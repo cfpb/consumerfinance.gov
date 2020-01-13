@@ -106,3 +106,7 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
 # unless the GOVDELIVERY_BASE_URL environment variable is set.
 if not os.environ.get('GOVDELIVERY_BASE_URL'):
     GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'
+
+# Used in legacy.views.complaint.ComplaintLandingView
+# This is a localhost debug environment for Docker
+COMPLAINT_LANDING_STATS_SOURCE = "http://0.0.0.0:8000/data-research/consumer-complaints/search/api/v1/?field=all&size=1&no_aggs=true"    

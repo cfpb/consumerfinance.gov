@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import datetime
-import six
-from six.moves import html_parser as HTMLParser
+from html.parser import HTMLParser
+from unittest import mock
 
 from django.apps import apps
 from django.contrib.auth.models import User
@@ -25,7 +23,8 @@ from ask_cfpb.models.django import (
 )
 from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
-    PortalSearchPage, get_standard_text, validate_page_number
+    PortalSearchPage, get_answer_preview, get_standard_text,
+    validate_page_number
 )
 from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
@@ -35,15 +34,12 @@ from v1.models import (
     CFGOVImage, HomePage, PortalCategory, PortalTopic, SublandingPage
 )
 from v1.tests.wagtail_pages import helpers
-from v1.util.migrations import get_free_path, get_or_create_page
+from v1.util.migrations import (
+    get_free_path, get_or_create_page, set_stream_data
+)
 
 
-if six.PY2:
-    import mock  # pragma: no cover
-else:
-    from unittest import mock  # pragma: no cover
-
-html_parser = HTMLParser.HTMLParser()
+html_parser = HTMLParser()
 now = timezone.now()
 
 
@@ -132,7 +128,7 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
         slug = 'ask-cfpb-{}.csv'.format(timestamp)
         m = mock.mock_open()
-        with mock.patch('six.moves.builtins.open', m, create=True):
+        with mock.patch('builtins.open', m, create=True):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
         m.assert_called_once_with("/tmp/{}".format(slug), 'w')
@@ -722,6 +718,35 @@ class AnswerPageTestCase(TestCase):
         self.assertEqual(
             context.get('breadcrumb_items')[0]['title'],
             'Obtener respuestas')
+
+    def test_get_answer_preview(self):
+        """Check that get_answer_preview returns truncated text, no tags."""
+        page = self.page1
+        stream_data = [
+            {
+                'type': 'video_player',
+                'id': '402b933b',
+                'value': {
+                    'video_url':
+                    'https://www.youtube.com/embed/wcQ1a_Gg8tI'}
+            },
+            {
+                'type': 'text',
+                'id': '402b933c',
+                'value': {
+                    'content': (
+                        '<p><span>'
+                        'This is more than forty words: '
+                        'word word word word word word word word word word '
+                        'word word word word word word word word word word '
+                        'word word word word word word word word word word '
+                        'word word word word word word too-many.'
+                        '</span></p>')
+                }
+            }
+        ]
+        set_stream_data(page, 'answer_content', stream_data)
+        self.assertTrue(get_answer_preview(page).endswith('word word ...'))
 
     def test_english_page_context(self):
         from v1.models.snippets import ReusableText

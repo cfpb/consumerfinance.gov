@@ -1,32 +1,9 @@
 from __future__ import print_function
 
-import six
-import sys
-from six import StringIO
+from io import StringIO
 from unittest import TestCase, TestSuite, defaultTestLoader
 
-from cfgov.test import StdoutCapturingTestRunner, redirect_stdout
-
-
-if six.PY2:
-    class TestRedirectStdout(TestCase):
-
-        def test_redirect_to_string_io(self):
-            stdout = sys.stdout
-            unstdout = StringIO()
-            with redirect_stdout(unstdout):
-                self.assertIs(sys.stdout, unstdout)
-                print('Hello, world!', file=sys.stdout)
-
-            self.assertIs(sys.stdout, stdout)
-            test_str = unstdout.getvalue().strip()
-            self.assertEqual(test_str, 'Hello, world!')
-
-        def test_raises_exception(self):
-            unstdout = StringIO()
-            with self.assertRaises(ValueError):
-                with redirect_stdout(unstdout):
-                    raise ValueError('Test exception handling')
+from cfgov.test import StdoutCapturingTestRunner
 
 
 class StderrSuppressingStdoutCapturingTestRunner(StdoutCapturingTestRunner):

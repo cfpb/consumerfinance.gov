@@ -2,9 +2,10 @@
 from __future__ import unicode_literals
 
 import datetime
-import six
 import smtplib
 import unittest
+from unittest import mock
+from unittest.mock import mock_open, patch
 
 from django.http import HttpRequest
 from django.test import TestCase
@@ -20,14 +21,6 @@ from paying_for_college.models import (
 
 from v1.models import HomePage
 from v1.util.migrations import set_stream_data
-
-
-if six.PY2:  # pragma: no cover
-    import mock
-    from mock import mock_open, patch
-else:  # pragma: no cover
-    from unittest import mock
-    from unittest.mock import mock_open, patch
 
 
 class MakeDivisibleTest(TestCase):
@@ -427,6 +420,6 @@ class ProgramExport(TestCase):
     def test_program_as_csv(self):
         p = Program.objects.get(pk=1)
         m = mock_open()
-        with patch("six.moves.builtins.open", m, create=True):
+        with patch("builtins.open", m, create=True):
             p.as_csv('/tmp.csv')
         self.assertEqual(m.call_count, 1)

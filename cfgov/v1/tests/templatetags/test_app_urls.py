@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-import six
-from unittest import skipUnless
-
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 
@@ -16,7 +13,6 @@ class TestAppUrlTags(TestCase):
         response = template.render(Context({'request': request}))
         self.assertEqual(response, 'app')
 
-    @skipUnless(six.PY3, "Unicode in path doesn't work in python 2")
     def test_app_url_unicode(self):
         template = Template('{% load app_urls %}{% app_url request %}')
         request = RequestFactory().get('/äpp/path')
@@ -29,7 +25,6 @@ class TestAppUrlTags(TestCase):
         response = template.render(Context({'request': request}))
         self.assertEqual(response, 'app/with/page/path')
 
-    @skipUnless(six.PY3, "Unicode in path doesn't work in python 2")
     def test_app_page_url_unicode(self):
         template = Template('{% load app_urls %}{% app_page_url request %}')
         request = RequestFactory().get('/ápp/with/päge/path')
