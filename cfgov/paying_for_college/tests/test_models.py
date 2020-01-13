@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 import datetime
 import smtplib
 import unittest
+from unittest import mock
+from unittest.mock import mock_open, patch
 
 from django.http import HttpRequest
 from django.test import TestCase
@@ -19,9 +21,6 @@ from paying_for_college.models import (
 
 from v1.models import HomePage
 from v1.util.migrations import set_stream_data
-
-from unittest import mock
-from unittest.mock import mock_open, patch
 
 
 class MakeDivisibleTest(TestCase):

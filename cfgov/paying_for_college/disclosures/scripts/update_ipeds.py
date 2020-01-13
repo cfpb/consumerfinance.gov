@@ -3,12 +3,13 @@ import json
 import os
 import zipfile
 from collections import OrderedDict
+from csv import DictReader as cdr, writer as csw
 from subprocess import call
 
 from django.contrib.humanize.templatetags.humanize import intcomma
 
 import requests
-from paying_for_college.models import Alias, School, cdr, csw
+from paying_for_college.models import Alias, School
 from paying_for_college.views import get_school
 from unipath import Path
 

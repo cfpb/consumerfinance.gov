@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
 import datetime
-import re
 import html.parser as HTMLParser
+import re
 
 from django.http import HttpResponse
 from django.utils import html

@@ -6,6 +6,8 @@ import json
 import os
 import unittest
 from decimal import Decimal
+from unittest import mock
+from unittest.mock import mock_open, patch
 
 import django
 from django.conf import settings
@@ -24,9 +26,6 @@ from paying_for_college.models import (
     FAKE_SCHOOL_PK, Alias, Notification, Program, School
 )
 from requests.exceptions import SSLError
-
-from unittest import mock
-from unittest.mock import mock_open, patch
 
 
 COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)

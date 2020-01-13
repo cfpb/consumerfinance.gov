@@ -1,7 +1,7 @@
-from django.core.management import call_command
-
 import unittest
 from unittest import mock
+
+from django.core.management import call_command
 
 
 class CommandTests(unittest.TestCase):

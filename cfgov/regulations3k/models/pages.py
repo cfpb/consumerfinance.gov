@@ -2,10 +2,10 @@ from __future__ import absolute_import, unicode_literals
 
 import logging
 import re
+import urllib
 from collections import OrderedDict
 from datetime import date
 from functools import partial
-import urllib
 from urllib.parse import urljoin
 
 from django.core.paginator import InvalidPage, Paginator

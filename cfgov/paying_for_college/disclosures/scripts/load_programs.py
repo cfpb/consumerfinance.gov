@@ -2,9 +2,10 @@
 from __future__ import print_function, unicode_literals
 
 import io
+from csv import DictReader as cdr
 
 import requests
-from paying_for_college.models import Program, School, cdr
+from paying_for_college.models import Program, School
 from paying_for_college.views import validate_pid
 from rest_framework import serializers
 

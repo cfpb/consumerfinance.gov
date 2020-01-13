@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from unittest.mock import mock_open, patch
+
 import django
 
 import mock
@@ -9,8 +11,6 @@ from paying_for_college.disclosures.scripts.load_programs import (
     read_in_data, read_in_s3, standardize_rate
 )
 from paying_for_college.models import Program, School
-
-from unittest.mock import mock_open, patch
 
 
 class TestLoadPrograms(django.test.TestCase):
