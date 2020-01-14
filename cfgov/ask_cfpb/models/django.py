@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 # from collections import Counter
-from six.moves import html_parser as HTMLParser
+import html.parser as HTMLParser
 
 from django.contrib.auth.models import User
 from django.db import models

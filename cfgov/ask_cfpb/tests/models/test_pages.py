@@ -128,7 +128,7 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
         slug = 'ask-cfpb-{}.csv'.format(timestamp)
         m = mock.mock_open()
-        with mock.patch('six.moves.builtins.open', m, create=True):
+        with mock.patch('builtins.open', m, create=True):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
         m.assert_called_once_with("/tmp/{}".format(slug), 'w')

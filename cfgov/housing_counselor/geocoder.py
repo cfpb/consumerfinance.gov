@@ -4,7 +4,6 @@ import csv
 import itertools
 import logging
 import time
-from six.moves import range
 
 from django.conf import settings
 

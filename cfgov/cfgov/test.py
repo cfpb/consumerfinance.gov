@@ -8,7 +8,7 @@ import re
 import shutil
 import subprocess
 import sys
-from six import StringIO
+from io import StringIO
 
 from django.apps import apps
 from django.conf import settings

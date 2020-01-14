@@ -40,7 +40,7 @@ class ComplaintLandingView(TemplateView):
 
         context.update({
             'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES'),
-            'ccdb_content_updates': flag_enabled('CCDB_CONTENT_UPDATES'),
+            'ccdb_content_updates': flag_enabled('CCDB_CONTENT_UPDATES')
         })
 
         return context
@@ -48,7 +48,9 @@ class ComplaintLandingView(TemplateView):
     def get_ccdb_status_json(self, complaint_source):
         """Retrieve JSON describing the CCDB's status from a given URL."""
         try:
-            res_json = requests.get(complaint_source).json()
+            headers = {"accept": "application/json"}
+            res_json = requests.get(complaint_source, headers=headers).json()
+
         except requests.exceptions.RequestException:
             logger.exception("CCDB status data fetch failed.")
             res_json = {}
@@ -76,10 +78,9 @@ class ComplaintLandingView(TemplateView):
                                   timedelta(delta)).strftime("%Y-%m-%d")
 
         try:
-
-            if res_json['stats']['last_updated'] < four_business_days_ago:
+            if res_json['_meta']['last_indexed'] < four_business_days_ago:
                 data_down = True
-            elif (res_json['stats']['last_updated_narratives'] <
+            elif (res_json['_meta']['last_updated'] <
                     four_business_days_ago):
                 narratives_down = True
         except KeyError:
