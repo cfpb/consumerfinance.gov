@@ -14,8 +14,9 @@ def remove_url_parameter(request, discards):
     """
     query = request.GET.copy()
     params = dict(iterlists(query))
+    # params = iter(query)
     items = {}
-    for key in params:
+    for key in list(dict.keys(query)):
         if key in discards:
             items[key.encode('utf-8')] = [
                 item.encode('utf-8') for item in params[key]
