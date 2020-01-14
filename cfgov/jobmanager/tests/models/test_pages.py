@@ -1,5 +1,3 @@
-from six import string_types as basestring
-
 from django.core.exceptions import ValidationError
 from django.http import HttpRequest
 from django.test import TestCase
@@ -100,7 +98,7 @@ class JobListingPageTestCase(TestCase):
     def test_ordered_grades_returns_strings(self):
         page = self.make_page_with_grades('3', '2', '1')
         for grade in page.ordered_grades:
-            self.assertIsInstance(grade, basestring)
+            self.assertIsInstance(grade, str)
 
     def test_context_for_page_with_region_location(self):
         region = mommy.make(
