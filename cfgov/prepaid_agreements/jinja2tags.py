@@ -1,7 +1,5 @@
 from urllib.parse import urlencode
 
-from django.utils.six import iterlists
-
 from jinja2.ext import Extension
 
 
@@ -12,11 +10,9 @@ def remove_url_parameter(request, discards):
     Discards should be a dict of lists:
          {param: [values]}
     """
-    query = request.GET.copy()
-    params = dict(iterlists(query))
-    # params = iter(query)
+    params = dict(request.GET.lists())
     items = {}
-    for key in list(dict.keys(query)):
+    for key in params.keys():
         if key in discards:
             items[key.encode('utf-8')] = [
                 item.encode('utf-8') for item in params[key]

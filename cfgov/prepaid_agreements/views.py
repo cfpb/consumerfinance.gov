@@ -95,8 +95,7 @@ def get_support_text():
 
 
 def index(request):
-    query = request.GET.copy()
-    params = dict.items(query)
+    params = request.GET.lists()
     available_filters = {}
     search_term = None
     search_field = None
