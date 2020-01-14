@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
-from six import BytesIO
+from io import BytesIO
 
 from django.conf import settings
 
