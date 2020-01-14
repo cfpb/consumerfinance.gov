@@ -3,7 +3,7 @@ import argparse
 import io
 import tempfile
 from datetime import date, datetime, timedelta
-from six import StringIO, ensure_text
+from io import StringIO
 
 from django.core.management import call_command
 from django.test import SimpleTestCase, TestCase
@@ -102,7 +102,7 @@ class TestExportFeedback(TestCase):
     def call_command(self, *args, **kwargs):
         stdout = StringIO()
         call_command('export_feedback', *args, stdout=stdout, **kwargs)
-        return ensure_text(stdout.getvalue())
+        return str(stdout.getvalue())
 
     def test_export_no_feedback_header_only(self):
         Feedback.objects.all().delete()

@@ -12,5 +12,4 @@ mkdocs-rtd-dropdown==1.0.2
 pymdown-extensions==5.0
 PyYAML==3.13
 singledispatch==3.4.0.3
-six==1.12.0
 tornado==5.1.1
