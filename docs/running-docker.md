@@ -26,7 +26,8 @@ To build and run the containers for the first time, run:
 docker-compose up
 ```
 
-### Environment variables
+
+## Environment variables
 
 Environment variables from your `.env` file are sourced 
 when the Python container starts
@@ -37,13 +38,15 @@ To add new environment variables, simply add them to the `.env` file,
 stop docker-compose with Ctrl+C, 
 and start it again with `docker-compose up`.
 
-### Access a container's shell
+
+## Access a container's shell
 
 - Python: `docker-compose exec python bash`
 - Elasticsearch: `docker-compose exec elasticsearch bash`
 - PostgreSQL: `docker-compose exec postgres bash`
 
-### Run Django management commands
+
+## Run Django management commands
 
 Django `manage.py` commands can only be run after you've 
 opened up a shell in the Python container. 
@@ -52,7 +55,8 @@ From there commands like `cfgov/manage.py migrate` should run as expected.
 The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
 they will work as expected once you're inside the container.
 
-### Update Python dependencies
+
+## Update Python dependencies
 
 If the Python package requirements files have changed, 
 you will need to stop `docker-compose` (if it is running) 
@@ -62,11 +66,13 @@ and rebuild the Python container using:
 docker-compose up --build python
 ```
 
-### Work on satellite apps
+
+## Work on satellite apps
 
 See [Related Projects#Using Docker](../related-projects/#using-docker).
 
-### Attach for debugging
+
+## Attach for debugging
 
 If you have inserted a [PDB breakpoint](https://docs.python.org/3/library/pdb.html) in your code 
 and need to interact with the running Django process when the breakpoint is reached 
@@ -77,7 +83,7 @@ you can run [`docker attach`](https://docs.docker.com/engine/reference/commandli
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 
 
-### Useful Docker commands
+## Useful Docker commands
 
 For `docker-compose` commands, 
 `[SERVICE]` is the service name that is defined in `docker-compose.yml`.
@@ -93,7 +99,8 @@ For `docker` commands, `[CONTAINER]` is the container name displayed with `docke
 - [`docker-compose build [SERVICE]`](https://docs.docker.com/compose/reference/build/)
     will build any of our configured containers.
 
-# Production-like Docker Image
+
+## Production-like Docker Image
 
 This repository includes a "production-like" Docker image, created for
 experimenting with how cf.gov _could_ be built and run as a Docker
@@ -106,9 +113,9 @@ This includes:
 - procedures for executing Django `collectstatic` and `yarn`-based frontend build process
 - an Apache HTTPD webserver with `mod_wsgi`, run with configs in `cfgov-refresh`
 
-## How do I use it?
+### How do I use it?
 
-### Just Docker
+#### Just Docker
 
 If you just want to build the image:
 
@@ -120,7 +127,7 @@ docker build . --build-arg scl_python_version=rh-python36 -t your-desired-image-
 [Python Software Collection](https://www.softwarecollections.org/en/scls/?search=python)
 version you'd like to use. We've tested this against `rh-python36`.
 
-### Docker Compose
+#### Docker Compose
 
 You can also launch the full cf.gov stack locally via `docker-compose`. This setup is
 a nice way to test out new Apache config changes. It includes volumes that mount your
@@ -169,8 +176,7 @@ change configs locally without having to rebuild the image each time.
     docker-compose up --build python
     ```
 
-
-## How does it work?
+### How does it work?
 
 The production image extends the development image. If you look at the `Dockerfile`, this is spelled out by the line:
 
