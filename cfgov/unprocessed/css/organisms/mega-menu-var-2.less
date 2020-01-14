@@ -486,6 +486,10 @@ body {
         &_group-heading {
             margin-top: @grid_gutter-width;
 
+            &__hidden {
+                .u-visually-hidden;
+            }
+
             // add border between title and following list
             &:not(&__hidden) + ul {
                 border-top: 1px solid @gray-40;
@@ -553,7 +557,7 @@ body {
                 &:active,
                 &:focus,
                 &:visited {
-                    border-color: @white;
+                    border-color: transparent;
                     border-bottom: none;
                 }
 
@@ -749,6 +753,7 @@ body {
                 box-shadow: 0 5px 5px 0px rgba( 0, 0, 0, 0.2 );
 
                 padding: unit( @grid_gutter-width / @base-font-size-px, em );
+                padding-top: unit( 20px / @base-font-size-px, em );
                 padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
                 padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
             }
@@ -781,6 +786,7 @@ body {
 
             &-lists {
                 display: table;
+                margin-top: unit( 10px / @base-font-size-px, em );
             }
 
             &-list {
@@ -822,20 +828,15 @@ body {
                     cursor: default;
                 }
             }
-
-            &-overview-link {
-                padding-top: 0;
-            }
-
-            &_group-heading {
-                margin-bottom: @grid_gutter-width;
-            }
-
         }
 
         // 3rd-level menu - Desktop.
         &_content-3 {
             display: none;
+        }
+
+        &_group-heading__hidden {
+            visibility: hidden;
         }
 
         // Hide global header CTA container and eyebrow at desktop size.
@@ -887,17 +888,6 @@ body {
         &_content-2 {
             left: -@grid_gutter-width;
             width: @menu_max_width_px + ( @grid_gutter-width * 2 );
-
-            &-overview-link {
-                padding-top: 0;
-            }
-        }
-
-        &_group-heading {
-            &__hidden {
-                opacity: 0;
-                cursor: default;
-            }
         }
 
     } );
