@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import csv
-from six import BytesIO, StringIO
+from io import BytesIO, StringIO
 
 from django.test import TestCase, override_settings
 

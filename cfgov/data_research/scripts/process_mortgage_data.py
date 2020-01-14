@@ -4,7 +4,7 @@ import datetime
 import logging
 import os
 import sys
-from six.moves import cStringIO as StringIO
+from io import StringIO
 
 import unicodecsv
 from dateutil import parser

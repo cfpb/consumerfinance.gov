@@ -1,7 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailsearch import index
@@ -10,7 +9,6 @@ from wagtail.wagtailsnippets.models import register_snippet
 from modelcluster.fields import ParentalKey
 
 
-@python_2_unicode_compatible
 @register_snippet
 class GlossaryTerm(index.Indexed, models.Model):
     name_en = models.CharField(

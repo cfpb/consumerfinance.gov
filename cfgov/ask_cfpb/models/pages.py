@@ -1,14 +1,13 @@
 from __future__ import absolute_import, unicode_literals
 
 from collections import OrderedDict
-from six.moves.urllib.parse import unquote
+from urllib.parse import unquote
 
 from django import forms
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.html import format_html, strip_tags
 from django.utils.text import Truncator, slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
@@ -718,7 +717,6 @@ class ArticleLink(Orderable, models.Model):
     ]
 
 
-@python_2_unicode_compatible
 class ArticlePage(CFGOVPage):
     """
     General article page type.
