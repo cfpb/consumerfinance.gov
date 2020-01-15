@@ -6,10 +6,15 @@
   "homepage": "https://www.consumerfinance.gov/mmt-my-money-calendar",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "7.7.4",
+    "@babel/plugin-proposal-decorators": "7.8.3",
     "@babel/preset-react": "7.7.4",
+    "idb": "5.0.0",
+    "mobx": "5.15.2",
+    "mobx-react": "6.1.5",
     "prop-types": "15.7.2",
     "react": "16.12.0",
     "react-dom": "16.12.0",
+    "react-router-dom": "5.1.2",
     "react-use": "13.14.3"
   },
   "devDependencies": {
