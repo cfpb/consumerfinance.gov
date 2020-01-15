@@ -23,6 +23,12 @@ class ApplicantType(models.Model):
     class Meta:
         ordering = ['applicant_type']
 
+    def __lt__(self, other):
+        return self.applicant_type < other.applicant_type
+
+    def __gt__(self, other):
+        return self.applicant_type > other.applicant_type
+
 
 class Grade(models.Model):
     grade = models.CharField(max_length=32)
