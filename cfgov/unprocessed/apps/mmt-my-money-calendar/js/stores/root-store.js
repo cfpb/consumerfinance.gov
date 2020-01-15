@@ -10,6 +10,8 @@ export default class RootStore {
     this.logger = logger.addGroup('rootStore');
     this.uiStore = new UIStore(this);
     this.eventStore = new CashFlowStore(this);
+
+    this.logger.debug('Initialize RootStore: %O', this);
   }
 
   @computed get isLoading() {

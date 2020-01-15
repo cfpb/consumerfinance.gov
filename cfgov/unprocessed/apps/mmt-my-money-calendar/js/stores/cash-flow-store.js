@@ -8,6 +8,8 @@ export default class CashFlowStore {
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.logger = logger.addGroup('cashFlowStore');
+
+    this.logger.debug('Initialize CashFlowStore: %O', this);
   }
 
   /**
