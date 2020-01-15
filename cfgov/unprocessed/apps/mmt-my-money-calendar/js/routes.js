@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './views/home';
-import Wizard from './views/wizard';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./views/home";
+import Wizard from "./views/wizard";
+import CalendarView from "./views/calendar";
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">
@@ -12,6 +13,9 @@ const Routes = () => (
 
         <Route path="/wizard">
           <Wizard />
+        </Route>
+        <Route path="/calendar">
+          <Calendar />
         </Route>
       </Switch>
     </div>
