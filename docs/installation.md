@@ -260,7 +260,7 @@ longer if you are on a slow internet connection.
 When it's all done, you should be able to load http://localhost:8000 in your
 browser, and see a database error.
 
-### 3. Setup the database
+### 5. Setup the database
 
 Open a bash shell inside your Python container.
 
@@ -281,6 +281,11 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 You can get that URL at
 [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
 
+The first time you add this value to `.env` (and any time you make a
+change to that file) you will either need to run `source .env` from
+the container or `docker-compose down && docker-compose up` from your
+standard shell to pick up the changes.
+
 With `CFGOV_PROD_DB_LOCATION` in `.env` you should be able to run:
 
 `./refresh-data.sh`
@@ -291,7 +296,7 @@ below should be enough to get you started.
 Once you have a database loaded, you should have a functioning copy of site
 working at [http://localhost:8000](http://localhost:8000)
 
-### 4. Next Steps
+### 6. Next Steps
 
 See [Running in Docker](../running-docker/) to continue after that.
 
