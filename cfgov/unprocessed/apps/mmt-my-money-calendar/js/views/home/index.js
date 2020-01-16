@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="mmt-view home">
       <h1>Home</h1>
-      <Link to="/wizard">Begin Wizard</Link>
+      <Link to="/wizard/steps/starting-balance">Begin Wizard</Link>
     </main>
   );
 }
