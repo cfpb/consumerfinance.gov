@@ -1,5 +1,3 @@
-from six import string_types as basestring
-
 from django.core.exceptions import ValidationError
 from django.http import HttpRequest
 from django.test import TestCase
@@ -8,10 +6,10 @@ from mock import patch
 from model_mommy import mommy
 
 from jobmanager.models.django import (
-    City, Grade, JobCategory, Office, Region, State
+    ApplicantType, City, Grade, JobCategory, Office, Region, State
 )
 from jobmanager.models.pages import JobListingPage
-from jobmanager.models.panels import GradePanel
+from jobmanager.models.panels import GradePanel, USAJobsApplicationLink
 from v1.models.snippets import ReusableText
 from v1.tests.wagtail_pages.helpers import save_new_page
 
@@ -100,7 +98,7 @@ class JobListingPageTestCase(TestCase):
     def test_ordered_grades_returns_strings(self):
         page = self.make_page_with_grades('3', '2', '1')
         for grade in page.ordered_grades:
-            self.assertIsInstance(grade, basestring)
+            self.assertIsInstance(grade, str)
 
     def test_context_for_page_with_region_location(self):
         region = mommy.make(
@@ -165,3 +163,21 @@ class JobListingPageTestCase(TestCase):
             test_context['about_us'],
             about_us_snippet
         )
+
+    def test_usajobs_application_link_ordering(self):
+        page = self.prepare_job_listing_page()
+        save_new_page(page)
+
+        page.usajobs_application_links = [
+            USAJobsApplicationLink(
+                announcement_number='1',
+                applicant_type=mommy.make(ApplicantType, applicant_type='1'),
+            ),
+            USAJobsApplicationLink(
+                announcement_number='2',
+                applicant_type=mommy.make(ApplicantType, applicant_type='2'),
+            ),
+        ]
+
+        result = page.usajobs_application_links.order_by('applicant_type')
+        self.assertEqual(result.first().announcement_number, '1')

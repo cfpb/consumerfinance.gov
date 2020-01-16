@@ -5,7 +5,7 @@ volumes:
 
 services:
 
-    python2:
+    python:
         build:
             target: cfgov-prod
         environment: &python_env
@@ -23,11 +23,3 @@ services:
             - ./cfgov/apache/conf/:/src/cfgov-refresh/cfgov/apache/conf/
             - ./cfgov/apache/conf.d/:/src/cfgov-refresh/cfgov/apache/conf.d/
             - ./cfgov/apache/conf.modules.d/:/src/cfgov-refresh/cfgov/apache/conf.modules.d/
-
-    python3:
-        build:
-            target: cfgov-prod
-        environment: *python_env
-        ports:
-            - "8333:80" # Apache
-        volumes: *python_volumes

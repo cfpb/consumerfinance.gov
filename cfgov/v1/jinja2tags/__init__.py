@@ -1,4 +1,4 @@
-from six.moves import html_parser as HTMLParser
+import html.parser as HTMLParser
 
 from django.utils.module_loading import import_string
 

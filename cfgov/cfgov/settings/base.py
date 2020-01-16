@@ -529,6 +529,7 @@ CSP_SCRIPT_SRC = (
     'universal.iperceptions.com',
     'cdn.mouseflow.com',
     'n2.mouseflow.com',
+    'us.mouseflow.com',
     'geocoding.geo.census.gov',
     'tigerweb.geo.census.gov',
     'about:',

@@ -1,9 +1,19 @@
+import sys
 import warnings
 
 from unipath import DIRS
 
 from .base import *
 
+
+if sys.version_info[0] < 3:
+    raise Exception(
+        "Python 2 is no longer supported. "
+        "If you are running in a virtual environment, please see "
+        "http://cfpb.github.io/cfgov-refresh/running-virtualenv/"
+        "#reinstalling-the-virtual-environment "
+        "for how to reinstall."
+    )
 
 DEBUG = True
 SECRET_KEY = 'not-secret-key-for-testing'
@@ -96,3 +106,7 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
 # unless the GOVDELIVERY_BASE_URL environment variable is set.
 if not os.environ.get('GOVDELIVERY_BASE_URL'):
     GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'
+
+# Used in legacy.views.complaint.ComplaintLandingView
+# This is a localhost debug environment for Docker
+COMPLAINT_LANDING_STATS_SOURCE = "http://0.0.0.0:8000/data-research/consumer-complaints/search/api/v1/?field=all&size=1&no_aggs=true"    

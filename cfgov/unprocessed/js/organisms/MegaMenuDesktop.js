@@ -9,10 +9,11 @@ import MoveTransition from '../modules/transition/MoveTransition';
  *
  * @classdesc Behavior for the mega menu at desktop sizes.
  *
+ * @param {string} baseClass - The base class of the parent mega menu.
  * @param {Tree} menus - Tree of FlyoutMenus.
  * @returns {MegaMenuDesktop} An instance.
  */
-function MegaMenuDesktop( menus ) {
+function MegaMenuDesktop( baseClass, menus ) {
 
   // DOM references.
   const _bodyDom = document.body;
@@ -256,7 +257,7 @@ function MegaMenuDesktop( menus ) {
     const menu = node.data;
 
     if ( nLevel === 1 ) {
-      const wrapperSel = '.o-mega-menu_content-2-wrapper';
+      const wrapperSel = `.${ baseClass }_content-2-wrapper`;
       const contentDom = menu.getDom().content;
       const wrapperDom = contentDom.querySelector( wrapperSel );
       let transition = menu.getTransition();

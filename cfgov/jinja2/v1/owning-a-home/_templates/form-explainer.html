@@ -47,12 +47,12 @@
         <div class="image-map explain_image-map">
             <div class="image-map_wrapper">
                 <div class="form-explainer_page-buttons">
-                    <button class="prev a-btn a-btn__disabled">
-                        <span class="u-visually-hidden">Previous page</span>
+                    <button class="prev a-btn a-btn__disabled"
+                            aria-label="Previous page">
                         {{ svg_icon('left') }}
                     </button>
-                    <button class="a-btn next">
-                        <span class="u-visually-hidden">Next page</span>
+                    <button class="a-btn next"
+                            aria-label="Next page">
                         {{ svg_icon('right') }}
                     </button>
                   </div>
@@ -169,12 +169,10 @@
             {{ item.term }}
         </span>
         <span class="o-expandable_header-right o-expandable_link">
-            <span class="o-expandable_cue-open">
-                <span class="u-visually-hidden">Show</span>
+            <span class="o-expandable_cue-open" aria-label="Show">
                 {{ svg_icon('plus-round') }}
             </span>
-            <span class="o-expandable_cue-close">
-                <span class="u-visually-hidden">Hide</span>
+            <span class="o-expandable_cue-close" aria-label="Hide">
                 {{ svg_icon('minus-round') }}
             </span>
         </span>

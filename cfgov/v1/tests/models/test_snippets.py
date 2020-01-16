@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import six
 from unittest import skipIf
 
 from django.test import TestCase
@@ -13,16 +12,10 @@ from v1.models.snippets import Contact, RelatedResource, ReusableText
 
 
 class TestUnicodeCompatibility(TestCase):
-    @skipIf(six.PY3, "all strings are unicode")
-    def test_unicode_contact_heading_str(self):
-        contact = Contact(heading=u'Unicod\xeb')
-        self.assertEqual(str(contact), 'Unicod\xc3\xab')
-        self.assertIsInstance(str(contact), str)
-
     def test_unicode_contact_heading_unicode(self):
-        contact = Contact(heading=u'Unicod\xeb')
-        self.assertEqual(six.text_type(contact), u'Unicod\xeb')
-        self.assertIsInstance(six.text_type(contact), six.text_type)
+        contact = Contact(heading='Unicod\xeb')
+        self.assertEqual(str(contact), 'Unicod\xeb')
+        self.assertIsInstance(str(contact), str)
 
 
 class TestTranslations(TestCase):
