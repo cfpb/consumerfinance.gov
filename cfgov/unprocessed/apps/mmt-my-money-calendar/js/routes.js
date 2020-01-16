@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./views/home";
 import Wizard from "./views/wizard";
+import Summary from "./views/summary";
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">

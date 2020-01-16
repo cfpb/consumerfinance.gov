@@ -1,5 +1,5 @@
 import { Route, Redirect, Switch, Link, useRouteMatch } from "react-router-dom";
-import { Interval } from "./interval";
+import Interval from "./interval";
 
 export default function Summary() {
   const match = useRouteMatch("/summary/interval/:interval");
@@ -12,10 +12,9 @@ export default function Summary() {
 
       <h3>Route match debug</h3>
       <pre className="debug">{JSON.stringify(match, null, 2)}</pre>
-
       <Switch>
-        <Redirect exact from="/summary" to="/summary/month" />
-        <Route path="/summary/:interval">
+        <Redirect exact from="/summary" to="/summary/interval/1" />
+        <Route path="/interval/:interval">
           <Interval />
         </Route>
       </Switch>
