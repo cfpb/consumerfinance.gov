@@ -2,6 +2,35 @@
 # yarn lockfile v1
 
 
+"@cfpb/cfpb-atomic-component@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.0.8.tgz#edc174846ee98aad3e8bebe6d7ca7b838041f725"
+  integrity sha512-/7bDbFqDXMwScbX1bSkXcYvF5uHu7eDK6oOCpD3clR+gNg55+CVcIao3fnMIQtR8s1P6AKEjKxFw9uW5I4B4ZA==
+  dependencies:
+    ftdomdelegate "^3.0.0"
+
+"@cfpb/cfpb-core@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.0.8.tgz#9d739b909f0ad3680879f8832e878936a5c37ba5"
+  integrity sha512-NyApxTEq6DA4Ofm8bwElw7YT1jhFYrsBlCyR0oMOmNVtLdk4NB00DHdRMoTy0azJm7yX8jqNOrT5/5CwUAUOKg==
+  dependencies:
+    normalize-css "^2.0.0"
+    normalize-legacy-addon "0.1.0"
+
+"@cfpb/cfpb-expandables@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.0.8.tgz#3bbdea95a02470ac40bc90b7fbd3650efc2e1111"
+  integrity sha512-xirt+vJkVHAKsPuBfGgDI6kQ4nYRawkaR4075LyB0jPmMjEpoXrf/98o/CqekG4Hgv5vXDyJt9AHz3pHvAhh7w==
+  dependencies:
+    "@cfpb/cfpb-atomic-component" "^0.0.8"
+    "@cfpb/cfpb-core" "^0.0.8"
+    "@cfpb/cfpb-icons" "^0.0.8"
+
+"@cfpb/cfpb-icons@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.0.8.tgz#f4dcf8771e3dc26d61fc5137042df849df96e521"
+  integrity sha512-7yIOGeXaMqEE0tw2w05iE1dbV8knMerTsSLvPZs4EB7wqNtyLnuNCr3ybGDcVwKXMe+rxxzKRFz1Wyf12WlaIg==
+
 babel-extract-comments@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/babel-extract-comments/-/babel-extract-comments-1.0.0.tgz#0a2aedf81417ed391b85e18b4614e693a0351a21"
@@ -77,6 +106,11 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
+ftdomdelegate@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/ftdomdelegate/-/ftdomdelegate-3.1.0.tgz#f22a1bb3dba7ed0e239125487923899a16448963"
+  integrity sha512-sEGlE4xTcwl7RxW8ypB2jUbKAWxG4iE7YLmko9AKdGUn2BY1fkg5zeC0Ec9Ac770iDpAqgzXdzO4KrPi3sasug==
+
 get-own-enumerable-property-symbols@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/get-own-enumerable-property-symbols/-/get-own-enumerable-property-symbols-3.0.2.tgz#b5fde77f22cbe35f390b4e089922c50bce6ef664"
@@ -116,6 +150,11 @@ inherits@2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
+
+insert-css@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/insert-css/-/insert-css-0.0.0.tgz#2304bfa6f893abecb8ff9ca8d9c7605d94cf2911"
+  integrity sha1-IwS/pviTq+y4/5yo2cdgXZTPKRE=
 
 is-obj@^1.0.1:
   version "1.0.1"
@@ -176,6 +215,18 @@ minimatch@^3.0.4:
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
   dependencies:
     brace-expansion "^1.1.7"
+
+normalize-css@^2.0.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/normalize-css/-/normalize-css-2.3.1.tgz#fc03e3b91e3a51aa7a1836bae7b2b6ac6d51e156"
+  integrity sha1-/APjuR46Uap6GDa657K2rG1R4VY=
+  dependencies:
+    insert-css "0.0.0"
+
+normalize-legacy-addon@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/normalize-legacy-addon/-/normalize-legacy-addon-0.1.0.tgz#8ca131e8503943a3a9e4d0d70cc0e80a27a40c9e"
+  integrity sha1-jKEx6FA5Q6Op5NDXDMDoCiekDJ4=
 
 once@^1.3.0:
   version "1.4.0"

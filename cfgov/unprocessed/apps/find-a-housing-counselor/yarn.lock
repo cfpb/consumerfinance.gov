@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@cfpb/cfpb-core@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.0.8.tgz#9d739b909f0ad3680879f8832e878936a5c37ba5"
+  integrity sha512-NyApxTEq6DA4Ofm8bwElw7YT1jhFYrsBlCyR0oMOmNVtLdk4NB00DHdRMoTy0azJm7yX8jqNOrT5/5CwUAUOKg==
+  dependencies:
+    normalize-css "^2.0.0"
+    normalize-legacy-addon "0.1.0"
+
 babel-polyfill@^7.0.0-beta.3:
   version "7.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-7.0.0-beta.3.tgz#053f0943cdf498910cc037de2ffc7b1f2e36223a"
@@ -9,14 +17,6 @@ babel-polyfill@^7.0.0-beta.3:
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
-
-cf-core@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/cf-core/-/cf-core-10.0.0.tgz#4e447a95c8b94b55c5ec16df8243173382fd321b"
-  integrity sha512-NrPhzfwWv+KRnMMLYfOzuuDBsLQ80uBOdNTsYLxEvJrItLa/aXNSBJ1T+JHCxlodKFjT8e54rWf5oRaOq5DiuA==
-  dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
 
 core-js@^2.4.0:
   version "2.6.11"

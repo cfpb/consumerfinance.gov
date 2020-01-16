@@ -18,5 +18,8 @@
   },
   "dependencies": {
     "workbox-build": "^3.4.1"
+  },
+  "devDependencies": {
+    "@cfpb/cfpb-expandables": "0.0.8"
   }
 }

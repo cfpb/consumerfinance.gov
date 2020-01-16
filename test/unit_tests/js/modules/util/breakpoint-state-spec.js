@@ -1,5 +1,5 @@
 import * as breakpointState from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
-import breakpointsConfig from 'cf-core/src/cf-vars-breakpoints';
+import breakpointsConfig from '@cfpb/cfpb-core/src/vars-breakpoints';
 
 let configKeys;
 

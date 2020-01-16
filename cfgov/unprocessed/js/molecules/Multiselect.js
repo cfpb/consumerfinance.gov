@@ -7,7 +7,7 @@ import { bindEvent } from '../modules/util/dom-events';
 import { create } from '../modules/util/dom-manipulators';
 
 const closeIcon = require(
-  'svg-inline-loader!../../../../node_modules/cf-icons/src/icons/close.svg'
+  'svg-inline-loader!../../../../node_modules/@cfpb/cfpb-icons/src/icons/close.svg'
 );
 
 const BASE_CLASS = 'o-multiselect';
