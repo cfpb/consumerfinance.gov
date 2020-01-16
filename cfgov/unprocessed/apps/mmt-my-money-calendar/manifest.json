@@ -15,7 +15,7 @@
   ],
   "start_url": "/mmt-my-money-calendar?source=pwa",
   "background_color": "#FFFFFF",
-  "display": "minimal-ui",
+  "display": "standalone",
   "scope": "/mmt-my-money-calendar",
   "theme_color": "#5AB057",
   "prefer_related_applications": false
