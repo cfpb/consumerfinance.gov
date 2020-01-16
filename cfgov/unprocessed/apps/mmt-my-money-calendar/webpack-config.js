@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
@@ -25,6 +26,23 @@ const COPY_PWA_MANIFEST = new CopyPlugin([
     to: '..',
   },
 ]);
+
+const GENERATE_SERVICE_WORKER = new WorkboxPlugin.GenerateSW({
+  // Do not precache images
+  exclude: [
+    /\.(?:png|jpe?g|svg|gif)$/,
+  ],
+
+  runtimeCaching: [
+    {
+      urlPattern: /\.(?:png|jpe?g|svg|gif)$/,
+      handler: 'StaleWhileRevalidate',
+      options: {
+        cacheName: 'images',
+      }
+    },
+  ]
+});
 
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin({
   cache: true,
@@ -87,6 +105,7 @@ const STATS_CONFIG = {
 const plugins = [
   AUTOLOAD_REACT,
   COPY_PWA_MANIFEST,
+  GENERATE_SERVICE_WORKER,
 ];
 
 /*
