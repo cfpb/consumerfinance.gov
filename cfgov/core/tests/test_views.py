@@ -1,6 +1,6 @@
 import json
 import re
-from six.moves.urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from django.core.urlresolvers import reverse
 from django.http import Http404, QueryDict

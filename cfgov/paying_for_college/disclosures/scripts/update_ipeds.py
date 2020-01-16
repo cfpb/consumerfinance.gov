@@ -1,15 +1,15 @@
 import datetime
 import json
 import os
-import six
 import zipfile
 from collections import OrderedDict
+from csv import DictReader as cdr, writer as csw
 from subprocess import call
 
 from django.contrib.humanize.templatetags.humanize import intcomma
 
 import requests
-from paying_for_college.models import Alias, School, cdr, csw
+from paying_for_college.models import Alias, School
 from paying_for_college.views import get_school
 from unipath import Path
 
@@ -97,7 +97,7 @@ def download_zip_file(url, zip_file):
     if resp.ok:
         with open(zip_file, 'wb') as f:
             for chunk in resp.iter_content(chunk_size=1024):
-                if chunk:  # pragma: no cover
+                if chunk:
                     f.write(chunk)
         unzip_file(zip_file)
         call(['rm', zip_file])
@@ -143,12 +143,6 @@ def download_files():
 def read_csv(fpath, encoding='utf-8'):
     if not os.path.isfile(fpath):
         download_files()
-    if six.PY2:  # pragma: no cover
-        with open(fpath, 'r') as f:
-            reader = cdr(f, encoding=encoding)
-            data = [row for row in reader]
-            return reader.fieldnames, data
-    else:  # pragma: no cover
         with open(fpath, newline='', encoding=encoding) as f:
             reader = cdr(f)
             data = [row for row in reader]
