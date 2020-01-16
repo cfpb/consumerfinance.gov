@@ -8,6 +8,7 @@
     "@babel/plugin-proposal-class-properties": "7.7.4",
     "@babel/plugin-proposal-decorators": "7.8.3",
     "@babel/preset-react": "7.7.4",
+    "copy-webpack-plugin": "5.1.1",
     "idb": "5.0.0",
     "mobx": "5.15.2",
     "mobx-react": "6.1.5",

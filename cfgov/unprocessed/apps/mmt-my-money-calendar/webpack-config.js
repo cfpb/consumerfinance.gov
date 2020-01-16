@@ -1,6 +1,9 @@
 const { LAST_2_IE_11_UP } = require('../../../../config/browser-list-config');
 const webpack = require('webpack');
+const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // Used for toggling debug output. Inherit Django debug value to cut down on redundant environment variables:
@@ -15,6 +18,13 @@ const COMMON_BUNDLE_NAME = 'common.js';
 const AUTOLOAD_REACT = new webpack.ProvidePlugin({
   React: 'react',
 });
+
+const COPY_PWA_MANIFEST = new CopyPlugin([
+  {
+    from: path.join(__dirname, 'manifest.json'),
+    to: '..',
+  },
+]);
 
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin({
   cache: true,
@@ -76,6 +86,7 @@ const STATS_CONFIG = {
 
 const plugins = [
   AUTOLOAD_REACT,
+  COPY_PWA_MANIFEST,
 ];
 
 /*
