@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./views/home";
 import Wizard from "./views/wizard";
-import CalendarView from "./views/calendar";
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">
