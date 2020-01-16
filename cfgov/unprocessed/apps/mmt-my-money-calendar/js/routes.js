@@ -14,8 +14,9 @@ const Routes = () => (
         <Route path="/wizard">
           <Wizard />
         </Route>
-        <Route path="/calendar">
-          <Calendar />
+
+        <Route path="/summary">
+          <Summary />
         </Route>
       </Switch>
     </div>
