@@ -17,7 +17,7 @@ export default function Wizard() {
 
       <Switch>
         <Redirect exact from="/wizard" to="/wizard/step/1" />
-        <Route path="/step/:step">
+        <Route path="/wizard/step/:step">
           <Step />
         </Route>
       </Switch>
