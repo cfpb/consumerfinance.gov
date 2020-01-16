@@ -1,7 +1,7 @@
 const { LAST_2_IE_11_UP } = require('../../../../config/browser-list-config');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // Used for toggling debug output. Inherit Django debug value to cut down on redundant environment variables:
 const {
@@ -78,11 +78,15 @@ const plugins = [
   AUTOLOAD_REACT,
 ];
 
+/*
 if (NODE_ENV === 'development' && ANALYZE) {
   plugins.push(new BundleAnalyzerPlugin({
     analyzerMode: 'server',
   }));
 }
+*/
+
+const minimize = NODE_ENV === 'production';
 
 const conf = {
   cache: false,
@@ -93,7 +97,7 @@ const conf = {
     jsonpFunction: 'apps',
   },
   optimization: {
-    minimize: true,
+    minimize,
     minimizer: [
       COMMON_MINIFICATION_CONFIG,
     ],
