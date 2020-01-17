@@ -1,3 +1,5 @@
+const APP_NAME = 'mmt-my-money-calendar';
+const { paths } = require('../../../../config/environment');
 const { LAST_2_IE_11_UP } = require('../../../../config/browser-list-config');
 const webpack = require('webpack');
 const path = require('path');
