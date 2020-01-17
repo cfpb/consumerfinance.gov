@@ -39,6 +39,7 @@ from v1.views import (
     password_reset_confirm, welcome
 )
 from v1.views.documents import DocumentServeView
+from mmt_my_money_calendar.views import ServiceWorkerView
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -137,13 +138,11 @@ urlpatterns = [
         name='fair-lending'),
 
     # My Money Tools
-    url(
-        r'mmt-my-money-calendar/service-worker.js',
-        TemplateView.as_view(
+    url(r'^mmt-my-money-calendar/service-worker.js',
+        ServiceWorkerView.as_view(
             template_name='mmt-my-money-calendar/service-worker.js',
-            content_type='application/javascript'),
-        name='mmt-my-money-calendar-service-worker.js'
-    ),
+            scope='/mmt-my-money-calendar'),
+        name='mmt-my-money-calendar-service-worker'),
 
     url(r'^mmt-my-money-calendar/.*',
         FlaggedTemplateView.as_view(
