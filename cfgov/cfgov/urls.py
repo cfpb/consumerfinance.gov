@@ -137,6 +137,14 @@ urlpatterns = [
         name='fair-lending'),
 
     # My Money Tools
+    url(
+        r'mmt-my-money-calendar/service-worker.js',
+        TemplateView.as_view(
+            template_name='mmt-my-money-calendar/service-worker.js',
+            content_type='application/javascript'),
+        name='mmt-my-money-calendar-service-worker.js'
+    ),
+
     url(r'^mmt-my-money-calendar/.*',
         FlaggedTemplateView.as_view(
             template_name='mmt-my-money-calendar/index.html',

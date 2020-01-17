@@ -15,7 +15,7 @@ const {
 } = process.env;
 
 const COMMON_BUNDLE_NAME = 'common.js';
-const SERVICE_WORKER_DESTINATION = '../../../../jinja2/v1/mmt-my-money-calendar/mmt-my-money-calendar-service-worker.js';
+const SERVICE_WORKER_DESTINATION = '../../../../jinja2/v1/mmt-my-money-calendar/service-worker.js';
 
 const AUTOLOAD_REACT = new webpack.ProvidePlugin({
   React: 'react',
