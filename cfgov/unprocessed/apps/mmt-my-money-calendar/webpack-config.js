@@ -21,6 +21,11 @@ const AUTOLOAD_REACT = new webpack.ProvidePlugin({
   React: 'react',
 });
 
+const ENVIRONMENT_VARIABLES = new webpack.DefinePlugin({
+  'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
+  'process.env.DEBUG': JSON.stringify(DEBUG),
+});
+
 const COPY_PWA_MANIFEST = new CopyPlugin([
   {
     from: path.join(__dirname, 'manifest.json'),
@@ -106,6 +111,7 @@ const STATS_CONFIG = {
  */
 
 const plugins = [
+  ENVIRONMENT_VARIABLES,
   AUTOLOAD_REACT,
   COPY_PWA_MANIFEST,
   GENERATE_SERVICE_WORKER,
