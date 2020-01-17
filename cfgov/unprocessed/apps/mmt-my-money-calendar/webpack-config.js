@@ -15,6 +15,7 @@ const {
 } = process.env;
 
 const COMMON_BUNDLE_NAME = 'common.js';
+const SERVICE_WORKER_DESTINATION = '../../../../jinja2/v1/mmt-my-money-calendar/mmt-my-money-calendar-service-worker.js';
 
 const AUTOLOAD_REACT = new webpack.ProvidePlugin({
   React: 'react',
@@ -28,6 +29,8 @@ const COPY_PWA_MANIFEST = new CopyPlugin([
 ]);
 
 const GENERATE_SERVICE_WORKER = new WorkboxPlugin.GenerateSW({
+  swDest: SERVICE_WORKER_DESTINATION,
+
   // Do not precache images
   exclude: [
     /\.(?:png|jpe?g|svg|gif)$/,
