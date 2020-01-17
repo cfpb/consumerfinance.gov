@@ -6,18 +6,30 @@ export default function Summary() {
 
   return (
     <section id="summary-view">
-      <h1>Summary Screen</h1>
-
+      <img
+        src="/static/apps/mmt-my-money-calendar/img/4.png"
+        alt=""
+        height="42"
+        class="u-hide-on-print"
+      />
+      <h3>Summary</h3>
+      <br />
+      <img
+        src="/static/apps/mmt-my-money-calendar/img/green_calendar.png"
+        alt=""
+        width="200"
+        class="u-hide-on-print"
+      />
+      <h3>Here are some totals</h3>
+      <p>Check off which expenses you incur.</p>
+      <ul>
+        <li>Week 1 total?</li>
+        <li>Week 2 total?</li>
+        <li>Month total?</li>
+      </ul>
       <Link to="/">Back Home</Link>
-
-      <h3>Route match debug</h3>
-      <pre className="debug">{JSON.stringify(match, null, 2)}</pre>
-      <Switch>
-        <Redirect exact from="/summary" to="/summary/interval/1" />
-        <Route path="/interval/:interval">
-          <Interval />
-        </Route>
-      </Switch>
+      <br />
+      <br />
     </section>
   );
 }
