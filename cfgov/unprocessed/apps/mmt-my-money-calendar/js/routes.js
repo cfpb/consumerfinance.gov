@@ -7,7 +7,6 @@ import Summary from "./views/summary";
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">
-    test
     <div className="app">
       <Switch>
         <Route exact path="/">

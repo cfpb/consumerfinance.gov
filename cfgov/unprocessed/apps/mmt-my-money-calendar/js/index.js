@@ -9,7 +9,6 @@ configureMobX({ enforceActions: "observed" });
 
 const App = () => (
   <section className="my-money-calendar">
-    <div>This is the App Index page</div>
     <Routes />
   </section>
 );
