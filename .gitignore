@@ -136,7 +136,7 @@ cfgov/paying_for_college/fixtures/national_stats_backup.json
 # Auto-generated service workers #
 ##################################
 cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js
-cfgov/jinja2/v1/mmt-my-money-calendar/mmt-my-money-calendar-service-worker.js
+cfgov/jinja2/v1/mmt-my-money-calendar/service-worker.js
 
 # Apache #
 ##########
