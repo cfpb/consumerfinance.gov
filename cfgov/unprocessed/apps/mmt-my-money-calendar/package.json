@@ -18,7 +18,8 @@
     "react-router-dom": "5.1.2",
     "react-use": "13.14.3",
     "workbox": "0.0.0",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "4.3.1",
+    "workbox-window": "4.3.1"
   },
   "devDependencies": {
     "webpack-bundle-analyzer": "3.6.0"
