@@ -1,10 +1,9 @@
 const { LAST_2_IE_11_UP } = require('../../../../config/browser-list-config');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-// Used for toggling debug output. Inherit Django debug value to cut down on redundant environment variables:
 const {
+  // Used for toggling debug output. Inherit Django debug value to cut down on redundant environment variables:
   DJANGO_DEBUG: DEBUG = false,
   NODE_ENV = 'development',
   ANALYZE = false,
@@ -78,13 +77,21 @@ const plugins = [
   AUTOLOAD_REACT,
 ];
 
-/*
-if (NODE_ENV === 'development' && ANALYZE) {
-  plugins.push(new BundleAnalyzerPlugin({
-    analyzerMode: 'server',
-  }));
+if (NODE_ENV === 'development') {
+  if (ANALYZE) {
+    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+    plugins.push(new BundleAnalyzerPlugin({
+      analyzerMode: 'server',
+    }));
+  }
+
+  if (process.stdout.isTTY) {
+    const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+
+    plugins.push(new ProgressBarPlugin());
+  }
 }
-*/
 
 const minimize = NODE_ENV === 'production';
 
