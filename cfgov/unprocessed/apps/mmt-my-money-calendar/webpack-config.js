@@ -7,6 +7,8 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
@@ -36,6 +38,10 @@ const COPY_PWA_MANIFEST = new CopyPlugin([
   },
 ]);
 
+const EXTRACT_CSS = new MiniCssExtractPlugin({
+  moduleFilename: ({ name }) => `${name.replace('js', 'css')}`,
+});
+
 const GENERATE_SERVICE_WORKER = new WorkboxPlugin.GenerateSW({
   swDest: SERVICE_WORKER_DESTINATION,
 
@@ -53,26 +59,30 @@ const GENERATE_SERVICE_WORKER = new WorkboxPlugin.GenerateSW({
   ]
 });
 
-const COMMON_MINIFICATION_CONFIG = new TerserPlugin({
-  cache: true,
-  parallel: true,
-  extractComments: true,
-  terserOptions: {
-    ie8: false,
-    ecma: 5,
-    warnings: false,
-    mangle: true,
-    output: {
-      comments: false,
-      beautify: false,
+const COMMON_MINIFICATION_CONFIG = [
+  new TerserPlugin({
+    cache: true,
+    parallel: true,
+    extractComments: true,
+    terserOptions: {
+      ie8: false,
+      ecma: 5,
+      warnings: false,
+      mangle: true,
+      output: {
+        comments: false,
+        beautify: false,
+      },
     },
-  },
-});
+  }),
+  new OptimizeCssAssetsPlugin(),
+];
 
 const COMMON_MODULE_CONFIG = {
   rules: [
+    // Use Babel for JS and JSX
     {
-      test: /\.js$/,
+      test: /\.jsx?$/,
       exclude: {
         test: /node_modules/,
         exclude: /node_modules\/(?:cf-.+|cfpb-.+)/,
@@ -98,6 +108,32 @@ const COMMON_MODULE_CONFIG = {
         },
       },
     },
+
+    // Enable import and usage of images in bundle code
+    {
+      test: /\.(jpe?g|png|gif|svg)$/,
+      use: [ 'file-loader' ],
+    },
+
+    // Enable import of static CSS stylesheets
+    {
+      test: /\.css$/,
+      use: [
+        {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            publicPath: '/static/apps/mmt-my-money-calendar/js/',
+          },
+        },
+        'css-loader',
+      ],
+    },
+
+    // Allow font imports
+    {
+      test: /\.(woff2?|eot|ttf|otf)$/,
+      use: [ 'file-loader' ],
+    },
   ],
 };
 
@@ -115,6 +151,7 @@ const plugins = [
   ENVIRONMENT_VARIABLES,
   AUTOLOAD_REACT,
   COPY_PWA_MANIFEST,
+  EXTRACT_CSS,
   GENERATE_SERVICE_WORKER,
 ];
 
@@ -126,8 +163,6 @@ if (NODE_ENV === 'development' && ANALYZE) {
 }
 */
 
-const minimize = NODE_ENV === 'production';
-
 const conf = {
   cache: false,
   mode: NODE_ENV,
@@ -138,10 +173,8 @@ const conf = {
     publicPath: PUBLIC_PATH,
   },
   optimization: {
-    minimize,
-    minimizer: [
-      COMMON_MINIFICATION_CONFIG,
-    ],
+    minimize: NODE_ENV === 'production',
+    minimizer: COMMON_MINIFICATION_CONFIG,
   },
   stats: STATS_CONFIG.stats,
   devtool: NODE_ENV === 'production' ? false : 'inline-source-map',
