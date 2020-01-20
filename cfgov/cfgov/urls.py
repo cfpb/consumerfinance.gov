@@ -145,7 +145,7 @@ urlpatterns = [
         name='fair-lending'),
 
     # My Money Tools
-    url(r'^mmt-my-money-calendar/service-worker.js',
+    url(r'^mmt-my-money-calendar/service-worker\.js$',
         ServiceWorkerView.as_view(
             template_name='mmt-my-money-calendar/service-worker.js',
             scope='/mmt-my-money-calendar'),

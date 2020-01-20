@@ -1,4 +1,5 @@
 from django.views.generic.base import TemplateView
+from django.utils.decorators import method_decorator
 from django.http import HttpResponse
 
 class ServiceWorkerView(TemplateView):
@@ -14,6 +15,6 @@ class ServiceWorkerView(TemplateView):
     See: https://www.w3.org/TR/service-workers/#service-worker-allowed
     """
     def dispatch(self, request, *args, **kwargs):
-        response = super(ServiceWorkerView).dispatch(self, request, *args, **kwargs)
+        response = super(ServiceWorkerView, self).dispatch(request, *args, **kwargs)
         response['Service-Worker-Allowed'] = self.scope
         return response
