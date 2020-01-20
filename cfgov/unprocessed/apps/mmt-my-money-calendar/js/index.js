@@ -19,7 +19,7 @@ window.idb = idb;
 render(<App />, document.querySelector('#mmt-my-money-calendar'));
 
 if ('serviceWorker' in navigator) {
-  const wb = new Workbox('/mmt-my-money-calendar/service-worker.js');
+  const wb = new Workbox('/mmt-my-money-calendar/service-worker.js', { scope: '/mmt-my-money-calendar' });
 
   wb.addEventListener('activated', (evt) => {
     if (!evt.isUpdate) {
