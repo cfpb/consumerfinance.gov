@@ -1,4 +1,5 @@
 const APP_NAME = 'mmt-my-money-calendar';
+const PUBLIC_PATH = `/static/apps/${APP_NAME}/js/`;
 const { paths } = require('../../../../config/environment');
 const { LAST_2_IE_11_UP } = require('../../../../config/browser-list-config');
 const webpack = require('webpack');
@@ -38,10 +39,8 @@ const COPY_PWA_MANIFEST = new CopyPlugin([
 const GENERATE_SERVICE_WORKER = new WorkboxPlugin.GenerateSW({
   swDest: SERVICE_WORKER_DESTINATION,
 
-  // Do not precache images
-  exclude: [
-    /\.(?:png|jpe?g|svg|gif)$/,
-  ],
+  // Add regexp patterns for anything we want to exclude from the SW cache here:
+  exclude: [],
 
   runtimeCaching: [
     {
@@ -136,6 +135,7 @@ const conf = {
   output: {
     filename: '[name]',
     jsonpFunction: 'apps',
+    publicPath: PUBLIC_PATH,
   },
   optimization: {
     minimize,
