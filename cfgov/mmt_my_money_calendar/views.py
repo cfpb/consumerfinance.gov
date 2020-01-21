@@ -16,5 +16,6 @@ class ServiceWorkerView(TemplateView):
     """
     def dispatch(self, request, *args, **kwargs):
         response = super(ServiceWorkerView, self).dispatch(request, *args, **kwargs)
+        response['content-type'] = self.content_type
         response['Service-Worker-Allowed'] = self.scope
         return response
