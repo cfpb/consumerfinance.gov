@@ -107,6 +107,13 @@ function requireAllDefaultTasks() {
       'build'
     )
   );
+
+  gulp.task( 'moneytools',
+    gulp.series(
+      'scripts:moneytools',
+      'copy:moneytools'
+    )
+  );
 }
 
 /*
