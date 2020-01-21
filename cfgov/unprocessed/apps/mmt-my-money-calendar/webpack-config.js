@@ -43,24 +43,6 @@ const EXTRACT_CSS = new MiniCssExtractPlugin({
   moduleFilename: ({ name }) => `${name.replace('js', 'css')}`,
 });
 
-/*
-const GENERATE_SERVICE_WORKER = new WorkboxPlugin.GenerateSW({
-  swDest: SERVICE_WORKER_DESTINATION,
-
-  // Add regexp patterns for anything we want to exclude from the SW cache here:
-  exclude: [],
-
-  runtimeCaching: [
-    {
-      urlPattern: /\.(?:png|jpe?g|svg|gif)$/,
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'images',
-      }
-    },
-  ]
-});
-*/
 const GENERATE_SERVICE_WORKER = new InjectManifest({
   swSrc: 'cfgov/unprocessed/apps/mmt-my-money-calendar/js/service-worker.js',
   swDest: SERVICE_WORKER_DESTINATION,
