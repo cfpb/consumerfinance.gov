@@ -4,6 +4,13 @@
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
+{% block meta_viewport %}
+  {{ super() }}
+  <link rel="manifest" href="{{ static('apps/mmt-my-money-calendar/manifest.json') }}">
+  <link rel="apple-touch-icon" href="{{ static('apps/mmt-my-money-calendar/img/cfpb-icon-192.png') }}">
+  <meta name="theme-color" content="#5AB057">
+{% endblock %}
+
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
