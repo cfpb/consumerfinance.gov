@@ -140,13 +140,23 @@ const STATS_CONFIG = {
 
 const plugins = [ENVIRONMENT_VARIABLES, AUTOLOAD_REACT, COPY_PWA_MANIFEST, EXTRACT_CSS, GENERATE_SERVICE_WORKER];
 
-/*
-if (NODE_ENV === 'development' && ANALYZE) {
-  plugins.push(new BundleAnalyzerPlugin({
-    analyzerMode: 'server',
-  }));
+if (NODE_ENV === 'development') {
+  if (ANALYZE) {
+    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+    plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'server',
+      })
+    );
+  }
+
+  if (process.stdout.isTTY) {
+    const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+
+    plugins.push(new ProgressBarPlugin());
+  }
 }
-*/
 
 const conf = {
   cache: false,
