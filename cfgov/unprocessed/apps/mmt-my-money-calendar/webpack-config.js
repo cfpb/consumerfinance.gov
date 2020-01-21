@@ -14,11 +14,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // Used for toggling debug output. Inherit Django debug value to cut down on redundant environment variables:
-const {
-  DJANGO_DEBUG: DEBUG = false,
-  NODE_ENV = 'development',
-  ANALYZE = false,
-} = process.env;
+const { DJANGO_DEBUG: DEBUG = false, NODE_ENV = 'development', ANALYZE = false } = process.env;
 
 const COMMON_BUNDLE_NAME = 'common.js';
 const SERVICE_WORKER_DESTINATION = '../../../../jinja2/v1/mmt-my-money-calendar/service-worker.js';
@@ -80,15 +76,21 @@ const COMMON_MODULE_CONFIG = {
         loader: 'babel-loader?cacheDirectory=true',
         options: {
           presets: [
-            ['@babel/preset-env', {
-              configPath: __dirname,
-              useBuiltIns: DEBUG ? 'usage' : false,
-              debug: DEBUG,
-              targets: LAST_2_IE_11_UP,
-            }],
-            [require('@babel/preset-react'), {
-              development: NODE_ENV === 'development',
-            }],
+            [
+              '@babel/preset-env',
+              {
+                configPath: __dirname,
+                useBuiltIns: DEBUG ? 'usage' : false,
+                debug: DEBUG,
+                targets: LAST_2_IE_11_UP,
+              },
+            ],
+            [
+              require('@babel/preset-react'),
+              {
+                development: NODE_ENV === 'development',
+              },
+            ],
           ],
           plugins: [
             [require('@babel/plugin-proposal-decorators'), { legacy: true }],
@@ -101,7 +103,7 @@ const COMMON_MODULE_CONFIG = {
     // Enable import and usage of images in bundle code
     {
       test: /\.(jpe?g|png|gif|svg)$/,
-      use: [ 'file-loader' ],
+      use: ['file-loader'],
     },
 
     // Enable import of static CSS stylesheets
@@ -121,7 +123,7 @@ const COMMON_MODULE_CONFIG = {
     // Allow font imports
     {
       test: /\.(woff2?|eot|ttf|otf)$/,
-      use: [ 'file-loader' ],
+      use: ['file-loader'],
     },
   ],
 };
@@ -136,13 +138,7 @@ const STATS_CONFIG = {
  * TODO: Set up service worker config using workbox for offline capability
  */
 
-const plugins = [
-  ENVIRONMENT_VARIABLES,
-  AUTOLOAD_REACT,
-  COPY_PWA_MANIFEST,
-  EXTRACT_CSS,
-  GENERATE_SERVICE_WORKER,
-];
+const plugins = [ENVIRONMENT_VARIABLES, AUTOLOAD_REACT, COPY_PWA_MANIFEST, EXTRACT_CSS, GENERATE_SERVICE_WORKER];
 
 /*
 if (NODE_ENV === 'development' && ANALYZE) {
@@ -164,6 +160,17 @@ const conf = {
   optimization: {
     minimize: NODE_ENV === 'production',
     minimizer: COMMON_MINIFICATION_CONFIG,
+    runtimeChunk: true,
+    splitChunks: {
+      cacheGroups: {
+        default: false,
+        vendors: false,
+        vendor: {
+          chunks: 'all',
+          test: /node_modules/,
+        },
+      },
+    },
   },
   stats: STATS_CONFIG.stats,
   devtool: NODE_ENV === 'production' ? false : 'inline-source-map',
