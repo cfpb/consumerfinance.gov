@@ -7,6 +7,7 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const { InjectManifest } = WorkboxPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -42,6 +43,7 @@ const EXTRACT_CSS = new MiniCssExtractPlugin({
   moduleFilename: ({ name }) => `${name.replace('js', 'css')}`,
 });
 
+/*
 const GENERATE_SERVICE_WORKER = new WorkboxPlugin.GenerateSW({
   swDest: SERVICE_WORKER_DESTINATION,
 
@@ -57,6 +59,11 @@ const GENERATE_SERVICE_WORKER = new WorkboxPlugin.GenerateSW({
       }
     },
   ]
+});
+*/
+const GENERATE_SERVICE_WORKER = new InjectManifest({
+  swSrc: 'cfgov/unprocessed/apps/mmt-my-money-calendar/js/service-worker.js',
+  swDest: SERVICE_WORKER_DESTINATION,
 });
 
 const COMMON_MINIFICATION_CONFIG = [
