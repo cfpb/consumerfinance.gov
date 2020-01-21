@@ -40,7 +40,7 @@ const EXTRACT_CSS = new MiniCssExtractPlugin({
 });
 
 const GENERATE_SERVICE_WORKER = new InjectManifest({
-  swSrc: 'cfgov/unprocessed/apps/mmt-my-money-calendar/js/service-worker.js',
+  swSrc: 'cfgov/unprocessed/apps/mmt-my-money-calendar/js/sw.js',
   swDest: SERVICE_WORKER_DESTINATION,
 });
 
