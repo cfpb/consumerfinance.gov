@@ -11,11 +11,11 @@ const days = (num) => minutes(num) * 60 * 24;
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 // Precache app landing page:
-workbox.precaching.precacheAndRoute([ '/mmt-my-money-calendar ']);
+workbox.precaching.precacheAndRoute(['/mmt-my-money-calendar ']);
 
 // All navigation routes hit the single-page-app landing page:
 workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL('/mmt-my-money-calendar'), {
-  whitelist: [ /mmt-my-money-calendar/ ],
+  whitelist: [/mmt-my-money-calendar/],
 });
 
 // Cache Google fonts long term:
@@ -38,7 +38,7 @@ workbox.routing.registerRoute(
         maxAgeSeconds: days(365),
         maxEntries: 20,
       }),
-    ]
+    ],
   })
 );
 
@@ -56,7 +56,15 @@ workbox.routing.registerRoute(
   })
 );
 
-self.addEventListener('message', ({ data, ports: [port]}) => {
+// Cache main CFPB stylesheet and our app's overrides
+workbox.routing.registerRoute(
+  /main\.css$/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'styles',
+  })
+);
+
+self.addEventListener('message', ({ data, ports: [port] }) => {
   console.log('Receive message from window: %O', data);
   port.postMessage(data);
 });
