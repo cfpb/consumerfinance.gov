@@ -170,6 +170,7 @@ const conf = {
   optimization: {
     minimize: NODE_ENV === 'production',
     minimizer: COMMON_MINIFICATION_CONFIG,
+    /*
     runtimeChunk: true,
     splitChunks: {
       cacheGroups: {
@@ -181,6 +182,7 @@ const conf = {
         },
       },
     },
+    */
   },
   stats: STATS_CONFIG.stats,
   devtool: NODE_ENV === 'production' ? false : 'inline-source-map',
