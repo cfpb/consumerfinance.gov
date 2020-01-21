@@ -17,7 +17,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { DJANGO_DEBUG: DEBUG = false, NODE_ENV = 'development', ANALYZE = false } = process.env;
 
 const COMMON_BUNDLE_NAME = 'common.js';
-const SERVICE_WORKER_DESTINATION = '../../../../jinja2/v1/mmt-my-money-calendar/service-worker.js';
+//const SERVICE_WORKER_DESTINATION = '../../../../jinja2/v1/mmt-my-money-calendar/service-worker.js';
+const SERVICE_WORKER_DESTINATION = 'service-worker.js';
 
 const AUTOLOAD_REACT = new webpack.ProvidePlugin({
   React: 'react',

@@ -72,10 +72,19 @@ gulp.task( 'copy:icons',
   )
 );
 
+gulp.task( 'copy:moneytools', () => {
+  const app = 'mmt-my-money-calendar';
+
+  return gulp
+    .src(paths.processed, `apps/${app}/js/service-worker.js`)
+    .pipe(gulp.dest(`./cfgov/jinja2/v1/${app}/`));
+} );
+
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
     'copy:lightbox2',
+    'copy:moneytools',
     'copy:root'
   )
 );
