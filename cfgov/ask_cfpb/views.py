@@ -19,12 +19,13 @@ from ask_cfpb.models import AnswerPage, AnswerResultsPage, AskSearch
 
 def annotate_links(answer_text):
     """
-    Parse and annotate links from answer text and return the annotated answer
+    Parse and annotate links from answer text.
+
+    Return the annotated answer
     and an enumerated list of links as footnotes.
     """
-
     try:
-        SITE = Site.objects.get(is_default_site=True)
+        _site = Site.objects.get(is_default_site=True)
     except Site.DoesNotExist:
         raise RuntimeError('no default wagtail site configured')
 
@@ -36,7 +37,7 @@ def annotate_links(answer_text):
         if not link.get('href'):
             continue
         footnotes.append(
-            (index, urljoin(SITE.root_url, link.get('href'))))
+            (index, urljoin(_site.root_url, link.get('href'))))
         parent = link.parent
         link_location = parent.index(link)
         super_tag = soup.new_tag('sup')
@@ -144,30 +145,40 @@ def ask_autocomplete(request, language='en'):
 
 def redirect_ask_search(request, language='en'):
     """
-    Catch old pages built via query string and
-    redirect them to category pages if we can. If the query string
-    has a 'q' query, we'll run that search. Otherwise, we look for faceting.
+    Redirect legacy knowledgebase requests built via query strings.
+
+    Prior to 2016, Ask CFPB (knowledgebase) built category, audience and
+    search-tag pages based on query string facets. When Ask was migrated
+    to Wagtail, we simplified the page structure and left this view
+    to route legacy requests using the old query string faceting routine.
+
+    Knowledgebase used /askcfpb/ (no hyphen) as its base URL node.
+
+    If the legacy query string has no 'q' element or a blank one, we return
+    the current base /ask-cfpb/search/ page.
+    If the query string has a 'q' query, we'll run that search.
+    Otherwise, we look for legacy faceting.
 
     We want to catch these search facets, in this order:
     - selected_facets=category_exact:
     - selected_facets=audience_exact
     - selected_facets=tag_exact:
     """
-
     category_facet = 'category_exact:'
     audience_facet = 'audience_exact:'
     tag_facet = 'tag_exact:'
     if request.GET.get('q'):
         querystring = request.GET.get('q').strip()
         if not querystring:
-            raise Http404
+            return redirect('/ask-cfpb/search/', permanent=True)
         return redirect(
             '/ask-cfpb/search/?q={query}'.format(
                 query=querystring, permanent=True))
     else:
         facets = request.GET.getlist('selected_facets')
         if not facets or not facets[0]:
-            raise Http404
+            return redirect(
+                '/ask-cfpb/search/', permanent=True)
 
         def redirect_to_category(category, language):
             if language == 'es':
@@ -179,13 +190,13 @@ def redirect_ask_search(request, language='en'):
                     category=category), permanent=True)
 
         def redirect_to_audience(audience):
-            """We currently only offer audience pages to English users"""
+            """We currently only offer audience pages to English users."""
             return redirect(
                 '/ask-cfpb/audience-{audience}/'.format(
                     audience=audience), permanent=True)
 
         def redirect_to_tag(tag, language):
-            """for URLs, tags are passed with words separated by underscores"""
+            """Handle tags passed with underscore separators."""
             if language == 'es':
                 return redirect(
                     '/es/obtener-respuestas/buscar-por-etiqueta/{tag}/'.format(

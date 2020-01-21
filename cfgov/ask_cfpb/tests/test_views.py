@@ -413,20 +413,26 @@ class RedirectAskSearchTestCase(TestCase):
 
     def test_redirect_search_no_facets(self):
         request = HttpRequest()
-        with self.assertRaises(Http404):
-            redirect_ask_search(request)
+        result = redirect_ask_search(request)
+        self.assertEqual(
+            result.get('location'),
+            '/ask-cfpb/search/')
 
     def test_redirect_search_blank_facets(self):
         request = HttpRequest()
         request.GET['selected_facets'] = ''
-        with self.assertRaises(Http404):
-            redirect_ask_search(request)
+        result = redirect_ask_search(request)
+        self.assertEqual(
+            result.get('location'),
+            '/ask-cfpb/search/')
 
     def test_redirect_search_no_query(self):
         request = HttpRequest()
         request.GET['q'] = ' '
-        with self.assertRaises(Http404):
-            redirect_ask_search(request)
+        result = redirect_ask_search(request)
+        self.assertEqual(
+            result.get('location'),
+            '/ask-cfpb/search/')
 
     def test_redirect_search_with_category(self):
         category_querystring = (
