@@ -161,6 +161,11 @@ const conf = {
   cache: false,
   mode: NODE_ENV,
   module: COMMON_MODULE_CONFIG,
+  resolve: {
+    alias: {
+      images: path.resolve(__dirname, 'img'),
+    },
+  },
   output: {
     filename: '[name]',
     jsonpFunction: 'apps',
