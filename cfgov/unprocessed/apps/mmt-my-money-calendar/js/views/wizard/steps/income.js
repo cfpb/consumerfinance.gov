@@ -15,14 +15,14 @@ export default function Income() {
         src="/static/apps/mmt-my-money-calendar/img/2.png"
         alt=""
         height="42"
-        class="u-hide-on-print"
+        className="u-hide-on-print"
       />
       <h3>Income</h3>
       <img
         src="/static/apps/mmt-my-money-calendar/img/thinking.png"
         alt=""
         height="100"
-        class="u-hide-on-print"
+        className="u-hide-on-print"
       />
       <h3>Tell us about your income</h3>
       <p>Check off which types of income you receive.</p>

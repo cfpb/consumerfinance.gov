@@ -7,7 +7,7 @@ export default function Home() {
     <main className="mmt-view home">
       <Hero />
       <br />
-      <div class="m-hero_subhead">
+      <div className="m-hero_subhead">
         Input your income, expenses, and cash-on-hand to build your calendar,
         Estimates are acceptable.
       </div>
