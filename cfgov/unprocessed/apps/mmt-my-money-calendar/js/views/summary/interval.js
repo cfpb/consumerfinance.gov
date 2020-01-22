@@ -10,14 +10,14 @@ export default function Interval() {
         src="/static/apps/mmt-my-money-calendar/img/4.png"
         alt=""
         height="42"
-        class="u-hide-on-print"
+        className="u-hide-on-print"
       />
       <h3>Summary</h3>
       <img
         src="/static/apps/mmt-my-money-calendar/img/green_calendar.png"
         alt=""
         height="100"
-        class="u-hide-on-print"
+        className="u-hide-on-print"
       />
       <h3>Here are some totals</h3>
       <p>Check off which expenses you incur.</p>

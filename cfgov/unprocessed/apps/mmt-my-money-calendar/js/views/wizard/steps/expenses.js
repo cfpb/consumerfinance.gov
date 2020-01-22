@@ -1,13 +1,10 @@
-import { useEffect } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Expenses() {
-  const match = useRouteMatch("/wizard/steps/:step");
+  const params = useParams();
 
-  console.log("match  is: ", match);
-  console.log("match.params", match.params);
-  console.log("match.params.step", match.params.step);
-  //testing console.log
+  console.log("params: %O", params);
+  console.log("params.step: %O", params.step);
 
   return (
     <div className="expenses">
@@ -15,14 +12,14 @@ export default function Expenses() {
         src="/static/apps/mmt-my-money-calendar/img/3a.png"
         alt=""
         height="42"
-        class="u-hide-on-print"
+        className="u-hide-on-print"
       />
       <h3>Income</h3>
       <img
         src="/static/apps/mmt-my-money-calendar/img/thinking.png"
         alt=""
         height="100"
-        class="u-hide-on-print"
+        className="u-hide-on-print"
       />
       <h3>What expenses do you have?</h3>
       <p>Check off which expenses you incur.</p>
