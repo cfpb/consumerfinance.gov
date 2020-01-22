@@ -2,6 +2,7 @@ const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
 const handleErrors = require( '../utils/handle-errors' );
 const paths = require( '../../config/environment' ).paths;
+const path = require('path');
 
 /*
   Path to the cf-icons SVG icons folder,
