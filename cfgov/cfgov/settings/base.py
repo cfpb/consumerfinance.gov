@@ -720,6 +720,13 @@ FLAGS = {
 
     # Used to hide CCDB landing page updates prior to public launch.
     'CCDB_CONTENT_UPDATES': [],
+
+    # During a Salesforce system outage, the following flag should be enabled
+    # to alert users that the Collect community is down
+    'COLLECT_OUTAGE': [
+        {'condition': 'boolean', 'value': False},
+        {'condition': 'path matches', 'value': r'^/data-research/credit-card-data/terms-credit-card-plans-survey|^/data-research/prepaid-accounts', 'required': True}
+    ],
 }
 
 
