@@ -1,4 +1,3 @@
-import { Link, useRouteMatch } from "react-router-dom";
 import heroImg from '../../../img/Hero_2.png';
 
 export default function Hero() {
