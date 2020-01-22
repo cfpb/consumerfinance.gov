@@ -14,7 +14,5 @@
   "private": true,
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {},
-  "devDependencies": {
-    "@cfpb/cfpb-expandables": "0.0.8"
-  }
+  "devDependencies": {}
 }
