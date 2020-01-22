@@ -1,4 +1,4 @@
-import heroImg from '../../../img/Hero_2.png';
+import heroImg from 'images/Hero_2.png';
 
 export default function Hero() {
   // Interval will be either month or week
