@@ -6,8 +6,6 @@ import { configure as configureMobX } from 'mobx';
 import { Workbox } from 'workbox-window';
 import Routes from './routes';
 
-import '../css/style.css';
-
 configureMobX({ enforceActions: 'observed' });
 
 const App = () => (
