@@ -33,7 +33,7 @@ class HomePageFormMetaclass(WagtailAdminModelFormMetaclass):
         return HomePageForm
 
 
-class HomePageForm(HomePageFormMetaclass, WagtailAdminPageForm):
+class HomePageForm(WagtailAdminPageForm, metaclass=HomePageFormMetaclass):
     pass
 
 
