@@ -163,7 +163,7 @@ const conf = {
   module: COMMON_MODULE_CONFIG,
   resolve: {
     alias: {
-      images: path.resolve(__dirname, 'img'),
+      img: path.resolve(__dirname, 'img'),
     },
   },
   output: {
