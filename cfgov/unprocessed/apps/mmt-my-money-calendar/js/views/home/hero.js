@@ -1,4 +1,5 @@
 import { Link, useRouteMatch } from "react-router-dom";
+import heroImg from '../../../img/Hero_2.png';
 
 export default function Hero() {
   // Interval will be either month or week
@@ -16,7 +17,7 @@ export default function Hero() {
         <div className="m-hero_image-wrapper">
           <div className="m-hero_image">
             <img
-              src="/static/apps/mmt-my-money-calendar/img/Hero_2.png"
+              src={heroImg}
               alt=""
               className="u-hide-on-print"
             />
