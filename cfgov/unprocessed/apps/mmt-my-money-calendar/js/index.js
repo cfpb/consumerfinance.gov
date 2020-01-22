@@ -17,7 +17,7 @@ window.idb = idb;
 
 render(<App />, document.querySelector('#mmt-my-money-calendar'));
 
-if ('serviceWorker' in navigator) {
+if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   const wb = new Workbox('/mmt-my-money-calendar/service-worker.js', { scope: '/mmt-my-money-calendar' });
 
   wb.addEventListener('activated', (evt) => {

@@ -7,14 +7,14 @@ export default function StartingBalance() {
         src="/static/apps/mmt-my-money-calendar/img/1.png"
         alt=""
         height="42"
-        class="u-hide-on-print"
+        className="u-hide-on-print"
       />
       <h3>Starting Balance</h3>
       <img
         src="/static/apps/mmt-my-money-calendar/img/thinking.png"
         alt=""
         height="100"
-        class="u-hide-on-print"
+        className="u-hide-on-print"
       />
       <h3>Let's figure out your Starting Balance</h3>
       <p>Where do you have money?</p>
