@@ -8,7 +8,7 @@ export const ButtonGroup = ({ children }) => (
 
 export function Button({ as = 'button', fullWidth = false, className = '', variant = 'primary', disabled = false, link = false, children, ...btnProps }) {
   const TagName = as;
-  const classes = clsx('a-btn', {
+  const classes = clsx(className, 'a-btn', {
     'a-btn__secondary': variant === 'secondary',
     'a-btn__warning': variant === 'warning',
     'a-btn__disabled': disabled,
@@ -18,7 +18,7 @@ export function Button({ as = 'button', fullWidth = false, className = '', varia
   });
 
   return (
-    <TagName {...btnProps} className={className} disabled={disabled}>
+    <TagName {...btnProps} className={classes} disabled={disabled}>
       {children}
     </TagName>
   )
