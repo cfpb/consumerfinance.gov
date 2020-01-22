@@ -76,7 +76,7 @@ gulp.task( 'copy:moneytools', () => {
   const app = 'mmt-my-money-calendar';
 
   return gulp
-    .src(paths.processed, `apps/${app}/js/service-worker.js`)
+    .src(path.join(paths.processed, `apps/${app}/js/service-worker.js`))
     .pipe(gulp.dest(`./cfgov/jinja2/v1/${app}/`));
 } );
 
