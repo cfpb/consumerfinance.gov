@@ -103,8 +103,14 @@ const COMMON_MODULE_CONFIG = {
 
     // Enable import and usage of images in bundle code
     {
-      test: /\.(jpe?g|png|gif|svg)$/,
+      test: /\.(jpe?g|png|gif)$/,
       use: ['file-loader'],
+    },
+
+    // Allow SVGs to load inline
+    {
+      test: /\.svg$/,
+      use: ['svg-inline-loader'],
     },
 
     // Enable import of static CSS stylesheets
