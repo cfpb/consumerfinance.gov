@@ -5,7 +5,6 @@ import Button from '../../components/button';
 
 import heroImg from 'img/Hero_2.png';
 import arrowRight from 'cf-icons/src/icons/arrow-right.svg';
-import arrowLeft from 'cf-icons/src/icons/arrow-left.svg';
 
 export default function Home() {
   const history = useHistory();
