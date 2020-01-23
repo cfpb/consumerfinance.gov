@@ -723,6 +723,10 @@ FLAGS = {
 
     # Used to hide CCDB landing page updates prior to public launch.
     'CCDB_CONTENT_UPDATES': [],
+
+    # Used to enable the urls for accessing the Wagtail API, which the
+    # data team uses to query page, image, and document data.
+    'ENABLE_WAGTAIL_API': [('environment is', 'staging')],
 }
 
 

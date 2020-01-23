@@ -407,7 +407,7 @@ urlpatterns = [
         name='regulations3k-service-worker.js'
     ),
 
-    url(r'^api/v2/', api_router.urls),
+    flagged_url('ENABLE_WAGTAIL_API', r'^api/v2/', api_router.urls),
 
     # Explicitly redirect eRegulations URLs to Regulations3000
     url(r'^eregulations/.*', redirect_eregs, name='eregs-redirect'),
