@@ -39,6 +39,7 @@ from v1.views import (
     password_reset_confirm, welcome
 )
 from v1.views.documents import DocumentServeView
+from api import api_router
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -405,6 +406,8 @@ urlpatterns = [
         content_type='application/javascript'),
         name='regulations3k-service-worker.js'
     ),
+
+    url(r'^api/v2/', api_router.urls),
 
     # Explicitly redirect eRegulations URLs to Regulations3000
     url(r'^eregulations/.*', redirect_eregs, name='eregs-redirect'),
