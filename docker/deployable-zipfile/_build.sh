@@ -28,7 +28,6 @@ build_args=(
     "$cfgov_refresh_volume/cfgov"
     "$cfgov_refresh_volume/requirements/deployment.txt"
     "$build_artifact_name"
-    "--extra-python" "python3"
 )
 
 if [ -d "$webfonts_path" ]; then
