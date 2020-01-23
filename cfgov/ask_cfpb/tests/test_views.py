@@ -426,6 +426,17 @@ class RedirectAskSearchTestCase(TestCase):
             result.get('location'),
             '/ask-cfpb/search/')
 
+    def test_redirect_search_uppercase_facet(self):
+        """Handle odd requests with uppercase, spaced category names."""
+        category_querystring = 'selected_facets=category_exact:Prepaid Cards'
+        request = HttpRequest()
+        request.GET = QueryDict(category_querystring)
+        result = redirect_ask_search(request)
+        self.assertEqual(
+            result.get('location'),
+            '/ask-cfpb/category-prepaid-cards/'
+        )
+
     def test_redirect_search_no_query(self):
         request = HttpRequest()
         request.GET['q'] = ' '
