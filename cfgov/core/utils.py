@@ -28,10 +28,10 @@ LINK_ICON_TEXT_CLASSES = 'a-link_text'
 A_TAG = re.compile(
     # Match an <a containing any attributes
     r'<a [^>]*?>'
-    # And match everything inside
-    r'.+?'
-    # As long as it's not a </a>, then match '</a>'
-    r'(?=</a>)</a>'
+    # And match everything inside before the closing </a>
+    r'.+?(?=</a>)'
+    # Then match the closing </a>
+    r'</a>'
     # Make '.' match new lines, ignore case
     r'(?s)(?i)'
 )
