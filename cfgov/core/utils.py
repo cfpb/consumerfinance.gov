@@ -38,7 +38,7 @@ A_TAG = re.compile(
 
 # If a link contains these elements, it should *not* get an icon
 ICONLESS_LINK_CHILD_ELEMENTS = [
-    'img', 'svg', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+    'img', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 ]
 
 
@@ -127,6 +127,12 @@ def add_link_markup(tag):
     elif DOWNLOAD_LINKS.search(tag['href']):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
+
+    # If the already ends in an SVG, we never want to append an icon.
+    # If it has an SVG but other content comes after it, we still add one.
+    svgs = tag.find_all('svg')
+    if svgs and not all((svg.next_sibling or '').strip() for svg in svgs):
+        return str(tag)
 
     if tag.select(', '.join(ICONLESS_LINK_CHILD_ELEMENTS)):
         # If this tag has any children that are in our list of child elements
