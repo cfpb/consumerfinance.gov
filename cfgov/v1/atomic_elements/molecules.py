@@ -415,46 +415,28 @@ class EnforcementActionMetadata(blocks.StructBlock):
     categories = blocks.StructBlock([
             ('heading', blocks.CharBlock(
                 max_length=100,
-                default='Categories'
+                default='Category'
             )),
             ('show_categories', blocks.BooleanBlock(
                 default=True,
                 required=False
             ))
         ])
+    institution_type = blocks.ChoiceBlock(choices=[
+            ('nonbank', 'Nonbank'),
+            ('bank', 'Bank')
+        ])
+    status = blocks.ChoiceBlock(choices=[
+            ('post_order_post_judgment', 'Post Order/Post Judgment'),
+            ('expired_terminated_dismissed', 'Expired/Terminated/Dismissed'),
+            ('pending_litigation', 'Pending Litigation')
+        ])
+    docket_number = blocks.CharBlock(max_length=100,required=False)
     topics = blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100, default='Topics')),
             ('show_topics', blocks.BooleanBlock(default=True, required=False))
         ])
-    content = blocks.StreamBlock([
-        ('text', blocks.StructBlock([
-            ('heading', blocks.CharBlock(max_length=100)),
-            ('blob', blocks.RichTextBlock())
-        ], icon='pilcrow')),
-        ('list', blocks.StructBlock([
-            ('heading', blocks.CharBlock(max_length=100)),
-            ('links', blocks.ListBlock(atoms.Hyperlink())),
-        ], icon='list-ul')),
-        ('date', blocks.StructBlock([
-            ('heading', blocks.CharBlock(max_length=100)),
-            ('date', blocks.DateBlock())
-        ], icon='date')),
-        ('topics', blocks.StructBlock([
-            ('heading', blocks.CharBlock(max_length=100, default='Topics')),
-            ('show_topics', blocks.BooleanBlock(default=True, required=False))
-        ], icon='tag')),
-        ('categories', blocks.StructBlock([
-            ('heading', blocks.CharBlock(
-                max_length=100,
-                default='Categories'
-            )),
-            ('show_categories', blocks.BooleanBlock(
-                default=True,
-                required=False
-            ))
-        ], icon='list-ul')),
-    ])
-    is_half_width = blocks.BooleanBlock(required=False, default=False)
+    date_filed = blocks.DateBlock()
 
     class Meta:
         icon = 'grip'
