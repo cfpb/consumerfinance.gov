@@ -5,6 +5,7 @@ import Counter from './components/counter';
 import { configure as configureMobX } from 'mobx';
 import { Workbox } from 'workbox-window';
 import Routes from './routes';
+import CashFlowEvent from './stores/models/cash-flow-event';
 
 configureMobX({ enforceActions: 'observed' });
 
@@ -15,6 +16,7 @@ const App = () => (
 );
 
 window.idb = idb;
+window.CashFlowEvent = CashFlowEvent;
 
 render(<App />, document.querySelector('#mmt-my-money-calendar'));
 
