@@ -19,6 +19,8 @@ class MenuModelAdminButtonHelper(ButtonHelper):
                 classnames_exclude or []
             ),
             'title': _('Preview this %s') % self.verbose_name,
+            'target': "_blank",
+            'rel': 'noopener noreferrer',
         }
 
     def get_buttons_for_obj(self, obj, exclude=None, classnames_add=None,
