@@ -1,9 +1,18 @@
 import { observable, computed, action, extendObservable } from 'mobx';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
+import { transform } from '../../lib/object-helpers';
+import { StoreProvider } from '..';
 
 export default class CashFlowEvent {
   static store = 'events';
+  static schema = {
+    name: 'string',
+    date: 'date',
+    category: 'string',
+    totalCents: 'integer',
+    recurrence: 'string',
+  };
 
   static isCashFlowEvent(obj) {
     return obj instanceof CashFlowEvent;
@@ -19,15 +28,28 @@ export default class CashFlowEvent {
     return store.get(id);
   }
 
-  static async getDateRange(start, end = new Date()) {
-    const fromDate = new Date(date);
+  static async getByDateRange(start, end = new Date()) {
+    const fromDate = new Date(start);
     const range = IDBKeyRange.lowerBound(fromDate);
-    const { tx, store } = this.transaction();
+    const { tx, store } = await this.transaction();
     const index = store.index('date');
-    const cursor = await index.openCursor(range);
+    let cursor = await index.openCursor(range);
+    const results = []
+
+    while (cursor) {
+      results.push(cursor.value)
+      cursor = await cursor.continue();
+    }
+
+    return results;
   }
 
-  static async transaction(stores = this.store, perms = 'readonly') {
+  static async count() {
+    const { store } = await this.transaction();
+    return store.count();
+  }
+
+  static async transaction(perms = 'readonly', stores = this.store) {
     const db = await dbPromise;
     const tx = db.transaction(stores, perms);
 
@@ -37,10 +59,39 @@ export default class CashFlowEvent {
     };
   }
 
+  @observable name;
+  @observable date;
+  @observable category;
+  @observable total = 0;
+  @observable recurrence;
+  @observable errors;
+
   constructor(store, props) {
     this.store = store;
     this.logger = logger.addGroup('cashFlowEvent');
 
     extendObservable(this, props);
+  }
+
+  @computed get totalCents() {
+    return this.total * 100;
+  }
+
+  async save() {
+    const { tx, store } = await this.transaction('readwrite');
+    const record = this.asObject();
+    store.add(record);
+    return tx.complete;
+  }
+
+  asObject() {
+    return transform(this.constructor.schema, (result, [key]) => {
+      result[key] = this[key];
+      return result;
+    });
+  }
+
+  transaction(...args) {
+    return this.constructor.transaction(...args);
   }
 }
