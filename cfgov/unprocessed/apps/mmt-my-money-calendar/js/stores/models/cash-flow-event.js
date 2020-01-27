@@ -1,11 +1,12 @@
 import { observable, computed, action, extendObservable } from 'mobx';
+import { RRule, rrulestr } from 'rrule';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
-import { StoreProvider } from '..';
 
 export default class CashFlowEvent {
   static store = 'events';
+
   static schema = {
     name: 'string',
     date: 'date',
@@ -34,7 +35,7 @@ export default class CashFlowEvent {
     const { tx, store } = await this.transaction();
     const index = store.index('date');
     let cursor = await index.openCursor(range);
-    const results = []
+    const results = [];
 
     while (cursor) {
       results.push(cursor.value)
@@ -65,16 +66,27 @@ export default class CashFlowEvent {
   @observable total = 0;
   @observable recurrence;
   @observable errors;
+  @observable persisted = false;
 
-  constructor(store, props) {
-    this.store = store;
+  constructor(props) {
     this.logger = logger.addGroup('cashFlowEvent');
 
-    extendObservable(this, props);
+    this.update(props);
   }
 
   @computed get totalCents() {
     return this.total * 100;
+  }
+
+  @computed get recurrenceRule() {
+    if (!this.recurrence || (typeof this.recurrence !== 'string')) return null;
+    return rrulestr(this.recurrence);
+  }
+
+  @action update(props = {}) {
+    for (const key in props) {
+      this[key] = props[key];
+    }
   }
 
   async save() {

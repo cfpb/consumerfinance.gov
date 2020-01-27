@@ -16,6 +16,7 @@
     "file-loader": "5.0.2",
     "idb": "5.0.0",
     "less-loader": "5.0.0",
+    "luxon": "1.21.3",
     "mini-css-extract-plugin": "0.9.0",
     "mobx": "5.15.2",
     "mobx-react": "6.1.5",

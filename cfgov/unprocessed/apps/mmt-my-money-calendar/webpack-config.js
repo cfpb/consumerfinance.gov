@@ -171,6 +171,7 @@ const conf = {
   resolve: {
     alias: {
       img: path.resolve(__dirname, 'img'),
+      rrule: 'rrule/dist/esm/src',
     },
   },
   output: {
