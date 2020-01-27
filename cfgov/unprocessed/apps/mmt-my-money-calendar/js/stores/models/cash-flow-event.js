@@ -1,5 +1,6 @@
 import { observable, computed, action, extendObservable } from 'mobx';
 import { RRule, rrulestr } from 'rrule';
+import * as yup from 'yup';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
@@ -8,11 +9,12 @@ export default class CashFlowEvent {
   static store = 'events';
 
   static schema = {
-    name: 'string',
-    date: 'date',
-    category: 'string',
-    totalCents: 'integer',
-    recurrence: 'string',
+    name: yup.string().required(),
+    date: yup.date().required(),
+    category: yup.string().required(),
+    subCategory: yup.string(),
+    totalCents: yup.number().integer(),
+    recurrence: yup.string(),
   };
 
   static isCashFlowEvent(obj) {
@@ -20,19 +22,19 @@ export default class CashFlowEvent {
   }
 
   static async getAll() {
-    const { tx, store } = await this.transaction();
+    const { store } = await this.transaction();
     return store.getAll();
   }
 
   static async get(id) {
-    const { tx, store } = await this.transaction();
+    const { store } = await this.transaction();
     return store.get(id);
   }
 
   static async getByDateRange(start, end = new Date()) {
     const fromDate = new Date(start);
     const range = IDBKeyRange.lowerBound(fromDate);
-    const { tx, store } = await this.transaction();
+    const { store } = await this.transaction();
     const index = store.index('date');
     let cursor = await index.openCursor(range);
     const results = [];
@@ -74,6 +76,10 @@ export default class CashFlowEvent {
     this.update(props);
   }
 
+  get yupSchema() {
+    return yup.object().shapeOf(this.constructor.schema);
+  }
+
   @computed get totalCents() {
     return this.total * 100;
   }
@@ -94,6 +100,19 @@ export default class CashFlowEvent {
     const record = this.asObject();
     store.add(record);
     return tx.complete;
+  }
+
+  async validate() {
+    try {
+      await this.yupSchema.validate();
+      return true;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async isValid() {
+    return this.yupSchema.isValid();
   }
 
   asObject() {
