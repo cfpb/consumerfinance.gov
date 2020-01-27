@@ -16,14 +16,14 @@ function seedCashFlowEvents() {
     {
       name: 'Starting Balance',
       date: now.toJSDate(),
-      total: 500,
+      totalCents: 50000,
       category: 'startingBalance',
     },
     {
       name: 'Paycheck',
       date: currentDate = randDay(),
       category: 'Job',
-      total: 300,
+      totalCents: 30000,
       recurs: true,
       recurrence: new RRule({
         freq: RRule.WEEKLY,
@@ -37,7 +37,7 @@ function seedCashFlowEvents() {
       date: currentDate = randDay(),
       category: 'Housing',
       subcategory: 'Rent',
-      total: 800,
+      totalCents: 80000,
       recurs: true,
       recurrence: new RRule({
         freq: RRule.MONTHLY,

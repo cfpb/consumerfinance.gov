@@ -10,7 +10,7 @@ export default class CashFlowEvent {
   @observable date;
   @observable category;
   @observable subcategory;
-  @observable total = 0;
+  @observable totalCents = 0;
   @observable recurs = false;
   @observable recurrence;
   @observable errors;
@@ -33,12 +33,14 @@ export default class CashFlowEvent {
 
   static async getAll() {
     const { store } = await this.transaction();
-    return store.getAll();
+    const records = await store.getAll();
+    return records.map((rec) => new CashFlowEvent(rec));
   }
 
   static async get(id) {
     const { store } = await this.transaction();
-    return store.get(id);
+    const record = await store.get(id);
+    return new CashFlowEvent(record);
   }
 
   static async getByDateRange(start, end = new Date()) {
@@ -50,7 +52,7 @@ export default class CashFlowEvent {
     const results = [];
 
     while (cursor) {
-      results.push(cursor.value)
+      results.push(new CashFlowEvent(cursor.value));
       cursor = await cursor.continue();
     }
 
@@ -82,8 +84,8 @@ export default class CashFlowEvent {
     return yup.object().shapeOf(this.constructor.schema);
   }
 
-  @computed get totalCents() {
-    return this.total * 100;
+  @computed get total() {
+    return this.totalCents / 100;
   }
 
   @computed get recurrenceRule() {
