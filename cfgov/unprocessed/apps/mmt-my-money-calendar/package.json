@@ -31,7 +31,8 @@
     "svg-inline-loader": "0.8.0",
     "workbox": "0.0.0",
     "workbox-webpack-plugin": "4.3.1",
-    "workbox-window": "4.3.1"
+    "workbox-window": "4.3.1",
+    "yup": "0.28.0"
   },
   "devDependencies": {
     "progress-bar-webpack-plugin": "2.1.0",
