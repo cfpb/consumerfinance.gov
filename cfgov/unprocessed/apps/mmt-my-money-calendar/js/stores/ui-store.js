@@ -3,6 +3,7 @@ import logger from '../lib/logger';
 
 export default class UIStore {
   @observable navOpen = false;
+  @observable pageTitle = 'myMoney Calendar';
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -13,6 +14,10 @@ export default class UIStore {
 
   @action setNavOpen(val) {
     this.navOpen = Boolean(val);
+  }
+
+  @action setPageTitle(title) {
+    this.pageTitle = title;
   }
 
   toggleNav() {

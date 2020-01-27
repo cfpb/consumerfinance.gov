@@ -1,8 +1,14 @@
+import { observer } from 'mobx-react';
 import { Link, useRouteMatch } from "react-router-dom";
+import { useStore } from '../../../stores';
 
-export default function StartingBalance() {
+function StartingBalance() {
+  const store = useStore();
+  const { uiStore, eventStore } = store;
+
   return (
     <div className="starting-balance">
+      <h2 className="page-title">{uiStore.pageTitle}</h2>
       <img
         src="/static/apps/mmt-my-money-calendar/img/1.png"
         alt=""
@@ -34,3 +40,5 @@ export default function StartingBalance() {
     </div>
   );
 }
+
+export default observer(StartingBalance);
