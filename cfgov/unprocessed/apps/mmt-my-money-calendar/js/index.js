@@ -17,9 +17,12 @@ const App = () => (
 
 window.idb = idb;
 window.CashFlowEvent = CashFlowEvent;
+
 window.seedTestData = async function seedTestData() {
   const { seedData } = await import(/* webpackChunkName: "seed-data.js" */ './seed-data.js');
-  seedData();
+  console.info('Imported seed data script');
+  const results = await seedData();
+  console.info('Seeding complete %O', results);
 };
 
 render(<App />, document.querySelector('#mmt-my-money-calendar'));

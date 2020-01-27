@@ -6,13 +6,23 @@ import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
 
 export default class CashFlowEvent {
+  @observable name;
+  @observable date;
+  @observable category;
+  @observable subcategory;
+  @observable total = 0;
+  @observable recurs = false;
+  @observable recurrence;
+  @observable errors;
+  @observable persisted = false;
+
   static store = 'events';
 
   static schema = {
     name: yup.string().required(),
     date: yup.date().required(),
     category: yup.string().required(),
-    subCategory: yup.string(),
+    subcategory: yup.string(),
     totalCents: yup.number().integer(),
     recurrence: yup.string(),
   };
@@ -62,14 +72,6 @@ export default class CashFlowEvent {
     };
   }
 
-  @observable name;
-  @observable date;
-  @observable category;
-  @observable total = 0;
-  @observable recurrence;
-  @observable errors;
-  @observable persisted = false;
-
   constructor(props) {
     this.logger = logger.addGroup('cashFlowEvent');
 
@@ -98,6 +100,7 @@ export default class CashFlowEvent {
   async save() {
     const { tx, store } = await this.transaction('readwrite');
     const record = this.asObject();
+
     store.add(record);
     return tx.complete;
   }
