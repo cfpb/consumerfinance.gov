@@ -443,91 +443,91 @@ urlpatterns = [
 
 # Ask CFPB category and subcategory redirects
 category_redirects = [
-    url(r'^ask-cfpb/category-auto-loans/(.*)$',
+    url(r'^(?i)ask-cfpb/category-auto-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/auto-loans/',
             permanent=True)),
-    url(r'^ask-cfpb/category-bank-accounts-and-services/(.*)$',
+    url(r'^(?i)ask-cfpb/category-bank-accounts-and-services/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/bank-accounts/',
             permanent=True)),
-    url(r'^ask-cfpb/category-credit-cards/(.*)$',
+    url(r'^(?i)ask-cfpb/category-credit-cards/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/credit-cards/answers/',
             permanent=True)),
-    url(r'^ask-cfpb/category-credit-reporting/(.*)$',
+    url(r'^(?i)ask-cfpb/category-credit-reporting/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/credit-reports-and-scores/',
             permanent=True)),
-    url(r'^ask-cfpb/category-debt-collection/(.*)$',
+    url(r'^(?i)ask-cfpb/category-debt-collection/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/debt-collection/',
             permanent=True)),
-    url(r'^ask-cfpb/category-families-money/(.*)$',
+    url(r'^(?i)ask-cfpb/category-families-money/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/money-as-you-grow/',
             permanent=True)),
-    url(r'^ask-cfpb/category-money-transfers/(.*)$',
+    url(r'^(?i)ask-cfpb/category-money-transfers/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/money-transfers/answers/',
             permanent=True)),
-    url(r'^ask-cfpb/category-mortgages/(.*)$',
+    url(r'^(?i)ask-cfpb/category-mortgages/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/mortgages/',
             permanent=True)),
-    url(r'^ask-cfpb/category-payday-loans/(.*)$',
+    url(r'^(?i)ask-cfpb/category-payday-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/payday-loans/answers',
             permanent=True)),
-    url(r'^ask-cfpb/category-prepaid-cards/(.*)$',
+    url(r'^(?i)ask-cfpb/category-prepaid-cards/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/prepaid-cards/',
             permanent=True)),
-    url(r'^ask-cfpb/category-student-loans/(.*)$',
+    url(r'^(?i)ask-cfpb/category-student-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/student-loans/',
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
+    url(r'^(?i)es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/',  # noqa: E501
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
+    url(r'^(?i)es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cuentas-bancarias/',
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
+    url(r'^(?i)es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',  # noqa: E501
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
+    url(r'^(?i)es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/',  # noqa: E501
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
+    url(r'^(?i)es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cobro-de-deudas/',
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$',
+    url(r'^(?i)es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$',
         RedirectView.as_view(
             url='/es/el-dinero-mientras-creces/',
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
+    url(r'^(?i)es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/',  # noqa: E501
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$',
+    url(r'^(?i)es/obtener-respuestas/categoria-comprar-una-casa/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/hipotecas/',
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$',
+    url(r'^(?i)es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',  # noqa: E501
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
+    url(r'^(?i)es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',  # noqa: E501
             permanent=True)),
-    url(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
+    url(r'^(?i)es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-estudiantiles/',  # noqa: E501
             permanent=True))

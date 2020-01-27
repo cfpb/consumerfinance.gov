@@ -34,9 +34,9 @@
 
       },
 
-      "describedBy": "https://www.consumerfinance.gov/complaintdatabase/technical-documentation/#field-reference",
+      "describedBy": "https://cfpb.github.io/api/ccdb/api.html",
 
-      "description": "These are complaints we’ve received about financial products and services.",
+      "description": "The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database. The database generally updates daily.",
 
       "distribution": [
 
@@ -44,7 +44,7 @@
 
           "@type": "dcat:Distribution",
 
-          "downloadURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp/rows.csv?accessType=DOWNLOAD",
+          "downloadURL": "https://files.consumerfinance.gov/ccdb/complaints.csv.zip",
 
           "mediaType": "text/csv"
 
@@ -54,17 +54,7 @@
 
           "@type": "dcat:Distribution",
 
-          "downloadURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp/rows.csv?accessType=DOWNLOAD",
-
-          "mediaType": "text/csv"
-
-        },
-
-        {
-
-          "@type": "dcat:Distribution",
-
-          "downloadURL": "https://data.consumerfinance.gov/api/views.json",
+          "downloadURL": "https://files.consumerfinance.gov/ccdb/complaints.json.zip",
 
           "mediaType": "application/json"
 
@@ -74,19 +64,9 @@
 
           "@type": "dcat:Distribution",
 
-          "downloadURL": "https://data.consumerfinance.gov/api/views.xml",
-
-          "mediaType": "application/xml"
-
-        },
-
-        {
-
-          "@type": "dcat:Distribution",
-
           "format": "API",
 
-          "accessURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp.json"
+          "accessURL": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/"
 
         }
 
@@ -122,9 +102,9 @@
 
       ],
 
-      "landingPage": "https://www.consumerfinance.gov/complaintdatabase",
+      "landingPage": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
 
-      "modified": "2013-11-06",
+      "modified": "2020-01-13",
 
       "programCode": [
 
@@ -141,8 +121,6 @@
       },
 
       "spatial": "United States",
-
-      "temporal": "2011-12-01/2013-11-06",
 
       "title": "Consumer Complaint Database"
 

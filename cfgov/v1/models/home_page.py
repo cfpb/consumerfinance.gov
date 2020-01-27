@@ -1,6 +1,4 @@
 # -*- coding: utf8 -*-
-import six
-
 from django.db import models
 from django.utils.safestring import mark_safe
 
@@ -35,9 +33,7 @@ class HomePageFormMetaclass(WagtailAdminModelFormMetaclass):
         return HomePageForm
 
 
-class HomePageForm(
-    six.with_metaclass(HomePageFormMetaclass, WagtailAdminPageForm)
-):
+class HomePageForm(WagtailAdminPageForm, metaclass=HomePageFormMetaclass):
     pass
 
 

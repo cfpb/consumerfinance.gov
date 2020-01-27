@@ -2,8 +2,7 @@ import itertools
 import json
 from collections import Counter
 from functools import partial
-from six import string_types as basestring
-from six.moves.urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from django import forms
 from django.apps import apps
@@ -584,7 +583,7 @@ class ModelBlock(blocks.StructBlock):
 
         ordering = self.get_ordering(value)
         if ordering:
-            if isinstance(ordering, basestring):
+            if isinstance(ordering, str):
                 ordering = (ordering,)
 
             qs = qs.order_by(*ordering)

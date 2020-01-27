@@ -1,15 +1,14 @@
 from __future__ import absolute_import, unicode_literals
 
 from collections import OrderedDict
-from six.moves.urllib.parse import unquote
+from urllib.parse import unquote
 
 from django import forms
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.html import format_html
+from django.utils.html import format_html, strip_tags
 from django.utils.text import Truncator, slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
 from haystack.query import SearchQuerySet
@@ -30,6 +29,7 @@ from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from ask_cfpb.models import blocks as ask_blocks
 from ask_cfpb.models.search import AskSearch
+from ask_cfpb.search_indexes import extract_raw_text, truncatissimo as truncate
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
@@ -72,6 +72,13 @@ def get_reusable_text_snippet(snippet_title):
             title=snippet_title)
     except ReusableText.DoesNotExist:
         pass
+
+
+def get_answer_preview(page):
+    """Extract an answer summary for use in search result previews."""
+    raw_text = extract_raw_text(page.answer_content.stream_data)
+    full_text = strip_tags(" ".join([page.short_answer, raw_text]))
+    return truncate(full_text)
 
 
 def get_portal_or_portal_search_page(portal_topic, language='en'):
@@ -446,19 +453,28 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
 
     @route(r'^(?P<tag>[^/]+)/$')
     def tag_search(self, request, **kwargs):
+        """
+        Return results as a ist of 3-tuples: (url, question, answer-preview).
+
+        This matches the result form used for /ask-cfpb/search/ queries,
+        which use the same template but deliver results from Elasticsearch.
+        """
         tag = kwargs.get('tag').replace('_', ' ')
-        self.answers = AnswerPage.objects.filter(
+        base_query = AnswerPage.objects.filter(
             language=self.language,
-            search_tags__contains=tag,
             redirect_to_page=None,
             live=True)
-        paginator = Paginator(self.answers, 20)
+        answer_tuples = [
+            (page.url, page.question, get_answer_preview(page))
+            for page in base_query if tag in page.clean_search_tags
+        ]
+        paginator = Paginator(answer_tuples, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
         context = self.get_context(request)
         context['current_page'] = page_number
         context['results'] = page
-        context['results_count'] = len(self.answers)
+        context['results_count'] = len(answer_tuples)
         context['tag'] = tag
         context['paginator'] = paginator
         return TemplateResponse(
@@ -468,9 +484,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
 
 
 class AnswerPage(CFGOVPage):
-    """
-    Page type for Ask CFPB answers.
-    """
+    """Page type for Ask CFPB answers."""
     from ask_cfpb.models import Answer
     last_edited = models.DateField(
         blank=True,
@@ -703,7 +717,6 @@ class ArticleLink(Orderable, models.Model):
     ]
 
 
-@python_2_unicode_compatible
 class ArticlePage(CFGOVPage):
     """
     General article page type.
