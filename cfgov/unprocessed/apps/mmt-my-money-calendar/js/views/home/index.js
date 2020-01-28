@@ -11,7 +11,7 @@ export default function Home() {
 
   const nextPage = useCallback((evt) => {
     evt.preventDefault();
-    history.push('/wizard/steps/starting-balance');
+    history.push('/wizard/starting-balance');
   }, [history]);
 
   // This is the Home Page of the app
