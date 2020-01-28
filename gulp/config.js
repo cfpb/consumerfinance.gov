@@ -59,7 +59,7 @@ module.exports = {
     dest:     paths.processed + '/css',
     settings: {
       paths:  globAll.sync( [
-        paths.modules + '/cf-*/src',
+        paths.modules + '/@cfpb/cfpb-*/src',
         paths.modules + '/cfpb-chart-builder/src/**',
         paths.modules + '/highcharts/css'
       ] ),
