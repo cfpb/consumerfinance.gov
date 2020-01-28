@@ -2,13 +2,23 @@ import { Route, Redirect, Switch, Link, useRouteMatch } from "react-router-dom";
 import StartingBalance from "./steps/starting-balance";
 import Income from "./steps/income";
 import Expenses from "./steps/expenses";
+import { useStore } from '../../stores';
+import { observer } from 'mobx-react';
 
-export default function Wizard() {
+function Wizard() {
+
+  const { uiStore } = useStore();
 
   return (
     <section className="wizard">
-      <div>This is the Wizard Index Page</div>
-      <h1>New User Wizard</h1>
+      <header className="wizard__header">
+        <h1 className="wizard__title">{uiStore.pageTitle}</h1>
+        <h2 className="wizard__subtitle">{uiStore.subtitle}</h2>
+
+        <div className="wizard__description">
+          {uiStore.description}
+        </div>
+      </header>
 
       <Link to="/">Back Home</Link>
 
@@ -28,3 +38,5 @@ export default function Wizard() {
     </section>
   );
 }
+
+export default observer(Wizard);
