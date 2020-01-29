@@ -172,6 +172,10 @@ export default class CashFlowEvent {
     return rrulestr(this.recurrence);
   }
 
+  set recurrenceRule(rule) {
+    this.recurrence = rule.toString();
+  }
+
   /**
    * Update the observable properties of this instance
    *
