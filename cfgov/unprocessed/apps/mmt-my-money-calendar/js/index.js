@@ -18,16 +18,6 @@ const App = () => (
   </StoreProvider>
 );
 
-window.idb = idb;
-window.CashFlowEvent = CashFlowEvent;
-
-window.seedTestData = async function seedTestData() {
-  const { seedData } = await import(/* webpackChunkName: "seed-data.js" */ './seed-data.js');
-  console.info('Imported seed data script');
-  const results = await seedData();
-  console.info('Seeding complete %O', results);
-};
-
 render(<App />, document.querySelector('#mmt-my-money-calendar'));
 
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
@@ -42,4 +32,22 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   });
 
   wb.register();
+}
+
+if (process.env.NODE_ENV === 'development') {
+  window.idb = idb;
+  window.CashFlowEvent = CashFlowEvent;
+
+  window.seedTestData = async function seedTestData() {
+    const { seedData } = await import(/* webpackChunkName: "seed-data.js" */ './seed-data.js');
+    console.info('Imported seed data script');
+    const results = await seedData();
+    console.info('Seeding complete %O', results);
+  };
+
+  window.clearTestData = async function clearTestData() {
+    const { clearData } = await import(/* webpackChunkName: "seed-data.js" */ './seed-data.js');
+    await clearData();
+    console.info('Cleared all data');
+  }
 }
