@@ -2,11 +2,14 @@ import { useCallback } from 'react';
 import { useHistory, Link } from "react-router-dom";
 import Hero from '../../components/hero';
 import Button from '../../components/button';
+import { useScrollToTop } from '../../components/scroll-to-top';
 
 import heroImg from 'img/Hero_2.png';
 import arrowRight from 'cf-icons/src/icons/arrow-right.svg';
 
 export default function Home() {
+  useScrollToTop();
+
   const history = useHistory();
 
   const nextPage = useCallback((evt) => {
