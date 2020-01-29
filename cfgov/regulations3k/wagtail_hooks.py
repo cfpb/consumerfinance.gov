@@ -4,11 +4,22 @@ from datetime import date
 
 from wagtail.contrib.modeladmin.options import modeladmin_register
 
+from copyablemodeladmin.helpers import CopyButtonHelperMixin
+from copyablemodeladmin.options import CopyableModelAdminMixin
+from copyablemodeladmin.views import CopyInstanceView
+from treemodeladmin.helpers import TreeButtonHelper
 from treemodeladmin.options import TreeModelAdmin
-from treemodeladmin.views import TreeIndexView
+from treemodeladmin.views import TreeIndexView, TreeViewParentMixin
 
-from regulations3k.copyable_modeladmin import CopyableModelAdmin
 from regulations3k.models import EffectiveVersion, Part, Section, Subpart
+
+
+class TreeCopyButtonHelper(CopyButtonHelperMixin, TreeButtonHelper):
+    pass
+
+
+class TreeCopyInstanceView(TreeViewParentMixin, CopyInstanceView):
+    pass
 
 
 class SectionPreviewIndexView(TreeIndexView):
@@ -70,7 +81,7 @@ class SubpartModelAdmin(TreeModelAdmin):
     ordering = ['subpart_type', 'title']
 
 
-class EffectiveVersionModelAdmin(CopyableModelAdmin):
+class EffectiveVersionModelAdmin(CopyableModelAdminMixin, TreeModelAdmin):
     model = EffectiveVersion
     menu_label = 'Regulation effective versions'
     menu_icon = 'list-ul'
@@ -81,6 +92,8 @@ class EffectiveVersionModelAdmin(CopyableModelAdmin):
     child_field = 'subparts'
     child_model_admin = SubpartModelAdmin
     parent_field = 'part'
+    button_helper_class = TreeCopyButtonHelper
+    copy_view_class = TreeCopyInstanceView
 
     def copy(self, instance):
         subparts = instance.subparts.all()
