@@ -4,13 +4,16 @@ import * as yup from 'yup';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
+import { DateTime } from 'luxon';
 
 export default class CashFlowEvent {
+  @observable id;
   @observable name;
   @observable date;
   @observable category;
   @observable subcategory;
   @observable totalCents = 0;
+  @observable isRecurrence = false;
   @observable recurs = false;
   @observable recurrence;
   @observable errors;
@@ -19,6 +22,7 @@ export default class CashFlowEvent {
   static store = 'events';
 
   static schema = {
+    id: yup.number().integer(),
     name: yup.string().required(),
     date: yup.date().required(),
     category: yup.string().required(),
@@ -27,22 +31,44 @@ export default class CashFlowEvent {
     recurrence: yup.string(),
   };
 
+  /**
+   * Indicates whether or not the object is an instance of CashFlowEvent
+   *
+   * @param {Object} obj - The object to check
+   */
   static isCashFlowEvent(obj) {
     return obj instanceof CashFlowEvent;
   }
 
+  /**
+   * Fetch all cash flow events from the IndexedDB store
+   *
+   * @returns {Promise<CashFlowEvent[]>} An array of cash flow events
+   */
   static async getAll() {
     const { store } = await this.transaction();
     const records = await store.getAll();
     return records.map((rec) => new CashFlowEvent(rec));
   }
 
+  /**
+   * Retrieves a single cash flow event from the IDB store by its ID key
+   *
+   * @param {Number} id - The ID of the event to retrieve
+   */
   static async get(id) {
     const { store } = await this.transaction();
     const record = await store.get(id);
     return new CashFlowEvent(record);
   }
 
+  /**
+   * Retrieves cash flow events from the specified date range from the IDB store
+   *
+   * @param {Date} start - The beginning date to query from
+   * @param {Date} end - The end date
+   * @returns {Promise<CashFlowEvent[]>} An array of cash flow events
+   */
   static async getByDateRange(start, end = new Date()) {
     const fromDate = new Date(start);
     const range = IDBKeyRange.lowerBound(fromDate);
@@ -59,11 +85,23 @@ export default class CashFlowEvent {
     return results;
   }
 
+  /**
+   * Get the number of stored cash flow events in the IDB store
+   *
+   * @returns {Promise<Number>} The number of stored cash flow events
+   */
   static async count() {
     const { store } = await this.transaction();
     return store.count();
   }
 
+  /**
+   * Begin an IDB transaction
+   *
+   * @param {String} [perms="readonly"] - The permissions the transaction is requesting
+   * @param {String|String[]} [stores=this.store] - The stores the transaction will be interacting with
+   * @returns {Promise<Object>} An object with tx and store properties
+   */
   static async transaction(perms = 'readonly', stores = this.store) {
     const db = await dbPromise;
     const tx = db.transaction(stores, perms);
@@ -81,7 +119,22 @@ export default class CashFlowEvent {
   }
 
   get yupSchema() {
-    return yup.object().shapeOf(this.constructor.schema);
+    return yup.object().shape(this.constructor.schema);
+  }
+
+  @computed get asObject() {
+    const obj = transform(this.constructor.schema, (result, [key]) => {
+      result[key] = this[key];
+      return result;
+    });
+
+    if (!obj.id) delete obj.id;
+
+    return obj;
+  }
+
+  @computed get dateTime() {
+    return new DateTime(this.date);
   }
 
   @computed get total() {
@@ -93,40 +146,58 @@ export default class CashFlowEvent {
     return rrulestr(this.recurrence);
   }
 
+  /**
+   * Update the observable properties of this instance
+   *
+   * @param {Object} props - Properties to update
+   * @returns {undefined}
+   */
   @action update(props = {}) {
     for (const key in props) {
       this[key] = props[key];
     }
   }
 
+  /**
+   * Save the cash flow event to IndexedDB store, or raise a validation error if it doesn't conform to schema
+   *
+   * @throws {ValidationError} A Yup validation error if the object is not valid
+   * @returns {Number} The key of the added or updated record
+   */
   async save() {
+    await this.validate();
+
     const { tx, store } = await this.transaction('readwrite');
-    const record = this.asObject();
-
-    store.add(record);
-    return tx.complete;
+    const key = await store.put(this.asObject);
+    await tx.complete;
+    return key;
   }
 
-  async validate() {
-    try {
-      await this.yupSchema.validate();
-      return true;
-    } catch (err) {
-      return err;
-    }
+  /**
+   * Validate the cash flow event according to its defined schema
+   *
+   * @throws {ValidationError} A Yup validation error if the instance does not conform to schema
+   * @returns {Promise<Object>} A promise resolving to the properties of the cash flow event if it's valid
+   */
+  validate() {
+    return this.yupSchema.validate(this.asObject);
   }
 
-  async isValid() {
+  /**
+   * Asynchronously determines whether or not the cash flow event is valid
+   *
+   * @returns {Promise<Boolean>} Whether or not the event is valid
+   */
+  isValid() {
     return this.yupSchema.isValid();
   }
 
-  asObject() {
-    return transform(this.constructor.schema, (result, [key]) => {
-      result[key] = this[key];
-      return result;
-    });
-  }
-
+  /**
+   * Creates an IndexedDB transaction in which queries can be run
+   *
+   * @param {Boolean} [perms='readonly'] - Transaction permissions (readwrite or readonly)
+   * @param {String|String[]} [stores=this.constructor.store] - Names of the object stores to be operated on
+   */
   transaction(...args) {
     return this.constructor.transaction(...args);
   }
