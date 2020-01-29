@@ -19,6 +19,11 @@ export default class CashFlowEvent {
   @observable errors;
   @observable persisted = false;
 
+  static directions = {
+    DESC: 'prev',
+    ASC: 'next',
+  };
+
   static store = 'events';
 
   static schema = {
@@ -49,6 +54,27 @@ export default class CashFlowEvent {
     const { store } = await this.transaction();
     const records = await store.getAll();
     return records.map((rec) => new CashFlowEvent(rec));
+  }
+
+  /**
+   * Gets all entries in the IDB object store, sorted by the given index
+   *
+   * @param {String} indexName - The index to use for sorting
+   * @param {String} direction - The direction in which to sort results ('next', 'nextunique', 'prev', or 'prevunique')
+   * @returns {Promise<CashFlowEvent[]>} A promise resolving to an array of CashFlowEvent instances
+   */
+  static async getAllBy(indexName, direction = 'next') {
+    const { store } = await this.transaction();
+    const index = store.index(indexName);
+    let cursor = await index.openCursor(null, direction);
+    const results = [];
+
+    while (cursor) {
+      results.push(new CashFlowEvent(cursor.value));
+      cursor = await cursor.continue();
+    }
+
+    return results;
   }
 
   /**
@@ -158,6 +184,14 @@ export default class CashFlowEvent {
     }
   }
 
+  @action setID(id) {
+    this.id = id;
+  }
+
+  @action setPersisted(value = true) {
+    this.persisted = Boolean(value);
+  }
+
   /**
    * Save the cash flow event to IndexedDB store, or raise a validation error if it doesn't conform to schema
    *
@@ -170,7 +204,24 @@ export default class CashFlowEvent {
     const { tx, store } = await this.transaction('readwrite');
     const key = await store.put(this.asObject);
     await tx.complete;
+
+    if (!this.id) this.setID(key);
+    if (!this.persisted) this.setPersisted();
+
     return key;
+  }
+
+  /**
+   * Removes this event from the IDB store
+   *
+   * @returns {CashFlowEvent|Boolean} the event that was just removed, or false if not deleteable
+   */
+  async destroy() {
+    if (!this.persisted) return false;
+    const { tx, store } = await this.transaction('readwrite');
+    await store.delete(this.id);
+    await tx.complete;
+    return this;
   }
 
   /**
