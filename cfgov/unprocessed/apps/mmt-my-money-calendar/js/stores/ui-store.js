@@ -9,6 +9,7 @@ export default class UIStore {
   @observable nextStepPath;
   @observable prevStepPath;
   @observable progress = 0;
+  @observable error;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -40,6 +41,10 @@ export default class UIStore {
     this.nextStepPath = nextStepPath;
     this.prevStepPath = prevStepPath;
     this.progress = progress;
+  }
+
+  @action setError(err) {
+    this.error = err;
   }
 
   toggleNav() {

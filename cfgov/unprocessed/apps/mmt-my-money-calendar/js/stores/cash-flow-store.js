@@ -1,41 +1,61 @@
-import { observable, computed, action } from 'mobx';
+import { flow, observable, computed, action } from 'mobx';
 import logger from '../lib/logger';
 import CashFlowEvent from './models/cash-flow-event';
 
 export default class CashFlowStore {
-  @observable eventsById = new Map();
+  @observable events = [];
 
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.logger = logger.addGroup('cashFlowStore');
 
+    this.loadEvents();
+
     this.logger.debug('Initialize CashFlowStore: %O', this);
   }
 
   /**
-   * Whenever eventsById is updates, this will regenerate the Map of events by date automatically
+   * All events in the store as a map, keyed by date
+   *
+   * @type {Map}
    */
   @computed get eventsByDate() {
-    const output = new Map();
+    return this.events.reduce((output, event) => {
+      const list = output.get(event.date) || [];
+      output.set(event.date, [...list, event]);
+      return output;
+    }, new Map());
+  }
 
-    for (const event of this.eventsById.values()) {
-      const events = output.get(event.date) || [];
-      events.push(event);
-      output.set(event.date, events);
+  /**
+   * All events in the store as a map, keyed by ID
+   *
+   * @type {Map}
+   */
+  @computed get eventsById() {
+    return new Map(this.events.map((event) => [event.id, event]));
+  }
+
+  loadEvents = flow(function*() {
+    const events = yield CashFlowEvent.getAllBy('date');
+    this.events = events;
+    this.logger.debug('Load all events from IDB store: %O', events);
+  });
+
+  addEvent = flow(function*(params) {
+    const event = new CashFlowEvent(params);
+
+    try {
+      yield event.save();
+      this.events.push(event);
+    } catch (err) {
+      this.rootStore.uiStore.setError(err);
     }
+  });
 
-    return output;
-  }
-
-  @computed get allEvents() {
-    return [...this.eventsById.values()];
-  }
-
-  @action addEvent(event) {
-    this.eventsById.set(event.id, new CashFlowEvent(this, event));
-  }
-
-  @action deleteEvent(id) {
-    this.eventsById.delete(id);
-  }
+  deleteEvent = flow(function*(id) {
+    const event = this.eventsById.get(id);
+    yield event.destroy();
+    this.events = this.events.filter((e) => e.id !== id);
+  });
 }
