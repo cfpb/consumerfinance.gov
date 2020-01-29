@@ -9,6 +9,16 @@ export async function seedData() {
   await seedCashFlowEvents();
 }
 
+export async function clearData() {
+  await clearCashFlowEvents();
+}
+
+export async function clearCashFlowEvents() {
+  const { store, tx } = await CashFlowEvent.transaction('readwrite');
+  await store.clear();
+  return tx.complete;
+}
+
 function seedCashFlowEvents() {
   let currentDate;
 
