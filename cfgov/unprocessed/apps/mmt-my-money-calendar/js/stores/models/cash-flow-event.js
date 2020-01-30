@@ -163,12 +163,16 @@ export default class CashFlowEvent {
     return new DateTime(this.date);
   }
 
+  set dateTime(dateTime) {
+    this.date = dateTime.toJSDate();
+  }
+
   @computed get total() {
     return this.totalCents / 100;
   }
 
   @computed get recurrenceRule() {
-    if (!this.recurrence || (typeof this.recurrence !== 'string')) return null;
+    if (!this.recurrence || typeof this.recurrence !== 'string') return null;
     return rrulestr(this.recurrence);
   }
 
