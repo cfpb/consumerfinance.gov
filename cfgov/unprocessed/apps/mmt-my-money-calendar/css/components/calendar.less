@@ -1,0 +1,47 @@
+@cols: 7;
+@gap: 10px;
+@inactiveMonthColor: #bdbdbd;
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: @gap;
+  }
+
+  &__day {
+    color: @inactiveMonthColor;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-basis: calc(100% / @cols - @gap);
+    justify-content: space-between;
+    width: calc(100% / @cols - @gap);
+    min-height: 4rem;
+    border: 1px solid #ccc;
+    margin-right: @gap;
+    text-align: center;
+
+    &.current-month {
+      color: @text;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+
+  &__day-number {
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+
+  &__day-balance {
+    font-size: .8rem;
+  }
+}
