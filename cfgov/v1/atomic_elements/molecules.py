@@ -410,6 +410,40 @@ class RelatedMetadata(blocks.StructBlock):
         label = 'Related metadata'
 
 
+class EnforcementActionMetadata(blocks.StructBlock):
+    slug = blocks.CharBlock(default='Action details',max_length=100)
+    categories = blocks.StructBlock([
+            ('heading', blocks.CharBlock(
+                max_length=100,
+                default='Category'
+            )),
+            ('show_categories', blocks.BooleanBlock(
+                default=True,
+                required=False
+            ))
+        ])
+    institution_type = blocks.ChoiceBlock(choices=[
+            ('nonbank', 'Nonbank'),
+            ('bank', 'Bank')
+        ])
+    status = blocks.ChoiceBlock(choices=[
+            ('post_order_post_judgment', 'Post Order/Post Judgment'),
+            ('expired_terminated_dismissed', 'Expired/Terminated/Dismissed'),
+            ('pending_litigation', 'Pending Litigation')
+        ])
+    docket_number = blocks.CharBlock(max_length=100,required=False)
+    topics = blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100, default='Topics')),
+            ('show_topics', blocks.BooleanBlock(default=True, required=False))
+        ])
+    date_filed = blocks.DateBlock()
+
+    class Meta:
+        icon = 'grip'
+        template = '_includes/molecules/related-metadata.html'
+        label = 'Enforcement action metadata'
+
+
 class RSSFeed(blocks.StaticBlock):
     class Meta:
         icon = 'plus'
