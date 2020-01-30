@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { DateTime } from 'luxon';
 import { observer } from 'mobx-react';
 import { useStore } from '../../stores';
 import Day from './day';
@@ -29,6 +30,11 @@ function Calendar() {
     uiStore.prevMonth();
   }, [uiStore.currentMonth]);
 
+  const gotoToday = useCallback((evt) => {
+    evt.preventDefault();
+    uiStore.setCurrentMonth(DateTime.local().startOf('day'));
+  })
+
   useEffect(() => {
     uiStore.setPageTitle('myMoney Calendar');
     uiStore.setSubtitle(uiStore.currentMonth.toFormat('MMMM, y'));
@@ -43,6 +49,7 @@ function Calendar() {
         <Button icon={arrowLeft} iconSide="left" onClick={prevMonth}>
           Previous
         </Button>
+        <Button onClick={gotoToday}>Today</Button>
         <Button icon={arrowRight} iconSide="right" onClick={nextMonth}>
           Next
         </Button>
