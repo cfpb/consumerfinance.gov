@@ -1,6 +1,7 @@
 import { flow, observable, computed, action } from 'mobx';
 import { computedFn } from 'mobx-utils';
 import logger from '../lib/logger';
+import { toDateTime } from '../lib/calendar-helpers';
 import CashFlowEvent from './models/cash-flow-event';
 import { DateTime } from 'luxon';
 
@@ -39,14 +40,24 @@ export default class CashFlowStore {
   }
 
   getBalanceForDate = computedFn(function getBalanceForDate(stopDate) {
+    stopDate = toDateTime(stopDate).endOf('day');
+
+    if (!this.events.length) return 0;
+
     const totalInCents = this.events.reduce((total, event) => {
-      if (event.date > stopDate) return total;
+      const { milliseconds: diff } = event.dateTime.diff(stopDate).toObject();
+
+      if (diff > 0) return total;
+
       return total + event.totalCents;
     }, 0);
+
+    this.logger.info('Balance in cents for date %s: %d', stopDate.toFormat('D'), totalInCents);
 
     return totalInCents / 100;
   });
 
+  // Flows are asynchronous actions, structured as generator functions:
   loadEvents = flow(function*() {
     const events = yield CashFlowEvent.getAllBy('date');
     this.events = events;

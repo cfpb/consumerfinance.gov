@@ -1,5 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import logger from '../lib/logger';
+import { DateTime } from 'luxon';
+import { limitMonthNumber, getWeekRows } from '../lib/calendar-helpers';
 
 export default class UIStore {
   @observable navOpen = false;
@@ -10,12 +12,18 @@ export default class UIStore {
   @observable prevStepPath;
   @observable progress = 0;
   @observable error;
+  @observable currentMonth = DateTime.local().startOf('month');
+  @observable selectedDate;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.logger = logger.addGroup('uiStore');
 
     this.logger.debug('Initialize UI Store: %O', this);
+  }
+
+  @computed get monthCalendarRows() {
+    return getWeekRows(this.currentMonth);
   }
 
   @action setNavOpen(val) {
@@ -45,6 +53,16 @@ export default class UIStore {
 
   @action setError(err) {
     this.error = err;
+  }
+
+  @action setCurrentMonth(month) {
+    if (!Number.isInteger(month)) throw new Error('Current month must be an integer');
+
+    this.currentMonth = limitMonthNumber(month);
+  }
+
+  @action setSelectedDate(date) {
+    this.selectedDate = date;
   }
 
   toggleNav() {
