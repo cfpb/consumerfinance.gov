@@ -11,7 +11,7 @@ function Day({ day, dateFormat = 'd' }) {
   const handleClick = useCallback(
     (evt) => {
       evt.preventDefault();
-      console.log('day clicked: %O', day);
+      uiStore.setSelectedDate(day);
     },
     [day]
   );

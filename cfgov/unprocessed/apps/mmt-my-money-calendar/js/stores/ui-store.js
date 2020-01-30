@@ -68,7 +68,7 @@ export default class UIStore {
   }
 
   @action setSelectedDate(date) {
-    this.selectedDate = date;
+    this.selectedDate = toDateTime(date).startOf('day');
   }
 
   toggleNav() {
