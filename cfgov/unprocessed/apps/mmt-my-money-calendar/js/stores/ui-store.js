@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import logger from '../lib/logger';
 import { DateTime } from 'luxon';
-import { limitMonthNumber, getWeekRows } from '../lib/calendar-helpers';
+import { limitMonthNumber, getWeekRows, toDateTime } from '../lib/calendar-helpers';
 
 export default class UIStore {
   @observable navOpen = false;
@@ -56,9 +56,15 @@ export default class UIStore {
   }
 
   @action setCurrentMonth(month) {
-    if (!Number.isInteger(month)) throw new Error('Current month must be an integer');
+    this.currentMonth = toDateTime(month);
+  }
 
-    this.currentMonth = limitMonthNumber(month);
+  @action nextMonth() {
+    this.currentMonth = this.currentMonth.plus({ months: 1 });
+  }
+
+  @action prevMonth() {
+    this.currentMonth = this.currentMonth.minus({ months: 1 });
   }
 
   @action setSelectedDate(date) {

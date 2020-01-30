@@ -39,6 +39,12 @@ export default class CashFlowStore {
     return new Map(this.events.map((event) => [event.id, event]));
   }
 
+  /**
+   * Get the user's available balance for the specified date
+   *
+   * @param {Date|DateTime} stopDate - The date to check the balance for
+   * @returns {Number} the balance in dollars
+   */
   getBalanceForDate = computedFn(function getBalanceForDate(stopDate) {
     stopDate = toDateTime(stopDate).endOf('day');
     const stopTimestamp = stopDate.valueOf();
@@ -56,13 +62,31 @@ export default class CashFlowStore {
     return totalInCents / 100;
   });
 
-  // Flows are asynchronous actions, structured as generator functions:
+  /**
+   * Load all events from IndexedDB, sorted ascending by date, into the events array
+   *
+   * @returns {undefined}
+   */
   loadEvents = flow(function*() {
+    // Flows are asynchronous actions, structured as generator functions
     const events = yield CashFlowEvent.getAllBy('date');
     this.events = events;
     this.logger.debug('Load all events from IDB store: %O', events);
   });
 
+  /**
+   * Adds a new event to the database and syncs it with the store
+   *
+   * @param {Object} params - Event properties
+   * @param {String} params.name - The event name
+   * @param {Date|DateTime} params.date - The event date
+   * @param {String} params.category - The category name
+   * @param {String} [params.subcategory] - The subcategory name
+   * @param {Number} totalCents - The transaction amount, in cents
+   * @param {Boolean} [recurs=false] - Whether or not the event recurs
+   * @param {String} [recurrence] - The recurrence rule in iCalendar format
+   * @returns {undefined}
+   */
   addEvent = flow(function*(params) {
     const event = new CashFlowEvent(params);
 
@@ -74,6 +98,12 @@ export default class CashFlowStore {
     }
   });
 
+  /**
+   * Deletes an event from the store and the database
+   *
+   * @param {Number} id - The event's ID property
+   * @returns {undefined}
+   */
   deleteEvent = flow(function*(id) {
     const event = this.eventsById.get(id);
     yield event.destroy();
