@@ -1,11 +1,11 @@
 @import (reference) '../../../css/main.less';
 
 /**
-  * Capital Framework overrides
+ * Design System overrides
 **/
 
 // ATOMIC OVERRIDES
-/** 
+/**
 * This gets overwritten by media queries, so we need to make it important.
 */
 .u-hidden {
@@ -55,7 +55,7 @@
   }
 }
 
-// The original class provides a pretty huge gap, particularly on mobile, so tame it a bit 
+// The original class provides a pretty huge gap, particularly on mobile, so tame it a bit
 .content-l_col+.content-l_col {
   .respond-to-max(@bp-sm-min, {
     margin-top: 1em;
@@ -130,7 +130,7 @@ ul {
 }
 
 /**
-* content-l_col overrides the default appearance for textareas, this restores it. 
+* content-l_col overrides the default appearance for textareas, this restores it.
 */
 textarea {
   border-color: black !important;

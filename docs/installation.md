@@ -86,7 +86,7 @@ includes the following frameworks / tools:
 - [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
-- [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
+- [Design System](https://cfpb.github.io/design-system/getting-started/):
   User interface pattern-library produced by the CFPB.
 - [Node.js](https://nodejs.org). Install however you’d like.
   We recommend using [nvm](https://github.com/creationix/nvm), though.

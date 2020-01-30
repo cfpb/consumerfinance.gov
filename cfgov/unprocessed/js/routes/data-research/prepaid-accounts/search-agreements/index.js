@@ -1,4 +1,4 @@
-import Expandable from 'cf-expandables/src/Expandable';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import Multiselect from '../../../../molecules/Multiselect';
 import { instantiateAll } from '../../../../modules/util/atomic-helpers';
 
