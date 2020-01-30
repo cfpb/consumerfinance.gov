@@ -2,8 +2,13 @@ import CashFlowEvent from './stores/models/cash-flow-event';
 import { DateTime } from 'luxon';
 import { RRule } from 'rrule';
 
+let currentDate;
 const now = DateTime.local();
-const randDay = (max = 30) => now.plus(Math.floor(Math.random() * max) + 1).toJSDate();
+const randDay = (max = 30) => {
+  const date = now.plus({ days: Math.floor(Math.random() * max) + 1 }).toJSDate();
+  currentDate = date;
+  return date;
+};
 
 export async function seedData() {
   await seedCashFlowEvents();
@@ -20,8 +25,6 @@ export async function clearCashFlowEvents() {
 }
 
 function seedCashFlowEvents() {
-  let currentDate;
-
   const events = [
     {
       name: 'Starting Balance',
@@ -31,7 +34,7 @@ function seedCashFlowEvents() {
     },
     {
       name: 'Paycheck',
-      date: currentDate = randDay(),
+      date: randDay(),
       category: 'Job',
       totalCents: 30000,
       recurs: true,
@@ -44,7 +47,7 @@ function seedCashFlowEvents() {
     },
     {
       name: 'Rent',
-      date: currentDate = randDay(),
+      date: randDay(),
       category: 'Housing',
       subcategory: 'Rent',
       totalCents: 80000,
@@ -59,6 +62,7 @@ function seedCashFlowEvents() {
 
   return Promise.all(events.map((event) => {
     const cfe = new CashFlowEvent(event);
+    console.log('Add event: %O', cfe.asObject);
     return cfe.save();
   }));
 }
