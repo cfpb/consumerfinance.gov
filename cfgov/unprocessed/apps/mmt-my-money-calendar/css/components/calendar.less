@@ -1,11 +1,21 @@
 @cols: 7;
 @gap: 10px;
-@inactiveMonthColor: #bdbdbd;
+@inactiveMonthColor: #a4a4a4;
+@positiveColor: #cbf0b6;
+@negativeColor: #f0b6b6;
 @breakpointMed: 500px;
 
 .calendar {
   display: flex;
   flex-direction: column;
+
+  &__nav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
 
   &__row {
     display: flex;
@@ -34,6 +44,16 @@
 
     &.current-month {
       color: @text;
+    }
+
+    &.pos-balance {
+      background-color: @positiveColor;
+      border-color: @positiveColor;
+    }
+
+    &.neg-balance {
+      background-color: @negativeColor;
+      border-color: @negativeColor;
     }
 
     &:last-of-type {
