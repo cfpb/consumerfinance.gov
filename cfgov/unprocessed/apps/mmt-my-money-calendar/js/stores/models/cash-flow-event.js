@@ -160,7 +160,7 @@ export default class CashFlowEvent {
   }
 
   @computed get dateTime() {
-    return new DateTime(this.date);
+    return DateTime.fromJSDate(this.date);
   }
 
   set dateTime(dateTime) {
