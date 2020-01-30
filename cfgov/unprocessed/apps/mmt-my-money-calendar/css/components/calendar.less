@@ -1,6 +1,7 @@
 @cols: 7;
 @gap: 10px;
 @inactiveMonthColor: #bdbdbd;
+@breakpointMed: 500px;
 
 .calendar {
   display: flex;
@@ -22,10 +23,14 @@
     flex-basis: calc(100% / @cols - @gap);
     justify-content: space-between;
     width: calc(100% / @cols - @gap);
-    min-height: 4rem;
+    min-height: 40px;
     border: 1px solid #ccc;
     margin-right: @gap;
     text-align: center;
+
+    @media screen and (min-width: @breakpointMed) {
+      min-height: 4rem;
+    }
 
     &.current-month {
       color: @text;
@@ -38,10 +43,18 @@
 
   &__day-number {
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: 1rem;
+
+    @media screen and (min-width: @breakpointMed) {
+      font-size: 1.25rem;
+    }
   }
 
   &__day-balance {
-    font-size: .8rem;
+    font-size: .6rem;
+
+    @media screen and (min-width: @breakpointMed) {
+      font-size: .8rem;
+    }
   }
 }

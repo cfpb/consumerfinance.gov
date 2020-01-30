@@ -19,6 +19,14 @@ export const MONTH_NAMES = Info.months();
 export const toDateTime = (date) => DateTime.isDateTime(date) ? date : DateTime.fromJSDate(date);
 
 /**
+ * Get the ordinal day of the year for a date, as an integer
+ *
+ * @param {Date|DateTime} date - A Date or DateTime instance
+ * @returns {Number} an integer between 1 and 365
+ */
+export const dayOfYear = (date) => parseInt(toDateTime(date).toFormat('o'), 10);
+
+/**
  * Returns the number of the specified month, zero-indexed.
  *
  * @param {String} monthName - The name of the current month
