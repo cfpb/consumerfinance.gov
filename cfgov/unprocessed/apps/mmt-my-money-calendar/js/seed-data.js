@@ -40,7 +40,6 @@ function seedCashFlowEvents() {
       recurs: true,
       recurrence: new RRule({
         freq: RRule.WEEKLY,
-        byweekday: RRule.FR,
         dtstart: currentDate,
         count: 12,
       }).toString(),
@@ -50,13 +49,25 @@ function seedCashFlowEvents() {
       date: randDay(),
       category: 'Housing',
       subcategory: 'Rent',
-      totalCents: 80000,
+      totalCents: -80000,
       recurs: true,
       recurrence: new RRule({
         freq: RRule.MONTHLY,
         count: 3,
         dtstart: currentDate,
       }).toString(),
+    },
+    {
+      name: 'Groceries',
+      date: randDay(),
+      category: 'Groceries',
+      totalCents: -20000,
+      recurs: true,
+      recurrence: new RRule({
+        freq: RRule.WEEKLY,
+        dtstart: currentDate,
+        count: 12,
+      }),
     },
   ];
 
