@@ -72,7 +72,7 @@
 {% macro render_link( link ) %}
 <div class="brand-footer_img">
     <a href="{{ link.url }}">
-        <img src="{{ link.img }}" alt="{{ link.label | safe }}">
+        <img src="{{ link.img }}" alt="{{ link.image_label }}">
     </a>
 </div>
 <p>{{ link.text | safe }}</p>
