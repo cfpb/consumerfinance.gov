@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { DateTime } from 'luxon';
 import { useStore } from '../../stores';
 import { formatCurrency } from '../../lib/currency-helpers';
+import { compact } from '../../lib/array-helpers';
 
 function Day({ day, dateFormat = 'd' }) {
   const { uiStore, eventStore } = useStore();
@@ -29,6 +30,11 @@ function Day({ day, dateFormat = 'd' }) {
     'neg-balance': balance < 0,
   });
 
+  const symbols = compact([
+    eventStore.dateHasIncome(day) && '+',
+    eventStore.dateHasExpenses(day) && '-',
+  ]);
+
   return (
     <div className={classes} role="button" onClick={handleClick}>
       <div className="calendar__day-number">
@@ -36,7 +42,7 @@ function Day({ day, dateFormat = 'd' }) {
           {day.toFormat(dateFormat)}
         </time>
       </div>
-      <div className="calendar__day-balance">{formatCurrency(balance)}</div>
+      <div className="calendar__day-symbols">{symbols}</div>
     </div>
   );
 }

@@ -31,6 +31,11 @@ export default class CashFlowStore {
     }, new Map());
   }
 
+  /**
+   * All events in the store as a map, keyed by the timestamp of the beginning of the month in which they occur, in milliseconds
+   *
+   * @type {Map}
+   */
   @computed get eventsByMonth() {
     return this.events.reduce((output, event) => {
       const key = event.dateTime.startOf('month').valueOf();
@@ -72,12 +77,52 @@ export default class CashFlowStore {
     return totalInCents / 100;
   });
 
+  /**
+   * Get the total amount of money received or spent for a particular day
+   *
+   * @param {Date|DateTime} date - The date
+   * @returns {Number} The amount of money for that day received or spent
+   */
   getTotalForDate = computedFn(function getTotalForDate(date) {
     const events = this.getEventsForDate(date);
     const totalInCents = events.reduce((total, event) => total + event.totalCents, 0);
     return totalInCents / 100;
   });
 
+  /**
+   * Determines whether or not the given date has any income events
+   *
+   * @param {Date|DateTime} date - The date to check
+   * @returns {Boolean}
+   */
+  dateHasIncome(date) {
+    const events = this.getEventsForDate(date);
+
+    if (!events) return false;
+
+    return Boolean(events.find(({ totalCents }) => totalCents > 0));
+  }
+
+  /**
+   * Determines whether or not the given date has any expense events
+   *
+   * @param {Date|DateTime} date - The date to check
+   * @returns {Boolean}
+   */
+  dateHasExpenses(date) {
+    const events = this.getEventsForDate(date);
+
+    if (!events) return false;
+
+    return Boolean(events.find(({ totalCents }) => totalCents < 0));
+  }
+
+  /**
+   * Returns all cash flow events for the given date
+   *
+   * @param {Date|DateTime} date - The date to check
+   * @returns {CashFlowEvent[]|undefined}
+   */
   getEventsForDate(date) {
     date = toDateTime(date);
     return this.eventsByDate.get(date.startOf('day').valueOf());
