@@ -64,7 +64,7 @@ const conf = {
   mode: 'production',
   output: {
     filename: '[name]',
-    jsonpFunction: 'oah'
+    jsonpFunction: 'ccdb'
   },
   optimization: {
     minimize: true,
