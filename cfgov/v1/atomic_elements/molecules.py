@@ -422,16 +422,17 @@ class EnforcementActionMetadata(blocks.StructBlock):
                 required=False
             ))
         ])
+    court = blocks.CharBlock(max_length=150,required=True)
     institution_type = blocks.ChoiceBlock(choices=[
-            ('nonbank', 'Nonbank'),
-            ('bank', 'Bank')
+            ('Nonbank', 'Nonbank'),
+            ('Bank', 'Bank')
         ])
     status = blocks.ChoiceBlock(choices=[
-            ('post_order_post_judgment', 'Post Order/Post Judgment'),
-            ('expired_terminated_dismissed', 'Expired/Terminated/Dismissed'),
-            ('pending_litigation', 'Pending Litigation')
+            ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
+            ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
+            ('Pending Litigation', 'Pending Litigation')
         ])
-    docket_number = blocks.CharBlock(max_length=100,required=False)
+    docket_number = blocks.CharBlock(max_length=100,required=True)
     topics = blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100, default='Topics')),
             ('show_topics', blocks.BooleanBlock(default=True, required=False))
