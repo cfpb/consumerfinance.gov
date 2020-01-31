@@ -8,7 +8,7 @@ const paths = require( '../../config/environment' ).paths;
   which gets copied into the static directory on production
   so SVG references in CSS get resolved.
 */
-const iconSrc = `${ paths.modules }/cf-icons/src/icons/*.svg`;
+const iconSrc = `${ paths.modules }/@cfpb/cfpb-icons/src/icons/*.svg`;
 
 /**
  * Generic copy files flow from source to destination.

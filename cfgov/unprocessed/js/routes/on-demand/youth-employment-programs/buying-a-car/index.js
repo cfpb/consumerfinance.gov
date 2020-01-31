@@ -1,4 +1,4 @@
-import Expandable from 'cf-expandables/src/Expandable';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import checkbox from './templates/checkbox';
 import checklistGroupView from './views/checklist-group';
 import checklistMap from './models/checklist-map';

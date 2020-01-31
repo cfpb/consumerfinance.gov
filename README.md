@@ -94,7 +94,7 @@ We welcome your feedback and contributions.
 See the [contribution guidelines](CONTRIBUTING.md) for more details.
 
 Additionally, you may want to consider
-[contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
+[contributing to the Design System](https://cfpb.github.io/design-system/#help-us-make-improvements),
 which is the front-end pattern library used in this project.
 
 
@@ -107,5 +107,5 @@ which is the front-end pattern library used in this project.
 
 ## Credits and references
 
-This project uses [Capital Framework](https://github.com/cfpb/capital-framework)
+This project uses [Design System](https://github.com/cfpb/design-system)
 as the basis of its user interface and layout components.

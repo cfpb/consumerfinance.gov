@@ -214,7 +214,8 @@ def redirect_ask_search(request, language='en'):
             if category_facet in facet:
                 category = facet.replace(category_facet, '')
                 if category:
-                    return redirect_to_category(category, language)
+                    slug = slugify(category)  # handle uppercase and spaces
+                    return redirect_to_category(slug, language)
 
         for facet in facets:
             if audience_facet in facet:
