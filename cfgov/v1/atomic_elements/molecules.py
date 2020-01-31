@@ -411,18 +411,18 @@ class RelatedMetadata(blocks.StructBlock):
 
 
 class EnforcementActionMetadata(blocks.StructBlock):
-    slug = blocks.CharBlock(default='Action details',max_length=100)
+    slug = blocks.CharBlock(default='Action details', max_length=100)
     categories = blocks.BooleanBlock(default=True, required=False)
     court = blocks.CharBlock(max_length=150, required=True)
     institution_type = blocks.ChoiceBlock(choices=[
-            ('Nonbank', 'Nonbank'),
-            ('Bank', 'Bank')
-        ])
+        ('Nonbank', 'Nonbank'),
+        ('Bank', 'Bank')
+    ])
     status = blocks.ChoiceBlock(choices=[
-            ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
-            ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
-            ('Pending Litigation', 'Pending Litigation')
-        ])
+        ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
+        ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
+        ('Pending Litigation', 'Pending Litigation')
+    ])
     docket_number = blocks.CharBlock(max_length=100, required=True)
     topics = blocks.BooleanBlock(default=True, required=False)
     date_filed = blocks.DateBlock()
