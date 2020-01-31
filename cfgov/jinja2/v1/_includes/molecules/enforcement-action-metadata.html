@@ -15,13 +15,13 @@
 
    value.date_filed:            A date object
 
-   value.(court,                String values derieved from Char and Choice blocks
-          status,
+   value.(court,                String values derieved from
+          status,               Char and Choice blocks
           institution_type,
           docket_number)
 
-   value.(topics,               Struct values containing a header and
-         categories)            a boolean on whether to show the pages' topics/categories
+   value.(topics,               Boolean values to determine whether
+         categories)            to show the pages' topics/categories
 
    ========================================================================== #}
 
@@ -47,20 +47,16 @@
         </h2>
     </header>
     {% for key, val in value.items() %}
-        {% if value.topics and not value.topics.show_topics %}
+        {% if key == 'topics' and not value.topics %}
             {% continue %}
-        {% elif value.categories and not value.categories.show_categories %}
+        {% elif key == 'categories' and not value.categories %}
             {% continue %}
         {% elif key == 'slug' %}
             {% continue %}
         {% endif %}
         <div class="m-related-metadata_item-container">
             <h3 class="h4">
-            {% if key == 'categories'  or val == 'topics' %}
-              {{val.heading}}
-            {% else %}
               {{key.capitalize() | replace("_", " ")}}
-            {% endif %}
             </h3>
             {{macro_lookup[key](val)}}
         </div>
