@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   related_metadata.render()
+   enforcement_action_metadata.render()
 
    ==========================================================================
 
@@ -8,65 +8,61 @@
 
    Creates related metadata markup when given:
 
-   value:                              Object defined from a StreamField block.
+   value:                       Object defined from a StreamField block.
 
-   value.is_half_width:                A boolean indicating whether the
-                                       list items should be at half width.
-                                       Defaults to False.
+   value.slug:                  A string of text to use as a header
+                                for the entire module.
 
-   value.slug:                         A string of text to use as a header
-                                       for the entire module.
+   value.date_filed:            A date object
 
-   value.content:                      A list of metadata blocks.
+   value.(court,                String values derieved from Char and Choice blocks
+          status,
+          institution_type,
+          docket_number)
 
-   value.content[i].block_type:        String for a block type,
-                                       it should be date, list, text,
-                                       or topics.
-
-   value.content[i].value:             A date, list, text, or topics markup.
-
-   value.content[i].value.show_topics: A boolean for whether the
-                                       topic should be rendered.
-
-   value.content[i].value.heading:     A string for the heading on the related
-                                       metadata block
-                                       (date, list, text, or topic).
+   value.(topics,               Struct values containing a header and
+         categories)            a boolean on whether to show the pages' topics/categories
 
    ========================================================================== #}
 
 {% macro render(value) %}
 
 {# This references each of the private macros,
-   so _date(), _list(), _text(), and topics()
-   are called via type_lookup() while looping over this array. #}
-{% set types_lookup = {
-    'date':   _date,
-    'list':   _list,
-    'text':   _text,
+   so _date(), _text(), and topics()
+   are called for the appropriate keys #}
+{% set macro_lookup = {
+    'date_filed':   _date,
     'topics': _topics,
     'categories': _categories,
+    'institution_type':   _text,
+    'status':   _text,
+    'docket_number': _text,
+    'court': _text,
 } %}
-<div class="m-related-metadata
-            {{ 'm-related-metadata__half-width' if value.is_half_width else '' }}">
+
+<div class="m-related-metadata">
     <header class="m-slug-header">
         <h2 class="a-heading">
             {{ value.slug }}
         </h2>
     </header>
-    {# For each of the blocks render them if they're there except for Topics or Categories.
-       In that case, render only if the value `show_topics` is True. #}
-    {% for block in value.content %}
-        {% if 'topics' in block.block_type and not block.value.show_topics %}
+    {% for key, val in value.items() %}
+        {% if value.topics and not value.topics.show_topics %}
             {% continue %}
-        {% endif %}
-        {% if 'categories' in block.block_type and not block.value.show_categories %}
+        {% elif value.categories and not value.categories.show_categories %}
+            {% continue %}
+        {% elif key == 'slug' %}
             {% continue %}
         {% endif %}
         <div class="m-related-metadata_item-container">
             <h3 class="h4">
-                {{ block.value.heading }}
+            {% if key == 'categories'  or val == 'topics' %}
+              {{val.heading}}
+            {% else %}
+              {{key.capitalize() | replace("_", " ")}}
+            {% endif %}
             </h3>
-            {{ types_lookup[block.block_type](block.value) }}
+            {{macro_lookup[key](val)}}
         </div>
     {% endfor %}
 </div>
@@ -125,7 +121,7 @@
 {% macro _date(date) %}
 <p class="a-date">
     {% import 'macros/time.html' as time %}
-    {{ time.render(date.date, {'date':true}) }}
+    {{ time.render(date, {'date':true}) }}
 </p>
 {% endmacro %}
 
@@ -144,7 +140,7 @@
    ========================================================================== #}
 
 {% macro _text(text) %}
-    {{ text.blob | safe }}
+    {{ text | safe }}
 {% endmacro %}
 
 {# ==========================================================================
