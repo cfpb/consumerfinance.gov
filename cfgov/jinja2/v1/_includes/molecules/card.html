@@ -25,4 +25,19 @@
         <a href="{{ value.link_url }}">{{ value.link_text }}</a>
     </div>
 </article>
+
+{#
+    We want to make the whole card clickable on mobile
+    so we make a redundant card only for mobile
+    and hide the desktop version when we are on mobile.
+#}
+<a href="{{ value.link_url }}" class="m-card m-card__mobile">
+    <article>
+        <div class="m-card_icon">{{ svg_icon( value.icon ) }}</div>
+        <p>{{ value.text }}</p>
+        <div class="m-card_footer">
+            <span>{{ value.link_text }}</span>
+        </div>
+    </article>
+</a>
 {% endmacro %}
