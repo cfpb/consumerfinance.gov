@@ -35,6 +35,7 @@ export default function Home() {
       <Button icon={arrowRight} iconSide="right" onClick={nextPage}>Get started</Button>
       <br />
       <br />
+      <Link to="/calendar">Go to calendar</Link>
     </main>
   );
 }

@@ -13,6 +13,7 @@
     "clsx": "1.0.4",
     "copy-webpack-plugin": "5.1.1",
     "css-loader": "3.4.2",
+    "dot-prop": "5.2.0",
     "file-loader": "5.0.2",
     "idb": "5.0.0",
     "less-loader": "5.0.0",

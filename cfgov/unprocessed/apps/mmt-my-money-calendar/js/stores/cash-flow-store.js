@@ -24,8 +24,18 @@ export default class CashFlowStore {
    */
   @computed get eventsByDate() {
     return this.events.reduce((output, event) => {
-      const list = output.get(event.date) || [];
-      output.set(event.date, [...list, event]);
+      const key = event.dateTime.startOf('day').valueOf();
+      const list = output.get(key) || [];
+      output.set(key, [...list, event]);
+      return output;
+    }, new Map());
+  }
+
+  @computed get eventsByMonth() {
+    return this.events.reduce((output, event) => {
+      const key = event.dateTime.startOf('month').valueOf();
+      const list = output.get(key) || [];
+      output.set(key, [...list, event]);
       return output;
     }, new Map());
   }
@@ -61,6 +71,17 @@ export default class CashFlowStore {
 
     return totalInCents / 100;
   });
+
+  getTotalForDate = computedFn(function getTotalForDate(date) {
+    const events = this.getEventsForDate(date);
+    const totalInCents = events.reduce((total, event) => total + event.totalCents, 0);
+    return totalInCents / 100;
+  });
+
+  getEventsForDate(date) {
+    date = toDateTime(date);
+    return this.eventsByDate.get(date.startOf('day').valueOf());
+  }
 
   /**
    * Load all events from IndexedDB, sorted ascending by date, into the events array

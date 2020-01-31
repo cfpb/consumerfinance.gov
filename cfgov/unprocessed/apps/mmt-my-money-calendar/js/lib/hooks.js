@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useStore } from '../stores';
 
@@ -24,3 +24,8 @@ export function useWizardStep({
     });
   }, [location]);
 }
+
+export const useClickHandler = (cb, deps) => useCallback((evt) => {
+  evt.preventDefault();
+  cb(evt);
+}, deps);
