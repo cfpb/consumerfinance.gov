@@ -82,4 +82,42 @@
       font-size: .8rem;
     }
   }
+
+  &__day-symbols {
+    font-weight: bold;
+  }
+}
+
+.calendar-details {
+  &__events {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &__event,
+  &__total {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid @inactiveMonthColor;
+  }
+
+  &__total {
+    border-bottom: 0;
+  }
+
+  &__event-name,
+  &__event-total,
+  &__total-label,
+  &__total-value {
+    flex-basis: 50%;
+    width: 50%;
+  }
+
+  &__event-total,
+  &__total-value {
+    text-align: right;
+  }
 }
