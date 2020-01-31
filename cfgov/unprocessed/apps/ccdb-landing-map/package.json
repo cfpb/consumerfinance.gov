@@ -1,0 +1,21 @@
+{
+  "name": "ccdb-landing-map",
+  "description": "The landing page components for consumer complaints",
+  "homepage": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfpb/cfgov-refresh.git"
+  },
+  "license": "SEE LICENSE IN TERMS.md",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "dependencies": {
+    "cfpb-chart-builder": "^6.4.0"
+  }
+}
