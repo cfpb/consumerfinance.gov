@@ -11,7 +11,10 @@ function Day({ day, dateFormat = 'd' }) {
   const handleClick = useCallback(
     (evt) => {
       evt.preventDefault();
-      uiStore.setSelectedDate(day);
+
+      uiStore.selectedDate && day.equals(uiStore.selectedDate)
+        ? uiStore.clearSelectedDate()
+        : uiStore.setSelectedDate(day);
     },
     [day]
   );
@@ -29,7 +32,9 @@ function Day({ day, dateFormat = 'd' }) {
   return (
     <div className={classes} role="button" onClick={handleClick}>
       <div className="calendar__day-number">
-        <time dateTime={day.toFormat('y-MM-dd')} className="calendar__day-datetime">{day.toFormat(dateFormat)}</time>
+        <time dateTime={day.toFormat('y-MM-dd')} className="calendar__day-datetime">
+          {day.toFormat(dateFormat)}
+        </time>
       </div>
       <div className="calendar__day-balance">{formatCurrency(balance)}</div>
     </div>
