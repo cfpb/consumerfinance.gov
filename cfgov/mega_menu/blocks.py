@@ -13,8 +13,8 @@ class LinkBlock(blocks.StructBlock):
 
 
 class FeaturedLinkBlock(LinkBlock):
-    body = blocks.CharBlock(required=False)
-    image = ImageChooserBlock(required=False)
+    body = blocks.CharBlock()
+    image = ImageChooserBlock()
 
 
 class LinkWithIconBlock(LinkBlock):
