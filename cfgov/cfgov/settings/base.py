@@ -715,22 +715,37 @@ FLAGS = {
     # Used to hide new youth employment success pages prior to public launch.
     'YOUTH_EMPLOYMENT_SUCCESS': [],
 
-    # Release of prepaid agreements database search
+    # Release of prepaid agreements database search.
     'PREPAID_AGREEMENTS_SEARCH': [],
 
     # Used to hide CCDB landing page updates prior to public launch.
     'CCDB_CONTENT_UPDATES': [],
 
     # During a Salesforce system outage, the following flag should be enabled
-    # to alert users that the Collect community is down
+    # to alert users that the Collect community is down.
     'COLLECT_OUTAGE': [
-        {'condition': 'boolean', 'value': False},
         {
             'condition': 'path matches',
-            'value': (r'^/data-research/credit-card-data/terms-credit-card-plans-survey|'  # noqa: E501
-                      r'^/data-research/prepaid-accounts'),
+            'value': (r'^/data-research/credit-card-data/terms-credit-card-plans-survey/$|'  # noqa: E501
+                      r'^/data-research/prepaid-accounts/$'),
             'required': True
-        }
+        },
+        # Boolean to turn it off explicitly unless enabled by another condition
+        {'condition': 'boolean', 'value': False}
+    ],
+
+    # During a Salesforce system outage, the following flag
+    # should be enabled to alert users that
+    # the OMWI assessment form and inclusivity portal are down.
+    'OMWI_SALESFORCE_OUTAGE': [
+        {
+            'condition': 'path matches',
+            'value': (r'^/about-us/diversity-and-inclusion/$|'
+                      r'^/about-us/diversity-and-inclusion/self-assessment-financial-institutions/$'),  # noqa: E501
+            'required': True
+        },
+        # Boolean to turn it off explicitly unless enabled by another condition
+        {'condition': 'boolean', 'value': False}
     ],
 }
 

@@ -12,7 +12,7 @@ from v1.models.images import CFGOVRendition
 from v1.templatetags.app_urls import app_page_url, app_url
 from v1.templatetags.banners import (
     collect_outage_banner, complaint_issue_banner,
-    complaint_maintenance_banner
+    complaint_maintenance_banner, omwi_salesforce_outage_banner
 )
 from v1.templatetags.email_popup import email_popup
 from v1.templatetags.mega_menu import get_menu_items
@@ -101,6 +101,7 @@ class V1Extension(Extension):
             'collect_outage_banner': collect_outage_banner,
             'complaint_issue_banner': complaint_issue_banner,
             'complaint_maintenance_banner': complaint_maintenance_banner,
+            'omwi_salesforce_outage_banner': omwi_salesforce_outage_banner,
             'get_menu_items': get_menu_items,
             'get_model': get_model,
             'get_unique_id': get_unique_id,
