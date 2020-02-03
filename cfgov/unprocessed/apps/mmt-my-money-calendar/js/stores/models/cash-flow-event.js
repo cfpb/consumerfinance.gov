@@ -1,19 +1,20 @@
-import { observable, computed, action, extendObservable } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { RRule, rrulestr } from 'rrule';
 import * as yup from 'yup';
+import { DateTime } from 'luxon';
+import { asyncComputed } from 'computed-async-mobx';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
-import { DateTime } from 'luxon';
 
 export default class CashFlowEvent {
+  @observable originalEventID;
   @observable id;
   @observable name;
   @observable date;
   @observable category;
   @observable subcategory;
   @observable totalCents = 0;
-  @observable isRecurrence = false;
   @observable recurs = false;
   @observable recurrence;
   @observable errors;
@@ -148,16 +149,7 @@ export default class CashFlowEvent {
     return yup.object().shape(this.constructor.schema);
   }
 
-  @computed get asObject() {
-    const obj = transform(this.constructor.schema, (result, [key]) => {
-      result[key] = this[key];
-      return result;
-    });
-
-    if (!obj.id) delete obj.id;
-
-    return obj;
-  }
+  originalEvent = asyncComputed(undefined, 50, async () => await this.constructor.get(this.originalEventID));
 
   @computed get dateTime() {
     return DateTime.fromJSDate(this.date);
@@ -169,6 +161,10 @@ export default class CashFlowEvent {
 
   @computed get total() {
     return this.totalCents / 100;
+  }
+
+  set total(amount) {
+    this.totalCents = amount * 100;
   }
 
   @computed get recurrenceRule() {
@@ -210,7 +206,7 @@ export default class CashFlowEvent {
     await this.validate();
 
     const { tx, store } = await this.transaction('readwrite');
-    const key = await store.put(this.asObject);
+    const key = await store.put(this.toJS());
     await tx.complete;
 
     if (!this.id) this.setID(key);
@@ -239,7 +235,7 @@ export default class CashFlowEvent {
    * @returns {Promise<Object>} A promise resolving to the properties of the cash flow event if it's valid
    */
   validate() {
-    return this.yupSchema.validate(this.asObject);
+    return this.yupSchema.validate(this.toJS());
   }
 
   /**
@@ -259,5 +255,14 @@ export default class CashFlowEvent {
    */
   transaction(...args) {
     return this.constructor.transaction(...args);
+  }
+
+  toJS() {
+    return transform(this.constructor.schema, (result, [key, value]) => {
+      if (key === 'id' && !value) return result;
+
+      result[key] = this[key];
+      return result;
+    });
   }
 }
