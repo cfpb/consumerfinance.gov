@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.template import loader
 from django.utils.translation import get_language_from_request
 
@@ -27,7 +28,10 @@ def select_menu_for_context(context):
         request = context['request']
         language = get_language_from_request(request, check_path=True)
 
-    return Menu.objects.get(language=language)
+    try:
+        return Menu.objects.get(language=language[:2])
+    except Menu.DoesNotExist:
+        return Menu.objects.get(language=settings.LANGUAGE_CODE[:2])
 
 
 def mega_menu(context):

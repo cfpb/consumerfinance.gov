@@ -76,6 +76,11 @@ class MegaMenuTests(TestCase):
         html = self.render_mega_menu({'request': request, 'language': 'es'})
         self.assertIn('Spanish', html)
 
+    def test_unsupported_language_in_context_falls_back_to_default(self):
+        request = RequestFactory().get('/')
+        html = self.render_mega_menu({'request': request, 'language': 'fr'})
+        self.assertIn('English', html)
+
     def test_renders_in_single_database_query(self):
         request = RequestFactory().get('/')
         with self.assertNumQueries(1):
