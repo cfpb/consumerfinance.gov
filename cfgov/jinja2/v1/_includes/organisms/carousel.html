@@ -67,22 +67,20 @@
 #}
 {% macro render_carousel_thumbnail_mobile( item, is_selected=false ) %}
 <div class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{% endif %}">
-    <div class="o-carousel_thumbnail-layout">
-        <span class="o-carousel_thumbnail-visual">
-            <a href="{{ item.link_url }}">
+    <a href="{{ item.link_url }}" title="{{ item.title }}">
+        <div class="o-carousel_thumbnail-layout">
+            <span class="o-carousel_thumbnail-visual">
                 {% set rendition = image( item.image, 'fill-48x48' ) %}
                 <img class="o-carousel_thumbnail-img"
-                     src="{{ rendition.url }}"
-                     alt="{{ item.title }}"
-                     aria-hidden="true">
-            </a>
-        </span>
-        <span class="o-carousel_thumbnail-text">
-            <a href="{{ item.link_url }}">
+                        src="{{ rendition.url }}"
+                        alt="{{ item.title }}"
+                        aria-hidden="true">
+            </span>
+            <span class="o-carousel_thumbnail-text">
                 {{ item.title }}
-            </a>
-        </span>
-    </div>
+            </span>
+        </div>
+    </a>
 </div>
 {% endmacro %}
 
