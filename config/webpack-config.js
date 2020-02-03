@@ -10,6 +10,12 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
 
+/* This sets the default mode for webpack configurations to satisfy the need
+   of webpack to have a `mode` set.
+   This value gets overridden when NODE_ENV=development.
+   See the `if ( envvars.NODE_ENV === 'development' )` block below. */
+const WEBPACK_MODE_DEFAULT = 'production';
+
 /* Commmon webpack 'module' option used in each configuration.
    Runs code through Babel and uses global supported browser list. */
 const COMMON_MODULE_CONFIG = {
@@ -68,8 +74,8 @@ const STATS_CONFIG = {
 
 const commonConf = {
   cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: '[name]'
   },
@@ -86,13 +92,12 @@ const commonConf = {
 
 const externalConf = {
   cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: 'external-site.js'
   },
   optimization: {
-    minimize: true,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]
@@ -105,7 +110,7 @@ const externalConf = {
 
 const modernConf = {
   cache: true,
-  mode: 'production',
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: '[name]'
@@ -125,6 +130,7 @@ const modernConf = {
 };
 
 const onDemandHeaderRawConf = {
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
   resolve: {
     symlinks: false
@@ -133,8 +139,8 @@ const onDemandHeaderRawConf = {
 
 const appsConf = {
   cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: '[name]',
     jsonpFunction: 'apps'
@@ -155,8 +161,8 @@ const appsConf = {
 
 const spanishConf = {
   cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: 'spanish.js'
   },

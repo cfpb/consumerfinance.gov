@@ -268,15 +268,14 @@ those context variables can also be output with simple Jinja2 expression tags:
 #### Adding CSS
 
 If a component needs any custom styling not already provided
-by Capital Framework or cfgov-refresh,
+by the [Design System](https://github.com/cfpb/design-system) or cfgov-refresh,
 you can add it by creating a new
-[Less](http://lesscss.org/)
-file for the component.
+[Less](http://lesscss.org/) file for the component.
 
 !!! note
     Please be sure that you actually need new Less before creating it.
-    We have a wide array of styles already available in
-    [Capital Framework components](https://cfpb.github.io/capital-framework/components/) and
+    We have a wide array of styles already available in the
+    [Design System components](https://cfpb.github.io/design-system/components/) and
     [here in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/css),
     some of which could perhaps be combined to achieve your desired result.
     Also be sure that new component designs have gone through

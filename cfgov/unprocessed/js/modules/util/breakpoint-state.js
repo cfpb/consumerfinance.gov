@@ -2,7 +2,7 @@
    Get Breakpoint State
    ========================================================================== */
 
-import breakpointsConfig from 'cf-core/src/cf-vars-breakpoints';
+import breakpointsConfig from '@cfpb/cfpb-core/src/vars-breakpoints';
 import { getViewportDimensions } from './get-viewport-dimensions';
 
 /**

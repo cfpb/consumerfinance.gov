@@ -1,14 +1,7 @@
-import six
+import unittest
+from unittest import mock
 
 from django.core.management import call_command
-
-
-if six.PY2:  # pragma: no cover
-    import unittest
-    import mock
-else:  # pragma: no cover
-    import unittest
-    from unittest import mock
 
 
 class CommandTests(unittest.TestCase):
@@ -61,7 +54,7 @@ class CommandTests(unittest.TestCase):
         'paying_for_college.management.commands.'
         'update_via_api.update_colleges.update')
     def test_api_update(self, mock_update):
-        mock_update.return_value = ([], [], 'OK')
+        mock_update.return_value = ([], 'OK')
         call_command('update_via_api')
         self.assertTrue(mock_update.call_count == 1)
         call_command('update_via_api', '--school_id', '99999')

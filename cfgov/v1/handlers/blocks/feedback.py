@@ -41,6 +41,7 @@ class FeedbackHandler(Handler):
         self.block_value = block_value
 
     def sanitize_referrer(self):
+        """Skip referrer URLs that fail to encode or decode."""
         referrer = self.request.META.get('HTTP_REFERER', '')
         try:
             referrer.encode('utf8')

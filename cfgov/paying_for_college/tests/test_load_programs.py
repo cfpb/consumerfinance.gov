@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import six
+from unittest.mock import mock_open, patch
 
 import django
 
@@ -11,12 +11,6 @@ from paying_for_college.disclosures.scripts.load_programs import (
     read_in_data, read_in_s3, standardize_rate
 )
 from paying_for_college.models import Program, School
-
-
-if six.PY2:  # pragma: no cover
-    from mock import mock_open, patch
-else:  # pragma: no cover
-    from unittest.mock import mock_open, patch
 
 
 class TestLoadPrograms(django.test.TestCase):
@@ -160,13 +154,13 @@ class TestLoadPrograms(django.test.TestCase):
     def test_read_in_data(self):
         # mock_return = [{'a': 'd', 'b': 'e', 'c': 'f'}]
         m = mock_open(read_data='a,b,c\nd,e,f')
-        with patch("six.moves.builtins.open", m):
+        with patch("builtins.open", m):
             read_in_data('mockfile.csv')
         self.assertEqual(m.call_count, 1)
         # self.assertEqual(data, mock_return)
         # m2 = mock_open(read_data='a,b,c\nd,e,f')
         # m2.side_effect = UnicodeDecodeError
-        # with patch("six.moves.builtins.open", m2):
+        # with patch("builtins.open", m2):
         #     read_in_data('mockfile.csv')
         # self.assertEqual(m.call_count, 2)
         # self.assertEqual(data, mock_return)

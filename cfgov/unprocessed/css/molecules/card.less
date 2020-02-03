@@ -1,10 +1,30 @@
 .m-card {
-    // TODO: Use flexbox to make these all the same height when side-by-side
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 0;
+    box-sizing: border-box;
+    width: 100%;
     background: @white;
     border: 1px solid @gray-20;
     border-bottom-width: 3px;
     padding: unit( @grid_gutter-width / @base-font-size-px, em );
 
+    &_icon {
+        font-size: unit( 48px / @base-font-size-px, em );
+        margin-bottom: unit( 5px / @base-font-size-px, em );
+    }
+
+    &_footer {
+        margin-top: auto;
+    }
+
+    &_footer > a {
+        font-weight: 500;
+        border-bottom-width: 1px;
+    }
+
+    // TODO: Check if heading and body is used anywhere?
     &_heading {
         color: @green;
     }

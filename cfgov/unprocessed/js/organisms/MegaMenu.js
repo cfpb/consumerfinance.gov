@@ -67,7 +67,7 @@ function MegaMenu( element ) {
     _populateTreeFromDom( rootMenuDom, rootNode, _addMenu );
 
     // Initialize screen-size specific behaviors.
-    _desktopNav = new MegaMenuDesktop( _menus ).init();
+    _desktopNav = new MegaMenuDesktop( BASE_CLASS, _menus ).init();
     _mobileNav = new MegaMenuMobile( _menus ).init();
     _mobileNav.addEventListener(
       'rootExpandBegin',

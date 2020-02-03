@@ -4,7 +4,6 @@ import logging
 import os
 from pprint import pformat
 
-from django.utils import six
 from django.utils.encoding import force_str
 from django.views.debug import get_exception_reporter_filter
 
@@ -122,9 +121,9 @@ class CFGovErrorHandler(logging.Handler):
             '<%s\npath:%s,\nGET:%s,\nPOST:%s,\nCOOKIES:%s,\nMETA:%s>' % (
                 request.__class__.__name__,
                 path,
-                six.text_type(get),
-                six.text_type(post),
-                six.text_type(cookies),
-                six.text_type(meta)
+                str(get),
+                str(post),
+                str(cookies),
+                str(meta)
             )
         )

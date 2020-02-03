@@ -1,0 +1,858 @@
+
+// Import Design System's Atomic Component less file to get transition CSS.
+@import (less) '@cfpb/cfpb-atomic-component/src/utilities/transition/transition.less';
+
+// TODO: Move the theme variables to /enhancements/ for CF.
+/* topdoc
+  name: Theme variables
+  family: cf-core
+  notes:
+    - "The following color and sizing variables are exposed, allowing you to
+       easily override them before compiling."
+  patterns:
+    - name: Sizing
+      codenotes:
+        - |
+          @mobile_trigger_ht__px
+  tags:
+    - cf-core
+*/
+
+@mobile_trigger_ht__px: 54px;
+
+/* topdoc
+  name: Body Overflow
+  notes:
+    - "Hides menu overflow on mobile sizes."
+  patterns:
+    - name: Body
+      codenotes:
+        - |
+          body
+*/
+
+// TODO: Reduce global scope and reign it in to the menu only if possible.
+body {
+    .respond-to-max( @bp-sm-max, {
+        overflow-x: hidden;
+    } );
+}
+
+/* topdoc
+  name: Mega Menu
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <nav class="o-mega-menu"
+             role="navigation">
+            <h2 class="o-mega-menu_heading">
+                <button class="o-mega-menu_trigger" aria-expanded="false">
+                    <span class="u-visually-hidden">Main menu</span>
+                </button>
+            </h2>
+            <div class="o-mega-menu_content"
+                 aria-expanded="false">
+                <div class="o-mega-menu_content-wrapper">
+                    <div class="o-mega-menu_content-grid">
+                        <div class="o-mega-menu-lists">
+                            <ul class="o-mega-menu_content-list">
+                                <li class="o-mega-menu_content-item">
+                                    [Global Header CTA]
+                                </li>
+                                <li class="o-mega-menu_content-item">
+                                    <a class="o-mega-menu_content-link"
+                                        href="/about-us/"
+                                        aria-expanded="false">
+                                        About Us
+                                    </a>
+                                    <div class="o-mega-menu_content"
+                                            aria-expanded="false">
+                                        <div class="o-mega-menu_content-wrapper">
+                                            <div class="wrapper">
+                                                <button class="o-mega-menu_content-alt-trigger">
+                                                    Back
+                                                </button>
+                                                <div class="o-mega-menu_content-grid">
+                                                    <span class="o-mega-menu_content-overview">
+                                                        <h3 class="o-mega-menu_content-overview-heading">
+                                                            <a class="o-mega-menu_content-overview-link"
+                                                                href="/about-us/">
+                                                                About Us Overview
+                                                            </a>
+                                                        </h3>
+                                                    </span>
+                                                    <div class="o-mega-menu_content-lists">
+                                                        <ul class="m-list
+                                                                    m-list__unstyled
+                                                                    o-mega-menu_content-list">
+                                                            <li class="m-list_item
+                                                                        o-mega-menu_content-item">
+                                                                <a class="o-mega-menu_content-link"
+                                                                    href="/the-bureau/">
+                                                                    The Bureau
+                                                                    </a>
+                                                            </li>
+                                                            …
+                                                        </ul>
+                                                        <ul class="m-list
+                                                                    m-list__unstyled
+                                                                    o-mega-menu_content-list">
+                                                                <li class="m-list_item
+                                                                            o-mega-menu_content-item">
+                                                                    <a class="o-mega-menu_content-link__current
+                                                                                o-mega-menu_content-link"
+                                                                        href="/about-us/careers/">
+                                                                        Careers
+                                                                        </a>
+                                                                </li>
+                                                                …
+                                                        </ul>
+                                                        …
+                                                    </div>
+                                                </div>
+                                                <aside class="sub-nav_media">
+                                                    [Featured Menu Content]
+                                                </aside>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            [Global Eyebrow]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          nav.o-mega-menu
+            .o-mega-menu_heading
+                .o-mega-menu_trigger
+            .o-mega-menu_content
+                .o-mega-menu_content-wrapper
+                    .wrapper
+                        .o-mega-menu-content-grid
+                            .o-mega-menu_content-overview
+                                .o-mega-menu_content-overview-heading
+                                    .o-mega-menu_content-overview-link
+                            .o-mega-menu_content-title
+                                a.o-mega-menu_content-link
+                            .o-mega-menu_content-lists
+                                ul.o-mega-menu_content-list
+                                    li.o-mega-menu_content-item
+                                        .m-global-header-cta.m-global-header-cta__list
+                                    li.o-mega-menu_content-item
+                                        a.o-mega-menu_content-link
+                                    li.o-mega-menu_content-item
+                                        a.o-mega-menu_content-link
+                                        .o-mega-menu_content
+                                            .o-mega-menu_content-wrapper
+                                                .wrapper
+                                                    button.o-mega-menu_content-alt-trigger
+                                                    .o-mega-menu_content-grid
+                                                        .o-mega-menu_content-title
+                                                            a.o-mega-menu_content-link
+                                                        .o-mega-menu_content-lists
+                                                            ul.o-mega-menu_content-list
+                                                                li.o-mega-menu_content-item
+                                                            ul.o-mega-menu_content-list
+                                                                li.o-mega-menu_content-item
+                                                    aside.sub-nav_media
+      notes:
+        - "Not shown, but each content level adds a depth-specific class,
+           such as o-mega-menu_content-1, o-mega-menu_content-2, etc."
+  tags:
+    - cfgov-organisms
+*/
+
+@menu_max_width_px: 1200px;
+
+.o-mega-menu-var-1 {
+
+    &_heading {
+        // Override h2 element styles.
+        margin: 0;
+        font-size: 1em;
+    }
+
+    ul ul {
+        // Override margin added by CF between lists.
+        margin-top: 0;
+    }
+
+    &_content-item {
+        // Override margin added by CF to list items.
+        margin-bottom: 0;
+    }
+
+    &_content {
+        &-overview-heading {
+            margin-bottom: 0;
+            font-size: unit( @base-font-size-px / @base-font-size-px, em );
+            font-weight: normal;
+        }
+    }
+
+    &_content-link {
+        // Hide the ">" icon next to menu items on desktop.
+        .cf-icon-svg {
+            display: none;
+        }
+    }
+
+    // 1st-level menu.
+    &_content-1 {
+        &-link {
+            // Colors for :link, :visited, :hover, :focus, :active.
+            .u-link__colors( @black );
+
+            display: block;
+        }
+    }
+
+    // 2nd and 3rd-level menus.
+    &_content-2,
+    &_content-3 {
+        &-overview {
+            display: block;
+            border-bottom: 1px solid @gray-40;
+
+            .u-link__disabled {
+                color: @gray !important;
+            }
+        }
+
+        &-link,
+        &-overview-link {
+            // Colors for :link, :visited, :hover, :focus, :active.
+            .u-link__colors( @pacific, @black );
+
+            display: block;
+        }
+    }
+
+    // Mobile sizes.
+    .respond-to-max( @bp-xs-max, {
+        &_trigger {
+            margin-left: -15px;
+        }
+    } );
+
+    // Tablet sizes.
+    .respond-to-range( @bp-sm-min, @bp-sm-max, {
+        &_trigger {
+            margin-left: -30px;
+        }
+    } );
+
+    // Tablet/mobile sizes.
+    .respond-to-max( @bp-sm-max, {
+        &_trigger {
+            display: none;
+            height: @mobile_trigger_ht__px;
+            min-width: @mobile_trigger_ht__px;
+            padding-top: 14px;
+            padding-bottom: 14px;
+
+            position: absolute;
+            top: 0;
+            z-index: 20;
+
+            background: @white;
+            border: none;
+            border-right: 1px solid @gray-40;
+            color: @black;
+            font-size: 18px;
+
+            .js & {
+                display: block;
+            }
+
+            &:focus {
+                outline: 1px dotted @black;
+            }
+
+            .o-mega-menu-var-1_trigger-close {
+                display: none;
+            }
+
+            .o-mega-menu-var-1_trigger-open {
+                display: block;
+            }
+
+            &[aria-expanded="true"] {
+                background: @gray-10;
+                border-left: 1px solid @gray-40;
+                border-right: 1px solid @gray-40;
+                color: @black;
+
+                .o-mega-menu-var-1_trigger-close {
+                    display: block;
+                }
+
+                .o-mega-menu-var-1_trigger-open {
+                    display: none;
+                }
+            }
+
+        }
+
+        // Menu flyout.
+        // All menus - Tablet/Mobile.
+        &_content {
+            .u-drop-shadow-after();
+
+            display: none;
+            box-sizing: border-box;
+            width: 100%;
+
+            background-color: @gray-5;
+            border: 1px solid @gray-40;
+
+            .js & {
+                position: absolute;
+                left: 0;
+                top: -1px;
+                z-index: 10;
+            }
+
+            &.u-is-animating,
+            &[aria-expanded="true"] {
+                display: block;
+            }
+
+            &-alt-trigger {
+                display: block;
+                width: 100%;
+                padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                border: none;
+                border-bottom: 1px solid @gray-40;
+                position: relative;
+                background-color: @gray-10;
+                font-weight: 500;
+                text-align: left;
+                text-transform: uppercase;
+
+                &:focus {
+                    outline: 1px dotted @black;
+                }
+
+                .cf-icon-svg {
+                    margin-right: 0.6em;
+                }
+            }
+
+            &-overview {
+                display: block;
+                border-bottom: 1px solid @gray-40;
+            }
+
+            // Adjust padding and margin on unordered list menu items
+            // above the global eyebrow.
+            &-list {
+                padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                margin-bottom: 0;
+            }
+
+            &-item {
+                border-bottom: 1px solid @gray-40;
+            }
+
+            // Ensure desktop link icons don't appear at mobile.
+            &-link {
+                &-icon-closed .cf-icon-svg,
+                &-icon-open .cf-icon-svg {
+                    display: none !important;
+                }
+            }
+
+            &-link,
+            &-overview-link {
+                position: relative;
+                // Colors for :link, :visited, :hover, :focus, :active.
+                .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
+
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
+                .js & {
+                    &__has-children .cf-icon-svg {
+                        display: block;
+
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY( -50% );
+
+                        fill: @green;
+                    }
+                }
+
+                &__current,
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            &-overview-heading-text {
+                display: block;
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            }
+
+        }
+
+        // 1st-level menu - Tablet/Mobile.
+        &_content-1 {
+            .js & {
+                // Offset for height of trigger button.
+                top: @mobile_trigger_ht__px;
+            }
+            display: block;
+
+            &-list {
+                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            }
+
+            // Remove final border line of last list item.
+            &-list:last-child {
+                .o-mega-menu-var-1_content-1-item:last-child {
+                    border-bottom: none;
+                }
+            }
+
+            // TODO: Remove when Consumer Tools and Ed Resources links are in.
+            // Overrides disabled link styles.
+            &-link.u-link__disabled {
+                color: @pacific !important;
+
+                &:hover {
+                    color: @pacific-60 !important;
+                    cursor: pointer !important;
+                }
+            }
+        }
+
+        // 2nd-level menu - Tablet/Mobile.
+        &_content-2 {
+
+            // TODO: Enable or delete when non-clickable
+            //       current page link is in.
+            //       The problem is sections with a 3rd
+            //       level need to remain links and the
+            //       overview link is what needs to be disabled.
+            // Make current page menu link non-clickable.
+            // &-link,
+            // &-overview-link {
+            //    &__current,
+            //    &__current:hover {
+            //        color: @black;
+            //        cursor: default;
+            //    }
+            // }
+
+            // Remove final border line of last list item.
+            &-list:last-child {
+                .o-mega-menu-var-1_content-2-item:last-child {
+                    border-bottom: none;
+                }
+            }
+        }
+
+        // 3rd-level menu - Tablet/Mobile.
+        &_content-3 {
+            // TODO: There is similar code set on all three menus.
+            //       Investigate if it can be combined.
+            // Remove final border line of last list item.
+            &-list:last-child {
+                .o-mega-menu-var-1_content-3-item:last-child {
+                    border-bottom: none;
+                }
+            }
+        }
+
+        // Submenus - Tablet/Mobile.
+        &_content-2,
+        &_content-3 {
+            .u-move-right();
+            position: absolute;
+            left: 0;
+            top: -1px;
+            z-index: 10;
+
+            &-grid {
+                padding-left: unit( @grid_gutter-width / 2 / 18px, em );
+                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            }
+        }
+
+        // Group heading - Tablet/Mobile
+        &_group-heading {
+            margin-top: @grid_gutter-width;
+
+            &__hidden {
+                .u-visually-hidden;
+            }
+
+            // add border between title and following list
+            &:not(&__hidden) + ul {
+                border-top: 1px solid @gray-40;
+            }
+        }
+
+    } );
+
+    // Desktop sizes. 901px.
+    .respond-to-min( @bp-med-min, {
+        position: relative;
+
+        // Horizontal rule to overlay on top of header rule so that
+        // rule isn't hidden when menu opens.
+        &:after {
+            position: absolute;
+            bottom: 0;
+            left: -@grid_gutter-width;
+            display: block;
+            z-index: 20;
+            width: @menu_max_width_px + ( @grid_gutter-width * 2 );
+            height: 1px;
+            content: '';
+            box-shadow: 0px 1px 0px 0px @gray-40;
+        }
+
+        &_trigger {
+            display: none;
+        }
+
+        // 1st-level menu - Desktop.
+        &_content-1 {
+            &[aria-expanded="true"] {
+                .o-mega-menu-var-1_content-1-wrapper {
+                    display: block;
+                    transform: translateY( 0 );
+                }
+            }
+
+            &-list {
+                margin-bottom: 0;
+                // Truncate the expanded menu to this element.
+                position: relative;
+            }
+
+            &-item {
+                display: inline-block;
+                margin-right: 0;
+
+                .no-js &:hover {
+                    .o-mega-menu-var-1_content-2 {
+                        display: block;
+                    }
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+
+            &-link {
+                // Override global link styling.
+                &:hover,
+                &:active,
+                &:focus,
+                &:visited {
+                    border-color: transparent;
+                    border-bottom: none;
+                }
+
+                position: relative;
+                z-index: 30;
+                padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-right: unit( 24px / @base-font-size-px, em );
+                border-top: 1px solid transparent;
+                border-right: 1px solid transparent;
+                border-left: 1px solid transparent;
+
+                font-size: unit( 16px / @base-font-size-px, em );
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                // A main nav label has been selected and the menu is expanded.
+                &[aria-expanded="true"],
+                &:active {
+                    position: relative;
+                    top: 1px;
+                    background-color: @gray-5;
+                    border: 1px solid @gray-40;
+                    border-bottom: none;
+                }
+
+                &:hover {
+                    padding-bottom: ( @grid_gutter-width / 2) - 6px;
+                    border-bottom: 6px solid @green;
+                    cursor: pointer;
+                }
+
+                // Don't show hover when menu is expanded.
+                &[aria-expanded="true"]:hover,
+                &:active:hover {
+                    border-bottom: none;
+                    padding-bottom: @grid_gutter-width / 2
+                }
+
+                &:focus {
+                    outline-offset: 2px;
+                }
+
+                &[aria-expanded="true"]:focus {
+                    outline: none;
+                    box-shadow: 0 -4px 5px 0 @pacific-40,
+                                -5px -2px 5px 0 @pacific-40,
+                                5px -2px 5px 0 @pacific-40;
+
+                    &:after {
+                        position: absolute;
+                        bottom: -5px;
+                        left: 0;
+                        display: block;
+                        content: '';
+                        width: 100%;
+                        height: 5px;
+                        background: @gray-5;
+                    }
+                }
+
+                &-icon-closed .cf-icon-svg,
+                &-icon-open .cf-icon-svg {
+                    position: absolute;
+                    right: 10px;
+                    top: 19px;
+                    font-size: unit( 10px / @base-font-size-px, em );
+                }
+
+                &-icon-closed .cf-icon-svg {
+                    display: inline-block;
+                }
+
+                &[aria-expanded="true"] &-icon-open .cf-icon-svg {
+                    display: inline-block;
+                }
+
+                &[aria-expanded="true"] &-icon-closed .cf-icon-svg {
+                    display: none;
+                }
+            }
+        }
+
+        // 2nd-level menu - Desktop.
+        &_content-2 {
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            z-index: 10;
+
+            // Featured menu content is link items with icons.
+            &-list__featured {
+
+                // Hide the featured menu content area at smaller screen sizes.
+                display: table-cell;
+
+                & .cf-icon-svg {
+                    display: inline;
+                    color: @pacific;
+                    margin-right: 10px;
+                }
+            }
+
+            &-list__featured li {
+                // Align the icon and text.
+                display: flex;
+                align-items: baseline;
+            }
+
+            &-list__featured li:not( &-list__featured-item ) {
+                padding-left: 13px;
+            }
+
+            // Featured item has a highlight box around it.
+            &-list__featured-item {
+                // Style the featured item box.
+                padding: 10px;
+                padding-top: 30px;
+                padding-bottom: 30px;
+                margin-bottom: 30px;
+                border: 1px solid @gray-40;
+                border-top: 6px solid @gold;
+
+                & .cf-icon-svg {
+                    color: @gold;
+                }
+
+                & a:hover {
+                    // For featured item,
+                    // remove default green left bar hover state of menu links.
+                    border-left-color: transparent;
+                }
+            }
+
+            .no-js & {
+                display: none;
+            }
+
+            &[aria-expanded="true"] {
+                overflow: visible;
+
+                .o-mega-menu-var-1_content-2-wrapper {
+                    display: block;
+                }
+            }
+
+            &-wrapper {
+                background-color: @gray-5;
+                border: 1px solid @gray-40;
+                box-shadow: 0 5px 5px 0px rgba( 0, 0, 0, 0.2 );
+
+                padding: unit( @grid_gutter-width / @base-font-size-px, em );
+                padding-top: unit( 20px / @base-font-size-px, em );
+                padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+            }
+
+            &-alt-trigger {
+                display: none;
+            }
+
+            &-overview {
+                padding-bottom: @grid_gutter-width / 2;
+                margin-bottom: @grid_gutter-width;
+                font-size: unit( 18px / @base-font-size-px, em );
+
+                &-heading {
+                    padding-top: 0;
+                }
+
+                &-link {
+                    display: inline-block;
+                }
+            }
+
+            &-lists {
+                display: table;
+                margin-top: unit( 10px / @base-font-size-px, em );
+            }
+
+            &-list {
+                display: table-cell;
+                width: 25%;
+                vertical-align: top;
+                padding-right: 10px;
+            }
+
+            &-list:last-child {
+                padding-right: 0;
+            }
+
+            &-grid {
+                padding-left: @grid_gutter-width;
+            }
+
+            &-link,
+            &-overview-link {
+                position: relative;
+                left: unit( -15px / 18px, em );
+                padding-top: unit( 10px / 18px, em );
+                padding-bottom: unit( 10px / 18px, em );
+                padding-left: unit( 10px / 18px, em );
+
+                border-left: 5px solid transparent;
+                font-size: unit( 16px / @base-font-size-px, em );
+
+                &:hover,
+                &__current,
+                &__current:visited {
+                    color: @black;
+                    border-left-color: @green;
+                }
+
+                &__current:hover,
+                &__current,
+                &__current:visited {
+                    cursor: default;
+                }
+            }
+        }
+
+        // 3rd-level menu - Desktop.
+        &_content-3 {
+            display: none;
+        }
+
+        &_group-heading__hidden {
+            visibility: hidden;
+        }
+
+        // Hide global header CTA container and eyebrow at desktop size.
+        &_content-1-item:first-child,
+        .m-global-eyebrow {
+            display: none;
+        }
+    } );
+
+    // Large desktop size. 1021px. Not currently used.
+    /*.respond-to-min( @bp-lg-min, { } );*/
+
+    // Xtra-Large desktop size. 1261px.
+    .respond-to-min( @bp-xl-min + @grid_gutter-width, {
+        left: unit( -16px / @base-font-size-px, em );
+        width: @menu_max_width_px;
+
+        &_content-1 {
+            &-item {
+                margin-right: @grid_gutter-width * 2;
+            }
+        }
+
+        &_content-2 {
+            left: -@grid_gutter-width;
+            width: @menu_max_width_px + ( @grid_gutter-width * 2 );
+        }
+
+    } );
+}
+
+.o-mega-menu-var-1 {
+    // Tab trigger is used to capture press of the tab key so that
+    // global search can be collapsed when it hits this element.
+    &_tab-trigger {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+}
+
+.no-js .o-mega-menu-var-1 {
+    // JS isn't available to remove u-hidden class, so override it.
+    &.u-hidden {
+      display: block;
+    }
+}
+
+// Hide on print.
+.respond-to-print( {
+    .o-mega-menu-var-1 {
+        display: none;
+    }
+} );
+
+
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

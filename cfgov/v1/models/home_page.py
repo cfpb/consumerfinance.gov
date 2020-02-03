@@ -1,251 +1,40 @@
 # -*- coding: utf8 -*-
 from django.db import models
-from django.db.models import Q
+from django.utils.safestring import mark_safe
 
 from wagtail.wagtailadmin.edit_handlers import (
-    InlinePanel, ObjectList, PageChooserPanel, StreamFieldPanel,
-    TabbedInterface
+    FieldPanel, InlinePanel, ObjectList, StreamFieldPanel, TabbedInterface
+)
+from wagtail.wagtailadmin.forms import (
+    WagtailAdminModelFormMetaclass, WagtailAdminPageForm
 )
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailcore.models import Orderable, PageManager
+from wagtail.wagtailimages import get_image_model_string
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 
 from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 
 from v1.atomic_elements import molecules
 from v1.models.base import CFGOVPage
-from v1.util import ref
 
 
-"""Placeholder until these are exposed in the Wagtail admin."""
-_placeholder_carousel_image_url = (
-    'https://files.consumerfinance.gov/f/original_images/'
-    'cfpb_mayg_bookshelf_puppy-in-the-window.jpg'
-)
+# These classes are used to add support for nested InlinePanels, and are
+# referenced by HomePage.base_form_class. This workaround comes from
+# https://github.com/wagtail/wagtail/issues/5511. Proper support for nested
+# inline panels in Wagtail won't be added until version 2.8, see
+# https://github.com/wagtail/wagtail/pull/5566.
+class HomePageFormMetaclass(WagtailAdminModelFormMetaclass):
+    @classmethod
+    def child_form(cls):
+        return HomePageForm
 
 
-_placeholder_carousel_image = {
-    'url': _placeholder_carousel_image_url,
-    'alt_text': 'Alt text goes here',
-    'thumbnail_url': _placeholder_carousel_image_url,
-}
-
-
-_carousel_items_by_language = {
-    'en': [
-        {
-            'title': 'Start Small, Save Up',
-            'body': (
-                'Whether you want to put money aside for unexpected expenses '
-                'or make a plan to save for your future goals, we have '
-                'resources that can help.'
-            ),
-            'link': {
-                'text': 'Learn how to get started',
-                'url': '/start-small-save-up/',
-            },
-            'image': _placeholder_carousel_image,
-        },
-        {
-            'title': 'Tax time',
-            'body': (
-                'Take advantage of the time when you are filing your tax '
-                'return to set aside a portion of your refund towards savings.'
-            ),
-            'link': {
-                'text': 'Learn more about tax time savings',
-                'url': '/about-us/blog/tax-time-saving-tips/',
-            },
-            'image': _placeholder_carousel_image,
-        },
-        {
-            'title': 'Building a Bridge to Credit Visibility Symposium',
-            'body': (
-                'Mark your Calendar to join the Bureau for a day-long '
-                'symposium on September 17, 2018, from 8:00am to 4:45pm'
-            ),
-            'link': {
-                'text': 'Learn more about this event',
-                'url': (
-                    '/about-us/events/archive-past-events'
-                    '/building-bridge-credit-visibility/'
-                ),
-            },
-            'image': _placeholder_carousel_image,
-        },
-        {
-            'title': 'Equifax data breach updates',
-            'body': (
-                'Today the CFPB, FTC and States Announced Settlement with '
-                'Equifax Over 2017 Data Breach.'
-            ),
-            'link': {
-                'text': 'Find out more details',
-                'url': '/equifax-settlement/',
-            },
-            'image': _placeholder_carousel_image,
-        },
-    ],
-}
-
-
-# TODO: Add real carousel content for Spanish.
-_carousel_items_by_language['es'] = _carousel_items_by_language['en']
-
-
-"""Placeholder until these are exposed in the Wagtail admin."""
-_info_units_by_language = {
-    'en': [
-        {
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
-            },
-            'heading': {
-                'text': 'Empowering Consumers',
-                'level': 'h3',
-            },
-            'body': (
-                'We produce innovation products to help consumers make '
-                'informed financial decisions and choose products and '
-                'services that fit their needs.'
-            ),
-            'links': [
-                {
-                    'text': 'Consumer tools',
-                    'url': '/consumer-tools/',
-                },
-            ],
-        },
-        {
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
-            },
-            'heading': {
-                'text': 'Rules of the Road',
-                'level': 'h3',
-            },
-            'body': (
-                'We create clear rules to implement the law and preserve '
-                'choices for consumers.'
-            ),
-            'links': [
-                {
-                    'text': 'Rulemaking',
-                    'url': '/policy-compliance/rulemaking/',
-                },
-                {
-                    'text': 'Notice and Opportunities to Comment',
-                    'url': '/policy-compliance/notice-opportunities-comment/'
-                },
-            ],
-        },
-        {
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
-            },
-            'heading': {
-                'text': 'Enforcing the Law',
-                'level': 'h3',
-            },
-            'body': (
-                'We enforce federal consumer financial laws by investigating '
-                'cases of potential wrongdoing and taking action.'
-            ),
-            'links': [
-                {
-                    'text': 'Enforcement',
-                    'url': '/policy-compliance/enforcement/',
-                },
-                {
-                    'text': 'Payments to harmed consumers',
-                    'url': '/about-us/payments-harmed-consumers/',
-                }
-            ],
-        },
-        {
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
-            },
-            'heading': {
-                'text': 'Learning through data and research',
-                'level': 'h3',
-            },
-            'body': (
-                u'We publish research and information we’ve collected above '
-                u'the consumer financial marketplace.'
-            ),
-            'links': [
-                {
-                    'text': 'Data and Research',
-                    'url': '/data-research/',
-                },
-                {
-                    'text': 'Financial Well-being survey',
-                    'url': '/data-research/financial-well-being-survey-data/',
-                },
-            ],
-        },
-        {
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
-            },
-            'heading': {
-                'text': 'Supervision',
-                'level': 'h3',
-            },
-            'body': (
-                'We supervise financial companies to ensure compliance with '
-                'federal consumer laws.'
-            ),
-            'links': [
-                {
-                    'text': 'Compliance and Guidance',
-                    'url': '/policy-compliance/guidance/',
-                },
-                {
-                    'text': 'Supervisory Highlights',
-                    'url': (
-                        '/policy-compliance/guidance/supervisory-highlights/'
-                    ),
-                },
-            ],
-        },
-        {
-            'image': {
-                'alt': 'Alt text goes here',
-                'upload': 2485,
-            },
-            'heading': {
-                'text': 'Events',
-                'level': 'h3',
-            },
-            'body': (
-                'We host conferences, workshops, townhalls, symposiums, and '
-                'Advisory Committee meetings.'
-            ),
-            'links': [
-                {
-                    'text': 'Archive of Events',
-                    'url': '/about-us/events/archive-past-events/',
-                },
-                {
-                    'text': 'Request a Speaker',
-                    'url': '/about-us/events/request-speaker/',
-                },
-            ],
-        },
-    ],
-}
-
-
-# TODO: Add real info unit content for Spanish.
-_info_units_by_language['es'] = _info_units_by_language['en']
+class HomePageForm(WagtailAdminPageForm, metaclass=HomePageFormMetaclass):
+    pass
 
 
 class HomePage(CFGOVPage):
@@ -254,24 +43,28 @@ class HomePage(CFGOVPage):
         ('half_width_link_blob', molecules.HalfWidthLinkBlob()),
     ], blank=True)
 
+    card_heading = models.CharField(max_length=40, null=True, blank=True)
+
     # General content tab
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('header'),
-        InlinePanel(
-            'excluded_updates',
-            label='Pages excluded from Latest Updates',
-            help_text=('This block automatically displays the six most '
-                       'recently published blog posts, press releases, '
-                       'speeches, testimonies, events, or op-eds. If you want '
-                       'to exclude a page from appearing as a recent update '
-                       'in this block, add it as an excluded page.')
-        ),
-    ]
+    content_panels = CFGOVPage.content_panels + [StreamFieldPanel('header')]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList([
+            InlinePanel(
+                'carousel_items', min_num=4, max_num=4, label="Carousel Item"
+            ),
+        ], heading='Carousel'),
+        ObjectList([
+            InlinePanel(
+                'info_units', min_num=6, max_num=6, label="Info Unit"
+            ),
+        ], heading='Info Units'),
+        ObjectList([
+            FieldPanel('card_heading'),
+            InlinePanel('cards', min_num=3, max_num=3, label="Card"),
+        ], heading='Cards'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
@@ -282,73 +75,162 @@ class HomePage(CFGOVPage):
 
     search_fields = CFGOVPage.search_fields + [index.SearchField('header')]
 
+    base_form_class = HomePageForm
+
     @property
     def page_js(self):
         return super(HomePage, self).page_js + ['home-page.js']
 
-    def get_category_name(self, category_icon_name):
-        cats = dict(ref.limited_categories)
-        return cats[str(category_icon_name)]
-
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
+
         context.update({
-            'carousel_items': self.get_carousel_items(),
-            'info_units': self.get_info_units(),
-            'latest_updates': self.get_latest_updates(request),
+            'carousel_items': self.carousel_items.select_related('image'),
+            'info_units': [
+                info_unit.as_info_unit()
+                for info_unit in
+                self.info_units.select_related('image')
+            ],
+            'card_heading': self.card_heading,
+            'cards': self.cards.all(),
         })
+
         return context
 
-    def get_carousel_items(self):
-        return _carousel_items_by_language[self.language]
-
-    def get_info_units(self):
-        return [
-            molecules.InfoUnit().to_python(info_unit)
-            for info_unit in _info_units_by_language[self.language]
-        ]
-
-    def get_latest_updates(self, request):
-        # TODO: There should be a way to express this as part of the query
-        # rather than evaluating it in Python.
-        excluded_updates_pks = [
-            e.excluded_page.pk for e in self.excluded_updates.all()
-        ]
-
-        latest_pages = CFGOVPage.objects.in_site(
-            request.site
-        ).exclude(
-            pk__in=excluded_updates_pks
-        ).filter(
-            Q(content_type__app_label='v1') & (
-                Q(content_type__model='blogpage') |
-                Q(content_type__model='eventpage') |
-                Q(content_type__model='newsroompage')
-            ),
-            live=True,
-        ).distinct().order_by(
-            '-first_published_at'
-        )[:6]
-
-        return latest_pages
-
     def get_template(self, request):
-        if flag_enabled('NEW_HOME_PAGE', request=request):
-            return 'home-page/index_new.html'
+        if (
+            self.language == 'en' or
+            flag_enabled('NEW_HOME_PAGE', request=request)
+        ):
+            return 'home-page/index.html'
         else:
             return 'home-page/index_%s.html' % self.language
 
 
-class HomePageExcludedUpdates(models.Model):
+class HomePageCarouselItem(Orderable):
     page = ParentalKey(
-        HomePage, on_delete=models.CASCADE, related_name='excluded_updates'
+        'v1.HomePage', on_delete=models.CASCADE, related_name='carousel_items'
     )
-    excluded_page = models.ForeignKey(
-        CFGOVPage, on_delete=models.CASCADE, related_name='+'
+    title = models.CharField(max_length=45, help_text=(
+        "45 characters maximum (including spaces). "
+        "Sentence case, unless proper noun."
+    ))
+    body = models.TextField(max_length=160, help_text=(
+        "160 characters maximum (including spaces)."
+    ))
+    link_text = models.CharField(max_length=35, help_text=(
+        "35 characters maximum (including spaces). "
+        "Lead with a verb, and be specific."
+    ))
+    # TODO: Change this to use a URLField that also allows relative links.
+    # https://code.djangoproject.com/ticket/10896
+    link_url = models.CharField("Link URL", max_length=255)
+    image = models.ForeignKey(
+        get_image_model_string(),
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='+'
     )
 
     panels = [
-        PageChooserPanel('excluded_page'),
+        FieldPanel('title'),
+        FieldPanel('body'),
+        FieldPanel('link_text'),
+        FieldPanel('link_url'),
+        ImageChooserPanel('image'),
+    ]
+
+
+class HomePageInfoUnit(Orderable, ClusterableModel):
+    page = ParentalKey(
+        'v1.HomePage', on_delete=models.CASCADE, related_name='info_units'
+    )
+    title = models.CharField(max_length=35, help_text=(
+        "35 characters maximum (including spaces). "
+        "Sentence case, unless proper noun."
+    ))
+    body = models.TextField(max_length=140, help_text=(
+        "140 characters maximum (including spaces)."
+    ))
+    image = models.ForeignKey(
+        get_image_model_string(),
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='+'
+    )
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('body'),
+        ImageChooserPanel('image'),
+        # Note: this min_num=1 doesn't seem to work properly, allowing users to
+        # save new info units without providing links. This might be due to the
+        # incomplete support for nested InlinePanels in our version of Wagtail.
+        # See comments above and https://github.com/wagtail/wagtail/pull/5566.
+        InlinePanel('links', min_num=1, label="Link"),
+    ]
+
+    def as_info_unit(self):
+        """Convert model instance into data for molecules.InfoUnit.
+
+        This allows us to use the existing InfoUnit template to render this
+        model instance.
+        """
+        return {
+            'image': {
+                'upload': self.image,
+            },
+            'heading': '<h3>%s</h3>' % self.title,
+            'body': self.body,
+            'links': [
+                {
+                    'text': link.text,
+                    'url': link.url,
+                } for link in self.links.all()
+            ],
+        }
+
+
+class HomePageInfoUnitLink(Orderable):
+    info_unit = ParentalKey(
+        'v1.HomePageInfoUnit', on_delete=models.CASCADE, related_name='links'
+    )
+    text = models.CharField(max_length=40, help_text=(
+        "40 characters maximum (including spaces)."
+    ))
+    # TODO: Change this to use a URLField that also allows relative links.
+    # https://code.djangoproject.com/ticket/10896
+    url = models.CharField("URL", max_length=255)
+
+    panels = [
+        FieldPanel('text'),
+        FieldPanel('url'),
+    ]
+
+
+class HomePageCard(Orderable):
+    page = ParentalKey(
+        'v1.HomePage', on_delete=models.CASCADE, related_name='cards'
+    )
+    icon = models.CharField(max_length=64, help_text=mark_safe(
+        '<a href='
+        '"https://cfpb.github.io/design-system/foundation/iconography"'
+        '>See full list of icon names.</a>'
+    ))
+    text = models.TextField(max_length=100, help_text=(
+        "100 characters maximum (including spaces)."
+    ))
+    link_text = models.CharField(max_length=25, help_text=(
+        "25 characters maximum (including spaces)."
+    ))
+    # TODO: Change this to use a URLField that also allows relative links.
+    link_url = models.CharField("Link URL", max_length=255)
+
+    panels = [
+        FieldPanel('icon'),
+        FieldPanel('text'),
+        FieldPanel('link_text'),
+        FieldPanel('link_url'),
     ]
 
 

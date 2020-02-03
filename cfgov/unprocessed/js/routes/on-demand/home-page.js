@@ -7,6 +7,6 @@ import Carousel from '../../organisms/Carousel.js';
 const carouselDom = document.querySelector( `.${ Carousel.BASE_CLASS }` );
 
 if ( carouselDom ) {
-    const carousel = new Carousel( carouselDom );
-    carousel.init();
+  const carousel = new Carousel( carouselDom );
+  carousel.init();
 }
