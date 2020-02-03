@@ -725,7 +725,12 @@ FLAGS = {
     # to alert users that the Collect community is down
     'COLLECT_OUTAGE': [
         {'condition': 'boolean', 'value': False},
-        {'condition': 'path matches', 'value': r'^/data-research/credit-card-data/terms-credit-card-plans-survey|^/data-research/prepaid-accounts', 'required': True}
+        {
+            'condition': 'path matches',
+            'value': (r'^/data-research/credit-card-data/terms-credit-card-plans-survey|'  # noqa: E501
+                      r'^/data-research/prepaid-accounts'),
+            'required': True
+        }
     ],
 }
 
