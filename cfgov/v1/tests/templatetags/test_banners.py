@@ -7,13 +7,29 @@ from django.utils import dateparse, timezone
 from flags.sources import get_flags
 
 
+class TestCollectOutageBannerTag(SimpleTestCase):
+
+    def render(self, path):
+        request = RequestFactory().get(path)
+        request.flag_conditions = get_flags()
+        template = Template(
+            '{% load banners %}'
+            '{% collect_outage_banner request %}'
+        )
+        return template.render(Context({'request': request}))
+
+    def test_banner_renders(self):
+        response = self.render('/some/other/path/')
+        self.assertIn('m-global-banner', response)
+
+
 class TestComplaintIssueBannerTag(SimpleTestCase):
 
     def render(self, path):
         request = RequestFactory().get(path)
         request.flag_conditions = get_flags()
         template = Template(
-            '{% load complaint_banners %}'
+            '{% load banners %}'
             '{% complaint_issue_banner request %}'
         )
         return template.render(Context({'request': request}))
@@ -29,7 +45,7 @@ class TestComplaintMaintenanceBannerTag(SimpleTestCase):
         request = RequestFactory().get(path)
         request.flag_conditions = get_flags()
         template = Template(
-            '{% load complaint_banners %}'
+            '{% load banners %}'
             '{% complaint_maintenance_banner request %}'
         )
         return template.render(Context({'request': request}))
