@@ -9,6 +9,12 @@ register = template.Library()
 
 
 @register.simple_tag
+def collect_outage_banner(request):
+    template = 'organisms/collect-outage-banner.html'
+    return mark_safe(render_to_string(template))
+
+
+@register.simple_tag
 def complaint_issue_banner(request):
     template = 'organisms/complaint-issue-banner.html'
     return mark_safe(render_to_string(template))

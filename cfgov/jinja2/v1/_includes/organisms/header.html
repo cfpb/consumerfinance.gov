@@ -35,6 +35,10 @@
     </div>
     {% endif %}
 
+    {% if flag_enabled('COLLECT_OUTAGE', request) %}
+        {{ collect_outage_banner(request) }}
+    {% endif %}
+
     {% if flag_enabled('HMDA_OUTAGE', request) %}
         {{ hmda_outage_banner(request) }}
     {% endif %}
