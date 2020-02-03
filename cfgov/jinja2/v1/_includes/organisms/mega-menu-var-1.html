@@ -257,8 +257,10 @@
              if has_children else ''
            }}>
               {{ text }}
+              {% if has_children %}
               <span class="{{- _classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
               <span class="{{- _classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
+              {% endif %}
         </a>
         {% if has_children %}
             {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
