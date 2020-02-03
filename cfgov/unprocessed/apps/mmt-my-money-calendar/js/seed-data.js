@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { RRule } from 'rrule';
 
 let currentDate;
-const now = DateTime.local();
+const now = DateTime.local().startOf('day');
 const randDay = (max = 30) => {
   const date = now.plus({ days: Math.floor(Math.random() * max) + 1 }).toJSDate();
   currentDate = date;
@@ -38,11 +38,11 @@ function seedCashFlowEvents() {
       category: 'Job',
       totalCents: 30000,
       recurs: true,
-      recurrence: new RRule({
+      recurrenceRule: new RRule({
         freq: RRule.WEEKLY,
         dtstart: currentDate,
         count: 12,
-      }).toString(),
+      }),
     },
     {
       name: 'Rent',
@@ -51,11 +51,11 @@ function seedCashFlowEvents() {
       subcategory: 'Rent',
       totalCents: -80000,
       recurs: true,
-      recurrence: new RRule({
+      recurrenceRule: new RRule({
         freq: RRule.MONTHLY,
         count: 3,
         dtstart: currentDate,
-      }).toString(),
+      }),
     },
     {
       name: 'Groceries',
@@ -63,7 +63,7 @@ function seedCashFlowEvents() {
       category: 'Groceries',
       totalCents: -20000,
       recurs: true,
-      recurrence: new RRule({
+      recurrenceRule: new RRule({
         freq: RRule.WEEKLY,
         dtstart: currentDate,
         count: 12,

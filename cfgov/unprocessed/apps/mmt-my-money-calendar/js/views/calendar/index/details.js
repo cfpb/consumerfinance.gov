@@ -21,6 +21,7 @@ function Details() {
         {events &&
           events.map((e) => (
             <li className="calendar-details__event" key={e.id}>
+              <div className="calendar-details__event-date">{e.dateTime.toFormat('D')}</div>
               <div className="calendar-details__event-name">{e.name}</div>
               <div className="calendar-details__event-total">{formatCurrency(e.total)}</div>
             </li>

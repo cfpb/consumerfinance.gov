@@ -7,6 +7,7 @@
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "7.7.4",
     "@babel/plugin-proposal-decorators": "7.8.3",
+    "@babel/plugin-proposal-private-methods": "7.8.3",
     "@babel/plugin-transform-runtime": "7.8.3",
     "@babel/preset-env": "7.8.4",
     "@babel/preset-react": "7.7.4",
@@ -19,6 +20,7 @@
     "core-js": "3",
     "css-loader": "3.4.2",
     "dot-prop": "5.2.0",
+    "eventemitter3": "4.0.0",
     "file-loader": "5.0.2",
     "idb": "5.0.0",
     "less-loader": "5.0.0",

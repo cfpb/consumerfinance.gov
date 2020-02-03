@@ -56,7 +56,7 @@ if (process.env.NODE_ENV === 'development') {
   window.clearTestData = async function clearTestData() {
     if (!window.seed) await loadSeeders();
 
-    await clearData();
+    await window.seed.clearData();
     console.info('Cleared all data');
   }
 }

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { observer } from 'mobx-react';
 import { DateTime } from 'luxon';
 import { useStore } from '../../stores';
@@ -8,6 +8,19 @@ import { compact } from '../../lib/array-helpers';
 
 function Day({ day, dateFormat = 'd' }) {
   const { uiStore, eventStore } = useStore();
+
+  const isToday = useMemo(() => day.hasSame(DateTime.local(), 'day'), [day]);
+  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'day'), [day, uiStore.selectedDate]);
+  const isCurrentMonth = useMemo(() => day.hasSame(uiStore.currentMonth, 'month'), [day, uiStore.currentMonth]);
+  const dateString = useMemo(() => day.toFormat(dateFormat), [day, dateFormat]);
+
+  const classes = [
+    'calendar__day',
+    isToday && 'today',
+    isSelected && 'selected',
+    isCurrentMonth && 'current-month',
+  ];
+
 
   const handleClick = useCallback(
     (evt) => {
@@ -20,12 +33,20 @@ function Day({ day, dateFormat = 'd' }) {
     [day]
   );
 
+  const emptyTile = useCallback(() => (
+    <div className={clsx(classes)} role="button" onClick={handleClick}>
+      <div className="calendar__day-number">
+        {dateString}
+      </div>
+      <div className="calendar__day-symbols" />
+    </div>
+  ), []);
+
+  if (!eventStore.events.length) return emptyTile();
+
   const balance = eventStore.getBalanceForDate(day);
 
-  const classes = clsx('calendar__day', {
-    today: day.hasSame(DateTime.local(), 'day'),
-    selected: uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'day'),
-    'current-month': day.hasSame(uiStore.currentMonth, 'month'),
+  classes.push({
     'pos-balance': balance > 0,
     'neg-balance': balance < 0,
   });
@@ -36,7 +57,7 @@ function Day({ day, dateFormat = 'd' }) {
   ]);
 
   return (
-    <div className={classes} role="button" onClick={handleClick}>
+    <div className={clsx(classes)} role="button" onClick={handleClick}>
       <div className="calendar__day-number">
         <time dateTime={day.toFormat('y-MM-dd')} className="calendar__day-datetime">
           {day.toFormat(dateFormat)}

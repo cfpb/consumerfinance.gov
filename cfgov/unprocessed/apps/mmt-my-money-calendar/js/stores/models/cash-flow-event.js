@@ -2,10 +2,12 @@ import { observable, computed, action } from 'mobx';
 import { RRule, rrulestr } from 'rrule';
 import * as yup from 'yup';
 import { DateTime } from 'luxon';
+import EventEmitter from 'eventemitter3';
 import { asyncComputed } from 'computed-async-mobx';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
+import { compact } from '../../lib/array-helpers';
 
 export default class CashFlowEvent {
   @observable originalEventID;
@@ -19,6 +21,30 @@ export default class CashFlowEvent {
   @observable recurrence;
   @observable errors;
   @observable persisted = false;
+  @observable updatedAt;
+  @observable createdAt;
+
+  static MIN_DATE = DateTime.fromFormat('1970-01-01', 'y-MM-dd');
+
+  static eventEmitter = new EventEmitter();
+
+  static emit(...args) {
+    return this.eventEmitter.emit(...args);
+  }
+
+  static on(...args) {
+    return this.eventEmitter.on(...args);
+  }
+
+  static once(...args) {
+    return this.eventEmitter.once(...args);
+  }
+
+  static removeListener(...args) {
+    return this.eventEmitter.removeListener(...args);
+  }
+
+  static recurrenceMonths = 3;
 
   static directions = {
     DESC: 'prev',
@@ -29,12 +55,16 @@ export default class CashFlowEvent {
 
   static schema = {
     id: yup.number().integer(),
+    originalEventID: yup.number().integer(),
     name: yup.string().required(),
     date: yup.date().required(),
     category: yup.string().required(),
     subcategory: yup.string(),
-    totalCents: yup.number().integer(),
-    recurrence: yup.string(),
+    totalCents: yup.number().integer().default(0),
+    recurs: yup.boolean().default(false),
+    rruleStr: yup.string(),
+    createdAt: yup.date().default(() => new Date()),
+    updatedAt: yup.date().default(() => new Date()),
   };
 
   /**
@@ -54,7 +84,7 @@ export default class CashFlowEvent {
   static async getAll() {
     const { store } = await this.transaction();
     const records = await store.getAll();
-    return records.map((rec) => new CashFlowEvent(rec));
+    return records.map((rec) => new CashFlowEvent({ ...rec, persisted: true }));
   }
 
   /**
@@ -65,16 +95,12 @@ export default class CashFlowEvent {
    * @returns {Promise<CashFlowEvent[]>} A promise resolving to an array of CashFlowEvent instances
    */
   static async getAllBy(indexName, direction = 'next') {
+    //console.profile('getAllBy');
     const { store } = await this.transaction();
     const index = store.index(indexName);
     let cursor = await index.openCursor(null, direction);
-    const results = [];
-
-    while (cursor) {
-      results.push(new CashFlowEvent(cursor.value));
-      cursor = await cursor.continue();
-    }
-
+    const results = await this.getAllFromCursor(cursor);
+    //console.profileEnd('getAllBy');
     return results;
   }
 
@@ -86,7 +112,7 @@ export default class CashFlowEvent {
   static async get(id) {
     const { store } = await this.transaction();
     const record = await store.get(id);
-    return new CashFlowEvent(record);
+    return new CashFlowEvent({ ...record, persisted: true });
   }
 
   /**
@@ -99,17 +125,25 @@ export default class CashFlowEvent {
   static async getByDateRange(start, end = new Date()) {
     const fromDate = new Date(start);
     const range = IDBKeyRange.lowerBound(fromDate);
-    const { store } = await this.transaction();
-    const index = store.index('date');
-    let cursor = await index.openCursor(range);
+    const cursor = await this.rangeQuery('date', range);
+    return this.getAllFromCursor(cursor);
+  }
+
+  static async getAllFromCursor(cursor) {
     const results = [];
 
     while (cursor) {
-      results.push(new CashFlowEvent(cursor.value));
+      results.push(new CashFlowEvent({ ...cursor.value, persisted: true }));
       cursor = await cursor.continue();
     }
 
     return results;
+  }
+
+  static async rangeQuery(indexName, keyRange, direction = this.directions.ASC) {
+    const { store } = await this.transaction();
+    const index = store.index(indexName, direction);
+    return index.openCursor(keyRange);
   }
 
   /**
@@ -149,14 +183,64 @@ export default class CashFlowEvent {
     return yup.object().shape(this.constructor.schema);
   }
 
-  originalEvent = asyncComputed(undefined, 50, async () => await this.constructor.get(this.originalEventID));
+  originalEvent = asyncComputed(undefined, 50, async () => {
+    if (!this.originalEventID) return undefined;
+    return this.constructor.get(this.originalEventID);
+  });
+
+  recurrences = asyncComputed([], 100, async () => {
+    if (this.isRecurrence || !this.id || !this.persisted || !this.rruleStr) return [];
+    return this.getAllRecurrences();
+  });
+
+  @computed get signature() {
+    return `${this.dateTime.startOf('day').valueOf()}-${this.originalEventID}`;
+  }
+
+  @computed get isRecurrence() {
+    return this.recurs && this.originalEventID;
+  }
+
+  @computed get recurrenceRule() {
+    if (!this.rruleStr || typeof this.rruleStr !== 'string') return null;
+    return rrulestr(this.rruleStr);
+  }
+
+  set recurrenceRule(rule) {
+    this.rruleStr = rule.toString();
+  }
+
+  @computed get recurrenceDates() {
+    const now = DateTime.local();
+
+    return this.recurrenceRule.between(
+      this.dateTime.startOf('day').toJSDate(),
+      now.plus({ months: this.constructor.recurrenceMonths }).endOf('day').toJSDate()
+    ).map(DateTime.fromJSDate);
+  }
 
   @computed get dateTime() {
-    return DateTime.fromJSDate(this.date);
+    return DateTime.fromJSDate(this.date).startOf('day');
   }
 
   set dateTime(dateTime) {
-    this.date = dateTime.toJSDate();
+    this.date = dateTime.startOf('day').toJSDate();
+  }
+
+  @computed get createdAtDateTime() {
+    return DateTime.fromJSDate(this.createdAt);
+  }
+
+  set createdAtDateTime(value) {
+    this.createdAt = value.toJSDate();
+  }
+
+  @computed get updatedAtDateTime() {
+    return DateTime.fromJSDate(this.updatedAt);
+  }
+
+  set updatedAtDateTime(value) {
+    this.updatedAt = value.toJSDate();
   }
 
   @computed get total() {
@@ -165,15 +249,6 @@ export default class CashFlowEvent {
 
   set total(amount) {
     this.totalCents = amount * 100;
-  }
-
-  @computed get recurrenceRule() {
-    if (!this.recurrence || typeof this.recurrence !== 'string') return null;
-    return rrulestr(this.recurrence);
-  }
-
-  set recurrenceRule(rule) {
-    this.recurrence = rule.toString();
   }
 
   /**
@@ -196,6 +271,17 @@ export default class CashFlowEvent {
     this.persisted = Boolean(value);
   }
 
+  @action markPersisted(id) {
+    this.id = id;
+    this.persisted = true;
+  }
+
+  @action setTimestamps() {
+    const now = new Date();
+    this.createdAt = this.createdAt || now;
+    this.updatedAt = now;
+  }
+
   /**
    * Save the cash flow event to IndexedDB store, or raise a validation error if it doesn't conform to schema
    *
@@ -204,13 +290,20 @@ export default class CashFlowEvent {
    */
   async save() {
     await this.validate();
+    this.setTimestamps();
 
     const { tx, store } = await this.transaction('readwrite');
     const key = await store.put(this.toJS());
     await tx.complete;
 
-    if (!this.id) this.setID(key);
-    if (!this.persisted) this.setPersisted();
+
+    if (!this.id && !this.persisted) this.markPersisted(key);
+    /*
+    if (this.recurs && this.recurrenceRule && !this.isRecurrence)
+      await this._createRecurrences();
+    */
+
+    this.constructor.emit('afterSave', this);
 
     return key;
   }
@@ -244,7 +337,7 @@ export default class CashFlowEvent {
    * @returns {Promise<Boolean>} Whether or not the event is valid
    */
   isValid() {
-    return this.yupSchema.isValid();
+    return this.yupSchema.isValid(this.toJS());
   }
 
   /**
@@ -258,11 +351,52 @@ export default class CashFlowEvent {
   }
 
   toJS() {
-    return transform(this.constructor.schema, (result, [key, value]) => {
-      if (key === 'id' && !value) return result;
+    return transform(this.constructor.schema, (result, [key]) => {
+      if (key === 'id' && !this[key]) return result;
 
       result[key] = this[key];
       return result;
     });
+  }
+
+  async getAllRecurrences() {
+    const id = this.isRecurrence ? this.originalEventID : this.id;
+    const { store } = await this.transaction();
+    const index = store.index('originalEventID_date');
+    const lowerBound = [id, this.constructor.MIN_DATE.toJSDate()];
+    const upperBound = [id, DateTime.local().plus({ months: 3 }).toJSDate()];
+    const range = IDBKeyRange.bound(lowerBound, upperBound);
+    let cursor = await index.openCursor(range, 'next');
+
+    return this.constructor.getAllFromCursor(cursor);
+  }
+
+  async _createRecurrences() {
+    // TODO: This will save duplicate recurrences for the same date right now. Need mechanism to skip saving if a recurrence already exists.
+    const events = this.recurrenceDates.map((dateTime) => new CashFlowEvent({
+      ...this.toJS(),
+      dateTime,
+      id: null,
+      originalEventID: this.id,
+      persisted: false,
+    }));
+
+    this.logger.info('Generated recurrences for event %O: %O', this, events);
+
+    const savedEvents = (await Promise.all(events.map((event) => {
+      /*
+      try {
+        await event.save();
+        return event;
+      } catch (err) {
+        return null;
+      }
+      */
+      return event.save().then(() => event).catch(() => null);
+    }))).filter(Boolean);
+
+    this.constructor.emit('recurrencesSaved', savedEvents, this);
+
+    return savedEvents;
   }
 }
