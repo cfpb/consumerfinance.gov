@@ -41,15 +41,21 @@ if (process.env.NODE_ENV === 'development') {
   window.Info = Info;
   window.RRule = RRule;
 
+  async function loadSeeders() {
+    window.seed = await import(/* webpackChunkName: "seeds.js" */ './seed-data.js');
+  };
+
   window.seedTestData = async function seedTestData() {
-    const { seedData } = await import(/* webpackChunkName: "seed-data.js" */ './seed-data.js');
+    if (!window.seed) await loadSeeders();
+
     console.info('Imported seed data script');
-    const results = await seedData();
+    const results = await window.seed.seedData();
     console.info('Seeding complete %O', results);
   };
 
   window.clearTestData = async function clearTestData() {
-    const { clearData } = await import(/* webpackChunkName: "seed-data.js" */ './seed-data.js');
+    if (!window.seed) await loadSeeders();
+
     await clearData();
     console.info('Cleared all data');
   }

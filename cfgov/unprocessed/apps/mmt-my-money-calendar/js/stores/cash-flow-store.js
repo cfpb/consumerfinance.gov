@@ -2,8 +2,10 @@ import { flow, observable, computed, action } from 'mobx';
 import { computedFn } from 'mobx-utils';
 import logger from '../lib/logger';
 import { toDateTime, dayOfYear } from '../lib/calendar-helpers';
+import { toMap } from '../lib/array-helpers';
 import CashFlowEvent from './models/cash-flow-event';
 import { DateTime } from 'luxon';
+import { transform } from '@babel/core';
 
 export default class CashFlowStore {
   @observable events = [];
@@ -51,7 +53,7 @@ export default class CashFlowStore {
    * @type {Map}
    */
   @computed get eventsById() {
-    return new Map(this.events.map((event) => [event.id, event]));
+    return toMap(this.events, 'id');
   }
 
   /**
