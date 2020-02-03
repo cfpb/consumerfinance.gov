@@ -102,14 +102,20 @@
     align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid @inactiveMonthColor;
+    max-width: unset !important;
   }
 
   &__total {
     border-bottom: 0;
   }
 
+  &__event-date,
   &__event-name,
-  &__event-total,
+  &__event-total {
+    flex-basis: calc(100% / 3);
+    width: calc(100% / 3);
+  }
+
   &__total-label,
   &__total-value {
     flex-basis: 50%;

@@ -19,7 +19,7 @@ function StartingBalance() {
 
     console.log('Starting balance is %s', startingBalance);
 
-    eventStore.addEvent({
+    eventStore.createEvent({
       name: 'Starting balance',
       date: new Date(),
       total: startingBalance,
