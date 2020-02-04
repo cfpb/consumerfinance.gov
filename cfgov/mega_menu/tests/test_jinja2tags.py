@@ -37,8 +37,7 @@ class MegaMenuTemplateTests(SimpleTestCase):
 
 
 class MegaMenuTests(TestCase):
-    @classmethod
-    def setUpTestData(cls):
+    def setUp(self):
         Menu.objects.create(language='en', submenus=json.dumps([
             {'type': 'submenu', 'value': {'title': 'English'}},
         ]))
@@ -52,9 +51,16 @@ class MegaMenuTests(TestCase):
         template = jinja_engine.from_string('{{ mega_menu() }}')
         return template.render(context)
 
-    def test_empty_context_fails_due_to_missing_response(self):
+    def test_empty_context_fails_due_to_missing_request(self):
         with self.assertRaises(KeyError):
             self.render_mega_menu({})
+
+    def test_raises_exception_if_default_menu_does_not_exist(self):
+        Menu.objects.all().delete()
+
+        request = RequestFactory().get('/')
+        with self.assertRaises(Menu.DoesNotExist):
+            self.render_mega_menu({'request': request})
 
     def test_uses_request_falls_back_to_default_language(self):
         request = RequestFactory().get('/')
