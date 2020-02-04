@@ -136,7 +136,7 @@
             <div class="{{ _classes( nav_depth, '-lists' ) }}">
                 {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
 
-                {% if flag_enabled( 'MEGA_MENU_BACKEND_V2' ) and nav_item.featured_links %}
+                {% if flag_enabled( 'MEGA_MENU_BACKEND_V2' ) and ( nav_item.featured_links or nav_item.other_links ) %}
                 {# New mega menu backend #}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
                     <ul class="m-list m-list__unstyled">
