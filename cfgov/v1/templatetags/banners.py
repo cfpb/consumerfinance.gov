@@ -68,3 +68,9 @@ def complaint_maintenance_banner(request):
         'date_str': date_str,
     }
     return mark_safe(render_to_string(template, context=context))
+
+
+@register.simple_tag
+def omwi_salesforce_outage_banner(request):
+    template = 'organisms/omwi-salesforce-outage-banner.html'
+    return mark_safe(render_to_string(template))
