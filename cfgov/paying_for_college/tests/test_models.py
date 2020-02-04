@@ -2,9 +2,10 @@
 from __future__ import unicode_literals
 
 import datetime
-import six
 import smtplib
 import unittest
+from unittest import mock
+from unittest.mock import mock_open, patch
 
 from django.http import HttpRequest
 from django.test import TestCase
@@ -19,14 +20,7 @@ from paying_for_college.models import (
 )
 
 from v1.models import HomePage
-
-
-if six.PY2:  # pragma: no cover
-    import mock
-    from mock import mock_open, patch
-else:  # pragma: no cover
-    from unittest import mock
-    from unittest.mock import mock_open, patch
+from v1.util.migrations import set_stream_data
 
 
 class MakeDivisibleTest(TestCase):
@@ -77,19 +71,25 @@ class PageModelsTest(TestCase):
         )
 
     def test_loan_quiz_template(self):
+        """
+        We are using get_template to set a 'situation_id' for development.
+
+        We hope to drop this value, or deliver it another way,
+        when quiz structure is decided.
+        """
+        page = self.loan_quiz_page
+        stream_data = [{
+            'type': 'guided_quiz',
+            'id': '12345',
+            'value': {
+                'question': '?',
+                'answer': 'huh?'}}]
+        set_stream_data(page, 'content', stream_data)
         self.assertEqual(
-            self.loan_quiz_page.get_template(HttpRequest()),
+            page.get_template(HttpRequest()),
             'paying-for-college/choose-a-student-loan.html')
-
-    def test_debt_page_template(self):
         self.assertEqual(
-            self.debt_page.get_template(HttpRequest()),
-            'paying-for-college/repaying-student-debt.html')
-
-    def test_college_costs_template(self):
-        self.assertEqual(
-            self.college_costs_page.get_template(HttpRequest()),
-            'paying-for-college/college-costs.html')
+            self.loan_quiz_page.content[0].value['situation_id'], '12345')
 
 
 class SchoolRegionTest(TestCase):
@@ -112,7 +112,8 @@ class PayingForCollegeConfigTest(unittest.TestCase):
 class SchoolModelsTest(TestCase):
 
     def create_school(
-            self, ID=999999,
+            self,
+            school_id=999999,
             data_json='',
             accreditor="Almighty Wizard",
             city="Emerald City",
@@ -121,7 +122,7 @@ class SchoolModelsTest(TestCase):
             ope6=5555,
             ope8=555500):
         return School.objects.create(
-            school_id=ID,
+            school_id=school_id,
             data_json=data_json,
             accreditor=accreditor,
             degrees_highest=degrees_highest,
@@ -326,7 +327,7 @@ class SchoolModelsTest(TestCase):
         self.assertEqual(feedback.parsed_url, {})
 
     def test_feedback_school(self):
-        school = self.create_school(ID=451796)
+        school = self.create_school(school_id=451796)
         feedback = self.create_feedback()
         self.assertEqual(feedback.school, school)
         feedback.url = feedback.url.replace("iped=451796&", '')
@@ -419,29 +420,6 @@ class ProgramExport(TestCase):
     def test_program_as_csv(self):
         p = Program.objects.get(pk=1)
         m = mock_open()
-        with patch("six.moves.builtins.open", m, create=True):
+        with patch("builtins.open", m, create=True):
             p.as_csv('/tmp.csv')
         self.assertEqual(m.call_count, 1)
-
-
-class SchoolCohortTest(TestCase):
-    fixtures = ['test_fixture.json']
-
-    def test_highest_degree_cohort(self):
-        test_school = School.objects.get(pk=155317)
-        self.assertEqual(5, len(test_school.get_cohort('degrees_highest')))
-
-    def test_state_cohort(self):
-        test_school = School.objects.get(pk=100636)
-        self.assertEqual(2, len(test_school.get_cohort('state')))
-
-    def test_control_cohort(self):
-        test_school = School.objects.get(pk=155317)
-        self.assertEqual(5, len(test_school.get_cohort('control')))
-
-    # def get_cohort_rank(self, cohort, metric):
-    def test_get_cohort_rank(self):
-        test_school = School.objects.get(pk=155317)
-        self.assertEqual(4, len(test_school.get_cohort_rank('degrees_highest', 'grad_rate')))  # noqa
-        self.assertEqual(5, len(test_school.get_cohort_rank('degrees_highest', 'repay_3yr')))  # noqa
-        self.assertEqual(5, len(test_school.get_cohort_rank('degrees_highest', 'median_total_debt')))  # noqa

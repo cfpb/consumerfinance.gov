@@ -53,16 +53,14 @@ tox
 ```
 
 Tox runs different isolated Python environments with different versions of dependencies.
-We use it 
-to lint our Python files, 
-check out import sorting, 
-and run unit tests in both Python 2.7 and Python 3.6.
+We use it to lint our Python files, check out import sorting, and run unit tests
+in both Python 3.6 and Python 3.8.
 You can select specific environments using `-e`.
 
-Running `tox` is the same as running:
+Running `tox` by itself is the same as running:
 
 ```sh
-tox -e lint -e unittest-py27-dj111-wag113-slow -e unittest-py36-dj111-wag113-slow
+tox -e lint -e unittest-py36-dj111-wag113-slow
 ```
 
 These default environments are:
@@ -81,14 +79,7 @@ If you haven't changed any Python dependencies and you don't need to test
 all migrations, you can run our "fast" environments that skip migrations:
 
 ```sh
-# Python 2.7
-tox -e unittest-py27-dj111-wag113-fast
-
-# Python 3.6
 tox -e unittest-py36-dj111-wag113-fast
-
-# Both
-tox -e unittest-py27-dj111-wag113-fast -e unittest-py36-dj111-wag113-fast
 ```
 
 If you would like to run only a specific test, or the tests for a specific app, 

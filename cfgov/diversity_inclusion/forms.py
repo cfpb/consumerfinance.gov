@@ -6,7 +6,7 @@ from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse
 
 
-# Form input attributes for Capital Framework compatibility.
+# Form input attributes for Design System compatibility.
 # Technique copied from data_research/forms.py
 #
 # See https://cfpb.github.io/capital-framework/components/cf-forms/

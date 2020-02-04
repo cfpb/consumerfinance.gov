@@ -33,6 +33,7 @@ function _scrollToTop() {
   // If requestAnimationFrame is not supported, return to top immediately.
   if ( 'requestAnimationFrame' in window === false ) {
     window.scrollTo( 0, 0 );
+    _setFocus();
     return;
   }
 
@@ -42,7 +43,9 @@ function _scrollToTop() {
    * Decrement scroll Y position.
    */
   function _step() {
-    if ( window.scrollY !== 0 ) {
+    if ( window.scrollY === 0 ) {
+      _setFocus();
+    } else {
       window.setTimeout( () => {
         scrollCount += 1;
         const adjustVal = cosParameter * Math.cos( scrollCount * scrollStep );
@@ -52,6 +55,14 @@ function _scrollToTop() {
       }, SCROLL_STEP_DURATION );
     }
   }
+}
+
+/**
+ *  Move focus to the top of the page.
+ */
+function _setFocus() {
+  document.documentElement.tabIndex = 0;
+  document.documentElement.focus();
 }
 
 export { init };

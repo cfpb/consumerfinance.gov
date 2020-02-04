@@ -1,6 +1,5 @@
 import json
 import os
-import six
 from collections import OrderedDict
 from subprocess import call
 
@@ -8,9 +7,6 @@ import requests
 import yaml
 from unipath import Path
 
-
-if six.PY2:  # pragma: no cover
-    FileNotFoundError = IOError
 
 COLLEGE_CHOICE_NATIONAL_DATA_URL = (
     'https://raw.githubusercontent.com/RTICWDT/'

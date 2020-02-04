@@ -86,7 +86,7 @@ includes the following frameworks / tools:
 - [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
-- [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
+- [Design System](https://cfpb.github.io/design-system/getting-started/):
   User interface pattern-library produced by the CFPB.
 - [Node.js](https://nodejs.org). Install however you’d like.
   We recommend using [nvm](https://github.com/creationix/nvm), though.
@@ -260,12 +260,12 @@ longer if you are on a slow internet connection.
 When it's all done, you should be able to load http://localhost:8000 in your
 browser, and see a database error.
 
-### 3. Setup the database
+### 5. Setup the database
 
 Open a bash shell inside your Python container.
 
 ```bash
-docker-compose exec python2 bash
+docker-compose exec python bash
 ```
 
 You can either [load initial data](#load-initial-data-into-database) per the
@@ -281,6 +281,11 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 You can get that URL at
 [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
 
+The first time you add this value to `.env` (and any time you make a
+change to that file) you will either need to run `source .env` from
+the container or `docker-compose down && docker-compose up` from your
+standard shell to pick up the changes.
+
 With `CFGOV_PROD_DB_LOCATION` in `.env` you should be able to run:
 
 `./refresh-data.sh`
@@ -291,7 +296,7 @@ below should be enough to get you started.
 Once you have a database loaded, you should have a functioning copy of site
 working at [http://localhost:8000](http://localhost:8000)
 
-### 4. Next Steps
+### 6. Next Steps
 
 See [Running in Docker](../running-docker/) to continue after that.
 
@@ -339,6 +344,27 @@ To apply any unapplied migrations to a database created from a dump, run:
 ```bash
 python cfgov/manage.py migrate
 ```
+
+### Sync local image storage
+
+If using a database dump, pages will contain links to images that exist in
+the database but don't exist on your local disk. This will cause broken or
+missing images when browsing the site locally.
+
+For example, in production images are stored on S3, but when running locally
+they are stored on disk.
+
+This project includes a Django management command that can be used to download
+any remote images referenced in the database so that they can be served when
+running locally.
+
+```bash
+cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
+```
+
+This downloads all remote images (and image renditions) referenced in the
+database, retrieving them from the specified URL and storing them in the
+specified local directory.
 
 ### Set variables for working with the GovDelivery API
 

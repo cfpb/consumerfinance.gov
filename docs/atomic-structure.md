@@ -193,7 +193,7 @@ cfgov-refresh/cfgov/jinja2/v1/_includes/organisms/
 
 !!! note
     Some of our foundational components get their Less and JavaScript
-    from [Capital Framework](https://cfpb.github.io/capital-framework),
+    from the [Design System](https://cfpb.github.io/design-system/),
     but the HTML for their Wagtail block templates
     is stored in the above folders.
 

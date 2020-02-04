@@ -1,9 +1,9 @@
 import re
-from six import text_type as str
-from six.moves.urllib.parse import parse_qs, urlencode, urlparse
+from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 
 from bs4 import BeautifulSoup, NavigableString
 
@@ -28,17 +28,17 @@ LINK_ICON_TEXT_CLASSES = 'a-link_text'
 A_TAG = re.compile(
     # Match an <a containing any attributes
     r'<a [^>]*?>'
-    # And match everything inside
-    r'.+?'
-    # As long as it's not a </a>, then match '</a>'
-    r'(?=</a>)</a>'
+    # And match everything inside before the closing </a>
+    r'.+?(?=</a>)'
+    # Then match the closing </a>
+    r'</a>'
     # Make '.' match new lines, ignore case
     r'(?s)(?i)'
 )
 
 # If a link contains these elements, it should *not* get an icon
 ICONLESS_LINK_CHILD_ELEMENTS = [
-    'img', 'svg', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+    'img', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 ]
 
 
@@ -128,6 +128,12 @@ def add_link_markup(tag):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
 
+    # If the already ends in an SVG, we never want to append an icon.
+    # If it has an SVG but other content comes after it, we still add one.
+    svgs = tag.find_all('svg')
+    if svgs and not all((svg.next_sibling or '').strip() for svg in svgs):
+        return str(tag)
+
     if tag.select(', '.join(ICONLESS_LINK_CHILD_ELEMENTS)):
         # If this tag has any children that are in our list of child elements
         # that should not get an icon, it doesn't get the icon. It might still
@@ -162,3 +168,53 @@ class NoMigrations(object):
 
     def __getitem__(self, item):
         return None
+
+
+def slugify_unique(context, value):
+    """Generates a slug, making it unique for a context, if possible.
+
+    If the context has a request object, the generated slug will be unique:
+
+    >>> context = {'request': request}
+    >>> slugify_unique(context, 'Some text')
+    'some-text'
+    >>> slugify_unique(context, 'Some text')
+    'some-text-1'
+    >>> slugify_unique(context, 'Some text')
+    'some-text-2'
+
+    This functionality is not thread safe.
+
+    If the context lacks a request, this function falls back to the default
+    behavior of Django slugify:
+
+    https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.text.slugify
+
+    >>> context = {}
+    >>> slugify_unique(context, 'Some text')
+    'some-text'
+    >>> slugify_unique(context, 'Some text')
+    'some-text'
+    """
+    slug = slugify(value)
+
+    request = context.get('request')
+
+    if request:
+        attribute_name = '__slugify_unique_slugs'
+
+        if not hasattr(request, attribute_name):
+            setattr(request, attribute_name, list())
+
+        used_slugs = getattr(request, attribute_name)
+
+        original_slug = slug
+        index = 1
+
+        while slug in used_slugs:
+            slug = '%s-%d' % (original_slug, index)
+            index += 1
+
+        used_slugs.append(slug)
+
+    return slug

@@ -330,7 +330,7 @@ STATIC_VERSION = ''
 
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
-    'https://files.consumerfinance.gov'
+    'https://s3.amazonaws.com/files.consumerfinance.gov'
     '/a/assets/hud/{file_format}s/{zipcode}.{file_format}'
 )
 
@@ -529,6 +529,7 @@ CSP_SCRIPT_SRC = (
     'universal.iperceptions.com',
     'cdn.mouseflow.com',
     'n2.mouseflow.com',
+    'us.mouseflow.com',
     'geocoding.geo.census.gov',
     'tigerweb.geo.census.gov',
     'about:',
@@ -714,11 +715,38 @@ FLAGS = {
     # Used to hide new youth employment success pages prior to public launch.
     'YOUTH_EMPLOYMENT_SUCCESS': [],
 
-    # Release of prepaid agreements database search
+    # Release of prepaid agreements database search.
     'PREPAID_AGREEMENTS_SEARCH': [],
 
     # Used to hide CCDB landing page updates prior to public launch.
     'CCDB_CONTENT_UPDATES': [],
+
+    # During a Salesforce system outage, the following flag should be enabled
+    # to alert users that the Collect community is down.
+    'COLLECT_OUTAGE': [
+        {
+            'condition': 'path matches',
+            'value': (r'^/data-research/credit-card-data/terms-credit-card-plans-survey/$|'  # noqa: E501
+                      r'^/data-research/prepaid-accounts/$'),
+            'required': True
+        },
+        # Boolean to turn it off explicitly unless enabled by another condition
+        {'condition': 'boolean', 'value': False}
+    ],
+
+    # During a Salesforce system outage, the following flag
+    # should be enabled to alert users that
+    # the OMWI assessment form and inclusivity portal are down.
+    'OMWI_SALESFORCE_OUTAGE': [
+        {
+            'condition': 'path matches',
+            'value': (r'^/about-us/diversity-and-inclusion/$|'
+                      r'^/about-us/diversity-and-inclusion/self-assessment-financial-institutions/$'),  # noqa: E501
+            'required': True
+        },
+        # Boolean to turn it off explicitly unless enabled by another condition
+        {'condition': 'boolean', 'value': False}
+    ],
 }
 
 

@@ -2,7 +2,6 @@ language: python
 dist: xenial
 
 python:
-- 2.7
 - 3.6
 
 git:
@@ -44,12 +43,6 @@ env:
   matrix:
     - RUNTEST=backend
     - RUNTEST=frontend
-
-matrix:
-  exclude:
-    # We only want to run the frontend build once.
-    - python: 2.7
-      env: RUNTEST=frontend
 
 jobs:
   include:

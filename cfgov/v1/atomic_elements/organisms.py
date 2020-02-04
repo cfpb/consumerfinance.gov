@@ -2,8 +2,7 @@ import itertools
 import json
 from collections import Counter
 from functools import partial
-from six import string_types as basestring
-from six.moves.urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from django import forms
 from django.apps import apps
@@ -27,7 +26,6 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from jinja2 import Markup
 from taggit.models import Tag
 
-import ask_cfpb
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 from v1.util import ref
@@ -585,7 +583,7 @@ class ModelBlock(blocks.StructBlock):
 
         ordering = self.get_ordering(value)
         if ordering:
-            if isinstance(ordering, basestring):
+            if isinstance(ordering, str):
                 ordering = (ordering,)
 
             qs = qs.order_by(*ordering)
@@ -782,8 +780,27 @@ class Expandable(BaseExpandable):
     )
 
 
-class ExpandableGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
+class BaseExpandableGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(
+        required=False,
+        help_text=mark_safe(
+            'Added as an <code>&lt;h3&gt;</code> at the top of this block. '
+            'Also adds a wrapping <code>&lt;div&gt;</code> whose '
+            '<code>id</code> attribute comes from a slugified version of this '
+            'heading, creating an anchor that can be used when linking to '
+            'this part of the page.'
+        )
+    )
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/organisms/expandable-group.html'
+
+    class Media:
+        js = ["expandable-group.js"]
+
+
+class ExpandableGroup(BaseExpandableGroup):
     body = blocks.RichTextBlock(required=False)
     is_accordion = blocks.BooleanBlock(required=False)
     has_top_rule_line = blocks.BooleanBlock(
@@ -792,72 +809,51 @@ class ExpandableGroup(blocks.StructBlock):
         help_text=('Check this to add a horizontal rule line to top of '
                    'expandable group.')
     )
-    add_heading_id = blocks.BooleanBlock(default=False, required=False)
 
     expandables = blocks.ListBlock(Expandable())
 
+
+class ContactExpandable(blocks.StructBlock):
+    contact = SnippetChooserBlock('v1.Contact')
+
     class Meta:
-        icon = 'list-ul'
-        template = '_includes/organisms/expandable-group.html'
+        icon = 'user'
+        template = '_includes/organisms/contact-expandable.html'
 
     class Media:
-        js = ["expandable-group.js"]
-
-
-class ContactExpandableGroup(blocks.StructBlock):
-    """Expandable group that renders selected Contact snippets."""
-    group_title = blocks.CharBlock()
-    contacts = blocks.ListBlock(SnippetChooserBlock('v1.Contact'))
-
-    def get_context(self, value, parent_context=None):
-        context = super(ContactExpandableGroup, self).get_context(
-            value,
-            parent_context=parent_context
-        )
-
-        # This block mimics the ExpandableGroup block.
-        context['value'] = ExpandableGroup().to_python({
-            'heading': value['group_title'],
-            'add_heading_id': True,
-            'expandables': [
-                {
-                    'label': contact.heading,
-                    'content': contact.contact_info.stream_data,
-                } for contact in value['contacts']
-            ],
-        })
-
-        return context
+        js = ['expandable.js']
 
     def bulk_to_python(self, values):
-        """Support bulk retrieval of Contacts to reduce database queries.
-
-        This method leverages Wagtail's undocumented method for doing bulk
-        retrieval of data for StreamField blocks. It retrieves all Contacts
-        referenced by a StreamField in a single lookup, instead of the
-        default behavior of doing one database query per SnippetChooserBlock.
-        """
-        contact_ids = set(
-            itertools.chain(*(block['contacts'] for block in values))
+        """Support bulk retrieval of Contacts to reduce database queries."""
+        contact_model = self.child_blocks['contact'].target_model
+        contacts_by_id = contact_model.objects.in_bulk(
+            value['contact'] for value in values
         )
 
-        contact_model = self.child_blocks['contacts'].child_block.target_model
-        contacts_by_id = contact_model.objects.in_bulk(contact_ids)
+        for value in values:
+            value['contact'] = contacts_by_id.get(value['contact'])
 
-        for block in values:
-            block['contacts'] = [
-                contacts_by_id[contact_id]
-                for contact_id in block['contacts']
-            ]
+        return [blocks.StructValue(self, value) for value in values]
 
-        return values
 
-    class Meta:
-        icon = 'list-ul'
-        template = '_includes/organisms/expandable-group.html'
+class ContactExpandableGroup(BaseExpandableGroup):
+    expandables = blocks.ListBlock(ContactExpandable())
 
-    class Media:
-        js = ["expandable-group.js"]
+    def bulk_to_python(self, values):
+        contact_expandable_values = list(itertools.chain(*(
+            value['expandables'] for value in values
+        )))
+
+        contacts = self.child_blocks['expandables'].child_block \
+            .bulk_to_python(contact_expandable_values)
+
+        index = 0
+        for value in values:
+            value_count = len(value['expandables'])
+            value['expandables'] = contacts[index:index + value_count]
+            index += value_count
+
+        return [blocks.StructValue(self, value) for value in values]
 
 
 class ItemIntroduction(blocks.StructBlock):
@@ -1224,16 +1220,6 @@ class ResourceList(blocks.StructBlock):
         label = 'Resource List'
         icon = 'table'
         template = '_includes/organisms/resource-list.html'
-
-
-class AskCategoryCard(ModelList):
-
-    def render(self, value, context=None):
-        value['category'] = ask_cfpb.models.Category.objects.first()
-        value.update(context or {})
-
-        template = '_includes/organisms/ask-cfpb-card.html'
-        return render_to_string(template, value)
 
 
 class DataSnapshot(blocks.StructBlock):

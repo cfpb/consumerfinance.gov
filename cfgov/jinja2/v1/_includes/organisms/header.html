@@ -28,17 +28,15 @@
             {{ notification.render(
                 'warning',
                 true,
-                'This beta site is a work in progress.',
-                'We’re prototyping new designs. Things may not work as expected.
-                Our regular site continues to be at
+                'This beta site is a work in progress. Our regular site continues to be
                 <a href="https://www.consumerfinance.gov/">www.consumerfinance.gov</a>.' | safe
             ) }}
         </div>
     </div>
     {% endif %}
 
-    {% if flag_enabled('HMDA_OUTAGE', request) %}
-        {{ hmda_outage_banner(request) }}
+    {% if flag_enabled('COLLECT_OUTAGE', request) %}
+        {{ collect_outage_banner(request) }}
     {% endif %}
 
     {% if flag_enabled('COMPLAINT_INTAKE_TECHNICAL_ISSUES', request) %}
@@ -47,6 +45,14 @@
 
     {% if flag_enabled('COMPLAINT_INTAKE_MAINTENANCE', request) %}
         {{ complaint_maintenance_banner(request) }}
+    {% endif %}
+
+    {% if flag_enabled('HMDA_OUTAGE', request) %}
+        {{ hmda_outage_banner(request) }}
+    {% endif %}
+
+    {% if flag_enabled('OMWI_SALESFORCE_OUTAGE', request) %}
+        {{ omwi_salesforce_outage_banner(request) }}
     {% endif %}
 
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
@@ -92,7 +98,14 @@
             {% endif %}
 
             {% block primary_nav %}
-                {% from 'organisms/mega-menu.html' import mega_menu with context %}
+                {% if flag_enabled('MEGA_MENU_VAR_1', request) %}
+                    {% from 'organisms/mega-menu-var-1.html' import mega_menu with context %}
+                {% elif flag_enabled('MEGA_MENU_VAR_2', request) %}
+                    {% from 'organisms/mega-menu-var-2.html' import mega_menu with context %}
+                {% else %}
+                    {% from 'organisms/mega-menu.html' import mega_menu with context %}
+                {% endif %}
+
                 {% if language == 'es' %}
                     {% import '_vars-mega-menu-spanish.html' as vars with context %}
                     {{ mega_menu(vars.menu_items) }}

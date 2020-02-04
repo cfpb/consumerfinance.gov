@@ -1,6 +1,11 @@
 from django.db import models
 
 
+class PrepaidProductQuerySet(models.QuerySet):
+    def valid(self):
+        return self.filter(deleted_at=None)
+
+
 class PrepaidProduct(models.Model):
     name = models.CharField(blank=True, max_length=255)
     issuer_name = models.CharField(max_length=255, blank=True)
@@ -11,6 +16,9 @@ class PrepaidProduct(models.Model):
     other_relevant_parties = models.TextField(blank=True, null=True)
     status = models.TextField(blank=True, null=True)
     withdrawal_date = models.DateField(blank=True, null=True)
+    deleted_at = models.DateTimeField(blank=True, null=True)
+
+    objects = PrepaidProductQuerySet.as_manager()
 
     def __str__(self):
         return self.name

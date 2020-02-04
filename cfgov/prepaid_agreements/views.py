@@ -1,4 +1,4 @@
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import InvalidPage, Paginator
@@ -95,11 +95,11 @@ def get_support_text():
 
 
 def index(request):
-    params = dict(request.GET.iterlists())
+    params = dict(request.GET.lists())
     available_filters = {}
     search_term = None
     search_field = None
-    products = PrepaidProduct.objects
+    products = PrepaidProduct.objects.valid()
     total_count = products.count()
     valid_filters = [
         'prepaid_type', 'status', 'issuer_name'

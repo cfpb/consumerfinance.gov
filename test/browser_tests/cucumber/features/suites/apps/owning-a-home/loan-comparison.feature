@@ -4,9 +4,9 @@ Feature: Test the default values in the Loan Comparison page
   So that I can compare loan costs easily
 
 Background:
-   Given I navigate to the "Loan Comparison" page
+  Given I navigate to the "Loan Comparison" page
 
 @loan_comparison
 Scenario: Test inbound links in the Loan Options page
-   When I click on the "Check out the Rate Checker" link
-   Then I should be directed to the internal "rate-checker" URL
+  When I click on the "Check out the Rate Checker" link
+  Then I should be directed to the internal "rate-checker" URL

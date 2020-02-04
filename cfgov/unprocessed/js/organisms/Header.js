@@ -1,7 +1,23 @@
 // Required modules.
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import GlobalSearch from '../molecules/GlobalSearch.js';
-import MegaMenu from '../organisms/MegaMenu.js';
+import GlobalSearch from '../molecules/GlobalSearch';
+import MegaMenuOrig from '../organisms/MegaMenu';
+
+/*
+  TODO: Remove when 2019/2020 Mega Menu modifications are finalized.
+  Global variables are set by a flag in the base template.
+*/
+let MegaMenu;
+import MegaMenuVar1 from '../organisms/MegaMenuVar1';
+import MegaMenuVar2 from '../organisms/MegaMenuVar2';
+
+if ( window.cfpb && window.cfpb.megaMenuVar1 ) {
+  MegaMenu = MegaMenuVar1;
+} else if ( window.cfpb && window.cfpb.megaMenuVar2 ) {
+  MegaMenu = MegaMenuVar2;
+} else {
+  MegaMenu = MegaMenuOrig;
+}
 
 /**
  * Header

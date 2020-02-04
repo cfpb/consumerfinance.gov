@@ -1,4 +1,4 @@
-from six.moves import html_parser as HTMLParser
+import html.parser as HTMLParser
 
 from django.utils.module_loading import import_string
 
@@ -10,8 +10,9 @@ from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
 from v1.models.images import CFGOVRendition
 from v1.templatetags.app_urls import app_page_url, app_url
-from v1.templatetags.complaint_banners import (
-    complaint_issue_banner, complaint_maintenance_banner
+from v1.templatetags.banners import (
+    collect_outage_banner, complaint_issue_banner,
+    complaint_maintenance_banner, omwi_salesforce_outage_banner
 )
 from v1.templatetags.email_popup import email_popup
 from v1.templatetags.mega_menu import get_menu_items
@@ -97,8 +98,10 @@ class V1Extension(Extension):
             'category_label': ref.category_label,
             'choices_for_page_type': ref.choices_for_page_type,
             'email_popup': email_popup,
+            'collect_outage_banner': collect_outage_banner,
             'complaint_issue_banner': complaint_issue_banner,
             'complaint_maintenance_banner': complaint_maintenance_banner,
+            'omwi_salesforce_outage_banner': omwi_salesforce_outage_banner,
             'get_menu_items': get_menu_items,
             'get_model': get_model,
             'get_unique_id': get_unique_id,

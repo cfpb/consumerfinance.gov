@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 
 import datetime
+import html.parser as HTMLParser
 import re
-from six.moves import html_parser as HTMLParser
 
 from django.http import HttpResponse
 from django.utils import html

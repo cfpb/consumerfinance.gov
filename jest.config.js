@@ -22,5 +22,9 @@ module.exports = {
   moduleNameMapper: {
     '\\.(svg)$': '<rootDir>/test/unit_tests/mocks/fileMock.js'
   },
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/develop-apps/'
+  ],
   testURL: 'http://localhost'
 };
