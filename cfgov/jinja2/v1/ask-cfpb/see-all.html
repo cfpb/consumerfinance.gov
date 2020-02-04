@@ -17,8 +17,10 @@
                  id="{{ term.anchor(page.language) }}"
                  itemscope
                  itemtype="http://schema.org/DefinedTerm">
-                <link itemprop="url" href="{{ page.full_url }}#{{ term.anchor(page.language) }}">
-                <dt class="term_name" itemprop="name">{{ term.name(page.language) }}</dt>
+                <dt class="term_name" itemprop="name">
+                    {{ term.name(page.language) }}
+                    <link itemprop="url" href="{{ page.full_url }}#{{ term.anchor(page.language) }}">
+                </dt>
                 <dd class="term_definition" itemprop="description">
                     {{ term.definition(page.language) | richtext }}
                     {% if term.answer_page_en -%}
