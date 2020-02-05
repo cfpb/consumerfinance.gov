@@ -2,25 +2,21 @@ import clsx from 'clsx';
 import { useMemo, useCallback } from 'react';
 import { observer } from 'mobx-react';
 import { DateTime } from 'luxon';
-import { useStore } from '../../stores';
-import { formatCurrency } from '../../lib/currency-helpers';
-import { compact } from '../../lib/array-helpers';
+import { useStore } from '../../../stores';
+import { compact } from '../../../lib/array-helpers';
 
 function Day({ day, dateFormat = 'd' }) {
   const { uiStore, eventStore } = useStore();
 
   const isToday = useMemo(() => day.hasSame(DateTime.local(), 'day'), [day]);
-  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'day'), [day, uiStore.selectedDate]);
+  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'day'), [
+    day,
+    uiStore.selectedDate,
+  ]);
   const isCurrentMonth = useMemo(() => day.hasSame(uiStore.currentMonth, 'month'), [day, uiStore.currentMonth]);
   const dateString = useMemo(() => day.toFormat(dateFormat), [day, dateFormat]);
 
-  const classes = [
-    'calendar__day',
-    isToday && 'today',
-    isSelected && 'selected',
-    isCurrentMonth && 'current-month',
-  ];
-
+  const classes = ['calendar__day', isToday && 'today', isSelected && 'selected', isCurrentMonth && 'current-month'];
 
   const handleClick = useCallback(
     (evt) => {
@@ -33,14 +29,15 @@ function Day({ day, dateFormat = 'd' }) {
     [day]
   );
 
-  const emptyTile = useCallback(() => (
-    <div className={clsx(classes)} role="button" onClick={handleClick}>
-      <div className="calendar__day-number">
-        {dateString}
+  const emptyTile = useCallback(
+    () => (
+      <div className={clsx(classes)} role="button" onClick={handleClick}>
+        <div className="calendar__day-number">{dateString}</div>
+        <div className="calendar__day-symbols" />
       </div>
-      <div className="calendar__day-symbols" />
-    </div>
-  ), []);
+    ),
+    []
+  );
 
   if (!eventStore.events.length) return emptyTile();
 
@@ -51,10 +48,7 @@ function Day({ day, dateFormat = 'd' }) {
     'neg-balance': balance < 0,
   });
 
-  const symbols = compact([
-    eventStore.dateHasIncome(day) && '+',
-    eventStore.dateHasExpenses(day) && '-',
-  ]);
+  const symbols = compact([eventStore.dateHasIncome(day) && '+', eventStore.dateHasExpenses(day) && '-']);
 
   return (
     <div className={clsx(classes)} role="button" onClick={handleClick}>
