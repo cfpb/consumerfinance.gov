@@ -49,7 +49,7 @@
             <span class="byline">
             {%- for author in page.get_authors() -%}
                 {% if loop.first %}By {% elif loop.last %}and {% endif %}
-                <a href="{{ url }}?authors={{ author.slug }}">{{ author.name }}</a>
+                <a href="{{ filter_page_url }}?authors={{ author.slug }}">{{ author.name }}</a>
                 {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
             {% endfor %}
                 &ndash;
