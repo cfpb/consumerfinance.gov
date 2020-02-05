@@ -172,6 +172,9 @@ if (NODE_ENV === 'development') {
 }
 
 const conf = {
+  node: {
+    fs: 'empty'
+  },
   cache: false,
   mode: NODE_ENV,
   module: COMMON_MODULE_CONFIG,

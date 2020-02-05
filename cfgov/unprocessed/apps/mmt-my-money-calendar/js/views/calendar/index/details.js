@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
-import { useStore } from '../../stores';
-import { formatCurrency } from '../../lib/currency-helpers';
+import { useStore } from '../../../stores';
+import { formatCurrency } from '../../../lib/currency-helpers';
 
 function Details() {
   const { uiStore, eventStore } = useStore();

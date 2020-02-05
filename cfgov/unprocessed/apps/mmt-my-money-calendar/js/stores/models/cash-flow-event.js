@@ -370,33 +370,4 @@ export default class CashFlowEvent {
 
     return this.constructor.getAllFromCursor(cursor);
   }
-
-  async _createRecurrences() {
-    // TODO: This will save duplicate recurrences for the same date right now. Need mechanism to skip saving if a recurrence already exists.
-    const events = this.recurrenceDates.map((dateTime) => new CashFlowEvent({
-      ...this.toJS(),
-      dateTime,
-      id: null,
-      originalEventID: this.id,
-      persisted: false,
-    }));
-
-    this.logger.info('Generated recurrences for event %O: %O', this, events);
-
-    const savedEvents = (await Promise.all(events.map((event) => {
-      /*
-      try {
-        await event.save();
-        return event;
-      } catch (err) {
-        return null;
-      }
-      */
-      return event.save().then(() => event).catch(() => null);
-    }))).filter(Boolean);
-
-    this.constructor.emit('recurrencesSaved', savedEvents, this);
-
-    return savedEvents;
-  }
 }

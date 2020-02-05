@@ -2,14 +2,14 @@ import { useEffect, useCallback } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import { observer } from 'mobx-react';
-import { useStore } from '../../stores';
-import { useClickHandler } from '../../lib/hooks';
+import { useStore } from '../../../stores';
+import { useClickHandler } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
-import Button from '../../components/button';
+import Button from '../../../components/button';
 
-import arrowRight from 'cf-icons/src/icons/arrow-right.svg';
-import arrowLeft from 'cf-icons/src/icons/arrow-left.svg';
+import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
+import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
 
 const ifDevelopment = (fn) => {
   if (process.env.NODE_ENV !== 'development') return null;
@@ -18,7 +18,9 @@ const ifDevelopment = (fn) => {
 
 const CalendarWeekRow = ({ days }) => (
   <div className="calendar__row">
-    {days.map((day) => <Day day={day} key={`day-${day.toFormat('ooo')}`} />)}
+    {days.map((day) => (
+      <Day day={day} key={`day-${day.toFormat('ooo')}`} />
+    ))}
   </div>
 );
 
@@ -48,8 +50,16 @@ function Calendar() {
     uiStore.setSubtitle(uiStore.currentMonth.toFormat('MMMM, y'));
   }, [location, params, uiStore.currentMonth]);
 
-  const seedButton = ifDevelopment(() => <Button onClick={loadSeedData} variant="secondary" style={{margin: '.5rem 0'}}>Seed Database</Button>);
-  const clearButton = ifDevelopment(() => <Button onClick={clearDatabase} variant="secondary">Clear Database</Button>);
+  const seedButton = ifDevelopment(() => (
+    <Button onClick={loadSeedData} variant="secondary" style={{ margin: '.5rem 0' }}>
+      Seed Database
+    </Button>
+  ));
+  const clearButton = ifDevelopment(() => (
+    <Button onClick={clearDatabase} variant="secondary">
+      Clear Database
+    </Button>
+  ));
 
   return (
     <section className="calendar">
@@ -67,7 +77,9 @@ function Calendar() {
       </nav>
 
       <div className="calendar__rows">
-        {uiStore.monthCalendarRows.map(({ days, weekNumber }) => <CalendarWeekRow days={days} key={`week-${weekNumber}`} />)}
+        {uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
+          <CalendarWeekRow days={days} key={`week-${weekNumber}`} />
+        ))}
       </div>
 
       <Details />
