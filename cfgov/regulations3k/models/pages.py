@@ -16,12 +16,30 @@ from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from haystack.query import SearchQuerySet
 
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
-)
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
+try:
+    from wagtail.contrib.routable_page.models import (
+        RoutablePageMixin, route
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.contrib.wagtailroutablepage.models import (
+        RoutablePageMixin, route
+    )
+try:
+    from wagtail.admin.edit_handlers import (
+        FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    )
+try:
+    from wagtail.core.fields import StreamField
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.fields import StreamField
+try:
+    from wagtail.core.models import PageManager
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import PageManager
 
 import requests
 from jinja2 import Markup

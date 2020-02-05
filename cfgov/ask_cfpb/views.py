@@ -8,7 +8,10 @@ from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 from haystack.query import SearchQuerySet
 
-from wagtail.wagtailcore.models import Site
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 

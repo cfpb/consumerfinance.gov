@@ -12,7 +12,10 @@ from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 
 from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
+try:
+    from wagtail.admin.edit_handlers import FieldPanel
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
 import regdown
 

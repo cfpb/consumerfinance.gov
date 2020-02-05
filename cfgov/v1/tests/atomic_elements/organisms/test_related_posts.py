@@ -5,7 +5,10 @@ import re
 
 from django.test import RequestFactory, TestCase
 
-from wagtail.wagtailcore.models import Page, Site
+try:
+    from wagtail.core.models import Page, Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page, Site
 
 from pytz import timezone
 

@@ -2,7 +2,10 @@ from datetime import datetime
 
 from django.test import TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 from pytz import timezone
 from scripts._atomic_helpers import filter_controls as controls

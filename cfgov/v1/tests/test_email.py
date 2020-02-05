@@ -3,7 +3,10 @@ from django.core import mail
 from django.http import HttpRequest
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Site
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 
 from mock import patch
 from model_mommy import mommy

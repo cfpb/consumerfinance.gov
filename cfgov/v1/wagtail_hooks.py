@@ -14,9 +14,18 @@ from django.utils.html import format_html_join
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
-from wagtail.wagtailadmin.menu import MenuItem
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.whitelist import attribute_rule
+try:
+    from wagtail.admin.menu import MenuItem
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.menu import MenuItem
+try:
+    from wagtail.core import hooks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import hooks
+try:
+    from wagtail.core.whitelist import attribute_rule
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.whitelist import attribute_rule
 
 from scripts import export_enforcement_actions
 

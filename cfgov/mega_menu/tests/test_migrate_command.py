@@ -5,7 +5,10 @@ from django.core.management import call_command
 from django.test import TestCase
 from django.utils.text import slugify
 
-from wagtail.wagtailcore.models import Page, Site
+try:
+    from wagtail.core.models import Page, Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page, Site
 
 from mega_menu.models import Menu
 from v1.models import MenuItem

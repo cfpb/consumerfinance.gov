@@ -4,7 +4,10 @@ import re
 from difflib import ndiff
 from functools import partial
 
-from wagtail.wagtailcore.blocks import RawHTMLBlock
+try:
+    from wagtail.core.blocks import RawHTMLBlock
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import RawHTMLBlock
 
 from v1.tests.wagtail_pages.helpers import save_page
 

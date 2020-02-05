@@ -1,8 +1,19 @@
-from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList, StreamFieldPanel, TabbedInterface
-)
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
+try:
+    from wagtail.admin.edit_handlers import (
+        ObjectList, StreamFieldPanel, TabbedInterface
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        ObjectList, StreamFieldPanel, TabbedInterface
+    )
+try:
+    from wagtail.core.fields import StreamField
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.fields import StreamField
+try:
+    from wagtail.core.models import PageManager
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailsearch import index
 
 from v1 import blocks as v1_blocks

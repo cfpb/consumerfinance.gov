@@ -6,8 +6,14 @@ from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Site
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 
 import mock
 

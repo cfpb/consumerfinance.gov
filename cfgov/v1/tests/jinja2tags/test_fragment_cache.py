@@ -2,7 +2,10 @@ from django.core.cache import cache, caches
 from django.template import engines
 from django.test import Client, TestCase, override_settings
 
-from wagtail.wagtailcore.blocks import StreamValue
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 from mock import patch
 from scripts import _atomic_helpers as atomic

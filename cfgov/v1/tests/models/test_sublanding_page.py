@@ -1,7 +1,10 @@
 import datetime as dt
 from unittest import TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 import mock
 import scripts._atomic_helpers as atomic

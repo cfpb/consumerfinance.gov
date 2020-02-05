@@ -13,16 +13,44 @@ from django.utils.text import Truncator, slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
 from haystack.query import SearchQuerySet
 
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
-    TabbedInterface
-)
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Orderable, Page
-from wagtail.wagtailsearch import index
-from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
+try:
+    from wagtail.contrib.routable_page.models import (
+        RoutablePageMixin, route
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.contrib.wagtailroutablepage.models import (
+        RoutablePageMixin, route
+    )
+try:
+    from wagtail.admin.edit_handlers import (
+        FieldPanel, InlinePanel, MultiFieldPanel, ObjectList,
+        StreamFieldPanel, TabbedInterface
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        FieldPanel, InlinePanel, MultiFieldPanel, ObjectList,
+        StreamFieldPanel, TabbedInterface
+    )
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+try:
+    from wagtail.core.fields import RichTextField, StreamField
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.fields import RichTextField, StreamField
+try:
+    from wagtail.core.models import Orderable, Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Orderable, Page
+try:
+    from wagtail.search import index
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailsearch import index
+try:
+   from wagtail.snippets.edit_handlers import SnippetChooserPanel
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+   from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtailautocomplete.edit_handlers import AutocompletePanel

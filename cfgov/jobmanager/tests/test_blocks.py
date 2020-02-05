@@ -4,7 +4,10 @@ from django.test import RequestFactory, TestCase
 from django.utils import timezone
 from django.utils.encoding import force_text
 
-from wagtail.wagtailcore.models import Page
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
 
 from mock import Mock
 from model_mommy import mommy

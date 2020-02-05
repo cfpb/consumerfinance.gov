@@ -9,7 +9,10 @@ from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
 from django.utils import timezone
 
-from wagtail.wagtailcore.models import Site
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 from wagtailsharing.models import SharingSite
 
 import mock

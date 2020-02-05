@@ -5,7 +5,10 @@ from django.apps import apps
 from django.test import TestCase
 
 from wagtail.tests.testapp.models import StreamPage
-from wagtail.wagtailcore.models import Page, PageRevision
+try:
+    from wagtail.core.models import Page, PageRevision
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page, PageRevision
 
 import mock
 

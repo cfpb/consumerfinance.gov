@@ -4,7 +4,10 @@ import logging
 
 from django.db import models
 
-from wagtail.wagtailcore.models import PageManager
+try:
+    from wagtail.core.models import PageManager
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import PageManager
 
 from dateutil import parser
 from jsonfield import JSONField

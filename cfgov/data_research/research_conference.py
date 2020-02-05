@@ -6,7 +6,10 @@ from django.core.mail import EmailMessage
 from django.template import loader
 from django.utils.functional import cached_property
 
-from wagtail.wagtailcore.models import Page
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
 
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook

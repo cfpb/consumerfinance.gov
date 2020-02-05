@@ -5,7 +5,10 @@ from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 

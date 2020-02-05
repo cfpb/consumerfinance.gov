@@ -2,7 +2,10 @@ from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings
 
 from wagtail.wagtaildocs.models import Document
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+try:
+    from wagtail.images.tests.utils import get_test_image_file
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 import boto3
 import moto

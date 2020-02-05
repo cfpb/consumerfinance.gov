@@ -4,7 +4,10 @@ from io import BytesIO, StringIO
 from django import forms
 from django.core.management import call_command
 
-from wagtail.wagtailcore.models import Page
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
 
 
 class CacheInvalidationForm(forms.Form):

@@ -1,6 +1,9 @@
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Page, Site
+try:
+    from wagtail.core.models import Page, Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page, Site
 
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory

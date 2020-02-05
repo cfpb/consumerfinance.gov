@@ -14,7 +14,10 @@ from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
 
 from wagtail.tests.utils import WagtailTestUtils
-from wagtail.wagtailcore.blocks import StreamValue
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 from model_mommy import mommy
 

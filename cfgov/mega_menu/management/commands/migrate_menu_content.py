@@ -4,7 +4,10 @@ from operator import itemgetter
 from django.core.management.base import BaseCommand
 from django.template import engines
 
-from wagtail.wagtailcore.models import Site
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 
 from bs4 import BeautifulSoup
 

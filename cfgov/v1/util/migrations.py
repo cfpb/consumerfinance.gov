@@ -3,7 +3,10 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
-from wagtail.wagtailcore.blocks import StreamValue
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 from treebeard.mp_tree import MP_Node
 

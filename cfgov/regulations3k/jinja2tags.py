@@ -1,8 +1,13 @@
 import datetime
 
-from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (  # noqa: E501
-    routablepageurl
-)
+try:
+    from wagtail.contrib.routable_page.templatetags.wagtailroutablepage_tags import (  # noqa: E501
+        routablepageurl
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (  # noqa: E501
+        routablepageurl
+    )
 
 import jinja2
 from dateutil import parser

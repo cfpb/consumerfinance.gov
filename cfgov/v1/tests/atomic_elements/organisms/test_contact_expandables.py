@@ -4,7 +4,11 @@ from django.http import HttpRequest
 from django.test import TestCase
 
 from wagtail.tests.utils import WagtailTestUtils
-from wagtail.wagtailcore import blocks
+
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
 
 from v1.atomic_elements.organisms import (
     ContactExpandable, ContactExpandableGroup

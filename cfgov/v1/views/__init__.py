@@ -18,7 +18,10 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
-from wagtail.wagtailadmin.views import account
+try:
+    from wagtail.admin.views import account
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.views import account
 
 from v1.auth_forms import (
     CFGOVPasswordChangeForm, CFGOVSetPasswordForm, LoginForm

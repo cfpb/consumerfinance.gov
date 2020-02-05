@@ -3,8 +3,14 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+try:
+   from wagtail.snippets.blocks import SnippetChooserBlock
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+   from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from bs4 import BeautifulSoup
 

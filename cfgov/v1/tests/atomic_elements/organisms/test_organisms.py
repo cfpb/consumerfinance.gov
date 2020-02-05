@@ -1,8 +1,14 @@
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
+try:
+    from wagtail.images.tests.utils import get_test_image_file
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from scripts import _atomic_helpers as atomic
 

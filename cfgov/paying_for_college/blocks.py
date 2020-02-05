@@ -1,5 +1,7 @@
-from wagtail.wagtailcore import blocks
-
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
 
 class QuizAnswer(blocks.StructBlock):
     """Answer blocks to be applied to each question."""

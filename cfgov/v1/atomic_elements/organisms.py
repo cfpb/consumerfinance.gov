@@ -16,12 +16,27 @@ from django.utils.safestring import mark_safe
 
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.utils.widgets import WidgetWithScript
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
+try:
+    from wagtail.core.rich_text import DbWhitelister, expand_db_html
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
-from wagtail.wagtailimages import blocks as images_blocks
-from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+try:
+    from wagtail.images import blocks as images_blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailimages import blocks as images_blocks
+try:
+   from wagtail.snippets.blocks import SnippetChooserBlock
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+   from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from jinja2 import Markup
 from taggit.models import Tag

@@ -1,10 +1,21 @@
 from __future__ import unicode_literals
 
-from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList, StreamFieldPanel, TabbedInterface
-)
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
+try:
+    from wagtail.admin.edit_handlers import (
+        ObjectList, StreamFieldPanel, TabbedInterface
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        ObjectList, StreamFieldPanel, TabbedInterface
+    )
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+try:
+    from wagtail.core.fields import StreamField
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.fields import StreamField
 
 from paying_for_college.blocks import GuidedQuiz
 

@@ -1,7 +1,10 @@
 import datetime
 from unittest import TestCase
 
-from wagtail.wagtailcore.models import Site
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 
 from v1.models import BlogPage
 from v1.models.base import CFGOVPageCategory

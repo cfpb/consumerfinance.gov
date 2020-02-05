@@ -3,7 +3,10 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.safestring import SafeText
 
-from wagtail.wagtailcore.models import Page
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
 
 import mock
 

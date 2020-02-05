@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404
 
-from wagtail.wagtailcore.models import Page
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
 from wagtail.wagtaildocs.models import get_document_model
 
 from bs4 import BeautifulSoup

@@ -1,6 +1,9 @@
 import logging
 
-from wagtail.wagtailcore.signals import page_published
+try:
+    from wagtail.core.signals import page_published
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.signals import page_published
 
 import requests
 from flags.state import flag_enabled
