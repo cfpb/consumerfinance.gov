@@ -255,3 +255,9 @@
 </nav>
 
 {% endmacro %}
+
+
+{# Render the menu if this entire template is rendered with menu_items. #}
+{% if menu_items %}
+    {{ mega_menu( menu_items, language | default( null ) ) }}
+{% endif %}
