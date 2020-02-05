@@ -13,6 +13,7 @@ from v1.models.browse_filterable_page import (
 from v1.models.browse_page import BrowsePage
 from v1.models.caching import CDNHistory
 from v1.models.feedback import Feedback
+from v1.models.form_explainer_page import FormExplainerPage
 from v1.models.home_page import HomePage
 from v1.models.images import CFGOVImage, CFGOVRendition
 from v1.models.landing_page import LandingPage

@@ -1,0 +1,19 @@
+.explainer_notes .fields li:first-child label {
+    width: 100% !important;
+}
+
+.coordinates li {
+    width: 25% !important;
+    float: left;
+}
+
+.coordinates .object-help {
+    opacity: 1 !important;
+    padding-left: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 1em;
+}
+
+.coordinates .object-help:before {
+    display: none !important;
+}
