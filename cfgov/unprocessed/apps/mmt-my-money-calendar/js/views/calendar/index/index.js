@@ -6,10 +6,11 @@ import { useStore } from '../../../stores';
 import { useClickHandler } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
-import Button from '../../../components/button';
+import Button, { ButtonLink } from '../../../components/button';
 
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
+import addRound from '@cfpb/cfpb-icons/src/icons/add-round.svg';
 
 const ifDevelopment = (fn) => {
   if (process.env.NODE_ENV !== 'development') return null;
@@ -81,6 +82,8 @@ function Calendar() {
           <CalendarWeekRow days={days} key={`week-${weekNumber}`} />
         ))}
       </div>
+
+      <ButtonLink to="/calendar/add" icon={addRound} iconSide="left">Add Income/Expense</ButtonLink>
 
       <Details />
 

@@ -5,8 +5,8 @@ import { DateTime } from 'luxon';
 import { useStore } from '../../../stores';
 import { compact } from '../../../lib/array-helpers';
 
-import addRound from '@cfpb/cfpb-icons/src/icons/add-round.svg';
-import subtractRound from '@cfpb/cfpb-icons/src/icons/subtract-round.svg';
+import add from '@cfpb/cfpb-icons/src/icons/add.svg';
+import subtract from '@cfpb/cfpb-icons/src/icons/subtract.svg';
 
 const Icon = ({ icon, size, style = {}, ...props }) => {
   const styles = {
@@ -62,8 +62,8 @@ function Day({ day, dateFormat = 'd' }) {
   });
 
   const symbols = compact([
-    eventStore.dateHasIncome(day) && <Icon icon={addRound} key="add-icon" size={20} />,
-    eventStore.dateHasExpenses(day) && <Icon icon={subtractRound} key="subtract-icon" size={20} />,
+    eventStore.dateHasIncome(day) && <Icon icon={add} key="add-icon" size={20} />,
+    eventStore.dateHasExpenses(day) && <Icon icon={subtract} key="subtract-icon" size={20} />,
   ]);
 
   return (
