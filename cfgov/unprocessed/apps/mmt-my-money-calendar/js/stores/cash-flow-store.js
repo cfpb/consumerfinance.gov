@@ -192,7 +192,8 @@ export default class CashFlowStore {
       yield event.save();
       this.events.push(event);
     } catch (err) {
-      this.rootStore.uiStore.setError(err);
+      this.logger.error('Event save error: %O', err);
+      throw err;
     }
   });
 
