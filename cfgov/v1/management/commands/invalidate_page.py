@@ -1,6 +1,9 @@
 from django.core.management.base import BaseCommand
 
-from wagtail.contrib.wagtailfrontendcache.utils import purge_url_from_cache
+try:
+    from wagtail.contrib.frontend_cache.utils import purge_url_from_cache
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.contrib.wagtailfrontendcache.utils import purge_url_from_cache
 
 
 class Command(BaseCommand):
