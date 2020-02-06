@@ -1,4 +1,6 @@
 import clsx from 'clsx';
+import { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const ButtonIcon = ({ side = 'left', icon }) => (
   <span className={`a-btn_icon a-btn_icon__on-${side}`} dangerouslySetInnerHTML={{__html: icon}}></span>
@@ -37,6 +39,16 @@ export function Button({
       {icon && iconSide === 'right' && btnIcon}
     </TagName>
   );
+}
+
+export function ButtonLink({ to, ...props }) {
+  const history = useHistory();
+  const onClick = useCallback((evt) => {
+    evt.preventDefault();
+    history.push(to);
+  }, [history, to]);
+
+  return <Button {...props} onClick={onClick} />;
 }
 
 export default Button;
