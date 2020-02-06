@@ -5,6 +5,19 @@ import { DateTime } from 'luxon';
 import { useStore } from '../../../stores';
 import { compact } from '../../../lib/array-helpers';
 
+import addRound from '@cfpb/cfpb-icons/src/icons/add-round.svg';
+import subtractRound from '@cfpb/cfpb-icons/src/icons/subtract-round.svg';
+
+const Icon = ({ icon, size, style = {}, ...props }) => {
+  const styles = {
+    width: `${size}px`,
+    height: `${size}px`,
+    ...style,
+  };
+
+  return <span className="calendar__day-icon" style={styles} dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
+};
+
 function Day({ day, dateFormat = 'd' }) {
   const { uiStore, eventStore } = useStore();
 
@@ -48,7 +61,10 @@ function Day({ day, dateFormat = 'd' }) {
     'neg-balance': balance < 0,
   });
 
-  const symbols = compact([eventStore.dateHasIncome(day) && '+', eventStore.dateHasExpenses(day) && '-']);
+  const symbols = compact([
+    eventStore.dateHasIncome(day) && <Icon icon={addRound} key="add-icon" size={20} />,
+    eventStore.dateHasExpenses(day) && <Icon icon={subtractRound} key="subtract-icon" size={20} />,
+  ]);
 
   return (
     <div className={clsx(classes)} role="button" onClick={handleClick}>
