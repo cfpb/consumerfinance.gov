@@ -43,7 +43,7 @@ export const Categories = {
       description: 'Includes child support payments, etc.',
     },
   },
-  expenses: {
+  expense: {
     housing: {
       name: 'Housing',
       subcategories: {

@@ -1,26 +1,71 @@
 import clsx from 'clsx';
+import { useMemo } from 'react';
 import { observer } from 'mobx-react';
 import { useFormik } from 'formik';
+import { useHistory } from 'react-router-dom';
 import { useStore } from '../../../stores';
+import { Categories } from '../../../stores/models/cash-flow-event';
 import Button from '../../../components/button';
-import { TextField, Checkbox, CurrencyField, RadioButton } from '../../../components/forms';
+import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
 import * as Yup from 'yup';
 
 function Add() {
   const { uiStore, eventStore } = useStore();
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       name: '',
-      total: 0,
+      totalCents: 0,
+      category: undefined,
+      eventType: undefined,
+      dateTime: '',
     },
     validationSchema: Yup.object({
       name: Yup.string().required(),
       totalCents: Yup.number().integer().required(),
+      eventType: Yup.string().required(),
+      category: Yup.string().required(),
+      dateTime: Yup.date().required(),
     }),
     onSubmit: (values) => {
+      console.log('Form submit: %O', values);
+      if (values.eventType === 'expense') values.totalCents = -values.totalCents;
 
+      values.totalCents = parseInt(values.totalCents, 10);
+      values.dateTime = DateTime.fromFormat(values.dateTime, 'yyyy-MM-dd');
+
+      try {
+        eventStore.createEvent(values);
+        alert('Event saved');
+        history.push('/calendar');
+      } catch (err) {
+        console.error(err);
+        uiStore.setError(err);
+      }
     }
   });
+
+  const categoryOptions = useMemo(() => {
+    if (!formik.values.eventType || !Categories[formik.values.eventType]) return [];
+
+    console.log(Categories[formik.values.eventType]);
+
+    return Object.entries(Categories[formik.values.eventType]).reduce((output, [slug, category]) => {
+      if (!category.subcategories) {
+        output = [...output, { value: `${formik.values.eventType}.${slug}`, label: category.name }];
+        return output;
+      }
+
+      const options = Object.entries(category.subcategories).map(([id, subcategory]) => ({
+        label: `${category.name} > ${subcategory.name}`,
+        value: `${formik.values.eventType}.${slug}.${id}`,
+      }));
+
+      output = [...output, ...options];
+
+      return output;
+    }, []);
+  }, [formik.values.eventType]);
 
   return (
     <section className="add-event">
@@ -48,6 +93,31 @@ function Add() {
           largeTarget
         />
 
+        {formik.errors.eventType && formik.touched.eventType && (<div className="error">{formik.errors.eventType}</div>)}
+
+        <DateField
+          id="dateTime"
+          name="dateTime"
+          label="Date"
+          value={formik.values.dateTime}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+
+        {formik.errors.dateTime && formik.touched.dateTime && (<div className="error">{formik.errors.dateTime}</div>)}
+
+        <SelectField
+          id="category"
+          name="category"
+          label="Category"
+          value={formik.values.category}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          options={categoryOptions}
+        />
+
+        {formik.errors.category && formik.touched.category && (<div className="error">{formik.errors.category}</div>)}
+
         <TextField
           id="name"
           name="name"
@@ -57,23 +127,7 @@ function Add() {
           onBlur={formik.handleBlur}
         />
 
-        <TextField
-          id="category"
-          name="category"
-          label="Category"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.category}
-        />
-
-        <TextField
-          id="subcategory"
-          name="subcategory"
-          label="Subcategory"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.subcategory}
-        />
+        {formik.errors.description && formik.touched.description && (<div className="error">{formik.errors.description}</div>)}
 
         <CurrencyField
           id="totalCents"
@@ -81,20 +135,14 @@ function Add() {
           label="Amount"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.total}
+          value={formik.values.totalCents}
         />
 
+        {formik.errors.totalCents && formik.touched.totalCents && (<div className="error">{formik.errors.totalCents}</div>)}
 
-        {formik.touched.name && formik.errors.name ? (
-          <strong>{formik.errors.name}</strong>
-        ) : null}
-
+        <h3>Form State</h3>
         <pre>
-          Form State:
           {JSON.stringify(formik.values, null, 2)}
-
-          Errors:
-          {JSON.stringify(formik.errors, null, 2)}
         </pre>
 
         <Button type="submit">Save</Button>
