@@ -1,7 +1,7 @@
 FROM centos:7 AS cfgov-dev
 
-# Specify SCL-based Python version.
-# Currently used options: python27, rh-python36
+# Specify SCL-based Python version
+# Currently used option: rh-python36
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
 ARG scl_python_version
 ENV SCL_PYTHON_VERSION ${scl_python_version}

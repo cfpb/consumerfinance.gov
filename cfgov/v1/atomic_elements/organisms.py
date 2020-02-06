@@ -2,8 +2,7 @@ import itertools
 import json
 from collections import Counter
 from functools import partial
-from six import string_types as basestring
-from six.moves.urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from django import forms
 from django.apps import apps
@@ -584,7 +583,7 @@ class ModelBlock(blocks.StructBlock):
 
         ordering = self.get_ordering(value)
         if ordering:
-            if isinstance(ordering, basestring):
+            if isinstance(ordering, str):
                 ordering = (ordering,)
 
             qs = qs.order_by(*ordering)
@@ -781,8 +780,27 @@ class Expandable(BaseExpandable):
     )
 
 
-class ExpandableGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
+class BaseExpandableGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(
+        required=False,
+        help_text=mark_safe(
+            'Added as an <code>&lt;h3&gt;</code> at the top of this block. '
+            'Also adds a wrapping <code>&lt;div&gt;</code> whose '
+            '<code>id</code> attribute comes from a slugified version of this '
+            'heading, creating an anchor that can be used when linking to '
+            'this part of the page.'
+        )
+    )
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/organisms/expandable-group.html'
+
+    class Media:
+        js = ["expandable-group.js"]
+
+
+class ExpandableGroup(BaseExpandableGroup):
     body = blocks.RichTextBlock(required=False)
     is_accordion = blocks.BooleanBlock(required=False)
     has_top_rule_line = blocks.BooleanBlock(
@@ -793,13 +811,6 @@ class ExpandableGroup(blocks.StructBlock):
     )
 
     expandables = blocks.ListBlock(Expandable())
-
-    class Meta:
-        icon = 'list-ul'
-        template = '_includes/organisms/expandable-group.html'
-
-    class Media:
-        js = ["expandable-group.js"]
 
 
 class ContactExpandable(blocks.StructBlock):
@@ -825,16 +836,8 @@ class ContactExpandable(blocks.StructBlock):
         return [blocks.StructValue(self, value) for value in values]
 
 
-class ContactExpandableGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
+class ContactExpandableGroup(BaseExpandableGroup):
     expandables = blocks.ListBlock(ContactExpandable())
-
-    class Meta:
-        icon = 'list-ul'
-        template = '_includes/organisms/expandable-group.html'
-
-    class Media:
-        js = ['expandable-group.js']
 
     def bulk_to_python(self, values):
         contact_expandable_values = list(itertools.chain(*(

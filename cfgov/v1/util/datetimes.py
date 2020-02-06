@@ -1,5 +1,4 @@
 import datetime
-from six import string_types as basestring
 
 from dateutil import parser
 from pytz import timezone
@@ -12,7 +11,7 @@ def convert_date(date, tz):
     datetime. Then (and if `date` was already a datetime), it takes the passed
     timezone and converts the datetime to one that is in that timezone.
     """
-    if date and isinstance(date, basestring):
+    if date and isinstance(date, str):
         date = parser.parse(
             date,
             default=datetime.datetime.today().replace(day=1)

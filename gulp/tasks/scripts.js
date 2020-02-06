@@ -55,7 +55,7 @@ function scriptsPolyfill() {
       extra: configScripts.otherBuildTriggerFiles
     } ) )
 
-    /* csspointerevents is used by select menu in Capital Framework for IE10.
+    /* csspointerevents is used by select menu in the Design System for IE10.
        es5 is used for ECMAScript 5 feature detection to change js CSS to no-js.
        setClasses sets detection checks as feat/no-feat CSS in html element.
        html5printshiv enables use of HTML5 sectioning elements in IE8

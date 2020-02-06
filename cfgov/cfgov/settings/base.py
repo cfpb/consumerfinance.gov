@@ -96,6 +96,7 @@ INSTALLED_APPS = (
     'hmda',
     'youth_employment',
     'diversity_inclusion',
+    'mega_menu.apps.MegaMenuConfig',
 )
 
 OPTIONAL_APPS = [
@@ -191,6 +192,7 @@ TEMPLATES = [
 
                 'core.jinja2tags.filters',
                 'agreements.jinja2tags.agreements',
+                'mega_menu.jinja2tags.MegaMenuExtension',
                 'prepaid_agreements.jinja2tags.prepaid_agreements',
                 'regulations3k.jinja2tags.regulations',
                 'v1.jinja2tags.datetimes_extension',
@@ -529,6 +531,7 @@ CSP_SCRIPT_SRC = (
     'universal.iperceptions.com',
     'cdn.mouseflow.com',
     'n2.mouseflow.com',
+    'us.mouseflow.com',
     'geocoding.geo.census.gov',
     'tigerweb.geo.census.gov',
     'about:',
@@ -714,7 +717,7 @@ FLAGS = {
     # Used to hide new youth employment success pages prior to public launch.
     'YOUTH_EMPLOYMENT_SUCCESS': [],
 
-    # Release of prepaid agreements database search
+    # Release of prepaid agreements database search.
     'PREPAID_AGREEMENTS_SEARCH': [],
 
     # Used to hide CCDB landing page updates prior to public launch.
@@ -722,6 +725,33 @@ FLAGS = {
 
     # Toggle My Money Calendar tool pages prior to public launch.
     'MMT_MY_MONEY_CALENDAR': [],
+
+    # During a Salesforce system outage, the following flag should be enabled
+    # to alert users that the Collect community is down.
+    'COLLECT_OUTAGE': [
+        {
+            'condition': 'path matches',
+            'value': (r'^/data-research/credit-card-data/terms-credit-card-plans-survey/$|'  # noqa: E501
+                      r'^/data-research/prepaid-accounts/$'),
+            'required': True
+        },
+        # Boolean to turn it off explicitly unless enabled by another condition
+        {'condition': 'boolean', 'value': False}
+    ],
+
+    # During a Salesforce system outage, the following flag
+    # should be enabled to alert users that
+    # the OMWI assessment form and inclusivity portal are down.
+    'OMWI_SALESFORCE_OUTAGE': [
+        {
+            'condition': 'path matches',
+            'value': (r'^/about-us/diversity-and-inclusion/$|'
+                      r'^/about-us/diversity-and-inclusion/self-assessment-financial-institutions/$'),  # noqa: E501
+            'required': True
+        },
+        # Boolean to turn it off explicitly unless enabled by another condition
+        {'condition': 'boolean', 'value': False}
+    ],
 }
 
 
@@ -804,7 +834,12 @@ else:
 # which we don't want this logic to be run.
 PARSE_LINKS_EXCLUSION_LIST = [
     # Wagtail admin pages, except preview and draft views
-    r'^/admin/(?!pages/\d+/(edit/preview|view_draft)/)',
+    (
+        r'^/admin/(?!'
+        r'pages/\d+/(edit/preview|view_draft)/|'
+        r'mega_menu/menu/preview/\w+/'
+        r')'
+    ),
     # Django admin pages
     r'^/django-admin/',
     # Our custom login pages

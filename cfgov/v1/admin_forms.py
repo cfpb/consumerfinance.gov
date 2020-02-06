@@ -1,5 +1,5 @@
 import zipfile
-from six import BytesIO, StringIO
+from io import BytesIO, StringIO
 
 from django import forms
 from django.core.management import call_command

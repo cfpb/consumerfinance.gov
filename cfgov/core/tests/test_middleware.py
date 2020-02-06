@@ -167,3 +167,35 @@ class TestParseLinks(TestCase):
         output = parse_links(s)
         soup = BeautifulSoup(output, 'html.parser')
         self.assertEqual(len(soup.find_all('a')), 2)
+
+    def check_after_parse_links_has_a_single_svg(self, s):
+        output = parse_links(s)
+        soup = BeautifulSoup(output, 'html.parser')
+        self.assertEqual(len(soup.find_all('svg')), 1)
+
+    def test_link_ending_with_svg_doesnt_get_another_svg(self):
+        self.check_after_parse_links_has_a_single_svg(
+            '<a href="https://external.gov">'
+            '<span>Text before icon</span> '
+            '<svg>something</svg>'
+            '</a>'
+        )
+
+    def test_link_ending_with_svg_and_whitespace_doesnt_get_another_svg(self):
+        self.check_after_parse_links_has_a_single_svg(
+            '<a href="https://external.gov">'
+            '<span>Text before icon</span> '
+            '<svg>something</svg>   \n\t'
+            '</a>'
+        )
+
+    def test_with_svg_not_at_the_end_still_gets_svg(self):
+        s = (
+            '<a href="https://external.gov">'
+            '<span><svg>something</svg> Text after icon</span>'
+            '</a>'
+        )
+
+        output = parse_links(s)
+        soup = BeautifulSoup(output, 'html.parser')
+        self.assertEqual(len(soup.find_all('svg')), 2)

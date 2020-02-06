@@ -1,4 +1,4 @@
-# Backend testing
+# Python testing
 
 ## Writing tests
 
@@ -9,7 +9,41 @@ We have multiple resources for writing new unit tests for Django, Wagtial, and P
 - [The Wagtail testing documentation](http://docs.wagtail.io/en/v1.13.4/advanced_topics/testing.html)
 - [Real Python's "Testing in Django"](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/)
 
+## Prerequisites
+
+If you have set up 
+[a standalone installation of cfgov-refresh](/installation/#install-system-level-requirements), 
+you'll need to 
+[activate your virtual environment](/running-virtualenv/#3-launch-site) 
+before running the tests:
+
+```sh
+workon cfgov-refresh
+```
+
+If have not set up the standalone installation of cfgov-refresh,
+it's not necessary to run the tests. 
+You can install Tox in your 
+[local installation of Python](https://github.com/cfpb/development/blob/master/guides/installing-python.md):
+
+```
+pip install tox
+```
+
+If you have set up 
+[a Docker-based installation of cfgov-refresh](/installation/#docker-based-installation),
+you'll need to 
+[access the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell) 
+before running the tests:
+
+```sh
+docker-compose exec python3 bash
+```
+
 ## Running tests
+
+Our test suite can either be run in a local virtualenv or in Docker. 
+Please note, the tests run quite slow in Docker.
 
 To run the the full suite of Python tests using Tox, 
 make sure you are in the cfgov-refresh root and then run:
@@ -18,29 +52,34 @@ make sure you are in the cfgov-refresh root and then run:
 tox
 ```
 
-This will run linting tests and unit tests with migrations in both Python 2.7 and Python 3.6. 
-This is the same as running:
+Tox runs different isolated Python environments with different versions of dependencies.
+We use it to lint our Python files, check out import sorting, and run unit tests
+in both Python 3.6 and Python 3.8.
+You can select specific environments using `-e`.
+
+Running `tox` by itself is the same as running:
 
 ```sh
-tox -e lint -e unittest-py27-dj111-wag113-slow -e unittest-py36-dj111-wag113-slow
+tox -e lint -e unittest-py36-dj111-wag113-slow
 ```
 
+These default environments are:
+
+- `lint`, which runs our [linting](#linting) tools
+- `unittest-py27-dj111-wag113-slow`, our "slow" (with migrations) environment 
+  for running unit tests on Python 2.7 with Django 1.11 and Wagtail 1.13.
+- `unittest-py36-dj111-wag113-slow`, our "slow" (with migrations) environment 
+  for running unit tests on Python 3.6 with Django 1.11 and Wagtail 1.13.
+ 
 By default this uses a local SQLite database for tests. To override this, you
 can set the `TEST_DATABASE_URL` environment variable to a database connection
 string as supported by [dj-database-url](https://github.com/kennethreitz/dj-database-url).
 
 If you haven't changed any Python dependencies and you don't need to test 
-all migrations, you can run a much faster Python code test using:
+all migrations, you can run our "fast" environments that skip migrations:
 
 ```sh
-# Python 2.7
-tox -e unittest-py27-dj111-wag113-fast
-
-# Python 3.6
 tox -e unittest-py36-dj111-wag113-fast
-
-# Both
-tox -e unittest-py27-dj111-wag113-fast -e unittest-py36-dj111-wag113-fast
 ```
 
 If you would like to run only a specific test, or the tests for a specific app, 

@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import RichTextField, StreamField
@@ -14,7 +13,6 @@ from v1.atomic_elements import molecules
 from v1.blocks import ReusableTextChooserBlock  # noqa
 
 
-@python_2_unicode_compatible
 @register_snippet
 class ReusableText(index.Indexed, models.Model):
     title = models.CharField(
@@ -41,7 +39,6 @@ class ReusableText(index.Indexed, models.Model):
         return self.title
 
 
-@python_2_unicode_compatible
 @register_snippet
 class Contact(models.Model):
     heading = models.CharField(verbose_name=('Heading'), max_length=255,
@@ -68,7 +65,6 @@ class Contact(models.Model):
         ordering = ['heading']
 
 
-@python_2_unicode_compatible
 @register_snippet
 class RelatedResource(index.Indexed, models.Model):
     title = models.CharField(max_length=255)

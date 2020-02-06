@@ -1,11 +1,10 @@
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import InvalidPage, Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.utils.six import iterlists
 
 from prepaid_agreements.models import PrepaidProduct
 from v1.models.snippets import ReusableText
@@ -96,8 +95,7 @@ def get_support_text():
 
 
 def index(request):
-    query = request.GET.copy()
-    params = dict(iterlists(query))
+    params = dict(request.GET.lists())
     available_filters = {}
     search_term = None
     search_field = None

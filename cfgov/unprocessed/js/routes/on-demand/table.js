@@ -3,4 +3,4 @@
    ========================================================================== */
 
 // See https://github.com/cfpb/capital-framework/
-require( 'cf-tables/src/Table' ).init();
+require( '@cfpb/cfpb-tables/src/Table' ).init();

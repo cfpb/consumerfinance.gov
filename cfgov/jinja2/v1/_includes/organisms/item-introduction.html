@@ -48,11 +48,10 @@
         {% if filter_page_url and has_authors %}
             <span class="byline">
             {%- for author in page.get_authors() -%}
-                {{- 'By ' if loop.index == 1 else ' and ' }}
-                <a href="{{ filter_page_url }}?authors={{ author.slug }}">
-                    {{ author.name }}
-                </a>
-            {%- endfor -%}
+                {% if loop.first %}By {% elif loop.last %}and {% endif %}
+                <a href="{{ filter_page_url }}?authors={{ author.slug }}">{{ author.name }}</a>
+                {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
+            {% endfor %}
                 &ndash;
             </span>
         {% endif %}

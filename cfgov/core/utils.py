@@ -1,6 +1,5 @@
 import re
-from six import text_type as str
-from six.moves.urllib.parse import parse_qs, urlencode, urlparse
+from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
 from django.core.urlresolvers import reverse
@@ -29,17 +28,17 @@ LINK_ICON_TEXT_CLASSES = 'a-link_text'
 A_TAG = re.compile(
     # Match an <a containing any attributes
     r'<a [^>]*?>'
-    # And match everything inside
-    r'.+?'
-    # As long as it's not a </a>, then match '</a>'
-    r'(?=</a>)</a>'
+    # And match everything inside before the closing </a>
+    r'.+?(?=</a>)'
+    # Then match the closing </a>
+    r'</a>'
     # Make '.' match new lines, ignore case
     r'(?s)(?i)'
 )
 
 # If a link contains these elements, it should *not* get an icon
 ICONLESS_LINK_CHILD_ELEMENTS = [
-    'img', 'svg', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+    'img', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 ]
 
 
@@ -128,6 +127,12 @@ def add_link_markup(tag):
     elif DOWNLOAD_LINKS.search(tag['href']):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
+
+    # If the already ends in an SVG, we never want to append an icon.
+    # If it has an SVG but other content comes after it, we still add one.
+    svgs = tag.find_all('svg')
+    if svgs and not all((svg.next_sibling or '').strip() for svg in svgs):
+        return str(tag)
 
     if tag.select(', '.join(ICONLESS_LINK_CHILD_ELEMENTS)):
         # If this tag has any children that are in our list of child elements

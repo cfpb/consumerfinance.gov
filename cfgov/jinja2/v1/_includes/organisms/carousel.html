@@ -38,8 +38,7 @@
                 {% set rendition = image( item.image, 'original' ) %}
                 <img class="o-carousel_item-img"
                      src="{{ rendition.url }}"
-                     alt="{{ item.image.alt }}"
-                >
+                     alt="{{ item.image.alt }}">
             </div>
         </div>
     </div>
@@ -48,18 +47,17 @@
 
 {% macro render_carousel_thumbnail( item, is_selected=false ) %}
 <button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
-    <li class="o-carousel_thumbnail-layout">
-        <div class="o-carousel_thumbnail-visual">
-            {% set rendition = image( item.image, 'fill-50x50' ) %}
+    <span class="o-carousel_thumbnail-layout">
+        <span class="o-carousel_thumbnail-visual">
+            {% set rendition = image( item.image, 'fill-48x48' ) %}
             <img class="o-carousel_thumbnail-img"
-                src="{{ rendition.url }}"
-                alt="{{ item.image.alt }}"
-            >
-        </div>
-        <p class="o-carousel_thumbnail-text">
+                 src="{{ rendition.url }}"
+                 alt="{{ item.image.alt }}">
+        </span>
+        <span class="o-carousel_thumbnail-text">
             {{ item.title }}
-        <p>
-    </li>
+        </span>
+    </span>
 </button>
 {% endmacro %}
 
@@ -69,22 +67,20 @@
 #}
 {% macro render_carousel_thumbnail_mobile( item, is_selected=false ) %}
 <div class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{% endif %}">
-    <li class="o-carousel_thumbnail-layout">
-        <div class="o-carousel_thumbnail-visual">
-            <a href="{{ item.link_url }}">
-                {% set rendition = image( item.image, 'fill-50x50' ) %}
+    <a href="{{ item.link_url }}" title="{{ item.title }}">
+        <div class="o-carousel_thumbnail-layout">
+            <span class="o-carousel_thumbnail-visual">
+                {% set rendition = image( item.image, 'fill-48x48' ) %}
                 <img class="o-carousel_thumbnail-img"
-                    src="{{ rendition.url }}"
-                    alt="{{ item.image.alt }}"
-                >
-            </a>
-        </div>
-        <p class="o-carousel_thumbnail-text">
-            <a href="{{ item.link_url }}">
+                        src="{{ rendition.url }}"
+                        alt="{{ item.title }}"
+                        aria-hidden="true">
+            </span>
+            <span class="o-carousel_thumbnail-text">
                 {{ item.title }}
-            </a>
-        <p>
-    </li>
+            </span>
+        </div>
+    </a>
 </div>
 {% endmacro %}
 
@@ -100,26 +96,26 @@
             {{ svg_icon( 'right' ) }}
         </button>
 
-        <ul class="o-carousel_items-container">
+        <div class="o-carousel_items-container">
             <div class="o-carousel_items">
                 {% for item in value %}
                     {{ render_carousel_item( item ) }}
                 {% endfor %}
             </div>
-        </ul>
+        </div>
 
     </div>
 
-    <ul class="o-carousel_thumbnails o-carousel_thumbnails__desktop">
+    <div class="o-carousel_thumbnails o-carousel_thumbnails__desktop">
         {% for item in value %}
             {{ render_carousel_thumbnail( item, loop.first ) }}
         {% endfor %}
-    </ul>
+    </div>
 
-    <ul class="o-carousel_thumbnails o-carousel_thumbnails__mobile">
+    <div class="o-carousel_thumbnails o-carousel_thumbnails__mobile">
         {% for item in value %}
             {{ render_carousel_thumbnail_mobile( item, loop.first ) }}
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endmacro %}
