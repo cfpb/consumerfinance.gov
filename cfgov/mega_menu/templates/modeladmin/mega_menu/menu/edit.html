@@ -1,0 +1,22 @@
+{% extends "modeladmin/edit.html" %}
+{% load i18n %}
+
+{% block footer %}
+    <footer>
+        <ul>
+            <li class="actions">
+                {% block form_actions %}
+                    {{ block.super }}
+                {% endblock %}
+            </li>
+            <li class="preview">
+                <a href="{{ view.preview_url }}"
+                   class="button icon icon-view"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    {{ _('Preview') }}
+                </a>
+            </li>
+        </ul>
+    </footer>
+{% endblock %}

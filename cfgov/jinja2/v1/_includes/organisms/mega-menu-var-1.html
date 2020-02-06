@@ -136,6 +136,29 @@
             <div class="{{ _classes( nav_depth, '-lists' ) }}">
                 {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
 
+                {% if flag_enabled( 'MEGA_MENU_BACKEND_V2' ) and ( nav_item.featured_links or nav_item.other_links ) %}
+                {# New mega menu backend #}
+                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                    <ul class="m-list m-list__unstyled">
+                        {% for link in nav_item.featured_links | default( [], true ) %}
+                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                            <span>{{ svg_icon( 'favorite' ) }}</span>
+                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="{{ link.external_link }}">
+                                {{ link.link_text }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% for link in nav_item.other_links | default( [], true ) %}
+                        <li>
+                            <span>{{ svg_icon( link.icon ) }}</span>
+                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="{{ link.external_link }}">
+                                {{ link.link_text }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
                 {# TODO: This is hardcoded to menu selected, which will need to be controlled by Wagtail when this is released. #}
                 {% if nav_item | string == 'Consumer Tools' %}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
@@ -206,7 +229,7 @@
                     </ul>
                 </div>
                 {% endif %}
-
+            {% endif %}
             </div>
             {% endif %}
 
@@ -257,8 +280,10 @@
              if has_children else ''
            }}>
               {{ text }}
+              {% if has_children %}
               <span class="{{- _classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
               <span class="{{- _classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
+              {% endif %}
         </a>
         {% if has_children %}
             {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
@@ -305,3 +330,9 @@
 </nav>
 
 {% endmacro %}
+
+
+{# Render the menu if this entire template is rendered with menu_items. #}
+{% if menu_items %}
+    {{ mega_menu( menu_items, language | default( null ) ) }}
+{% endif %}

@@ -117,6 +117,36 @@
         {% endif %}
         <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) -}}">
 
+            {% if flag_enabled( 'MEGA_MENU_BACKEND_V2' ) %}
+            {# New mega menu backend #}
+            <div class="{{ _classes( nav_depth, '-heading' ) }}">
+
+                {% if nav_depth > 1 %}
+                <h3 class="{{ _classes( nav_depth, '-overview' ) }}
+                            {{ _classes( nav_depth, '-overview-heading' ) }}">
+                    <a class="{{ _classes( nav_depth, '-overview-link' ) }}
+                                {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                                {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                        {{ nav_overview_text ~ ' Overview' }}
+                    </a>
+                </h3>
+                {% endif %}
+
+                {% if nav_item.other_links %}
+                <ul class="m-list m-list__horizontal">
+                    {% for link in nav_item.other_links %}
+                    <li class="m-list_item">
+                        <a href="{{ link.external_link }}">
+                            {{ link.link_text }}
+                        </a>
+                    </li>
+                    {% if not loop.last %}|{% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+            </div>
+            {% else %}
             {# TODO: This is hardcoded to menu selected, which will need to be controlled by Wagtail when this is released. #}
             {% if nav_item | string == 'Consumer Tools' %}
             <div class="{{ _classes( nav_depth, '-heading' ) }}">
@@ -193,6 +223,7 @@
                 {% endif %}
             </div>
             {% endif %}
+            {% endif %}
 
             {% if nav_item.nav_items %}
                 {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
@@ -202,6 +233,23 @@
             <div class="{{ _classes( nav_depth, '-lists' ) }}">
                 {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
 
+                {% if flag_enabled( 'MEGA_MENU_BACKEND_V2' ) %}
+                {# New mega menu backend #}
+                {% if nav_item.featured_links %}
+                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                    <ul class="m-list m-list__unstyled">
+                        {% for link in nav_item.featured_links %}
+                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                            <span>{{ svg_icon( 'favorite' ) }}</span>
+                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="{{ link.external_link }}">
+                                {{ link.link_text }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% else %}
                 {# TODO: This is hardcoded to menu selected, which will need to be controlled by Wagtail when this is released. #}
                 {% if nav_item | string == 'Consumer Tools' %}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
@@ -247,6 +295,7 @@
                         </li>
                     </ul>
                 </div>
+                {% endif %}
                 {% endif %}
 
             </div>
@@ -346,3 +395,9 @@
 </nav>
 
 {% endmacro %}
+
+
+{# Render the menu if this entire template is rendered with menu_items. #}
+{% if menu_items %}
+    {{ mega_menu( menu_items, language | default( null ) ) }}
+{% endif %}

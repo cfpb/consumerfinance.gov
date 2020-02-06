@@ -13,6 +13,6 @@
   },
   "private": true,
   "license": "SEE LICENSE IN TERMS.md",
-  "dependencies": {
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

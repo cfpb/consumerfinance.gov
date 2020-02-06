@@ -80,7 +80,7 @@ class FormExplainer {
     );
 
     // eslint-disable-next-line global-require
-    require( 'cf-expandables/src/Expandable' ).init();
+    require( '@cfpb/cfpb-expandables/src/Expandable' ).init();
   }
 
   /**

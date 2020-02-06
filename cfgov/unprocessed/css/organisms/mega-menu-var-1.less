@@ -1,6 +1,6 @@
 
-// Import Capital Framework Atomic Component less file to get transition CSS.
-@import (less) 'cf-atomic-component.less';
+// Import Design System's Atomic Component less file to get transition CSS.
+@import (less) '@cfpb/cfpb-atomic-component/src/utilities/transition/transition.less';
 
 // TODO: Move the theme variables to /enhancements/ for CF.
 /* topdoc
@@ -572,7 +572,6 @@ body {
                 position: relative;
                 z-index: 30;
                 padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                padding-right: unit( 24px / @base-font-size-px, em );
                 border-top: 1px solid transparent;
                 border-right: 1px solid transparent;
                 border-left: 1px solid transparent;
@@ -646,6 +645,11 @@ body {
 
                 &[aria-expanded="true"] &-icon-closed .cf-icon-svg {
                     display: none;
+                }
+
+                // Add padding to accommodate caret.
+                &__has-children {
+                    padding-right: unit( 24px / @base-font-size-px, em );
                 }
             }
         }
