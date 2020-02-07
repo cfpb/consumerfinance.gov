@@ -18,6 +18,8 @@ from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
 from django.test.runner import DiscoverRunner
 
+import wagtail
+
 from mock import Mock
 from scripts import initial_data, test_data
 
@@ -96,16 +98,28 @@ class TestRunner(DiscoverRunner):
         return dbs
 
     def run_required_data_migrations(self):
-        migration_methods = (
-            (
-                'wagtail.wagtailcore.migrations.0002_initial_data',
-                'initial_data'
-            ),
-            (
-                'wagtail.wagtailcore.migrations.0025_collection_initial_data',
-                'initial_data'
-            ),
-        )
+        if wagtail.VERSION >= (2, 0):
+            migration_methods = (
+                (
+                    'wagtail.core.migrations.0002_initial_data',
+                    'initial_data'
+                ),
+                (
+                    'wagtail.core.migrations.0025_collection_initial_data',
+                    'initial_data'
+                ),
+            )
+        else:
+            migration_methods = (
+                (
+                    'wagtail.wagtailcore.migrations.0002_initial_data',
+                    'initial_data'
+                ),
+                (
+                    'wagtail.wagtailcore.migrations.0025_collection_initial_data',
+                    'initial_data'
+                ),
+            )
 
         loader = MigrationLoader(connection)
 
