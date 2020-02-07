@@ -27,14 +27,24 @@ INSTALLED_APPS += (
     'wagtail.tests.testapp',
 )
 
-WAGTAILADMIN_RICH_TEXT_EDITORS = {
-    'default': {
-        'WIDGET': 'wagtail.wagtailadmin.rich_text.HalloRichTextArea',
-    },
-    'custom': {
-        'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
-    },
-}
+if wagtail.VERSION >= (2, 0):
+    WAGTAILADMIN_RICH_TEXT_EDITORS = {
+        'default': {
+            'WIDGET': 'wagtail.admin.rich_text.HalloRichTextArea',
+        },
+        'custom': {
+            'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
+        },
+    }
+else:
+    WAGTAILADMIN_RICH_TEXT_EDITORS = {
+        'default': {
+            'WIDGET': 'wagtail.wagtailadmin.rich_text.HalloRichTextArea',
+        },
+        'custom': {
+            'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
+        },
+    }
 
 GOVDELIVERY_API = 'core.govdelivery.MockGovDelivery'
 
