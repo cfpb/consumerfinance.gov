@@ -3,7 +3,10 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.utils.timezone import datetime, timedelta
 
-from wagtail.wagtailcore.blocks import StreamValue
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 
