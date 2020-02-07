@@ -46,7 +46,7 @@ class CFGOVImage(AbstractImage):
         Template tags with Wagtail size-related filters (width, height, max,
         and min), e.g. {% image image 'max-165x165' %}, will generate an
         <img> tag with appropriate size parameters, following logic from
-        wagtail.wagtailimages.image_operations.
+        wagtail.images.image_operations.
         """
         if isinstance(rendition_filter, str):
             rendition_filter = Filter(spec=rendition_filter)
