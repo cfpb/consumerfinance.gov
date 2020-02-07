@@ -19,7 +19,7 @@ from wagtail.utils.widgets import WidgetWithScript
 try:
     from wagtail.core import blocks
     from wagtail.core.models import Page
-    from wagtail.core.rich_text import DbWhitelister, expand_db_html
+    from wagtail.core.rich_text import expand_db_html
     from wagtail.documents.blocks import DocumentChooserBlock
     from wagtail.images import blocks as images_blocks
     from wagtail.snippets.blocks import SnippetChooserBlock
