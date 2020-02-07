@@ -2,23 +2,18 @@ try:
     from wagtail.admin.edit_handlers import (
         ObjectList, StreamFieldPanel, TabbedInterface
     )
+    from wagtail.core.blocks import StreamBlock
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import PageManager
+    from wagtail.search import index
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.edit_handlers import (
         ObjectList, StreamFieldPanel, TabbedInterface
     )
-try:
-    from wagtail.core.blocks import StreamBlock
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.blocks import StreamBlock
-try:
-    from wagtail.core.fields import StreamField
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import StreamField
-try:
-    from wagtail.core.models import PageManager
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailsearch import index
+    from wagtail.wagtailsearch import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms

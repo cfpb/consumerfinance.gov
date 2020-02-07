@@ -7,36 +7,27 @@ try:
         FieldPanel, InlinePanel, ObjectList, StreamFieldPanel,
         TabbedInterface
     )
+    from wagtail.admin.forms import (
+        WagtailAdminModelFormMetaclass, WagtailAdminPageForm
+    )
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import Orderable, PageManager
+    from wagtail.images import get_image_model_string
+    from wagtail.images.edit_handlers import ImageChooserPanel
+    from wagtail.search import index
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.edit_handlers import (
         FieldPanel, InlinePanel, ObjectList, StreamFieldPanel,
         TabbedInterface
     )
-try:
-    from wagtail.admin.forms import (
-        WagtailAdminModelFormMetaclass, WagtailAdminPageForm
-    )
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.forms import (
         WagtailAdminModelFormMetaclass, WagtailAdminPageForm
     )
-try:
-    from wagtail.core.fields import StreamField
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import StreamField
-try:
-    from wagtail.core.models import Orderable, PageManager
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Orderable, PageManager
-try:
-   from wagtail.images import get_image_model_string
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-   from wagtail.wagtailimages import get_image_model_string
-try:
-   from wagtail.images.edit_handlers import ImageChooserPanel
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-   from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsearch import index
+    from wagtail.wagtailimages import get_image_model_string
+    from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+    from wagtail.wagtailsearch import index
 
 from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey

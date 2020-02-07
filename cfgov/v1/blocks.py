@@ -5,12 +5,10 @@ from django.utils.text import slugify
 
 try:
     from wagtail.core import blocks
+    from wagtail.snippets.blocks import SnippetChooserBlock
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore import blocks
-try:
-   from wagtail.snippets.blocks import SnippetChooserBlock
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-   from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+    from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from bs4 import BeautifulSoup
 

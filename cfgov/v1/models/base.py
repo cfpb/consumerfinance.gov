@@ -11,32 +11,25 @@ try:
         FieldPanel, InlinePanel, MultiFieldPanel, ObjectList,
         StreamFieldPanel, TabbedInterface
     )
+    from wagtail.core import hooks
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import (
+        Orderable, Page, PageManager, PageQuerySet
+    )
+    from wagtail.images.edit_handlers import ImageChooserPanel
+    from wagtail.search import index
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.edit_handlers import (
         FieldPanel, InlinePanel, MultiFieldPanel, ObjectList,
         StreamFieldPanel, TabbedInterface
     )
-try:
-    from wagtail.core import hooks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore import hooks
-try:
-    from wagtail.core.fields import StreamField
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import StreamField
-try:
-    from wagtail.core.models import (
-        Orderable, Page, PageManager, PageQuerySet
-    )
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import (
         Orderable, Page, PageManager, PageQuerySet
     )
-try:
-    from wagtail.images.edit_handlers import ImageChooserPanel
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsearch import index
+    from wagtail.wagtailsearch import index
 
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager

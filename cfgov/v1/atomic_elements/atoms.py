@@ -5,11 +5,9 @@ from django.core.exceptions import ValidationError
 
 try:
     from wagtail.core import blocks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore import blocks
-try:
     from wagtail.images.blocks import ImageChooserBlock
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
     from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 

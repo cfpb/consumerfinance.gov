@@ -4,27 +4,20 @@ try:
     from wagtail.admin.edit_handlers import (
         FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
     )
+    from wagtail.core import blocks
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import PageManager
+    from wagtail.images.blocks import ImageChooserBlock
+    from wagtail.search import index
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.edit_handlers import (
         FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
     )
-try:
-    from wagtail.core import blocks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore import blocks
-try:
-    from wagtail.core.fields import StreamField
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import StreamField
-try:
-    from wagtail.core.models import PageManager
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import PageManager
-try:
-    from wagtail.images.blocks import ImageChooserBlock
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailimages.blocks import ImageChooserBlock
-from wagtail.wagtailsearch import index
+    from wagtail.wagtailsearch import index
 
 from jobmanager.blocks import JobListingList
 from v1 import blocks as v1_blocks

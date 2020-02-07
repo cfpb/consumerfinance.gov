@@ -8,11 +8,9 @@ from django.test.client import RequestFactory
 
 try:
     from wagtail.core import blocks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore import blocks
-try:
     from wagtail.core.models import Site
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
     from wagtail.wagtailcore.models import Site
 
 import mock

@@ -3,11 +3,9 @@ from django.test import TestCase
 
 try:
     from wagtail.images.models import Filter
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailimages.models import Filter
-try:
     from wagtail.images.tests.utils import get_test_image_file
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailimages.models import Filter
     from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from mock import Mock, patch

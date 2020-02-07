@@ -5,11 +5,9 @@ from django.utils.http import urlquote
 
 try:
     from wagtail.admin.edit_handlers import FieldPanel
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import FieldPanel
-try:
     from wagtail.core.models import Orderable
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import FieldPanel
     from wagtail.wagtailcore.models import Orderable
 
 from modelcluster.fields import ParentalKey

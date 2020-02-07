@@ -5,18 +5,14 @@ try:
         FieldPanel, MultiFieldPanel, PageChooserPanel,
         StreamFieldPanel
     )
+    from wagtail.core.fields import StreamField
+    from wagtail.core.rich_text import expand_db_html
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.edit_handlers import (
         FieldPanel, MultiFieldPanel, PageChooserPanel,
         StreamFieldPanel
     )
-try:
-    from wagtail.core.fields import StreamField
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import StreamField
-try:
-    from wagtail.core.rich_text import expand_db_html
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.rich_text import expand_db_html
 
 from bs4 import BeautifulSoup

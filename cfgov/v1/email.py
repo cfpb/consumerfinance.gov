@@ -3,11 +3,9 @@ from django.core.handlers.wsgi import WSGIRequest
 
 try:
     from wagtail.admin.forms import PasswordResetForm
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.forms import PasswordResetForm
-try:
     from wagtail.core.models import Site
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.forms import PasswordResetForm
     from wagtail.wagtailcore.models import Site
 
 

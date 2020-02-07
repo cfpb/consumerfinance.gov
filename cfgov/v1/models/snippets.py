@@ -2,17 +2,14 @@ from django.db import models
 
 try:
     from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+    from wagtail.core.fields import RichTextField, StreamField
+    from wagtail.search import index
+    from wagtail.snippets.models import register_snippet
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
-try:
-    from wagtail.core.fields import RichTextField, StreamField
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailsearch import index
-try:
-   from wagtail.snippets.models import register_snippet
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-   from wagtail.wagtailsnippets.models import register_snippet
+    from wagtail.wagtailsearch import index
+    from wagtail.wagtailsnippets.models import register_snippet
 
 from v1.atomic_elements import molecules
 # We import ReusableTextChooserBlock here because this is where it used to

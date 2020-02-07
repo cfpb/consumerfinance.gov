@@ -4,15 +4,11 @@ from django.utils.translation import ugettext_lazy as _
 
 try:
     from wagtail.admin.menu import MenuItem
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.menu import MenuItem
-try:
     from wagtail.core import hooks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore import hooks
-try:
     from wagtail.users.widgets import UserListingButton
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.menu import MenuItem
+    from wagtail.wagtailcore import hooks
     from wagtail.wagtailusers.widgets import UserListingButton
 
 

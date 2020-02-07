@@ -10,13 +10,12 @@ from django.dispatch import receiver
 
 try:
     from wagtail.contrib.frontend_cache.backends import BaseBackend
+    from wagtail.contrib.frontend_cache.utils import PurgeBatch
+    from wagtail.documents.models import Document
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
-try:
-    from wagtail.contrib.frontend_cache.utils import PurgeBatch
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
-from wagtail.wagtaildocs.models import Document
+    from wagtail.wagtaildocs.models import Document
 
 import requests
 from akamai.edgegrid import EdgeGridAuth

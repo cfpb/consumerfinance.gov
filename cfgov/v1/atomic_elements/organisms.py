@@ -18,25 +18,18 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.utils.widgets import WidgetWithScript
 try:
     from wagtail.core import blocks
+    from wagtail.core.models import Page
+    from wagtail.core.rich_text import DbWhitelister, expand_db_html
+    from wagtail.documents.blocks import DocumentChooserBlock
+    from wagtail.images import blocks as images_blocks
+    from wagtail.snippets.blocks import SnippetChooserBlock
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore import blocks
-try:
-    from wagtail.core.models import Page
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Page
-try:
-    from wagtail.core.rich_text import DbWhitelister, expand_db_html
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
-from wagtail.wagtaildocs.blocks import DocumentChooserBlock
-try:
-    from wagtail.images import blocks as images_blocks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtaildocs.blocks import DocumentChooserBlock
     from wagtail.wagtailimages import blocks as images_blocks
-try:
-   from wagtail.snippets.blocks import SnippetChooserBlock
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-   from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+    from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from jinja2 import Markup
 from taggit.models import Tag

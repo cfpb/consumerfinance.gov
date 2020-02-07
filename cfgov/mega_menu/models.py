@@ -3,11 +3,9 @@ from django.db import models
 
 try:
     from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
-try:
     from wagtail.core.fields import StreamField
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
     from wagtail.wagtailcore.fields import StreamField
 
 from mega_menu.blocks import MenuStreamBlock

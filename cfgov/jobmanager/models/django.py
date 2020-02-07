@@ -4,11 +4,9 @@ from django.db import models
 
 try:
     from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
-try:
     from wagtail.core.fields import RichTextField
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
     from wagtail.wagtailcore.fields import RichTextField
 
 from modelcluster.fields import ParentalKey

@@ -5,11 +5,9 @@ from django.utils.safestring import mark_safe
 
 try:
     from wagtail.core import blocks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore import blocks
-try:
     from wagtail.images.blocks import ImageChooserBlock
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
     from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms

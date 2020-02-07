@@ -5,15 +5,11 @@ from django.utils.text import slugify
 
 try:
     from wagtail.core.models import Page, Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page, Site
-try:
     from wagtail.images import get_image_model
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailimages import get_image_model
-try:
     from wagtail.images.tests.utils import get_test_image_file
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page, Site
+    from wagtail.wagtailimages import get_image_model
     from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from mega_menu.frontend_conversion import FrontendConverter

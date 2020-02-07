@@ -7,18 +7,14 @@ try:
         FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
         ObjectList, TabbedInterface
     )
+    from wagtail.core.fields import RichTextField
+    from wagtail.core.models import PageManager
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.edit_handlers import (
         FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
         ObjectList, TabbedInterface
     )
-try:
-    from wagtail.core.fields import RichTextField
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import RichTextField
-try:
-    from wagtail.core.models import PageManager
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import PageManager
 
 from jobmanager.models.django import (

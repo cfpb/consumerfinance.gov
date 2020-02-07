@@ -13,11 +13,9 @@ from django.utils.html import strip_tags
 
 try:
     from wagtail.contrib.frontend_cache.utils import PurgeBatch
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
-try:
     from wagtail.admin.edit_handlers import FieldPanel
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
     from wagtail.wagtailadmin.edit_handlers import FieldPanel
 
 import regdown
