@@ -1,19 +1,22 @@
-.explainer_notes .fields li:first-child label {
-    width: 100% !important;
+@media screen and (min-width: 50em) {
+    .explainer_notes .fields li:first-child label {
+        width: 100%;
+    }
+
+    .coordinates li {
+        width: 25%;
+        float: left;
+    }
 }
 
-.coordinates li {
-    width: 25% !important;
-    float: left;
-}
-
-.coordinates .object-help {
-    opacity: 1 !important;
-    padding-left: 0 !important;
-    margin-top: 0 !important;
+.object.stream-field .coordinates .object-help {
+    font-size: 1em;
+    opacity: 1;
+    padding-left: 0;
+    margin-top: 0;
     margin-bottom: 1em;
 }
 
-.coordinates .object-help:before {
-    display: none !important;
+.object.stream-field .coordinates .object-help:before {
+    display: none;
 }
