@@ -3,6 +3,7 @@ try:
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore import blocks
 
+
 class YESChecklistItem(blocks.StructBlock):
     """Deliver a standard set of values for a checklist item."""
 

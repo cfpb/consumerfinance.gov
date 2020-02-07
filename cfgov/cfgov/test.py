@@ -116,7 +116,8 @@ class TestRunner(DiscoverRunner):
                     'initial_data'
                 ),
                 (
-                    'wagtail.wagtailcore.migrations.0025_collection_initial_data',
+                    'wagtail.wagtailcore.migrations.'
+                    '0025_collection_initial_data',
                     'initial_data'
                 ),
             )

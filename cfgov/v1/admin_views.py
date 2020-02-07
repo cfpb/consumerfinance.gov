@@ -10,9 +10,9 @@ from django.utils import timezone
 from django.views.generic import FormView
 
 try:
-   from wagtail.contrib.frontend_cache.utils import PurgeBatch
+    from wagtail.contrib.frontend_cache.utils import PurgeBatch
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-   from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
+    from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
 
 from dateutil.relativedelta import relativedelta
 from requests.exceptions import HTTPError

@@ -1,7 +1,7 @@
 try:
-   from wagtail.contrib.frontend_cache.backends import BaseBackend
+    from wagtail.contrib.frontend_cache.backends import BaseBackend
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-   from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
+    from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
 
 
 CACHE_PURGED_URLS = []
