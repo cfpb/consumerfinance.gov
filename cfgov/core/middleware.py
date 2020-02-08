@@ -3,12 +3,13 @@ import re
 from django.conf import settings
 from django.utils.encoding import force_text
 
+from core.utils import add_link_markup, get_link_tags
+
+
 try:
     from wagtail.core.rich_text import expand_db_html
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.rich_text import expand_db_html
-
-from core.utils import add_link_markup, get_link_tags
 
 
 class DownstreamCacheControlMiddleware(object):

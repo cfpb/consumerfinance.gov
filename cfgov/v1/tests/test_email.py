@@ -3,15 +3,16 @@ from django.core import mail
 from django.http import HttpRequest
 from django.test import TestCase
 
-try:
-    from wagtail.core.models import Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Site
-
 from mock import patch
 from model_mommy import mommy
 
 from v1.email import create_request_for_email, send_password_reset_email
+
+
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 
 
 class CreateEmailRequestTestCase(TestCase):

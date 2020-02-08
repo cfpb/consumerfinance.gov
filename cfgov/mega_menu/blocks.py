@@ -1,5 +1,6 @@
 from itertools import chain
 
+
 try:
     from wagtail.core import blocks
     from wagtail.core.models import Page

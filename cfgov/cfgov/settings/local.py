@@ -1,11 +1,11 @@
 import sys
 import warnings
 
+import wagtail
+
 from unipath import DIRS
 
 from .base import *
-
-import wagtail
 
 
 if sys.version_info[0] < 3:

@@ -5,13 +5,15 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db import transaction
 
+from wagtailsharing.models import SharingSite
+
+from v1.models import HomePage
+
+
 try:
     from wagtail.core.models import Page, Site
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Page, Site
-from wagtailsharing.models import SharingSite
-
-from v1.models import HomePage
 
 
 logger = logging.getLogger(__name__)

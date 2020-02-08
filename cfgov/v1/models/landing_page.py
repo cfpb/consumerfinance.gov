@@ -1,3 +1,8 @@
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.models.base import CFGOVPage
+
+
 try:
     from wagtail.admin.edit_handlers import (
         ObjectList, StreamFieldPanel, TabbedInterface
@@ -12,10 +17,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import StreamField
     from wagtail.wagtailcore.models import PageManager
     from wagtail.wagtailsearch import index
-
-from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
-from v1.models.base import CFGOVPage
 
 
 class LandingPage(CFGOVPage):

@@ -1,15 +1,16 @@
 import datetime
 from unittest import TestCase
 
-try:
-    from wagtail.core.models import Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Site
-
 from v1.models import BlogPage
 from v1.models.base import CFGOVPageCategory
 from v1.templatetags import activity_feed
 from v1.tests.wagtail_pages.helpers import publish_page
+
+
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 
 
 class TestActivityFeed(TestCase):

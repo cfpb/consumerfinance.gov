@@ -1,5 +1,13 @@
 from django.db import models
 
+from v1.atomic_elements import molecules
+# We import ReusableTextChooserBlock here because this is where it used to
+# live. That caused circular imports when it was imported into models. It's no
+# longer imported into models from this file, but there are migrations which
+# still look for it here.
+from v1.blocks import ReusableTextChooserBlock  # noqa
+
+
 try:
     from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
     from wagtail.core.fields import RichTextField, StreamField
@@ -10,13 +18,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import RichTextField, StreamField
     from wagtail.wagtailsearch import index
     from wagtail.wagtailsnippets.models import register_snippet
-
-from v1.atomic_elements import molecules
-# We import ReusableTextChooserBlock here because this is where it used to
-# live. That caused circular imports when it was imported into models. It's no
-# longer imported into models from this file, but there are migrations which
-# still look for it here.
-from v1.blocks import ReusableTextChooserBlock  # noqa
 
 
 @register_snippet

@@ -3,6 +3,7 @@ import re
 from django import forms
 from django.core.exceptions import ValidationError
 
+
 try:
     from wagtail.core import blocks
     from wagtail.images.blocks import ImageChooserBlock

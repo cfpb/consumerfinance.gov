@@ -2,6 +2,14 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 
+from flags.state import flag_enabled
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
+
+from v1.atomic_elements import molecules
+from v1.models.base import CFGOVPage
+
+
 try:
     from wagtail.admin.edit_handlers import (
         FieldPanel, InlinePanel, ObjectList, StreamFieldPanel,
@@ -28,13 +36,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailimages import get_image_model_string
     from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
     from wagtail.wagtailsearch import index
-
-from flags.state import flag_enabled
-from modelcluster.fields import ParentalKey
-from modelcluster.models import ClusterableModel
-
-from v1.atomic_elements import molecules
-from v1.models.base import CFGOVPage
 
 
 # These classes are used to add support for nested InlinePanels, and are

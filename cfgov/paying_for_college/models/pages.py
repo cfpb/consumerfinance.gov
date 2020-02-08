@@ -1,5 +1,11 @@
 from __future__ import unicode_literals
 
+from paying_for_college.blocks import GuidedQuiz
+
+from v1.atomic_elements import molecules, organisms
+from v1.models import CFGOVPage, CFGOVPageManager
+
+
 try:
     from wagtail.admin.edit_handlers import (
         ObjectList, StreamFieldPanel, TabbedInterface
@@ -12,11 +18,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     )
     from wagtail.wagtailcore import blocks
     from wagtail.wagtailcore.fields import StreamField
-
-from paying_for_college.blocks import GuidedQuiz
-
-from v1.atomic_elements import molecules, organisms
-from v1.models import CFGOVPage, CFGOVPageManager
 
 
 class PayingForCollegePage(CFGOVPage):

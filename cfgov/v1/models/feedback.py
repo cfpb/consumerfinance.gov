@@ -3,12 +3,13 @@ from django.db.models import Q
 from django.utils.encoding import force_text
 from django.utils.timezone import localdate
 
+from backports import csv
+
+
 try:
     from wagtail.core.models import Page
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Page
-
-from backports import csv
 
 
 class FeedbackQuerySet(models.QuerySet):

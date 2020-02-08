@@ -2,6 +2,7 @@ import logging
 
 from django.core.management.base import BaseCommand
 
+
 try:
     from wagtail.core.models import Site
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0

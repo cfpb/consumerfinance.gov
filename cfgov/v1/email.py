@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 
+
 try:
     from wagtail.admin.forms import PasswordResetForm
     from wagtail.core.models import Site

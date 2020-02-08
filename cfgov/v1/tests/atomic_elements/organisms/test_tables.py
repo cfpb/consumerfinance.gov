@@ -3,12 +3,14 @@ import json
 from django.test import TestCase
 
 from wagtail.tests.testapp.models import SimplePage
+
+from v1.atomic_elements.organisms import AtomicTableBlock, RichTextTableInput
+
+
 try:
     from wagtail.core.models import Site
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Site
-
-from v1.atomic_elements.organisms import AtomicTableBlock, RichTextTableInput
 
 
 class TestRichTextTableInput(TestCase):

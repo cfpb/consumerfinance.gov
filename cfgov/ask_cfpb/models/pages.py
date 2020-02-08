@@ -13,6 +13,21 @@ from django.utils.text import Truncator, slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
 from haystack.query import SearchQuerySet
 
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from wagtailautocomplete.edit_handlers import AutocompletePanel
+
+from ask_cfpb.models import blocks as ask_blocks
+from ask_cfpb.models.search import AskSearch
+from ask_cfpb.search_indexes import extract_raw_text, truncatissimo as truncate
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.models import (
+    CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic,
+    SublandingPage
+)
+from v1.models.snippets import RelatedResource, ReusableText
+
+
 try:
     from wagtail.contrib.routable_page.models import (
         RoutablePageMixin, route
@@ -39,20 +54,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Orderable, Page
     from wagtail.wagtailsearch import index
     from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
-
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from wagtailautocomplete.edit_handlers import AutocompletePanel
-
-from ask_cfpb.models import blocks as ask_blocks
-from ask_cfpb.models.search import AskSearch
-from ask_cfpb.search_indexes import extract_raw_text, truncatissimo as truncate
-from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
-from v1.models import (
-    CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic,
-    SublandingPage
-)
-from v1.models.snippets import RelatedResource, ReusableText
 
 
 REUSABLE_TEXT_TITLES = {

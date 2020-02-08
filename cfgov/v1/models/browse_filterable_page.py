@@ -1,5 +1,13 @@
 from django.db import models
 
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.feeds import FilterableFeedPageMixin
+from v1.models.base import CFGOVPage
+from v1.models.learn_page import EventPage
+from v1.util.filterable_list import FilterableListMixin
+
+
 try:
     from wagtail.admin.edit_handlers import (
         FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
@@ -16,13 +24,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.fields import StreamField
     from wagtail.wagtailcore.models import PageManager
     from wagtail.wagtailsearch import index
-
-from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
-from v1.feeds import FilterableFeedPageMixin
-from v1.models.base import CFGOVPage
-from v1.models.learn_page import EventPage
-from v1.util.filterable_list import FilterableListMixin
 
 
 class BrowseFilterableContent(StreamBlock):

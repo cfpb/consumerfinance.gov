@@ -3,10 +3,10 @@ import os
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import wagtail
+
 import dj_database_url
 from unipath import DIRS, Path
-
-import wagtail
 
 from cfgov.util import admin_emails
 

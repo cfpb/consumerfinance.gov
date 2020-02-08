@@ -2,6 +2,13 @@ from __future__ import absolute_import
 
 from django.db import models
 
+from jobmanager.models.django import (
+    JobCategory, JobLength, JobLocation, ServiceType
+)
+from v1.models import CFGOVPage
+from v1.models.snippets import ReusableText
+
+
 try:
     from wagtail.admin.edit_handlers import (
         FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
@@ -16,12 +23,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     )
     from wagtail.wagtailcore.fields import RichTextField
     from wagtail.wagtailcore.models import PageManager
-
-from jobmanager.models.django import (
-    JobCategory, JobLength, JobLocation, ServiceType
-)
-from v1.models import CFGOVPage
-from v1.models.snippets import ReusableText
 
 
 class JobListingPage(CFGOVPage):

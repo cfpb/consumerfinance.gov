@@ -5,12 +5,13 @@ from datetime import datetime, time, timedelta
 from django.core.management.base import BaseCommand
 from django.utils.timezone import make_aware
 
+from v1.models import Feedback
+
+
 try:
     from wagtail.core.models import Page
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Page
-
-from v1.models import Feedback
 
 
 def lookup_page_slug(s):

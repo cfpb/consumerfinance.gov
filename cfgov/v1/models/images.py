@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.functional import cached_property
 
+
 try:
     from wagtail.images.image_operations import (
         DoNothingOperation, MinMaxOperation, WidthHeightOperation

@@ -5,12 +5,6 @@ from django.test import (
 
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
-try:
-    from wagtail.core.models import Site
-    from wagtail.core.rich_text import DbWhitelister
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Site
-    from wagtail.wagtailcore.rich_text import DbWhitelister
 
 import mock
 
@@ -20,6 +14,14 @@ from v1.models.resources import Resource
 from v1.wagtail_hooks import (
     form_module_handlers, get_resource_tags, set_served_by_wagtail_sharing
 )
+
+
+try:
+    from wagtail.core.models import Site
+    from wagtail.core.rich_text import DbWhitelister
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
+    from wagtail.wagtailcore.rich_text import DbWhitelister
 
 
 class TestFormModuleHandlers(TestCase):

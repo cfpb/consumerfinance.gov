@@ -18,15 +18,16 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
-try:
-    from wagtail.admin.views import account
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.views import account
-
 from v1.auth_forms import (
     CFGOVPasswordChangeForm, CFGOVSetPasswordForm, LoginForm
 )
 from v1.util.util import all_valid_destinations_for_request
+
+
+try:
+    from wagtail.admin.views import account
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.views import account
 
 
 # Overrided Wagtail Views

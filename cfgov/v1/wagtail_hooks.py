@@ -14,14 +14,6 @@ from django.utils.html import format_html_join
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
-try:
-    from wagtail.admin.menu import MenuItem
-    from wagtail.core import hooks
-    from wagtail.core.whitelist import attribute_rule
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.menu import MenuItem
-    from wagtail.wagtailcore import hooks
-    from wagtail.wagtailcore.whitelist import attribute_rule
 
 from scripts import export_enforcement_actions
 
@@ -32,6 +24,16 @@ from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.util import util
+
+
+try:
+    from wagtail.admin.menu import MenuItem
+    from wagtail.core import hooks
+    from wagtail.core.whitelist import attribute_rule
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.menu import MenuItem
+    from wagtail.wagtailcore import hooks
+    from wagtail.wagtailcore.whitelist import attribute_rule
 
 
 logger = logging.getLogger(__name__)

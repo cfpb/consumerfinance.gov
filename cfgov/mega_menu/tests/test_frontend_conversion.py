@@ -3,6 +3,10 @@ import json
 from django.test import RequestFactory, TestCase
 from django.utils.text import slugify
 
+from mega_menu.frontend_conversion import FrontendConverter
+from mega_menu.models import Menu
+
+
 try:
     from wagtail.core.models import Page, Site
     from wagtail.images import get_image_model
@@ -11,9 +15,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Page, Site
     from wagtail.wagtailimages import get_image_model
     from wagtail.wagtailimages.tests.utils import get_test_image_file
-
-from mega_menu.frontend_conversion import FrontendConverter
-from mega_menu.models import Menu
 
 
 class FrontendConverterTests(TestCase):

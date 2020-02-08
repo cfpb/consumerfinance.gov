@@ -16,6 +16,15 @@ from django.utils.safestring import mark_safe
 
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.utils.widgets import WidgetWithScript
+
+from jinja2 import Markup
+from taggit.models import Tag
+
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import atoms, molecules
+from v1.util import ref
+
+
 try:
     from wagtail.core import blocks
     from wagtail.core.models import Page
@@ -30,13 +39,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtaildocs.blocks import DocumentChooserBlock
     from wagtail.wagtailimages import blocks as images_blocks
     from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-
-from jinja2 import Markup
-from taggit.models import Tag
-
-from v1 import blocks as v1_blocks
-from v1.atomic_elements import atoms, molecules
-from v1.util import ref
 
 
 class AskSearch(blocks.StructBlock):

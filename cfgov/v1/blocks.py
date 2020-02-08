@@ -3,17 +3,18 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
 
+from bs4 import BeautifulSoup
+
+from v1.atomic_elements import atoms
+from v1.util.util import get_unique_id
+
+
 try:
     from wagtail.core import blocks
     from wagtail.snippets.blocks import SnippetChooserBlock
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore import blocks
     from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-
-from bs4 import BeautifulSoup
-
-from v1.atomic_elements import atoms
-from v1.util.util import get_unique_id
 
 
 class AbstractFormBlock(blocks.StructBlock):

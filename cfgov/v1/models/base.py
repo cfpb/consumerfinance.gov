@@ -6,6 +6,18 @@ from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
 
+from modelcluster.fields import ParentalKey
+from modelcluster.tags import ClusterTaggableManager
+from taggit.models import TaggedItemBase
+from wagtailinventory.helpers import get_page_blocks
+
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.models.snippets import ReusableText
+from v1.util import ref
+from v1.util.util import validate_social_sharing_image
+
+
 try:
     from wagtail.admin.edit_handlers import (
         FieldPanel, InlinePanel, MultiFieldPanel, ObjectList,
@@ -30,17 +42,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     )
     from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
     from wagtail.wagtailsearch import index
-
-from modelcluster.fields import ParentalKey
-from modelcluster.tags import ClusterTaggableManager
-from taggit.models import TaggedItemBase
-from wagtailinventory.helpers import get_page_blocks
-
-from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
-from v1.models.snippets import ReusableText
-from v1.util import ref
-from v1.util.util import validate_social_sharing_image
 
 
 class CFGOVAuthoredPages(TaggedItemBase):

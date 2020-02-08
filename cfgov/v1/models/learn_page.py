@@ -5,6 +5,16 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 
+from localflavor.us.models import USStateField
+from pytz import timezone
+
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.util.datetimes import convert_date
+from v1.util.events import get_venue_coords
+
+
 try:
     from wagtail.admin.edit_handlers import (
         FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
@@ -27,15 +37,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
     from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
     from wagtail.wagtailsearch import index
-
-from localflavor.us.models import USStateField
-from pytz import timezone
-
-from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
-from v1.models.base import CFGOVPage, CFGOVPageManager
-from v1.util.datetimes import convert_date
-from v1.util.events import get_venue_coords
 
 
 class AbstractFilterPage(CFGOVPage):

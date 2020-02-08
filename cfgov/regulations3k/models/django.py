@@ -11,14 +11,15 @@ from django.dispatch import receiver
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 
+import regdown
+
+
 try:
     from wagtail.contrib.frontend_cache.utils import PurgeBatch
     from wagtail.admin.edit_handlers import FieldPanel
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
     from wagtail.wagtailadmin.edit_handlers import FieldPanel
-
-import regdown
 
 
 def sortable_label(label, separator='-'):

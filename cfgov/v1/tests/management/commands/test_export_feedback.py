@@ -10,15 +10,17 @@ from django.test import SimpleTestCase, TestCase
 from django.utils.timezone import make_aware
 
 from wagtail.tests.testapp.models import SimplePage
-try:
-    from wagtail.core.models import Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Site
 
 from v1.management.commands.export_feedback import (
     lookup_page_slug, make_aware_datetime, parse_date
 )
 from v1.models import Feedback
+
+
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
 
 
 def create_simple_page(parent, slug):

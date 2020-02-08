@@ -9,16 +9,17 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic import FormView
 
-try:
-    from wagtail.contrib.frontend_cache.utils import PurgeBatch
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
-
 from dateutil.relativedelta import relativedelta
 from requests.exceptions import HTTPError
 
 from v1.admin_forms import CacheInvalidationForm, ExportFeedbackForm
 from v1.models.caching import AkamaiBackend, CDNHistory
+
+
+try:
+    from wagtail.contrib.frontend_cache.utils import PurgeBatch
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
 
 
 logger = logging.getLogger(__name__)

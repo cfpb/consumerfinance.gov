@@ -4,15 +4,16 @@ from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 
-try:
-    from wagtail.core.blocks import StreamValue
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.blocks import StreamValue
-
 from scripts import _atomic_helpers as atomic
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
+
+
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 
 class UpdateDataSnapshotValuesTestCase(TestCase):

@@ -1,10 +1,5 @@
 from django.test import TestCase
 
-try:
-    from wagtail.core.models import Page, Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page, Site
-
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory
 from v1.models.browse_filterable_page import (
@@ -12,6 +7,12 @@ from v1.models.browse_filterable_page import (
 )
 from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
+
+
+try:
+    from wagtail.core.models import Page, Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page, Site
 
 
 class EventArchivePageTestCase(TestCase):

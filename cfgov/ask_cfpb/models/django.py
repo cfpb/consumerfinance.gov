@@ -7,6 +7,7 @@ import html.parser as HTMLParser
 from django.contrib.auth.models import User
 from django.db import models
 
+
 try:
     from wagtail.admin.edit_handlers import FieldPanel
     from wagtail.core.fields import RichTextField

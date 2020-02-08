@@ -3,12 +3,13 @@ from django.core.urlresolvers import resolve, reverse
 from django.http import Http404, StreamingHttpResponse
 from django.test import RequestFactory, TestCase, override_settings
 
+from v1.views.documents import DocumentServeView
+
+
 try:
     from wagtail.documents.models import get_document_model
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtaildocs.models import get_document_model
-
-from v1.views.documents import DocumentServeView
 
 
 def create_document(filename):

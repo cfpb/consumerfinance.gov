@@ -3,14 +3,15 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.safestring import SafeText
 
+import mock
+
+from v1.blocks import AbstractFormBlock, AnchorLink, Link, PlaceholderCharBlock
+
+
 try:
     from wagtail.core.models import Page
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Page
-
-import mock
-
-from v1.blocks import AbstractFormBlock, AnchorLink, Link, PlaceholderCharBlock
 
 
 class TestAbstractFormBlock(TestCase):

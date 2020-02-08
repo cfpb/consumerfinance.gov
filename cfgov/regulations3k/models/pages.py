@@ -16,6 +16,18 @@ from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from haystack.query import SearchQuerySet
 
+import requests
+from jinja2 import Markup
+from regdown import regdown
+
+from ask_cfpb.models.pages import SecondaryNavigationJSMixin
+from regulations3k.blocks import RegulationsListingFullWidthText
+from regulations3k.models import Part, Section, SectionParagraph
+from regulations3k.resolver import get_contents_resolver, get_url_resolver
+from v1.atomic_elements import molecules, organisms
+from v1.models import CFGOVPage, CFGOVPageManager
+
+
 try:
     from wagtail.contrib.routable_page.models import (
         RoutablePageMixin, route
@@ -34,17 +46,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     )
     from wagtail.wagtailcore.fields import StreamField
     from wagtail.wagtailcore.models import PageManager
-
-import requests
-from jinja2 import Markup
-from regdown import regdown
-
-from ask_cfpb.models.pages import SecondaryNavigationJSMixin
-from regulations3k.blocks import RegulationsListingFullWidthText
-from regulations3k.models import Part, Section, SectionParagraph
-from regulations3k.resolver import get_contents_resolver, get_url_resolver
-from v1.atomic_elements import molecules, organisms
-from v1.models import CFGOVPage, CFGOVPageManager
 
 
 logger = logging.getLogger(__name__)

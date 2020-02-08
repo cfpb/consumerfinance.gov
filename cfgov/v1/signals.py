@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.core.cache import caches
 from django.utils import timezone
 
+
 try:
     from wagtail.core.signals import page_published
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0

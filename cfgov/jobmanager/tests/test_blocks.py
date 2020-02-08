@@ -4,11 +4,6 @@ from django.test import RequestFactory, TestCase
 from django.utils import timezone
 from django.utils.encoding import force_text
 
-try:
-    from wagtail.core.models import Page
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page
-
 from mock import Mock
 from model_mommy import mommy
 from scripts._atomic_helpers import job_listing_list
@@ -20,6 +15,12 @@ from jobmanager.models.panels import GradePanel
 from v1.models import SublandingPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
+
+
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
 
 
 def make_job_listing_page(title, close_date=None, grades=[], **kwargs):

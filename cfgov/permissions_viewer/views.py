@@ -5,6 +5,7 @@ from django.contrib.auth.models import Group
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404, render
 
+
 try:
     from wagtail.core.models import Collection, Page
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
