@@ -15,8 +15,6 @@ def mega_menu_template(context):
 
     if flag_enabled('MEGA_MENU_VAR_1', request=request):
         return '_includes/organisms/mega-menu-var-1.html'
-    elif flag_enabled('MEGA_MENU_VAR_2', request=request):
-        return '_includes/organisms/mega-menu-var-2.html'
     else:
         return '_includes/organisms/mega-menu.html'
 
