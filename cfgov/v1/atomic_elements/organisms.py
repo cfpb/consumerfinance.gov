@@ -1338,7 +1338,7 @@ class ExplainerCategory(blocks.StructBlock):
         required=False,
         label='Category title',
         help_text='Optional. Leave blank if there is only '
-                  'one type of notes for this image.'
+                  'one type of note for this image.'
     )
     notes = blocks.ListBlock(ExplainerNote(
         form_classname='explainer_notes',
