@@ -1325,7 +1325,12 @@ class ExplainerNote(blocks.StructBlock):
         help_text='Enter percentage values to define the area '
                   'that will be highlighted on the image for this note.')
     heading = blocks.CharBlock(required=True, label='Note heading')
-    body = blocks.RichTextBlock(required=True, label='Note text')
+    body = blocks.RichTextBlock(
+        required=True,
+        features=[
+            'bold', 'italic', 'link', 'document-link'
+        ],
+        label='Note text')
 
 
 class ExplainerCategory(blocks.StructBlock):
