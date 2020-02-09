@@ -116,6 +116,8 @@
     }
 
     &_heading-link {
+        display: block;
+
         .u-link__colors( @black, @pacific-80 );
     }
 
@@ -149,10 +151,6 @@
 
 .m-info-unit {
     .u-info-unit-base();
-
-    &_image-link {
-        display: block;
-    }
 
     &__inline {
         .respond-to-range( @bp-sm-min, @bp-sm-max, {
