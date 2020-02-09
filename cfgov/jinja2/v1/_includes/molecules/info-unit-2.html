@@ -61,7 +61,8 @@
 {%- if value.image.upload %}
     {%- set img = image(value.image.upload, 'original') %}
     {% if link_image_and_heading %}
-        <a href="{{ value.links[0].url | safe }}">
+        <a class="m-info-unit_image-link"
+           href="{{ value.links[0].url | safe }}">
     {% endif %}
         {%- if image_alt_value(value.image) %}
             <img class="m-info-unit_image

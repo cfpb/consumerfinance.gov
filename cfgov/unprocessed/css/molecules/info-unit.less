@@ -150,6 +150,10 @@
 .m-info-unit {
     .u-info-unit-base();
 
+    &_image-link {
+        display: block;
+    }
+
     &__inline {
         .respond-to-range( @bp-sm-min, @bp-sm-max, {
             .u-info-unit-base__inline( @m-info-unit_img__sm );
