@@ -49,41 +49,50 @@
 {%- macro info_unit(value, format, link_image_and_heading) -%}
 
 {# Confirm that not only is link_image_and_heading set, but that this
-   particular info unit has a link in its list. #}
+   particular info unit has a link in its list and there's either an
+   image or heading to wrap in a link. #}
 {%- set link_image_and_heading = link_image_and_heading
                                  and value.links
                                  and value.links[0]
-                                 and value.links[0].url %}
+                                 and value.links[0].url
+                                 and (value.image.upload or value.heading) %}
 
 <div class="m-info-unit
             {{- ' m-info-unit__inline' if format == '25-75' else '' }}">
 
-{%- if value.image.upload %}
-    {%- set img = image(value.image.upload, 'original') %}
     {% if link_image_and_heading %}
         <a class="m-info-unit_heading-link"
            href="{{ value.links[0].url | safe }}">
     {% endif %}
-        {%- if image_alt_value(value.image) %}
-            <img class="m-info-unit_image
-                        {{- ' m-info-unit_image__square' if img.is_square else '' }}"
-                 src="{{ img.url }}"
-                 alt="{{ image_alt_value(value.image) }}">
-        {%- else %}
-            <div class="m-info-unit_image
-                        {{- ' m-info-unit_image__square' if img.is_square else '' }}"
-                 style="background-image: url( '{{ img.url }}' );
-                        {{- ' padding-bottom: ' ~ ( img.height / img.width * 100 ) ~ '%;'
-                            if not img.is_square else '' }}">
-            </div>
-        {% endif %}
+
+        {%- if value.image.upload %}
+            {%- set img = image(value.image.upload, 'original') %}
+            {# Empty alt attribute if header text is present to prevent screen reader repetition #}
+            {%- set img_alt_text = '' if value.heading.text else image_alt_value(value.image) %}
+                {%- if image_alt_value(value.image) %}
+                    <img class="m-info-unit_image
+                                {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+                        src="{{ img.url }}"
+                        alt="{{ img_alt_text }}">
+                {%- else %}
+                    <div class="m-info-unit_image
+                                {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+                        style="background-image: url( '{{ img.url }}' );
+                                {{- ' padding-bottom: ' ~ ( img.height / img.width * 100 ) ~ '%;'
+                                    if not img.is_square else '' }}">
+                    </div>
+                {% endif %}
+        {%- endif %}
+
+        {%- if value.heading %}
             <div class="m-info-unit_heading-text">
                 {% include_block value.heading %}
             </div>
+        {%- endif %}
+
     {%- if link_image_and_heading %}
         </a>
     {%- endif -%}
-{%- endif %}
 
         <div class="m-info-unit_content">
 
