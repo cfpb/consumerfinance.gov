@@ -153,6 +153,57 @@ class DocumentDetailPage(AbstractFilterPage):
         index.SearchField('content')
     ]
 
+class EnforcementActionPage(AbstractFilterPage):
+    label = models.CharField(default='Action details', max_length=100, blank=True)
+    court = models.CharField(max_length=150, blank=True)
+    institution_type = models.CharField(max_length=50, choices=[
+        ('Nonbank', 'Nonbank'),
+        ('Bank', 'Bank')
+    ], blank=True)
+    status = models.CharField(max_length=50, choices=[
+        ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
+        ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
+        ('Pending Litigation', 'Pending Litigation')
+    ], blank=True)
+    docket_number = models.CharField(max_length=50, blank=True)
+
+    content = StreamField([
+        ('full_width_text', organisms.FullWidthText()),
+        ('expandable', organisms.Expandable()),
+        ('expandable_group', organisms.ExpandableGroup()),
+        ('notification', molecules.Notification()),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
+        ('feedback', v1_blocks.Feedback()),
+    ], blank=True)
+
+    content_panels = [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content')
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(AbstractFilterPage.content_panels + content_panels, heading='General Content'),
+        ObjectList(
+           [MultiFieldPanel([
+               FieldPanel('label'),
+               FieldPanel('court'),
+               FieldPanel('institution_type'),
+               FieldPanel('status'),
+               FieldPanel('docket_number')
+        ])], heading='Metadata'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
+    ])
+
+    template = 'enforcement-action/index.html'
+
+    objects = PageManager()
+
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('content')
+    ]
+
 
 class AgendaItemBlock(blocks.StructBlock):
     start_time = blocks.TimeBlock(label="Start", required=False)
