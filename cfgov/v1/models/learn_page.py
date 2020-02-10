@@ -153,8 +153,13 @@ class DocumentDetailPage(AbstractFilterPage):
         index.SearchField('content')
     ]
 
+
 class EnforcementActionPage(AbstractFilterPage):
-    label = models.CharField(default='Action details', max_length=100, blank=True)
+    label = models.CharField(
+        default='Action details',
+        max_length=100,
+        blank=True
+    )
     court = models.CharField(max_length=150, blank=True)
     institution_type = models.CharField(max_length=50, choices=[
         ('Nonbank', 'Nonbank'),
@@ -183,17 +188,25 @@ class EnforcementActionPage(AbstractFilterPage):
     ]
 
     edit_handler = TabbedInterface([
-        ObjectList(AbstractFilterPage.content_panels + content_panels, heading='General Content'),
         ObjectList(
-           [MultiFieldPanel([
-               FieldPanel('label'),
-               FieldPanel('court'),
-               FieldPanel('institution_type'),
-               FieldPanel('status'),
-               FieldPanel('docket_number')
-        ])], heading='Metadata'),
+            AbstractFilterPage.content_panels + content_panels,
+            heading='General Content'
+        ),
+        ObjectList([
+            MultiFieldPanel([
+                FieldPanel('label'),
+                FieldPanel('court'),
+                FieldPanel('institution_type'),
+                FieldPanel('status'),
+                FieldPanel('docket_number')
+            ])],
+            heading='Metadata'
+        ),
         ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
+        ObjectList(
+            AbstractFilterPage.settings_panels,
+            heading='Configuration'
+        )
     ])
 
     template = 'enforcement-action/index.html'
