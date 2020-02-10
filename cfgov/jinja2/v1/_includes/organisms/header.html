@@ -99,7 +99,7 @@
 
             {% block primary_nav %}
                 {% if flag_enabled('MEGA_MENU_BACKEND_V2') %}
-                    {{ mega_menu( language=language ) }}
+                    {{ mega_menu() }}
                 {% else %}
                     {% from mega_menu_template() import mega_menu with context %}
                     {% if language == 'es' %}
