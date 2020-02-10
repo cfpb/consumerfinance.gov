@@ -22,11 +22,6 @@ export default class CashFlowStore {
       if (event.recurs && event.recurrenceRule && !event.isRecurrence) this.createRecurrences(event);
     });
 
-    CashFlowEvent.on('recurrencesSaved', (events, originalEvent) => {
-      this.logger.debug('event (%O) just created recurrences of itself: %O', originalEvent, events);
-      this.addEvents(events);
-    });
-
     this.logger.debug('Initialize CashFlowStore: %O', this);
   }
 
