@@ -39,13 +39,15 @@
 
    Creates a mega menu sub menu list markup when given:
 
-   nav_depth: Level of menu nesting. 1 equals the root menu.
+   nav_depth:  Level of menu nesting. 1 equals the root menu.
 
    nav_groups: List of nav item groups.
 
+   language:   The page's language. Defaults to English.
+
    ========================================================================== #}
 
-{% macro _nav_list( nav_depth, nav_groups ) %}
+{% macro _nav_list( nav_depth, nav_groups, language='en' ) %}
     {% for nav_group in nav_groups %}
     {% set group = nav_group.value %}
     <div class="{{ _classes( nav_depth, '-list' ) }}">
@@ -67,7 +69,7 @@
             {%- endif %}
             {%- for item in group.nav_items %}
                 {% if ( request.show_draft_megamenu and item.state != 'live' ) or ( not request.show_draft_megamenu and item.state != 'draft' ) %}
-                    {{ _nav_item( nav_depth, item ) }}
+                    {{ _nav_item( nav_depth, item, language ) }}
                 {% endif %}
             {%- endfor %}
         </ul>
@@ -134,7 +136,7 @@
 
             {% if nav_item.nav_groups %}
             <div class="{{ _classes( nav_depth, '-lists' ) }}">
-                {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
+                {{ _nav_list( nav_depth, nav_item.nav_groups, language=language ) }}
 
                 {% if flag_enabled( 'MEGA_MENU_BACKEND_V2' ) and ( nav_item.featured_links or nav_item.other_links ) %}
                 {# New mega menu backend #}
@@ -255,11 +257,13 @@
 
    nav_depth: Level of menu nesting. 1 equals the root menu.
 
-   nav_item: A nav menu item.
+   nav_item:  A nav menu item.
+
+   language:  The page's language. Defaults to English.
 
    ========================================================================== #}
 
-{% macro _nav_item( nav_depth, nav_item ) %}
+{% macro _nav_item( nav_depth, nav_item, language='en' ) %}
 {% set link = nav_item.link if nav_item.link else nav_item %}
 {% if link %}
     {% set url = pageurl(link.page_link) if link.page_link else link.external_link | default('#') %}
@@ -286,7 +290,7 @@
               {% endif %}
         </a>
         {% if has_children %}
-            {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
+            {{ _nav_level( nav_depth | int + 1, nav_item, url, text, language ) }}
         {% endif %}
     </li>
 {% endif %}
@@ -302,6 +306,8 @@
    Description:
 
    Creates a mega menu primary navigation menu.
+
+   language: The page's language. Defaults to English.
 
    ========================================================================== #}
 {% macro mega_menu( menu_items, language='en' ) %}

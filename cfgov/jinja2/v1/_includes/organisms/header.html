@@ -99,15 +99,15 @@
 
             {% block primary_nav %}
                 {% if flag_enabled('MEGA_MENU_BACKEND_V2') %}
-                    {{ mega_menu() }}
+                    {{ mega_menu( language=language ) }}
                 {% else %}
                     {% from mega_menu_template() import mega_menu with context %}
                     {% if language == 'es' %}
                         {% import '_vars-mega-menu-spanish.html' as vars with context %}
-                        {{ mega_menu( vars.menu_items ) }}
+                        {{ mega_menu( vars.menu_items, language=language ) }}
                     {% else %}
                         {% cache 'mega_menu', 'default_fragment_cache' %}
-                            {{ mega_menu( get_menu_items( request ) ) }}
+                            {{ mega_menu( get_menu_items( request ), language=language ) }}
                         {% endcache %}
                     {% endif %}
                 {% endif %}
