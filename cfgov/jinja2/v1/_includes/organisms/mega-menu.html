@@ -64,7 +64,7 @@
             {% if nav_depth == 1 -%}
             <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
                 {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-                {{ global_header_cta.render() }}
+                {{ global_header_cta.render( language=language ) }}
             </li>
             {%- endif %}
             {%- for item in group.nav_items %}
