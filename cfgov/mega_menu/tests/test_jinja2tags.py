@@ -28,13 +28,6 @@ class MegaMenuTemplateTests(SimpleTestCase):
             '_includes/organisms/mega-menu-var-1.html'
         )
 
-    @override_settings(FLAGS={'MEGA_MENU_VAR_2': [('boolean', True)]})
-    def test_template_variation_2(self):
-        self.assertEqual(
-            self.render_template_name(),
-            '_includes/organisms/mega-menu-var-2.html'
-        )
-
 
 class MegaMenuTests(TestCase):
     def setUp(self):
