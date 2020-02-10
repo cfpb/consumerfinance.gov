@@ -174,6 +174,20 @@ ROOT_URLCONF = 'cfgov.urls'
 # We support two different template engines: Django templates and Jinja2
 # templates. See https://docs.djangoproject.com/en/dev/topics/templates/
 # for an overview of how Django templates work.
+
+if wagtail.VERSION >= (2, 0):
+    wagtail_extensions = [
+        'wagtail.core.jinja2tags.core',
+        'wagtail.admin.jinja2tags.userbar',
+        'wagtail.images.jinja2tags.images',
+    ]
+else:
+    wagtail_extensions = [
+        'wagtail.wagtailcore.jinja2tags.core',
+        'wagtail.wagtailadmin.jinja2tags.userbar',
+        'wagtail.wagtailimages.jinja2tags.images',
+    ]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -209,17 +223,11 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'v1.jinja2_environment.environment',
-            'extensions': [
+            'extensions': wagtail_extensions + [
                 'jinja2.ext.do',
                 'jinja2.ext.i18n',
                 'jinja2.ext.loopcontrols',
-
-                'wagtail.wagtailcore.jinja2tags.core',
-                'wagtail.wagtailadmin.jinja2tags.userbar',
-                'wagtail.wagtailimages.jinja2tags.images',
-
                 'flags.jinja2tags.flags',
-
                 'core.jinja2tags.filters',
                 'agreements.jinja2tags.agreements',
                 'mega_menu.jinja2tags.MegaMenuExtension',
