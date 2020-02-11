@@ -6,26 +6,21 @@
 
    Description:
 
-   Creates related metadata markup when given:
+   Creates related metadata markup from an EnforcementActionPage
+   The following are available specifically on this page type:
 
-   value:                       Object defined from a StreamField block.
-
-   value.slug:                  A string of text to use as a header
-                                for the entire module.
-
-   value.date_filed:            A date object
-
-   value.(court,                String values derieved from
-          status,               Char and Choice blocks
-          institution_type,
-          docket_number)
-
-   value.(topics,               Boolean values to determine whether
-         categories)            to show the pages' topics/categories
+   label - CharField, defaults to Action Details
+   court - CharField
+   institution_type - CharField, with choices: Nonbank & Bank
+   status - CharField, with choices:
+        Post Order/Post Judgment
+        Expired/Terminated/Dismissed
+        Pending Litigation
+   docker_number - CharField
 
    ========================================================================== #}
 
-{% macro render(value) %}
+{% macro render() %}
 
 <div class="m-related-metadata block block__flush-top">
     <header class="m-slug-header">
