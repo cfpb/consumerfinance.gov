@@ -206,6 +206,17 @@ YEAR_FIELDS = assemble_program_fields() + [
     'student.retention_rate.lt_four_year.part_time',
     'student.demographics.veteran',  # blank for many schools
 ]
+PROGRAM_FIELDS = [
+    'programs.cip_4_digit.ope6_id',
+    'programs.cip_4_digit.school.name',
+    'programs.cip_4_digit.title',
+    'programs.cip_4_digit.code',
+    'programs.cip_4_digit.credential.level',
+    'programs.cip_4_digit.debt.median_debt',
+    'programs.cip_4_digit.debt.monthly_debt_payment',
+    'programs.cip_4_digit.counts.titleiv',
+    'programs.cip_4_digit.earnings.median_earnings',
+]
 
 
 def api_school_query(school_id, fields):
@@ -215,11 +226,12 @@ def api_school_query(school_id, fields):
 
 
 def build_field_string():
-    """Assemble fields for an API query."""
-    fields = BASE_FIELDS + ['latest.{}'.format(field)
-                            for field in YEAR_FIELDS]
-    field_string = ",".join([field for field in fields])
-    return field_string
+    """Assemble fields for a fat API query."""
+    latest_fields = [
+        'latest.{}'.format(field) for field in (YEAR_FIELDS + PROGRAM_FIELDS)
+    ]
+    fields = BASE_FIELDS + latest_fields
+    return ",".join([field for field in fields])
 
 
 def search_by_school_name(name):

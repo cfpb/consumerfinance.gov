@@ -1,5 +1,6 @@
 """
 Update college data using the Dept. of Education's College Scorecard API.
+
 Scorecard documentation: https://collegescorecard.ed.gov/data/documentation/
 """
 import datetime
@@ -16,7 +17,9 @@ from paying_for_college.disclosures.scripts import api_utils
 from paying_for_college.disclosures.scripts.api_utils import (
     DECIMAL_MAP, MODEL_MAP
 )
-from paying_for_college.models import CONTROL_MAP, FAKE_SCHOOL_PK, School
+from paying_for_college.models import (
+    CONTROL_MAP, FAKE_SCHOOL_PK, PROGRAM_LEVELS, Program, School
+)
 
 
 logger = logging.getLogger(__name__)
@@ -28,6 +31,46 @@ SCRIPTNAME = os.path.basename(__file__).partition('.')[0]
 ID_BASE = "{}?api_key={}".format(api_utils.SCHOOLS_ROOT, api_utils.API_KEY)
 FIELDS = sorted(MODEL_MAP.keys())
 FIELDSTRING = api_utils.build_field_string()
+
+
+def test_for_program_data(program_data):
+    if (
+            program_data.get('earnings').get('median_earnings') or
+            program_data.get('debt').get('median_debt') or
+            program_data.get('debt').get('monthly_debt_payment')):
+        return True
+    else:
+        return False
+
+
+def update_programs(api_data, school):
+    """Create or update a school's program-level records."""
+    create_count = 0
+    program_data = api_data.get('latest.programs.cip_4_digit')
+    for entry in program_data:
+        if not test_for_program_data(entry):
+            continue
+        level_code = entry['credential']['level']
+        cip_code = entry['code']
+        program_code = "{}-{}".format(cip_code, level_code)
+        program, _created = Program.objects.get_or_create(
+            institution=school,
+            program_code=program_code,
+        )
+        if _created:
+            create_count += 1
+        program.program_name = entry['title']
+        program.cip_code = cip_code
+        program.completers = entry['counts']['titleiv']
+        program.level_code = level_code
+        program.level = PROGRAM_LEVELS.get(int(level_code))
+        program.salary = entry['earnings']['median_earnings']
+        program.median_student_loan_completers = (
+            entry['debt']['median_debt'])
+        program.median_monthly_debt = (
+            entry['debt']['monthly_debt_payment'])
+        program.save()
+    return create_count
 
 
 def fix_zip5(zip5):
@@ -116,8 +159,13 @@ def compile_net_prices(school, api_data):
     return school
 
 
-def update(exclude_ids=[], single_school=None):
-    """Update college-level data for the latest year."""
+def update(exclude_ids=[], single_school=None, store_programs=False):
+    """
+    Update college-level data for the latest year.
+
+    Optionally, you can store program data and limit actions to one school.
+    """
+    programs_created = 0
     exclude_ids += [FAKE_SCHOOL_PK]
     no_data = []  # API failed to respond or provided no data
     closed = []  # schools that have closed since our last scrape
@@ -131,10 +179,13 @@ def update(exclude_ids=[], single_school=None):
     id_url = "{}&id={}&fields={}"
     base_query = School.objects.exclude(pk__in=exclude_ids)
     if single_school:
+        if not base_query.filter(pk=single_school).exists():
+            no_school_msg = "Could not find school with ID {}".format(
+                single_school)
+            return (no_data, no_school_msg)
         base_query = base_query.filter(pk=single_school)
         logger.info("Updating {}".format(base_query[0]))
     else:
-        base_query = base_query.filter(operating=True)
         logger.info(
             "Seeking updates for {} schools.".format(base_query.count()))
         logger.info(job_msg)
@@ -178,6 +229,8 @@ def update(exclude_ids=[], single_school=None):
                 'program_count')
         school.zip5 = fix_zip5(str(school.zip5))
         school.save()
+        if store_programs:
+            programs_created += update_programs(data, school)
     endmsg = """
     Updated {} schools and found no data for {}\n\
     Schools that closed since last run: {}\n\
@@ -187,6 +240,8 @@ def update(exclude_ids=[], single_school=None):
         len(closed),
         SCRIPTNAME,
         (datetime.datetime.now() - starter))
+    if programs_created:
+        logger.info("\nCreated {} program records".format(programs_created))
     if no_data:
         logger.info("\n\nSchools for which we found no data on {}:".format(
             datetime.date.today().strftime("%b %-d, %Y")))

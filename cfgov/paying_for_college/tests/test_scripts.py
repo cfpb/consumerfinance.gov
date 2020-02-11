@@ -38,6 +38,81 @@ completion_rate:\n\
 """
 
 
+class ProgamDataTest(django.test.TestCase):
+    """Test the program data checks and creation."""
+
+    fixtures = ['fake_school.json']
+
+    def setUp(self):
+        self.mock_program_data = {
+            'earnings': {
+                'median_earnings': 3000
+            },
+            'debt': {
+                'median_debt': 20000,
+                'monthly_debt_payment': 400
+            },
+            'credential': {
+                'level': '5'
+            },
+            'code': '5101',
+            'title': 'Nursing',
+            'counts': {
+                'titleiv': 3000
+            },
+
+        }
+        self.empty_mock_program_data = {
+            'earnings': {
+                'median_earnings': None
+            },
+            'debt': {
+                'median_debt': None,
+                'montly_debt_payent': None
+            }
+        }
+        self.school = School.objects.get(pk=999999)
+
+    def test_single_school_failure(self):
+        (flist, msg) = update_colleges.update(single_school=99999)
+        self.assertIn("Could not find", msg)
+        # if single_school:
+        #     if not base_query.filter(pk=single_school).exists():
+        #         no_school_msg = "Could not find school with ID {}".format(
+        #             single_school)
+        #         return (no_data, no_school_msg)
+
+    def test_program_data_check_passes(self):
+        self.assertTrue(
+            update_colleges.test_for_program_data(
+                self.mock_program_data))
+
+    def test_empty_program_data_fails(self):
+        self.assertFalse(
+            update_colleges.test_for_program_data(
+                self.empty_mock_program_data))
+
+    def test_program_creation_empty_data(self):
+        """Check that update_programs bails when there's no data."""
+        empty_program_data = {
+            'latest.programs.cip_4_digit': [self.empty_mock_program_data]
+        }
+        count = update_colleges.update_programs(
+            empty_program_data, self.school)
+        self.assertEqual(count, 0)
+
+    def test_program_creation_success(self):
+        """Check the update_programs succeeds with good data."""
+        api_data = {
+            'latest.programs.cip_4_digit': [self.mock_program_data]
+        }
+        count = update_colleges.update_programs(api_data, self.school)
+        self.assertEqual(count, 1)
+        self.assertTrue(Program.objects.filter(
+            institution=self.school,
+            program_code='5101-5').exists())
+
+
 class TaggingTests(django.test.TestCase):
     """Test functions for tagging settlement schools via CSV."""
 
@@ -580,35 +655,6 @@ class TestScripts(django.test.TestCase):
         percent = api_utils.calculate_group_percent(0, 0)
         self.assertTrue(percent == 0)
 
-    # def test_get_repayment_rate(self):
-    #     """Checks calculation of completer repay rate from data payload."""
-    #     mock_data = {
-    #         'latest.repayment.5_yr_repayment.completers': 10,
-    #         'latest.repayment.5_yr_repayment.noncompleters': 90,
-    #     }
-    #     expected_result = 10.0
-    #     self.assertEqual(
-    #         api_utils.get_completer_repayment_rate(mock_data, timeframe=5),
-    #         expected_result
-    #         )
-
-    # @patch('paying_for_college.disclosures.scripts.api_utils.requests.get')
-    # def test_get_repayment_data(self, mock_requests):
-    #     """Checks repay calculation for one-off repayment data requests."""
-    #     mock_response = mock.Mock()
-    #     expected_dict = {
-    #         'results': [
-    #             {'latest.repayment.5_yr_repayment.completers': 100,
-    #              'latest.repayment.5_yr_repayment.noncompleters': 900,
-    #              'completer_repayment_rate_after_5_yrs': 10.0,
-    #              }
-    #         ]
-    #     }
-    #     mock_response.json.return_value = expected_dict
-    #     mock_requests.return_value = mock_response
-    #     data = api_utils.get_repayment_data(123456)
-    #     self.assertTrue(data['completer_repayment_rate_after_5_yrs'] == 10.0)
-
     @patch('paying_for_college.disclosures.scripts.api_utils.requests.get')
     def test_search_by_school_name(self, mock_requests):
         mock_response = mock.Mock()
@@ -622,7 +668,9 @@ class TestScripts(django.test.TestCase):
         self.assertTrue(field_string.startswith('id'))
         self.assertEqual(
             len(field_string.split(',')),
-            (len(api_utils.BASE_FIELDS) + len(api_utils.YEAR_FIELDS))
+            (len(api_utils.BASE_FIELDS) +
+             len(api_utils.YEAR_FIELDS) +
+             len(api_utils.PROGRAM_FIELDS))
         )
 
     @patch('paying_for_college.disclosures.scripts.nat_stats.requests.get')
