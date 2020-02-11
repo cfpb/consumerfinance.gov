@@ -7,6 +7,7 @@ import { useClickHandler } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
 import Button, { ButtonLink } from '../../../components/button';
+import { useScrollToTop } from '../../../components/scroll-to-top';
 
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
@@ -61,6 +62,8 @@ function Calendar() {
       Clear Database
     </Button>
   ));
+
+  useScrollToTop();
 
   return (
     <section className="calendar">
