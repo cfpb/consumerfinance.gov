@@ -11,14 +11,18 @@
    is_horizontal: Whether the molecule appears horizontally or vertically.
                   defaults to false.
 
+   language:      The page's language value (used to display different
+                  information on Spanish pages). Defaults to English.
+
    ========================================================================== #}
 
 
-{% macro render( is_horizontal=false ) %}
+{% macro render( is_horizontal=false, language='en' ) %}
+    {% set complaint_link = '/es/enviar-una-queja/' if language == 'es' else '/complaint/' %}
     {# TODO: Padding should be on link, not CTA itself #}
     <div class="m-global-header-cta
                 m-global-header-cta__{{ 'horizontal' if is_horizontal else 'list' }}">
-        <a href="/complaint/">
+        <a href="{{ complaint_link }}">
             {{ svg_icon('complaint') }}
             {{ _('Submit a Complaint') }}
         </a>
