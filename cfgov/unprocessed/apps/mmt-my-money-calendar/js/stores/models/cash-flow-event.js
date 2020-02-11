@@ -7,7 +7,6 @@ import { asyncComputed } from 'computed-async-mobx';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
-import { recurrenceRules } from '../../lib/calendar-helpers';
 
 export const Categories = {
   income: {

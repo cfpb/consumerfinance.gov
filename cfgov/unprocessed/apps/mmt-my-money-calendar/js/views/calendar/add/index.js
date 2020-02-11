@@ -39,7 +39,6 @@ function Add() {
 
       try {
         eventStore.createEvent(values);
-        alert('Event saved');
         history.push('/calendar');
       } catch (err) {
         console.error(err);
