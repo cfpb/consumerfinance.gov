@@ -5,9 +5,11 @@ import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/cash-flow-event';
-import Button from '../../../components/button';
+import Button, { ButtonLink } from '../../../components/button';
 import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
 import * as Yup from 'yup';
+
+import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
 
 function Add() {
   const { uiStore, eventStore } = useStore();
@@ -18,7 +20,7 @@ function Add() {
       totalCents: 0,
       category: undefined,
       eventType: undefined,
-      dateTime: '',
+      dateTime: uiStore.selectedDate ? uiStore.selectedDate.toFormat('yyyy-MM-dd') : '',
     },
     validationSchema: Yup.object({
       name: Yup.string().required(),
@@ -48,8 +50,6 @@ function Add() {
   const categoryOptions = useMemo(() => {
     if (!formik.values.eventType || !Categories[formik.values.eventType]) return [];
 
-    console.log(Categories[formik.values.eventType]);
-
     return Object.entries(Categories[formik.values.eventType]).reduce((output, [slug, category]) => {
       if (!category.subcategories) {
         output = [...output, { value: `${formik.values.eventType}.${slug}`, label: category.name }];
@@ -69,6 +69,7 @@ function Add() {
 
   return (
     <section className="add-event">
+      <ButtonLink variant="secondary" to="/calendar" icon={arrowLeft}>Back</ButtonLink>
       <h1>Add Income and Expenses</h1>
 
       <form onSubmit={formik.handleSubmit}>

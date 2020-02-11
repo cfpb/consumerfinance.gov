@@ -2,6 +2,8 @@ import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
 import { formatCurrency } from '../../../lib/currency-helpers';
 
+import deleteRound from '@cfpb/cfpb-icons/src/icons/delete-round.svg';
+
 function Details() {
   const { uiStore, eventStore } = useStore();
 
@@ -24,6 +26,9 @@ function Details() {
               <div className="calendar-details__event-date">{e.dateTime.toFormat('D')}</div>
               <div className="calendar-details__event-name">{e.name}</div>
               <div className="calendar-details__event-total">{formatCurrency(e.total)}</div>
+              <button className="calendar-details__event-delete" onClick={() => eventStore.deleteEvent(e.id)}>
+                <span dangerouslySetInnerHTML={{__html: deleteRound}} />
+              </button>
             </li>
           ))}
       </ul>
