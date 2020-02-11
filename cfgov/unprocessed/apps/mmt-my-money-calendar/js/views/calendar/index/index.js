@@ -3,7 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
-import { useClickHandler } from '../../../lib/hooks';
+import { useClickHandler, useClickConfirm } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
 import Button, { ButtonLink } from '../../../components/button';
@@ -41,7 +41,7 @@ function Calendar() {
     alert('Seed data loaded');
   }, []);
 
-  const clearDatabase = useClickHandler(async () => {
+  const clearDatabase = useClickConfirm(async () => {
     await window.clearTestData();
     await eventStore.loadEvents();
     alert('Database cleared');

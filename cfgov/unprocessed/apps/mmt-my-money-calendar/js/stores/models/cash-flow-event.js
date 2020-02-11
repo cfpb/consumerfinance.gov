@@ -1,5 +1,5 @@
 import { observable, computed, action } from 'mobx';
-import { RRule, RRuleSet, rrulestr } from 'rrule';
+import { rrulestr } from 'rrule';
 import * as yup from 'yup';
 import { DateTime } from 'luxon';
 import EventEmitter from 'eventemitter3';

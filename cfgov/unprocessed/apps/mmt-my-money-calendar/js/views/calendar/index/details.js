@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
 import { formatCurrency } from '../../../lib/currency-helpers';
@@ -6,6 +7,12 @@ import deleteRound from '@cfpb/cfpb-icons/src/icons/delete-round.svg';
 
 function Details() {
   const { uiStore, eventStore } = useStore();
+
+  const confirmDelete = useMemo(() => (eventID) => (evt) => {
+    evt.preventDefault();
+    if (!confirm('Delete this event?')) return;
+    eventStore.deleteEvent(eventID);
+  }, []);
 
   const title = uiStore.selectedDate ? uiStore.selectedDate.toFormat('DDD') : uiStore.currentMonth.toFormat('MMMM, y');
   const events = uiStore.selectedDate
@@ -26,7 +33,7 @@ function Details() {
               <div className="calendar-details__event-date">{e.dateTime.toFormat('D')}</div>
               <div className="calendar-details__event-name">{e.name}</div>
               <div className="calendar-details__event-total">{formatCurrency(e.total)}</div>
-              <button className="calendar-details__event-delete" onClick={() => eventStore.deleteEvent(e.id)}>
+              <button className="calendar-details__event-delete" onClick={confirmDelete(e.id)}>
                 <span dangerouslySetInnerHTML={{__html: deleteRound}} />
               </button>
             </li>
