@@ -1,4 +1,5 @@
 import { DateTime, Info } from 'luxon';
+import { RRule, RRuleSet } from 'rrule';
 
 /**
  * Luxon's DateTime class
@@ -16,7 +17,14 @@ export const MONTH_NAMES = Info.months();
  * @param {Date|DateTime} date - A Date instance or DateTime object
  * @returns {DateTime} a Luxon DateTime instance
  */
-export const toDateTime = (date) => DateTime.isDateTime(date) ? date : DateTime.fromJSDate(date);
+export const toDateTime = (date) => (DateTime.isDateTime(date) ? date : DateTime.fromJSDate(date));
+
+/**
+ * Ensures that the argument is returned as a native JS Date object
+ *
+ * @param {Date|DateTime} date - A JS Date or Luxon DateTime object
+ */
+export const toJSDate = (date) => (date instanceof Date ? date : date.toJSDate());
 
 /**
  * Get the ordinal day of the year for a date, as an integer
@@ -89,9 +97,57 @@ export function getWeekRows(date) {
 
     rows.push({
       weekNumber,
-      days: Array(7).fill(0).map((n, i) => startOfWeek.plus({ days: n + i })),
+      days: Array(7)
+        .fill(0)
+        .map((n, i) => startOfWeek.plus({ days: n + i })),
     });
   }
 
   return rows;
 }
+
+export const WEEKDAYS = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR];
+
+export const recurrenceRules = {
+  weekly: (dtstart, byweekday = RRule.FR, options = {}) =>
+    new RRule({ freq: RRule.WEEKLY, dtstart, byweekday, ...options }),
+  biweekly: (dtstart, byweekday = RRule.FR, options = {}) =>
+    new RRule({
+      freq: RRule.WEEKLY,
+      interval: 2,
+      dtstart,
+      byweekday,
+      ...options,
+    }),
+  monthly: (dtstart, options = {}) => new RRule({ freq: RRule.MONTHLY, dtstart, ...options }),
+  semimonthly: (dtstart, payday1 = 15, payday2 = 30) => {
+    const rules = new RRuleSet();
+
+    const firstPaydayRange = [0, 1, 2].map((num) => (payday1 > 2 ? payday1 - num : payday1 + num)).sort();
+    const lastPaydayRange =
+      payday2 > 29 ? undefined : [0, 1, 2].map((num) => (payday2 > 2 ? payday2 - num : payday2 + num)).sort();
+
+    // The last business day before the first payday provided, not considering holidays:
+    rules.rrule(
+      new RRule({
+        dtstart,
+        freq: RRule.MONTHLY,
+        bysetpos: -1,
+        byweekday: WEEKDAYS,
+        bymonthday: firstPaydayRange,
+      })
+    );
+
+    // The last business day of the month:
+    rules.rrule(
+      new RRule({
+        freq: RRule.MONTHLY,
+        bysetpos: -1,
+        byweekday: WEEKDAYS,
+        bymonthday: lastPaydayRange,
+      })
+    );
+
+    return rules;
+  },
+};

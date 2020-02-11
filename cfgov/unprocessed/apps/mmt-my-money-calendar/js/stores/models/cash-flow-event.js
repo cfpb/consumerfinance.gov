@@ -1,5 +1,5 @@
 import { observable, computed, action } from 'mobx';
-import { RRule, rrulestr } from 'rrule';
+import { RRule, RRuleSet, rrulestr } from 'rrule';
 import * as yup from 'yup';
 import { DateTime } from 'luxon';
 import EventEmitter from 'eventemitter3';
@@ -7,7 +7,7 @@ import { asyncComputed } from 'computed-async-mobx';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
-import { compact } from '../../lib/array-helpers';
+import { recurrenceRules } from '../../lib/calendar-helpers';
 
 export const Categories = {
   income: {
