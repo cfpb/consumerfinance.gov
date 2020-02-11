@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
-# from collections import Counter
 import html.parser as HTMLParser
 
 from django.contrib.auth.models import User

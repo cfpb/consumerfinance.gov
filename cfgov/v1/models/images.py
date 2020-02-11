@@ -1,15 +1,17 @@
 from django.db import models
 from django.utils.functional import cached_property
 
+import wagtail
 
-try:
+
+if wagtail.VERSION >= (2, 0):
     from wagtail.images.image_operations import (
         DoNothingOperation, MinMaxOperation, WidthHeightOperation
     )
     from wagtail.images.models import (
         AbstractImage, AbstractRendition, Filter, Image
     )
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+else:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailimages.image_operations import (
         DoNothingOperation, MinMaxOperation, WidthHeightOperation
     )
@@ -21,6 +23,7 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
 class CFGOVImage(AbstractImage):
     alt = models.CharField(max_length=100, blank=True)
 
+    file_hash = models.CharField(max_length=40, blank=True, editable=False)
     admin_form_fields = Image.admin_form_fields + (
         'alt',
     )

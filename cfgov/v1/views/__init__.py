@@ -22,6 +22,7 @@ from v1.auth_forms import (
     CFGOVPasswordChangeForm, CFGOVSetPasswordForm, LoginForm
 )
 from v1.util.util import all_valid_destinations_for_request
+from v1.util.wrap_password_reset import _wrap_password_reset_view
 
 
 try:
@@ -217,5 +218,5 @@ def welcome(request):
         )
 
 
-password_reset_confirm = account._wrap_password_reset_view(
+password_reset_confirm = _wrap_password_reset_view(
     custom_password_reset_confirm)

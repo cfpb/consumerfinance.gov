@@ -14,6 +14,7 @@ from django.utils.encoding import smart_text
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 
+import wagtail
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.utils.widgets import WidgetWithScript
 
@@ -25,14 +26,15 @@ from v1.atomic_elements import atoms, molecules
 from v1.util import ref
 
 
-try:
+if wagtail.VERSION >= (2, 0):
     from wagtail.core import blocks
     from wagtail.core.models import Page
+    from v1.util.rich_text import DbWhitelister
     from wagtail.core.rich_text import expand_db_html
     from wagtail.documents.blocks import DocumentChooserBlock
     from wagtail.images import blocks as images_blocks
     from wagtail.snippets.blocks import SnippetChooserBlock
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+else:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore import blocks
     from wagtail.wagtailcore.models import Page
     from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html

@@ -3,6 +3,7 @@ from django.test import (
     RequestFactory, SimpleTestCase, TestCase, override_settings
 )
 
+import wagtail
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
 
@@ -16,10 +17,10 @@ from v1.wagtail_hooks import (
 )
 
 
-try:
+if wagtail.VERSION >= (2, 0):
     from wagtail.core.models import Site
-    from wagtail.core.rich_text import DbWhitelister
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from v1.util.rich_text import DbWhitelister
+else:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Site
     from wagtail.wagtailcore.rich_text import DbWhitelister
 
