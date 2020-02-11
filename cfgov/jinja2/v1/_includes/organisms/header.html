@@ -62,7 +62,7 @@
 
         <div class="wrapper wrapper__match-content">
             {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-            {{ global_header_cta.render( true ) }}
+            {{ global_header_cta.render( true, language ) }}
 
             {% import 'molecules/global-search.html' as global_search with context %}
             {{ global_search.render() }}
@@ -104,10 +104,10 @@
                     {% from mega_menu_template() import mega_menu with context %}
                     {% if language == 'es' %}
                         {% import '_vars-mega-menu-spanish.html' as vars with context %}
-                        {{ mega_menu( vars.menu_items ) }}
+                        {{ mega_menu( vars.menu_items, language=language ) }}
                     {% else %}
                         {% cache 'mega_menu', 'default_fragment_cache' %}
-                            {{ mega_menu( get_menu_items( request ) ) }}
+                            {{ mega_menu( get_menu_items( request ), language=language ) }}
                         {% endcache %}
                     {% endif %}
                 {% endif %}
