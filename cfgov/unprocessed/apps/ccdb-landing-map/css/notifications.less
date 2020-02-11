@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Capital Framework
+   Enhancements
+   ========================================================================== */
+
+// This is your project's CF enhancements.
+//
+// Whenever building enhancements or changes to existing CF components, write them here
+// to work out the details before contributing them back to a Capital Framework component
+//
+
+// .cf-notification
+@notification-bg:               #ccc888;
+@notification-error:            @red-20;
+@notification-success:          @green-20;
+@notification-warning:          @gold-20;
+
+@input-border:                  @gray;
+@input-border-focus:            @pacific;
+
+@input-error:                   @red;
+@input-success:                 @green;
+@input-warning:                 @gold-80;
+
+@cf-icon-left:                  "\e000";
+
+@notification-padding__px: 11px;
+
+.cf-notification {
+    display: none;
+    position: relative;
+
+    padding: @notification-padding__px;
+    padding-left: 40px;
+    margin-bottom: @notification-padding__px + 4px;
+
+    background: @notification-bg;
+    border: 1px solid @input-border;
+
+    &__visible {
+      display: block;
+    }
+
+    &__error {
+        background: @notification-error;
+        border-color: @input-error;
+    }
+
+    &__success {
+        background: @notification-success;
+        border-color: @input-success;
+    }
+
+    &__warning {
+        background: @notification-warning;
+        border-color: @input-warning;
+    }
+
+    &_icon {
+        position: absolute;
+        top: @notification-padding__px + 2px;
+        left: @notification-padding__px + 4px;
+
+        color: @notification-bg;
+        font-size: unit( 18px / @base-font-size-px, em );
+
+        &__error {
+            color: @input-error;
+        }
+
+        &__success {
+            color: @input-success;
+        }
+
+        &__warning {
+            color: @input-warning;
+        }
+    }
+
+    &_text {
+        .h4();
+        margin: 0;
+
+        .short-desc {
+            display: block;
+            font-size: @base-font-size-px;
+        }
+    }
+}
+
+.breadcrumbs {
+    .webfont-regular();
+    .grid_column(1,1);
+
+    padding-top: unit(@grid_gutter-width / 14px, em);
+    font-size: unit(14px / @base-font-size-px, em);
+    overflow-x: auto;
+    white-space: nowrap;
+
+    &:before {
+      color: @pacific;
+      content: @cf-icon-left;
+      font-family: 'CFPB Minicons';
+    }
+
+    .respond-to-max(@bp-sm-max, {
+        padding-top: unit(@grid_gutter-width / 2 / 14px, em);
+        padding-bottom: unit(@grid_gutter-width / 2 / 14px, em);
+    });
+
+    &_link {
+        padding-left: 4px;
+
+        &:not(:last-child):after {
+            padding-left: 4px;
+            color: @text;
+            content: ' /';
+        }
+    }
+}
+
+.breadcrumbs__main-first {
+    margin-bottom: unit(@grid_gutter-width / 2 / 14px, em);
+}
+
+.breadcrumbs__sidebar-first {
+    .respond-to-min(@bp-med-min, {
+        margin-bottom: unit(@grid_gutter-width / 2 / 14px, em);
+    });
+}
+
+
+.block__border-top-medium {
+  .respond-to-min(600px, {
+    border-top: 1px solid @block__border-top;
+  });
+}
+
+.block__border-bottom-medium {
+  .respond-to-min(600px, {
+    border-bottom: 1px solid @block__border-bottom;
+  });
+}
+
+.block__padded-top-medium {
+  .respond-to-min(600px, {
+    padding-top: unit(30px / @base-font-size-px, em);
+    margin-top: unit(30px / @base-font-size-px, em);
+  });
+}
+
+.block__padded-bottom-medium {
+  .respond-to-min(600px, {
+    padding-bottom: unit(30px / @base-font-size-px, em);
+    margin-bottom: unit(30px / @base-font-size-px, em);
+  });
+}
+
+.icon-round {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 1.5em;
+  line-height: 1.5;
+  text-align: center;
+  background-color: @green;
+}
+
+.wrapper__match-content {
+    .respond-to-min(600px, {
+        max-width: @grid_wrapper-width - (@grid_gutter-width * 2);
+    });
+}
