@@ -625,6 +625,8 @@ CSP_IMG_SRC = (
     'www.gravatar.com',
 )
 
+WAGTAIL_GRAVATAR_PROVIDER_URL = '//www.gravatar.com/avatar'
+
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
     "'self'",
