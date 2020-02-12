@@ -18,9 +18,9 @@
   "dependencies": {
     "@cfpb/cfpb-core": "0.0.9",
     "@cfpb/cfpb-layout": "0.0.9",
+    "cfpb-chart-builder": "^6.4.0",
     "core-js": "3.3.6",
     "highcharts": "7.2.1",
-    "xdr": "0.5.3",
-    "cfpb-chart-builder": "^6.4.0"
+    "xdr": "0.5.3"
   }
 }
