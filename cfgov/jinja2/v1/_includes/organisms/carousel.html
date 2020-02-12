@@ -29,18 +29,18 @@
         <div class="o-carousel_item-text">
             <h2>{{ item.title }}</h2>
             <p>{{ item.body }}</p>
-            <a class="a-link__jump" href="{{ item.link_url }}">
+            <a class="a-link a-link__jump" href="{{ item.link_url }}">
                 <span class="a-link_text">{{ item.link_text }}</span>
             </a>
         </div>
-        <div class="o-carousel_item-visual">
+        <a href="{{ item.link_url }}" class="o-carousel_item-visual">
             <div class="o-carousel_item-visual-wrapper">
-                {% set rendition = image( item.image, 'original' ) %}
-                <img class="o-carousel_item-img"
-                     src="{{ rendition.url }}"
-                     alt="{{ item.image.alt }}">
+                    {% set rendition = image( item.image, 'original' ) %}
+                    <img class="o-carousel_item-img"
+                        src="{{ rendition.url }}"
+                        alt="{{ item.image.alt }}">
             </div>
-        </div>
+        </a>
     </div>
 </section>
 {% endmacro %}
