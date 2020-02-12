@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import contextlib
 import importlib
 import logging
@@ -99,20 +97,26 @@ class TestRunner(DiscoverRunner):
 
     def run_required_data_migrations(self):
         if wagtail.VERSION >= (2, 0):
-            migration_methods = (
-                (
-                    'wagtail.core.migrations.0002_initial_data',
-                    'initial_data'
-                ),
-                (
-                    'wagtail.core.migrations.0025_collection_initial_data',
-                    'initial_data'
-                ),
-            )
+            if settings.MIGRATION_MODULES:
+                migration_methods = (
+                    (
+                        'wagtail.core.migrations.'
+                        '0002_initial_data',
+                        'initial_data'
+                    ),
+                    (
+                        'wagtail.core.migrations.'
+                        '0025_collection_initial_data',
+                        'initial_data'
+                    ),
+                )
+            else:
+                migration_methods = ()
         else:
             migration_methods = (
                 (
-                    'wagtail.wagtailcore.migrations.0002_initial_data',
+                    'wagtail.wagtailcore.migrations.'
+                    '0002_initial_data',
                     'initial_data'
                 ),
                 (
