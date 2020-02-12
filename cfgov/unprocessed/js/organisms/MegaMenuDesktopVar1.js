@@ -127,6 +127,9 @@ function MegaMenuDesktop( baseClass, menus ) {
       _activeMenu.getTransition().animateOn();
       _activeMenu.collapse();
       _activeMenu = null;
+
+      // Clean up listeners
+      _bodyDom.removeEventListener( 'click', _handleBodyClick );
     } else if ( _activeMenu === null ) {
       // A menu is opened.
       _activeMenu = menu;
