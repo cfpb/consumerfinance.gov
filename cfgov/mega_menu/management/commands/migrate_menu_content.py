@@ -16,6 +16,14 @@ def int_or_none(value):
     return int(value) if value is not None else None
 
 
+def make_link(link):
+    return {
+        'page': int_or_none(link.get('page_link', link.get('page'))),
+        'text': link.get('link_text', link.get('text')) or None,
+        'url': link.get('external_link', link.get('url')) or None,
+    }
+
+
 def generate_featured_links_from_menu_item(menu_item):
     blocks = filter(
         lambda block: block['type'] == 'featured_content',
@@ -33,9 +41,7 @@ def generate_featured_links_from_menu_item(menu_item):
         image = value.get('image', {}).get('upload')
 
         yield {
-            'page': int_or_none(link['page_link']),
-            'text': link['link_text'] or None,
-            'url': link['external_link'] or None,
+            'link': make_link(link),
             'body': body,
             'image': image,
         }
@@ -50,19 +56,22 @@ def generate_other_links_from_menu_item(menu_item):
             if len(p.contents) > 1:
                 page = link['id'] if link['linktype'] == 'page' else None
 
-                yield {
-                    'page': int_or_none(page),
+                link = make_link({
+                    'page': page,
                     'text': p.contents[0].strip(),
                     'url': link['href'] if not page else None,
-                    'icon': 'web',
-                }
+                })
             else:
-                yield {
+                link = make_link({
                     'page': None,
                     'text': link.text,
                     'url': link['href'],
-                    'icon': 'web',
-                }
+                })
+
+            yield {
+                'link': link,
+                'icon': 'web',
+            }
 
 
 def generate_submenu_column_blocks_from_menu_item(menu_item):
@@ -76,6 +85,9 @@ def generate_submenu_column_blocks_from_menu_item(menu_item):
         except StopIteration:
             continue
 
+        if content['draft']:
+            continue
+
         yield {
             'heading': (
                 (not content['hide_group_title']) and content['group_title']
@@ -83,10 +95,15 @@ def generate_submenu_column_blocks_from_menu_item(menu_item):
             ),
             'links': [
                 {
-                    'page': int_or_none(link['page_link']),
-                    'text': link['link_text'] or None,
-                    'url': link['external_link'] or None,
-                } for link in map(itemgetter('link'), content['nav_items'])
+                    'link': make_link(item['link']),
+                    'children': list(map(
+                        make_link,
+                        map(itemgetter('link'), item.get('nav_items', []))
+                    )),
+                } for item in filter(
+                    lambda item: item['state'] != 'draft',
+                    content['nav_items']
+                )
             ],
         }
 

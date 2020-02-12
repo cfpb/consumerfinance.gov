@@ -22,8 +22,10 @@ class ModelAdminTests(TestCase, WagtailTestUtils):
                             'heading': 'Test column heading',
                             'links': [
                                 {
-                                    'url': '/foo/bar/',
-                                    'text': 'Test menu link',
+                                    'link': {
+                                        'url': '/foo/bar/',
+                                        'text': 'Test menu link',
+                                    },
                                 },
                             ],
                         },

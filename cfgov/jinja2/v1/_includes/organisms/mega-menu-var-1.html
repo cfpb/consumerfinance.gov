@@ -152,8 +152,8 @@
                         {% endfor %}
                         {% for link in nav_item.other_links | default( [], true ) %}
                         <li>
-                            <span>{{ svg_icon( link.icon ) }}</span>
                             <a class="{{ _classes( nav_depth, '-link' ) }}" href="{{ link.external_link }}">
+                                <span>{{ svg_icon( link.icon ) }}</span>
                                 {{ link.link_text }}
                             </a>
                         </li>

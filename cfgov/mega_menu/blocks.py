@@ -1,4 +1,5 @@
 from itertools import chain
+from operator import itemgetter
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
@@ -12,18 +13,25 @@ class LinkBlock(blocks.StructBlock):
     url = blocks.CharBlock(required=False)
 
 
-class FeaturedLinkBlock(LinkBlock):
+class FeaturedLinkBlock(blocks.StructBlock):
+    link = LinkBlock()
     body = blocks.CharBlock()
     image = ImageChooserBlock()
 
 
-class LinkWithIconBlock(LinkBlock):
+class LinkWithIconBlock(blocks.StructBlock):
+    link = LinkBlock()
     icon = blocks.CharBlock()
+
+
+class LinkWithChildLinksBlock(blocks.StructBlock):
+    link = LinkBlock()
+    children = blocks.ListBlock(LinkBlock(), default=[])
 
 
 class SubmenuColumnBlock(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
-    links = blocks.ListBlock(LinkBlock(), default=[])
+    links = blocks.ListBlock(LinkWithChildLinksBlock(), default=[])
 
 
 class SubmenuBlock(blocks.StructBlock):
@@ -73,12 +81,13 @@ class SubmenuBlock(blocks.StructBlock):
 
     def link_iterator(self, value):
         return chain(
-            value.get('featured_links') or [],
-            value.get('other_links') or [],
+            map(itemgetter('link'), value.get('featured_links') or []),
+            map(itemgetter('link'), value.get('other_links') or []),
             chain(*(
-                (column.get('links') or [])
+                [link.get('link')] + (link.get('children') or [])
                 for column in (value.get('columns') or [])
-            ))
+                for link in column.get('links')
+            )),
         )
 
     def get_referenced_image_ids(self, value):

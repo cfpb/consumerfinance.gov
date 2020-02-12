@@ -35,23 +35,31 @@ class FrontendConverterTests(TestCase):
                             'heading': 'Money Topics',
                             'links': [
                                 {
-                                    'page': auto_loans_page.pk,
+                                    'link': {
+                                        'page': auto_loans_page.pk,
+                                    },
                                 },
                                 {
-                                    'page': bank_accounts_page.pk,
-                                    'text': 'Wagtail page with other text',
+                                    'link': {
+                                        'page': bank_accounts_page.pk,
+                                        'text': 'Wagtail page with other text',
+                                    },
                                 },
                                 {
-                                    'url': '/foo/bar/',
-                                    'text': 'Non-Wagtail page',
+                                    'link': {
+                                        'url': '/foo/bar/',
+                                        'text': 'Non-Wagtail page',
+                                    },
                                 },
                             ],
                         },
                     ],
                     'featured_links': [
                         {
-                            'url': '/featured/1/',
-                            'text': 'First featured link',
+                            'link': {
+                                'url': '/featured/1/',
+                                'text': 'First featured link',
+                            },
                             'body': 'First featured body',
                             'image': cls.test_image_1.pk,
                         },
@@ -65,25 +73,33 @@ class FrontendConverterTests(TestCase):
                     'title': 'Alternate Submenu Title',
                     'featured_links': [
                         {
-                            'url': '/featured/2/',
-                            'text': 'Second featured link',
+                            'link': {
+                                'url': '/featured/2/',
+                                'text': 'Second featured link',
+                            },
                             'body': 'Second featured body',
                             'image': cls.test_image_2.pk,
                         },
                         {
-                            'url': '/featured/3/',
-                            'text': 'Third featured link',
+                            'link': {
+                                'url': '/featured/3/',
+                                'text': 'Third featured link',
+                            },
                         },
                     ],
                     'other_links': [
                         {
-                            'page': well_being_page.pk,
-                            'text': 'First other link',
+                            'link': {
+                                'page': well_being_page.pk,
+                                'text': 'First other link',
+                            },
                             'icon': 'star',
                         },
                         {
-                            'url': '/other/2/',
-                            'text': 'Second other link',
+                            'link': {
+                                'url': '/other/2/',
+                                'text': 'Second other link',
+                            },
                             'icon': 'mail',
                         },
                     ]
