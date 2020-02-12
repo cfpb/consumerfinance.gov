@@ -35,7 +35,7 @@ function Details() {
 
       <div className="calendar-details__total">
         <strong className="calendar-details__total-label">Total Balance:</strong>
-        <span className="calendar-details__total-value">{formatCurrency(balance)}</span>
+        <span className="calendar-details__total-value">{formatCurrency(balance || 0)}</span>
       </div>
     </div>
   );
