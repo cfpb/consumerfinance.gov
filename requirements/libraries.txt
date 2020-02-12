@@ -58,6 +58,6 @@ wagtail-treemodeladmin==1.0.4
 https://github.com/cfpb/owning-a-home-api/releases/download/0.13.0/owning_a_home_api-0.13.0-py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.11.0/retirement-0.11.0-py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.2.1/ccdb5_api-1.2.1-py3-none-any.whl
-https://github.com/cfpb/ccdb5-ui/releases/download/1.5.0-dev/ccdb5_ui-1.4.1.1.devdev_0-py2.py3-none-any.whl
+https://github.com/cfpb/ccdb5-ui/releases/download/1.5.1-dev/ccdb5_ui-1.5.1.devdev_0-py2.py3-none-any.whl
 https://github.com/cfpb/django-college-costs-comparison/releases/download/1.13.0/comparisontool-1.13.0-py3-none-any.whl
 https://github.com/cfpb/teachers-digital-platform/releases/download/1.2.0/teachers_digital_platform-1.2.0-py3-none-any.whl
