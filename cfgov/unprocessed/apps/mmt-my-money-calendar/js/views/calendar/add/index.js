@@ -3,18 +3,28 @@ import { useMemo } from 'react';
 import { observer } from 'mobx-react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/cash-flow-event';
 import Button, { ButtonLink } from '../../../components/button';
 import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
-import * as Yup from 'yup';
-import { DateTime } from 'luxon';
+import { recurrenceRules, numberWithOrdinal } from '../../../lib/calendar-helpers';
+import { range } from '../../../lib/array-helpers';
 
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
 
 function Add() {
   const { uiStore, eventStore } = useStore();
   const history = useHistory();
+  const recurrenceOptions = useMemo(
+    () => Object.entries(recurrenceRules).map(([value, { label }]) => ({ label, value })),
+    []
+  );
+  const monthDayOptions = useMemo(
+    () => [...range(1, 30)].map((num) => ({ label: numberWithOrdinal(num), value: num })),
+    []
+  );
+  console.log(monthDayOptions);
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -22,10 +32,16 @@ function Add() {
       category: undefined,
       eventType: undefined,
       dateTime: uiStore.selectedDate ? uiStore.selectedDate.toFormat('yyyy-MM-dd') : '',
+      recurs: false,
+      recurrenceRule: undefined,
+      payday1: 15,
+      payday2: 30,
     },
     validationSchema: Yup.object({
       name: Yup.string().required(),
-      totalCents: Yup.number().integer().required(),
+      totalCents: Yup.number()
+        .integer()
+        .required(),
       eventType: Yup.string().required(),
       category: Yup.string().required(),
       dateTime: Yup.date().required(),
@@ -44,7 +60,7 @@ function Add() {
         console.error(err);
         uiStore.setError(err);
       }
-    }
+    },
   });
 
   const categoryOptions = useMemo(() => {
@@ -69,7 +85,9 @@ function Add() {
 
   return (
     <section className="add-event">
-      <ButtonLink variant="secondary" to="/calendar" icon={arrowLeft}>Back</ButtonLink>
+      <ButtonLink variant="secondary" to="/calendar" icon={arrowLeft}>
+        Back
+      </ButtonLink>
       <h1>Add Income and Expenses</h1>
 
       <form onSubmit={formik.handleSubmit}>
@@ -94,7 +112,7 @@ function Add() {
           largeTarget
         />
 
-        {formik.errors.eventType && formik.touched.eventType && (<div className="error">{formik.errors.eventType}</div>)}
+        {formik.errors.eventType && formik.touched.eventType && <div className="error">{formik.errors.eventType}</div>}
 
         <DateField
           id="dateTime"
@@ -105,7 +123,7 @@ function Add() {
           onBlur={formik.handleBlur}
         />
 
-        {formik.errors.dateTime && formik.touched.dateTime && (<div className="error">{formik.errors.dateTime}</div>)}
+        {formik.errors.dateTime && formik.touched.dateTime && <div className="error">{formik.errors.dateTime}</div>}
 
         <SelectField
           id="category"
@@ -117,7 +135,7 @@ function Add() {
           options={categoryOptions}
         />
 
-        {formik.errors.category && formik.touched.category && (<div className="error">{formik.errors.category}</div>)}
+        {formik.errors.category && formik.touched.category && <div className="error">{formik.errors.category}</div>}
 
         <TextField
           id="name"
@@ -128,7 +146,9 @@ function Add() {
           onBlur={formik.handleBlur}
         />
 
-        {formik.errors.description && formik.touched.description && (<div className="error">{formik.errors.description}</div>)}
+        {formik.errors.description && formik.touched.description && (
+          <div className="error">{formik.errors.description}</div>
+        )}
 
         <CurrencyField
           id="totalCents"
@@ -139,12 +159,56 @@ function Add() {
           value={formik.values.totalCents}
         />
 
-        {formik.errors.totalCents && formik.touched.totalCents && (<div className="error">{formik.errors.totalCents}</div>)}
+        {formik.errors.totalCents && formik.touched.totalCents && (
+          <div className="error">{formik.errors.totalCents}</div>
+        )}
+
+        <Checkbox
+          id="recurs"
+          name="recurs"
+          label="Is this a recurring event?"
+          checked={formik.values.recurs}
+          onChange={formik.handleChange}
+        />
+
+        {formik.values.recurs && (
+          <SelectField
+            id="recurrenceRule"
+            name="recurrenceRule"
+            label="Frequency"
+            options={recurrenceOptions}
+            value={formik.values.recurrenceRule}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+        )}
+
+        {formik.values.recurs && formik.values.recurrenceRule === 'semimonthly' && (
+          <SelectField
+            id="payday1"
+            name="payday1"
+            label="First Payday of the Month"
+            options={monthDayOptions}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.payday1}
+          />
+        )}
+
+        {formik.values.recurs && formik.values.recurrenceRule === 'semimonthly' && (
+          <SelectField
+            id="payday2"
+            name="payday2"
+            label="Second Payday of the Month"
+            options={monthDayOptions}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.payday2}
+          />
+        )}
 
         <h3>Form State</h3>
-        <pre>
-          {JSON.stringify(formik.values, null, 2)}
-        </pre>
+        <pre>{JSON.stringify(formik.values, null, 2)}</pre>
 
         <Button type="submit">Save</Button>
       </form>

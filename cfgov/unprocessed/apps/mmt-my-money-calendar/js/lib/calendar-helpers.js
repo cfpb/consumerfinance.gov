@@ -11,6 +11,12 @@ export const DAY_NAMES = Info.weekdays();
 export const DAY_LABELS = DAY_NAMES.map((name) => name.charAt(0));
 export const MONTH_NAMES = Info.months();
 
+export function numberWithOrdinal(num) {
+  const suffixes = ['th', 'st', 'nd', 'rd'];
+  const v = num % 100;
+  return num + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
+}
+
 /**
  * Ensures that the argument is returned as a DateTime
  *
@@ -108,46 +114,67 @@ export function getWeekRows(date) {
 
 export const WEEKDAYS = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR];
 
+export const DAY_OPTIONS = {
+  Sunday: RRule.SU,
+  Monday: RRule.MO,
+  Tuesday: RRule.TU,
+  Wednesday: RRule.WE,
+  Thursday: RRule.TH,
+  Friday: RRule.FR,
+  Saturday: RRule.SA,
+};
+
 export const recurrenceRules = {
-  weekly: (dtstart, byweekday = RRule.FR, options = {}) =>
-    new RRule({ freq: RRule.WEEKLY, dtstart, byweekday, ...options }),
-  biweekly: (dtstart, byweekday = RRule.FR, options = {}) =>
-    new RRule({
-      freq: RRule.WEEKLY,
-      interval: 2,
-      dtstart,
-      byweekday,
-      ...options,
-    }),
-  monthly: (dtstart, options = {}) => new RRule({ freq: RRule.MONTHLY, dtstart, ...options }),
-  semimonthly: (dtstart, payday1 = 15, payday2 = 30) => {
-    const rules = new RRuleSet();
-
-    const firstPaydayRange = [0, 1, 2].map((num) => (payday1 > 2 ? payday1 - num : payday1 + num)).sort();
-    const lastPaydayRange =
-      payday2 > 29 ? undefined : [0, 1, 2].map((num) => (payday2 > 2 ? payday2 - num : payday2 + num)).sort();
-
-    // The last business day before the first payday provided, not considering holidays:
-    rules.rrule(
+  weekly: {
+    label: 'Weekly',
+    handler: (dtstart, byweekday = RRule.FR, options = {}) =>
+      new RRule({ freq: RRule.WEEKLY, dtstart, byweekday, ...options }),
+  },
+  biweekly: {
+    label: 'Bi-weekly',
+    handler: (dtstart, options = {}) =>
       new RRule({
+        freq: RRule.WEEKLY,
+        interval: 2,
         dtstart,
-        freq: RRule.MONTHLY,
-        bysetpos: -1,
-        byweekday: WEEKDAYS,
-        bymonthday: firstPaydayRange,
-      })
-    );
+        ...options,
+      }),
+  },
+  monthly: {
+    label: 'Monthly',
+    handler: (dtstart, options = {}) => new RRule({ freq: RRule.MONTHLY, dtstart, ...options }),
+  },
+  semimonthly: {
+    label: 'Semi-monthly',
+    handler: (dtstart, payday1 = 15, payday2 = 30) => {
+      const rules = new RRuleSet();
 
-    // The last business day of the month:
-    rules.rrule(
-      new RRule({
-        freq: RRule.MONTHLY,
-        bysetpos: -1,
-        byweekday: WEEKDAYS,
-        bymonthday: lastPaydayRange,
-      })
-    );
+      const firstPaydayRange = [0, 1, 2].map((num) => (payday1 > 2 ? payday1 - num : payday1 + num)).sort();
+      const lastPaydayRange =
+        payday2 > 29 ? undefined : [0, 1, 2].map((num) => (payday2 > 2 ? payday2 - num : payday2 + num)).sort();
 
-    return rules;
+      // The last business day before the first payday provided, not considering holidays:
+      rules.rrule(
+        new RRule({
+          dtstart,
+          freq: RRule.MONTHLY,
+          bysetpos: -1,
+          byweekday: WEEKDAYS,
+          bymonthday: firstPaydayRange,
+        })
+      );
+
+      // The last business day of the month:
+      rules.rrule(
+        new RRule({
+          freq: RRule.MONTHLY,
+          bysetpos: -1,
+          byweekday: WEEKDAYS,
+          bymonthday: lastPaydayRange,
+        })
+      );
+
+      return rules;
+    },
   },
 };

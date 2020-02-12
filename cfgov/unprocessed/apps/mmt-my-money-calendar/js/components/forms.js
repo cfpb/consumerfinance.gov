@@ -1,25 +1,33 @@
 import clsx from 'clsx';
 import { DateTime } from 'luxon';
-import { useState, useCallback } from 'react';
+import { useReducer, useCallback } from 'react';
 import { formatCurrency, toCents } from '../lib/currency-helpers';
+import { recurrenceRules, DAY_OPTIONS } from '../lib/calendar-helpers';
 
-export const Checkbox = ({ id, name, onChange, checked, label, value = '1', ...props }) => (
-  <div className="m-form-field m-form-field__checkbox">
-    <input
-      className="a-checkbox"
-      type="checkbox"
-      name={name}
-      id={id}
-      onChange={onChange}
-      checked={checked}
-      value={value}
-      {...props}
-    />
-    <label className="a-label" htmlFor={id}>
-      {label}
-    </label>
-  </div>
-);
+export const Checkbox = ({ id, name, onChange, checked, label, value = '1', ...props }) => {
+  const changeHandler = useCallback((evt) => {
+    evt.target.value = evt.target.checked;
+    onChange(evt);
+  }, [onChange]);
+
+  return (
+    <div className="m-form-field m-form-field__checkbox">
+      <input
+        className="a-checkbox"
+        type="checkbox"
+        name={name}
+        id={id}
+        onChange={changeHandler}
+        checked={checked}
+        value={value}
+        {...props}
+      />
+      <label className="a-label" htmlFor={id}>
+        {label}
+      </label>
+    </div>
+  );
+};
 
 export const TextField = ({ id, name, type = 'text', onChange, onBlur, label, value, ...props }) => (
   <div className="m-form-field m-form-field__text">
