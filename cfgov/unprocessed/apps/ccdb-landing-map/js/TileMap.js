@@ -37,12 +37,13 @@ function getBins( data, colors ) {
 
   for ( let i = 0, curr = min; i < binCount; i++, curr += step ) {
     const minValue = Math.round( curr );
+    const displayValue = Math.round( curr/1000 );
 
     bins.push( {
       from: minValue,
       to: Math.round( curr + step ),
       color: colors[i],
-      name: `≥ ${ minValue.toLocaleString() }`
+      name: displayValue > 0 ? `≥ ${ displayValue }K` : '≥ 0'
     } );
   }
 
