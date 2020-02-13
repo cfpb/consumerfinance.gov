@@ -155,7 +155,7 @@ class DocumentDetailPage(AbstractFilterPage):
 
 
 class EnforcementActionPage(AbstractFilterPage):
-    label = models.CharField(
+    sidebar_header = models.CharField(
         default='Action details',
         max_length=100
     )
@@ -193,7 +193,7 @@ class EnforcementActionPage(AbstractFilterPage):
         ),
         ObjectList([
             MultiFieldPanel([
-                FieldPanel('label'),
+                FieldPanel('sidebar_header'),
                 FieldPanel('court'),
                 FieldPanel('institution_type'),
                 FieldPanel('status'),
