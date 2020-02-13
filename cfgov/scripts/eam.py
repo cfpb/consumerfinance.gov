@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.contrib.contenttypes.models import ContentType
 from v1.models import DocumentDetailPage
 from v1.models.learn_page import EnforcementActionPage
 from v1.util.migrations import get_stream_data, set_stream_data
@@ -17,16 +18,25 @@ def update_sidefoot():
             continue
 
         keys = vars(page)
-        del keys['_state']
-        del keys['_wagtail_cached_site_root_paths']
-
+        #print('\n'.join(sorted(vars(page).keys())))
+        
         page.delete()
 
-        eap = EnforcementActionPage.objects.create(**keys)
-        print(eap)
-
-
-        #print('\n'.join(vars(page).keys()))
+        eap = EnforcementActionPage.objects.create(
+            path = keys['path'],
+            depth = keys['depth'],
+            slug = keys['slug'],
+            title = keys['title'],
+            header = keys['header'],
+            content = keys['content'],
+            date_filed = keys['date_filed'],
+            sidebar_header = 'sh',
+            court = 'c',
+            docket_number = '123',
+            status = 'Post Order/Post Judgment',
+            institution_type = 'Nonbank'
+        )
+        print('hrey')
         break
 
 def run():
