@@ -1,10 +1,10 @@
 import {
   scrollIntoView,
   scrollTo
-} from '../modules/util/scroll';
-import DT from '../../apps/owning-a-home/js/form-explainer/dom-tools';
-import { assign } from '../modules/util/assign';
-import { closest } from '../modules/util/dom-traverse';
+} from '../../../js/modules/util/scroll';
+import DT from '../../owning-a-home/js/form-explainer/dom-tools';
+import { assign } from '../../../js/modules/util/assign';
+import { closest } from '../../../js/modules/util/dom-traverse';
 import throttle from 'lodash.throttle';
 
 
