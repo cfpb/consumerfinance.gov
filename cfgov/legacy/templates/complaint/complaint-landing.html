@@ -76,8 +76,34 @@
         </div>
       </div>
 
-      <div class="block block__border-bottom">
+      <div class="block block__flush-top">
+        <h2 class="h3">Headline giving the reason for an interactive map</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+          nisi ut aliquip ex ea commodo consequat.
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <a>Link to geographic data text</a>
+        </p>
+      </div>
 
+      <div class="block block__flush-top">
+        <div class="layout-row refine">
+            <div class="date-intervals m-btn-group">
+                <p>Date range (Click to modify range)</p>
+                <button class="a-btn date-selector interval-3y">3y</button>
+                <button class="a-btn date-selector interval-All a-btn__disabled">All</button>
+            </div>
+            <div class="per-capita m-btn-group">
+                <p>Map Shading</p>
+                <button class="a-btn selected">Complaints</button>
+                <button class="a-btn disabled">Complaints per 1,000</button>
+            </div>
+        </div>
+      </div>
+
+      <div class="block block__border-bottom">
         <div id="landing-map" class="cfpb-chart"
              data-chart-type=tile_map
              data-chart-ignore="true"> <!-- This makes sure chart-builder doesn't auto-build -->
