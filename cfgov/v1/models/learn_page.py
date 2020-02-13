@@ -163,13 +163,13 @@ class EnforcementActionPage(AbstractFilterPage):
     institution_type = models.CharField(max_length=50, choices=[
         ('Nonbank', 'Nonbank'),
         ('Bank', 'Bank')
-    ], null=True)
+    ])
     status = models.CharField(max_length=50, choices=[
         ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
         ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
         ('Pending Litigation', 'Pending Litigation')
-    ], null=True)
-    docket_number = models.CharField(max_length=50, null=True)
+    ])
+    docket_number = models.CharField(max_length=50)
 
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
