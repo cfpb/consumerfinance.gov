@@ -85,9 +85,6 @@ def generate_submenu_column_blocks_from_menu_item(menu_item):
         except StopIteration:
             continue
 
-        if content['draft']:
-            continue
-
         yield {
             'heading': (
                 (not content['hide_group_title']) and content['group_title']

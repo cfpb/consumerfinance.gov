@@ -38,6 +38,12 @@ class FrontendConverterTests(TestCase):
                                     'link': {
                                         'page': auto_loans_page.pk,
                                     },
+                                    'children': [
+                                        {
+                                            'url': '/foo/bar/',
+                                            'text': 'Non-Wagtail page',
+                                        },
+                                    ],
                                 },
                                 {
                                     'link': {
@@ -47,8 +53,8 @@ class FrontendConverterTests(TestCase):
                                 },
                                 {
                                     'link': {
-                                        'url': '/foo/bar/',
-                                        'text': 'Non-Wagtail page',
+                                        'url': '/foo/baz/',
+                                        'text': 'Another non-Wagtail page',
                                     },
                                 },
                             ],
@@ -168,6 +174,12 @@ class FrontendConverterTests(TestCase):
                                 {
                                     'external_link': '/auto-loans/',
                                     'link_text': 'Auto Loans',
+                                    'nav_items': [
+                                        {
+                                            'external_link': '/foo/bar/',
+                                            'link_text': 'Non-Wagtail page',
+                                        },
+                                    ],
                                 },
                                 {
                                     'external_link': '/bank-accounts/',
@@ -176,8 +188,8 @@ class FrontendConverterTests(TestCase):
                                     ),
                                 },
                                 {
-                                    'external_link': '/foo/bar/',
-                                    'link_text': 'Non-Wagtail page',
+                                    'external_link': '/foo/baz/',
+                                    'link_text': 'Another non-Wagtail page',
                                 },
                             ]
                         },
