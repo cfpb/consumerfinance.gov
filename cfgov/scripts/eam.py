@@ -18,13 +18,13 @@ def update_sidefoot():
             continue
 
         keys = vars(page)
-        #print('\n'.join(sorted(vars(page).keys())))
         
         page.delete()
 
         eap = EnforcementActionPage.objects.create(
             path = keys['path'],
             depth = keys['depth'],
+            latest_revision_created_at = keys['latest_revision_created_at'],
             slug = keys['slug'],
             title = keys['title'],
             header = keys['header'],
@@ -36,8 +36,7 @@ def update_sidefoot():
             status = 'Post Order/Post Judgment',
             institution_type = 'Nonbank'
         )
-        print('hrey')
-        break
+
 
 def run():
     update_sidefoot()
