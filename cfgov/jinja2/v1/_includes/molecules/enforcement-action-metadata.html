@@ -9,7 +9,7 @@
    Creates related metadata markup from an EnforcementActionPage
    The following are available specifically on this page type:
 
-   label - CharField, defaults to Action Details
+   sidebar_header - CharField, defaults to Action Details
    court - CharField
    institution_type - CharField, with choices: Nonbank & Bank
    status - CharField, with choices:
@@ -25,7 +25,7 @@
 <div class="m-related-metadata block block__flush-top">
     <header class="m-slug-header">
         <h2 class="a-heading">
-            {{ page.label }}
+            {{ page.sidebar_header }}
         </h2>
     </header>
     <div class="m-related-metadata_item-container">
