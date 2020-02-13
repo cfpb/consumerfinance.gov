@@ -27,5 +27,7 @@ const dataUrl = "https://files.consumerfinance.gov/ccdb/hero-map-3y.json"
 
 const chart = new Chart( {
   el: el,
-  source: dataUrl
+  source: dataUrl,
+  title: 'Complaints by State',
+  description: 'The complaints by state for...'
 } );

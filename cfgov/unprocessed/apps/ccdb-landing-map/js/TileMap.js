@@ -8,56 +8,48 @@ import getTileMapState from 'cfpb-chart-builder/src/js/utils/get-tile-map-state'
 // Utility Functions
 
 /**
- * helper function to get max value
- * @param data array of data
- */
-function getMax( data ) {
-  return Object.values( data ).reduce( ( a, b ) => Math.max( a, b ), 0 );
+* A reducer function to process the maximum value in the state complaint data
+*
+* @param {number} accum the current max value
+* @param {Object} stateComplaint a candidate value
+* @returns {string} the maximum between the current and a state entry
+*/
+function findMaxComplaints( accum, stateComplaint ) {
+  return Math.max( accum, stateComplaint.value );
 }
 
 /**
  * helper function to get the bins for legend and colors, etc.
  * @param data
+ * @param {Array} colors an array of colors
  * @returns {[]|Array}
  */
-function getBins( data ) {
-  const binCount = 6;
-  const max = getMax( data );
-  const min = 0;
+function getBins( data, colors ) {
+  const binCount = colors.length;
+  const max = data.reduce( findMaxComplaints, 0 );
+  const min = 1;
 
   // Early exit
   if ( max === 0 ) return [];
 
-  const bins = [];
-  const step = ( max - min ) / binCount;
+  const bins = [ { from: 0, to: 1, color: '#fff', name: 'N/A' } ];
+  const step = ( max - min + 1 ) / binCount;
 
   for ( let i = 0, curr = min; i < binCount; i++, curr += step ) {
-    bins.push( { color: '#000000', index: i, min: Math.round( curr ) } );
+    const minValue = Math.round( curr );
+
+    bins.push( {
+      from: minValue,
+      to: Math.round( curr + step ),
+      color: colors[i],
+      name: `≥ ${ minValue.toLocaleString() }`
+    } );
   }
+
+  // The last bin is unbounded
+  bins[binCount - 1].to = undefined;
 
   return bins;
-}
-
-/**
- * Returns color given a data value.
- * @param   {number} value A numerical data value.
- * @param   {array} bins different buckets for values.
- * @param   {array} colors contains the input colors for the tile map
- * @returns {string} A color hex string.
- */
-function getColorByValue( value, bins, colors ) {
-  if ( parseInt( value, 10 ) === 0 ) {
-    return '#fff';
-  }
-
-  let color = '#fff';
-  for ( let i = 0; i < colors.length; i++ ) {
-    if ( value > bins[ i ].min ) {
-      color = colors[ i ];
-    }
-  }
-
-  return color;
 }
 
 // ----------------------------------------------------------------------------
@@ -67,7 +59,7 @@ function getColorByValue( value, bins, colors ) {
  * @param {Object} data - Data to process.
  * @returns {Object} The processed data.
  */
-function processMapData( data, colors ) {
+function processMapData( data ) {
 
   if ( typeof data !== 'object' ) {
     return data;
@@ -78,15 +70,13 @@ function processMapData( data, colors ) {
     return Boolean( row.name );
   } );
 
-  const bins = getBins( data.map( o => Math.round( Math.abs(parseFloat( o.value ) ) ) ) );
   data = data.map( function( obj, i ) {
     const state = getTileMapState[obj.name];
     return {
       ...obj,
-      abbr: state.abbr,
+      // abbr: state.abbr,
       // fullName: state.fullName,
       path: state.path,
-      color: getColorByValue( obj.value, bins, colors )
     };
   } );
 
@@ -101,108 +91,41 @@ function processMapData( data, colors ) {
  * @param {Object} chart A highchart chart.
  */
 function _drawLegend( chart ) {
-  // do we use the value or perCapita ?
-  const valKey = chart.options.series[0].data[0].displayValue ? 'displayValue' : 'value';
-  const d = chart.options.series[ 0 ].data.map( o => o[valKey] );
-  const colors = chart.options.colors;
-  const bins = getBins(d);
-  const marginTop = chart.margin[0] || 0;
-  const localize = chart.options.localize;
+  const bins = chart.options.bins;
 
-  /**
-   * @param {string} color hex color code.
-   * @returns {Object} Return a hash of box fill and stroke styles.
-   */
-  function _boxStyle( color ) {
-    return {
-      'stroke-width': 1,
-      'stroke': '#75787b',
-      'fill': color
-    };
-  }
+  const marginTop = chart.margin[0] || 0;
+  const boxWidth = 50;
+  const boxHeight = 15;
+  const boxPadding = 1;
 
   // args: (str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-  const labelTx = 'Map shading: Complaints';
-  chart.renderer
-    .label( labelTx, 5, 5, null, null, null, true, false, 'label__tile-map' )
-    .add();
+  // const labelTx = 'Map shading: Complaints';
+  // chart.renderer
+  //   .label( labelTx, 5, 5, null, null, null, true, false, 'label__tile-map' )
+  //   .add();
 
   const legend = chart.renderer.g( 'legend__tile-map' )
     .translate(10, marginTop)
     .add();
-  const g1 = chart.renderer.g( 'g1' ).translate(0,0).add(legend);
-  const g2 = chart.renderer.g( 'g2' ).translate(70,0).add(legend);
-  const g3 = chart.renderer.g( 'g3' ).translate(140,0).add(legend);
-  const g4 = chart.renderer.g( 'g4' ).translate(210,0).add(legend);
-  const g5 = chart.renderer.g( 'g5' ).translate(280,0).add(legend);
-  const g6 = chart.renderer.g( 'g6' ).translate(350,0).add(legend);
-  const g7 = chart.renderer.g( 'g7' ).translate(420,0).add(legend);
 
-  if ( localize ) {
-    bins[5].min = bins[5].min.toLocaleString();
-    bins[4].min = bins[4].min.toLocaleString();
-    bins[3].min = bins[3].min.toLocaleString();
-    bins[2].min = bins[2].min.toLocaleString();
-    bins[1].min = bins[1].min.toLocaleString();
-    bins[0].min = bins[0].min.toLocaleString();
+  for (var i = 0; i < bins.length; i++) {
+    const g = chart.renderer.g( `g${ i }` )
+      .translate(i * (boxWidth + boxPadding), 0)
+      .add(legend);
+
+    const bin = bins[i];
+
+    chart.renderer
+      .rect( 0, 0, boxWidth, boxHeight )
+      .attr( { 'fill': bin.color } )
+      .addClass( 'legend-box' )
+      .add( g );
+
+    chart.renderer
+      .text( bin.name, 2, boxHeight - 2 )
+      .addClass( 'legend-text' )
+      .add( g );
   }
-
-  chart.renderer
-    .rect( 0, 0, 65, 15 )
-    .attr( _boxStyle( colors[5] ) )
-    .add( g7 );
-  chart.renderer
-    .text( '>' + bins[5].min, 0, 14 )
-    .add( g7 );
-
-  chart.renderer
-    .rect( 0, 0, 65, 15 )
-    .attr( _boxStyle( colors[4] ) )
-    .add( g6 );
-  chart.renderer
-    .text( '>' + bins[4].min, 0, 14 )
-    .add( g6 );
-
-  chart.renderer
-    .rect( 0, 0, 65, 15 )
-    .attr( _boxStyle( colors[3] ) )
-    .add( g5 );
-  chart.renderer
-    .text( '>' + bins[3].min, 0, 14 )
-    .add( g5 );
-
-  chart.renderer
-    .rect( 0, 0, 65, 15 )
-    .attr( _boxStyle( colors[2] ) )
-    .add( g4 );
-  chart.renderer
-    .text( '>' + bins[2].min, 0, 14 )
-    .add( g4 );
-
-  chart.renderer
-    .rect( 0, 0, 65, 15 )
-    .attr( _boxStyle( colors[1] ) )
-    .add( g3 );
-  chart.renderer
-    .text( '>' + bins[1].min, 0, 14 )
-    .add( g3 );
-
-  chart.renderer
-    .rect( 0, 0, 65, 15 )
-    .attr( _boxStyle( colors[0] ) )
-    .add( g2 );
-  chart.renderer
-    .text( '>' + bins[0].min, 0, 14 )
-    .add( g2 );
-
-  chart.renderer
-    .rect( 0, 0, 65, 15 )
-    .attr( _boxStyle( '#fff' ) )
-    .add( g1 );
-  chart.renderer
-    .text( 'N/A', 0, 14 )
-    .add( g1 );
-
 }
 
 // ----------------------------------------------------------------------------
@@ -216,10 +139,13 @@ Highcharts.setOptions( {
   }
 } );
 
+// ----------------------------------------------------------------------------
+// Tile Map class
 
 class TileMap {
   constructor( { el, description, data, metadata, title } ) {
-    const bins = getBins( data );
+    data = processMapData( data[0] );
+
     const colors = [
       'rgba(247, 248, 249, 0.5)',
       'rgba(212, 231, 230, 0.5)',
@@ -228,17 +154,19 @@ class TileMap {
       'rgba(86, 149, 148, 0.5)',
       'rgba(37, 116, 115, 0.5)'
     ];
+    const bins = getBins( data, colors );
     const localize = true;
-
-    data = processMapData( data[0], colors );
 
     const options = {
       bins,
       chart: {
-        marginTop: 40,
         styledMode: true
       },
       colors,
+      colorAxis: {
+        dataClasses: bins,
+        dataClassColor: 'category'
+      },
       title: false,
       description: description,
       credits: false,
@@ -296,6 +224,7 @@ class TileMap {
           }
         }
       },
+
       series: [ {
         type: 'map',
         clip: false,
