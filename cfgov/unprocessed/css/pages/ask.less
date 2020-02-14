@@ -21,6 +21,7 @@
 
             p:last-child {
                 display: inline;
+                margin-right: 0.25em;
             }
         }
 
@@ -32,8 +33,15 @@
             padding-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
         }
 
-        .term-link {
-            display: inline;
+        .term_name {
+            .h2();
+
+            display: block;
+        }
+
+        .term_definition {
+            display: block;
+            margin-left: 0;
         }
     }
 
@@ -451,4 +459,3 @@
         }
     } );
 }
-

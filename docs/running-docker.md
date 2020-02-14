@@ -31,7 +31,7 @@ docker-compose up
 
 Environment variables from your `.env` file are sourced 
 when the Python container starts
-and when you access the running Python container. 
+and when you [access the running Python container](#access-a-containers-shell). 
 Your local shell environment variables, however, 
 are not visible to applications running in Docker.
 To add new environment variables, simply add them to the `.env` file, 
@@ -39,21 +39,21 @@ stop docker-compose with Ctrl+C,
 and start it again with `docker-compose up`.
 
 
-## Access a container's shell
+## Commands that must be run from within the Python container
+
+Django `manage.py` commands can only be run after you've 
+[opened up a shell in the Python container](#access-a-containers-shell). 
+From there, commands like `cfgov/manage.py migrate` should run as expected.
+
+The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
+they will work as expected once you’re inside the Python container.
+
+
+## Access a container’s shell
 
 - Python: `docker-compose exec python bash`
 - Elasticsearch: `docker-compose exec elasticsearch bash`
 - PostgreSQL: `docker-compose exec postgres bash`
-
-
-## Run Django management commands
-
-Django `manage.py` commands can only be run after you've 
-opened up a shell in the Python container. 
-From there commands like `cfgov/manage.py migrate` should run as expected.
-
-The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
-they will work as expected once you're inside the container.
 
 
 ## Update Python dependencies
@@ -62,14 +62,14 @@ If the Python package requirements files have changed,
 you will need to stop `docker-compose` (if it is running) 
 and rebuild the Python container using:
 
-```
+```bash
 docker-compose up --build python
 ```
 
 
 ## Work on satellite apps
 
-See [Related Projects#Using Docker](../related-projects/#using-docker).
+See [“Using Docker” on the Related Projects page](../related-projects/#using-docker).
 
 
 ## Attach for debugging
@@ -78,7 +78,9 @@ If you have inserted a [PDB breakpoint](https://docs.python.org/3/library/pdb.ht
 and need to interact with the running Django process when the breakpoint is reached 
 you can run [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach/):
 
-- `docker attach cfgov-refresh_python_1`
+```bash
+docker attach cfgov-refresh_python_1
+```
 
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 

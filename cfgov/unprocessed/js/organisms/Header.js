@@ -9,12 +9,9 @@ import MegaMenuOrig from '../organisms/MegaMenu';
 */
 let MegaMenu;
 import MegaMenuVar1 from '../organisms/MegaMenuVar1';
-import MegaMenuVar2 from '../organisms/MegaMenuVar2';
 
 if ( window.cfpb && window.cfpb.megaMenuVar1 ) {
   MegaMenu = MegaMenuVar1;
-} else if ( window.cfpb && window.cfpb.megaMenuVar2 ) {
-  MegaMenu = MegaMenuVar2;
 } else {
   MegaMenu = MegaMenuOrig;
 }
