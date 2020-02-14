@@ -21,8 +21,8 @@ const Icon = ({ icon, size, style = {}, ...props }) => {
 function Day({ day, dateFormat = 'd' }) {
   const { uiStore, eventStore } = useStore();
 
-  const isToday = useMemo(() => day.hasSame(DateTime.local(), 'ordinal'), [day]);
-  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'ordinal'), [
+  const isToday = useMemo(() => day.get('ordinal') === DateTime.local().get('ordinal'), [day]);
+  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'month'), [
     day,
     uiStore.selectedDate,
   ]);
