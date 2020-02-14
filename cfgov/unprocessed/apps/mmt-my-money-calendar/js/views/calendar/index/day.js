@@ -21,12 +21,15 @@ const Icon = ({ icon, size, style = {}, ...props }) => {
 function Day({ day, dateFormat = 'd' }) {
   const { uiStore, eventStore } = useStore();
 
-  const isToday = useMemo(() => day.hasSame(DateTime.local(), 'day'), [day]);
-  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'day'), [
+  const isToday = useMemo(() => day.hasSame(DateTime.local(), 'ordinal'), [day]);
+  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'ordinal'), [
     day,
     uiStore.selectedDate,
   ]);
-  const isCurrentMonth = useMemo(() => day.hasSame(uiStore.currentMonth, 'month'), [day, uiStore.currentMonth]);
+  const isCurrentMonth = useMemo(
+    () => day.hasSame(uiStore.currentMonth, 'month') && day.hasSame(uiStore.currentMonth, 'year'),
+    [day, uiStore.currentMonth]
+  );
   const dateString = useMemo(() => day.toFormat(dateFormat), [day, dateFormat]);
 
   const classes = ['calendar__day', isToday && 'today', isSelected && 'selected', isCurrentMonth && 'current-month'];
