@@ -22,7 +22,7 @@ function Day({ day, dateFormat = 'd' }) {
   const { uiStore, eventStore } = useStore();
 
   const isToday = useMemo(() => day.get('ordinal') === DateTime.local().get('ordinal'), [day]);
-  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'month'), [
+  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'day'), [
     day,
     uiStore.selectedDate,
   ]);
