@@ -5,7 +5,6 @@ import { toDateTime, dayOfYear } from '../lib/calendar-helpers';
 import { toMap } from '../lib/array-helpers';
 import CashFlowEvent from './models/cash-flow-event';
 import { DateTime } from 'luxon';
-import { transform } from '@babel/core';
 
 export default class CashFlowStore {
   @observable events = [];
