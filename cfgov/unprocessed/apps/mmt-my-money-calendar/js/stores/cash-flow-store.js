@@ -137,6 +137,16 @@ export default class CashFlowStore {
   }
 
   /**
+   * Determines whether or not a given date has any events
+   *
+   * @param {Date|DateTime} date A JS date or Luxon DateTime object
+   * @returns {boolean}
+   */
+  dateHasEvents(date) {
+    return Boolean(this.getEventsForDate(date));
+  }
+
+  /**
    * Returns all cash flow events for the given date
    *
    * @param {Date|DateTime} date - The date to check
