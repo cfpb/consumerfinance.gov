@@ -76,12 +76,16 @@ export function getMonthInfo(date = DateTime.local()) {
  */
 export function getWeekRows(date) {
   date = toDateTime(date);
-  const startWeek = date.startOf('month').get('weekNumber');
-  const endWeek = date.endOf('month').get('weekNumber') + 1;
   const rows = [];
+  const start = date.startOf('month');
+  const end = date.endOf('month');
+  let numWeeks = Math.ceil(end.diff(start.startOf('week'), 'weeks').toObject().weeks);
 
-  for (let weekNumber = startWeek; weekNumber < endWeek; weekNumber++) {
-    const startOfWeek = date.set({ weekNumber }).startOf('week');
+  if (start.plus({ weeks: numWeeks }))
+
+  for (let i = 0; i < numWeeks; i++) {
+    const startOfWeek = date.plus({ weeks: i }).startOf('week');
+    const weekNumber = startOfWeek.get('weekNumber');
 
     rows.push({
       weekNumber,
