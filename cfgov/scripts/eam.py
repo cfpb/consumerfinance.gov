@@ -19,7 +19,10 @@ def update_sidefoot():
             continue
 
         keys = vars(page)
-        
+        #tags = page.tags.all()
+
+        #keys['sidefoot'])
+
         page.delete()
 
         eap = EnforcementActionPage(
@@ -27,15 +30,18 @@ def update_sidefoot():
             live = keys['live'],
             latest_revision_created_at = keys['latest_revision_created_at'],
             slug = keys['slug'],
+            preview_title = keys['preview_title'],
+            preview_description = keys['preview_description'],
             title = keys['title'],
             header = keys['header'],
             content = keys['content'],
-            date_filed = keys['date_filed'],
+            #sidefoot = keys['sidefoot'],
             sidebar_header = 'sh',
             court = 'c',
             docket_number = '123',
             status = 'Post Order/Post Judgment',
-            institution_type = 'Nonbank'
+            institution_type = 'Nonbank',
+            date_filed = keys['date_filed']
         )
 
         enforcement_actions.add_child(instance=eap)
@@ -47,6 +53,7 @@ def update_sidefoot():
         if keys['live']:
           rev.publish()
 
+        break
 
 def run():
     update_sidefoot()
