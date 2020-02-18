@@ -64,7 +64,7 @@ function Day({ day, dateFormat = 'd' }) {
     'neg-balance': balance < 0,
   });
 
-  const symbol = eventStore.dateHasEvents(day) ? <div className="calendar-day__symbols">&bull;</div> : null;
+  const symbol = eventStore.dateHasEvents(day) ? <div className="calendar__day-symbols">&bull;</div> : null;
 
   return (
     <div className={clsx(classes)} role="button" onClick={handleClick}>

@@ -8,6 +8,7 @@ import Day from './day';
 import Details from './details';
 import Button, { ButtonLink } from '../../../components/button';
 import { useScrollToTop } from '../../../components/scroll-to-top';
+import { DAY_LABELS } from '../../../lib/calendar-helpers';
 
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
@@ -79,6 +80,12 @@ function Calendar() {
           Next
         </Button>
       </nav>
+
+      <header className="calendar__day-labels">
+        {DAY_LABELS.map((label) => (
+          <div className="calendar__day-label">{label}</div>
+        ))}
+      </header>
 
       <div className="calendar__rows">
         {uiStore.monthCalendarRows.map(({ days, weekNumber }) => (

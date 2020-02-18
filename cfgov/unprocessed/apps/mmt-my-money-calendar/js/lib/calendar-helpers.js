@@ -7,7 +7,16 @@ import { RRule, RRuleSet } from 'rrule';
  * @see {@link https://moment.github.io/luxon/docs/class/src/datetime.js~DateTime.html|DateTime}
  */
 
-export const DAY_NAMES = Info.weekdays();
+export const DAY_NAMES = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
 export const DAY_LABELS = DAY_NAMES.map((name) => name.charAt(0));
 export const MONTH_NAMES = Info.months();
 
