@@ -266,14 +266,22 @@ export default class CashFlowEvent {
    * @returns {Promise<CashFlowEvent[]>} A promise resolving to an array of CashFlowEvent instances
    */
   static async getAllBy(indexName, direction = 'next') {
-    //console.profile('getAllBy');
-    const { store } = await this.transaction();
-    const index = store.index(indexName);
-    let cursor = await index.openCursor(null, direction);
-    const results = await this.getAllFromCursor(cursor);
-    //console.profileEnd('getAllBy');
-    return results;
+    const cursor = await this.openCursor(indexName, direction);
+    return this.getAllFromCursor(cursor);
   }
+
+  /**
+   * Get the first object in an index
+   *
+   * @param {string} indexName - The index to use for sorting
+   * @param {string} [direction="next"] - The direction in which to sort
+   * @returns {Promise<CashFlowEvent>}
+   */
+  static async getFirstBy(indexName, direction = 'next') {
+    const cursor = await this.openCursor(indexName, direction);
+    return cursor.value;
+  }
+
 
   /**
    * Retrieves a single cash flow event from the IDB store by its ID key
@@ -296,7 +304,7 @@ export default class CashFlowEvent {
   static async getByDateRange(start, end = new Date()) {
     const fromDate = new Date(start);
     const range = IDBKeyRange.lowerBound(fromDate);
-    const cursor = await this.rangeQuery('date', range);
+    const cursor = await this.openCursor('date', this.directions.ASC, range);
     return this.getAllFromCursor(cursor);
   }
 
@@ -311,10 +319,17 @@ export default class CashFlowEvent {
     return results;
   }
 
-  static async rangeQuery(indexName, keyRange, direction = this.directions.ASC) {
+  /**
+   * Opens a cursor into an index for iteration
+   *
+   * @param {string} indexName The index to use for querying
+   * @param {string} [direction="next"] The sort direction
+   * @param {string|null} [range=null] The key range to query
+   */
+  static async openCursor(indexName, direction = this.directions.ASC, range = null) {
     const { store } = await this.transaction();
-    const index = store.index(indexName, direction);
-    return index.openCursor(keyRange);
+    const index = store.index(indexName);
+    return index.openCursor(range, direction);
   }
 
   /**

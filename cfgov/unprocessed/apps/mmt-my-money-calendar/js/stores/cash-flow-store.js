@@ -1,4 +1,5 @@
 import { flow, observable, computed, action } from 'mobx';
+import { asyncComputed } from 'computed-async-mobx';
 import { computedFn } from 'mobx-utils';
 import logger from '../lib/logger';
 import { toDateTime, dayOfYear } from '../lib/calendar-helpers';
@@ -72,6 +73,11 @@ export default class CashFlowStore {
       .map(({ signature }) => signature);
     return new Set(signatures);
   }
+
+  earliestEventDate = asyncComputed(undefined, 50, async () => {
+    const firstEvent = await CashFlowStore.getFirstBy('date');
+    return firstEvent.date;
+  });
 
   /**
    * Get the user's available balance for the specified date
