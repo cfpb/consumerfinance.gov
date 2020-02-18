@@ -19,11 +19,11 @@
     margin-bottom: 1rem;
   }
 
-  &__day-labels {
-    display: flex;
-    flex-flow: row nowrap;
+  &__rows {
+    margin-bottom: 1rem;
   }
 
+  /*
   &__day-label {
     display: flex;
     justify-content: center;
@@ -38,6 +38,7 @@
     border: 1px solid transparent;
     font-weight: bold;
   }
+  */
 
   &__row {
     display: flex;
@@ -46,7 +47,7 @@
     align-items: center;
   }
 
-  &__day {
+  &__day, &__day-label {
     color: @inactiveMonthColor;
     cursor: pointer;
     display: flex;
@@ -88,6 +89,11 @@
     &:last-of-type {
       margin-right: 0;
     }
+  }
+
+  &__day-label {
+    font-weight: bold;
+    color: @text;
   }
 
   &__day-number {

@@ -64,6 +64,12 @@ function Calendar() {
     </Button>
   ));
 
+  const dayLabels = (
+    <div className="calendar__row" key="dayLabels">
+      {DAY_LABELS.map((label, idx) => <div key={`label-${idx}`} className="calendar__day-label">{label}</div>)}
+    </div>
+  );
+
   useScrollToTop();
 
   return (
@@ -81,16 +87,13 @@ function Calendar() {
         </Button>
       </nav>
 
-      <header className="calendar__day-labels">
-        {DAY_LABELS.map((label) => (
-          <div className="calendar__day-label">{label}</div>
-        ))}
-      </header>
-
       <div className="calendar__rows">
-        {uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
-          <CalendarWeekRow days={days} key={`week-${weekNumber}`} />
-        ))}
+        {[
+          dayLabels,
+          ...uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
+            <CalendarWeekRow days={days} key={`week-${weekNumber}`} />
+          ))
+        ]}
       </div>
 
       <ButtonLink to="/calendar/add" icon={addRound} iconSide="left">Add Income/Expense</ButtonLink>

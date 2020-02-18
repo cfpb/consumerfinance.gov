@@ -24,7 +24,6 @@ function Add() {
     () => [...range(1, 30)].map((num) => ({ label: numberWithOrdinal(num), value: num })),
     []
   );
-  console.log(monthDayOptions);
   const formik = useFormik({
     initialValues: {
       name: '',

@@ -15,7 +15,6 @@ export const DAY_NAMES = [
   'Thursday',
   'Friday',
   'Saturday',
-  'Sunday',
 ];
 export const DAY_LABELS = DAY_NAMES.map((name) => name.charAt(0));
 export const MONTH_NAMES = Info.months();
