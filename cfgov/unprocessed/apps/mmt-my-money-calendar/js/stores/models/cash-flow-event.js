@@ -502,7 +502,9 @@ export default class CashFlowEvent {
   async destroy(deleteFutureRecurrences = true) {
     if (!this.persisted) return false;
     const { tx, store } = await this.transaction('readwrite');
+    const deletedIDs = [];
     await store.delete(this.id);
+    deletedIDs.push(this.id);
 
     if (deleteFutureRecurrences) {
       this.logger.debug('Delete future recurrences');
@@ -515,11 +517,13 @@ export default class CashFlowEvent {
       while (cursor) {
         this.logger.debug('Delete recurrence ID %d', cursor.value.id);
         await cursor.delete();
+        deletedIDs.push(cursor.value.id);
         cursor = await cursor.continue();
       }
     }
 
     await tx.complete;
+    this.constructor.emit('destroy', deletedIDs, this);
     return this;
   }
 

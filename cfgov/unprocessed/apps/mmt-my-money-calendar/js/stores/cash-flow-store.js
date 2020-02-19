@@ -22,6 +22,11 @@ export default class CashFlowStore {
       if (event.recurs && event.recurrenceRule && !event.isRecurrence) this.createRecurrences(event);
     });
 
+    CashFlowEvent.on('destroy', (deletedIDs) => {
+      this.logger.info('Detected event destroy with IDs: %O', deletedIDs);
+      this.removeEvents(deletedIDs);
+    });
+
     this.logger.debug('Initialize CashFlowStore: %O', this);
   }
 
@@ -215,6 +220,13 @@ export default class CashFlowStore {
 
   @action addEvents(events) {
     this.events = [...this.events, ...events];
+  }
+
+  @action removeEvents(...ids) {
+    this.events = this.events.filter((evt) => {
+      if (ids.includes(evt.id)) return false;
+      return true;
+    });
   }
 
   /**
