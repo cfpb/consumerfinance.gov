@@ -74,14 +74,16 @@ const COMMON_MODULE_CONFIG = {
         exclude: /node_modules\/(?:cf-.+|cfpb-.+)/,
       },
       use: {
-        loader: 'babel-loader?cacheDirectory=true',
+        loader: 'babel-loader',
         options: {
+          cacheDirectory: true,
           presets: [
             [
               '@babel/preset-env',
               {
                 configPath: __dirname,
-                useBuiltIns: DEBUG ? 'usage' : false,
+                useBuiltIns: 'usage',
+                corejs: 3,
                 debug: DEBUG,
                 targets: LAST_2_IE_11_UP,
               },
@@ -94,6 +96,7 @@ const COMMON_MODULE_CONFIG = {
             ],
           ],
           plugins: [
+            [require('babel-plugin-lodash'), { cwd: __dirname }],
             [require('@babel/plugin-proposal-decorators'), { legacy: true }],
             [require('@babel/plugin-proposal-class-properties'), { loose: true }],
             require('@babel/plugin-transform-runtime'),
@@ -155,6 +158,8 @@ if (NODE_ENV === 'development') {
     plugins.push(
       new BundleAnalyzerPlugin({
         analyzerMode: 'server',
+        statsFilename: 'stats.json',
+        generateStatsFile: true,
       })
     );
   }
@@ -167,6 +172,9 @@ if (NODE_ENV === 'development') {
 }
 
 const conf = {
+  node: {
+    fs: 'empty'
+  },
   cache: false,
   mode: NODE_ENV,
   module: COMMON_MODULE_CONFIG,
@@ -174,6 +182,7 @@ const conf = {
     alias: {
       img: path.resolve(__dirname, 'img'),
       rrule: 'rrule/dist/esm/src',
+      lodash: path.join(__dirname, 'node_modules/lodash'),
     },
   },
   output: {
@@ -199,7 +208,7 @@ const conf = {
     */
   },
   stats: STATS_CONFIG.stats,
-  devtool: NODE_ENV === 'production' ? false : 'inline-source-map',
+  devtool: NODE_ENV === 'production' ? false : 'source-map',
   plugins,
 };
 

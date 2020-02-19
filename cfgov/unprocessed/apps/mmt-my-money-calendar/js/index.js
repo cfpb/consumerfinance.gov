@@ -1,29 +1,22 @@
 import * as idb from 'idb';
 import { render } from 'react-dom';
-import Greeting from './components/greeting';
-import Counter from './components/counter';
 import { configure as configureMobX } from 'mobx';
 import { Workbox } from 'workbox-window';
+import { DateTime, Info } from 'luxon';
+import { RRule } from 'rrule';
+import { StoreProvider } from './stores';
 import Routes from './routes';
 import CashFlowEvent from './stores/models/cash-flow-event';
 
 configureMobX({ enforceActions: 'observed' });
 
 const App = () => (
-  <section className="my-money-calendar">
-    <Routes />
-  </section>
+  <StoreProvider>
+    <section className="my-money-calendar">
+      <Routes />
+    </section>
+  </StoreProvider>
 );
-
-window.idb = idb;
-window.CashFlowEvent = CashFlowEvent;
-
-window.seedTestData = async function seedTestData() {
-  const { seedData } = await import(/* webpackChunkName: "seed-data.js" */ './seed-data.js');
-  console.info('Imported seed data script');
-  const results = await seedData();
-  console.info('Seeding complete %O', results);
-};
 
 render(<App />, document.querySelector('#mmt-my-money-calendar'));
 
@@ -39,4 +32,31 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   });
 
   wb.register();
+}
+
+if (process.env.NODE_ENV === 'development') {
+  window.idb = idb;
+  window.CashFlowEvent = CashFlowEvent;
+  window.DateTime = DateTime;
+  window.Info = Info;
+  window.RRule = RRule;
+
+  async function loadSeeders() {
+    window.seed = await import(/* webpackChunkName: "seeds.js" */ './seed-data.js');
+  };
+
+  window.seedTestData = async function seedTestData() {
+    if (!window.seed) await loadSeeders();
+
+    console.info('Imported seed data script');
+    const results = await window.seed.seedData();
+    console.info('Seeding complete %O', results);
+  };
+
+  window.clearTestData = async function clearTestData() {
+    if (!window.seed) await loadSeeders();
+
+    await window.seed.clearData();
+    console.info('Cleared all data');
+  }
 }

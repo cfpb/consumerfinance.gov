@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./views/home";
-import StartingBalance from "./views/wizard/steps/starting-balance";
-import Income from "./views/wizard/steps/income";
-import Expenses from "./views/wizard/steps/expenses";
-import Summary from "./views/summary";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './views/home';
+import Wizard from './views/wizard';
+import Summary from './views/summary';
+import Calendar from './views/calendar/index';
+import AddEvent from './views/calendar/add';
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">
@@ -13,20 +13,20 @@ const Routes = () => (
           <Home />
         </Route>
 
-        <Route path="/wizard/steps/starting-balance">
-          <StartingBalance />
-        </Route>
-
-        <Route path="/wizard/steps/income">
-          <Income />
-        </Route>
-
-        <Route path="/wizard/steps/expenses">
-          <Expenses />
+        <Route path="/wizard">
+          <Wizard />
         </Route>
 
         <Route path="/summary">
           <Summary />
+        </Route>
+
+        <Route exact path="/calendar">
+          <Calendar />
+        </Route>
+
+        <Route path="/calendar/add">
+          <AddEvent />
         </Route>
       </Switch>
     </div>

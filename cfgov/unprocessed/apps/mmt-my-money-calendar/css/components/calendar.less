@@ -1,0 +1,136 @@
+@cols: 7;
+@gap: 10px;
+@inactiveMonthColor: #a4a4a4;
+@positiveColor: #cbf0b6;
+@negativeColor: #f0b6b6;
+@breakpointMed: 500px;
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+
+  &__nav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: @gap;
+  }
+
+  &__day {
+    color: @inactiveMonthColor;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-basis: calc(100% / @cols - @gap);
+    justify-content: space-between;
+    width: calc(100% / @cols - @gap);
+    min-height: 40px;
+    border: 1px solid #ccc;
+    margin-right: @gap;
+    text-align: center;
+
+    @media screen and (min-width: @breakpointMed) {
+      min-height: 4rem;
+    }
+
+    &.current-month {
+      color: @text;
+    }
+
+    &.pos-balance {
+      background-color: @positiveColor;
+      border-color: @positiveColor;
+    }
+
+    &.neg-balance {
+      background-color: @negativeColor;
+      border-color: @negativeColor;
+    }
+
+    &.selected {
+      border-color: #000;
+      border-width: 2px;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+
+  &__day-number {
+    font-weight: bold;
+    font-size: 1rem;
+
+    @media screen and (min-width: @breakpointMed) {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__day-balance {
+    font-size: .6rem;
+
+    @media screen and (min-width: @breakpointMed) {
+      font-size: .8rem;
+    }
+  }
+
+  &__day-symbols {
+    font-weight: bold;
+  }
+}
+
+.calendar-details {
+  margin-top: 1.5rem;
+
+  &__events {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &__event,
+  &__total {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid @inactiveMonthColor;
+    max-width: unset !important;
+  }
+
+  &__total {
+    border-bottom: 0;
+  }
+
+  &__event-date,
+  &__event-name,
+  &__event-total {
+    flex-basis: calc(100% / 3);
+    width: calc(100% / 3);
+  }
+
+  &__total-label,
+  &__total-value {
+    flex-basis: 50%;
+    width: 50%;
+  }
+
+  &__event-total,
+  &__total-value {
+    text-align: right;
+  }
+
+  &__event-delete {
+    background: transparent;
+    border: 0;
+  }
+}

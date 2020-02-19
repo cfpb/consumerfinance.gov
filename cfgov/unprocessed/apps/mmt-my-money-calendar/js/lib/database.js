@@ -1,7 +1,7 @@
 import * as idb from 'idb';
 import logManager from './logger';
 
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 const logger = logManager.addGroup('db');
 
@@ -9,6 +9,8 @@ const dbPromise = idb.openDB('myMoneyCalendar', DB_VERSION, {
   upgrade(db, oldVersion, newVersion, transaction) {
 
     logger.debug('Upgrade IndexedDB from %d to %d', oldVersion, newVersion);
+
+    let eventStore;
 
     /**
      * Numbered DB version migrations
@@ -22,11 +24,19 @@ const dbPromise = idb.openDB('myMoneyCalendar', DB_VERSION, {
         db.createObjectStore('ui', { keyPath: 'option' });
 
         // Cash flow event (income and expense) storage
-        const eventStore = db.createObjectStore('events', { keyPath: 'id', autoIncrement: true });
+        eventStore = db.createObjectStore('events', { keyPath: 'id', autoIncrement: true });
         eventStore.createIndex('date', 'date', { unique: false });
         eventStore.createIndex('category', 'category', { unique: false });
-
-        break;
+        logger.info('Create events object store');
+      case 1:
+        eventStore = transaction.objectStore('events');
+        eventStore.createIndex('originalEventID', 'originalEventID', { unique: false });
+        eventStore.createIndex('originalEventID_date', ['originalEventID', 'date'], { unique: true });
+        eventStore.createIndex('createdAt', 'createdAt', { unique: false });
+        eventStore.createIndex('updatedAt', 'updatedAt', { unique: false });
+        eventStore.createIndex('subcategory', 'subcategory', { unique: false });
+        eventStore.createIndex('totalCents', 'totalCents', { unique: false });
+        eventStore.createIndex('recurs', 'recurs', { unique: false });
     }
   },
 });

@@ -4,7 +4,7 @@ import UIStore from './ui-store';
 import CashFlowStore from './cash-flow-store';
 
 export default class RootStore {
-  @observable networkStatus = 'idle';
+  @observable loading = true;
 
   constructor() {
     this.logger = logger.addGroup('rootStore');
@@ -14,15 +14,11 @@ export default class RootStore {
     this.logger.debug('Initialize RootStore: %O', this);
   }
 
-  @computed get isLoading() {
-    return this.networkStatus === 'loading';
+  @action setLoading() {
+    this.loading = true;
   }
 
-  @computed get hasNetworkError() {
-    return this.networkStatus === 'error';
-  }
-
-  @action setNetworkStatus(val) {
-    this.networkStatus = val;
+  @action setIdle() {
+    this.loading = false;
   }
 }
