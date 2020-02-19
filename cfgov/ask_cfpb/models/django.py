@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
-# from collections import Counter
 import html.parser as HTMLParser
 
 from django.contrib.auth.models import User
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+
+try:
+    from wagtail.admin.edit_handlers import FieldPanel
+    from wagtail.core.fields import RichTextField
+    from wagtail.images.edit_handlers import ImageChooserPanel
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import FieldPanel
+    from wagtail.wagtailcore.fields import RichTextField
+    from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 html_parser = HTMLParser.HTMLParser()

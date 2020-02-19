@@ -6,13 +6,20 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.utils.html import format_html
 
-from wagtail.wagtailadmin.menu import MenuItem
-from wagtail.wagtailadmin.rich_text import HalloPlugin
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.models import Page
-
 from ask_cfpb.models import Answer, AnswerPage
 from ask_cfpb.scripts import export_ask_data
+
+
+try:
+    from wagtail.admin.menu import MenuItem
+    from wagtail.admin.rich_text import HalloPlugin
+    from wagtail.core import hooks
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.menu import MenuItem
+    from wagtail.wagtailadmin.rich_text import HalloPlugin
+    from wagtail.wagtailcore import hooks
+    from wagtail.wagtailcore.models import Page
 
 
 def export_data(request):

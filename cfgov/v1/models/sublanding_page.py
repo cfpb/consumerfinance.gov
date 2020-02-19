@@ -1,20 +1,31 @@
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
-)
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailimages.blocks import ImageChooserBlock
-from wagtail.wagtailsearch import index
-
 from jobmanager.blocks import JobListingList
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.forms import FilterableListForm
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
+
+
+try:
+    from wagtail.admin.edit_handlers import (
+        FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    )
+    from wagtail.core import blocks
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import PageManager
+    from wagtail.images.blocks import ImageChooserBlock
+    from wagtail.search import index
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    )
+    from wagtail.wagtailcore import blocks
+    from wagtail.wagtailcore.fields import StreamField
+    from wagtail.wagtailcore.models import PageManager
+    from wagtail.wagtailimages.blocks import ImageChooserBlock
+    from wagtail.wagtailsearch import index
 
 
 class SublandingPage(CFGOVPage):

@@ -2,24 +2,40 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, InlinePanel, ObjectList, StreamFieldPanel, TabbedInterface
-)
-from wagtail.wagtailadmin.forms import (
-    WagtailAdminModelFormMetaclass, WagtailAdminPageForm
-)
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Orderable, PageManager
-from wagtail.wagtailimages import get_image_model_string
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsearch import index
-
 from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 from v1.atomic_elements import molecules
 from v1.models.base import CFGOVPage
+
+
+try:
+    from wagtail.admin.edit_handlers import (
+        FieldPanel, InlinePanel, ObjectList, StreamFieldPanel,
+        TabbedInterface
+    )
+    from wagtail.admin.forms import (
+        WagtailAdminModelFormMetaclass, WagtailAdminPageForm
+    )
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import Orderable, PageManager
+    from wagtail.images import get_image_model_string
+    from wagtail.images.edit_handlers import ImageChooserPanel
+    from wagtail.search import index
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        FieldPanel, InlinePanel, ObjectList, StreamFieldPanel,
+        TabbedInterface
+    )
+    from wagtail.wagtailadmin.forms import (
+        WagtailAdminModelFormMetaclass, WagtailAdminPageForm
+    )
+    from wagtail.wagtailcore.fields import StreamField
+    from wagtail.wagtailcore.models import Orderable, PageManager
+    from wagtail.wagtailimages import get_image_model_string
+    from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+    from wagtail.wagtailsearch import index
 
 
 # These classes are used to add support for nested InlinePanels, and are

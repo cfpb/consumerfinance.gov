@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import migrations, models
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.wagtailcore.fields
+import wagtail
+
+
+if wagtail.VERSION >= (2, 0):
+    from wagtail.core import fields as core_fields
+else:
+    from wagtail.wagtailcore import fields as core_fields
 
 
 class Migration(migrations.Migration):
@@ -38,17 +42,17 @@ class Migration(migrations.Migration):
             name='JobListingPage',
             fields=[
                 ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
-                ('description', wagtail.wagtailcore.fields.RichTextField(verbose_name='Summary')),
+                ('description', core_fields.RichTextField(verbose_name='Summary')),
                 ('open_date', models.DateField(verbose_name='Open date')),
                 ('close_date', models.DateField(verbose_name='Close date')),
                 ('salary_min', models.DecimalField(verbose_name='Minimum salary', max_digits=11, decimal_places=2)),
                 ('salary_max', models.DecimalField(verbose_name='Maximum salary', max_digits=11, decimal_places=2)),
                 ('allow_remote', models.BooleanField(default=False, help_text='Adds remote option to jobs with office locations.', verbose_name='Location can also be remote')),
-                ('responsibilities', wagtail.wagtailcore.fields.RichTextField(null=True, verbose_name='Responsibilities', blank=True)),
+                ('responsibilities', core_fields.RichTextField(null=True, verbose_name='Responsibilities', blank=True)),
                 ('travel_required', models.BooleanField(default=False, help_text='Optional: Check to add a "Travel required" section to the job description. Section content defaults to "Yes".')),
-                ('travel_details', wagtail.wagtailcore.fields.RichTextField(help_text='Optional: Add content for "Travel required" section.', null=True, blank=True)),
+                ('travel_details', core_fields.RichTextField(help_text='Optional: Add content for "Travel required" section.', null=True, blank=True)),
                 ('additional_section_title', models.CharField(help_text='Optional: Add title for an additional section that will display at end of job description.', max_length=255, null=True, blank=True)),
-                ('additional_section_content', wagtail.wagtailcore.fields.RichTextField(help_text='Optional: Add content for an additional section that will display at end of job description.', null=True, blank=True)),
+                ('additional_section_content', core_fields.RichTextField(help_text='Optional: Add content for an additional section that will display at end of job description.', null=True, blank=True)),
                 ('division', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='jobmanager.JobCategory', null=True)),
                 ('job_length', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name='Position length', blank=True, to='jobmanager.JobLength', null=True)),
             ],
