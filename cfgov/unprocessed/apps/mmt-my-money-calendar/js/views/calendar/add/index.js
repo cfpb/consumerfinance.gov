@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { observer } from 'mobx-react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
-import * as Yup from 'yup';
+import * as yup from 'yup';
 import { DateTime } from 'luxon';
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/cash-flow-event';
@@ -37,14 +37,26 @@ function Add() {
       payday1: 15,
       payday2: 30,
     },
-    validationSchema: Yup.object({
-      name: Yup.string().required(),
-      totalCents: Yup.number()
+    validationSchema: yup.object({
+      name: yup.string().required(),
+      totalCents: yup.number()
         .integer()
         .required(),
-      eventType: Yup.string().required(),
-      category: Yup.string().required(),
-      dateTime: Yup.date().required(),
+      eventType: yup.string().required(),
+      category: yup.string().required(),
+      dateTime: yup.date().required(),
+      recurrenceRule: yup.string(),
+      recurs: yup.boolean(),
+      payday1: yup.number().when(['recurs', 'recurrenceRule'], {
+        is: (recurs, recurrenceRule) => recurs && recurrenceRule === 'semimonthly',
+        then: yup.number().integer().required().cast(),
+        otherwise: yup.number(),
+      }),
+      payday2: yup.number().when(['recurs', 'recurrenceRule'], {
+        is: (recurs, recurrenceRule) => recurs && recurrenceRule === 'semimonthly',
+        then: yup.number().integer().required().cast(),
+        otherwise: yup.number(),
+      }),
     }),
     onSubmit: (values) => {
       console.log('Form submit: %O', values);
@@ -52,6 +64,13 @@ function Add() {
 
       values.totalCents = parseInt(values.totalCents, 10);
       values.dateTime = DateTime.fromFormat(values.dateTime, 'yyyy-MM-dd');
+
+      if (values.recurs) {
+        const { handler } = recurrenceRules[values.recurrenceRule];
+        values.recurrenceRule = values.recurrenceRule === 'semimonthly'
+          ? handler(values.dateTime.toJSDate(), values.payday1, values.payday2)
+          : handler(values.dateTime.toJSDate());
+      }
 
       try {
         eventStore.createEvent(values);

@@ -499,10 +499,26 @@ export default class CashFlowEvent {
    *
    * @returns {CashFlowEvent|Boolean} the event that was just removed, or false if not deleteable
    */
-  async destroy() {
+  async destroy(deleteFutureRecurrences = true) {
     if (!this.persisted) return false;
     const { tx, store } = await this.transaction('readwrite');
     await store.delete(this.id);
+
+    if (deleteFutureRecurrences) {
+      this.logger.debug('Delete future recurrences');
+
+      const id = this.isRecurrence ? this.originalEventID : this.id;
+      const index = store.index('originalEventID');
+      const range = IDBKeyRange.only(id);
+      let cursor = await index.openCursor(range, this.constructor.directions.ASC);
+
+      while (cursor) {
+        this.logger.debug('Delete recurrence ID %d', cursor.value.id);
+        await cursor.delete();
+        cursor = await cursor.continue();
+      }
+    }
+
     await tx.complete;
     return this;
   }
