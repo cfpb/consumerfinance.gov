@@ -1,14 +1,22 @@
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailsearch import index
-
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import organisms
 from v1.feeds import get_appropriate_rss_feed_url_for_page
 from v1.models.base import CFGOVPageManager
 from v1.models.learn_page import AbstractFilterPage
+
+
+try:
+    from wagtail.admin.edit_handlers import StreamFieldPanel
+    from wagtail.core import blocks
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import PageManager
+    from wagtail.search import index
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+    from wagtail.wagtailcore import blocks
+    from wagtail.wagtailcore.fields import StreamField
+    from wagtail.wagtailcore.models import PageManager
+    from wagtail.wagtailsearch import index
 
 
 class BlogPage(AbstractFilterPage):

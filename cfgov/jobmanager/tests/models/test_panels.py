@@ -1,8 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Page
-
 from mock import Mock
 from model_mommy import mommy
 
@@ -11,6 +9,12 @@ from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import (
     EmailApplicationLink, USAJobsApplicationLink
 )
+
+
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
 
 
 class ApplicationLinkTestCaseMixin(object):

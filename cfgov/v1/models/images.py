@@ -1,17 +1,25 @@
 from django.db import models
 from django.utils.functional import cached_property
 
-from wagtail.wagtailimages.image_operations import (
-    DoNothingOperation, MinMaxOperation, WidthHeightOperation
-)
-from wagtail.wagtailimages.models import (
-    AbstractImage, AbstractRendition, Filter, Image
-)
+
+try:
+    from wagtail.images.image_operations import (
+        DoNothingOperation, MinMaxOperation, WidthHeightOperation
+    )
+    from wagtail.images.models import (
+        AbstractImage, AbstractRendition, Filter, Image
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailimages.image_operations import (
+        DoNothingOperation, MinMaxOperation, WidthHeightOperation
+    )
+    from wagtail.wagtailimages.models import (
+        AbstractImage, AbstractRendition, Filter, Image
+    )
 
 
 class CFGOVImage(AbstractImage):
     alt = models.CharField(max_length=100, blank=True)
-
     admin_form_fields = Image.admin_form_fields + (
         'alt',
     )
@@ -38,7 +46,7 @@ class CFGOVImage(AbstractImage):
         Template tags with Wagtail size-related filters (width, height, max,
         and min), e.g. {% image image 'max-165x165' %}, will generate an
         <img> tag with appropriate size parameters, following logic from
-        wagtail.wagtailimages.image_operations.
+        wagtail.images.image_operations.
         """
         if isinstance(rendition_filter, str):
             rendition_filter = Filter(spec=rendition_filter)

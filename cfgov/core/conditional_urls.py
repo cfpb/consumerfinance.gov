@@ -1,7 +1,11 @@
 from django.conf import settings
 from django.conf.urls import include
 
-from wagtail.wagtailcore.views import serve as wagtail_serve
+
+try:
+    from wagtail.core.views import serve as wagtail_serve
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.views import serve as wagtail_serve
 
 
 def wagtail_fail_through(request):

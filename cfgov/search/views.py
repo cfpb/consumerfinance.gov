@@ -2,12 +2,16 @@ from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.views.generic import View
 
-from wagtail.wagtailcore.models import get_page_models
-
 from search import dotgov
 from search.forms import ExternalLinksForm
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, ReusableText
+
+
+try:
+    from wagtail.core.models import get_page_models
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import get_page_models
 
 
 class SearchView(View):

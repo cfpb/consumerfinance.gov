@@ -1,14 +1,21 @@
 # -*- coding: utf-8 -*-
 import json
+import unittest
 
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils.text import slugify
 
-from wagtail.wagtailcore.models import Page, Site
+import wagtail
 
 from mega_menu.models import Menu
 from v1.models import MenuItem
+
+
+try:
+    from wagtail.core.models import Page, Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page, Site
 
 
 class MigrateMenuContentTests(TestCase):
@@ -70,6 +77,9 @@ class MigrateMenuContentTests(TestCase):
         root_page.add_child(instance=page)
         return page
 
+    @unittest.skipUnless(
+        wagtail.VERSION < (2, 0),
+        'Not supported in Wagtail 2.x')
     def test_command(self):
         call_command('migrate_menu_content')
 

@@ -2,10 +2,14 @@ from datetime import date
 
 from django.db.models import Prefetch
 
-from wagtail.wagtailcore import blocks
-
 from regulations3k.models.django import EffectiveVersion
 from v1.atomic_elements import organisms
+
+
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
 
 
 class RegulationsList(organisms.ModelBlock):

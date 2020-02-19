@@ -3,6 +3,8 @@ import os
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import wagtail
+
 import dj_database_url
 from unipath import DIRS, Path
 
@@ -36,25 +38,45 @@ USE_X_FORWARDED_PORT = os.environ.get('USE_X_FORWARDED_PORT') == 'True'
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
 # Application definition
-
 INSTALLED_APPS = (
     'permissions_viewer',
-    'wagtail.wagtailcore',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailsnippets',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailembeds',
-    'wagtail.contrib.wagtailfrontendcache',
-    # 'wagtail.wagtailsearch',  # TODO: conflicts w/ haystack, need to revisit
-    'wagtail.wagtailredirects',
-    'wagtail.wagtailforms',
-    'wagtail.wagtailsites',
+)
 
+if wagtail.VERSION >= (2, 0):
+    INSTALLED_APPS += (
+        'wagtail.core',
+        'wagtail.admin',
+        'wagtail.documents',
+        'wagtail.snippets',
+        'wagtail.users',
+        'wagtail.images',
+        'wagtail.embeds',
+        'wagtail.contrib.frontend_cache',
+        'wagtail.contrib.redirects',
+        'wagtail.contrib.forms',
+        'wagtail.sites',
+        'wagtail.contrib.routable_page',
+    )
+else:
+    INSTALLED_APPS += (
+        'wagtail.wagtailcore',
+        'wagtail.wagtailadmin',
+        'wagtail.wagtaildocs',
+        'wagtail.wagtailsnippets',
+        'wagtail.wagtailusers',
+        'wagtail.wagtailimages',
+        'wagtail.wagtailembeds',
+        'wagtail.contrib.wagtailfrontendcache',
+        # 'wagtail.search',  # TODO: conflicts w/ haystack, need to revisit
+        'wagtail.wagtailredirects',
+        'wagtail.wagtailforms',
+        'wagtail.wagtailsites',
+        'wagtail.contrib.wagtailroutablepage',
+    )
+
+INSTALLED_APPS += (
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.table_block',
-    'wagtail.contrib.wagtailroutablepage',
 
     'localflavor',
     'modelcluster',
@@ -126,13 +148,21 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
-    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-
     'core.middleware.ParseLinksMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware',
     'flags.middleware.FlagConditionsMiddleware',
 )
+
+if wagtail.VERSION >= (2, 0):
+    MIDDLEWARE_CLASSES += (
+        'wagtail.core.middleware.SiteMiddleware',
+        'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    )
+else:
+    MIDDLEWARE_CLASSES += (
+        'wagtail.wagtailcore.middleware.SiteMiddleware',
+        'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    )
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 
@@ -144,6 +174,20 @@ ROOT_URLCONF = 'cfgov.urls'
 # We support two different template engines: Django templates and Jinja2
 # templates. See https://docs.djangoproject.com/en/dev/topics/templates/
 # for an overview of how Django templates work.
+
+if wagtail.VERSION >= (2, 0):
+    wagtail_extensions = [
+        'wagtail.core.jinja2tags.core',
+        'wagtail.admin.jinja2tags.userbar',
+        'wagtail.images.jinja2tags.images',
+    ]
+else:
+    wagtail_extensions = [
+        'wagtail.wagtailcore.jinja2tags.core',
+        'wagtail.wagtailadmin.jinja2tags.userbar',
+        'wagtail.wagtailimages.jinja2tags.images',
+    ]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -179,17 +223,11 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'v1.jinja2_environment.environment',
-            'extensions': [
+            'extensions': wagtail_extensions + [
                 'jinja2.ext.do',
                 'jinja2.ext.i18n',
                 'jinja2.ext.loopcontrols',
-
-                'wagtail.wagtailcore.jinja2tags.core',
-                'wagtail.wagtailadmin.jinja2tags.userbar',
-                'wagtail.wagtailimages.jinja2tags.images',
-
                 'flags.jinja2tags.flags',
-
                 'core.jinja2tags.filters',
                 'agreements.jinja2tags.agreements',
                 'mega_menu.jinja2tags.MegaMenuExtension',
@@ -501,12 +539,20 @@ if ENABLE_AKAMAI_CACHE_PURGE:
 
 ENABLE_CLOUDFRONT_CACHE_PURGE = os.environ.get('ENABLE_CLOUDFRONT_CACHE_PURGE', False)
 if ENABLE_CLOUDFRONT_CACHE_PURGE:
-    WAGTAILFRONTENDCACHE['files'] = {
-        'BACKEND': 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend',
-        'DISTRIBUTION_ID': {
-            'files.consumerfinance.gov': os.environ.get('CLOUDFRONT_DISTRIBUTION_ID_FILES')
+    if wagtail.VERSION >= (2, 0):
+        WAGTAILFRONTENDCACHE['files'] = {
+            'BACKEND': 'wagtail.contrib.frontend_cache.backends.CloudfrontBackend',
+            'DISTRIBUTION_ID': {
+                'files.consumerfinance.gov': os.environ.get('CLOUDFRONT_DISTRIBUTION_ID_FILES')
+            }
         }
-    }
+    else:
+        WAGTAILFRONTENDCACHE['files'] = {
+            'BACKEND': 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend',
+            'DISTRIBUTION_ID': {
+                'files.consumerfinance.gov': os.environ.get('CLOUDFRONT_DISTRIBUTION_ID_FILES')
+            }
+        }
 
 # CSP Whitelists
 

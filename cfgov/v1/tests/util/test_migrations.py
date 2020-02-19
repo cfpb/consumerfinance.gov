@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.apps import apps
 from django.test import TestCase
 
 from wagtail.tests.testapp.models import StreamPage
-from wagtail.wagtailcore.models import Page, PageRevision
 
 import mock
 
@@ -14,6 +11,12 @@ from v1.util.migrations import (
     get_stream_data, is_page, migrate_page_types_and_fields,
     migrate_stream_data, migrate_stream_field, set_stream_data
 )
+
+
+try:
+    from wagtail.core.models import Page
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page
 
 
 class MigrationsUtilTestCase(TestCase):
