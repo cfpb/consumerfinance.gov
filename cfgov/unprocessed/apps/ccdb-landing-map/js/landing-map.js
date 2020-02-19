@@ -1,9 +1,10 @@
 import TileMap from './TileMap.js';
 import getData from 'cfpb-chart-builder/src/js/utils/get-data';
 
-// -----------------------------------------------------------------------------
-// Replace the functionality in cfpb-chart-builder/src/js/index.js
-
+/**
+ *  Chart class
+ *  Replace the functionality in cfpb-chart-builder/src/js/index.js
+ */
 class Chart {
 
   constructor( chartOptions ) {
@@ -19,12 +20,13 @@ class Chart {
   }
 }
 
-// -----------------------------------------------------------------------------
-// Main
-
+/**
+ * main
+ */
 const el = document.getElementById( 'landing-map' );
-const dataUrl = "https://files.consumerfinance.gov/ccdb/hero-map-3y.json"
+const dataUrl = 'https://files.consumerfinance.gov/ccdb/hero-map-3y.json';
 
+// eslint-disable-next-line no-unused-vars
 const chart = new Chart( {
   el: el,
   source: dataUrl,
