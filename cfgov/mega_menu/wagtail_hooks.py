@@ -47,7 +47,7 @@ class MenuModelAdminButtonHelper(ButtonHelper):
 class MenuModelAdmin(ModelAdmin):
     model = Menu
     menu_icon = 'list-ul'
-    menu_label = 'Mega menu (v2)'
+    menu_label = 'Mega menu'
     button_helper_class = MenuModelAdminButtonHelper
     edit_view_class = MenuEditView
 
