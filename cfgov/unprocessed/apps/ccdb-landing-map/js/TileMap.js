@@ -61,11 +61,6 @@ function getBins( data, colors ) {
  * @returns {Object} The processed data.
  */
 function processMapData( data ) {
-
-  if ( typeof data !== 'object' ) {
-    return data;
-  }
-
   // Filter out any empty values just in case
   data = data.filter( function( row ) {
     return Boolean( row.name );
@@ -215,7 +210,7 @@ class TileMap {
 
               // are we using perCapita or value?
               const value = localize ? this.point[valKey].toLocaleString() : this.point[valKey];
-              return '<div class="highcharts-data-label-state ' + this.point.className + '">' +
+              return '<div class="highcharts-data-label-state">' +
                 '<span class="abbr">' + this.point.name + '</span>' +
                 '<br />' +
                 '<span class="value">' + value + '</span>' +
