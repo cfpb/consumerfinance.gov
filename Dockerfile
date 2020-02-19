@@ -97,8 +97,11 @@ RUN yum -y install nodejs yarn  && \
         node_modules && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
     mkdir -p cfgov/f/ && chown -R apache:apache cfgov/f/ && \
-    mkdir /tmp/eregs_cache && chown apache:apache /tmp/eregs_cache
+    mkdir /tmp/eregs_cache && chown apache:apache /tmp/eregs_cache && \
+    chown -R apache:apache ${SCL_HTTPD_ROOT}/var/run/
 
-EXPOSE 80
+EXPOSE 8080
+
+USER apache
 
 CMD ["httpd", "-d", "./cfgov/apache", "-D", "FOREGROUND"]

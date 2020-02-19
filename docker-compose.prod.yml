@@ -18,7 +18,7 @@ services:
             MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
             PGPASSWORD: cfpb
         ports:
-            - "8000:80" # Apache
+            - "8000:8080" # Apache
         volumes: &python_volumes
             - ./cfgov/apache/conf/:/src/cfgov-refresh/cfgov/apache/conf/
             - ./cfgov/apache/conf.d/:/src/cfgov-refresh/cfgov/apache/conf.d/
