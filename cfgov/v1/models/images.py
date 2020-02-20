@@ -20,7 +20,6 @@ except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
 
 class CFGOVImage(AbstractImage):
     alt = models.CharField(max_length=100, blank=True)
-
     file_hash = models.CharField(max_length=40, blank=True, editable=False)
     admin_form_fields = Image.admin_form_fields + (
         'alt',
