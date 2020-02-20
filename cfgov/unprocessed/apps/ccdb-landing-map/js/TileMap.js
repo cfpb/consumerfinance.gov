@@ -15,7 +15,7 @@ import getTileMapState from 'cfpb-chart-builder/src/js/utils/get-tile-map-state'
 * @returns {string} the maximum between the current and a state entry
 */
 function findMaxComplaints( accum, stateComplaint ) {
-  return Math.max( accum, stateComplaint.value );
+  return Math.max( accum, stateComplaint.displayValue );
 }
 
 /**
@@ -53,14 +53,49 @@ function getBins( data, colors ) {
   return bins;
 }
 
+/**
+ * helper function to get the bins for legend and colors, etc.
+ * @param data
+ * @param {Array} colors an array of colors
+ * @returns {[]|Array}
+ */
+function getPerCapitaBins( data, colors ) {
+  const binCount = colors.length;
+  const max = data.reduce( findMaxComplaints, 0 );
+  const min = 1;
+
+  // Early exit
+  if ( max === 0 ) return [];
+
+  const bins = [];
+  const step = ( max - min ) / binCount;
+
+  for ( let i = 0, curr = min; i < binCount; i++, curr += step ) {
+    curr = parseFloat(curr.toFixed(2))
+    const minValue = curr;
+    const displayValue = curr;
+
+    bins.push( {
+      from: minValue,
+      to: parseFloat((curr + step).toFixed(2)),
+      color: colors[i],
+      name: displayValue > 0 ? `≥ ${ displayValue }` : '≥ 0'
+    } );
+  }
+
+  // The last bin is unbounded
+  bins[binCount - 1].to = undefined;
+
+  return bins;
+}
+
 // ----------------------------------------------------------------------------
 // Utility Functions 2
-
 /**
- * @param {Object} data - Data to process.
+ * @param {Object} data - Data to process. add in state paths to the data obj
  * @returns {Object} The processed data.
  */
-function processMapData( data ) {
+function processMapData( data , bins ) {
   // Filter out any empty values just in case
   data = data.filter( function( row ) {
     return Boolean( row.name );
@@ -70,14 +105,24 @@ function processMapData( data ) {
     const state = getTileMapState[obj.name];
     return {
       ...obj,
-      perCapita: obj.perCapita.toFixed(2),
-      path: state.path,
+      color: getColorByValue(obj.displayValue, bins),
+      path: state.path
+
     };
   } );
 
   return data;
 }
 
+function getColorByValue(value, bins) {
+  let color = '#ffffff';
+  for (let i = 0; i < bins.length; i++) {
+    if (value > bins[i].from) {
+      color = bins[i].color;
+    }
+  }
+  return color;
+}
 // ----------------------------------------------------------------------------
 // Highcharts callbacks
 
@@ -103,7 +148,7 @@ function _drawLegend( chart ) {
     .translate(10, marginTop)
     .add();
 
-  for (var i = 0; i < bins.length; i++) {
+  for (let i = 0; i < bins.length; i++) {
     const g = chart.renderer.g( `g${ i }` )
       .translate(i * (boxWidth + boxPadding), 0)
       .add(legend);
@@ -138,10 +183,8 @@ Highcharts.setOptions( {
 // Tile Map class
 
 class TileMap {
-  constructor( { el, description, data, metadata, title } ) {
+  constructor( { el, description, data } ) {
     // console.log(data);
-    data = processMapData(data);
-
     const colors = [
       'rgba(247, 248, 249, 0.5)',
       'rgba(212, 231, 230, 0.5)',
@@ -150,7 +193,10 @@ class TileMap {
       'rgba(86, 149, 148, 0.5)',
       'rgba(37, 116, 115, 0.5)'
     ];
-    const bins = getBins( data, colors );
+    //const bins = getBins( data, colors );
+    const bins = getPerCapitaBins( data, colors );
+    data = processMapData(data, bins);
+
     const localize = true;
 
     const options = {
@@ -206,10 +252,8 @@ class TileMap {
           dataLabels: {
             enabled: true,
             formatter: function() {
-              const valKey = this.point.displayValue ? 'displayValue' : 'value';
-
               // are we using perCapita or value?
-              const value = localize ? this.point[valKey].toLocaleString() : this.point[valKey];
+              const value = this.point.displayValue.toLocaleString();
               return '<div class="highcharts-data-label-state">' +
                 '<span class="abbr">' + this.point.name + '</span>' +
                 '<br />' +
@@ -224,7 +268,6 @@ class TileMap {
       series: [ {
         type: 'map',
         clip: false,
-        name: title,
         data: data
       } ]
     };
