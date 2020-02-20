@@ -70,8 +70,7 @@ function processMapData( data ) {
     const state = getTileMapState[obj.name];
     return {
       ...obj,
-      // abbr: state.abbr,
-      // fullName: state.fullName,
+      perCapita: obj.perCapita.toFixed(2),
       path: state.path,
     };
   } );
@@ -140,7 +139,8 @@ Highcharts.setOptions( {
 
 class TileMap {
   constructor( { el, description, data, metadata, title } ) {
-    data = processMapData( data[0] );
+    // console.log(data);
+    data = processMapData(data);
 
     const colors = [
       'rgba(247, 248, 249, 0.5)',

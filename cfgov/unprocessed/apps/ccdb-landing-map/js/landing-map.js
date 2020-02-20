@@ -8,18 +8,14 @@ class Chart {
 
   constructor( chartOptions ) {
     this.chartOptions = chartOptions;
+
+    // console.log('rload')
     fetch( chartOptions.source )
     .then( response=> {
       return response.json();
     })
     .then( data => {
-      const mappedData = data.map(o => {
-        // api needs to provide full state name
-        o.fullName = 'State name here';
-        return o;
-      });
-
-      this.chartOptions.data = [ mappedData ];
+      this.chartOptions.data = data;
       this.draw( this.chartOptions );
     } );
   }
@@ -29,6 +25,7 @@ class Chart {
   }
 }
 
+
 /**
  * main
  */
@@ -36,7 +33,7 @@ class Chart {
 function start() {
   const el = document.getElementById('landing-map');
   const dataUrl = 'https://files.consumerfinance.gov/ccdb/hero-map-3y.json';
-// eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   const chart = new Chart({
     el: el,
     source: dataUrl,
@@ -46,7 +43,7 @@ function start() {
 }
 
 
-document.getElementsByClassName('interval-All')[0].onclick = function(){
+document.getElementsByClassName('per-capita')[0].onclick = function(){
   // probably need to set some variable somewhere and redraw the map with filtered data.
   start();
 }

@@ -9,6 +9,28 @@ body {
     flex-wrap: wrap;
 
   &.refine {
+    div {
+      margin: 0 1.375em 0 0;
+      p {
+        color: @gray-60;
+        font-size: @size-vi;
+        font-weight: 600;
+        font-style: normal;
+      }
+    }
+    .a-btn {
+      color: @black;
+      background-color: @pacific-60;
+      &.interval-All{
+        background-color: @gray-20;
+      }
+      &.per-capita {
+        background-color: @pacific-20;
+      }
+      &.selected {
+        font-weight: 600;
+      }
+    }
     .a-btn__disabled {
       cursor: pointer;
     }
