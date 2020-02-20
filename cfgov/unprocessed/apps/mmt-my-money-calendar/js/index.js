@@ -10,16 +10,6 @@ import CashFlowEvent from './stores/models/cash-flow-event';
 
 configureMobX({ enforceActions: 'observed' });
 
-const App = () => (
-  <StoreProvider>
-    <section className="my-money-calendar">
-      <Routes />
-    </section>
-  </StoreProvider>
-);
-
-render(<App />, document.querySelector('#mmt-my-money-calendar'));
-
 if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   const wb = new Workbox('/mmt-my-money-calendar/service-worker.js', { scope: '/mmt-my-money-calendar' });
 
@@ -60,3 +50,13 @@ if (process.env.NODE_ENV === 'development') {
     console.info('Cleared all data');
   }
 }
+
+const App = () => (
+  <StoreProvider>
+    <section className="my-money-calendar">
+      <Routes />
+    </section>
+  </StoreProvider>
+);
+
+render(<App />, document.querySelector('#mmt-my-money-calendar'));
