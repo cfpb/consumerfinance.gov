@@ -195,6 +195,30 @@ body {
             font-size: unit( @base-font-size-px / @base-font-size-px, em );
             font-weight: normal;
         }
+
+        // Featured menu content is link items with icons.
+        &-list__featured {
+
+            // Hide the featured menu content area at smaller screen sizes.
+            display: table-cell;
+
+            & .cf-icon-svg {
+                display: inline;
+                color: @pacific;
+                margin-right: 10px;
+            }
+        }
+
+        &-list__featured li {
+            // Align the icon and text.
+            display: flex;
+            align-items: baseline;
+
+            // Hide link bottom line from Design System link styles.
+            & .a-link_text {
+                border-bottom-width: 0;
+            }
+        }
     }
 
     &_content-link {
@@ -660,25 +684,6 @@ body {
             position: absolute;
             left: 0;
             z-index: 10;
-
-            // Featured menu content is link items with icons.
-            &-list__featured {
-
-                // Hide the featured menu content area at smaller screen sizes.
-                display: table-cell;
-
-                & .cf-icon-svg {
-                    display: inline;
-                    color: @pacific;
-                    margin-right: 10px;
-                }
-            }
-
-            &-list__featured li {
-                // Align the icon and text.
-                display: flex;
-                align-items: baseline;
-            }
 
             &-list__featured li:not( &-list__featured-item ) {
                 padding-left: 13px;
