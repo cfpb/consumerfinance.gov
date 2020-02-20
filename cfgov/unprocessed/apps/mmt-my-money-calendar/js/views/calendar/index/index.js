@@ -74,7 +74,6 @@ function Calendar() {
 
   return (
     <section className="calendar">
-      <h1>{uiStore.pageTitle}</h1>
       <h2>{uiStore.subtitle}</h2>
 
       <nav className="calendar__nav">
@@ -95,8 +94,6 @@ function Calendar() {
           ))
         ]}
       </div>
-
-      <ButtonLink to="/calendar/add" icon={addRound} iconSide="left">Add Income/Expense</ButtonLink>
 
       <Details />
 

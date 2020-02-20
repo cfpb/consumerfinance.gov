@@ -20,8 +20,8 @@ export default function BottomNav() {
     <footer className="bottom-nav">
       <nav className="bottom-nav__nav">
         <ul className="bottom-nav__items">
-          <NavItem href="/calendar" icon={calendar} label="Calendar" />
-          <NavItem href="/calendar/add" icon={add} label="Income/Expense" />
+          <NavItem href="/calendar" icon={calendar} exact label="Calendar" />
+          <NavItem href="/calendar/add" icon={add} exact label="Income/Expense" />
           <NavItem href="/strategies" icon={lightbulb} label="Strategies" />
           <NavItem href="/more" icon={menu} label="More" />
         </ul>
