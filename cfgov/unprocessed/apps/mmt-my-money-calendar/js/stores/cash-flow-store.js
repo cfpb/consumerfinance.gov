@@ -22,11 +22,6 @@ export default class CashFlowStore {
       if (event.recurs && event.recurrenceRule && !event.isRecurrence) this.createRecurrences(event);
     });
 
-    CashFlowEvent.on('destroy', (deletedIDs) => {
-      this.logger.info('Detected event destroy with IDs: %O', deletedIDs);
-      this.removeEvents(deletedIDs);
-    });
-
     this.logger.debug('Initialize CashFlowStore: %O', this);
   }
 
@@ -222,13 +217,6 @@ export default class CashFlowStore {
     this.events = [...this.events, ...events];
   }
 
-  @action removeEvents(...ids) {
-    this.events = this.events.filter((evt) => {
-      if (ids.includes(evt.id)) return false;
-      return true;
-    });
-  }
-
   /**
    * Deletes an event from the store and the database
    *
@@ -237,8 +225,21 @@ export default class CashFlowStore {
    */
   deleteEvent = flow(function*(id) {
     const event = this.eventsById.get(id);
+    const recurrences = yield event.getAllRecurrences();
+    const deletedIDs = [event.id];
+
     yield event.destroy();
-    this.events = this.events.filter((e) => e.id !== id);
+    this.logger.debug('Destroy event with ID %d', event.id);
+
+    if (recurrences && recurrences.length) {
+      for (const recurrence of recurrences) {
+        yield recurrence.destroy();
+        deletedIDs.push(recurrence.id);
+        this.logger.debug('Destroy event recurrence with ID %d', recurrence.id);
+      }
+    }
+
+    this.events = this.events.filter((e) => !deletedIDs.includes(e.id));
   });
 
   createRecurrences = flow(function*(event) {
