@@ -13,7 +13,7 @@ class Chart {
       .then( data => {
         data = data.map( o => {
           const perCapita = parseFloat( o.perCapita.toFixed( 2 ) );
-          const displayValue = this.chartOptions.perCapita ?
+          const displayValue = this.chartOptions.isPerCapita ?
             perCapita : o.value;
           return {
             ...o,
@@ -49,11 +49,18 @@ function start( isPerCapita ) {
   } );
 }
 
-document.getElementsByClassName( 'capita' )[0].onclick = () => {
+const perCapBtn = document.getElementsByClassName( 'capita' )[0];
+const rawBtn = document.getElementsByClassName( 'raw' )[0];
+
+perCapBtn.onclick = () => {
+  perCapBtn.classList.add('selected');
+  rawBtn.classList.remove('selected');
   start( true );
 };
 
-document.getElementsByClassName( 'raw' )[0].onclick = () => {
+rawBtn.onclick = () => {
+  rawBtn.classList.add('selected');
+  perCapBtn.classList.remove('selected');
   start( false );
 };
 

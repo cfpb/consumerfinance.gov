@@ -24,11 +24,13 @@ body {
       &.interval-All{
         background-color: @gray-20;
       }
-      &.per-capita {
-        background-color: @pacific-20;
-      }
       &.selected {
         font-weight: 600;
+      }
+    }
+    .per-capita {
+      .a-btn:not(.selected){
+        background-color: @pacific-20;
       }
     }
     .a-btn__disabled {

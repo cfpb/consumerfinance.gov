@@ -74,6 +74,9 @@ function getPerCapitaBins( data, colors ) {
     curr = parseFloat( curr.toFixed( 2 ) );
     const minValue = curr;
     const displayValue = curr;
+    if ( i === 0 ) {
+      bins.push( { from: 0, to: minValue, color: '#fff', name: '>0' } );
+    }
 
     bins.push( {
       from: minValue,
@@ -86,6 +89,8 @@ function getPerCapitaBins( data, colors ) {
   // The last bin is unbounded
   // eslint-disable-next-line no-undefined
   bins[binCount - 1].to = undefined;
+
+  console.log( bins );
 
   return bins;
 }
@@ -246,8 +251,8 @@ const colors = [
 
 class TileMap {
   constructor( { el, description, data, isPerCapita } ) {
-    const bins = isPerCapita ? getPerCapitaBins( data, colors ) :
-      getBins( data, colors );
+    const bins = isPerCapita ?
+      getPerCapitaBins( data, colors ) : getBins( data, colors );
     data = processMapData( data, bins );
 
     const options = {
