@@ -1,82 +1,84 @@
 #landing-map {
   height: 400px;
-}
-
-.cfpb-chart[data-chart-type="tile_map"] {
-  .highcharts-container {
-    .webfont-regular();
-  }
-
-  .highcharts-legend__tile-map {
-    font-size: 12px;
-    font-weight: 600;
-    .legend-box {
-      stroke-width: 1;
-      stroke: #75787b;
+  &.cfpb-chart {
+    .highcharts-container {
+      .webfont-regular();
     }
-  }
 
-  .highcharts-data-label {
-    .highcharts-data-label-state {
-      text-align: center;
-      cursor: default;
-      &.deselected {
-        color: @gray
-      }
+    .highcharts-legend__tile-map {
+      font-size: 12px;
+      font-weight: 600;
 
-      .abbr {
-        font-size: 18px;
-        font-weight: 800;
-      }
-
-      .value {
-        font-size: 12px;
-        .respond-to-max( 600px, {
-          display: block;
-          margin-top: -2px;
-          font-size: 9px;
-        } );
+      .legend-box {
+        stroke-width: 1;
+        stroke: #75787b;
       }
     }
-  }
 
-  .highcharts-label-box {
-    display: none;
-  }
+    .highcharts-data-label {
+      .highcharts-data-label-state {
+        text-align: center;
+        cursor: default;
 
-  .highcharts-tooltip {
-    min-width: 200px;
+        &.deselected {
+          color: @gray
+        }
 
-    span {
-      color: @white;
-      background-color: @black;
-      padding: 5px;
-      width: 320px;
-      div {
-        p {
-          margin: 5px;
-          white-space: normal;
+        .abbr {
+          font-size: 18px;
+          font-weight: 800;
+        }
 
-          &.u-float-left {
-            width: 150px;
-            float: left;
-          }
-
-          &.u-right {
-            width: 150px;
-            //float: right;
-          }
+        .value {
+          font-size: 12px;
+          .respond-to-max(600px, {
+            display: block;
+            margin-top: -2px;
+            font-size: 9px;
+          });
         }
       }
+    }
 
-      .title {
-        text-align: center;
-      }
+    .highcharts-label-box {
+      display: none;
+    }
 
-      .row {
-        border-top: solid 1px @dark-gray;
-        margin-top: 5px;
-        padding-top: 5px;
+    .highcharts-tooltip {
+      min-width: 200px;
+
+      span {
+        color: @white;
+        background-color: @black;
+        padding: 5px;
+        width: 320px;
+
+        div {
+          p {
+            margin: 5px;
+            white-space: normal;
+
+            &.u-float-left {
+              width: 150px;
+              float: left;
+            }
+
+            &.u-right {
+              width: 150px;
+              //float: right;
+            }
+          }
+        }
+
+        .title {
+          text-align: center;
+        }
+
+        .row {
+          border-top: solid 1px @dark-gray;
+          margin-top: 5px;
+          padding-top: 5px;
+        }
       }
     }
   }
