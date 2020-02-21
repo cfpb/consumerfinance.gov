@@ -86,8 +86,6 @@ function getPerCapitaBins( data, colors ) {
   // eslint-disable-next-line no-undefined
   bins[binCount - 1].to = undefined;
 
-  console.log( bins );
-
   return bins;
 }
 
