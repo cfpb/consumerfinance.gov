@@ -67,17 +67,13 @@ function getPerCapitaBins( data, colors ) {
   // Early exit
   if ( max === 0 ) return [];
 
-  const bins = [];
   const step = ( max - min ) / binCount;
+  const bins = [ { from: 0, to: step, color: '#fff', name: '>0' } ];
 
   for ( let i = 0, curr = min; i < binCount; i++, curr += step ) {
     curr = parseFloat( curr.toFixed( 2 ) );
     const minValue = curr;
     const displayValue = curr;
-    if ( i === 0 ) {
-      bins.push( { from: 0, to: minValue, color: '#fff', name: '>0' } );
-    }
-
     bins.push( {
       from: minValue,
       to: parseFloat( ( curr + step ).toFixed( 2 ) ),
