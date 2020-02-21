@@ -77,8 +77,9 @@ function Form() {
       try {
         eventStore.createEvent({
           ...values,
-          categoryPath,
-        })
+          category: categoryPath,
+        });
+        history.push('/calendar');
       } catch (err) {
         logger.error(err);
         uiStore.setError(err);
@@ -91,8 +92,8 @@ function Form() {
 
   return (
     <section className="add-event">
-      <h2>{category.name}</h2>
-      <p>Enter your {category.name} details.</p>
+      <h2 className="add-event__title">{category.name}</h2>
+      <p className="add-event__intro">Enter your {category.name.toLowerCase()} details.</p>
 
       <form onSubmit={formik.handleSubmit}>
         <CurrencyField
