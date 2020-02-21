@@ -14,6 +14,7 @@ export default class UIStore {
   @observable error;
   @observable currentMonth = DateTime.local().startOf('month');
   @observable selectedDate;
+  @observable selectedCategory;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -80,6 +81,10 @@ export default class UIStore {
     this.currentMonth = date.startOf('month');
     this.selectedDate = date.startOf('day');
   }
+
+  @action setSelectedCategory(category) {
+    this.selectedCategory = category;
+  };
 
   toggleNav() {
     this.setNavOpen(!this.navOpen);
