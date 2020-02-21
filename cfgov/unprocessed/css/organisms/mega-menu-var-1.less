@@ -618,14 +618,17 @@ body {
 
                 &:hover {
                     padding-bottom: ( @grid_gutter-width / 2) - 6px;
-                    border-bottom: 6px solid @green;
+                    // We can't use a border here as it will get a slant on
+                    // the edges because there are transparent left/right
+                    // borders.
+                    box-shadow: 0 6px 0 0 @gray-40;
                     cursor: pointer;
                 }
 
                 // Don't show hover when menu is expanded.
                 &[aria-expanded="true"]:hover,
                 &:active:hover {
-                    border-bottom: none;
+                    box-shadow: none;
                     padding-bottom: @grid_gutter-width / 2
                 }
 
