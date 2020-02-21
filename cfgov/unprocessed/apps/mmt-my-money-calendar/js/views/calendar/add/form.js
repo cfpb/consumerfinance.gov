@@ -26,7 +26,7 @@ function Form() {
     []
   );
   const categoryPath = uiStore.selectedCategory;
-  const category = dotProp.get(Categories, categoryPath);
+  const category = Categories.get(categoryPath);
   const eventType = categoryPath.split('.')[0];
 
   const formik = useFormik({
