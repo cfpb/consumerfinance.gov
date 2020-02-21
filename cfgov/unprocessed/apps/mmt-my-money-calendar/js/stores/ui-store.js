@@ -14,7 +14,7 @@ export default class UIStore {
   @observable error;
   @observable currentMonth = DateTime.local().startOf('month');
   @observable selectedDate;
-  @observable selectedCategory;
+  @observable selectedCategory = '';
 
   constructor(rootStore) {
     this.rootStore = rootStore;
