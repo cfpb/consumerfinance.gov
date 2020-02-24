@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 import dotProp from 'dot-prop';
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/cash-flow-event';
-import Button, { ButtonLink } from '../../../components/button';
+import Button, { ButtonLink, BackButton } from '../../../components/button';
 import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
 import { recurrenceRules, numberWithOrdinal } from '../../../lib/calendar-helpers';
 import { range } from '../../../lib/array-helpers';
@@ -27,8 +27,9 @@ function Form() {
   );
   const { categories = '' } = useParams();
   const categoryPath = categories.replace(/\//g, '.');
+  const pathSegments = categoryPath.split('.');
   const category = Categories.get(categoryPath);
-  const eventType = categoryPath.split('.')[0];
+  const eventType = pathSegments[0];
 
   const formik = useFormik({
     initialValues: {
@@ -88,17 +89,27 @@ function Form() {
     },
   });
 
-  /*
-  if (!uiStore.selectedCategory)
+  if (!category)
     return <Redirect to="/calendar/add" />;
-    */
 
   return (
     <section className="add-event">
+      <BackButton variant="secondary" onClick={() => history.goBack()}>Back</BackButton>
       <h2 className="add-event__title">{category.name}</h2>
       <p className="add-event__intro">Enter your {category.name.toLowerCase()} details.</p>
 
       <form onSubmit={formik.handleSubmit}>
+        <TextField
+          name="name"
+          id="name"
+          label="Description"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.name}
+          errors={formik.errors.name}
+          touched={formik.touched.name}
+        />
+
         <CurrencyField
           id="totalCents"
           name="totalCents"

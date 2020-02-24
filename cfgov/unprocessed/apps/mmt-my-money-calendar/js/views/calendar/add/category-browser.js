@@ -5,7 +5,10 @@ import { Link, NavLink, useParams, useHistory, withRouter } from 'react-router-d
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/cash-flow-event';
 import { useLogger } from '../../../lib/logger';
+import { BackButton } from '../../../components/button';
 import dotProp from 'dot-prop';
+
+import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
 
 const CategoryLink = ({ slug, label, icon = '' }) => <li key={slug}></li>;
 
@@ -15,7 +18,9 @@ function CategoryBrowser({ match }) {
   const history = useHistory();
   const categoryPath = categories.replace(/\//g, '.');
   const category = Categories.get(categoryPath);
-  // const categoryOptions = category ? category : Categories.all;
+  const pathSegments = categoryPath.split('.');
+  const parentCategoryPath = pathSegments.slice(0, pathSegments.length - 1)
+  const backPath = parentCategoryPath.join('/');
 
   useLogger(
     'categoryBrowser',
@@ -27,20 +32,12 @@ function CategoryBrowser({ match }) {
     [categoryPath, category]
   );
 
-  /*
-  useEffect(() => {
-    uiStore.setSelectedCategory(categoryPath);
-
-    if (category && category.name && !category.subcategories) {
-      history.push('/calendar/add/new');
-    }
-  }, [category, categoryPath]);
-  */
-
   const categoryOptions = category ? (category.subcategories ? category.subcategories : category) : Categories.all;
 
   return (
     <section className="category-browser">
+      <BackButton variant="secondary" onClick={() => history.goBack()}>Back</BackButton>
+
       <nav className="category-browser__tab-nav">
         <ul>
           <li>
