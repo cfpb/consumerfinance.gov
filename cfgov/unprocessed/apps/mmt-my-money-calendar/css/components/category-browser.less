@@ -26,6 +26,7 @@
     &:visited,
     &:active {
       color: @text;
+      border-color: @text;
     }
 
     &.active {
@@ -63,10 +64,14 @@
     &:active {
       color: @text;
     }
+
+    &:active {
+      border: 1px dotted @text;
+    }
   }
 
   &__icon {
-    width: 72px;
+    width: 60px;
     height: auto;
     margin-bottom: 16px;
   }
