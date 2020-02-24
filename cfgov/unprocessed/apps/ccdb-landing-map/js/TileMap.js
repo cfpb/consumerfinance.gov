@@ -145,16 +145,44 @@ function _drawLegend( chart ) {
   const boxHeight = 15;
   const boxPadding = 1;
 
-  /* args: (str, x, y, shape, anchorX, anchorY, useHTML, baseline, className)
-     const labelTx = 'Map shading: Complaints';
-     chart.renderer
-       .label( labelTx, 5, 5, null, null, null, true, false, 'label__tile-map' )
-       .add(); */
   /* https://api.highcharts.com/class-reference/Highcharts.SVGRenderer#label
      boxes and labels for legend buckets */
-  const legend = chart.renderer.g( 'legend__tile-map' )
+  // main container
+  const legendContainer = chart.renderer.g( 'legend-container' )
     .translate( 10, marginTop )
     .add();
+
+  const legendText = chart.renderer.g( 'legend-title' )
+    .translate(boxPadding, 0)
+    .add(legendContainer);
+  // key
+  chart.renderer
+    .label( 'Key', 0, 0, null, null, null, true, false, 'legend-key' )
+    .add( legendText );
+
+  // horizontal separator line
+  chart.renderer.path(['M', 0, 0, 'L', 490, 0])
+    .attr({
+      class: 'separator',
+      'stroke-width': 1,
+      stroke: 'gray'
+    })
+    .translate(0, 25)
+    .add(legendText);
+
+  // what legend represents
+  let legendTitle = chart.legend.legendTitle;
+
+  const labelTx = 'Map shading: <span class="type">' + legendTitle + '</span>';
+  chart.renderer
+  .label( labelTx, 0, 28, null, null, null, true, false, 'legend-description' )
+  .add(legendText);
+
+
+  // bars
+  const legend = chart.renderer.g( 'legend__tile-map' )
+    .translate( 0, 40 )
+    .add( legendContainer );
 
   for ( let i = 0; i < bins.length; i++ ) {
     const g = chart.renderer.g( `g${ i }` )
@@ -263,7 +291,8 @@ class TileMap {
       description: description,
       credits: false,
       legend: {
-        enabled: false
+        enabled: false,
+        legendTitle: isPerCapita ? 'Complaints per 1000' : 'Complaints',
       },
       tooltip: {
         className: 'tooltip',
