@@ -39,12 +39,12 @@ function CategoryBrowser({ match }) {
       <BackButton variant="secondary" onClick={() => history.goBack()}>Back</BackButton>
 
       <nav className="category-browser__tab-nav">
-        <ul>
-          <li>
-            <NavLink to={`/calendar/add/income`}>Income</NavLink>
+        <ul className="category-browser__tab-items">
+          <li className="category-browser__tab-item">
+            <NavLink className="category-browser__tab-link" to={`/calendar/add/income`}>Income</NavLink>
           </li>
-          <li>
-            <NavLink to={`/calendar/add/expense`}>Expense</NavLink>
+          <li className="category-browser__tab-item">
+            <NavLink className="category-browser__tab-link" to={`/calendar/add/expense`}>Expense</NavLink>
           </li>
         </ul>
       </nav>
