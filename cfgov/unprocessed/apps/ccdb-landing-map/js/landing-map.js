@@ -33,9 +33,9 @@ class Chart {
 }
 
 /**
- * main
+ * main function to draw a new map.
+ * @param {boolean} isPerCapita display per capita complaints (decimals)
  */
-
 function start( isPerCapita ) {
   const el = document.getElementById( 'landing-map' );
   el.querySelectorAll( '*' ).forEach( n => n.remove() );
@@ -53,14 +53,14 @@ const perCapBtn = document.getElementsByClassName( 'capita' )[0];
 const rawBtn = document.getElementsByClassName( 'raw' )[0];
 
 perCapBtn.onclick = () => {
-  perCapBtn.classList.add('selected');
-  rawBtn.classList.remove('selected');
+  perCapBtn.classList.add( 'selected' );
+  rawBtn.classList.remove( 'selected' );
   start( true );
 };
 
 rawBtn.onclick = () => {
-  rawBtn.classList.add('selected');
-  perCapBtn.classList.remove('selected');
+  rawBtn.classList.add( 'selected' );
+  perCapBtn.classList.remove( 'selected' );
   start( false );
 };
 
