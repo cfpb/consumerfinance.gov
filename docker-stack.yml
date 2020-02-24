@@ -1,0 +1,73 @@
+version: "3.7"
+
+services:
+
+    elasticsearch:
+        image: elasticsearch:2.4-alpine
+        networks:
+            - app
+
+    postgres:
+        image: postgres:10-alpine
+        environment:
+            POSTGRES_USER: cfpb
+            POSTGRES_PASSWORD_FILE: /var/run/secrets/PGPASSWORD
+            POSTGRES_DB: cfgov
+        ports:
+            - 5432
+        networks:
+            - app
+        secrets:
+            - PGPASSWORD
+
+    python:
+        image: ${CFGOV_PYTHON_IMAGE}
+        environment:
+            ALLOW_ADMIN_URL: 'True'
+            APACHE_PORT: 8000
+            APACHE_UPLOADS_F_ALIAS: /src/cfgov-refresh/cfgov/f/
+            DATABASE_URL: postgres://cfpb@postgres/cfgov
+            DJANGO_ADMIN_USERNAME: admin
+            ES_HOST: elasticsearch
+            MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
+        ports:
+            - 8000
+        networks:
+            - app
+            - lb
+        secrets:
+            - CFGOV_PROD_DB_LOCATION
+            - DJANGO_ADMIN_PASSWORD
+            - PGPASSWORD
+            - SECRET_KEY
+        deploy:
+            placement:
+                constraints:
+                - node.role!=manager
+            restart_policy:
+                condition: none
+            labels:
+                - com.docker.lb.hosts=${CFGOV_HOSTNAME}
+                - com.docker.lb.port=8000
+                - com.docker.lb.network=${LB_NETWORK}
+        command: /bin/bash -c './refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND'
+
+networks:
+    app:
+    lb:
+        name: ${LB_NETWORK}
+        external: True
+    
+secrets:
+    CFGOV_PROD_DB_LOCATION:
+        name: cfgov_prod_db_location
+        external: True
+    DJANGO_ADMIN_PASSWORD:
+        name: cfgov_django_admin_password
+        external: True
+    PGPASSWORD:
+        name: cfgov_postgres_password
+        external: True
+    SECRET_KEY:
+        name: cfgov_django_secret_key
+        external: True
