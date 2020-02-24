@@ -153,30 +153,30 @@ function _drawLegend( chart ) {
     .add();
 
   const legendText = chart.renderer.g( 'legend-title' )
-    .translate(boxPadding, 0)
-    .add(legendContainer);
+    .translate( boxPadding, 0 )
+    .add( legendContainer );
   // key
   chart.renderer
     .label( 'Key', 0, 0, null, null, null, true, false, 'legend-key' )
     .add( legendText );
 
   // horizontal separator line
-  chart.renderer.path(['M', 0, 0, 'L', 355, 0])
-    .attr({
-      class: 'separator',
+  chart.renderer.path( [ 'M', 0, 0, 'L', 308, 0 ] )
+    .attr( {
+      'class': 'separator',
       'stroke-width': 1,
-      stroke: 'gray'
-    })
-    .translate(0, 25)
-    .add(legendText);
+      'stroke': 'gray'
+    } )
+    .translate( 0, 25 )
+    .add( legendText );
 
   // what legend represents
   const { legendTitle } = chart.options.legend;
 
   const labelTx = 'Map shading: <span class="type">' + legendTitle + '</span>';
   chart.renderer
-  .label( labelTx, 0, 28, null, null, null, true, false, 'legend-description' )
-  .add(legendText);
+    .label( labelTx, 0, 28, null, null, null, true, false, 'legend-description' )
+    .add( legendText );
 
 
   // bars
@@ -292,7 +292,7 @@ class TileMap {
       credits: false,
       legend: {
         enabled: false,
-        legendTitle: isPerCapita ? 'Complaints per 1000' : 'Complaints',
+        legendTitle: isPerCapita ? 'Complaints per 1000' : 'Complaints'
       },
       tooltip: {
         className: 'tooltip',
