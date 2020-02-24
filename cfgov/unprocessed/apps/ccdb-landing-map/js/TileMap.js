@@ -161,7 +161,7 @@ function _drawLegend( chart ) {
     .add( legendText );
 
   // horizontal separator line
-  chart.renderer.path(['M', 0, 0, 'L', 490, 0])
+  chart.renderer.path(['M', 0, 0, 'L', 355, 0])
     .attr({
       class: 'separator',
       'stroke-width': 1,
@@ -171,7 +171,7 @@ function _drawLegend( chart ) {
     .add(legendText);
 
   // what legend represents
-  let legendTitle = chart.legend.legendTitle;
+  const { legendTitle } = chart.options.legend;
 
   const labelTx = 'Map shading: <span class="type">' + legendTitle + '</span>';
   chart.renderer
@@ -181,7 +181,7 @@ function _drawLegend( chart ) {
 
   // bars
   const legend = chart.renderer.g( 'legend__tile-map' )
-    .translate( 0, 40 )
+    .translate( 3, 50 )
     .add( legendContainer );
 
   for ( let i = 0; i < bins.length; i++ ) {
