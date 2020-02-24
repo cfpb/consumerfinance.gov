@@ -33,3 +33,45 @@
     }
   }
 }
+
+.category-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &__item {
+    flex-basis: 33%;
+    width: 33%;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    color: @text;
+    border: 0;
+
+    &:visited,
+    &:active {
+      color: @text;
+    }
+  }
+
+  &__icon {
+    width: 72px;
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  &__label {
+    font-size: 14px;
+  }
+}

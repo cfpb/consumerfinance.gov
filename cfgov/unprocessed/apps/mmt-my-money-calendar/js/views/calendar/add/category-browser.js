@@ -9,6 +9,7 @@ import { BackButton } from '../../../components/button';
 import dotProp from 'dot-prop';
 
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
+import iconPlaceholder from '../../../../img/icon-placeholder.png';
 
 const CategoryLink = ({ slug, label, icon = '' }) => <li key={slug}></li>;
 
@@ -54,7 +55,10 @@ function CategoryBrowser({ match }) {
       <ul className="category-links">
         {Object.entries(categoryOptions).map(([key, {name, subcategories}]) => (
           <li key={key} className="category-links__item">
-            <Link to={`/calendar/add/${categories}/${key}${subcategories ? '' : '/new'}`}>{name}</Link>
+            <Link className="category-links__link" to={`/calendar/add/${categories}/${key}${subcategories ? '' : '/new'}`}>
+              <img src={iconPlaceholder} className="category-links__icon" alt={`Category: ${name}`} />
+              <span className="category-links__label">{name}</span>
+            </Link>
           </li>
         ))}
       </ul>
