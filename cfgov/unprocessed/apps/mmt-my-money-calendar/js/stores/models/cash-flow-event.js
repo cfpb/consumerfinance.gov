@@ -19,8 +19,12 @@ class CategoryTree {
   }
 
   get(path = '') {
-    if (path.length && !(/\./).test(path) && this.categories[path]) return this.categories[path].subcategories;
-    return dotProp.get(this.categories, path.replace(/\./g, '.subcategories.'));
+    const normalizedPath = path.replace(/\//g, '.');
+
+    if (normalizedPath.length && !(/\./).test(normalizedPath) && this.categories[normalizedPath])
+      return this.categories[normalizedPath].subcategories;
+
+    return dotProp.get(this.categories, normalizedPath.replace(/\./g, '.subcategories.'));
   }
 }
 

@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import { useMemo } from 'react';
 import { useFormik } from 'formik';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useParams, useHistory, Redirect, withRouter } from 'react-router-dom';
 import * as yup from 'yup';
 import { DateTime } from 'luxon';
 import dotProp from 'dot-prop';
@@ -25,7 +25,8 @@ function Form() {
     () => [...range(1, 30)].map((num) => ({ label: numberWithOrdinal(num), value: num })),
     []
   );
-  const categoryPath = uiStore.selectedCategory;
+  const { categories = '' } = useParams();
+  const categoryPath = categories.replace(/\//g, '.');
   const category = Categories.get(categoryPath);
   const eventType = categoryPath.split('.')[0];
 
@@ -87,8 +88,10 @@ function Form() {
     },
   });
 
+  /*
   if (!uiStore.selectedCategory)
     return <Redirect to="/calendar/add" />;
+    */
 
   return (
     <section className="add-event">
@@ -168,4 +171,4 @@ function Form() {
   );
 }
 
-export default observer(Form);
+export default withRouter(observer(Form));

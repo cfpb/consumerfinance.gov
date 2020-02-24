@@ -15,7 +15,7 @@ function CategoryBrowser({ match }) {
   const history = useHistory();
   const categoryPath = categories.replace(/\//g, '.');
   const category = Categories.get(categoryPath);
-  const categoryOptions = category ? category : Categories.all;
+  // const categoryOptions = category ? category : Categories.all;
 
   useLogger(
     'categoryBrowser',
@@ -27,6 +27,7 @@ function CategoryBrowser({ match }) {
     [categoryPath, category]
   );
 
+  /*
   useEffect(() => {
     uiStore.setSelectedCategory(categoryPath);
 
@@ -34,6 +35,9 @@ function CategoryBrowser({ match }) {
       history.push('/calendar/add/new');
     }
   }, [category, categoryPath]);
+  */
+
+  const categoryOptions = category ? (category.subcategories ? category.subcategories : category) : Categories.all;
 
   return (
     <section className="category-browser">
@@ -48,10 +52,12 @@ function CategoryBrowser({ match }) {
         </ul>
       </nav>
 
+      {category.name && <h2>{category.name}</h2>}
+
       <ul className="category-links">
-        {Object.entries(categoryOptions).map(([key, {name}]) => (
+        {Object.entries(categoryOptions).map(([key, {name, subcategories}]) => (
           <li key={key} className="category-links__item">
-            <Link to={`/calendar/add/${categories}/${key}`}>{name}</Link>
+            <Link to={`/calendar/add/${categories}/${key}${subcategories ? '' : '/new'}`}>{name}</Link>
           </li>
         ))}
       </ul>

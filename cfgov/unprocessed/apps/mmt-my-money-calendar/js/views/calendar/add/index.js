@@ -9,6 +9,10 @@ const Add = ({ match }) => (
       <Debug />
     </Route>
 
+    <Route path={`${match.path}/:categories+/new`}>
+      <Form />
+    </Route>
+
     <Route path={`${match.path}/new`}>
       <Form />
     </Route>
