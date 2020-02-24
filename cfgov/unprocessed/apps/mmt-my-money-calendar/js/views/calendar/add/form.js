@@ -11,6 +11,7 @@ import Button, { ButtonLink, BackButton } from '../../../components/button';
 import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
 import { recurrenceRules, numberWithOrdinal } from '../../../lib/calendar-helpers';
 import { range } from '../../../lib/array-helpers';
+import { useScrollToTop } from '../../../components/scroll-to-top';
 import Logger from '../../../lib/logger';
 
 function Form() {
@@ -88,6 +89,8 @@ function Form() {
       }
     },
   });
+
+  useScrollToTop();
 
   if (!category)
     return <Redirect to="/calendar/add" />;

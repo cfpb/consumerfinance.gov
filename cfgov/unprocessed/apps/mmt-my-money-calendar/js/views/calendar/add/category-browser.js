@@ -5,6 +5,7 @@ import { Link, NavLink, useParams, useHistory, withRouter } from 'react-router-d
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/cash-flow-event';
 import { useLogger } from '../../../lib/logger';
+import { useScrollToTop } from '../../../components/scroll-to-top';
 import { BackButton } from '../../../components/button';
 import dotProp from 'dot-prop';
 
@@ -32,6 +33,8 @@ function CategoryBrowser({ match }) {
     },
     [categoryPath, category]
   );
+
+  useScrollToTop();
 
   const categoryOptions = category ? (category.subcategories ? category.subcategories : category) : Categories.all;
 
