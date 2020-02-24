@@ -7,7 +7,6 @@ import { asyncComputed } from 'computed-async-mobx';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
 import { transform } from '../../lib/object-helpers';
-import dotProp from 'dot-prop';
 
 export default class CashFlowEvent {
   @observable originalEventID;
@@ -223,6 +222,11 @@ export default class CashFlowEvent {
   }
 
   set recurrenceRule(rule) {
+    if (!rule || typeof rule.toString !== 'function') {
+      this.rruleStr = '';
+      return;
+    }
+
     this.rruleStr = rule.toString();
   }
 
