@@ -51,14 +51,13 @@ ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
 
-
+# Production-like Apache-based image
 FROM cfgov-dev as cfgov-prod
 
 ENV SCL_HTTPD_VERSION httpd24
 ENV SCL_HTTPD_ROOT /opt/rh/${SCL_HTTPD_VERSION}/root
 
 # Apache HTTPD settings
-#ENV APACHE_SERVER_ROOT ${SCL_HTTPD_ROOT}/etc/httpd
 ENV APACHE_SERVER_ROOT ${APP_HOME}/cfgov/apache
 ENV APACHE_PROCESS_COUNT 4
 ENV ACCESS_LOG /dev/stdout
@@ -77,28 +76,28 @@ ENV ALLOWED_HOSTS '["*"]'
 
 RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     yum clean all && rm -rf /var/cache/yum && \
-    echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh
+    echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
+    echo "SD=/var/run/secrets [ -d "$SD" ] && cd $SD && for s in *; do export $s=$(cat $s); done" > /etc/profile.d/secrets_env.sh
 
 # See .dockerignore for details on which files are included
-COPY . .
+COPY --chown=apache:apache . .
 
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
 # - /tmp/eregs_cache/ - Django file-based cache
 RUN yum -y install nodejs yarn  && \
-    ./frontend.sh production && \
+    yum clean all && rm -rf /var/cache/yum && \
+    chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
+
+USER apache
+
+RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
-    yum -y remove nodejs yarn && \
-    yum clean all && rm -rf /var/cache/yum && \
-    rm -rf \
-        cfgov/apache/www \
-        cfgov/unprocessed \
-        node_modules && \
+#    yum -y remove nodejs yarn && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
-    mkdir -p cfgov/f/ && chown -R apache:apache cfgov/f/ && \
-    mkdir /tmp/eregs_cache && chown apache:apache /tmp/eregs_cache
-
-EXPOSE 80
-
-CMD ["httpd", "-d", "./cfgov/apache", "-D", "FOREGROUND"]
+    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
+    rm -rf cfgov/apache/www cfgov/unprocessed node_modules && \
+    mkdir -p cfgov/f /tmp/eregs_cache
+    
+CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]
