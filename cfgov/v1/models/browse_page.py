@@ -1,13 +1,5 @@
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
-)
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailsearch import index
-
 from youth_employment.blocks import YESChecklist
 
 from data_research.blocks import (
@@ -18,6 +10,24 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 from v1.util.util import get_secondary_nav_items
+
+
+try:
+    from wagtail.admin.edit_handlers import (
+        FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    )
+    from wagtail.core import blocks
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import PageManager
+    from wagtail.search import index
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    )
+    from wagtail.wagtailcore import blocks
+    from wagtail.wagtailcore.fields import StreamField
+    from wagtail.wagtailcore.models import PageManager
+    from wagtail.wagtailsearch import index
 
 
 class BrowsePage(CFGOVPage):

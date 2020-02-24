@@ -2,10 +2,14 @@ import os
 
 from django.core.management.base import BaseCommand
 
-from wagtail.wagtailimages import get_image_model
-
 import requests
 import requests.exceptions
+
+
+try:
+    from wagtail.images import get_image_model
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailimages import get_image_model
 
 
 class Command(BaseCommand):

@@ -1,11 +1,15 @@
 import logging
 
-from wagtail.wagtailcore.signals import page_published
-
 import requests
 from flags.state import flag_enabled
 
 from jobmanager.models.pages import JobListingPage
+
+
+try:
+    from wagtail.core.signals import page_published
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.signals import page_published
 
 
 logger = logging.getLogger(__name__)

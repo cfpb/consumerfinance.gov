@@ -1,14 +1,20 @@
 import datetime
 
-from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (  # noqa: E501
-    routablepageurl
-)
-
 import jinja2
 from dateutil import parser
 from jinja2.ext import Extension
 from jinja2.filters import do_mark_safe
 from regdown import regdown as regdown_func
+
+
+try:
+    from wagtail.contrib.routable_page.templatetags.wagtailroutablepage_tags import (  # noqa: E501
+        routablepageurl
+    )
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.contrib.wagtailroutablepage.templatetags.wagtailroutablepage_tags import (  # noqa: E501
+        routablepageurl
+    )
 
 
 def ap_date(date):

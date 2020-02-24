@@ -1,6 +1,3 @@
-from __future__ import print_function
-
-import contextlib
 import importlib
 import logging
 import os
@@ -8,6 +5,7 @@ import re
 import shutil
 import subprocess
 import sys
+from contextlib import redirect_stdout
 from io import StringIO
 
 from django.apps import apps
@@ -18,22 +16,10 @@ from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
 from django.test.runner import DiscoverRunner
 
+import wagtail
+
 from mock import Mock
 from scripts import initial_data, test_data
-
-
-try:
-    from contextlib import redirect_stdout
-except ImportError:
-    # contextlib.redirect_stdout exists in Python 3 but not in Python 2.
-    # This is an approximation.
-    @contextlib.contextmanager
-    def redirect_stdout(new_target):
-        sys.stdout = new_target
-        try:
-            yield
-        finally:
-            sys.stdout = sys.__stdout__
 
 
 class TestRunner(DiscoverRunner):
@@ -96,16 +82,35 @@ class TestRunner(DiscoverRunner):
         return dbs
 
     def run_required_data_migrations(self):
-        migration_methods = (
-            (
-                'wagtail.wagtailcore.migrations.0002_initial_data',
-                'initial_data'
-            ),
-            (
-                'wagtail.wagtailcore.migrations.0025_collection_initial_data',
-                'initial_data'
-            ),
-        )
+        if wagtail.VERSION >= (2, 0):
+            if settings.MIGRATION_MODULES:
+                migration_methods = (
+                    (
+                        'wagtail.core.migrations.'
+                        '0002_initial_data',
+                        'initial_data'
+                    ),
+                    (
+                        'wagtail.core.migrations.'
+                        '0025_collection_initial_data',
+                        'initial_data'
+                    ),
+                )
+            else:
+                migration_methods = ()
+        else:
+            migration_methods = (
+                (
+                    'wagtail.wagtailcore.migrations.'
+                    '0002_initial_data',
+                    'initial_data'
+                ),
+                (
+                    'wagtail.wagtailcore.migrations.'
+                    '0025_collection_initial_data',
+                    'initial_data'
+                ),
+            )
 
         loader = MigrationLoader(connection)
 

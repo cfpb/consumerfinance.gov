@@ -1,16 +1,26 @@
-from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList, StreamFieldPanel, TabbedInterface
-)
-from wagtail.wagtailcore.blocks import StreamBlock
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailsearch import index
-
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
 from v1.util.filterable_list import FilterableListMixin
+
+
+try:
+    from wagtail.admin.edit_handlers import (
+        ObjectList, StreamFieldPanel, TabbedInterface
+    )
+    from wagtail.core.blocks import StreamBlock
+    from wagtail.core.fields import StreamField
+    from wagtail.core.models import PageManager
+    from wagtail.search import index
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        ObjectList, StreamFieldPanel, TabbedInterface
+    )
+    from wagtail.wagtailcore.blocks import StreamBlock
+    from wagtail.wagtailcore.fields import StreamField
+    from wagtail.wagtailcore.models import PageManager
+    from wagtail.wagtailsearch import index
 
 
 class SublandingFilterableContent(StreamBlock):
