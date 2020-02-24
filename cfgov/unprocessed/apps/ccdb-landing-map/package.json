@@ -21,6 +21,7 @@
     "cfpb-chart-builder": "^6.4.0",
     "core-js": "3.3.6",
     "highcharts": "7.2.1",
+    "moment": "2.24.0",
     "xdr": "0.5.3"
   }
 }

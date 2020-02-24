@@ -3,6 +3,19 @@
 import Highcharts from 'highcharts/highmaps';
 import accessibility from 'highcharts/modules/accessibility';
 import getTileMapState from 'cfpb-chart-builder/src/js/utils/get-tile-map-state';
+import moment from 'moment';
+
+/**
+ * helper function to get date interval for legend
+ * @returns {string} formatted string
+ */
+function calculateDateInterval() {
+  let today = new Date();
+  today = today.toLocaleDateString( 'en-US' );
+  let past = new Date( moment().subtract( 3, 'years' ).calendar() );
+  past = past.toLocaleDateString( 'en-US' );
+  return past + ' - ' + today;
+}
 
 /* ----------------------------------------------------------------------------
    Utility Functions */
@@ -139,7 +152,6 @@ function getColorByValue( value, bins ) {
  */
 function _drawLegend( chart ) {
   const bins = chart.options.bins;
-
   const marginTop = chart.margin[0] || 0;
   const boxWidth = 50;
   const boxHeight = 15;
@@ -161,7 +173,7 @@ function _drawLegend( chart ) {
     .add( legendText );
 
   // horizontal separator line
-  chart.renderer.path( [ 'M', 0, 0, 'L', 308, 0 ] )
+  chart.renderer.path( [ 'M', 0, 0, 'L', bins.length * ( boxWidth + boxPadding ), 0 ] )
     .attr( {
       'class': 'separator',
       'stroke-width': 1,
@@ -171,17 +183,21 @@ function _drawLegend( chart ) {
     .add( legendText );
 
   // what legend represents
-  const { legendTitle } = chart.options.legend;
-
-  const labelTx = 'Map shading: <span class="type">' + legendTitle + '</span>';
+  const labelTx = 'Map shading: <span class="type">' +
+    chart.options.legend.legendTitle + '</span>';
   chart.renderer
     .label( labelTx, 0, 28, null, null, null, true, false, 'legend-description' )
     .add( legendText );
 
+  const labelDates = `Dates: <span class="type">${ calculateDateInterval() }` +
+    '</span>';
+  chart.renderer
+    .label( labelDates, 0, 44, null, null, null, true, false, 'legend-dates' )
+    .add( legendText );
 
   // bars
   const legend = chart.renderer.g( 'legend__tile-map' )
-    .translate( 3, 50 )
+    .translate( 3, 64 )
     .add( legendContainer );
 
   for ( let i = 0; i < bins.length; i++ ) {
@@ -292,7 +308,7 @@ class TileMap {
       credits: false,
       legend: {
         enabled: false,
-        legendTitle: isPerCapita ? 'Complaints per 1000' : 'Complaints'
+        legendTitle: isPerCapita ? 'Complaints per 1,000' : 'Complaints'
       },
       tooltip: {
         className: 'tooltip',
