@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import { DateTime } from 'luxon';
 import { useStore } from '../../../stores';
-import { Categories } from '../../../stores/models/cash-flow-event';
+import { Categories } from '../../../stores/models/categories';
 import Button, { ButtonLink } from '../../../components/button';
 import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
 import { recurrenceRules, numberWithOrdinal } from '../../../lib/calendar-helpers';

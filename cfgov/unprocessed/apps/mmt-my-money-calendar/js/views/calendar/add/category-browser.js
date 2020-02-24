@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Link, NavLink, useParams, useHistory, withRouter } from 'react-router-dom';
 import { useStore } from '../../../stores';
-import { Categories } from '../../../stores/models/cash-flow-event';
+import { Categories } from '../../../stores/models/categories';
 import { useLogger } from '../../../lib/logger';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { BackButton } from '../../../components/button';
