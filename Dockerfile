@@ -77,7 +77,7 @@ ENV ALLOWED_HOSTS '["*"]'
 RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
-    echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done' > /etc/profile.d/secrets_env.sh
+    echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
 # See .dockerignore for details on which files are included
 COPY --chown=apache:apache . .
