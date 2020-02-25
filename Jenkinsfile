@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     env.STACK_NAME = stack.scrubStackName(params.ENV_NAME)
-                    env.CFGOV_HOSTNAME = "${STACK_PREFIX}-${STACK_NAME}.${HOSTING_DOMAIN}"
+                    env.CFGOV_HOSTNAME = stack.getWebHostDomain(env.STACK_NAME)
                     env.IMAGE_NAME = "${IMAGE_REPO}:${IMAGE_TAG}"
                 }
                 sh 'env | sort'
@@ -47,7 +47,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 dir('static.in/cfgov-fonts') {
-                    git env.CFGOV_FONTS_GIT_REPO
+                    script {
+                        git ghe.getRepoUrl('CFGOV/cfgov-fonts')
+                    }
                 }
             }
         }
