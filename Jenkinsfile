@@ -62,7 +62,7 @@ pipeline {
 
         stage('Scan Image') {
             when {
-                environment { name: 'SCAN_IMAGE', value: 'true' }
+                environment name: 'SCAN_IMAGE', value: 'true' 
             }
             steps {
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
@@ -83,6 +83,9 @@ pipeline {
         }
 
         stage('Deploy Stack') {
+            when {
+                expression { return params.DEPLOY }
+            } 
             options {
                 timeout(time: 15, unit: 'MINUTES')
             }
