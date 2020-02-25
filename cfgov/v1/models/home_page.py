@@ -1,41 +1,32 @@
-# -*- coding: utf8 -*-
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
-from v1.atomic_elements import molecules
 from v1.models.base import CFGOVPage
 
 
 try:
     from wagtail.admin.edit_handlers import (
-        FieldPanel, InlinePanel, ObjectList, StreamFieldPanel,
-        TabbedInterface
+        FieldPanel, InlinePanel, ObjectList, TabbedInterface
     )
     from wagtail.admin.forms import (
         WagtailAdminModelFormMetaclass, WagtailAdminPageForm
     )
-    from wagtail.core.fields import StreamField
     from wagtail.core.models import Orderable, PageManager
     from wagtail.images import get_image_model_string
     from wagtail.images.edit_handlers import ImageChooserPanel
-    from wagtail.search import index
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.edit_handlers import (
-        FieldPanel, InlinePanel, ObjectList, StreamFieldPanel,
-        TabbedInterface
+        FieldPanel, InlinePanel, ObjectList, TabbedInterface
     )
     from wagtail.wagtailadmin.forms import (
         WagtailAdminModelFormMetaclass, WagtailAdminPageForm
     )
-    from wagtail.wagtailcore.fields import StreamField
     from wagtail.wagtailcore.models import Orderable, PageManager
     from wagtail.wagtailimages import get_image_model_string
     from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-    from wagtail.wagtailsearch import index
 
 
 # These classes are used to add support for nested InlinePanels, and are
@@ -54,19 +45,10 @@ class HomePageForm(WagtailAdminPageForm, metaclass=HomePageFormMetaclass):
 
 
 class HomePage(CFGOVPage):
-    header = StreamField([
-        ('info_unit', molecules.InfoUnit()),
-        ('half_width_link_blob', molecules.HalfWidthLinkBlob()),
-    ], blank=True)
-
     card_heading = models.CharField(max_length=40, null=True, blank=True)
-
-    # General content tab
-    content_panels = CFGOVPage.content_panels + [StreamFieldPanel('header')]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
         ObjectList([
             InlinePanel(
                 'carousel_items', min_num=4, max_num=4, label="Carousel Item"
@@ -81,15 +63,20 @@ class HomePage(CFGOVPage):
             FieldPanel('card_heading'),
             InlinePanel('cards', min_num=3, max_num=3, label="Card"),
         ], heading='Cards'),
-        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+        ObjectList(
+            # The only general content panel is the page title, which isn't
+            # displayed or used except for slug generation in Wagtail. For this
+            # reason it lives on the configuration tab so that it doesn't
+            # require a tab of its own.
+            CFGOVPage.content_panels + CFGOVPage.settings_panels,
+            heading='Configuration'
+        ),
     ])
 
     # Sets page to only be createable at the root
     parent_page_types = ['wagtailcore.Page']
 
     objects = PageManager()
-
-    search_fields = CFGOVPage.search_fields + [index.SearchField('header')]
 
     base_form_class = HomePageForm
 
@@ -112,15 +99,6 @@ class HomePage(CFGOVPage):
         })
 
         return context
-
-    def get_template(self, request):
-        if (
-            self.language == 'en' or
-            flag_enabled('NEW_HOME_PAGE', request=request)
-        ):
-            return 'home-page/index.html'
-        else:
-            return 'home-page/index_%s.html' % self.language
 
 
 class HomePageCarouselItem(Orderable):
@@ -253,3 +231,4 @@ class HomePageCard(Orderable):
 class SpanishHomePage(HomePage):
     objects = PageManager()
     parent_page_types = ['v1.HomePage']
+    template = 'v1/home_page.html'
