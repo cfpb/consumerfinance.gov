@@ -55,6 +55,9 @@ pipeline {
         }
 
         stage('Build Image') {
+            environment {
+                DOCKER_BUILDKIT='1'
+            }
             steps {
                 script {
                     docker.build(env.IMAGE_NAME, "--build-arg scl_python_version=rh-python36 --target cfgov-prod .")
