@@ -1,41 +1,9 @@
-import TileMap from './TileMap.js';
+import Chart from './Chart';
 
 let idLink, perCapBtn, rawBtn;
 
 /**
- *  Chart class
- *  Replace the functionality in cfpb-chart-builder/src/js/index.js
- */
-class Chart {
-  constructor( chartOptions ) {
-    this.chartOptions = chartOptions;
-
-    fetch( chartOptions.source )
-      .then( response => response.json() )
-      .then( data => {
-        data = data.map( o => {
-          const perCapita = parseFloat( o.perCapita.toFixed( 2 ) );
-          const displayValue = this.chartOptions.isPerCapita ?
-            perCapita : o.value;
-          return {
-            ...o,
-            displayValue,
-            perCapita
-          };
-        } );
-
-        this.chartOptions.data = data;
-        this.draw( this.chartOptions );
-      } );
-  }
-
-  draw( chartOptions ) {
-    this.highchart = new TileMap( chartOptions );
-  }
-}
-
-/**
- * main function to draw a new map.
+ * Wrapper function around the chart cleanup and chart initialization
  * @param {boolean} isPerCapita display per capita complaints (decimals)
  */
 function start( isPerCapita ) {
@@ -51,6 +19,9 @@ function start( isPerCapita ) {
   } );
 }
 
+/**
+ * main entrypoint into landing map page, init the buttons, kick off map
+ */
 function init() {
   idLink = document.getElementById( 'all-results' );
   perCapBtn = document.getElementsByClassName( 'capita' )[0];
