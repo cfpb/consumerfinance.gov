@@ -78,7 +78,9 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry(dockerRegistry.getUrl(), dockerRegistry.getCredentialsId()) {
-                        docker.image(env.IMAGE_NAME).push()
+                        image = docker.image(env.IMAGE_NAME)
+                        image.push()
+                        env.CFGOV_PYTHON_IMAGE = image.imageName()
                     }
                 }
             }
