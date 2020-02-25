@@ -36,7 +36,7 @@ pipeline {
         stage ('Init') {
             steps {
                 script {
-                    env.STACK_NAME = stack.scrubStackName(params.ENV_NAME)
+                    env.STACK_NAME = stack.scrubStackName("${env.STACK_PREFIX}-${params.ENV_NAME}")
                     env.CFGOV_HOSTNAME = stack.getWebHostDomain(env.STACK_NAME)
                     env.IMAGE_NAME = "${IMAGE_REPO}:${IMAGE_TAG}"
                 }
