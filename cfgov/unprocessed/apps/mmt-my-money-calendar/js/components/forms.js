@@ -112,6 +112,8 @@ export const SelectField = ({
   value,
   placeholder = 'Select an option',
   options = [],
+  errors,
+  touched,
   ...props
 }) => {
   const opts = [
@@ -135,6 +137,7 @@ export const SelectField = ({
           {opts}
         </select>
       </div>
+      {errors && touched && <div className="error">{errors}</div>}
     </div>
   );
 };
