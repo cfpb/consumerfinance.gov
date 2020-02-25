@@ -5,7 +5,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_REPO="${DOCKER_REGISTRY}/cfpb/cfgov-python"
+        IMAGE_REPO="cfpb/cfgov-python"
         IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
         SCAN_IMAGE = 'true'
         STACK_PREFIX = 'cfgov'
