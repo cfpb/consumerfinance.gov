@@ -8,6 +8,7 @@ import CashFlowEvent from './models/cash-flow-event';
 import { DateTime } from 'luxon';
 
 export default class CashFlowStore {
+  @observable eventsLoaded = false;
   @observable events = [];
 
   constructor(rootStore) {
@@ -174,9 +175,14 @@ export default class CashFlowStore {
     this.rootStore.setLoading();
     const events = yield CashFlowEvent.getAllBy('date');
     this.events = events;
+    this.eventsLoaded = true;
     this.rootStore.setIdle();
     //console.profileEnd('loadEvents');
   });
+
+  getEvent(id) {
+    return this.eventsById.get(Number(id));
+  }
 
   @action setEvents(events) {
     this.events = events;

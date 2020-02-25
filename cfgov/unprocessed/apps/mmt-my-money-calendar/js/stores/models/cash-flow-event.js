@@ -11,7 +11,7 @@ import { transform } from '../../lib/object-helpers';
 export default class CashFlowEvent {
   @observable originalEventID;
   @observable id;
-  @observable name;
+  @observable name = '';
   @observable date;
   @observable category;
   @observable totalCents = 0;
@@ -21,6 +21,9 @@ export default class CashFlowEvent {
   @observable persisted = false;
   @observable updatedAt;
   @observable createdAt;
+  @observable recurrenceType;
+  @observable payday1 = 15;
+  @observable payday2 = 30;
 
   static MIN_DATE = DateTime.fromFormat('1970-01-01', 'y-MM-dd');
 
@@ -54,19 +57,29 @@ export default class CashFlowEvent {
   static schema = {
     id: yup.number().integer(),
     originalEventID: yup.number().integer(),
-    name: yup.string().required(),
-    date: yup.date().required(),
+    name: yup.string(),
+    dateTime: yup.date().required(),
     category: yup.string().required(),
-    subcategory: yup.string(),
     totalCents: yup
       .number()
       .integer()
       .default(0),
-    recurs: yup.boolean().default(false),
-    rruleStr: yup.string(),
     createdAt: yup.date().default(() => new Date()),
     updatedAt: yup.date().default(() => new Date()),
   };
+
+  static dbFields = [
+    'id',
+    'originalEventID',
+    'name',
+    'date',
+    'category',
+    'totalCents',
+    'recurs',
+    'rruleStr',
+    'createdAt',
+    'updatedAt',
+  ];
 
   /**
    * Indicates whether or not the object is an instance of CashFlowEvent
@@ -249,6 +262,10 @@ export default class CashFlowEvent {
   }
 
   set dateTime(dateTime) {
+    if (!dateTime) {
+      return;
+    }
+
     this.date = dateTime.startOf('day').toJSDate();
   }
 
@@ -314,7 +331,7 @@ export default class CashFlowEvent {
    * @returns {Number} The key of the added or updated record
    */
   async save() {
-    await this.validate();
+    //await this.validate();
     this.setTimestamps();
 
     const { tx, store } = await this.transaction('readwrite');
@@ -378,12 +395,25 @@ export default class CashFlowEvent {
   }
 
   toJS() {
-    return transform(this.constructor.schema, (result, [key]) => {
-      if (key === 'id' && !this[key]) return result;
+    return this.constructor.dbFields.reduce((output, field) => {
+      if (field === 'id' && !this[field]) return output;
+      output[field] = this[field];
+      return output;
+    }, {});
+  }
 
-      result[key] = this[key];
-      return result;
-    });
+  toFormValues() {
+    return {
+      id: this.id,
+      name: this.name,
+      totalCents: Math.abs(this.totalCents),
+      category: this.category,
+      dateTime: this.dateTime && !this.dateTime.invalidReason ? this.dateTime.toFormat('yyyy-MM-dd') : null,
+      recurs: this.recurs,
+      recurrenceType: this.recurrenceType,
+      payday1: this.payday1,
+      payday2: this.payday2,
+    };
   }
 
   async getAllRecurrences() {
