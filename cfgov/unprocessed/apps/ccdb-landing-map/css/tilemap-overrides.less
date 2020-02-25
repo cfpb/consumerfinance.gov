@@ -1,0 +1,87 @@
+#landing-map {
+  height: 400px;
+  &.cfpb-chart {
+    .highcharts-container {
+      .webfont-regular();
+    }
+    .highcharts-legend-key {
+      font-size: 16px;
+    }
+    .highcharts-legend__tile-map {
+      font-size: 12px;
+      font-weight: 600;
+
+      .legend-box {
+        stroke-width: 1;
+        stroke: #75787b;
+      }
+    }
+
+    .highcharts-data-label {
+      .highcharts-data-label-state {
+        text-align: center;
+        cursor: default;
+
+        &.deselected {
+          color: @gray
+        }
+
+        .abbr {
+          font-size: 18px;
+          font-weight: 800;
+        }
+
+        .value {
+          font-size: 12px;
+          .respond-to-max(600px, {
+            display: block;
+            margin-top: -2px;
+            font-size: 9px;
+          });
+        }
+      }
+    }
+
+    .highcharts-label-box {
+      display: none;
+    }
+
+    .highcharts-tooltip {
+      min-width: 200px;
+
+      span {
+        color: @white;
+        background-color: @black;
+        padding: 5px;
+        width: 320px;
+
+        div {
+          p {
+            margin: 5px;
+            white-space: normal;
+
+            &.u-float-left {
+              width: 150px;
+              float: left;
+            }
+
+            &.u-right {
+              width: 150px;
+              //float: right;
+            }
+          }
+        }
+
+        .title {
+          text-align: center;
+        }
+
+        .row {
+          border-top: solid 1px @dark-gray;
+          margin-top: 5px;
+          padding-top: 5px;
+        }
+      }
+    }
+  }
+}

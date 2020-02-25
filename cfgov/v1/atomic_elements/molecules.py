@@ -3,12 +3,17 @@ from django.core.validators import RegexValidator
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailimages.blocks import ImageChooserBlock
-
 from v1.atomic_elements import atoms
 from v1.blocks import AnchorLink, HeadingBlock
 from v1.feeds import get_appropriate_rss_feed_url_for_page
+
+
+try:
+    from wagtail.core import blocks
+    from wagtail.images.blocks import ImageChooserBlock
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+    from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):

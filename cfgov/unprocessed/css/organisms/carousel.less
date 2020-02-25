@@ -10,7 +10,7 @@
     border: 1px solid @gray-40;
     border-bottom: none;
 
-    .respond-to-max( @bp-xs-max, {
+    .respond-to-max( @bp-sm-max, {
       display: none;
     } );
   }
@@ -147,10 +147,6 @@
 
     // Change stacking behavior of thumbnails.
     .respond-to-max( @bp-sm-max, {
-      width: 50%;
-    } );
-
-    .respond-to-max( @bp-xs-max, {
       width: 100%;
     } );
 
@@ -191,7 +187,7 @@
   }
 
   // Mobile view.
-  .respond-to-max( @bp-xs-max, {
+  .respond-to-max( @bp-sm-max, {
     &_thumbnails {
       display: none;
     }
@@ -208,7 +204,7 @@
   } );
 
   // Desktop view.
-  .respond-to-min( @bp-sm-min, {
+  .respond-to-min( @bp-med-min, {
     &_thumbnails__mobile {
       display: none;
     }
@@ -303,16 +299,4 @@
   &_thumbnails__desktop {
     display: none !important;
   }
-}
-
-// TODO: move to the Design System.
-a.o-carousel_item-visual:after {
-  content: '';
-    display: block;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    box-shadow: 0 -4px 5px 0 #afd2f2 inset;
 }

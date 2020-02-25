@@ -1,12 +1,13 @@
+import unittest
+
 from django.core.cache import caches
 from django.test import (
     RequestFactory, SimpleTestCase, TestCase, override_settings
 )
 
+import wagtail
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
-from wagtail.wagtailcore.models import Site
-from wagtail.wagtailcore.rich_text import DbWhitelister
 
 import mock
 
@@ -16,6 +17,13 @@ from v1.models.resources import Resource
 from v1.wagtail_hooks import (
     form_module_handlers, get_resource_tags, set_served_by_wagtail_sharing
 )
+
+
+try:
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Site
+    from wagtail.wagtailcore.rich_text import DbWhitelister
 
 
 class TestFormModuleHandlers(TestCase):
@@ -47,7 +55,8 @@ class TestFormModuleHandlers(TestCase):
 
     @mock.patch('builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
-    def test_checks_child_block_if_set_form_context_exists(self, mock_getstreamfields, mock_hasattr):
+    def test_checks_child_block_if_set_form_context_exists(
+            self, mock_getstreamfields, mock_hasattr):
         child = mock.Mock()
         streamfields = {'name': [child]}
         mock_getstreamfields.return_value = streamfields
@@ -56,7 +65,8 @@ class TestFormModuleHandlers(TestCase):
 
     @mock.patch('builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
-    def test_sets_context_fieldname_if_not_set(self, mock_getstreamfields, mock_hasattr):
+    def test_sets_context_fieldname_if_not_set(
+            self, mock_getstreamfields, mock_hasattr):
         child = mock.Mock()
         streamfields = {'name': [child]}
         mock_getstreamfields.return_value = streamfields
@@ -67,7 +77,8 @@ class TestFormModuleHandlers(TestCase):
 
     @mock.patch('builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
-    def test_calls_child_block_get_result(self, mock_getstreamfields, mock_hasattr):
+    def test_calls_child_block_get_result(
+            self, mock_getstreamfields, mock_hasattr):
         child = mock.Mock()
         streamfields = {'name': [child]}
         mock_getstreamfields.return_value = streamfields
@@ -82,7 +93,8 @@ class TestFormModuleHandlers(TestCase):
 
     @mock.patch('builtins.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
-    def test_calls_child_block_is_submitted(self, mock_getstreamfields, mock_hasattr):
+    def test_calls_child_block_is_submitted(
+            self, mock_getstreamfields, mock_hasattr):
         child = mock.Mock()
         streamfields = {'name': [child]}
         mock_getstreamfields.return_value = streamfields
@@ -111,9 +123,10 @@ class TestServeLatestDraftPage(TestCase):
             self.assertContains(response, 'draft')
             self.assertEqual(response['Serving-Wagtail-Draft'], '1')
 
+
 class TestMenuItemSave(TestCase):
     @override_settings(
-        CACHES = {
+        CACHES={
             'default_fragment_cache': {
                 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
             }
@@ -216,6 +229,7 @@ class TestResourceTagsFilter(TestCase, WagtailTestUtils):
         )
 
 
+@unittest.skipIf(wagtail.VERSION >= (2, 0), "No need to test in Wagtail 2+")
 class TestWhitelistOverride(SimpleTestCase):
     # Borrowed from https://github.com/wagtail/wagtail/blob/v1.13.4/wagtail
     # /wagtailcore/tests/test_dbwhitelister.py
@@ -225,7 +239,6 @@ class TestWhitelistOverride(SimpleTestCase):
 
         The new allowed elements and attributes are added in v1.wagtail_hooks.
         """
-
         input_html = '''
 <span class="schema-container"
       itemprop="step"

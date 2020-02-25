@@ -14,7 +14,6 @@ from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
 
 from wagtail.tests.utils import WagtailTestUtils
-from wagtail.wagtailcore.blocks import StreamValue
 
 from model_mommy import mommy
 
@@ -37,6 +36,12 @@ from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import (
     get_free_path, get_or_create_page, set_stream_data
 )
+
+
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 
 html_parser = HTMLParser()
@@ -107,7 +112,7 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         page.answer_content = StreamValue(
             page.answer_content.stream_block, [{
                 'type': 'text',
-                'value': 'Mock answer'
+                'value': {'content': 'Mock answer'}
             }], True
         )
         helpers.publish_page(page)

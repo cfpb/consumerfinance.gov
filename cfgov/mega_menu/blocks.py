@@ -1,9 +1,16 @@
 from itertools import chain
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailimages import get_image_model
-from wagtail.wagtailimages.blocks import ImageChooserBlock
+
+try:
+    from wagtail.core import blocks
+    from wagtail.core.models import Page
+    from wagtail.images import get_image_model
+    from wagtail.images.blocks import ImageChooserBlock
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+    from wagtail.wagtailcore.models import Page
+    from wagtail.wagtailimages import get_image_model
+    from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 
 class LinkBlock(blocks.StructBlock):

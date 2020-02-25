@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 import unittest
 
@@ -12,7 +10,7 @@ from django.test import (
     RequestFactory, TestCase as DjangoTestCase, override_settings
 )
 
-from wagtail.wagtailcore.models import Site
+import wagtail
 
 import mock
 from model_mommy import mommy
@@ -28,6 +26,12 @@ from regulations3k.models.pages import (
     get_section_url, validate_num_results, validate_order,
     validate_page_number, validate_regs_list
 )
+
+
+if wagtail.VERSION >= (2, 0):
+    from wagtail.core.models import Site
+else:
+    from wagtail.wagtailcore.models import Site
 
 
 class RegModelTests(DjangoTestCase):
