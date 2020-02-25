@@ -77,7 +77,7 @@ pipeline {
             } 
             steps {
                 script {
-                    docker.withRegistry(env.DOCKER_REGISTRY_URL, env.DOCKER_REGISTRY_CREDENTIALS_ID) {
+                    docker.withRegistry(dockerRegistry.getUrl(), dockerRegistry.getCredentialsId()) {
                         docker.image(env.IMAGE_NAME).push()
                     }
                 }
