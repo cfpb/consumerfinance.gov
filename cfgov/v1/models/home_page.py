@@ -226,9 +226,3 @@ class HomePageCard(Orderable):
         FieldPanel('link_text'),
         FieldPanel('link_url'),
     ]
-
-
-class SpanishHomePage(HomePage):
-    objects = PageManager()
-    parent_page_types = ['v1.HomePage']
-    template = 'v1/home_page.html'
