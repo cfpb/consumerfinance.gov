@@ -1,5 +1,7 @@
 import TileMap from './TileMap.js';
 
+let idLink, perCapBtn, rawBtn;
+
 /**
  *  Chart class
  *  Replace the functionality in cfpb-chart-builder/src/js/index.js
@@ -49,28 +51,31 @@ function start( isPerCapita ) {
   } );
 }
 
-const idLink = document.getElementById( 'all-results' );
-const perCapBtn = document.getElementsByClassName( 'capita' )[0];
-const rawBtn = document.getElementsByClassName( 'raw' )[0];
+function init() {
+  idLink = document.getElementById( 'all-results' );
+  perCapBtn = document.getElementsByClassName( 'capita' )[0];
+  rawBtn = document.getElementsByClassName( 'raw' )[0];
 
-perCapBtn.onclick = () => {
-  perCapBtn.classList.add( 'selected' );
-  rawBtn.classList.remove( 'selected' );
-  let link = idLink.getAttribute( 'href' );
-  link = link.replace( 'None', 'Per%201000%20pop.' );
-  idLink.setAttribute( 'href', link );
-  start( true );
-};
+  perCapBtn.onclick = () => {
+    perCapBtn.classList.add( 'selected' );
+    rawBtn.classList.remove( 'selected' );
+    let link = idLink.getAttribute( 'href' );
+    link = link.replace( 'None', 'Per%201000%20pop.' );
+    idLink.setAttribute( 'href', link );
+    start( true );
+  };
 
-rawBtn.onclick = () => {
-  rawBtn.classList.add( 'selected' );
-  perCapBtn.classList.remove( 'selected' );
-  let link = idLink.getAttribute( 'href' );
-  link = link.replace( 'Per%201000%20pop.', 'None' );
-  idLink.setAttribute( 'href', link );
+  rawBtn.onclick = () => {
+    rawBtn.classList.add( 'selected' );
+    perCapBtn.classList.remove( 'selected' );
+    let link = idLink.getAttribute( 'href' );
+    link = link.replace( 'Per%201000%20pop.', 'None' );
+    idLink.setAttribute( 'href', link );
+
+    start( false );
+  };
 
   start( false );
-};
+}
 
-start( false );
-
+export default { init };
