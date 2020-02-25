@@ -56,7 +56,7 @@ function CategoryBrowser({ match }) {
       {category.name && <h2>{category.name}</h2>}
 
       <ul className="category-links">
-        {Object.entries(categoryOptions).map(([key, {name, subcategories}]) => (
+        {Object.entries(categoryOptions).map(([key, {name, subcategories, restricted}]) => !restricted && (
           <li key={key} className="category-links__item">
             <Link className="category-links__link" to={`/calendar/add/${categories}/${key}${subcategories ? '' : '/new'}`}>
               <img src={iconPlaceholder} className="category-links__icon" alt={`Category: ${name}`} />

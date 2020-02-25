@@ -17,6 +17,10 @@ const Add = ({ match }) => (
       <Form />
     </Route>
 
+    <Route path={`${match.path}/:id/edit`}>
+      <Form />
+    </Route>
+
     <Route path={`${match.path}/:categories+`}>
       <CategoryBrowser />
     </Route>
