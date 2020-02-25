@@ -9,7 +9,7 @@ import moment from 'moment';
  * helper function to get date interval for legend
  * @returns {string} formatted string
  */
-function calculateDateInterval() {
+export function calculateDateInterval() {
   let today = new Date();
   today = today.toLocaleDateString( 'en-US' );
   let past = new Date( moment().subtract( 3, 'years' ).calendar() );
@@ -26,7 +26,7 @@ function calculateDateInterval() {
 * @param {Object} stateComplaint a candidate value
 * @returns {string} the maximum between the current and a state entry
 */
-function findMaxComplaints( accum, stateComplaint ) {
+export function findMaxComplaints( accum, stateComplaint ) {
   return Math.max( accum, stateComplaint.displayValue );
 }
 
@@ -36,7 +36,7 @@ function findMaxComplaints( accum, stateComplaint ) {
  * @param {Array} colors an array of colors
  * @returns {Array} the bins with bounds, name, and color
  */
-function getBins( data, colors ) {
+export function getBins( data, colors ) {
   const binCount = colors.length;
   const max = data.reduce( findMaxComplaints, 0 );
   const min = 1;
@@ -72,7 +72,7 @@ function getBins( data, colors ) {
  * @param {Array} colors an array of colors
  * @returns {Array} contains bins with bounds, colors, name, and color
  */
-function getPerCapitaBins( data, colors ) {
+export function getPerCapitaBins( data, colors ) {
   const binCount = colors.length;
   const max = data.reduce( findMaxComplaints, 0 );
   const min = 1;
@@ -109,7 +109,7 @@ function getPerCapitaBins( data, colors ) {
  * @param {Array} bins - contains different buckets for the values
  * @returns {Object} The processed data.
  */
-function processMapData( data, bins ) {
+export function processMapData( data, bins ) {
   // Filter out any empty values just in case
   data = data.filter( function( row ) {
     return Boolean( row.name );
@@ -133,7 +133,7 @@ function processMapData( data, bins ) {
  * @param {array} bins contains bin objects
  * @returns {string} color hex or rgb code for a color
  */
-function getColorByValue( value, bins ) {
+export function getColorByValue( value, bins ) {
   let color = '#ffffff';
   for ( let i = 0; i < bins.length; i++ ) {
     if ( value > bins[i].from ) {
@@ -150,7 +150,7 @@ function getColorByValue( value, bins ) {
  * Draw a legend on a chart.
  * @param {Object} chart A highchart chart.
  */
-function _drawLegend( chart ) {
+export function _drawLegend( chart ) {
   const bins = chart.options.bins;
   const marginTop = chart.margin[0] || 0;
   const boxWidth = 50;
@@ -224,7 +224,7 @@ function _drawLegend( chart ) {
  * callback function to format the individual tiles in HTML
  * @returns {string} html output
  */
-function tileFormatter() {
+export function tileFormatter() {
   const value = this.point.displayValue.toLocaleString();
   return '<div class="highcharts-data-label-state">' +
     '<span class="abbr">' + this.point.name + '</span>' +
@@ -237,7 +237,7 @@ function tileFormatter() {
  * callback function to format the tooltip in HTML
  * @returns {string} html output
  */
-function tooltipFormatter() {
+export function tooltipFormatter() {
   const product = this.product ? '<div class="row u-clearfix">' +
     '<p class="u-float-left">Product with highest complaint volume</p>' +
     '<p class="u-right">' + this.product + '</p>' +
