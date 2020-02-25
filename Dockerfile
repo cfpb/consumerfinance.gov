@@ -100,4 +100,8 @@ RUN ./frontend.sh production && \
     rm -rf cfgov/apache/www cfgov/unprocessed node_modules && \
     mkdir -p cfgov/f /tmp/eregs_cache
     
+# Healthcheck retry set high since database loads take a while
+HEALTHCHECK --start-period=15s --interval=30s --retries=30 \
+            CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
+
 CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]
