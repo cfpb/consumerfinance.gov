@@ -147,6 +147,50 @@ export function getColorByValue( value, bins ) {
    Highcharts callbacks */
 
 /**
+ * callback function to format the individual tiles in HTML
+ * @returns {string} html output
+ */
+export function tileFormatter() {
+  const value = this.point.displayValue.toLocaleString();
+  return '<div class="highcharts-data-label-state">' +
+    '<span class="abbr">' + this.point.name + '</span>' +
+    '<br />' +
+    '<span class="value">' + value + '</span>' +
+    '</div>';
+}
+
+/**
+ * callback function to format the tooltip in HTML
+ * @returns {string} html output
+ */
+export function tooltipFormatter() {
+  const product = this.product ? '<div class="row u-clearfix">' +
+    '<p class="u-float-left">Product with highest complaint volume</p>' +
+    '<p class="u-right">' + this.product + '</p>' +
+    '</div>' : '';
+
+  const issue = this.issue ? '<div class="row u-clearfix">' +
+    '<p class="u-float-left">Issue with highest complaint volume</p>' +
+    '<p class="u-right">' + this.issue + '</p>' +
+    '</div>' : '';
+
+  const value = this.value.toLocaleString();
+  const perCapita = this.perCapita ? '<div class="row u-clearfix">' +
+    '<p class="u-float-left">Per capita</p>' +
+    '<p class="u-right">' + this.perCapita + '</p>' +
+    '</div>' : '';
+
+  return '<div class="title">' + this.fullName + '</div>' +
+    '<div class="row u-clearfix">' +
+    '<p class="u-float-left">Complaints</p>' +
+    '<p class="u-right">' + value + '</p>' +
+    '</div>' +
+    perCapita +
+    product +
+    issue;
+}
+
+/**
  * Draw a legend on a chart.
  * @param {Object} chart A highchart chart.
  */
@@ -218,50 +262,6 @@ export function _drawLegend( chart ) {
       .addClass( 'legend-text' )
       .add( g );
   }
-}
-
-/**
- * callback function to format the individual tiles in HTML
- * @returns {string} html output
- */
-export function tileFormatter() {
-  const value = this.point.displayValue.toLocaleString();
-  return '<div class="highcharts-data-label-state">' +
-    '<span class="abbr">' + this.point.name + '</span>' +
-    '<br />' +
-    '<span class="value">' + value + '</span>' +
-    '</div>';
-}
-
-/**
- * callback function to format the tooltip in HTML
- * @returns {string} html output
- */
-export function tooltipFormatter() {
-  const product = this.product ? '<div class="row u-clearfix">' +
-    '<p class="u-float-left">Product with highest complaint volume</p>' +
-    '<p class="u-right">' + this.product + '</p>' +
-    '</div>' : '';
-
-  const issue = this.issue ? '<div class="row u-clearfix">' +
-    '<p class="u-float-left">Issue with highest complaint volume</p>' +
-    '<p class="u-right">' + this.issue + '</p>' +
-    '</div>' : '';
-
-  const value = this.value.toLocaleString();
-  const perCapita = this.perCapita ? '<div class="row u-clearfix">' +
-    '<p class="u-float-left">Per capita</p>' +
-    '<p class="u-right">' + this.perCapita + '</p>' +
-    '</div>' : '';
-
-  return '<div class="title">' + this.fullName + '</div>' +
-    '<div class="row u-clearfix">' +
-    '<p class="u-float-left">Complaints</p>' +
-    '<p class="u-right">' + value + '</p>' +
-    '</div>' +
-    perCapita +
-    product +
-    issue;
 }
 
 /* ----------------------------------------------------------------------------
