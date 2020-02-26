@@ -63,18 +63,6 @@
     "@cfpb/cfpb-core" "^0.0.8"
     "@cfpb/cfpb-icons" "^0.0.8"
 
-cfpb-chart-builder@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-6.4.0.tgz#0087b8df296a0d17fd8be4ac9ba11813f8a94273"
-  integrity sha512-Bz4vLwS1vj8jApg6XAW+h7Jsu+2YX2n/UyxHqZzrtpyx5pXoeF6fZ6B4wGpV0U6h8WvVs7r7IJVHRaPpjmzDmg==
-  dependencies:
-    "@cfpb/cfpb-core" "0.0.8"
-    "@cfpb/cfpb-layout" "0.0.8"
-    "@cfpb/cfpb-typography" "0.0.8"
-    core-js "3.3.6"
-    highcharts "7.2.1"
-    xdr "0.5.3"
-
 core-js@3.3.6:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.3.6.tgz#6ad1650323c441f45379e176ed175c0d021eac92"
@@ -106,8 +94,3 @@ normalize-legacy-addon@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/normalize-legacy-addon/-/normalize-legacy-addon-0.1.0.tgz#8ca131e8503943a3a9e4d0d70cc0e80a27a40c9e"
   integrity sha1-jKEx6FA5Q6Op5NDXDMDoCiekDJ4=
-
-xdr@0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/xdr/-/xdr-0.5.3.tgz#c72cd3fe47bcc7607f5f5fc92510b0fab2e2a422"
-  integrity sha1-xyzT/ke8x2B/X1/JJRCw+rLipCI=
