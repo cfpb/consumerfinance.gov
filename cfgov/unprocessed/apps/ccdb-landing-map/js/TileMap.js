@@ -91,7 +91,7 @@ export function getPerCapitaBins( data, colors ) {
       from: minValue,
       to: parseFloat( ( curr + step ).toFixed( 2 ) ),
       color: colors[i],
-      name: displayValue > 0 ? `≥ ${ displayValue }` : '≥ 0'
+      name: `≥ ${ displayValue }`
     } );
   }
 
