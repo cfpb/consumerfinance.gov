@@ -43,7 +43,6 @@ describe( 'Landing Page App', () => {
     } );
   } );
 
-
   it( 'should not throw any errors on init', () => {
     landingMap.init();
     linkAttr = idLink.getAttribute( 'href' );

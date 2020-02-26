@@ -288,7 +288,7 @@ const colors = [
    Tile Map class */
 
 class TileMap {
-  constructor( { el, description, data, isPerCapita } ) {
+  constructor( { el, data, isPerCapita } ) {
     const bins = isPerCapita ?
       getPerCapitaBins( data, colors ) : getBins( data, colors );
     data = processMapData( data, bins );
@@ -304,7 +304,6 @@ class TileMap {
         dataClassColor: 'category'
       },
       title: false,
-      description: description,
       credits: false,
       legend: {
         enabled: false,
@@ -334,7 +333,11 @@ class TileMap {
       } ]
     };
 
-    return Highcharts.mapChart( el, options, _drawLegend );
+    this.draw(el, options);
+  }
+
+  draw(el, options){
+    Highcharts.mapChart( el, options, _drawLegend );
   }
 }
 
