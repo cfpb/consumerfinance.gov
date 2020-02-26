@@ -235,3 +235,9 @@ gulp.task( 'styles',
     'styles:ondemand'
   )
 );
+
+gulp.task( 'styles:watch', function() {
+  gulp.watch( `${ configStyles.cwd }/**/*.less`, gulp.parallel(
+    'styles:modern'
+  ) );
+} );
