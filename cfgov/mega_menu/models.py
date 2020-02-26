@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 from mega_menu.blocks import MenuStreamBlock
+from mega_menu.frontend_conversion import FrontendConverter
 
 
 try:
@@ -31,3 +32,6 @@ class Menu(models.Model):
 
     def __str__(self):
         return str(dict(settings.LANGUAGES)[self.language])
+
+    def get_content_for_frontend(self, request=None):
+        return FrontendConverter(self, request=request).get_menu_items()
