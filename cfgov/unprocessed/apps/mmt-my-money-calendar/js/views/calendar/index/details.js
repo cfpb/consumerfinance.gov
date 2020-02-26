@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useCallback, useState } from 'react';
 import { observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
+import { useToggle } from 'react-use';
+import Modal from 'react-modal';
 import { useStore } from '../../../stores';
 import { formatCurrency } from '../../../lib/currency-helpers';
 
@@ -9,14 +11,23 @@ import deleteRound from '@cfpb/cfpb-icons/src/icons/delete-round.svg';
 function Details() {
   const { uiStore, eventStore } = useStore();
   const history = useHistory();
+  const [selectedID, setSelectedID] = useState(null);
+  const [modalOpen, toggleModal] = useToggle(false);
 
-  const confirmDelete = useMemo(() => (eventID) => (evt) => {
+  const confirmDelete = useCallback((eventID) => (evt) => {
     evt.preventDefault();
-    if (!confirm('Delete this event?')) return;
-    eventStore.deleteEvent(eventID);
+    evt.stopPropagation();
+    setSelectedID(eventID);
+    toggleModal(true);
   }, []);
 
-  const editEvent = useMemo(() => (id) => (evt) => {
+  const eventDeleteHandler = useCallback((andRecurrences = false) => async (evt) => {
+    evt.preventDefault();
+    await eventStore.deleteEvent(selectedID, andRecurrences);
+    toggleModal(false);
+  }, [selectedID]);
+
+  const editEvent = useCallback((id) => (evt) => {
     evt.preventDefault();
     history.push(`/calendar/add/${id}/edit`);
   }, []);
@@ -51,6 +62,41 @@ function Details() {
         <strong className="calendar-details__total-label">Total Balance:</strong>
         <span className="calendar-details__total-value">{formatCurrency(balance || 0)}</span>
       </div>
+
+      <Modal
+        className="delete-dialog"
+        contentLabel="Event deletion options"
+        isOpen={modalOpen}
+        onRequestClose={toggleModal}
+      >
+        <p className="delete-dialog__prompt">Delete Event?</p>
+        <ul className="delete-dialog__actions">
+          <li className="delete-dialog__action">
+            <button
+              className="delete-dialog__action-button"
+              onClick={eventDeleteHandler(false)}
+            >
+              Just this event
+            </button>
+          </li>
+          <li className="delete-dialog__action">
+            <button
+              className="delete-dialog__action-button"
+              onClick={eventDeleteHandler(true)}
+            >
+              This event and all recurrences
+            </button>
+          </li>
+          <li className="delete-dialog__action">
+            <button
+              className="delete-dialog__action-button"
+              onClick={() => toggleModal(false)}
+            >
+              Cancel
+            </button>
+          </li>
+        </ul>
+      </Modal>
     </div>
   );
 }

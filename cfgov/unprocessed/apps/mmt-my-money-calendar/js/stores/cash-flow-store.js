@@ -229,7 +229,7 @@ export default class CashFlowStore {
    * @param {Number} id - The event's ID property
    * @returns {undefined}
    */
-  deleteEvent = flow(function*(id) {
+  deleteEvent = flow(function*(id, andRecurrences) {
     const event = this.eventsById.get(id);
     const recurrences = yield event.getAllRecurrences();
     const deletedIDs = [event.id];
@@ -237,7 +237,7 @@ export default class CashFlowStore {
     yield event.destroy();
     this.logger.debug('Destroy event with ID %d', event.id);
 
-    if (recurrences && recurrences.length) {
+    if (andRecurrences && recurrences && recurrences.length) {
       for (const recurrence of recurrences) {
         yield recurrence.destroy();
         deletedIDs.push(recurrence.id);
