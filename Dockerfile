@@ -22,7 +22,9 @@ RUN yum -y install \
         https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm && \
     curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
+    yum -y update && \
     yum -y install \
+        gcc \
         mailcap \
         postgresql10 \
         which \
@@ -38,12 +40,7 @@ ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
 COPY requirements requirements
-
-RUN yum -y install gcc && \
-    pip install -r requirements/local.txt -r requirements/deployment.txt && \
-    yum -y remove gcc && \
-    yum clean all && rm -rf /var/cache/yum
-
+RUN pip install -r requirements/local.txt -r requirements/deployment.txt
 
 EXPOSE 8000
 
@@ -82,19 +79,23 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
 # See .dockerignore for details on which files are included
 COPY --chown=apache:apache . .
 
-# Build frontend, cleanup excess file, and setup filesystem
-# - cfgov/f/ - Wagtail file uploads
-# - /tmp/eregs_cache/ - Django file-based cache
 RUN yum -y install nodejs yarn  && \
     yum clean all && rm -rf /var/cache/yum && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
 
+# Remove files flagged by image vulnerability scanner
+# FIXME: Find out if these packages can be remove altogether
+RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
+    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
+
 USER apache
 
+# Build frontend, cleanup excess file, and setup filesystem
+# - cfgov/f/ - Wagtail file uploads
+# - /tmp/eregs_cache/ - Django file-based cache./frontend.sh production && \
 RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
-#    yum -y remove nodejs yarn && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
     rm -rf cfgov/apache/www cfgov/unprocessed node_modules && \
@@ -103,5 +104,6 @@ RUN ./frontend.sh production && \
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=15s --interval=30s --retries=30 \
             CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
+
 
 CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]
