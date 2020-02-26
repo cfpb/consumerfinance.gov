@@ -11,6 +11,7 @@ import Button, { ButtonLink, BackButton } from '../../../components/button';
 import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
 import { recurrenceRules, numberWithOrdinal } from '../../../lib/calendar-helpers';
 import { range } from '../../../lib/array-helpers';
+import { pluck } from '../../../lib/object-helpers';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import Logger from '../../../lib/logger';
 import CashFlowEvent from '../../../stores/models/cash-flow-event';
@@ -21,19 +22,23 @@ function Form() {
   const { uiStore, eventStore } = useStore();
   const history = useHistory();
   const logger = useMemo(() => Logger.addGroup('eventForm'), []);
-  const recurrenceOptions = useMemo(
-    () => Object.entries(recurrenceRules).map(([value, { label }]) => ({ label, value })),
-    []
-  );
   const monthDayOptions = useMemo(
     () => [...range(1, 30)].map((num) => ({ label: numberWithOrdinal(num), value: num })),
     []
   );
-  const paydaySchema = useMemo(() => yup.number().when(['recurs', 'recurrenceType'], {
-    is: (recurs, recurrenceType) => recurs && recurrenceType === 'semimonthly',
-    then: yup.number().integer().required().cast(),
-    otherwise: yup.number(),
-  }), []);
+  const paydaySchema = useMemo(
+    () =>
+      yup.number().when(['recurs', 'recurrenceType'], {
+        is: (recurs, recurrenceType) => recurs && recurrenceType === 'semimonthly',
+        then: yup
+          .number()
+          .integer()
+          .required()
+          .cast(),
+        otherwise: yup.number(),
+      }),
+    []
+  );
 
   let { id, categories = '' } = useParams();
   const isNew = !id;
@@ -42,15 +47,12 @@ function Form() {
   let category = Categories.get(categoryPath);
   let eventType = pathSegments[0];
 
-  const event = id ? eventStore.getEvent(id) : new CashFlowEvent({
-    category: categoryPath,
-    dateTime: uiStore.selectedDate,
-  });
-
-  if (id && !eventStore.eventsLoaded) return null;
-
-  if (isNew && !category)
-    return <Redirect to="/calendar/add" />;
+  const event = id
+    ? eventStore.getEvent(id)
+    : new CashFlowEvent({
+        category: categoryPath,
+        dateTime: uiStore.selectedDate,
+      });
 
   if (id && event) {
     categoryPath = event.category;
@@ -60,9 +62,20 @@ function Form() {
     logger.log('Editing existing event: %O', event);
   }
 
+  const recurrenceOptions = useMemo(() => {
+    const rules = category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules;
+    return Object.entries(rules).map(([value, { label }]) => ({ label, value }));
+  }, [category]);
+
+  if (id && !eventStore.eventsLoaded) return null;
+
+  if (isNew && !category) return <Redirect to="/calendar/add" />;
+
   return (
     <section className="add-event">
-      <BackButton variant="secondary" onClick={() => history.goBack()}>Back</BackButton>
+      <BackButton variant="secondary" onClick={() => history.goBack()}>
+        Back
+      </BackButton>
       <h2 className="add-event__title">{category.name}</h2>
       <p className="add-event__intro">Enter your {category.name.toLowerCase()} details.</p>
 
@@ -70,7 +83,11 @@ function Form() {
         initialValues={event.toFormValues()}
         validationSchema={yup.object({
           name: yup.string(),
-          totalCents: yup.number().integer().positive().required(),
+          totalCents: yup
+            .number()
+            .integer()
+            .positive()
+            .required(),
           dateTime: yup.date().required(),
           recurrenceType: yup.string().when('recurs', {
             is: true,
@@ -93,9 +110,10 @@ function Form() {
 
           if (values.recurs) {
             const { handler } = recurrenceRules[values.recurrenceRule];
-            values.recurrenceRule = values.recurrenceRule === 'semimonthly'
-              ? handler(values.dateTime.toJSDate(), values.payday1, values.payday2)
-              : handler(values.dateTime.toJSDate());
+            values.recurrenceRule =
+              values.recurrenceRule === 'semimonthly'
+                ? handler(values.dateTime.toJSDate(), values.payday1, values.payday2)
+                : handler(values.dateTime.toJSDate());
           }
 
           try {
@@ -187,7 +205,9 @@ function Form() {
               </>
             )}
 
-            <Button fullWidth disabled={!formik.dirty && !formik.isValid} type="submit">Save</Button>
+            <Button fullWidth disabled={!formik.dirty && !formik.isValid} type="submit">
+              Save
+            </Button>
           </form>
         )}
       </Formik>
