@@ -7,7 +7,6 @@ pipeline {
     environment {
         IMAGE_REPO="cfpb/cfgov-python"
         IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
-        SCAN_IMAGE = 'true'
         STACK_PREFIX = 'cfgov'
     }
 
@@ -19,8 +18,14 @@ pipeline {
         )
 
         booleanParam(
+            name: 'SCAN_IMAGE', 
+            defaultValue: true,
+            description: 'Scan Docker image for vulnerabilities?'
+        )
+
+        booleanParam(
             name: 'DEPLOY', 
-            defaultValue: false,
+            defaultValue: true,
             description: 'Deploy the stack?'
         )
     }
@@ -67,7 +72,7 @@ pipeline {
 
         stage('Scan Image') {
             when {
-                environment name: 'SCAN_IMAGE', value: 'true' 
+                expression { return params.SCAN_IMAGE }
             }
             steps {
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
