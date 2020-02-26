@@ -6,7 +6,7 @@ from wagtail.contrib.modeladmin.helpers import ButtonHelper
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 
 from mega_menu.models import Menu
-from mega_menu.views import MenuEditView, MenuPreviewView
+from mega_menu.views import MenuPreviewView
 
 
 class MenuModelAdminButtonHelper(ButtonHelper):
@@ -49,7 +49,6 @@ class MenuModelAdmin(ModelAdmin):
     menu_icon = 'list-ul'
     menu_label = 'Mega menu'
     button_helper_class = MenuModelAdminButtonHelper
-    edit_view_class = MenuEditView
 
     def get_admin_urls_for_registration(self):
         urls = super().get_admin_urls_for_registration()
