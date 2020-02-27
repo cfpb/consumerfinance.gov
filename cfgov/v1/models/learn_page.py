@@ -169,7 +169,7 @@ class EnforcementActionPage(AbstractFilterPage):
         ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
         ('Pending Litigation', 'Pending Litigation')
     ])
-    docket_number = models.CharField(max_length=50)
+    docket_number = models.CharField(max_length=100)
 
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),

@@ -61,9 +61,9 @@ def update_sidefoot():
                         elif heading.lower() in [
                             'docket number',
                             'case number',
-             #               'case numbers',
+                            'case numbers',
                             'file number',
-              #              'file numbers',
+                            'file numbers',
                             'civil action number'
                         ]:
                             docket_number = item['value']['blob']
