@@ -19,7 +19,7 @@
 
 {% macro render( value ) %}
 {# We want to make the whole card clickable. #}
-<article class="m-card">
+<article class="m-card m-card__featured">
     <a href="{{ value.link_url }}">
         <div class="m-card_icon">{{ svg_icon( value.icon ) }}</div>
         <p>{{ value.text }}</p>

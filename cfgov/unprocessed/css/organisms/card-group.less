@@ -1,47 +1,27 @@
 .o-card-group {
-    padding: unit( 30px / @base-font-size-px, em );
+
+    &__column-2 &_cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    &__column-3 &_cards {
+        grid-template-columns: repeat( 3, minmax( 0, 1fr ) );
+    }
 
     &_cards {
-        display: flex;
-        flex: 1;
+        display: grid;
+        grid-column-gap: unit( 20px / @base-font-size-px, em );
+        grid-row-gap: unit( 20px / @base-font-size-px, em );
 
-        & .m-card {
-            margin-left: unit( 20px / @base-font-size-px, em );
-
-            .lt-ie10 & {
-                display: block;
-                width: 32%;
-                margin-left: 2%;
-                float: left;
-            }
-
-            &:first-child {
-                margin-left: 0;
-            }
-        }
 
         .respond-to-max( @bp-xs-max, {
-            flex-direction: column;
-
-            & .m-card {
-                margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-                margin-left: 0;
-                // Overrides flex-basis:1 to prevent card content from overflowing container
-                // when flex-direction is set to column at small screen sizes
-                flex-basis: auto;
-            }
-
-            & .m-card:first-child {
-                margin-top: 0;
-            }
+            // Make sure cards are stacked at mobile size.
+            grid-template-columns: 100% !important;
         } );
     }
 
     &__bg-green {
+        padding: unit( 30px / @base-font-size-px, em );
         background: @green-20;
-    }
-
-    .lt-ie10 & {
-        .u-clearfix();
     }
 }
