@@ -1,35 +1,7 @@
 from __future__ import unicode_literals
 
 from v1.models import DocumentDetailPage
-from v1.util.migrations import get_stream_data, set_stream_data
-from unicodedata import normalize
-from html.parser import HTMLParser
-
-
-class MLStripper(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self.reset()
-        self.strict = False
-        self.convert_charrefs= True
-        self.fed = []
-    def handle_data(self, d):
-        self.fed.append(d)
-    def get_data(self):
-        return ''.join(self.fed)
-
-
-def strip_tags(html):
-    s = MLStripper()
-    s.feed(html)
-    d = s.get_data()
-
-    try:
-        data = d.decode('utf-8')
-    except (UnicodeEncodeError, AttributeError):
-        data = d
-
-    return normalize('NFKC', data).strip()
+from v1.util.migrations import get_stream_data, set_stream_data, strip_tags
 
 
 def escape_heading(heading):
