@@ -25,3 +25,14 @@
         background: @green-20;
     }
 }
+
+// Hack for Edge/IE to convert grid to block layout.
+// See https://jeffclayton.wordpress.com/2015/04/07/css-hacks-for-windows-10-and-spartan-browser-preview/
+// Necessitated because of https://stackoverflow.com/questions/46743722/items-in-css-grid-in-ie-superimposed-on-each-other
+_:-ms-lang(x),.o-card-group_cards {
+    display: block !important;
+
+    & .m-card {
+        margin-bottom: unit( 20px / @base-font-size-px, em );
+    }
+}
