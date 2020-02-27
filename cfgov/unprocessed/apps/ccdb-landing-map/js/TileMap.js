@@ -1,8 +1,6 @@
-// import TileMap from 'cfpb-chart-builder/src/js/charts/TileMap';
-
 import Highcharts from 'highcharts/highmaps';
+import { STATE_TILES } from './constants';
 import accessibility from 'highcharts/modules/accessibility';
-import getTileMapState from 'cfpb-chart-builder/src/js/utils/get-tile-map-state';
 import moment from 'moment';
 
 /**
@@ -116,11 +114,10 @@ export function processMapData( data, bins ) {
   } );
 
   data = data.map( function( obj ) {
-    const state = getTileMapState[obj.name];
     return {
       ...obj,
       color: getColorByValue( obj.displayValue, bins ),
-      path: state.path
+      path: STATE_TILES[obj.name]
     };
   } );
 
@@ -333,10 +330,10 @@ class TileMap {
       } ]
     };
 
-    this.draw(el, options);
+    this.draw( el, options );
   }
 
-  draw(el, options){
+  draw( el, options ) {
     Highcharts.mapChart( el, options, _drawLegend );
   }
 }
