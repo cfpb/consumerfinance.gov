@@ -4,9 +4,13 @@ from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
 
-from wagtail.wagtailcore import blocks
-
 from v1.blocks import AbstractFormBlock
+
+
+try:
+    from wagtail.core import blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
 
 
 class ConferenceRegistrationForm(AbstractFormBlock):

@@ -1,13 +1,17 @@
 import datetime as dt
 from unittest import TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
-
 import mock
 import scripts._atomic_helpers as atomic
 
 from v1.models import AbstractFilterPage, BrowseFilterablePage, SublandingPage
 from v1.tests.wagtail_pages import helpers
+
+
+try:
+    from wagtail.core.blocks import StreamValue
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.blocks import StreamValue
 
 
 class SublandingPageTestCase(TestCase):

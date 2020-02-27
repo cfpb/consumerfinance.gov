@@ -105,12 +105,13 @@ function MegaMenuDesktop( baseClass, menus ) {
   }
 
   /**
-   * Event handler for when mouse is hovering.
-   * @param {MouseEvent} event - The hovering event.
+   * Event handler for when clicking on the body of the document.
+   * @param {MouseEvent} event - The click event.
    */
-  function _handleMove( event ) {
-    // If we've left the parent container of the current menu, close it.
-    if ( !_firstLevelDom.contains( event.target ) ) {
+  function _handleBodyClick( event ) {
+    // If we've clicked outside the parent of the current menu, close it.
+    if ( !_firstLevelDom.contains( event.target ) ||
+         event.target.parentNode.classList.contains( `${ baseClass }_content-1-list` ) ) {
       _updateMenuState( null, event.type );
     }
   }
@@ -126,18 +127,17 @@ function MegaMenuDesktop( baseClass, menus ) {
       _activeMenu.getTransition().animateOn();
       _activeMenu.collapse();
       _activeMenu = null;
-      _bodyDom.removeEventListener( 'mousemove', _handleMove );
-      _bodyDom.removeEventListener( 'mouseleave', _handleMove );
+
+      // Clean up listeners
+      _bodyDom.removeEventListener( 'click', _handleBodyClick );
     } else if ( _activeMenu === null ) {
       // A menu is opened.
       _activeMenu = menu;
       _activeMenu.getTransition().animateOn();
 
-      /* Mousemove needed in addition to mouseout of the trigger
-         in order to check if user has moved off the menu <ul> and not
-         just the <li> list items. */
-      _bodyDom.addEventListener( 'mousemove', _handleMove );
-      _bodyDom.addEventListener( 'mouseleave', _handleMove );
+      // Close the menu on click of the document body.
+      _bodyDom.addEventListener( 'click', _handleBodyClick );
+
       _activeMenu.expand();
     } else {
       // An open menu has switched to another menu.
@@ -169,9 +169,6 @@ function MegaMenuDesktop( baseClass, menus ) {
     if ( !_suspended ) {
       treeTraversal.bfs( _menus.getRoot(), _handleSuspendTraversal );
 
-      // Ensure body events were removed.
-      _bodyDom.removeEventListener( 'mousemove', _handleMove );
-      _bodyDom.removeEventListener( 'mouseleave', _handleMove );
       // Clear active menu.
       _activeMenu = null;
       _suspended = true;

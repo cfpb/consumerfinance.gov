@@ -4,10 +4,14 @@ from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Page, Site
-
 from ask_cfpb.models import Answer, AnswerLandingPage, AnswerPage
 from ask_cfpb.wagtail_hooks import create_answer_id, editor_css
+
+
+try:
+    from wagtail.core.models import Page, Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore.models import Page, Site
 
 
 class TestAskHooks(TestCase):

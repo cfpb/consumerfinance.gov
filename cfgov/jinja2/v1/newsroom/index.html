@@ -10,7 +10,6 @@
     {% for block in page.header %}
         {% if 'featured_content' in block.block_type %}
             <div class="block
-                        block__border
                         {{ 'u-mt0' if loop.first }}">
                         {# u-mt0 is used instead of block__flush-top to keep top border #}
                 {% include_block block %}

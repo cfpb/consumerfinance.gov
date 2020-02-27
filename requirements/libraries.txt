@@ -49,15 +49,15 @@ unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 urllib3==1.25.2
 wagtail-autocomplete==0.1.1
-wagtail-flags==4.1.0b2
-wagtail-inventory==0.8
-wagtail-sharing==0.8
-wagtail-treemodeladmin==1.0.4
+wagtail-flags==4.1.0
+wagtail-inventory==1.0
+wagtail-sharing==1.0
+wagtail-treemodeladmin==1.1.1
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.13.0/owning_a_home_api-0.13.0-py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.11.0/retirement-0.11.0-py3-none-any.whl
-https://github.com/cfpb/ccdb5-api/releases/download/1.2.0/ccdb5_api-1.2.0-py3-none-any.whl
+https://github.com/cfpb/ccdb5-api/releases/download/1.2.2/ccdb5_api-1.2.2-py3-none-any.whl
 https://github.com/cfpb/ccdb5-ui/releases/download/1.4.0/ccdb5_ui-1.4.0-py3-none-any.whl
-https://github.com/cfpb/django-college-costs-comparison/releases/download/1.13.0/comparisontool-1.13.0-py3-none-any.whl
-https://github.com/cfpb/teachers-digital-platform/releases/download/1.2.1/teachers_digital_platform-1.2.1-py3-none-any.whl
+https://github.com/cfpb/django-college-costs-comparison/releases/download/1.13.1/comparisontool-1.13.1-py3-none-any.whl
+https://github.com/cfpb/teachers-digital-platform/releases/download/1.2.3/teachers_digital_platform-1.2.3-py3-none-any.whl
