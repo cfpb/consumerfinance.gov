@@ -20,11 +20,6 @@
         outline-offset: 2px;
     }
 
-    &_icon {
-        font-size: unit( 48px / @base-font-size-px, em );
-        margin-bottom: unit( 5px / @base-font-size-px, em );
-    }
-
     &_footer {
         margin-top: auto;
     }
@@ -32,6 +27,13 @@
     &_footer > a {
         font-weight: 500;
         border-bottom-width: 1px;
+    }
+
+    // Shrink heading at smaller screen sizes.
+    &_heading {
+        .respond-to-max( @bp-med-min, {
+            .h3();
+        } );
     }
 
     // Regular cards.
@@ -61,6 +63,15 @@
 
     // Featured cards.
     &__featured {
+
+        .m-card_heading {
+            margin: 0;
+        }
+
+        .m-card_icon {
+            font-size: unit( 30px / @base-font-size-px, em );
+            margin-bottom: unit( 5px / @base-font-size-px, em );
+        }
 
         .m-card_icon,
         p {

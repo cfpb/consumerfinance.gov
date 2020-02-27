@@ -21,7 +21,9 @@
 {# We want to make the whole card clickable. #}
 <article class="m-card m-card__featured">
     <a href="{{ value.link_url }}">
-        <div class="m-card_icon">{{ svg_icon( value.icon ) }}</div>
+        <h2 class="m-card_heading">
+            <div class="m-card_icon">{{ svg_icon( value.icon ) }}</div>
+        </h2>
         <p>{{ value.text }}</p>
         <div class="m-card_footer">
             <span>{{ value.link_text }}</span>

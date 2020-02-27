@@ -6,13 +6,17 @@
 
     &__column-3 &_cards {
         grid-template-columns: repeat( 3, minmax( 0, 1fr ) );
+
+        // Convert to 2-column layout at small screen sizes;
+        .respond-to-max( @bp-med-min, {
+            grid-template-columns: 1fr 1fr;
+        } );
     }
 
     &_cards {
         display: grid;
         grid-column-gap: unit( 20px / @base-font-size-px, em );
         grid-row-gap: unit( 20px / @base-font-size-px, em );
-
 
         .respond-to-max( @bp-xs-max, {
             // Make sure cards are stacked at mobile size.
