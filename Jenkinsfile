@@ -41,9 +41,11 @@ pipeline {
         stage ('Init') {
             steps {
                 script {
-                    env.STACK_NAME = stack.scrubStackName("${env.STACK_PREFIX}-${params.ENV_NAME}")
-                    env.CFGOV_HOSTNAME = stack.getWebHostDomain(env.STACK_NAME)
-                    env.IMAGE_NAME = "${IMAGE_REPO}:${IMAGE_TAG}"
+                    def registryDomain = dockerRegistry.
+
+                    env.STACK_NAME = stack.sanitizeStackName("${env.STACK_PREFIX}-${params.ENV_NAME}")
+                    env.CFGOV_HOSTNAME = stack.getHostingDomain(env.STACK_NAME)
+                    env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
             }
@@ -65,7 +67,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.build(env.IMAGE_NAME, "--build-arg scl_python_version=rh-python36 --target cfgov-prod .")
+                    docker.build(env.IMAGE_NAME_LOCAL, "--build-arg scl_python_version=rh-python36 --target cfgov-prod .")
                 }
             }
         }
@@ -85,9 +87,11 @@ pipeline {
             } 
             steps {
                 script {
-                    docker.withRegistry(dockerRegistry.getUrl(), dockerRegistry.getCredentialsId()) {
-                        image = docker.image(env.IMAGE_NAME)
+                    docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
+                        image = docker.image(env.IMAGE_NAME_LOCAL)
                         image.push()
+
+                        // Sets fully-qualified image name
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
                     }
                 }
