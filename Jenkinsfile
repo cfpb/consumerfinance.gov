@@ -43,8 +43,8 @@ pipeline {
                 script {
                     def registryDomain = dockerRegistry.
 
-                    env.STACK_NAME = stack.sanitizeStackName("${env.STACK_PREFIX}-${params.ENV_NAME}")
-                    env.CFGOV_HOSTNAME = stack.getHostingDomain(env.STACK_NAME)
+                    env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${params.ENV_NAME}")
+                    env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
@@ -106,7 +106,7 @@ pipeline {
                 timeout(time: 15, unit: 'MINUTES')
             }
             steps {
-                deployStack(env.STACK_NAME, 'docker-stack.yml')
+                dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
             post {
