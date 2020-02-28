@@ -106,7 +106,9 @@ pipeline {
                 timeout(time: 15, unit: 'MINUTES')
             }
             steps {
-                dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
+                script {
+                    dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
+                }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
             post {
