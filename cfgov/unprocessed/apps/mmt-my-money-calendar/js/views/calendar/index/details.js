@@ -64,32 +64,39 @@ function Details() {
       </div>
 
       <Modal
-        className="delete-dialog"
+        className="modal-dialog"
         contentLabel="Event deletion options"
         isOpen={modalOpen}
         onRequestClose={toggleModal}
+        appElement={document.querySelector('#mmt-my-money-calendar')}
+        closeTimeoutMS={1500}
+        overlayClassName="modal-overlay"
+        id="delete-dialog"
       >
-        <p className="delete-dialog__prompt">Delete Event?</p>
-        <ul className="delete-dialog__actions">
-          <li className="delete-dialog__action">
+        <p className="modal-dialog__prompt">Delete this event?</p>
+        <ul className="modal-dialog__actions">
+          <li className="modal-dialog__action">
             <button
-              className="delete-dialog__action-button"
+              tabIndex="0"
+              className="modal-dialog__action-button"
               onClick={eventDeleteHandler(false)}
             >
               Just this event
             </button>
           </li>
-          <li className="delete-dialog__action">
+          <li className="modal-dialog__action">
             <button
-              className="delete-dialog__action-button"
+              tabIndex="1"
+              className="modal-dialog__action-button"
               onClick={eventDeleteHandler(true)}
             >
-              This event and all recurrences
+              This event and future recurrences
             </button>
           </li>
-          <li className="delete-dialog__action">
+          <li className="modal-dialog__action">
             <button
-              className="delete-dialog__action-button"
+              tabIndex="2"
+              className="modal-dialog__action-button modal-dialog__action-button--cancel"
               onClick={() => toggleModal(false)}
             >
               Cancel
