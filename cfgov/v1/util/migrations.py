@@ -1,4 +1,6 @@
 import json
+from html.parser import HTMLParser
+from unicodedata import normalize
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -170,3 +172,29 @@ def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
                 page=page).order_by('-id')
             for revision in revisions:
                 migrate_stream_field(revision, field_name, block_path, mapper)
+
+
+class MLStripper(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.reset()
+        self.strict = False
+        self.convert_charrefs= True
+        self.fed = []
+    def handle_data(self, d):
+        self.fed.append(d)
+    def get_data(self):
+        return ''.join(self.fed)
+
+
+def strip_tags(html):
+    s = MLStripper()
+    s.feed(html)
+    d = s.get_data()
+
+    try:
+        data = d.decode('utf-8')
+    except (UnicodeEncodeError, AttributeError):
+        data = d
+
+    return normalize('NFKC', data).strip()
