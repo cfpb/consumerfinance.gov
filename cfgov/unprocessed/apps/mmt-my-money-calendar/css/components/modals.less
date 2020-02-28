@@ -28,6 +28,7 @@
   transform: translate(-50%, -50%);
   width: 75%;
   padding: @modal-padding 0;
+  padding-bottom: 0;
   background-color: #fff;
   border-radius: 6px;
   outline: none;
@@ -52,6 +53,14 @@
 
     &:first-child {
       border-top: @modal-button-border;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+
+      .modal-dialog__action-button {
+        border-radius: 6px;
+      }
     }
   }
 
