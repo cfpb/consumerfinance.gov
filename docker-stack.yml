@@ -49,13 +49,13 @@ services:
             labels:
                 - com.docker.lb.hosts=${CFGOV_HOSTNAME}
                 - com.docker.lb.port=8000
-                - com.docker.lb.network=ucp-interlock
+                - com.docker.lb.network=${LB_NETWORK}
         command: /bin/bash -c './refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND'
 
 networks:
     app:
     lb:
-        name: ucp-interlock
+        name: ${LB_NETWORK}
         external: True
     
 secrets:
