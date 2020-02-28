@@ -6,7 +6,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: es\n"
 
-#: v1/home-page/index_new.html
+#: v1/home_page.html
 msgid "homepage"
 msgstr "página de inicio"
 
