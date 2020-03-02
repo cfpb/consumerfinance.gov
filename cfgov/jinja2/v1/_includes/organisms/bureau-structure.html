@@ -174,11 +174,9 @@
 
    ========================================================================== #}
 {% macro _role(role) -%}
+{% if role.name %}<h6>{{ role.name }}</h6>{% endif %}
 {% for lead in role.leads -%}
 <div class="o-bureau-structure_role">
-    {% if loop.first and role.name -%}
-    <h6 class="o-bureau-structure_role_office">{{ role.name }}</h6>
-    {%- endif %}
     <span class="o-bureau-structure_role_name">{{ lead.name }}</span>
     {% for title_line in ( lead.title | default( '' ) ).split('\n') -%}
     <span class="o-bureau-structure_role_title">{{ title_line }}</span>
