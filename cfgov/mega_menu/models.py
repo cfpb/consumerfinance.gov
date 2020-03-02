@@ -1,10 +1,16 @@
 from django.conf import settings
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.wagtailcore.fields import StreamField
-
 from mega_menu.blocks import MenuStreamBlock
+from mega_menu.frontend_conversion import FrontendConverter
+
+
+try:
+    from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+    from wagtail.core.fields import StreamField
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
+    from wagtail.wagtailcore.fields import StreamField
 
 
 class Menu(models.Model):
@@ -26,3 +32,6 @@ class Menu(models.Model):
 
     def __str__(self):
         return str(dict(settings.LANGUAGES)[self.language])
+
+    def get_content_for_frontend(self, request=None):
+        return FrontendConverter(self, request=request).get_menu_items()

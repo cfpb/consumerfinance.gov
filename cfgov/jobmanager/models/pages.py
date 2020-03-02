@@ -2,18 +2,27 @@ from __future__ import absolute_import
 
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
-    TabbedInterface
-)
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailcore.models import PageManager
-
 from jobmanager.models.django import (
     JobCategory, JobLength, JobLocation, ServiceType
 )
 from v1.models import CFGOVPage
 from v1.models.snippets import ReusableText
+
+
+try:
+    from wagtail.admin.edit_handlers import (
+        FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
+        ObjectList, TabbedInterface
+    )
+    from wagtail.core.fields import RichTextField
+    from wagtail.core.models import PageManager
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailadmin.edit_handlers import (
+        FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
+        ObjectList, TabbedInterface
+    )
+    from wagtail.wagtailcore.fields import RichTextField
+    from wagtail.wagtailcore.models import PageManager
 
 
 class JobListingPage(CFGOVPage):

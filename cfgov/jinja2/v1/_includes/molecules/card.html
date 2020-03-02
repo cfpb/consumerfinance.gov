@@ -18,11 +18,14 @@
    ========================================================================== #}
 
 {% macro render( value ) %}
+{# We want to make the whole card clickable. #}
 <article class="m-card">
-    <div class="m-card_icon">{{ svg_icon( value.icon ) }}</div>
-    <p>{{ value.text }}</p>
-    <div class="m-card_footer">
-        <a href="{{ value.link_url }}">{{ value.link_text }}</a>
-    </div>
+    <a href="{{ value.link_url }}">
+        <div class="m-card_icon">{{ svg_icon( value.icon ) }}</div>
+        <p>{{ value.text }}</p>
+        <div class="m-card_footer">
+            <span>{{ value.link_text }}</span>
+        </div>
+    </a>
 </article>
 {% endmacro %}

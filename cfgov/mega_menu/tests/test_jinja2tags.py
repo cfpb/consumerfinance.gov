@@ -1,39 +1,9 @@
 import json
 
-from django.template import engines
-from django.test import (
-    RequestFactory, SimpleTestCase, TestCase, override_settings
-)
+from django.test import RequestFactory, TestCase
 
+from mega_menu.jinja2tags import get_mega_menu_content
 from mega_menu.models import Menu
-
-
-class MegaMenuTemplateTests(SimpleTestCase):
-    def render_template_name(self):
-        jinja_engine = engines['wagtail-env']
-        template = jinja_engine.from_string('{{ mega_menu_template() }}')
-        return template.render()
-
-    @override_settings(FLAGS={})
-    def test_default_template(self):
-        self.assertEqual(
-            self.render_template_name(),
-            '_includes/organisms/mega-menu.html'
-        )
-
-    @override_settings(FLAGS={'MEGA_MENU_VAR_1': [('boolean', True)]})
-    def test_template_variation_1(self):
-        self.assertEqual(
-            self.render_template_name(),
-            '_includes/organisms/mega-menu-var-1.html'
-        )
-
-    @override_settings(FLAGS={'MEGA_MENU_VAR_2': [('boolean', True)]})
-    def test_template_variation_2(self):
-        self.assertEqual(
-            self.render_template_name(),
-            '_includes/organisms/mega-menu-var-2.html'
-        )
 
 
 class MegaMenuTests(TestCase):
@@ -46,48 +16,42 @@ class MegaMenuTests(TestCase):
             {'type': 'submenu', 'value': {'title': 'Spanish'}},
         ]))
 
-    def render_mega_menu(self, context):
-        jinja_engine = engines['wagtail-env']
-        template = jinja_engine.from_string('{{ mega_menu() }}')
-        return template.render(context)
-
     def test_empty_context_fails_due_to_missing_request(self):
         with self.assertRaises(KeyError):
-            self.render_mega_menu({})
+            get_mega_menu_content({})
 
-    def test_raises_exception_if_default_menu_does_not_exist(self):
+    def test_returns_none_if_no_menus_exist(self):
         Menu.objects.all().delete()
 
         request = RequestFactory().get('/')
-        with self.assertRaises(Menu.DoesNotExist):
-            self.render_mega_menu({'request': request})
+        self.assertIsNone(get_mega_menu_content({'request': request}))
 
     def test_uses_request_falls_back_to_default_language(self):
         request = RequestFactory().get('/')
-        html = self.render_mega_menu({'request': request})
-        self.assertIn('English', html)
+        content = get_mega_menu_content({'request': request})
+        self.assertIn('English', json.dumps(content))
 
     def test_uses_request_language_if_set(self):
         request = RequestFactory().get('/', HTTP_ACCEPT_LANGUAGE='es')
-        html = self.render_mega_menu({'request': request})
-        self.assertIn('Spanish', html)
+        content = get_mega_menu_content({'request': request})
+        self.assertIn('Spanish', json.dumps(content))
 
     def test_unsupported_language_falls_back_to_default_language(self):
         request = RequestFactory().get('/', HTTP_ACCEPT_LANGUAGE='fr')
-        html = self.render_mega_menu({'request': request})
-        self.assertIn('English', html)
+        content = get_mega_menu_content({'request': request})
+        self.assertIn('English', json.dumps(content))
 
     def test_uses_language_from_context_instead_of_request(self):
         request = RequestFactory().get('/', HTTP_ACCEPT_LANGUAGE='en')
-        html = self.render_mega_menu({'request': request, 'language': 'es'})
-        self.assertIn('Spanish', html)
+        content = get_mega_menu_content({'request': request, 'language': 'es'})
+        self.assertIn('Spanish', json.dumps(content))
 
     def test_unsupported_language_in_context_falls_back_to_default(self):
         request = RequestFactory().get('/')
-        html = self.render_mega_menu({'request': request, 'language': 'fr'})
-        self.assertIn('English', html)
+        content = get_mega_menu_content({'request': request, 'language': 'fr'})
+        self.assertIn('English', json.dumps(content))
 
     def test_renders_in_single_database_query(self):
         request = RequestFactory().get('/')
         with self.assertNumQueries(1):
-            self.render_mega_menu({'request': request})
+            get_mega_menu_content({'request': request})

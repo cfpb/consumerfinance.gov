@@ -6,13 +6,18 @@ from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Site
-
 import mock
 
 from v1.models import BrowsePage, CFGOVPage
 from v1.tests.wagtail_pages.helpers import save_new_page
+
+
+try:
+    from wagtail.core import blocks
+    from wagtail.core.models import Site
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+    from wagtail.wagtailcore.models import Site
 
 
 class TestCFGOVPage(TestCase):

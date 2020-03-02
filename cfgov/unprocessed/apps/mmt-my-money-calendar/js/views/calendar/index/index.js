@@ -73,7 +73,7 @@ function Calendar() {
   useScrollToTop();
 
   return (
-    <section className="calendar">
+  <section className="calendar">
       <h2>{uiStore.subtitle}</h2>
 
       <nav className="calendar__nav">
