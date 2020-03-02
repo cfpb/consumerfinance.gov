@@ -52,10 +52,13 @@ class ExplainerCategory(blocks.StructBlock):
         help_text='Optional. Leave blank if there is only '
                   'one type of note for this image.'
     )
-    notes = blocks.ListBlock(ExplainerNote(
-        form_classname='explainer_notes',
-        required=False
-    ))
+    notes = blocks.ListBlock(
+        ExplainerNote(
+            form_classname='explainer_notes',
+            required=False
+        ),
+        default=[],
+    )
 
 
 class ExplainerPage(blocks.StructBlock):

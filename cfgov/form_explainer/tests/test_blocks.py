@@ -1,43 +1,40 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from form_explainer.models.blocks import ImageMapCoordinates
+from form_explainer.blocks import ImageMapCoordinates
 
 
 class ImageMapCoordinatesTestCase(TestCase):
 
-    def it_should_not_validate_if_sum_of_top_and_height_exceeds_100(self):
+    def test_validation_fails_if_sum_of_top_and_height_exceeds_100(self):
         block = ImageMapCoordinates()
         value = block.to_python({
             'left': 10,
             'top': 10,
             'width': 10,
             'height': 100,
-
         })
         with self.assertRaises(ValidationError):
             block.clean(value)
 
-    def it_should_not_validate_if_sum_of_left_and_width_exceeds_100(self):
+    def test_validation_fails_if_sum_of_left_and_width_exceeds_100(self):
         block = ImageMapCoordinates()
         value = block.to_python({
             'left': 10,
             'top': 10,
             'width': 100,
             'height': 10,
-
         })
         with self.assertRaises(ValidationError):
             block.clean(value)
 
-    def it_should_validate_if_coordinate_sums_less_than_or_equal_to_100(self):
+    def test_validates_if_coordinate_sums_less_than_or_equal_to_100(self):
         block = ImageMapCoordinates()
         value = block.to_python({
             'left': 10,
             'top': 10,
             'width': 10,
             'height': 90,
-
         })
         try:
             block.clean(value)
