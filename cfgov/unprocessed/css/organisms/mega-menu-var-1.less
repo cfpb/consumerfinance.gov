@@ -686,6 +686,16 @@ body {
             left: 0;
             z-index: 10;
 
+            // Pad in featured items.
+            &-list__featured li {
+                padding-left: unit( 13px / @base-font-size-px, em );
+            }
+
+            // Don't pad in featured items in box.
+            &-list__featured-item li {
+                padding-left: 0;
+            }
+
             // Featured item has a highlight box around it.
             &-list__featured-item {
 
