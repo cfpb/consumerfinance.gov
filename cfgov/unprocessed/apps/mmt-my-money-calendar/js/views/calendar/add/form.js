@@ -40,13 +40,19 @@ function Form() {
     []
   );
 
-  const focusHandler = useCallback((evt) => {
-    uiStore.toggleBottomNav(false);
-  }, [uiStore]);
-  const blurHandler = useCallback((cb) => (evt) => {
-    uiStore.toggleBottomNav(true);
-    cb(evt);
-  }, [uiStore]);
+  const focusHandler = useCallback(
+    (evt) => {
+      uiStore.toggleBottomNav(false);
+    },
+    [uiStore]
+  );
+  const blurHandler = useCallback(
+    (cb) => (evt) => {
+      uiStore.toggleBottomNav(true);
+      cb(evt);
+    },
+    [uiStore]
+  );
 
   let { id, categories = '' } = useParams();
   const isNew = !id;

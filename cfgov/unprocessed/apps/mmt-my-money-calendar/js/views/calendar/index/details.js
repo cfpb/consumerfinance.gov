@@ -14,24 +14,35 @@ function Details() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [modalOpen, toggleModal] = useToggle(false);
 
-  const confirmDelete = useCallback((event) => (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setSelectedEvent(event);
-    toggleModal(true);
-  }, []);
+  const confirmDelete = useCallback(
+    (event) => (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setSelectedEvent(event);
+      toggleModal(true);
+    },
+    []
+  );
 
-  const eventDeleteHandler = useCallback((andRecurrences = false) => async (evt) => {
-    evt.preventDefault();
-    await eventStore.deleteEvent(selectedEvent.id, andRecurrences);
-    setSelectedEvent(null);
-    toggleModal(false);
-  }, [selectedEvent]);
+  const eventDeleteHandler = useCallback(
+    (andRecurrences = false) => async (evt) => {
+      evt.preventDefault();
+      await eventStore.deleteEvent(selectedEvent.id, andRecurrences);
+      setSelectedEvent(null);
+      toggleModal(false);
+    },
+    [selectedEvent]
+  );
 
-  const editEvent = useCallback((id) => (evt) => {
-    evt.preventDefault();
-    history.push(`/calendar/add/${id}/edit`);
-  }, []);
+  const eventRecurs = selectedEvent && selectedEvent.recurs;
+
+  const editEvent = useCallback(
+    (id) => (evt) => {
+      evt.preventDefault();
+      history.push(`/calendar/add/${id}/edit`);
+    },
+    []
+  );
 
   const title = uiStore.selectedDate ? uiStore.selectedDate.toFormat('DDD') : uiStore.currentMonth.toFormat('MMMM, y');
   const events = uiStore.selectedDate
@@ -53,7 +64,7 @@ function Details() {
               <div className="calendar-details__event-name">{e.name}</div>
               <div className="calendar-details__event-total">{formatCurrency(e.total)}</div>
               <button className="calendar-details__event-delete" onClick={confirmDelete(e)}>
-                <span dangerouslySetInnerHTML={{__html: deleteRound}} />
+                <span dangerouslySetInnerHTML={{ __html: deleteRound }} />
               </button>
             </li>
           ))}
@@ -74,27 +85,20 @@ function Details() {
         overlayClassName="modal-overlay"
         id="delete-dialog"
       >
-        {/* TODO: change buttons and their labels depending on whether event recurs or not */}
         <p className="modal-dialog__prompt">Delete this event?</p>
         <ul className="modal-dialog__actions">
           <li className="modal-dialog__action">
-            <button
-              tabIndex="0"
-              className="modal-dialog__action-button"
-              onClick={eventDeleteHandler(false)}
-            >
-              Just this event
+            <button tabIndex="0" className="modal-dialog__action-button" onClick={eventDeleteHandler(false)}>
+              {eventRecurs ? 'Just this event' : 'Delete'}
             </button>
           </li>
-          <li className="modal-dialog__action">
-            <button
-              tabIndex="1"
-              className="modal-dialog__action-button"
-              onClick={eventDeleteHandler(true)}
-            >
-              This event and future recurrences
-            </button>
-          </li>
+          {eventRecurs && (
+            <li className="modal-dialog__action">
+              <button tabIndex="1" className="modal-dialog__action-button" onClick={eventDeleteHandler(true)}>
+                This event and future recurrences
+              </button>
+            </li>
+          )}
           <li className="modal-dialog__action">
             <button
               tabIndex="2"
