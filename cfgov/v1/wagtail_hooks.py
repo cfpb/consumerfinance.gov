@@ -11,6 +11,7 @@ from django.dispatch import receiver
 from django.shortcuts import render
 from django.utils.html import format_html_join
 
+import wagtail
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
@@ -86,9 +87,31 @@ def log_page_deletion(request, page):
 
 @hooks.register('insert_editor_js')
 def editor_js():
-    js_files = [
-        'js/table-block.js',
-    ]
+    js_files = ['js/table-block.js']
+
+    if wagtail.VERSION >= (2, 0):
+        # js_files.insert(0, 'wagtailadmin/js/hallo-bootstrap.js')
+        js_files.insert(0, 'wagtailadmin/js/vendor/hallo.js')
+        js_files.insert(0, 'wagtailadmin/js/hallo-plugins/hallo-hr.js')
+        js_files.insert(
+            0,
+            'wagtailadmin/js/hallo-plugins/hallo-requireparagraphs.js'
+        )
+        js_files.insert(
+            0, 'wagtailadmin/js/hallo-plugins/hallo-wagtaillink.js')
+        js_files.insert(
+            0,
+            'wagtaildocs/js/hallo-plugins/hallo-wagtaildoclink.js'
+        )
+        js_files.insert(
+            0,
+            'wagtailembeds/js/hallo-plugins/hallo-wagtailembeds.js'
+        )
+        js_files.insert(
+            0,
+            'wagtailimages/js/hallo-plugins/hallo-wagtailimage.js'
+        )
+
     js_includes = format_html_join(
         '\n',
         '<script src="{0}{1}"></script>',
@@ -107,6 +130,10 @@ def editor_css():
         'css/heading-block.css',
         'css/table-block.css',
     ]
+
+    if wagtail.VERSION >= (2, 0):
+        css_files.insert(0, 'wagtailadmin/css/panels/hallo.css')
+
     css_includes = format_html_join(
         '\n',
         '<link rel="stylesheet" href="{0}{1}">',
