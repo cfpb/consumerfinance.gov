@@ -159,6 +159,7 @@ function Form() {
               errors={formik.errors.totalCents}
               touched={formik.touched.totalCents}
               tabIndex="0"
+              required
             />
 
             <DateField
@@ -172,6 +173,7 @@ function Form() {
               errors={formik.errors.dateTime}
               touched={formik.touched.dateTime}
               tabIndex="0"
+              required
             />
 
             <Checkbox
@@ -193,6 +195,7 @@ function Form() {
                 onBlur={formik.handleBlur}
                 errors={formik.errors.recurrenceType}
                 touched={formik.touched.recurrenceType}
+                required={formik.values.recurs}
               />
             )}
 
@@ -206,6 +209,7 @@ function Form() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.payday1}
+                  required={formik.values.recurrenceType === 'semimonthly'}
                 />
                 <SelectField
                   id="payday2"
@@ -215,6 +219,7 @@ function Form() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.payday2}
+                  required={formik.values.recurrenceType === 'semimonthly'}
                 />
               </>
             )}
