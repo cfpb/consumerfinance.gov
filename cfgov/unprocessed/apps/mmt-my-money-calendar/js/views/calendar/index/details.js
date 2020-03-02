@@ -11,21 +11,22 @@ import deleteRound from '@cfpb/cfpb-icons/src/icons/delete-round.svg';
 function Details() {
   const { uiStore, eventStore } = useStore();
   const history = useHistory();
-  const [selectedID, setSelectedID] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [modalOpen, toggleModal] = useToggle(false);
 
-  const confirmDelete = useCallback((eventID) => (evt) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-    setSelectedID(eventID);
+  const confirmDelete = useCallback((event) => (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSelectedEvent(event);
     toggleModal(true);
   }, []);
 
   const eventDeleteHandler = useCallback((andRecurrences = false) => async (evt) => {
     evt.preventDefault();
-    await eventStore.deleteEvent(selectedID, andRecurrences);
+    await eventStore.deleteEvent(selectedEvent.id, andRecurrences);
+    setSelectedEvent(null);
     toggleModal(false);
-  }, [selectedID]);
+  }, [selectedEvent]);
 
   const editEvent = useCallback((id) => (evt) => {
     evt.preventDefault();
@@ -51,7 +52,7 @@ function Details() {
               <div className="calendar-details__event-date">{e.dateTime.toFormat('D')}</div>
               <div className="calendar-details__event-name">{e.name}</div>
               <div className="calendar-details__event-total">{formatCurrency(e.total)}</div>
-              <button className="calendar-details__event-delete" onClick={confirmDelete(e.id)}>
+              <button className="calendar-details__event-delete" onClick={confirmDelete(e)}>
                 <span dangerouslySetInnerHTML={{__html: deleteRound}} />
               </button>
             </li>
@@ -67,12 +68,13 @@ function Details() {
         className="modal-dialog"
         contentLabel="Event deletion options"
         isOpen={modalOpen}
-        onRequestClose={toggleModal}
+        onRequestClose={() => toggleModal(false)}
         appElement={document.querySelector('#mmt-my-money-calendar')}
-        closeTimeoutMS={1500}
+        closeTimeoutMS={150}
         overlayClassName="modal-overlay"
         id="delete-dialog"
       >
+        {/* TODO: change buttons and their labels depending on whether event recurs or not */}
         <p className="modal-dialog__prompt">Delete this event?</p>
         <ul className="modal-dialog__actions">
           <li className="modal-dialog__action">
