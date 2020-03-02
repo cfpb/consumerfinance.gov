@@ -1,5 +1,8 @@
+import clsx from 'clsx';
+import { observer } from 'mobx-react';
 import { useCallback } from 'react';
 import { useHistory, useLocation, NavLink } from 'react-router-dom';
+import { useStore } from '../stores';
 
 import calendar from '@cfpb/cfpb-icons/src/icons/calendar.svg';
 import add from '@cfpb/cfpb-icons/src/icons/add.svg';
@@ -15,9 +18,12 @@ const NavItem = ({ href, icon, label, ...params }) => (
   </li>
 );
 
-export default function BottomNav() {
+function BottomNav() {
+  const { uiStore } = useStore();
+  const classes = clsx('bottom-nav', uiStore.showBottomNav && 'bottom-nav--visible');
+
   return (
-    <footer className="bottom-nav">
+    <footer className={classes}>
       <nav className="bottom-nav__nav">
         <ul className="bottom-nav__items">
           <NavItem href="/calendar" icon={calendar} exact label="Calendar" />
@@ -29,3 +35,5 @@ export default function BottomNav() {
     </footer>
   );
 }
+
+export default observer(BottomNav);

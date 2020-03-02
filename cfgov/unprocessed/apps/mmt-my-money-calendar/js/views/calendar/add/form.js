@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { Formik } from 'formik';
 import { useParams, useHistory, Redirect, withRouter } from 'react-router-dom';
 import * as yup from 'yup';
@@ -39,6 +39,14 @@ function Form() {
       }),
     []
   );
+
+  const focusHandler = useCallback((evt) => {
+    uiStore.toggleBottomNav(false);
+  }, [uiStore]);
+  const blurHandler = useCallback((cb) => (evt) => {
+    uiStore.toggleBottomNav(true);
+    cb(evt);
+  }, [uiStore]);
 
   let { id, categories = '' } = useParams();
   const isNew = !id;
@@ -109,9 +117,9 @@ function Form() {
           if (eventType === 'expense') values.totalCents = -values.totalCents;
 
           if (values.recurs) {
-            const { handler } = recurrenceRules[values.recurrenceRule];
+            const { handler } = recurrenceRules[values.recurrenceType];
             values.recurrenceRule =
-              values.recurrenceRule === 'semimonthly'
+              values.recurrenceType === 'semimonthly'
                 ? handler(values.dateTime.toJSDate(), values.payday1, values.payday2)
                 : handler(values.dateTime.toJSDate());
           }
@@ -132,10 +140,12 @@ function Form() {
               id="name"
               label="Description"
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
               value={formik.values.name}
               errors={formik.errors.name}
               touched={formik.touched.name}
+              tabIndex="0"
             />
 
             <CurrencyField
@@ -143,10 +153,12 @@ function Form() {
               name="totalCents"
               label="Pay Amount"
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
               value={formik.values.totalCents}
               errors={formik.errors.totalCents}
               touched={formik.touched.totalCents}
+              tabIndex="0"
             />
 
             <DateField
@@ -154,10 +166,12 @@ function Form() {
               name="dateTime"
               label={eventType === 'expense' ? 'Due Date' : 'Pay Date'}
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
               value={formik.values.dateTime || ''}
               errors={formik.errors.dateTime}
               touched={formik.touched.dateTime}
+              tabIndex="0"
             />
 
             <Checkbox
