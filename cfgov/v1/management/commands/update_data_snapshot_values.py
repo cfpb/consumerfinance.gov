@@ -38,7 +38,7 @@ class Command(BaseCommand):
         snapshots = []
         for page in BrowsePage.objects.all():
             stream_data = page.content.stream_data
-            if stream_data[0]['type'] == 'data_snapshot':
+            if stream_data and stream_data[0]['type'] == 'data_snapshot':
                 stream_data[0]['value']['page'] = page.pk
                 snapshots.append(stream_data)
         return snapshots

@@ -15,6 +15,8 @@ from django.db import connection
 from django.utils import timezone
 
 import requests
+from requests.exceptions import SSLError
+
 from paying_for_college.disclosures.scripts import (
     api_utils, nat_stats, notifications, process_cohorts, purge_objects,
     tag_settlement_schools, update_colleges, update_ipeds
@@ -25,7 +27,6 @@ from paying_for_college.disclosures.scripts.ping_edmc import (
 from paying_for_college.models import (
     FAKE_SCHOOL_PK, Alias, Notification, Program, School
 )
-from requests.exceptions import SSLError
 
 
 COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)

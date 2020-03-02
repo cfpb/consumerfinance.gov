@@ -10,12 +10,13 @@ import time
 from decimal import Decimal
 
 import requests
+from requests.exceptions import SSLError
+
 from paying_for_college.disclosures.scripts import api_utils
 from paying_for_college.disclosures.scripts.api_utils import (
     DECIMAL_MAP, MODEL_MAP
 )
 from paying_for_college.models import CONTROL_MAP, FAKE_SCHOOL_PK, School
-from requests.exceptions import SSLError
 
 
 logger = logging.getLogger(__name__)
