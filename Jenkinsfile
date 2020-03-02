@@ -41,8 +41,6 @@ pipeline {
         stage ('Init') {
             steps {
                 script {
-                    def registryDomain = dockerRegistry.
-
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${params.ENV_NAME}")
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
