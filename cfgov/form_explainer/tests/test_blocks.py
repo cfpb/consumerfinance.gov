@@ -5,7 +5,6 @@ from form_explainer.blocks import ImageMapCoordinates
 
 
 class ImageMapCoordinatesTestCase(TestCase):
-
     def test_validation_fails_if_sum_of_top_and_height_exceeds_100(self):
         block = ImageMapCoordinates()
         value = block.to_python({

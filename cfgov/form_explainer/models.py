@@ -1,10 +1,7 @@
-from django.core.exceptions import ValidationError
-
 from wagtail.wagtailadmin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
 from wagtail.wagtailcore.blocks import StreamBlock
-from wagtail.wagtailcore.blocks import StreamBlockValidationError
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailsearch import index
 
