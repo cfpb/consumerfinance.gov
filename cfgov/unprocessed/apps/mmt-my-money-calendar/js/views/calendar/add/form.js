@@ -33,7 +33,7 @@ function Form() {
         then: yup
           .number()
           .integer()
-          .required()
+          .required('Day of month is required for semimonthly recurrences')
           .cast(),
         otherwise: yup.number(),
       }),
@@ -92,14 +92,14 @@ function Form() {
         validationSchema={yup.object({
           name: yup.string(),
           totalCents: yup
-            .number()
+            .number('Total must be a number')
             .integer()
-            .positive()
-            .required(),
-          dateTime: yup.date().required(),
+            .positive('Total must be greater than $0.00')
+            .required('Total is required'),
+          dateTime: yup.date('Must be a valid date').required('Date is required'),
           recurrenceType: yup.string().when('recurs', {
             is: true,
-            then: yup.string().required(),
+            then: yup.string().required('Frequency is required for recurring transactions'),
             otherwise: yup.string(),
           }),
           payday1: paydaySchema,
