@@ -4,6 +4,8 @@ import { useReducer, useCallback } from 'react';
 import { formatCurrency, toCents } from '../lib/currency-helpers';
 import { recurrenceRules, DAY_OPTIONS } from '../lib/calendar-helpers';
 
+import closeRound from '@cfpb/cfpb-icons/src/icons/close-round.svg';
+
 export const Checkbox = ({ id, name, onChange, checked, label, value = '1', ...props }) => {
   const changeHandler = useCallback(
     (evt) => {
@@ -32,15 +34,24 @@ export const Checkbox = ({ id, name, onChange, checked, label, value = '1', ...p
   );
 };
 
-export const TextField = ({ id, name, type = 'text', onChange, onBlur, label, value, errors, touched, ...props }) => (
-  <div className="m-form-field m-form-field__text">
-    <label className="a-label a-label__heading" htmlFor={id}>
-      {label}
-    </label>
-    <input type={type} className="a-text-input" id={id} value={value} onChange={onChange} onBlur={onBlur} {...props} />
-    {errors && touched && <div className="error">{errors}</div>}
-  </div>
-);
+export const TextField = ({ id, name, type = 'text', onChange, onBlur, label, value, errors, touched, ...props }) => {
+  const fieldClasses = clsx('m-form-field', 'm-form-field__text', errors && touched && 'm-form-field__error');
+  const inputClasses = clsx('a-text-input', errors && touched && 'a-text-input__error')
+  return (
+    <div className={fieldClasses}>
+      <label className="a-label a-label__heading" htmlFor={id}>
+        {label}
+      </label>
+      <input type={type} className={inputClasses} id={id} value={value} onChange={onChange} onBlur={onBlur} {...props} />
+      {errors && touched && (
+        <div className="a-form-alert a-form-alert__error" role="alert">
+          <span dangerouslySetInnerHTML={{__html: closeRound }} className="error-icon" />
+          <span className="a-form-alert_text">{errors}</span>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const DateField = ({ onChange, value, ...props }) => (
   <TextField type="date" onChange={onChange} value={value} {...props} />
@@ -116,6 +127,9 @@ export const SelectField = ({
   touched,
   ...props
 }) => {
+  const fieldClasses = clsx('m-form-field', 'm-form-field__select', errors && touched && 'm-form-field__error');
+  const inputClasses = clsx('a-select', errors && touched && 'a-select__error');
+
   const opts = [
     <option value={null} key="empty">
       {placeholder}
@@ -128,16 +142,21 @@ export const SelectField = ({
   ];
 
   return (
-    <div className="m-form-field m-form-field__select">
+    <div className={fieldClasses}>
       <label className="a-label a-label__heading" htmlFor={id}>
         {label}
       </label>
-      <div className="a-select">
+      <div className={inputClasses}>
         <select id={id} name={name} value={value} onChange={onChange} onBlur={onBlur} {...props}>
           {opts}
         </select>
       </div>
-      {errors && touched && <div className="error">{errors}</div>}
+      {errors && touched && (
+        <div className="a-form-alert a-form-alert__error" role="alert">
+          <span dangerouslySetInnerHTML={{__html: closeRound }} className="error-icon" />
+          <span className="a-form-alert_text">{errors}</span>
+        </div>
+      )}
     </div>
   );
 };
