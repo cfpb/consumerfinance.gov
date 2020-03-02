@@ -34,21 +34,39 @@ export const Checkbox = ({ id, name, onChange, checked, label, value = '1', ...p
   );
 };
 
-export const TextField = ({ id, name, type = 'text', onChange, onBlur, label, value, errors, touched, required = false, ...props }) => {
+export const TextField = ({
+  id,
+  name,
+  type = 'text',
+  onChange,
+  onBlur,
+  label,
+  value,
+  errors,
+  touched,
+  required = false,
+  ...props
+}) => {
   const fieldClasses = clsx('m-form-field', 'm-form-field__text', errors && touched && 'm-form-field__error');
   const inputClasses = clsx('a-text-input', errors && touched && 'a-text-input__error');
 
   return (
     <div className={fieldClasses}>
       <label className="a-label a-label__heading" htmlFor={id}>
-        {label}
-        {' '}
-        {!required && (<small className="a-label_helper">(optional)</small>)}
+        {label} {!required && <small className="a-label_helper">(optional)</small>}
       </label>
-      <input type={type} className={inputClasses} id={id} value={value} onChange={onChange} onBlur={onBlur} {...props} />
+      <input
+        type={type}
+        className={inputClasses}
+        id={id}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        {...props}
+      />
       {errors && touched && (
         <div className="a-form-alert a-form-alert__error" role="alert">
-          <span dangerouslySetInnerHTML={{__html: closeRound }} className="error-icon" />
+          <span dangerouslySetInnerHTML={{ __html: closeRound }} className="error-icon" />
           <span className="a-form-alert_text">{errors}</span>
         </div>
       )}
@@ -156,7 +174,7 @@ export const SelectField = ({
       </div>
       {errors && touched && (
         <div className="a-form-alert a-form-alert__error" role="alert">
-          <span dangerouslySetInnerHTML={{__html: closeRound }} className="error-icon" />
+          <span dangerouslySetInnerHTML={{ __html: closeRound }} className="error-icon" />
           <span className="a-form-alert_text">{errors}</span>
         </div>
       )}
