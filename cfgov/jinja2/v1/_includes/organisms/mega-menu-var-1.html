@@ -60,7 +60,7 @@
             {{ group.group_title | safe }}
         </h4>
         {% endif %}
-        <ul class="m-list m-list__unstyled">
+        <ul>
             {% if nav_depth == 1 -%}
             <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
                 {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
@@ -138,20 +138,22 @@
 
                 {% if nav_item.featured_links or nav_item.other_links %}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                    <ul class="m-list m-list__unstyled">
+                    <ul>
                         {% for link in nav_item.featured_links | default( [], true ) %}
                         <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
-                            <span>{{ svg_icon( 'favorite' ) }}</span>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="{{ link.external_link }}">
-                                {{ link.link_text }}
+                            <a class="a-link {{ _classes( nav_depth, '-link' ) }}"
+                               href="{{ link.external_link }}">
+                                {{ svg_icon( 'favorite' ) }}
+                                <span class="a-link_text">{{ link.link_text }}</span class="a-link_text">
                             </a>
                         </li>
                         {% endfor %}
                         {% for link in nav_item.other_links | default( [], true ) %}
                         <li>
-                            <span>{{ svg_icon( link.icon ) }}</span>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="{{ link.external_link }}">
-                                {{ link.link_text }}
+                            <a class="a-link {{ _classes( nav_depth, '-link' ) }}"
+                               href="{{ link.external_link }}">
+                                {{ svg_icon( link.icon ) }}
+                                <span class="a-link_text">{{ link.link_text }}</span>
                             </a>
                         </li>
                         {% endfor %}
