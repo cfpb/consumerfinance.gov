@@ -1,8 +1,12 @@
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailimages import blocks as images_blocks
+try:
+    from wagtail.core import blocks
+    from wagtail.images import blocks as images_blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    from wagtail.wagtailcore import blocks
+    from wagtail.wagtailimages import blocks as images_blocks
 
 
 class ImageMapCoordinates(blocks.StructBlock):

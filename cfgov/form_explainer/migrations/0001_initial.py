@@ -5,9 +5,15 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 import django.db.models.deletion
 import v1.blocks
-import wagtail.wagtailcore.blocks
-import wagtail.wagtailcore.fields
-import wagtail.wagtailimages.blocks
+
+try:
+    import wagtail.core.blocks
+    import wagtail.core.fields
+    import wagtail.images.blocks
+except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
+    import wagtail.wagtailcore.blocks
+    import wagtail.wagtailcore.fields
+    import wagtail.wagtailimages.blocks
 
 
 class Migration(migrations.Migration):
