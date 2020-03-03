@@ -47,6 +47,15 @@ const EXTRACT_CSS = new MiniCssExtractPlugin({
 const GENERATE_SERVICE_WORKER = new InjectManifest({
   swSrc: 'cfgov/unprocessed/apps/mmt-my-money-calendar/js/sw.js',
   swDest: SERVICE_WORKER_DESTINATION,
+  exclude: [
+    /components\/.+\.(js|map)$/,
+    /views\/.+\.(js|map)$/,
+    /lib\/.+\.(js|map)$/,
+    /stores\/.+\.(js|map)$/,
+    /routes\.(js|map)$/,
+    /seed-data\.(js|map)$/,
+    /sw\.(js|map)$/,
+  ]
 });
 
 const COMMON_MINIFICATION_CONFIG = [
