@@ -852,23 +852,6 @@ REGULATIONS_REFERENCE_MAPPING = [
     ),
 ]
 
-# Optionally enable cache for general template fragments
-if os.environ.get('ENABLE_DEFAULT_FRAGMENT_CACHE'):
-    CACHES = {
-        'default_fragment_cache': {
-            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-            'LOCATION': 'default_fragment_cache',
-            'TIMEOUT': None,
-        }
-    }
-else:
-    CACHES = {
-        'default_fragment_cache': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-            'TIMEOUT': 0,
-        }
-    }
-
 
 # See core.middleware.ParseLinksMiddleware. Normally all HTML responses get
 # processed by this middleware so that their link content gets the proper

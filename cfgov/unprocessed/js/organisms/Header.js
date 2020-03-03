@@ -50,24 +50,22 @@ function Header( element ) {
     _overlay = overlay;
 
     _globalSearch = new GlobalSearch( _dom );
-    _globalSearch.addEventListener( 'expandBegin', _searchExpandBegin );
-    _globalSearch.init();
 
-    _megaMenu = new MegaMenu( _dom );
-    _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
-    _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
-    _megaMenu.init();
+    // Don't initialize the mega menu if it isn't on the page.
+    if ( _dom.classList.contains( `${ BASE_CLASS }__mega-menu` ) ) {
+      _megaMenu = new MegaMenu( _dom );
+      _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
+      _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
+      _megaMenu.init();
+
+      // If we have a mega menu, it needs to be collapsed when search is expanded.
+      _globalSearch.addEventListener( 'expandBegin', _megaMenu.collapse );
+    }
+
+    _globalSearch.init();
 
     return this;
   }
-
-  /**
-   * Handler for opening the search.
-   */
-  function _searchExpandBegin() {
-    _megaMenu.collapse();
-  }
-
 
   /**
    * Handler for when the mega menu begins expansion.
