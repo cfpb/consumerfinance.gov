@@ -3,11 +3,12 @@ import { useLocation, useParams } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
-import { useClickHandler } from '../../../lib/hooks';
+import { useClickHandler, useClickConfirm } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
 import Button, { ButtonLink } from '../../../components/button';
 import { useScrollToTop } from '../../../components/scroll-to-top';
+import { DAY_LABELS } from '../../../lib/calendar-helpers';
 
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
@@ -41,7 +42,7 @@ function Calendar() {
     alert('Seed data loaded');
   }, []);
 
-  const clearDatabase = useClickHandler(async () => {
+  const clearDatabase = useClickConfirm(async () => {
     await window.clearTestData();
     await eventStore.loadEvents();
     alert('Database cleared');
@@ -63,11 +64,16 @@ function Calendar() {
     </Button>
   ));
 
+  const dayLabels = (
+    <div className="calendar__row" key="dayLabels">
+      {DAY_LABELS.map((label, idx) => <div key={`label-${idx}`} className="calendar__day-label">{label}</div>)}
+    </div>
+  );
+
   useScrollToTop();
 
   return (
-    <section className="calendar">
-      <h1>{uiStore.pageTitle}</h1>
+  <section className="calendar">
       <h2>{uiStore.subtitle}</h2>
 
       <nav className="calendar__nav">
@@ -81,12 +87,13 @@ function Calendar() {
       </nav>
 
       <div className="calendar__rows">
-        {uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
-          <CalendarWeekRow days={days} key={`week-${weekNumber}`} />
-        ))}
+        {[
+          dayLabels,
+          ...uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
+            <CalendarWeekRow days={days} key={`week-${weekNumber}`} />
+          ))
+        ]}
       </div>
-
-      <ButtonLink to="/calendar/add" icon={addRound} iconSide="left">Add Income/Expense</ButtonLink>
 
       <Details />
 

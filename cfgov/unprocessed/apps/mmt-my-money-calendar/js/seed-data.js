@@ -35,9 +35,10 @@ function seedCashFlowEvents() {
     {
       name: 'Paycheck',
       date: randDay(),
-      category: 'Job',
+      category: 'income.salary',
       totalCents: 30000,
       recurs: true,
+      recurrenceType: 'weekly',
       recurrenceRule: new RRule({
         freq: RRule.WEEKLY,
         dtstart: currentDate,
@@ -47,10 +48,11 @@ function seedCashFlowEvents() {
     {
       name: 'Rent',
       date: randDay(),
-      category: 'Housing',
+      category: 'expense.housing.rent',
       subcategory: 'Rent',
       totalCents: -80000,
       recurs: true,
+      recurrenceType: 'monthly',
       recurrenceRule: new RRule({
         freq: RRule.MONTHLY,
         count: 3,
@@ -60,9 +62,10 @@ function seedCashFlowEvents() {
     {
       name: 'Groceries',
       date: randDay(),
-      category: 'Groceries',
+      category: 'expense.food.groceries',
       totalCents: -20000,
       recurs: true,
+      recurrenceType: 'weekly',
       recurrenceRule: new RRule({
         freq: RRule.WEEKLY,
         dtstart: currentDate,

@@ -11,7 +11,7 @@ const days = (num) => minutes(num) * 60 * 24;
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 // Precache app landing page:
-workbox.precaching.precacheAndRoute(['/mmt-my-money-calendar ']);
+workbox.precaching.precacheAndRoute(['/mmt-my-money-calendar']);
 
 // All navigation routes hit the single-page-app landing page:
 workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL('/mmt-my-money-calendar'), {

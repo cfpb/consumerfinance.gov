@@ -11,10 +11,13 @@ const { InjectManifest } = WorkboxPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-
 // Used for toggling debug output. Inherit Django debug value to cut down on redundant environment variables:
-const { DJANGO_DEBUG: DEBUG = false, NODE_ENV = 'development', ANALYZE = false } = process.env;
+const {
+  DJANGO_DEBUG: DEBUG = false,
+  NODE_ENV = 'development',
+  ANALYZE = false,
+  SERVICE_WORKER_ENABLED = false,
+} = process.env;
 
 const COMMON_BUNDLE_NAME = 'common.js';
 //const SERVICE_WORKER_DESTINATION = '../../../../jinja2/v1/mmt-my-money-calendar/service-worker.js';
@@ -27,6 +30,7 @@ const AUTOLOAD_REACT = new webpack.ProvidePlugin({
 const ENVIRONMENT_VARIABLES = new webpack.DefinePlugin({
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   'process.env.DEBUG': JSON.stringify(DEBUG),
+  'process.env.SERVICE_WORKER_ENABLED': JSON.stringify(SERVICE_WORKER_ENABLED),
 });
 
 const COPY_PWA_MANIFEST = new CopyPlugin([
@@ -43,6 +47,15 @@ const EXTRACT_CSS = new MiniCssExtractPlugin({
 const GENERATE_SERVICE_WORKER = new InjectManifest({
   swSrc: 'cfgov/unprocessed/apps/mmt-my-money-calendar/js/sw.js',
   swDest: SERVICE_WORKER_DESTINATION,
+  exclude: [
+    /components\/.+\.(js|map)$/,
+    /views\/.+\.(js|map)$/,
+    /lib\/.+\.(js|map)$/,
+    /stores\/.+\.(js|map)$/,
+    /routes\.(js|map)$/,
+    /seed-data\.(js|map)$/,
+    /sw\.(js|map)$/,
+  ]
 });
 
 const COMMON_MINIFICATION_CONFIG = [
@@ -145,10 +158,6 @@ const STATS_CONFIG = {
   },
 };
 
-/**
- * TODO: Set up service worker config using workbox for offline capability
- */
-
 const plugins = [ENVIRONMENT_VARIABLES, AUTOLOAD_REACT, COPY_PWA_MANIFEST, EXTRACT_CSS, GENERATE_SERVICE_WORKER];
 
 if (NODE_ENV === 'development') {
@@ -173,7 +182,7 @@ if (NODE_ENV === 'development') {
 
 const conf = {
   node: {
-    fs: 'empty'
+    fs: 'empty',
   },
   cache: false,
   mode: NODE_ENV,

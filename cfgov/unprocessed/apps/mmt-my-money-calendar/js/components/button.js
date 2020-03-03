@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
+import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
+
 const ButtonIcon = ({ side = 'left', icon }) => (
   <span className={`a-btn_icon a-btn_icon__on-${side}`} dangerouslySetInnerHTML={{__html: icon}}></span>
 );
@@ -50,5 +53,8 @@ export function ButtonLink({ to, ...props }) {
 
   return <Button {...props} onClick={onClick} />;
 }
+
+export const BackButton = ({ children, ...props }) => <Button {...props} icon={arrowLeft} iconSide="left">{children}</Button>;
+export const NextButton = ({ children, ...props }) => <Button {...props} icon={arrowRight} iconSide="right">{children}</Button>;
 
 export default Button;

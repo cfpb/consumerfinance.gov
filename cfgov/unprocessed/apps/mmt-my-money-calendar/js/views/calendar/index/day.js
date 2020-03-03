@@ -64,10 +64,7 @@ function Day({ day, dateFormat = 'd' }) {
     'neg-balance': balance < 0,
   });
 
-  const symbols = compact([
-    eventStore.dateHasIncome(day) && <Icon icon={add} key="add-icon" size={20} />,
-    eventStore.dateHasExpenses(day) && <Icon icon={subtract} key="subtract-icon" size={20} />,
-  ]);
+  const symbol = eventStore.dateHasEvents(day) ? <div className="calendar__day-symbols">&bull;</div> : null;
 
   return (
     <div className={clsx(classes)} role="button" onClick={handleClick}>
@@ -76,7 +73,7 @@ function Day({ day, dateFormat = 'd' }) {
           {day.toFormat(dateFormat)}
         </time>
       </div>
-      <div className="calendar__day-symbols">{symbols}</div>
+      {symbol}
     </div>
   );
 }

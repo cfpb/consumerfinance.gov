@@ -4,6 +4,7 @@ import Wizard from './views/wizard';
 import Summary from './views/summary';
 import Calendar from './views/calendar/index';
 import AddEvent from './views/calendar/add';
+import BottomNav from './components/bottom-nav';
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">
@@ -29,6 +30,8 @@ const Routes = () => (
           <AddEvent />
         </Route>
       </Switch>
+
+      <BottomNav />
     </div>
   </Router>
 );

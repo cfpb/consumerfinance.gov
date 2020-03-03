@@ -4,10 +4,12 @@
 @positiveColor: #cbf0b6;
 @negativeColor: #f0b6b6;
 @breakpointMed: 500px;
+@symbolSize: 24px;
 
 .calendar {
   display: flex;
   flex-direction: column;
+  margin-bottom: @gap;
 
   &__nav {
     display: flex;
@@ -17,26 +19,32 @@
     margin-bottom: 1rem;
   }
 
+  &__rows {
+    margin-bottom: 1rem;
+  }
+
   &__row {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-    margin-bottom: @gap;
   }
 
-  &__day {
+  &__day, &__day-label {
     color: @inactiveMonthColor;
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     flex-basis: calc(100% / @cols - @gap);
-    justify-content: space-between;
     width: calc(100% / @cols - @gap);
+    height: calc(100vw / @cols - @gap);
     min-height: 40px;
-    border: 1px solid #ccc;
-    margin-right: @gap;
+    padding-right: @gap / 2;
+    padding-left: @gap / 2;
     text-align: center;
+    border: 1px solid transparent;
+    position: relative;
 
     @media screen and (min-width: @breakpointMed) {
       min-height: 4rem;
@@ -58,7 +66,7 @@
 
     &.selected {
       border-color: #000;
-      border-width: 2px;
+      border-width: 1px;
     }
 
     &:last-of-type {
@@ -66,8 +74,12 @@
     }
   }
 
-  &__day-number {
+  &__day-label {
     font-weight: bold;
+    color: @text;
+  }
+
+  &__day-number {
     font-size: 1rem;
 
     @media screen and (min-width: @breakpointMed) {
@@ -85,6 +97,12 @@
 
   &__day-symbols {
     font-weight: bold;
+    font-size: @symbolSize;
+    height: @symbolSize;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
   }
 }
 
