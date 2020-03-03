@@ -40,6 +40,7 @@ function Form() {
     []
   );
 
+  // Toggle bottom nav bar when inputs are focused, to prevent it from obscuring text on mobile screens:
   const focusHandler = useCallback(
     (evt) => {
       uiStore.toggleBottomNav(false);
@@ -90,6 +91,7 @@ function Form() {
       <BackButton variant="secondary" onClick={() => history.goBack()}>
         Back
       </BackButton>
+
       <h2 className="add-event__title">{category.name}</h2>
       <p className="add-event__intro">Enter your {category.name.toLowerCase()} details.</p>
 
@@ -152,6 +154,7 @@ function Form() {
               errors={formik.errors.name}
               touched={formik.touched.name}
               tabIndex="0"
+              placeholder={category.name}
             />
 
             <CurrencyField
@@ -188,6 +191,7 @@ function Form() {
               label="Recurring?"
               checked={formik.values.recurs}
               onChange={formik.handleChange}
+              tabIndex="0"
             />
 
             {formik.values.recurs && (
@@ -202,6 +206,7 @@ function Form() {
                 errors={formik.errors.recurrenceType}
                 touched={formik.touched.recurrenceType}
                 required={formik.values.recurs}
+                tabIndex="0"
               />
             )}
 
@@ -216,6 +221,7 @@ function Form() {
                   onBlur={formik.handleBlur}
                   value={formik.values.payday1}
                   required={formik.values.recurrenceType === 'semimonthly'}
+                  tabIndex="0"
                 />
                 <SelectField
                   id="payday2"
@@ -226,11 +232,12 @@ function Form() {
                   onBlur={formik.handleBlur}
                   value={formik.values.payday2}
                   required={formik.values.recurrenceType === 'semimonthly'}
+                  tabIndex="0"
                 />
               </>
             )}
 
-            <Button fullWidth disabled={!formik.dirty && !formik.isValid} type="submit">
+            <Button fullWidth disabled={!formik.dirty && !formik.isValid} type="submit" tabIndex="0">
               Save
             </Button>
           </form>
