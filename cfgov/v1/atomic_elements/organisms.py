@@ -1,7 +1,6 @@
 import itertools
 import json
 from collections import Counter
-from functools import partial
 from urllib.parse import urlencode
 
 from django import forms
@@ -489,7 +488,7 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
     def render(self, name, value, attrs=None):
         value = self.json_dict_apply(
             value,
-            partial(expand_db_html, for_editor=True)
+            expand_db_html
         )
 
         html = super(RichTextTableInput, self).render(name, value, attrs)
@@ -510,7 +509,10 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
             data, files, name
         )
 
-        return self.json_dict_apply(value, DbWhitelister.clean)
+        try:
+            return self.json_dict_apply(value, DbWhitelister.clean)
+        except NameError:
+            return value
 
     @staticmethod
     def json_dict_apply(value, callback):
