@@ -10,7 +10,7 @@ import CashFlowEvent from './stores/models/cash-flow-event';
 
 configureMobX({ enforceActions: 'observed' });
 
-if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+if ((process.env.NODE_ENV === 'production' || process.env.SERVICE_WORKER_ENABLED) && 'serviceWorker' in navigator) {
   const wb = new Workbox('/mmt-my-money-calendar/service-worker.js', { scope: '/mmt-my-money-calendar' });
 
   wb.addEventListener('activated', (evt) => {
