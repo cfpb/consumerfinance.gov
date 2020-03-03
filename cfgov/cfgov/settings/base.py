@@ -886,7 +886,7 @@ if wagtail.VERSION >= (2, 0):
             'OPTIONS': {
                 'features': [
                     'h2', 'h3', 'h4', 'h5',
-                    'ol', 'ul', 'blockquote'
+                    'blockquote', 'hr', 'ol', 'ul',
                     'bold', 'italic',
                     'link', 'document-link', 'image'
                 ]
