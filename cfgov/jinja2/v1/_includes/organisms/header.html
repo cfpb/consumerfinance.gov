@@ -8,17 +8,22 @@
 
    Creates markup for Header organism.
 
-   show_banner: Whether the global banner molecule is included.
-                Default is true.
+   show_banner:     Whether the global banner molecule is included.
+                    Default is false.
 
-   language:    The page's language value (used to display different
-                information on Spanish pages). Defaults to English.
+   show_mega_menu:  Whether the mega menu is included. Default is true.
+
+   language:        The page's language value (used to display different
+                    information on Spanish pages). Defaults to 'en' for
+                    English.
 
    ========================================================================== #}
 
-{% macro render( show_banner=false, language='en' ) %}
+{% macro render( show_banner=false, show_mega_menu=true, language='en' ) %}
 
-<header class="o-header">
+{% set mega_menu_content = show_mega_menu and get_mega_menu_content() %}
+
+<header class="o-header{% if mega_menu_content %} o-header__mega-menu{% endif %}">
 
     {% if flag_enabled('BETA_NOTICE', request) and show_banner %}
     {% import 'molecules/notification.html' as notification with context %}
@@ -97,21 +102,16 @@
             </a>
             {% endif %}
 
-            {% block primary_nav %}
-                {% if flag_enabled('MEGA_MENU_BACKEND_V2') %}
-                    {{ mega_menu() }}
+            {% if mega_menu_content %}
+                {% if flag_enabled('MEGA_MENU_VAR_1', request) %}
+                    {% set mega_menu_template = 'mega-menu-var-1.html' %}
                 {% else %}
-                    {% from mega_menu_template() import mega_menu with context %}
-                    {% if language == 'es' %}
-                        {% import '_vars-mega-menu-spanish.html' as vars with context %}
-                        {{ mega_menu( vars.menu_items, language=language ) }}
-                    {% else %}
-                        {% cache 'mega_menu', 'default_fragment_cache' %}
-                            {{ mega_menu( get_menu_items( request ), language=language ) }}
-                        {% endcache %}
-                    {% endif %}
+                    {% set mega_menu_template = 'mega-menu.html' %}
                 {% endif %}
-            {% endblock primary_nav %}
+
+                {% from 'organisms/' ~ mega_menu_template import mega_menu with context %}
+                {{ mega_menu ( mega_menu_content ) }}
+            {% endif %}
         </div>
 
     </div>
