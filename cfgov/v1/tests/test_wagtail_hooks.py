@@ -1,6 +1,5 @@
 import unittest
 
-from django.core.cache import caches
 from django.test import (
     RequestFactory, SimpleTestCase, TestCase, override_settings
 )
@@ -12,7 +11,6 @@ from wagtail.tests.utils import WagtailTestUtils
 import mock
 
 from v1.models.base import CFGOVPage
-from v1.models.menu_item import MenuItem
 from v1.models.resources import Resource
 from v1.wagtail_hooks import (
     form_module_handlers, get_resource_tags, set_served_by_wagtail_sharing
@@ -122,27 +120,6 @@ class TestServeLatestDraftPage(TestCase):
             response = self.client.get('/test/')
             self.assertContains(response, 'draft')
             self.assertEqual(response['Serving-Wagtail-Draft'], '1')
-
-
-class TestMenuItemSave(TestCase):
-    @override_settings(
-        CACHES={
-            'default_fragment_cache': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            }
-        })
-    def test_mega_menu_cache_cleared(self):
-        caches['default_fragment_cache'].set('mega_menu', 'menu_content')
-        self.assertEqual(
-            caches['default_fragment_cache'].get('mega_menu'),
-            'menu_content'
-        )
-        menu_item = MenuItem()
-        menu_item.save()
-        self.assertEqual(
-            caches['default_fragment_cache'].get('mega_menu'),
-            None
-        )
 
 
 class TestGetResourceTags(TestCase):

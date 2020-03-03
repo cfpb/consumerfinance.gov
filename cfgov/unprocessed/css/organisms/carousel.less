@@ -209,9 +209,10 @@
       display: none;
     }
 
-    // Hide "featured" heading at desktop size.
-    & h5 {
-      display: none;
+    // Hide "featured content" heading at desktop size but keep it available
+    // to screen readers.
+    & .h5 {
+      .u-visually-hidden;
     }
 
     // We can't do a straight top border because it gets included in the
