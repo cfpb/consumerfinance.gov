@@ -853,23 +853,6 @@ REGULATIONS_REFERENCE_MAPPING = [
     ),
 ]
 
-# Optionally enable cache for general template fragments
-if os.environ.get('ENABLE_DEFAULT_FRAGMENT_CACHE'):
-    CACHES = {
-        'default_fragment_cache': {
-            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-            'LOCATION': 'default_fragment_cache',
-            'TIMEOUT': None,
-        }
-    }
-else:
-    CACHES = {
-        'default_fragment_cache': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-            'TIMEOUT': 0,
-        }
-    }
-
 
 # See core.middleware.ParseLinksMiddleware. Normally all HTML responses get
 # processed by this middleware so that their link content gets the proper
@@ -896,3 +879,21 @@ PARSE_LINKS_EXCLUSION_LIST = [
 # scripts executed with the "runscript" management command.
 # See https://django-extensions.readthedocs.io/en/latest/runscript.html.
 BASE_DIR = 'scripts'
+
+if wagtail.VERSION >= (2, 0):
+    WAGTAILADMIN_RICH_TEXT_EDITORS = {
+        'default': {
+            'WIDGET': 'wagtail.admin.rich_text.DraftailRichTextArea',
+            'OPTIONS': {
+                'features': [
+                    'h2', 'h3', 'h4', 'h5',
+                    'blockquote', 'hr', 'ol', 'ul',
+                    'bold', 'italic',
+                    'link', 'document-link', 'image'
+                ]
+            }
+        },
+        'legacy': {
+            'WIDGET': 'wagtail.admin.rich_text.HalloRichTextArea',
+        }
+    }

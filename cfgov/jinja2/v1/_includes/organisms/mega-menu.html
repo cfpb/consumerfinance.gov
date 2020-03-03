@@ -70,9 +70,7 @@
             </li>
             {%- endif %}
             {%- for item in group.nav_items %}
-                {% if ( request.show_draft_megamenu and item.state != 'live' ) or ( not request.show_draft_megamenu and item.state != 'draft' ) %}
-                    {{ _nav_item( nav_depth, item, language ) }}
-                {% endif %}
+                {{ _nav_item( nav_depth, item, language ) }}
             {%- endfor %}
         </ul>
     </div>
