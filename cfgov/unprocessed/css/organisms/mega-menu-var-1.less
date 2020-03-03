@@ -2,22 +2,6 @@
 // Import Design System's Atomic Component less file to get transition CSS.
 @import (less) '@cfpb/cfpb-atomic-component/src/utilities/transition/transition.less';
 
-// TODO: Move the theme variables to /enhancements/ for CF.
-/* topdoc
-  name: Theme variables
-  family: cf-core
-  notes:
-    - "The following color and sizing variables are exposed, allowing you to
-       easily override them before compiling."
-  patterns:
-    - name: Sizing
-      codenotes:
-        - |
-          @mobile_trigger_ht__px
-  tags:
-    - cf-core
-*/
-
 @mobile_trigger_ht__px: 54px;
 
 /* topdoc
@@ -179,14 +163,9 @@ body {
         font-size: 1em;
     }
 
-    ul ul {
-        // Override margin added by CF between lists.
-        margin-top: 0;
-    }
-
-    &_content-item {
-        // Override margin added by CF to list items.
-        margin-bottom: 0;
+    // Reset default unordered list padding.
+    ul {
+        padding-left: 0;
     }
 
     &_content {
@@ -196,11 +175,22 @@ body {
             font-weight: normal;
         }
 
+        // Hide the ">" icon next to menu items on desktop…
+        &-link {
+            .cf-icon-svg {
+                display: none;
+            }
+        }
+
+        // …however, show the icons in featured links.
+        &_content-list__featured {
+            .cf-icon-svg {
+                display: inline-block;
+            }
+        }
+
         // Featured menu content is link items with icons.
         &-list__featured {
-
-            // Hide the featured menu content area at smaller screen sizes.
-            display: table-cell;
 
             & .cf-icon-svg {
                 display: inline;
@@ -218,13 +208,6 @@ body {
             & .a-link_text {
                 border-bottom-width: 0;
             }
-        }
-    }
-
-    &_content-link {
-        // Hide the ">" icon next to menu items on desktop.
-        .cf-icon-svg {
-            display: none;
         }
     }
 
@@ -703,28 +686,51 @@ body {
             left: 0;
             z-index: 10;
 
-            &-list__featured li:not( &-list__featured-item ) {
-                padding-left: 13px;
-            }
-
             // Featured item has a highlight box around it.
             &-list__featured-item {
+
                 // Style the featured item box.
                 padding: 10px;
-                padding-top: 20px;
-                padding-bottom: 20px;
+                padding-top: 30px;
+                padding-bottom: 30px;
                 margin-bottom: 30px;
                 border: 1px solid @gray-40;
                 border-top: 6px solid @gold;
 
-                & .cf-icon-svg {
-                    color: @gold;
+                & a {
+                    display: flex;
+                    padding: 0;
+                    left: 0;
+                    border: none;
                 }
 
                 & a:hover {
                     // For featured item,
                     // remove default green left bar hover state of menu links.
                     border-left-color: transparent;
+                }
+
+                & .cf-icon-svg {
+                    color: @gold;
+                    width: 100%;
+                }
+            }
+
+            &-list__featured li:not( &-list__featured-item ) {
+                padding-left: 13px;
+
+                & a {
+                    display: flex;
+                }
+
+                & .cf-icon-svg {
+                    width: 100%;
+                }
+            }
+
+            &-list__featured li {
+                & a:hover .cf-icon-svg {
+                    color: @black;
                 }
             }
 

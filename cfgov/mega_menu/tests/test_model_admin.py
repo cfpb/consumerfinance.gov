@@ -1,6 +1,6 @@
 import json
 
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from wagtail.tests.utils import WagtailTestUtils
 
@@ -36,11 +36,6 @@ class ModelAdminTests(TestCase, WagtailTestUtils):
         response = self.client.get('/admin/mega_menu/menu/')
         self.assertContains(response, 'Preview this menu')
 
-    def test_edit_view_contains_preview_button(self):
-        response = self.client.get('/admin/mega_menu/menu/edit/en/')
-        self.assertContains(response, 'Preview')
-
-    @override_settings(FLAGS={'MEGA_MENU_BACKEND_V2': [('boolean', True)]})
     def test_preview_view(self):
         response = self.client.get('/admin/mega_menu/menu/preview/en/')
         self.assertContains(response, 'Test column heading')
