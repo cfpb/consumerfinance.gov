@@ -12,12 +12,10 @@ from ask_cfpb.scripts import export_ask_data
 
 try:
     from wagtail.admin.menu import MenuItem
-    from wagtail.admin.rich_text import HalloPlugin
     from wagtail.core import hooks
     from wagtail.core.models import Page
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.menu import MenuItem
-    from wagtail.wagtailadmin.rich_text import HalloPlugin
     from wagtail.wagtailcore import hooks
     from wagtail.wagtailcore.models import Page
 
@@ -28,36 +26,12 @@ def export_data(request):
     return render(request, 'admin/export.html')
 
 
-@hooks.register('register_rich_text_features')
-def register_tips_feature(features):
-    features.register_editor_plugin(
-        'hallo', 'ask-tips',
-        HalloPlugin(
-            name='answermodule',
-            js=['js/ask_cfpb_tips.js'],
-        )
-    )
-
-
-@hooks.register('register_rich_text_features')
-def register_html_feature(features):
-    features.register_editor_plugin(
-        'hallo', 'edit-html',
-        HalloPlugin(
-            name='editHtmlButton',
-            js=['js/html_editor.js'],
-        )
-    )
-
-
+@hooks.register('insert_editor_css')
 def editor_css():
     return format_html(
         '<link rel="stylesheet" href="' +
         settings.STATIC_URL +
         'css/question-tips.css">\n')
-
-
-hooks.register('insert_editor_css', editor_css)
 
 
 @hooks.register('register_admin_menu_item')
