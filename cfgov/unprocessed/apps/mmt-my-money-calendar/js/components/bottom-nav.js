@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { observer } from 'mobx-react';
-import { useCallback } from 'react';
-import { useHistory, useLocation, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useStore } from '../stores';
 
 import calendar from '@cfpb/cfpb-icons/src/icons/calendar.svg';

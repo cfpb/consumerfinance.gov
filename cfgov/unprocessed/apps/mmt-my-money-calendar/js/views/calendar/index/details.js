@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useLockBodyScroll } from 'react-use';
 import { observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
 import { useToggle } from 'react-use';
@@ -43,6 +44,8 @@ function Details() {
     },
     []
   );
+
+  useLockBodyScroll(modalOpen);
 
   const title = uiStore.selectedDate ? uiStore.selectedDate.toFormat('DDD') : uiStore.currentMonth.toFormat('MMMM, y');
   const events = uiStore.selectedDate
