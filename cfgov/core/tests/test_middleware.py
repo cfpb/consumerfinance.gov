@@ -174,32 +174,32 @@ class TestParseLinks(TestCase):
         self.assertEqual(len(soup.find_all('svg')), count)
 
     def test_link_ending_with_svg_doesnt_get_another_svg(self):
-        self.check_after_parse_links_has_this_many_svgs(1,
+        self.check_after_parse_links_has_this_many_svgs(1, (
             '<a href="https://external.gov">'
             '<span>Text before icon</span> '
             '<svg>something</svg>'
             '</a>'
-        )
+        ))
 
     def test_link_ending_with_svg_and_whitespace_doesnt_get_another_svg(self):
-        self.check_after_parse_links_has_this_many_svgs(1,
+        self.check_after_parse_links_has_this_many_svgs(1, (
             '<a href="https://external.gov">'
             '<span>Text before icon</span> '
             '<svg>something</svg>   \n\t'
             '</a>'
-        )
+        ))
 
     def test_with_svg_not_at_the_end_still_gets_svg(self):
-        self.check_after_parse_links_has_this_many_svgs(2,
+        self.check_after_parse_links_has_this_many_svgs(2, (
             '<a href="https://external.gov">'
             '<span><svg>something</svg> Text after icon</span>'
             '</a>'
-        )
+        ))
 
     def test_with_svg_then_span_still_gets_svg(self):
-        self.check_after_parse_links_has_this_many_svgs(2,
+        self.check_after_parse_links_has_this_many_svgs(2, (
             '<a href="https://external.gov">'
             '<svg>something</svg>'
             '<span>Text after icon</span>'
             '</a>'
-        )
+        ))
