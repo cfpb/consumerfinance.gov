@@ -141,7 +141,6 @@
                     <ul class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
                         {% for link in nav_item.featured_links | default( [], true ) %}
                         <li>
-                            <span>{{ svg_icon( 'favorite' ) }}</span>
                             <a class="a-link {{ _classes( nav_depth, '-link' ) }}"
                                href="{{ link.external_link }}">
                                 {{ svg_icon( 'favorite' ) }}
