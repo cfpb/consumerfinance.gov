@@ -90,7 +90,9 @@ def editor_js():
     js_files = ['js/table-block.js']
 
     if wagtail.VERSION >= (2, 0):
-        # js_files.insert(0, 'wagtailadmin/js/hallo-bootstrap.js')
+        # Temporarily adding Hallo-related JavaScript files to all admin pages
+        # to support the continued use of Hallo in our RichTextTableInput
+        # until we can take more time to migrate that to Draftail.
         js_files.insert(0, 'wagtailadmin/js/vendor/hallo.js')
         js_files.insert(0, 'wagtailadmin/js/hallo-plugins/hallo-hr.js')
         js_files.insert(
@@ -132,6 +134,9 @@ def editor_css():
     ]
 
     if wagtail.VERSION >= (2, 0):
+        # Temporarily adding Hallo CSS to all admin pages
+        # to support the continued use of Hallo in our RichTextTableInput
+        # until we can take more time to migrate that to Draftail.
         css_files.insert(0, 'wagtailadmin/css/panels/hallo.css')
 
     css_includes = format_html_join(
