@@ -68,9 +68,7 @@
             </li>
             {%- endif %}
             {%- for item in group.nav_items %}
-                {% if ( request.show_draft_megamenu and item.state != 'live' ) or ( not request.show_draft_megamenu and item.state != 'draft' ) %}
-                    {{ _nav_item( nav_depth, item, language ) }}
-                {% endif %}
+                {{ _nav_item( nav_depth, item, language ) }}
             {%- endfor %}
         </ul>
     </div>
@@ -138,8 +136,7 @@
             <div class="{{ _classes( nav_depth, '-lists' ) }}">
                 {{ _nav_list( nav_depth, nav_item.nav_groups, language=language ) }}
 
-                {% if flag_enabled( 'MEGA_MENU_BACKEND_V2' ) and ( nav_item.featured_links or nav_item.other_links ) %}
-                {# New mega menu backend #}
+                {% if nav_item.featured_links or nav_item.other_links %}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
                     <ul>
                         {% for link in nav_item.featured_links | default( [], true ) %}
@@ -162,78 +159,7 @@
                         {% endfor %}
                     </ul>
                 </div>
-                {% else %}
-                {# TODO: This is hardcoded to menu selected, which will need to be controlled by Wagtail when this is released. #}
-                {% if nav_item | string == 'Consumer Tools' %}
-                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                    <ul>
-                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
-                            <span>{{ svg_icon( 'favorite' ) }}</span>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/consumer-tools/disasters-and-emergencies/">
-                                Prepare your finances for a natural disaster
-                            </a>
-                        </li>
-                        <li>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/complaint/">
-                                <span>{{ svg_icon( 'complaint' ) }}</span>
-                                Submit a complaint
-                            </a>
-                        </li>
-                        <li>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/ask-cfpb/">
-                                <span>{{ svg_icon( 'lightbulb' ) }}</span>
-                                Browse Ask CFPB
-                            </a>
-                        </li>
-                        <li>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/your-story/">
-                                <span>{{ svg_icon( 'open-quote' ) }}</span>
-                                Tell Your Story
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                {% elif nav_item | string == 'Practitioner Resources' %}
-                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                    <ul>
-                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
-                            <span>{{ svg_icon( 'favorite' ) }}</span>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/data-research/research-reports/financial-well-being-america/">
-                                Explore financial well-being survey results
-                            </a>
-                        </li>
-                        <li>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php">
-                                <span>{{ svg_icon( 'document' ) }}</span>
-                                Order free brochures {{ svg_icon( 'external-link' ) }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                {% elif nav_item | string == 'Data & Research' %}
-                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                    <ul>
-                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
-                            <span>{{ svg_icon( 'favorite' ) }}</span>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/data-research/financial-well-being-survey-data/">
-                                Help advance financial well-being
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                {% elif nav_item | string == 'Policy & Compliance' %}
-                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                    <ul>
-                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
-                            <span>{{ svg_icon( 'favorite' ) }}</span>
-                            <a class="{{ _classes( nav_depth, '-link' ) }}" href="/policy-compliance/guidance/tila-respa-disclosure-rule/">
-                                Resources to help you comply
-                            </a>
-                        </li>
-                    </ul>
-                </div>
                 {% endif %}
-            {% endif %}
             </div>
             {% endif %}
 
