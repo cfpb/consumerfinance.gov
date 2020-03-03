@@ -15,7 +15,6 @@ from v1.templatetags.banners import (
     complaint_maintenance_banner, omwi_salesforce_outage_banner
 )
 from v1.templatetags.email_popup import email_popup
-from v1.templatetags.mega_menu import get_menu_items
 from v1.util import ref
 from v1.util.util import get_unique_id
 
@@ -102,7 +101,6 @@ class V1Extension(Extension):
             'complaint_issue_banner': complaint_issue_banner,
             'complaint_maintenance_banner': complaint_maintenance_banner,
             'omwi_salesforce_outage_banner': omwi_salesforce_outage_banner,
-            'get_menu_items': get_menu_items,
             'get_model': get_model,
             'get_unique_id': get_unique_id,
             'hmda_outage_banner': hmda_outage_banner,
