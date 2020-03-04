@@ -6,6 +6,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 
 from localflavor.us.models import USStateField
+from modelcluster.fields import ParentalKey
 from pytz import timezone
 
 from v1 import blocks as v1_blocks
@@ -159,6 +160,101 @@ class DocumentDetailPage(AbstractFilterPage):
         content_panel=StreamFieldPanel('content')
     )
     template = 'document-detail/index.html'
+
+    objects = PageManager()
+
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('content')
+    ]
+
+
+class EnforcementActionStatus(models.Model):
+    institution = models.CharField(max_length=200, blank=True)
+    status = models.CharField(max_length=50, choices=[
+        ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
+        ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
+        ('Pending Litigation', 'Pending Litigation')
+    ])
+    action = ParentalKey('v1.EnforcementActionPage',
+                         on_delete=models.CASCADE,
+                         related_name='statuses')
+
+
+class EnforcementActionPage(AbstractFilterPage):
+    sidebar_header = models.CharField(
+        default='Action details',
+        max_length=100
+    )
+    court = models.CharField(default='', max_length=150, blank=True)
+    institution_type = models.CharField(max_length=50, choices=[
+        ('Nonbank', 'Nonbank'),
+        ('Bank', 'Bank')
+    ])
+    docket_number = models.CharField(max_length=100)
+
+    content = StreamField([
+        ('full_width_text', organisms.FullWidthText()),
+        ('expandable', organisms.Expandable()),
+        ('expandable_group', organisms.ExpandableGroup()),
+        ('notification', molecules.Notification()),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
+        ('feedback', v1_blocks.Feedback()),
+    ], blank=True)
+
+    content_panels = [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content')
+    ]
+
+    metadata_panels = [
+        MultiFieldPanel([
+            FieldPanel('sidebar_header'),
+            FieldPanel('court'),
+            FieldPanel('institution_type'),
+            FieldPanel('docket_number'),
+            FieldPanel('date_filed'),
+            FieldPanel('tags', 'Tags'),
+        ], heading='Basic Metadata'),
+        MultiFieldPanel([
+            InlinePanel('statuses', label="Enforcement Status", min_num=1),
+        ], heading='Enforcement Status'),
+        MultiFieldPanel([
+            InlinePanel('categories', label="Categories",
+                        min_num=1, max_num=2),
+        ], heading='Categories'),
+    ]
+
+    settings_panels = [
+        MultiFieldPanel(CFGOVPage.promote_panels, 'Settings'),
+        MultiFieldPanel([
+            FieldPanel('preview_title', classname="full"),
+            FieldPanel('preview_subheading', classname="full"),
+            FieldPanel('preview_description', classname="full"),
+            FieldPanel('secondary_link_url', classname="full"),
+            FieldPanel('secondary_link_text', classname="full"),
+            ImageChooserPanel('preview_image'),
+        ], heading='Page Preview Fields', classname='collapsible'),
+        FieldPanel('authors', 'Authors'),
+        MultiFieldPanel([
+            FieldPanel('date_published'),
+            FieldPanel('comments_close_by'),
+        ], 'Relevant Dates', classname='collapsible'),
+        MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
+        FieldPanel('language', 'Language'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(
+            AbstractFilterPage.content_panels + content_panels,
+            heading='General Content'
+        ),
+        ObjectList(metadata_panels, heading='Metadata'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(settings_panels, heading='Configuration')
+    ])
+
+    template = 'enforcement-action/index.html'
 
     objects = PageManager()
 
