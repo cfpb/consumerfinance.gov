@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { DateTime } from 'luxon';
 import { useReducer, useCallback } from 'react';
 import { formatCurrency, toCents } from '../lib/currency-helpers';
 import { recurrenceRules, DAY_OPTIONS } from '../lib/calendar-helpers';

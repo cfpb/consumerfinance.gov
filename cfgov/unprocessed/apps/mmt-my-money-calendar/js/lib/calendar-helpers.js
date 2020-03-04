@@ -1,19 +1,14 @@
 import dayjs from 'dayjs';
 import yearDay from 'dayjs/plugin/dayOfYear';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
-import { DateTime } from 'luxon';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { RRule, RRuleSet } from 'rrule';
 
 dayjs.extend(yearDay);
 dayjs.extend(weekOfYear);
+dayjs.extend(customParseFormat);
 
 export { dayjs as dayjs };
-
-/**
- * Luxon's DateTime class
- * @external DateTime
- * @see {@link https://moment.github.io/luxon/docs/class/src/datetime.js~DateTime.html|DateTime}
- */
 
 export const DAY_NAMES = [
   'Sunday',
@@ -46,27 +41,19 @@ export function numberWithOrdinal(num) {
   return num + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
 }
 
-/**
- * Ensures that the argument is returned as a DateTime
- *
- * @param {Date|DateTime} date - A Date instance or DateTime object
- * @returns {DateTime} a Luxon DateTime instance
- */
-export const toDateTime = (date) => (DateTime.isDateTime(date) ? date : DateTime.fromJSDate(date));
-
 export const toDayJS = (date) => dayjs(date);
 
 /**
  * Ensures that the argument is returned as a native JS Date object
  *
- * @param {Date|DateTime} date - A JS Date or dayjs object
+ * @param {Date|dayjs} date - A JS Date or dayjs object
  */
 export const toJSDate = (date) => (date instanceof Date ? date : date.toDate());
 
 /**
  * Get the ordinal day of the year for a date, as an integer
  *
- * @param {Date|DateTime} date - A Date or DateTime instance
+ * @param {Date|dayjs} date - A Date or dayjs instance
  * @returns {Number} an integer between 1 and 365
  */
 export const dayOfYear = (date) => toDayJS(date).dayOfYear();
@@ -96,7 +83,7 @@ export const limitMonthNumber = (num) => Math.min(Math.max(num, 0), 11);
 /**
  * Returns the number of the first day of the specified date's month, and the total number of days the month has
  *
- * @param {Date|DateTime} date - A JS Date or Luxon DateTime instance
+ * @param {Date|dayjs} date - A JS Date or dayjs instance
  * @returns {Object}
  */
 export function getMonthInfo(date = dayjs()) {
@@ -109,7 +96,7 @@ export function getMonthInfo(date = dayjs()) {
 /**
  * An object representing a week row on the calendar
  * @typedef {Object} Week
- * @property {dayjs[]} days - An array of DateTime objects, one for each day of the week
+ * @property {dayjs[]} days - An array of dayjs objects, one for each day of the week
  * @property {Number} weekNumber - The week number of the year
  */
 
@@ -120,19 +107,19 @@ export function getMonthInfo(date = dayjs()) {
  * @returns {Week[]} An array of Week objects
  */
 export function getWeekRows(date) {
-  date = toDateTime(date);
+  date = toDayJS(date);
   const rows = [];
   let numWeeks = Math.ceil(date.daysInMonth() / 7);
 
   for (let i = 0; i < numWeeks; i++) {
-    const startOfWeek = date.add(i, 'day').startOf('week');
+    const startOfWeek = date.add(i, 'week').startOf('week');
     const weekNumber = startOfWeek.week();
 
     rows.push({
       weekNumber,
       days: Array(7)
         .fill(0)
-        .map((n, i) => startOfWeek.add(n + i, 'day')),
+        .map((n, idx) => startOfWeek.add(n + idx, 'days')),
     });
   }
 

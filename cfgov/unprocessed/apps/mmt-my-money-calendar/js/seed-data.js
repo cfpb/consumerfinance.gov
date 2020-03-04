@@ -6,7 +6,7 @@ let currentDate;
 const now = dayjs().startOf('day');
 
 const randDay = (max = 30) => {
-  const date = now.add(Math.floor(Math.random() * max) + 1).toDate();
+  const date = now.add(Math.floor(Math.random() * max) + 1, 'days').toDate();
   currentDate = date;
   return date;
 };

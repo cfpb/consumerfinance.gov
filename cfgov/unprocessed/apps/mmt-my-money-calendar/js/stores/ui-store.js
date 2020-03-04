@@ -1,7 +1,6 @@
 import { observable, computed, action } from 'mobx';
 import logger from '../lib/logger';
-import { DateTime } from 'luxon';
-import { limitMonthNumber, getWeekRows, toDateTime } from '../lib/calendar-helpers';
+import { getWeekRows, toDayJS, dayjs } from '../lib/calendar-helpers';
 
 export default class UIStore {
   @observable navOpen = false;
@@ -12,7 +11,7 @@ export default class UIStore {
   @observable prevStepPath;
   @observable progress = 0;
   @observable error;
-  @observable currentMonth = DateTime.local().startOf('month');
+  @observable currentMonth = dayjs().startOf('month');
   @observable selectedDate;
   @observable selectedCategory = '';
   @observable showBottomNav = true;
@@ -58,19 +57,19 @@ export default class UIStore {
   }
 
   @action setCurrentMonth(month) {
-    this.currentMonth = toDateTime(month);
+    this.currentMonth = toDayJS(month);
   }
 
   @action nextMonth() {
-    this.currentMonth = this.currentMonth.plus({ months: 1 });
+    this.currentMonth = this.currentMonth.add(1, 'month');
   }
 
   @action prevMonth() {
-    this.currentMonth = this.currentMonth.minus({ months: 1 });
+    this.currentMonth = this.currentMonth.subtract(1, 'month');
   }
 
   @action setSelectedDate(date) {
-    this.selectedDate = toDateTime(date).startOf('day');
+    this.selectedDate = toDayJS(date).startOf('day');
   }
 
   @action clearSelectedDate() {
@@ -78,7 +77,7 @@ export default class UIStore {
   }
 
   @action gotoDate(date) {
-    date = toDateTime(date);
+    date = toDayJS(date);
     this.currentMonth = date.startOf('month');
     this.selectedDate = date.startOf('day');
   }

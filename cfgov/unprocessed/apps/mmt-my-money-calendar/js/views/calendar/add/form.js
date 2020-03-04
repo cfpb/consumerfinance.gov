@@ -3,13 +3,11 @@ import { useMemo, useCallback } from 'react';
 import { Formik } from 'formik';
 import { useParams, useHistory, Redirect, withRouter } from 'react-router-dom';
 import * as yup from 'yup';
-import { DateTime } from 'luxon';
-import dotProp from 'dot-prop';
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/categories';
 import Button, { ButtonLink, BackButton } from '../../../components/button';
 import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
-import { recurrenceRules, numberWithOrdinal } from '../../../lib/calendar-helpers';
+import { recurrenceRules, numberWithOrdinal, dayjs } from '../../../lib/calendar-helpers';
 import { range } from '../../../lib/array-helpers';
 import { pluck } from '../../../lib/object-helpers';
 import { useScrollToTop } from '../../../components/scroll-to-top';
@@ -120,7 +118,7 @@ function Form() {
           logger.debug('Category %s', categoryPath);
 
           values.totalCents = Number.parseInt(values.totalCents, 10);
-          values.dateTime = DateTime.fromFormat(values.dateTime, 'yyyy-MM-dd');
+          values.dateTime = dayjs(values.dateTime, 'YYYY-MM-DD');
 
           if (eventType === 'expense') values.totalCents = -values.totalCents;
 
@@ -128,8 +126,8 @@ function Form() {
             const { handler } = recurrenceRules[values.recurrenceType];
             values.recurrenceRule =
               values.recurrenceType === 'semimonthly'
-                ? handler(values.dateTime.toJSDate(), values.payday1, values.payday2)
-                : handler(values.dateTime.toJSDate());
+                ? handler(values.dateTime.toDate(), values.payday1, values.payday2)
+                : handler(values.dateTime.toDate());
           }
 
           try {
