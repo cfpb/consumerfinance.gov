@@ -138,16 +138,19 @@
 
                 {% if nav_item.featured_links or nav_item.other_links %}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                    <ul>
+                    <ul class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
                         {% for link in nav_item.featured_links | default( [], true ) %}
-                        <li class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                        <li>
                             <a class="a-link {{ _classes( nav_depth, '-link' ) }}"
                                href="{{ link.external_link }}">
                                 {{ svg_icon( 'favorite' ) }}
-                                <span class="a-link_text">{{ link.link_text }}</span class="a-link_text">
+                                <span class="a-link_text">{{ link.link_text }}</span>
                             </a>
                         </li>
                         {% endfor %}
+                    </ul>
+
+                    <ul class="m-list m-list__unstyled">
                         {% for link in nav_item.other_links | default( [], true ) %}
                         <li>
                             <a class="a-link {{ _classes( nav_depth, '-link' ) }}"
