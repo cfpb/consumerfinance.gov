@@ -686,16 +686,6 @@ body {
             left: 0;
             z-index: 10;
 
-            // Pad in featured items.
-            &-list__featured li {
-                padding-left: unit( 13px / @base-font-size-px, em );
-            }
-
-            // Don't pad in featured items in box.
-            &-list__featured-item li {
-                padding-left: 0;
-            }
-
             // Featured item has a highlight box around it.
             &-list__featured-item {
 
@@ -720,14 +710,19 @@ body {
                     border-left-color: transparent;
                 }
 
+                & a:focus {
+                    outline-offset: 2px;
+                }
+
                 & .cf-icon-svg {
                     color: @gold;
                     width: 100%;
                 }
             }
 
-            &-list__featured li:not( &-list__featured-item ) {
-                padding-left: 13px;
+            &-list__featured li {
+                // Pad in featured items from their icons.
+                padding-left: unit( 13px / @base-font-size-px, em );
 
                 & a {
                     display: flex;
@@ -736,6 +731,15 @@ body {
                 & .cf-icon-svg {
                     width: 100%;
                 }
+            }
+
+            // Adding padding between featured items.
+            &-list__featured-item li {
+                margin-bottom: unit( 20px / @base-font-size-px, em );
+            }
+
+            &-list__featured-item li:last-child {
+                margin-bottom: 0;
             }
 
             &-list__featured li {
