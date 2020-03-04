@@ -2,7 +2,7 @@ import * as idb from 'idb';
 import { render } from 'react-dom';
 import { configure as configureMobX } from 'mobx';
 import { Workbox } from 'workbox-window';
-import { DateTime, Info } from 'luxon';
+import dayjs from 'dayjs';
 import { RRule } from 'rrule';
 import { StoreProvider } from './stores';
 import Routes from './routes';
@@ -27,8 +27,7 @@ if ((process.env.NODE_ENV === 'production' || process.env.SERVICE_WORKER_ENABLED
 if (process.env.NODE_ENV === 'development') {
   window.idb = idb;
   window.CashFlowEvent = CashFlowEvent;
-  window.DateTime = DateTime;
-  window.Info = Info;
+  window.dayjs = dayjs;
   window.RRule = RRule;
 
   async function loadSeeders() {
