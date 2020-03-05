@@ -1,4 +1,8 @@
 /* @group Base */
+.cc-links > li {
+  margin-bottom: 1em;
+}
+
 select.chzn-select {
   visibility: hidden;
   height: 28px !important;
