@@ -103,13 +103,7 @@
             {% endif %}
 
             {% if mega_menu_content %}
-                {% if flag_enabled('MEGA_MENU_VAR_1', request) %}
-                    {% set mega_menu_template = 'mega-menu-var-1.html' %}
-                {% else %}
-                    {% set mega_menu_template = 'mega-menu.html' %}
-                {% endif %}
-
-                {% from 'organisms/' ~ mega_menu_template import mega_menu with context %}
+                {% from 'organisms/mega-menu.html' import mega_menu with context %}
                 {{ mega_menu ( mega_menu_content ) }}
             {% endif %}
         </div>

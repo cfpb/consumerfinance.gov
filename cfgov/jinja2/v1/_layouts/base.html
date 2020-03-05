@@ -117,17 +117,6 @@
     {% block css %}
     <!--[if lt IE 10]><link rel="stylesheet" href="{{ static('css/main.ie.css') }}"><![endif]-->
     <!--[if gt IE 9]><!--><link rel="stylesheet" href="{{ static('css/main.css') }}"><!--<![endif]-->
-
-    {# TODO: Remove when 2020 Mega Menu modifications are finalized. #}
-    {% if not flag_enabled('MEGA_MENU_VAR_1', request) %}
-      <style>
-        .o-header {
-          /* Force header bottom border to CFPB green. */
-          border-bottom: 5px solid #20aa3f !important;
-        }
-      </style>
-    {% endif %}
-
     {% endblock css %}
 
 {#
@@ -288,14 +277,6 @@
 #}
 
     {% block javascript scoped %}
-
-    {# TODO: Remove when 2020 Mega Menu modifications are finalized. #}
-    {% if flag_enabled('MEGA_MENU_VAR_1', request) %}
-      <script>
-        window.cfpb = window.cfpb || {};
-        window.cfpb.megaMenuVar1 = true;
-      </script>
-    {% endif %}
 
     {#
       Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
