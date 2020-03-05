@@ -1,6 +1,5 @@
 # Ignore all
 **
-.git
 
 # ...except these directories
 !cfgov
