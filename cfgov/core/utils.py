@@ -128,11 +128,17 @@ def add_link_markup(tag):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
 
-    # If the already ends in an SVG, we never want to append an icon.
-    # If it has an SVG but other content comes after it, we still add one.
+    # If the tag already ends in an SVG, we never want to append an icon.
+    # If it has one or more SVGs but other content comes after them, we still
+    # want to add one.
     svgs = tag.find_all('svg')
-    if svgs and not all((svg.next_sibling or '').strip() for svg in svgs):
-        return str(tag)
+    if svgs:
+        last_svg = svgs[-1]
+        if not any(
+            str(sibling or '').strip()
+            for sibling in last_svg.next_siblings
+        ):
+            return str(tag)
 
     if tag.select(', '.join(ICONLESS_LINK_CHILD_ELEMENTS)):
         # If this tag has any children that are in our list of child elements
