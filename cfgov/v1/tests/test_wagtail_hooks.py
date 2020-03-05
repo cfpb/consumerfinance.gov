@@ -212,7 +212,7 @@ class TestWhitelistOverride(SimpleTestCase):
     # /core/tests/test_whitelist.py
 
     def test_whitelist_hooks(self):
-        """Test that DbWhitelister does not strip new elements and attributes.
+        """Test that Whitelister does not strip new elements and attributes.
 
         The new allowed elements and attributes are added in v1.wagtail_hooks.
         """
