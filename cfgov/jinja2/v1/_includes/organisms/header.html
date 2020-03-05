@@ -104,7 +104,7 @@
 
             {% if mega_menu_content %}
                 {% from 'organisms/mega-menu.html' import mega_menu with context %}
-                {{ mega_menu ( mega_menu_content ) }}
+                {{ mega_menu ( mega_menu_content, language=language ) }}
             {% endif %}
         </div>
 
