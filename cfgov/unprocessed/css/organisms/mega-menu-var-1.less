@@ -318,7 +318,8 @@ body {
             width: 100%;
 
             background-color: @gray-5;
-            border: 1px solid @gray-40;
+            border-top: 1px solid @gray-40;
+            border-bottom: 1px solid @gray-40;
 
             .js & {
                 position: absolute;
@@ -690,10 +691,10 @@ body {
             &-list__featured-item {
 
                 // Style the featured item box.
-                padding: 10px;
-                padding-top: 30px;
-                padding-bottom: 30px;
-                margin-bottom: 30px;
+                padding-right: unit( 13px / @base-font-size-px, em );
+                padding-top: unit( 30px / @base-font-size-px, em );
+                padding-bottom: unit( 30px / @base-font-size-px, em );
+                margin-bottom: unit( 30px / @base-font-size-px, em );
                 border: 1px solid @gray-40;
                 border-top: 6px solid @gold;
 
@@ -710,14 +711,19 @@ body {
                     border-left-color: transparent;
                 }
 
+                & a:focus {
+                    outline-offset: 2px;
+                }
+
                 & .cf-icon-svg {
                     color: @gold;
                     width: 100%;
                 }
             }
 
-            &-list__featured li:not( &-list__featured-item ) {
-                padding-left: 13px;
+            &-list__featured li {
+                // Pad in featured items from their icons.
+                padding-left: unit( 13px / @base-font-size-px, em );
 
                 & a {
                     display: flex;
@@ -726,6 +732,15 @@ body {
                 & .cf-icon-svg {
                     width: 100%;
                 }
+            }
+
+            // Adding padding between featured items.
+            &-list__featured-item li {
+                margin-bottom: unit( 20px / @base-font-size-px, em );
+            }
+
+            &-list__featured-item li:last-child {
+                margin-bottom: 0;
             }
 
             &-list__featured li {
