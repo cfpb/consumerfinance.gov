@@ -25,7 +25,7 @@ into the concepts presented throughout this page:
 
 - [Django migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/)
 - [Django data migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations)
-- [Wagtail Streamfield migrations documentation](https://docs.wagtail.io/en/v2.3/topics/streamfield.html#migrations)
+- [Wagtail Streamfield migrations documentation](https://docs.wagtail.io/en/stable/topics/streamfield.html#migrations)
 
 
 ## Do I need to create a migration?
