@@ -656,7 +656,7 @@ body {
                 &-icon-closed .cf-icon-svg,
                 &-icon-open .cf-icon-svg {
                     position: absolute;
-                    right: 10px;
+                    right: unit( 24px / @base-font-size-px, em );
                     top: 19px;
                     font-size: unit( 10px / @base-font-size-px, em );
                 }
@@ -675,7 +675,7 @@ body {
 
                 // Add padding to accommodate caret.
                 &__has-children {
-                    padding-right: unit( 24px / @base-font-size-px, em );
+                    padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
                 }
             }
         }
