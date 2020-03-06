@@ -7,25 +7,14 @@ pipeline {
     environment {
         IMAGE_REPO="cfpb/cfgov-python"
         IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
+        SCAN_IMAGE = 'true'
         STACK_PREFIX = 'cfgov'
     }
 
     parameters {
-        string(
-            name: 'ENV_NAME',
-            defaultValue: env.JOB_BASE_NAME,
-            description: 'Environment name'
-        )
-
         booleanParam(
-            name: 'SCAN_IMAGE', 
-            defaultValue: true,
-            description: 'Scan Docker image for vulnerabilities?'
-        )
-
-        booleanParam(
-            name: 'DEPLOY', 
-            defaultValue: true,
+            name: 'DEPLOY',
+            defaultValue: false,
             description: 'Deploy the stack?'
         )
     }
@@ -72,7 +61,7 @@ pipeline {
 
         stage('Scan Image') {
             when {
-                expression { return params.SCAN_IMAGE }
+                environment name: 'SCAN_IMAGE', value: 'true'
             }
             steps {
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
@@ -108,13 +97,6 @@ pipeline {
                     dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
-            }
-            post {
-                unsuccessful {
-                    echo "Stack '${STACK_NAME}' failed to deploy."
-                    //FIXME: Implement this.
-                    //showStack(env.STACK_NAME)
-                }
             }
         }
     }
