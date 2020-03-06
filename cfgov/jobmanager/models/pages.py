@@ -100,7 +100,7 @@ class JobListingPage(CFGOVPage):
     )
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
-            FieldPanel('division', classname='full'),
+            FieldPanel('division'),
             InlinePanel('grades', label='Grades'),
             FieldRowPanel([
                 FieldPanel('open_date', classname='col6'),
@@ -116,16 +116,16 @@ class JobListingPage(CFGOVPage):
             ]),
         ], heading='Details'),
         MultiFieldPanel([
-            FieldPanel('location', classname='full'),
-            FieldPanel('allow_remote', classname='full'),
+            FieldPanel('location'),
+            FieldPanel('allow_remote'),
         ], heading='Location'),
         MultiFieldPanel([
-            FieldPanel('description', classname='full'),
-            FieldPanel('responsibilities', classname='full'),
-            FieldPanel('travel_required', classname='full'),
-            FieldPanel('travel_details', classname='full'),
-            FieldPanel('additional_section_title', classname='full'),
-            FieldPanel('additional_section_content', classname='full'),
+            FieldPanel('description'),
+            FieldPanel('responsibilities'),
+            FieldPanel('travel_required'),
+            FieldPanel('travel_details'),
+            FieldPanel('additional_section_title'),
+            FieldPanel('additional_section_content'),
         ], heading='Description'),
         InlinePanel(
             'usajobs_application_links',
