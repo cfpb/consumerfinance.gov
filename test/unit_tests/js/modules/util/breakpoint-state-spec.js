@@ -1,23 +1,29 @@
-import * as breakpointState from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
-import breakpointsConfig from '@cfpb/cfpb-core/src/vars-breakpoints';
+import {
+  DESKTOP,
+  MOBILE,
+  TABLET,
+  getBreakpoint,
+  isIn
+} from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
+import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
 
 let configKeys;
 
 describe( 'breakpoint-state', () => {
   beforeEach( () => {
-    configKeys = Object.keys( breakpointsConfig );
+    configKeys = Object.keys( varsBreakpoints );
   } );
 
-  describe( '.get()', () => {
+  describe( '.getBreakpoint()', () => {
     it( 'should return an object with properties from config file', () => {
       const breakpointStatekeys =
-        Object.keys( breakpointsConfig ).map( key => {
+        Object.keys( varsBreakpoints ).map( key => {
           key.replace( 'is', '' );
           key.charAt( 0 ).toLowerCase() + key.slice( 1 );
           return key;
         } );
 
-      expect( breakpointState.get() instanceof Object ).toBe( true );
+      expect( getBreakpoint() instanceof Object ).toBe( true );
       expect( configKeys.sort().join() === breakpointStatekeys.sort().join() )
         .toBe( true );
     } );
@@ -25,7 +31,7 @@ describe( 'breakpoint-state', () => {
     it( 'should return an object with one state property set to true', () => {
       let trueValueCount = 0;
 
-      const breakpointStateGet = breakpointState.get();
+      const breakpointStateGet = getBreakpoint();
       // eslint-disable-next guard-for-in
       let stateKey;
       for ( stateKey in breakpointStateGet ) {
@@ -41,14 +47,12 @@ describe( 'breakpoint-state', () => {
 
       // eslint-disable-next-line guard-for-in
       let rangeKey;
-      for ( rangeKey in breakpointsConfig ) {
-        if ( {}.hasOwnProperty.call( breakpointsConfig, rangeKey ) ) {
-          width = breakpointsConfig[rangeKey].max ||
-                  breakpointsConfig[rangeKey].min;
-          breakpointStateKey =
-            'is' + rangeKey.charAt( 0 ).toUpperCase() + rangeKey.slice( 1 );
+      for ( rangeKey in varsBreakpoints ) {
+        if ( {}.hasOwnProperty.call( varsBreakpoints, rangeKey ) ) {
+          width = varsBreakpoints[rangeKey].max ||
+                  varsBreakpoints[rangeKey].min;
 
-          expect( breakpointState.get( width )[breakpointStateKey] )
+          expect( getBreakpoint( width )[rangeKey] )
             .toBe( true );
         }
       }
@@ -56,14 +60,32 @@ describe( 'breakpoint-state', () => {
 
   } );
 
-  describe( '.isInDesktop()', () => {
+  describe( '.isIn()', () => {
     it( 'should determine whether inside desktop breakpoint threshold', () => {
-      expect( breakpointState.isInDesktop() ).toBe( true );
+      expect( isIn( DESKTOP ) ).toBe( true );
 
       /* TODO:
-         Mock breakpointState.get() to return a small breakpoint size, so
-         that breakpointState.isInDesktop() returns false and can be tested with
-         expect( breakpointState.isInDesktop() ).toBe( false ); */
+         Mock getBreakpoint() to return a small breakpoint size,
+         so that isIn( DESKTOP ) returns false and can be tested with
+         expect( isIn( DESKTOP ) ).toBe( false ); */
+    } );
+
+    it( 'should determine whether inside tablet breakpoint threshold', () => {
+      expect( isIn( TABLET ) ).toBe( false );
+
+      /* TODO:
+         Mock getBreakpoint() to return a tablet breakpoint size,
+         so that isIn( TABLET ) returns true and can be tested with
+         expect( isIn( TABLET ) ).toBe( true ); */
+    } );
+
+    it( 'should determine whether inside tablet breakpoint threshold', () => {
+      expect( isIn( MOBILE ) ).toBe( false );
+
+      /* TODO:
+         Mock getBreakpoint() to return a mobile breakpoint size,
+         so that isIn( MOBILE ) returns true and can be tested with
+         expect( isIn( MOBILE ) ).toBe( true ); */
     } );
   } );
 

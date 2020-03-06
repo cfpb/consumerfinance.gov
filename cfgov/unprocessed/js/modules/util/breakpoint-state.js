@@ -2,8 +2,7 @@
    Get Breakpoint State
    ========================================================================== */
 
-import breakpointsConfig from '@cfpb/cfpb-core/src/vars-breakpoints';
-import { getViewportDimensions } from './get-viewport-dimensions';
+import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
 
 /**
  * @param {Object} breakpointRange - Object containing breakpoint constants.
@@ -22,40 +21,58 @@ function _inBreakpointRange( breakpointRange, width ) {
  * @returns {Object} An object literal with boolean
  *   isBpXS, isBpSM, isBpMED, isBpLG, isBpXL properties.
  */
-function get( width ) {
+function getBreakpoint( width ) {
   const breakpointState = {};
   let breakpointKey;
-  width = width || getViewportDimensions().width;
+  width = width || window.innerWidth;
 
   let rangeKey;
   // eslint-disable-next-line guard-for-in
-  for ( rangeKey in breakpointsConfig ) {
-    breakpointKey = 'is' + rangeKey.charAt( 0 ).toUpperCase() +
-                    rangeKey.slice( 1 );
-    breakpointState[breakpointKey] =
-      _inBreakpointRange( breakpointsConfig[rangeKey], width );
+  for ( rangeKey in varsBreakpoints ) {
+    breakpointState[rangeKey] = _inBreakpointRange(
+      varsBreakpoints[rangeKey],
+      width
+    );
   }
 
   return breakpointState;
 }
 
+// Constants for breakpoint groupings.
+const MOBILE = 'mobile';
+const TABLET = 'tablet';
+const DESKTOP = 'desktop';
+
 /**
- * Whether currently in the desktop view.
- * @returns {boolean} True if in the desktop view, otherwise false.
+ * Checks whether the current breakpoint is in a particular breakpoint group.
+ * @param {string} breakpointGroup - Breakpoint group names.
+ * @returns {boolean} True if in the breakpoint group, otherwise false.
  */
-function isInDesktop() {
+function isIn( breakpointGroup ) {
   let response = false;
-  const currentBreakpoint = get();
-  if ( currentBreakpoint.isBpMED ||
-       currentBreakpoint.isBpLG ||
-       currentBreakpoint.isBpXL ) {
+  const currentBreakpoint = getBreakpoint();
+
+  if (
+    ( breakpointGroup === MOBILE && currentBreakpoint.bpXS ) ||
+    ( breakpointGroup === TABLET && currentBreakpoint.bpSM ) ||
+    ( breakpointGroup === DESKTOP &&
+      ( currentBreakpoint.bpMED ||
+        currentBreakpoint.bpLG ||
+        currentBreakpoint.bpXL
+      )
+    )
+  ) {
     response = true;
   }
+
   return response;
 }
 
 // Expose public methods.
 export {
-  get,
-  isInDesktop
+  MOBILE,
+  TABLET,
+  DESKTOP,
+  getBreakpoint,
+  isIn
 };

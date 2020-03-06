@@ -1,5 +1,5 @@
 // Required modules.
-import * as breakpointState from '../../modules/util/breakpoint-state';
+import { MOBILE, isIn } from '../../modules/util/breakpoint-state';
 import {
   BEHAVIOR_PREFIX,
   JS_HOOK,
@@ -89,7 +89,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
     /* Ignore Google Analytics on the trigger if it is a link,
        since we're preventing the default link behavior. */
-    if ( _triggerDom.tagName === 'A' && _isInMobile() ) {
+    if ( _triggerDom.tagName === 'A' && isIn( MOBILE ) ) {
       _triggerDom.setAttribute( 'data-gtm_ignore', 'true' );
     }
 
@@ -120,7 +120,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
            instead of a primary and alternative.
            Ignore Google Analytics on the trigger if it is a link,
            since we're preventing the default link behavior. */
-        if ( _altTriggerDom.tagName === 'A' && _isInMobile() ) {
+        if ( _altTriggerDom.tagName === 'A' && isIn( MOBILE ) ) {
           _altTriggerDom.setAttribute( 'data-gtm_ignore', 'true' );
         }
 
@@ -203,20 +203,6 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         this.expand();
       }
     }
-  }
-
-  // TODO: Move this to breakpoint-state.js.
-  /**
-   * Whether currently in the desktop view.
-   * @returns {boolean} True if in the desktop view, otherwise false.
-   */
-  function _isInMobile() {
-    let isInMobile = false;
-    const currentBreakpoint = breakpointState.get();
-    if ( currentBreakpoint.isBpXS ) {
-      isInMobile = true;
-    }
-    return isInMobile;
   }
 
   /**
