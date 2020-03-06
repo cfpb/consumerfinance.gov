@@ -365,7 +365,7 @@ def hide_snippets_menu_item(request, menu_items):
                      if item.url != reverse('wagtailsnippets:index')]
 
 
-if wagtail.VERSION <= (1, 13):
+if wagtail.VERSION < (2, 0):
     # Override list of allowed tags in a RichTextField
     @hooks.register('construct_whitelister_element_rules')
     def whitelister_element_rules():
