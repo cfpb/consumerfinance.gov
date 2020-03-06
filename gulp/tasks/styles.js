@@ -237,7 +237,8 @@ gulp.task( 'styles',
 );
 
 gulp.task( 'styles:watch', function() {
-  gulp.watch( `${ configStyles.cwd }/**/*.less`, gulp.parallel(
-    'styles:modern'
-  ) );
+  gulp.watch(
+    `${ configStyles.cwd }/**/*.less`,
+    gulp.parallel( 'styles:modern' )
+  );
 } );
