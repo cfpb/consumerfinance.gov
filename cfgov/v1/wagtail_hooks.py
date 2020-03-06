@@ -26,9 +26,8 @@ from v1.util import util
 
 try:
     from wagtail.admin.menu import MenuItem
-    from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
     from wagtail.core import hooks
-    from wagtail.core.whitelist import attribute_rule, allow_without_attributes
+    from wagtail.core.whitelist import attribute_rule
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.menu import MenuItem
     from wagtail.wagtailcore import hooks
@@ -366,7 +365,7 @@ def hide_snippets_menu_item(request, menu_items):
                      if item.url != reverse('wagtailsnippets:index')]
 
 
-if wagtail.VERSION <= (1, 14):
+if wagtail.VERSION <= (1, 13):
     # Override list of allowed tags in a RichTextField
     @hooks.register('construct_whitelister_element_rules')
     def whitelister_element_rules():
@@ -382,23 +381,6 @@ if wagtail.VERSION <= (1, 14):
                         'col', 'colgroup']
 
         return {tag: allow_html_class for tag in allowed_tags}
-
-
-# construct_whitelister_element_rules are depricated in Wagtail 2.0
-# https://docs.wagtail.io/en/stable/releases/
-# 2.0.html#construct-whitelister-element-rules-hook-is-deprecated
-if wagtail.VERSION >= (2, 0):
-    @hooks.register('register_rich_text_features')
-    def blockquote_feature(features):
-
-        # register a feature 'blockquote'
-        # which whitelists the <blockquote> element
-        features.register_converter_rule('editorhtml', 'blockquote', [
-            WhitelistRule('blockquote', allow_without_attributes),
-        ])
-
-        # add 'blockquote' to the default feature set
-        features.default_features.append('blockquote')
 
 
 @hooks.register('before_serve_shared_page')
