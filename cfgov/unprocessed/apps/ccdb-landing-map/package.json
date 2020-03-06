@@ -19,7 +19,9 @@
     "@cfpb/cfpb-core": "0.0.9",
     "@cfpb/cfpb-layout": "0.0.9",
     "core-js": "3.3.6",
+    "es6-promise": "4.2.8",
     "highcharts": "7.2.1",
-    "moment": "2.24.0"
+    "moment": "2.24.0",
+    "whatwg-fetch": "3.0.0"
   }
 }

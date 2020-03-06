@@ -1,4 +1,5 @@
 import TileMap from './TileMap';
+import 'whatwg-fetch'
 
 /**
  *  Chart class

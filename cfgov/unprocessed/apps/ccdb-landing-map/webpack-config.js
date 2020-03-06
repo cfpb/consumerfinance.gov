@@ -72,6 +72,11 @@ const conf = {
       COMMON_MINIFICATION_CONFIG
     ]
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      Promise: ['es6-promise', 'Promise']
+    })
+  ],
   stats: STATS_CONFIG.stats
 };
 
