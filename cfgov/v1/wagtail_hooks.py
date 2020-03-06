@@ -6,8 +6,6 @@ from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.shortcuts import render
 from django.utils.html import format_html_join
 
@@ -19,7 +17,6 @@ from scripts import export_enforcement_actions
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import ExportFeedbackView, manage_cdn
-from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
@@ -210,27 +207,6 @@ def serve_latest_draft_page(page, request, args, kwargs):
         response = latest_draft.serve(request, *args, **kwargs)
         response['Serving-Wagtail-Draft'] = '1'
         return response
-
-
-@hooks.register('before_serve_shared_page')
-def before_serve_shared_page(page, request, args, kwargs):
-    request.show_draft_megamenu = True
-
-
-class MegaMenuModelAdmin(ModelAdmin):
-    model = MegaMenuItem
-    menu_label = 'Mega Menu'
-    menu_icon = 'cog'
-    list_display = ('link_text', 'order')
-
-
-modeladmin_register(MegaMenuModelAdmin)
-
-
-@receiver(post_save, sender=MegaMenuItem)
-def clear_mega_menu_cache(sender, instance, **kwargs):
-    from django.core.cache import caches
-    caches['default_fragment_cache'].delete('mega_menu')
 
 
 def get_resource_tags():

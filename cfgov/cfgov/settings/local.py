@@ -96,14 +96,14 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 
 # Disable caching when working locally.
-CACHES.update({
+CACHES = {
     k: {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'TIMEOUT': 0,
     } for k in (
         'default', 'post_preview'
     )
-})
+}
 
 # Optionally enable cache for post_preview
 if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
