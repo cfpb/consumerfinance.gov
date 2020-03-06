@@ -7,6 +7,7 @@ const configStyles = config.styles;
 const configLegacy = config.legacy;
 const fs = require( 'fs' );
 const gulp = require( 'gulp' );
+const gulpBless = require( 'gulp-bless' );
 const gulpCleanCss = require( 'gulp-clean-css' );
 const gulpHeader = require( 'gulp-header' );
 const gulpLess = require( 'gulp-less' );
@@ -62,6 +63,7 @@ function stylesIE() {
       suffix:  '.ie',
       extname: '.css'
     } ) )
+    .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( { compatibility: 'ie8', inline: false } ) )
     .pipe( gulp.dest( configStyles.dest ) );
 }
@@ -197,6 +199,7 @@ function stylesApps() {
         .pipe( gulpPostcss( [
           autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
         ] ) )
+        .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
         .pipe( gulpCleanCss( {
           compatibility: 'ie9',
           inline: [ 'none' ]

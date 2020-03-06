@@ -5,9 +5,10 @@ import io
 from csv import DictReader as cdr
 
 import requests
+from rest_framework import serializers
+
 from paying_for_college.models import Program, School
 from paying_for_college.views import validate_pid
-from rest_framework import serializers
 
 
 NO_DATA_ENTRIES_LOWER = ('', 'blank', 'no grads', 'no data', 'none')

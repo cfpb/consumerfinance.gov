@@ -5,7 +5,7 @@ from django.core.signing import Signer
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
-from bs4 import BeautifulSoup, NavigableString
+from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
 
@@ -20,9 +20,9 @@ NON_CFPB_LINKS = re.compile(
 DOWNLOAD_LINKS = re.compile(
     r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 )
-LINK_ICON_CLASSES = 'a-link a-link__icon'
+LINK_ICON_CLASSES = ['a-link', 'a-link__icon']
 
-LINK_ICON_TEXT_CLASSES = 'a-link_text'
+LINK_ICON_TEXT_CLASSES = ['a-link_text']
 
 # Regular expression to match <a> links in HTML strings
 A_TAG = re.compile(
@@ -99,13 +99,13 @@ def add_link_markup(tag):
     """
     icon = False
 
-    tag = BeautifulSoup(tag, 'html.parser').find('a', href=True)
+    soup = BeautifulSoup(tag, 'html.parser')
+    tag = soup.find('a', href=True)
 
     if tag is None:
         return None
 
-    if not tag.attrs.get('class', None):
-        tag.attrs.update({'class': []})
+    class_attrs = tag.attrs.setdefault('class', [])
 
     if tag['href'].startswith('/external-site/?'):
         # Sets the icon to indicate you're leaving consumerfinance.gov
@@ -128,11 +128,17 @@ def add_link_markup(tag):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
 
-    # If the already ends in an SVG, we never want to append an icon.
-    # If it has an SVG but other content comes after it, we still add one.
+    # If the tag already ends in an SVG, we never want to append an icon.
+    # If it has one or more SVGs but other content comes after them, we still
+    # want to add one.
     svgs = tag.find_all('svg')
-    if svgs and not all((svg.next_sibling or '').strip() for svg in svgs):
-        return str(tag)
+    if svgs:
+        last_svg = svgs[-1]
+        if not any(
+            str(sibling or '').strip()
+            for sibling in last_svg.next_siblings
+        ):
+            return str(tag)
 
     if tag.select(', '.join(ICONLESS_LINK_CHILD_ELEMENTS)):
         # If this tag has any children that are in our list of child elements
@@ -140,19 +146,29 @@ def add_link_markup(tag):
         # be an external link and modified accordingly above.
         return str(tag)
 
-    if icon:
-        tag.attrs['class'].append(LINK_ICON_CLASSES)
-        # Wraps the link text in a span that provides the underline
-        contents = tag.contents
-        span = BeautifulSoup('', 'html.parser').new_tag('span')
-        span['class'] = LINK_ICON_TEXT_CLASSES
-        span.contents = contents
-        tag.contents = [span, NavigableString(' ')]
-        # Appends the SVG icon
-        tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
-        return str(tag)
+    if not icon:
+        return None
 
-    return None
+    # We have an icon to append.
+    for cls in LINK_ICON_CLASSES:
+        if cls not in class_attrs:
+            class_attrs.append(cls)
+
+    icon_classes = {'class': LINK_ICON_TEXT_CLASSES}
+    spans = tag.findAll('span', icon_classes)
+
+    if spans:
+        span = spans[-1]
+    else:
+        span = soup.new_tag('span', **icon_classes)
+        span.contents = list(tag.contents)
+
+        tag.clear()
+        tag.append(span)
+
+    span.insert_after(BeautifulSoup(' ' + svg_icon(icon), 'html.parser'))
+
+    return str(tag)
 
 
 class NoMigrations(object):

@@ -1,13 +1,6 @@
 from django.utils import translation
-from django.utils.functional import cached_property
 
-from wagtail.contrib.modeladmin.views import EditView, WMABaseView
-
-
-class MenuEditView(EditView):
-    @cached_property
-    def preview_url(self):
-        return self.url_helper.get_action_url('preview', self.pk_quoted)
+from wagtail.contrib.modeladmin.views import WMABaseView
 
 
 class MenuPreviewView(WMABaseView):

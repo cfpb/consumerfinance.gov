@@ -1,6 +1,5 @@
 import unittest
 
-from django.core.cache import caches
 from django.test import (
     RequestFactory, SimpleTestCase, TestCase, override_settings
 )
@@ -12,7 +11,6 @@ from wagtail.tests.utils import WagtailTestUtils
 import mock
 
 from v1.models.base import CFGOVPage
-from v1.models.menu_item import MenuItem
 from v1.models.resources import Resource
 from v1.wagtail_hooks import (
     form_module_handlers, get_resource_tags, set_served_by_wagtail_sharing
@@ -124,27 +122,6 @@ class TestServeLatestDraftPage(TestCase):
             self.assertEqual(response['Serving-Wagtail-Draft'], '1')
 
 
-class TestMenuItemSave(TestCase):
-    @override_settings(
-        CACHES={
-            'default_fragment_cache': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            }
-        })
-    def test_mega_menu_cache_cleared(self):
-        caches['default_fragment_cache'].set('mega_menu', 'menu_content')
-        self.assertEqual(
-            caches['default_fragment_cache'].get('mega_menu'),
-            'menu_content'
-        )
-        menu_item = MenuItem()
-        menu_item.save()
-        self.assertEqual(
-            caches['default_fragment_cache'].get('mega_menu'),
-            None
-        )
-
-
 class TestGetResourceTags(TestCase):
     def setUp(self):
         self.resource1 = Resource.objects.create(title='Test resource 1')
@@ -231,11 +208,11 @@ class TestResourceTagsFilter(TestCase, WagtailTestUtils):
 
 @unittest.skipIf(wagtail.VERSION >= (2, 0), "No need to test in Wagtail 2+")
 class TestWhitelistOverride(SimpleTestCase):
-    # Borrowed from https://github.com/wagtail/wagtail/blob/v1.13.4/wagtail
-    # /wagtailcore/tests/test_dbwhitelister.py
+    # Borrowed from https://github.com/wagtail/wagtail/blob/master/wagtail
+    # /core/tests/test_whitelist.py
 
     def test_whitelist_hooks(self):
-        """Test that DbWhitelister does not strip new elements and attributes.
+        """Test that Whitelister does not strip new elements and attributes.
 
         The new allowed elements and attributes are added in v1.wagtail_hooks.
         """
