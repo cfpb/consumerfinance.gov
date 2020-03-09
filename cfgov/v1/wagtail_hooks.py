@@ -125,6 +125,7 @@ def editor_css():
     css_files = [
         'css/bureau-structure.css',
         'css/deprecated-blocks.css',
+        'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
         'css/table-block.css',
@@ -182,7 +183,7 @@ class PermissionCheckingMenuItem(MenuItem):
     MenuItem that only displays if the user has a certain permission.
 
     This subclassing approach is recommended by the Wagtail documentation:
-    https://docs.wagtail.io/en/v1.13.4/reference/hooks.html#register-admin-menu-item
+    https://docs.wagtail.io/en/stable/reference/hooks.html#register-admin-menu-item
     """
 
     def __init__(self, *args, **kwargs):

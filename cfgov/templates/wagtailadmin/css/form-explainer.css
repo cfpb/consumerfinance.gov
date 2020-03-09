@@ -1,0 +1,22 @@
+@media screen and (min-width: 50em) {
+    .explainer_notes .fields li:first-child label {
+        width: 100%;
+    }
+
+    .coordinates li {
+        width: 25%;
+        float: left;
+    }
+}
+
+.object.stream-field .coordinates .object-help {
+    font-size: 1em;
+    opacity: 1;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+.object.stream-field .coordinates .object-help:before {
+    display: none;
+}

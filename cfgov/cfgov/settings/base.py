@@ -119,6 +119,7 @@ INSTALLED_APPS += (
     'youth_employment',
     'diversity_inclusion',
     'mega_menu.apps.MegaMenuConfig',
+    'form_explainer.apps.FormExplainerConfig',
 )
 
 OPTIONAL_APPS = [

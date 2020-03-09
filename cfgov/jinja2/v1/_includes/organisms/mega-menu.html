@@ -1,4 +1,3 @@
-{% import 'molecules/featured-menu-content.html' as featured_menu_content with context %}
 {% set base_class = 'o-mega-menu' %}
 
 {# ==========================================================================
@@ -49,7 +48,6 @@
    ========================================================================== #}
 
 {% macro _nav_list( nav_depth, nav_groups, language='en' ) %}
-<div class="{{ _classes( nav_depth, '-lists' ) }}">
     {% for nav_group in nav_groups %}
     {% set group = nav_group.value %}
     <div class="{{ _classes( nav_depth, '-list' ) }}">
@@ -62,7 +60,7 @@
             {{ group.group_title | safe }}
         </h4>
         {% endif %}
-        <ul class="m-list m-list__unstyled">
+        <ul>
             {% if nav_depth == 1 -%}
             <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
                 {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
@@ -76,7 +74,6 @@
     </div>
 
     {% endfor %}
-</div>
 
 {% endmacro %}
 
@@ -99,18 +96,17 @@
 
    nav_overview_text:  A string used for a sub nav overview title.
 
-   language:           The page's language (passed to global_eyebrow macro). 
+   language:           The page's language (passed to global_eyebrow macro).
                        Defaults to English.
 
 
    ========================================================================== #}
 
 {% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text, language='en' ) %}
-<section class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
-     aria-expanded="false"
-     data-js-hook="behavior_flyout-menu_content">
+<section class="{{- _classes( nav_depth ) -}}"
+         aria-expanded="false"
+         data-js-hook="behavior_flyout-menu_content">
     <div class="{{- _classes( nav_depth, '-wrapper' ) -}}">
-        {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
         {# Open wrapper if needed #}
         {% if nav_depth > 1 %}
         <button class="{{- _classes( nav_depth, '-alt-trigger' ) -}}"
@@ -121,47 +117,56 @@
         {% endif %}
         <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) -}}">
 
-            {% if nav_depth > 1 %}
+            {% if nav_depth > 1 and nav_overview_url != '#' %}
             <h3 class="{{ _classes( nav_depth, '-overview' ) }}
-                       {{ _classes( nav_depth, '-overview-heading' ) }}
-            ">
-                {# TODO: Remove the check for '#' when real overview pages
-                       are added for the Consumer Resources and Education
-                       pages. #}
-                {% if nav_overview_url %}
-                    {% if nav_overview_url == '#' %}
-
-                    {# only use a link element when there is an overview page to link to, otherwise we use regular heading text for context #}
-
-                    <span class="{{ _classes( nav_depth, '-overview-heading-text' ) }}">{{ nav_overview_text }}</span>
-
-                    {% else %}
-
-                    <a class="{{ _classes( nav_depth, '-overview-link' ) }}
-                              {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                              {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
-                        {{ nav_overview_text ~ ' Overview' }}
-                    </a>
-
-                    {% endif %}
-                {% endif %}
+                       {{ _classes( nav_depth, '-overview-heading' ) }}">
+                <a class="{{ _classes( nav_depth, '-overview-link' ) }}
+                            {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                            {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                    {{ nav_overview_text ~ ' Overview' }}
+                </a>
             </h3>
             {% endif %}
+
             {% if nav_item.nav_items %}
                 {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
             {% endif %}
+
             {% if nav_item.nav_groups %}
+            <div class="{{ _classes( nav_depth, '-lists' ) }}">
                 {{ _nav_list( nav_depth, nav_item.nav_groups, language=language ) }}
-            {% endif %}
-            {% if nav_item.footer %}
-            <div class="{{ base_class ~ '_footer' }}">
-                {{ nav_item.footer | safe }}
+
+                {% if nav_item.featured_links or nav_item.other_links %}
+                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                    <ul class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                        {% for link in nav_item.featured_links | default( [], true ) %}
+                        <li>
+                            <a class="{{ _classes( nav_depth, '-link' ) }}"
+                               href="{{ link.external_link }}">
+                                {{ svg_icon( 'favorite' ) }}
+                                <span><span class="a-link_text">{{ link.link_text }}</span></span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <ul class="m-list m-list__unstyled">
+                        {% for link in nav_item.other_links | default( [], true ) %}
+                        <li>
+                            <a class="a-link {{ _classes( nav_depth, '-link' ) }}"
+                               href="{{ link.external_link }}">
+                                {{ svg_icon( link.icon ) }}
+                                <span><span class="a-link_text">{{ link.link_text }}</span></span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
             </div>
             {% endif %}
+
         </div>
-        {{ featured_menu_content.render(nav_item.featured_content.value) if nav_item.featured_content else ''}}
-        {# Close Wrapper if needed #}
-        {{ '</div>' | safe if nav_depth > 1 else '' }}
     </div>
 
     {% if nav_depth == 1 %}
@@ -211,6 +216,10 @@
            }}>
               {{ text }}
               {{ svg_icon('right') }}
+              {% if has_children %}
+              <span class="{{- _classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
+              <span class="{{- _classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
+              {% endif %}
         </a>
         {% if has_children %}
             {{ _nav_level( nav_depth | int + 1, nav_item, url, text, language ) }}
@@ -236,12 +245,12 @@
 {% macro mega_menu( menu_items, language='en' ) %}
 <nav class="{{ base_class }}
             u-hidden"
-    data-js-hook="behavior_flyout-menu"
-    aria-label="main menu">
+     data-js-hook="behavior_flyout-menu"
+     aria-label="main menu">
     <h2 class="{{ base_class ~ '_heading' }}">
         <button class="{{ base_class ~ '_trigger' }}"
-               data-js-hook="behavior_flyout-menu_trigger"
-               aria-haspopup="menu">
+                data-js-hook="behavior_flyout-menu_trigger"
+                aria-haspopup="menu">
             <span class="{{ base_class ~ '_trigger-open' }}">
                 {{ svg_icon('menu') }}
             </span>
@@ -257,11 +266,4 @@
       This is the 1st level of a 3-level menu. #}
    {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]}, language=language ) }}
 </nav>
-
 {% endmacro %}
-
-
-{# Render the menu if this entire template is rendered with menu_items. #}
-{% if menu_items %}
-    {{ mega_menu( menu_items, language | default( null ) ) }}
-{% endif %}
