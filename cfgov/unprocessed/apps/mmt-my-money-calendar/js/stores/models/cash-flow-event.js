@@ -254,7 +254,7 @@ export default class CashFlowEvent {
           .endOf('day')
           .toDate()
       )
-      .map(dayjs);
+      .map((date) => dayjs(date));
   }
 
   @computed get dateTime() {
