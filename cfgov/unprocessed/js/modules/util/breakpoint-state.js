@@ -19,11 +19,10 @@ function _inBreakpointRange( breakpointRange, width ) {
 /**
  * @param {integer} width - Current window width.
  * @returns {Object} An object literal with boolean
- *   isBpXS, isBpSM, isBpMED, isBpLG, isBpXL properties.
+ *   bpXS, bpSM, bpMED, bpLG, bpXL properties.
  */
 function getBreakpoint( width ) {
   const breakpointState = {};
-  let breakpointKey;
   width = width || window.innerWidth;
 
   let rangeKey;
@@ -48,7 +47,7 @@ const DESKTOP = 'desktop';
  * @param {string} breakpointGroup - Breakpoint group names.
  * @returns {boolean} True if in the breakpoint group, otherwise false.
  */
-function isIn( breakpointGroup ) {
+function viewportIsIn( breakpointGroup ) {
   let response = false;
   const currentBreakpoint = getBreakpoint();
 
@@ -74,5 +73,5 @@ export {
   TABLET,
   DESKTOP,
   getBreakpoint,
-  isIn
+  viewportIsIn
 };

@@ -3,7 +3,7 @@ import {
   MOBILE,
   TABLET,
   getBreakpoint,
-  isIn
+  viewportIsIn
 } from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
 
@@ -60,32 +60,32 @@ describe( 'breakpoint-state', () => {
 
   } );
 
-  describe( '.isIn()', () => {
+  describe( '.viewportIsIn()', () => {
     it( 'should determine whether inside desktop breakpoint threshold', () => {
-      expect( isIn( DESKTOP ) ).toBe( true );
+      expect( viewportIsIn( DESKTOP ) ).toBe( true );
 
       /* TODO:
          Mock getBreakpoint() to return a small breakpoint size,
-         so that isIn( DESKTOP ) returns false and can be tested with
-         expect( isIn( DESKTOP ) ).toBe( false ); */
+         so that viewportIsIn( DESKTOP ) returns false and can be tested with
+         expect( viewportIsIn( DESKTOP ) ).toBe( false ); */
     } );
 
     it( 'should determine whether inside tablet breakpoint threshold', () => {
-      expect( isIn( TABLET ) ).toBe( false );
+      expect( viewportIsIn( TABLET ) ).toBe( false );
 
       /* TODO:
          Mock getBreakpoint() to return a tablet breakpoint size,
-         so that isIn( TABLET ) returns true and can be tested with
-         expect( isIn( TABLET ) ).toBe( true ); */
+         so that viewportIsIn( TABLET ) returns true and can be tested with
+         expect( viewportIsIn( TABLET ) ).toBe( true ); */
     } );
 
     it( 'should determine whether inside tablet breakpoint threshold', () => {
-      expect( isIn( MOBILE ) ).toBe( false );
+      expect( viewportIsIn( MOBILE ) ).toBe( false );
 
       /* TODO:
          Mock getBreakpoint() to return a mobile breakpoint size,
-         so that isIn( MOBILE ) returns true and can be tested with
-         expect( isIn( MOBILE ) ).toBe( true ); */
+         so that viewportIsIn( MOBILE ) returns true and can be tested with
+         expect( viewportIsIn( MOBILE ) ).toBe( true ); */
     } );
   } );
 
