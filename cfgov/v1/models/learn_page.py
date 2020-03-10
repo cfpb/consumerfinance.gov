@@ -180,6 +180,13 @@ class EnforcementActionStatus(models.Model):
                          related_name='statuses')
 
 
+class EnforcementActionDocket(models.Model):
+    docket_number = models.CharField(max_length=50)
+    action = ParentalKey('v1.EnforcementActionPage',
+                         on_delete=models.CASCADE,
+                         related_name='docket_numbers')
+
+
 class EnforcementActionPage(AbstractFilterPage):
     sidebar_header = models.CharField(
         default='Action details',
@@ -190,7 +197,6 @@ class EnforcementActionPage(AbstractFilterPage):
         ('Nonbank', 'Nonbank'),
         ('Bank', 'Bank')
     ])
-    docket_number = models.CharField(max_length=100)
 
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
@@ -212,10 +218,16 @@ class EnforcementActionPage(AbstractFilterPage):
             FieldPanel('sidebar_header'),
             FieldPanel('court'),
             FieldPanel('institution_type'),
-            FieldPanel('docket_number'),
             FieldPanel('date_filed'),
             FieldPanel('tags', 'Tags'),
         ], heading='Basic Metadata'),
+        MultiFieldPanel([
+            InlinePanel(
+                'docket_numbers',
+                label="Docket Number",
+                min_num=1
+            ),
+        ], heading='Docket Number'),
         MultiFieldPanel([
             InlinePanel('statuses', label="Enforcement Status", min_num=1),
         ], heading='Enforcement Status'),
