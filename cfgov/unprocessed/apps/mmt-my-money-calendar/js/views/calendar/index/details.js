@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useCallback, useState } from 'react';
 import { useLockBodyScroll } from 'react-use';
 import { observer } from 'mobx-react';
@@ -51,15 +52,7 @@ function Details() {
 
   useLockBodyScroll(modalOpen);
 
-  const title = uiStore.selectedDate
-    ? uiStore.selectedDate.format('MMMM D, YYYY')
-    : uiStore.currentMonth.format('MMMM YYYY');
-  const events = uiStore.selectedDate
-    ? eventStore.eventsByDate.get(uiStore.selectedDate.startOf('day').valueOf())
-    : eventStore.eventsByMonth.get(uiStore.currentMonth.startOf('month').valueOf());
-  const balance = uiStore.selectedDate
-    ? eventStore.getBalanceForDate(uiStore.selectedDate)
-    : eventStore.getBalanceForDate(uiStore.currentMonth.endOf('month'));
+  const events = eventStore.eventsByWeek.get(uiStore.currentWeek.startOf('week').valueOf());
 
   return (
     <section className="calendar-details">
@@ -106,11 +99,6 @@ function Details() {
             </li>
           ))}
       </ul>
-
-      <div className="calendar-details__total">
-        <strong className="calendar-details__total-label">Total Balance:</strong>
-        <span className="calendar-details__total-value">{formatCurrency(balance || 0)}</span>
-      </div>
 
       <Modal
         className="modal-dialog"

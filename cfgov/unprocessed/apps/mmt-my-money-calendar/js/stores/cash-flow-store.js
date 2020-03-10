@@ -54,6 +54,20 @@ export default class CashFlowStore {
   }
 
   /**
+   * All events in the store as a map, keyed by the epoch timestamp of the beginning of the week in which the event occurs, in milliseconds.
+   *
+   * @type {Map<number, CashFlowEvent>}
+   */
+  @computed get eventsByWeek() {
+    return this.events.reduce((output, event) => {
+      const key = event.dateTime.startOf('week').valueOf();
+      const list = output.get(key) || [];
+      output.set(key, [...list, event]);
+      return output;
+    }, new Map());
+  }
+
+  /**
    * All events in the store as a map, keyed by ID
    *
    * @type {Map}
