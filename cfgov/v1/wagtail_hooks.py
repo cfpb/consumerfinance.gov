@@ -28,7 +28,7 @@ try:
     from wagtail.admin.menu import MenuItem
     from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
     from wagtail.core import hooks
-    from wagtail.core.whitelist import attribute_rule, allow_without_attributes
+    from wagtail.core.whitelist import attribute_rule
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.menu import MenuItem
     from wagtail.wagtailcore import hooks
@@ -372,6 +372,7 @@ if wagtail.VERSION < (2, 0):
     def whitelister_element_rules():
         allow_html_class = attribute_rule({
             'class': True,
+            'id': True,
             'itemprop': True,
             'itemscope': True,
             'itemtype': True,
@@ -382,33 +383,26 @@ if wagtail.VERSION < (2, 0):
                         'col', 'colgroup']
 
         return {tag: allow_html_class for tag in allowed_tags}
-
-
-# construct_whitelister_element_rules are depricated in Wagtail 2.0
-# https://docs.wagtail.io/en/stable/releases/
-# 2.0.html#construct-whitelister-element-rules-hook-is-deprecated
-if wagtail.VERSION >= (2, 0):
+elif wagtail.VERSION >= (2, 0):
+    # The construct_whitelister_element_rules was depricated in Wagtail 2,
+    # so we'll use register_rich_text_features instead.
+    # Only applies to Hallo editors, which only remain in our custom
+    # AtomicTableBlock table cells.
     @hooks.register('register_rich_text_features')
     def register_span_feature(features):
         allow_html_class = attribute_rule({
             'class': True,
-            'itemprop': True,
-            'itemscope': True,
-            'itemtype': True,
+            'id': True,
         })
-
-        allowed_tags = ['span']
 
         # register a feature 'span'
         # which whitelists the <span> element
         features.register_converter_rule('editorhtml', 'span', [
-            WhitelistRule('span', allow_without_attributes),
+            WhitelistRule('span', allow_html_class),
         ])
 
         # add 'span' to the default feature set
         features.default_features.append('span')
-
-        return {tag: allow_html_class for tag in allowed_tags}
 
 
 @hooks.register('before_serve_shared_page')
