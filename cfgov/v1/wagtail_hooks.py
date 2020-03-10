@@ -390,6 +390,14 @@ if wagtail.VERSION < (2, 0):
 if wagtail.VERSION >= (2, 0):
     @hooks.register('register_rich_text_features')
     def register_span_feature(features):
+        allow_html_class = attribute_rule({
+            'class': True,
+            'itemprop': True,
+            'itemscope': True,
+            'itemtype': True,
+        })
+
+        allowed_tags = ['span']
 
         # register a feature 'span'
         # which whitelists the <span> element
@@ -399,6 +407,8 @@ if wagtail.VERSION >= (2, 0):
 
         # add 'span' to the default feature set
         features.default_features.append('span')
+
+        return {tag: allow_html_class for tag in allowed_tags}
 
 
 @hooks.register('before_serve_shared_page')
