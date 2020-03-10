@@ -24,7 +24,7 @@
 {% import "molecules/card.html" as card with context %}
 
 {% macro render( heading, cards ) %}
-<div class="o-card-group o-card-group__bg-green">
+<div class="o-card-group o-card-group__column-3 o-card-group__bg-green">
     <h2>{{ heading }}</h2>
     <div class="o-card-group_cards">
     {% for _card in cards %}
