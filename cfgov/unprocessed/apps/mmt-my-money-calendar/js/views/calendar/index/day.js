@@ -36,8 +36,8 @@ function Day({ day, dateFormat = 'D' }) {
   );
 
   const emptyTile = useCallback(
-    () => (
-      <div className={clsx(classes)} role="button" onClick={handleClick}>
+    (klass) => (
+      <div className={clsx(klass)} role="button" onClick={handleClick}>
         <div className="calendar__day-number">{dateString}</div>
         <div className="calendar__day-symbols" />
       </div>
@@ -45,7 +45,7 @@ function Day({ day, dateFormat = 'D' }) {
     [dateString]
   );
 
-  if (!eventStore.events.length) return emptyTile();
+  if (!eventStore.events.length) return emptyTile(classes);
 
   const balance = eventStore.getBalanceForDate(day);
 
