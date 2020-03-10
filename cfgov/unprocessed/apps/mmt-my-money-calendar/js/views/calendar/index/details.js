@@ -1,18 +1,38 @@
 import clsx from 'clsx';
 import { useCallback, useState } from 'react';
-import { useLockBodyScroll } from 'react-use';
+import { useLockBodyScroll, useKeyPressEvent, useKeyPress } from 'react-use';
 import { observer } from 'mobx-react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useToggle } from 'react-use';
 import Modal from 'react-modal';
 import { useStore } from '../../../stores';
 import { formatCurrency } from '../../../lib/currency-helpers';
+import { Notification } from '../../../components/notification';
 
 import deleteRound from '@cfpb/cfpb-icons/src/icons/delete-round.svg';
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
 
-const Icon = (svg, className) => <span className={className} dangerouslySetInnerHTML={{ __html: svg }} />;
+const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
+
+const DetailRow = ({ event, onRequestEdit, onRequestDelete, ...props }) => (
+  <li className="swipeable-item calendar-details__event" role="button" {...props}>
+    <div className="swipeable-item__background">
+      <button className="swipeable-item__button swipeable-item__button--edit" onClick={onRequestEdit}>
+        Edit
+      </button>
+      <button className="swipeable-item__button swipeable-item__button--delete" onClick={onRequestDelete}>
+        Delete
+      </button>
+    </div>
+    <div className="swipeable-item__foreground">
+      <div className="calendar-details__event-date">{event.dateTime.format('M/D/YYYY')}</div>
+      <div className="calendar-details__event-name">{event.name}</div>
+      <div className="calendar-details__event-total">{formatCurrency(event.total)}</div>
+      <IconButton className="calendar-details__event-delete" onClick={onRequestDelete} icon={deleteRound} />
+    </div>
+  </li>
+);
 
 function Details() {
   const { uiStore, eventStore } = useStore();
@@ -43,62 +63,77 @@ function Details() {
   const eventRecurs = selectedEvent && selectedEvent.recurs;
 
   const editEvent = useCallback(
-    (id) => (evt) => {
+    (e) => (evt) => {
       evt.preventDefault();
-      history.push(`/calendar/add/${id}/edit`);
+      history.push(`/calendar/add/${e.id}/edit`);
     },
     []
   );
 
+  useKeyPressEvent('ArrowRight', uiStore.nextWeek.bind(uiStore));
+  useKeyPressEvent('ArrowLeft', uiStore.prevWeek.bind(uiStore));
+
   useLockBodyScroll(modalOpen);
 
   const events = eventStore.eventsByWeek.get(uiStore.currentWeek.startOf('week').valueOf());
+  const income = events ? events.filter(({ totalCents }) => totalCents > 0) : [];
+  const expenses = events ? events.filter(({ totalCents }) => totalCents < 0) : [];
+  const negativeBalance = uiStore.weekEndingBalance < 1;
+  const endBalanceClasses = clsx('calendar-details__ending-balance', negativeBalance && 'negative');
+
+  // TODO: Add m-notification component with negative balance message when user goes into negative moneys
 
   return (
     <section className="calendar-details">
       <header className="calendar-details__header">
-        <button
+        <IconButton
           className="calendar-details__nav-button"
           aria-label="Previous Week"
           onClick={() => uiStore.prevWeek()}
-          dangerouslySetInnerHTML={{ __html: arrowLeft }}
+          icon={arrowLeft}
         />
 
         <div className="calendar-details__header-text">
           <h3>{uiStore.weekRangeText}</h3>
           <div className="calendar-details__starting-balance">
-            Week starting balance:
-            {' '}
-            {uiStore.weekStartingBalanceText}
+            Week starting balance: {uiStore.weekStartingBalanceText}
           </div>
-          <div className="calendar-details__ending-balance">
-            Week ending balance:
-            {' '}
-            {uiStore.weekEndingBalanceText}
-          </div>
+          {!negativeBalance && <div className={endBalanceClasses}>Week ending balance: {uiStore.weekEndingBalanceText}</div>}
         </div>
 
-        <button
+        <IconButton
           className="calendar-details__nav-button"
           aria-label="Next Week"
           onClick={() => uiStore.nextWeek()}
-          dangerouslySetInnerHTML={{ __html: arrowRight }}
+          icon={arrowRight}
         />
       </header>
 
-      <ul className="calendar-details__events">
-        {events &&
-          events.map((e) => (
-            <li className="calendar-details__event" key={e.id} role="button" onClick={editEvent(e.id)}>
-              <div className="calendar-details__event-date">{e.dateTime.format('M/D/YYYY')}</div>
-              <div className="calendar-details__event-name">{e.name}</div>
-              <div className="calendar-details__event-total">{formatCurrency(e.total)}</div>
-              <button className="calendar-details__event-delete" onClick={confirmDelete(e)}>
-                <span dangerouslySetInnerHTML={{ __html: deleteRound }} />
-              </button>
-            </li>
-          ))}
-      </ul>
+      {negativeBalance && (
+        <div className={endBalanceClasses}>
+          <Notification message="You're in the red!" variant="error" actionLink={<Link to="/strategies" className="m-notification_button">Fix it</Link>}>
+            <p className="m-notification_explanation">
+              Week ending balance: {uiStore.weekEndingBalanceText}
+            </p>
+          </Notification>
+        </div>
+      )}
+
+      <div className="calendar-details__events-section">
+        <h3 className="calendar-details__events-section-title">Income</h3>
+
+        <ul className="calendar-details__events-list">
+          {income.map((e) => <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} />)}
+        </ul>
+      </div>
+
+      <div className="calendar-details__events-section">
+        <h3 className="calendar-details__events-section-title">Expenses</h3>
+
+        <ul className="calendar-details__events-list">
+          {expenses.map((e) => <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} />)}
+        </ul>
+      </div>
 
       <Modal
         className="modal-dialog"

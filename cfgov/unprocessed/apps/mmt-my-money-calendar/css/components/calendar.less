@@ -123,6 +123,32 @@
     text-align: center;
   }
 
+  .m-notification {
+    text-align: left;
+
+    &_explanation {
+      font-size: 14px;
+    }
+
+    &_button {
+      background-color: @red;
+      color: #fff;
+      display: block;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 12px;
+      padding: 5px;
+    }
+  }
+
+  .notification-icon {
+    position: absolute;
+  }
+
+  .notification-icon + .m-notification_content {
+    padding-left: 1.5625rem;
+  }
+
   &__nav-button {
     font-size: 24px;
 
@@ -141,7 +167,17 @@
     }
   }
 
-  &__events {
+  &__ending-balance {
+    &.negative {
+      margin: 12px auto;
+    }
+  }
+
+  &__events-section {
+    margin-bottom: 1rem;
+  }
+
+  &__events-list {
     list-style: none;
     padding-left: 0;
   }
@@ -155,6 +191,12 @@
     padding: 10px 0;
     border-bottom: 1px solid @inactiveMonthColor;
     max-width: unset !important;
+  }
+
+  &__event {
+    &:first-of-type {
+      border-top: 1px solid @inactiveMonthColor;
+    }
   }
 
   &__total {
@@ -181,6 +223,9 @@
 
   &__event-delete {
     background: transparent;
+    color: @red;
     border: 0;
+    margin-left: 1rem;
+    font-size: 20px;
   }
 }
