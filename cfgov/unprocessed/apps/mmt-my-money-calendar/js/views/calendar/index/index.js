@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
@@ -17,13 +18,17 @@ const ifDevelopment = (fn) => {
   return fn();
 };
 
-const CalendarWeekRow = ({ days }) => (
-  <div className="calendar__row">
-    {days.map((day) => (
-      <Day day={day} key={`day-${day.dayOfYear()}`} />
-    ))}
-  </div>
-);
+const CalendarWeekRow = ({ days, selected }) => {
+  const classes = clsx('calendar__row', selected && 'selected');
+
+  return (
+    <div className={classes}>
+      {days.map((day) => (
+        <Day day={day} key={`day-${day.dayOfYear()}`} />
+      ))}
+    </div>
+  );
+};
 
 function Calendar() {
   const { uiStore, eventStore } = useStore();
@@ -65,7 +70,7 @@ function Calendar() {
         {[
           dayLabels,
           ...uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
-            <CalendarWeekRow days={days} key={`week-${weekNumber}`} />
+            <CalendarWeekRow days={days} key={`week-${weekNumber}`} selected={uiStore.currentWeek.week() === weekNumber} />
           ))
         ]}
       </div>
