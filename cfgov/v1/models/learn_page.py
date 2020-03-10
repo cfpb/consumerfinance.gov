@@ -71,11 +71,11 @@ class AbstractFilterPage(CFGOVPage):
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         MultiFieldPanel([
-            FieldPanel('preview_title', classname="full"),
-            FieldPanel('preview_subheading', classname="full"),
-            FieldPanel('preview_description', classname="full"),
-            FieldPanel('secondary_link_url', classname="full"),
-            FieldPanel('secondary_link_text', classname="full"),
+            FieldPanel('preview_title'),
+            FieldPanel('preview_subheading'),
+            FieldPanel('preview_description'),
+            FieldPanel('secondary_link_url'),
+            FieldPanel('secondary_link_text'),
             ImageChooserPanel('preview_image'),
         ], heading='Page Preview Fields', classname='collapsible'),
         FieldPanel('authors', 'Authors'),
@@ -180,6 +180,13 @@ class EnforcementActionStatus(models.Model):
                          related_name='statuses')
 
 
+class EnforcementActionDocket(models.Model):
+    docket_number = models.CharField(max_length=50)
+    action = ParentalKey('v1.EnforcementActionPage',
+                         on_delete=models.CASCADE,
+                         related_name='docket_numbers')
+
+
 class EnforcementActionPage(AbstractFilterPage):
     sidebar_header = models.CharField(
         default='Action details',
@@ -190,7 +197,6 @@ class EnforcementActionPage(AbstractFilterPage):
         ('Nonbank', 'Nonbank'),
         ('Bank', 'Bank')
     ])
-    docket_number = models.CharField(max_length=100)
 
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
@@ -212,10 +218,16 @@ class EnforcementActionPage(AbstractFilterPage):
             FieldPanel('sidebar_header'),
             FieldPanel('court'),
             FieldPanel('institution_type'),
-            FieldPanel('docket_number'),
             FieldPanel('date_filed'),
             FieldPanel('tags', 'Tags'),
         ], heading='Basic Metadata'),
+        MultiFieldPanel([
+            InlinePanel(
+                'docket_numbers',
+                label="Docket Number",
+                min_num=1
+            ),
+        ], heading='Docket Number'),
         MultiFieldPanel([
             InlinePanel('statuses', label="Enforcement Status", min_num=1),
         ], heading='Enforcement Status'),
@@ -228,11 +240,11 @@ class EnforcementActionPage(AbstractFilterPage):
     settings_panels = [
         MultiFieldPanel(CFGOVPage.promote_panels, 'Settings'),
         MultiFieldPanel([
-            FieldPanel('preview_title', classname="full"),
-            FieldPanel('preview_subheading', classname="full"),
-            FieldPanel('preview_description', classname="full"),
-            FieldPanel('secondary_link_url', classname="full"),
-            FieldPanel('secondary_link_text', classname="full"),
+            FieldPanel('preview_title'),
+            FieldPanel('preview_subheading'),
+            FieldPanel('preview_description'),
+            FieldPanel('secondary_link_url'),
+            FieldPanel('secondary_link_text'),
             ImageChooserPanel('preview_image'),
         ], heading='Page Preview Fields', classname='collapsible'),
         FieldPanel('authors', 'Authors'),
@@ -423,21 +435,21 @@ class EventPage(AbstractFilterPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        FieldPanel('body', classname="full"),
+        FieldPanel('body'),
         FieldRowPanel([
             FieldPanel('start_dt', classname="col6"),
             FieldPanel('end_dt', classname="col6"),
         ]),
         MultiFieldPanel([
-            FieldPanel('archive_body', classname="full"),
+            FieldPanel('archive_body'),
             ImageChooserPanel('archive_image'),
             DocumentChooserPanel('video_transcript'),
             DocumentChooserPanel('speech_transcript'),
             FieldPanel('flickr_url'),
             FieldPanel('youtube_url'),
         ], heading='Archive Information'),
-        FieldPanel('live_body', classname="full"),
-        FieldPanel('future_body', classname="full"),
+        FieldPanel('live_body'),
+        FieldPanel('future_body'),
         StreamFieldPanel('persistent_body'),
         MultiFieldPanel([
             FieldPanel('live_stream_availability'),
