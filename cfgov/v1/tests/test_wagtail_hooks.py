@@ -213,16 +213,15 @@ class TestWhitelistOverride(SimpleTestCase):
     # /core/tests/test_whitelist.py
 
     def test_whitelist_hooks(self):
-        """Test that Whitelister does not strip scan element and attributes.
+        """Test that Whitelister does not strip span element and attributes.
 
-        The allowed element <scan> and attributes are added in v1.wagtail_hooks.
+        The allowed element <span> and attributes are added in v1.wagtail_hooks.
         """
         input_html = '''
-<span class="schema-container"
-      itemprop="step"
-      itemscope=""
-      itemtype="http://schema.org/HowToSection">
-    <span class="schema-container" itemprop="itemListElement">
+<span class="schema-container">
+    <span class="schema-container">
+    </span>
+    <span id="schema-identity">
     </span>
 </span>
         '''
