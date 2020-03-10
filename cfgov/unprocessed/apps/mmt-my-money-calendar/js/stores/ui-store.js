@@ -1,6 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import logger from '../lib/logger';
 import { getWeekRows, toDayJS, dayjs } from '../lib/calendar-helpers';
+import { formatCurrency } from '../lib/currency-helpers';
 
 export default class UIStore {
   @observable navOpen = false;
@@ -33,6 +34,22 @@ export default class UIStore {
     const end = this.currentWeek.endOf('week');
 
     return `${start.format('MMMM D')} - ${end.format('MMMM D')}`;
+  }
+
+  @computed get weekStartingBalance() {
+    return this.rootStore.eventStore.getBalanceForDate(this.currentWeek.startOf('week'));
+  }
+
+  @computed get weekEndingBalance() {
+    return this.rootStore.eventStore.getBalanceForDate(this.currentWeek.endOf('week'));
+  }
+
+  @computed get weekStartingBalanceText() {
+    return formatCurrency(this.weekStartingBalance);
+  }
+
+  @computed get weekEndingBalanceText() {
+    return formatCurrency(this.weekEndingBalance);
   }
 
   @action setNavOpen(val) {
@@ -86,8 +103,7 @@ export default class UIStore {
     date = toDayJS(date);
     this.currentWeek = date.startOf('week');
 
-    if (!date.isSame(this.currentMonth, 'month'))
-      this.currentMonth = date.startOf('month');
+    if (!date.isSame(this.currentMonth, 'month')) this.currentMonth = date.startOf('month');
   }
 
   nextWeek() {
@@ -110,7 +126,7 @@ export default class UIStore {
 
   @action setSelectedCategory(category) {
     this.selectedCategory = category;
-  };
+  }
 
   @action toggleBottomNav(state) {
     if (typeof state === 'undefined') {

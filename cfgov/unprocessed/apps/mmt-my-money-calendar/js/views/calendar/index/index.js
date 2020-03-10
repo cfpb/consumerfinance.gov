@@ -57,13 +57,7 @@ function Calendar() {
       <h2>{uiStore.subtitle}</h2>
 
       <nav className="calendar__nav">
-        <Button icon={arrowLeft} iconSide="left" onClick={prevMonth}>
-          Previous
-        </Button>
         <Button onClick={gotoToday}>Today</Button>
-        <Button icon={arrowRight} iconSide="right" onClick={nextMonth}>
-          Next
-        </Button>
       </nav>
 
       <div className="calendar__rows">

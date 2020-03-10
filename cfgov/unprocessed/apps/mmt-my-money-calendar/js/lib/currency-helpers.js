@@ -1,6 +1,10 @@
 const DEFAULT_FORMATTER = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
 export function formatCurrency(num, formatter = DEFAULT_FORMATTER) {
+  if (!Number.isInteger(num)) {
+    num = 0;
+  }
+
   return formatter.format(num);
 }
 

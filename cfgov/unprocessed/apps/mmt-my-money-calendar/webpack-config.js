@@ -126,7 +126,14 @@ const COMMON_MODULE_CONFIG = {
     // Allow SVGs to load inline
     {
       test: /\.svg$/,
-      use: ['svg-inline-loader'],
+      use: [
+        {
+          loader: 'svg-inline-loader',
+          options: {
+            removeSVGTagAttrs: true,
+          },
+        },
+      ],
     },
 
     // Enable import of static CSS stylesheets

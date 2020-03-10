@@ -114,6 +114,33 @@
 .calendar-details {
   margin-top: 1.5rem;
 
+  &__header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  &__nav-button {
+    font-size: 24px;
+
+    &:first-of-type {
+      margin-right: 10px;
+    }
+
+    &::last-of-type {
+      margin-left: 10px;
+    }
+  }
+
+  &__header-text {
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
   &__events {
     list-style: none;
     padding-left: 0;
