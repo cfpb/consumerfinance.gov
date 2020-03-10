@@ -141,8 +141,8 @@ export const DAY_OPTIONS = {
 export const recurrenceRules = {
   weekly: {
     label: 'Weekly',
-    handler: (dtstart, byweekday = RRule.FR, options = {}) =>
-      new RRule({ freq: RRule.WEEKLY, dtstart, byweekday, ...options }),
+    handler: (dtstart, options = {}) =>
+      new RRule({ freq: RRule.WEEKLY, dtstart, ...options }),
   },
   biweekly: {
     label: 'Bi-weekly',
