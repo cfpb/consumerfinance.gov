@@ -26,8 +26,9 @@ from v1.util import util
 
 try:
     from wagtail.admin.menu import MenuItem
+    from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
     from wagtail.core import hooks
-    from wagtail.core.whitelist import attribute_rule
+    from wagtail.core.whitelist import attribute_rule, allow_without_attributes
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailadmin.menu import MenuItem
     from wagtail.wagtailcore import hooks
@@ -381,6 +382,23 @@ if wagtail.VERSION < (2, 0):
                         'col', 'colgroup']
 
         return {tag: allow_html_class for tag in allowed_tags}
+
+
+# construct_whitelister_element_rules are depricated in Wagtail 2.0
+# https://docs.wagtail.io/en/stable/releases/
+# 2.0.html#construct-whitelister-element-rules-hook-is-deprecated
+if wagtail.VERSION >= (2, 0):
+    @hooks.register('register_rich_text_features')
+    def register_span_feature(features):
+
+        # register a feature 'span'
+        # which whitelists the <span> element
+        features.register_converter_rule('editorhtml', 'span', [
+            WhitelistRule('span', allow_without_attributes),
+        ])
+
+        # add 'span' to the default feature set
+        features.default_features.append('span')
 
 
 @hooks.register('before_serve_shared_page')
