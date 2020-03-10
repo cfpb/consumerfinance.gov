@@ -239,7 +239,7 @@ export default class CashFlowStore {
     if (andRecurrences && recurrences && recurrences.length) {
       for (const recurrence of recurrences) {
         // only delete future recurrences:
-        if (event.dateTime.diff(recurrence.dateTime, 'days').toObject().days > 0) continue;
+        if (recurrence.dateTime.isBefore(event.dateTime)) continue;
 
         yield recurrence.destroy();
         deletedIDs.push(recurrence.id);
