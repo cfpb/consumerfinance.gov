@@ -53,14 +53,16 @@
     <div class="{{ _classes( nav_depth, '-list' ) }}">
 
         {% if group.group_title %}
+        {% set group_title = group.group_title ~ ' continued' if group.hide_group_title else group.group_title %}
         <h4 class="h5
                   {{ base_class ~ '_group-heading' }}
                   {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_group_title else ''}}"
+            id="{{ group_title | slugify }}"
             {% if group.hide_group_title %} aria-hidden="true" {% endif %}>
-            {{ group.group_title | safe }}
+            {{ group_title | safe }}
         </h4>
         {% endif %}
-        <ul>
+        <ul aria-labelledby="{{ group_title | slugify }}">
             {% if nav_depth == 1 -%}
             <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
                 {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
@@ -138,7 +140,14 @@
 
                 {% if nav_item.featured_links or nav_item.other_links %}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
-                    <ul class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
+                    {% if nav_item.featured_links %}
+                    {% set featured_links_id = nav_item.featured_links[0].link_text | slugify %}
+                    <h4 id="{{ featured_links_id }}"
+                        class="{{ base_class ~ '_group-heading' ~ '__hidden' }}"
+                        aria-hidden="true">
+                        Featured links
+                    </h4>
+                    <ul class="{{ _classes( nav_depth, '-list__featured-item' ) }}" aria-labelledby="{{ featured_links_id }}">
                         {% for link in nav_item.featured_links | default( [], true ) %}
                         <li>
                             <a class="{{ _classes( nav_depth, '-link' ) }}"
@@ -149,6 +158,7 @@
                         </li>
                         {% endfor %}
                     </ul>
+                    {% endif %}
 
                     <ul class="m-list m-list__unstyled">
                         {% for link in nav_item.other_links | default( [], true ) %}
