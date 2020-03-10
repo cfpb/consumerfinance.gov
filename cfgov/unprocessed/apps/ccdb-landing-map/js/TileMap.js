@@ -173,7 +173,7 @@ export function tooltipFormatter() {
 
   const value = this.value.toLocaleString();
   const perCapita = this.perCapita ? '<div class="row u-clearfix">' +
-    '<p class="u-float-left">Per capita</p>' +
+    '<p class="u-float-left">Per 1000 population</p>' +
     '<p class="u-right">' + this.perCapita + '</p>' +
     '</div>' : '';
 
