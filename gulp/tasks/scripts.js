@@ -302,3 +302,10 @@ gulp.task( 'scripts',
     'scripts:ondemand'
   )
 );
+
+gulp.task( 'scripts:watch', function() {
+  gulp.watch(
+    configScripts.src,
+    gulp.parallel( 'scripts:modern' )
+  );
+} );

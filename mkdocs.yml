@@ -14,7 +14,6 @@ nav:
     - Atomic Structure and Design: atomic-structure.md
     - Creating and Editing Components: editing-components.md
     - Django and Wagtail Migrations: migrations.md
-    - Editing the Mega Menu: mega-menu.md
     - Forms in Wagtail Page Context: forms-in-wagtail.md
     - Wagtail Pages: wagtail-pages.md
 - Supporting Features:

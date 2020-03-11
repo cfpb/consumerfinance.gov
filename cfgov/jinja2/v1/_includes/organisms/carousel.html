@@ -27,7 +27,7 @@
 <section class="o-carousel_item">
     <div class="o-carousel_item-wrapper">
         <div class="o-carousel_item-text">
-            <h2>{{ item.title }}</h2>
+            <h3 class="h2">{{ item.title }}</h3>
             <p>{{ item.body }}</p>
             <a class="a-link a-link__jump" href="{{ item.link_url }}">
                 <span class="a-link_text">{{ item.link_text }}</span>
@@ -85,14 +85,14 @@
 {% endmacro %}
 
 {% macro render( value ) %}
-<div class="o-carousel u-hidden">
-    <h5>{{ _( 'Featured' ) }}</h5>
+<div class="o-carousel u-hidden" aria-labelledby="o-carousel_heading">
+    <h2 class="h5" id="o-carousel_heading" aria-label="Featured content">{{ _( 'Featured' ) }}</h2>
     <div class="o-carousel_navigator">
 
-        <button class="o-carousel_btn o-carousel_btn-prev a-btn" aria-label="Previous showcase item">
+        <button class="o-carousel_btn o-carousel_btn-prev a-btn" aria-label="Previous featured content item">
             {{ svg_icon( 'left' ) }}
         </button>
-        <button class="o-carousel_btn o-carousel_btn-next a-btn" aria-label="Next showcase item">
+        <button class="o-carousel_btn o-carousel_btn-next a-btn" aria-label="Next featured content item">
             {{ svg_icon( 'right' ) }}
         </button>
 

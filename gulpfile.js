@@ -101,6 +101,14 @@ function requireAllDefaultTasks() {
     );
   }
 
+  // Define the task that runs with `gulp watch`.
+  gulp.task( 'watch',
+    gulp.parallel(
+      'styles:watch',
+      'scripts:watch'
+    )
+  );
+
   // Define the default task that runs with just `gulp`.
   gulp.task( 'default',
     gulp.parallel(

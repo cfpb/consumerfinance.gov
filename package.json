@@ -40,6 +40,7 @@
     "file-loader": "5.1.0",
     "glob-all": "3.1.0",
     "gulp": "4.0.2",
+    "gulp-bless": "4.0.1",
     "gulp-changed": "4.0.2",
     "gulp-clean-css": "4.2.0",
     "gulp-concat": "2.6.1",
@@ -92,12 +93,16 @@
     "through2": "3.0.1",
     "wcag": "0.3.0"
   },
+  "resolutions": {
+    "gulp-bless/bless/css": "github:cfpb/css"
+  },
   "scripts": {
     "enforce": "enforce-node-version",
     "preinstall": "node scripts/preinstall.js",
     "postinstall": "yarn run enforce && node scripts/yarn/apps-install",
     "test": "snyk test",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "watch": "gulp watch"
   },
   "snyk": true
 }

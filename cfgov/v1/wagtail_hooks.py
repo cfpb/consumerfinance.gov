@@ -6,11 +6,10 @@ from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.shortcuts import render
 from django.utils.html import format_html_join
 
+import wagtail
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
@@ -19,7 +18,6 @@ from scripts import export_enforcement_actions
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import ExportFeedbackView, manage_cdn
-from v1.models.menu_item import MenuItem as MegaMenuItem
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
@@ -28,6 +26,7 @@ from v1.util import util
 
 try:
     from wagtail.admin.menu import MenuItem
+    from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
     from wagtail.core import hooks
     from wagtail.core.whitelist import attribute_rule
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
@@ -86,9 +85,33 @@ def log_page_deletion(request, page):
 
 @hooks.register('insert_editor_js')
 def editor_js():
-    js_files = [
-        'js/table-block.js',
-    ]
+    js_files = ['js/table-block.js']
+
+    if wagtail.VERSION >= (2, 0):
+        # Temporarily adding Hallo-related JavaScript files to all admin pages
+        # to support the continued use of Hallo in our RichTextTableInput
+        # until we can take more time to migrate that to Draftail.
+        js_files.insert(0, 'wagtailadmin/js/vendor/hallo.js')
+        js_files.insert(0, 'wagtailadmin/js/hallo-plugins/hallo-hr.js')
+        js_files.insert(
+            0,
+            'wagtailadmin/js/hallo-plugins/hallo-requireparagraphs.js'
+        )
+        js_files.insert(
+            0, 'wagtailadmin/js/hallo-plugins/hallo-wagtaillink.js')
+        js_files.insert(
+            0,
+            'wagtaildocs/js/hallo-plugins/hallo-wagtaildoclink.js'
+        )
+        js_files.insert(
+            0,
+            'wagtailembeds/js/hallo-plugins/hallo-wagtailembeds.js'
+        )
+        js_files.insert(
+            0,
+            'wagtailimages/js/hallo-plugins/hallo-wagtailimage.js'
+        )
+
     js_includes = format_html_join(
         '\n',
         '<script src="{0}{1}"></script>',
@@ -103,10 +126,18 @@ def editor_css():
     css_files = [
         'css/bureau-structure.css',
         'css/deprecated-blocks.css',
+        'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
         'css/table-block.css',
     ]
+
+    if wagtail.VERSION >= (2, 0):
+        # Temporarily adding Hallo CSS to all admin pages
+        # to support the continued use of Hallo in our RichTextTableInput
+        # until we can take more time to migrate that to Draftail.
+        css_files.insert(0, 'wagtailadmin/css/panels/hallo.css')
+
     css_includes = format_html_join(
         '\n',
         '<link rel="stylesheet" href="{0}{1}">',
@@ -153,7 +184,7 @@ class PermissionCheckingMenuItem(MenuItem):
     MenuItem that only displays if the user has a certain permission.
 
     This subclassing approach is recommended by the Wagtail documentation:
-    https://docs.wagtail.io/en/v1.13.4/reference/hooks.html#register-admin-menu-item
+    https://docs.wagtail.io/en/stable/reference/hooks.html#register-admin-menu-item
     """
 
     def __init__(self, *args, **kwargs):
@@ -210,27 +241,6 @@ def serve_latest_draft_page(page, request, args, kwargs):
         response = latest_draft.serve(request, *args, **kwargs)
         response['Serving-Wagtail-Draft'] = '1'
         return response
-
-
-@hooks.register('before_serve_shared_page')
-def before_serve_shared_page(page, request, args, kwargs):
-    request.show_draft_megamenu = True
-
-
-class MegaMenuModelAdmin(ModelAdmin):
-    model = MegaMenuItem
-    menu_label = 'Mega Menu'
-    menu_icon = 'cog'
-    list_display = ('link_text', 'order')
-
-
-modeladmin_register(MegaMenuModelAdmin)
-
-
-@receiver(post_save, sender=MegaMenuItem)
-def clear_mega_menu_cache(sender, instance, **kwargs):
-    from django.core.cache import caches
-    caches['default_fragment_cache'].delete('mega_menu')
 
 
 def get_resource_tags():
@@ -356,21 +366,43 @@ def hide_snippets_menu_item(request, menu_items):
                      if item.url != reverse('wagtailsnippets:index')]
 
 
-# Override list of allowed tags in a RichTextField
-@hooks.register('construct_whitelister_element_rules')
-def whitelister_element_rules():
-    allow_html_class = attribute_rule({
-        'class': True,
-        'itemprop': True,
-        'itemscope': True,
-        'itemtype': True,
-    })
+if wagtail.VERSION < (2, 0):
+    # Override list of allowed tags in a RichTextField
+    @hooks.register('construct_whitelister_element_rules')
+    def whitelister_element_rules():
+        allow_html_class = attribute_rule({
+            'class': True,
+            'id': True,
+            'itemprop': True,
+            'itemscope': True,
+            'itemtype': True,
+        })
 
-    allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
-                    'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
-                    'col', 'colgroup']
+        allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
+                        'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
+                        'col', 'colgroup']
 
-    return {tag: allow_html_class for tag in allowed_tags}
+        return {tag: allow_html_class for tag in allowed_tags}
+elif wagtail.VERSION >= (2, 0):
+    # The construct_whitelister_element_rules was depricated in Wagtail 2,
+    # so we'll use register_rich_text_features instead.
+    # Only applies to Hallo editors, which only remain in our custom
+    # AtomicTableBlock table cells.
+    @hooks.register('register_rich_text_features')
+    def register_span_feature(features):
+        allow_html_class = attribute_rule({
+            'class': True,
+            'id': True,
+        })
+
+        # register a feature 'span'
+        # which whitelists the <span> element
+        features.register_converter_rule('editorhtml', 'span', [
+            WhitelistRule('span', allow_html_class),
+        ])
+
+        # add 'span' to the default feature set
+        features.default_features.append('span')
 
 
 @hooks.register('before_serve_shared_page')
