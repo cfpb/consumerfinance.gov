@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import { rrulestr } from 'rrule';
 import * as yup from 'yup';
-import { DateTime } from 'luxon';
+import { dayjs } from '../../lib/calendar-helpers';
 import EventEmitter from 'eventemitter3';
 import { asyncComputed } from 'computed-async-mobx';
 import logger from '../../lib/logger';
@@ -25,7 +25,7 @@ export default class CashFlowEvent {
   @observable payday1 = 15;
   @observable payday2 = 30;
 
-  static MIN_DATE = DateTime.fromFormat('1970-01-01', 'y-MM-dd');
+  static MIN_DATE = dayjs(0);
 
   static eventEmitter = new EventEmitter();
 
@@ -244,21 +244,21 @@ export default class CashFlowEvent {
   }
 
   @computed get recurrenceDates() {
-    const now = DateTime.local();
+    const now = dayjs();
 
     return this.recurrenceRule
       .between(
-        this.dateTime.startOf('day').toJSDate(),
+        this.dateTime.startOf('day').toDate(),
         now
-          .plus({ months: this.constructor.recurrenceMonths })
+          .add(this.constructor.recurrenceMonths, 'months')
           .endOf('day')
-          .toJSDate()
+          .toDate()
       )
-      .map(DateTime.fromJSDate);
+      .map((date) => dayjs(date));
   }
 
   @computed get dateTime() {
-    return DateTime.fromJSDate(this.date).startOf('day');
+    return dayjs(this.date).startOf('day');
   }
 
   set dateTime(dateTime) {
@@ -266,23 +266,23 @@ export default class CashFlowEvent {
       return;
     }
 
-    this.date = dateTime.startOf('day').toJSDate();
+    this.date = dateTime.startOf('day').toDate();
   }
 
   @computed get createdAtDateTime() {
-    return DateTime.fromJSDate(this.createdAt);
+    return dayjs(this.createdAt);
   }
 
   set createdAtDateTime(value) {
-    this.createdAt = value.toJSDate();
+    this.createdAt = value.toDate();
   }
 
   @computed get updatedAtDateTime() {
-    return DateTime.fromJSDate(this.updatedAt);
+    return dayjs(this.updatedAt);
   }
 
   set updatedAtDateTime(value) {
-    this.updatedAt = value.toJSDate();
+    this.updatedAt = value.toDate();
   }
 
   @computed get total() {
@@ -408,7 +408,7 @@ export default class CashFlowEvent {
       name: this.name,
       totalCents: Math.abs(this.totalCents),
       category: this.category,
-      dateTime: this.dateTime && !this.dateTime.invalidReason ? this.dateTime.toFormat('yyyy-MM-dd') : null,
+      dateTime: this.dateTime && this.dateTime.isValid() ? this.dateTime.format('YYYY-MM-DD') : null,
       recurs: this.recurs,
       recurrenceType: this.recurrenceType,
       payday1: this.payday1,
@@ -420,12 +420,10 @@ export default class CashFlowEvent {
     const id = this.isRecurrence ? this.originalEventID : this.id;
     const { store } = await this.transaction();
     const index = store.index('originalEventID_date');
-    const lowerBound = [id, this.constructor.MIN_DATE.toJSDate()];
+    const lowerBound = [id, this.constructor.MIN_DATE.toDate()];
     const upperBound = [
       id,
-      DateTime.local()
-        .plus({ months: 3 })
-        .toJSDate(),
+      dayjs().add(3, 'months').toDate(),
     ];
     const range = IDBKeyRange.bound(lowerBound, upperBound);
     let cursor = await index.openCursor(range, 'next');

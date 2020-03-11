@@ -1,11 +1,12 @@
 import CashFlowEvent from './stores/models/cash-flow-event';
-import { DateTime } from 'luxon';
+import { dayjs } from './lib/calendar-helpers';
 import { RRule } from 'rrule';
 
 let currentDate;
-const now = DateTime.local().startOf('day');
+const now = dayjs().startOf('day');
+
 const randDay = (max = 30) => {
-  const date = now.plus({ days: Math.floor(Math.random() * max) + 1 }).toJSDate();
+  const date = now.add(Math.floor(Math.random() * max) + 1, 'days').toDate();
   currentDate = date;
   return date;
 };
@@ -28,7 +29,7 @@ function seedCashFlowEvents() {
   const events = [
     {
       name: 'Starting Balance',
-      date: now.toJSDate(),
+      date: now.toDate(),
       totalCents: 50000,
       category: 'startingBalance',
     },

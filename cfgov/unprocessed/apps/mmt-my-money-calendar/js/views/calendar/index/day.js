@@ -1,12 +1,8 @@
 import clsx from 'clsx';
 import { useMemo, useCallback } from 'react';
 import { observer } from 'mobx-react';
-import { DateTime } from 'luxon';
 import { useStore } from '../../../stores';
-import { compact } from '../../../lib/array-helpers';
-
-import add from '@cfpb/cfpb-icons/src/icons/add.svg';
-import subtract from '@cfpb/cfpb-icons/src/icons/subtract.svg';
+import { dayjs } from '../../../lib/calendar-helpers';
 
 const Icon = ({ icon, size, style = {}, ...props }) => {
   const styles = {
@@ -18,19 +14,13 @@ const Icon = ({ icon, size, style = {}, ...props }) => {
   return <span className="calendar__day-icon" style={styles} dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 };
 
-function Day({ day, dateFormat = 'd' }) {
+function Day({ day, dateFormat = 'D' }) {
   const { uiStore, eventStore } = useStore();
 
-  const isToday = useMemo(() => day.get('ordinal') === DateTime.local().get('ordinal'), [day]);
-  const isSelected = useMemo(() => uiStore.selectedDate && day.hasSame(uiStore.selectedDate, 'day'), [
-    day,
-    uiStore.selectedDate,
-  ]);
-  const isCurrentMonth = useMemo(
-    () => day.hasSame(uiStore.currentMonth, 'month') && day.hasSame(uiStore.currentMonth, 'year'),
-    [day, uiStore.currentMonth]
-  );
-  const dateString = useMemo(() => day.toFormat(dateFormat), [day, dateFormat]);
+  const isToday = day.dayOfYear() === dayjs().dayOfYear();
+  const isSelected = uiStore.selectedDate && day.isSame(uiStore.selectedDate, 'day');
+  const isCurrentMonth = day.isSame(uiStore.currentMonth, 'month') && day.isSame(uiStore.currentMonth, 'year');
+  const dateString = day.format(dateFormat);
 
   const classes = ['calendar__day', isToday && 'today', isSelected && 'selected', isCurrentMonth && 'current-month'];
 
@@ -38,7 +28,7 @@ function Day({ day, dateFormat = 'd' }) {
     (evt) => {
       evt.preventDefault();
 
-      uiStore.selectedDate && day.equals(uiStore.selectedDate)
+      uiStore.selectedDate && day.isSame(uiStore.selectedDate)
         ? uiStore.clearSelectedDate()
         : uiStore.setSelectedDate(day);
     },
@@ -46,16 +36,16 @@ function Day({ day, dateFormat = 'd' }) {
   );
 
   const emptyTile = useCallback(
-    () => (
-      <div className={clsx(classes)} role="button" onClick={handleClick}>
+    (klass) => (
+      <div className={clsx(klass)} role="button" onClick={handleClick}>
         <div className="calendar__day-number">{dateString}</div>
         <div className="calendar__day-symbols" />
       </div>
     ),
-    []
+    [dateString]
   );
 
-  if (!eventStore.events.length) return emptyTile();
+  if (!eventStore.events.length) return emptyTile(classes);
 
   const balance = eventStore.getBalanceForDate(day);
 
@@ -69,8 +59,8 @@ function Day({ day, dateFormat = 'd' }) {
   return (
     <div className={clsx(classes)} role="button" onClick={handleClick}>
       <div className="calendar__day-number">
-        <time dateTime={day.toFormat('y-MM-dd')} className="calendar__day-datetime">
-          {day.toFormat(dateFormat)}
+        <time dateTime={day.format('YYYY-MM-DD')} className="calendar__day-datetime">
+          {day.format(dateFormat)}
         </time>
       </div>
       {symbol}

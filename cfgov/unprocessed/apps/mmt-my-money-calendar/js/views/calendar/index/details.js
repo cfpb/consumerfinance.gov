@@ -47,7 +47,7 @@ function Details() {
 
   useLockBodyScroll(modalOpen);
 
-  const title = uiStore.selectedDate ? uiStore.selectedDate.toFormat('DDD') : uiStore.currentMonth.toFormat('MMMM, y');
+  const title = uiStore.selectedDate ? uiStore.selectedDate.format('MMMM D, YYYY') : uiStore.currentMonth.format('MMMM YYYY');
   const events = uiStore.selectedDate
     ? eventStore.eventsByDate.get(uiStore.selectedDate.startOf('day').valueOf())
     : eventStore.eventsByMonth.get(uiStore.currentMonth.startOf('month').valueOf());
@@ -63,7 +63,7 @@ function Details() {
         {events &&
           events.map((e) => (
             <li className="calendar-details__event" key={e.id} role="button" onClick={editEvent(e.id)}>
-              <div className="calendar-details__event-date">{e.dateTime.toFormat('D')}</div>
+              <div className="calendar-details__event-date">{e.dateTime.format('M/D/YYYY')}</div>
               <div className="calendar-details__event-name">{e.name}</div>
               <div className="calendar-details__event-total">{formatCurrency(e.total)}</div>
               <button className="calendar-details__event-delete" onClick={confirmDelete(e)}>

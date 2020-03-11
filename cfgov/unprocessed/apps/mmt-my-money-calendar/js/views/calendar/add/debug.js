@@ -1,10 +1,9 @@
-import clsx from 'clsx';
 import { useMemo } from 'react';
 import { observer } from 'mobx-react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
-import { DateTime } from 'luxon';
+import { dayjs } from '../../../lib/calendar-helpers';
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/categories';
 import Button, { ButtonLink } from '../../../components/button';
@@ -31,7 +30,7 @@ function Debug() {
       totalCents: 0,
       category: undefined,
       eventType: undefined,
-      dateTime: uiStore.selectedDate ? uiStore.selectedDate.toFormat('yyyy-MM-dd') : '',
+      dateTime: uiStore.selectedDate ? uiStore.selectedDate.format('YYYY-MM-DD') : '',
       recurs: false,
       recurrenceRule: undefined,
       payday1: 15,
@@ -63,13 +62,13 @@ function Debug() {
       if (values.eventType === 'expense') values.totalCents = -values.totalCents;
 
       values.totalCents = parseInt(values.totalCents, 10);
-      values.dateTime = DateTime.fromFormat(values.dateTime, 'yyyy-MM-dd');
+      values.dateTime = dayjs(values.dateTime, 'YYYY-MM-DD');
 
       if (values.recurs) {
         const { handler } = recurrenceRules[values.recurrenceRule];
         values.recurrenceRule = values.recurrenceRule === 'semimonthly'
-          ? handler(values.dateTime.toJSDate(), values.payday1, values.payday2)
-          : handler(values.dateTime.toJSDate());
+          ? handler(values.dateTime.toDate(), values.payday1, values.payday2)
+          : handler(values.dateTime.toDate());
       }
 
       try {

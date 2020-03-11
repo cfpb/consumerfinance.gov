@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { DateTime } from 'luxon';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
 import { useClickHandler, useClickConfirm } from '../../../lib/hooks';
@@ -8,11 +7,10 @@ import Day from './day';
 import Details from './details';
 import Button, { ButtonLink } from '../../../components/button';
 import { useScrollToTop } from '../../../components/scroll-to-top';
-import { DAY_LABELS } from '../../../lib/calendar-helpers';
+import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
 
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
-import addRound from '@cfpb/cfpb-icons/src/icons/add-round.svg';
 
 const ifDevelopment = (fn) => {
   if (process.env.NODE_ENV !== 'development') return null;
@@ -22,7 +20,7 @@ const ifDevelopment = (fn) => {
 const CalendarWeekRow = ({ days }) => (
   <div className="calendar__row">
     {days.map((day) => (
-      <Day day={day} key={`day-${day.toFormat('ooo')}`} />
+      <Day day={day} key={`day-${day.dayOfYear()}`} />
     ))}
   </div>
 );
@@ -34,7 +32,7 @@ function Calendar() {
 
   const nextMonth = useClickHandler(() => uiStore.nextMonth(), []);
   const prevMonth = useClickHandler(() => uiStore.prevMonth(), []);
-  const gotoToday = useClickHandler(() => uiStore.gotoDate(DateTime.local()), []);
+  const gotoToday = useClickHandler(() => uiStore.gotoDate(dayjs()), []);
 
   const loadSeedData = useClickHandler(async () => {
     await window.seedTestData();
@@ -50,7 +48,7 @@ function Calendar() {
 
   useEffect(() => {
     uiStore.setPageTitle('myMoney Calendar');
-    uiStore.setSubtitle(uiStore.currentMonth.toFormat('MMMM, y'));
+    uiStore.setSubtitle(uiStore.currentMonth.format('MMMM, YYYY'));
   }, [location, params, uiStore.currentMonth]);
 
   const seedButton = ifDevelopment(() => (

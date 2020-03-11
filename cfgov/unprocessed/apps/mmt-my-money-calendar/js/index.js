@@ -2,7 +2,7 @@ import * as idb from 'idb';
 import { render } from 'react-dom';
 import { configure as configureMobX } from 'mobx';
 import { Workbox } from 'workbox-window';
-import { DateTime, Info } from 'luxon';
+import dayjs from 'dayjs';
 import { RRule } from 'rrule';
 import { StoreProvider } from './stores';
 import Routes from './routes';
@@ -10,7 +10,7 @@ import CashFlowEvent from './stores/models/cash-flow-event';
 
 configureMobX({ enforceActions: 'observed' });
 
-if ((process.env.NODE_ENV === 'production' || process.env.SERVICE_WORKER_ENABLED) && 'serviceWorker' in navigator) {
+if (process.env.SERVICE_WORKER_ENABLED && 'serviceWorker' in navigator) {
   const wb = new Workbox('/mmt-my-money-calendar/service-worker.js', { scope: '/mmt-my-money-calendar' });
 
   wb.addEventListener('activated', (evt) => {
@@ -27,13 +27,12 @@ if ((process.env.NODE_ENV === 'production' || process.env.SERVICE_WORKER_ENABLED
 if (process.env.NODE_ENV === 'development') {
   window.idb = idb;
   window.CashFlowEvent = CashFlowEvent;
-  window.DateTime = DateTime;
-  window.Info = Info;
+  window.dayjs = dayjs;
   window.RRule = RRule;
 
   async function loadSeeders() {
     window.seed = await import(/* webpackChunkName: "seeds.js" */ './seed-data.js');
-  };
+  }
 
   window.seedTestData = async function seedTestData() {
     if (!window.seed) await loadSeeders();
@@ -48,7 +47,7 @@ if (process.env.NODE_ENV === 'development') {
 
     await window.seed.clearData();
     console.info('Cleared all data');
-  }
+  };
 }
 
 const App = () => (

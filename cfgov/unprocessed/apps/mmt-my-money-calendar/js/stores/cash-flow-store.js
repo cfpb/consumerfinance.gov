@@ -2,10 +2,9 @@ import { flow, observable, computed, action } from 'mobx';
 import { asyncComputed } from 'computed-async-mobx';
 import { computedFn } from 'mobx-utils';
 import logger from '../lib/logger';
-import { toDateTime, dayOfYear } from '../lib/calendar-helpers';
+import { toDayJS } from '../lib/calendar-helpers';
 import { toMap } from '../lib/array-helpers';
 import CashFlowEvent from './models/cash-flow-event';
-import { DateTime } from 'luxon';
 
 export default class CashFlowStore {
   @observable eventsLoaded = false;
@@ -83,11 +82,11 @@ export default class CashFlowStore {
   /**
    * Get the user's available balance for the specified date
    *
-   * @param {Date|DateTime} stopDate - The date to check the balance for
+   * @param {Date|dayjs} stopDate - The date to check the balance for
    * @returns {Number} the balance in dollars
    */
   getBalanceForDate = computedFn(function getBalanceForDate(stopDate) {
-    stopDate = toDateTime(stopDate).endOf('day');
+    stopDate = toDayJS(stopDate).endOf('day');
     const stopTimestamp = stopDate.valueOf();
 
     if (!this.events.length) return totalInCents;
@@ -106,7 +105,7 @@ export default class CashFlowStore {
   /**
    * Get the total amount of money received or spent for a particular day
    *
-   * @param {Date|DateTime} date - The date
+   * @param {Date|dayjs} date - The date
    * @returns {Number} The amount of money for that day received or spent
    */
   getTotalForDate = computedFn(function getTotalForDate(date) {
@@ -118,7 +117,7 @@ export default class CashFlowStore {
   /**
    * Determines whether or not the given date has any income events
    *
-   * @param {Date|DateTime} date - The date to check
+   * @param {Date|dayjs} date - The date to check
    * @returns {Boolean}
    */
   dateHasIncome(date) {
@@ -132,7 +131,7 @@ export default class CashFlowStore {
   /**
    * Determines whether or not the given date has any expense events
    *
-   * @param {Date|DateTime} date - The date to check
+   * @param {Date|dayjs} date - The date to check
    * @returns {Boolean}
    */
   dateHasExpenses(date) {
@@ -146,7 +145,7 @@ export default class CashFlowStore {
   /**
    * Determines whether or not a given date has any events
    *
-   * @param {Date|DateTime} date A JS date or Luxon DateTime object
+   * @param {Date|dayjs} date A JS date or dayjs object
    * @returns {boolean}
    */
   dateHasEvents(date) {
@@ -156,11 +155,11 @@ export default class CashFlowStore {
   /**
    * Returns all cash flow events for the given date
    *
-   * @param {Date|DateTime} date - The date to check
+   * @param {Date|dayjs} date - The date to check
    * @returns {CashFlowEvent[]|undefined}
    */
   getEventsForDate(date) {
-    date = toDateTime(date);
+    date = toDayJS(date);
     return this.eventsByDate.get(date.startOf('day').valueOf());
   }
 
@@ -193,7 +192,7 @@ export default class CashFlowStore {
    *
    * @param {Object} params - Event properties
    * @param {String} params.name - The event name
-   * @param {Date|DateTime} params.date - The event date
+   * @param {Date|dayjs} params.date - The event date
    * @param {String} params.category - The category name
    * @param {String} [params.subcategory] - The subcategory name
    * @param {Number} totalCents - The transaction amount, in cents
@@ -240,7 +239,7 @@ export default class CashFlowStore {
     if (andRecurrences && recurrences && recurrences.length) {
       for (const recurrence of recurrences) {
         // only delete future recurrences:
-        if (event.dateTime.diff(recurrence.dateTime, 'days').toObject().days > 0) continue;
+        if (recurrence.dateTime.isBefore(event.dateTime)) continue;
 
         yield recurrence.destroy();
         deletedIDs.push(recurrence.id);
