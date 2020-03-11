@@ -14,7 +14,8 @@
    institution_type - CharField, with choices: Nonbank & Bank
    statuses - relation of EnforcementActionStatus, which each have:
         institution (CharField), status (CharField with choices)
-   docket_number - CharField
+   docket_numbers - relation of EnforcementActionDocket, which each have:
+        docket_number (CharField)
 
    ========================================================================== #}
 
@@ -67,7 +68,9 @@
         <h3 class="h4">
           Docket number
         </h3>
-        {{_text(page.docket_number)}}
+        {% for docket in page.docket_numbers.all() %}
+            <p>{{_text(docket.docket_number)}}</p>
+        {% endfor %}
     </div>
     <div class="m-related-metadata_item-container">
         <h3 class="h4">

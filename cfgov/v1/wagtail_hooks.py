@@ -26,6 +26,7 @@ from v1.util import util
 
 try:
     from wagtail.admin.menu import MenuItem
+    from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
     from wagtail.core import hooks
     from wagtail.core.whitelist import attribute_rule
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
@@ -365,21 +366,43 @@ def hide_snippets_menu_item(request, menu_items):
                      if item.url != reverse('wagtailsnippets:index')]
 
 
-# Override list of allowed tags in a RichTextField
-@hooks.register('construct_whitelister_element_rules')
-def whitelister_element_rules():
-    allow_html_class = attribute_rule({
-        'class': True,
-        'itemprop': True,
-        'itemscope': True,
-        'itemtype': True,
-    })
+if wagtail.VERSION < (2, 0):
+    # Override list of allowed tags in a RichTextField
+    @hooks.register('construct_whitelister_element_rules')
+    def whitelister_element_rules():
+        allow_html_class = attribute_rule({
+            'class': True,
+            'id': True,
+            'itemprop': True,
+            'itemscope': True,
+            'itemtype': True,
+        })
 
-    allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
-                    'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
-                    'col', 'colgroup']
+        allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
+                        'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
+                        'col', 'colgroup']
 
-    return {tag: allow_html_class for tag in allowed_tags}
+        return {tag: allow_html_class for tag in allowed_tags}
+elif wagtail.VERSION >= (2, 0):
+    # The construct_whitelister_element_rules was depricated in Wagtail 2,
+    # so we'll use register_rich_text_features instead.
+    # Only applies to Hallo editors, which only remain in our custom
+    # AtomicTableBlock table cells.
+    @hooks.register('register_rich_text_features')
+    def register_span_feature(features):
+        allow_html_class = attribute_rule({
+            'class': True,
+            'id': True,
+        })
+
+        # register a feature 'span'
+        # which whitelists the <span> element
+        features.register_converter_rule('editorhtml', 'span', [
+            WhitelistRule('span', allow_html_class),
+        ])
+
+        # add 'span' to the default feature set
+        features.default_features.append('span')
 
 
 @hooks.register('before_serve_shared_page')
