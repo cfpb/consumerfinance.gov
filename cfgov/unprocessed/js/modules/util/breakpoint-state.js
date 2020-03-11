@@ -21,7 +21,7 @@ function _inBreakpointRange( breakpointRange, width ) {
  * @returns {Object} An object literal with boolean
  *   bpXS, bpSM, bpMED, bpLG, bpXL properties.
  */
-function getBreakpoint( width ) {
+function getBreakpointState( width ) {
   const breakpointState = {};
   width = width || window.innerWidth;
 
@@ -49,7 +49,7 @@ const DESKTOP = 'desktop';
  */
 function viewportIsIn( breakpointGroup ) {
   let response = false;
-  const currentBreakpoint = getBreakpoint();
+  const currentBreakpoint = getBreakpointState();
 
   if (
     ( breakpointGroup === MOBILE && currentBreakpoint.bpXS ) ||
@@ -72,6 +72,6 @@ export {
   MOBILE,
   TABLET,
   DESKTOP,
-  getBreakpoint,
+  getBreakpointState,
   viewportIsIn
 };

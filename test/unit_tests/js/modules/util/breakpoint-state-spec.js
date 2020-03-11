@@ -2,7 +2,7 @@ import {
   DESKTOP,
   MOBILE,
   TABLET,
-  getBreakpoint,
+  getBreakpointState,
   viewportIsIn
 } from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
@@ -14,7 +14,7 @@ describe( 'breakpoint-state', () => {
     configKeys = Object.keys( varsBreakpoints );
   } );
 
-  describe( '.getBreakpoint()', () => {
+  describe( '.getBreakpointState()', () => {
     it( 'should return an object with properties from config file', () => {
       const breakpointStatekeys =
         Object.keys( varsBreakpoints ).map( key => {
@@ -23,7 +23,7 @@ describe( 'breakpoint-state', () => {
           return key;
         } );
 
-      expect( getBreakpoint() instanceof Object ).toBe( true );
+      expect( getBreakpointState() instanceof Object ).toBe( true );
       expect( configKeys.sort().join() === breakpointStatekeys.sort().join() )
         .toBe( true );
     } );
@@ -31,7 +31,7 @@ describe( 'breakpoint-state', () => {
     it( 'should return an object with one state property set to true', () => {
       let trueValueCount = 0;
 
-      const breakpointStateGet = getBreakpoint();
+      const breakpointStateGet = getBreakpointState();
       // eslint-disable-next guard-for-in
       let stateKey;
       for ( stateKey in breakpointStateGet ) {
@@ -52,8 +52,7 @@ describe( 'breakpoint-state', () => {
           width = varsBreakpoints[rangeKey].max ||
                   varsBreakpoints[rangeKey].min;
 
-          expect( getBreakpoint( width )[rangeKey] )
-            .toBe( true );
+          expect( getBreakpointState( width )[rangeKey] ).toBe( true );
         }
       }
     } );
@@ -65,7 +64,7 @@ describe( 'breakpoint-state', () => {
       expect( viewportIsIn( DESKTOP ) ).toBe( true );
 
       /* TODO:
-         Mock getBreakpoint() to return a small breakpoint size,
+         Mock getBreakpointState() to return a small breakpoint size,
          so that viewportIsIn( DESKTOP ) returns false and can be tested with
          expect( viewportIsIn( DESKTOP ) ).toBe( false ); */
     } );
@@ -74,7 +73,7 @@ describe( 'breakpoint-state', () => {
       expect( viewportIsIn( TABLET ) ).toBe( false );
 
       /* TODO:
-         Mock getBreakpoint() to return a tablet breakpoint size,
+         Mock getBreakpointState() to return a tablet breakpoint size,
          so that viewportIsIn( TABLET ) returns true and can be tested with
          expect( viewportIsIn( TABLET ) ).toBe( true ); */
     } );
@@ -83,7 +82,7 @@ describe( 'breakpoint-state', () => {
       expect( viewportIsIn( MOBILE ) ).toBe( false );
 
       /* TODO:
-         Mock getBreakpoint() to return a mobile breakpoint size,
+         Mock getBreakpointState() to return a mobile breakpoint size,
          so that viewportIsIn( MOBILE ) returns true and can be tested with
          expect( viewportIsIn( MOBILE ) ).toBe( true ); */
     } );

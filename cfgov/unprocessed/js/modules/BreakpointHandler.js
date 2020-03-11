@@ -1,5 +1,5 @@
 import breakpointsConfig from '@cfpb/cfpb-core/src/vars-breakpoints';
-import { getBreakpoint } from './util/breakpoint-state';
+import { getBreakpointState } from './util/breakpoint-state';
 
 /**
  * BreakpointHandler
@@ -66,7 +66,7 @@ function handleViewportChange() {
   let breakpointState;
 
   if ( match !== this.match ) {
-    breakpointState = getBreakpoint( width );
+    breakpointState = getBreakpointState( width );
     if ( match && this.enter ) this.enter( breakpointState );
     else if ( this.leave ) this.leave( breakpointState );
   }
