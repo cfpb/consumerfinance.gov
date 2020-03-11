@@ -47,22 +47,28 @@
 
    ========================================================================== #}
 
-{% macro _nav_list( nav_depth, nav_groups, language='en' ) %}
+{% macro _nav_list( nav_depth, nav_groups, nav_title='', language='en' ) %}
     {% for nav_group in nav_groups %}
     {% set group = nav_group.value %}
     <div class="{{ _classes( nav_depth, '-list' ) }}">
 
         {% if group.group_title %}
-        {% set group_title = group.group_title ~ ' continued' if group.hide_group_title else group.group_title %}
+        {% set aria_group_title = group.group_title ~ ' continued' if group.hide_group_title else group.group_title %}
         <h4 class="h5
                   {{ base_class ~ '_group-heading' }}
                   {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_group_title else ''}}"
-            id="{{ group_title | slugify }}"
-            {% if group.hide_group_title %} aria-hidden="true" {% endif %}>
-            {{ group_title | safe }}
+            id="{{ aria_group_title | slugify ~ '-menu' }}"
+            {% if group.hide_group_title %} aria-hidden="true" {% endif %}
+            aria-label="{{ aria_group_title | safe }}">
+            {{ group.group_title | safe }}
         </h4>
         {% endif %}
-        <ul aria-labelledby="{{ group_title | slugify }}">
+        <ul
+            {% if aria_group_title %}
+            aria-labelledby="{{ aria_group_title | slugify ~ '-menu' }}"
+            {% else %}
+            aria-label="{{ nav_title | safe }}"
+            {% endif %}>
             {% if nav_depth == 1 -%}
             <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
                 {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
@@ -124,7 +130,8 @@
                        {{ _classes( nav_depth, '-overview-heading' ) }}">
                 <a class="{{ _classes( nav_depth, '-overview-link' ) }}
                             {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                            {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                            {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}
+                   id="{{ nav_overview_text | slugify ~ '-menu' }}">
                     {{ nav_overview_text ~ ' Overview' }}
                 </a>
             </h3>
@@ -136,7 +143,7 @@
 
             {% if nav_item.nav_groups %}
             <div class="{{ _classes( nav_depth, '-lists' ) }}">
-                {{ _nav_list( nav_depth, nav_item.nav_groups, language=language ) }}
+                {{ _nav_list( nav_depth, nav_item.nav_groups, nav_overview_text, language=language ) }}
 
                 {% if nav_item.featured_links or nav_item.other_links %}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
