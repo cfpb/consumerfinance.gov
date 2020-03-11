@@ -2,73 +2,113 @@
     width: 100%;
     background: @white;
 
-    > a {
+    // Both regular and featured cards.
+    &:not( .m-card__featured ),
+    & > a {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
         flex-basis: 0;
         box-sizing: border-box;
-        padding: unit( @grid_gutter-width / @base-font-size-px, em );
-        height: 100%;
-    }
-
-    &_icon {
-        font-size: unit( 48px / @base-font-size-px, em );
-        margin-bottom: unit( 5px / @base-font-size-px, em );
-    }
-
-    &_footer {
-        margin-top: auto;
-    }
-
-    &_footer > span {
-        display: inline-block;
-        border-width: 0;
-        border-bottom-width: 1px;
-        border-color: @pacific;
-        border-style: dotted;
-        font-weight: 500;
-        color: @pacific;
-        text-decoration: none;
-    }
-
-    // TODO: Check if heading and body is used anywhere?
-    &_heading {
-        color: @green;
-    }
-
-    &_body {
-        margin-bottom: 0;
-    }
-
-    & > a:link,
-    & > a:visited {
         border: 1px solid @gray-20;
         border-bottom-width: 3px;
-    }
-
-    &:hover {
-        box-shadow: 0 8px 0 0 inset @green,
-                    2px 0 0 0 inset @gray-20,
-                    -2px 0 0 0 inset @gray-20;
-    }
-
-    & > a:visited &_footer > span {
-        color: @teal;
-        border-color: @teal !important;
-    }
-
-    &:hover &_footer > span {
-        border-style: solid;
-        color: @dark-pacific;
+        padding: unit( @grid_gutter-width / @base-font-size-px, em );
+        height: 100%;
     }
 
     & a:focus {
         outline-offset: 2px;
     }
 
-    &_icon,
-    p {
+    &_footer {
+        margin-top: auto;
+    }
+
+    &_footer > a {
+        font-weight: 500;
+        border-bottom-width: 1px;
+    }
+
+    // Shrink heading at smaller screen sizes.
+    &_heading {
+        .respond-to-max( @bp-med-min, {
+            .h3();
+        } );
+    }
+
+    // Regular cards.
+    &_heading > a {
         color: @black;
+
+        &:hover {
+            color: @pacific;
+        }
+
+        & .m-card_icon {
+            font-size: 1em;
+            margin-bottom: 0;
+            padding-right: unit( 7.5px / @base-font-size-px, em );
+        }
+
+        & .m-card_icon,
+        & span {
+            display: table-cell;
+        }
+    }
+
+    & > .m-list {
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+
+    // Featured cards.
+    &__featured {
+
+        .m-card_heading {
+            margin: 0;
+        }
+
+        .m-card_icon {
+            font-size: unit( 30px / @base-font-size-px, em );
+            margin-bottom: unit( 5px / @base-font-size-px, em );
+        }
+
+        .m-card_icon,
+        p {
+            color: @black;
+        }
+
+        &:hover {
+            box-shadow: 0 8px 0 0 inset @green,
+                        2px 0 0 0 inset @gray-20,
+                        -2px 0 0 0 inset @gray-20;
+        }
+
+        &:hover .m-card_footer > span {
+            border-style: solid;
+            color: @dark-pacific;
+        }
+
+        .m-card_footer > span {
+            display: inline;
+            border-width: 0;
+            border-bottom-width: 1px;
+            border-color: @pacific;
+            border-style: dotted;
+            font-weight: 500;
+            color: @pacific;
+            text-decoration: none;
+        }
+
+        & > a:visited .m-card_footer > span {
+            color: @teal;
+            border-color: @teal !important;
+        }
+
+        & > a:link,
+        & > a:visited {
+            border: 1px solid @gray-20;
+            border-bottom-width: 3px;
+        }
     }
 }

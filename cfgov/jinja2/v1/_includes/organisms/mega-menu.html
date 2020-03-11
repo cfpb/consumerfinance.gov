@@ -48,16 +48,14 @@
    ========================================================================== #}
 
 {% macro _nav_list( nav_depth, nav_groups, language='en' ) %}
-    {% for nav_group in nav_groups %}
-    {% set group = nav_group.value %}
+    {% for group in nav_groups %}
     <div class="{{ _classes( nav_depth, '-list' ) }}">
-
-        {% if group.group_title %}
+        {% if group.title %}
         <h4 class="h5
                   {{ base_class ~ '_group-heading' }}
-                  {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_group_title else ''}}"
-            {% if group.hide_group_title %} aria-hidden="true" {% endif %}>
-            {{ group.group_title | safe }}
+                  {{ base_class ~ '_group-heading' ~ '__hidden' if group.title_hidden else ''}}"
+            {% if group.title_hidden %} aria-hidden="true" {% endif %}>
+            {{ group.title }}
         </h4>
         {% endif %}
         <ul>
@@ -115,7 +113,7 @@
             Back
         </button>
         {% endif %}
-        <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) -}}">
+        <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.nav_groups | count < 4 else '' ) -}}">
 
             {% if nav_depth > 1 and nav_overview_url != '#' %}
             <h3 class="{{ _classes( nav_depth, '-overview' ) }}
@@ -129,34 +127,34 @@
             {% endif %}
 
             {% if nav_item.nav_items %}
-                {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
+                {% set temp = nav_item.update({'nav_groups': [{'nav_items': nav_item.nav_items}]}) %}
             {% endif %}
 
             {% if nav_item.nav_groups %}
             <div class="{{ _classes( nav_depth, '-lists' ) }}">
                 {{ _nav_list( nav_depth, nav_item.nav_groups, language=language ) }}
 
-                {% if nav_item.featured_links or nav_item.other_links %}
+                {% if nav_item.featured_items or nav_item.other_items %}
                 <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
                     <ul class="{{ _classes( nav_depth, '-list__featured-item' ) }}">
-                        {% for link in nav_item.featured_links | default( [], true ) %}
+                        {% for link in nav_item.featured_items | default( [], true ) %}
                         <li>
                             <a class="{{ _classes( nav_depth, '-link' ) }}"
-                               href="{{ link.external_link }}">
+                               href="{{ link.url }}">
                                 {{ svg_icon( 'favorite' ) }}
-                                <span><span class="a-link_text">{{ link.link_text }}</span></span>
+                                <span><span class="a-link_text">{{ link.text }}</span></span>
                             </a>
                         </li>
                         {% endfor %}
                     </ul>
 
                     <ul class="m-list m-list__unstyled">
-                        {% for link in nav_item.other_links | default( [], true ) %}
+                        {% for link in nav_item.other_items | default( [], true ) %}
                         <li>
                             <a class="a-link {{ _classes( nav_depth, '-link' ) }}"
-                               href="{{ link.external_link }}">
+                               href="{{ link.url }}">
                                 {{ svg_icon( link.icon ) }}
-                                <span><span class="a-link_text">{{ link.link_text }}</span></span>
+                                <span><span class="a-link_text">{{ link.text }}</span></span>
                             </a>
                         </li>
                         {% endfor %}
@@ -195,37 +193,32 @@
    ========================================================================== #}
 
 {% macro _nav_item( nav_depth, nav_item, language='en' ) %}
-{% set link = nav_item.link if nav_item.link else nav_item %}
-{% if link %}
-    {% set url = pageurl(link.page_link) if link.page_link else link.external_link | default('#') %}
-    {% set text = link.link_text %}
-    {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
-
-    <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
-        {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
-        <a class="{{- 'u-link__disabled' if url == '' else '' -}}
-                  {{- _classes( nav_depth, '-link' ) -}}
-                  {{- _classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
-                  {{- _classes( nav_depth, '-link__current' ) if url == request.path else '' -}}"
-           {{ '' if url == '' else 'href=' + url | e }}
-           {{
-             'data-js-hook=behavior_flyout-menu_trigger
-              aria-haspopup=menu'
-             if has_children else ''
-           }}>
-              {{ text }}
-              {{ svg_icon('right') }}
-              {% if has_children %}
-              <span class="{{- _classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
-              <span class="{{- _classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
-              {% endif %}
-        </a>
-        {% if has_children %}
-            {{ _nav_level( nav_depth | int + 1, nav_item, url, text, language ) }}
-        {% endif %}
-    </li>
-{% endif %}
+{% set has_children = nav_item.nav_groups or nav_item.nav_items %}
+{% set link = nav_item.overview if nav_item.overview else nav_item %}
+<li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
+    {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
+    {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
+    <a class="{{- 'u-link__disabled' if url == '' else '' -}}
+              {{- _classes( nav_depth, '-link' ) -}}
+              {{- _classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
+              {{- _classes( nav_depth, '-link__current' ) if url == request.path else '' -}}"
+       href="{{ link.url | default( '#' ) }}"
+       {{
+         'data-js-hook=behavior_flyout-menu_trigger
+          aria-haspopup=menu'
+         if has_children else ''
+       }}>
+          {{ link.text }}
+          {{ svg_icon('right') }}
+          {% if has_children %}
+          <span class="{{- _classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
+          <span class="{{- _classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
+          {% endif %}
+    </a>
+    {% if has_children %}
+        {{ _nav_level( nav_depth | int + 1, nav_item, link.url, link.text, language ) }}
+    {% endif %}
+</li>
 {% endmacro %}
 
 
@@ -264,6 +257,6 @@
     </h2>
    {# Create a root menu at depth one.
       This is the 1st level of a 3-level menu. #}
-   {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]}, language=language ) }}
+    {{ _nav_level( 1, {'nav_groups': [{'nav_items': menu_items}]}, language=language ) }}
 </nav>
 {% endmacro %}
