@@ -207,7 +207,7 @@ class Section(models.Model):
         FieldPanel('label'),
         FieldPanel('subpart'),
         FieldPanel('title'),
-        FieldPanel('contents', classname="full"),
+        FieldPanel('contents'),
     ]
 
     def __str__(self):

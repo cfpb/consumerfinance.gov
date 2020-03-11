@@ -119,6 +119,7 @@ INSTALLED_APPS += (
     'youth_employment',
     'diversity_inclusion',
     'mega_menu.apps.MegaMenuConfig',
+    'form_explainer.apps.FormExplainerConfig',
 )
 
 OPTIONAL_APPS = [
@@ -878,3 +879,21 @@ PARSE_LINKS_EXCLUSION_LIST = [
 # scripts executed with the "runscript" management command.
 # See https://django-extensions.readthedocs.io/en/latest/runscript.html.
 BASE_DIR = 'scripts'
+
+if wagtail.VERSION >= (2, 0):
+    WAGTAILADMIN_RICH_TEXT_EDITORS = {
+        'default': {
+            'WIDGET': 'wagtail.admin.rich_text.DraftailRichTextArea',
+            'OPTIONS': {
+                'features': [
+                    'h2', 'h3', 'h4', 'h5',
+                    'blockquote', 'hr', 'ol', 'ul',
+                    'bold', 'italic',
+                    'link', 'document-link', 'image'
+                ]
+            }
+        },
+        'legacy': {
+            'WIDGET': 'wagtail.admin.rich_text.HalloRichTextArea',
+        }
+    }

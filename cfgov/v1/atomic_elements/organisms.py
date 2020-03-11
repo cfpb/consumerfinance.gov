@@ -1,7 +1,6 @@
 import itertools
 import json
 from collections import Counter
-from functools import partial
 from urllib.parse import urlencode
 
 from django import forms
@@ -427,40 +426,21 @@ class SidebarContactInfo(MainContactInfo):
 
 
 class BureauStructurePosition(blocks.StructBlock):
-    office_name = blocks.CharBlock()
-    lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
-    title = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 1")),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 2"))
-    ])
+    name = blocks.CharBlock()
+    title = blocks.TextBlock(required=False)
 
 
-class BureauStructureDivision(blocks.StructBlock):
-    division = v1_blocks.PlaceholderCharBlock(label='Division')
-    division_lead = v1_blocks.PlaceholderCharBlock(placeholder='Name')
-    title = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 1')),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 2'))
-    ])
-    division_lead_1 = v1_blocks.PlaceholderCharBlock(required=False,
-                                                     placeholder='Name',
-                                                     label='Division Lead')
-    title_1 = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 1')),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 2'))
-    ], label='Title')
-    link_to_division_page = atoms.Hyperlink(required=False)
-    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+class BureauStructureOffice(blocks.StructBlock):
+    name = blocks.CharBlock()
+    leads = blocks.ListBlock(BureauStructurePosition())
 
 
-class BureauStructureOffice(BureauStructurePosition):
-    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+class BureauStructureOffices(BureauStructureOffice):
+    offices = blocks.ListBlock(BureauStructureOffice())
+
+
+class BureauStructureDivision(BureauStructureOffices):
+    overview_page = blocks.CharBlock()
 
 
 class BureauStructure(blocks.StructBlock):
@@ -469,7 +449,8 @@ class BureauStructure(blocks.StructBlock):
     director = blocks.CharBlock()
     divisions = blocks.ListBlock(BureauStructureDivision())
     office_of_the_director = blocks.ListBlock(
-        BureauStructureOffice(), label='Office of the Director'
+        BureauStructureOffices(),
+        label='Office of the Director'
     )
 
     class Meta:
@@ -489,7 +470,7 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
     def render(self, name, value, attrs=None):
         value = self.json_dict_apply(
             value,
-            partial(expand_db_html, for_editor=True)
+            expand_db_html
         )
 
         html = super(RichTextTableInput, self).render(name, value, attrs)
@@ -510,7 +491,10 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
             data, files, name
         )
 
-        return self.json_dict_apply(value, DbWhitelister.clean)
+        try:
+            return self.json_dict_apply(value, DbWhitelister.clean)
+        except NameError:
+            return value
 
     @staticmethod
     def json_dict_apply(value, callback):
