@@ -11,3 +11,12 @@ export const useClickConfirm = (message, cb, deps, confirm = window.confirm) => 
   if (!confirm(message)) return;
   cb(evt);
 }, deps);
+
+export const useBEM = (baseClass) => useCallback((module, modifier) => {
+  let klass = baseClass;
+
+  if (module) klass += `__${module}`;
+  if (modifier) klass += `--${modifier}`;
+
+  return klass;
+}, [baseClass]);

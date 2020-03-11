@@ -17,13 +17,17 @@ export default class UIStore {
   @observable currentWeek = dayjs().startOf('week');
   @observable selectedCategory = '';
   @observable showBottomNav = true;
+  @observable isTouchDevice = false;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.logger = logger.addGroup('uiStore');
 
     this.logger.debug('Initialize UI Store: %O', this);
+
+    window.addEventListener('touchstart', this.setIsTouchDevice);
   }
+
 
   @computed get monthCalendarRows() {
     return getWeekRows(this.currentMonth);
@@ -138,6 +142,12 @@ export default class UIStore {
 
     this.showBottomNav = Boolean(state);
   }
+
+  @action setIsTouchDevice = () => {
+    this.isTouchDevice = true;
+    this.logger.debug('touch device detected');
+    window.removeEventListener('touchstart', this.setIsTouchDevice);
+  };
 
   toggleNav() {
     this.setNavOpen(!this.navOpen);

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useCallback, useState } from 'react';
-import { useLockBodyScroll, useKeyPressEvent, useKeyPress } from 'react-use';
+import { useLockBodyScroll, useKeyPressEvent } from 'react-use';
 import { observer } from 'mobx-react';
 import { useHistory, Link } from 'react-router-dom';
 import { useToggle } from 'react-use';
@@ -8,30 +8,38 @@ import Modal from 'react-modal';
 import { useStore } from '../../../stores';
 import { formatCurrency } from '../../../lib/currency-helpers';
 import { Notification } from '../../../components/notification';
+import { SwipeableListItem } from '../../../components/swipeable-list';
 
-import deleteRound from '@cfpb/cfpb-icons/src/icons/delete-round.svg';
+import pencil from '@cfpb/cfpb-icons/src/icons/pencil.svg';
+import deleteIcon from '@cfpb/cfpb-icons/src/icons/delete.svg';
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
 
 const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
 const DetailRow = ({ event, onRequestEdit, onRequestDelete, ...props }) => (
-  <li className="swipeable-item calendar-details__event" role="button" {...props}>
-    <div className="swipeable-item__background">
-      <button className="swipeable-item__button swipeable-item__button--edit" onClick={onRequestEdit}>
-        Edit
-      </button>
-      <button className="swipeable-item__button swipeable-item__button--delete" onClick={onRequestDelete}>
-        Delete
-      </button>
-    </div>
-    <div className="swipeable-item__foreground">
-      <div className="calendar-details__event-date">{event.dateTime.format('M/D/YYYY')}</div>
-      <div className="calendar-details__event-name">{event.name}</div>
-      <div className="calendar-details__event-total">{formatCurrency(event.total)}</div>
-      <IconButton className="calendar-details__event-delete" onClick={onRequestDelete} icon={deleteRound} />
-    </div>
-  </li>
+  <SwipeableListItem
+    className="calendar-details__event"
+    actions={[
+      {
+        label: 'Edit',
+        icon: pencil,
+        className: 'swipeable-item__button--edit',
+        onClick: onRequestEdit,
+      },
+      {
+        label: 'Delete',
+        icon: deleteIcon,
+        className: 'swipeable-item__button--delete',
+        onClick: onRequestDelete,
+      },
+    ]}
+    {...props}
+  >
+    <div className="calendar-details__event-date">{event.dateTime.format('M/D/YYYY')}</div>
+    <div className="calendar-details__event-name">{event.name}</div>
+    <div className="calendar-details__event-total">{formatCurrency(event.total)}</div>
+  </SwipeableListItem>
 );
 
 function Details() {
@@ -98,7 +106,9 @@ function Details() {
           <div className="calendar-details__starting-balance">
             Week starting balance: {uiStore.weekStartingBalanceText}
           </div>
-          {!negativeBalance && <div className={endBalanceClasses}>Week ending balance: {uiStore.weekEndingBalanceText}</div>}
+          {!negativeBalance && (
+            <div className={endBalanceClasses}>Week ending balance: {uiStore.weekEndingBalanceText}</div>
+          )}
         </div>
 
         <IconButton
@@ -111,10 +121,16 @@ function Details() {
 
       {negativeBalance && (
         <div className={endBalanceClasses}>
-          <Notification message="You're in the red!" variant="error" actionLink={<Link to="/strategies" className="m-notification_button">Fix it</Link>}>
-            <p className="m-notification_explanation">
-              Week ending balance: {uiStore.weekEndingBalanceText}
-            </p>
+          <Notification
+            message="You're in the red!"
+            variant="error"
+            actionLink={
+              <Link to="/strategies" className="m-notification_button">
+                Fix it
+              </Link>
+            }
+          >
+            <p className="m-notification_explanation">Week ending balance: {uiStore.weekEndingBalanceText}</p>
           </Notification>
         </div>
       )}
@@ -123,7 +139,9 @@ function Details() {
         <h3 className="calendar-details__events-section-title">Income</h3>
 
         <ul className="calendar-details__events-list">
-          {income.map((e) => <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} />)}
+          {income.map((e) => (
+            <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} />
+          ))}
         </ul>
       </div>
 
@@ -131,7 +149,9 @@ function Details() {
         <h3 className="calendar-details__events-section-title">Expenses</h3>
 
         <ul className="calendar-details__events-list">
-          {expenses.map((e) => <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} />)}
+          {expenses.map((e) => (
+            <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} />
+          ))}
         </ul>
       </div>
 
