@@ -4,21 +4,14 @@ import datetime
 
 from django.test import TestCase, override_settings
 
-import wagtail
+from wagtail.core.blocks import StreamValue
+from wagtail.core.models import Page
 
 from model_mommy import mommy
 
 from regulations3k.blocks import RegulationsList
 from regulations3k.models.django import EffectiveVersion, Part
 from regulations3k.models.pages import RegulationLandingPage, RegulationPage
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.core.blocks import StreamValue
-    from wagtail.core.models import Page
-else:
-    from wagtail.wagtailcore.blocks import StreamValue
-    from wagtail.wagtailcore.models import Page
 
 
 @override_settings(

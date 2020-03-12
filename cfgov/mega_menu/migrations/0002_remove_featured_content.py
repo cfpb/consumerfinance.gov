@@ -3,15 +3,8 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import wagtail
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.core import blocks as core_blocks
-    from wagtail.core import fields as core_fields
-else:
-    from wagtail.wagtailcore import blocks as core_blocks
-    from wagtail.wagtailcore import fields as core_fields
+from wagtail.core import blocks as core_blocks
+from wagtail.core import fields as core_fields
 
 
 class Migration(migrations.Migration):
