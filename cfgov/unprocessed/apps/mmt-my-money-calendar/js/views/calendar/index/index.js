@@ -34,32 +34,10 @@ function Calendar() {
   const prevMonth = useClickHandler(() => uiStore.prevMonth(), []);
   const gotoToday = useClickHandler(() => uiStore.gotoDate(dayjs()), []);
 
-  const loadSeedData = useClickHandler(async () => {
-    await window.seedTestData();
-    await eventStore.loadEvents();
-    alert('Seed data loaded');
-  }, []);
-
-  const clearDatabase = useClickConfirm('Clear the database?', async () => {
-    await window.clearTestData();
-    await eventStore.loadEvents();
-  }, []);
-
   useEffect(() => {
     uiStore.setPageTitle('myMoney Calendar');
     uiStore.setSubtitle(uiStore.currentMonth.format('MMMM, YYYY'));
   }, [location, params, uiStore.currentMonth]);
-
-  const seedButton = ifDevelopment(() => (
-    <Button onClick={loadSeedData} variant="secondary" style={{ margin: '.5rem 0' }}>
-      Seed Database
-    </Button>
-  ));
-  const clearButton = ifDevelopment(() => (
-    <Button onClick={clearDatabase} variant="secondary">
-      Clear Database
-    </Button>
-  ));
 
   const dayLabels = (
     <div className="calendar__row" key="dayLabels">
@@ -93,11 +71,6 @@ function Calendar() {
       </div>
 
       <Details />
-
-      {/*
-      {seedButton}
-      {clearButton}
-      */}
     </section>
   );
 }
