@@ -11,17 +11,6 @@ django-haystack==2.7.0
 # django-js-asset is required by teachers-digital-platform
 django-js-asset==1.1.0
 django-localflavor==1.6.2
-# Normally django-modelcluster==3.1 is installed by Wagtail 1.13. Here we
-# instead force installation of django-modelcluster==4.0.
-
-# This conflicts with the dependencies of Wagtail 1.13, which specifies
-# django-localflavor>=3.1,<4.0, but in practice is still compatible. Wagtail
-# 1.13 (and Python 2) support isn't removed until django-modelcluster 5.0.
-# This specific version is needed to support nested InlinePanels in Wagtail.
-# See https://github.com/wagtail/wagtail/issues/5511.
-#
-# Once we're on wagtail>=2.0, this won't be needed.
-django-modelcluster==4.4
 # django-mptt is required by teachers-digital-platform
 django-mptt==0.9.0
 django-overextends==0.4.3

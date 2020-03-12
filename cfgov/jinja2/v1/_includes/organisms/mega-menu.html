@@ -124,7 +124,7 @@
         {% endif %}
         <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.nav_groups | count < 4 else '' ) -}}">
 
-            {% if nav_depth > 1 and nav_overview_url != '#' %}
+            {% if nav_depth > 1 and nav_overview_url and nav_overview_url != '#' %}
             <h3 class="{{ _classes( nav_depth, '-overview' ) }}
                        {{ _classes( nav_depth, '-overview-heading' ) }}">
                 <a class="{{ _classes( nav_depth, '-overview-link' ) }}
