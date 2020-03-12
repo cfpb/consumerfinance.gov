@@ -40,10 +40,9 @@ function Calendar() {
     alert('Seed data loaded');
   }, []);
 
-  const clearDatabase = useClickConfirm(async () => {
+  const clearDatabase = useClickConfirm('Clear the database?', async () => {
     await window.clearTestData();
     await eventStore.loadEvents();
-    alert('Database cleared');
   }, []);
 
   useEffect(() => {
@@ -95,8 +94,10 @@ function Calendar() {
 
       <Details />
 
+      {/*
       {seedButton}
       {clearButton}
+      */}
     </section>
   );
 }
