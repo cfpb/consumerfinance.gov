@@ -1,3 +1,9 @@
+// Jenkins multibranch pipeline geared towards building
+// and deploying cf.gov production-like Docker stack.
+// 
+// This pipeline uses Jenkins Shared Libraries for several
+// pipeline steps. For details on how those work, see
+// GHE repo: app-ops/app-ops-jenkins-shared-libraries
 pipeline {
 
     agent {
@@ -90,9 +96,6 @@ pipeline {
             when {
                 expression { return params.DEPLOY }
             } 
-            options {
-                timeout(time: 15, unit: 'MINUTES')
-            }
             steps {
                 script {
                     dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
