@@ -828,16 +828,15 @@ body {
                 border-left: 5px solid transparent;
                 font-size: unit( 16px / @base-font-size-px, em );
 
-                &:hover,
-                &__current,
-                &__current:visited {
-                    color: @black;
+                &:hover {
                     border-left-color: @green;
                 }
 
                 &__current:hover,
                 &__current,
                 &__current:visited {
+                    color: @black;
+                    border-left-color: @black;
                     cursor: default;
                 }
             }
