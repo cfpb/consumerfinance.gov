@@ -32,15 +32,8 @@ class ComplaintLandingView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ComplaintLandingView, self).get_context_data(**kwargs)
 
-        complaint_source = getattr(
-            settings,
-            'COMPLAINT_LANDING_STATS_SOURCE',
-            None
-        )
-
-        if complaint_source:
-            ccdb_status_json = self.get_ccdb_status_json(complaint_source)
-            context.update(self.is_ccdb_out_of_date(ccdb_status_json))
+        ccdb_status_json = self.get_ccdb_status_json()
+        context.update(self.is_ccdb_out_of_date(ccdb_status_json))
 
         context.update({
             'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES'),
@@ -49,7 +42,7 @@ class ComplaintLandingView(TemplateView):
 
         return context
 
-    def get_ccdb_status_json(self, complaint_source):
+    def get_ccdb_status_json(self):
         """Retrieve JSON describing the CCDB's status from a given URL."""
         try:
             args = {'field': 'all', 'size': '1', 'no_aggs': 'true'}
@@ -89,6 +82,8 @@ class ComplaintLandingView(TemplateView):
             elif (res_json['_meta']['last_updated'] <
                     four_business_days_ago):
                 narratives_down = True
+        except TypeError:
+            logger.exception("CCDB JSON status not in expected format.")
         except KeyError:
             logger.exception("CCDB JSON status not in expected format.")
 
