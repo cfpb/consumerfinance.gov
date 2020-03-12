@@ -575,35 +575,24 @@ body {
             }
 
             &-link {
-                // Override global link styling.
-                &:hover,
-                &:active,
-                &:focus,
-                &:visited {
-                    border-color: transparent;
-                    border-bottom: none;
-                }
-
                 position: relative;
                 z-index: 30;
                 padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
                 border-top: 1px solid transparent;
                 border-right: 1px solid transparent;
                 border-left: 1px solid transparent;
-
                 font-size: unit( 16px / @base-font-size-px, em );
 
                 &:first-child {
                     margin-left: 0;
                 }
 
-                // A main nav label has been selected and the menu is expanded.
-                &[aria-expanded="true"],
-                &:active {
-                    position: relative;
-                    top: 1px;
-                    background-color: @gray-5;
-                    border: 1px solid @gray-40;
+                // Override global link styling.
+                &:hover,
+                &:active,
+                &:focus,
+                &:visited {
+                    border-color: transparent;
                     border-bottom: none;
                 }
 
@@ -625,6 +614,16 @@ body {
                         width: 100%;
                         height: unit( 6px / @base-font-size-px, em );
                     }
+                }
+
+                // A main nav label has been selected and the menu is expanded.
+                &[aria-expanded="true"],
+                &:active {
+                    position: relative;
+                    top: 1px;
+                    background-color: @gray-5;
+                    border: 1px solid @gray-40;
+                    border-bottom: none;
                 }
 
                 // Don't show hover when menu is expanded.
@@ -832,6 +831,7 @@ body {
                     border-left-color: @green;
                 }
 
+                // This is styling for the currently selected content-2 links.
                 &__current:hover,
                 &__current,
                 &__current:visited {
