@@ -3,15 +3,10 @@ from __future__ import absolute_import, unicode_literals
 from django.conf.urls import url
 from django.core.urlresolvers import reverse
 
+from wagtail.admin.menu import MenuItem
+from wagtail.core import hooks
+
 from search.views import SearchView
-
-
-try:
-    from wagtail.admin.menu import MenuItem
-    from wagtail.core import hooks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.menu import MenuItem
-    from wagtail.wagtailcore import hooks
 
 
 @hooks.register('register_admin_urls')

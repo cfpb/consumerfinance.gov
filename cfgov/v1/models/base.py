@@ -6,6 +6,16 @@ from django.utils import timezone, translation
 from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
 
+from wagtail.admin.edit_handlers import (
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
+    TabbedInterface
+)
+from wagtail.core import hooks
+from wagtail.core.fields import StreamField
+from wagtail.core.models import Orderable, Page, PageManager, PageQuerySet
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
+
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
@@ -16,32 +26,6 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.snippets import ReusableText
 from v1.util import ref
 from v1.util.util import validate_social_sharing_image
-
-
-try:
-    from wagtail.admin.edit_handlers import (
-        FieldPanel, InlinePanel, MultiFieldPanel, ObjectList,
-        StreamFieldPanel, TabbedInterface
-    )
-    from wagtail.core import hooks
-    from wagtail.core.fields import StreamField
-    from wagtail.core.models import (
-        Orderable, Page, PageManager, PageQuerySet
-    )
-    from wagtail.images.edit_handlers import ImageChooserPanel
-    from wagtail.search import index
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import (
-        FieldPanel, InlinePanel, MultiFieldPanel, ObjectList,
-        StreamFieldPanel, TabbedInterface
-    )
-    from wagtail.wagtailcore import hooks
-    from wagtail.wagtailcore.fields import StreamField
-    from wagtail.wagtailcore.models import (
-        Orderable, Page, PageManager, PageQuerySet
-    )
-    from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-    from wagtail.wagtailsearch import index
 
 
 class CFGOVAuthoredPages(TaggedItemBase):

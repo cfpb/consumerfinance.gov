@@ -10,11 +10,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.formats import date_format
 
-
-try:
-    from wagtail.core.models import PageRevision
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import PageRevision
+from wagtail.core.models import PageRevision
 
 
 User = get_user_model()

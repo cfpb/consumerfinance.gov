@@ -9,6 +9,7 @@ from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
 from django.utils import timezone
 
+from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
 
 import mock
@@ -21,12 +22,6 @@ from ask_cfpb.models.search import make_safe
 from ask_cfpb.tests.models.test_pages import mock_queryset
 from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
-
-
-try:
-    from wagtail.core.models import Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Site
 
 
 now = timezone.now()
