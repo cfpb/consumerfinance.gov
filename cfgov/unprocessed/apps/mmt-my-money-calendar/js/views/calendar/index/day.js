@@ -1,18 +1,8 @@
 import clsx from 'clsx';
-import { useMemo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
 import { dayjs } from '../../../lib/calendar-helpers';
-
-const Icon = ({ icon, size, style = {}, ...props }) => {
-  const styles = {
-    width: `${size}px`,
-    height: `${size}px`,
-    ...style,
-  };
-
-  return <span className="calendar__day-icon" style={styles} dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
-};
 
 function Day({ day, dateFormat = 'D' }) {
   const { uiStore, eventStore } = useStore();

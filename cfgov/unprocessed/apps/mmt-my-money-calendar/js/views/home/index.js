@@ -1,21 +1,20 @@
-import { useCallback } from 'react';
-import { useHistory, Link } from "react-router-dom";
+import { observer } from 'mobx-react';
+import { useHistory, Link, Redirect } from "react-router-dom";
 import Hero from '../../components/hero';
-import Button from '../../components/button';
+import { ButtonLink } from '../../components/button';
 import { useScrollToTop } from '../../components/scroll-to-top';
+import { useStore } from '../../stores';
 
 import heroImg from 'img/Hero_2.png';
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 
-export default function Home() {
+function Home() {
   useScrollToTop();
 
   const history = useHistory();
+  const { eventStore } = useStore();
 
-  const nextPage = useCallback((evt) => {
-    evt.preventDefault();
-    history.push('/wizard/starting-balance');
-  }, [history]);
+  if (eventStore.events.length > 0) return <Redirect to="/calendar" />;
 
   // This is the Home Page of the app
   return (
@@ -32,10 +31,9 @@ export default function Home() {
         Estimates are acceptable.
       </div>
       <br />
-      <Button icon={arrowRight} iconSide="right" onClick={nextPage}>Get started</Button>
-      <br />
-      <br />
-      <Link to="/calendar">Go to calendar</Link>
+      <ButtonLink icon={arrowRight} iconSide="right" to="/calendar">Get started</ButtonLink>
     </main>
   );
 }
+
+export default observer(Home);

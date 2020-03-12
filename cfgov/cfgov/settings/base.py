@@ -770,9 +770,6 @@ FLAGS = {
     # Used to hide CCDB landing page updates prior to public launch.
     'CCDB_CONTENT_UPDATES': [],
 
-    # Toggle My Money Calendar tool pages prior to public launch.
-    'MMT_MY_MONEY_CALENDAR': [],
-
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     'COLLECT_OUTAGE': [
@@ -800,7 +797,7 @@ FLAGS = {
         {'condition': 'boolean', 'value': False}
     ],
 
-    # Toggle My Money Calendar tool pages prior to public launch.
+    # Toggle the public availability of the My Money Calendar progressive web app
     'MMT_MY_MONEY_CALENDAR': [],
 }
 

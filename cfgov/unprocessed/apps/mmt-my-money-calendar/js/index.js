@@ -1,12 +1,8 @@
-import * as idb from 'idb';
 import { render } from 'react-dom';
 import { configure as configureMobX } from 'mobx';
 import { Workbox } from 'workbox-window';
-import dayjs from 'dayjs';
-import { RRule } from 'rrule';
 import { StoreProvider } from './stores';
 import Routes from './routes';
-import CashFlowEvent from './stores/models/cash-flow-event';
 
 configureMobX({ enforceActions: 'observed' });
 
@@ -24,12 +20,8 @@ if (process.env.SERVICE_WORKER_ENABLED && 'serviceWorker' in navigator) {
   wb.register();
 }
 
+// In development mode, expose global functions to seed and clear the local IDB database:
 if (process.env.NODE_ENV === 'development') {
-  window.idb = idb;
-  window.CashFlowEvent = CashFlowEvent;
-  window.dayjs = dayjs;
-  window.RRule = RRule;
-
   async function loadSeeders() {
     window.seed = await import(/* webpackChunkName: "seeds.js" */ './seed-data.js');
   }
