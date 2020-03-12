@@ -1,5 +1,6 @@
+# Docker Swarm compatible Compose file.  Intended for use
+# with this repo's Jenkinsfile, not local development.
 version: "3.7"
-
 services:
 
     elasticsearch:

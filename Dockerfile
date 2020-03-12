@@ -71,6 +71,8 @@ ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
 
+# Install and enable SCL-based Apache server and mod_wsgi,
+# and converts all Docker Secrets into environment variables.
 RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
