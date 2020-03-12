@@ -2,9 +2,13 @@ import logging
 from datetime import datetime, timedelta
 
 from django.conf import settings
+from django.core.exceptions import ViewDoesNotExist
 from django.views.generic import TemplateView
 
+from rest_framework.test import APIRequestFactory
+
 import requests
+from complaint_search import views
 from flags.state import flag_enabled
 
 
@@ -48,14 +52,16 @@ class ComplaintLandingView(TemplateView):
     def get_ccdb_status_json(self, complaint_source):
         """Retrieve JSON describing the CCDB's status from a given URL."""
         try:
-            headers = {"accept": "application/json"}
-            res_json = requests.get(complaint_source, headers=headers).json()
-
-        except requests.exceptions.RequestException:
-            logger.exception("CCDB status data fetch failed.")
-            res_json = {}
+            args = {'field': 'all', 'size': '1', 'no_aggs': 'true'}
+            factory = APIRequestFactory()
+            request = factory.get('/search/', args, format='json')
+            response = views.search(request)
+            res_json = response.data
         except ValueError:
             logger.exception("CCDB status data not valid JSON.")
+            res_json = {}
+        except Exception:
+            logger.exception("CCDB status data fetch failed.")
             res_json = {}
 
         return res_json
