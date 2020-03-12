@@ -19,6 +19,7 @@ from v1.wagtail_hooks import (
 
 try:
     from wagtail.core.models import Site
+    from wagtail.core.whitelist import Whitelister
 except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
     from wagtail.wagtailcore.models import Site
     from wagtail.wagtailcore.rich_text import DbWhitelister
@@ -205,6 +206,27 @@ class TestResourceTagsFilter(TestCase, WagtailTestUtils):
             'Test resource Banana'
         )
 
+
+@unittest.skipIf(wagtail.VERSION < (2, 0), "No need to test in Wagtail 1+")
+class TestWhitelistOverride(SimpleTestCase):
+    # Borrowed from https://github.com/wagtail/wagtail/blob/master/wagtail
+    # /core/tests/test_whitelist.py
+
+    def test_whitelist_hooks(self):
+        """Test that Whitelister does not strip span element and attributes.
+
+        The allowed element <span> and attributes are added in v1.wagtail_hooks.
+        """
+        input_html = '''
+<span class="schema-container">
+    <span class="schema-container">
+    </span>
+    <span id="schema-identity">
+    </span>
+</span>
+        '''
+        output_html = Whitelister.clean(input_html)
+        self.assertHTMLEqual(input_html, output_html)
 
 @unittest.skipIf(wagtail.VERSION >= (2, 0), "No need to test in Wagtail 2+")
 class TestWhitelistOverride(SimpleTestCase):
