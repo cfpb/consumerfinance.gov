@@ -9,9 +9,13 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.utils.html import format_html_join
 
+from wagtail.admin.menu import MenuItem
+from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
+from wagtail.core import hooks
+from wagtail.core.whitelist import attribute_rule
 
 from scripts import export_enforcement_actions
 
@@ -21,17 +25,6 @@ from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.util import util
-
-
-try:
-    from wagtail.admin.menu import MenuItem
-    from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
-    from wagtail.core import hooks
-    from wagtail.core.whitelist import attribute_rule
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.menu import MenuItem
-    from wagtail.wagtailcore import hooks
-    from wagtail.wagtailcore.whitelist import attribute_rule
 
 
 logger = logging.getLogger(__name__)
@@ -96,7 +89,8 @@ def editor_js():
         'wagtailadmin/js/hallo-plugins/hallo-requireparagraphs.js'
     )
     js_files.insert(
-        0, 'wagtailadmin/js/hallo-plugins/hallo-wagtaillink.js')
+        0, 'wagtailadmin/js/hallo-plugins/hallo-wagtaillink.js'
+    )
     js_files.insert(
         0,
         'wagtaildocs/js/hallo-plugins/hallo-wagtaildoclink.js'
