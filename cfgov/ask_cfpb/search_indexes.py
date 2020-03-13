@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 
 from django.utils.html import strip_tags
 from django.utils.text import Truncator

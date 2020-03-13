@@ -38,7 +38,6 @@ Some appendix interpretations refer to multiple appendices. These don't get
 inserted into section content.
 
 """
-from __future__ import unicode_literals
 
 import re
 
