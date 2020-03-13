@@ -1,7 +1,4 @@
-try:
-    from wagtail.core.models import PageManager
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import PageManager
+from wagtail.core.models import PageManager
 
 from hmda.models.forms import HmdaFilterableForm
 from hmda.resources.hmda_data_options import (
