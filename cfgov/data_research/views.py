@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 
 from rest_framework.renderers import JSONRenderer

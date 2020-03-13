@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from paying_for_college.blocks import GuidedQuiz
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
