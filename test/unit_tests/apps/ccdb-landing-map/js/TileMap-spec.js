@@ -149,6 +149,30 @@ describe( 'Tile map', () => {
     expect( result ).toEqual( '#ffffff' );
   } );
 
+  it( 'navigates the url to all complaints when clicked', () => {
+    window.location.assign = jest.fn();
+    expect( window.location.href ).toEqual( 'http://localhost/' );
+    const evt = {
+      point: {
+        name: 'TX'
+      }
+    };
+    sut.clickHandler( false, evt );
+    expect(window.location.assign).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=None&state=TX' );
+  } );
+
+  it( 'navigates the url to per capita when clicked', () => {
+    window.location.assign = jest.fn();
+    expect( window.location.href ).toEqual( 'http://localhost/' );
+    const evt = {
+      point: {
+        name: 'TX'
+      }
+    };
+    sut.clickHandler( true, evt );
+    expect( window.location.assign).toBeCalledWith('http://localhost/search/?dateInterval=3y&dataNormalization=Per%201000%20pop.&state=TX' );
+  } );
+
   it( 'formats a map tile', () => {
     sut.point = {
       displayValue: 10000,
@@ -181,7 +205,7 @@ describe( 'Tile map', () => {
     expect( result ).toEqual( '<div class="title">State Name' +
       '</div><div class="row u-clearfix"><p class="u-float-left">Complaints' +
       '</p><p class="u-right">10,000</p></div><div class="row u-clearfix">' +
-      '<p class="u-float-left">Per capita</p><p class="u-right">3.12</p>' +
+      '<p class="u-float-left">Per 1000 population</p><p class="u-right">3.12</p>' +
       '</div><div class="row u-clearfix"><p class="u-float-left">' +
       'Product with highest complaint volume</p><p class="u-right">' +
       'Expensive Item</p></div><div class="row u-clearfix">' +
