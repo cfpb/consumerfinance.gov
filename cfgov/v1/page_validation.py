@@ -1,5 +1,3 @@
-from __future__ import print_function, unicode_literals
-
 import re
 from difflib import ndiff
 from functools import partial
