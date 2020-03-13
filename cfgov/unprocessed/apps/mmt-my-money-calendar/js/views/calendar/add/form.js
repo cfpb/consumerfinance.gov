@@ -131,7 +131,7 @@ function Form() {
           }
 
           try {
-            eventStore.createEvent(values);
+            eventStore.saveEvent(values);
             history.push('/calendar');
           } catch (err) {
             logger.error(err);

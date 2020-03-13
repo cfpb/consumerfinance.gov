@@ -1,15 +1,13 @@
-.swipeable-item {
+.slide-list-item {
+  border-top: 1px solid @text;
+  border-bottom: 1px solid @text;
   position: relative;
   overflow: hidden;
   width: 100%;
 
-  /*
-  &.-swiped {
-    .swipeable-item__background {
-      z-index: 1;
-    }
+  & + .slide-list-item {
+    border-top: 0;
   }
-  */
 
   &__background {
     position: absolute;
@@ -33,10 +31,7 @@
     background-color: #fff;
     padding: 10px 1rem;
     z-index: 1;
-
-    &.-has-transition {
-      transition: transform 500ms ease-out;
-    }
+    touch-action: pan-x;
   }
 
   &__button {

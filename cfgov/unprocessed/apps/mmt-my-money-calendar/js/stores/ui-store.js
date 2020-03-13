@@ -128,6 +128,7 @@ export default class UIStore {
     date = toDayJS(date);
     this.currentMonth = date.startOf('month');
     this.selectedDate = date.startOf('day');
+    this.currentWeek = date.startOf('week');
   }
 
   @action setSelectedCategory(category) {

@@ -77,6 +77,7 @@ export default class CashFlowEvent {
     'totalCents',
     'recurs',
     'rruleStr',
+    'recurrenceType',
     'createdAt',
     'updatedAt',
   ];
@@ -331,7 +332,6 @@ export default class CashFlowEvent {
    * @returns {Number} The key of the added or updated record
    */
   async save() {
-    //await this.validate();
     this.setTimestamps();
 
     const { tx, store } = await this.transaction('readwrite');
@@ -339,10 +339,6 @@ export default class CashFlowEvent {
     await tx.complete;
 
     if (!this.id && !this.persisted) this.markPersisted(key);
-    /*
-    if (this.recurs && this.recurrenceRule && !this.isRecurrence)
-      await this._createRecurrences();
-    */
 
     this.constructor.emit('afterSave', this);
 

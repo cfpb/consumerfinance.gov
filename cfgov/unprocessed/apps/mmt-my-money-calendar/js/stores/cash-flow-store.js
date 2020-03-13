@@ -202,7 +202,7 @@ export default class CashFlowStore {
   }
 
   /**
-   * Adds a new event to the database and syncs it with the store
+   * Adds or updates an event in the database and syncs it with the store
    *
    * @param {Object} params - Event properties
    * @param {String} params.name - The event name
@@ -212,14 +212,26 @@ export default class CashFlowStore {
    * @param {Number} totalCents - The transaction amount, in cents
    * @param {Boolean} [recurs=false] - Whether or not the event recurs
    * @param {String} [recurrence] - The recurrence rule in iCalendar format
+   * @param {boolean} [updateRecurrences=false] - If event has recurrences, update their totals to match
    * @returns {undefined}
    */
-  createEvent = flow(function*(params) {
-    const event = new CashFlowEvent(params);
+  saveEvent = flow(function*(params, updateRecurrences = false) {
+    let event;
+
+    if (params.id) {
+      this.logger.debug('updating existing event %O', params);
+      event = this.getEvent(params.id);
+      event.update(params);
+    } else {
+      this.logger.debug('creating new event %O', params);
+      event = new CashFlowEvent(params);
+    }
 
     try {
       yield event.save();
-      this.events.push(event);
+
+      if (!params.id)
+        this.events.push(event);
     } catch (err) {
       this.logger.error('Event save error: %O', err);
       throw err;
