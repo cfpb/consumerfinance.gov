@@ -1,5 +1,3 @@
-
-
 class RegTable(object):
     """Assemble table from XML and deliver an HTML table."""
 

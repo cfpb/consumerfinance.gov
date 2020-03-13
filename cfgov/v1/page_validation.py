@@ -1,4 +1,3 @@
-
 import re
 from difflib import ndiff
 from functools import partial

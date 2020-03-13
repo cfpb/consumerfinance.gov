@@ -1,4 +1,3 @@
-
 from unittest import TestCase
 
 from ask_cfpb.templatetags.accent_stripper import strip_accents
