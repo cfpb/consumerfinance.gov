@@ -27,6 +27,15 @@ class ComplaintLandingViewTests(TestCase):
         self.assertNoBanner(response)
 
     @patch.object(ComplaintViews, 'search')
+    def test_elasticsearch_down(self, mock_view):
+        response = Response({})
+        response.status = 404
+        mock_view.return_value = response
+        response = ComplaintLandingView.as_view()(self.request)
+        self.assertTrue(mock_view.call_count == 1)
+        self.assertNoBanner(response)
+
+    @patch.object(ComplaintViews, 'search')
     def test_data_up_to_date(self, mock_view):
         data_json = {
             '_meta': {
@@ -49,6 +58,7 @@ class ComplaintLandingViewTests(TestCase):
             }
         }
         response = Response(data_json)
+        response.status = 200
         mock_view.return_value = response
         response = ComplaintLandingView.as_view()(self.request)
         self.assertTrue(mock_view.call_count == 1)
@@ -64,6 +74,7 @@ class ComplaintLandingViewTests(TestCase):
         }
         response = Response(data_json)
         mock_view.return_value = response
+        response.status = 200
         response = ComplaintLandingView.as_view()(self.request)
         self.assertTrue(mock_view.call_count == 1)
         self.assertContains(response, 'show-narratives-notification')
