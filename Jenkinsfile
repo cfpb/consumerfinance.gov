@@ -13,8 +13,6 @@ pipeline {
     environment {
         IMAGE_REPO="cfpb/cfgov-python"
         IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
-        // FIXME: Re-enable this before merging!
-        SCAN_IMAGE = 'false'
         STACK_PREFIX = 'cfgov'
     }
 
@@ -67,9 +65,6 @@ pipeline {
         }
 
         stage('Scan Image') {
-            when {
-                environment name: 'SCAN_IMAGE', value: 'true'
-            }
             steps {
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
             }
