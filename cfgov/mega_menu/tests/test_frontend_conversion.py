@@ -3,14 +3,10 @@ import json
 from django.test import RequestFactory, TestCase
 from django.utils.text import slugify
 
+from wagtail.core.models import Page, Site
+
 from mega_menu.frontend_conversion import FrontendConverter
 from mega_menu.models import Menu
-
-
-try:
-    from wagtail.core.models import Page, Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page, Site
 
 
 class FrontendConverterTests(TestCase):

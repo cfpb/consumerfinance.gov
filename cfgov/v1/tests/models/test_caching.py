@@ -1,20 +1,15 @@
 from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings
 
+from wagtail.documents.models import Document
+from wagtail.images.tests.utils import get_test_image_file
+
 import boto3
 import moto
 
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
 from v1.models.caching import AkamaiBackend, cloudfront_cache_invalidation
 from v1.models.images import CFGOVImage
-
-
-try:
-    from wagtail.documents.models import Document
-    from wagtail.images.tests.utils import get_test_image_file
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtaildocs.models import Document
-    from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 
 class TestAkamaiBackend(TestCase):

@@ -3,13 +3,8 @@ from urllib.parse import urlparse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View
 
-
-try:
-    from wagtail.documents.models import get_document_model
-    from wagtail.documents.views.serve import serve as wagtail_serve
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtaildocs.models import get_document_model
-    from wagtail.wagtaildocs.views.serve import serve as wagtail_serve
+from wagtail.documents.models import get_document_model
+from wagtail.documents.views.serve import serve as wagtail_serve
 
 
 class DocumentServeView(View):
