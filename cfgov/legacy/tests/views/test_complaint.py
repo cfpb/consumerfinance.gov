@@ -2,14 +2,11 @@ from datetime import datetime, timedelta
 
 from django.test import RequestFactory, TestCase, override_settings
 
-import responses
-from requests.exceptions import RequestException
-
 from complaint_search import views as ComplaintViews
-from legacy.views.complaint import ComplaintLandingView
-
+from mock import patch
 from rest_framework.response import Response
-from mock import patch, MagicMock
+
+from legacy.views.complaint import ComplaintLandingView
 
 
 class ComplaintLandingViewTests(TestCase):

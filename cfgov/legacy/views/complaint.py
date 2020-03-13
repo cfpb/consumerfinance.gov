@@ -1,15 +1,11 @@
 import logging
 from datetime import datetime, timedelta
 
-from django.conf import settings
-from django.core.exceptions import ViewDoesNotExist
 from django.views.generic import TemplateView
 
-from rest_framework.test import APIRequestFactory
-
-import requests
 from complaint_search import views
 from flags.state import flag_enabled
+from rest_framework.test import APIRequestFactory
 
 
 logger = logging.getLogger(__name__)
