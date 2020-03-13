@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 import html.parser as HTMLParser
 

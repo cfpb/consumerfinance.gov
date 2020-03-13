@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.utils.safestring import mark_safe
