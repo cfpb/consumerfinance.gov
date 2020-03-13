@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wagtail.admin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
