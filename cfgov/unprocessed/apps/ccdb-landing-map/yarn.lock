@@ -2,26 +2,10 @@
 # yarn lockfile v1
 
 
-"@cfpb/cfpb-core@0.0.8", "@cfpb/cfpb-core@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.0.8.tgz#9d739b909f0ad3680879f8832e878936a5c37ba5"
-  integrity sha512-NyApxTEq6DA4Ofm8bwElw7YT1jhFYrsBlCyR0oMOmNVtLdk4NB00DHdRMoTy0azJm7yX8jqNOrT5/5CwUAUOKg==
-  dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
-
 "@cfpb/cfpb-core@0.0.9", "@cfpb/cfpb-core@^0.0.9":
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.0.9.tgz#638b528687bfcd5a0cb20a3832d585147d186f51"
   integrity sha512-EiyAWmoRSojRRfZ1E3GjnFJeXY3ZrFDBScmh1oygHfsfKKvDsiGNFSqe3dOWRiweZ62yO/22oImU2jhmZhQHHw==
-  dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
-
-"@cfpb/cfpb-grid@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-grid/-/cfpb-grid-0.0.8.tgz#2d8d386c93bef03f983d4140da180def60ee13b2"
-  integrity sha512-PpfeSAXdNYgQtCChP/EhidUP1LDMEkuSi5jjRBwjB3vFKh4CMsPOuL+2IuPWZB5dmxLnFZHLrH10VIkx8ubdZw==
   dependencies:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
@@ -34,19 +18,6 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-icons@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.0.8.tgz#f4dcf8771e3dc26d61fc5137042df849df96e521"
-  integrity sha512-7yIOGeXaMqEE0tw2w05iE1dbV8knMerTsSLvPZs4EB7wqNtyLnuNCr3ybGDcVwKXMe+rxxzKRFz1Wyf12WlaIg==
-
-"@cfpb/cfpb-layout@0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.0.8.tgz#2bc06dfab92439a5d03e3c67b775b0bc2dc8bca4"
-  integrity sha512-+cEoRGNyA+PKrKoIKXDu4jiszXiFyJSs7I51p9+ch1OV8e1gNFLORXyIA2pGeVsFnNThaE8Xbw64DCpUxF2w2A==
-  dependencies:
-    "@cfpb/cfpb-core" "^0.0.8"
-    "@cfpb/cfpb-grid" "^0.0.8"
-
 "@cfpb/cfpb-layout@0.0.9":
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.0.9.tgz#92f79dd7ebdc2c1b29ff2226c6b2c2798b65557d"
@@ -55,18 +26,15 @@
     "@cfpb/cfpb-core" "^0.0.9"
     "@cfpb/cfpb-grid" "^0.0.9"
 
-"@cfpb/cfpb-typography@0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.0.8.tgz#ba559e532899d1aef99bfa53f1b9d72570992fcd"
-  integrity sha512-LnVNWH78hlNj1Idj3r60TJQOOEHB8b6z71SzjsyFk631wUCR8lrtxPLqOily6yndxEa109TCLN8zIX8KeRI76g==
-  dependencies:
-    "@cfpb/cfpb-core" "^0.0.8"
-    "@cfpb/cfpb-icons" "^0.0.8"
-
 core-js@3.3.6:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.3.6.tgz#6ad1650323c441f45379e176ed175c0d021eac92"
   integrity sha512-u4oM8SHwmDuh5mWZdDg9UwNVq5s1uqq6ZDLLIs07VY+VJU91i3h4f3K/pgFvtUQPGdeStrZ+odKyfyt4EnKHfA==
+
+es6-promise@4.2.8:
+  version "4.2.8"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
+  integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
 
 highcharts@7.2.1:
   version "7.2.1"
@@ -94,3 +62,8 @@ normalize-legacy-addon@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/normalize-legacy-addon/-/normalize-legacy-addon-0.1.0.tgz#8ca131e8503943a3a9e4d0d70cc0e80a27a40c9e"
   integrity sha1-jKEx6FA5Q6Op5NDXDMDoCiekDJ4=
+
+whatwg-fetch@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
+  integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==

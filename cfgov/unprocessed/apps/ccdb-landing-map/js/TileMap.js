@@ -143,6 +143,15 @@ export function getColorByValue( value, bins ) {
 /* ----------------------------------------------------------------------------
    Highcharts callbacks */
 
+export function clickHandler( isPerCapita, t ) {
+  let capText = 'dataNormalization=';
+  capText += isPerCapita ? 'Per%201000%20pop.' : 'None';
+  const stateUrl = 'search/?dateInterval=3y&' + capText +
+    '&state=' + t.point.name;
+  const loc = location.protocol + '//' + location.host + location.pathname;
+  location.assign( loc + stateUrl );
+}
+
 /**
  * callback function to format the individual tiles in HTML
  * @returns {string} html output
@@ -319,6 +328,9 @@ class TileMap {
             enabled: true,
             formatter: tileFormatter,
             useHTML: true
+          },
+          events: {
+            click: clickHandler.bind( this, isPerCapita )
           }
         }
       },
