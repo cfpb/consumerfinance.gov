@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-
 WHITELIST_KEYS = {
     'alias': 'string',
     'avgmonthlypay': 'float',
