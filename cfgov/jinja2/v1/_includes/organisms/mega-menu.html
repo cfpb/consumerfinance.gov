@@ -57,7 +57,6 @@
                   {{ base_class ~ '_group-heading' }}
                   {{ base_class ~ '_group-heading' ~ '__hidden' if group.title_hidden else ''}}"
             id="{{ aria_group_title | slugify ~ '-menu' }}"
-            {% if group.title_hidden %} aria-hidden="true" {% endif %}
             aria-label="{{ aria_group_title }}">
             {{ group.title }}
         </h4>
