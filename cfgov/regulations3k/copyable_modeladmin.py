@@ -1,4 +1,3 @@
-
 from django.conf.urls import url
 from django.contrib.admin.utils import quote
 from django.contrib.auth.decorators import login_required

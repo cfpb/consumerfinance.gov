@@ -1,4 +1,3 @@
-
 import os
 
 from django.utils.encoding import force_text

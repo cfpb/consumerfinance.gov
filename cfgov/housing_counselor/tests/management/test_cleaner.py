@@ -1,4 +1,3 @@
-
 from itertools import repeat
 from unittest import TestCase
 

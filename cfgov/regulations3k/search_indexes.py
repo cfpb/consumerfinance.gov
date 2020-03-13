@@ -1,4 +1,3 @@
-
 from haystack import indexes
 
 from regulations3k.models import SectionParagraph

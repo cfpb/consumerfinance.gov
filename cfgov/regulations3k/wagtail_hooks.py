@@ -1,4 +1,3 @@
-
 from datetime import date
 
 from wagtail.contrib.modeladmin.options import modeladmin_register

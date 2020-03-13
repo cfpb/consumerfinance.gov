@@ -1,4 +1,3 @@
-
 from django.core.management.base import BaseCommand
 
 from housing_counselor.generator import generate_counselor_html

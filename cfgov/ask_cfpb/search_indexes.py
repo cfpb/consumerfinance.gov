@@ -1,4 +1,3 @@
-
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
 from haystack import indexes

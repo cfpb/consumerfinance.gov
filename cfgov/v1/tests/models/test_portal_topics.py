@@ -1,4 +1,3 @@
-
 from django.test import TestCase
 
 from v1.models.portal_topics import PortalCategory, PortalTopic
