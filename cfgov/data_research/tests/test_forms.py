@@ -1,4 +1,3 @@
-
 from django.test import TestCase
 
 from core.govdelivery import MockGovDelivery

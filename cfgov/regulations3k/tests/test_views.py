@@ -1,4 +1,3 @@
-
 import datetime
 
 from django.test import RequestFactory, TestCase, override_settings

@@ -1,4 +1,3 @@
-
 import logging
 
 from data_research.models import County, MetroArea, MortgageMetaData, State

@@ -1,5 +1,3 @@
-
-
 WHITELIST_KEYS = {
     'alias': 'string',
     'avgmonthlypay': 'float',

@@ -1,4 +1,3 @@
-
 import unicodedata
 
 from django import template

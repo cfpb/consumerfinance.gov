@@ -1,4 +1,3 @@
-
 from io import StringIO
 
 from django.core import mail
