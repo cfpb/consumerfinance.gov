@@ -45,7 +45,14 @@ class ComplaintLandingView(TemplateView):
             factory = APIRequestFactory()
             request = factory.get('/search/', args, format='json')
             response = views.search(request)
-            res_json = response.data
+
+            if response.status == 200:
+                res_json = response.data
+            else:
+                logger.exception("Elasticsearch failed to return a valid " +
+                                 "response. Response data reutrned: {}"
+                                 .format(response.data))
+                res_json = {}
         except ValueError:
             logger.exception("CCDB status data not valid JSON.")
             res_json = {}
@@ -78,9 +85,7 @@ class ComplaintLandingView(TemplateView):
             elif (res_json['_meta']['last_updated'] <
                     four_business_days_ago):
                 narratives_down = True
-        except TypeError:
-            logger.exception("CCDB JSON status not in expected format.")
-        except KeyError:
+        except (TypeError, KeyError):
             logger.exception("CCDB JSON status not in expected format.")
 
         return {
