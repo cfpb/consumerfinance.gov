@@ -70,7 +70,7 @@
             aria-label="{{ nav_title | safe }}"
             {% endif %}>
             {% if nav_depth == 1 -%}
-            <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
+            <li class="{{ _classes( nav_depth, '-item' ) }}">
                 {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
                 {{ global_header_cta.render( language=language ) }}
             </li>
@@ -123,7 +123,7 @@
             Back
         </button>
         {% endif %}
-        <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.nav_groups | count < 4 else '' ) -}}">
+        <div class="{{- _classes( nav_depth, '-grid' ) -}}">
 
             {% if nav_depth > 1 and nav_overview_url and nav_overview_url != '#' %}
             <h3 class="{{ _classes( nav_depth, '-overview' ) }}
@@ -150,7 +150,7 @@
                     {% if nav_item.featured_items %}
                     <ul class="{{ _classes( nav_depth, '-list__featured-item' ) }}" aria-label="Featured">
                         {% for link in nav_item.featured_items | default( [], true ) %}
-                        <li>
+                        <li class="{{ _classes( nav_depth, '-item' ) }}">
                             <a class="{{ _classes( nav_depth, '-link' ) }}"
                                href="{{ link.url }}">
                                 {{ svg_icon( 'favorite' ) }}
@@ -161,9 +161,9 @@
                     </ul>
                     {% endif %}
 
-                    <ul class="m-list m-list__unstyled">
+                    <ul>
                         {% for link in nav_item.other_items | default( [], true ) %}
-                        <li>
+                        <li class="{{ _classes( nav_depth, '-item' ) }}">
                             <a class="a-link {{ _classes( nav_depth, '-link' ) }}"
                                href="{{ link.url }}">
                                 {{ svg_icon( link.icon ) }}
@@ -208,7 +208,7 @@
 {% macro _nav_item( nav_depth, nav_item, language='en' ) %}
 {% set has_children = nav_item.nav_groups or nav_item.nav_items %}
 {% set link = nav_item.overview if nav_item.overview else nav_item %}
-<li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
+<li class="{{ _classes( nav_depth, '-item' ) }}"
     {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
     {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
     <a class="{{- 'u-link__disabled' if url == '' else '' -}}
