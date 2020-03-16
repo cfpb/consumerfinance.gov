@@ -55,7 +55,7 @@
         {% set aria_group_title = group.title ~ ' continued' if group.title_hidden else group.title %}
         <h4 class="h5
                   {{ base_class ~ '_group-heading' }}
-                  {{ base_class ~ '_group-heading' ~ '__hidden' if group.title_hidden else ''}}"
+                  {{ base_class ~ '_group-heading__hidden' if group.title_hidden else ''}}"
             id="{{ aria_group_title | slugify ~ '-menu' }}"
             aria-label="{{ aria_group_title }}">
             {{ group.title }}
