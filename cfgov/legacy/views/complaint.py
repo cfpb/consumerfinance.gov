@@ -50,7 +50,7 @@ class ComplaintLandingView(TemplateView):
                 res_json = response.data
             else:
                 logger.exception("Elasticsearch failed to return a valid " +
-                                 "response. Response data reutrned: {}"
+                                 "response. Response data returned: {}"
                                  .format(response.data))
                 res_json = {}
         except ValueError:
