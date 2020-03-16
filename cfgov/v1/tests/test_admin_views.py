@@ -6,8 +6,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.test import RequestFactory, TestCase, override_settings
 
-import wagtail
-
 import mock
 
 from v1.admin_views import ExportFeedbackView
@@ -39,10 +37,7 @@ def create_admin_access_permissions():
         group.permissions.add(admin_permission)
 
 
-if wagtail.VERSION >= (2, 0):
-    cache_path = 'wagtail.contrib.frontend_cache.backends.CloudfrontBackend'
-else:
-    cache_path = 'wagtail.contrib.wagtailfrontendcache.backends.CloudfrontBackend'  # noqa
+cache_path = 'wagtail.contrib.frontend_cache.backends.CloudfrontBackend'
 
 
 @override_settings(WAGTAILFRONTENDCACHE={

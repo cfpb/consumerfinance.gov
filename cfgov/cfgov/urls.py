@@ -9,7 +9,8 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 
-import wagtail
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.contrib.sitemaps.views import sitemap
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
@@ -38,14 +39,6 @@ from v1.views import (
     password_reset_confirm, welcome
 )
 from v1.views.documents import DocumentServeView
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.contrib.sitemaps.views import sitemap
-    from wagtail.admin import urls as wagtailadmin_urls
-else:
-    from wagtail.contrib.wagtailsitemaps.views import sitemap
-    from wagtail.wagtailadmin import urls as wagtailadmin_urls
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
