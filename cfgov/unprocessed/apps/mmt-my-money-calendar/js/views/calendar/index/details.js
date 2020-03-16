@@ -9,6 +9,7 @@ import { useStore } from '../../../stores';
 import { formatCurrency } from '../../../lib/currency-helpers';
 import { Notification } from '../../../components/notification';
 import { SlideListItem } from '../../../components/slide-list';
+import ModalDialog from '../../../components/modal-dialog';
 
 import pencil from '@cfpb/cfpb-icons/src/icons/pencil.svg';
 import deleteIcon from '@cfpb/cfpb-icons/src/icons/delete.svg';
@@ -155,41 +156,25 @@ function Details() {
         </ul>
       </div>
 
-      <Modal
-        className="modal-dialog"
+      <ModalDialog
         contentLabel="Event deletion options"
         isOpen={modalOpen}
         onRequestClose={() => toggleModal(false)}
-        appElement={document.querySelector('#mmt-my-money-calendar')}
-        closeTimeoutMS={150}
-        overlayClassName="modal-overlay"
         id="delete-dialog"
-      >
-        <p className="modal-dialog__prompt">Delete this event?</p>
-        <ul className="modal-dialog__actions">
-          <li className="modal-dialog__action">
-            <button tabIndex="0" className="modal-dialog__action-button" onClick={eventDeleteHandler(false)}>
-              {eventRecurs ? 'Just this event' : 'Delete'}
-            </button>
-          </li>
-          {eventRecurs && (
-            <li className="modal-dialog__action">
-              <button tabIndex="1" className="modal-dialog__action-button" onClick={eventDeleteHandler(true)}>
-                This event and future recurrences
-              </button>
-            </li>
-          )}
-          <li className="modal-dialog__action">
-            <button
-              tabIndex="2"
-              className="modal-dialog__action-button modal-dialog__action-button--cancel"
-              onClick={() => toggleModal(false)}
-            >
-              Cancel
-            </button>
-          </li>
-        </ul>
-      </Modal>
+        prompt="Delete this event?"
+        actions={[
+          {
+            label: eventRecurs ? 'Just this event' : 'Delete',
+            onClick: eventDeleteHandler(false),
+          },
+          {
+            label: 'This event and future recurrences',
+            onClick: eventDeleteHandler(true),
+            condition: eventRecurs,
+          },
+        ]}
+        showCancel
+      />
     </section>
   );
 }
