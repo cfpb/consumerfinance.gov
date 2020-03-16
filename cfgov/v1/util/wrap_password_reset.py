@@ -2,13 +2,7 @@ from functools import wraps
 
 from django.http import Http404
 
-import wagtail
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.admin.views import account
-else:
-    from wagtail.wagtailadmin.views import account
+from wagtail.admin.views import account
 
 
 # This wrapper is used to check our custom password-reset routine, in urls.py:
