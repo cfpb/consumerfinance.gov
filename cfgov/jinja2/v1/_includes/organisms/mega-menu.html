@@ -15,15 +15,13 @@
    suffix:    Suffix to add to the classes.
               Default is ''.
 
-   additional_suffix: Optional additional class suffix.
-
    ========================================================================== #}
 
 {# TODO: Move to external macro so it can be shared with secondary nav. #}
-{%- macro _classes( nav_depth, suffix='', additional_suffix='' ) -%}
+{%- macro _classes( nav_depth, suffix='' ) -%}
 {%- set general_class = base_class ~ '_content' -%}
 {%- set depth_class = general_class ~ '-' ~ nav_depth -%}
-{%- set additional_class = depth_class ~ suffix ~ '__' ~  additional_suffix if additional_suffix else '' -%}
+{%- set additional_class = depth_class ~ suffix -%}
 
 {{ general_class ~ suffix ~ ' ' ~ depth_class ~ suffix ~ ' ' ~ additional_class }}
 {%- endmacro -%}
@@ -146,7 +144,8 @@
                 {{ _nav_list( nav_depth, nav_item.nav_groups, nav_overview_text, language=language ) }}
 
                 {% if nav_item.featured_items or nav_item.other_items %}
-                <div class="{{ _classes( nav_depth, '-list' ) }} {{ _classes( nav_depth, '-list__featured' ) }} ">
+                <div class="{{ _classes( nav_depth, '-list' ) }}
+                            {{ _classes( nav_depth, '-list__featured' ) }} ">
                     {% if nav_item.featured_items %}
                     <ul class="{{ _classes( nav_depth, '-list__featured-item' ) }}" aria-label="Featured">
                         {% for link in nav_item.featured_items | default( [], true ) %}
