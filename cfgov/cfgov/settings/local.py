@@ -1,8 +1,6 @@
 import sys
 import warnings
 
-import wagtail
-
 from unipath import DIRS
 
 from .base import *
@@ -22,16 +20,8 @@ SECRET_KEY = 'not-secret-key-for-testing'
 
 INSTALLED_APPS += (
     'sslserver',
+    'wagtail.contrib.styleguide',
 )
-
-if wagtail.VERSION >= (2, 0):
-    INSTALLED_APPS += (
-        'wagtail.contrib.styleguide',
-    )
-else:
-    INSTALLED_APPS += (
-        'wagtail.contrib.wagtailstyleguide',
-    )
 
 STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')
 
