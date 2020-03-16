@@ -1,5 +1,10 @@
-from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 # Remove this file and the associated URLs and templates

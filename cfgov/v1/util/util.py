@@ -3,10 +3,15 @@ from time import time
 from django.apps import apps
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
 
 from wagtail.core.blocks.stream_block import StreamValue
+
+
+try:
+    from django.urls import resolve
+except ImportError:
+    from django.core.urlresolvers import resolve
 
 
 # These messages are manually mirrored on the

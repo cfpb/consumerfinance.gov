@@ -2,13 +2,17 @@ import re
 from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
 from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
 
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 NON_GOV_LINKS = re.compile(
     r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'

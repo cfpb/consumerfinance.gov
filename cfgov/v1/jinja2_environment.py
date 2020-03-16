@@ -2,11 +2,16 @@ import os.path
 
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.utils.translation import ugettext, ungettext
 
 from jinja2 import Environment
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 class RelativeTemplatePathEnvironment(Environment):

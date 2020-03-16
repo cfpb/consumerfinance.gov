@@ -1,11 +1,16 @@
 from django.core.files.base import ContentFile
-from django.core.urlresolvers import resolve, reverse
 from django.http import Http404, StreamingHttpResponse
 from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.documents.models import get_document_model
 
 from v1.views.documents import DocumentServeView
+
+
+try:
+    from django.urls import resolve, reverse
+except ImportError:
+    from django.core.urlresolvers import resolve, reverse
 
 
 def create_document(filename):

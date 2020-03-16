@@ -1,10 +1,15 @@
 from django.conf.urls import url
-from django.core.urlresolvers import reverse
 
 from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
 
 from search.views import SearchView
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 @hooks.register('register_admin_urls')

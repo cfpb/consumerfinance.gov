@@ -198,7 +198,11 @@ class School(models.Model):
         max_length=100,
         blank=True,
         default='')
-    contact = models.ForeignKey(Contact, blank=True, null=True)
+    contact = models.ForeignKey(
+        Contact,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
     data_json = models.TextField(blank=True)
     city = models.CharField(max_length=50, blank=True)
     state = models.CharField(max_length=2, blank=True)
@@ -496,7 +500,7 @@ class Feedback(DisclosureBase):
 
 class Notification(DisclosureBase):
     """record of a disclosure verification"""
-    institution = models.ForeignKey(School)
+    institution = models.ForeignKey(School, on_delete=models.CASCADE)
     oid = models.CharField(max_length=40)
     timestamp = models.DateTimeField()
     errors = models.CharField(max_length=255)
@@ -609,7 +613,7 @@ class Program(models.Model):
     Cost and outcome info for an individual course of study at a school
     """
     DEBT_NOTE = "TITLEIV_DEBT + PRIVATE_DEBT + INSTITUTIONAL_DEBT"
-    institution = models.ForeignKey(School)
+    institution = models.ForeignKey(School, on_delete=models.CASCADE)
     program_name = models.CharField(max_length=255)
     accreditor = models.CharField(max_length=255, blank=True)
     level = models.CharField(max_length=255, blank=True)
@@ -768,7 +772,7 @@ class Alias(models.Model):
     """
     One of potentially several names for a school
     """
-    institution = models.ForeignKey(School)
+    institution = models.ForeignKey(School, on_delete=models.CASCADE)
     alias = models.TextField()
     is_primary = models.BooleanField(default=False)
 
@@ -783,7 +787,7 @@ class Nickname(models.Model):
     """
     One of potentially several nicknames for a school
     """
-    institution = models.ForeignKey(School)
+    institution = models.ForeignKey(School, on_delete=models.CASCADE)
     nickname = models.TextField()
     is_female = models.BooleanField(default=False)
 

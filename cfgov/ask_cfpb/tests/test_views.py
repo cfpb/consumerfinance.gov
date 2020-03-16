@@ -2,7 +2,6 @@ import json
 import unittest
 
 from django.apps import apps
-from django.core.urlresolvers import NoReverseMatch, reverse
 from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
 from django.utils import timezone
@@ -20,6 +19,12 @@ from ask_cfpb.models.search import make_safe
 from ask_cfpb.tests.models.test_pages import mock_queryset
 from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
+
+
+try:
+    from django.urls import NoReverseMatch, reverse
+except ImportError:
+    from django.core.urlresolvers import NoReverseMatch, reverse
 
 
 now = timezone.now()

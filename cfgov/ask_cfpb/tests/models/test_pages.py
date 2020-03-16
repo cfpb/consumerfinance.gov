@@ -6,7 +6,6 @@ from unittest import mock
 from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponse
 from django.test import TestCase, override_settings
 from django.utils import timezone, translation
@@ -37,6 +36,12 @@ from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import (
     get_free_path, get_or_create_page, set_stream_data
 )
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 html_parser = HTMLParser()

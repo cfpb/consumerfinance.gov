@@ -2,7 +2,6 @@ import json
 import re
 from urllib.parse import urlencode
 
-from django.core.urlresolvers import reverse
 from django.http import Http404, QueryDict
 from django.test import RequestFactory, TestCase, override_settings
 
@@ -14,6 +13,12 @@ from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment,
     submit_comment
 )
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 class GovDeliverySubscribeTest(TestCase):

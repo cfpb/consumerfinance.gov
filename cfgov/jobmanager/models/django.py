@@ -131,6 +131,7 @@ class City(models.Model):
         verbose_name="City name")
     state = models.ForeignKey(
         State,
+        on_delete=models.CASCADE,
         null=False,
         blank=False,
         default=None,

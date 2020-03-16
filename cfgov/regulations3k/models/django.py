@@ -88,7 +88,10 @@ class EffectiveVersion(models.Model):
     effective_date = models.DateField(default=date.today)
     created = models.DateField(default=date.today)
     draft = models.BooleanField(default=False)
-    part = models.ForeignKey(Part, related_name="versions")
+    part = models.ForeignKey(
+        Part,
+        on_delete=models.CASCADE,
+        related_name="versions")
 
     panels = [
         FieldPanel('authority'),
@@ -147,7 +150,10 @@ class EffectiveVersion(models.Model):
 class Subpart(models.Model):
     label = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255, blank=True)
-    version = models.ForeignKey(EffectiveVersion, related_name="subparts")
+    version = models.ForeignKey(
+        EffectiveVersion,
+        on_delete=models.CASCADE,
+        related_name="subparts")
 
     BODY = 0000
     APPENDIX = 1000
@@ -194,7 +200,10 @@ class Section(models.Model):
     label = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
-    subpart = models.ForeignKey(Subpart, related_name="sections")
+    subpart = models.ForeignKey(
+        Subpart,
+        on_delete=models.CASCADE,
+        related_name="sections")
     sortable_label = models.CharField(max_length=255)
 
     panels = [
@@ -288,7 +297,10 @@ class SectionParagraph(models.Model):
 
     paragraph = models.TextField(blank=True)
     paragraph_id = models.CharField(max_length=255, blank=True)
-    section = models.ForeignKey(Section, related_name="paragraphs")
+    section = models.ForeignKey(
+        Section,
+        on_delete=models.CASCADE,
+        related_name="paragraphs")
 
     def __str__(self):
         return "Section {}-{} paragraph {}".format(

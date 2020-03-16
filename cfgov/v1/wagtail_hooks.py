@@ -5,7 +5,6 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.utils.html import format_html_join
 
@@ -25,6 +24,12 @@ from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.util import util
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 logger = logging.getLogger(__name__)

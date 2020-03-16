@@ -1,5 +1,10 @@
-from django.core.urlresolvers import reverse
 from django.test import TestCase
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 class TestTokenProviderView(TestCase):

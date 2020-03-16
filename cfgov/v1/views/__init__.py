@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url
 from django.template.response import TemplateResponse
@@ -25,6 +24,12 @@ from v1.auth_forms import (
 )
 from v1.util.util import all_valid_destinations_for_request
 from v1.util.wrap_password_reset import _wrap_password_reset_view
+
+
+try:
+    from django.urls import resolve
+except ImportError:
+    from django.core.urlresolvers import resolve
 
 
 # Overrided Wagtail Views

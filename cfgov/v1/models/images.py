@@ -99,7 +99,10 @@ class CFGOVImage(AbstractImage):
 
 
 class CFGOVRendition(AbstractRendition):
-    image = models.ForeignKey(CFGOVImage, related_name='renditions')
+    image = models.ForeignKey(
+        CFGOVImage,
+        on_delete=models.CASCADE,
+        related_name='renditions')
 
     @property
     def alt(self):

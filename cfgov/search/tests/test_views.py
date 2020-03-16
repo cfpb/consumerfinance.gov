@@ -1,6 +1,5 @@
 import json
 
-from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 
 import mock
@@ -9,6 +8,12 @@ from v1.models.blog_page import BlogPage
 from v1.models.browse_page import BrowsePage
 from v1.models.snippets import Contact
 from v1.tests.wagtail_pages.helpers import publish_page
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 @override_settings(FLAGS={'SEARCH_DOTGOV_API': [('boolean', True)]})

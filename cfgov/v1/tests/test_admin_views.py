@@ -3,12 +3,17 @@ from datetime import date
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission, User
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
 from django.test import RequestFactory, TestCase, override_settings
 
 import mock
 
 from v1.admin_views import ExportFeedbackView
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 def create_admin_access_permissions():

@@ -26,6 +26,7 @@ class GlossaryTerm(index.Indexed, models.Model):
     )
     answer_page_en = models.ForeignKey(
         'ask_cfpb.AnswerPage',
+        on_delete=models.CASCADE,
         related_name='glossary_terms',
         null=True,
         blank=True,
@@ -50,6 +51,7 @@ class GlossaryTerm(index.Indexed, models.Model):
     )
     answer_page_es = models.ForeignKey(
         'ask_cfpb.AnswerPage',
+        on_delete=models.CASCADE,
         related_name='glossary_terms_es',
         null=True,
         blank=True,

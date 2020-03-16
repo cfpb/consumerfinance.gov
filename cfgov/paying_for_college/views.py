@@ -3,7 +3,6 @@ import os
 import re
 from collections import OrderedDict
 
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
@@ -15,6 +14,12 @@ from paying_for_college.forms import FeedbackForm
 from paying_for_college.models import (
     ConstantCap, ConstantRate, Feedback, Notification, Program, School
 )
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 BASEDIR = os.path.dirname(__file__)

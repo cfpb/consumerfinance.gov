@@ -3,7 +3,6 @@ import json
 import unittest
 
 import django
-from django.core.urlresolvers import reverse
 from django.http import HttpRequest
 from django.test import RequestFactory
 
@@ -15,6 +14,11 @@ from paying_for_college.views import (
     get_school, school_search_api, validate_oid, validate_pid
 )
 
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 # def setup_view(view, request, *args, **kwargs):
 #     """Mimic as_view() returned callable, return view instance instead."""

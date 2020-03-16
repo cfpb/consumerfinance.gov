@@ -3,7 +3,6 @@ import json
 import unittest
 
 import django
-from django.core.urlresolvers import NoReverseMatch, reverse
 
 from model_mommy import mommy
 
@@ -12,6 +11,12 @@ from data_research.models import (
     NationalMortgageData, NonMSAMortgageData, State, StateMortgageData
 )
 from data_research.views import validate_year_month
+
+
+try:
+    from django.urls import NoReverseMatch, reverse
+except ImportError:
+    from django.core.urlresolvers import NoReverseMatch, reverse
 
 
 class YearMonthValidatorTests(unittest.TestCase):

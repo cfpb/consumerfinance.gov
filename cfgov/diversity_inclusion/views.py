@@ -1,7 +1,12 @@
-from django.core.urlresolvers import reverse_lazy
 from django.views.generic import FormView
 
 from diversity_inclusion.forms import VoluntaryAssessmentForm
+
+
+try:
+    from django.urls import reverse_lazy
+except ImportError:
+    from django.core.urlresolvers import reverse_lazy
 
 
 class GetAssessmentForm(FormView):
