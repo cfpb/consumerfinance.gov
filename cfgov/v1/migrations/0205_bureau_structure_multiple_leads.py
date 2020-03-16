@@ -126,20 +126,12 @@ to this schema:
 
 import django.core.validators
 from django.db import migrations
+import wagtail.core.blocks as core_blocks
+import wagtail.core.fields as core_fields
+import wagtail.documents.blocks as docs_blocks
+import wagtail.images.blocks as images_blocks
 import v1.atomic_elements.organisms
 import v1.blocks
-
-try:
-    import wagtail.wagtailcore.blocks as core_blocks
-    import wagtail.wagtailcore.fields as core_fields
-    import wagtail.wagtaildocs.blocks as docs_blocks
-    import wagtail.wagtailimages.blocks as images_blocks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    import wagtail.core.blocks as core_blocks
-    import wagtail.core.fields as core_fields
-    import wagtail.documents.blocks as docs_blocks
-    import wagtail.images.blocks as images_blocks
-
 
 from v1.util.migrations import migrate_page_types_and_fields
 
