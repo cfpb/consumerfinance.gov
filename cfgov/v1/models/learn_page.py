@@ -5,6 +5,17 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 
+from wagtail.admin.edit_handlers import (
+    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
+    StreamFieldPanel, TabbedInterface
+)
+from wagtail.core import blocks
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page, PageManager
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
+
 from localflavor.us.models import USStateField
 from modelcluster.fields import ParentalKey
 from pytz import timezone
@@ -14,30 +25,6 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
-
-
-try:
-    from wagtail.admin.edit_handlers import (
-        FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
-        ObjectList, StreamFieldPanel, TabbedInterface
-    )
-    from wagtail.core import blocks
-    from wagtail.core.fields import RichTextField, StreamField
-    from wagtail.core.models import Page, PageManager
-    from wagtail.documents.edit_handlers import DocumentChooserPanel
-    from wagtail.images.edit_handlers import ImageChooserPanel
-    from wagtail.search import index
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import (
-        FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
-        ObjectList, StreamFieldPanel, TabbedInterface
-    )
-    from wagtail.wagtailcore import blocks
-    from wagtail.wagtailcore.fields import RichTextField, StreamField
-    from wagtail.wagtailcore.models import Page, PageManager
-    from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
-    from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-    from wagtail.wagtailsearch import index
 
 
 class AbstractFilterPage(CFGOVPage):

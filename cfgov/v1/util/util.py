@@ -6,11 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
 
-
-try:
-    from wagtail.core.blocks.stream_block import StreamValue
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from wagtail.core.blocks.stream_block import StreamValue
 
 
 # These messages are manually mirrored on the

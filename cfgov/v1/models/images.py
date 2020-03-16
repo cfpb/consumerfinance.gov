@@ -1,21 +1,12 @@
 from django.db import models
 from django.utils.functional import cached_property
 
-
-try:
-    from wagtail.images.image_operations import (
-        DoNothingOperation, MinMaxOperation, WidthHeightOperation
-    )
-    from wagtail.images.models import (
-        AbstractImage, AbstractRendition, Filter, Image
-    )
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailimages.image_operations import (
-        DoNothingOperation, MinMaxOperation, WidthHeightOperation
-    )
-    from wagtail.wagtailimages.models import (
-        AbstractImage, AbstractRendition, Filter, Image
-    )
+from wagtail.images.image_operations import (
+    DoNothingOperation, MinMaxOperation, WidthHeightOperation
+)
+from wagtail.images.models import (
+    AbstractImage, AbstractRendition, Filter, Image
+)
 
 
 class CFGOVImage(AbstractImage):
