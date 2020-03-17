@@ -232,6 +232,19 @@ export default class CashFlowStore {
 
       if (!params.id)
         this.events.push(event);
+
+      if (updateRecurrences) {
+        const recurrences = yield event.getAllRecurrences();
+
+        for (const recurrence of recurrences) {
+          if (recurrence.dateTime.isBefore(event.dateTime)) continue;
+
+          const stateEvent = this.getEvent(recurrence.id);
+          stateEvent.update({ totalCents: event.totalCents });
+          yield stateEvent.save();
+          this.logger.debug('Update recurrence total (id: %d, total: %d)', recurrence.id, recurrence.total);
+        }
+      }
     } catch (err) {
       this.logger.error('Event save error: %O', err);
       throw err;
