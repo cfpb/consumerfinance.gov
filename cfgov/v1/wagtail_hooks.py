@@ -1,7 +1,6 @@
 import logging
 
 from django.conf import settings
-from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
@@ -27,8 +26,9 @@ from v1.util import util
 
 
 try:
-    from django.urls import reverse
+    from django.urls import re_path, reverse
 except ImportError:
+    from django.conf.urls import url as re_path
     from django.core.urlresolvers import reverse
 
 
@@ -53,7 +53,7 @@ def register_export_menu_item():
 
 @hooks.register('register_admin_urls')
 def register_export_url():
-    return [url(
+    return [re_path(
         'export-enforcement-actions',
         export_data,
         name='export-enforcement-actions')]
@@ -223,10 +223,10 @@ def register_frank_menu_item():
 @hooks.register('register_admin_urls')
 def register_admin_urls():
     return [
-        url(r'^cdn/$', manage_cdn, name='manage-cdn'),
-        url(r'^export-feedback/$',
-            ExportFeedbackView.as_view(),
-            name='export-feedback'),
+        re_path(r'^cdn/$', manage_cdn,
+                name='manage-cdn'),
+        re_path(r'^export-feedback/$', ExportFeedbackView.as_view(),
+                name='export-feedback'),
     ]
 
 

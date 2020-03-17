@@ -1,6 +1,5 @@
 from imp import reload
 
-from django.conf.urls import url
 from django.test import RequestFactory, TestCase, override_settings
 
 import mock
@@ -9,8 +8,9 @@ from cfgov import urls
 
 
 try:
-    from django.urls import RegexURLPattern, RegexURLResolver
+    from django.urls import re_path, RegexURLPattern, RegexURLResolver
 except ImportError:
+    from django.conf.urls import url as re_path
     from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
 
 
@@ -82,7 +82,8 @@ def dummy_external_site_view(request):
 
 urlpatterns = [
     # Needed for rendering of base template that calls reverse('external-site')
-    url(r'^external-site/$', dummy_external_site_view, name='external-site'),
+    re_path(r'^external-site/$', dummy_external_site_view,
+            name='external-site'),
 
     urls.flagged_wagtail_only_view('MY_TEST_FLAG', r'^$'),
 ]

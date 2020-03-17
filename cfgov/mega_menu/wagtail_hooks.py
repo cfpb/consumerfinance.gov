@@ -1,4 +1,3 @@
-from django.conf.urls import url
 from django.contrib.admin.utils import quote
 from django.utils.translation import ugettext as _
 
@@ -7,6 +6,12 @@ from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 
 from mega_menu.models import Menu
 from mega_menu.views import MenuPreviewView
+
+
+try:
+    from django.urls import path
+except ImportError:
+    from django.conf.urls import url as path
 
 
 class MenuModelAdminButtonHelper(ButtonHelper):
@@ -54,7 +59,7 @@ class MenuModelAdmin(ModelAdmin):
         urls = super().get_admin_urls_for_registration()
 
         return urls + (
-            url(
+            path(
                 self.url_helper.get_action_url_pattern('preview'),
                 self.preview_view,
                 name=self.url_helper.get_action_url_name('preview')
