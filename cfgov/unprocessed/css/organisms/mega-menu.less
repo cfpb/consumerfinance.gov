@@ -30,11 +30,20 @@ body {
       markup: |
         <nav class="o-mega-menu"
              role="navigation">
-            <h2 class="o-mega-menu_heading">
-                <button class="o-mega-menu_trigger" aria-expanded="false">
-                    <span class="u-visually-hidden">Main menu</span>
-                </button>
-            </h2>
+            <button class="o-mega-menu_trigger" aria-expanded="false">
+                <span class="u-visually-hidden">Main menu</span>
+            </button>
+            <button class="o-mega-menu_trigger" data-js-hook="behavior_flyout-menu_trigger" aria-haspopup="menu" aria-expanded="false">
+                <span class="o-mega-menu_trigger-open">
+                    [svg]
+                </span>
+                <span class="o-mega-menu_trigger-close">
+                    [svg]
+                </span>
+                <span class="u-visually-hidden">
+                    Main menu
+                </span>
+            </button>
             <div class="o-mega-menu_content"
                  aria-expanded="false">
                 <div class="o-mega-menu_content-wrapper">
@@ -114,8 +123,7 @@ body {
           Structural cheat sheet:
           -----------------------
           nav.o-mega-menu
-            .o-mega-menu_heading
-                .o-mega-menu_trigger
+            .o-mega-menu_trigger
             .o-mega-menu_content
                 .o-mega-menu_content-wrapper
                     .wrapper
@@ -156,12 +164,6 @@ body {
 @menu_max_width_px: 1200px;
 
 .o-mega-menu {
-
-    &_heading {
-        // Override h2 element styles.
-        margin: 0;
-        font-size: 1em;
-    }
 
     // Reset default unordered list padding and margin.
     ul {
