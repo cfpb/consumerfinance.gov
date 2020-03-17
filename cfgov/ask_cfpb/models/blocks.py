@@ -1,10 +1,6 @@
+from wagtail.core import blocks
+
 from v1.atomic_elements import organisms
-
-
-try:
-    from wagtail.core import blocks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore import blocks
 
 
 class Tip(blocks.StructBlock):

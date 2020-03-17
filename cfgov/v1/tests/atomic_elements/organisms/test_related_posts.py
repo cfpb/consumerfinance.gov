@@ -1,9 +1,9 @@
-from __future__ import unicode_literals
-
 import datetime as dt
 import re
 
 from django.test import RequestFactory, TestCase
+
+from wagtail.core.models import Page, Site
 
 from pytz import timezone
 
@@ -13,12 +13,6 @@ from v1.models.blog_page import BlogPage
 from v1.models.learn_page import EventPage
 from v1.models.newsroom_page import NewsroomPage
 from v1.tests.wagtail_pages import helpers
-
-
-try:
-    from wagtail.core.models import Page, Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page, Site
 
 
 class RelatedPostsTestCase(TestCase):

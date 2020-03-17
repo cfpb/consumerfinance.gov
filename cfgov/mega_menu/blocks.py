@@ -1,12 +1,7 @@
 from itertools import chain
 
-
-try:
-    from wagtail.core import blocks
-    from wagtail.core.models import Page
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore import blocks
-    from wagtail.wagtailcore.models import Page
+from wagtail.core import blocks
+from wagtail.core.models import Page
 
 
 class LinkBlock(blocks.StructBlock):
