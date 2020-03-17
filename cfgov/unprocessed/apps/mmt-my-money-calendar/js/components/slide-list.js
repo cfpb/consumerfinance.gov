@@ -3,6 +3,7 @@ import { useRef, useLayoutEffect } from 'react';
 import { useDrag } from 'react-use-gesture';
 import { useSpring, config, animated, interpolate } from 'react-spring';
 import { useBEM } from '../lib/hooks';
+import { clamp, mapRange } from '../lib/number-helpers';
 
 export function SlideListItem({
   className,
@@ -22,8 +23,12 @@ export function SlideListItem({
   const slideWidth = useRef(0);
   const [{ x }, set] = useSpring(() => ({ x: 0 }), { immediate: false });
   const transform = interpolate([x], (x) => `translateX(${x}px)`);
+  const opacity = interpolate([x], (x) => {
+    const mapped = mapRange(Math.abs(x), 0, slideWidth.current, 0.3, 1);
+    return clamp(mapped, 0, 1) || 0.3;
+  });
   const bgStyle = {
-    opacity: x.interpolate({ range: [0, slideWidth.current], output: [40, 100], extrapolate: 'clamp' }),
+    opacity,
   };
   const fgStyle = {
     transform,
@@ -77,8 +82,14 @@ export function SlideListItem({
   return (
     <li className={rootClasses} {...props}>
       <animated.div className={bem('background')} ref={background} style={bgStyle}>
-        {actions.map(({ label, icon, className: btnClass, onClick }, idx) => (
-          <button key={`action-${idx}`} className={clsx(bem('button'), btnClass)} onClick={onClick} aria-label={label}>
+        {actions.map(({ label, icon, className: btnClass, onClick, disabled = false }, idx) => (
+          <button
+            key={`action-${idx}`}
+            className={clsx(bem('button'), btnClass, disabled && '-disabled')}
+            onClick={onClick}
+            aria-label={label}
+            disabled={disabled}
+          >
             {icon ? <span dangerouslySetInnerHTML={{ __html: icon }} /> : label}
           </button>
         ))}

@@ -40,15 +40,20 @@
     border: 0;
     background: #fff;
     min-width: 60px;
-  }
 
-  &__button--edit {
-    background-color: @green;
-    color: #fff;
-  }
+    &--edit {
+      background-color: @green;
+      color: #fff;
+    }
 
-  &__button--delete {
-    background-color: @red;
-    color: #fff;
+    &--delete {
+      background-color: @red;
+      color: #fff;
+    }
+
+    &.-disabled {
+      background-color: #b9b9b9;
+      color: darken(#b9b9b9, 20%);
+    }
   }
 }
