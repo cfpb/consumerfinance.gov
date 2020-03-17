@@ -56,6 +56,15 @@ export default class UIStore {
     return formatCurrency(this.weekEndingBalance);
   }
 
+  @computed get weekHasEvents() {
+    const events = this.rootStore.eventStore.eventsByWeek.get(this.currentWeek.startOf('week').valueOf());
+    return events && events.length;
+  }
+
+  @computed get weekHasNegativeBalance() {
+    return this.weekHasEvents && this.weekEndingBalance < 1;
+  }
+
   @action setNavOpen(val) {
     this.navOpen = Boolean(val);
   }

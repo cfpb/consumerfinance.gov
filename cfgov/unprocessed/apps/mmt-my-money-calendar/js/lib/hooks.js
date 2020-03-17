@@ -1,6 +1,4 @@
-import { useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useStore } from '../stores';
+import { useCallback } from 'react';
 
 export const useClickHandler = (cb, deps) => useCallback((evt) => {
   evt.preventDefault();

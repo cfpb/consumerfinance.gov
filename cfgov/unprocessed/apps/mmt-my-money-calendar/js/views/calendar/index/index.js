@@ -41,7 +41,7 @@ function Calendar() {
 
   useEffect(() => {
     uiStore.setPageTitle('myMoney Calendar');
-    uiStore.setSubtitle(uiStore.currentMonth.format('MMMM, YYYY'));
+    uiStore.setSubtitle(uiStore.currentMonth.format('MMMM YYYY'));
   }, [location, params, uiStore.currentMonth]);
 
   const dayLabels = (
@@ -53,12 +53,14 @@ function Calendar() {
   useScrollToTop();
 
   return (
-  <section className="calendar">
-      <h2>{uiStore.subtitle}</h2>
+    <section className="calendar">
+      <header className="calendar__header">
+        <h2 className="calendar__subtitle">{uiStore.subtitle}</h2>
 
-      <nav className="calendar__nav">
-        <Button onClick={gotoToday}>Today</Button>
-      </nav>
+        <nav className="calendar__nav">
+          <Button onClick={gotoToday}>Today</Button>
+        </nav>
+      </header>
 
       <div className="calendar__rows">
         {[

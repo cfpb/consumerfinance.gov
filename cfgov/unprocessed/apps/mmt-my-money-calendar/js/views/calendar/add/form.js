@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react';
-import { useMemo, useCallback } from 'react';
+import { useMemo, useRef, useCallback, useState } from 'react';
 import { Formik } from 'formik';
 import { useParams, useHistory, Redirect, withRouter } from 'react-router-dom';
 import * as yup from 'yup';
 import { useStore } from '../../../stores';
 import { Categories } from '../../../stores/models/categories';
-import Button, { ButtonLink, BackButton } from '../../../components/button';
+import Button, { BackButton } from '../../../components/button';
 import { TextField, DateField, Checkbox, CurrencyField, RadioButton, SelectField } from '../../../components/forms';
 import { recurrenceRules, numberWithOrdinal, dayjs } from '../../../lib/calendar-helpers';
 import { range } from '../../../lib/array-helpers';
@@ -13,12 +13,15 @@ import { pluck } from '../../../lib/object-helpers';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import Logger from '../../../lib/logger';
 import CashFlowEvent from '../../../stores/models/cash-flow-event';
+import ModalDialog from '../../../components/modal-dialog';
 
 function Form() {
   useScrollToTop();
 
   const { uiStore, eventStore } = useStore();
+  const formValues = useRef(null);
   const history = useHistory();
+  const [recurrenceUpdateModalState, showRecurrenceUpdateModal] = useState(false);
   const logger = useMemo(() => Logger.addGroup('eventForm'), []);
   const monthDayOptions = useMemo(
     () => [...range(1, 30)].map((num) => ({ label: numberWithOrdinal(num), value: num })),
@@ -52,6 +55,15 @@ function Form() {
     },
     [uiStore]
   );
+  const saveEvent = useCallback(async (values, updateRecurrences = false) => {
+    try {
+      await eventStore.saveEvent(values, updateRecurrences);
+      history.push('/calendar');
+    } catch (err) {
+      logger.error(err);
+      uiStore.setError(err);
+    }
+  }, [eventStore, logger, uiStore]);
 
   let { id, categories = '' } = useParams();
   const isNew = !id;
@@ -59,6 +71,11 @@ function Form() {
   let pathSegments = categoryPath.split('.');
   let category = Categories.get(categoryPath);
   let eventType = pathSegments[0];
+
+  // Should eventually return a loading spinner here:
+  if (id && !eventStore.eventsLoaded) return null;
+
+  if (isNew && !category) return <Redirect to="/calendar/add" />;
 
   const event = id
     ? eventStore.getEvent(id)
@@ -75,14 +92,9 @@ function Form() {
     logger.log('Editing existing event: %O', event);
   }
 
-  const recurrenceOptions = useMemo(() => {
-    const rules = category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules;
-    return Object.entries(rules).map(([value, { label }]) => ({ label, value }));
-  }, [category]);
-
-  if (id && !eventStore.eventsLoaded) return null;
-
-  if (isNew && !category) return <Redirect to="/calendar/add" />;
+  const recurrenceOptions = Object.entries(
+    category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
+  ).map(([value, { label }]) => ({ label, value }));
 
   return (
     <section className="add-event">
@@ -130,13 +142,12 @@ function Form() {
                 : handler(values.dateTime.toDate());
           }
 
-          try {
-            eventStore.saveEvent(values);
-            history.push('/calendar');
-          } catch (err) {
-            logger.error(err);
-            uiStore.setError(err);
+          if (event.persisted && event.recurs) {
+            formValues.current = values;
+            return showRecurrenceUpdateModal(true);
           }
+
+          return saveEvent(values);
         }}
       >
         {(formik) => (
@@ -241,6 +252,31 @@ function Form() {
           </form>
         )}
       </Formik>
+
+      <ModalDialog
+        contentLabel="Recurring event update options"
+        isOpen={recurrenceUpdateModalState}
+        onRequestClose={() => showRecurrenceUpdateModal(false)}
+        id="recurrence-update-dialog"
+        prompt="Update the totals of future occurrences of this event?"
+        actions={[
+          {
+            label: 'Yes',
+            onClick: async () => {
+              showRecurrenceUpdateModal(false);
+              await saveEvent(formValues.current, true);
+            },
+          },
+          {
+            label: 'No',
+            onClick: async () => {
+              showRecurrenceUpdateModal(false);
+              await saveEvent(formValues.current);
+            },
+          },
+        ]}
+        showCancel={false}
+      />
     </section>
   );
 }

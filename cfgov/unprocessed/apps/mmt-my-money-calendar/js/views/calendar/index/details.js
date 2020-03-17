@@ -33,6 +33,7 @@ const DetailRow = ({ event, onRequestEdit, onRequestDelete, ...props }) => (
         icon: deleteIcon,
         className: 'slide-list-item__button--delete',
         onClick: onRequestDelete,
+        disabled: event.category === 'startingBalance',
       },
     ]}
     {...props}
@@ -87,10 +88,7 @@ function Details() {
   const events = eventStore.eventsByWeek.get(uiStore.currentWeek.startOf('week').valueOf());
   const income = events ? events.filter(({ totalCents }) => totalCents > 0) : [];
   const expenses = events ? events.filter(({ totalCents }) => totalCents < 0) : [];
-  const negativeBalance = uiStore.weekEndingBalance < 1;
-  const endBalanceClasses = clsx('calendar-details__ending-balance', negativeBalance && 'negative');
-
-  // TODO: Add m-notification component with negative balance message when user goes into negative moneys
+  const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative');
 
   return (
     <section className="calendar-details">
@@ -107,7 +105,7 @@ function Details() {
           <div className="calendar-details__starting-balance">
             Week starting balance: {uiStore.weekStartingBalanceText}
           </div>
-          {!negativeBalance && (
+          {!uiStore.weekHasNegativeBalance && (
             <div className={endBalanceClasses}>Week ending balance: {uiStore.weekEndingBalanceText}</div>
           )}
         </div>
@@ -120,7 +118,7 @@ function Details() {
         />
       </header>
 
-      {negativeBalance && (
+      {uiStore.weekHasNegativeBalance && (
         <div className={endBalanceClasses}>
           <Notification
             message="You're in the red!"
