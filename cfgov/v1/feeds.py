@@ -2,13 +2,9 @@ from datetime import datetime
 
 from django.contrib.syndication.views import Feed
 
+from wagtail.core.url_routing import RouteResult
+
 import pytz
-
-
-try:
-    from wagtail.core.url_routing import RouteResult
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.url_routing import RouteResult
 
 
 eastern = pytz.timezone('US/Eastern')

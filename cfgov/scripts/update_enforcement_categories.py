@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from v1.models import CFGOVPageCategory, DocumentDetailPage
 from v1.util.migrations import get_stream_data, set_stream_data
 

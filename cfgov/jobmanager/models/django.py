@@ -1,17 +1,10 @@
-from __future__ import absolute_import, unicode_literals
-
 from django.db import models
+
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
+from wagtail.core.fields import RichTextField
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-
-
-try:
-    from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
-    from wagtail.core.fields import RichTextField
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
-    from wagtail.wagtailcore.fields import RichTextField
 
 
 class ApplicantType(models.Model):

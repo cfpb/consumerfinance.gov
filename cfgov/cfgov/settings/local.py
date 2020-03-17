@@ -1,8 +1,6 @@
 import sys
 import warnings
 
-import wagtail
-
 from unipath import DIRS
 
 from .base import *
@@ -22,16 +20,8 @@ SECRET_KEY = 'not-secret-key-for-testing'
 
 INSTALLED_APPS += (
     'sslserver',
+    'wagtail.contrib.styleguide',
 )
-
-if wagtail.VERSION >= (2, 0):
-    INSTALLED_APPS += (
-        'wagtail.contrib.styleguide',
-    )
-else:
-    INSTALLED_APPS += (
-        'wagtail.contrib.wagtailstyleguide',
-    )
 
 STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')
 
@@ -117,7 +107,3 @@ if os.environ.get('ENABLE_POST_PREVIEW_CACHE'):
 # unless the GOVDELIVERY_BASE_URL environment variable is set.
 if not os.environ.get('GOVDELIVERY_BASE_URL'):
     GOVDELIVERY_API = 'core.govdelivery.LoggingMockGovDelivery'
-
-# Used in legacy.views.complaint.ComplaintLandingView
-# This is a localhost debug environment for Docker
-COMPLAINT_LANDING_STATS_SOURCE = "http://0.0.0.0:8000/data-research/consumer-complaints/search/api/v1/?field=all&size=1&no_aggs=true"    

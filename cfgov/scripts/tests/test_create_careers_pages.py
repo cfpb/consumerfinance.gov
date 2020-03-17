@@ -1,16 +1,10 @@
 from django.test import TestCase
 
-import wagtail
+from wagtail.core.models import Page
 
 from scripts import create_careers_pages
 
 from v1.tests.wagtail_pages.helpers import save_page
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.core.models import Page
-else:
-    from wagtail.wagtailcore.models import Page
 
 
 class TestCreateCareersPages(TestCase):
