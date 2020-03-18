@@ -15,12 +15,13 @@ import pencil from '@cfpb/cfpb-icons/src/icons/pencil.svg';
 import deleteIcon from '@cfpb/cfpb-icons/src/icons/delete.svg';
 import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
+import dragHandle from '@cfpb/cfpb-icons/src/icons/hamburger.svg';
 
 const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
-const DetailRow = ({ event, onRequestEdit, onRequestDelete, ...props }) => (
+const DetailRow = ({ event, onRequestEdit, onRequestDelete, balanceIsNegative = false, ...props }) => (
   <SlideListItem
-    className="calendar-details__event"
+    className={clsx('calendar-details__event', balanceIsNegative && '-negative-balance')}
     actions={[
       {
         label: 'Edit',
@@ -41,6 +42,9 @@ const DetailRow = ({ event, onRequestEdit, onRequestDelete, ...props }) => (
     <div className="calendar-details__event-date">{event.dateTime.format('M/D/YYYY')}</div>
     <div className="calendar-details__event-name">{event.name}</div>
     <div className="calendar-details__event-total">{formatCurrency(event.total)}</div>
+    <div className="calendar-details__drag-handle">
+      <span className="calendar-details__drag-icon" dangerouslySetInnerHTML={{__html: dragHandle }} />
+    </div>
   </SlideListItem>
 );
 
@@ -149,7 +153,7 @@ function Details() {
 
         <ul className="calendar-details__events-list">
           {expenses.map((e) => (
-            <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} />
+            <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} balanceIsNegative={eventStore.getBalanceForDate(e.dateTime) < 1} />
           ))}
         </ul>
       </div>

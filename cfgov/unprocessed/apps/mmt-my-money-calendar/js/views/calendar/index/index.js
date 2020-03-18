@@ -56,10 +56,6 @@ function Calendar() {
     <section className="calendar">
       <header className="calendar__header">
         <h2 className="calendar__subtitle">{uiStore.subtitle}</h2>
-
-        <nav className="calendar__nav">
-          <Button onClick={gotoToday}>Today</Button>
-        </nav>
       </header>
 
       <div className="calendar__rows">
