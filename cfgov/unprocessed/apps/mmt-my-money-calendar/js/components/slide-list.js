@@ -37,9 +37,10 @@ export function SlideListItem({
   const fgStyle = {
     transform,
   };
+  const springConfig = { ...config.gentle, tension: 200 };
 
   const open = ({ canceled }) => {
-    set({ x: -slideWidth.current, config: canceled ? config.wobbly : config.gentle });
+    set({ x: -slideWidth.current, config: canceled ? config.wobbly : springConfig });
     isOpen.current = true;
   };
 
@@ -62,7 +63,7 @@ export function SlideListItem({
     else if (last && isOpen.current)
       mx > -(slideWidth.current - slideWidth.current * (1 - threshold)) ? close(vx) : open({ canceled });
     // when user keeps dragging, move according to touch or cursor position:
-    else set({ x: mx, immediate: false, config: config.gentle });
+    else set({ x: mx, immediate: false, config: springConfig });
   });
 
   useLayoutEffect(() => {
