@@ -330,7 +330,7 @@ in our `sample.js` file.
 
 Another example is
 [`breakpoint-state-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/breakpoint-state-spec.js),
-which tests 2 methods, `get` and `isInDesktop`,
+which tests several methods, including `getBreakpointState` and `viewportIsIn`,
 on the module `breakpoint-state`.
 
 When using TDD, you may prefer to add `describe` blocks later,

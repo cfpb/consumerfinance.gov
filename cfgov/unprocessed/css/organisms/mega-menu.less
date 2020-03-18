@@ -163,9 +163,10 @@ body {
         font-size: 1em;
     }
 
-    // Reset default unordered list padding.
+    // Reset default unordered list padding and margin.
     ul {
         padding-left: 0;
+        margin-top: 0;
     }
 
     &_content {
@@ -522,16 +523,18 @@ body {
     // Desktop sizes. 901px.
     .respond-to-min( @bp-med-min, {
         position: relative;
+        left: -( @grid_gutter-width / 2 );
+        width: calc( 100% + @grid_gutter-width );
 
         // Horizontal rule to overlay on top of header rule so that
         // rule isn't hidden when menu opens.
         &:after {
             position: absolute;
             bottom: 0;
-            left: -@grid_gutter-width;
+            left: -( @grid_gutter-width / 2 );
+            right: -( @grid_gutter-width / 2 );
             display: block;
             z-index: 20;
-            width: @menu_max_width_px + ( @grid_gutter-width * 2 );
             height: 1px;
             content: '';
             box-shadow: 0px 1px 0px 0px @gray-40;
@@ -572,35 +575,24 @@ body {
             }
 
             &-link {
-                // Override global link styling.
-                &:hover,
-                &:active,
-                &:focus,
-                &:visited {
-                    border-color: transparent;
-                    border-bottom: none;
-                }
-
                 position: relative;
                 z-index: 30;
                 padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
                 border-top: 1px solid transparent;
                 border-right: 1px solid transparent;
                 border-left: 1px solid transparent;
-
                 font-size: unit( 16px / @base-font-size-px, em );
 
                 &:first-child {
                     margin-left: 0;
                 }
 
-                // A main nav label has been selected and the menu is expanded.
-                &[aria-expanded="true"],
-                &:active {
-                    position: relative;
-                    top: 1px;
-                    background-color: @gray-5;
-                    border: 1px solid @gray-40;
+                // Override global link styling.
+                &:hover,
+                &:active,
+                &:focus,
+                &:visited {
+                    border-color: transparent;
                     border-bottom: none;
                 }
 
@@ -622,6 +614,16 @@ body {
                         width: 100%;
                         height: unit( 6px / @base-font-size-px, em );
                     }
+                }
+
+                // A main nav label has been selected and the menu is expanded.
+                &[aria-expanded="true"],
+                &:active {
+                    position: relative;
+                    top: 1px;
+                    background-color: @gray-5;
+                    border: 1px solid @gray-40;
+                    border-bottom: none;
                 }
 
                 // Don't show hover when menu is expanded.
@@ -825,16 +827,16 @@ body {
                 border-left: 5px solid transparent;
                 font-size: unit( 16px / @base-font-size-px, em );
 
-                &:hover,
-                &__current,
-                &__current:visited {
-                    color: @black;
+                &:hover {
                     border-left-color: @green;
                 }
 
+                // This is styling for the currently selected content-2 links.
                 &__current:hover,
                 &__current,
                 &__current:visited {
+                    color: @black;
+                    border-left-color: @black;
                     cursor: default;
                 }
             }
@@ -861,8 +863,14 @@ body {
 
     // Xtra-Large desktop size. 1261px.
     .respond-to-min( @bp-xl-min + @grid_gutter-width, {
-        left: unit( -16px / @base-font-size-px, em );
         width: @menu_max_width_px;
+
+        // Horizontal rule to overlay on top of header rule so that
+        // rule isn't hidden when menu opens.
+        &:after {
+            left: -@grid_gutter-width;
+            width: @menu_max_width_px + ( @grid_gutter-width * 2 );
+        }
 
         &_content-1 {
             &-item {

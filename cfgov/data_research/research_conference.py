@@ -1,22 +1,16 @@
-from __future__ import unicode_literals
-
 import re
 
 from django.core.mail import EmailMessage
 from django.template import loader
 from django.utils.functional import cached_property
 
+from wagtail.core.models import Page
+
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
 
 from data_research.forms import ConferenceRegistrationForm
 from data_research.models import ConferenceRegistration
-
-
-try:
-    from wagtail.core.models import Page
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page
 
 
 def get_conference_details_from_page(page_id):

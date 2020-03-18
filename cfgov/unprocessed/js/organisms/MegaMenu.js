@@ -8,7 +8,7 @@ import MoveTransition from '../modules/transition/MoveTransition';
 import TabTrigger from '../modules/TabTrigger';
 import Tree from '../modules/Tree';
 import { contains } from '../modules/util/data-hook';
-import { isInDesktop } from '../modules/util/breakpoint-state';
+import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state';
 
 /**
  * MegaMenu
@@ -84,7 +84,7 @@ function MegaMenu( element ) {
       window.addEventListener( 'orientationchange', _resizeHandler );
     }
 
-    if ( isInDesktop() ) {
+    if ( viewportIsIn( DESKTOP ) ) {
       _desktopNav.resume();
     } else {
       _mobileNav.resume();
@@ -162,7 +162,7 @@ function MegaMenu( element ) {
    * @param {Object} event - A FlyoutMenu event object.
    */
   function _handleEvent( event ) {
-    const activeNav = isInDesktop() ? _desktopNav : _mobileNav;
+    const activeNav = viewportIsIn( DESKTOP ) ? _desktopNav : _mobileNav;
     activeNav.handleEvent( event );
   }
 
@@ -171,7 +171,7 @@ function MegaMenu( element ) {
    * suspends or resumes the mobile or desktop menu behaviors.
    */
   function _resizeHandler() {
-    if ( isInDesktop() ) {
+    if ( viewportIsIn( DESKTOP ) ) {
       _mobileNav.suspend();
       _desktopNav.resume();
     } else {
@@ -192,7 +192,7 @@ function MegaMenu( element ) {
    * @returns {MegaMenu} An instance.
    */
   function collapse() {
-    if ( !isInDesktop() ) {
+    if ( !viewportIsIn( DESKTOP ) ) {
       _mobileNav.collapse();
     }
 

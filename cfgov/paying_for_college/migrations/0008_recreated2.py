@@ -6,16 +6,9 @@ from django.db import migrations, models
 import django.db.models.deletion
 import v1.atomic_elements.organisms
 import v1.blocks
-import wagtail
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.core import blocks as core_blocks
-    from wagtail.core import fields as core_fields
-    from wagtail.images import blocks as images_blocks
-else:
-    from wagtail.wagtailcore import blocks as core_blocks
-    from wagtail.wagtailcore import fields as core_fields
-    from wagtail.wagtailimages import blocks as images_blocks
+from wagtail.core import blocks as core_blocks
+from wagtail.core import fields as core_fields
+from wagtail.images import blocks as images_blocks
 
 
 class Migration(migrations.Migration):

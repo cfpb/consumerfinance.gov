@@ -5,6 +5,17 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 
+from wagtail.admin.edit_handlers import (
+    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
+    StreamFieldPanel, TabbedInterface
+)
+from wagtail.core import blocks
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page, PageManager
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
+
 from localflavor.us.models import USStateField
 from modelcluster.fields import ParentalKey
 from pytz import timezone
@@ -14,30 +25,6 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
-
-
-try:
-    from wagtail.admin.edit_handlers import (
-        FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
-        ObjectList, StreamFieldPanel, TabbedInterface
-    )
-    from wagtail.core import blocks
-    from wagtail.core.fields import RichTextField, StreamField
-    from wagtail.core.models import Page, PageManager
-    from wagtail.documents.edit_handlers import DocumentChooserPanel
-    from wagtail.images.edit_handlers import ImageChooserPanel
-    from wagtail.search import index
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import (
-        FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel,
-        ObjectList, StreamFieldPanel, TabbedInterface
-    )
-    from wagtail.wagtailcore import blocks
-    from wagtail.wagtailcore.fields import RichTextField, StreamField
-    from wagtail.wagtailcore.models import Page, PageManager
-    from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
-    from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-    from wagtail.wagtailsearch import index
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -180,6 +167,13 @@ class EnforcementActionStatus(models.Model):
                          related_name='statuses')
 
 
+class EnforcementActionDocket(models.Model):
+    docket_number = models.CharField(max_length=50)
+    action = ParentalKey('v1.EnforcementActionPage',
+                         on_delete=models.CASCADE,
+                         related_name='docket_numbers')
+
+
 class EnforcementActionPage(AbstractFilterPage):
     sidebar_header = models.CharField(
         default='Action details',
@@ -190,7 +184,6 @@ class EnforcementActionPage(AbstractFilterPage):
         ('Nonbank', 'Nonbank'),
         ('Bank', 'Bank')
     ])
-    docket_number = models.CharField(max_length=100)
 
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
@@ -212,10 +205,16 @@ class EnforcementActionPage(AbstractFilterPage):
             FieldPanel('sidebar_header'),
             FieldPanel('court'),
             FieldPanel('institution_type'),
-            FieldPanel('docket_number'),
             FieldPanel('date_filed'),
             FieldPanel('tags', 'Tags'),
         ], heading='Basic Metadata'),
+        MultiFieldPanel([
+            InlinePanel(
+                'docket_numbers',
+                label="Docket Number",
+                min_num=1
+            ),
+        ], heading='Docket Number'),
         MultiFieldPanel([
             InlinePanel('statuses', label="Enforcement Status", min_num=1),
         ], heading='Enforcement Status'),

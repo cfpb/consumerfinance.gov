@@ -4,7 +4,8 @@ from django.test import (
     RequestFactory, SimpleTestCase, TestCase, override_settings
 )
 
-import wagtail
+from wagtail.core.models import Site
+from wagtail.core.whitelist import Whitelister
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
 
@@ -15,13 +16,6 @@ from v1.models.resources import Resource
 from v1.wagtail_hooks import (
     form_module_handlers, get_resource_tags, set_served_by_wagtail_sharing
 )
-
-
-try:
-    from wagtail.core.models import Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Site
-    from wagtail.wagtailcore.rich_text import DbWhitelister
 
 
 class TestFormModuleHandlers(TestCase):
@@ -206,46 +200,21 @@ class TestResourceTagsFilter(TestCase, WagtailTestUtils):
         )
 
 
-@unittest.skipIf(wagtail.VERSION >= (2, 0), "No need to test in Wagtail 2+")
 class TestWhitelistOverride(SimpleTestCase):
     # Borrowed from https://github.com/wagtail/wagtail/blob/master/wagtail
     # /core/tests/test_whitelist.py
 
-    def test_whitelist_hooks(self):
-        """Test that Whitelister does not strip new elements and attributes.
+    def setUp(self):
+        self.whitelister = Whitelister()
 
-        The new allowed elements and attributes are added in v1.wagtail_hooks.
+    def test_whitelist_hooks(self):
         """
-        input_html = '''
-<span class="schema-container"
-      itemprop="step"
-      itemscope=""
-      itemtype="http://schema.org/HowToSection">
-    <h4 itemprop="name">Step 1: Learn about the debt</h4>
-    <span class="schema-container" itemprop="itemListElement">
-        <table>
-            <thead>
-                <tr>
-                    <th>Col 1 header</th>
-                    <th>Col 2 header</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Row 1 Col 1</td>
-                    <td>Row 1 Col 2</td>
-                </tr>
-                <tr>
-                    <td>Row 2 Col 1</td>
-                    <td>Row 2 Col 2</td>
-                </tr>
-            </tbody>
-        </table>
-    </span>
-</span>
-        '''
-        output_html = DbWhitelister.clean(input_html)
-        self.assertHTMLEqual(input_html, output_html)
+        Whitelister.clean should remove disallowed tags and attributes from
+        a string
+        """
+        input_html = '<scan class="id">Consumer <embed>Finance</embed></scan>'
+        output_html = self.whitelister.clean(input_html)
+        self.assertHTMLEqual(output_html, 'Consumer Finance')
 
 
 class TestSetServedByWagtailSharing(TestCase):

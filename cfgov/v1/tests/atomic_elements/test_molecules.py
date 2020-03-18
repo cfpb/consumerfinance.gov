@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.test import SimpleTestCase, TestCase
 
+from wagtail.core.blocks import StreamValue
+
 from scripts import _atomic_helpers as atomic
 
 from v1.atomic_elements.molecules import (
@@ -13,12 +15,6 @@ from v1.models.learn_page import DocumentDetailPage, LearnPage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
-
-
-try:
-    from wagtail.core.blocks import StreamValue
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.blocks import StreamValue
 
 
 class MoleculesTestCase(TestCase):

@@ -9,10 +9,13 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.utils.html import format_html_join
 
-import wagtail
+from wagtail.admin.menu import MenuItem
+from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
+from wagtail.core import hooks
+from wagtail.core.whitelist import attribute_rule
 
 from scripts import export_enforcement_actions
 
@@ -22,16 +25,6 @@ from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.util import util
-
-
-try:
-    from wagtail.admin.menu import MenuItem
-    from wagtail.core import hooks
-    from wagtail.core.whitelist import attribute_rule
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.menu import MenuItem
-    from wagtail.wagtailcore import hooks
-    from wagtail.wagtailcore.whitelist import attribute_rule
 
 
 logger = logging.getLogger(__name__)
@@ -86,30 +79,30 @@ def log_page_deletion(request, page):
 def editor_js():
     js_files = ['js/table-block.js']
 
-    if wagtail.VERSION >= (2, 0):
-        # Temporarily adding Hallo-related JavaScript files to all admin pages
-        # to support the continued use of Hallo in our RichTextTableInput
-        # until we can take more time to migrate that to Draftail.
-        js_files.insert(0, 'wagtailadmin/js/vendor/hallo.js')
-        js_files.insert(0, 'wagtailadmin/js/hallo-plugins/hallo-hr.js')
-        js_files.insert(
-            0,
-            'wagtailadmin/js/hallo-plugins/hallo-requireparagraphs.js'
-        )
-        js_files.insert(
-            0, 'wagtailadmin/js/hallo-plugins/hallo-wagtaillink.js')
-        js_files.insert(
-            0,
-            'wagtaildocs/js/hallo-plugins/hallo-wagtaildoclink.js'
-        )
-        js_files.insert(
-            0,
-            'wagtailembeds/js/hallo-plugins/hallo-wagtailembeds.js'
-        )
-        js_files.insert(
-            0,
-            'wagtailimages/js/hallo-plugins/hallo-wagtailimage.js'
-        )
+    # Temporarily adding Hallo-related JavaScript files to all admin pages
+    # to support the continued use of Hallo in our RichTextTableInput
+    # until we can take more time to migrate that to Draftail.
+    js_files.insert(0, 'wagtailadmin/js/vendor/hallo.js')
+    js_files.insert(0, 'wagtailadmin/js/hallo-plugins/hallo-hr.js')
+    js_files.insert(
+        0,
+        'wagtailadmin/js/hallo-plugins/hallo-requireparagraphs.js'
+    )
+    js_files.insert(
+        0, 'wagtailadmin/js/hallo-plugins/hallo-wagtaillink.js'
+    )
+    js_files.insert(
+        0,
+        'wagtaildocs/js/hallo-plugins/hallo-wagtaildoclink.js'
+    )
+    js_files.insert(
+        0,
+        'wagtailembeds/js/hallo-plugins/hallo-wagtailembeds.js'
+    )
+    js_files.insert(
+        0,
+        'wagtailimages/js/hallo-plugins/hallo-wagtailimage.js'
+    )
 
     js_includes = format_html_join(
         '\n',
@@ -131,11 +124,10 @@ def editor_css():
         'css/table-block.css',
     ]
 
-    if wagtail.VERSION >= (2, 0):
-        # Temporarily adding Hallo CSS to all admin pages
-        # to support the continued use of Hallo in our RichTextTableInput
-        # until we can take more time to migrate that to Draftail.
-        css_files.insert(0, 'wagtailadmin/css/panels/hallo.css')
+    # Temporarily adding Hallo CSS to all admin pages
+    # to support the continued use of Hallo in our RichTextTableInput
+    # until we can take more time to migrate that to Draftail.
+    css_files.insert(0, 'wagtailadmin/css/panels/hallo.css')
 
     css_includes = format_html_join(
         '\n',
@@ -365,21 +357,25 @@ def hide_snippets_menu_item(request, menu_items):
                      if item.url != reverse('wagtailsnippets:index')]
 
 
-# Override list of allowed tags in a RichTextField
-@hooks.register('construct_whitelister_element_rules')
-def whitelister_element_rules():
+# The construct_whitelister_element_rules was depricated in Wagtail 2,
+# so we'll use register_rich_text_features instead.
+# Only applies to Hallo editors, which only remain in our custom
+# AtomicTableBlock table cells.
+@hooks.register('register_rich_text_features')
+def register_span_feature(features):
     allow_html_class = attribute_rule({
         'class': True,
-        'itemprop': True,
-        'itemscope': True,
-        'itemtype': True,
+        'id': True,
     })
 
-    allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
-                    'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
-                    'col', 'colgroup']
+    # register a feature 'span'
+    # which whitelists the <span> element
+    features.register_converter_rule('editorhtml', 'span', [
+        WhitelistRule('span', allow_html_class),
+    ])
 
-    return {tag: allow_html_class for tag in allowed_tags}
+    # add 'span' to the default feature set
+    features.default_features.append('span')
 
 
 @hooks.register('before_serve_shared_page')
