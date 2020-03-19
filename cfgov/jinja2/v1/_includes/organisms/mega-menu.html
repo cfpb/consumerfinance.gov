@@ -139,7 +139,7 @@
             </h3>
             {% endif %}
 
-            {# TODO: Make the follow menu markup use the _nav_item macro. #}
+            {# TODO: Make the following menu markup use the _nav_item macro. #}
             {% if nav_item.nav_items %}
                 {% set temp = nav_item.update({'nav_groups': [{'nav_items': nav_item.nav_items}]}) %}
             {% endif %}
