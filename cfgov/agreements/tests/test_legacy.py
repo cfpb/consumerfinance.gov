@@ -50,7 +50,7 @@ class Views(TestCase):
 
     def test_index_renders(self):
         response = self.client.get(reverse('agreements_home'))
-        str(response.content)
+        str(response.content.decode('utf-8'))
 
     @patch('agreements.views.render', return_value=HttpResponse())
     def test_index_with_agreements(self, render):
