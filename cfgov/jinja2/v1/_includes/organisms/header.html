@@ -97,7 +97,7 @@
             {% endif %}
 
             {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-            {{ global_header_cta.render( true, language ) }}
+            {{ global_header_cta.render( language ) }}
 
             {% import 'molecules/global-search.html' as global_search with context %}
             {{ global_search.render() }}
