@@ -20,9 +20,7 @@ def register_admin_urls():
     if django.VERSION >= (2, 0):
         urls = [
             re_path(r'^permissions/',
-                    include('permissions_viewer.urls',
-                            app_name='permissions_viewer',
-                            namespace='permissions')),
+                    include('permissions_viewer.urls')),
         ]
     else:
         urls = [
