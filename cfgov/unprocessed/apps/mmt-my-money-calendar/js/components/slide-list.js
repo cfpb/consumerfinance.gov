@@ -22,7 +22,6 @@ export function SlideListItem({
   const isOpen = useRef(false);
   const slideWidth = useRef(0);
   const [{ x }, set] = useSpring(() => ({ x: 0 }), { immediate: false });
-  //const transform = interpolate([x], (x) => `translateX(${x}px)`);
   const transform = interpolate([x], (x) => {
     const limited = clamp(x, -slideWidth.current * (1 + threshold), 0);
     return `translateX(${limited}px)`;
