@@ -119,7 +119,8 @@ body {
           Structural cheat sheet:
           -----------------------
           nav.o-mega-menu
-            .o-mega-menu_trigger
+            .o-mega-menu_heading
+                .o-mega-menu_trigger
             .o-mega-menu_content
                 .o-mega-menu_content-wrapper
                     .wrapper
@@ -162,6 +163,12 @@ body {
 @menu_max_width_px: 1200px;
 
 .o-mega-menu {
+
+    &_heading {
+        // Override h2 element styles.
+        margin: 0;
+        font-size: 1em;
+    }
 
     // Reset default unordered list padding and margin.
     ul {

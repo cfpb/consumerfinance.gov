@@ -281,19 +281,21 @@
             u-hidden"
      data-js-hook="behavior_flyout-menu"
      aria-label="main menu">
-    <button class="{{ base_class ~ '_trigger' }}"
-            data-js-hook="behavior_flyout-menu_trigger"
-            aria-haspopup="menu">
-        <span class="{{ base_class ~ '_trigger-open' }}">
-            {{ svg_icon('menu') }}
-        </span>
-        <span class="{{ base_class ~ '_trigger-close' }}">
-            {{ svg_icon('close') }}
-        </span>
-        <span class="u-visually-hidden">
-            Main menu
-        </span>
-    </button>
+    <h2 class="{{ base_class ~ '_heading' }}">
+        <button class="{{ base_class ~ '_trigger' }}"
+                data-js-hook="behavior_flyout-menu_trigger"
+                aria-haspopup="menu">
+            <span class="{{ base_class ~ '_trigger-open' }}">
+                {{ svg_icon('menu') }}
+            </span>
+            <span class="{{ base_class ~ '_trigger-close' }}">
+                {{ svg_icon('close') }}
+            </span>
+            <span class="u-visually-hidden">
+                Main menu
+            </span>
+        </button>
+    </h2>
    {# Create a root menu at depth one.
       This is the 1st level of a 3-level menu. #}
     {{ _nav_level( 1, {'nav_groups': [{'nav_items': menu_items}]}, language=language ) }}
