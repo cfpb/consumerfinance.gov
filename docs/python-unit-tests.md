@@ -60,33 +60,32 @@ You can select specific environments using `-e`.
 Running `tox` by itself is the same as running:
 
 ```sh
-tox -e lint -e unittest-py36-dj111-wag113-slow
+tox -e lint -e unittest
 ```
 
 These default environments are:
 
-- `lint`, which runs our [linting](#linting) tools
-- `unittest-py27-dj111-wag113-slow`, our "slow" (with migrations) environment 
-  for running unit tests on Python 2.7 with Django 1.11 and Wagtail 1.13.
-- `unittest-py36-dj111-wag113-slow`, our "slow" (with migrations) environment 
-  for running unit tests on Python 3.6 with Django 1.11 and Wagtail 1.13.
+- `lint`, which runs our [linting](#linting) tools. We require this 
+  environment to pass in CI.
+- `unittest`, which runs unit tests against the current production 
+  versions of Python, Django, and Wagtail. We require this environment to 
+  pass in CI.
+
+In addition, we also have this environment:
+
+- `unittest-future`, which runs unit tests against upcoming versions of 
+  Python, Django, and Wagtail. We do not require this environment to pass in 
+  CI.
  
 By default this uses a local SQLite database for tests. To override this, you
 can set the `TEST_DATABASE_URL` environment variable to a database connection
 string as supported by [dj-database-url](https://github.com/kennethreitz/dj-database-url).
 
-If you haven't changed any Python dependencies and you don't need to test 
-all migrations, you can run our "fast" environments that skip migrations:
-
-```sh
-tox -e unittest-py36-dj111-wag113-fast
-```
-
 If you would like to run only a specific test, or the tests for a specific app, 
 you can provide a dotted path to the test as the final argument to any of the above calls to `tox`:
 
 ```sh
-tox -e unittest-py36-dj111-wag113-fast regulations3k.tests.test_regdown
+tox -e unittest regulations3k.tests.test_regdown
 ```
 
 ### Linting
@@ -136,7 +135,7 @@ runner that fails if anything is written to stdout. This test runner is at
 environment variable:
 
 ```sh
-TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e fast
+TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e unittest
 ```
 
 This test runner is enabled when tests are run automatically on [Travis CI](https://travis-ci.org/),
