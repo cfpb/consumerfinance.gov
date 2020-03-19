@@ -54,6 +54,20 @@ export default class CashFlowStore {
   }
 
   /**
+   * All events in the store as a map, keyed by the epoch timestamp of the beginning of the week in which the event occurs, in milliseconds.
+   *
+   * @type {Map<number, CashFlowEvent>}
+   */
+  @computed get eventsByWeek() {
+    return this.events.reduce((output, event) => {
+      const key = event.dateTime.startOf('week').valueOf();
+      const list = output.get(key) || [];
+      output.set(key, [...list, event]);
+      return output;
+    }, new Map());
+  }
+
+  /**
    * All events in the store as a map, keyed by ID
    *
    * @type {Map}
@@ -188,7 +202,7 @@ export default class CashFlowStore {
   }
 
   /**
-   * Adds a new event to the database and syncs it with the store
+   * Adds or updates an event in the database and syncs it with the store
    *
    * @param {Object} params - Event properties
    * @param {String} params.name - The event name
@@ -198,14 +212,39 @@ export default class CashFlowStore {
    * @param {Number} totalCents - The transaction amount, in cents
    * @param {Boolean} [recurs=false] - Whether or not the event recurs
    * @param {String} [recurrence] - The recurrence rule in iCalendar format
+   * @param {boolean} [updateRecurrences=false] - If event has recurrences, update their totals to match
    * @returns {undefined}
    */
-  createEvent = flow(function*(params) {
-    const event = new CashFlowEvent(params);
+  saveEvent = flow(function*(params, updateRecurrences = false) {
+    let event;
+
+    if (params.id) {
+      this.logger.debug('updating existing event %O', params);
+      event = this.getEvent(params.id);
+      event.update(params);
+    } else {
+      this.logger.debug('creating new event %O', params);
+      event = new CashFlowEvent(params);
+    }
 
     try {
       yield event.save();
-      this.events.push(event);
+
+      if (!params.id)
+        this.events.push(event);
+
+      if (updateRecurrences) {
+        const recurrences = yield event.getAllRecurrences();
+
+        for (const recurrence of recurrences) {
+          if (recurrence.dateTime.isBefore(event.dateTime)) continue;
+
+          const stateEvent = this.getEvent(recurrence.id);
+          stateEvent.update({ totalCents: event.totalCents });
+          yield stateEvent.save();
+          this.logger.debug('Update recurrence total (id: %d, total: %d)', recurrence.id, recurrence.total);
+        }
+      }
     } catch (err) {
       this.logger.error('Event save error: %O', err);
       throw err;

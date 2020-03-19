@@ -5,11 +5,16 @@
 @negativeColor: #f0b6b6;
 @breakpointMed: 500px;
 @symbolSize: 24px;
+@currentWeekBorder: 2px solid @inactiveMonthColor;
 
 .calendar {
   display: flex;
   flex-direction: column;
   margin-bottom: @gap;
+
+  &__subtitle {
+    text-align: center;
+  }
 
   &__nav {
     display: flex;
@@ -21,6 +26,9 @@
 
   &__rows {
     margin-bottom: 1rem;
+    border: 1px solid @inactiveMonthColor;
+    border-radius: .5rem;
+    padding: 10px;
   }
 
   &__row {
@@ -28,6 +36,22 @@
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
+    margin-bottom: .3rem;
+
+    &.selected {
+      .calendar__day {
+        border-top: @currentWeekBorder;
+        border-bottom: @currentWeekBorder;
+
+        &:first-of-type {
+          border-left: @currentWeekBorder;
+        }
+
+        &:last-of-type {
+          border-right: @currentWeekBorder;
+        }
+      }
+    }
   }
 
   &__day, &__day-label {
@@ -43,7 +67,8 @@
     padding-right: @gap / 2;
     padding-left: @gap / 2;
     text-align: center;
-    border: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
     position: relative;
 
     @media screen and (min-width: @breakpointMed) {
@@ -75,6 +100,18 @@
     }
   }
 
+  &__day {
+    &:first-of-type {
+      border-top-left-radius: 50%;
+      border-bottom-left-radius: 50%;
+    }
+
+    &:last-of-type {
+      border-top-right-radius: 50%;
+      border-bottom-right-radius: 50%;
+    }
+  }
+
   &__day-label {
     font-weight: bold;
     color: @text;
@@ -82,6 +119,7 @@
 
   &__day-number {
     font-size: 1rem;
+    margin-bottom: 4px;
 
     @media screen and (min-width: @breakpointMed) {
       font-size: 1.25rem;
@@ -108,9 +146,76 @@
 }
 
 .calendar-details {
-  margin-top: 1.5rem;
+  border: 1px solid @inactiveMonthColor;
+  border-radius: .5rem;
+  padding: 10px;
 
-  &__events {
+  &__header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .m-notification {
+    text-align: left;
+
+    &_explanation {
+      font-size: 14px;
+    }
+
+    &_button {
+      background-color: @red;
+      color: #fff;
+      display: block;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 12px;
+      padding: 5px;
+    }
+  }
+
+  .notification-icon {
+    position: absolute;
+  }
+
+  .notification-icon + .m-notification_content {
+    padding-left: 1.5625rem;
+  }
+
+  &__nav-button {
+    font-size: 24px;
+    background: none;
+    border: 0;
+
+    &:first-of-type {
+      margin-right: 10px;
+    }
+
+    &:last-of-type {
+      margin-left: 10px;
+    }
+  }
+
+  &__header-text {
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  &__ending-balance {
+    &.negative {
+      margin: 12px auto;
+    }
+  }
+
+  &__events-section {
+    margin-bottom: 1rem;
+  }
+
+  &__events-list {
     list-style: none;
     padding-left: 0;
   }
@@ -121,9 +226,9 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid @inactiveMonthColor;
     max-width: unset !important;
+    border: 1px solid @inactiveMonthColor;
+    margin-bottom: .5rem;
   }
 
   &__total {
@@ -133,6 +238,7 @@
   &__event-date,
   &__event-name,
   &__event-total {
+    font-size: 13px;
     flex-basis: calc(100% / 3);
     width: calc(100% / 3);
   }
@@ -150,6 +256,19 @@
 
   &__event-delete {
     background: transparent;
+    color: @red;
     border: 0;
+    margin-left: 1rem;
+    font-size: 20px;
+  }
+
+  &__drag-handle {
+    font-size: 22px;
+    margin-left: 20px;
+
+    .cf-icon-svg {
+      transform: rotate(90deg);
+      fill: @inactiveMonthColor;
+    }
   }
 }
