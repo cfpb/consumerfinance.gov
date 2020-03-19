@@ -42,12 +42,12 @@ env:
     - TRAVIS_CHECK_MIGRATIONS="./manage.py makemigrations --dry-run --check"
   matrix:
     - RUNTEST='backend'
-    - RUNTEST='backend' TOXENV='unittest-py36-dj22-wag23'
+    - RUNTEST='backend' TOXENV='unittest-future'
     - RUNTEST='frontend'
 
 jobs:
   allow_failures:
-    - env: RUNTEST='backend' TOXENV='unittest-py36-dj22-wag23'
+    - env: RUNTEST='backend' TOXENV='unittest-future'
   include:
     # This stage will run after the default testing stage succeeds.
     - stage: Build docs and push them to GitHub Pages
