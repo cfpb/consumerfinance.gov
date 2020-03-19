@@ -11,6 +11,8 @@ except ImportError:
     from django.conf.urls import url as re_path
 
 
+app_name = "disclosures"
+
 urlpatterns = [
 
     re_path(r'^offer/$', OfferView.as_view(),

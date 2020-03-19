@@ -1,6 +1,3 @@
-import django
-
-
 try:
     from django.urls import include, re_path
 except ImportError:
@@ -8,15 +5,7 @@ except ImportError:
     from django.conf.urls import url as re_path
 
 
-if django.VERSION >= (2, 0):
-    app_name = "disclosures"
-    urlpatterns = [
-        re_path(r'^understanding-your-financial-aid-offer/',
-                include('paying_for_college.disclosures.urls')),
-    ]
-else:
-    urlpatterns = [
-        re_path(r'^understanding-your-financial-aid-offer/',
-                include('paying_for_college.disclosures.urls',
-                        namespace='disclosures')),
-    ]
+urlpatterns = [
+    re_path(r'^understanding-your-financial-aid-offer/',
+            include('paying_for_college.disclosures.urls')),
+]
