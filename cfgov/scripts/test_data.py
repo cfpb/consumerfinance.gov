@@ -1,7 +1,7 @@
-from __future__ import unicode_literals
-
 from django.contrib.auth.models import User
 from django.utils.timezone import datetime, timedelta
+
+from wagtail.core.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 
@@ -12,12 +12,6 @@ from v1.models import (
 )
 from v1.models.snippets import ReusableText
 from v1.tests.wagtail_pages.helpers import publish_changes, publish_page
-
-
-try:
-    from wagtail.core.blocks import StreamValue
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.blocks import StreamValue
 
 
 def add_children(parent, num, slug):

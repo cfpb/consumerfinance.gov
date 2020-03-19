@@ -10,7 +10,7 @@ from django.test import (
     RequestFactory, TestCase as DjangoTestCase, override_settings
 )
 
-import wagtail
+from wagtail.core.models import Site
 
 import mock
 from model_mommy import mommy
@@ -26,12 +26,6 @@ from regulations3k.models.pages import (
     get_section_url, validate_num_results, validate_order,
     validate_page_number, validate_regs_list
 )
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.core.models import Site
-else:
-    from wagtail.wagtailcore.models import Site
 
 
 class RegModelTests(DjangoTestCase):
