@@ -171,21 +171,6 @@ def add_link_markup(tag):
     return str(tag)
 
 
-class NoMigrations(object):
-    """Class to disable app migrations through settings.MIGRATION_MODULES.
-
-    The MIGRATION_MODULES setting can be used to tell Django where to look
-    for an app's migrations (by default this is the "migrations" subdirectory).
-    This class simulates a dictionary where a lookup for any app returns a
-    value that causes Django to think that no migrations exist.
-    """
-    def __contains__(self, item):
-        return True
-
-    def __getitem__(self, item):
-        return None
-
-
 def slugify_unique(context, value):
     """Generates a slug, making it unique for a context, if possible.
 
