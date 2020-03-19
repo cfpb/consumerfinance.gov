@@ -37,6 +37,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='agreement',
             name='issuer',
-            field=models.ForeignKey(to='agreements.Issuer'),
+            field=models.ForeignKey(to='agreements.Issuer',
+                                    on_delete=models.CASCADE),
         ),
     ]

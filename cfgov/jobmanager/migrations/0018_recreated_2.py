@@ -92,7 +92,7 @@ class Migration(migrations.Migration):
                 ('sort_order', models.IntegerField(null=True, editable=False, blank=True)),
                 ('announcement_number', models.CharField(max_length=128)),
                 ('url', models.URLField(max_length=255)),
-                ('applicant_type', models.ForeignKey(related_name='usajobs_application_links', to='jobmanager.ApplicantType')),
+                ('applicant_type', models.ForeignKey(related_name='usajobs_application_links', to='jobmanager.ApplicantType', on_delete=models.CASCADE)),
                 ('job_listing', modelcluster.fields.ParentalKey(related_name='usajobs_application_links', to='jobmanager.JobListingPage')),
             ],
             options={
@@ -133,7 +133,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='gradepanel',
             name='grade',
-            field=models.ForeignKey(related_name='grade_panels', to='jobmanager.Grade'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='grade_panels', to='jobmanager.Grade'),
         ),
         migrations.AddField(
             model_name='gradepanel',
@@ -153,7 +153,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='city',
             name='state',
-            field=models.ForeignKey(related_name='cities', default=None, to='jobmanager.State'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='cities', default=None, to='jobmanager.State'),
         ),
         migrations.AddField(
             model_name='state',
