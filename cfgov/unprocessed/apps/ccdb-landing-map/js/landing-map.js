@@ -8,7 +8,10 @@ let idLink, perCapBtn, rawBtn;
  */
 function start( isPerCapita ) {
   const el = document.getElementById( 'landing-map' );
-  el.querySelectorAll( '*' ).forEach( n => n.remove() );
+  const elements = el.querySelectorAll( '*' )
+  for ( let i = 0; i< elements.length; i++ ) {
+    elements[i].remove();
+  }
 
   const dataUrl = 'https://files.consumerfinance.gov/ccdb/hero-map-3y.json';
   // eslint-disable-next-line no-unused-vars
