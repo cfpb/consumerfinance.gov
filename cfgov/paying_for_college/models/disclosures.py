@@ -565,7 +565,7 @@ class Notification(DisclosureBase):
                             "response reason: {}\nstatus_code: {}\n"
                             "content: {}\n\n".format(
                                 now,
-                                endpoint,
+                                endpoint.decode('utf-8'),
                                 resp.reason,
                                 resp.status_code,
                                 resp.content)
