@@ -100,6 +100,16 @@ export function getMonthInfo(date = dayjs()) {
  * @property {Number} weekNumber - The week number of the year
  */
 
+const monthSharesFirstWeek = (date) => {
+  const start = date.startOf('month');
+  return start.week() === start.subtract(1, 'month').endOf('month').week();
+};
+
+const monthSharesLastWeek = (date) => {
+  const end = date.endOf('month');
+  return end.week() === end.add(1, 'month').startOf('month').week();
+};
+
 /**
  * Get an array of objects representing weeks of the month, containing the week number and an array of weekdays
  *
@@ -111,16 +121,21 @@ export function getWeekRows(date) {
   const rows = [];
   let numWeeks = Math.ceil(date.daysInMonth() / 7);
 
-  for (let i = 0; i < numWeeks; i++) {
-    const startOfWeek = date.add(i, 'week').startOf('week');
-    const weekNumber = startOfWeek.week();
+  if (monthSharesFirstWeek(date) && monthSharesLastWeek(date)) {
+    numWeeks += 1;
+  }
+
+  let currentWeekStart = date.startOf('week');
+
+  while (currentWeekStart.startOf('week').isSame(date, 'month') || currentWeekStart.endOf('week').isSame(date, 'month')) {
+    const weekNumber = currentWeekStart.week();
 
     rows.push({
       weekNumber,
-      days: Array(7)
-        .fill(0)
-        .map((n, idx) => startOfWeek.add(n + idx, 'days')),
+      days: Array(7).fill(0).map((n, idx) => currentWeekStart.add(n + idx, 'days')),
     });
+
+    currentWeekStart = currentWeekStart.add(1, 'week');
   }
 
   return rows;
