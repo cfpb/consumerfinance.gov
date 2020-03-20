@@ -49,10 +49,12 @@ export default class UIStore {
   }
 
   @computed get weekStartingBalanceText() {
+    if (typeof this.weekStartingBalance === 'undefined') return '$0.00';
     return formatCurrency(this.weekStartingBalance);
   }
 
   @computed get weekEndingBalanceText() {
+    if (typeof this.weekEndingBalance === 'undefined') return '$0.00';
     return formatCurrency(this.weekEndingBalance);
   }
 
