@@ -12,7 +12,6 @@ from wagtail.contrib.sitemaps.views import sitemap
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
-from flags.urls import flagged_url
 from flags.views import FlaggedTemplateView
 from wagtailautocomplete.urls.admin import (
     urlpatterns as autocomplete_admin_urls
@@ -40,8 +39,10 @@ from v1.views.documents import DocumentServeView
 
 
 try:
+    from flags.path import flagged_re_path
     from django.urls import include, re_path, static
 except ImportError:
+    from flags.urls import flagged_url as flagged_re_path
     from django.conf.urls import include
     from django.conf.urls.static import static
     from django.conf.urls import url as re_path
@@ -66,7 +67,7 @@ def flagged_wagtail_only_view(flag_name, regex_path, url_name=None):
     def this_view_always_raises_http404(request, *args, **kwargs):
         raise Http404('flag {} not set'.format(flag_name))
 
-    return flagged_url(
+    return flagged_re_path(
         flag_name,
         regex_path,
         lambda request: ServeView.as_view()(request, request.path),
@@ -225,7 +226,8 @@ urlpatterns = [
     re_path(r'^credit-cards/agreements/',
         include('agreements.urls')),
 
-    flagged_url('PREPAID_AGREEMENTS_SEARCH',
+    flagged_re_path(
+        'PREPAID_AGREEMENTS_SEARCH',
         r'^data-research/prepaid-accounts/search-agreements/',
         include('prepaid_agreements.urls', namespace='prepaid_agreements'
     )),
@@ -240,17 +242,17 @@ urlpatterns = [
         name='complaint-landing'),
 
     # CCDB5-API
-    flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/search/api/v1/',
-                include_if_app_enabled('complaint_search',
-                                       'complaint_search.urls')
-                ),
+    flagged_re_path(
+        'CCDB5_RELEASE',
+        r'^data-research/consumer-complaints/search/api/v1/',
+        include_if_app_enabled('complaint_search',
+                               'complaint_search.urls')),
+
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
-    flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/search/',
-                include_if_app_enabled(
-                    'ccdb5_ui', 'ccdb5_ui.config.urls'
-                )),
+    flagged_re_path(
+        'CCDB5_RELEASE',
+        r'^data-research/consumer-complaints/search/',
+        include_if_app_enabled('ccdb5_ui', 'ccdb5_ui.config.urls')),
 
     re_path(r'^oah-api/rates/',
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
@@ -380,9 +382,8 @@ urlpatterns = [
 
     re_path(r'^sitemap\.xml$', sitemap),
 
-    flagged_url('SEARCH_DOTGOV_API',
-                r'^search/',
-                include('search.urls')),
+    flagged_re_path(
+        'SEARCH_DOTGOV_API', r'^search/', include('search.urls')),
 
     re_path(
         r'^practitioner-resources/youth-financial-education/',
@@ -404,9 +405,10 @@ urlpatterns = [
     # Manually enabled when Beta is being used for an external test.
     # Jenkins job check this endpoint to determine whether to refresh
     # Beta database.
-    flagged_url('BETA_EXTERNAL_TESTING',
-            r'^beta_external_testing/',
-            empty_200_response),
+    flagged_re_path(
+        'BETA_EXTERNAL_TESTING',
+        r'^beta_external_testing/',
+        empty_200_response),
 
     # put financial well-being pages behind feature flag for testing
     flagged_wagtail_only_view(
