@@ -141,6 +141,14 @@
         .js & {
             display: block;
         }
+
+        // Hover state for (x) close button.
+        &:hover {
+            border-left: 1px solid @gray-40;
+
+            // Important needed to override background color in expanded state.
+            background: @gray-20 !important;
+        }
     }
 
     &_content {
