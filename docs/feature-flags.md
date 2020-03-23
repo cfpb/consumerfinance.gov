@@ -119,7 +119,7 @@ There are two ways to flag Django URL patterns in `urls.py`: with `flagged_url()
 
 An example is [our `WAGTAIL_ABOUT_US` flag](https://github.com/cfpb/cfgov-refresh/blob/4c3521e967abc5a35fc42566ae409d6ba008f81e/cfgov/cfgov/urls.py#L204-L210):
 
-```python    
+```python
 flagged_url('WAGTAIL_ABOUT_US',
             r'^about-us/$',
             lambda req: ServeView.as_view()(req, req.path),
@@ -162,7 +162,7 @@ Wagtail views in `flagged_url` with a Django view as fallback (or vice-versa) ca
 lambda req: ServeView.as_view()(req, req.path)
 ```
 
-This lambda takes the request and calls the [Wagtail-Sharing](https://github.com/cfpb/wagtail-sharing) `ServeView` (which we're using in place of `wagtail.wagtailcore.views.serve`).
+This lambda takes the request and calls the [Wagtail-Sharing](https://github.com/cfpb/wagtail-sharing) `ServeView` (which we're using in place of `wagtail.core.views.serve`).
 
 ## Enabling a flag
 
@@ -186,7 +186,7 @@ FLAGS = {
     # "This beta site is a work in progress."
     'BETA_NOTICE': [
         {
-            'condition': 'boolean', 
+            'condition': 'boolean',
             'value': True,
         },
     ],
