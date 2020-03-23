@@ -94,7 +94,7 @@ USER apache
 
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
-# - /tmp/eregs_cache/ - Django file-based cache./frontend.sh production && \
+# - /tmp/eregs_cache/ - Django file-based cache
 RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
