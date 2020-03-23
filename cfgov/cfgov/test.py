@@ -1,4 +1,3 @@
-import importlib
 import logging
 import os
 import re
@@ -8,11 +7,8 @@ import sys
 from contextlib import redirect_stdout
 from io import StringIO
 
-from django.apps import apps
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.db import connection
-from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
 from django.test.runner import DiscoverRunner
 
@@ -68,41 +64,11 @@ class TestRunner(DiscoverRunner):
     def setup_databases(self, **kwargs):
         dbs = super(TestRunner, self).setup_databases(**kwargs)
 
-        # Ensure that certain key data migrations are always run, even if
-        # tests are being run without migrations, e.g. through use of
-        # settings.test_nomigrations.
-        self.run_required_data_migrations()
-
         # Set up additional required test data that isn't contained in data
         # migrations, for example an admin user.
         initial_data.run()
 
         return dbs
-
-    def run_required_data_migrations(self):
-        if settings.MIGRATION_MODULES:
-            migration_methods = (
-                (
-                    'wagtail.core.migrations.'
-                    '0002_initial_data',
-                    'initial_data'
-                ),
-                (
-                    'wagtail.core.migrations.'
-                    '0025_collection_initial_data',
-                    'initial_data'
-                ),
-            )
-        else:
-            migration_methods = ()
-
-        loader = MigrationLoader(connection)
-
-        for migration, method in migration_methods:
-            if not self.is_migration_applied(loader, migration):
-                print('applying migration {}'.format(migration))
-                module = importlib.import_module(migration)
-                getattr(module, method)(apps, None)
 
     @staticmethod
     def is_migration_applied(loader, migration):
