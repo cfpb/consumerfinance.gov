@@ -38,35 +38,36 @@ body {
             <div class="o-mega-menu_content"
                  aria-expanded="false">
                 <div class="o-mega-menu_content-wrapper">
-                    <div class="o-mega-menu_content-grid">
-                        <div class="o-mega-menu-lists">
-                            <ul class="o-mega-menu_content-list">
-                                <li class="o-mega-menu_content-item">
-                                    [Global Header CTA]
-                                </li>
-                                <li class="o-mega-menu_content-item">
-                                    <a class="o-mega-menu_content-link"
-                                        href="/about-us/"
+                    <div class="o-mega-menu-lists">
+                        <ul class="o-mega-menu_content-list">
+                            <li class="o-mega-menu_content-item">
+                                [Global Header CTA]
+                            </li>
+                            <li class="o-mega-menu_content-item">
+                                <a class="o-mega-menu_content-link"
+                                    href="/about-us/"
+                                    aria-expanded="false">
+                                    About Us
+                                </a>
+                                <div class="o-mega-menu_content"
                                         aria-expanded="false">
-                                        About Us
-                                    </a>
-                                    <div class="o-mega-menu_content"
-                                            aria-expanded="false">
-                                        <div class="o-mega-menu_content-wrapper">
-                                            <div class="wrapper">
-                                                <button class="o-mega-menu_content-alt-trigger">
-                                                    Back
-                                                </button>
-                                                <div class="o-mega-menu_content-grid">
-                                                    <span class="o-mega-menu_content-overview">
-                                                        <h3 class="o-mega-menu_content-overview-heading">
-                                                            <a class="o-mega-menu_content-overview-link"
-                                                                href="/about-us/">
-                                                                About Us Overview
-                                                            </a>
-                                                        </h3>
-                                                    </span>
-                                                    <div class="o-mega-menu_content-lists">
+                                    <div class="o-mega-menu_content-wrapper">
+                                        <div class="wrapper">
+                                            <button class="o-mega-menu_content-alt-trigger">
+                                                Back
+                                            </button>
+                                            <span class="o-mega-menu_content-overview">
+                                                <h3 class="o-mega-menu_content-overview-heading">
+                                                    <a class="o-mega-menu_content-overview-link"
+                                                        href="/about-us/">
+                                                        About Us Overview
+                                                    </a>
+                                                </h3>
+                                            </span>
+                                            <div class="o-mega-menu_content-lists">
+                                                <div class="o-mega-menu_content-list-group">
+                                                    <div class="o-mega-menu_content-list">
+
                                                         <ul class="m-list
                                                                     m-list__unstyled
                                                                     o-mega-menu_content-list">
@@ -92,19 +93,19 @@ body {
                                                                 </li>
                                                                 …
                                                         </ul>
-                                                        …
                                                     </div>
+                                                    …
                                                 </div>
-                                                <aside class="sub-nav_media">
-                                                    [Featured Menu Content]
-                                                </aside>
                                             </div>
+                                            <aside class="sub-nav_media">
+                                                [Featured Menu Content]
+                                            </aside>
                                         </div>
                                     </div>
-                                </li>
-                            </ul>
-                            [Global Eyebrow]
-                        </div>
+                                </div>
+                            </li>
+                        </ul>
+                        [Global Eyebrow]
                     </div>
                 </div>
             </div>
@@ -118,15 +119,15 @@ body {
                 .o-mega-menu_trigger
             .o-mega-menu_content
                 .o-mega-menu_content-wrapper
-                    .wrapper
-                        .o-mega-menu-content-grid
-                            .o-mega-menu_content-overview
-                                .o-mega-menu_content-overview-heading
-                                    .o-mega-menu_content-overview-link
-                            .o-mega-menu_content-title
-                                a.o-mega-menu_content-link
-                            .o-mega-menu_content-lists
-                                ul.o-mega-menu_content-list
+                    .o-mega-menu_content-overview
+                        .o-mega-menu_content-overview-heading
+                            .o-mega-menu_content-overview-link
+                    .o-mega-menu_content-title
+                        a.o-mega-menu_content-link
+                    .o-mega-menu_content-lists
+                        .o-mega-menu_content-list-group
+                            .o-mega-menu_content-list
+                                ul
                                     li.o-mega-menu_content-item
                                         .m-global-header-cta.m-global-header-cta__list
                                     li.o-mega-menu_content-item
@@ -135,17 +136,15 @@ body {
                                         a.o-mega-menu_content-link
                                         .o-mega-menu_content
                                             .o-mega-menu_content-wrapper
-                                                .wrapper
-                                                    button.o-mega-menu_content-alt-trigger
-                                                    .o-mega-menu_content-grid
-                                                        .o-mega-menu_content-title
-                                                            a.o-mega-menu_content-link
-                                                        .o-mega-menu_content-lists
-                                                            ul.o-mega-menu_content-list
-                                                                li.o-mega-menu_content-item
-                                                            ul.o-mega-menu_content-list
-                                                                li.o-mega-menu_content-item
-                                                    aside.sub-nav_media
+                                                button.o-mega-menu_content-alt-trigger
+                                                .o-mega-menu_content-title
+                                                    a.o-mega-menu_content-link
+                                                .o-mega-menu_content-lists
+                                                    ul.o-mega-menu_content-list
+                                                        li.o-mega-menu_content-item
+                                                    ul.o-mega-menu_content-list
+                                                        li.o-mega-menu_content-item
+                                            aside.sub-nav_media
       notes:
         - "Not shown, but each content level adds a depth-specific class,
            such as o-mega-menu_content-1, o-mega-menu_content-2, etc."
@@ -170,44 +169,53 @@ body {
     }
 
     &_content {
+
         &-overview-heading {
             margin-bottom: 0;
-            font-size: unit( @base-font-size-px / @base-font-size-px, em );
+            font-size: unit( 18px / @base-font-size-px, rem );
             font-weight: normal;
         }
 
-        // Hide the ">" icon next to menu items on desktop…
-        &-link {
-            .cf-icon-svg {
-                display: none;
-            }
-        }
-
         // …however, show the icons in featured links.
-        &_content-list__featured {
+        &-item__has-icon {
             .cf-icon-svg {
                 display: inline-block;
             }
         }
 
+        &-link,
+        &-overview-link {
+            width: 100%;
+        }
+
+        // Ensure desktop up/down arrow link icons don't appear at mobile.
+        &-link {
+            &-icon-closed .cf-icon-svg,
+            &-icon-open .cf-icon-svg {
+                display: none;
+            }
+        }
+
         // Featured menu content is link items with icons.
-        &-list__featured {
+        &-item__has-icon {
+            // Align the icon and text.
+            display: flex;
+            align-items: baseline;
+
+            & a {
+                display: flex;
+            }
+
+            // Hide link bottom line from Design System link styles.
+            & .a-link_text {
+                border-bottom-width: 0;
+            }
 
             & .cf-icon-svg {
                 display: inline;
                 color: @pacific;
                 margin-right: 10px;
-            }
-        }
-
-        &-list__featured li {
-            // Align the icon and text.
-            display: flex;
-            align-items: baseline;
-
-            // Hide link bottom line from Design System link styles.
-            & .a-link_text {
-                border-bottom-width: 0;
+                width: 100%;
             }
         }
     }
@@ -307,6 +315,10 @@ body {
                 }
             }
 
+            // Hover state for (x) close button.
+            &:hover {
+                background: @gray-20;
+            }
         }
 
         // Menu flyout.
@@ -353,6 +365,11 @@ body {
                 .cf-icon-svg {
                     margin-right: 0.6em;
                 }
+
+                // Hover state for back button.
+                &:hover {
+                    background: @gray-20;
+                }
             }
 
             &-overview {
@@ -360,23 +377,19 @@ body {
                 border-bottom: 1px solid @gray-40;
             }
 
+            &-wrapper {
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+                padding-left: unit( @grid_gutter-width / @base-font-size-px, rem );
+            }
+
             // Adjust padding and margin on unordered list menu items
             // above the global eyebrow.
-            &-list {
-                padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            &-list-group {
                 margin-bottom: 0;
             }
 
             &-item {
                 border-bottom: 1px solid @gray-40;
-            }
-
-            // Ensure desktop link icons don't appear at mobile.
-            &-link {
-                &-icon-closed .cf-icon-svg,
-                &-icon-open .cf-icon-svg {
-                    display: none !important;
-                }
             }
 
             &-link,
@@ -386,18 +399,22 @@ body {
                 .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
 
                 padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
                 padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
-                .js & {
-                    &__has-children .cf-icon-svg {
-                        display: block;
+                // Hide ">" icon when we don't have children.
+                &-icon-post {
+                    display: none;
+                }
 
-                        position: absolute;
-                        right: 0;
-                        top: 50%;
-                        transform: translateY( -50% );
+                &__has-children &-icon-post {
+                    display: block;
 
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY( -50% );
+
+                    .cf-icon-svg {
                         fill: @green;
                     }
                 }
@@ -405,6 +422,10 @@ body {
                 &__current,
                 &:hover {
                     cursor: pointer;
+
+                    .cf-icon-svg {
+                        fill: @black;
+                    }
                 }
             }
 
@@ -414,25 +435,48 @@ body {
                 padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             }
 
+            &-link,
+            &-overview-link {
+                position: relative;
+                left: unit( -15px / 18px, em );
+                padding-top: unit( 15px / 18px, em );
+                padding-bottom: unit( 15px / 18px, em );
+                padding-left: unit( 10px / 18px, em );
+
+                border-left: 5px solid transparent;
+
+                &:hover {
+                    color: @black;
+                    border-left-color: @green;
+                }
+
+                &:focus {
+                    border-color: @black;
+                    outline: 1px dotted @black;
+                }
+
+                // This is styling for the currently selected content-2 links.
+                &__current:hover,
+                &__current,
+                &__current:visited {
+                    color: @black;
+                    border-left-color: @black;
+                    cursor: default;
+                }
+            }
         }
 
         // 1st-level menu - Tablet/Mobile.
         &_content-1 {
+            display: block;
+
             .js & {
                 // Offset for height of trigger button.
                 top: @mobile_trigger_ht__px;
             }
-            display: block;
 
-            &-list {
+            &-list-group {
                 padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-            }
-
-            // Remove final border line of last list item.
-            &-list:last-child {
-                .o-mega-menu_content-1-item:last-child {
-                    border-bottom: none;
-                }
             }
 
             // TODO: Remove when Consumer Tools and Ed Resources links are in.
@@ -450,8 +494,9 @@ body {
         // 2nd-level menu - Tablet/Mobile.
         &_content-2 {
 
-            &-list__featured-item {
-                display: none;
+            // Remove final border line of last list item.
+            &-lists &-list-group:last-child &-list:last-child &-item:last-child {
+                border-bottom: none;
             }
 
             // TODO: Enable or delete when non-clickable
@@ -468,13 +513,6 @@ body {
             //        cursor: default;
             //    }
             // }
-
-            // Remove final border line of last list item.
-            &-list:last-child {
-                .o-mega-menu_content-2-item:last-child {
-                    border-bottom: none;
-                }
-            }
         }
 
         // 3rd-level menu - Tablet/Mobile.
@@ -482,7 +520,7 @@ body {
             // TODO: There is similar code set on all three menus.
             //       Investigate if it can be combined.
             // Remove final border line of last list item.
-            &-list:last-child {
+            &-list-group:last-child {
                 .o-mega-menu_content-3-item:last-child {
                     border-bottom: none;
                 }
@@ -498,15 +536,16 @@ body {
             top: -1px;
             z-index: 10;
 
-            &-grid {
-                padding-left: unit( @grid_gutter-width / 2 / 18px, em );
+            &-wrapper {
                 padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             }
         }
 
         // Group heading - Tablet/Mobile
         &_group-heading {
-            margin-top: @grid_gutter-width;
+            // !important is used to override a highly specific ul+.h5 rule in base.less
+            margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem ) !important;
 
             &__hidden {
                 .u-visually-hidden;
@@ -544,6 +583,11 @@ body {
             display: none;
         }
 
+        // Hide the ">" icon next to menu items on desktop…
+        &_content-link-icon-post {
+            display: none;
+        }
+
         // 1st-level menu - Desktop.
         &_content-1 {
             &[aria-expanded="true"] {
@@ -553,7 +597,7 @@ body {
                 }
             }
 
-            &-list {
+            &-list-group {
                 margin-bottom: 0;
                 // Truncate the expanded menu to this element.
                 position: relative;
@@ -581,7 +625,10 @@ body {
                 border-top: 1px solid transparent;
                 border-right: 1px solid transparent;
                 border-left: 1px solid transparent;
-                font-size: unit( 16px / @base-font-size-px, em );
+                font-size: unit( 16px / @base-font-size-px, rem );
+
+                // Revert 100% width set globally within menu.
+                width: auto !important;
 
                 &:first-child {
                     margin-left: 0;
@@ -686,6 +733,11 @@ body {
             }
         }
 
+        // Hide last columns headings at desktop sizes.
+        &_content-2-lists &_content-2-list-group:last-child &_group-heading {
+            display: none;
+        }
+
         // 2nd-level menu - Desktop.
         &_content-2 {
             overflow: hidden;
@@ -694,15 +746,17 @@ body {
             z-index: 10;
 
             // Featured item has a highlight box around it.
-            &-list__featured-item {
+            &-list__featured {
 
-                // Style the featured item box.
-                padding-right: unit( 13px / @base-font-size-px, em );
-                padding-top: unit( 30px / @base-font-size-px, em );
-                padding-bottom: unit( 30px / @base-font-size-px, em );
-                margin-bottom: unit( 30px / @base-font-size-px, em );
-                border: 1px solid @gray-40;
-                border-top: 6px solid @gold;
+                & ul {
+                    // Style the featured item box.
+                    padding-right: unit( 13px / @base-font-size-px, em );
+                    padding-top: unit( 30px / @base-font-size-px, em );
+                    padding-bottom: unit( 30px / @base-font-size-px, em );
+                    margin-bottom: unit( 30px / @base-font-size-px, em );
+                    border: 1px solid @gray-40;
+                    border-top: 6px solid @gold;
+                }
 
                 & a {
                     display: flex;
@@ -727,29 +781,10 @@ body {
                 }
             }
 
-            &-list__featured li {
+            &-item__has-icon {
                 // Pad in featured items from their icons.
                 padding-left: unit( 13px / @base-font-size-px, em );
 
-                & a {
-                    display: flex;
-                }
-
-                & .cf-icon-svg {
-                    width: 100%;
-                }
-            }
-
-            // Adding padding between featured items.
-            &-list__featured-item li {
-                margin-bottom: unit( 20px / @base-font-size-px, em );
-            }
-
-            &-list__featured-item li:last-child {
-                margin-bottom: 0;
-            }
-
-            &-list__featured li {
                 & a:hover .cf-icon-svg {
                     color: @black;
                 }
@@ -774,7 +809,7 @@ body {
 
                 padding: unit( @grid_gutter-width / @base-font-size-px, em );
                 padding-top: unit( 20px / @base-font-size-px, em );
-                padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-left: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
                 padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
             }
 
@@ -785,7 +820,7 @@ body {
             &-overview {
                 padding-bottom: @grid_gutter-width / 2;
                 margin-bottom: @grid_gutter-width;
-                font-size: unit( 18px / @base-font-size-px, em );
+                font-size: unit( 18px / @base-font-size-px, rem );
 
                 &-heading {
                     padding-top: 0;
@@ -801,19 +836,15 @@ body {
                 margin-top: unit( 10px / @base-font-size-px, em );
             }
 
-            &-list {
+            &-list-group {
                 display: table-cell;
                 width: 25%;
                 vertical-align: top;
                 padding-right: 10px;
             }
 
-            &-list:last-child {
+            &-list-group:last-child {
                 padding-right: 0;
-            }
-
-            &-grid {
-                padding-left: @grid_gutter-width;
             }
 
             &-link,
@@ -900,6 +931,11 @@ body {
     // JS isn't available to remove u-hidden class, so override it.
     &.u-hidden {
       display: block;
+    }
+
+    // Hide the ">" arrow icon (used on mobile view).
+    .o-mega-menu_content-link-icon-post {
+        display: none;
     }
 }
 

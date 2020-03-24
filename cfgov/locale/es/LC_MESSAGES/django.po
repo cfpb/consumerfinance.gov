@@ -8,11 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-17 18:34+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-03-24 17:54+0000\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,33 +17,33 @@ msgstr ""
 
 #: ask_cfpb/models/pages.py:251
 msgid "for"
-msgstr ""
+msgstr "para"
 
 #: ask_cfpb/models/pages.py:255
 msgid "Showing "
-msgstr ""
+msgstr "Se muestra "
 
 #: ask_cfpb/models/pages.py:256
 msgid "result"
-msgstr ""
+msgstr "resultado"
 
 #: ask_cfpb/models/pages.py:258
 #: jinja2/v1/ask-cfpb/answer-search-results.html:27
 msgid "Showing"
-msgstr ""
+msgstr "Se muestran"
 
 #: ask_cfpb/models/pages.py:259
 msgid "results"
-msgstr ""
+msgstr "resultados"
 
 #: ask_cfpb/models/pages.py:269 ask_cfpb/models/pages.py:280
 #: ask_cfpb/models/pages.py:288
 msgid "within"
-msgstr ""
+msgstr "en"
 
 #: ask_cfpb/models/pages.py:272
 msgid "See all results within"
-msgstr ""
+msgstr "Ver todos los resultados para"
 
 #: ask_cfpb/templates/admin/export.html:3
 msgid "Export Ask data"
@@ -72,23 +69,23 @@ msgstr ""
 
 #: jinja2/v1/_includes/ask/tip.html:19
 msgid "Tip"
-msgstr ""
+msgstr "Consejo"
 
 #: jinja2/v1/_includes/atoms/tagline.html:16
 msgid "An official website of the United States government"
-msgstr ""
+msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
 
 #: jinja2/v1/_includes/blocks/feedback.html:53
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #: jinja2/v1/_includes/blocks/feedback.html:90
 msgid "Additional comment"
-msgstr ""
+msgstr "Comentario adicional"
 
 #: jinja2/v1/_includes/blocks/feedback.html:91
 msgid "optional"
-msgstr ""
+msgstr "opcional"
 
 #: jinja2/v1/_includes/blocks/feedback.html:95
 msgid ""
@@ -97,10 +94,12 @@ msgid ""
 "address, Social Security number, account information, or any other "
 "information of a sensitive nature."
 msgstr ""
+"No incluya información confidencial, como su nombre, información de "
+"contacto, número de cuenta o número de seguro social en este campo."
 
 #: jinja2/v1/_includes/molecules/global-header-cta.html:27
 msgid "Submit a Complaint"
-msgstr ""
+msgstr "Enviar una queja"
 
 #: jinja2/v1/_includes/molecules/global-search.html:23
 #: jinja2/v1/_includes/molecules/global-search.html:58
@@ -108,29 +107,31 @@ msgstr ""
 #: jinja2/v1/_includes/organisms/ask-search.html:56
 #: jinja2/v1/ask-cfpb/see-all.html:52
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: jinja2/v1/_includes/molecules/global-search.html:27
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: jinja2/v1/_includes/molecules/global-search.html:63
 #: jinja2/v1/_includes/molecules/global-search.html:66
 msgid "Search the CFPB"
-msgstr ""
+msgstr "Buscar la CFPB"
 
 #: jinja2/v1/_includes/molecules/global-search.html:72
 #: jinja2/v1/ask-cfpb/see-all.html:56
 msgid "Clear search"
-msgstr ""
+msgstr "Borrar búsqueda"
 
 #: jinja2/v1/_includes/molecules/global-search.html:82
 msgid "Suggested search terms:"
 msgstr ""
 
 #: jinja2/v1/_includes/molecules/global-search.html:86
+#, fuzzy
+#| msgid "Related questions"
 msgid "Regulations"
-msgstr ""
+msgstr "Otras preguntas"
 
 #: jinja2/v1/_includes/molecules/global-search.html:91
 msgid "Compliance guides"
@@ -138,169 +139,171 @@ msgstr ""
 
 #: jinja2/v1/_includes/molecules/global-search.html:96
 msgid "Mortgage"
-msgstr ""
+msgstr "Hipoteca"
 
 #: jinja2/v1/_includes/molecules/global-search.html:101
+#, fuzzy
+#| msgid "Auto loans"
 msgid "College loans"
-msgstr ""
+msgstr "Préstamos para vehículos"
 
 #: jinja2/v1/_includes/molecules/pagination.html:69
 msgid "Page"
-msgstr ""
+msgstr "Página"
 
 #: jinja2/v1/_includes/molecules/pagination.html:98
 msgid "Go"
-msgstr ""
+msgstr "Ir"
 
 #: jinja2/v1/_includes/molecules/related-posts.html:112
 msgid "View more"
-msgstr ""
+msgstr "Ver más"
 
 #: jinja2/v1/_includes/organisms/ask-search.html:31
 #: jinja2/v1/ask-cfpb/see-all.html:78
 msgid "/ask-cfpb/search/"
-msgstr ""
+msgstr "/es/obtener-respuestas/buscar/"
 
 #: jinja2/v1/_includes/organisms/ask-search.html:34
 msgid "Search for your question"
-msgstr ""
+msgstr "Busca su pregunta"
 
 #: jinja2/v1/_includes/organisms/email-signup.html:53
 msgid "Email address"
-msgstr ""
+msgstr "Dirección email"
 
 #: jinja2/v1/_includes/organisms/email-signup.html:64
 msgid "Sign up"
-msgstr ""
+msgstr "Suscribir"
 
 #: jinja2/v1/_includes/organisms/email-signup.html:69
 msgid "See Privacy Act statement"
-msgstr ""
+msgstr "Lea la declaración de privacidad"
 
 #: jinja2/v1/_includes/organisms/expandable.html:50
 #: regulations3k/jinja2/regulations3k/inline_interps.html:15
 #: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:48
 #: wellbeing/jinja2/wellbeing/results.html:339
 msgid "Show"
-msgstr ""
+msgstr "Mostrar"
 
 #: jinja2/v1/_includes/organisms/expandable.html:58
 #: regulations3k/jinja2/regulations3k/inline_interps.html:21
 #: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:55
 #: wellbeing/jinja2/wellbeing/results.html:345
 msgid "Hide"
-msgstr ""
+msgstr "Ocultar"
 
 #: jinja2/v1/_includes/organisms/footer.html:32
 msgid "Back to top"
-msgstr ""
+msgstr "Ir arriba"
 
 #: jinja2/v1/_includes/organisms/footer.html:175
 msgid "https://usa.gov/"
-msgstr ""
+msgstr "https://gobiernousa.gov/"
 
 #: jinja2/v1/_includes/organisms/footer.html:175
 msgid "USA.gov"
-msgstr ""
+msgstr "GobiernoUSA.gov"
 
 #: jinja2/v1/_layouts/base.html:52
 #: legacy/templates/front/base_nonresponsive.html:32
 #: legacy/templates/front/base_update.html:52 v1/jinja2/v1/home_page.html:7
 #: v1/jinja2/v1/home_page.html:13
 msgid "Consumer Financial Protection Bureau"
-msgstr ""
+msgstr "Oficina para la Protección Financiera del Consumidor"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:38
 msgid "updated"
-msgstr ""
+msgstr "actualizado"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:65
 msgid "Read full answer"
-msgstr ""
+msgstr "Leer más"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:69
 msgid "Hide full answer"
-msgstr ""
+msgstr "Esconder la respuesta completa"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:77
 #: jinja2/v1/ask-cfpb/landing-page.html:85 jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Don't see what you're looking for?"
-msgstr ""
+msgstr "¿No encuentra lo que busca?"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:80
 msgid "Browse related questions"
-msgstr ""
+msgstr "Otras preguntas"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:93
 #: jinja2/v1/ask-cfpb/landing-page.html:72
 msgid "Learn more about"
-msgstr ""
+msgstr "Sepa más sobre"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:16
 msgid "Search our library of answers"
-msgstr ""
+msgstr "Buscar en nuestra lista de respuestas"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:25
 #: jinja2/v1/ask-cfpb/answer-search-results.html:34
 #: jinja2/v1/ask-cfpb/answer-search-results.html:36
 msgid "Showing results for "
-msgstr ""
+msgstr "Se muestran resultados para "
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:27
 msgid "of"
-msgstr ""
+msgstr "de"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:27
 msgid "results for"
-msgstr ""
+msgstr "resultados para"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:30
 #: jinja2/v1/ask-cfpb/answer-search-results.html:79
 msgid "Search instead for"
-msgstr ""
+msgstr "Busca de"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:30
 #: jinja2/v1/ask-cfpb/answer-search-results.html:79
 msgid "/ask-cfpb/search"
-msgstr ""
+msgstr "/es/obtener-respuestas/buscar"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:72
 #: jinja2/v1/ask-cfpb/answer-search-results.html:74
 msgid "No results found for"
-msgstr ""
+msgstr "No se encontraron resultados para"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:83
 msgid "Can't find your question?"
-msgstr ""
+msgstr "¿No encuentra su pregunta?"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:83
 msgid "/ask-cfpb/"
-msgstr ""
+msgstr "/es/obtener-respuestas/"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:83
 #: jinja2/v1/ask-cfpb/landing-page.html:21
 msgid "Browse questions by category"
-msgstr ""
+msgstr "Examinar las preguntas por categoría"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:94
 msgid "Please enter a search term in the box above."
-msgstr ""
+msgstr "Por favor escriba su búsqueda arriba"
 
 #: jinja2/v1/ask-cfpb/article-page.html:28
 msgid "In this article"
-msgstr ""
+msgstr "En este artículo"
 
 #: jinja2/v1/ask-cfpb/see-all.html:27
 msgid "Read more"
-msgstr ""
+msgstr "Leer más"
 
 #: jinja2/v1/ask-cfpb/see-all.html:42
 msgid "Narrow your results"
-msgstr ""
+msgstr "Búsqueda especial"
 
 #: jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Search our full library of answers"
-msgstr ""
+msgstr "Buscar en toda la lista de respuestas"
 
 #: legacy/templates/common/forgot_password.html:24
 msgid "Email"
@@ -412,8 +415,10 @@ msgid "en"
 msgstr ""
 
 #: mega_menu/wagtail_hooks.py:16
+#, fuzzy
+#| msgid "Previous"
 msgid "Preview"
-msgstr ""
+msgstr "Anterior"
 
 #: mega_menu/wagtail_hooks.py:21
 #, python-format
@@ -453,12 +458,16 @@ msgid "Edit"
 msgstr ""
 
 #: search/templates/search/_list_explore_revised.html:47
+#, fuzzy
+#| msgid "View more"
 msgid "View Draft"
-msgstr ""
+msgstr "Ver más"
 
 #: search/templates/search/_list_explore_revised.html:57
+#, fuzzy
+#| msgid "View more"
 msgid "View Live"
-msgstr ""
+msgstr "Ver más"
 
 #: search/templates/search/external_links.html:4
 msgid "External Links Management"
@@ -895,8 +904,10 @@ msgid "Save as PDF"
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/results.html:288
+#, fuzzy
+#| msgid " results"
 msgid "Your result"
-msgstr ""
+msgstr " resultados"
 
 #: wellbeing/jinja2/wellbeing/results.html:297
 msgid "Your score:"
@@ -915,16 +926,20 @@ msgid "Financial well-being score"
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/results.html:334
+#, fuzzy
+#| msgid "Read full answer"
 msgid "Review your answers"
-msgstr ""
+msgstr "Leer más"
 
 #: wellbeing/jinja2/wellbeing/results.html:355
 msgid "Question"
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/results.html:356
+#, fuzzy
+#| msgid "answers"
 msgid "Your answer"
-msgstr ""
+msgstr "respuestas"
 
 #: wellbeing/jinja2/wellbeing/results.html:374
 msgid "What would you like to do next?"
@@ -975,12 +990,16 @@ msgid "and find templates to help you communicate with"
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/results.html:412
+#, fuzzy
+#| msgid "Debt collection"
 msgid "debt collectors"
-msgstr ""
+msgstr "Cobro de deudas"
 
 #: wellbeing/jinja2/wellbeing/results.html:415
+#, fuzzy
+#| msgid "Student loans"
 msgid "Repay student loans wisely."
-msgstr ""
+msgstr "Préstamos para educación"
 
 #: wellbeing/jinja2/wellbeing/results.html:416
 msgid "Use our tool to see your choices about how you"
@@ -999,12 +1018,16 @@ msgid "Look toward home ownership."
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/results.html:428
+#, fuzzy
+#| msgid "result for"
 msgid "Consult our"
-msgstr ""
+msgstr "resultado para"
 
 #: wellbeing/jinja2/wellbeing/results.html:429
+#, fuzzy
+#| msgid "Buying a House?"
 msgid "Buying a House"
-msgstr ""
+msgstr "¿Quiere comprar una vivienda?"
 
 #: wellbeing/jinja2/wellbeing/results.html:430
 msgid "tools and resources."
@@ -1048,8 +1071,10 @@ msgid "Understand"
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/results.html:459
+#, fuzzy
+#| msgid "Credit reports and scores"
 msgid "credit reports and scores"
-msgstr ""
+msgstr "Informes y puntajes de crédito"
 
 #: wellbeing/jinja2/wellbeing/results.html:461
 msgid "and their effect on your cost of borrowing."
@@ -1144,3 +1169,110 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/results.html:591
 msgid "September 26, 2017"
 msgstr ""
+
+#~ msgid "Take the next step"
+#~ msgstr "Dar el siguiente paso"
+
+#~ msgid "Featured"
+#~ msgstr "Destacado"
+
+#~ msgid "Clear"
+#~ msgstr "Borrar"
+
+#~ msgid "Mortgages"
+#~ msgstr "Hipotecas"
+
+#~ msgid "Buying a Home?"
+#~ msgstr "¿Quiere comprar una vivienda?"
+
+#~ msgid "Sign up for email tips and info to help you through the process."
+#~ msgstr ""
+#~ "Suscríbase a nuestra lista de email con consejos útiles sobre hipotecas."
+
+#~ msgid "Read answer"
+#~ msgstr "Leer la respuesta"
+
+#~ msgid "Next"
+#~ msgstr "Siguiente"
+
+#~ msgid "Return to top"
+#~ msgstr "Ir arriba"
+
+#~ msgid "Ask CFPB"
+#~ msgstr "Obtener respuestas"
+
+#~ msgid "result within"
+#~ msgstr "resultado de"
+
+#~ msgid "results within"
+#~ msgstr "resultados de"
+
+#~ msgid "Was this answer helpful to you?"
+#~ msgstr "¿Te resultó útil esta respuesta?"
+
+#~ msgid "Explore"
+#~ msgstr "Explorar"
+
+#~ msgid ""
+#~ "Don't see what you're looking for? <span class=\"break\">Search for your "
+#~ "question.</span>"
+#~ msgstr ""
+#~ "¿No encuentra lo que busca? <span class=\"break\">Busca su pregunta.</"
+#~ "span>"
+
+#~ msgid "Search for your question."
+#~ msgstr "Busca su pregunta."
+
+#~ msgid "answers within"
+#~ msgstr "respuestas dentro de"
+
+#~ msgid " of "
+#~ msgstr " de "
+
+#~ msgid "In this section"
+#~ msgstr "En esta sección"
+
+#~ msgid "Bank accounts"
+#~ msgstr "Cuentas bancarias"
+
+#~ msgid "Credit cards"
+#~ msgstr "Tarjetas de crédito"
+
+#~ msgid "Fraud and scams"
+#~ msgstr "Fraudes y estafas"
+
+#~ msgid "Money transfers"
+#~ msgstr "Transferencias y envíos de dinero"
+
+#~ msgid "Payday loans"
+#~ msgstr "Préstamos del día de pago"
+
+#~ msgid "Prepaid cards"
+#~ msgstr "Tarjetas prepagadas"
+
+#~ msgid "Reverse mortgages"
+#~ msgstr "Hipotecas inversas"
+
+#~ msgid "Basics"
+#~ msgstr "Lo que debe saber"
+
+#~ msgid "Common issues"
+#~ msgstr "Problemas comunes"
+
+#~ msgid "How-to"
+#~ msgstr "Paso a paso"
+
+#~ msgid "How to"
+#~ msgstr "Paso a paso"
+
+#~ msgid "How-to guides"
+#~ msgstr "Paso a paso"
+
+#~ msgid "Key terms"
+#~ msgstr "Palabras claves"
+
+#~ msgid "Know your rights"
+#~ msgstr "Conozca sus derechos"
+
+#~ msgid "(required)"
+#~ msgstr "(se requiere)"

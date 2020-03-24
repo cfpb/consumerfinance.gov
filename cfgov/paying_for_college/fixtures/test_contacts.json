@@ -1,0 +1,20 @@
+[
+{
+    "model": "paying_for_college.contact",
+    "pk": 1,
+    "fields": {
+        "contacts": "contact1@example.com",
+        "endpoint": "https://example.com",
+        "name": "EDMC"
+    }
+},
+{
+    "model": "paying_for_college.contact",
+    "pk": 3,
+    "fields": {
+        "contacts": "contact2@example.com",
+        "endpoint": "https://example.com",
+        "name": "Bridgepoint Education"
+    }
+}
+]

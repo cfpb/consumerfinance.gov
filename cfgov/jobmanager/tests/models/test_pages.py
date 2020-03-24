@@ -1,6 +1,11 @@
+from datetime import timedelta
+
 from django.core.exceptions import ValidationError
 from django.http import HttpRequest
 from django.test import TestCase
+from django.utils import timezone
+
+from wagtail.core.models import Site
 
 from mock import patch
 from model_mommy import mommy
@@ -12,6 +17,56 @@ from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel, USAJobsApplicationLink
 from v1.models.snippets import ReusableText
 from v1.tests.wagtail_pages.helpers import save_new_page
+
+
+class JobListingPageQuerySetTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        today = timezone.now().date()
+        root_page = Site.objects.get(is_default_site=True).root_page
+
+        division = JobCategory.objects.create(job_category='Division')
+        location = Region.objects.create(abbreviation='NW', name='Northwest')
+
+        defaults = {
+            'description': 'description',
+            'salary_min': 0,
+            'salary_max': 1000,
+            'division': division,
+            'location': location,
+        }
+
+        live_job = JobListingPage(
+            title='Job',
+            open_date=today - timedelta(days=7),
+            close_date=today + timedelta(days=7),
+            **defaults
+        )
+        root_page.add_child(instance=live_job)
+
+        another_live_job = JobListingPage(
+            title='Another job',
+            open_date=today - timedelta(days=7),
+            close_date=today + timedelta(days=7),
+            **defaults
+        )
+        root_page.add_child(instance=another_live_job)
+
+        expired_job = JobListingPage(
+            title='Expired job',
+            open_date=today - timedelta(days=7),
+            close_date=today - timedelta(days=1),
+            **defaults
+        )
+        root_page.add_child(instance=expired_job)
+
+    def test_open(self):
+        open_jobs = JobListingPage.objects.open()
+        self.assertEqual(open_jobs.count(), 2)
+        self.assertSequenceEqual(
+            open_jobs.values_list('title', flat=True),
+            ['Another job', 'Job']
+        )
 
 
 class JobListingPageTestCase(TestCase):
@@ -33,7 +88,7 @@ class JobListingPageTestCase(TestCase):
         page = self.prepare_job_listing_page()
         try:
             page.full_clean()
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('clean with all fields should validate')
 
     def test_clean_without_description_fails_validation(self):

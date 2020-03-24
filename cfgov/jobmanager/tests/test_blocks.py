@@ -6,7 +6,6 @@ from django.utils.encoding import force_text
 
 from wagtail.core.models import Page
 
-from mock import Mock
 from model_mommy import mommy
 from scripts._atomic_helpers import job_listing_list
 
@@ -45,11 +44,14 @@ class JobListingListTestCase(TestCase):
         self.request = RequestFactory().get('/')
         self.more_jobs_page = Page.objects.first()
 
+    def get_value(self, block):
+        return block.to_python({
+            'more_jobs_page': self.more_jobs_page.pk,
+        })
+
     def _render_block_to_html(self):
         block = JobListingList()
-        return block.render(block.to_python({
-            'more_jobs_page': self.more_jobs_page.pk,
-        }))
+        return block.render(self.get_value(block))
 
     def test_html_has_aside(self):
         self.assertInHTML(
@@ -78,14 +80,13 @@ class JobListingListTestCase(TestCase):
 
     def test_excludes_draft_jobs(self):
         make_job_listing_page('Job', live=False)
-        qs = JobListingList().get_queryset({})
-        self.assertFalse(qs.exists())
+        self.assertFalse(JobListingList().get_job_listings().exists())
 
     def test_includes_live_jobs(self):
-        job = make_job_listing_page('Job', live=True)
-        qs = JobListingList().get_queryset({})
-        self.assertTrue(qs.exists())
-        self.assertEqual(job.title, qs[0].title)
+        make_job_listing_page('Job', live=True)
+        jobs = JobListingList().get_job_listings()
+        self.assertEqual(jobs.count(), 1)
+        self.assertEqual(jobs[0].title, 'Job')
 
     def test_page_renders_block_safely(self):
         """
@@ -97,7 +98,6 @@ class JobListingListTestCase(TestCase):
         set_stream_data(page, 'sidebar_breakout', [job_listing_list])
 
         request = RequestFactory().get('/')
-        request.user = Mock()
         rendered_html = force_text(page.serve(request).render().content)
         self.assertInHTML(
             ('<aside class="m-jobs-list" data-qa-hook="openings-section">'
@@ -109,29 +109,23 @@ class JobListingListTestCase(TestCase):
 
 class JobListingTableTestCase(TestCase):
     def test_html_displays_no_data_message(self):
-        table = JobListingTable()
-        html = table.render(table.to_python({'empty_table_msg': 'No Jobs'}))
-        self.assertInHTML('<h3>No Jobs</h3>', html)
-
-    def test_html_displays_table_if_row_flag_false(self):
-        table = JobListingTable()
-        html = table.render(table.to_python(
-            {'first_row_is_table_header': False}
-        ))
-        self.assertNotIn('<thead>', html)
-        self.assertIn('TITLE', html)
-        self.assertIn('GRADE', html)
-        self.assertIn('POSTING CLOSES', html)
-        self.assertIn('LOCATION', html)
+        self.assertInHTML(
+            '<h3>There are no current openings at this time.</h3>',
+            JobListingTable().render({})
+        )
 
     def test_html_has_header(self):
         make_job_listing_page(
             title='CEO',
             close_date=date(2099, 12, 1)
         )
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
+        html = JobListingTable().render({})
+
         self.assertIn('<thead>', html)
+        self.assertIn('TITLE', html)
+        self.assertIn('GRADE', html)
+        self.assertIn('POSTING CLOSES', html)
+        self.assertIn('LOCATION', html)
 
     def test_html_has_job_listings(self):
         make_job_listing_page(
@@ -146,7 +140,7 @@ class JobListingTableTestCase(TestCase):
         )
 
         table = JobListingTable()
-        html = table.render(table.to_python({}))
+        html = table.render({})
 
         self.assertIn('Manager', html)
         self.assertIn('Assistant', html)
@@ -156,13 +150,30 @@ class JobListingTableTestCase(TestCase):
         self.assertIn('Apr. 21, 2099', html)
         self.assertEqual(html.count('Silicon Valley'), 2)
 
+    def test_is_efficient(self):
+        for i in range(10):
+            make_job_listing_page(
+                title='Manager',
+                grades=['1', '2', '3'],
+                close_date=date(2099, 8, 5)
+            )
+
+        request = RequestFactory().get('/')
+
+        # We expect four database queries here. First, Wagtail has to look up
+        # the site root paths. These get cached on the request object. Then,
+        # all of the JobListingPages are retrieved in a single query. Finally,
+        # two additional queries are needed to pull back job grades.
+        with self.assertNumQueries(4):
+            JobListingTable().render({}, context={'request': request})
+
     def test_excludes_draft_jobs(self):
         make_job_listing_page('Job', live=False)
-        qs = JobListingTable().get_queryset({})
+        qs = JobListingTable().get_job_listings()
         self.assertFalse(qs.exists())
 
     def test_includes_live_jobs(self):
         job = make_job_listing_page('Job', live=True)
-        qs = JobListingTable().get_queryset({})
+        qs = JobListingTable().get_job_listings()
         self.assertTrue(qs.exists())
         self.assertEqual(job.title, qs[0].title)
