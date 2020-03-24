@@ -1,80 +1,72 @@
-from django.template.loader import render_to_string
-from django.utils import timezone
-
 from wagtail.core import blocks
 
-from v1.atomic_elements import organisms
+from jobmanager.models import JobListingPage
 from v1.util.util import extended_strftime
 
 
-class OpenJobListingsMixin(object):
-    def filter_queryset(self, qs, value):
-        qs = super(OpenJobListingsMixin, self).filter_queryset(qs, value)
+class JobListingsMixin:
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context.update({
+            'jobs': self.get_job_listings(),
+            'no_jobs_message': (
+                'There are no current openings at this time.'
+            ),
+        })
+        return context
 
-        # Hide any jobs that have not been published.
-        qs = qs.filter(live=True)
-
-        if value.get('hide_closed'):
-            today = timezone.now().date()
-            qs = qs.filter(open_date__lte=today, close_date__gte=today)
-
-        return qs
+    def get_job_listings(self):
+        return JobListingPage.objects.open()
 
 
-class JobListingList(OpenJobListingsMixin, organisms.ModelList):
-    model = 'jobmanager.JobListingPage'
-    ordering = ('close_date', 'title')
-
-    heading = blocks.CharBlock(required=False, help_text='List heading')
+class JobListingList(JobListingsMixin, blocks.StructBlock):
     more_jobs_page = blocks.PageChooserBlock(
         help_text='Link to full list of jobs'
     )
-    more_jobs_text = blocks.CharBlock(
-        required=False,
-        help_text='Text to show on link to full list of jobs'
-    )
 
-    hide_closed = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        help_text=(
-            'Whether to hide jobs that are not currently open '
-            '(jobs will automatically update)'
-        )
-    )
+    def get_job_listings(self):
+        return super().get_job_listings()[:5]
 
-    def render(self, value, context=None):
-        value['careers'] = self.get_queryset(value)
-        value.update(context or {})
-
-        template = '_includes/organisms/job-listing-list.html'
-        return render_to_string(template, value)
+    class Meta:
+        icon = 'list-ul'
+        template = 'jobmanager/job_listing_list.html'
 
 
-class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
-    model = 'jobmanager.JobListingPage'
-    ordering = ('close_date', 'title')
+class JobListingTable(JobListingsMixin, blocks.StaticBlock):
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
 
-    hide_closed = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        help_text=(
-            'Whether to hide jobs that are not currently open '
-            '(jobs will automatically update)'
-        )
-    )
+        jobs = context['jobs']
+        request = context.get('request')
 
-    fields = ['title', 'grades', 'close_date', 'location']
-    field_headers = ['TITLE', 'GRADE', 'POSTING CLOSES', 'LOCATION']
+        header = [['TITLE', 'GRADE', 'POSTING CLOSES', 'LOCATION']]
+        data = [
+            [
+                '<a href="%s">%s</a>' % (
+                    job.get_url(request=request),
+                    job.title,
+                ),
+                ', '.join(map(str, job.grades.all())),
+                extended_strftime(job.close_date, '%_m %_d, %Y'),
+                str(job.location),
+            ] for job in jobs
+        ]
 
-    def make_title_value(self, instance, value):
-        return '<a href="{}">{}</a>'.format(
-            instance.relative_url(instance.get_site()),
-            value
-        )
+        return {
+            'value': {
+                'data': header + data,
+                'empty_table_msg': context['no_jobs_message'],
+                'first_row_is_table_header': True,
+                'has_data': bool(data),
+                'is_stacked': True,
+            },
+        }
 
-    def make_grades_value(self, instance, value):
-        return ', '.join(sorted(g.grade.grade for g in value.all()))
+    def get_job_listings(self):
+        return super().get_job_listings() \
+            .select_related('location') \
+            .prefetch_related('grades__grade')
 
-    def make_close_date_value(self, instance, value):
-        return extended_strftime(value, '%_m %_d, %Y')
+    class Meta:
+        icon = 'table'
+        template = '_includes/organisms/table.html'

@@ -117,89 +117,88 @@
 <section class="{{- _content_classes( nav_depth ) -}}"
          aria-expanded="false"
          data-js-hook="behavior_flyout-menu_content">
+
+    {# Create "back" button in mobile menu. #}
+    {% if nav_depth > 1 %}
+    <button class="{{- _content_classes( nav_depth, '-alt-trigger' ) -}}"
+            data-js-hook="behavior_flyout-menu_alt-trigger">
+        {{ svg_icon('left') }}
+        Back
+    </button>
+    {% endif %}
+
     <div class="{{- _content_classes( nav_depth, '-wrapper' ) -}}">
-        {# Open wrapper if needed #}
-        {% if nav_depth > 1 %}
-        <button class="{{- _content_classes( nav_depth, '-alt-trigger' ) -}}"
-                data-js-hook="behavior_flyout-menu_alt-trigger">
-            {{ svg_icon('left') }}
-            Back
-        </button>
+
+        {% if nav_depth > 1 and nav_overview_url and nav_overview_url != '#' %}
+        <h3 class="{{ _content_classes( nav_depth, '-overview' ) }}
+                    {{ _content_classes( nav_depth, '-overview-heading' ) }}">
+            <a class="{{ _content_classes( nav_depth, '-overview-link' ) }}
+                        {{ _content_classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
+                        {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                {{ nav_overview_text ~ ' Overview' }}
+            </a>
+        </h3>
         {% endif %}
-        <div class="{{- _content_classes( nav_depth, '-grid' ) -}}">
 
-            {% if nav_depth > 1 and nav_overview_url and nav_overview_url != '#' %}
-            <h3 class="{{ _content_classes( nav_depth, '-overview' ) }}
-                       {{ _content_classes( nav_depth, '-overview-heading' ) }}">
-                <a class="{{ _content_classes( nav_depth, '-overview-link' ) }}
-                            {{ _content_classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                            {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
-                    {{ nav_overview_text ~ ' Overview' }}
-                </a>
-            </h3>
-            {% endif %}
+        {# TODO: Make the following menu markup use the _nav_item macro. #}
+        {% if nav_item.nav_items %}
+            {% set temp = nav_item.update({'nav_groups': [{'nav_items': nav_item.nav_items}]}) %}
+        {% endif %}
 
-            {# TODO: Make the following menu markup use the _nav_item macro. #}
-            {% if nav_item.nav_items %}
-                {% set temp = nav_item.update({'nav_groups': [{'nav_items': nav_item.nav_items}]}) %}
-            {% endif %}
+        {% if nav_item.nav_groups %}
+        <div class="{{ _content_classes( nav_depth, '-lists' ) }}">
 
-            {% if nav_item.nav_groups %}
-            <div class="{{ _content_classes( nav_depth, '-lists' ) }}">
+            {{ _nav_list( nav_depth, nav_item.nav_groups, nav_overview_text, language=language ) }}
 
-                {{ _nav_list( nav_depth, nav_item.nav_groups, nav_overview_text, language=language ) }}
+            {% if nav_item.featured_items or nav_item.other_items %}
 
-                {% if nav_item.featured_items or nav_item.other_items %}
+            <div class="{{ _content_classes( nav_depth, '-list-group' ) }}">
 
-                <div class="{{ _content_classes( nav_depth, '-list-group' ) }}">
-
-                    {% if nav_item.featured_items %}
-                    <div class="{{ _content_classes( nav_depth, '-list' ) }}
-                                {{ _content_classes( nav_depth, '-list__featured' ) }}">
-                        <h4 class="h5 {{ base_class ~ '_group-heading' }}">
-                            Featured
-                        </h4>
-                        <ul aria-label="Featured">
-                            {% for link in nav_item.featured_items | default( [], true ) %}
-                            <li class="{{ _content_classes( nav_depth, '-item' ) }}
-                                       {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
-                                <a class="{{ _content_classes( nav_depth, '-link' ) }}"
-                                   href="{{ link.url }}">
-                                    {{ svg_icon( 'favorite' ) }}
-                                    <span><span class="a-link_text">{{ link.text }}</span></span>
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% endif %}
-
-                    {% if nav_item.other_items %}
-                    <div class="{{ _content_classes( nav_depth, '-list' ) }}">
-                        <h4 class="h5 {{ base_class ~ '_group-heading' }}">
-                            Additional Resources
-                        </h4>
-                        <ul aria-label="Additional Resources">
-                            {% for link in nav_item.other_items | default( [], true ) %}
-                            <li class="{{ _content_classes( nav_depth, '-item' ) }}
-                                       {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
-                                <a class="a-link {{ _content_classes( nav_depth, '-link' ) }}"
+                {% if nav_item.featured_items %}
+                <div class="{{ _content_classes( nav_depth, '-list' ) }}
+                            {{ _content_classes( nav_depth, '-list__featured' ) }}">
+                    <h4 class="h5 {{ base_class ~ '_group-heading' }}">
+                        Featured
+                    </h4>
+                    <ul aria-label="Featured">
+                        {% for link in nav_item.featured_items | default( [], true ) %}
+                        <li class="{{ _content_classes( nav_depth, '-item' ) }}
+                                    {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
+                            <a class="{{ _content_classes( nav_depth, '-link' ) }}"
                                 href="{{ link.url }}">
-                                    {{ svg_icon( link.icon ) }}
-                                    <span><span class="a-link_text">{{ link.text }}</span></span>
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% endif %}
-
+                                {{ svg_icon( 'favorite' ) }}
+                                <span><span class="a-link_text">{{ link.text }}</span></span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 {% endif %}
+
+                {% if nav_item.other_items %}
+                <div class="{{ _content_classes( nav_depth, '-list' ) }}">
+                    <h4 class="h5 {{ base_class ~ '_group-heading' }}">
+                        Additional Resources
+                    </h4>
+                    <ul aria-label="Additional Resources">
+                        {% for link in nav_item.other_items | default( [], true ) %}
+                        <li class="{{ _content_classes( nav_depth, '-item' ) }}
+                                    {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
+                            <a class="a-link {{ _content_classes( nav_depth, '-link' ) }}"
+                            href="{{ link.url }}">
+                                {{ svg_icon( link.icon ) }}
+                                <span><span class="a-link_text">{{ link.text }}</span></span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
             </div>
             {% endif %}
-
         </div>
+        {% endif %}
     </div>
 
     {% if nav_depth == 1 %}

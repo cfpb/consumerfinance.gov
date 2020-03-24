@@ -102,7 +102,7 @@
                     {{ date_desc }}
                     {% if 'EventPage' in post.specific_class.__name__ %}
                         {{ time.render(post.specific.start_dt, {'date':true}) }}
-		    {% elif 'EnforcementAction' in post.specific_class.__name__ %}
+		    {% elif 'EnforcementAction' in post.specific_class.__name__ and post.date_filed %}
                         {{ time.render(post.date_filed, {'date':true}) }}
                     {% else %}
                         {{ time.render(post.date_published, {'date':true}) }}
