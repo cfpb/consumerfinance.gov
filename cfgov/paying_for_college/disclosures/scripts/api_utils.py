@@ -231,7 +231,7 @@ def build_field_string():
         'latest.{}'.format(field) for field in (YEAR_FIELDS + PROGRAM_FIELDS)
     ]
     fields = BASE_FIELDS + latest_fields
-    return ",".join([field for field in fields])
+    return ",".join(fields)
 
 
 def search_by_school_name(name):
