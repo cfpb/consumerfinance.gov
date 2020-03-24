@@ -1,11 +1,16 @@
 import re
 
 from django.conf import settings
-from django.utils.encoding import force_text
 
 from wagtail.core.rich_text import expand_db_html
 
 from core.utils import add_link_markup, get_link_tags
+
+
+try:
+    from django.utils.encoding import force_str
+except ImportError:
+    from django.utils.encoding import force_text as force_str
 
 
 class DownstreamCacheControlMiddleware(object):
@@ -23,7 +28,7 @@ def parse_links(html, encoding=None):
     # The passed HTML may be a string or bytes, depending on what is calling
     # this method. For example, Django response.content is always bytes. We
     # always want this content to be a string for our purposes.
-    html_as_text = force_text(html, encoding=encoding)
+    html_as_text = force_str(html, encoding=encoding)
 
     # This call invokes Wagail-specific logic that converts references to
     # Wagtail pages, documents, and images to their proper link URLs.

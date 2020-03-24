@@ -1,11 +1,16 @@
 import os
 
-from django.utils.encoding import force_text
 from django.utils.text import slugify
 
 import boto3
 
 from agreements.models import Issuer
+
+
+try:
+    from django.utils.encoding import force_str
+except ImportError:
+    from django.utils.encoding import force_text as force_str
 
 
 def s3_safe_key(path, prefix=''):
@@ -46,7 +51,7 @@ def save_agreement(agreements_zip, pdf_path, outfile,
 
     zipinfo = agreements_zip.getinfo(pdf_path)
 
-    path = force_text(pdf_path)
+    path = force_str(pdf_path)
 
     try:
         issuer_name, filename = path.split('/')

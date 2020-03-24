@@ -10,7 +10,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url
 from django.template.response import TemplateResponse
-from django.utils.encoding import force_text
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
@@ -28,8 +27,10 @@ from v1.util.wrap_password_reset import _wrap_password_reset_view
 
 try:
     from django.urls import resolve
+    from django.utils.encoding import force_str
 except ImportError:
     from django.core.urlresolvers import resolve
+    from django.utils.encoding import force_text as force_str
 
 
 # Overrided Wagtail Views
@@ -171,7 +172,7 @@ def custom_password_reset_confirm(
 
     try:
         # urlsafe_base64_decode() decodes to bytestring on Python 3
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = UserModel._default_manager.get(pk=uid)
     except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
         user = None
