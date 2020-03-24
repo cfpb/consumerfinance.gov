@@ -392,14 +392,24 @@ body {
                 border-bottom: 1px solid @gray-40;
             }
 
+            &-overview-heading-text {
+                display: block;
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            }
+
             &-link,
             &-overview-link {
                 position: relative;
                 // Colors for :link, :visited, :hover, :focus, :active.
                 .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
 
-                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                left: unit( -15px / 18px, em );
+                padding-top: unit( 15px / 18px, em );
+                padding-bottom: unit( 15px / 18px, em );
+                padding-left: unit( 10px / 18px, em );
+
+                border-left: 5px solid transparent;
 
                 // Hide ">" icon when we don't have children.
                 &-icon-post {
@@ -419,32 +429,6 @@ body {
                     }
                 }
 
-                &__current,
-                &:hover {
-                    cursor: pointer;
-
-                    .cf-icon-svg {
-                        fill: @black;
-                    }
-                }
-            }
-
-            &-overview-heading-text {
-                display: block;
-                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-            }
-
-            &-link,
-            &-overview-link {
-                position: relative;
-                left: unit( -15px / 18px, em );
-                padding-top: unit( 15px / 18px, em );
-                padding-bottom: unit( 15px / 18px, em );
-                padding-left: unit( 10px / 18px, em );
-
-                border-left: 5px solid transparent;
-
                 &:hover {
                     color: @black;
                     border-left-color: @green;
@@ -453,6 +437,15 @@ body {
                 &:focus {
                     border-color: @black;
                     outline: 1px dotted @black;
+                }
+
+                &__current,
+                &:hover {
+                    cursor: pointer;
+
+                    .cf-icon-svg {
+                        fill: @black;
+                    }
                 }
 
                 // This is styling for the currently selected content-2 links.
