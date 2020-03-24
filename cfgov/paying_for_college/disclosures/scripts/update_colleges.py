@@ -53,23 +53,24 @@ def update_programs(api_data, school):
         level_code = entry['credential']['level']
         cip_code = entry['code']
         program_code = "{}-{}".format(cip_code, level_code)
-        program, _created = Program.objects.get_or_create(
+        program, _created = Program.objects.update_or_create(
             institution=school,
             program_code=program_code,
+            defaults={
+                'program_name': entry['title'],
+                'cip_code': cip_code,
+                'completers': entry['counts']['titleiv'],
+                'level_code': level_code,
+                'level': PROGRAM_LEVELS.get(int(level_code)),
+                'salary': entry['earnings']['median_earnings'],
+                'median_student_loan_completers': (
+                    entry['debt']['median_debt']),
+                'median_monthly_debt': (
+                    entry['debt']['monthly_debt_payment'])
+            }
         )
         if _created:
             create_count += 1
-        program.program_name = entry['title']
-        program.cip_code = cip_code
-        program.completers = entry['counts']['titleiv']
-        program.level_code = level_code
-        program.level = PROGRAM_LEVELS.get(int(level_code))
-        program.salary = entry['earnings']['median_earnings']
-        program.median_student_loan_completers = (
-            entry['debt']['median_debt'])
-        program.median_monthly_debt = (
-            entry['debt']['monthly_debt_payment'])
-        program.save()
     return create_count
 
 
