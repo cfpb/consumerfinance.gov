@@ -89,7 +89,7 @@
                                 </div>
                             {% endif %}
                         {% endif %}
-                    {% elif 'related_posts' in block.block_type %}
+                    {% elif block.block_type in ['job_listing_list', 'related_posts'] %}
                         <div class="block{{ ' block__flush-top' if loop.first else '' }}">
                             {% include_block block %}
                         </div>
