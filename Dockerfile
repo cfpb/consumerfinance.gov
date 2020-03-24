@@ -86,7 +86,6 @@ RUN yum -y install nodejs yarn  && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
 
 # Remove files flagged by image vulnerability scanner
-# FIXME: Find out if these packages can be remove altogether
 RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
     rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
 
