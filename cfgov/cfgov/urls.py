@@ -230,8 +230,11 @@ urlpatterns = [
 
     re_path(r'^paying-for-college/',
         include_if_app_enabled('comparisontool', 'comparisontool.urls')),
-    re_path(r'^paying-for-college2/', include(
-        'paying_for_college.urls', namespace='paying_for_college')),
+
+    re_path(r'^paying-for-college2/', include((
+        'paying_for_college.urls',
+        'paying_for_college'),
+        namespace='paying_for_college')),
 
     re_path(r'^credit-cards/agreements/',
         include('agreements.urls')),
@@ -239,8 +242,10 @@ urlpatterns = [
     flagged_re_path(
         'PREPAID_AGREEMENTS_SEARCH',
         r'^data-research/prepaid-accounts/search-agreements/',
-        include('prepaid_agreements.urls', namespace='prepaid_agreements'
-    )),
+        include((
+            'prepaid_agreements.urls',
+            'prepaid_agreements'),
+            namespace='prepaid_agreements')),
 
     re_path(r'^consumer-tools/retirement/', include_if_app_enabled(
         'retirement_api',
@@ -386,9 +391,10 @@ urlpatterns = [
     ),
     re_path(
         r'^(?i)about-us/diversity-and-inclusion/',
-        include('diversity_inclusion.urls',
-                namespace='diversity_inclusion')
-    ),
+        include((
+            'diversity_inclusion.urls',
+            'diversity_inclusion'),
+            namespace='diversity_inclusion')),
 
     re_path(r'^sitemap\.xml$', sitemap),
 
@@ -553,7 +559,7 @@ if settings.ALLOW_ADMIN_URL:
         re_path(r'^django-admin/password_change',
             change_password,
             name='django_admin_account_change_password'),
-        re_path(r'^django-admin/', include(admin.site.urls)),
+        re_path(r'^django-admin/', admin.site.urls),
 
         # Override Django and Wagtail password views with our password policy
         re_path(r'^admin/password_reset/', include([
