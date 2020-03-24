@@ -1,6 +1,7 @@
 from functools import partial
 
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
@@ -39,12 +40,11 @@ from v1.views.documents import DocumentServeView
 
 
 try:
-    from flags.path import flagged_re_path
-    from django.urls import include, re_path, static
+    from flags.urls import flagged_re_path
+    from django.urls import include, re_path
 except ImportError:
     from flags.urls import flagged_url as flagged_re_path
     from django.conf.urls import include
-    from django.conf.urls.static import static
     from django.conf.urls import url as re_path
 
 
@@ -173,31 +173,37 @@ urlpatterns = [
     re_path(r'^subscriptions/new/$', govdelivery_subscribe,
         name='govdelivery'),
 
-    re_path(r'^govdelivery-subscribe/', include([
-        re_path(r'^success/$', TemplateView.as_view(
-            template_name='govdelivery-subscribe/success/index.html'),
-            name='success'),
-        re_path(r'^error/$', TemplateView.as_view(
-            template_name='govdelivery-subscribe/error/index.html'),
-            name='user_error'),
-        re_path(r'^server-error/$', TemplateView.as_view(
-            template_name='govdelivery-subscribe/server-error/index.html'),
-            name='server_error')],
+    re_path(r'^govdelivery-subscribe/', include((
+        [
+            re_path(r'^success/$', TemplateView.as_view(
+                template_name='govdelivery-subscribe/success/index.html'),
+                name='success'),
+            re_path(r'^error/$', TemplateView.as_view(
+                template_name='govdelivery-subscribe/error/index.html'),
+                name='user_error'),
+            re_path(r'^server-error/$', TemplateView.as_view(
+                template_name='govdelivery-subscribe/server-error/index.html'),
+                name='server_error')
+        ],
+        'govdelivery'),
         namespace='govdelivery')),
 
     re_path(r'^regulation-comment/new/$', regsgov_comment, name='reg_comment'),
 
-    re_path(r'^regulation-comment/', include([
-        re_path(r'^success/$', TemplateView.as_view(
-            template_name='regulation-comment/success/index.html'),
-            # 'core.views.comment_success',
-            name='success'),
-        re_path(r'^error/$', TemplateView.as_view(
-            template_name='regulation-comment/error/index.html'),
-            name='user_error'),
-        re_path(r'^server-error/$', TemplateView.as_view(
-            template_name='regulation-comment/server-error/index.html'),
-            name='server_error')],
+    re_path(r'^regulation-comment/', include((
+        [
+            re_path(r'^success/$', TemplateView.as_view(
+                template_name='regulation-comment/success/index.html'),
+                # 'core.views.comment_success',
+                name='success'),
+            re_path(r'^error/$', TemplateView.as_view(
+                template_name='regulation-comment/error/index.html'),
+                name='user_error'),
+            re_path(r'^server-error/$', TemplateView.as_view(
+                template_name='regulation-comment/server-error/index.html'),
+                name='server_error')
+        ],
+        'reg_comment'),
         namespace='reg_comment')),
 
     re_path(r'^feed/$', RedirectView.as_view(
@@ -212,12 +218,16 @@ urlpatterns = [
     re_path(r'^careers/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/careers/%(path)s', permanent=True)),
 
-    re_path(r'^transcripts/', include([
-        re_path(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$',
-            TemplateView.as_view(
-                template_name='transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html'),  # noqa: E501
-                name='how-to-apply-for-a-federal-job-with-the-cfpb'), ],
+    re_path(r'^transcripts/', include((
+        [
+            re_path(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$',
+                TemplateView.as_view(
+                    template_name='transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html'),  # noqa: E501
+                    name='how-to-apply-for-a-federal-job-with-the-cfpb'),
+        ],
+        'transcripts'),
         namespace='transcripts')),
+
     re_path(r'^paying-for-college/',
         include_if_app_enabled('comparisontool', 'comparisontool.urls')),
     re_path(r'^paying-for-college2/', include(
