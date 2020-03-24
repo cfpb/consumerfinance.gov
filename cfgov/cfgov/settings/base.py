@@ -118,7 +118,7 @@ OPTIONAL_APPS = [
 
 POSTGRES_APPS = []
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
@@ -135,10 +135,10 @@ MIDDLEWARE_CLASSES = (
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 )
 
-CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
+CSP_MIDDLEWARE = ('csp.middleware.CSPMiddleware', )
 
 if ('CSP_ENFORCE' in os.environ):
-    MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+    MIDDLEWARE += CSP_MIDDLEWARE
 
 ROOT_URLCONF = 'cfgov.urls'
 
@@ -438,7 +438,7 @@ for app in OPTIONAL_APPS:
         for name in app.get("apps", ()):
             if name not in INSTALLED_APPS:
                 INSTALLED_APPS += (name,)
-        MIDDLEWARE_CLASSES += app.get("middleware", ())
+        MIDDLEWARE += app.get("middleware", ())
     except ImportError:
         pass
 

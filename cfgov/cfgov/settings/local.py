@@ -58,7 +58,7 @@ if os.environ.get('ENABLE_SQL_LOGGING'):
 if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
     INSTALLED_APPS += ('debug_toolbar',)
 
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 
     DEBUG_TOOLBAR_PANELS = [
         'debug_toolbar.panels.versions.VersionsPanel',
@@ -83,7 +83,7 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
     }
 
 
-MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+MIDDLEWARE += CSP_MIDDLEWARE
 
 # Disable caching when working locally.
 CACHES = {
