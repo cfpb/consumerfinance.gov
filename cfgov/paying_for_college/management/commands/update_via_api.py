@@ -27,6 +27,9 @@ class Command(BaseCommand):
         if save_programs and single_school:
             (no_data, endmsg) = update_colleges.update(
                 single_school=single_school, store_programs=True)
+        elif single_school:
+            (no_data, endmsg) = update_colleges.update(
+                single_school=single_school)
         elif save_programs:
             (no_data, endmsg) = update_colleges.update(store_programs=True)
         else:
