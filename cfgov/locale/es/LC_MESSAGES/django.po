@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 17:54+0000\n"
+"POT-Creation-Date: 2020-03-24 22:01+0000\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -97,7 +97,7 @@ msgstr ""
 "No incluya información confidencial, como su nombre, información de "
 "contacto, número de cuenta o número de seguro social en este campo."
 
-#: jinja2/v1/_includes/molecules/global-header-cta.html:27
+#: jinja2/v1/_includes/molecules/global-header-cta.html:23
 msgid "Submit a Complaint"
 msgstr "Enviar una queja"
 
@@ -577,7 +577,7 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/about.html:4
 #: wellbeing/jinja2/wellbeing/about.html:34
 msgid "Why financial well-being?"
-msgstr ""
+msgstr "¿Por qué medimos su bienestar financiero?"
 
 #: wellbeing/jinja2/wellbeing/about.html:8
 #: wellbeing/jinja2/wellbeing/about.html:12
@@ -591,36 +591,38 @@ msgstr ""
 
 #: wellbeing/jinja2/wellbeing/about.html:65
 msgid "Why doesn’t this questionnaire ask about financial details?"
-msgstr ""
+msgstr "¿Por qué no pregunta por detalles financieros específicos?"
 
 #: wellbeing/jinja2/wellbeing/about.html:72
 msgid "Instead,"
-msgstr ""
+msgstr "En vez,"
 
 #: wellbeing/jinja2/wellbeing/about.html:74
 msgid "we asked people around the country"
-msgstr ""
+msgstr "le preguntamos a personas a través de todos los Estados Unidos"
 
 #: wellbeing/jinja2/wellbeing/about.html:76
 msgid "what financial well-being meant to them, and we listened."
-msgstr ""
+msgstr "qué significa para ellos tener bienestar financiero."
 
 #: wellbeing/jinja2/wellbeing/about.html:85
 msgid "Have control over day-to-day, month-to-month finances"
-msgstr ""
+msgstr "Tener control sobre sus finanzas diarias y mensuales"
 
 #: wellbeing/jinja2/wellbeing/about.html:86
 msgid "Have the capacity to absorb a financial shock"
-msgstr ""
+msgstr "Tener la capacidad de pagar por un gasto imprevisto"
 
 #: wellbeing/jinja2/wellbeing/about.html:87
 msgid "Are on track to meet your financial goals"
-msgstr ""
+msgstr "Estar en paso para cumplir sus metas financieras"
 
 #: wellbeing/jinja2/wellbeing/about.html:88
 msgid ""
 "Have the financial freedom to make the choices that allow you to enjoy life"
 msgstr ""
+"Tener la libertad financiera para tomar las decisiones que le permiten "
+"disfrutar de su vida"
 
 #: wellbeing/jinja2/wellbeing/about.html:95
 msgid "How does financial well-being look across America?"
@@ -645,69 +647,74 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/home.html:4
 #: wellbeing/jinja2/wellbeing/home.html:45
 msgid "Find out your financial well-being"
-msgstr ""
+msgstr "Calcule su bienestar financiero"
 
 #: wellbeing/jinja2/wellbeing/home.html:8
 msgid ""
-"Answer ten questions to measure your own current financial well-being and "
+"Answer ten questions to measure your current financial well-being and "
 "see steps you can take to improve it."
 msgstr ""
+"Provea su respuesta a estas diez preguntas sobre su estado actual de "
+"bienestar financiero y reciba más información sobre pasos que pueda tomar "
+"para mejorarlo."
 
 #: wellbeing/jinja2/wellbeing/home.html:12
 msgid ""
 "Find out your financial well-being by answering ten questions, and then see "
 "steps you can take to improve it."
 msgstr ""
-
-#: wellbeing/jinja2/wellbeing/home.html:48
-msgid ""
-"Answer ten questions to measure your current financial well-being and see "
-"steps you can take to improve it."
-msgstr ""
+"Calcule su puntuación de bienestar financiero y vea pasos sobre cómo "
+"mejorarla."
 
 #: wellbeing/jinja2/wellbeing/home.html:60
 msgid "Here’s how it works:"
-msgstr ""
+msgstr "Funciona así:"
 
 #: wellbeing/jinja2/wellbeing/home.html:63
 msgid "Answer the questions and get your score."
-msgstr ""
+msgstr "Conteste las preguntas y vea su puntuación."
+
+#: wellbeing/jinja2/wellbeing/home.html:64
+msgid ""
+"You won’t be asked about any personal financial data—it’s not that "
+"kind of questionnaire."
+msgstr "No le pediremos ningún dato financiero personal o específico."
 
 #: wellbeing/jinja2/wellbeing/home.html:66
 msgid "See how and why we developed it."
-msgstr ""
+msgstr "Lea más sobre cómo desarrollamos este cuestionario."
 
 #: wellbeing/jinja2/wellbeing/home.html:69
 msgid "Review steps you can take"
-msgstr ""
+msgstr "Revise los pasos que pueda tomar"
 
 #: wellbeing/jinja2/wellbeing/home.html:70
 msgid "if you want to be able to answer the questions differently."
-msgstr ""
+msgstr "si desea poder contestar las preguntas de una manera diferente."
 
 #: wellbeing/jinja2/wellbeing/home.html:74
 msgid "See how your score compares"
-msgstr ""
+msgstr "Compare su resultado"
 
 #: wellbeing/jinja2/wellbeing/home.html:75
 msgid "to other U.S. adults from our national survey."
-msgstr ""
+msgstr "con el del resto de la población en los Estados Unidos."
 
 #: wellbeing/jinja2/wellbeing/home.html:84
 msgid "We never collect or store the answers you provide."
-msgstr ""
+msgstr "No guardamos sus respuestas."
 
 #: wellbeing/jinja2/wellbeing/home.html:90
 msgid "See how your privacy is protected."
-msgstr ""
+msgstr "Lea más sobre cómo protegemos su privacidad."
 
 #: wellbeing/jinja2/wellbeing/home.html:99
 msgid "Part 1: How well does this statement describe you or your situation?"
-msgstr ""
+msgstr "Parte 1: ¿Cuán bien lo describe a usted o su situación lo siguiente?"
 
 #: wellbeing/jinja2/wellbeing/home.html:103
 msgid "I could handle a major unexpected expense"
-msgstr ""
+msgstr "Podría hacer frente a un gasto imprevisto importante"
 
 #: wellbeing/jinja2/wellbeing/home.html:105
 #: wellbeing/jinja2/wellbeing/home.html:178
@@ -716,7 +723,7 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/home.html:397
 #: wellbeing/jinja2/wellbeing/home.html:470
 msgid "This statement describes me"
-msgstr ""
+msgstr "Esto me describe "
 
 #: wellbeing/jinja2/wellbeing/home.html:117
 #: wellbeing/jinja2/wellbeing/home.html:190
@@ -725,7 +732,7 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/home.html:409
 #: wellbeing/jinja2/wellbeing/home.html:482
 msgid "Completely"
-msgstr ""
+msgstr "Totalmente"
 
 #: wellbeing/jinja2/wellbeing/home.html:130
 #: wellbeing/jinja2/wellbeing/home.html:203
@@ -734,7 +741,7 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/home.html:422
 #: wellbeing/jinja2/wellbeing/home.html:495
 msgid "Very well"
-msgstr ""
+msgstr "Muy bien"
 
 #: wellbeing/jinja2/wellbeing/home.html:143
 #: wellbeing/jinja2/wellbeing/home.html:216
@@ -743,7 +750,7 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/home.html:435
 #: wellbeing/jinja2/wellbeing/home.html:508
 msgid "Somewhat"
-msgstr ""
+msgstr "En cierta medida"
 
 #: wellbeing/jinja2/wellbeing/home.html:156
 #: wellbeing/jinja2/wellbeing/home.html:229
@@ -752,7 +759,7 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/home.html:448
 #: wellbeing/jinja2/wellbeing/home.html:521
 msgid "Very little"
-msgstr ""
+msgstr "Muy poco"
 
 #: wellbeing/jinja2/wellbeing/home.html:169
 #: wellbeing/jinja2/wellbeing/home.html:242
@@ -761,124 +768,130 @@ msgstr ""
 #: wellbeing/jinja2/wellbeing/home.html:461
 #: wellbeing/jinja2/wellbeing/home.html:534
 msgid "Not at all"
-msgstr ""
+msgstr "No me describe en lo absoluto"
 
 #: wellbeing/jinja2/wellbeing/home.html:176
 msgid "I am securing my financial future"
-msgstr ""
+msgstr "Estoy asegurando mi futuro financiero"
 
 #: wellbeing/jinja2/wellbeing/home.html:249
 msgid ""
 "Because of my money situation, I feel like I will never have the things I "
 "want in life"
 msgstr ""
+"Debido a mi situación financiera, creo que nunca tendré las cosas que quiero "
+"en la vida"
 
 #: wellbeing/jinja2/wellbeing/home.html:322
 msgid "I can enjoy life because of the way I’m managing my money"
-msgstr ""
+msgstr "Puedo disfrutar la vida debido a la manera en que manejo mi dinero"
 
 #: wellbeing/jinja2/wellbeing/home.html:395
 msgid "I am just getting by financially"
-msgstr ""
+msgstr "Apenas estoy subsistiendo financieramente"
 
 #: wellbeing/jinja2/wellbeing/home.html:468
 msgid "I am concerned that the money I have or will save won’t last"
-msgstr ""
+msgstr "Me preocupa que el dinero que tengo o que ahorre no me dure"
 
 #: wellbeing/jinja2/wellbeing/home.html:542
 msgid "Part 2: How often does this statement apply to you?"
-msgstr ""
+msgstr "Parte 2: ¿Con qué frecuencia le ocurre lo siguiente?"
 
 #: wellbeing/jinja2/wellbeing/home.html:546
 msgid ""
 "Giving a gift for a wedding, birthday or other occasion would put a strain "
 "on my finances for the month"
 msgstr ""
+"Hacer un regalo para una boda, un cumpleaños u otra ocasión supondría una "
+"enorme carga para mis finanzas del mes"
 
 #: wellbeing/jinja2/wellbeing/home.html:548
 #: wellbeing/jinja2/wellbeing/home.html:621
 #: wellbeing/jinja2/wellbeing/home.html:693
 #: wellbeing/jinja2/wellbeing/home.html:766
 msgid "This statement applies to me"
-msgstr ""
+msgstr "Esto me ocurre"
 
 #: wellbeing/jinja2/wellbeing/home.html:560
 #: wellbeing/jinja2/wellbeing/home.html:632
 #: wellbeing/jinja2/wellbeing/home.html:705
 #: wellbeing/jinja2/wellbeing/home.html:778
 msgid "Always"
-msgstr ""
+msgstr "Siempre"
 
 #: wellbeing/jinja2/wellbeing/home.html:573
 #: wellbeing/jinja2/wellbeing/home.html:645
 #: wellbeing/jinja2/wellbeing/home.html:718
 #: wellbeing/jinja2/wellbeing/home.html:791
 msgid "Often"
-msgstr ""
+msgstr "A menudo"
 
 #: wellbeing/jinja2/wellbeing/home.html:586
 #: wellbeing/jinja2/wellbeing/home.html:658
 #: wellbeing/jinja2/wellbeing/home.html:731
 #: wellbeing/jinja2/wellbeing/home.html:804
 msgid "Sometimes"
-msgstr ""
+msgstr "A veces"
 
 #: wellbeing/jinja2/wellbeing/home.html:599
 #: wellbeing/jinja2/wellbeing/home.html:671
 #: wellbeing/jinja2/wellbeing/home.html:744
 #: wellbeing/jinja2/wellbeing/home.html:817
 msgid "Rarely"
-msgstr ""
+msgstr "Casi nunca"
 
 #: wellbeing/jinja2/wellbeing/home.html:612
 #: wellbeing/jinja2/wellbeing/home.html:684
 #: wellbeing/jinja2/wellbeing/home.html:757
 #: wellbeing/jinja2/wellbeing/home.html:830
 msgid "Never"
-msgstr ""
+msgstr "Nunca"
 
 #: wellbeing/jinja2/wellbeing/home.html:619
 msgid "I have money left over at the end of the month"
-msgstr ""
+msgstr "Me sobra dinero al final del mes"
 
 #: wellbeing/jinja2/wellbeing/home.html:691
 msgid "I am behind with my finances"
-msgstr ""
+msgstr "Estoy atrasado en mis finanzas"
 
 #: wellbeing/jinja2/wellbeing/home.html:764
 msgid "My finances control my life"
-msgstr ""
+msgstr "Mis finanzas controlan mi vida"
 
 #: wellbeing/jinja2/wellbeing/home.html:838
 msgid "About you"
-msgstr ""
+msgstr "Sobre usted"
 
 #: wellbeing/jinja2/wellbeing/home.html:843
 msgid "Select your age group. This changes the scoring calculation."
-msgstr ""
+msgstr "Seleccione su edad. Esto afecta cómo calculamos su puntuación."
 
 #: wellbeing/jinja2/wellbeing/home.html:882
 msgid ""
 "Select how you completed the questionnaire. This changes the scoring "
 "calculation."
 msgstr ""
+"Seleccione cómo contestó el cuestionario. Esto afecta cómo calculamos su "
+"puntuación."
 
 #: wellbeing/jinja2/wellbeing/home.html:897
 msgid "I read and answered the questions myself"
-msgstr ""
+msgstr "Yo leí y contesté las preguntas"
 
 #: wellbeing/jinja2/wellbeing/home.html:912
 msgid "I read the questions to someone else and recorded their answers"
-msgstr ""
+msgstr "Yo leí a alguien las preguntas y anoté sus respuestas"
 
 #: wellbeing/jinja2/wellbeing/home.html:928
 msgid "Get my score"
-msgstr ""
+msgstr "Obtenga su puntuación"
 
 #: wellbeing/jinja2/wellbeing/home.html:952
 #: wellbeing/jinja2/wellbeing/results.html:638
 msgid "About this questionnaire"
-msgstr ""
+msgstr "Sobre este cuestionario"
 
 #: wellbeing/jinja2/wellbeing/home.html:961
 msgid "See more background"
