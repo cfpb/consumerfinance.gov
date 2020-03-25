@@ -113,7 +113,7 @@
 
    ========================================================================== #}
 
-{% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text, language='en' ) %}
+{% macro _nav_level( nav_depth, nav_item, overview_link=none, language='en' ) %}
 <section class="{{- _content_classes( nav_depth ) -}}"
          aria-expanded="false"
          data-js-hook="behavior_flyout-menu_content">
@@ -129,13 +129,13 @@
 
     <div class="{{- _content_classes( nav_depth, '-wrapper' ) -}}">
 
-        {% if nav_depth > 1 and nav_overview_url and nav_overview_url != '#' %}
+        {% if overview_link and overview_link.url %}
         <h3 class="{{ _content_classes( nav_depth, '-overview' ) }}
                     {{ _content_classes( nav_depth, '-overview-heading' ) }}">
             <a class="{{ _content_classes( nav_depth, '-overview-link' ) }}
-                        {{ _content_classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                        {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
-                {{ nav_overview_text ~ ' Overview' }}
+                        {{ _content_classes( nav_depth, '-overview-link__current' ) if overview_link.selected else '' }}"
+               href="{{ overview_link.url }}">
+                {{ overview_link.text ~ ' Overview' }}
             </a>
         </h3>
         {% endif %}
@@ -147,8 +147,7 @@
 
         {% if nav_item.nav_groups %}
         <div class="{{ _content_classes( nav_depth, '-lists' ) }}">
-
-            {{ _nav_list( nav_depth, nav_item.nav_groups, nav_overview_text, language=language ) }}
+            {{ _nav_list( nav_depth, nav_item.nav_groups, overview_link.text, language=language ) }}
 
             {% if nav_item.featured_items or nav_item.other_items %}
 
@@ -184,7 +183,9 @@
                         {% for link in nav_item.other_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
                                     {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
-                            <a class="a-link {{ _content_classes( nav_depth, '-link' ) }}"
+                            <a class="a-link
+                                      {{ _content_classes( nav_depth, '-link' ) }}
+                                      {{ _content_classes( nav_depth, '-link__current' ) if link.selected else '' }}"
                             href="{{ link.url }}">
                                 {{ svg_icon( link.icon ) }}
                                 <span><span class="a-link_text">{{ link.text }}</span></span>
@@ -232,11 +233,9 @@
 <li class="{{ _content_classes( nav_depth, '-item' ) }}
            {{- _content_classes( nav_depth, '-item__has-icon' ) if link.icon_pre else '' -}}"
     {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
-    {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
-    <a class="{{- 'u-link__disabled' if url == '' else '' -}}
-              {{- _content_classes( nav_depth, '-link' ) -}}
+    <a class="{{- _content_classes( nav_depth, '-link' ) -}}
               {{- _content_classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
-              {{- _content_classes( nav_depth, '-link__current' ) if url == request.path else '' -}}"
+              {{- _content_classes( nav_depth, '-link__current' ) if nav_item.selected else '' -}}"
        href="{{ link.url | default( '#' ) }}"
        {{
          'data-js-hook=behavior_flyout-menu_trigger
@@ -256,7 +255,7 @@
           {% endif %}
     </a>
     {% if has_children %}
-        {{ _nav_level( nav_depth | int + 1, nav_item, link.url, link.text, language ) }}
+        {{ _nav_level( nav_depth + 1, nav_item, link, language ) }}
     {% endif %}
 </li>
 {% endmacro %}
