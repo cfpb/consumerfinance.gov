@@ -5,10 +5,16 @@
 */
 
 const stateModel = {
-  activeSection: null,
-  schoolSelected: null,
-  gotStarted: false,
-
+  values: {
+    activeSection: null,
+    schoolSelected: null,
+    gotStarted: false,
+    handleCostsButtonClicked: false,
+    programType: null,
+    programLength: null,
+    programRate: null,
+    programHousing: null
+  },
 
   init: () => {
     // PLACEHOLDER - Add more interesting stuff later

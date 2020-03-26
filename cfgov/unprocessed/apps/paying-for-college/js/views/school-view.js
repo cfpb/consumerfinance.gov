@@ -3,6 +3,10 @@
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { schoolSearch } from '../dispatchers/get-api-values';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
+import { updateSchoolData } from '../dispatchers/update-models.js';
+import { updateState } from '../dispatchers/update-state.js';
+import { getSchoolValue } from '../dispatchers/get-model-values.js';
+
 
 const schoolView = {
   _searchSection: null,
@@ -27,7 +31,7 @@ const schoolView = {
 
   _handleInputChange: function( event ) {
     clearTimeout( this._keyupDelay );
-    this._keyupDelay = setTimeout( function() {
+    schoolView._keyupDelay = setTimeout( function() {
       const searchTerm = schoolView._searchBox.value;
       // TODO - clean up searchbox text, remove non-alphanumeric characters
       schoolSearch( searchTerm )
@@ -49,9 +53,10 @@ const schoolView = {
 
     // If there's a school_id, then proceed with schoolInfo
     if ( typeof button.dataset.school_id !== 'undefined' ) {
-      schoolView._searchResults.classList.remove( 'active' );
-      schoolView._searchBox.value = button.querySelector( 'strong' ).innerText;
-      schoolView._schoolInfo.classList.add( 'active' );
+      const iped = button.dataset.school_id;
+
+      // Add schoolData to schoolModel
+      updateSchoolData( iped );
 
     }
   },
@@ -60,6 +65,11 @@ const schoolView = {
     const container = closest( event.target, '.m-form-field' );
     const input = container.querySelector( 'input' );
     input.setAttribute( 'checked', true );
+
+    // Update the model with program info
+    const prop = input.getAttribute( 'data-state-item' );
+    const value = input.value;
+    updateState.setProgramData( prop, value );
 
     const checkedCount = schoolView._schoolInfo
       .querySelectorAll( 'input[checked="true"]' ).length;
@@ -71,35 +81,47 @@ const schoolView = {
     }
   },
 
-  _addListeners: function() {
+  /* Add all event listeners for school search view  */
+  _addListeners: () => {
     const searchEvents = {
-      keyup: this._handleInputChange
+      keyup: schoolView._handleInputChange
     };
-    bindEvent( this._searchBox, searchEvents );
+    bindEvent( schoolView._searchBox, searchEvents );
 
     const searchResultsEvent = {
-      click: this._handleResultButtonClick
+      click: schoolView._handleResultButtonClick
     };
-    bindEvent( this._searchResults, searchResultsEvent );
+    bindEvent( schoolView._searchResults, searchResultsEvent );
 
     const radioEvents = {
-      click: this._handleProgramRadioClick
+      click: schoolView._handleProgramRadioClick
     };
-    this._programRadios.forEach( elem => {
+    schoolView._programRadios.forEach( elem => {
       bindEvent( elem, radioEvents );
     } );
+
   },
 
-  init: function( body ) {
+  init: body => {
     // Set up nodeLists
-    this._searchSection = body.querySelector( '#college-costs_school-search' );
-    this._searchBox = body.querySelector( '#search__school-input' );
-    this._searchResults = body.querySelector( '#search__results' );
-    this._programRadios = body.querySelectorAll( '.school-search_additional-info label' );
-    this._schoolInfo = body.querySelector( '.school-search_additional-info' );
+    schoolView._searchSection = body.querySelector( '#college-costs_school-search' );
+    schoolView._searchBox = body.querySelector( '#search__school-input' );
+    schoolView._searchResults = body.querySelector( '#search__results' );
+    schoolView._programRadios = body.querySelectorAll( '.school-search_additional-info label' );
+    schoolView._schoolInfo = body.querySelector( '.school-search_additional-info' );
 
     // Initialize listeners
-    this._addListeners();
+    schoolView._addListeners();
+  },
+
+  updateSchoolRadioButtons: () => {
+    const campus = getSchoolValue( 'onCampusAvail' );
+    const control = getSchoolValue( 'Public' );
+
+
+    schoolView._searchResults.classList.remove( 'active' );
+    schoolView._searchBox.value = getSchoolValue( 'school' );
+    schoolView._schoolInfo.classList.add( 'active' );
   }
 
 };

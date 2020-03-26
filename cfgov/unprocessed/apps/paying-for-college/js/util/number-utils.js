@@ -8,6 +8,10 @@
 function stringToNum( numberString ) {
   if ( typeof numberString === 'number' ) {
     return numberString;
+  } else if ( typeof numberString === 'undefined' ) {
+    return 0;
+  } else if ( typeof numberString === 'object' ) {
+    return 0;
   }
   let signMaker = 1;
   const minusPosition = numberString.indexOf( numberString.match( '-' ) );
@@ -36,7 +40,15 @@ function stringToNum( numberString ) {
 
 }
 
-export {
-  stringToNum
+function decimalToPercentString( number, decimalPlaces ) {
+  if ( typeof decimalPlaces === 'undefined' ) decimalPlaces = 2;
+  return Number( number )
+    .toLocaleString( 'en-US',
+      { style: 'percent',
+        minimumFractionDigits: decimalPlaces } );
+}
 
+export {
+  stringToNum,
+  decimalToPercentString
 };

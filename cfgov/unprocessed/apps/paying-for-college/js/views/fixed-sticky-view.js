@@ -1,6 +1,7 @@
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 
 const fixedSticky = {
+  _stickies: null,
   _sticky: null,
   _offset: 0,
   _stickyHeight: 0,
@@ -28,23 +29,23 @@ const fixedSticky = {
   },
 
   _scrollHandler: function( event ) {
-    const yLoc = fixedSticky.getYLocation( fixedSticky._sticky );
-    const scrollY = fixedSticky.scrollY();
-    const limit = fixedSticky._collegeCosts.offsetTop + fixedSticky._collegeCosts.offsetHeight -
-      ( window.innerHeight / 2 );
+    fixedSticky._stickies.forEach( elem => {
+      const yLoc = fixedSticky.getYLocation( elem );
+      const scrollY = fixedSticky.scrollY();
+      const limit = fixedSticky._collegeCosts.offsetTop + fixedSticky._collegeCosts.offsetHeight -
+        ( window.innerHeight / 2 );
 
+      if ( scrollY > fixedSticky._offset && scrollY <= limit ) {
+        // elem.style.top = scrollY - fixedSticky._offset + 'px';
+        const right = ( window.innerWidth - fixedSticky._appSegment.offsetWidth ) / 2;
+        elem.classList.add( 'stuck' );
+        elem.style.right = right + 'px';
+      } else {
+        elem.classList.remove( 'stuck' );
+        elem.style.right = '0px';
+      }
+    } );
 
-    console.log( scrollY, fixedSticky._offset, limit );
-
-    if ( scrollY > fixedSticky._offset && scrollY <= limit ) {
-      // fixedSticky._sticky.style.top = scrollY - fixedSticky._offset + 'px';
-      const right = ( window.innerWidth - fixedSticky._appSegment.offsetWidth ) / 2;
-      fixedSticky._sticky.classList.add( 'stuck' );
-      fixedSticky._sticky.style.right = right + 'px';
-    } else {
-      fixedSticky._sticky.classList.remove( 'stuck' );
-      fixedSticky._sticky.style.right = '0px';
-    }
   },
 
   _scrollListener: function() {
@@ -54,8 +55,9 @@ const fixedSticky = {
     bindEvent( window, events );
   },
 
-  init: function( elem ) {
-    this._sticky = elem;
+  init: function( selector ) {
+    this._stickies = document.querySelectorAll( selector );
+    // this._sticky = elem;
     this._collegeCosts = document.querySelector( '.college-costs' );
     this._appSegment = document.querySelector( '.college-costs_app-segment' );
     this._offset = this._collegeCosts.offsetTop;

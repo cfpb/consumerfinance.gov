@@ -2,8 +2,8 @@
 
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { updateState } from '../dispatchers/update-state.js';
-import { getState } from '../dispatchers/get-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
+import { getStateValue } from '../dispatchers/get-model-values.js';
 
 const navigationView = {
   _contentSidebar: null,
@@ -13,7 +13,6 @@ const navigationView = {
   _navListItems: null,
   _navButtons: null,
   _nextButtons: null,
-  _feelingGauge: null,
   _appSegment: null,
 
   _addButtonListeners: function( ) {
@@ -32,12 +31,6 @@ const navigationView = {
     } );
 
     bindEvent( navigationView._getStartedBtn, { click: this._handleGetStartedBtnClick } );
-    bindEvent( navigationView._feelingGauge, { click: this._handleFeelingGaugeEvent } );
-
-  },
-
-  _handleFeelingGaugeEvent: function( event ) {
-    navigationView.activateGetStartedBtn();
   },
 
   _handleGetStartedBtnClick: function( event ) {
@@ -99,11 +92,6 @@ const navigationView = {
     activeSection.classList.add( 'active' );
   },
 
-  activateGetStartedBtn: function() {
-    this._getStartedBtn.classList.remove( 'a-btn__disabled' );
-    this._getStartedBtn.removeAttribute( 'disabled' );
-  },
-
   init: function( body ) {
     this._navMenu = body.querySelector( '.o-college-costs-nav' );
     this._navButtons = body.querySelectorAll( '.o-college-costs-nav button' );
@@ -114,7 +102,6 @@ const navigationView = {
     this._getStartedBtn = body.querySelector( '.college-costs_intro-segment .btn__get-started' );
     this._appSegment = body.querySelector( '.college-costs_app-segment' );
     this._sections = body.querySelectorAll( '.college-costs_tool-section' );
-    this._feelingGauge = body.querySelector( '.college-costs .feeling-gauge' );
 
     this._addButtonListeners();
 
@@ -123,9 +110,9 @@ const navigationView = {
   },
 
   update: function() {
-    const started = getState( 'gotStarted' );
+    const started = getStateValue( 'gotStarted' );
     if ( started ) {
-      const activeName = getState( 'activeSection' );
+      const activeName = getStateValue( 'activeSection' );
       this._updateSideNav( activeName );
       this._updateSection( activeName );
     }

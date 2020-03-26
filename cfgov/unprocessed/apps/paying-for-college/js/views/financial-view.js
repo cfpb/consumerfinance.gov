@@ -3,24 +3,37 @@
 import numberToMoney from 'format-usd';
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { updateState } from '../dispatchers/update-state.js';
-import { createFinancial, updateFinancial } from '../dispatchers/update-models.js';
-import { getState } from '../dispatchers/get-state.js';
-import { getFinancialValue } from '../dispatchers/get-model-values.js';
-import { stringToNum } from '../util/number-utils.js';
+import { createFinancial, recalculateFinancials, updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
+import { getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
+import { updateAffordingChart, updateCostOfBorrowingChart, updateMakePlanChart, updateMaxDebtChart } from '../dispatchers/update-view.js';
 
 const financialView = {
   _financialItems: null,
   _inputChangeTimeout: null,
   _calculatingTimeout: null,
   _currentInput: null,
+  _costsOfferButtons: null,
   _actionPlanChoices: null,
 
   /**
    * Listeners for INPUT fields and radio buttons
    */
+  _addButtonListeners: function() {
+    financialView._costsOfferButtons.forEach( elem => {
+      const events = {
+        click: this._handleCostsButtonClick
+      };
+      bindEvent( elem, events );
+    } );
+  },
+
+  /**
+   * Listeners for INPUT fields and radio buttons
+   */
   _addInputListeners: function() {
-    financialView._financialItems.forEach( elem => {
+    financialView._financialInputs.forEach( elem => {
       const events = {
         keyup: this._handleInputChange,
         focusout: this._handleInputChange
@@ -50,17 +63,48 @@ const financialView = {
     } );
 
     if ( target.matches( '.m-form-field' ) ) {
-      console.log( 'form-field' );
       target.classList.add( 'highlighted' );
       target.querySelector( 'input' ).setAttribute( 'checked', true );
     } else {
-      console.log( 'not form-field' );
       const div = closest( target, '.m-form-field' );
       div.classList.add( 'highlighted' );
       div.querySelector( 'input' ).setAttribute( 'checked', true );
     }
 
     financialView._actionPlanSeeSteps.removeAttribute( 'disabled' );
+  },
+
+  /**
+   * Event handling for button choice - "Does your offer include costs?"
+   * @param {Object} event - Triggering event
+   */
+  _handleCostsButtonClick: function( event ) {
+    const target = event.target;
+    const answer = target.dataset.costs_offerAnswer;
+    const offerContent = document.querySelector( '[data-offer-costs-info="' + answer + '"]' );
+    const costsContent = document.getElementById( 'costs_inputs-section' );
+
+    // When button is first clicked, bring in school data if 'No'
+    if ( getStateValue( 'handleCostsButtonClicked' ) === false ) {
+      updateState.byProperty( 'handleCostsButtonClicked', true );
+      // If their offer does not have costs, use the Department of Ed data
+      if ( answer === 'no' ) {
+        updateFinancialsFromSchool();
+      } else {
+        recalculateFinancials();
+      }
+    }
+
+    // Show the appropriate content
+    document.querySelectorAll( '[data-offer-costs-info]' ).forEach( elem => {
+      elem.classList.remove( 'active' );
+    } );
+    document.querySelectorAll( '[data-costs_offer-answer]' ).forEach( elem => {
+      elem.classList.add( 'a-btn__disabled' );
+    } );
+    target.classList.remove( 'a-btn__disabled' );
+    offerContent.classList.add( 'active' );
+    costsContent.classList.add( 'active' );
   },
 
   /**
@@ -71,19 +115,33 @@ const financialView = {
     clearTimeout( financialView._inputChangeTimeout );
     const elem = event.target;
     const name = elem.dataset.financialItem;
-    const value = stringToNum( elem.value );
+    const isRate = name.substr( 0, 5 ) === 'rate_';
+    const isFee = name.substr( 0, 4 ) === 'fee_';
+    let value = stringToNum( elem.value );
 
     financialView._currentInput = elem;
+
+    if ( isRate || isFee ) {
+      value /= 100;
+    }
 
     if ( elem.matches( ':focus' ) ) {
       financialView._inputChangeTimeout = setTimeout(
         function() {
           updateFinancial( name, value );
           financialView.updateFinancialItems();
+          updateCostOfBorrowingChart();
+          updateMakePlanChart();
+          updateMaxDebtChart();
+          updateAffordingChart();
         }, 500 );
     } else {
       updateFinancial( name, value );
       financialView.updateFinancialItems();
+      updateCostOfBorrowingChart();
+      updateMakePlanChart();
+      updateMaxDebtChart();
+      updateAffordingChart();
     }
   },
 
@@ -102,8 +160,6 @@ const financialView = {
   },
 
   updateFinancialItems: function() {
-    clearTimeout( this._calculatingTimeout );
-
     this._financialItems.forEach( elem => {
 
       if ( !elem.matches( ':focus' ) ) {
@@ -111,8 +167,10 @@ const financialView = {
         const isRate = prop.substr( 0, 5 ) === 'rate_';
         const isFee = prop.substr( 0, 4 ) === 'fee_';
         let val = getFinancialValue( prop );
-        if ( isRate || isFee ) {
-          val = ( val * 100 ) + '%';
+        if ( isFee ) {
+          val = decimalToPercentString( val, 3 );
+        } else if ( isRate ) {
+          val = decimalToPercentString( val, 2 );
         } else {
           val = numberToMoney( { amount: val, decimalPlaces: 0 } );
         }
@@ -150,7 +208,7 @@ const financialView = {
     */
   initializeFinancialValues: function() {
     this._financialItems.forEach( elem => {
-      createFinancial( elem.dataset.financialItem );
+      createFinancial( elem.dataset.financialItem, 0 );
     } );
   },
 
@@ -158,9 +216,11 @@ const financialView = {
     this._financialItems = document.querySelectorAll( '[data-financial-item]' );
     this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
     this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
+    this._costsOfferButtons = document.querySelectorAll( '.costs_button-section button' );
     this._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field' );
     this._actionPlanSeeSteps = document.getElementById( 'action-plan_see-your-steps' );
     this._addInputListeners();
+    this._addButtonListeners();
     this.initializeFinancialValues();
 
   }

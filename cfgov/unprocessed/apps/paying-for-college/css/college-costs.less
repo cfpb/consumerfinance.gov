@@ -102,13 +102,37 @@
 				display: block;
 			}
 
-			& > h3.header_bottom-line {
+			& h3.header_bottom-line {
 				border-bottom: 1px solid @gray-40;
 				margin-top: unit( 30px / @base-font-size-px, em );
 			}
 
 			.header__spaced {
 				margin-top: unit( 30px / @base-font-size-px, em );
+			}
+
+			.costs {
+				&_button-section {
+					margin-bottom: unit( 30px / @base-font-size-px, em );
+
+					.a-btn.active {
+						background-color: @white;
+						color: @pacific;
+						border-color: @pacific;
+					}
+				}
+
+				&_content-section {
+					display: none;
+
+					&.active {
+						display: block;
+					}
+
+					&_content {
+						margin-bottom: unit( 30px / @base-font-size-px, em );
+					}
+				}
 			}
 
 			.expenses-item,
@@ -165,7 +189,7 @@
 				    	width: 100%;
 				    }
 
-				    .a-btn__link {
+				    .o-expandable_cue > span {
 				    	margin-left: unit( 10px / @base-font-size-px, em );
 				    }
 				}
@@ -214,14 +238,6 @@
 				margin-top: unit( 30px / @base-font-size-px, em );
 			}
 
-			.affording,
-			.make-a-plan {
-				&_gap {
-					color: @red;
-					font-weight: 500;
-				}
-			}
-
 			.number-callout {
 				padding-top: unit( 10px / @base-font-size-px, em );
 				margin-top: unit( 20px / @base-font-size-px, em );
@@ -241,6 +257,10 @@
 				    font-weight: 600;
 				    margin-top: 0;
 				    margin-bottom: unit( 10px / @base-font-size-px, em );
+
+				    &.red {
+				    	color: @red;
+				    }
 				}
 
 				& + .number-callout {
@@ -248,8 +268,41 @@
 				}
 			}
 
-			.summary {
-				&_header {
+			&.make-a-plan {
+				&_gap {
+					color: @red;
+					font-weight: 500;
+				}
+
+				.other-borrowing-btns {
+					button {
+					    margin: unit( 10px / @base-font-size-px, em ) 0;
+					}
+				}
+
+				h3.other-loan-options {
+					font-size: unit( 16px / @base-font-size-px, em );
+					font-weight: 500;
+					margin-top: unit( 30px / @base-font-size-px, em );
+				}
+
+				.financial-item {
+					margin-top: 0em;
+				}
+
+				.o-expandable_content {
+					&:before {
+						border: none;
+					}
+					
+					.financial-item.form-group_item {
+						margin-top: 1em;
+					}
+				}
+			}
+
+			&.summary {
+				.summary_header {
 					margin-top: unit( 30px / @base-font-size-px, em );
 				}
 
@@ -260,6 +313,10 @@
 					&.financial-item__last {
 						border-bottom: 1px solid @gray-40;
 					}
+				}
+
+				.financial-item {
+					margin-top: 0;
 				}
 			}
 
@@ -315,6 +372,7 @@
 					text-transform: uppercase;
 				}
 				&_amount {
+					color: @red;
 					font-weight: 500;
 					font-size: unit( 18px / @base-font-size-px, em );
 				}
@@ -332,38 +390,66 @@
 					right: 0px;
     				top: 0px;
 				}
-
 			}
-		}
 
-		.school-results {
-			&_basics {
-				display: table;
-				&__half {
-					display: table-cell;
-					width: 50%;
+			&.school-results {
+				&_basics {
+					display: table;
+					&__half {
+						display: table-cell;
+						width: 50%;
+					}
+				}
+
+				& .highcharts-plot-band {
+
+				    fill-opacity: 1;
+
+					&:first-child {
+						fill: #d14124;
+					}
+					&:nth-child(2) {
+						fill: #ff9e1b;
+					}
+					&:last-child {
+						fill: #257675;
+					}
+
 				}
 			}
-		}
 
-		.finish {
-			.form-group_item {
-				margin-bottom: unit( 30px / @base-font-size-px, em );
-
-				textarea,
-				input {
-					margin-top: unit( 10px / @base-font-size-px, em );
-					width: 80%;
+			#affording-your-loans_chart,
+			#max-debt-guideline_chart {
+				.highcharts-plot-line {
+					stroke: #20aa3f;
+					stroke-width: 3px;
 				}
 			}
 
-			.restart {
-				margin-top: unit( 45px / @base-font-size-px, em );
+			#make-a-plan_chart {
+				.highcharts-plot-line {
+					stroke: #d14124;
+					stroke-width: 3px;
+				}
+			}
+
+			.finish {
+				.form-group_item {
+					margin-bottom: unit( 30px / @base-font-size-px, em );
+
+					textarea,
+					input {
+						margin-top: unit( 10px / @base-font-size-px, em );
+						width: 80%;
+					}
+				}
+
+				.restart {
+					margin-top: unit( 45px / @base-font-size-px, em );
+				}
 			}
 		}
 	}
-	
-
 }
 
 #college-costs_school-search {

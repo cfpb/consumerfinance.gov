@@ -5,6 +5,7 @@ import { stateModel } from '../models/state-model.js';
 import { navigationView } from '../views/navigation-view.js';
 import { financialView } from '../views/financial-view.js';
 import { schoolView } from '../views/school-view.js';
+import { financialModel } from '../models/financial-model.js';
 
 const updateState = {
 
@@ -15,15 +16,23 @@ const updateState = {
    * @param {string} item - Value of 'data-nav_item' attribute
    */
   activeSection: item => {
-    stateModel.activeSection = item;
+    stateModel.values.activeSection = item;
 
     navigationView.update();
   },
 
   getStarted: bool => {
     if ( bool === true ) {
-      stateModel.gotStarted = true;
+      stateModel.values.gotStarted = true;
     }
+  },
+
+  setProgramData: function( prop, value ) {
+    stateModel.values[prop] = value;
+  },
+
+  byProperty: function( prop, value ) {
+    stateModel.values[prop] = value;
   }
 
 };
