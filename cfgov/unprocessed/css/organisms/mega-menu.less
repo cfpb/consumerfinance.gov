@@ -153,6 +153,201 @@ body {
 */
 
 @menu_max_width_px: 1200px;
+@menu_link_hover_bar_px: 5px;
+
+//
+// ELEMENT STATES
+//
+// To finely control the focus, hover, and current states independant of element
+// padding and margin, we create a hover bar in the :before pseudo-element, and
+// a focus rectangle in the :after pseudo-element.
+//
+
+
+// Create a bar for hover purposes to the left of an item.
+.u-bar-left( @color, @position: -@menu_link_hover_bar_px - 10px ) {
+    & {
+        position: relative;
+    }
+
+    &:before {
+        position: absolute;
+        left: @position;
+        top: 0;
+        content: '';
+        background: @color;
+        width: @menu_link_hover_bar_px;
+        height: 100%;
+    }
+}
+
+// Focus item appearance.
+.u-focus-rectangle() {
+    // Position focus rectangle relative to parent container.
+    & {
+        position: relative;
+    }
+
+    // Remove default focus outline.
+    &:focus {
+        outline: none;
+    }
+
+    // Make the pseudo-element have an outline.
+    &:focus:after {
+        outline: 1px dotted @pacific;
+    }
+
+    // Create the dimensions for the pseudo-element focus rectangle.
+    &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: '';
+        height: 100%;
+        width: 100%;
+    }
+}
+
+//
+// HOVER STATES
+//
+// u-hover-link-desktop
+// u-hover-link-icon-desktop
+// u-hover-link-featured-desktop
+// u-hover-link-mobile
+//
+
+// Hover over item appearance.
+// Default link hover menu items.
+.u-hover-link-desktop() {
+    &:hover {
+        .u-bar-left( @green );
+    }
+}
+
+// Adjustments for links with icons, desktop.
+.u-hover-link-icon-desktop() {
+    &:hover {
+        .u-bar-left( @green, -@menu_link_hover_bar_px - 8px );
+
+        .cf-icon-svg {
+            fill: @black;
+        }
+    }
+}
+
+// Adjustments for featured link, desktop.
+.u-hover-link-featured-desktop() {
+    &:hover {
+        .u-bar-left( transparent );
+    }
+}
+
+// A default link on mobile.
+.u-hover-link-mobile() {
+    &:hover {
+        color: @black;
+        .u-bar-left( @green );
+
+        // This is for the link with icon, which is
+        // combined with this helper because the
+        // hover bar doesn't need separate treatment.
+        .cf-icon-svg {
+            fill: @black;
+        }
+    }
+}
+
+//
+// FOCUS STATES
+//
+// u-focus-link-desktop
+// u-focus-overview-link-desktop
+// u-focus-link-icon-desktop
+// u-focus-link-featured-desktop
+// u-focus-link-mobile
+//
+
+// Default link focus appearance, desktop.
+.u-focus-link-desktop() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px - 9px;
+        width: calc( 100% + @menu_link_hover_bar_px + 6px );
+    }
+}
+
+// Focus on overview links, desktop.
+.u-focus-overview-link-desktop() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px - 9px;
+        width: calc( 100% + @menu_link_hover_bar_px + 22px );
+    }
+}
+
+// Focus on links with icons, desktop.
+.u-focus-link-icon-desktop() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px - 7px;
+        width: calc( 100% + @menu_link_hover_bar_px + 6px );
+    }
+}
+
+// Focus on featured links, desktop.
+.u-focus-link-featured-desktop() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px;
+        width: calc( 100% + @menu_link_hover_bar_px + 5px );
+    }
+}
+
+// Default link on mobile.
+.u-focus-link-mobile() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px - 9px;
+        width: calc( 100% + @menu_link_hover_bar_px + 14px );
+    }
+}
+
+//
+// CURRENT STATES
+//
+// u-current-link-desktop
+// u-current-link-icon-desktop
+// u-current-link-mobile
+//
+
+
+// Default current link appearance, desktop.
+.u-current-link-desktop() {
+    &, &:hover {
+        .u-bar-left( @black );
+    }
+}
+
+// Current link with an icon, desktop.
+.u-current-link-icon-desktop() {
+    &, &:hover {
+        .u-bar-left( @black, -@menu_link_hover_bar_px - 8px );
+    }
+}
+
+// Default current link, mobile.
+.u-current-link-mobile() {
+    &, &:hover {
+        .u-bar-left( @black );
+    }
+}
 
 .o-mega-menu {
 
@@ -183,22 +378,9 @@ body {
             }
         }
 
-        &-link,
-        &-overview-link {
-            width: 100%;
-
-            &__current,
-            &:hover {
-                cursor: pointer;
-
-                .cf-icon-svg {
-                    fill: @black;
-                }
-            }
-        }
-
         // Ensure desktop up/down arrow link icons don't appear at mobile.
         &-link {
+            width: 100%;
             &-icon-closed .cf-icon-svg,
             &-icon-open .cf-icon-svg {
                 display: none;
@@ -254,7 +436,10 @@ body {
         &-link,
         &-overview-link {
             // Colors for :link, :visited, :hover, :focus, :active.
-            .u-link__colors( @pacific, @black );
+            .u-link__colors( @pacific, @pacific, @black, @pacific, @black );
+            &:hover:focus {
+                color: @black;
+            }
 
             display: block;
         }
@@ -368,7 +553,7 @@ body {
                 text-transform: uppercase;
 
                 &:focus {
-                    outline: 1px dotted @black;
+                    outline: 1px dotted @pacific;
                 }
 
                 .cf-icon-svg {
@@ -413,12 +598,8 @@ body {
                 // Colors for :link, :visited, :hover, :focus, :active.
                 .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
 
-                left: unit( -15px / 18px, em );
                 padding-top: unit( 15px / 18px, em );
                 padding-bottom: unit( 15px / 18px, em );
-                padding-left: unit( 10px / 18px, em );
-
-                border-left: 5px solid transparent;
 
                 // Hide ">" icon when we don't have children.
                 &-icon-post {
@@ -438,23 +619,11 @@ body {
                     }
                 }
 
-                &:hover {
-                    color: @black;
-                    border-left-color: @green;
-                }
+                .u-hover-link-mobile();
+                .u-focus-link-mobile();
 
-                &:focus {
-                    border-color: @black;
-                    outline: 1px dotted @black;
-                }
-
-                // This is styling for the currently selected content-2 links.
-                &__current:hover,
-                &__current,
-                &__current:visited {
-                    color: @black;
-                    border-left-color: @black;
-                    cursor: default;
+                &__current {
+                    .u-current-link-mobile();
                 }
             }
         }
@@ -491,21 +660,6 @@ body {
             &-lists &-list-group:last-child &-list:last-child &-item:last-child {
                 border-bottom: none;
             }
-
-            // TODO: Enable or delete when non-clickable
-            //       current page link is in.
-            //       The problem is sections with a 3rd
-            //       level need to remain links and the
-            //       overview link is what needs to be disabled.
-            // Make current page menu link non-clickable.
-            // &-link,
-            // &-overview-link {
-            //    &__current,
-            //    &__current:hover {
-            //        color: @black;
-            //        cursor: default;
-            //    }
-            // }
         }
 
         // 3rd-level menu - Tablet/Mobile.
@@ -667,8 +821,10 @@ body {
                     position: relative;
                     top: 1px;
                     background-color: @gray-5;
-                    border: 1px solid @gray-40;
-                    border-bottom: none;
+
+                    // Important needed to override global link style override.
+                    border: 1px solid @gray-40 !important;
+                    border-bottom: none !important;
                 }
 
                 // Don't show hover when menu is expanded.
@@ -755,51 +911,6 @@ body {
             left: 0;
             z-index: 10;
 
-            // Featured item has a highlight box around it.
-            &-list__featured {
-
-                & ul {
-                    // Style the featured item box.
-                    padding-right: unit( 13px / @base-font-size-px, em );
-                    padding-top: unit( 30px / @base-font-size-px, em );
-                    padding-bottom: unit( 30px / @base-font-size-px, em );
-                    margin-bottom: unit( 30px / @base-font-size-px, em );
-                    border: 1px solid @gray-40;
-                    border-top: 6px solid @gold;
-                }
-
-                & a {
-                    display: flex;
-                    padding: 0;
-                    left: 0;
-                    border: none;
-                }
-
-                & a:hover {
-                    // For featured item,
-                    // remove default green left bar hover state of menu links.
-                    border-left-color: transparent;
-                }
-
-                & a:focus {
-                    outline-offset: 2px;
-                }
-
-                & .cf-icon-svg {
-                    color: @gold;
-                    width: 100%;
-                }
-            }
-
-            &-item__has-icon {
-                // Pad in featured items from their icons.
-                padding-left: unit( 13px / @base-font-size-px, em );
-
-                & a:hover .cf-icon-svg {
-                    color: @black;
-                }
-            }
-
             .no-js & {
                 display: none;
             }
@@ -830,14 +941,9 @@ body {
             &-overview {
                 padding-bottom: @grid_gutter-width / 2;
                 margin-bottom: @grid_gutter-width;
-                font-size: unit( 18px / @base-font-size-px, rem );
 
                 &-heading {
                     padding-top: 0;
-                }
-
-                &-link {
-                    display: inline-block;
                 }
             }
 
@@ -850,36 +956,79 @@ body {
                 display: table-cell;
                 width: 25%;
                 vertical-align: top;
-                padding-right: 10px;
+                padding-right: unit( 30px / @base-font-size-px, em );
             }
 
             &-list-group:last-child {
                 padding-right: 0;
             }
 
-            &-link,
+            &-overview-link,
+            &-link {
+                padding: unit( 10px / 18px, em );
+                padding-left: 0;
+                padding-right: unit( 15px / 18px, em );
+
+                .u-hover-link-desktop();
+
+                &__current {
+                    .u-current-link-desktop();
+                }
+            }
+
             &-overview-link {
-                position: relative;
-                left: unit( -15px / 18px, em );
-                padding-top: unit( 10px / 18px, em );
-                padding-bottom: unit( 10px / 18px, em );
-                padding-left: unit( 10px / 18px, em );
+                display: inline-block;
+                font-size: unit( 18px / @base-font-size-px, rem );
+                .u-focus-overview-link-desktop();
+            }
 
-                border-left: 5px solid transparent;
+            &-link {
                 font-size: unit( 16px / @base-font-size-px, em );
+                .u-focus-link-desktop();
+            }
 
-                &:hover {
-                    border-left-color: @green;
-                }
+            // Featured item has a highlight box around it.
+            &-list__featured ul {
+                // Style the featured item box.
+                padding-right: unit( 13px / @base-font-size-px, em );
+                padding-top: unit( 30px / @base-font-size-px, em );
+                padding-bottom: unit( 30px / @base-font-size-px, em );
+                margin-bottom: unit( 30px / @base-font-size-px, em );
+                border: 1px solid @gray-40;
+                border-top: 6px solid @gold;
+            }
 
-                // This is styling for the currently selected content-2 links.
-                &__current:hover,
-                &__current,
-                &__current:visited {
-                    color: @black;
-                    border-left-color: @black;
-                    cursor: default;
+            &-list__featured &-link {
+                display: flex;
+                padding: 0;
+                left: 0;
+                border: none;
+
+                & .cf-icon-svg {
+                    color: @gold;
+                    width: 100%;
                 }
+            }
+
+            &-item__has-icon {
+                // Pad in featured items from their icons.
+                padding-left: unit( 13px / @base-font-size-px, em );
+            }
+
+            // Set up hover state for link with an icon.
+            &-item__has-icon &-link {
+                .u-hover-link-icon-desktop();
+                .u-focus-link-icon-desktop();
+
+                &__current {
+                    .u-current-link-icon-desktop();
+                }
+            }
+
+            // Remove hover bar for featured item link.
+            &-list__featured &-link {
+                .u-hover-link-featured-desktop();
+                .u-focus-link-featured-desktop();
             }
         }
 
