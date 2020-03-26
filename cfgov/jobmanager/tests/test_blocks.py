@@ -6,7 +6,7 @@ from django.utils.encoding import force_text
 
 from wagtail.core.models import Page
 
-from model_mommy import mommy
+from model_bakery import baker
 from scripts._atomic_helpers import job_listing_list
 
 from jobmanager.blocks import JobListingList, JobListingTable
@@ -19,13 +19,13 @@ from v1.util.migrations import set_stream_data
 
 
 def make_job_listing_page(title, close_date=None, grades=[], **kwargs):
-    page = mommy.prepare(
+    page = baker.prepare(
         JobListingPage,
         title=title,
         close_date=close_date or timezone.now().date(),
         description='description',
-        division=mommy.make(JobCategory),
-        location=mommy.make(JobLocation, name='Silicon Valley'),
+        division=baker.make(JobCategory),
+        location=baker.make(JobLocation, name='Silicon Valley'),
         **kwargs
     )
 
@@ -33,7 +33,7 @@ def make_job_listing_page(title, close_date=None, grades=[], **kwargs):
     home.add_child(instance=page)
 
     for grade in grades:
-        grade_model = mommy.make(Grade, grade=grade)
+        grade_model = baker.make(Grade, grade=grade)
         GradePanel.objects.create(grade=grade_model, job_listing=page)
 
     return page

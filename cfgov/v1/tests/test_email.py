@@ -6,7 +6,7 @@ from django.test import TestCase
 from wagtail.core.models import Site
 
 from mock import patch
-from model_mommy import mommy
+from model_bakery import baker
 
 from v1.email import create_request_for_email, send_password_reset_email
 
@@ -27,13 +27,13 @@ class CreateEmailRequestTestCase(TestCase):
         )
 
     def test_http_site(self):
-        site = mommy.prepare(Site, is_default_site=True, port=80)
+        site = baker.prepare(Site, is_default_site=True, port=80)
         with patch('v1.email.Site.objects.get', return_value=site):
             request = create_request_for_email()
         self.assertRequestMatches(request, site.hostname, site.port, False)
 
     def test_https_site(self):
-        site = mommy.prepare(Site, is_default_site=True, port=443)
+        site = baker.prepare(Site, is_default_site=True, port=443)
         with patch('v1.email.Site.objects.get', return_value=site):
             request = create_request_for_email()
         self.assertRequestMatches(request, site.hostname, site.port, True)

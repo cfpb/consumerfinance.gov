@@ -16,7 +16,7 @@ from haystack.query import SearchQuerySet
 from wagtail.core.blocks import StreamValue
 from wagtail.tests.utils import WagtailTestUtils
 
-from model_mommy import mommy
+from model_bakery import baker
 
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
@@ -599,20 +599,20 @@ class AnswerPageTestCase(TestCase):
         kwargs.setdefault('depth', self.english_parent_page.depth + 1)
         kwargs.setdefault('slug', 'mock-answer-page-en-1234')
         kwargs.setdefault('title', 'Mock answer page title')
-        page = mommy.prepare(AnswerPage, **kwargs)
+        page = baker.prepare(AnswerPage, **kwargs)
         page.save()
         return page
 
     def setUp(self):
         self.test_user = User.objects.get(pk=1)
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
-        self.category = mommy.make(
+        self.category = baker.make(
             Category, name='stub_cat', name_es='que', slug='stub-cat')
         self.category.save()
-        self.test_image = mommy.make(CFGOVImage)
-        self.test_image2 = mommy.make(CFGOVImage)
-        self.next_step = mommy.make(NextStep, title='stub_step')
-        self.portal_topic = mommy.make(
+        self.test_image = baker.make(CFGOVImage)
+        self.test_image2 = baker.make(CFGOVImage)
+        self.next_step = baker.make(NextStep, title='stub_step')
+        self.portal_topic = baker.make(
             PortalTopic,
             heading='test topic',
             heading_es='prueba tema')
@@ -1070,7 +1070,7 @@ class AnswerPageTestCase(TestCase):
 
     def test_answer_meta_image_uses_category_image_if_no_social_image(self):
         """ Answer page's meta image is its category's image """
-        category = mommy.make(Category, category_image=self.test_image)
+        category = baker.make(Category, category_image=self.test_image)
         page = self.page1
         page.category.add(category)
         page.save_revision()
