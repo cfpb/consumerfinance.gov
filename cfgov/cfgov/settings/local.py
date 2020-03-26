@@ -1,6 +1,8 @@
 import sys
 import warnings
 
+import django
+
 from unipath import DIRS
 
 from .base import *
@@ -26,7 +28,6 @@ INSTALLED_APPS += (
 STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')
 
 ALLOW_ADMIN_URL = DEBUG or os.environ.get('ALLOW_ADMIN_URL', False)
-
 
 LOGGING = {
     'version': 1,
@@ -58,7 +59,12 @@ if os.environ.get('ENABLE_SQL_LOGGING'):
 if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
     INSTALLED_APPS += ('debug_toolbar',)
 
-    MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    if django.VERSION < (2, 0):
+        MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+        MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+    else:
+        MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+        MIDDLEWARE += CSP_MIDDLEWARE_CLASSES
 
     DEBUG_TOOLBAR_PANELS = [
         'debug_toolbar.panels.versions.VersionsPanel',
@@ -81,9 +87,6 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
         'SHOW_COLLAPSED': True,
         'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
     }
-
-
-MIDDLEWARE += CSP_MIDDLEWARE
 
 # Disable caching when working locally.
 CACHES = {

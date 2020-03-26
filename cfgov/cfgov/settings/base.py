@@ -1,5 +1,6 @@
 import os
 
+import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
@@ -38,9 +39,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 # Application definition
 INSTALLED_APPS = (
     'permissions_viewer',
-)
 
-INSTALLED_APPS += (
     'wagtail.core',
     'wagtail.admin',
     'wagtail.documents',
@@ -118,27 +117,48 @@ OPTIONAL_APPS = [
 
 POSTGRES_APPS = []
 
-MIDDLEWARE = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.http.ConditionalGetMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+if django.VERSION < (2, 0):
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
+        'django.middleware.http.ConditionalGetMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
 
-    'core.middleware.ParseLinksMiddleware',
-    'core.middleware.DownstreamCacheControlMiddleware',
-    'flags.middleware.FlagConditionsMiddleware',
+        'core.middleware.ParseLinksMiddleware',
+        'core.middleware.DownstreamCacheControlMiddleware',
+        'flags.middleware.FlagConditionsMiddleware',
 
-    'wagtail.core.middleware.SiteMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
-)
+        'wagtail.core.middleware.SiteMiddleware',
+        'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    )
+else:
+    MIDDLEWARE = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
+        'django.middleware.http.ConditionalGetMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
 
-CSP_MIDDLEWARE = ('csp.middleware.CSPMiddleware', )
+        'core.middleware.ParseLinksMiddleware',
+        'core.middleware.DownstreamCacheControlMiddleware',
+        'flags.middleware.FlagConditionsMiddleware',
+
+        'wagtail.core.middleware.SiteMiddleware',
+        'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    )
+
+CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 
 if ('CSP_ENFORCE' in os.environ):
-    MIDDLEWARE += CSP_MIDDLEWARE
+    if django.VERSION < (2, 0):
+        MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+    else:
+        MIDDLEWARE += CSP_MIDDLEWARE_CLASSES
 
 ROOT_URLCONF = 'cfgov.urls'
 
@@ -221,7 +241,7 @@ if os.getenv('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config()
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
+# https://docs.djangoproject.com/en/stable/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -244,7 +264,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+# https://docs.djangoproject.com/en/stable/howto/static-files/
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
@@ -282,7 +302,6 @@ EXTERNAL_URL_WHITELIST = (
 )
 
 # Wagtail settings
-
 WAGTAIL_SITE_NAME = 'consumerfinance.gov'
 WAGTAILIMAGES_IMAGE_MODEL = 'v1.CFGOVImage'
 TAGGIT_CASE_INSENSITIVE = True
@@ -333,11 +352,11 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 STATIC_VERSION = ''
 
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
+
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
     'https://s3.amazonaws.com/files.consumerfinance.gov'
     '/a/assets/hud/{file_format}s/{zipcode}.{file_format}'
 )
-
 
 HAYSTACK_CONNECTIONS = {
     'default': {
@@ -348,6 +367,7 @@ HAYSTACK_CONNECTIONS = {
         'INCLUDE_SPELLING': True,
     }
 }
+
 ELASTICSEARCH_INDEX_SETTINGS = {
     'settings': {
         'analysis': {
@@ -407,6 +427,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
         }
     }
 }
+
 ELASTICSEARCH_DEFAULT_ANALYZER = 'snowball'
 
 # S3 Configuration
@@ -438,7 +459,10 @@ for app in OPTIONAL_APPS:
         for name in app.get("apps", ()):
             if name not in INSTALLED_APPS:
                 INSTALLED_APPS += (name,)
-        MIDDLEWARE += app.get("middleware", ())
+        if django.VERSION < (2, 0):
+            MIDDLEWARE_CLASSES += app.get("middleware", ())
+        else:
+            MIDDLEWARE += app.get("middleware", ())
     except ImportError:
         pass
 
