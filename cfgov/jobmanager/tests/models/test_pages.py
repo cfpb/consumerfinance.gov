@@ -8,7 +8,7 @@ from django.utils import timezone
 from wagtail.core.models import Site
 
 from mock import patch
-from model_mommy import mommy
+from model_bakery import baker
 
 from jobmanager.models.django import (
     ApplicantType, City, Grade, JobCategory, Office, Region, State
@@ -71,8 +71,8 @@ class JobListingPageQuerySetTests(TestCase):
 
 class JobListingPageTestCase(TestCase):
     def setUp(self):
-        self.division = mommy.make(JobCategory)
-        self.location = mommy.make(Region)
+        self.division = baker.make(JobCategory)
+        self.location = baker.make(Region)
 
         page_clean = patch('jobmanager.models.pages.CFGOVPage.clean')
         page_clean.start()
@@ -82,7 +82,7 @@ class JobListingPageTestCase(TestCase):
         kwargs.setdefault('description', 'default')
         kwargs.setdefault('division', self.division)
         kwargs.setdefault('location', self.location)
-        return mommy.prepare(JobListingPage, **kwargs)
+        return baker.prepare(JobListingPage, **kwargs)
 
     def test_clean_with_all_fields_passes_validation(self):
         page = self.prepare_job_listing_page()
@@ -127,7 +127,7 @@ class JobListingPageTestCase(TestCase):
 
         for grade in grades:
             panel = GradePanel.objects.create(
-                grade=mommy.make(Grade, grade=str(grade)),
+                grade=baker.make(Grade, grade=str(grade)),
                 job_listing=page
             )
             page.grades.add(panel)
@@ -156,12 +156,12 @@ class JobListingPageTestCase(TestCase):
             self.assertIsInstance(grade, str)
 
     def test_context_for_page_with_region_location(self):
-        region = mommy.make(
+        region = baker.make(
             Region,
             name="Tri-State Area",
             abbreviation="TA",
         )
-        state = mommy.make(
+        state = baker.make(
             State,
             name="Unknown",
             abbreviation='UN',
@@ -180,15 +180,15 @@ class JobListingPageTestCase(TestCase):
         self.assertIn(test_context['cities'][0].name, cities)
 
     def test_context_for_page_with_office_location(self):
-        region = mommy.make(
+        region = baker.make(
             Region,
             name="Mideastern",
             abbreviation="ME")
-        office = mommy.make(
+        office = baker.make(
             Office,
             name="Zenith Office",
             abbreviation="ZE")
-        state = mommy.make(
+        state = baker.make(
             State,
             name="Winnemac",
             abbreviation='WM',
@@ -226,11 +226,11 @@ class JobListingPageTestCase(TestCase):
         page.usajobs_application_links = [
             USAJobsApplicationLink(
                 announcement_number='1',
-                applicant_type=mommy.make(ApplicantType, applicant_type='1'),
+                applicant_type=baker.make(ApplicantType, applicant_type='1'),
             ),
             USAJobsApplicationLink(
                 announcement_number='2',
-                applicant_type=mommy.make(ApplicantType, applicant_type='2'),
+                applicant_type=baker.make(ApplicantType, applicant_type='2'),
             ),
         ]
 

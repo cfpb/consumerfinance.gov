@@ -157,7 +157,7 @@ body {
 .o-mega-menu {
 
     &_heading {
-        // Override h2 element styles.
+        // Override h2 global element styles.
         margin: 0;
         font-size: 1em;
     }
@@ -186,6 +186,15 @@ body {
         &-link,
         &-overview-link {
             width: 100%;
+
+            &__current,
+            &:hover {
+                cursor: pointer;
+
+                .cf-icon-svg {
+                    fill: @black;
+                }
+            }
         }
 
         // Ensure desktop up/down arrow link icons don't appear at mobile.
@@ -392,14 +401,24 @@ body {
                 border-bottom: 1px solid @gray-40;
             }
 
+            &-overview-heading-text {
+                display: block;
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            }
+
             &-link,
             &-overview-link {
                 position: relative;
                 // Colors for :link, :visited, :hover, :focus, :active.
                 .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
 
-                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                left: unit( -15px / 18px, em );
+                padding-top: unit( 15px / 18px, em );
+                padding-bottom: unit( 15px / 18px, em );
+                padding-left: unit( 10px / 18px, em );
+
+                border-left: 5px solid transparent;
 
                 // Hide ">" icon when we don't have children.
                 &-icon-post {
@@ -418,32 +437,6 @@ body {
                         fill: @green;
                     }
                 }
-
-                &__current,
-                &:hover {
-                    cursor: pointer;
-
-                    .cf-icon-svg {
-                        fill: @black;
-                    }
-                }
-            }
-
-            &-overview-heading-text {
-                display: block;
-                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-            }
-
-            &-link,
-            &-overview-link {
-                position: relative;
-                left: unit( -15px / 18px, em );
-                padding-top: unit( 15px / 18px, em );
-                padding-bottom: unit( 15px / 18px, em );
-                padding-left: unit( 10px / 18px, em );
-
-                border-left: 5px solid transparent;
 
                 &:hover {
                     color: @black;
@@ -643,23 +636,28 @@ body {
                     border-bottom: none;
                 }
 
+                // This creates the hover/selection line.
+                // We can't use a border here as it will get a slant on
+                // the edges because there are transparent left/right
+                // borders.
+                &:after {
+                    position: absolute;
+                    left: 0;
+                    top: unit( 46px / @base-font-size-px, em );
+                    content: '';
+                    background: transparent;
+                    width: 100%;
+                    height: unit( 6px / @base-font-size-px, em );
+                }
+
                 &:hover {
                     padding-bottom: ( @grid_gutter-width / 2) - 6px;
                     border-bottom: 6px solid transparent;
                     cursor: pointer;
 
-                    // This creates the hover line.
-                    // We can't use a border here as it will get a slant on
-                    // the edges because there are transparent left/right
-                    // borders.
+                    // Change hover border color.
                     &:after {
-                        position: absolute;
-                        left: 0;
-                        top: unit( 46px / @base-font-size-px, em );
-                        content: '';
                         background: @gray-40;
-                        width: 100%;
-                        height: unit( 6px / @base-font-size-px, em );
                     }
                 }
 
@@ -729,6 +727,18 @@ body {
                 // Add padding to accommodate caret.
                 &__has-children {
                     padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+                }
+
+                &__current {
+                    // Change the selection bar to black.
+                    &:after {
+                        background-color: @black;
+                    }
+                }
+
+                &__current[aria-expanded="true"]:after,
+                &__current:active:after {
+                    background-color: transparent;
                 }
             }
         }

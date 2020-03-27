@@ -4,7 +4,7 @@ import unittest
 
 import django
 
-from model_mommy import mommy
+from model_bakery import baker
 
 from data_research.models import (
     County, CountyMortgageData, MetroArea, MSAMortgageData,
@@ -52,7 +52,7 @@ class TimeseriesViewTests(django.test.TestCase):
     fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
-        mommy.make(
+        baker.make(
             State,
             fips='12',
             abbr='FL',
@@ -63,14 +63,14 @@ class TimeseriesViewTests(django.test.TestCase):
             non_msa_counties=["12001"],
             non_msa_valid=True)
 
-        mommy.make(
+        baker.make(
             County,
             fips='12081',
             name='Manatee County',
             state=State.objects.get(fips='12'),
             valid=True)
 
-        mommy.make(
+        baker.make(
             MetroArea,
             fips='35840',
             name='North Port-Sarasota-Bradenton, FL',
@@ -78,7 +78,7 @@ class TimeseriesViewTests(django.test.TestCase):
             counties=["12081", "12115"],
             valid=True)
 
-        mommy.make(
+        baker.make(
             MetroArea,
             fips='16220',
             name='Casper, WY',
@@ -86,7 +86,7 @@ class TimeseriesViewTests(django.test.TestCase):
             counties=["12081", "12115"],
             valid=True)
 
-        mommy.make(
+        baker.make(
             NationalMortgageData,
             current=2500819,
             date=datetime.date(2008, 1, 1),
@@ -98,7 +98,7 @@ class TimeseriesViewTests(django.test.TestCase):
             thirty=67668,
             total=2674899)
 
-        mommy.make(
+        baker.make(
             StateMortgageData,
             current=250081,
             date=datetime.date(2008, 1, 1),
@@ -111,7 +111,7 @@ class TimeseriesViewTests(django.test.TestCase):
             thirty=6766,
             total=26748)
 
-        mommy.make(
+        baker.make(
             MSAMortgageData,
             current=5250,
             date=datetime.date(2008, 1, 1),
@@ -124,7 +124,7 @@ class TimeseriesViewTests(django.test.TestCase):
             thirty=3676,
             total=22674)
 
-        mommy.make(
+        baker.make(
             NonMSAMortgageData,
             current=5250,
             date=datetime.date(2008, 1, 1),
@@ -137,7 +137,7 @@ class TimeseriesViewTests(django.test.TestCase):
             thirty=3676,
             total=22674)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=250,
             date=datetime.date(2008, 1, 1),

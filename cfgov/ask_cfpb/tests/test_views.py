@@ -10,7 +10,7 @@ from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
 
 import mock
-from model_mommy import mommy
+from model_bakery import baker
 
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
@@ -64,8 +64,8 @@ class AnswerPagePreviewCase(TestCase):
             self.ROOT_PAGE,
             language='es',
             live=True)
-        self.test_answer = mommy.make(Answer)
-        self.test_answer2 = mommy.make(Answer)
+        self.test_answer = baker.make(Answer)
+        self.test_answer2 = baker.make(Answer)
         self.english_answer_page = AnswerPage(
             answer_base=self.test_answer,
             language='en',
@@ -84,13 +84,13 @@ class AnswerPagePreviewCase(TestCase):
             question='Test question2.')
         self.english_parent_page.add_child(instance=self.english_answer_page2)
         self.english_answer_page2.save_revision().publish()
-        self.site = mommy.make(
+        self.site = baker.make(
             Site,
             root_page=self.ROOT_PAGE,
             hostname='localhost',
             port=8000,
             is_default_site=True)
-        self.sharing_site = mommy.make(
+        self.sharing_site = baker.make(
             SharingSite,
             site=self.site,
             hostname='preview.localhost',

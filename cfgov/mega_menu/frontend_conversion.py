@@ -1,3 +1,6 @@
+from itertools import chain
+
+
 class FrontendConverter:
     def __init__(self, menu, request=None):
         self.menu = menu
@@ -9,12 +12,20 @@ class FrontendConverter:
         ]
 
     def get_menu_item(self, submenu):
-        menu_item = {
-            'overview': self.make_link({
+        # Normally we want to mark menu links as selected if the current
+        # request is either on that link or one of its children; this lets us
+        # properly highlight the menu if on the child of a menu link. But we
+        # don't want to do this for overview links, which are always the parent
+        # of all links beneath them.
+        overview_link = self.make_link(
+            {
                 'page': submenu.get('overview_page'),
                 'text': submenu.get('title'),
-            }),
-        }
+            },
+            selected_exact_only=True
+        )
+
+        menu_item = {'overview': overview_link}
 
         columns = self.get_columns(submenu)
         if columns:
@@ -27,6 +38,19 @@ class FrontendConverter:
         other_links = self.make_links(submenu.get('other_links'))
         if other_links:
             menu_item['other_items'] = other_links
+
+        # If the current request either matches or is a child of this menu's
+        # links (overview, other, and columns, deliberately excluding
+        # featured), then we mark this menu as selected.
+        for link in chain(
+            [overview_link],
+            other_links,
+            *chain(column['nav_items'] for column in columns)
+        ):
+            url = link.get('url')
+            if url and self.request.path.startswith(url):
+                menu_item['selected'] = True
+                break
 
         return menu_item
 
@@ -51,35 +75,36 @@ class FrontendConverter:
         return columns
 
     def make_links(self, values):
-        if values:
-            return list(map(self.make_link, values))
+        return list(map(self.make_link, values)) if values else []
 
-    def make_link(self, value):
+    def make_link(self, value, selected_exact_only=False):
         page = value.get('page')
         text = value.get('text')
         icon = value.get('icon')
 
         if page:
-            return self.make_link_for_page(page, text=text, icon=icon)
+            url = page.get_url(request=self.request)
 
-        link = {'text': text}
+            link = {
+                'url': url,
+                'text': text or page.title,
+            }
+        else:
+            link = {'text': text}
 
-        if icon:
-            link['icon'] = icon
-
-        url = value.get('url')
-        if url:
-            link['url'] = url
-
-        return link
-
-    def make_link_for_page(self, page, text=None, icon=None):
-        link = {
-            'url': page.get_url(request=self.request),
-            'text': text or page.title,
-        }
+            url = value.get('url')
+            if url:
+                link['url'] = url
 
         if icon:
             link['icon'] = icon
+
+        if selected_exact_only:
+            selected = url and self.request.path == url
+        else:
+            selected = url and self.request.path.startswith(url)
+
+        if selected:
+            link['selected'] = True
 
         return link
