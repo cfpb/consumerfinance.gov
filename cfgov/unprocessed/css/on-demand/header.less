@@ -67,6 +67,20 @@
 
 @import (less) "../organisms/mega-menu.less";
 
+// Hacks to fix issues with styles spilling into menu on legacy pages.
+.o-mega-menu_trigger {
+   border-radius: 0;
+}
+.o-mega-menu_content-list__featured a:hover {
+   border: transparent;
+}
+.o-mega-menu_content-list__featured ul {
+   margin-bottom: 1.875em !important;
+}
+.o-mega-menu_content-list a:focus {
+   background-color: transparent !important;
+}
+
 /* Template pieces
    ========================================================================== */
 @import (less) "../skip-nav.less";
