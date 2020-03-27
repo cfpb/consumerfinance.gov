@@ -26,34 +26,10 @@ class TestCFGOVPage(TestCase):
         key = self.page.post_preview_cache_key
         self.assertIn(str(self.page.id), key)
 
-    @mock.patch('builtins.super')
-    @mock.patch('v1.models.base.hooks')
-    def test_get_context_calls_get_context(self, mock_hooks, mock_super):
+    @mock.patch('v1.models.base.hooks.get_hooks')
+    def test_get_context_calls_get_hooks(self, mock_get_hooks):
         self.page.get_context(self.request)
-        mock_super.assert_called_with(CFGOVPage, self.page)
-        mock_super().get_context.assert_called_with(self.request)
-
-    @mock.patch('builtins.super')
-    @mock.patch('v1.models.base.hooks')
-    def test_get_context_calls_get_hooks(self, mock_hooks, mock_super):
-        self.page.get_context(self.request)
-        mock_hooks.get_hooks.assert_called_with('cfgovpage_context_handlers')
-
-    @mock.patch('builtins.super')
-    @mock.patch('v1.models.base.hooks')
-    def test_get_context_calls_hook_functions(self, mock_hooks, mock_super):
-        fn = mock.Mock()
-        mock_hooks.get_hooks.return_value = [fn]
-        self.page.get_context(self.request)
-        fn.assert_called_with(
-            self.page, self.request, mock_super().get_context()
-        )
-
-    @mock.patch('builtins.super')
-    @mock.patch('v1.models.base.hooks')
-    def test_get_context_returns_context(self, mock_hooks, mock_super):
-        result = self.page.get_context(self.request)
-        self.assertEqual(result, mock_super().get_context())
+        mock_get_hooks.assert_called_with('cfgovpage_context_handlers')
 
     @mock.patch('builtins.super')
     def test_serve_calls_super_on_non_ajax_request(self, mock_super):
@@ -61,10 +37,8 @@ class TestCFGOVPage(TestCase):
         mock_super.assert_called_with(CFGOVPage, self.page)
         mock_super().serve.assert_called_with(self.request)
 
-    @mock.patch('builtins.super')
     @mock.patch('v1.models.base.CFGOVPage.serve_post')
-    def test_serve_calls_serve_post_on_post_request(
-            self, mock_serve_post, mock_super):
+    def test_serve_calls_serve_post_on_post_request(self, mock_serve_post):
         self.request = self.factory.post('/')
         self.page.serve(self.request)
         mock_serve_post.assert_called_with(self.request)

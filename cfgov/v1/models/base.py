@@ -217,8 +217,7 @@ class CFGOVPage(Page):
                 # This annotation creates a path field in the QuerySet
                 # that we can use in the filter below to compare with
                 # the url_pattern defined on each enabled banner.
-                path=Value(request.path, output_field=models.CharField())
-            ) \
+                path=Value(request.path, output_field=models.CharField())) \
             .filter(path__regex=F('url_pattern'))
 
         return context
