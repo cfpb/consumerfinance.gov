@@ -27,7 +27,7 @@ from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
-from regulations3k.models import Part, Section, SectionParagraph
+from regulations3k.models import Part, Section, SectionParagraph, Subpart
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
@@ -474,6 +474,10 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         next_section = get_next_section(sections, current_index)
         previous_section = get_previous_section(sections, current_index)
 
+        # section.subpart.subpart_type can have a value of 0, 1000, or 2000
+        subpart_type_label = Subpart.SUBPART_TYPE_CHOICES[int(
+            section.subpart.subpart_type / 1000)][1]
+
         context.update({
             'requested_version': effective_version,
             'next_version': next_version,
@@ -487,6 +491,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             'previous_section': previous_section,
             'previous_url': get_section_url(self, previous_section,
                                             date_str=date_str),
+            'subpart_type_label': subpart_type_label,
         })
 
         return TemplateResponse(
