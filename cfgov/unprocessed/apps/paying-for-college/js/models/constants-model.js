@@ -1,6 +1,6 @@
+import { financialModel } from './financial-model.js';
 import { getConstants } from '../dispatchers/get-api-values.js';
 import { updateFinancialView } from '../dispatchers/update-view.js';
-import { financialModel } from './financial-model.js';
 
 const constantsModel = {
   values: {},

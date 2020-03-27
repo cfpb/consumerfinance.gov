@@ -1,11 +1,8 @@
 /**
  * Update the application state model, then trigger updates in views
  */
-import { stateModel } from '../models/state-model.js';
 import { navigationView } from '../views/navigation-view.js';
-import { financialView } from '../views/financial-view.js';
-import { schoolView } from '../views/school-view.js';
-import { financialModel } from '../models/financial-model.js';
+import { stateModel } from '../models/state-model.js';
 
 const updateState = {
 

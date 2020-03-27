@@ -1,13 +1,13 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
 import numberToMoney from 'format-usd';
-import { closest } from '../../../../js/modules/util/dom-traverse';
-import { updateState } from '../dispatchers/update-state.js';
-import { createFinancial, recalculateFinancials, updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
-import { getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { updateAffordingChart, updateCostOfBorrowingChart, updateMakePlanChart, updateMaxDebtChart } from '../dispatchers/update-view.js';
+import { closest } from '../../../../js/modules/util/dom-traverse';
+import { createFinancial, updateFinancial, updateFinancialsFromSchool, recalculateFinancials } from '../dispatchers/update-models.js';
+import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
+import { getStateValue, getFinancialValue } from '../dispatchers/get-model-values.js';
+import { updateCostOfBorrowingChart, updateMakePlanChart, updateMaxDebtChart, updateAffordingChart } from '../dispatchers/update-view.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 const financialView = {
   _financialItems: null,

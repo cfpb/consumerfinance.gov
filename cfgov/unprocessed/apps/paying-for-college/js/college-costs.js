@@ -1,20 +1,19 @@
 // This file controls the college costs application
 
-import { schoolModel } from './models/school-model.js';
-import { constantsModel } from './models/constants-model.js';
-import { financialModel } from './models/financial-model.js';
-import { expensesModel } from './models/expenses-model.js';
-import { stateModel } from './models/state-model.js';
-
-import { navigationView } from './views/navigation-view.js';
-import { financialView } from './views/financial-view.js';
-import { schoolView } from './views/school-view.js';
-import { chartView } from './views/chart-view.js';
-import { fixedSticky } from './views/fixed-sticky-view.js';
-
-import { updateState } from './dispatchers/update-state.js';
-import { updateSchoolData } from './dispatchers/update-models.js';
 import Expandable from '../../../../../node_modules/@cfpb/cfpb-expandables/src/Expandable.js';
+import { chartView } from './views/chart-view.js';
+import { constantsModel } from './models/constants-model.js';
+import { fixedSticky } from './views/fixed-sticky-view.js';
+import { expensesModel } from './models/expenses-model.js';
+import { expensesView } from './views/expenses-view.js';
+import { financialModel } from './models/financial-model.js';
+import { financialView } from './views/financial-view.js';
+import { navigationView } from './views/navigation-view.js';
+import { schoolModel } from './models/school-model.js';
+import { schoolView } from './views/school-view.js';
+import { stateModel } from './models/state-model.js';
+import { updateSchoolData } from './dispatchers/update-models.js';
+import { updateState } from './dispatchers/update-state.js';
 
 /* init() - Initialize the app */
 
@@ -54,25 +53,21 @@ const _demoData = function() {
   financialModel.setValue( 'salary_monthly', 4130 );
   expensesModel.setValue( 'total_expenses', 4230 );
 
-  console.log( 'val', expensesModel.values );
-
   financialView.updateFinancialItems();
 
   chartView.updateCostOfBorrowingChart();
   chartView.updateMakePlanChart();
   chartView.updateMaxDebtChart();
   chartView.updateAffordingChart();
-
-  console.log( financialModel.values );
-  console.log( stateModel.programData );
-  console.log( schoolModel );
 };
 
 const init = function() {
   const body = document.querySelector( 'body' );
   stateModel.init();
   constantsModel.init();
+  expensesModel.init();
   schoolView.init( body );
+  expensesView.init( body );
   financialView.init( body );
   navigationView.init( body );
   chartView.init( body );
@@ -84,8 +79,8 @@ const init = function() {
 
   fixedSticky.init( '.costs-not-covered' );
 
-  // For testing purposes:
-  // _demoData();
+  /* For testing purposes:
+     _demoData(); */
 
 };
 

@@ -32,6 +32,22 @@ const getConstants = function() {
   } );
 };
 
+const getExpenses = function() {
+  const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
+    '/api/expenses/';
+  const xhr = new XMLHttpRequest();
+  return new Promise( function( resolve, reject ) {
+    promiseRequest( 'GET', url )
+      .then( function( resp ) {
+        resolve( resp );
+      } )
+      .catch( function( error ) {
+        reject( new Error( error ) );
+        console.log( 'An error occurred!', error );
+      } );
+  } );
+};
+
 const getSchoolData = function( iped ) {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/school/' + iped;
@@ -50,6 +66,7 @@ const getSchoolData = function( iped ) {
 
 export {
   getConstants,
+  getExpenses,
   getSchoolData,
   schoolSearch
 };

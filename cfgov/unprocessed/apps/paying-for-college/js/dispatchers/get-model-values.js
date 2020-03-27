@@ -13,7 +13,6 @@ const getFinancialValue = function( name ) {
 };
 
 const getSchoolValue = function( name ) {
-  console.log( name, schoolModel.values, schoolModel.values[name] );
   return schoolModel.values[name];
 };
 

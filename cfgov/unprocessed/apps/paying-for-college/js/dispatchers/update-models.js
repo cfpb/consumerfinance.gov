@@ -5,9 +5,10 @@
 import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
-import { schoolView } from '../views/school-view.js';
-import { schoolModel } from '../models/school-model.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
+import { schoolModel } from '../models/school-model.js';
+import { schoolView } from '../views/school-view.js';
+import { stringToNum } from '../util/number-utils.js';
 import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { updateGradMeterChart, updateRepaymentMeterChart } from '../dispatchers/update-view.js';
 
@@ -33,6 +34,10 @@ const updateExpense = function( name, value ) {
   expensesModel.setValue( name, value );
 };
 
+const recalculateExpenses = function() {
+  expensesModel.calculateTotals();
+}
+
 const updateSchoolData = function( iped ) {
   getSchoolData( iped )
     .then( resp => {
@@ -42,8 +47,8 @@ const updateSchoolData = function( iped ) {
         schoolModel.createSchoolProperty( key, data[key] );
       }
 
-      financialModel.setValue( 'salary_annual', Number( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
-      financialModel.setValue( 'salary_monthly', Number( getSchoolValue( 'medianAnnualPay6Yr' ) ) / 12 );
+      financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+      financialModel.setValue( 'salary_monthly', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) / 12 );
 
       financialView.updateFinancialItems();
       updateGradMeterChart();
@@ -65,6 +70,8 @@ export {
   updateFinancial,
   createFinancial,
   updateSchoolData,
+  updateExpense,
   updateFinancialsFromSchool,
-  recalculateFinancials
+  recalculateFinancials,
+  recalculateExpenses
 };

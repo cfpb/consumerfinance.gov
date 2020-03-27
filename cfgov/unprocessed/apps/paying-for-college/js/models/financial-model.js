@@ -4,9 +4,12 @@ of college, grants, loans, etc. It also includes debt calculations
 based on these costs.
 */
 
-import { createFinancials } from '../dispatchers/update-models.js';
+// Please excuse some uses of underscore for code/HTML property clarity!
+/* eslint camelcase: ["error", {properties: "never"}] */
+
+import { createFinancials, recalculateExpenses } from '../dispatchers/update-models.js';
 import { getConstantsValue, getExpensesValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { calculateDebt } from '../util/calculate-debt.js';
+import { debtCalculator } from '../util/debt-calculator.js';
 import { stringToNum } from '../util/number-utils.js';
 
 const financialModel = {
@@ -43,11 +46,27 @@ const financialModel = {
   },
 
   recalculate: () => {
-    financialModel.calculateTotals();
-    financialModel.calculateDebt();
+    financialModel._calculateTotals();
+    financialModel._calculateDebt();
+    recalculateExpenses();
   },
 
-  calculateTotals: () => {
+  _calculateTotals: () => {
+    const totalKeys = {
+      totalDirectCosts: '',
+      totalIndirectCosts: '',
+      totalGrants: '',
+      totalScholarships: '',
+      totalFedLoans: '',
+      totalLoans: '',
+      totalSavings: '',
+      totalIncome: '',
+      totalContributions: '',
+      totalInstitutionalLoans: '',
+      totalWorkStudy: '',
+      totalPrivateLoans: ''
+    };
+
     let totalDirectCosts = 0;
     let totalIndirectCosts = 0;
     let totalGrants = 0;
@@ -59,7 +78,7 @@ const financialModel = {
     let totalContributions = 0;
     let totalInstitutionalLoans = 0;
     let totalWorkStudy = 0;
-    const totalPrivateLoans = 0;
+    let totalPrivateLoans = 0;
 
     // Calculate totals
     for ( const prop in financialModel.values ) {
@@ -172,11 +191,10 @@ const financialModel = {
 
     financialModel.recalculate();
 
-    console.log( financialModel.values );
   },
 
-  calculateDebt: () => {
-    const debtObject = calculateDebt( financialModel.values );
+  _calculateDebt: () => {
+    const debtObject = debtCalculator( financialModel.values );
     for ( const key in debtObject ) {
       financialModel.values[key] = debtObject[key];
     }
@@ -191,7 +209,7 @@ const financialModel = {
 
     // These are test values used only for development purposes.
 
-    financialModel.calculateTotals();
+    financialModel._calculateTotals();
 
   }
 };

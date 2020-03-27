@@ -3,14 +3,14 @@
  */
 
 import studentDebtCalculator from 'student-debt-calc';
-import { financialModel } from '../models/financial-model.js';
-import { constantsModel } from '../models/constants-model.js';
 import { getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { constantsModel } from '../models/constants-model.js';
+import { financialModel } from '../models/financial-model.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
 
-const calculateDebt = function( data ) {
+const debtCalculator = function( data ) {
   let values = {};
 
   const debtObj = {
@@ -67,5 +67,5 @@ const calculateDebt = function( data ) {
 };
 
 export {
-  calculateDebt
+  debtCalculator
 };

@@ -1,5 +1,10 @@
-import { financialView } from '../views/financial-view.js';
 import { chartView } from '../views/chart-view.js';
+import { expensesView } from '../views/expenses-view.js';
+import { financialView } from '../views/financial-view.js';
+
+const updateExpensesView = () => {
+  expensesView.updateExpensesView();
+}
 
 const updateFinancialView = () => {
   financialView.updateFinancialItems();
@@ -30,6 +35,7 @@ const updateRepaymentMeterChart = () => {
 };
 
 export {
+  updateExpensesView,
   updateFinancialView,
   updateCostOfBorrowingChart,
   updateMakePlanChart,
