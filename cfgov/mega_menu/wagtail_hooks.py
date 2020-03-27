@@ -9,9 +9,9 @@ from mega_menu.views import MenuPreviewView
 
 
 try:
-    from django.urls import path
+    from django.urls import re_path
 except ImportError:
-    from django.conf.urls import url as path
+    from django.conf.urls import url as re_path
 
 
 class MenuModelAdminButtonHelper(ButtonHelper):
@@ -59,7 +59,7 @@ class MenuModelAdmin(ModelAdmin):
         urls = super().get_admin_urls_for_registration()
 
         return urls + (
-            path(
+            re_path(
                 self.url_helper.get_action_url_pattern('preview'),
                 self.preview_view,
                 name=self.url_helper.get_action_url_name('preview')

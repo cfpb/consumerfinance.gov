@@ -11,9 +11,9 @@ from treemodeladmin.views import TreeViewParentMixin
 
 
 try:
-    from django.urls import path
+    from django.urls import re_path
 except ImportError:
-    from django.conf.urls import url as path
+    from django.conf.urls import url as re_path
 
 
 class CopyButtonHelper(TreeButtonHelper):
@@ -84,7 +84,7 @@ class CopyableModelAdmin(TreeModelAdmin):
 
         # Add the copy URL
         urls = urls + (
-            path(
+            re_path(
                 self.url_helper.get_action_url_pattern('copy'),
                 self.copy_view,
                 name=self.url_helper.get_action_url_name('copy')
