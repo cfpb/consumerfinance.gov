@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
@@ -23,6 +25,7 @@ from wagtailinventory.helpers import get_page_blocks
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
+from v1.models.banners import Banner
 from v1.models.snippets import ReusableText
 from v1.util import ref
 from v1.util.util import validate_social_sharing_image
@@ -203,8 +206,16 @@ class CFGOVPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+
         for hook in hooks.get_hooks('cfgovpage_context_handlers'):
             hook(self, request, context, *args, **kwargs)
+
+        context['banners'] = []
+        enabled_banners = Banner.objects.filter(enabled=True)
+        for banner in enabled_banners:
+            if re.search(banner.url_pattern, request.path):
+                context['banners'] += banner.content
+
         return context
 
     def serve(self, request, *args, **kwargs):

@@ -21,6 +21,7 @@ from scripts import export_enforcement_actions
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import ExportFeedbackView, manage_cdn
+from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
@@ -283,6 +284,15 @@ class ResourceModelAdmin(ModelAdmin):
     ordering = ('title',)
     list_filter = (ResourceTagsFilter,)
     search_fields = ('title',)
+
+
+@modeladmin_register
+class BannerModelAdmin(ModelAdmin):
+    model = Banner
+    menu_icon = 'warning'
+    list_display = ('title', 'url_pattern', 'enabled')
+    ordering = ('title',)
+    search_fields = ('title', 'url_pattern', 'content')
 
 
 class ContactModelAdmin(ModelAdmin):
