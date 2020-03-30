@@ -13,7 +13,7 @@ from django.test import (
 from wagtail.core.models import Site
 
 import mock
-from model_mommy import mommy
+from model_bakery import baker
 
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
 from regulations3k.models.django import (
@@ -43,7 +43,7 @@ class RegModelTests(DjangoTestCase):
             title='Reg Landing', slug='reg-landing')
         self.ROOT_PAGE.add_child(instance=self.landing_page)
 
-        self.part_1002 = mommy.make(
+        self.part_1002 = baker.make(
             Part,
             cfr_title_number=12,
             part_number='1002',
@@ -51,7 +51,7 @@ class RegModelTests(DjangoTestCase):
             short_name='Regulation B',
             chapter='X'
         )
-        self.part_1030 = mommy.make(
+        self.part_1030 = baker.make(
             Part,
             cfr_title_number=12,
             part_number='1030',
@@ -60,58 +60,58 @@ class RegModelTests(DjangoTestCase):
             chapter='X'
         )
 
-        self.effective_version = mommy.make(
+        self.effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2014, 1, 18),
             part=self.part_1002
         )
-        self.old_effective_version = mommy.make(
+        self.old_effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2011, 1, 1),
             part=self.part_1002,
         )
-        self.draft_effective_version = mommy.make(
+        self.draft_effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2020, 1, 1),
             part=self.part_1002,
             draft=True,
         )
 
-        self.subpart = mommy.make(
+        self.subpart = baker.make(
             Subpart,
             label='Subpart General',
             title='Subpart A - General',
             subpart_type=Subpart.BODY,
             version=self.effective_version
         )
-        self.subpart_appendices = mommy.make(
+        self.subpart_appendices = baker.make(
             Subpart,
             label='Appendices',
             title='Appendices',
             subpart_type=Subpart.APPENDIX,
             version=self.effective_version
         )
-        self.subpart_interps = mommy.make(
+        self.subpart_interps = baker.make(
             Subpart,
             label='Official Interpretations',
             title='Supplement I to Part 1002',
             subpart_type=Subpart.INTERPRETATION,
             version=self.effective_version
         )
-        self.subpart_orphan = mommy.make(
+        self.subpart_orphan = baker.make(
             Subpart,
             label='General Mistake',
             title='An orphan subpart with no sections for testing',
             version=self.effective_version
         )
-        self.old_subpart = mommy.make(
+        self.old_subpart = baker.make(
             Subpart,
             label='Subpart General',
             title='General',
             subpart_type=Subpart.BODY,
             version=self.old_effective_version
         )
-        self.section_num4 = mommy.make(
+        self.section_num4 = baker.make(
             Section,
             label='4',
             title='\xa7\xa01002.4 General rules.',
@@ -125,27 +125,27 @@ class RegModelTests(DjangoTestCase):
             ),
             subpart=self.subpart,
         )
-        self.graph_to_keep = mommy.make(
+        self.graph_to_keep = baker.make(
             SectionParagraph,
             section=self.section_num4,
             paragraph_id='d',
             paragraph=(
                 '(1) General rule. A creditor that provides in writing.')
         )
-        self.graph_to_delete = mommy.make(
+        self.graph_to_delete = baker.make(
             SectionParagraph,
             section=self.section_num4,
             paragraph_id='x',
             paragraph='(x) Non-existent graph that should get deleted.'
         )
-        self.section_num15 = mommy.make(
+        self.section_num15 = baker.make(
             Section,
             label='15',
             title='\xa7\xa01002.15 Rules concerning requests for information.',
             contents='regdown content.',
             subpart=self.subpart,
         )
-        self.section_alpha = mommy.make(
+        self.section_alpha = baker.make(
             Section,
             label='A',
             title=('Appendix A to Part 1002-Federal Agencies '
@@ -153,21 +153,21 @@ class RegModelTests(DjangoTestCase):
             contents='regdown content.',
             subpart=self.subpart_appendices,
         )
-        self.section_beta = mommy.make(
+        self.section_beta = baker.make(
             Section,
             label='B',
             title=('Appendix B to Part 1002-Errata'),
             contents='regdown content.',
             subpart=self.subpart_appendices,
         )
-        self.section_interps = mommy.make(
+        self.section_interps = baker.make(
             Section,
             label='Interp-A',
             title=('Official interpretations for Appendix A to Part 1002'),
             contents='interp content.',
             subpart=self.subpart_interps,
         )
-        self.old_section_num4 = mommy.make(
+        self.old_section_num4 = baker.make(
             Section,
             label='4',
             title='\xa7\xa01002.4 General rules.',
@@ -580,7 +580,7 @@ class RegModelTests(DjangoTestCase):
         )
 
     def test_effective_version_date_unique(self):
-        new_effective_version = mommy.make(
+        new_effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2020, 1, 1),
             part=self.part_1002,

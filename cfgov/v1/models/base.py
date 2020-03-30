@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import F, Value
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone, translation
@@ -23,6 +24,7 @@ from wagtailinventory.helpers import get_page_blocks
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
+from v1.models.banners import Banner
 from v1.models.snippets import ReusableText
 from v1.util import ref
 from v1.util.util import validate_social_sharing_image
@@ -203,8 +205,21 @@ class CFGOVPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+
         for hook in hooks.get_hooks('cfgovpage_context_handlers'):
             hook(self, request, context, *args, **kwargs)
+
+        # Add any banners that are enabled and match the current request path
+        # to a context variable.
+        context['banners'] = Banner.objects \
+            .filter(enabled=True) \
+            .annotate(
+                # This annotation creates a path field in the QuerySet
+                # that we can use in the filter below to compare with
+                # the url_pattern defined on each enabled banner.
+                path=Value(request.path, output_field=models.CharField())) \
+            .filter(path__regex=F('url_pattern'))
+
         return context
 
     def serve(self, request, *args, **kwargs):

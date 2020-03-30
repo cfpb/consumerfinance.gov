@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from cfgov.test import HtmlMixin
-from v1.atomic_elements.organisms import ModelBlock, ModelTable
+from v1.atomic_elements.organisms import ModelBlock
 
 
 class UserModelMixin(object):
@@ -100,105 +99,3 @@ class ModelBlockTestCase(UserModelMixin, TestCase):
             [model.username for model in block.get_queryset(None)],
             ['admin', 'chico']
         )
-
-
-class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
-    def test_default_formatter(self):
-        self.assertEqual(
-            ModelTable().format_field_value(None, 'foo', 1234),
-            '1234'
-        )
-
-    def test_custom_formatter(self):
-        class UserTable(ModelTable):
-            def make_foo_value(self, instance, value):
-                return str(2 * value)
-
-        self.assertEqual(
-            UserTable().format_field_value(None, 'foo', 1234),
-            '2468'
-        )
-
-    def get_table_html(self, **kwargs):
-        class UserTable(ModelTable):
-            model = 'auth.User'
-            fields = ('username', 'first_name')
-            field_headers = ('Username', 'First Name')
-
-        table = UserTable()
-        return table.render(table.to_python(kwargs))
-
-    def test_no_row_headers(self):
-        html = self.get_table_html(first_row_is_table_header=False)
-        self.assertHtmlRegexpMatches(html, (
-            '<tbody>'
-            '<tr>'
-            '<td><div class="rich-text">Username</div></td>'
-            '<td><div class="rich-text">First Name</div></td>'
-            '</tr>'
-        ))
-
-    def test_row_headers(self):
-        html = self.get_table_html(first_row_is_table_header=True)
-        self.assertHtmlRegexpMatches(html, (
-            '<thead>'
-            '<tr>'
-            '<th scope="col"><div class="rich-text">Username</div></th>'
-            '<th scope="col"><div class="rich-text">First Name</div></th>'
-            '</tr>'
-            '</thead>'
-        ))
-
-    def test_no_col_headers(self):
-        html = self.get_table_html(first_col_is_header=False)
-        self.assertHtmlRegexpMatches(html, (
-            '<tr>'
-            '<td data-label="Username"><div class="rich-text">chico</div></td>'
-            '<td data-label="First Name"><div class="rich-text">leonard</div></td>'
-            '</tr>'
-        ))
-
-    def test_col_headers(self):
-        html = self.get_table_html(first_col_is_header=True)
-        self.assertHtmlRegexpMatches(html, (
-            '<tr>'
-            '<th scope="row" data-label="Username"><div class="rich-text">chico</div></th>'
-            '<td data-label="First Name"><div class="rich-text">leonard</div></td>'
-            '</tr>'
-        ))
-
-    def test_no_full_width(self):
-        html = self.get_table_html(is_full_width=False)
-        self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table o-table__stack-on-small">'
-        ))
-
-    def test_full_width(self):
-        html = self.get_table_html(is_full_width=True)
-        self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table o-table__stack-on-small u-w100pct">'
-        ))
-
-    def test_not_striped(self):
-        html = self.get_table_html(is_striped=False)
-        self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table o-table__stack-on-small">'
-        ))
-
-    def test_striped(self):
-        html = self.get_table_html(is_striped=True)
-        self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table o-table__stack-on-small table__striped">'
-        ))
-
-    def test_not_stacked(self):
-        html = self.get_table_html(is_stacked=False)
-        self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table">'
-        ))
-
-    def test_stacked(self):
-        html = self.get_table_html(is_stacked=True)
-        self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table o-table__stack-on-small">'
-        ))

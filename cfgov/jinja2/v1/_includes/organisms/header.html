@@ -40,6 +40,17 @@
     </div>
     {% endif %}
 
+    {% if banners %}
+        {% for banner in banners %}
+            <div class="m-global-banner">
+                <div class="wrapper
+                          wrapper__match-content">
+                    {% include_block banner.content %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
     {% if flag_enabled('COLLECT_OUTAGE', request) %}
         {{ collect_outage_banner(request) }}
     {% endif %}
@@ -97,7 +108,7 @@
             {% endif %}
 
             {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-            {{ global_header_cta.render( true, language ) }}
+            {{ global_header_cta.render( language ) }}
 
             {% import 'molecules/global-search.html' as global_search with context %}
             {{ global_search.render() }}

@@ -178,6 +178,15 @@ change configs locally without having to rebuild the image each time.
     docker-compose up --build python
     ```
 
+#### Jenkins CI + Docker Swarm
+
+This repo also includes a Docker Swarm compatible Compose file
+[`docker-stack.yml`](../docker-stack.yml).  This file is intended
+for use with the project's [`Jenkinsfile`](../Jenkinsfile) [multibranch build
+pipeline](https://jenkins.io/doc/tutorials/build-a-multibranch-pipeline-project/).
+It follows a standard Docker build/scan/push workflow, optionally
+deploying to our Docker Swarm cluster.
+
 ### How does it work?
 
 The production image extends the development image. If you look at the `Dockerfile`, this is spelled out by the line:
