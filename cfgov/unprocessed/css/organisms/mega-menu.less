@@ -972,6 +972,13 @@ body {
                 padding-right: 0;
             }
 
+            // Move the first link in each mega menu list group up a bit so that it aligns
+            // with the featured links box. We do this instead of removing the top padding
+            // to preserve the links' hover state.
+            &-item:first-child &-link {
+                margin-top: unit( -12px / @base-font-size-px, em );
+            }
+
             &-overview-link,
             &-link {
                 padding: unit( 10px / 18px, em );
@@ -1046,8 +1053,12 @@ body {
             display: none;
         }
 
-        &_group-heading__hidden {
-            visibility: hidden;
+        &_group-heading {
+            margin-bottom: unit( 30px / @base-font-size-px, em );
+
+            &__hidden {
+                visibility: hidden;
+            }
         }
 
         // Hide global header CTA container and eyebrow at desktop size.
