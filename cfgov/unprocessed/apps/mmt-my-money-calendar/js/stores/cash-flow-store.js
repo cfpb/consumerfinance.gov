@@ -6,6 +6,12 @@ import { toDayJS } from '../lib/calendar-helpers';
 import { toMap } from '../lib/array-helpers';
 import CashFlowEvent from './models/cash-flow-event';
 
+/**
+ * To Do for Strategies:
+ *
+ * - [ ] Identify which cash flow event caused the user's balance to dip negative and highlight it in UI
+ * - [ ]
+ */
 export default class CashFlowStore {
   @observable eventsLoaded = false;
   @observable events = [];

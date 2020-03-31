@@ -107,7 +107,7 @@ function Details() {
             Week starting balance: {uiStore.weekStartingBalanceText}
           </div>
           {!uiStore.weekHasNegativeBalance && (
-            <div className={endBalanceClasses}>Week ending balance: {uiStore.weekEndingBalanceText}</div>
+            <div className={endBalanceClasses}>Weekly ending balance: {uiStore.weekEndingBalanceText}</div>
           )}
         </div>
 
@@ -130,7 +130,7 @@ function Details() {
               </Link>
             }
           >
-            <p className="m-notification_explanation">Week ending balance: {uiStore.weekEndingBalanceText}</p>
+            <p className="m-notification_explanation">Week ending balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span></p>
           </Notification>
         </div>
       )}
