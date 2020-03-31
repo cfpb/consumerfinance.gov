@@ -55,6 +55,7 @@ jobs:
 
     services:
       postgres:
+        # https://help.github.com/en/actions/configuring-and-managing-workflows/creating-postgresql-service-containers
         # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
         image: postgres
         env:
