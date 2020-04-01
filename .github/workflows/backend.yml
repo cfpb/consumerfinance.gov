@@ -1,47 +1,8 @@
-name: test
+name: backend
 
 on: pull_request
 
 jobs:
-
-  frontend:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        gulp_cmd:
-          - lint
-          - test:unit --ci --headless
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-            node-version: '10.x'
-
-      - name: Set up Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.6
-
-      - name: Install dependencies
-        run: |
-          ./frontend.sh development
-          python -m pip install --upgrade pip
-          pip install -r requirements/ci.txt
-
-      - name: Run ${{ matrix.gulp_cmd }}
-        run: yarn run gulp ${{ matrix.gulp_cmd }}
-
-      - name: Store test coverage
-        # Submit coverage from the unit test run only
-        if: matrix.gulp_cmd == 'test:unit --ci --headless'
-        uses: actions/upload-artifact@v1
-        with:
-          name: frontend_coverage
-          path: ./test/unit_test_coverage/clover.xml
 
   backend:
     runs-on: ubuntu-latest
@@ -102,21 +63,8 @@ jobs:
 
   coverage:
     runs-on: ubuntu-latest
-    needs: 
-      - frontend
+    needs:
       - backend
-
-
-    strategy:
-      matrix:
-        coverage:
-          - frontend
-          - backend
-        include:
-          - coverage: frontend
-            coverage_file: clover.xml
-          - coverage: backend
-            coverage_file: coverage.xml
 
     steps:
       - uses: actions/checkout@v2
@@ -133,11 +81,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements/ci.txt
 
-      - name: Retrieve ${{ matrix.coverage }} coverage
+      - name: Retrieve backend coverage
         uses: actions/download-artifact@v1
         with:
-          name: ${{ matrix.coverage }}_coverage
+          name: backend_coverage
 
-      - name: Check ${{ matrix.coverage }} test coverage
+      - name: Check backend test coverage
         run: |
-          diff-cover ${{ matrix.coverage }}_coverage/${{ matrix.coverage_file }} --fail-under=100
+          diff-cover backend_coverage/coverage.xml --fail-under=100
