@@ -1,1 +1,52 @@
-../../libraries.txt
+# These packages are installed from PyPI.
+backports.csv==1.0.7
+beautifulsoup4==4.6.0
+boto3==1.7.80
+dj-database-url==0.5.0
+djangorestframework==3.9.1
+django-csp==3.4
+django-extensions==2.1.3
+django-flags==4.2.4
+django-haystack==2.7.0
+# django-js-asset is required by teachers-digital-platform
+django-js-asset==1.1.0
+django-localflavor==1.6.2
+# django-mptt is required by teachers-digital-platform
+django-mptt==0.9.0
+django-overextends==0.4.3
+django-storages==1.7.1
+django-treebeard==3.0
+django-watchman==0.15.0
+edgegrid-python==1.0.10
+elasticsearch==2.4.1
+govdelivery==1.3
+Jinja2==2.10.1
+jsonfield==2.0.2
+lxml==4.2.5
+Markdown==3.2.1
+ntplib==0.3.3
+openpyxl==2.5.8
+psycopg2==2.7.3.2
+pyelasticsearch==0.6.1
+python-dateutil==2.7.3
+PyYAML==5.3.1
+regdown==1.0.2
+requests==2.22.0
+requests_toolbelt==0.8.0
+sha3==0.2.1
+unicodecsv==0.14.1
+unipath>=1.1,<=2.0
+urllib3==1.25.2
+wagtail-autocomplete==0.1.1
+wagtail-flags==4.1.1
+wagtail-inventory==1.0
+wagtail-sharing==1.0
+wagtail-treemodeladmin==1.1.1
+
+# These packages are installed from GitHub.
+https://github.com/cfpb/owning-a-home-api/releases/download/0.14.0/owning_a_home_api-0.14.0-py3-none-any.whl
+https://github.com/cfpb/retirement/releases/download/0.12.0/retirement-0.12.0-py3-none-any.whl
+https://github.com/cfpb/ccdb5-api/releases/download/1.3.1/ccdb5_api-1.3.1-py3-none-any.whl
+https://github.com/cfpb/ccdb5-ui/releases/download/1.6.1/ccdb5_ui-1.6.1-py3-none-any.whl
+https://github.com/cfpb/django-college-costs-comparison/releases/download/1.14.0/comparisontool-1.14.0-py3-none-any.whl
+https://github.com/cfpb/teachers-digital-platform/releases/download/1.2.4/teachers_digital_platform-1.2.4-py3-none-any.whl
