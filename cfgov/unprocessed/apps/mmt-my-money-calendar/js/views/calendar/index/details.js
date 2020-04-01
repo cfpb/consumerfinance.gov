@@ -42,7 +42,7 @@ const DetailRow = ({ event, onRequestEdit, onRequestDelete, balanceIsNegative = 
     <div className="calendar-details__event-name">{event.name}</div>
     <div className="calendar-details__event-total">{formatCurrency(event.total)}</div>
     <div className="calendar-details__drag-handle">
-      <span className="calendar-details__drag-icon" dangerouslySetInnerHTML={{__html: dragHandle }} />
+      <span className="calendar-details__drag-icon" dangerouslySetInnerHTML={{ __html: dragHandle }} />
     </div>
   </SlideListItem>
 );
@@ -130,7 +130,9 @@ function Details() {
               </Link>
             }
           >
-            <p className="m-notification_explanation">Week ending balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span></p>
+            <p className="m-notification_explanation">
+              Week ending balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span>
+            </p>
           </Notification>
         </div>
       )}
