@@ -1,6 +1,5 @@
 import re
 
-import django
 from django.conf import settings
 
 from wagtail.core.rich_text import expand_db_html
@@ -62,14 +61,13 @@ class ParseLinksMiddleware(object):
 
         Returns True if
 
-        1. The response has the default content type (HTML) AND
+        1. The response has the settings.DEFAULT_CONTENT_TYPE (HTML) AND
         2. The request path does not match settings.PARSE_LINKS_EXCLUSION_LIST
 
         Otherwise returns False.
         """
-        if django.VERSION < (2, 0):
-            if settings.DEFAULT_CONTENT_TYPE not in response_content_type:
-                return False
+        if "html" not in response_content_type:
+            return False
 
         return not any(
             re.search(regex, request_path)
