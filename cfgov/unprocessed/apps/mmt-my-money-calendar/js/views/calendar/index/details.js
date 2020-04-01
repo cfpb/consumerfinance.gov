@@ -88,7 +88,7 @@ function Details() {
 
   useLockBodyScroll(modalOpen);
 
-  const events = eventStore.eventsByWeek.get(uiStore.currentWeek.startOf('week').valueOf()) || [];
+  const events =  eventStore.getEventsForWeek(uiStore.currentWeek) || [];
   const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative');
 
   return (

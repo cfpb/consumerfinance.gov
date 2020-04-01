@@ -183,6 +183,11 @@ export default class CashFlowStore {
     return this.eventsByDate.get(date.startOf('day').valueOf());
   }
 
+  getEventsForWeek(date) {
+    date = toDayJS(date).startOf('week');
+    return this.eventsByWeek.get(date.valueOf());
+  }
+
   /**
    * Load all events from IndexedDB, sorted ascending by date, into the events array
    *

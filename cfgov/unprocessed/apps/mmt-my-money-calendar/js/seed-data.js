@@ -37,7 +37,7 @@ function seedCashFlowEvents() {
       name: 'Paycheck',
       date: randDay(),
       category: 'income.salary',
-      totalCents: 30000,
+      totalCents: 50000,
       recurs: true,
       recurrenceType: 'weekly',
       recurrenceRule: new RRule({
@@ -71,6 +71,32 @@ function seedCashFlowEvents() {
         freq: RRule.WEEKLY,
         dtstart: currentDate,
         count: 12,
+      }),
+    },
+    {
+      name: 'Electricity',
+      date: randDay(),
+      category: 'expense.utilities.electricity',
+      totalCents: -10000,
+      recurs: true,
+      recurrenceType: 'monthly',
+      recurrenceRule: new RRule({
+        freq: RRule.MONTHLY,
+        dtstart: currentDate,
+        count: 3,
+      }),
+    },
+    {
+      name: 'Internet',
+      date: randDay(),
+      category: 'expense.utilities.internet',
+      totalCents: -8000,
+      recurs: true,
+      recurrenceType: 'monthly',
+      recurrenceRule: new RRule({
+        freq: RRule.MONTHLY,
+        dtstart: currentDate,
+        count: 3,
       }),
     },
   ];

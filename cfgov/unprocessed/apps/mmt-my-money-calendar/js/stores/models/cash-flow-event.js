@@ -6,7 +6,7 @@ import EventEmitter from 'eventemitter3';
 import { asyncComputed } from 'computed-async-mobx';
 import logger from '../../lib/logger';
 import dbPromise from '../../lib/database';
-import { transform } from '../../lib/object-helpers';
+import { Categories } from '../models/categories';
 
 export default class CashFlowEvent {
   @observable originalEventID;
@@ -235,6 +235,14 @@ export default class CashFlowEvent {
     return rrulestr(this.rruleStr);
   }
 
+  @computed get categoryDetails() {
+    return Categories.get(this.category);
+  }
+
+  @computed get absoluteCents() {
+    return Math.abs(this.totalCents);
+  }
+
   set recurrenceRule(rule) {
     if (!rule || typeof rule.toString !== 'function') {
       this.rruleStr = '';
@@ -425,5 +433,13 @@ export default class CashFlowEvent {
     let cursor = await index.openCursor(range, 'next');
 
     return this.constructor.getAllFromCursor(cursor);
+  }
+
+  isGreaterThan(otherEvent) {
+    return this.absoluteCents > otherEvent.absoluteCents;
+  }
+
+  isLessThan(otherEvent) {
+    return this.absoluteCents < otherEvent.absoluteCents;
   }
 }
