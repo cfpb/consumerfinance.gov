@@ -44,8 +44,7 @@ try:
     from django.urls import include, re_path
 except ImportError:
     from flags.urls import flagged_url as flagged_re_path
-    from django.conf.urls import include
-    from django.conf.urls import url as re_path
+    from django.conf.urls import include, url as re_path
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
