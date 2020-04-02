@@ -72,9 +72,16 @@
     "xdr": "0.5.3"
   },
   "devDependencies": {
+    "@wdio/cli": "6.0.12",
+    "@wdio/local-runner": "6.0.12",
+    "@wdio/mocha-framework": "6.0.12",
+    "@wdio/sauce-service": "6.0.12",
+    "@wdio/spec-reporter": "6.0.12",
+    "@wdio/sync": "6.0.12",
     "babel-jest": "24.9.0",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
+    "chromedriver": "80.0.1",
     "cucumber": "6.0.5",
     "gulp-eslint": "6.0.0",
     "jest": "24.9.0",
@@ -90,7 +97,9 @@
     "selenium-webdriver": "4.0.0-alpha.5",
     "snyk": "1.279.1",
     "through2": "3.0.1",
-    "wcag": "0.3.0"
+    "wcag": "0.3.0",
+    "wdio-chromedriver-service": "5.0.2",
+    "wdio-image-comparison-service": "1.12.2"
   },
   "resolutions": {
     "gulp-bless/bless/css": "github:cfpb/css"
@@ -101,7 +110,8 @@
     "postinstall": "yarn run enforce && node scripts/yarn/apps-install && ./scripts/check-npm-cache.sh",
     "test": "snyk test",
     "gulp": "gulp",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "webdriver": "wdio run wdio.conf.js"
   },
   "snyk": true
 }
