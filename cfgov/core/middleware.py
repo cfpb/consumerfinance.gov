@@ -25,7 +25,7 @@ def parse_links(html, encoding=None):
     # always want this content to be a string for our purposes.
     html_as_text = force_str(html, encoding=encoding)
 
-    # This call invokes Wagail-specific logic that converts references to
+    # This call invokes Wagtail-specific logic that converts references to
     # Wagtail pages, documents, and images to their proper link URLs.
     expanded_html = expand_db_html(html_as_text)
 
