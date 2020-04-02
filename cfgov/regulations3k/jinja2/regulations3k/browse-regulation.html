@@ -46,6 +46,10 @@
     {{ super() }}
 {%- endblock desc %}
 
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
 {% block preload %}
     {{ super() }}
     {% if next_section %}
