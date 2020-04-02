@@ -44,6 +44,7 @@ class Contact(models.Model):
     heading = models.CharField(verbose_name=('Heading'), max_length=255,
                                help_text=("The snippet heading"))
     body = RichTextField(blank=True)
+    body_shown_in_expandables = models.BooleanField(default=False)
 
     contact_info = StreamField([
         ('email', molecules.ContactEmail()),
@@ -55,6 +56,7 @@ class Contact(models.Model):
     panels = [
         FieldPanel('heading'),
         FieldPanel('body'),
+        FieldPanel('body_shown_in_expandables'),
         StreamFieldPanel('contact_info'),
     ]
 
