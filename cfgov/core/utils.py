@@ -193,7 +193,7 @@ def slugify_unique(context, value):
     If the context lacks a request, this function falls back to the default
     behavior of Django slugify:
 
-    https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.text.slugify
+    https://docs.djangoproject.com/en/stable/ref/utils/#django.utils.text.slugify
 
     >>> context = {}
     >>> slugify_unique(context, 'Some text')

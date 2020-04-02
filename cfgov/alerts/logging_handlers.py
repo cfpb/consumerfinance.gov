@@ -16,7 +16,7 @@ class CFGovErrorHandler(logging.Handler):
     Generated GitHub issues include stack trace and request information.
     Sensitive request POST parameters are filtered using this Django logic:
 
-    https://docs.djangoproject.com/en/1.11/howto/error-reporting/#filtering-sensitive-information
+    https://docs.djangoproject.com/en/stable/howto/error-reporting/#filtering-sensitive-information
     """
 
     def __init__(self):
