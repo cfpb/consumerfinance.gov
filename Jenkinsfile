@@ -11,9 +11,14 @@ pipeline {
     }
 
     environment {
+        APP_NAME = "cf-gov"
+        BASE_HOSTNAME = 'demo.cfpb.gov'
         IMAGE_REPO="cfpb/cfgov-python"
         IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
+        DOCKER_REGISTRY = 'dtr.cfpb.gov'
+        DOCKER_REGISTRY_URL = 'https://dtr.cfpb.gov/'
+        DOCKER_REGISTRY_ORG = 'development'
     }
 
     parameters {
@@ -38,6 +43,11 @@ pipeline {
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
+
+                    // Site name
+                    env.CFGOV_SITE_SCHEME = 'https'
+                    env.CFGOV_SITE_DOMAIN = "appops-${STACK_NAME}.${BASE_HOSTNAME}"
+                    env.CFGOV_SITE_URL = "${CFGOV_SITE_SCHEME}://${CFGOV_SITE_DOMAIN}"
                 }
                 sh 'env | sort'
             }
