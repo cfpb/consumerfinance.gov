@@ -2,6 +2,7 @@ from datetime import date
 
 from django.test import RequestFactory, TestCase
 from django.utils import timezone
+from django.utils.encoding import force_str
 
 from wagtail.core.models import Page
 
@@ -15,12 +16,6 @@ from jobmanager.models.panels import GradePanel
 from v1.models import SublandingPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
-
-
-try:
-    from django.utils.encoding import force_str
-except ImportError:
-    from django.utils.encoding import force_text as force_str
 
 
 def make_job_listing_page(title, close_date=None, grades=[], **kwargs):

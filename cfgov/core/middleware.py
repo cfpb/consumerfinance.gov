@@ -1,16 +1,11 @@
 import re
 
 from django.conf import settings
+from django.utils.encoding import force_str
 
 from wagtail.core.rich_text import expand_db_html
 
 from core.utils import add_link_markup, get_link_tags
-
-
-try:
-    from django.utils.encoding import force_str
-except ImportError:
-    from django.utils.encoding import force_text as force_str
 
 
 class DownstreamCacheControlMiddleware(object):

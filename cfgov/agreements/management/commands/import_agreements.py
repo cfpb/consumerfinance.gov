@@ -2,15 +2,10 @@ import os
 from zipfile import ZipFile
 
 from django.core.management.base import BaseCommand, CommandError
+from django.utils.encoding import force_str
 
 from agreements.management.commands import _util
 from agreements.models import Agreement, Issuer
-
-
-try:
-    from django.utils.encoding import force_str
-except ImportError:
-    from django.utils.encoding import force_text as force_str
 
 
 def empty_folder_test(zipfile, pdf_list):

@@ -1,16 +1,11 @@
 from django.db import models
 from django.db.models import Q
+from django.utils.encoding import force_str
 from django.utils.timezone import localdate
 
 from wagtail.core.models import Page
 
 from backports import csv
-
-
-try:
-    from django.utils.encoding import force_str
-except ImportError:
-    from django.utils.encoding import force_text as force_str
 
 
 class FeedbackQuerySet(models.QuerySet):

@@ -1,16 +1,11 @@
 import os
 
+from django.utils.encoding import force_str
 from django.utils.text import slugify
 
 import boto3
 
 from agreements.models import Issuer
-
-
-try:
-    from django.utils.encoding import force_str
-except ImportError:
-    from django.utils.encoding import force_text as force_str
 
 
 def s3_safe_key(path, prefix=''):
