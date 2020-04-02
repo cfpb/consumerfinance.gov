@@ -122,10 +122,10 @@ function Details() {
       {uiStore.weekHasNegativeBalance && (
         <div className={endBalanceClasses}>
           <Notification
-            message="You're in the red!"
+            message="You are going to be in the red!"
             variant="error"
             actionLink={
-              <Link to="/strategies" className="m-notification_button">
+              <Link to="/fix-it-strategies" className="m-notification_button">
                 Fix it
               </Link>
             }

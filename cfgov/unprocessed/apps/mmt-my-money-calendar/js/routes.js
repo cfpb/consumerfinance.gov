@@ -3,6 +3,7 @@ import Home from './views/home';
 import Calendar from './views/calendar/index';
 import AddEvent from './views/calendar/add';
 import BottomNav from './components/bottom-nav';
+import FixItStrategies from './views/fix-it-strategies';
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">
@@ -18,6 +19,10 @@ const Routes = () => (
 
         <Route path="/calendar/add">
           <AddEvent />
+        </Route>
+
+        <Route path="/fix-it-strategies">
+          <FixItStrategies />
         </Route>
       </Switch>
 

@@ -87,10 +87,10 @@ function seedCashFlowEvents() {
       }),
     },
     {
-      name: 'Internet',
+      name: 'Student Loan',
       date: randDay(),
-      category: 'expense.utilities.internet',
-      totalCents: -8000,
+      category: 'expense.debt.studentLoan',
+      totalCents: -30000,
       recurs: true,
       recurrenceType: 'monthly',
       recurrenceRule: new RRule({
