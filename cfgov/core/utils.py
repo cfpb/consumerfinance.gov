@@ -14,6 +14,7 @@ try:
 except ImportError:
     from django.core.urlresolvers import reverse
 
+
 NON_GOV_LINKS = re.compile(
     r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 )

@@ -18,7 +18,7 @@ def register_admin_urls():
     urls = [
         re_path(r'^permissions/', include((
             'permissions_viewer.urls',
-            'permissions_viewer'),
+            'permissions'),
             namespace='permissions')
         ),
     ]
