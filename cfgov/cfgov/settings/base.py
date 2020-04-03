@@ -152,13 +152,13 @@ else:
         'wagtail.contrib.redirects.middleware.RedirectMiddleware',
     )
 
-CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
+CSP_MIDDLEWARE = ('csp.middleware.CSPMiddleware', )
 
 if ('CSP_ENFORCE' in os.environ):
     if django.VERSION < (2, 0):
-        MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+        MIDDLEWARE_CLASSES += CSP_MIDDLEWARE
     else:
-        MIDDLEWARE += CSP_MIDDLEWARE_CLASSES
+        MIDDLEWARE += CSP_MIDDLEWARE
 
 ROOT_URLCONF = 'cfgov.urls'
 

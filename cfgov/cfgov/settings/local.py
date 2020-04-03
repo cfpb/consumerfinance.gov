@@ -61,10 +61,10 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
 
     if django.VERSION < (2, 0):
         MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-        MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+        MIDDLEWARE_CLASSES += CSP_MIDDLEWARE
     else:
         MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-        MIDDLEWARE += CSP_MIDDLEWARE_CLASSES
+        MIDDLEWARE += CSP_MIDDLEWARE
 
     DEBUG_TOOLBAR_PANELS = [
         'debug_toolbar.panels.versions.VersionsPanel',
