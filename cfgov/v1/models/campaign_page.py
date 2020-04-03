@@ -1,16 +1,12 @@
 from wagtail.admin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.core.blocks import StreamBlock, StructBlock
+from wagtail.core.blocks import StreamBlock
 from wagtail.core.fields import StreamField
 from wagtail.core.models import PageManager
-from wagtail.search import index
 
-from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
-from v1.util.filterable_list import FilterableListMixin
 
 
 class CampaignHeader(StreamBlock):
