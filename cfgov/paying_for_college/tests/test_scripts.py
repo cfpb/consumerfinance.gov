@@ -76,11 +76,6 @@ class ProgamDataTest(django.test.TestCase):
     def test_single_school_failure(self):
         (flist, msg) = update_colleges.update(single_school=99999)
         self.assertIn("Could not find", msg)
-        # if single_school:
-        #     if not base_query.filter(pk=single_school).exists():
-        #         no_school_msg = "Could not find school with ID {}".format(
-        #             single_school)
-        #         return (no_data, no_school_msg)
 
     def test_program_data_check_passes(self):
         self.assertTrue(
