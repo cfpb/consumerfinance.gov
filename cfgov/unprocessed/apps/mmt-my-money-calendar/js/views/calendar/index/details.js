@@ -10,11 +10,13 @@ import { Notification } from '../../../components/notification';
 import { SlideListItem } from '../../../components/slide-list';
 import ModalDialog from '../../../components/modal-dialog';
 
-import pencil from '@cfpb/cfpb-icons/src/icons/pencil.svg';
-import deleteIcon from '@cfpb/cfpb-icons/src/icons/delete.svg';
-import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
-import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
-import dragHandle from '@cfpb/cfpb-icons/src/icons/hamburger.svg';
+import {
+  delete as deleteIcon,
+  hamburger as dragHandle,
+  arrowRight,
+  arrowLeft,
+  pencil,
+} from '../../../lib/icons';
 
 const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
@@ -125,7 +127,7 @@ function Details() {
             message="You are going to be in the red!"
             variant="error"
             actionLink={
-              <Link to="/fix-it-strategies" className="m-notification_button">
+              <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className="m-notification_button">
                 Fix it
               </Link>
             }

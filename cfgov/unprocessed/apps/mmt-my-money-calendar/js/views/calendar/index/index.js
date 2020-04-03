@@ -10,9 +10,6 @@ import Button, { ButtonLink } from '../../../components/button';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
 
-import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
-import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
-
 const ifDevelopment = (fn) => {
   if (process.env.NODE_ENV !== 'development') return null;
   return fn();

@@ -2,8 +2,7 @@ import clsx from 'clsx';
 import { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
-import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
+import { arrowLeft, arrowRight } from '../lib/icons';
 
 const ButtonIcon = ({ side = 'left', icon }) => (
   <span className={`a-btn_icon a-btn_icon__on-${side}`} dangerouslySetInnerHTML={{__html: icon}}></span>

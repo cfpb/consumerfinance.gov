@@ -3,10 +3,7 @@ import { observer } from 'mobx-react';
 import { NavLink } from 'react-router-dom';
 import { useStore } from '../stores';
 
-import calendar from '@cfpb/cfpb-icons/src/icons/calendar.svg';
-import add from '@cfpb/cfpb-icons/src/icons/add.svg';
-import lightbulb from '@cfpb/cfpb-icons/src/icons/lightbulb.svg';
-import menu from '@cfpb/cfpb-icons/src/icons/menu.svg';
+import { calendar, add, idea, menu } from '../lib/icons';
 
 const NavItem = ({ href, icon, label, ...params }) => (
   <li className="bottom-nav__item">
@@ -27,7 +24,7 @@ function BottomNav() {
         <ul className="bottom-nav__items">
           <NavItem href="/calendar" icon={calendar} exact label="Calendar" />
           <NavItem href="/calendar/add/income" icon={add} label="Income / Expense" />
-          <NavItem href="/strategies" icon={lightbulb} label="Strategies" />
+          <NavItem href="/strategies" icon={idea} label="Strategies" />
           <NavItem href="/more" icon={menu} label="More" />
         </ul>
       </nav>

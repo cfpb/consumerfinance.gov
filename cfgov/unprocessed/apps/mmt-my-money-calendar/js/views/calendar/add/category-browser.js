@@ -1,5 +1,3 @@
-import clsx from 'clsx';
-import { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Link, NavLink, useParams, useHistory, withRouter } from 'react-router-dom';
 import { useStore } from '../../../stores';
@@ -7,9 +5,7 @@ import { Categories } from '../../../stores/models/categories';
 import { useLogger } from '../../../lib/logger';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { BackButton } from '../../../components/button';
-import dotProp from 'dot-prop';
 
-import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
 import iconPlaceholder from '../../../../img/icon-placeholder.png';
 
 const CategoryLink = ({ slug, label, icon = '' }) => <li key={slug}></li>;
