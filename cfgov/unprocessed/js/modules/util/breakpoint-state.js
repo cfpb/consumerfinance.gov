@@ -21,7 +21,8 @@ function _inBreakpointRange( breakpointRange, width ) {
   let breakpointRangeMax = breakpointRange.max;
 
   // Whether the user has set a custom size for the font in their browser.
-  const useEmsConversation = _getBodyBaseFontSize() === 16 ? false : true;
+  const useEmsConversation = isNaN( _getBodyBaseFontSize() ) ||
+                             _getBodyBaseFontSize() === 16 ? false : true;
   if ( useEmsConversation ) {
     /* 16 = base font size without adjustments.
        The CSS converts breakpoints to ems, which then change the width of the
