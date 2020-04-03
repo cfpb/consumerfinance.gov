@@ -744,6 +744,11 @@ body {
                 }
             }
 
+            &-list ul {
+                display: table;
+                width: 100%;
+            }
+
             &-list-group {
                 margin-bottom: 0;
                 // Truncate the expanded menu to this element.
@@ -751,8 +756,7 @@ body {
             }
 
             &-item {
-                display: inline-block;
-                margin-right: 0;
+                display: table-cell;
 
                 .no-js &:hover {
                     .o-mega-menu_content-2 {
@@ -766,6 +770,8 @@ body {
             }
 
             &-link {
+                display: inline-block;
+
                 position: relative;
                 z-index: 30;
                 padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -1060,12 +1066,6 @@ body {
         &:after {
             left: -@grid_gutter-width;
             width: @menu_max_width_px + ( @grid_gutter-width * 2 );
-        }
-
-        &_content-1 {
-            &-item {
-                margin-right: @grid_gutter-width * 2;
-            }
         }
 
         &_content-2 {
