@@ -19,7 +19,7 @@ exports.config = {
        directory is where your package.json resides, so `wdio` will be called from there.
         */
   specs: [
-    './test/webdriver/**/*.js'
+    './test/visual-tests/specs/**/*.js'
   ],
   // Patterns to exclude.
   exclude: [
@@ -69,11 +69,6 @@ exports.config = {
       browserName: 'firefox',
       browserVersion: 'latest',
       platformName: 'Windows 10'
-    },
-    {
-      browserName: 'internet explorer',
-      browserVersion: '10.0',
-      platformName: 'Windows 7'
     }
   ],
 
@@ -84,7 +79,7 @@ exports.config = {
        Define all options that are relevant for the WebdriverIO instance here
 
        Level of logging verbosity: trace | debug | info | warn | error | silent */
-  logLevel: 'info',
+  logLevel: 'warn',
 
   /*
        Set specific log levels per logger
@@ -144,9 +139,9 @@ exports.config = {
       // The options
       {
         // Some options, see the docs for more
-        baselineFolder: './test/visual-tests/baseline/',
+        baselineFolder: './test/visual-tests/screenshots/baseline/',
         formatImageName: '{tag}-{logName}-{width}x{height}',
-        screenshotPath: './test/visual-tests/tmp-screenshots/',
+        screenshotPath: './test/visual-tests/screenshots/tmp-screenshots/',
         savePerInstance: true,
         autoSaveBaseline: true,
         blockOutStatusBar: true,

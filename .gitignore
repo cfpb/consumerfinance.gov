@@ -124,7 +124,7 @@ nosetests.xml
 coverage.xml
 .snyk
 protractorFailuresReport/
-test/visual-tests/tmp-screenshots/
+test/visual-tests/screenshots/tmp-screenshots/
 
 # Temp data backups #
 ###############

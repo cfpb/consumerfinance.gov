@@ -111,7 +111,7 @@
     "test": "snyk test",
     "gulp": "gulp",
     "watch": "gulp watch",
-    "webdriver": "wdio run wdio.conf.js"
+    "webdriver": ": ${SAUCE_USERNAME?\"You need to define SAUCE_USERNAME and SAUCE_ACCESS_KEY env variables \"} && wdio run webdriver.conf.js"
   },
   "snyk": true
 }
