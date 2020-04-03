@@ -69,11 +69,15 @@ pipeline {
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
             }
         }
-
+        
         stage('Push Image') {
+            // Push image only on master branch or deploy is set to true
             when {
-                expression { return params.DEPLOY }
-            } 
+                anyOf { 
+                    branch 'master'
+                    expression { return params.DEPLOY }
+                }
+            }
             steps {
                 script {
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
@@ -88,8 +92,12 @@ pipeline {
         }
 
         stage('Deploy Stack') {
+            // Deploys only on master branch or deploy is set to true
             when {
-                expression { return params.DEPLOY }
+                anyOf { 
+                    branch 'master'
+                    expression { return params.DEPLOY }
+                }
             } 
             steps {
                 script {
