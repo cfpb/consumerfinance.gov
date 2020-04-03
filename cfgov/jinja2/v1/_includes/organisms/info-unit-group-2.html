@@ -58,7 +58,7 @@
     </{{ value.heading.level }}>
 {% endif -%}
 
-{%- if not (value.intro | richtext_isempty) %}
+{%- if value.intro and not ( value.intro | richtext_isempty ) %}
     {{ value.intro | safe }}
 {%- endif %}
 
