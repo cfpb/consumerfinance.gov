@@ -188,6 +188,14 @@ class Hero(blocks.StructBlock):
             'vertically off the top and bottom of the hero space.')
     )
 
+    is_jumbo = blocks.BooleanBlock(
+        label="Jumbo",
+        required=False,
+        help_text=mark_safe(
+            '<b>Only permitted on CampaignPage templates.</b> Select if you '
+            'want the hero to be bigger than our standard hero.')
+    )
+
     class Meta:
         icon = 'image'
         template = '_includes/molecules/hero.html'

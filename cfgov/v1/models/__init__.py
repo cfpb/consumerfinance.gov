@@ -11,6 +11,7 @@ from v1.models.browse_filterable_page import (
     BrowseFilterablePage, EventArchivePage, NewsroomLandingPage
 )
 from v1.models.browse_page import BrowsePage
+from v1.models.campaign_page import CampaignPage
 from v1.models.caching import CDNHistory
 from v1.models.feedback import Feedback
 from v1.models.home_page import HomePage
