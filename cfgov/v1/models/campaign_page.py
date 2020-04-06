@@ -11,11 +11,13 @@ from v1.models.base import CFGOVPage
 
 class CampaignHeader(StreamBlock):
     hero = molecules.Hero()
+    jumbo_hero = molecules.JumboHero()
     features = organisms.InfoUnitGroup()
 
     class Meta:
         block_counts = {
             'hero': {'max_num': 1},
+            'jumbo_hero': {'max_num': 1},
             'features': {'max_num': 1},
         }
 
