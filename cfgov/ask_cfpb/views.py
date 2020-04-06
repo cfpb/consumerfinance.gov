@@ -6,18 +6,13 @@ from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
 from haystack.query import SearchQuerySet
 
+from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
 from ask_cfpb.models import AnswerPage, AnswerResultsPage, AskSearch
-
-
-try:
-    from wagtail.core.models import Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Site
 
 
 def annotate_links(answer_text):

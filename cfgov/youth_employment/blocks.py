@@ -1,7 +1,4 @@
-try:
-    from wagtail.core import blocks
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore import blocks
+from wagtail.core import blocks
 
 
 class YESChecklistItem(blocks.StructBlock):

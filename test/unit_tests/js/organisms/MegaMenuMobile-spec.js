@@ -17,7 +17,7 @@ const HTML_SNIPPET = `
     <div class="o-mega-menu_content o-mega-menu_content-1 u-hidden-overflow u-move-transition u-move-to-origin" aria-expanded="false" data-js-hook="behavior_flyout-menu_content">
         <div class="o-mega-menu_content-wrapper o-mega-menu_content-1-wrapper ">
 
-            <div class="o-mega-menu_content-grid o-mega-menu_content-1-grid o-mega-menu_content-1-grid__three-col">
+            <div class="o-mega-menu_content-grid o-mega-menu_content-1-grid">
 
                 <div class="o-mega-menu_content-lists o-mega-menu_content-1-lists ">
 
@@ -49,7 +49,7 @@ const HTML_SNIPPET = `
                                                 Back
                                             </button>
 
-                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid o-mega-menu_content-2-grid__three-col">
+                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid">
                                                 <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview ">
                                                     <a class="u-link__disabled
                                                               o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link
@@ -169,7 +169,7 @@ const HTML_SNIPPET = `
                                                 Back
                                             </button>
 
-                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid o-mega-menu_content-2-grid__three-col">
+                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid">
 
                                                 <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview ">
                                                     <a class="o-mega-menu_content-overview-link
@@ -244,7 +244,7 @@ const HTML_SNIPPET = `
                                                 Back
                                             </button>
 
-                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid o-mega-menu_content-2-grid__three-col">
+                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid">
 
                                                 <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview ">
                                                     <a class="o-mega-menu_content-overview-link
@@ -337,7 +337,7 @@ const HTML_SNIPPET = `
                                                                                 Back
                                                                             </button>
 
-                                                                            <div class="o-mega-menu_content-grid o-mega-menu_content-3-grid o-mega-menu_content-3-grid__three-col">
+                                                                            <div class="o-mega-menu_content-grid o-mega-menu_content-3-grid">
 
                                                                                 <span class="o-mega-menu_content-overview o-mega-menu_content-3-overview ">
                                                                                     <a class="o-mega-menu_content-overview-link

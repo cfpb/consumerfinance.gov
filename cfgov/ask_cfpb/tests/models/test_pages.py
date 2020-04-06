@@ -13,6 +13,7 @@ from django.utils import timezone, translation
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
 
+from wagtail.core.blocks import StreamValue
 from wagtail.tests.utils import WagtailTestUtils
 
 from model_mommy import mommy
@@ -36,12 +37,6 @@ from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import (
     get_free_path, get_or_create_page, set_stream_data
 )
-
-
-try:
-    from wagtail.core.blocks import StreamValue
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.blocks import StreamValue
 
 
 html_parser = HTMLParser()
