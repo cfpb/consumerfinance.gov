@@ -1,6 +1,6 @@
 import Chart from './Chart';
 
-let idLink, perCapBtn, rawBtn;
+let perCapBtn, rawBtn;
 
 /**
  * Wrapper function around the chart cleanup and chart initialization
@@ -26,26 +26,18 @@ function start( isPerCapita ) {
  * main entrypoint into landing map page, init the buttons, kick off map
  */
 function init() {
-  idLink = document.getElementById( 'all-results' );
   perCapBtn = document.getElementsByClassName( 'capita' )[0];
   rawBtn = document.getElementsByClassName( 'raw' )[0];
 
   perCapBtn.onclick = () => {
     perCapBtn.classList.add( 'selected' );
     rawBtn.classList.remove( 'selected' );
-    let link = idLink.getAttribute( 'href' );
-    link = link.replace( 'None', 'Per%201000%20pop.' );
-    idLink.setAttribute( 'href', link );
     start( true );
   };
 
   rawBtn.onclick = () => {
     rawBtn.classList.add( 'selected' );
     perCapBtn.classList.remove( 'selected' );
-    let link = idLink.getAttribute( 'href' );
-    link = link.replace( 'Per%201000%20pop.', 'None' );
-    idLink.setAttribute( 'href', link );
-
     start( false );
   };
 
