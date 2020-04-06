@@ -14,10 +14,9 @@ def richtext_isempty(value):
     for the comparison.
     """
 
+    blank_values = [None, '', '<p></p>']
+
     return any([
-        value is None,
-        value == '',
-        value == '<p></p>',
-        hasattr(value, 'source') and value.source == '',
-        hasattr(value, 'source') and value.source == '<p></p>',
+        value in blank_values,
+        hasattr(value, 'source') and value.source in blank_values,
     ])
