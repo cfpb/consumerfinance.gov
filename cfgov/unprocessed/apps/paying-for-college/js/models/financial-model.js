@@ -138,8 +138,8 @@ const financialModel = {
   },
 
   /**
- * Import financial values from the schoolModel based on stateModel
- */
+   * Import financial values from the schoolModel based on stateModel
+   */
   updateModelFromSchoolModel: () => {
     const rate = getStateValue( 'programRate' );
     const type = getStateValue( 'programType' );
