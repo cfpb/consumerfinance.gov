@@ -747,6 +747,9 @@ body {
             &-list ul {
                 display: table;
                 width: 100%;
+
+                // Constrain the menu spacing.
+                max-width: unit( 1000px / @base-font-size-px, em );
             }
 
             &-list-group {
