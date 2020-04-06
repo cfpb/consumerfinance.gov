@@ -1,6 +1,7 @@
 
 'use strict';
 
+
 /*
  *  TableBlock HansonTable bridge
  *
@@ -94,6 +95,7 @@
 
                     instance.deselectCell();
                     modalDom = showModal();
+                    console.log(initialCellValue);
                     richTextEditor = _createRichTextEditor( initialCellValue );
                     modalDom.on( 'save-btn:clicked', function() {
                         instance.setDataAtCell( cellProperties.row, cellProperties.col, richTextEditor.html() );
@@ -495,7 +497,7 @@
                                         '</div>',
                                     '</header>',
                                     '<div class="row active nice-padding struct-block object">',
-                                        '<input id="table-block-editor" maxlength="255" name="title" type="text">',
+                                        '<input id="table-block-editor" maxlength="255" name="title" type="text" value="null" data-draftail-input>',
                                     '</div><br>',
                                     '<div class="row active nice-padding m-t-10">',
                                         '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save</button>',
@@ -540,76 +542,16 @@
     function _createRichTextEditor( initialValue ) {
         var id = 'table-block-editor'
         var input = $( '#' + id );
-        var richText = $(
-            '<div class="richtext halloeditor" data-hallo-editor></div>'
-        ).html( initialValue );
-        var removeStylingPending = false;
+        console.log(initialValue)
+        // input.attr('value', '{}')
 
-        richText.insertBefore( input );
-        input.hide();
+        var richText = window.draftail.initEditor(
+            '#' + id,
+            {},
+            document.currentScript
+        );
 
-        function removeStyling() {
-            /* Strip the 'style' attribute from spans that have no other attributes.
-            (we don't remove the span entirely as that messes with the cursor position,
-            and spans will be removed anyway by our whitelisting)
-            */
-            $('span[style]', richText).filter(function() {
-                return this.attributes.length === 1;
-            }).removeAttr('style');
-            removeStylingPending = false;
-        }
-
-        /* Workaround for faulty change-detection in hallo */
-        function setModified() {
-            var hallo = richText.data( 'IKS-hallo' );
-            if ( hallo ) {
-                hallo.setModified();
-            }
-        }
-
-        var closestObj = input.closest( '.object' );
-
-
-        richText.hallo( {
-            toolbar: 'halloToolbarFixed',
-            toolbarCssClass: ( closestObj.hasClass( 'full' ) ) ? 'full' : '',
-            plugins: {
-                "halloformat": {},
-                "halloheadings": {},
-                "hallowagtaillink": {},
-                "hallowagtaildoclink": {},
-                "hallolists": {},
-                "halloreundo": {},
-            },
-            editable: true,
-        } ).on( 'hallomodified', function( event, data ) {
-            input.val( data.content );
-            if ( !removeStylingPending ) {
-                setTimeout( removeStyling, 100 );
-                removeStylingPending = true;
-            }
-        } ).on( 'paste drop', function( event, data ) {
-            setTimeout(function() {
-                removeStyling();
-                setModified();
-            }, 1);
-        /* Animate the fields open when you click into them. */
-        } ).on( 'halloactivated', function( event, data ) {
-            $( event.target ).addClass( 'expanded', 200, function(e) {
-                /* Hallo's toolbar will reposition itself on the scroll event.
-                This is useful since animating the fields can cause it to be
-                positioned badly initially. */
-                $( window ).trigger( 'scroll' );
-            } );
-        } ).on( 'hallodeactivated', function( event, data ) {
-            $( window ).trigger( 'scroll' );
-        } );
-
-        window.setTimeout( function() {
-            richText.focus();
-        }, 500 );
-
-        setupLinkTooltips( richText );
+        // input.hide();
 
         return richText;
     }
