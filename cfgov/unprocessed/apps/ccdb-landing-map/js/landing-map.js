@@ -8,8 +8,8 @@ let perCapBtn, rawBtn;
  */
 function start( isPerCapita ) {
   const el = document.getElementById( 'landing-map' );
-  const elements = el.querySelectorAll( '*' )
-  for ( let i = 0; i< elements.length; i++ ) {
+  const elements = el.querySelectorAll( '*' );
+  for ( let i = 0; i < elements.length; i++ ) {
     elements[i].remove();
   }
 
