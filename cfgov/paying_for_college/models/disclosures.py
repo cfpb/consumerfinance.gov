@@ -45,7 +45,8 @@ HIGHEST_DEGREES = {  # highest-awarded values from Ed API and our CSV spec
     '4': "Graduate degree"
 }
 
-LEVELS = {  # Dept. of Ed classification of post-secondary degree levels
+# Legacy Dept. of Ed classifications of post-secondary degree levels
+LEVELS = {
     '1': "Program of less than 1 academic year",
     '2': "Program of at least 1 but less than 2 academic years",
     '3': "Associate's degree",
@@ -57,6 +58,18 @@ LEVELS = {  # Dept. of Ed classification of post-secondary degree levels
     '17': "Doctor's degree-research/scholarship",
     '18': "Doctor's degree-professional practice",
     '19': "Doctor's degree-other"
+}
+
+# Dept. of Ed program degree levels specific to new program data in 2019
+PROGRAM_LEVELS = {
+    1: "Certificate",
+    2: "Associate's degree",
+    3: "Bachelor's degree",
+    4: "Post-baccalaureate certificate",
+    5: "Master's degree",
+    6: "Doctoral degree",
+    7: "First professional degree",
+    8: "Graduate/professional certificate",
 }
 
 NOTIFICATION_TEMPLATE = Template("""Disclosure notification for offer ID $oid\n\
@@ -610,10 +623,11 @@ class Program(models.Model):
     """
     DEBT_NOTE = "TITLEIV_DEBT + PRIVATE_DEBT + INSTITUTIONAL_DEBT"
     institution = models.ForeignKey(School)
-    program_name = models.CharField(max_length=255)
     accreditor = models.CharField(max_length=255, blank=True)
-    level = models.CharField(max_length=255, blank=True)
+    program_name = models.CharField(max_length=255)
     program_code = models.CharField(max_length=255, blank=True)
+    level = models.CharField(max_length=255, blank=True)
+    level_code = models.CharField(max_length=255, blank=True)
     campus = models.CharField(max_length=255, blank=True)
     cip_code = models.CharField(max_length=255, blank=True)
     soc_codes = models.CharField(max_length=255, blank=True)
@@ -634,6 +648,9 @@ class Program(models.Model):
         blank=True, null=True, help_text=DEBT_NOTE)
     median_student_loan_completers = models.IntegerField(
         blank=True, null=True, help_text=DEBT_NOTE)
+    median_monthly_debt = models.IntegerField(
+        blank=True, null=True,
+        help_text="MEDIAN MONTHLY PAYMENT FOR A 10-YEAR LOAN")
     default_rate = models.DecimalField(
         blank=True, null=True, max_digits=5, decimal_places=2)
     salary = models.IntegerField(
@@ -683,9 +700,10 @@ class Program(models.Model):
             'institutionalDebt': self.institutional_debt,
             'jobNote': self.job_note,
             'jobRate': "{0}".format(self.job_rate),
-            'level': self.get_level(),
-            'levelCode': self.level,
+            'level': self.level,
+            'levelCode': self.level_code,
             'meanStudentLoanCompleters': self.mean_student_loan_completers,
+            'medianMonthlyDebt': self.median_monthly_debt,
             'medianStudentLoanCompleters': self.median_student_loan_completers,
             'privateDebt': self.private_debt,
             'programCode': self.program_code,
