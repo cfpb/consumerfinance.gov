@@ -88,20 +88,25 @@
 
                 RichTextEditor.prototype.beginEditing = function( event, tableCellIndex, tableCell ) {
                     var initialCellValue = this.instance.getValue();
+                    var cellValue = window.DraftJS.convertToRaw(
+                        window.DraftJS.convertFromHTML(initialCellValue)
+                    );
                     var cellProperties = this.cellProperties;
                     var modalDom;
                     var richTextEditor;
                     var instance = this.instance;
-
+                    
                     instance.deselectCell();
                     modalDom = showModal();
                     console.log(initialCellValue);
-                    richTextEditor = _createRichTextEditor( initialCellValue );
+                    richTextEditor = _createRichTextEditor( cellValue );
+
                     modalDom.on( 'save-btn:clicked', function() {
                         instance.setDataAtCell( cellProperties.row, cellProperties.col, richTextEditor.html() );
                         instance.render();
                         $( win ).resize();
                     } );
+
                 }
 
                 options.editor = RichTextEditor;
@@ -497,7 +502,7 @@
                                         '</div>',
                                     '</header>',
                                     '<div class="row active nice-padding struct-block object">',
-                                        '<input id="table-block-editor" maxlength="255" name="title" type="text" value="null" data-draftail-input>',
+                                        '<input id="table-block-editor" maxlength="255" name="title" type="text" value="" data-draftail-input>',
                                     '</div><br>',
                                     '<div class="row active nice-padding m-t-10">',
                                         '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save</button>',
@@ -541,9 +546,7 @@
      */
     function _createRichTextEditor( initialValue ) {
         var id = 'table-block-editor'
-        var input = $( '#' + id );
-        console.log(initialValue)
-        // input.attr('value', '{}')
+        $( '#' + id ).attr('value', JSON.stringify(initialValue));
 
         var richText = window.draftail.initEditor(
             '#' + id,
