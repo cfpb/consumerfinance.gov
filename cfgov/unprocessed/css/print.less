@@ -50,3 +50,40 @@
     padding-bottom: unit(30px / @base-font-size-px, em);
     border-bottom: 5px solid @black;
 }
+
+@media print {
+  @page {
+    margin: 2cm;
+  }
+
+  body, .content_main {
+    background: none !important;
+    color: black !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 12pt !important;
+  }
+
+  .content_wrapper:after,
+  .content__bleedbar:after {
+      left: 100% !important;
+  }
+
+  .content_wrapper, p {
+    max-width: 100% !important;
+  }
+
+  .o-header, .o-footer, .content_sidebar,
+  .o-feedback, .related-questions {
+    display: none !important;
+  }
+
+  a[href^=http]:after {
+    content: " at " attr(href);
+  }
+
+  a:not([href^=http]):after {
+    content: " at https://consumerfinace.gov" attr(href);
+  }
+}
