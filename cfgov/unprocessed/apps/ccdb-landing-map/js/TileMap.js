@@ -204,6 +204,7 @@ export function tooltipFormatter() {
  * Draw a legend on a chart.
  * @param {Object} chart A highchart chart.
  */
+// eslint-disable-next-line max-lines-per-function, require-jsdoc
 export function _drawLegend( chart ) {
   const bins = chart.options.bins;
   const marginTop = chart.margin[0] || 0;
