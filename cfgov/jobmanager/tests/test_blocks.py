@@ -2,7 +2,7 @@ from datetime import date
 
 from django.test import RequestFactory, TestCase
 from django.utils import timezone
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from wagtail.core.models import Page
 
@@ -98,7 +98,7 @@ class JobListingListTestCase(TestCase):
         set_stream_data(page, 'sidebar_breakout', [job_listing_list])
 
         request = RequestFactory().get('/')
-        rendered_html = force_text(page.serve(request).render().content)
+        rendered_html = force_str(page.serve(request).render().content)
         self.assertInHTML(
             ('<aside class="m-jobs-list" data-qa-hook="openings-section">'
              '<h3 class="short-desc">There are no current openings at this '

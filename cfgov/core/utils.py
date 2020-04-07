@@ -2,12 +2,17 @@ import re
 from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
 from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 NON_GOV_LINKS = re.compile(
@@ -189,7 +194,7 @@ def slugify_unique(context, value):
     If the context lacks a request, this function falls back to the default
     behavior of Django slugify:
 
-    https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.text.slugify
+    https://docs.djangoproject.com/en/stable/ref/utils/#django.utils.text.slugify
 
     >>> context = {}
     >>> slugify_unique(context, 'Some text')

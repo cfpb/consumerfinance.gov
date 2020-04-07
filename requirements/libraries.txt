@@ -10,7 +10,8 @@ django-flags==4.2.4
 django-haystack==2.7.0
 # django-js-asset is required by teachers-digital-platform
 django-js-asset==1.1.0
-django-localflavor==1.6.2
+# django-localflavor is required by django-college-costs-comparison
+django-localflavor==2.2
 # django-mptt is required by teachers-digital-platform
 django-mptt==0.9.0
 django-overextends==0.4.3

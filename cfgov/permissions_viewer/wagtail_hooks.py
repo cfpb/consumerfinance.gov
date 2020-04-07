@@ -1,5 +1,3 @@
-from django.conf.urls import include, url
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.admin.menu import MenuItem
@@ -7,14 +5,22 @@ from wagtail.core import hooks
 from wagtail.users.widgets import UserListingButton
 
 
+try:
+    from django.urls import include, re_path, reverse
+except ImportError:
+    from django.conf.urls import include, url as re_path
+    from django.core.urlresolvers import reverse
+
+
 @hooks.register('register_admin_urls')
 def register_admin_urls():
 
     urls = [
-        url(r'^permissions/',
-            include('permissions_viewer.urls',
-                    app_name='permissions_viewer',
-                    namespace='permissions')),
+        re_path(r'^permissions/', include((
+            'permissions_viewer.urls',
+            'permissions'),
+            namespace='permissions')
+        ),
     ]
     return urls
 

@@ -238,6 +238,11 @@ class RegModelTests(DjangoTestCase):
         for each in Subpart.objects.all():
             self.assertEqual(each.subpart_heading, '')
 
+    def test_type(self):
+        self.assertEqual(self.section_num15.subpart.type, 'Regulation Body')
+        self.assertEqual(self.section_alpha.subpart.type, 'Appendix')
+        self.assertEqual(self.section_interps.subpart.type, 'Interpretation')
+
     def test_effective_version_string_method(self):
         self.assertEqual(
             self.effective_version.__str__(),

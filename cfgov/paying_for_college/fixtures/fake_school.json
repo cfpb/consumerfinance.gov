@@ -1,0 +1,118 @@
+[
+{
+    "model": "paying_for_college.school",
+    "pk": 999999,
+    "fields": {
+        "ope6_id": null,
+        "ope8_id": null,
+        "settlement_school": "demo",
+        "contact": null,
+        "data_json": "{\"BOOKS\": \"1200\", \"OTHEROFFCAMPUS\": \"4420\", \"OTHERONCAMPUS\": \"4420\", \"OTHERWFAMILY\": \"3546\", \"ROOM\": null, \"ROOMBRDOFFCAMPUS\": \"9153\", \"ROOMBRDONCAMPUS\": \"9153\", \"TUITIONGRADINDIS\": \"5724\", \"TUITIONGRADINS\": \"5724\", \"TUITIONGRADOSS\": \"13068\", \"TUITIONUNDERINDIS\": \"6432\", \"ONCAMPUSAVAIL\": \"Yes\"}",
+        "city": "Example Town",
+        "state": "TX",
+        "zip5": "00000",
+        "enrollment": 30330,
+        "accreditor": "Southern Association of Colleges and Schools Commission on Colleges",
+        "ownership": "1",
+        "control": "Public",
+        "url": "example.com",
+        "degrees_predominant": "3",
+        "degrees_highest": "4",
+        "program_count": 23,
+        "program_most_popular": [
+            "Business, Management, Marketing, and Related Support Services",
+            "Engineering",
+            "Multi/Interdisciplinary Studies",
+            "Communication, Journalism, and Related Programs",
+            "Parks, Recreation, Leisure, and Fitness Studies",
+            "Family and Consumer Sciences/Human Sciences",
+            "Agriculture, Agriculture Operations, and Related Sciences",
+            "Biological and Biomedical Sciences",
+            "Social Sciences",
+            "Psychology",
+            "Liberal Arts and Sciences, General Studies and Humanities",
+            "Computer and Information Sciences and Support Services",
+            "Visual and Performing Arts",
+            "English Language and Literature/Letters",
+            "Architecture and Related Services",
+            "Physical Sciences",
+            "History",
+            "Mathematics and Statistics",
+            "Foreign Languages, Literatures, and Linguistics",
+            "Natural Resources and Conservation",
+            "Public Administration and Social Service Professions",
+            "Health Professions and Related Programs",
+            "Philosophy and Religious Studies"
+        ],
+        "main_campus": null,
+        "online_only": false,
+        "operating": true,
+        "under_investigation": false,
+        "KBYOSS": false,
+        "grad_rate_4yr": "0.597",
+        "grad_rate_lt4": null,
+        "grad_rate": "0.597",
+        "repay_3yr": "0.6509651700",
+        "repay_5yr": "0.7178258328",
+        "default_rate": "0.064",
+        "median_total_debt": "15500.0",
+        "median_monthly_debt": "234.97",
+        "median_annual_pay": 51400,
+        "median_annual_pay_6yr": 42200,
+        "avg_net_price": 17134,
+        "avg_net_price_slices": {
+            "0_30k": 12374,
+            "30k_48k": 12930,
+            "48k_75k": 16916,
+            "75k_110k": 20533,
+            "110k_plus": 21512
+        },
+        "tuition_out_of_state": 18652,
+        "tuition_in_state": 8860,
+        "offers_perkins": true,
+        "cohort_ranking_by_control": {
+            "grad_rate": {
+                "cohort_count": 1923,
+                "percentile_rank": 77
+            },
+            "repay_3yr": {
+                "cohort_count": 1653,
+                "percentile_rank": 84
+            },
+            "median_total_debt": {
+                "cohort_count": 1671,
+                "percentile_rank": 85
+            }
+        },
+        "cohort_ranking_by_highest_degree": {
+            "grad_rate": {
+                "cohort_count": 1609,
+                "percentile_rank": 66
+            },
+            "repay_3yr": {
+                "cohort_count": 1661,
+                "percentile_rank": 62
+            },
+            "median_total_debt": {
+                "cohort_count": 1702,
+                "percentile_rank": 46
+            }
+        },
+        "cohort_ranking_by_state": {
+            "grad_rate": {
+                "cohort_count": 333,
+                "percentile_rank": 59
+            },
+            "repay_3yr": {
+                "cohort_count": 310,
+                "percentile_rank": 93
+            },
+            "median_total_debt": {
+                "cohort_count": 326,
+                "percentile_rank": 87
+            }
+        },
+        "associate_transfer_rate": null
+    }
+}
+]
