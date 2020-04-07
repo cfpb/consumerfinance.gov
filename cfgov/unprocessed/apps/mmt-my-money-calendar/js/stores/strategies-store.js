@@ -1,10 +1,30 @@
 import { computed, action, observable } from 'mobx';
 import { compact } from '../lib/array-helpers';
 import logger from '../lib/logger';
+import { Categories } from './models/categories';
 
 const isPlural = (word) => word.endsWith('s');
 
 class StrategiesStore {
+  negativeStrategies = {
+    'expense.personal.emergencySavings': {
+      title: 'Save for Emergencies',
+      body: 'Saving helps reduce stress when the unexpected happens.',
+      link: {
+        href: 'https://www.consumerfinance.gov/about-us/blog/how-save-emergencies-and-future/',
+        text: 'How to save for emergencies and the future',
+      },
+    },
+    'expense.personal.healthcare': {
+      title: 'Choose a Health Care Plan That Fits Your Budget',
+      body: 'Health insurance can drastically reduce the costs of unforeseen medical bills.',
+      link: {
+        href: 'https://www.healthcare.gov/',
+        text: 'HealthCare.gov',
+      },
+    },
+  };
+
   fixItStrategies = {
     largestHousingExpense: [
       {
@@ -106,7 +126,18 @@ class StrategiesStore {
   }
 
   @computed get strategyResults() {
-    return this.analyzeStrategyEvents(this.eventStore.events);
+    const results = this.eventStore.eventCategories.map((catPath) => {
+      const { strategy } = Categories.get(catPath) || {};
+      return strategy;
+    });
+
+    for (const [catPath, strategy] of Object.entries(this.negativeStrategies)) {
+      if (!this.eventStore.eventCategories.includes(catPath)) {
+        results.push(strategy);
+      }
+    }
+
+    return compact(results);
   }
 
   analyzeFixItEvents(events) {
@@ -136,10 +167,6 @@ class StrategiesStore {
         largestAdHocExpense: undefined,
       }
     );
-  }
-
-  analyzeStrategyEvents(events) {
-    return [];
   }
 }
 

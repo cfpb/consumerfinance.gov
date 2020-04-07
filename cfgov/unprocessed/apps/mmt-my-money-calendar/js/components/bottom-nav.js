@@ -5,17 +5,18 @@ import { useStore } from '../stores';
 
 import { calendar, add, idea, menu } from '../lib/icons';
 
-const NavItem = ({ href, icon, label, ...params }) => (
+const NavItem = ({ href, icon, label, badge, disabled = false, ...params }) => (
   <li className="bottom-nav__item">
-    <NavLink className="bottom-nav__link" to={href} {...params}>
+    <NavLink className="bottom-nav__link" disabled={disabled} to={href} {...params}>
       <div className="bottom-nav__link-icon" dangerouslySetInnerHTML={{ __html: icon }} />
       <div className="bottom-nav__link-label">{label}</div>
+      {!!badge && <div className="bottom-nav__link-badge">{badge}</div>}
     </NavLink>
   </li>
 );
 
 function BottomNav() {
-  const { uiStore } = useStore();
+  const { uiStore, strategiesStore } = useStore();
   const classes = clsx('bottom-nav', uiStore.showBottomNav && 'bottom-nav--visible');
 
   return (

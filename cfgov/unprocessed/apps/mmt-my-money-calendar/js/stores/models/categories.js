@@ -8,7 +8,6 @@ export class CategoryTree {
     'restricted',
     'recurrenceTypes',
     'strategy',
-    'negativeStrategy',
     'hasBill',
   ];
 
@@ -21,6 +20,7 @@ export class CategoryTree {
   }
 
   get(path = '') {
+    if (!path) return this.all;
     const normalizedPath = path.replace(/\//g, '.');
     return dotProp.get(this.categories, normalizedPath);
   }
@@ -33,9 +33,6 @@ export class CategoryTree {
 
   hasSubcategories(category = {}) {
     return Object.keys(category).filter((key) => !this.constructor.internalProps.includes(key)).length > 0;
-  }
-
-  getDescendants(path = '') {
   }
 
   isChildOf(childName, parentName) {
@@ -83,7 +80,10 @@ export const Categories = new CategoryTree({
       strategy: {
         title: 'Sign Up for Direct Deposit',
         body: 'Direct deposit may help you to avoid fees and interest associated with Check Cashing.',
-        link: 'https://www.consumerfinance.gov/ask-cfpb/should-i-enroll-in-direct-deposit-en-1027/',
+        link:  {
+          href: 'https://www.consumerfinance.gov/ask-cfpb/should-i-enroll-in-direct-deposit-en-1027/',
+          text: 'Should I enroll in direct deposit?',
+        },
       },
     },
     benefits: {
@@ -94,7 +94,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Explore CFPB\'s Military Financial Resources',
           body: 'These tools, designed specifically for servicemembers, can help you manage financial challenges at every step of your military career.',
-          link: 'https://www.consumerfinance.gov/consumer-tools/military-financial-lifecycle/',
+          link: {
+            href: 'https://www.consumerfinance.gov/consumer-tools/military-financial-lifecycle/',
+            text: 'Navigating the Military Financial Lifecycle',
+          },
         },
       },
       disability: {
@@ -103,7 +106,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Explore the Focus on People with Disabilities Companion Guides',
           body: 'These guides contains tips, information, tools, and skill-building resources for people with disabilities and from organizations that serve the disability community.',
-          link: 'https://www.consumerfinance.gov/about-us/blog/new-financial-empowerment-tools-people-disabilities/',
+          link: {
+            href: 'https://www.consumerfinance.gov/about-us/blog/new-financial-empowerment-tools-people-disabilities/',
+            text: 'Focus on People with Disabilities Guides',
+          },
         },
       },
       socialSecurity: {
@@ -115,7 +121,10 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly'],
         strategy: {
           title: 'Explore CareerOneStop Job Training Opportunities',
-          link: 'https://www.careeronestop.org/localhelp/americanjobcenters/find-american-job-centers.aspx',
+          link: {
+            href: 'https://www.careeronestop.org/localhelp/americanjobcenters/find-american-job-centers.aspx',
+            text: 'Find your nearest American Job Center',
+          },
         },
       },
       tanf: {
@@ -144,7 +153,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Refinance your mortgage',
           body: 'Check with your mortgage lender to see if you qualify, then enter the new expense into the calendar to see how it affects your cash flow.',
-          link: 'https://www.consumerfinance.gov/owning-a-home/',
+          link: {
+            href: 'https://www.consumerfinance.gov/owning-a-home/',
+            text: 'Tools and resources for homebuyers',
+          },
         },
       },
       rent: {
@@ -206,6 +218,14 @@ export const Categories = new CategoryTree({
         name: 'Cable/Satellite',
         recurrenceTypes: ['monthly'],
         hasBill: true,
+        strategy: {
+          title: 'Consider Entertainment Alternatives',
+          body: 'Many cable providers offer multiple options for new and existing customers. Contact your provider and ask about lower-cost plans or consider a cheaper streaming service.',
+          link: {
+            href: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/',
+            text: 'Cutting Expenses (Your Money Your Goals)',
+          },
+        },
       },
       internet: {
         name: 'Internet',
@@ -235,7 +255,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Refinance your car loan',
           body: 'Check with your auto lender to see if you qualify, then enter the new expense into the calendar to see how it affects your cash flow.',
-          link: 'https://www.consumerfinance.gov/consumer-tools/auto-loans/',
+          link: {
+            href: 'https://www.consumerfinance.gov/consumer-tools/auto-loans/',
+            text: 'Car Loans',
+          },
         },
       },
       carMaintenance: {
@@ -301,21 +324,11 @@ export const Categories = new CategoryTree({
         name: 'Emergency Savings',
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
-        negativeStrategy: {
-          title: 'Save for Emergencies',
-          body: 'Saving helps reduce stress when the unexpected happens.',
-          link: 'https://www.consumerfinance.gov/about-us/blog/how-save-emergencies-and-future/',
-        }
       },
       healthcare: {
         name: 'Health Care',
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
-        negativeStrategy: {
-          title: 'Choose a Health Care Plan That Fits Your Budget',
-          body: 'Health insurance can drastically reduce the costs of unforeseen medical bills.',
-          link: 'https://www.healthcare.gov/',
-        },
       },
       subscriptions: {
         name: 'Subscriptions',
@@ -332,7 +345,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Consider Second-hand Shops',
           body: 'Buying clothes and accessorits through classifieds ads, thrift shops, and consignment stores are much more cost effective alternatives to retail.',
-          link: 'https://www.consumerfinance.gov/about-us/blog/track-your-spending-with-this-easy-tool/',
+          link: {
+            href: 'https://www.consumerfinance.gov/about-us/blog/track-your-spending-with-this-easy-tool/',
+            text: 'Track your spending with this easy tool',
+          },
         },
       },
       giving: {
@@ -342,7 +358,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Keep track of Your Donations',
           body: 'Your charitable donations my be tax deductible. Keep records and receipts of these exchanges to lower the cost of your annual taxes.',
-          link: 'https://www.irs.gov/charities-non-profits/charitable-contributions',
+          link: {
+            href: 'https://www.irs.gov/charities-non-profits/charitable-contributions',
+            text: 'Charitable Donations',
+          },
         },
       },
       education: {
@@ -357,8 +376,11 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Get Child Care assistance',
           body: 'There are a number of financial aid programs designed to help parents struggling with childcare costs. Enrolling in these programs could free more money in your budget.',
-          link: 'https://www.childcare.gov/consumer-education/get-help-paying-for-child-care'
-        }
+          link: {
+            href: 'https://www.childcare.gov/consumer-education/get-help-paying-for-child-care',
+            text: 'Get Help Paying for Childcare',
+          },
+        },
       },
       personalCare: {
         name: 'Personal Care/Cosmetics',
@@ -386,7 +408,10 @@ export const Categories = new CategoryTree({
       strategy: {
         title: 'Explore CFPB\'s Resources for Dealing With Debt',
         body: 'Whether you\'re about to receive a medical procedure or are having trouble paying your medical bills, there are things you can do to help keep medical debt in check.',
-        link: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/#dealing-with-debt',
+        link: {
+          href: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/#dealing-with-debt',
+          text: 'Dealing with Debt',
+        },
       },
       medicalBill: {
         name: 'Medical Bill',
@@ -395,7 +420,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Sign up for Medicaid and CHIP',
           body: 'Seek help with paying medical bills, because receiving timely medical care can help you maintain your earning potential.',
-          link: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/#dealing-with-debt',
+          link: {
+            href: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/#dealing-with-debt',
+            text: 'Avoiding Medical Debt',
+          },
         },
       },
       courtOrderedExpenses: {
@@ -420,8 +448,11 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Explore Repayment Options',
           body: 'You have choices when it comes to repaying student loans. Make sure you have the repayment plan that works best for you.',
-          link: 'https://www.consumerfinance.gov/paying-for-college/repay-student-debt/',
-        }
+          link: {
+            href: 'https://www.consumerfinance.gov/paying-for-college/repay-student-debt/',
+            text: 'Repay student debt',
+          },
+        },
       },
     },
   },

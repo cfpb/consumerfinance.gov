@@ -88,10 +88,17 @@ export default class CashFlowStore {
    * @type {Set<String>}
    */
   @computed get eventSignatures() {
-    const signatures = this.events
-      .filter(({ originalEventID }) => originalEventID)
-      .map(({ signature }) => signature);
+    const signatures = this.events.filter(({ originalEventID }) => originalEventID).map(({ signature }) => signature);
     return new Set(signatures);
+  }
+
+  @computed get eventCategories() {
+    return Object.keys(
+      this.events.reduce((result, { category }) => {
+        result[category] = true;
+        return result;
+      }, {})
+    );
   }
 
   earliestEventDate = asyncComputed(undefined, 50, async () => {
@@ -193,7 +200,7 @@ export default class CashFlowStore {
    *
    * @returns {undefined}
    */
-  loadEvents = flow(function*() {
+  loadEvents = flow(function* () {
     //console.profile('loadEvents');
     // Flows are asynchronous actions, structured as generator functions
     this.rootStore.setLoading();
@@ -226,7 +233,7 @@ export default class CashFlowStore {
    * @param {boolean} [updateRecurrences=false] - If event has recurrences, update their totals to match
    * @returns {undefined}
    */
-  saveEvent = flow(function*(params, updateRecurrences = false) {
+  saveEvent = flow(function* (params, updateRecurrences = false) {
     let event;
 
     if (params.id) {
@@ -241,8 +248,7 @@ export default class CashFlowStore {
     try {
       yield event.save();
 
-      if (!params.id)
-        this.events.push(event);
+      if (!params.id) this.events.push(event);
 
       if (updateRecurrences) {
         const recurrences = yield event.getAllRecurrences();
@@ -278,7 +284,7 @@ export default class CashFlowStore {
    * @param {Number} id - The event's ID property
    * @returns {undefined}
    */
-  deleteEvent = flow(function*(id, andRecurrences) {
+  deleteEvent = flow(function* (id, andRecurrences) {
     const event = this.eventsById.get(id);
     const recurrences = yield event.getAllRecurrences();
     const deletedIDs = [event.id];
@@ -300,7 +306,7 @@ export default class CashFlowStore {
     this.events = this.events.filter((e) => !deletedIDs.includes(e.id));
   });
 
-  createRecurrences = flow(function*(event) {
+  createRecurrences = flow(function* (event) {
     const copies = event.recurrenceDates.map(
       (dateTime) =>
         new CashFlowEvent({
