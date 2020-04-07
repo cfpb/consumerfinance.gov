@@ -270,10 +270,11 @@ class CFGOVPage(Page):
                     except ValueError:
                         streamfield_index = None
 
-                    try:
-                        form_module = streamfield[streamfield_index]
-                    except IndexError:
-                        form_module = None
+                    if streamfield_index is not None:
+                        try:
+                            form_module = streamfield[streamfield_index]
+                        except IndexError:
+                            form_module = None
 
         if form_module is None:
             return self._return_bad_post_response(request)
