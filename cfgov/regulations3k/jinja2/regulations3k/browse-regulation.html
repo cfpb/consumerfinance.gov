@@ -18,10 +18,11 @@
 {%- endblock title %}
 
 {% block desc -%}
+    {#- 'section' pages are ones that show the actual text of the regulation -#}
     {% if section -%}
-        {% if subpart_type_label == 'Appendix' -%}
+        {% if section.subpart.type == 'Appendix' -%}
             Appendix {{ section.label }}
-        {% elif subpart_type_label == 'Interpretation' %}
+        {% elif section.subpart.type == 'Interpretation' %}
             {#- section.label[7:] strips out the "Interp-" part of the label -#}
             The comment for {{ regulation.part_number }}.{{ section.label[7:] }}
         {% else -%}
@@ -38,9 +39,12 @@
         {% else -%}
             is part of {{ page.regulation }}.
         {% endif -%}
+    {#- 'versions' is the page that lists all versions of a regulation -#}
     {% elif versions -%}
         View the current, previous, and future versions of {{ page.regulation }}.
     {% endif -%}
+    {#- super() tacks on the regulaation's description from Wagtail for more
+    context and also takes care of the regulation's landing page -#}
     {{ super() }}
 {%- endblock desc %}
 

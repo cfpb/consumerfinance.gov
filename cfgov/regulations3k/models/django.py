@@ -173,6 +173,10 @@ class Subpart(models.Model):
         return self.title
 
     @property
+    def type(self):
+        return dict(Subpart.SUBPART_TYPE_CHOICES)[self.subpart_type]
+
+    @property
     def subpart_heading(self):
         """Keeping for now as possible hook into secondary nav"""
         return ''
