@@ -11,7 +11,7 @@ function start( isPerCapita ) {
   const elements = el.querySelectorAll( '*' );
   for ( let i = 0; i < elements.length; i++ ) {
     const node = elements[i];
-    node.parentNode.removeChild(node);
+    node.parentNode.removeChild( node );
   }
 
   const dataUrl = 'https://files.consumerfinance.gov/ccdb/hero-map-3y.json';
