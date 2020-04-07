@@ -9,4 +9,4 @@ def get_static_version():
     return '%s%s' % ('?ver=', settings.STATIC_VERSION)
 
 
-register.assignment_tag(get_static_version)
+register.simple_tag(get_static_version)
