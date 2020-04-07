@@ -1,5 +1,6 @@
 from .local import *
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
 TEST_RUNNER = os.environ.get('TEST_RUNNER', 'cfgov.test.TestRunner')
