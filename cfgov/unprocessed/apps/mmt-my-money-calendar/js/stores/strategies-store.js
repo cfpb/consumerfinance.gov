@@ -5,7 +5,7 @@ import logger from '../lib/logger';
 const isPlural = (word) => word.endsWith('s');
 
 class StrategiesStore {
-  strategies = {
+  fixItStrategies = {
     largestHousingExpense: [
       {
         categories: ['expense.housing.mortgage'],
@@ -82,7 +82,7 @@ class StrategiesStore {
 
   @computed get fixItWeekAnalysis() {
     if (this.eventStore.getBalanceForDate(this.uiStore.currentWeek.endOf('week')) > 0) return {};
-    return this.analyzeEvents(this.eventsForWeek);
+    return this.analyzeFixItEvents(this.eventsForWeek);
   }
 
   @computed get fixItResults() {
@@ -90,7 +90,7 @@ class StrategiesStore {
       Object.entries(this.fixItWeekAnalysis).map(([type, event]) => {
         if (!event) return;
 
-        const strategy = this.strategies[type].find((sgy) => sgy.categories.includes(event.category));
+        const strategy = this.fixItStrategies[type].find((sgy) => sgy.categories.includes(event.category));
 
         if (!strategy) return;
 
@@ -105,7 +105,11 @@ class StrategiesStore {
     );
   }
 
-  analyzeEvents(events) {
+  @computed get strategyResults() {
+    return this.analyzeStrategyEvents(this.eventStore.events);
+  }
+
+  analyzeFixItEvents(events) {
     return events.reduce(
       (results, event) => {
         if (/^expense\.housing/.test(event.category)) {
@@ -132,6 +136,10 @@ class StrategiesStore {
         largestAdHocExpense: undefined,
       }
     );
+  }
+
+  analyzeStrategyEvents(events) {
+    return [];
   }
 }
 
