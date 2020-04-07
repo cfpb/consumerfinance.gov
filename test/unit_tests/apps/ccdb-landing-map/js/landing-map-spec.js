@@ -6,7 +6,6 @@ jest.mock( '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js' 
 
 const HTML_SNIPPET = `
 <section id="chart-section" class="chart">
-    <a href="blah/foo?dataNormalization=None" id="all-results">All</a>
     <div id="landing-map"><div><span><a></a></span></div></div>
   <div class="per-capita m-btn-group">
     <p>Map Shading</p>
@@ -17,12 +16,11 @@ const HTML_SNIPPET = `
 `;
 
 describe( 'Landing Page App', () => {
-  let idLink, perCapBtn, rawBtn, linkAttr;
+  let perCapBtn, rawBtn;
 
   beforeEach( () => {
     Chart.mockClear();
     document.body.innerHTML = HTML_SNIPPET;
-    idLink = document.getElementById( 'all-results' );
     perCapBtn = document.getElementsByClassName( 'capita' )[0];
     rawBtn = document.getElementsByClassName( 'raw' )[0];
 
@@ -45,8 +43,6 @@ describe( 'Landing Page App', () => {
 
   it( 'should not throw any errors on init', () => {
     landingMap.init();
-    linkAttr = idLink.getAttribute( 'href' );
-    expect( linkAttr ).toBe( 'blah/foo?dataNormalization=None' );
     expect( perCapBtn.classList.contains( 'a-btn__disabled' ) ).toBeTruthy();
     expect( Chart ).toHaveBeenCalledTimes( 1 );
   } );
@@ -55,8 +51,6 @@ describe( 'Landing Page App', () => {
     it( 'switches classes and link when clicked', () => {
       landingMap.init();
       simulateEvent( 'click', perCapBtn );
-      linkAttr = idLink.getAttribute( 'href' );
-      expect( linkAttr ).toBe( 'blah/foo?dataNormalization=Per%201000%20pop.' );
       expect( rawBtn.classList.contains( 'selected' ) ).toBeFalsy();
       expect( perCapBtn.classList.contains( 'selected' ) ).toBeTruthy();
       expect( Chart ).toHaveBeenCalledTimes( 2 );
@@ -73,19 +67,13 @@ describe( 'Landing Page App', () => {
 
     it( 'switch classes and links when selected twice', () => {
       landingMap.init();
-      linkAttr = idLink.getAttribute( 'href' );
-      expect( linkAttr ).toBe( 'blah/foo?dataNormalization=None' );
       simulateEvent( 'click', perCapBtn );
-      linkAttr = idLink.getAttribute( 'href' );
       expect( rawBtn.classList.contains( 'selected' ) ).toBeFalsy();
       expect( perCapBtn.classList.contains( 'selected' ) ).toBeTruthy();
-      expect( linkAttr ).toBe( 'blah/foo?dataNormalization=Per%201000%20pop.' );
 
       simulateEvent( 'click', rawBtn );
-      linkAttr = idLink.getAttribute( 'href' );
       expect( rawBtn.classList.contains( 'selected' ) ).toBeTruthy();
       expect( perCapBtn.classList.contains( 'selected' ) ).toBeFalsy();
-      expect( linkAttr ).toBe( 'blah/foo?dataNormalization=None' );
 
       expect( Chart ).toHaveBeenCalledTimes( 3 );
     } );
