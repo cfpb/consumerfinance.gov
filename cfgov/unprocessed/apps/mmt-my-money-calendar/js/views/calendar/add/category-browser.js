@@ -17,14 +17,14 @@ function CategoryBrowser({ match }) {
   const subcategories = Categories.childrenOf(categoryPath);
   const pathSegments = categoryPath.split('.');
   const parentCategoryPath = pathSegments.slice(0, pathSegments.length - 1)
-  const backPath = parentCategoryPath.join('/');
+  const backPath = parentCategoryPath.length ? `/calendar/add/${parentCategoryPath.join('/')}` : '/calendar';
 
   useLogger(
     'categoryBrowser',
     (group) => {
       group.debug('Category browser category path: %O', categoryPath);
       group.debug('Category object: %O', category);
-      group.debug('Subcategory Options: %O', subcategories);
+      group.debug('Parent category path: %O', parentCategoryPath);
     },
     [categoryPath, category, subcategories]
   );
@@ -33,7 +33,7 @@ function CategoryBrowser({ match }) {
 
   return (
     <section className="category-browser">
-      <BackButton variant="secondary" onClick={() => history.goBack()}>Back</BackButton>
+      <BackButton variant="secondary" onClick={() => history.replace(backPath)}>Back</BackButton>
 
       <nav className="category-browser__tab-nav">
         <ul className="category-browser__tab-items">
