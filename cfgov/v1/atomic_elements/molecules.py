@@ -170,6 +170,8 @@ class AbstractHero(blocks.StructBlock):
     )
 
     class Meta:
+        template = '_includes/molecules/hero.html'
+        classname = 'block__flush-top block__flush-bottom'
         icon = 'image'
 
 
@@ -195,15 +197,15 @@ class Hero(AbstractHero):
             'vertically off the top and bottom of the hero space.')
     )
 
-    class Meta:
-        template = '_includes/molecules/hero.html'
-        classname = 'block__flush-top block__flush-bottom'
+
+class JumboHeroValue(blocks.StructValue):
+    def is_jumbo(self):
+        return True
 
 
 class JumboHero(AbstractHero):
     class Meta:
-        template = '_includes/molecules/jumbo-hero.html'
-        classname = 'block__flush-top block__flush-bottom'
+        value_class = JumboHeroValue
 
 
 class Notification(blocks.StructBlock):
