@@ -102,7 +102,7 @@
         }
 
         .m-global-eyebrow_actions {
-            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+            padding-top: unit( @grid_gutter-width / @base-font-size-px, rem );
             border-top: 1px solid @gray-40;
             margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
 
@@ -113,6 +113,20 @@
         .m-global-eyebrow_languages {
             display: block;
             padding-left: 0;
+        }
+
+        .m-global-eyebrow_phone {
+          border-top: 1px solid @gray-40;
+          padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+        }
+
+        .m-global-eyebrow_languages {
+          margin-bottom: 0;
+
+          .m-list_item {
+            margin-right: unit( @grid_gutter-width / @base-font-size-px, rem );
+            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, rem );
+          }
         }
     }
 }
