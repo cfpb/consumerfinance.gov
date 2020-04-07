@@ -20,9 +20,9 @@ jobs:
         # https://github.com/actions/example-services/blob/master/.github/workflows/postgres-service.yml
         image: postgres
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_USER: cfpb
+          POSTGRES_PASSWORD: cfpb
+          POSTGRES_DB: cfgov_test
         ports:
         - 5432:5432
         # needed because the postgres container does not provide a healthcheck
@@ -46,7 +46,6 @@ jobs:
           tox -e ${{ matrix.toxenv }}
         env: 
           TEST_RUNNER: cfgov.test.StdoutCapturingTestRunner 
-          TEST_DATABASE_URL: postgres://postgres:postgres@localhost/postgres
           CI_CHECK_MIGRATIONS: "./manage.py makemigrations --dry-run --check"
 
       - name: Prepare test coverage
