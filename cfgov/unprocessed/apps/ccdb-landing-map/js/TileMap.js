@@ -142,7 +142,11 @@ export function getColorByValue( value, bins ) {
 
 /* ----------------------------------------------------------------------------
    Highcharts callbacks */
-
+/**
+ * handles the click action for the tile map
+ * @param {boolean} isPerCapita determines if it is a percapita value
+ * @param {object} t the highchart element containing point, and other props
+ */
 export function clickHandler( isPerCapita, t ) {
   let capText = 'dataNormalization=';
   capText += isPerCapita ? 'Per%201000%20pop.' : 'None';

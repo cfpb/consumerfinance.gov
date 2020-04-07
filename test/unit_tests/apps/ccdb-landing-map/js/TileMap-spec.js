@@ -158,7 +158,7 @@ describe( 'Tile map', () => {
       }
     };
     sut.clickHandler( false, evt );
-    expect(window.location.assign).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=None&state=TX' );
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=None&state=TX' );
   } );
 
   it( 'navigates the url to per capita when clicked', () => {
@@ -170,7 +170,7 @@ describe( 'Tile map', () => {
       }
     };
     sut.clickHandler( true, evt );
-    expect( window.location.assign).toBeCalledWith('http://localhost/search/?dateInterval=3y&dataNormalization=Per%201000%20pop.&state=TX' );
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=Per%201000%20pop.&state=TX' );
   } );
 
   it( 'formats a map tile', () => {
