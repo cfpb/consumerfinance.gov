@@ -23,6 +23,8 @@
     justify-content: space-between;
     padding: 0;
     list-style: none;
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   &__item {
@@ -45,12 +47,25 @@
     height: 40px;
   }
 
+  &__link-badge {
+    font-size: 12px;
+    color: #fff;
+    background-color: @red;
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 8%;
+    right: 8%;
+  }
+
   &__link {
     color: @text;
     display: block;
     height: 100%;
     text-align: center;
     padding: .5rem;
+    position: relative;
 
     &:visited,
     &:active {

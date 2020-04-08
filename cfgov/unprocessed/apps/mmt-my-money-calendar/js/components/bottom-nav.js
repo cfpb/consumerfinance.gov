@@ -25,7 +25,7 @@ function BottomNav() {
         <ul className="bottom-nav__items">
           <NavItem href="/calendar" icon={calendar} exact label="Calendar" />
           <NavItem href="/calendar/add/income" icon={add} label="Income / Expense" />
-          <NavItem href="/strategies" icon={idea} label="Strategies" />
+          <NavItem href="/strategies" icon={idea} label="Strategies" badge={strategiesStore.strategyResults.length} />
           <NavItem href="/more" icon={menu} label="More" />
         </ul>
       </nav>
