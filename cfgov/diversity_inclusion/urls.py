@@ -1,23 +1,28 @@
-from django.conf.urls import url
 from django.views.generic import TemplateView
 
 from diversity_inclusion.views import GetAssessmentForm
 
 
+try:
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
+
+
 urlpatterns = [
-    url(
+    re_path(
         r'^voluntary-assessment-onboarding-form/$',
         GetAssessmentForm.as_view(),
         name='voluntary_assessment_form'
     ),
-    url(
+    re_path(
         r'^voluntary-assessment-onboarding-form/form-submitted/$',
         TemplateView.as_view(
             template_name='diversity_inclusion/form-submitted.html'
         ),
         name='form_submitted'
     ),
-    url(
+    re_path(
         r'^voluntary-assessment-onboarding-form/privacy-act-statement/$',
         TemplateView.as_view(
             template_name='diversity_inclusion/privacy.html'
