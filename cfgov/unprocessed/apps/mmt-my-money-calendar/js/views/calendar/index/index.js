@@ -6,14 +6,17 @@ import { useStore } from '../../../stores';
 import { useClickHandler, useClickConfirm } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
-import Button, { ButtonLink } from '../../../components/button';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
+
+import { arrowLeft, arrowRight } from '../../../lib/icons';
 
 const ifDevelopment = (fn) => {
   if (process.env.NODE_ENV !== 'development') return null;
   return fn();
 };
+
+const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
 const CalendarWeekRow = ({ days, selected }) => {
   const classes = clsx('calendar__row', selected && 'selected');
@@ -52,7 +55,21 @@ function Calendar() {
   return (
     <section className="calendar">
       <header className="calendar__header">
+        <IconButton
+          className="calendar__nav-button"
+          aria-label="Previous Month"
+          onClick={() => uiStore.prevMonth()}
+          icon={arrowLeft}
+        />
+
         <h2 className="calendar__subtitle">{uiStore.subtitle}</h2>
+
+        <IconButton
+          className="calendar__nav-button"
+          aria-label="Next Month"
+          onClick={() => uiStore.nextMonth()}
+          icon={arrowRight}
+        />
       </header>
 
       <div className="calendar__rows">
