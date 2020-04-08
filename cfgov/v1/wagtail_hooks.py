@@ -123,10 +123,10 @@ def editor_js():
 def editor_css():
     css_files = [
         'css/bureau-structure.css',
-        'css/deprecated-blocks.css',
         'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
+        'css/hero.css',
         'css/table-block.css',
     ]
 
