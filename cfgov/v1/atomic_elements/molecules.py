@@ -11,26 +11,6 @@ from v1.blocks import AnchorLink, HeadingBlock
 from v1.feeds import get_appropriate_rss_feed_url_for_page
 
 
-class HalfWidthLinkBlob(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False, label="H3 heading")
-    sub_heading = blocks.CharBlock(required=False, label="H4 heading")
-    sub_heading_icon = blocks.CharBlock(
-        required=False,
-        label="H4 heading icon",
-        help_text=(
-            'A list of icon names can be obtained at: '
-            'https://cfpb.github.io/capital-framework/components/cf-icons/. '
-            'Examples: linkedin-square, facebook-square, etc.'
-        )
-    )
-    body = blocks.RichTextBlock(blank=True, required=False)
-    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-
-    class Meta:
-        icon = 'link'
-        template = '_includes/molecules/link-blob.html'
-
-
 class InfoUnit(blocks.StructBlock):
     image = atoms.ImageBasic(
         required=False,
@@ -47,32 +27,6 @@ class InfoUnit(blocks.StructBlock):
     class Meta:
         icon = 'image'
         template = '_includes/molecules/info-unit.html'
-
-
-class ImageText5050(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(blank=True, required=False)
-    image = atoms.ImageBasic()
-    is_widescreen = blocks.BooleanBlock(required=False, label="Use 16:9 image")
-    is_button = blocks.BooleanBlock(required=False,
-                                    label="Show links as button")
-    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-
-    class Meta:
-        icon = 'image'
-        template = '_includes/molecules/image-text-50-50.html'
-
-
-class ImageText2575(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    image = atoms.ImageBasic()
-    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-    has_rule = blocks.BooleanBlock(required=False)
-
-    class Meta:
-        icon = 'image'
-        template = '_includes/molecules/image-text-25-75.html'
 
 
 class TextIntroduction(blocks.StructBlock):
