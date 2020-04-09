@@ -52,12 +52,7 @@ if os.environ.get("ENABLE_SQL_LOGGING"):
 if os.environ.get("ENABLE_DEBUG_TOOLBAR"):
     INSTALLED_APPS += ("debug_toolbar",)
 
-    if django.VERSION < (2, 0):
-        MIDDLEWARE_CLASSES += (
-            "debug_toolbar.middleware.DebugToolbarMiddleware",
-        )
-    else:
-        MIDDLEWARE += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
+    MIDDLEWARE += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
 
     DEBUG_TOOLBAR_PANELS = [
         "debug_toolbar.panels.versions.VersionsPanel",
@@ -81,10 +76,7 @@ if os.environ.get("ENABLE_DEBUG_TOOLBAR"):
         "SHOW_TOOLBAR_CALLBACK": lambda request: DEBUG,
     }
 
-if django.VERSION < (2, 0):
-    MIDDLEWARE_CLASSES += CSP_MIDDLEWARE
-else:
-    MIDDLEWARE += CSP_MIDDLEWARE
+MIDDLEWARE += CSP_MIDDLEWARE
 
 # Disable caching when working locally
 CACHES = {
