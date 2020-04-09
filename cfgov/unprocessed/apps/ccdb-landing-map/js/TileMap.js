@@ -1,8 +1,12 @@
-import * as d3 from 'd3-selection';
+import * as d3 from 'd3';
 import Highcharts from 'highcharts/highmaps';
 import { STATE_TILES } from './constants';
 import accessibility from 'highcharts/modules/accessibility';
 import moment from 'moment';
+
+const TEN_K = 10000;
+const HUN_K = 100000;
+const MILLION = 1000000;
 
 const WHITE = '#ffffff';
 
@@ -21,103 +25,132 @@ export function calculateDateInterval() {
 /* ----------------------------------------------------------------------------
    Utility Functions */
 /**
-* A reducer function to process the maximum value in the state complaint data
-*
-* @param {number} accum the current max value
-* @param {Object} stateComplaint a candidate value
-* @returns {string} the maximum between the current and a state entry
-*/
-export function findMaxComplaints( accum, stateComplaint ) {
-  return Math.max( accum, stateComplaint.displayValue );
+ * Creates N evenly spaced ranges in the data
+ *
+ * @param {Array} data all of the states w/ displayValue, complaintCount, raw
+ * @param {Array} colors an array of colors
+ * @returns {Array} floating point numbers that mark the max of each range
+ */
+export function makeScale( data, colors ) {
+  const allValues = data.map( x => x.displayValue )
+  const uniques = new Set( allValues )
+
+  let scale = d3.scaleQuantile().range( [ WHITE, ...colors ] )
+  // This catches the condition where all the complaints are in one state
+  if ( uniques.size < colors.length ) {
+    scale = scale.domain( [ ...uniques ] )
+  } else {
+    scale = scale.domain( allValues )
+  }
+
+  return scale
 }
+
+/**
+ * Creates a shorter version of a number. 1,234 => 1.2K
+ *
+ * @param {Number} value the raw value
+ * @returns {string} A string representing a shortened value
+ */
+export function makeShortName( value ) {
+  if ( value < 1000 ) {
+    return value.toLocaleString();
+  } else if ( value < TEN_K ) {
+    return ( Math.floor( value / 100 ) / 10 ).toFixed( 1 ) + 'K'
+  } else if ( value < MILLION ) {
+    return Math.floor( value / 1000 ) + 'K'
+  }
+
+  return ( Math.floor( value / HUN_K ) / 10 ).toFixed( 1 ) + 'M'
+}
+
 
 /**
  * helper function to get the bins for legend and colors, etc.
- * @param {Array} data all of the states w/ displayValue, complaintCount, raw
- * @param {Array} colors an array of colors
+ *
+ * @param {Array} quantiles floats that mark the max of each range
+ * @param {Function} scale scaling function for color
  * @returns {Array} the bins with bounds, name, and color
  */
-export function getBins( data, colors ) {
-  const binCount = colors.length;
-  const max = data.reduce( findMaxComplaints, 0 );
-  const min = 1;
+export function getBins( quantiles, scale ) {
+  const rounds = quantiles.map( x => Math.round( x ) )
+  const ceils = quantiles.map( x => Math.ceil( x ) )
+  const mins = Array.from( new Set( rounds ) ).filter( x => x > 0 )
 
-  // Early exit
-  if ( max === 0 ) return [];
+  const bins = [
+    { from: 0, color: WHITE, name: '≥ 0', shortName: '≥ 0' }
+  ];
 
-  const bins = [];
-  const step = ( max - min + 1 ) / binCount;
+  mins.forEach( minValue => {
+    // The color is the equivalent ceiling from the floor
+    const i = rounds.indexOf( minValue )
 
-  for ( let i = 0, curr = min; i < binCount; i++, curr += step ) {
-    const minValue = Math.round( curr );
-    const displayValue = Math.round( curr / 1000 );
+    const prefix = ceils[i] === minValue ? '≥' : '>'
+    const displayValue = minValue.toLocaleString();
+    const shortened = makeShortName( minValue )
 
     bins.push( {
       from: minValue,
-      to: Math.round( curr + step ),
-      color: colors[i],
-      name: displayValue > 0 ? `≥ ${ displayValue }K` : '≥ 0'
+      color: scale( ceils[i] ),
+      name: `${ prefix } ${ displayValue }`,
+      shortName: `${ prefix } ${ shortened }`
     } );
-  }
+  } )
 
-  // The last bin is unbounded
-  // eslint-disable-next-line no-undefined
-  bins[binCount - 1].to = undefined;
-
-  return bins;
+  return bins
 }
 
+
 /**
- * helper function to get the per Capita bins for legend and colors, etc.
- * @param {Array} data all of the states w/ displayValue, complaintCount, raw
- * @param {Array} colors an array of colors
- * @returns {Array} contains bins with bounds, colors, name, and color
+ * helper function to get the Per 1000 population bins for legend and colors
+ *
+ * @param {Array} quantiles floats that mark the max of each range
+ * @param {Function} scale scaling function for color
+ * @returns {Array} the bins with bounds, name, and color
  */
-export function getPerCapitaBins( data, colors ) {
-  const binCount = colors.length;
-  const max = data.reduce( findMaxComplaints, 0 );
-  const min = 1;
+export function getPerCapitaBins( quantiles, scale ) {
+  const trunc100 = x => Math.floor( x * 100 ) / 100
 
-  // Early exit
-  if ( max === 0 ) return [];
+  const values = quantiles.map( x => trunc100( x ) )
+  const mins = Array.from( new Set( values ) ).filter( x => x > 0 )
 
-  const step = ( max - min ) / binCount;
-  const bins = [ { from: 0, to: step, color: WHITE, name: '>0' } ];
+  const bins = [
+    { from: 0, color: WHITE, name: '≥ 0', shortName: '≥ 0' }
+  ];
 
-  for ( let i = 0, curr = min; i < binCount; i++, curr += step ) {
-    curr = parseFloat( curr.toFixed( 2 ) );
-    const minValue = curr;
-    const displayValue = curr;
+  mins.forEach( minValue => {
+    // The color is the equivalent quantile
+    const i = values.indexOf( minValue )
+
+    const prefix = values[i] === quantiles[i] ? '≥' : '>'
+    const displayValue = minValue.toFixed( 2 );
+    const name = `${ prefix } ${ displayValue }`
     bins.push( {
       from: minValue,
-      to: parseFloat( ( curr + step ).toFixed( 2 ) ),
-      color: colors[i],
-      name: `≥ ${ displayValue }`
+      color: scale( quantiles[i] ),
+      name,
+      shortName: name
     } );
-  }
+  } )
 
-  // The last bin is unbounded
-  // eslint-disable-next-line no-undefined
-  bins[binCount - 1].to = undefined;
-
-  return bins;
+  return bins
 }
 
 /* ----------------------------------------------------------------------------
    Utility Functions 2 */
 /**
  * @param {Object} data - Data to process. add in state paths to the data obj
- * @param {Array} bins - contains different buckets for the values
+ * @param {Function} scale - contains different buckets for the values
  * @returns {Object} The processed data.
  */
-export function processMapData( data, bins ) {
+export function processMapData( data, scale ) {
   // Filter out any empty values just in case
   data = data.filter( function( row ) {
     return Boolean( row.name );
   } );
 
   data = data.map( function( obj ) {
-    const color = getColorByValue( obj.displayValue, bins );
+    const color = getColorByValue( obj.displayValue, scale );
     if ( color === WHITE ) {
       obj.className = 'empty';
     }
@@ -132,23 +165,36 @@ export function processMapData( data, bins ) {
 }
 
 /**
- * helper function to search color in the bins
+ * helper function to set the color.
+ *
+ * Highcharts could normally handle it, but it gets confused by values
+ * less than 1 that are frequently encountered in perCapita
+ *
+ * Also, walk through the array backwards to pick up the most saturated
+ * color. This helps the "only three values" case
+ *
  * @param {number} value the number of complaints or perCapita
- * @param {array} bins contains bin objects
+ * @param {Function} scale scaling function for color
  * @returns {string} color hex or rgb code for a color
  */
-export function getColorByValue( value, bins ) {
-  let color = WHITE;
-  for ( let i = 0; i < bins.length; i++ ) {
-    if ( value > bins[i].from ) {
-      color = bins[i].color;
-    }
-  }
-  return color;
+export function getColorByValue( value, scale ) {
+  if ( !value ) return WHITE
+
+  return scale( value );
 }
 
 /* ----------------------------------------------------------------------------
    Highcharts callbacks */
+/**
+ * callback function for reporting the series point in a voiceover text
+ *
+ * @param {Object} p the point in the series
+ * @returns {string} the text to speak
+ */
+export function pointDescriptionFormatter( p ) {
+  return `${ p.fullName } ${ p.displayValue }`
+}
+
 /**
  * handles the click action for the tile map
  * @param {boolean} isPerCapita determines if it is a percapita value
@@ -324,9 +370,20 @@ const colors = [
 class TileMap {
   // eslint-disable-next-line max-lines-per-function
   constructor( { el, data, isPerCapita } ) {
-    const bins = isPerCapita ?
-      getPerCapitaBins( data, colors ) : getBins( data, colors );
-    data = processMapData( data, bins );
+    const scale = makeScale(data, colors);
+    const quantiles = scale.quantiles();
+
+    let bins, legendTitle;
+
+    if (isPerCapita) {
+      bins = getPerCapitaBins(quantiles, scale);
+      legendTitle = 'Complaints per 1,000';
+    } else {
+      bins = getBins(quantiles, scale);
+      legendTitle = 'Complaints';
+    }
+
+    data = processMapData( data, scale );
 
     const options = {
       bins,
@@ -342,7 +399,7 @@ class TileMap {
       credits: false,
       legend: {
         enabled: false,
-        legendTitle: isPerCapita ? 'Complaints per 1,000' : 'Complaints'
+        legendTitle
       },
       tooltip: {
         className: 'tooltip',
@@ -373,7 +430,13 @@ class TileMap {
       series: [ {
         type: 'map',
         clip: false,
-        data: data
+        data: data,
+        accessibility: {
+          description: legendTitle + ' in the United States',
+          exposeAsGroupOnly: false,
+          keyboardNavigation: { enabled: true },
+          pointDescriptionFormatter: pointDescriptionFormatter
+        }
       } ]
     };
 
