@@ -32,18 +32,18 @@ export function calculateDateInterval() {
  * @returns {Array} floating point numbers that mark the max of each range
  */
 export function makeScale( data, colors ) {
-  const allValues = data.map( x => x.displayValue )
-  const uniques = new Set( allValues )
+  const allValues = data.map( x => x.displayValue );
+  const uniques = new Set( allValues );
 
-  let scale = d3.scaleQuantile().range( [ WHITE, ...colors ] )
+  let scale = d3.scaleQuantile().range( [ WHITE, ...colors ] );
   // This catches the condition where all the complaints are in one state
   if ( uniques.size < colors.length ) {
-    scale = scale.domain( [ ...uniques ] )
+    scale = scale.domain( [ ...uniques ] );
   } else {
-    scale = scale.domain( allValues )
+    scale = scale.domain( allValues );
   }
 
-  return scale
+  return scale;
 }
 
 /**
@@ -56,12 +56,12 @@ export function makeShortName( value ) {
   if ( value < 1000 ) {
     return value.toLocaleString();
   } else if ( value < TEN_K ) {
-    return ( Math.floor( value / 100 ) / 10 ).toFixed( 1 ) + 'K'
+    return ( Math.floor( value / 100 ) / 10 ).toFixed( 1 ) + 'K';
   } else if ( value < MILLION ) {
-    return Math.floor( value / 1000 ) + 'K'
+    return Math.floor( value / 1000 ) + 'K';
   }
 
-  return ( Math.floor( value / HUN_K ) / 10 ).toFixed( 1 ) + 'M'
+  return ( Math.floor( value / HUN_K ) / 10 ).toFixed( 1 ) + 'M';
 }
 
 
@@ -73,9 +73,9 @@ export function makeShortName( value ) {
  * @returns {Array} the bins with bounds, name, and color
  */
 export function getBins( quantiles, scale ) {
-  const rounds = quantiles.map( x => Math.round( x ) )
-  const ceils = quantiles.map( x => Math.ceil( x ) )
-  const mins = Array.from( new Set( rounds ) ).filter( x => x > 0 )
+  const rounds = quantiles.map( x => Math.round( x ) );
+  const ceils = quantiles.map( x => Math.ceil( x ) );
+  const mins = Array.from( new Set( rounds ) ).filter( x => x > 0 );
 
   const bins = [
     { from: 0, color: WHITE, name: '≥ 0', shortName: '≥ 0' }
@@ -83,11 +83,11 @@ export function getBins( quantiles, scale ) {
 
   mins.forEach( minValue => {
     // The color is the equivalent ceiling from the floor
-    const i = rounds.indexOf( minValue )
+    const i = rounds.indexOf( minValue );
 
-    const prefix = ceils[i] === minValue ? '≥' : '>'
+    const prefix = ceils[i] === minValue ? '≥' : '>';
     const displayValue = minValue.toLocaleString();
-    const shortened = makeShortName( minValue )
+    const shortened = makeShortName( minValue );
 
     bins.push( {
       from: minValue,
@@ -95,9 +95,9 @@ export function getBins( quantiles, scale ) {
       name: `${ prefix } ${ displayValue }`,
       shortName: `${ prefix } ${ shortened }`
     } );
-  } )
+  } );
 
-  return bins
+  return bins;
 }
 
 
@@ -109,10 +109,10 @@ export function getBins( quantiles, scale ) {
  * @returns {Array} the bins with bounds, name, and color
  */
 export function getPerCapitaBins( quantiles, scale ) {
-  const trunc100 = x => Math.floor( x * 100 ) / 100
+  const trunc100 = x => Math.floor( x * 100 ) / 100;
 
-  const values = quantiles.map( x => trunc100( x ) )
-  const mins = Array.from( new Set( values ) ).filter( x => x > 0 )
+  const values = quantiles.map( x => trunc100( x ) );
+  const mins = Array.from( new Set( values ) ).filter( x => x > 0 );
 
   const bins = [
     { from: 0, color: WHITE, name: '≥ 0', shortName: '≥ 0' }
@@ -120,20 +120,20 @@ export function getPerCapitaBins( quantiles, scale ) {
 
   mins.forEach( minValue => {
     // The color is the equivalent quantile
-    const i = values.indexOf( minValue )
+    const i = values.indexOf( minValue );
 
-    const prefix = values[i] === quantiles[i] ? '≥' : '>'
+    const prefix = values[i] === quantiles[i] ? '≥' : '>';
     const displayValue = minValue.toFixed( 2 );
-    const name = `${ prefix } ${ displayValue }`
+    const name = `${ prefix } ${ displayValue }`;
     bins.push( {
       from: minValue,
       color: scale( quantiles[i] ),
       name,
       shortName: name
     } );
-  } )
+  } );
 
-  return bins
+  return bins;
 }
 
 /* ----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ export function processMapData( data, scale ) {
  * @returns {string} color hex or rgb code for a color
  */
 export function getColorByValue( value, scale ) {
-  if ( !value ) return WHITE
+  if ( !value ) return WHITE;
 
   return scale( value );
 }
@@ -192,7 +192,7 @@ export function getColorByValue( value, scale ) {
  * @returns {string} the text to speak
  */
 export function pointDescriptionFormatter( p ) {
-  return `${ p.fullName } ${ p.displayValue }`
+  return `${ p.fullName } ${ p.displayValue }`;
 }
 
 /**
@@ -303,21 +303,21 @@ export function _drawLegend( chart ) {
   // horizontal separator line
   const sepWidth = bins.length * ( boxWidth + boxPadding );
   chart.renderer.path( [ 'M', 0, 0, 'L', sepWidth, 0 ] )
-  .attr( {
-    'class': 'separator',
-    'stroke-width': 1,
-    stroke: 'gray'
-  } )
-  .translate( 0, 25 )
-  .add( legendText );
+    .attr( {
+      'class': 'separator',
+      'stroke-width': 1,
+      'stroke': 'gray'
+    } )
+    .translate( 0, 25 )
+    .add( legendText );
 
   // what legend represents
   const labelTx = 'Map shading: <span class="type">' +
     chart.options.legend.legendTitle + '</span>';
   chart.renderer
-    .label(labelTx, 0, 28, null, null, null, true, false,
-      'legend-description')
-    .add(legendText);
+    .label( labelTx, 0, 28, null, null, null, true, false,
+      'legend-description' )
+    .add( legendText );
 
   const labelDates = `Dates: <span class="type">${ calculateDateInterval() }` +
     '</span>';
@@ -344,10 +344,10 @@ export function _drawLegend( chart ) {
       .add( g );
 
     chart.renderer
-    .text( beCompact ? bin.shortName : bin.name, 0, boxHeight )
-    .addClass( 'legend-text' )
-    .translate( 3, -3 )
-    .add( g );
+      .text( beCompact ? bin.shortName : bin.name, 0, boxHeight )
+      .addClass( 'legend-text' )
+      .translate( 3, -3 )
+      .add( g );
   }
 }
 
@@ -376,16 +376,16 @@ const colors = [
 class TileMap {
   // eslint-disable-next-line max-lines-per-function
   constructor( { el, data, isPerCapita } ) {
-    const scale = makeScale(data, colors);
+    const scale = makeScale( data, colors );
     const quantiles = scale.quantiles();
 
     let bins, legendTitle;
 
-    if (isPerCapita) {
-      bins = getPerCapitaBins(quantiles, scale);
+    if ( isPerCapita ) {
+      bins = getPerCapitaBins( quantiles, scale );
       legendTitle = 'Complaints per 1,000';
     } else {
-      bins = getBins(quantiles, scale);
+      bins = getBins( quantiles, scale );
       legendTitle = 'Complaints';
     }
 
