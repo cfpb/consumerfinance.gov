@@ -44,6 +44,21 @@
       }
     }
 
+    .highcharts-map-series {
+      .highcharts-point {
+        stroke: none;
+
+        &.empty {
+          stroke: rgba(231, 232, 233, 1);
+        }
+      }
+
+      .highcharts-point-hover {
+        stroke: rgba(0, 45, 114, 1);
+        stroke-width: 2px !important;
+      }
+    }
+
     .highcharts-label-box {
       display: none;
     }

@@ -4,6 +4,8 @@ import { STATE_TILES } from './constants';
 import accessibility from 'highcharts/modules/accessibility';
 import moment from 'moment';
 
+const WHITE = '#ffffff';
+
 /**
  * helper function to get date interval for legend
  * @returns {string} formatted string
@@ -80,7 +82,7 @@ export function getPerCapitaBins( data, colors ) {
   if ( max === 0 ) return [];
 
   const step = ( max - min ) / binCount;
-  const bins = [ { from: 0, to: step, color: '#fff', name: '>0' } ];
+  const bins = [ { from: 0, to: step, color: WHITE, name: '>0' } ];
 
   for ( let i = 0, curr = min; i < binCount; i++, curr += step ) {
     curr = parseFloat( curr.toFixed( 2 ) );
@@ -115,9 +117,13 @@ export function processMapData( data, bins ) {
   } );
 
   data = data.map( function( obj ) {
+    const color = getColorByValue( obj.displayValue, bins );
+    if ( color === WHITE ) {
+      obj.className = 'empty';
+    }
     return {
       ...obj,
-      color: getColorByValue( obj.displayValue, bins ),
+      color,
       path: STATE_TILES[obj.name]
     };
   } );
@@ -132,7 +138,7 @@ export function processMapData( data, bins ) {
  * @returns {string} color hex or rgb code for a color
  */
 export function getColorByValue( value, bins ) {
-  let color = '#ffffff';
+  let color = WHITE;
   for ( let i = 0; i < bins.length; i++ ) {
     if ( value > bins[i].from ) {
       color = bins[i].color;
@@ -169,8 +175,8 @@ export function mouseoutPoint() {
  * callback function for mouseover point to add hover class to tile label
  */
 export function mouseoverPoint() {
-  const name = '.tile-' + this.name
-  d3.select( name ).classed( 'hover', true )
+  const name = '.tile-' + this.name;
+  d3.select( name ).classed( 'hover', true );
 }
 
 /**
@@ -315,8 +321,8 @@ const colors = [
 
 /* ----------------------------------------------------------------------------
    Tile Map class */
-
 class TileMap {
+  // eslint-disable-next-line max-lines-per-function
   constructor( { el, data, isPerCapita } ) {
     const bins = isPerCapita ?
       getPerCapitaBins( data, colors ) : getBins( data, colors );
