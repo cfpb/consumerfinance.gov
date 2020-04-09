@@ -34,119 +34,36 @@ describe( 'Tile map', () => {
     expect( result ).toContain( '12/31/2012 - 12/31/2015' );
   } );
 
-  it( 'Finds Max Complaints', () => {
-    const state = { displayValue: 1000, name: 'Foo' };
-    const result = sut.findMaxComplaints( 50, state );
-    expect( result ).toEqual( 1000 );
-  } );
+  describe( 'makeScale', () => {
+    it( 'creates an evenly-spaced scale for a exponential dataset' , () => {
+      const data = []
+      for ( let i = 1; i <= 50; i++ ) {
+        data.push( { displayValue: i * i } )
+      }
 
-  it( 'gets empty raw  bins', () => {
-    const result = sut.getBins( [], colors );
-    expect( result ).toEqual( [] );
-  } );
+      const actual = sut.makeScale( data, colors )
+      expect( actual( 0 ) ).toEqual( '#ffffff' )
+      expect( actual( 100 ) ).toEqual( colors[0] )
+      expect( actual( 361 ) ).toEqual( colors[1] ) // 19^2
+      expect( actual( 784 ) ).toEqual( colors[2] ) // 28^2
+      expect( actual( 1225 ) ).toEqual( colors[3] ) // 35^2
+      expect( actual( 1681 ) ).toEqual( colors[4] ) // 41^2
+      expect( actual( 2500 ) ).toEqual( colors[5] )
+    } );
 
-  it( 'gets Raw Complaints bins', () => {
-    const result = sut.getBins( complaints.raw, colors );
-    expect( result )
-      .toEqual( [
-        {
-          color: 'rgba(247, 248, 249, 0.5)',
-          from: 1,
-          name: '≥ 0',
-          to: 16435
-        },
-        {
-          color: 'rgba(212, 231, 230, 0.5)',
-          from: 16435,
-          name: '≥ 16K',
-          to: 32868
-        },
-        {
-          color: 'rgba(180, 210, 209, 0.5)',
-          from: 32868,
-          name: '≥ 33K',
-          to: 49302
-        },
-        {
-          color: 'rgba(137, 182, 181, 0.5)',
-          from: 49302,
-          name: '≥ 49K',
-          to: 65735
-        },
-        {
-          color: 'rgba(86, 149, 148, 0.5)',
-          from: 65735,
-          name: '≥ 66K',
-          to: 82169
-        },
-        {
-          color: 'rgba(37, 116, 115, 0.5)',
-          from: 82169,
-          name: '≥ 82K',
-          // eslint-disable-next-line no-undefined
-          to: undefined
-        } ] );
-  } );
+    it( 'scales differently if there are few unique values' , () => {
+      const data = []
+      for ( let i = 0; i < 51; i++) {
+        data.push( { displayValue: 0 } )
+      }
+      data[ 3 ].displayValue = 900
 
-  it( 'gets empty per capita bins', () => {
-    const result = sut.getPerCapitaBins( [], colors );
-    expect( result ).toEqual( [] );
-  } );
-
-  it( 'gets Per Capita bins', () => {
-    const result = sut.getPerCapitaBins( complaints.perCapita, colors );
-    expect( result )
-      .toEqual( [
-        { color: '#ffffff', from: 0, name: '>0', to: 0.7516666666666666 },
-        {
-          color: 'rgba(247, 248, 249, 0.5)',
-          from: 1,
-          name: '≥ 1',
-          to: 1.75
-        },
-        {
-          color: 'rgba(212, 231, 230, 0.5)',
-          from: 1.75,
-          name: '≥ 1.75',
-          to: 2.5
-        },
-        {
-          color: 'rgba(180, 210, 209, 0.5)',
-          from: 2.5,
-          name: '≥ 2.5',
-          to: 3.25
-        },
-        {
-          color: 'rgba(137, 182, 181, 0.5)',
-          from: 3.25,
-          name: '≥ 3.25',
-          to: 4
-        },
-        {
-          color: 'rgba(86, 149, 148, 0.5)',
-          from: 4,
-          name: '≥ 4',
-          // eslint-disable-next-line no-undefined
-          to: undefined
-        },
-        {
-          color: 'rgba(37, 116, 115, 0.5)',
-          from: 4.75,
-          name: '≥ 4.75',
-          to: 5.5
-        } ] );
-  } );
-
-  it( 'Gets color of a tile based on bin limits', () => {
-    const bins = [
-      { color: 'white', from: 0 },
-      { color: 'green', from: 10 },
-      { color: 'red', from: 30 }
-    ];
-    let result = sut.getColorByValue( 23, bins );
-    expect( result ).toEqual( 'green' );
-    result = sut.getColorByValue( null, bins );
-    expect( result ).toEqual( '#ffffff' );
+      const actual = sut.makeScale( data, colors )
+      expect( actual( 0 ) ).toEqual( '#ffffff' )
+      expect( actual( 300 ) ).toEqual( colors[1] )
+      expect( actual( 450 ) ).toEqual( colors[2] )
+      expect( actual( 790 ) ).toEqual( colors[5] )
+    } );
   } );
 
   it( 'navigates the url to all complaints when clicked', () => {
@@ -214,47 +131,12 @@ describe( 'Tile map', () => {
   } );
 
   it( 'Processes the map data', () => {
-    const bins = [
-      {
-        color: 'rgba(247, 248, 249, 0.5)',
-        from: 1,
-        name: '≥ 0',
-        to: 16435
-      },
-      {
-        color: 'rgba(212, 231, 230, 0.5)',
-        from: 16435,
-        name: '≥ 16K',
-        to: 32868
-      },
-      {
-        color: 'rgba(180, 210, 209, 0.5)',
-        from: 32868,
-        name: '≥ 33K',
-        to: 49302
-      },
-      {
-        color: 'rgba(137, 182, 181, 0.5)',
-        from: 49302,
-        name: '≥ 49K',
-        to: 65735
-      },
-      {
-        color: 'rgba(86, 149, 148, 0.5)',
-        from: 65735,
-        name: '≥ 66K',
-        to: 82169
-      },
-      {
-        color: 'rgba(37, 116, 115, 0.5)',
-        from: 82169,
-        name: '≥ 82K',
-        // eslint-disable-next-line no-undefined
-        to: undefined
-      } ];
-    const result = sut.processMapData( complaints.raw, bins );
+    const scale = jest.fn().mockReturnValue( 'rgba(247, 248, 249, 1)' )
+
+    const result = sut.processMapData( complaints.raw, scale );
     // test only the first one just make sure that the path and color are found
     expect( result[0] ).toEqual( {
+      className: 'default',
       name: 'AK',
       fullName: 'Alaska',
       value: 713,
@@ -262,65 +144,106 @@ describe( 'Tile map', () => {
       product: 'Credit reporting, credit repair services, or other personal consumer reports',
       perCapita: 0.97,
       displayValue: 713,
-      color: 'rgba(247, 248, 249, 0.5)',
+      color: 'rgba(247, 248, 249, 1)',
       path: 'M92,-245L175,-245,175,-162,92,-162,92,-245'
     } );
+    expect( result[1] ).toEqual( {
+      className: 'deselected',
+      name: 'AL',
+      fullName: 'Alabama',
+      value: 10380,
+      issue: 'Incorrect information on your report',
+      product: 'Credit reporting, credit repair services, or other personal consumer reports',
+      perCapita: 2.14,
+      displayValue: 10380,
+      color: 'rgba(247, 248, 249, 1)',
+      path: 'M550,-337L633,-337,633,-253,550,-253,550,-337'
+    } );
+
+    expect( result[2] ).toEqual( {
+      className: 'selected',
+      name: 'AR',
+      fullName: 'Arkansas',
+      value: 4402,
+      issue: 'Incorrect information on your report',
+      product: 'Credit reporting, credit repair services, or other personal consumer reports',
+      perCapita: 1.48,
+      displayValue: 4402,
+      color: 'rgba(247, 248, 249, 1)',
+      path: 'M367,-428L450,-428,450,-345,367,-345,367,-428'
+    } );
+    expect( scale ).toHaveBeenCalledTimes( 51 )
   } );
 
-  it( 'draws the legend', () => {
-    const chart = {
-      options: {
-        bins: [
-          {
-            color: 'rgba(247, 248, 249, 0.5)',
-            from: 1,
-            name: '≥ 0',
-            to: 16435
+  describe('legend', () => {
+    let chart;
+    beforeEach(() => {
+      chart = {
+        options: {
+          bins: [
+            {
+              color: 'rgba(247, 248, 249, 0.5)',
+              from: 1,
+              name: '≥ 0',
+              to: 16435,
+            },
+            {
+              color: 'rgba(212, 231, 230, 0.5)',
+              from: 16435,
+              name: '≥ 16K',
+              to: 32868,
+            },
+            {
+              color: 'rgba(180, 210, 209, 0.5)',
+              from: 32868,
+              name: '≥ 33K',
+              to: 49302,
+            },
+            {
+              color: 'rgba(137, 182, 181, 0.5)',
+              from: 49302,
+              name: '≥ 49K',
+              to: 65735,
+            },
+            {
+              color: 'rgba(86, 149, 148, 0.5)',
+              from: 65735,
+              name: '≥ 66K',
+              to: 82169,
+            },
+            {
+              color: 'rgba(37, 116, 115, 0.5)',
+              from: 82169,
+              name: '≥ 82K',
+              // eslint-disable-next-line no-undefined
+              to: undefined,
+            }],
+          legend: {
+            legendTitle: 'Foo',
           },
-          {
-            color: 'rgba(212, 231, 230, 0.5)',
-            from: 16435,
-            name: '≥ 16K',
-            to: 32868
-          },
-          {
-            color: 'rgba(180, 210, 209, 0.5)',
-            from: 32868,
-            name: '≥ 33K',
-            to: 49302
-          },
-          {
-            color: 'rgba(137, 182, 181, 0.5)',
-            from: 49302,
-            name: '≥ 49K',
-            to: 65735
-          },
-          {
-            color: 'rgba(86, 149, 148, 0.5)',
-            from: 65735,
-            name: '≥ 66K',
-            to: 82169
-          },
-          {
-            color: 'rgba(37, 116, 115, 0.5)',
-            from: 82169,
-            name: '≥ 82K',
-            // eslint-disable-next-line no-undefined
-            to: undefined
-          } ],
-        legend: {
-          legendTitle: 'Foo'
-        }
-      },
-      margin: []
+        },
+        margin: []
+      };
+    });
 
-    };
-
-    chart.renderer = chartMock;
-    const addSpies = jest.spyOn( chart.renderer, 'add' );
-    sut._drawLegend( chart );
-    expect( addSpies ).toHaveBeenCalledTimes( 25 );
-  } );
+    afterEach(()=>{
+      jest.clearAllMocks()
+    })
+    it('draws large legend', () => {
+      chart.renderer = chartMock;
+      chart.chartWidth = 1000;
+      const addSpies = jest.spyOn(chart.renderer, 'add');
+      sut._drawLegend(chart);
+      expect(addSpies).toHaveBeenCalledTimes(25);
+    });
+    it('draws small legend', () => {
+      chart.renderer = chartMock;
+      chart.chartWidth = 599;
+      const addSpies = jest.spyOn(chart.renderer, 'add');
+      sut._drawLegend(chart);
+      expect(addSpies).toHaveBeenCalledTimes(25);
+    });
+  });
 
   it( 'can construct a map', () => {
     const options = {
