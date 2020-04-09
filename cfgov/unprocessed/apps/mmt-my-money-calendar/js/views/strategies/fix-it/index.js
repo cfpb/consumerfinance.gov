@@ -51,8 +51,8 @@ function FixItStrategies() {
 
         {strategies.fixItResults.length ? (
           <p className="strategies-header__intro">
-            This week you went into the red. Below are the transactions you made. Explore the different strategies that
-            can prevent going into the red in the future.
+            This week the total cost of your expenses was more than your income, putting you into the red. The strategies below are tailored to the specific expenses in your budget for the week.
+            Commit to implementing one or two of them to prevent from going into the red in the future.
           </p>
         ) : (
           <p>

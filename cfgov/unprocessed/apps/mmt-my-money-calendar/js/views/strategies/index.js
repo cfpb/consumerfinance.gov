@@ -33,7 +33,7 @@ function Strategies() {
         <h2 className="strategies-header__title">Strategies to Improve Cash Flow</h2>
 
         <p className="strategies-header__intro">
-          There are several things you can do to improve your cash flow. Commit to implementing one or two strategies below for the coming month and see if your cash flow improves.
+          The strategies below are tailored to the specific expenses and income in your budget. Commit to implementing one or two of them for the coming month and see if your cash flow improves.
         </p>
       </header>
 
