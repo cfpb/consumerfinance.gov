@@ -57,12 +57,21 @@
 {%- endblock %}
 
 {% block content_main -%}
+
+    <p>
+      {% if (current_language == 'en') %}
+      <a href="{{ url('fwb_home_es') }}" hreflang="es" lang="es">Ver página en español</a>
+      {% endif %}
+      {% if (current_language == 'es') %}
+      <a href="{{ url('fwb_home_en') }}" hreflang="en" lang="en">View page in English</a>
+      {% endif %}
+    </p>
+
     <h2>{{ _('Here’s how it works:') }}</h2>
 
     <p>
         <b>{{ _('Answer the questions and get your score.') }}</b>
-        {{ _('You won’t be asked about any personal financial data—it’s
-        not that kind of questionnaire.') }}
+        {{ _('You won’t be asked about any personal financial data—it’s not that kind of questionnaire.') }}
         <a href="{{ url('fwb_about_' + current_language) }}">{{ _('See how and why we developed it.') }}</a>
     </p>
     <p>
@@ -936,14 +945,13 @@
 
 {% block content_sidebar -%}
     <div class="block block__flush-top">
-        <h3>About us</h3>
+        <h3>{{ _('About us') }}</h3>
         <p>
-            We're the Consumer Financial Protection Bureau (CFPB),
-            a U.S. government agency that makes sure banks, lenders,
-            and other financial companies treat you fairly.
+            {{ _('We&#39;re the Consumer Financial Protection Bureau (CFPB),') }}
+            {{ _('a U.S. government agency that makes sure banks, lenders, and other financial companies treat you fairly.') }}
         </p>
         <a class="a-link a-link__jump" href="/about-us/the-bureau/">
-            <span class="a-link_text">Learn how the CFPB can help you</span>
+            <span class="a-link_text">{{ _('Learn how the CFPB can help you') }}</span>
         </a>
     </div>
 
@@ -952,16 +960,15 @@
             <h2 class="a-heading">{{ _('About this questionnaire') }}</h2>
         </header>
         <p>
-            {{ _('CFPB researchers developed the questionnaire and a way to score it,
-            as a tool to help measure your current financial well-being—that is,
-            how well your current money situation is providing you with
-            financial security and freedom of choice, today and for the future.') }}
+            {{ _('CFPB researchers developed the questionnaire and a way to score it, as a tool to help measure your current financial well-being—') }}
+            {{ _('that is, how well your current money situation is providing you with financial security and freedom of choice, today and for the future.') }}
         </p>
         <a class="a-link a-link__jump" href="{{ url('fwb_about_' + current_language) }}">
             <span class="a-link_text">{{ _('See more background') }}</span>
         </a>
     </div>
 
+    {% if (current_language == 'en') %}
     <div class="block">
         <header class="m-slug-header">
             <h2 class="a-heading">
@@ -1025,20 +1032,19 @@
 
         </div>
     </div>
+    {% endif %}
 
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="a-heading">Legal disclaimer</h2>
+            <h2 class="a-heading">{{ _('Legal disclaimer') }}</h2>
         </header>
         <p>
-            The content on this page provides general consumer information.
-            It is not legal advice or regulatory guidance.
-            The CFPB updates this information periodically.
-            This information may include links or references
-            to third-party resources or content.
-            We do not endorse the third-party or guarantee
-            the accuracy of this third-party information.
-            There may be other resources that also serve your needs.
+            {{ _('The content on this page provides general consumer information.') }}
+            {{ _('It is not legal advice or regulatory guidance.') }}
+            {{ _('The CFPB updates this information periodically.') }}
+            {{ _('This information may include links or references to third-party resources or content.') }}
+            {{ _('We do not endorse the third-party or guarantee the accuracy of this third-party information.') }}
+            {{ _('There may be other resources that also serve your needs.') }}
         </p>
     </div>
 {%- endblock %}
