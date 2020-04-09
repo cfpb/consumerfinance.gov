@@ -54,3 +54,13 @@ The structure looks like this:
 !!! note
     After running `gulp build` the site's assets are copied over to `cfgov\static_built`,
     ready to be served by Django.
+
+### TIP: Installing new frontend dependencies
+- Use `yarn add new_dep@se.m.ver` to install new dependencies.
+- If you can't do this for some reason or are looking to freshen all dependencies,
+  you will need to edit `.yarnrc`, commenting out the two included flags before
+  proceeding with your installation or update.
+- In the rare but observed case that `yarn add new_dep@se.m.ver` doesn't add
+  every needed package to the offline cache, you likely need to first run
+  `yarn cache clean`.
+
