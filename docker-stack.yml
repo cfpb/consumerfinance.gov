@@ -5,6 +5,7 @@ version: "3.7"
 services:
   elasticsearch:
     image: elasticsearch:2.4-alpine
+    user: elasticsearch
     deploy:
       placement:
         constraints:
@@ -16,6 +17,7 @@ services:
 
   postgres:
     image: postgres:10-alpine
+    user: postgres
     deploy:
       placement:
         constraints:
