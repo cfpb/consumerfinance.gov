@@ -298,29 +298,6 @@ item_introduction = {
     }
 }
 
-job_listing_list = {
-    'type': 'job_listing_list',
-    'value': {
-        'limit': 5,
-        'more_jobs_page': 123,
-        'hide_closed': True,
-        'heading': 'heading',
-        'more_jobs_text': 'Full list of jobs',
-    },
-}
-
-job_listing_table = {
-    'type': u'job_listing_table',
-    'value': {
-        'is_striped': False,
-        'hide_closed': True,
-        'is_full_width': False,
-        'is_stacked': False,
-        'first_row_is_table_header': True,
-        'first_col_is_header': False,
-    },
-}
-
 data_snapshot = {
     'type': u'data_snapshot',
     'value': {
