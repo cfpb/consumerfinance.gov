@@ -1,7 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% import 'macros/time.html' as time %}
-{% import 'macros/util/format/datetime.html' as dt %}
+{%- import 'macros/util/format/datetime.html' as dt %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -9,67 +8,22 @@
 
 {% block content_main %}
 
-    {% set usajobs_links = page.usajobs_application_links.order_by(
-      'applicant_type'
-    ) %}
+    {% set usajobs_links = page.usajobs_application_links.all() %}
 
-    <section class="block
-                    block__flush-top
-                    block__sub
-                    vacancy-announcement_details">
-        <h1>{{ page.title }}</h1>
-        <dl class="job-details">
-            <dt>Division/Office: </dt>
-            <dd>{{ page.division }}</dd>
-            <dt>Closing date:</dt>
-            <dd>
-                {% if page.close_date %}
-                    {{ time.render(page.close_date, {'date': true}, text_format=True) }}
-                {% endif %}
-            </dd>
-            {% if location_type == 'region' %}
-                <dt>Location:</dt>
-                <dd>{%- if states|length -%}
-                    Home duty location in one of the following {{ page.location }} states: {{ states|join(', ') -}}.
-                    {%- else -%}
-                    {{ page.location }}
-                    {%- endif -%}
-                    {%- if cities -%}
-                        <span class="u-hidden">Cities in this region include {{ cities|join('; ') -}}.</span>
-                    {%- endif  -%}
-                </dd>
-            {% else %}
-                <dt>Location:</dt>
-                <dd>{{- cities[0] if cities|length else page.location -}} {{- ' or remote' if page.allow_remote else '' -}}</dd>
-            {% endif %}
-
-            <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
-            <dd>
-                {% if page.grades.exists() %}
-                <strong>({{ page.ordered_grades | join(', ') }})</strong>
-                {% endif %}
-                ${{ '{:,.0f}'.format( page.salary_min ) }}–${{ '{:,.0f}'.format( page.salary_max ) }}
-                <a class="a-link
-                          a-link__icon
-                          pay-grade-link"
-                   href="https://files.consumerfinance.gov/f/documents/cfpb_pay_scales.pdf">
-                    <span class="a-link_text">See information on grades and base pay ranges</span>
-                    {{ svg_icon('download') }}
-                </a>
-            </dd>
-            {% if usajobs_links %}
-                <dt>
-                    Who may apply:
-                </dt>
-                <dd>
-                    {% for usajobs_link in usajobs_links %}
-                        {% set applicant_type = usajobs_link.applicant_type %}
-                        {{ applicant_type.display_title if applicant_type.display_title else applicant_type }}{{',' if not loop.last else ''}}
-                    {% endfor %}
-                </dd>
-            {% endif %}
-        </dl>
-    </section>
+    {%- with value = {
+        'title': page.title,
+        'division': page.division,
+        'close_date': page.close_date,
+        'offices': offices,
+        'remote_allowed': page.allow_remote,
+        'regions': regions,
+        'grades': grades,
+        'salary_min': page.salary_min,
+        'salary_max': page.salary_max,
+        'applicant_types': usajobs_links | map( attribute='applicant_type' )
+    } %}
+        {% include 'jobmanager/job_listing_details.html' %}
+    {% endwith %}
 
     <section class="block
                     block__padded-top
@@ -297,19 +251,25 @@
         "jobLocation" : {
             "@type": "Place",
             "address": [
-            {% if location_type == 'office' and page.allow_remote -%}
+            {% if page.allow_remote -%}
                 {
                     "@type": "PostalAddress",
                     "addressCountry": "US"
                 }
-            {% elif cities %}
-                {%- for city in cities -%}
-                    {
-                        "@type": "PostalAddress",
-                        "addressLocality": "{{ city.name }}",
-                        "addressRegion": "{{ city.state.abbreviation }}",
-                        "addressCountry": "US"
-                    }{{ ', ' if not loop.last else '' }}
+			{% else -%}
+				{%- set city_lists =
+					regions | map( attribute='major_cities' ) | list +
+                    [ offices ]
+				-%}
+				{% for city_list in city_lists %}
+                    {% for city in city_list %}
+                        {
+                            "@type": "PostalAddress",
+                            "addressLocality": "{{ city.name }}",
+                            "addressRegion": "{{ city.state_id }}",
+                            "addressCountry": "US"
+                        }{{ ', ' if not loop.last else '' }}
+                    {%- endfor -%}
                 {%- endfor -%}
             {% endif %}
             ]
