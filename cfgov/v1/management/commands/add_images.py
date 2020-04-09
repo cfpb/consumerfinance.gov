@@ -2,11 +2,16 @@ import os
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management.base import BaseCommand, CommandError
-from django.core.urlresolvers import reverse
 
 from wagtail.images import get_image_model
 
 from v1.management.commands._utils import WagtailClient
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 class Command(WagtailClient, BaseCommand):

@@ -75,7 +75,11 @@ class Category(models.Model):
 
 
 class Answer(models.Model):
-    last_user = models.ForeignKey(User, blank=True, null=True)
+    last_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
     question = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

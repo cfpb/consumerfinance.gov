@@ -1,10 +1,15 @@
-from django.core.urlresolvers import reverse
 from django.test import TestCase
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 class TestTokenProviderView(TestCase):
     def setUp(self):
-        self.url = reverse('csrf-token-provider')
+        self.url = reverse("csrf-token-provider")
 
     def test_get_returns_plain_http_response(self):
         response = self.client.get(self.url)
@@ -12,7 +17,7 @@ class TestTokenProviderView(TestCase):
 
     def test_post_returns_csrf_token(self):
         response = self.client.post(self.url)
-        self.assertTemplateUsed(response, 'common/csrf.html')
+        self.assertTemplateUsed(response, "common/csrf.html")
 
     def test_post_marks_session_as_modified(self):
         response = self.client.post(self.url)

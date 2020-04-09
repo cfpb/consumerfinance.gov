@@ -10,17 +10,28 @@ from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
+class TestDownstreamCacheControlMiddleware(TestCase):
+
+    def test_edge_control_header_in_response(self):
+        response = self.client.get('/', CSRF_COOKIE='', CSRF_COOKIE_USED=True)
+        self.assertIn('Edge-Control', response)
+
+    def test_edge_control_header_not_in_response(self):
+        response = self.client.get('/')
+        self.assertNotIn('Edge-Control', response)
+
+
 @mock.patch('core.middleware.parse_links')
 class TestParseLinksMiddleware(TestCase):
     def test_parse_links_gets_called(self, mock_parse_links):
         """Middleware correctly invokes parse links when rendering webpage"""
-        response = self.client.get('/foo/bar')
-        mock_parse_links.assert_called_with(response.content, encoding='utf-8')
+        self.client.get('/')
+        mock_parse_links.assert_called_once()
 
-    @override_settings(PARSE_LINKS_EXCLUSION_LIST=[r'^/foo/'])
+    @override_settings(PARSE_LINKS_EXCLUSION_LIST=[r'^/'])
     def test_parse_links_does_not_get_called_excluded(self, mock_parse_links):
         """Middleware does not invoke parse links when path is excluded"""
-        self.client.get('/foo/bar')
+        self.client.get('/')
         mock_parse_links.assert_not_called()
 
 
