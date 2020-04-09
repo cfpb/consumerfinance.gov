@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from django.shortcuts import render
+from django.utils.translation import gettext as _
 
 from core.views import TranslatedTemplateView
 from wellbeing.forms import FWBScore, ResultsForm
@@ -13,13 +14,13 @@ class ResultsView(TranslatedTemplateView):
     QUESTIONS = [
         {
             # Question 1
-            'question': 'I could handle a major unexpected expense',
+            'question': _('I could handle a major unexpected expense'),
             'answers': [
-                'Not at all',
-                'Very little',
-                'Somewhat',
-                'Very well',
-                'Completely',
+                _('Not at all'),
+                _('Very little'),
+                _('Somewhat'),
+                _('Very well'),
+                _('Completely'),
             ]
         },
         {
