@@ -41,7 +41,7 @@ urllib3==1.25.2
 wagtail-autocomplete==0.1.1
 wagtail-flags==4.1.1
 wagtail-inventory==1.0
-wagtail-sharing==1.0
+wagtail-sharing==2.1
 wagtail-treemodeladmin==1.1.1
 
 # These packages are installed from GitHub.

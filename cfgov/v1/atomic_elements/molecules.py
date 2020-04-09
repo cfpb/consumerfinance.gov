@@ -68,26 +68,27 @@ class TextIntroduction(blocks.StructBlock):
         classname = 'block__flush-top'
 
 
-class Hero(blocks.StructBlock):
+class AbstractHero(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
             'For complete guidelines on creating heroes, visit our '
-            '<a href="https://cfpb.github.io/design-manual/global-elements/heroes.html">'  # noqa: E501
-            'Design Manual</a>.'
-            '<ul class="help">Character counts (including spaces) at largest '
-            'breakpoint:'
-            '<li>&bull; 41 characters max (one-line heading)</li>'
-            '<li>&bull; 82 characters max (two-line heading)</li></ul>')
+            '<a href="https://cfpb.github.io/design-system/components/heroes">'
+            'Design System</a>. '
+            'Character counts (including spaces) at largest breakpoint:'
+            '<ul class="help">'
+            '    <li>&bull; 41 characters max (one-line heading)</li>'
+            '    <li>&bull; 82 characters max (two-line heading)</li>'
+            '</ul>')
     )
     body = blocks.RichTextBlock(
         label="Sub-heading",
         required=False,
         help_text=mark_safe(
-            '<ul class="help">Character counts (including spaces) at largest '
-            'breakpoint:'
-            '<li>&bull; 165-186 characters (after a one-line heading)</li>'
-            '<li>&bull; 108-124 characters (after a two-line heading)</li>'
+            'Character counts (including spaces) at largest breakpoint:'
+            '<ul class="help">'
+            '    <li>&bull; 165-186 characters (after a one-line heading)</li>'
+            '    <li>&bull; 108-124 characters (after a two-line heading)</li>'
             '</ul>')
     )
     image = ImageChooserBlock(
@@ -95,7 +96,7 @@ class Hero(blocks.StructBlock):
         required=False,
         help_text=mark_safe(
             'When saving illustrations, use a transparent background. '
-            '<a href="https://cfpb.github.io/design-manual/global-elements/heroes.html#style">'  # noqa: E501
+            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: E501
             'See image dimension guidelines.</a>')
     )
     small_image = ImageChooserBlock(
@@ -104,28 +105,15 @@ class Hero(blocks.StructBlock):
             '<b>Optional.</b> Provides an alternate image for '
             'small displays when using a photo or bleeding hero. '
             'Not required for the standard illustration. '
-            '<a href="https://cfpb.github.io/design-manual/global-elements/heroes.html#style">'  # noqa:E501
+            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa:E501
             'See image dimension guidelines.</a>')
     )
     background_color = blocks.CharBlock(
         required=False,
         help_text=mark_safe(
-            'Specify a hex value (with the # sign) from our '
+            'Specify a hex value (including the # sign) from our '
             '<a href="https://cfpb.github.io/design-manual/brand-guidelines/color-principles.html">'  # noqa: E501
             'official color palette</a>.')
-    )
-    is_overlay = blocks.BooleanBlock(
-        label="Photo",
-        required=False,
-        help_text=mark_safe(
-            '<b>Optional.</b> Uses the large image as a background under '
-            'the entire hero, creating the "Photo" style of hero (see '
-            '<a href="https://cfpb.github.io/design-manual/global-elements/heroes.html">'  # noqa: E501
-            'Design Manual</a> for details). When using this option, '
-            'make sure to specify a background color (above) for the '
-            'left/right margins that appear when screens are wider than '
-            '1200px and for the text section when the photo and text '
-            'stack at mobile sizes.')
     )
     is_white_text = blocks.BooleanBlock(
         label="White text",
@@ -133,6 +121,27 @@ class Hero(blocks.StructBlock):
         help_text=mark_safe(
             '<b>Optional.</b> Turns the hero text white. Useful if using '
             'a dark background color or background image.')
+    )
+
+    class Meta:
+        template = '_includes/molecules/hero.html'
+        classname = 'block__flush-top block__flush-bottom'
+        icon = 'image'
+
+
+class Hero(AbstractHero):
+    is_overlay = blocks.BooleanBlock(
+        label="Photo",
+        required=False,
+        help_text=mark_safe(
+            '<b>Optional.</b> Uses the large image as a background under '
+            'the entire hero, creating the "Photo" style of hero (see '
+            '<a href="https://cfpb.github.io/design-system/components/heroes">'
+            'Design System</a> for details). When using this option, '
+            'make sure to specify a background color (above) for the '
+            'left/right margins that appear when screens are wider than '
+            '1200px and for the text section when the photo and text '
+            'stack at mobile sizes.')
     )
     is_bleeding = blocks.BooleanBlock(
         label="Bleed",
@@ -142,10 +151,15 @@ class Hero(blocks.StructBlock):
             'vertically off the top and bottom of the hero space.')
     )
 
+
+class JumboHeroValue(blocks.StructValue):
+    def is_jumbo(self):
+        return True
+
+
+class JumboHero(AbstractHero):
     class Meta:
-        icon = 'image'
-        template = '_includes/molecules/hero.html'
-        classname = 'block__flush-top block__flush-bottom'
+        value_class = JumboHeroValue
 
 
 class Notification(blocks.StructBlock):
