@@ -40,7 +40,7 @@ function Day({ day, dateFormat = 'D' }) {
   const balance = eventStore.getBalanceForDate(day);
 
   classes.push({
-    'pos-balance': balance > 0,
+    'pos-balance': balance >= 0 && day.isSameOrAfter(eventStore.earliestEventDate),
     'neg-balance': balance < 0,
   });
 
