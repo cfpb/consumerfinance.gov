@@ -41,9 +41,3 @@ FLAG_SOURCES = (
 # other files don't write them to the local development media directory. The
 # test runner cleans up this directory after the tests run.
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'cfgov', 'tests', 'test-media')
-
-
-# A custom test database can be specified, but we don't support SQLite
-TEST_DATABASE_URL = os.getenv('TEST_DATABASE_URL')
-if TEST_DATABASE_URL:
-    DATABASES = {'default': dj_database_url.parse(TEST_DATABASE_URL)}
