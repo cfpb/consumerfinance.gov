@@ -4,13 +4,13 @@ of college, grants, loans, etc. It also includes debt calculations
 based on these costs.
 */
 
-// Please excuse some uses of underscore for code/HTML property clarity!
-/* eslint camelcase: ["error", {properties: "never"}] */
-
-import { createFinancials, recalculateExpenses } from '../dispatchers/update-models.js';
-import { getConstantsValue, getExpensesValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { recalculateExpenses } from '../dispatchers/update-models.js';
 import { debtCalculator } from '../util/debt-calculator.js';
 import { stringToNum } from '../util/number-utils.js';
+
+// Please excuse some uses of underscore for code/HTML property clarity!
+/* eslint camelcase: ["error", {properties: "never"}] */
 
 const financialModel = {
 
@@ -18,7 +18,7 @@ const financialModel = {
      housing situation, etc) is stored in the stateModel, schoolModel */
   values: {},
 
-  createFinancialProperty: function( name, value ) {
+  createFinancialProperty: function( name ) {
     if ( !financialModel.values.hasOwnProperty( name ) ) {
       financialModel.values[name] = 0;
     }
@@ -36,6 +36,10 @@ const financialModel = {
     }
   },
 
+  /**
+   * extendValues - Update multiple values at once using an Object
+   * @param {Object} data - an Object of new financial values
+   */
   extendValues: data => {
     for ( const key in data ) {
       if ( financialModel.values.hasOwnProperty( key ) ) {
@@ -45,40 +49,34 @@ const financialModel = {
     financialModel.recalculate();
   },
 
+  /**
+   * recalculate - Public method that runs private recalculation
+   * subfunctions
+   */
   recalculate: () => {
     financialModel._calculateTotals();
     financialModel._calculateDebt();
     recalculateExpenses();
   },
 
+  /**
+   * _calculateTotals - Recalculate all relevant totals
+   */
   _calculateTotals: () => {
-    const totalKeys = {
-      totalDirectCosts: '',
-      totalIndirectCosts: '',
-      totalGrants: '',
-      totalScholarships: '',
-      totalFedLoans: '',
-      totalLoans: '',
-      totalSavings: '',
-      totalIncome: '',
-      totalContributions: '',
-      totalInstitutionalLoans: '',
-      totalWorkStudy: '',
-      totalPrivateLoans: ''
-    };
-
+    // TODO: Completely refactor this method
     let totalDirectCosts = 0;
     let totalIndirectCosts = 0;
     let totalGrants = 0;
     let totalScholarships = 0;
+    let totalFellowAssist = 0;
     let totalFedLoans = 0;
     let totalLoans = 0;
     let totalSavings = 0;
     let totalIncome = 0;
     let totalContributions = 0;
-    let totalInstitutionalLoans = 0;
+    let totalOtherLoans = 0;
     let totalWorkStudy = 0;
-    let totalPrivateLoans = 0;
+    const totalPrivateLoans = 0;
 
     // Calculate totals
     for ( const prop in financialModel.values ) {
@@ -93,12 +91,14 @@ const financialModel = {
         totalScholarships += value;
       } else if ( prop.substring( 0, 8 ) === 'savings_' ) {
         totalSavings += value;
+      } else if ( prop.substring( 0, 12 ) === 'fellowAssist' ) {
+        totalFellowAssist += value;
       } else if ( prop.substring( 0, 7 ) === 'income_' ) {
         totalIncome += value;
       } else if ( prop.substring( 0, 8 ) === 'fedLoan_' ) {
         totalFedLoans += value;
-      } else if ( prop.substring( 0, 10 ) === 'instiLoan_' ) {
-        totalInstitutionalLoans += value;
+      } else if ( prop.substring( 0, 10 ) === 'loan_' ) {
+        totalOtherLoans += value;
       } else if ( prop.substring( 0, 10 ) === 'workStudy_' ) {
         totalWorkStudy += value;
       }
@@ -106,7 +106,7 @@ const financialModel = {
 
     // Calculate more totals
     totalContributions = totalGrants + totalScholarships + totalSavings + totalIncome + totalWorkStudy;
-    totalLoans = totalFedLoans + totalInstitutionalLoans + totalPrivateLoans;
+    totalLoans = totalFedLoans + totalPrivateLoans + totalOtherLoans;
 
     // Update the model
     financialModel.values.total_directCosts = totalDirectCosts;
@@ -117,10 +117,11 @@ const financialModel = {
     financialModel.values.total_income = totalIncome;
     financialModel.values.total_costs = totalDirectCosts + totalIndirectCosts;
     financialModel.values.total_grantsScholarships = totalGrants + totalScholarships;
+    financialModel.values.total_fellowAssist = totalFellowAssist;
     financialModel.values.total_workStudy = totalWorkStudy;
     financialModel.values.total_otherResources = totalSavings + totalIncome;
     financialModel.values.total_fedLoans = totalFedLoans;
-    financialModel.values.total_schoolLoans = totalInstitutionalLoans;
+    financialModel.values.total_otherLoans = totalOtherLoans;
     financialModel.values.total_borrowing = totalLoans;
     financialModel.values.total_funding = totalContributions + totalLoans;
     financialModel.values.total_gap = financialModel.values.total_costs -
@@ -138,7 +139,8 @@ const financialModel = {
   },
 
   /**
-   * Import financial values from the schoolModel based on stateModel
+   * updateModelFromSchoolModel - Import financial values from the schoolModel
+   * based on stateModel
    */
   updateModelFromSchoolModel: () => {
     const rate = getStateValue( 'programRate' );
@@ -193,10 +195,15 @@ const financialModel = {
 
   },
 
+  /**
+   * calculateDebt - Recalculate the values of loan debt
+   */
   _calculateDebt: () => {
     const debtObject = debtCalculator( financialModel.values );
     for ( const key in debtObject ) {
-      financialModel.values[key] = debtObject[key];
+      if ( debtObject.hasOwnProperty( key ) ) {
+        financialModel.values[key] = debtObject[key];
+      }
     }
   },
 

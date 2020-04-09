@@ -16,6 +16,11 @@ const stateModel = {
     programHousing: null
   },
 
+  setValue: function( name, value ) {
+    stateModel.values[name] = value;
+    console.log( stateModel.values );
+  },
+
   init: () => {
     // PLACEHOLDER - Add more interesting stuff later
     stateModel.foo = 'bar';

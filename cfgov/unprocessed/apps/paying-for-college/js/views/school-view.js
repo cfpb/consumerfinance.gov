@@ -6,6 +6,7 @@ import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { updateSchoolData } from '../dispatchers/update-models.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { getSchoolValue } from '../dispatchers/get-model-values.js';
+import { updateFinancialView, updateGradMeterChart, updateRepaymentMeterChart, updateViewByProgramType } from '../dispatchers/update-view.js';
 
 
 const schoolView = {
@@ -57,6 +58,10 @@ const schoolView = {
 
       // Add schoolData to schoolModel
       updateSchoolData( iped );
+      updateFinancialView();
+      updateGradMeterChart();
+      updateRepaymentMeterChart();
+      schoolView.updateSchoolRadioButtons();
 
     }
   },
@@ -69,7 +74,11 @@ const schoolView = {
     // Update the model with program info
     const prop = input.getAttribute( 'data-state-item' );
     const value = input.value;
-    updateState.setProgramData( prop, value );
+    updateState.byProperty( prop, value );
+
+    if ( prop === 'programType' ) {
+      updateViewByProgramType( value );
+    }
 
     const checkedCount = schoolView._schoolInfo
       .querySelectorAll( 'input[checked="true"]' ).length;

@@ -1,9 +1,11 @@
 // This file contains the model for after-college expenses
-import { financialModel } from './financial-model.js';
+import { updateExpensesView, updateFinancialView } from '../dispatchers/update-view.js';
 import { getExpenses } from '../dispatchers/get-api-values.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
 import { stringToNum } from '../util/number-utils.js';
-import { updateExpensesView, updateFinancialView } from '../dispatchers/update-view.js';
+
+// Please excuse some uses of underscore for code/HTML property clarity!
+/* eslint camelcase: ["error", {properties: "never"}] */
 
 const expensesModel = {
   // Values of the currently selected region
@@ -12,13 +14,12 @@ const expensesModel = {
   // All data from the API
   rawData: {},
 
-
   /**
    * Calculate total monthly expenses
    */
   calculateTotals: () => {
     let totalExpenses = 0;
-    let remaining = 0;
+    const remaining = 0;
 
     for ( const prop in expensesModel.values ) {
       if ( prop.substring( 0, 5 ) === 'item_' ) {
@@ -28,8 +29,6 @@ const expensesModel = {
 
     expensesModel.values.total_expenses = totalExpenses;
     expensesModel.values.total_remainder = getFinancialValue( 'salary_monthly' ) - totalExpenses;
-
-    updateExpensesView();
   },
 
   /**
@@ -88,26 +87,30 @@ const expensesModel = {
       Retirement: 'item_retirement',
       Taxes: 'item_taxes',
       Transportation: 'item_transportation',
-      Other: 'item_other',
+      Other: 'item_other'
     };
 
     const salary = getFinancialValue( 'salary_annual' ) || 0;
     const salaryRange = expensesModel._getSalaryRange( salary );
 
-    for ( let key in propertyTranslator ) {
-      const value = stringToNum( expensesModel.rawData[key][region][salaryRange] );
-      expensesModel.values[propertyTranslator[key]] = Math.round( value / 12 );
+    for ( const key in propertyTranslator ) {
+      if ( propertyTranslator.hasOwnProperty( key ) ) {
+        let value = stringToNum(
+          expensesModel.rawData[key][region][salaryRange]
+        );
+        value = Math.round( value / 12 );
+        expensesModel.values[propertyTranslator[key]] = value;
+      }
     }
 
     if ( typeof expensesModel.values.item_childcare === 'undefined' ) {
       expensesModel.values.item_childcare = 0;
     }
     expensesModel.calculateTotals();
-    updateExpensesView();
   },
 
   /**
-   * Initialize the model, fetch values from API 
+   * Initialize the model, fetch values from API
    */
   init: function() {
     getExpenses()

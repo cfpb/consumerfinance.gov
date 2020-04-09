@@ -190,7 +190,7 @@ const horizontalBarOpts = {
     max: 45000,
     stackLabels: {
       enabled: true,
-      format: 'Total funding<br>${total:,.0f}',
+      format: 'Your funding<br>${total:,.0f}',
       align: 'right'
     },
     plotLines: [ {
@@ -260,13 +260,19 @@ const compareCostOfBorrowingOpts = {
 };
 
 const costOfBorrowingOpts = {
+  xAxis: {
+    categories: [
+      '10 year period',
+      '25 year period'
+    ]
+  },
   series: [ {
     name: 'Interest',
-    data: [ 0, 0 ],
+    data: [ 0 ],
     color: '#ffe1b9'
   }, {
     name: 'Amount borrowed',
-    data: [ 1, 1 ],
+    data: [ 1 ],
     color: '#ff9e1b'
   } ]
 };
@@ -434,20 +440,19 @@ const chartView = {
   updateCostOfBorrowingChart: () => {
     const totalBorrowingAtGrad = getFinancialValue( 'total_borrowingAtGrad' );
     const interest10years = getFinancialValue( 'debt_tenYearInterest' );
-    const interest25years = getFinancialValue( 'debt_twentyFiveYearInterest' );
 
     chartView.costOfBorrowingChart.yAxis[0].update( {
-      max: Math.floor( getFinancialValue( 'debt_twentyFiveYearTotal' ) * 1.10 )
+      max: Math.floor( getFinancialValue( 'debt_tenYearInterest' ) * 1.10 )
     } );
-    chartView.costOfBorrowingChart.series[0].setData( [ interest10years, interest25years ] );
-    chartView.costOfBorrowingChart.series[1].setData( [ totalBorrowingAtGrad, totalBorrowingAtGrad ] );
+    chartView.costOfBorrowingChart.series[0].setData( [ interest10years ] );
+    chartView.costOfBorrowingChart.series[1].setData( [ totalBorrowingAtGrad ] );
   },
 
   updateMakePlanChart: () => {
     const totalCosts = getFinancialValue( 'total_costs' );
     const totalFunding = getFinancialValue( 'total_funding' );
     const max = Math.max( totalCosts * 1.1, totalFunding * 1.1 );
-    const text = 'Cost of attendance<br>' + numberToMoney( { amount: totalCosts, decimalPlaces: 0 } );
+    const text = 'Your costs<br>' + numberToMoney( { amount: totalCosts, decimalPlaces: 0 } );
 
     chartView.makePlanChart.yAxis[0].update( {
       max: max,
@@ -473,7 +478,7 @@ const chartView = {
     const salary = getFinancialValue( 'salary_annual' );
     const max = Math.max( totalDebt * 1.1, salary * 1.1 );
 
-    const text = 'Median salary of<br>this school\'s graduates<br>' + numberToMoney( { amount: salary, decimalPlaces: 0 } );
+    const text = 'Median salary of<br>this school\'s recent<br>' + numberToMoney( { amount: salary, decimalPlaces: 0 } );
 
     chartView.maxDebtChart.yAxis[0].update( {
       min: 0,

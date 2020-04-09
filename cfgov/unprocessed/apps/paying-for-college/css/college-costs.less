@@ -1,7 +1,6 @@
-;
 .college-costs {
 
-	> .wrapper > .content_main {
+	& > .wrapper > .content_main {
 		padding-top: 0;
 		position: relative;
 	}
@@ -10,513 +9,516 @@
         content: none;
     }
 
-	& .college-costs_intro-segment {
-		padding-bottom: unit( 60px / @base-font-size-px, em );
+    .h4 {
+	    border-bottom: 1px solid @gray-20;
+    	margin-top: unit( 30px / @base-font-size-px, em );
+    }
+}
 
-		.m-hero {
-			margin-bottom: unit( 45px / @base-font-size-px, em );
-		}
+.hidden {
+	display: none;
+}
 
-		&.hidden {
-			display: none;
-		}
+.college-costs_intro-segment {
+	padding-bottom: unit( 60px / @base-font-size-px, em );
+
+	.m-hero {
+		margin-bottom: unit( 45px / @base-font-size-px, em );
+	}
+}
+
+.college-costs_app-segment {
+	display: none;
+	padding-bottom: unit( 60px / @base-font-size-px, em );
+
+	&.active {
+		display: block;
 	}
 
-	&_app-segment {
-		display: none;
-		padding-bottom: unit( 60px / @base-font-size-px, em );
+	.o-college-costs-nav {
+		border-left: 0px;
+	}
 
-		&.active {
-			display: block;
+	.o-college-costs-nav > ul {
+		border-top: 1px solid @gray-20;
+		padding-left: 0;
+
+		ul {
+			margin: 0;
 		}
 
-		.o-college-costs-nav {
-			border-left: 0px;
-		}
+		button {
+			background: none;
+			border: none;
+			padding: unit( 5px / @base-font-size-px, em ) 0;
+			padding-left: unit( 10px / @base-font-size-px, em );
+			text-align: left;
+			width: 100%;
 
-		.o-college-costs-nav > ul {
-			border-top: 1px solid @gray-20;
-			padding-left: 0;
-
-			ul {
-				margin: 0;
-			}
-
-			button {
-				border: none;
-				background: none;
-				padding: unit( 5px / @base-font-size-px, em ) 0;
-				padding-left: unit( 10px / @base-font-size-px, em );
-				text-align: left;
-				width: 100%;
-
-				&:focus {
-					outline: 0;
-					font-weight: 600;
-				}
-			}
-
-			li {
-				list-style: none;
-				margin: 0;
-			}
-
-			li.o-college-costs-nav__section {
-				border-bottom: 1px solid @gray-20;
-
-				& > button {
-					font-size: unit( 18px / @base-font-size-px, em );
-				}
-
-				// Non-active, non-open nav sub-items are hidden	
-				& > ul > li {
-					display: none;
-				}
-
-				&.active,
-				&.open {
-					> ul > li {
-						display: block;
-					}
-				}
-
-				&.active {
-					border-left: 3px solid @green;
-
-					& > button {
-						font-weight: 600;
-					}
-
-					> ul > li.active > button {
-						font-weight: 600;
-					}
-				}
+			&:focus {
+				font-weight: 600;
+				outline: 0;
 			}
 		}
 
-		.college-costs_tool-section {
-			display: none;
-			max-width: unit( 570px / @base-font-size-px, rem );
+		li {
+			list-style: none;
+			margin: 0;
+		}
+
+		li.o-college-costs-nav__section {
+			border-bottom: 1px solid @gray-20;
+
+			& > button {
+				font-size: unit( 18px / @base-font-size-px, em );
+			}
+
+			// Non-active, non-open nav sub-items are hidden	
+			& > ul > li {
+				display: none;
+			}
+
+			&.active,
+			&.open {
+				> ul > li {
+					display: block;
+				}
+			}
 
 			&.active {
-				display: block;
-			}
+				border-left: 3px solid @green;
 
-			& h3.header_bottom-line {
-				border-bottom: 1px solid @gray-40;
-				margin-top: unit( 30px / @base-font-size-px, em );
-			}
-
-			.header__spaced {
-				margin-top: unit( 30px / @base-font-size-px, em );
-			}
-
-			.costs {
-				&_button-section {
-					margin-bottom: unit( 30px / @base-font-size-px, em );
-
-					.a-btn.active {
-						background-color: @white;
-						color: @pacific;
-						border-color: @pacific;
-					}
+				& > button {
+					font-weight: 600;
 				}
 
-				&_content-section {
-					display: none;
-
-					&.active {
-						display: block;
-					}
-
-					&_content {
-						margin-bottom: unit( 30px / @base-font-size-px, em );
-					}
-				}
-			}
-
-			.expenses-item,
-			.financial-item {
-				margin-top: unit( 30px / @base-font-size-px, em );
-
-				&__spaced {
-					margin-top: unit( 45px / @base-font-size-px, em );
-				}
-
-				&__lined {
-					border-top: 1px solid @gray-60;
-					padding-top: unit( 10px / @base-font-size-px, em );
-				}
-
-				&_label-wrapper {
-					display: inline-block;
-				    box-sizing: border-box;
-				    border: solid transparent;
-				    border-width: 0;
-				    margin-right: -.25em;
-				    vertical-align: top;
-				    width: 50%;
-
-				    label {
-				    	font-weight: 500;
-				    }
-
-				    span.label-note {
-				    	display: block;
-					    font-size: unit( 14px / @base-font-size-px, em );
-				    	font-weight: normal;
-				    	margin-top: unit( 10px / @base-font-size-px, em );
-				    }
-
-				    span.static-label {
-				    	font-size: unit( 18px / @base-font-size-px, em );
-				    	font-weight: 500;
-				    }
-				}
-
-				&_input-wrapper {
-					display: inline-block;
-					box-sizing: border-box;
-				    border: solid transparent;
-				    border-width: 0 15px;
-				    margin-right: -.25em;
-				    vertical-align: top;
-				    text-align: right;
-				    width: 50%;
-
-				    input {
-				    	text-align: right;
-				    	width: 100%;
-				    }
-
-				    .o-expandable_cue > span {
-				    	margin-left: unit( 10px / @base-font-size-px, em );
-				    }
-				}
-
-				&_total {
-					font-weight: 500;
-					font-size: unit( 18px / @base-font-size-px, em );
-
-					&__debt {
-						color: @red;
-					}
-
-					&__large {
-						font-size: unit( 20px / @base-font-size-px, em );
-					}
-				}
-
-				.financial-note {
-					margin-top: unit( 15px / @base-font-size-px, em );
-				}
-
-			}
-
-			.expenses-item {
-				&_label-wrapper {
-					label {
-						font-weight: normal;
-					}
-				}
-			}
-
-			&_buttons {
-				margin-top: unit( 45px / @base-font-size-px, rem );
-
-				.btn__save {
-					background: nomne;
-					border: none;
-					font-weight: 500;
-					margin-left: unit( 30px / @base-font-size-px, em );
-					text-decoration: underline;
-				}
-			}
-
-			.m-notification {
-				margin-bottom: unit( 30px / @base-font-size-px, em );
-				margin-top: unit( 30px / @base-font-size-px, em );
-			}
-
-			.number-callout {
-				padding-top: unit( 10px / @base-font-size-px, em );
-				margin-top: unit( 20px / @base-font-size-px, em );
-
-				&__lined {
-					border-top: 1px solid @gray-40;
-				}
-
-				&_header {
-					font-size: unit( 16px / @base-font-size-px, em );
-					margin-bottom: 0;
-					text-transform: uppercase;
-				}
-
-				&_value {
-					font-size: 28px;
-				    font-weight: 600;
-				    margin-top: 0;
-				    margin-bottom: unit( 10px / @base-font-size-px, em );
-
-				    &.red {
-				    	color: @red;
-				    }
-				}
-
-				& + .number-callout {
-					margin-top: unit( 30px / @base-font-size-px, em );
-				}
-			}
-
-			&.make-a-plan {
-				&_gap {
-					color: @red;
-					font-weight: 500;
-				}
-
-				.other-borrowing-btns {
-					button {
-					    margin: unit( 10px / @base-font-size-px, em ) 0;
-					}
-				}
-
-				h3.other-loan-options {
-					font-size: unit( 16px / @base-font-size-px, em );
-					font-weight: 500;
-					margin-top: unit( 30px / @base-font-size-px, em );
-				}
-
-				.financial-item {
-					margin-top: 0em;
-				}
-
-				.o-expandable_content {
-					&:before {
-						border: none;
-					}
-					
-					.financial-item.form-group_item {
-						margin-top: 1em;
-					}
-				}
-			}
-
-			&.summary {
-				.summary_header {
-					margin-top: unit( 30px / @base-font-size-px, em );
-				}
-
-				& .financial-item__lined {
-					padding-bottom: unit( 10px / @base-font-size-px, em );
-					margin-top: 0;
-
-					&.financial-item__last {
-						border-bottom: 1px solid @gray-40;
-					}
-				}
-
-				.financial-item {
-					margin-top: 0;
-				}
-			}
-
-			.action-plan {
-				&_choices {
-					display: table;
-					margin-bottom: unit( 15px / @base-font-size-px, em );
-
-					.m-form-field {
-						background-color: @gray-10;
-						border: 1px solid white;
-						display: table-cell;
-						padding: 0;
-						width: 50%;
-
-						label {
-							padding: unit( 15px / @base-font-size-px, em );
-						}
-
-						&.highlighted {
-							background-color: @pacific-10;
-							border: 1px solid @pacific;
-						}
-					}
-					
-					&__spacer {
-						border-right: unit( 15px / @base-font-size-px, em ) solid white;
-					}
-				}
-
-				&_steps {
-					display: none;
-					padding-top: unit( 30px / @base-font-size-px, em );
-
-					&.active {
-						display: block;
-					}
-				}
-
-				&_feeling-gauge {
-					display: none;
-					margin-top: unit( 30px / @base-font-size-px, em );
-
-					&.active {
-						display: block;
-					}
-				}
-			}
-
-			.costs-not-covered {
-				&_title {
-					font-weight: 500;
-					text-transform: uppercase;
-				}
-				&_amount {
-					color: @red;
-					font-weight: 500;
-					font-size: unit( 18px / @base-font-size-px, em );
-				}
-				position: absolute;
-				top: 0;
-				right: 0;
-				
-				border-right: 5px solid @red;
-				margin-top: unit( 30px / @base-font-size-px, em );
-				padding: 0 unit( 10px / @base-font-size-px, em );
-				text-align: right;
-
-				&.stuck {
-					position: fixed;
-					right: 0px;
-    				top: 0px;
-				}
-			}
-
-			&.school-results {
-				&_basics {
-					display: table;
-					&__half {
-						display: table-cell;
-						width: 50%;
-					}
-				}
-
-				& .highcharts-plot-band {
-
-				    fill-opacity: 1;
-
-					&:first-child {
-						fill: #d14124;
-					}
-					&:nth-child(2) {
-						fill: #ff9e1b;
-					}
-					&:last-child {
-						fill: #257675;
-					}
-
-				}
-			}
-
-			#affording-your-loans_chart,
-			#max-debt-guideline_chart {
-				.highcharts-plot-line {
-					stroke: #20aa3f;
-					stroke-width: 3px;
-				}
-			}
-
-			#make-a-plan_chart {
-				.highcharts-plot-line {
-					stroke: #d14124;
-					stroke-width: 3px;
-				}
-			}
-
-			.finish {
-				.form-group_item {
-					margin-bottom: unit( 30px / @base-font-size-px, em );
-
-					textarea,
-					input {
-						margin-top: unit( 10px / @base-font-size-px, em );
-						width: 80%;
-					}
-				}
-
-				.restart {
-					margin-top: unit( 45px / @base-font-size-px, em );
+				> ul > li.active > button {
+					font-weight: 600;
 				}
 			}
 		}
 	}
 }
 
-#college-costs_school-search {
-	position: relative;
+.college-costs_tool-section {
+	display: none;
+	max-width: unit( 570px / @base-font-size-px, rem );
 
-	.school-search_start label {
-		font-weight: 600;
-		margin-bottom: unit( 15px / @base-font-size-px, em );
+	&.active {
+		display: block;
 	}
 
-	input {
-		width: 100%;
+	& h3.header_bottom-line {
+		border-bottom: 1px solid @gray-40;
+		margin-top: unit( 30px / @base-font-size-px, em );
 	}
 
-	#search__results {
-		display: none;
-		position: absolute;
-		background-color: white;
-		border: 1px solid black;
+	.header__spaced {
+		margin-top: unit( 30px / @base-font-size-px, em );
+	}
 
-		&.active {
-			display: block;
+	.costs {
+		&_button-section {
+			margin-bottom: unit( 30px / @base-font-size-px, em );
+
+			.a-btn.active {
+				background-color: @white;
+				border-color: @pacific;
+				color: @pacific;
+			}
 		}
 
-		ul {
-			margin: 0;
-			padding: 0;
+		&_content-section {
+			display: none;
 
-			li {
-				list-style: none;
-				margin: 0;
-				padding: 0;
-				
-				button {
-					background: none;
-					border: none;
-					padding: unit( 5px / @base-font-size-px, em ) unit( 30px / @base-font-size-px, em );
-					margin: 0;
-					text-align: left;
-				}				
+			&.active {
+				display: block;
+			}
 
-				&:hover {
-					background-color: @pacific-20;
-				}
-
-				p {
-
-				}
+			&_content {
+				margin-bottom: unit( 30px / @base-font-size-px, em );
 			}
 		}
 	}
 
-	.school-search_additional-info {
-		display: none;
+	.expenses-item,
+	.financial-item {
+		margin-top: unit( 30px / @base-font-size-px, em );
 
-		&.active {
-			display: block;
+		&__spaced {
+			margin-top: unit( 45px / @base-font-size-px, em );
 		}
 
-		.m-form-field {
-			margin-top: unit( 10px / @base-font-size-px, em );
+		&__lined {
+			border-top: 1px solid @gray-60;
+			padding-top: unit( 10px / @base-font-size-px, em );
+		}
+
+		&_label-wrapper {
+			display: inline-block;
+		    border-width: 0;
+		    border: solid transparent;
+		    box-sizing: border-box;
+		    margin-right: -.25em;
+		    vertical-align: top;
+		    width: 50%;
+
+		    label {
+		    	font-weight: 500;
+		    }
+
+		    span.label-note {
+		    	display: block;
+			    font-size: unit( 14px / @base-font-size-px, em );
+		    	font-weight: normal;
+		    	margin-top: unit( 10px / @base-font-size-px, em );
+		    }
+
+		    span.static-label {
+		    	font-size: unit( 18px / @base-font-size-px, em );
+		    	font-weight: 500;
+		    }
+		}
+
+		&_input-wrapper {
+			display: inline-block;
+			box-sizing: border-box;
+		    border-width: 0 15px;
+		    border: solid transparent;
+		    margin-right: -.25em;
+		    text-align: right;
+		    vertical-align: top;
+		    width: 50%;
+
+		    input {
+		    	text-align: right;
+		    	width: 100%;
+		    }
+
+		    .o-expandable_cue > span {
+		    	margin-left: unit( 10px / @base-font-size-px, em );
+		    }
+		}
+
+		&_total {
+			font-weight: 500;
+			font-size: unit( 18px / @base-font-size-px, em );
+
+			&__debt {
+				color: @red;
+			}
+
+			&__large {
+				font-size: unit( 20px / @base-font-size-px, em );
+			}
+		}
+
+		.financial-note {
+			margin-top: unit( 15px / @base-font-size-px, em );
+		}
+
+	}
+
+	.expenses-item {
+		&_label-wrapper {
+			label {
+				font-weight: normal;
+			}
 		}
 	}
 
-	h3.program-question {
-		font-size: unit( 18px / @base-font-size-px, em );
-		font-weight: 500;
-		margin-top: unit( 15px / @base-font-size-px, em );
+	&_buttons {
+		margin-top: unit( 45px / @base-font-size-px, rem );
+
+		.btn__save {
+			background: nomne;
+			border: none;
+			font-weight: 500;
+			margin-left: unit( 30px / @base-font-size-px, em );
+			text-decoration: underline;
+		}
 	}
+
+	.m-notification {
+		margin-bottom: unit( 30px / @base-font-size-px, em );
+		margin-top: unit( 30px / @base-font-size-px, em );
+	}
+
+	.number-callout {
+		padding-top: unit( 10px / @base-font-size-px, em );
+		margin-top: unit( 20px / @base-font-size-px, em );
+
+		&__lined {
+			border-top: 1px solid @gray-40;
+		}
+
+		&_header {
+			font-size: unit( 16px / @base-font-size-px, em );
+			margin-bottom: 0;
+			text-transform: uppercase;
+		}
+
+		&_value {
+			font-size: 28px;
+		    font-weight: 600;
+		    margin-top: 0;
+		    margin-bottom: unit( 10px / @base-font-size-px, em );
+
+		    &.red {
+		    	color: @red;
+		    }
+		}
+
+		& + .number-callout {
+			margin-top: unit( 30px / @base-font-size-px, em );
+		}
+	}
+
+	&.make-a-plan {
+		&_gap {
+			color: @red;
+			font-weight: 500;
+		}
+
+		.other-borrowing-btns {
+			button {
+			    margin: unit( 10px / @base-font-size-px, em ) 0;
+			}
+		}
+
+		h3.other-loan-options {
+			font-size: unit( 16px / @base-font-size-px, em );
+			font-weight: 500;
+			margin-top: unit( 30px / @base-font-size-px, em );
+		}
+
+		.financial-item {
+			margin-top: 0em;
+		}
+
+		.o-expandable_content {
+			&:before {
+				border: none;
+			}
+			
+			.financial-item.form-group_item {
+				margin-top: 1em;
+			}
+		}
+	}
+
+	&.summary {
+		.summary_header {
+			margin-top: unit( 30px / @base-font-size-px, em );
+		}
+
+		& .financial-item__lined {
+			padding-bottom: unit( 10px / @base-font-size-px, em );
+			margin-top: 0;
+
+			&.financial-item__last {
+				border-bottom: 1px solid @gray-40;
+			}
+		}
+
+		.financial-item {
+			margin-top: 0;
+		}
+	}
+
+	.action-plan {
+		&_choices {
+			display: table;
+			margin-bottom: unit( 15px / @base-font-size-px, em );
+
+			.m-form-field {
+				display: table-cell;
+				background-color: @gray-10;
+				border: 1px solid white;
+				padding: 0;
+				width: 50%;
+
+				label {
+					padding: unit( 15px / @base-font-size-px, em );
+				}
+
+				&.highlighted {
+					background-color: @pacific-10;
+					border: 1px solid @pacific;
+				}
+			}
+			
+			&__spacer {
+				border-right: unit( 15px / @base-font-size-px, em ) solid white;
+			}
+		}
+
+		&_steps {
+			display: none;
+			padding-top: unit( 30px / @base-font-size-px, em );
+
+			&.active {
+				display: block;
+			}
+		}
+
+		&_feeling-gauge {
+			display: none;
+			margin-top: unit( 30px / @base-font-size-px, em );
+
+			&.active {
+				display: block;
+			}
+		}
+	}
+
+	.costs-not-covered {
+		&_title {
+			font-weight: 500;
+			text-transform: uppercase;
+		}
+		&_amount {
+			color: @red;
+			font-weight: 500;
+			font-size: unit( 18px / @base-font-size-px, em );
+		}
+		position: absolute;
+		top: 0;
+		right: 0;
+		border-right: 5px solid @red;
+		margin-top: unit( 30px / @base-font-size-px, em );
+		padding: 0 unit( 10px / @base-font-size-px, em );
+		text-align: right;
+
+		&.stuck {
+			position: fixed;
+			right: 0px;
+			top: 0px;
+		}
+	}
+
+	&.school-results {
+		&_basics {
+			display: table;
+			&__half {
+				display: table-cell;
+				width: 50%;
+			}
+		}
+
+		& .highcharts-plot-band {
+
+		    fill-opacity: 1;
+
+			&:first-child {
+				fill: #d14124;
+			}
+			&:nth-child(2) {
+				fill: #ff9e1b;
+			}
+			&:last-child {
+				fill: #257675;
+			}
+		}
+	}
+
+	#affording-your-loans_chart,
+	#max-debt-guideline_chart {
+		.highcharts-plot-line {
+			stroke: #20aa3f;
+			stroke-width: 3px;
+		}
+	}
+
+	#make-a-plan_chart {
+		.highcharts-plot-line {
+			stroke: #d14124;
+			stroke-width: 3px;
+		}
+	}
+
+	.finish {
+		.form-group_item {
+			margin-bottom: unit( 30px / @base-font-size-px, em );
+
+			textarea,
+			input {
+				margin-top: unit( 10px / @base-font-size-px, em );
+				width: 80%;
+			}
+		}
+
+		.restart {
+			margin-top: unit( 45px / @base-font-size-px, em );
+		}
+	}
+}
+
+#college-costs_school-search {
+	position: relative;
+}
+
+.school-search_start label {
+	font-weight: 600;
+	margin-bottom: unit( 15px / @base-font-size-px, em );
+}
+
+input {
+	width: 100%;
+}
+
+#search__results {
+	display: none;
+	background-color: white;
+	border: 1px solid black;
+	position: absolute;
+
+	&.active {
+		display: block;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+
+		li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			
+			button {
+				background: none;
+				border: none;
+				padding: unit( 5px / @base-font-size-px, em ) unit( 30px / @base-font-size-px, em );
+				margin: 0;
+				text-align: left;
+			}				
+
+			&:hover {
+				background-color: @pacific-20;
+			}
+
+			p {
+
+			}
+		}
+	}
+}
+
+.school-search_additional-info {
+	display: none;
+
+	&.active {
+		display: block;
+	}
+
+	.m-form-field {
+		margin-top: unit( 10px / @base-font-size-px, em );
+	}
+}
+
+h3.program-question {
+	font-size: unit( 18px / @base-font-size-px, em );
+	font-weight: 500;
+	margin-top: unit( 15px / @base-font-size-px, em );
 }

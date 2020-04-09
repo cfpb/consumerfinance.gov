@@ -31,7 +31,7 @@ const debtCalculator = function( data ) {
     fedLoan_directUnsub: 'directUnsubsidized',
     privloan_school: 'privateLoan',
     rate_schoolLoan: 'privateLoanRate',
-    instiLoan_institutional: 'institutionalLoan',
+    loan_institutional: 'institutionalLoan',
     rate_institutionalLoan: 'institutionalLoanRate'
   };
 

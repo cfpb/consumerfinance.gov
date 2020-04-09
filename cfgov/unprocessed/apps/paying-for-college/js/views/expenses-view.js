@@ -3,13 +3,14 @@ import numberToMoney from 'format-usd';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
-import { updateAffordingChart } from '../dispatchers/update-view.js';
+import { stringToNum } from '../util/number-utils.js';
+import { updateAffordingChart, updateCostOfBorrowingChart } from '../dispatchers/update-view.js';
 import { updateExpense } from '../dispatchers/update-models.js';
 
 const expensesView = {
   _currentInput: null,
-  _expensesItems: null,
-  _expensesInputs: null,
+  _expensesItems: [],
+  _expensesInputs: [],
   _inputChangeTimeout: null,
 
   /**
@@ -20,7 +21,7 @@ const expensesView = {
     clearTimeout( expensesView._inputChangeTimeout );
     const elem = event.target;
     const name = elem.dataset.expensesItem;
-    let value = stringToNum( elem.value );
+    const value = stringToNum( elem.value );
 
     expensesView._currentInput = elem;
 
@@ -40,7 +41,7 @@ const expensesView = {
     }
   },
 
-   _addInputListeners: function() {
+  _addInputListeners: function() {
     expensesView._expensesInputs.forEach( elem => {
       const events = {
         keyup: this._handleInputChange,
@@ -83,13 +84,13 @@ const expensesView = {
   /**
    * Update the Expenses View
    */
-   updateExpensesView: () => {
+  updateExpensesView: () => {
     expensesView._updateExpensesItems();
     updateAffordingChart();
-   }
+  }
 
 };
 
 export {
   expensesView
-}
+};

@@ -13,23 +13,19 @@ const updateState = {
    * @param {string} item - Value of 'data-nav_item' attribute
    */
   activeSection: item => {
-    stateModel.values.activeSection = item;
+    stateModel.setValue( 'activeSection', item );
 
     navigationView.update();
   },
 
   getStarted: bool => {
     if ( bool === true ) {
-      stateModel.values.gotStarted = true;
+      stateModel.setValue( 'gotStarted', true );
     }
   },
 
-  setProgramData: function( prop, value ) {
-    stateModel.values[prop] = value;
-  },
-
   byProperty: function( prop, value ) {
-    stateModel.values[prop] = value;
+    stateModel.setValue( prop, value );
   }
 
 };

@@ -2,27 +2,47 @@
  * Update the values of models
  */
 
+import { constantsModel } from '../models/constants-model.js';
 import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { schoolModel } from '../models/school-model.js';
-import { constantsModel } from '../models/constants-model.js';
 import { stateModel } from '../models/state-model.js';
 
-const getFinancialValue = function( name ) {
+/**
+ * getFinancialValue - get the value of 'name' from the financialModel
+ * @param {string} name - Name of the property to retrieve
+ * @returns {number} value of the property
+ */
+function getFinancialValue( name ) {
   return financialModel.values[name];
-};
+}
 
-const getSchoolValue = function( name ) {
+/**
+ * getSchoolValue - get the value of 'name' from the schoolModel
+ * @param {string} name - Name of the property to retrieve
+ * @returns {(number|string)} value of the property
+ */
+function getSchoolValue( name ) {
   return schoolModel.values[name];
-};
+}
 
-const getExpensesValue = function( name ) {
+/**
+ * getExpensesValue - get the value of 'name' from the expensesModel
+ * @param {string} name - Name of the property to retrieve
+ * @returns {number} value of the property
+ */
+function getExpensesValue( name ) {
   return expensesModel.values[name];
-};
+}
 
-const getConstantsValue = function( name ) {
+/**
+ * getConstantsValue - get the value of 'name' from the constantsModel
+ * @param {string} name - Name of the property to retrieve
+ * @returns {(number|string)} value of the property
+ */
+function getConstantsValue( name ) {
   return constantsModel.values[name];
-};
+}
 
 /**
  * getStateValue - gets the property from the application state model
@@ -31,9 +51,9 @@ const getConstantsValue = function( name ) {
  *
  * @returns {string} The value of the property in the stateModel Object
  */
-const getStateValue = function( prop ) {
+function getStateValue( prop ) {
   return stateModel.values[prop];
-};
+}
 
 
 export {

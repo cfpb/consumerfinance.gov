@@ -86,7 +86,7 @@
                     <li><button data-nav_item="work-study">Work-study</button></li>
                     <li><button data-nav_item="federal-loans">Federal loans</button></li>
                     <li><button data-nav_item="school-loans">Other loans</button></li>
-                    <li><button data-nav_item="other-resources">Other resources</button></li>
+                    <li><button data-nav_item="other-resources">Other sources</button></li>
                 </ul>
             </li>
             <li class="o-college-costs-nav__section"><button data-nav_section="covering-costs">Covering your costs</button>
@@ -225,6 +225,15 @@
                     <label class="a-label" for="program-housing-radio_with-family">With family (you will pay rent/mortgage)</label>
                 </div>
 
+                <h3 class="program-question">Are you considered a dependent or independent student?</h3>
+                <div class="m-form-field m-form-field__radio">
+                    <input id="program-dependency-radio_dependent" type="radio" name="program-dependency" data-state-item="programDependency" class="a-radio" value="dependent">
+                    <label class="a-label" for="program-dependency-radio_dependent">Dependent</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input id="program-dependency-radio_independent" type="radio" name="program-dependency" data-state-item="programDependency" class="a-radio" value="independent">
+                    <label class="a-label" for="program-dependency-radio_independent">Independent</label>
+                </div>
             </div>
 
             <div class="college-costs_tool-section_buttons">
@@ -259,7 +268,7 @@
                         <label class="form-label" for="costs__tuition-fees">
                             Tuition and fees
                         </label>
-<span class="label-note"> Depends on which courses you take</span>
+                    <span class="label-note"> Depends on which courses you take</span>
                     </div>
                     <div class="financial-item_input-wrapper">
                         <input type="text" id="costs__tuition-fees" name="costs__tuition-fees" data-financial-item="dirCost_tuition" autocorrect="off" value="0">
@@ -343,8 +352,9 @@
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message">Money saving tips</div>
                      <ul>
-                        <li> Finish on time. This typically requires earning 30 credits a year for an associate’s or bachelor’s. Work with your academic adviser to choose classes that add up to a degree. Graduating on time will help minimize your costs, maximize your aid eligibility, and get you into a full-time job sooner.</li>
-                        <li>Ask if this school offers block tuition (also known as flat rate tuition). If so, it may cost the same to take 18 credits as 12 credits, for example.</li>
+                        <li> Finish on time. This typically requires earning 30 credits a year for an associate’s or bachelor’s. Work with your academic adviser to choose classes that add up to a degree. Graduating on time (or early) will help minimize your costs, maximize your aid eligibility, and get you into a full-time job sooner.</li>
+                        <li>Find out if this school offers block tuition (also known as flat rate tuition). If so, it may cost the same to take anywhere from 12 to 18 credits, for example.</li>
+            <li> If your costs will be higher than the school predicts, contact the financial aid office. You may be eligible for more aid. </li>
                     </ul>
 
         </div>
@@ -420,6 +430,43 @@
                 </div>
             </div>
 
+            <h4 class="h4">Servicemember benefits</h4>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="grants__mta">
+                        Military Tuition Assistance
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="grants__mta" name="grants__mta" data-financial-item="grant_mta" autocorrect="off" value="0">
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="grants__gibill">
+                        GI Bill
+                    </label>
+                    <span class="label-note">We recommend checking out the <a href="https://www.va.gov/gi-bill-comparison-tool/" target="_blank" class="external-link">GI Bill&reg; Comparison Too</a> too.</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="grants__gibill" name="grants__gibill" data-financial-item="grant_gibill" autocorrect="off" value="0">
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="grants_serviceOther">
+                        Other (Yellow Ribbon, etc.)
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="grants_serviceOther" name="grants_serviceOther" data-financial-item="grantserviceOther" autocorrect="off" value="0">
+                </div>
+            </div>
+
+
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <span class="financial-item_total">Total grants</span>
@@ -482,14 +529,14 @@
                 </div>
             </div>
 
-<div class="m-notification m-notification__visible m-notification__success">
+            <div class="m-notification m-notification__visible m-notification__success">
                 {{ svg_icon('dollar-round') }}
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message">Money saving tips</div>
                      <ul>
                         <li> To protect your funding, find out the requirements of your grants and scholarships. For example, you may need to stay enrolled in a minimum number of courses or get high enough grades to meet a minimum GPA. </li>
-                        <li> You should also ask if it is renewable (available in future years). If so, ask how many years—typically the limit will be enough for on-time graduation—and if you will need to reapply next year (like FAFSA for federal grants and loans). If not, you will need to find replacement funding next year. </li>
-            <li> Don’t hesitate to contact the financial aid office for more information. They want to help you! They will not take your funding for asking too many questions. And forming relationships with the financial aid staff may help you find more funding opportunities in the future. </li>
+                        <li> You should also ask if it is renewable (available in future years). If so, ask how many years—typically the limit will be enough for on-time graduation—and if you will need to reapply next year (like FAFSA for federal grants and loans). If it is for one year only, you will need to find replacement funding next year. </li>
+            <li> Seriously, don’t hesitate to contact the financial aid office for more information. They want to help you! And forming relationships with the financial aid staff may help you find more funding opportunities in the future. </li>
                     </ul>
 
         </div>
@@ -502,7 +549,6 @@
                     <div class="h4 m-notification_message">Know before you go</div>
                     <ul>
                         <li> Applying for a grant or scholarship does not guarantee you will get it. You may need to reapply each year (like with FAFSA for federal grants and loans). Apply early for a better shot at funds that are first come, first served.</li>
-            <li>Know the requirements of your grants and scholarships. For example, you may need to stay enrolled in a minimum number of courses or keep your grades above a minimum GPA. </li>
                         <li>Your grant and scholarship funding can go up or down from year to year, depending on your financial situation, your major/program, the terms of the funding, and other factors.</li>
                         <li>Receiving private scholarships can reduce your eligibility for grants or scholarships from the school.</li>
                         <li>Scholarship money may be taxed as income if it exceeds the total of certain expenses. Ask the financial aid office if this might be an issue for you.</li>
@@ -521,10 +567,10 @@
             <h2>Work-study</h2>
             <p>Work-study programs are part-time jobs on campus. If your offer includes work-study, that means you are eligible to apply for work-study jobs—a job will not be lined up for you. The work-study amount in your offer is the maximum you can earn. It is estimated and <strong>not guaranteed.</strong></p>
 
-<div class="m-notification m-notification__visible">
+            <div class="m-notification m-notification__visible">
                 {{ svg_icon('information-round') }}
                 <div class="m-notification_content">
-                    Not sure where your grants and scholarships are listed? One way to identify grants and scholarships on your offer is to use the Hechinger Report’s OfferLetterDECODER, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)
+                    Not sure where your work-study listed? One way to identify work-study on your offer is to use the Hechinger Report’s OfferLetterDECODER, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)
                 </div>
             </div>
 
@@ -555,13 +601,13 @@
             </div>
 
 
-<div class="m-notification m-notification__visible m-notification__success">
+            <div class="m-notification m-notification__visible m-notification__success">
                 {{ svg_icon('dollar-round') }}
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message">Money saving tips</div>
                     <ul>
                         <li> Ask if there is help available for finding a work-study job (like a student employment service). You may be able to use your work-study to compete for student jobs that are not labeled work-study.</li>
-                        <li> There can be long-term benefits to work-study besides reducing the amount you need to borrow. Exposure to new types of work might put you on a new career path. Building relationships with professors can help you find scholarships, internships, and other opportunities.</li>
+                        <li> There can be long-term benefits to work-study besides reducing the amount you need to borrow, like exposure to new types of work and relationships with professors who can help you apply for scholarships, internships, and other opportunities.</li>
                     </ul>
                 </div>
             </div>
@@ -572,8 +618,56 @@
                     <div class="h4 m-notification_message">Know before you go</div>
                     <ul>
                         <li>If you do not find a work-study job in your first term, you may lose your eligibility in the future.</li>
-                        <li>At most schools, work-study money will not be available to cover direct costs (tuition, on-campus housing, meal plans), because you pay those bills before you have earned the work-study funds. Ask the financial aid office about your options for getting paid for work-study.</li>
+                        <li>Ask the financial aid office about the options for getting paid for work-study. At most schools, work-study money cannot be used to cover direct costs (like tuition, on-campus housing, and meal plans), because you must pay those bills <strong>before</strong> you earn the work-study funds.</li>
                     </ul>
+                </div>
+            </div>
+
+            <div class="grants-scholarships_grad-fellowships" data-program-type-content="grad">
+                <h3>Fellowships and assistantships</h3>
+
+                <p>In addition to work-study, graduate students may be eligible to earn additional funding from fellowships and/or assistantships.</p>
+
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <label class="form-label" for="fellowAssist__fellowship">
+                            Fellowship funding
+                        </label>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <input type="text" id="fellowAssist__fellowship" name="fellowAssist__fellowship" data-financial-item="fellowAssist_fellowship" autocorrect="off" value="0">
+                    </div>
+                </div>
+
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <label class="form-label" for="fellowAssist__assistantship">
+                            Assistantship funding
+                        </label>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <input type="text" id="fellowAssist__assistantship" name="fellowAssist__assistantship" data-financial-item="fellowAssist_assistantship" autocorrect="off" value="0">
+                    </div>
+                </div>
+
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
+                        <span class="financial-item_total">Total fellowship and assistantship funding</span>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <span class="financial-item_total" data-financial-item="total_fellowAssist">$99,999</span>
+                    </div>
+                </div>
+
+                <div class="m-notification m-notification__visible m-notification__success">
+                    {{ svg_icon('dollar-round') }}
+                    <div class="m-notification_content">
+                        <div class="h4 m-notification_message">Money saving tips</div>
+                        <ul>
+                            <li>The IRS has different rules for fellowships and assistantships. Ask the financial aid office about the tax implications of your funding. </li>
+                            <li>Depending on your field of study, you may be able to apply for fellowship funding from outside the school.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -587,23 +681,30 @@
 
             <h2>Federal Loans</h2>
 
-            <p> Any student loan must be repaid, with interest. Federal loans include some borrower protections and repayment options that are not typically offered by private loans.</p>
+            <p> Any student loan must be repaid, with interest. Federal loans include some borrower protections and repayment options that are not typically offered by private and other non-federal loans.</p>
 
-<div class="m-notification m-notification__visible">
+            <div class="federal-loans_grad-content" data-program-type-content="grad">
+                <p>Graduate students have access to two types of federal loans, Direct Unsubsidized and Grad PLUS. For both, there are limits on how much you can borrow. We will focus on Direct Unsubsidized here; you will have the opportunity to add Grad PLUS to your plan later.</p>
+            </div>
+
+            <div class="federal-loans_undergrad-content" data-program-type-content="undergrad">
+                <p>Undergraduates have access to two types of federal loans, <strong>Direct Subsidized</strong> and <strong>Direct Unsubsidized</strong>. For both, there are limits on how much you can borrow, and you will start repayment 6 months after you leave school or drop below half-time enrollment. Subsidized loans are cheaper than unsubsidized loans because the government pays the accruing interest until you enter repayment. You must demonstrate financial need on your FAFSA to qualify for subsidized loans, but anyone can take out unsubsidized loans.</p>
+            </div>
+
+            <p>You can borrow less than your school offers and can request more loan funds later if you need to. Only borrow what you need. Entering the amount here does not obligate you to borrow this money.</p>
+
+
+            <div class="m-notification m-notification__visible">
                 {{ svg_icon('information-round') }}
                 <div class="m-notification_content">
-                    Not sure where your grants and scholarships are listed? One way to identify grants and scholarships on your offer is to use the Hechinger Report’s OfferLetterDECODER, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)
+                    Not sure where your loans are listed? One way to identify loans on your offer is to use the Hechinger Report’s OfferLetterDECODER, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)
                 </div>
             </div>
 
-
-            <p>Undergraduates have access to two types of federal loans, <strong>Direct Subsidized</strong> and <strong>Direct Unsubsidized</strong>. For both, there are limits on how much you can borrow, and you will start repayment 6 months after you leave school or drop below half-time enrollment. Subsidized loans are cheaper than unsubsidized loans because the government pays the accruing interest until you enter repayment. Your FAFSA must show a certain amount of need to get subsidized loans, but anyone can take out unsubsidized loans. </p>
-
-<div class="m-notification m-notification__visible m-notification__error">
+            <div class="m-notification m-notification__visible m-notification__error">
                 {{ svg_icon('information-round') }}
                 <div class="m-notification_content">
-                    Only borrow what you need. You can borrow less than your school offers and request more loan funds later if you need to. Entering the amount here does not obligate you to borrow this money.
-                </div>
+                    You can borrow less than your school offers and can request more loan funds later if you need to. Only borrow what you need. Entering the amount here does not obligate you to borrow this money.</div>
             </div>
 
 
@@ -626,7 +727,9 @@
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <span class="static-label" for="loans__directSubRate">Interest rate (%)</span>
+                    <span class="label-note">For loans disbursed between July 1, 2019, and June 30, 2020</span>
                 </div>
+        
                 <div class="financial-item_input-wrapper">
                     <span id="loans__directSubRate" class="financial-item" data-financial-item="rate_directSub">9.99%</span>
                 </div>
@@ -654,6 +757,7 @@
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <span class="static-label" for="">Interest rate</span>
+                    <span class="label-note">For loans disbursed between July 1, 2019, and June 30, 2020</span>
                 </div>
                 <div class="financial-item_input-wrapper">
                     <span class="financial-item" data-financial-item="rate_directUnsub">9.99%</span>
@@ -695,9 +799,11 @@
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message">Know before you go</div>
                     <ul>
-                        <li> Do not spend funds from student loans on things not included in the cost of attendance. (For example, buying or leasing a new car is not a covered cost, but gas and tolls are.) It is financially risky, since student loans are very difficult to get rid of in bankruptcy. </li>
-                        <li>Federal loans do not provide a government guarantee of the quality of the school. Federal loans do not guarantee that you will get a good job when you graduate.</li>
+                        <li>Your loans require that you use them only for things included in the cost of attendance. (For example, buying or leasing a new car is not a covered cost, but gas and tolls are.) Ask the financial aid office for more guidance.</li>
+                        <li> As the Department of Education explains, “Just because a school participates in the federal student aid programs doesn’t mean the federal government has endorsed the quality of education the school offers. To find out whether there have been any complaints about the school, contact your local Better Business Bureau&reg;, state higher education agency, or the consumer protection division of your state attorney general’s office. Check with the agency that licenses or accredits the school to see whether it meets required standards.”</li>
                         <li>You have to pay back your loans even if you don’t graduate.</li>
+                        <li> It is very difficult to get student loans discharged in bankruptcy and you should not rely on that option.</li>
+
                     </ul>
                 </div>
             </div>
@@ -728,12 +834,39 @@
 
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="loans__schoolLoan">
-                        Institutional loan
+                    <label class="form-label" for="loans__stateLoan">
+                        Loan from your state
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="loans__schoolLoan" name="loans__schoolLoan" data-financial-item="instiLoan_institutional" autocorrect="off" value="0">
+                    <input type="text" id="loans__stateLoan" name="loans__stateLoan" data-financial-item="loan_state" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__stateLoanRate">Interest rate (%)</label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input id="loans__stateLoanRate" name="loans__stateLoanRate" data-financial-item="rate_state" value="9.99%">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__stateLoanFee">Loan fee (%)</label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input id="loans__stateLoanFee" name="loans__stateLoanFee" data-financial-item="fee_stateLoan" value="9.99%">
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__schoolLoan">
+                        Loan from this school
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="loans__schoolLoan" name="loans__schoolLoan" data-financial-item="loan_institutional" autocorrect="off" value="0">
                 </div>
             </div>
             <div class="financial-item form-group_item">
@@ -754,10 +887,37 @@
             </div>
             <div class="financial-item form-group_item financial-item__lined">
                 <div class="financial-item_label-wrapper financial-item_total">
-                    <span class="financial-item_total financial-item_total__large">Total institutional loans</span>
+                    <span class="financial-item_total financial-item_total__large">Total loans from your state, this school, or a nonprofit</span>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__large financial-item_total" data-financial-item="total_schoolLoans">$99,999</span>
+                    <span class="financial-item_total financial-item_total__large financial-item_total" data-financial-item="total_otherLoans">$99,999</span>
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__nonprofitLoan">
+                        Loan from a nonprofit
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="loans__nonprofitLoan" name="loans__nonprofitLoan" data-financial-item="loan_nonprofit" autocorrect="off" value="0">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__nonprofitLoanRate">Interest rate (%)</label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input id="loans__nonprofitLoanRate" name="loans__nonprofitLoanRate" data-financial-item="rate_nonprofit" value="9.99%">
+                </div>
+            </div>
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="loans__nonprofitLoanFee">Loan fee (%)</label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input id="loans__nonprofitLoanFee" name="loans__nonprofitLoanFee" data-financial-item="fee_nonprofit" value="9.99%">
                 </div>
             </div>
 
@@ -790,8 +950,8 @@
         </section>
 
         <section class="college-costs_tool-section" data-tool-section="other-resources">
-            <h2>Other resources (not on your offer)</h2>
-            <p>Thank you for entering everything from your financial aid offer. What other resources are available to you?</p>
+            <h2>Other sources (not on your offer)</h2>
+            <p>Thank you for entering everything from your financial aid offer. What other funding sources are available to you?</p>
 
             <div class="costs-not-covered">
                 <div class="costs-not-covered_title">Costs not covered yet</div>
@@ -803,18 +963,30 @@
                     <label class="form-label" for="savings__personal">
                         Personal funds
                     </label>
-<span class="label-note">Do you have money set aside for school this year?</span>
+                    <span class="label-note">Do you have money set aside for school this year?</span>
                 </div>
                 <div class="financial-item_input-wrapper">
                     <input type="text" id="savings__personal" name="savings__personal" data-financial-item="savings_personal" autocorrect="off" value="0">
                 </div>
             </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="savings__collegeSavings">
+                    College savings plan (like 529 plans)
+                </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="savings__collegeSavings" name="savings__collegeSavings" data-financial-item="savings_collegeSavings" autocorrect="off" value="0">
+                </div>
+            </div>
+
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
                     <label class="form-label" for="savings__family">
                         Family contribution
                     </label>
-<span class="label-note"> What can your family afford to spend on your education this year?</span>
+                    <span class="label-note"> What can your family afford to spend on your education this year?</span>
 
                 </div>
                 <div class="financial-item_input-wrapper">
@@ -854,7 +1026,7 @@
 
             <div class="financial-item form-group_item financial-item__lined">
                 <div class="financial-item_label-wrapper financial-item_total">
-                    <span class="financial-item_total financial-item_total__large">Total other resources</span>
+                    <span class="financial-item_total financial-item_total__large">Total from other sources</span>
                 </div>
                 <div class="financial-item_input-wrapper">
                     <span class="financial-item_total financial-item_total__large financial-item_total" data-financial-item="total_otherResources">$99,999</span>
@@ -867,8 +1039,7 @@
                     <div class="h4 m-notification_message">Money saving tip</div>
                     <ul>
             <li>Some states offer grants and funding for specific costs related to education, like childcare. Ask the financial aid office.</li> 
-            <li> Depending on your circumstances and location, you may be eligible for government benefits like TANF (welfare), SNAP (food stamps), Medicaid, and subsidized housing. Ask the financial aid office if you need help affording one of these necessities.</li>
-            <li> Income-share agreements (ISAs) are a new source of education funding that require students to repay a percentage of what they earn after school. To compare ISAs to loans, ask for an estimate of how much you’ll repay in total and an equivalent interest rate, along with other fees and requirements. </li>
+            <li> Depending on your circumstances and location, you may be eligible for government benefits like TANF (welfare), SNAP (food stamps), Medicaid, and subsidized housing. Reach out to the financial aid office if you are struggling to afford necessities.</li>
             </ul>
                 </div>
             </div>
@@ -879,7 +1050,7 @@
                 <div class="m-notification_content">
                     <div class="h4 m-notification_message">Did you know?</div>
                         <ul>
-            <li>Studies suggest that working up to 20 hours a week is associated with better grades, but students who work more than 20 hours a week are more likely to struggle academically. Low grades put financial aid eligibility at risk.</li>
+            <li> Working while in school can help you cut down the amount you need to borrow, but studies suggest that working more than 20 hours a week is associated with a lower GPA. Low grades put financial aid eligibility at risk.</li>
             <li>If you currently receive government benefits, going to school can affect how much you receive. Ask your caseworker or the financial aid office for help, and plan accordingly.</li>
             </ul>
                 </div>
@@ -902,33 +1073,34 @@
 
             <p> Next you will make a plan to cover remaining costs. Since you will probably use loans to pay for school—most students do—it’s important to understand how they work. This page will overview how student loans work and their potential benefits and risks.</p> 
 
-<h3>Reducing the cost of student loans</h3>
-            
+            <h3>Reducing the cost of student loans</h3>
+                
             <p> Student loans are money for education that you pay back with interest. That means you'll pay more than you originally borrowed.</p> 
 
-        <p>For example, if you borrow $10,000 in unsubsidized loans with 4% annual interest, you will accrue $400 in interest each year. Suppose you borrow that $10,000 in September 2020 and graduate in May 2024. When you enter repayment 6 months later, in November 2024, you’ll owe a total of $11,700. For a subsidized loan, you would enter repayment owing just the original $10,000. For both subsidized and unsubsidized loans, you will accrue interest while you gradually pay down the debt.</p> 
-            
-            <p>To save money on the cost of student loans, you can choose from four strategies:</p> 
+            <p> For example, if you borrow $10,000 in unsubsidized loans with 4% annual interest, you will accrue $400 in interest each year before you enter repayment. So if you borrow that $10,000 in September 2020, graduate in May 2024, and enter repayment 6 months later (November 2024), you will accrue about $1,700 in interest and owe a total of $11,700 at that time. (If it’s a subsidized loans, you will owe just the original $10,000 when you enter repayment – and then start accruing interest as you gradually pay down the debt.)</p> 
+                
+            <p>To save money on the cost of student loans, there are four strategies:</p> 
             
             <ul>
                 <li><strong>borrow less</strong></li>
                 <li><strong> shop around</strong> for lower interest rates (this will take research and additional loan applications)</li>
-         <li><strong>pay down interest</strong> on unsubsidized debt before repayment begins (to avoid <em>capitalization</em>—interest on interest)</li>
-                <li><strong>make bigger monthly payments</strong> to repay your loans faster.</li> 
+                 <li><strong>pay down interest</strong> on unsubsidized debt before repayment begins (to avoid <em>capitalization</em>—interest on interest)</li>
+                <li> repay your loans faster by making <strong>bigger monthly payments</strong> (depending on your federal loan repayment plan).</li> 
             </ul>
             
-            <p>As this graph shows, someone with about $30,000 in student loans (typical for graduates with bachelor’s degrees) will save more than $10,000 in interest by repaying their loan in 10 years instead of 25 years.</p> 
+            <p>As this graph shows, someone with about $30,000 in student loans (typical for college undergraduates) will save more than $10,000 in interest by repaying their loan in 10 years instead of 25 years.</p> 
             
+            <h4>The price of borrowing $30,000: the faster you repay your debt, the less it will cost</h4>
             <div id="compare-cost-of-borrowing_chart"></div>
 
             <h3>Potential benefits and risks</h3>
             <p>So why take out student loans? A degree can open up more career options and increase your future earnings. Successfully repaying your student loans can help build your credit history. If higher education helps you reach your goals, the cost of student loans may be a good investment in your future—if you can afford to repay them.</p>
 
-            <p>But be aware of the financial tradeoffs you’ll face when you leave school and enter repayment:</p>
+            <p>But be aware of the tradeoffs you’ll face when you leave school and enter repayment:</p>
 
             <ul>
-                <li><strong>You will owe monthly payments for many years.</strong> The average repayment period for the typical amount of debt is 20 years. These payments will take up money in your budget that you won’t be able to spend on other things.</li>
-                <li><strong>Missing payments can keep you from other goals.</strong> If you miss a payment deadline, your credit score might go down. Lower credit scores can make credit cards, home mortgages, and auto loans harder to get approved for and more expensive due to higher interest rates. (If you’re having trouble affording your payments, contact your servicer. Federal loans offer income-driven repayment plans.)</li>
+                <li><strong>You will owe monthly payments for many years.</strong> The average repayment period for the typical amount of debt is 20 years. These payments will take up money in your budget that you won’t be able to spend on other things, like saving for emergencies, retirement, or large purchases likes homes and cars.</li>
+                <li><strong>Missing payments can keep you from other goals.</strong> If you can’t afford your payments and miss a payment deadline, your credit score might go down. Lower credit scores can make credit cards, home mortgages, and auto loans harder to get approved for and more expensive due to higher interest rates. </li>
                 <li><strong>Repaying student loans is the only way you’re guaranteed to get rid of them.</strong> While loan forgiveness programs do exist for federal loans, they’re not guaranteed. It is very difficult to get rid of student loans in bankruptcy, and you should not rely on that option.</li>
             </ul>
 
@@ -956,7 +1128,7 @@
                 </div>
             </div>
 
-            <h3 class="h4">Cost of attendance vs. funding</h3>
+            <h3 class="h4">Your costs vs. your funding</h3>
 
             <div id="make-a-plan_chart"></div>
 
@@ -1110,6 +1282,36 @@
                             </div>
                         </div>
 
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__gibill">
+                                    GI Bill
+                                </label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input type="text" id="plan__gibill" name="plan__gibill" data-financial-item="grant_gibill" autocorrect="off" value="0">
+                            </div>
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__mta">
+                                    Military Tuition Assistance
+                                </label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input type="text" id="plan__mta" name="plan__mta" data-financial-item="grant_mta" autocorrect="off" value="0">
+                            </div>
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__serviceMemberOther">
+                                    Other servicemember benefits
+                                </label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input type="text" id="plan__serviceMemberOther" name="plan__serviceMemberOther" data-financial-item="grants_serviceOther" autocorrect="off" value="0">
+                            </div>
+                        </div>
                    
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
@@ -1122,7 +1324,8 @@
                             </div>
                         </div>
 
-<div class="financial-item form-group_item">
+
+                        <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
                                 <label class="form-label" for="plan__schoolScholarships">
                                     School scholarship(s)
@@ -1166,7 +1369,7 @@
                             </span>
                         </div>
 <div class="financial-note">
-                            <strong>Pursue a work-study position:</strong> Working up to 20 hours a week is associated with better grades and can provide other benefits.
+                            <strong>Pursue a work-study position:</strong> Working can reduce borrowing and provide other benefits, as long as it doesn’t interfere with academic progress.
                         </div>    
 
                     </button>
@@ -1189,7 +1392,7 @@
                             title="Expand content">
                         <div class="financial-item_label-wrapper">
                             <label class="form-label" for="plan__otherResources">
-                                Other Resources
+                                Other sources
                             </label>
                         </div>
                         <div class="financial-item_input-wrapper">
@@ -1207,19 +1410,28 @@
                         <div class="financial-note">
                             <p><strong>Ask about tuition payment plans:</strong> If the school offers a no-cost or low-cost installment plan, you and your family may be able to budget for paying your tuition gradually over time. Ask the financial aid office. </p>
 
-                <p><strong>Look for non-work-study jobs:</strong> Working up to 20 hours a week is associated with better grades and can provide other benefits.</p>
-                            <p><strong>Find more cash:</strong> Can you contribute more from savings or work? Can anyone in your family help you?</p> 
+                        <p><strong>Find more cash:</strong> Can you contribute more from savings or work? Would your employer contribute to your education? Can anyone in your family help you?</p> 
                         </div>    
                     </button>
                     <div class="o-expandable_content">
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
                                 <label class="form-label" for="plan__personalSavings">
-                                    Personal savings
+                                    Personal funds
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
                                 <input type="text" id="plan__personalSavings" name="plan__personalSavings" data-financial-item="savings_personal" autocorrect="off" value="0">
+                            </div>
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__collegeSavingsPlan">
+                                    Personal funds
+                                </label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input type="text" id="plan__collegeSavingsPlan" name="plan__collegeSavingsPlan" data-financial-item="savings_collegeSavings" autocorrect="off" value="0">
                             </div>
                         </div>
                         <div class="financial-item form-group_item">
@@ -1353,11 +1565,11 @@
                             title="Expand content">
                         <div class="financial-item_label-wrapper">
                             <label class="form-label" for="XXX">
-                                Other loans
+                                Loans from your state, this school, or a nonprofit
                             </label>
                         </div>
                         <div class="financial-item_input-wrapper">
-                            <span class="financial-item_total__debt" data-financial-item="total_schoolLoans">$99,999</span>
+                            <span class="financial-item_total__debt" data-financial-item="total_otherLoans">$99,999</span>
                             <span class="o-expandable_header-right o-expandable_link">
                                 <span class="o-expandable_cue o-expandable_cue-open">
                                     <span class="u-visually-hidden-on-mobile">{{ svg_icon('edit') }} Edit</span>
@@ -1369,19 +1581,46 @@
                         </div>
 
                         <div class="financial-note">
-                        <strong>Borrow more from your state, this school, or a nonprofit:</strong> Contact the financial aid office to find out more. Remember, these loans may not offer the same protections as federal student loans.
+                        <strong>Increase this borrowing:</strong> Contact the financial aid office to find out more. Remember, these loans may not offer the same protections as federal student loans.
                         </div>  
                     </button>
 
                     <div class="o-expandable_content">
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
-                                <label class="form-label" for="plan__schoolLoan">
-                                    Institutional loan
+                                <label class="form-label" for="plan__stateLoan">
+                                    Loan from your state
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
-                                <input type="text" id="plan__schoolLoan" name="plan__schoolLoan" data-financial-item="instiLoan_institutional" autocorrect="off" value="0">
+                                <input type="text" id="plan__stateLoan" name="plan__stateLoan" data-financial-item="loan_state" autocorrect="off" value="0">
+                            </div>
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__stateLoanRate">Interest rate (%)</label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input id="plan__stateLoanRate" name="plan__stateLoanRate" data-financial-item="rate_state" value="9.99%">
+                            </div>
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__stateLoanFee">Loan fee (%)</label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input id="plan__stateLoanFee" name="plan__stateLoanFee" data-financial-item="fee_stateLoan" value="9.99%">
+                            </div>
+                        </div>
+
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__schoolLoan">
+                                    Loan from this school
+                                </label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input type="text" id="plan__schoolLoan" name="plan__schoolLoan" data-financial-item="loan_institutional" autocorrect="off" value="0">
                             </div>
                         </div>
                         <div class="financial-item form-group_item">
@@ -1400,12 +1639,47 @@
                                 <input id="plan__schoolLoanFee" name="plan__schoolLoanFee" data-financial-item="fee_institutionalLoan" value="9.99%">
                             </div>
                         </div>
+                        <div class="financial-item form-group_item financial-item__lined">
+                            <div class="financial-item_label-wrapper financial-item_total">
+                                <span class="financial-item_total financial-item_total__large">Total loans from your state, this school, or a nonprofit</span>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <span class="financial-item_total financial-item_total__large financial-item_total" data-financial-item="total_otherLoans">$99,999</span>
+                            </div>
+                        </div>
+
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__nonprofitLoan">
+                                    Loan from a nonprofit
+                                </label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input type="text" id="plan__nonprofitLoan" name="plan__nonprofitLoan" data-financial-item="loan_nonprofit" autocorrect="off" value="0">
+                            </div>
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__nonprofitLoanRate">Interest rate (%)</label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input id="plan__nonprofitLoanRate" name="plan__nonprofitLoanRate" data-financial-item="rate_nonprofit" value="9.99%">
+                            </div>
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__nonprofitLoanFee">Loan fee (%)</label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input id="plan__nonprofitLoanFee" name="plan__nonprofitLoanFee" data-financial-item="fee_nonprofit" value="9.99%">
+                            </div>
+                        </div>                        
                     </div>
                 </div>
 
-                <h3 class="other-loan-options">Other loan options</h3>
+                <h3 class="other-loan-options">Additional loan options</h3>
  
-                <p> If you still have uncovered costs after working with the financial aid office to use up all the options listed above, you and your family have two more loan options to consider: </p>
+                <p> If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider: </p>
                 <ul>
                     <li><strong> Federal parent PLUS loan </strong>: For dependent students at participating schools, parents and stepparents may be able to apply for a parent PLUS loan from the U.S. Department of Education. Check with the financial aid office before applying for this loan.</li>
             <li><strong>Private student loan</strong>: You or a family member can apply for a private student loan from a bank or credit union. Students without credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>
@@ -1456,20 +1730,23 @@
                 <div class="number-callout_value"><span data-financial-item="debt_totalAtGrad">$53,500</span></div>
             </div>
             <p>Assuming similar borrowing each year</p>
+            <p class="max-debt-guideline_uncovered-costs-note">Since you have <span data-financial-item="total_gap">$Xxxx</span> in uncovered costs, this projection may underestimate your debt.</p>
 
             <div class="number-callout">
-                <h4 class="number-callout_header">Median first-year salary of this school's graduates</h4>
+                <h4 class="number-callout_header">Median salary of this school’s recent students</h4>
                 <div class="number-callout_value"><span data-financial-item="salary_annual">$48,200</span></div>
             </div>
+    <p> Median earnings of students working and not enrolled 6 years after starting at this school—includes students who did not graduate</p>
 
-            <h4>Your projected debt compared to the 6 year median salary of this school's graduates</h4>
+            <h4>Your projected debt vs. the median salary of recent students</h4>
             <div id="max-debt-guideline_chart"></div>
 
             <div class="m-notification m-notification__visible m-notification__error">
                 {{ svg_icon('information-round') }}
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message"> Your projected total debt is more than the median first-year salary of this school’s graduates.</div>
-                    <p> Your projected total debt is <span data-financial-item="total_debtRuleGap">$XXXX</span> higher than the median salary of this school’s students six years after enrollment. Your actual salary will depend on many different factors, including your field of work and where you live. Visit the BLS Wage Data site for more information.</p>
+                    <div class="h4 m-notification_message"> Your projected total debt is more than the median salary of this school’s recent students.</div>
+                    <p> Your projected total debt is <span data-financial-item="total_debtRuleGap">$XXXX</span> higher than the median salary of this school’s students six years after they first enrolled.</p>
+                    <p>Your projected total debt is not higher than the median salary of this school’s recent students. </p>
                 </div>
             </div>
 
@@ -1482,7 +1759,7 @@
         <section class="college-costs_tool-section" data-tool-section="cost-of-borrowing">
             <h2>What will interest cost me?</h2>
 
-            <p> This page depicts the total cost of borrowing if you repay your debt in 10 years on the standard repayment plan.</p>
+            <p> This page depicts the total cost of borrowing if you repay your debt over 10 years on the standard repayment plan.</p>
 
             <div id="cost-of-borrowing_chart"></div>
 
@@ -1700,77 +1977,93 @@
         <section class="college-costs_tool-section school-results" data-tool-section="school-results">
             <h2>Compare the school to others</h2>
 
-            <p>Now that you understand how much debt you’re considering, let’s look at some statistics that indicate how well the school serves students. You’re investing a lot—make sure it pays off.</p>
+            <div class="school-results_grad-content" data-program-type-content="grad">
+                <p>Now that you understand how much debt you’re considering, make sure to research how well the school serves students. You’re investing a lot—make sure it pays off.</p>
+                <p>Ask the school to provide the metrics you care about, such as:</p>
+                <ul>
+                    <li>On-time completion rate</li>
+                    <li>Job placement rate</li>
+                    <li>Loan default rate</li>
+                    <li>Loan repayment rate</li>
+                    <li>Persistence and retention rate</li>
+                </ul>
+                <p>You should consider asking multiple schools for this information, so you can compare this school’s results.</p>
+            </div>
 
-            <h3 class="header_bottom-line">School basics</h3>
 
-            <div class="school-results_basics">
-                <div class="school-results_basics__half">
-                    <div class="school-fact">
-                        <strong>Location:</strong>
-                        <span data-school-item="location">Lubbock, TX</span>
+            <div class="school-results_undergrad-content" data-program-type-content="undergrad">
+                <p>Now that you understand how much debt you’re considering, let’s look at some statistics that indicate how well the school serves students. You’re investing a lot—make sure it pays off.</p>
+
+                <h3 class="header_bottom-line"><span data-school-item="name"></span></h3>
+
+                <div class="school-results_basics">
+                    <div class="school-results_basics__half">
+                        <div class="school-fact">
+                            <strong>Location:</strong>
+                            <span data-school-item="location">Lubbock, TX</span>
+                        </div>
+                        <div>
+                            <strong>Type:</strong>
+                            <span data-school-item="control">Public University</span>
+                        </div>
+                        <div>
+                            <strong>Student Body:</strong>
+                            <span data-school-item="studentBody">30,330</span>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Type:</strong>
-                        <span data-school-item="control">Public University</span>
-                    </div>
-                    <div>
-                        <strong>Student Body:</strong>
-                        <span data-school-item="studentBody">30,330</span>
+                    <div class="school-results_basics__half">
+                        <div>
+                            <strong>Highest degree offered:</strong>
+                            <span data-school-item="highestDegree">PhD</span>
+                        </div>
+                        <div>
+                            <strong>Number of Programs:</strong>
+                            <span data-school-item="programCount">53</span>
+                        </div>
+                        <div>
+                            <strong>Most popular programs:</strong>
+                            <span data-school-item="popularPrograms">Business, Management, Marketing and Related Support Services</span>
+                        </div>
                     </div>
                 </div>
-                <div class="school-results_basics__half">
-                    <div>
-                        <strong>Highest degree offered:</strong>
-                        <span data-school-item="highestDegree">PhD</span>
-                    </div>
-                    <div>
-                        <strong>Number of Programs:</strong>
-                        <span data-school-item="programCount">53</span>
-                    </div>
-                    <div>
-                        <strong>Most popular programs:</strong>
-                        <span data-school-item="popularPrograms">Business, Management, Marketing and Related Support Services</span>
+
+                <div class="m-notification m-notification__visible m-notification__warning">
+                    {{ svg_icon('information-round') }}
+                    <div class="m-notification_content">
+                        This school is under Heightened Cash Monitoring by the U.S. Department of Education. <a href="">Find out more.</a>
                     </div>
                 </div>
-            </div>
-
-            <div class="m-notification m-notification__visible m-notification__warning">
-                {{ svg_icon('information-round') }}
-                <div class="m-notification_content">
-                    This school is under Heightened Cash Monitoring by the U.S. Department of Education. <a href="">Find out more.</a>
+                <h4>Graduation Rate</h4>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="grad-rate_control"></span></div>
+                    <div><span data-school-item="name"></span>'s graduation rate is <strong><span data-school-item="grad-rate_control"></strong></span>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
                 </div>
-            </div>
-            <h4>Graduation Rate</h4>
-            <div class="school-results_rank-display">
-                <div class="big-percentile"><span data-school-item="grad-rate_control"></span></div>
-                <div><span data-school-item="name"></span>'s graduation rate is <strong><span data-school-item="grad-rate_control"></strong></span>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
-            </div>
-            <div class="school-results_cohort-buttons">
-                <p>Compare <span data-school-item="name"></span>'s rate to the rates of these groups of schools:</p>
-                <div>
-                    <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]</button>
+                <div class="school-results_cohort-buttons">
+                    <p>Compare <span data-school-item="name"></span>'s rate to the rates of these groups of schools:</p>
+                    <div>
+                        <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]</button>
+                    </div>
                 </div>
-            </div>
 
-            <div id="school-results_grad-meter" class="college-costs_meter-graph"></div>
+                <div id="school-results_grad-meter" class="college-costs_meter-graph"></div>
 
-            <h4>Repayment Rate</h4>
-            <div class="school-results_rank-display">
-                <div class="big-percentile"><span data-school-item="repayment_control"></span></div>
-                <div><span data-school-item="name"></span>'s graduation rate is <strong><span data-school-item="repayment_control"></strong></span>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
-            </div>
-            <div class="school-results_cohort-buttons">
-                <p>Compare <span data-school-item="name"></span>'s rate to the rates of these groups of schools:</p>
-                <div>
-                    <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="cohortRankByControl">Public/Private</button>
+                <h4>Repayment Rate</h4>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="repayment_control"></span></div>
+                    <div><span data-school-item="name"></span>'s graduation rate is <strong><span data-school-item="repayment_control"></strong></span>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
                 </div>
-            </div>
+                <div class="school-results_cohort-buttons">
+                    <p>Compare <span data-school-item="name"></span> to other [4-year] schools that are also:</p>
+                    <div>
+                        <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="cohortRankByControl">Public/Private</button>
+                    </div>
+                </div>
 
-            <div id="school-results_repayment-meter" class="college-costs_meter-graph"></div>
+                <div id="school-results_repayment-meter" class="college-costs_meter-graph"></div>
+            </div>
 
 
 
@@ -1781,14 +2074,69 @@
         </section>
 
         <section class="college-costs_tool-section summary" data-tool-section="summary">
-            <h2>Review your financing plan</h2>
+            <h2>Review your plan and projected outcomes</h2>
 
             <p>Here is an overview of this school’s costs, your plan for covering them, the debt you are considering, and the school’s results on a few key metrics. As you look over these numbers again, think about whether you are feeling good about going to this school with this financial plan. If you have multiple offers, use this summary to compare them.</p>
 
             <button class="a-btn">Print summary</button>
             <button class="a-btn a-btn__secondary">Save as a link</button>
 
-            <h3 class="summary_header">Your offer letter</h3>
+            <h3 class="summary_header">School and living situation</h3>
+            <div class="financial-item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        School
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_text" data-school-item="school">School name</span>
+                </div>
+            </div>
+
+            <div class="financial-item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Program type
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_text" data-school-item="programType">[program type]</span>
+                </div>
+            </div>
+
+            <div class="financial-item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Number of years
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_text" data-school-item="programLength">[program length]</span>
+                </div>
+            </div>
+
+            <div class="financial-item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Tuition type
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_text" data-school-item="programRate">[program rate]</span>
+                </div>
+            </div>
+
+            <div class="financial-item financial-item__lined">
+                <div class="financial-item_label-wrapper">
+                    <span class="static-label">
+                        Where do you plan to live?
+                    </span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_text" data-school-item="housing">[housing]</span>
+                </div>
+            </div>
+            <h3 class="summary_header">Your financial aid offer</h3>
 
             <div class="o-expandable-group">
                 <div class="o-expandable o-expandable__padded">
@@ -1796,7 +2144,7 @@
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
                                 <span class="static-label">
-                                    Total cost of attendance
+                                    Your estimated total cost this year
                                 </span>
                             </div>
                             <div class="financial-item_input-wrapper">
@@ -2445,7 +2793,7 @@
 
                 <h4>3. Research the details of your grants and scholarships.</h4>
 
-                <p>Read or ask about the requirements of each grant and scholarship. </p>
+                <p>Read or ask about the requirements of each grant and scholarship. Ask if they are they renewable for following years—if not, you’ll need to find replacement funding next year. </p>
 
                 <h4>4. Make a budget.</h4>
 
@@ -2453,34 +2801,34 @@
 
         <h4>5. Double check that you’ll have enough money when you need it.</h4>
 
-                <p>If you have uncovered direct costs, talk to the financial aid office about options like tuition installment plans. Or can you (or your family) start saving for these now? </p> 
+                <p>If you have uncovered direct costs, talk to the financial aid office about options to reduce the amount due at the beginning of the school year, like tuition installment plans. Or can you (or your family) start saving for these now? </p> 
 
                 <h4>6. Accept the loans you want.</h4>
 
                 <p> More paperwork ahead! You’ll also need to do entrance counseling for federal loans. Remember, you don’t need to accept all the loans you’re offered or the full amount.</p>
 
-                <h4>7. Know how many credits you already have and make a plan to graduate on time. </h4>
-
-                <p> Make sure you get credit for your AP, IB, dual-enrollment, and transfer courses. Work with an academic adviser to stay on track for on-time graduation.  If you will start school with more than a few credits, ask if any of your funding this year will be affected if you reach second- or third-year student status. </p>
-
-        <h4>8. Ask about getting credits from a more affordable school.</h4>
-
-                <p>If you’re going to a 4-year school, reach out to your academic advisor about taking core requirements at community college. Make sure they will transfer and count towards your degree.</p>
-
-
-                <h4>9. If you need them, apply for federal parent PLUS or private student loans.</h4>
-
-                <p>To get the best deal for your situation, read the fine print and shop around for the lowest interest rates and fees. You’ll probably need a cosigner for private loans.</p>
-
-                
-
-                <h4>10. Put a reminder in your calendar to fill out FAFSA on October 1.</h4>
+        <h4>7. Put a reminder in your calendar to fill out FAFSA on October 1.</h4>
 
                 <p>If you’ll be in school next year, you’ll need to start this process again in a few months. </p>
 
-                <h4>11. Set another reminder to visit the financial aid office every semester.</h4>
+                <h4>8. Set another reminder to visit the financial aid office every semester.</h4>
 
-                <p>Ask about new opportunities for funding. For example, some scholarships are only open to certain majors or only for upperclassmen.</p> 
+                <p>Ask about new opportunities for funding. For example, some scholarships are only open to certain majors or only for upperclassmen.</p>
+
+                <h4>9. Know how many credits you already have and make a plan to graduate on time. </h4>
+
+                <p> Make sure you get credit for your AP, IB, dual-enrollment, and transfer courses. Work with an academic adviser to stay on track for on-time graduation.</p>
+
+            <h4>10. Ask about getting credits from a more affordable school.</h4>
+
+                <p>Reach out to your academic advisor about taking core requirements at community college. Make sure they will count towards your degree. (And be strategic about when you take them – if you start school with enough credits to count as a second- or third-year student, you may be disqualified from grants and scholarships for first-year students.)</p>
+
+
+                <h4>11. If you need them, apply for additional loans.</h4>
+
+                <p>To get the best deal for your situation, read the fine print and shop around for the lowest interest rates and fees. You’ll probably need a cosigner for private loans.</p>
+
+               
 
 
 
@@ -2492,17 +2840,17 @@
                 <h4>1. Ask about getting credits from a more affordable school.</h4>
                 <p>Reach out to your academic advisor about options like taking core requirements at community college.</p>
 
-                <h4>2. Reduce your indirect costs.</h4>
+                <h4>2. Reduce your living costs.</h4>
                 <p>Can you live at home? Stick to public transit?</p> 
 
                 <h4>3. Look for more grants and scholarships.</h4>
                 <p>There are always more available, even if school starts in a week or two! Scholarship Finder is one place to look</p>
 
                 <h4>4. Consider working, if you weren’t going to.</h4>
-                <p>Remember, up to 20 hours a week is associated with better grades.</p>
+                <p> While working can reduce borrowing and provide enriching experiences, remember that over 20 hours a week is associated with lower grades.</p>
 
                 <h4>5. Think about other programs at this school.</h4>
-         <p> Choose a major that will open the door to more lucrative career fields.</p>
+         <p> You might want to consider choosing a major that will open the door to more lucrative career fields.</p>
 
                 <h4>6. Explore other schools.</h4>
                 <p>Even if this is the only school you applied to, it’s not your only option. For example, if you are pursuing a bachelor’s degree, you can start at community college this year and plan to apply for a transfer next year.</p>
@@ -2551,7 +2899,21 @@
                 </div>
             </div>
 
-            <h3>Was this tool helpful?</h3>
+            <h3>Did this tool help you understand your financial aid offer?</h3>
+
+            <div class="form-group_item">
+                <input type="radio" name="save_was-this-helpful">
+                <input type="radio" name="save_was-this-helpful">
+                <input type="radio" name="save_was-this-helpful">
+            </div>
+
+            <h3>Did this tool help you understand the potential impact of student loans?</h3>
+
+            <div class="form-group_item">
+                <input type="radio" name="save_was-this-helpful">
+                <input type="radio" name="save_was-this-helpful">
+                <input type="radio" name="save_was-this-helpful">
+            </div>
 
             <div class="form-group_item">
                 <div class="">

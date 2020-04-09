@@ -1,12 +1,12 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
+import { updateAffordingChart, updateCostOfBorrowingChart, updateMakePlanChart, updateMaxDebtChart } from '../dispatchers/update-view.js';
 import numberToMoney from 'format-usd';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { closest } from '../../../../js/modules/util/dom-traverse';
-import { createFinancial, updateFinancial, updateFinancialsFromSchool, recalculateFinancials } from '../dispatchers/update-models.js';
+import { createFinancial, recalculateFinancials, updateExpensesView, updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
 import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
-import { getStateValue, getFinancialValue } from '../dispatchers/get-model-values.js';
-import { updateCostOfBorrowingChart, updateMakePlanChart, updateMaxDebtChart, updateAffordingChart } from '../dispatchers/update-view.js';
+import { getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { updateState } from '../dispatchers/update-state.js';
 
 const financialView = {
@@ -16,6 +16,8 @@ const financialView = {
   _currentInput: null,
   _costsOfferButtons: null,
   _actionPlanChoices: null,
+  _gradProgramContent: null,
+  _undergradProgramContent: null,
 
   /**
    * Listeners for INPUT fields and radio buttons
@@ -142,6 +144,7 @@ const financialView = {
       updateMakePlanChart();
       updateMaxDebtChart();
       updateAffordingChart();
+      updateExpensesView();
     }
   },
 
@@ -203,6 +206,29 @@ const financialView = {
   },
 
   /**
+    * updateViewByProgramType - Update the financial view to reflect program type
+    * @param {String} programType - Selected program level
+    */
+  updateViewByProgramType: function( programType ) {
+    console.log( 'updateViewByProgramType: ' + programType );
+    if ( programType === 'graduate' ) {
+      this._gradProgramContent.forEach( elem => {
+        elem.classList.remove( 'hidden' );
+      } );
+      this._undergradProgramContent.forEach( elem => {
+        elem.classList.add( 'hidden' );
+      } );
+    } else {
+      this._undergradProgramContent.forEach( elem => {
+        elem.classList.remove( 'hidden' );
+      } );
+      this._gradProgramContent.forEach( elem => {
+        elem.classList.add( 'hidden' );
+      } );
+    }
+  },
+
+  /**
     * initializeFinancialValues - Create financial model values based on the input
     * fields that exist in the financial view
     */
@@ -219,6 +245,8 @@ const financialView = {
     this._costsOfferButtons = document.querySelectorAll( '.costs_button-section button' );
     this._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field' );
     this._actionPlanSeeSteps = document.getElementById( 'action-plan_see-your-steps' );
+    this._gradProgramContent = document.querySelectorAll( '[data-program-type-content="grad"]' );
+    this._undergradProgramContent = document.querySelectorAll( '[data-program-type-content="undergrad"]' );
     this._addInputListeners();
     this._addButtonListeners();
     this.initializeFinancialValues();

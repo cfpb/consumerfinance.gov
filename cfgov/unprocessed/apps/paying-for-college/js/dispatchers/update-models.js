@@ -18,44 +18,47 @@ import { updateGradMeterChart, updateRepaymentMeterChart } from '../dispatchers/
   * @param {} value - The new value of the property
   */
 
-const updateFinancial = function( name, value ) {
+function updateFinancial( name, value ) {
   financialModel.setValue( name, value );
-};
+}
 
-const createFinancial = function( name, value ) {
+function createFinancial( name, value ) {
   financialModel.createFinancialProperty( name, value );
-};
+}
 
-const recalculateFinancials = () => {
+function recalculateFinancials() {
   financialModel.recalculate();
-};
+}
 
-const updateExpense = function( name, value ) {
+function updateExpense( name, value ) {
   expensesModel.setValue( name, value );
-};
+}
 
-const recalculateExpenses = function() {
+function recalculateExpenses() {
   expensesModel.calculateTotals();
 }
 
 const updateSchoolData = function( iped ) {
-  getSchoolData( iped )
-    .then( resp => {
-      const data = JSON.parse( resp.responseText );
+  return new Promise( ( resolve, reject ) => {
+    getSchoolData( iped )
+      .then( resp => {
+        const data = JSON.parse( resp.responseText );
 
-      for ( const key in data ) {
-        schoolModel.createSchoolProperty( key, data[key] );
-      }
+        for ( const key in data ) {
+          schoolModel.setValue( key, data[key] );
+        }
 
-      financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
-      financialModel.setValue( 'salary_monthly', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) / 12 );
+        financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+        financialModel.setValue( 'salary_monthly', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) / 12 );
 
-      financialView.updateFinancialItems();
-      updateGradMeterChart();
-      updateRepaymentMeterChart();
-      schoolView.updateSchoolRadioButtons();
+        resolve( true );
 
-    } );
+      } )
+      .catch( function( error ) {
+        reject( error );
+        // console.log( 'An error occurred!', error );
+      } );
+  } );
 };
 
 /**
