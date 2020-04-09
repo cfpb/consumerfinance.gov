@@ -14,6 +14,7 @@ from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
 from flags.views import FlaggedTemplateView
+from mmt_my_money_calendar.views import ServiceWorkerView
 from wagtailautocomplete.urls.admin import (
     urlpatterns as autocomplete_admin_urls
 )
@@ -37,7 +38,6 @@ from v1.views import (
     password_reset_confirm, welcome
 )
 from v1.views.documents import DocumentServeView
-from mmt_my_money_calendar.views import ServiceWorkerView
 
 
 try:
