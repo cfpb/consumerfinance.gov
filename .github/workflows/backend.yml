@@ -22,7 +22,7 @@ jobs:
         env:
           POSTGRES_USER: cfpb
           POSTGRES_PASSWORD: cfpb
-          POSTGRES_DB: cfgov_test
+          POSTGRES_DB: cfgov
         ports:
         - 5432:5432
         # needed because the postgres container does not provide a healthcheck
