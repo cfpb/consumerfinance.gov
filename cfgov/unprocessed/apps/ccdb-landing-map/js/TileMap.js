@@ -277,16 +277,19 @@ export function tooltipFormatter() {
 // eslint-disable-next-line max-lines-per-function, require-jsdoc
 export function _drawLegend( chart ) {
   const bins = chart.options.bins;
-  const marginTop = chart.margin[0] || 0;
-  const boxWidth = 50;
-  const boxHeight = 15;
-  const boxPadding = 1;
+  let boxWidth = 65;
+  const boxHeight = 17;
+  let boxPadding = 5;
+  const beCompact = chart.chartWidth < 600;
+  if ( beCompact ) {
+    boxWidth = 45;
+    boxPadding = 1;
+  }
 
   /* https://api.highcharts.com/class-reference/Highcharts.SVGRenderer#label
      boxes and labels for legend buckets */
   // main container
   const legendContainer = chart.renderer.g( 'legend-container' )
-    .translate( 10, marginTop )
     .add();
 
   const legendText = chart.renderer.g( 'legend-title' )
@@ -298,21 +301,23 @@ export function _drawLegend( chart ) {
     .add( legendText );
 
   // horizontal separator line
-  chart.renderer.path( [ 'M', 0, 0, 'L', bins.length * ( boxWidth + boxPadding ), 0 ] )
-    .attr( {
-      'class': 'separator',
-      'stroke-width': 1,
-      'stroke': 'gray'
-    } )
-    .translate( 0, 25 )
-    .add( legendText );
+  const sepWidth = bins.length * ( boxWidth + boxPadding );
+  chart.renderer.path( [ 'M', 0, 0, 'L', sepWidth, 0 ] )
+  .attr( {
+    'class': 'separator',
+    'stroke-width': 1,
+    stroke: 'gray'
+  } )
+  .translate( 0, 25 )
+  .add( legendText );
 
   // what legend represents
   const labelTx = 'Map shading: <span class="type">' +
     chart.options.legend.legendTitle + '</span>';
   chart.renderer
-    .label( labelTx, 0, 28, null, null, null, true, false, 'legend-description' )
-    .add( legendText );
+    .label(labelTx, 0, 28, null, null, null, true, false,
+      'legend-description')
+    .add(legendText);
 
   const labelDates = `Dates: <span class="type">${ calculateDateInterval() }` +
     '</span>';
@@ -322,7 +327,7 @@ export function _drawLegend( chart ) {
 
   // bars
   const legend = chart.renderer.g( 'legend__tile-map' )
-    .translate( 3, 64 )
+    .translate( 7, 64 )
     .add( legendContainer );
 
   for ( let i = 0; i < bins.length; i++ ) {
@@ -339,9 +344,10 @@ export function _drawLegend( chart ) {
       .add( g );
 
     chart.renderer
-      .text( bin.name, 2, boxHeight - 2 )
-      .addClass( 'legend-text' )
-      .add( g );
+    .text( beCompact ? bin.shortName : bin.name, 0, boxHeight )
+    .addClass( 'legend-text' )
+    .translate( 3, -3 )
+    .add( g );
   }
 }
 
@@ -388,7 +394,10 @@ class TileMap {
     const options = {
       bins,
       chart: {
-        styledMode: true
+        styledMode: true,
+        marginTop: 30,
+        marginRight: 0,
+        marginLeft: 0
       },
       colors,
       colorAxis: {
