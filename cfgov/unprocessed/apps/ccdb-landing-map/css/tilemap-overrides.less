@@ -22,8 +22,10 @@
         text-align: center;
         cursor: default;
 
-        &.deselected {
-          color: @gray
+        &.hover {
+          .abbr, .value {
+            text-decoration: underline;
+          }
         }
 
         .abbr {
@@ -39,6 +41,23 @@
             font-size: 9px;
           });
         }
+      }
+    }
+
+    .highcharts-map-series {
+      .highcharts-point {
+        stroke: none;
+      }
+
+      :not(.highcharts-point-hover) {
+        &.empty {
+          stroke: rgba(231, 232, 233, 1);
+        }
+      }
+
+      .highcharts-point-hover {
+        stroke: rgba(0, 45, 114, 1);
+        stroke-width: 2px !important;
       }
     }
 

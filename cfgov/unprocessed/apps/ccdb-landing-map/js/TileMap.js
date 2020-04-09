@@ -1,7 +1,10 @@
+import * as d3 from 'd3-selection';
 import Highcharts from 'highcharts/highmaps';
 import { STATE_TILES } from './constants';
 import accessibility from 'highcharts/modules/accessibility';
 import moment from 'moment';
+
+const WHITE = '#ffffff';
 
 /**
  * helper function to get date interval for legend
@@ -79,7 +82,7 @@ export function getPerCapitaBins( data, colors ) {
   if ( max === 0 ) return [];
 
   const step = ( max - min ) / binCount;
-  const bins = [ { from: 0, to: step, color: '#fff', name: '>0' } ];
+  const bins = [ { from: 0, to: step, color: WHITE, name: '>0' } ];
 
   for ( let i = 0, curr = min; i < binCount; i++, curr += step ) {
     curr = parseFloat( curr.toFixed( 2 ) );
@@ -114,9 +117,13 @@ export function processMapData( data, bins ) {
   } );
 
   data = data.map( function( obj ) {
+    const color = getColorByValue( obj.displayValue, bins );
+    if ( color === WHITE ) {
+      obj.className = 'empty';
+    }
     return {
       ...obj,
-      color: getColorByValue( obj.displayValue, bins ),
+      color,
       path: STATE_TILES[obj.name]
     };
   } );
@@ -131,7 +138,7 @@ export function processMapData( data, bins ) {
  * @returns {string} color hex or rgb code for a color
  */
 export function getColorByValue( value, bins ) {
-  let color = '#ffffff';
+  let color = WHITE;
   for ( let i = 0; i < bins.length; i++ ) {
     if ( value > bins[i].from ) {
       color = bins[i].color;
@@ -157,12 +164,29 @@ export function clickHandler( isPerCapita, t ) {
 }
 
 /**
+ * callback function for mouseout a point to remove hover class from tile label
+ */
+export function mouseoutPoint() {
+  const name = '.tile-' + this.name;
+  d3.select( name ).classed( 'hover', false );
+}
+
+/**
+ * callback function for mouseover point to add hover class to tile label
+ */
+export function mouseoverPoint() {
+  const name = '.tile-' + this.name;
+  d3.select( name ).classed( 'hover', true );
+}
+
+/**
  * callback function to format the individual tiles in HTML
  * @returns {string} html output
  */
 export function tileFormatter() {
   const value = this.point.displayValue.toLocaleString();
-  return '<div class="highcharts-data-label-state">' +
+  return '<div class="highcharts-data-label-state tile-' + this.point.name +
+    ' ">' +
     '<span class="abbr">' + this.point.name + '</span>' +
     '<br />' +
     '<span class="value">' + value + '</span>' +
@@ -287,18 +311,18 @@ Highcharts.setOptions( {
 } );
 
 const colors = [
-  'rgba(247, 248, 249, 0.5)',
-  'rgba(212, 231, 230, 0.5)',
-  'rgba(180, 210, 209, 0.5)',
-  'rgba(137, 182, 181, 0.5)',
-  'rgba(86, 149, 148, 0.5)',
-  'rgba(37, 116, 115, 0.5)'
+  'rgba(212, 231, 230, 1)',
+  'rgba(180, 210, 209, 1)',
+  'rgba(158, 196, 195, 1)',
+  'rgba(137, 182, 181, 1)',
+  'rgba(112, 166, 165, 1)',
+  'rgba(87, 150, 149, 1)'
 ];
 
 /* ----------------------------------------------------------------------------
    Tile Map class */
-
 class TileMap {
+  // eslint-disable-next-line max-lines-per-function
   constructor( { el, data, isPerCapita } ) {
     const bins = isPerCapita ?
       getPerCapitaBins( data, colors ) : getBins( data, colors );
@@ -336,6 +360,12 @@ class TileMap {
           },
           events: {
             click: clickHandler.bind( this, isPerCapita )
+          },
+          point: {
+            events: {
+              mouseOver: mouseoverPoint,
+              mouseOut: mouseoutPoint
+            }
           }
         }
       },

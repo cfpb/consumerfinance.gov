@@ -97,7 +97,7 @@ describe( 'Tile map', () => {
     const result = sut.getPerCapitaBins( complaints.perCapita, colors );
     expect( result )
       .toEqual( [
-        { color: '#fff', from: 0, name: '>0', to: 0.7516666666666666 },
+        { color: '#ffffff', from: 0, name: '>0', to: 0.7516666666666666 },
         {
           color: 'rgba(247, 248, 249, 0.5)',
           from: 1,
@@ -181,7 +181,7 @@ describe( 'Tile map', () => {
 
     const result = sut.tileFormatter();
     expect( result )
-      .toEqual( '<div class="highcharts-data-label-state">' +
+      .toEqual( '<div class="highcharts-data-label-state tile-FA ">' +
       '<span class="abbr">FA</span><br />' +
       '<span class="value">10,000</span></div>' );
   } );
