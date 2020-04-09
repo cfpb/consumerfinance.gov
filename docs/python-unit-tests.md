@@ -21,9 +21,8 @@ before running the tests:
 workon cfgov-refresh
 ```
 
-If have not set up the standalone installation of cfgov-refresh,
-it's not necessary to run the tests. 
-You can install Tox in your 
+If you have not set up the standalone installation of cfgov-refresh,
+you can still run the tests if you install Tox in your 
 [local installation of Python](https://github.com/cfpb/development/blob/master/guides/installing-python.md):
 
 ```
@@ -32,12 +31,11 @@ pip install tox
 
 If you have set up 
 [a Docker-based installation of cfgov-refresh](/installation/#docker-based-installation),
-you'll need to 
-[access the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell) 
-before running the tests:
+you can run the tests there by  
+[accessing the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell): 
 
 ```sh
-docker-compose exec python3 bash
+docker-compose exec python bash
 ```
 
 ## Running tests
