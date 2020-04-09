@@ -213,3 +213,9 @@ class TestParseLinks(TestCase):
             '<span>Text after icon</span>'
             '</a>'
         ))
+
+    def test_in_page_anchor_links_have_current_path_stripped(self):
+        s = '<a href="/foo/bar/#anchor">Anchor</a>'
+        output = parse_links(s, request_path='/foo/bar/')
+        self.assertNotIn('/foo/bar/', output)
+        self.assertIn('href="#anchor"', output)
