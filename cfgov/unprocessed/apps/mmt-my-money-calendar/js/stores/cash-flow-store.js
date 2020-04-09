@@ -2,16 +2,11 @@ import { flow, observable, computed, action } from 'mobx';
 import { asyncComputed } from 'computed-async-mobx';
 import { computedFn } from 'mobx-utils';
 import logger from '../lib/logger';
-import { toDayJS } from '../lib/calendar-helpers';
+import { toDayJS, dayjs } from '../lib/calendar-helpers';
 import { toMap } from '../lib/array-helpers';
 import CashFlowEvent from './models/cash-flow-event';
 
-/**
- * To Do for Strategies:
- *
- * - [ ] Identify which cash flow event caused the user's balance to dip negative and highlight it in UI
- * - [ ]
- */
+
 export default class CashFlowStore {
   @observable eventsLoaded = false;
   @observable events = [];
@@ -43,6 +38,21 @@ export default class CashFlowStore {
       output.set(key, [...list, event]);
       return output;
     }, new Map());
+  }
+
+  /**
+   * The date of the first event in the database, as a DayJS object
+   *
+   * @type {dayjs}
+   */
+  @computed get earliestEventDate() {
+    if (!this.eventsByDate) return undefined;
+
+    const [firstTimestamp] = this.eventsByDate.keys();
+
+    if (!firstTimestamp) return undefined;
+
+    return dayjs(firstTimestamp);
   }
 
   /**
@@ -100,11 +110,6 @@ export default class CashFlowStore {
       }, {})
     );
   }
-
-  earliestEventDate = asyncComputed(undefined, 50, async () => {
-    const firstEvent = await CashFlowStore.getFirstBy('date');
-    return firstEvent.date;
-  });
 
   /**
    * Get the user's available balance for the specified date
