@@ -12,10 +12,18 @@
 {%- endblock %}
 
 {% block content_main %}
+    <p>
+      {% if (current_language == 'en') %}
+      <a href="{{ url('fwb_error_es') }}">Ver página en español</a>
+      {% endif %}
+      {% if (current_language == 'es') %}
+      <a href="{{ url('fwb_error_en') }}">View page in English</a>
+      {% endif %}
+    </p>
+
     <h1>{{ _('There was a problem with your submission') }}</h1>
 
     <p class="lead-paragraph">
-        {{ _('Please use your browser’s back button to return to the questionnaire
-        and retake it to receive your score.') }}
+        {{ _('Please use your browser’s back button to return to the questionnaire and retake it to receive your score.') }}
     </p>
 {% endblock %}

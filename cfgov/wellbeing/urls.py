@@ -30,6 +30,13 @@ urlpatterns = [
         ),
         name='fwb_about_en'
     ),
+    url(
+        r'^error/$',
+        TranslatedTemplateView.as_view(
+            template_name='wellbeing/error.html'
+        ),
+        name='fwb_error_en'
+    ),
 
     url(
         r'^es/$',
@@ -51,5 +58,13 @@ urlpatterns = [
             language='es'
         ),
         name='fwb_about_es'
+    ),
+    url(
+        r'^error/es/$',
+        TranslatedTemplateView.as_view(
+            template_name='wellbeing/error.html',
+            language='es'
+        ),
+        name='fwb_error_es'
     ),
 ]
