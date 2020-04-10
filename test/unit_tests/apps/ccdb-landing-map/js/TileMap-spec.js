@@ -35,34 +35,34 @@ describe( 'Tile map', () => {
   } );
 
   describe( 'makeScale', () => {
-    it( 'creates an evenly-spaced scale for a exponential dataset' , () => {
-      const data = []
+    it( 'creates an evenly-spaced scale for a exponential dataset', () => {
+      const data = [];
       for ( let i = 1; i <= 50; i++ ) {
-        data.push( { displayValue: i * i } )
+        data.push( { displayValue: i * i } );
       }
 
-      const actual = sut.makeScale( data, colors )
-      expect( actual( 0 ) ).toEqual( '#ffffff' )
-      expect( actual( 100 ) ).toEqual( colors[0] )
-      expect( actual( 361 ) ).toEqual( colors[1] ) // 19^2
-      expect( actual( 784 ) ).toEqual( colors[2] ) // 28^2
-      expect( actual( 1225 ) ).toEqual( colors[3] ) // 35^2
-      expect( actual( 1681 ) ).toEqual( colors[4] ) // 41^2
-      expect( actual( 2500 ) ).toEqual( colors[5] )
+      const actual = sut.makeScale( data, colors );
+      expect( actual( 0 ) ).toEqual( '#ffffff' );
+      expect( actual( 100 ) ).toEqual( colors[0] );
+      expect( actual( 361 ) ).toEqual( colors[1] ); // 19^2
+      expect( actual( 784 ) ).toEqual( colors[2] ); // 28^2
+      expect( actual( 1225 ) ).toEqual( colors[3] ); // 35^2
+      expect( actual( 1681 ) ).toEqual( colors[4] ); // 41^2
+      expect( actual( 2500 ) ).toEqual( colors[5] );
     } );
 
-    it( 'scales differently if there are few unique values' , () => {
-      const data = []
-      for ( let i = 0; i < 51; i++) {
-        data.push( { displayValue: 0 } )
+    it( 'scales differently if there are few unique values', () => {
+      const data = [];
+      for ( let i = 0; i < 51; i++ ) {
+        data.push( { displayValue: 0 } );
       }
-      data[ 3 ].displayValue = 900
+      data[3].displayValue = 900;
 
-      const actual = sut.makeScale( data, colors )
-      expect( actual( 0 ) ).toEqual( '#ffffff' )
-      expect( actual( 300 ) ).toEqual( colors[1] )
-      expect( actual( 450 ) ).toEqual( colors[2] )
-      expect( actual( 790 ) ).toEqual( colors[5] )
+      const actual = sut.makeScale( data, colors );
+      expect( actual( 0 ) ).toEqual( '#ffffff' );
+      expect( actual( 300 ) ).toEqual( colors[1] );
+      expect( actual( 450 ) ).toEqual( colors[2] );
+      expect( actual( 790 ) ).toEqual( colors[5] );
     } );
   } );
 
@@ -131,7 +131,7 @@ describe( 'Tile map', () => {
   } );
 
   it( 'Processes the map data', () => {
-    const scale = jest.fn().mockReturnValue( 'rgba(247, 248, 249, 1)' )
+    const scale = jest.fn().mockReturnValue( 'rgba(247, 248, 249, 1)' );
 
     const result = sut.processMapData( complaints.raw, scale );
     // test only the first one just make sure that the path and color are found
@@ -172,12 +172,12 @@ describe( 'Tile map', () => {
       color: 'rgba(247, 248, 249, 1)',
       path: 'M367,-428L450,-428,450,-345,367,-345,367,-428'
     } );
-    expect( scale ).toHaveBeenCalledTimes( 51 )
+    expect( scale ).toHaveBeenCalledTimes( 51 );
   } );
 
-  describe('legend', () => {
+  describe( 'legend', () => {
     let chart;
-    beforeEach(() => {
+    beforeEach( () => {
       chart = {
         options: {
           bins: [
@@ -185,65 +185,65 @@ describe( 'Tile map', () => {
               color: 'rgba(247, 248, 249, 0.5)',
               from: 1,
               name: '≥ 0',
-              to: 16435,
+              to: 16435
             },
             {
               color: 'rgba(212, 231, 230, 0.5)',
               from: 16435,
               name: '≥ 16K',
-              to: 32868,
+              to: 32868
             },
             {
               color: 'rgba(180, 210, 209, 0.5)',
               from: 32868,
               name: '≥ 33K',
-              to: 49302,
+              to: 49302
             },
             {
               color: 'rgba(137, 182, 181, 0.5)',
               from: 49302,
               name: '≥ 49K',
-              to: 65735,
+              to: 65735
             },
             {
               color: 'rgba(86, 149, 148, 0.5)',
               from: 65735,
               name: '≥ 66K',
-              to: 82169,
+              to: 82169
             },
             {
               color: 'rgba(37, 116, 115, 0.5)',
               from: 82169,
               name: '≥ 82K',
               // eslint-disable-next-line no-undefined
-              to: undefined,
-            }],
+              to: undefined
+            } ],
           legend: {
-            legendTitle: 'Foo',
-          },
+            legendTitle: 'Foo'
+          }
         },
         margin: []
       };
-    });
+    } );
 
-    afterEach(()=>{
-      jest.clearAllMocks()
-    })
-    it('draws large legend', () => {
+    afterEach( () => {
+      jest.clearAllMocks();
+    } );
+    it( 'draws large legend', () => {
       chart.renderer = chartMock;
       chart.chartWidth = 1000;
-      const addSpies = jest.spyOn(chart.renderer, 'add');
-      sut._drawLegend(chart);
-      expect(addSpies).toHaveBeenCalledTimes(25);
-    });
-    it('draws small legend', () => {
+      const addSpies = jest.spyOn( chart.renderer, 'add' );
+      sut._drawLegend( chart );
+      expect( addSpies ).toHaveBeenCalledTimes( 25 );
+    } );
+    it( 'draws small legend', () => {
       chart.renderer = chartMock;
       chart.chartWidth = 599;
-      const addSpies = jest.spyOn(chart.renderer, 'add');
-      sut._drawLegend(chart);
-      expect(addSpies).toHaveBeenCalledTimes(25);
-    });
-  });
+      const addSpies = jest.spyOn( chart.renderer, 'add' );
+      sut._drawLegend( chart );
+      expect( addSpies ).toHaveBeenCalledTimes( 25 );
+    } );
+  } );
 
   it( 'can construct a map', () => {
     const options = {

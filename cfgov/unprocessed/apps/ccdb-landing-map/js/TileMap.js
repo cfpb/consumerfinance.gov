@@ -230,10 +230,10 @@ export function mouseoverPoint() {
  * @returns {string} html output
  */
 export function tileFormatter() {
-  let iePatch = ''
+  let iePatch = '';
   if ( navigator.userAgent.indexOf( 'MSIE' ) !== -1 ||
     navigator.appVersion.indexOf( 'Trident/' ) > -1 ) {
-    iePatch = '<br />'
+    iePatch = '<br />';
   }
 
   const value = this.point.displayValue.toLocaleString();
