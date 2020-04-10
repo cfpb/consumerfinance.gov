@@ -93,7 +93,7 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly'],
         strategy: {
           title: 'Explore CFPB\'s Military Financial Resources',
-          body: 'These tools, designed specifically for servicemembers, can help you manage financial challenges at every step of your military career.',
+          body: 'These tools, designed specifically for service members, can help you manage financial challenges at every step of your military career.',
           link: {
             href: 'https://www.consumerfinance.gov/consumer-tools/military-financial-lifecycle/',
             text: 'Navigating the Military Financial Lifecycle',
@@ -234,6 +234,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Explore Low Cost Phone and Internet Services',
           body: 'If you qualify for the FCC\'s "Lifeline" phone rate you could lower the monthly cost of phone and internet service.',
+          link: {
+            href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
+            text: 'Lifeline Support for Affordable Communications',
+          },
         },
       },
       phone: {
@@ -243,6 +247,10 @@ export const Categories = new CategoryTree({
         strategy: {
           title: 'Explore Low Cost Phone and Internet Services',
           body: 'If you qualify for the FCC\'s "Lifeline" phone rate you could lower the monthly cost of phone and internet service.',
+          link: {
+            href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
+            text: 'Lifeline Support for Affordable Communications',
+          },
         },
       },
     },
@@ -275,7 +283,7 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           title: 'Compare the Rates of Other Insurance Companies',
-          body: 'Most car Insurance providers offer quote over the phone or online. Research other providers and reenter their quotes into the calendar to see how much you could save.',
+          body: 'Most car Insurance providers offer quotes over the phone or online. Research other providers and reenter their quotes into the calendar to see how much you could save.',
         },
       },
       gas: {
