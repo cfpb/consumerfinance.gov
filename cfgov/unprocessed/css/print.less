@@ -57,8 +57,7 @@
     }
 
     .o-video-player::after {
-        // Output href in parentheses for links with a protocol already there
-        content: " Please visit this webpage to view the above video.";
+        content: "Watch the video at https://www.youtube.com/watch?v=" attr(data-id);
     }
 
     .o-email-signup,
