@@ -18,8 +18,8 @@ SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
 # Install common OS packages
 RUN yum -y install \
         centos-release-scl \
-        epel-release \
-        https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm && \
+        epel-release && \
+    rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
     curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum -y update && \
@@ -105,6 +105,5 @@ RUN ./frontend.sh production && \
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=15s --interval=30s --retries=30 \
             CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
-
 
 CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]

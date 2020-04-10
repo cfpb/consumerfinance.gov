@@ -69,11 +69,17 @@ def assemble_output():
             # If no text block is found,
             # there is either a HowTo or FAQ schema block.
             # Both define a description field, so we'll use that here.
-            answer_schema = filter(
-                lambda item: item['type'] == 'how_to_schema' or
-                item['type'] == 'faq_schema', answer_streamfield)
+            answer_schema = list(
+                filter(
+                    lambda item: item['type'] == 'how_to_schema' or
+                    item['type'] == 'faq_schema', answer_streamfield
+                )
+            )
             if answer_schema:
-                answer = next(answer_schema).get('value').get('description')
+                answer = answer_schema[0].get('value').get('description')
+            else:
+                # This is a question with no answer, possibly a new draft.
+                answer = ''
 
         output['Answer'] = clean_and_strip(answer).replace('\x81', '')
         output['ShortAnswer'] = clean_and_strip(page['short_answer'])

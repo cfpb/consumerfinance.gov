@@ -1,7 +1,7 @@
 import re
 
 from django.conf import settings
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from wagtail.core.rich_text import expand_db_html
 
@@ -9,7 +9,13 @@ from core.utils import add_link_markup, get_link_tags
 
 
 class DownstreamCacheControlMiddleware(object):
-    def process_response(self, request, response):
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+
         if 'CSRF_COOKIE_USED' in request.META:
             response['Edge-Control'] = 'no-store'
         return response
@@ -23,9 +29,9 @@ def parse_links(html, encoding=None):
     # The passed HTML may be a string or bytes, depending on what is calling
     # this method. For example, Django response.content is always bytes. We
     # always want this content to be a string for our purposes.
-    html_as_text = force_text(html, encoding=encoding)
+    html_as_text = force_str(html, encoding=encoding)
 
-    # This call invokes Wagail-specific logic that converts references to
+    # This call invokes Wagtail-specific logic that converts references to
     # Wagtail pages, documents, and images to their proper link URLs.
     expanded_html = expand_db_html(html_as_text)
 
@@ -42,7 +48,12 @@ def parse_links(html, encoding=None):
 
 
 class ParseLinksMiddleware(object):
-    def process_response(self, request, response):
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
         if self.should_parse_links(request.path, response['content-type']):
             response.content = parse_links(
                 response.content,
@@ -56,12 +67,12 @@ class ParseLinksMiddleware(object):
 
         Returns True if
 
-        1. The response has the default content type (HTML) AND
+        1. The response has the settings.DEFAULT_CONTENT_TYPE (HTML) AND
         2. The request path does not match settings.PARSE_LINKS_EXCLUSION_LIST
 
         Otherwise returns False.
         """
-        if settings.DEFAULT_CONTENT_TYPE not in response_content_type:
+        if "html" not in response_content_type:
             return False
 
         return not any(
