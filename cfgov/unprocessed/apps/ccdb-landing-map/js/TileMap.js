@@ -1,4 +1,6 @@
-import * as d3 from 'd3';
+import * as d3scale from 'd3-scale';
+import * as d3selection from 'd3-selection';
+
 import Highcharts from 'highcharts/highmaps';
 import { STATE_TILES } from './constants';
 import accessibility from 'highcharts/modules/accessibility';
@@ -35,7 +37,7 @@ export function makeScale( data, colors ) {
   const allValues = data.map( x => x.displayValue );
   const uniques = new Set( allValues );
 
-  let scale = d3.scaleQuantile().range( [ WHITE, ...colors ] );
+  let scale = d3scale.scaleQuantile().range( [ WHITE, ...colors ] );
   // This catches the condition where all the complaints are in one state
   if ( uniques.size < colors.length ) {
     scale = scale.domain( [ ...uniques ] );
@@ -214,7 +216,7 @@ export function clickHandler( isPerCapita, t ) {
  */
 export function mouseoutPoint() {
   const name = '.tile-' + this.name;
-  d3.select( name ).classed( 'hover', false );
+  d3selection.select( name ).classed( 'hover', false );
 }
 
 /**
@@ -222,7 +224,7 @@ export function mouseoutPoint() {
  */
 export function mouseoverPoint() {
   const name = '.tile-' + this.name;
-  d3.select( name ).classed( 'hover', true );
+  d3selection.select( name ).classed( 'hover', true );
 }
 
 /**
