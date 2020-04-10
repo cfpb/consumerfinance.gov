@@ -34,119 +34,40 @@ describe( 'Tile map', () => {
     expect( result ).toContain( '12/31/2012 - 12/31/2015' );
   } );
 
-  it( 'Finds Max Complaints', () => {
-    const state = { displayValue: 1000, name: 'Foo' };
-    const result = sut.findMaxComplaints( 50, state );
-    expect( result ).toEqual( 1000 );
-  } );
+  describe( 'makeScale', () => {
+    it( 'creates an evenly-spaced scale for a exponential dataset', () => {
+      const data = [];
+      for ( let i = 1; i <= 50; i++ ) {
+        data.push( { displayValue: i * i } );
+      }
 
-  it( 'gets empty raw  bins', () => {
-    const result = sut.getBins( [], colors );
-    expect( result ).toEqual( [] );
-  } );
+      const actual = sut.makeScale( data, colors );
+      expect( actual( 0 ) ).toEqual( '#ffffff' );
+      expect( actual( 100 ) ).toEqual( colors[0] );
+      // 19^2
+      expect( actual( 361 ) ).toEqual( colors[1] );
+      // 28^2
+      expect( actual( 784 ) ).toEqual( colors[2] );
+      // 35^2
+      expect( actual( 1225 ) ).toEqual( colors[3] );
+      // 41^2
+      expect( actual( 1681 ) ).toEqual( colors[4] );
+      expect( actual( 2500 ) ).toEqual( colors[5] );
+    } );
 
-  it( 'gets Raw Complaints bins', () => {
-    const result = sut.getBins( complaints.raw, colors );
-    expect( result )
-      .toEqual( [
-        {
-          color: 'rgba(247, 248, 249, 0.5)',
-          from: 1,
-          name: '≥ 0',
-          to: 16435
-        },
-        {
-          color: 'rgba(212, 231, 230, 0.5)',
-          from: 16435,
-          name: '≥ 16K',
-          to: 32868
-        },
-        {
-          color: 'rgba(180, 210, 209, 0.5)',
-          from: 32868,
-          name: '≥ 33K',
-          to: 49302
-        },
-        {
-          color: 'rgba(137, 182, 181, 0.5)',
-          from: 49302,
-          name: '≥ 49K',
-          to: 65735
-        },
-        {
-          color: 'rgba(86, 149, 148, 0.5)',
-          from: 65735,
-          name: '≥ 66K',
-          to: 82169
-        },
-        {
-          color: 'rgba(37, 116, 115, 0.5)',
-          from: 82169,
-          name: '≥ 82K',
-          // eslint-disable-next-line no-undefined
-          to: undefined
-        } ] );
-  } );
+    it( 'scales differently if there are few unique values', () => {
+      const data = [];
+      for ( let i = 0; i < 51; i++ ) {
+        data.push( { displayValue: 0 } );
+      }
+      data[3].displayValue = 900;
 
-  it( 'gets empty per capita bins', () => {
-    const result = sut.getPerCapitaBins( [], colors );
-    expect( result ).toEqual( [] );
-  } );
-
-  it( 'gets Per Capita bins', () => {
-    const result = sut.getPerCapitaBins( complaints.perCapita, colors );
-    expect( result )
-      .toEqual( [
-        { color: '#ffffff', from: 0, name: '>0', to: 0.7516666666666666 },
-        {
-          color: 'rgba(247, 248, 249, 0.5)',
-          from: 1,
-          name: '≥ 1',
-          to: 1.75
-        },
-        {
-          color: 'rgba(212, 231, 230, 0.5)',
-          from: 1.75,
-          name: '≥ 1.75',
-          to: 2.5
-        },
-        {
-          color: 'rgba(180, 210, 209, 0.5)',
-          from: 2.5,
-          name: '≥ 2.5',
-          to: 3.25
-        },
-        {
-          color: 'rgba(137, 182, 181, 0.5)',
-          from: 3.25,
-          name: '≥ 3.25',
-          to: 4
-        },
-        {
-          color: 'rgba(86, 149, 148, 0.5)',
-          from: 4,
-          name: '≥ 4',
-          // eslint-disable-next-line no-undefined
-          to: undefined
-        },
-        {
-          color: 'rgba(37, 116, 115, 0.5)',
-          from: 4.75,
-          name: '≥ 4.75',
-          to: 5.5
-        } ] );
-  } );
-
-  it( 'Gets color of a tile based on bin limits', () => {
-    const bins = [
-      { color: 'white', from: 0 },
-      { color: 'green', from: 10 },
-      { color: 'red', from: 30 }
-    ];
-    let result = sut.getColorByValue( 23, bins );
-    expect( result ).toEqual( 'green' );
-    result = sut.getColorByValue( null, bins );
-    expect( result ).toEqual( '#ffffff' );
+      const actual = sut.makeScale( data, colors );
+      expect( actual( 0 ) ).toEqual( '#ffffff' );
+      expect( actual( 300 ) ).toEqual( colors[1] );
+      expect( actual( 450 ) ).toEqual( colors[2] );
+      expect( actual( 790 ) ).toEqual( colors[5] );
+    } );
   } );
 
   it( 'navigates the url to all complaints when clicked', () => {
@@ -178,6 +99,23 @@ describe( 'Tile map', () => {
       displayValue: 10000,
       name: 'FA'
     };
+
+    const result = sut.tileFormatter();
+    expect( result )
+      .toEqual( '<div class="highcharts-data-label-state tile-FA ">' +
+      '<span class="abbr">FA</span>' +
+      '<span class="value">10,000</span></div>' );
+  } );
+
+  it( 'formats a map tile in Internet Explorer', () => {
+    sut.point = {
+      className: 'selected',
+      displayValue: 10000,
+      name: 'FA'
+    };
+
+    Object.defineProperty( window.navigator, 'userAgent',
+      { value: 'MSIE' } );
 
     const result = sut.tileFormatter();
     expect( result )
@@ -214,47 +152,12 @@ describe( 'Tile map', () => {
   } );
 
   it( 'Processes the map data', () => {
-    const bins = [
-      {
-        color: 'rgba(247, 248, 249, 0.5)',
-        from: 1,
-        name: '≥ 0',
-        to: 16435
-      },
-      {
-        color: 'rgba(212, 231, 230, 0.5)',
-        from: 16435,
-        name: '≥ 16K',
-        to: 32868
-      },
-      {
-        color: 'rgba(180, 210, 209, 0.5)',
-        from: 32868,
-        name: '≥ 33K',
-        to: 49302
-      },
-      {
-        color: 'rgba(137, 182, 181, 0.5)',
-        from: 49302,
-        name: '≥ 49K',
-        to: 65735
-      },
-      {
-        color: 'rgba(86, 149, 148, 0.5)',
-        from: 65735,
-        name: '≥ 66K',
-        to: 82169
-      },
-      {
-        color: 'rgba(37, 116, 115, 0.5)',
-        from: 82169,
-        name: '≥ 82K',
-        // eslint-disable-next-line no-undefined
-        to: undefined
-      } ];
-    const result = sut.processMapData( complaints.raw, bins );
+    const scale = jest.fn().mockReturnValue( 'rgba(247, 248, 249, 1)' );
+
+    const result = sut.processMapData( complaints.raw, scale );
     // test only the first one just make sure that the path and color are found
     expect( result[0] ).toEqual( {
+      className: 'default',
       name: 'AK',
       fullName: 'Alaska',
       value: 713,
@@ -262,64 +165,105 @@ describe( 'Tile map', () => {
       product: 'Credit reporting, credit repair services, or other personal consumer reports',
       perCapita: 0.97,
       displayValue: 713,
-      color: 'rgba(247, 248, 249, 0.5)',
+      color: 'rgba(247, 248, 249, 1)',
       path: 'M92,-245L175,-245,175,-162,92,-162,92,-245'
     } );
+    expect( result[1] ).toEqual( {
+      className: 'deselected',
+      name: 'AL',
+      fullName: 'Alabama',
+      value: 10380,
+      issue: 'Incorrect information on your report',
+      product: 'Credit reporting, credit repair services, or other personal consumer reports',
+      perCapita: 2.14,
+      displayValue: 10380,
+      color: 'rgba(247, 248, 249, 1)',
+      path: 'M550,-337L633,-337,633,-253,550,-253,550,-337'
+    } );
+
+    expect( result[2] ).toEqual( {
+      className: 'selected',
+      name: 'AR',
+      fullName: 'Arkansas',
+      value: 4402,
+      issue: 'Incorrect information on your report',
+      product: 'Credit reporting, credit repair services, or other personal consumer reports',
+      perCapita: 1.48,
+      displayValue: 4402,
+      color: 'rgba(247, 248, 249, 1)',
+      path: 'M367,-428L450,-428,450,-345,367,-345,367,-428'
+    } );
+    expect( scale ).toHaveBeenCalledTimes( 51 );
   } );
 
-  it( 'draws the legend', () => {
-    const chart = {
-      options: {
-        bins: [
-          {
-            color: 'rgba(247, 248, 249, 0.5)',
-            from: 1,
-            name: '≥ 0',
-            to: 16435
-          },
-          {
-            color: 'rgba(212, 231, 230, 0.5)',
-            from: 16435,
-            name: '≥ 16K',
-            to: 32868
-          },
-          {
-            color: 'rgba(180, 210, 209, 0.5)',
-            from: 32868,
-            name: '≥ 33K',
-            to: 49302
-          },
-          {
-            color: 'rgba(137, 182, 181, 0.5)',
-            from: 49302,
-            name: '≥ 49K',
-            to: 65735
-          },
-          {
-            color: 'rgba(86, 149, 148, 0.5)',
-            from: 65735,
-            name: '≥ 66K',
-            to: 82169
-          },
-          {
-            color: 'rgba(37, 116, 115, 0.5)',
-            from: 82169,
-            name: '≥ 82K',
-            // eslint-disable-next-line no-undefined
-            to: undefined
-          } ],
-        legend: {
-          legendTitle: 'Foo'
-        }
-      },
-      margin: []
+  describe( 'legend', () => {
+    let chart;
+    beforeEach( () => {
+      chart = {
+        options: {
+          bins: [
+            {
+              color: 'rgba(247, 248, 249, 0.5)',
+              from: 1,
+              name: '≥ 0',
+              to: 16435
+            },
+            {
+              color: 'rgba(212, 231, 230, 0.5)',
+              from: 16435,
+              name: '≥ 16K',
+              to: 32868
+            },
+            {
+              color: 'rgba(180, 210, 209, 0.5)',
+              from: 32868,
+              name: '≥ 33K',
+              to: 49302
+            },
+            {
+              color: 'rgba(137, 182, 181, 0.5)',
+              from: 49302,
+              name: '≥ 49K',
+              to: 65735
+            },
+            {
+              color: 'rgba(86, 149, 148, 0.5)',
+              from: 65735,
+              name: '≥ 66K',
+              to: 82169
+            },
+            {
+              color: 'rgba(37, 116, 115, 0.5)',
+              from: 82169,
+              name: '≥ 82K',
+              // eslint-disable-next-line no-undefined
+              to: undefined
+            } ],
+          legend: {
+            legendTitle: 'Foo'
+          }
+        },
+        margin: []
+      };
+    } );
 
-    };
-
-    chart.renderer = chartMock;
-    const addSpies = jest.spyOn( chart.renderer, 'add' );
-    sut._drawLegend( chart );
-    expect( addSpies ).toHaveBeenCalledTimes( 25 );
+    afterEach( () => {
+      jest.clearAllMocks();
+    } );
+    it( 'draws large legend', () => {
+      chart.renderer = chartMock;
+      chart.chartWidth = 1000;
+      const addSpies = jest.spyOn( chart.renderer, 'add' );
+      sut._drawLegend( chart );
+      expect( addSpies ).toHaveBeenCalledTimes( 25 );
+    } );
+    it( 'draws small legend', () => {
+      chart.renderer = chartMock;
+      chart.chartWidth = 599;
+      const addSpies = jest.spyOn( chart.renderer, 'add' );
+      sut._drawLegend( chart );
+      expect( addSpies ).toHaveBeenCalledTimes( 25 );
+    } );
   } );
 
   it( 'can construct a map', () => {
@@ -347,5 +291,152 @@ describe( 'Tile map', () => {
     const map = new TileMap( options );
 
     expect( drawSpy ).toHaveBeenCalled();
+  } );
+
+  it( 'shortens long numbers', () => {
+    const cases = [
+      { n: 0, val: '0' },
+      { n: 7, val: '7' },
+      { n: 42, val: '42' },
+      { n: 567, val: '567' },
+      { n: 3456, val: '3.4K' },
+      { n: 9873, val: '9.8K' },
+      { n: 23456, val: '23K' },
+      { n: 98765, val: '98K' },
+      { n: 234567, val: '234K' },
+      { n: 782345, val: '782K' },
+      { n: 1450000, val: '1.4M' },
+      { n: 9870000, val: '9.8M' }
+    ];
+
+    cases.forEach( x => {
+      expect( sut.makeShortName( x.n ) ).toEqual( x.val );
+    } );
+  } );
+
+  it( 'formats a series point for voice-over reading', () => {
+    const point = {
+      fullName: 'Foo',
+      displayValue: '13'
+    };
+    const actual = sut.pointDescriptionFormatter( point );
+    expect( actual ).toEqual( 'Foo 13' );
+  } );
+
+
+  describe( 'generating bins', () => {
+    let scaleFn;
+    beforeEach( () => {
+      scaleFn = jest.fn( x => x );
+    } );
+
+    it( 'gets complaints bins - All', () => {
+      const quantiles = [
+        880.2857142857142,
+        1622.5714285714282,
+        3064.9999999999995,
+        6136.714285714284,
+        7788.142857142858,
+        13909.714285714286
+      ];
+      const expected = [
+        { from: 0, color: '#ffffff', name: '≥ 0', shortName: '≥ 0' },
+        { from: 880, color: 881, name: '> 880', shortName: '> 880' },
+        { from: 1623, color: 1623, name: '≥ 1,623', shortName: '≥ 1.6K' },
+        { from: 3065, color: 3065, name: '≥ 3,065', shortName: '≥ 3.0K' },
+        { from: 6137, color: 6137, name: '≥ 6,137', shortName: '≥ 6.1K' },
+        { from: 7788, color: 7789, name: '> 7,788', shortName: '> 7.7K' },
+        { from: 13910, color: 13910, name: '≥ 13,910', shortName: '≥ 13K' }
+      ];
+
+      const result = sut.getBins( quantiles, scaleFn );
+      expect( result ).toEqual( expected );
+    } );
+
+    it( 'gets complaints bins - one zip code', () => {
+      const quantiles = [
+        0.2857142857142857,
+        0.5714285714285714,
+        0.8571428571428571,
+        183.99999999999991,
+        550,
+        915.9999999999999
+      ];
+      const expected = [
+        { from: 0, color: '#ffffff', name: '≥ 0', shortName: '≥ 0' },
+        { from: 1, color: 1, name: '≥ 1', shortName: '≥ 1' },
+        { from: 184, color: 184, name: '≥ 184', shortName: '≥ 184' },
+        { from: 550, color: 550, name: '≥ 550', shortName: '≥ 550' },
+        { from: 916, color: 916, name: '≥ 916', shortName: '≥ 916' }
+      ];
+
+      const result = sut.getBins( quantiles, scaleFn );
+      expect( result ).toEqual( expected );
+    } );
+
+    it( 'gets complaints bins - max 2 complaints', () => {
+      const quantiles = [
+        0.2857142857142857,
+        0.5714285714285714,
+        0.8571428571428571,
+        1.1428571428571428,
+        1.4285714285714286,
+        1.7142857142857142
+      ];
+      const expected = [
+        { from: 0, color: '#ffffff', name: '≥ 0', shortName: '≥ 0' },
+        { from: 1, color: 1, name: '≥ 1', shortName: '≥ 1' },
+        { from: 2, color: 2, name: '≥ 2', shortName: '≥ 2' }
+      ];
+
+      const result = sut.getBins( quantiles, scaleFn );
+      expect( result ).toEqual( expected );
+    } );
+
+    it( 'gets complaints bins - max 1 complaint', () => {
+      const quantiles = [
+        0.14285714285714285,
+        0.2857142857142857,
+        0.42857142857142855,
+        0.5714285714285714,
+        0.7142857142857143,
+        0.8571428571428571
+      ];
+      const expected = [
+        { from: 0, color: '#ffffff', name: '≥ 0', shortName: '≥ 0' },
+        { from: 1, color: 1, name: '≥ 1', shortName: '≥ 1' }
+      ];
+
+      const result = sut.getBins( quantiles, scaleFn );
+      expect( result ).toEqual( expected );
+    } );
+
+    it( 'gets Per 1000 population bins', () => {
+      const quantiles = [
+        1.1928571428571428,
+        1.4657142857142857,
+        1.81,
+        2.0357142857142856,
+        2.33,
+        2.845714285714285
+      ];
+      const expected = [
+        { from: 0, color: '#ffffff', name: '≥ 0', shortName: '≥ 0' },
+        { from: 1.19, color: quantiles[0], name: '> 1.19', shortName: '> 1.19' },
+        { from: 1.46, color: quantiles[1], name: '> 1.46', shortName: '> 1.46' },
+        { from: 1.81, color: quantiles[2], name: '≥ 1.81', shortName: '≥ 1.81' },
+        { from: 2.03, color: quantiles[3], name: '> 2.03', shortName: '> 2.03' },
+        { from: 2.33, color: quantiles[4], name: '≥ 2.33', shortName: '≥ 2.33' },
+        { from: 2.84, color: quantiles[5], name: '> 2.84', shortName: '> 2.84' }
+      ];
+
+      const result = sut.getPerCapitaBins( quantiles, scaleFn );
+      expect( result ).toEqual( expected );
+    } );
+  } );
+
+  it( 'handles no values for colors', () => {
+    const color = sut.getColorByValue( null, null );
+    expect( color ).toEqual( '#ffffff' );
   } );
 } );

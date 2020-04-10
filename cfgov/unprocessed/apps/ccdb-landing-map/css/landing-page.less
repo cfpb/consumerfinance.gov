@@ -3,6 +3,7 @@ body {
   background: none;
 }
 
+@phone: ~"only screen and (max-width:500px)";
 .layout-row {
     display: flex;
     flex-direction: row;
@@ -28,6 +29,12 @@ body {
     .per-capita {
       .a-btn:not(.selected){
         background-color: @pacific-20;
+      }
+
+      @media @phone {
+        span {
+          display: none;
+        }
       }
     }
     .a-btn__disabled {
