@@ -117,7 +117,7 @@ def add_link_markup(tag, request_path):
         # anchor links.
         # TODO: Remove that functionality when we get to Wagtail>=2.7, which
         # adds the ability to create anchor links.
-        in_page_anchor_pattern = request_path + r'#'
+        in_page_anchor_pattern = request_path + '#'
         if tag['href'].startswith(in_page_anchor_pattern):
             # Strip current path from in-page anchor links
             tag['href'] = tag['href'].replace(request_path, '')
