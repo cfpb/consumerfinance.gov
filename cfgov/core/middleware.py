@@ -21,7 +21,7 @@ class DownstreamCacheControlMiddleware(object):
         return response
 
 
-def parse_links(html, encoding=None):
+def parse_links(html, request_path=None, encoding=None):
     """Process all links in given html and replace them if markup is added."""
     if encoding is None:
         encoding = settings.DEFAULT_CHARSET
@@ -37,7 +37,7 @@ def parse_links(html, encoding=None):
 
     link_tags = get_link_tags(expanded_html)
     for tag in link_tags:
-        tag_with_markup = add_link_markup(tag)
+        tag_with_markup = add_link_markup(tag, request_path)
         if tag_with_markup:
             expanded_html = expanded_html.replace(
                 tag,
@@ -57,6 +57,7 @@ class ParseLinksMiddleware(object):
         if self.should_parse_links(request.path, response['content-type']):
             response.content = parse_links(
                 response.content,
+                request.path,
                 encoding=response.charset
             )
         return response
