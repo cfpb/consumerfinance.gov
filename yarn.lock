@@ -800,18 +800,18 @@
     "@cfpb/cfpb-core" "^0.0.8"
     "@cfpb/cfpb-grid" "^0.0.8"
 
-"@cfpb/cfpb-layout@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.1.0.tgz#aca3cf3afc5a0ac4a8817158affbfe6d137b647f"
-  integrity sha512-X9YUgpG7ky4YozuSuRvtPvqoh/Ci/TPkNWWOeoJd+OwRvQ8L3Pe3zTL0HXO2+lGHbaNlKPk7k0HT/CxVo2BeBA==
+"@cfpb/cfpb-layout@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.1.1.tgz#a86b12eaa4b8202e022d09c4bdc21314b0a69f44"
+  integrity sha512-cqFGc98oubzoHQT1otUAK6rRK1G7ap85mR53JMq82hKlI9OjypDuNDvGF739T6IYzgPlqh5EynguzZ8ly1uYOA==
   dependencies:
     "@cfpb/cfpb-core" "^0.1.0"
     "@cfpb/cfpb-grid" "^0.1.0"
 
-"@cfpb/cfpb-notifications@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.1.0.tgz#6e6c1ff45b0e25bad0b35097bb917dd78872b2e4"
-  integrity sha512-7Mv/BOESWmfS0H4C7rnNAez0K8Er8FZCJGvLclhNLtKMDknltegqnfmfpCoBBvq3X6YcfuQjUFlw4iW5liykDg==
+"@cfpb/cfpb-notifications@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.1.1.tgz#fc39fcd5118ecd2d53ae592905dfab9293f8f4c6"
+  integrity sha512-Mfn8DZTPm1ugIfm5VX38jWBUNRhktJM2T7tSjrS9yzgzPTndAlTXvfM3zxtKoUbmPZCLbd/yF0Pzik3fWueg8w==
   dependencies:
     "@cfpb/cfpb-core" "^0.1.0"
     "@cfpb/cfpb-icons" "^0.1.0"
