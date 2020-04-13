@@ -83,7 +83,7 @@ class StrategiesStore {
           'expense.personal.funMoney',
         ],
         title: 'Adjust Spending this Week',
-        text: (categoryName) =>
+        template: (categoryName) =>
           `${categoryName} ${isPlural(categoryName) ? 'were' : 'was'} your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
       },
     ],
@@ -118,8 +118,8 @@ class StrategiesStore {
 
         strategy.event = event;
 
-        if (typeof strategy.text === 'function') {
-          strategy.text = strategy.text(event.categoryDetails.name);
+        if (strategy.template && typeof strategy.template === 'function') {
+          strategy.text = strategy.template(event.categoryDetails.name);
         }
 
         return strategy;
