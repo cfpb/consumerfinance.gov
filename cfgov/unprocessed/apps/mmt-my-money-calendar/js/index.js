@@ -4,6 +4,7 @@ import { Workbox } from 'workbox-window';
 import { StoreProvider } from './stores';
 import Routes from './routes';
 import { dayjs } from './lib/calendar-helpers';
+import { Categories } from './stores/models/categories';
 
 configureMobX({ enforceActions: 'observed' });
 
@@ -24,26 +25,28 @@ if (process.env.SERVICE_WORKER_ENABLED && 'serviceWorker' in navigator) {
 // In development mode, expose global functions to seed and clear the local IDB database:
 if (process.env.NODE_ENV === 'development') {
   window.dayjs = dayjs;
+  window.Categories = Categories;
+}
 
-  async function loadSeeders() {
-    window.seed = await import(/* webpackChunkName: "seeds.js" */ './seed-data.js');
-  }
+async function loadSeeders() {
+  window.seed = await import(/* webpackChunkName: "seeds.js" */ './seed-data.js');
+}
 
-  window.seedTestData = async function seedTestData() {
+window.developer = {
+  async seedTestData() {
     if (!window.seed) await loadSeeders();
 
     console.info('Imported seed data script');
     const results = await window.seed.seedData();
     console.info('Seeding complete %O', results);
-  };
-
-  window.clearTestData = async function clearTestData() {
+  },
+  async clearTestData() {
     if (!window.seed) await loadSeeders();
 
     await window.seed.clearData();
     console.info('Cleared all data');
-  };
-}
+  },
+};
 
 const App = () => (
   <StoreProvider>

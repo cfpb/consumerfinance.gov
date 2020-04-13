@@ -4,18 +4,19 @@ import { useLockBodyScroll, useKeyPressEvent } from 'react-use';
 import { observer } from 'mobx-react';
 import { useHistory, Link } from 'react-router-dom';
 import { useToggle } from 'react-use';
-import Modal from 'react-modal';
 import { useStore } from '../../../stores';
 import { formatCurrency } from '../../../lib/currency-helpers';
 import { Notification } from '../../../components/notification';
 import { SlideListItem } from '../../../components/slide-list';
 import ModalDialog from '../../../components/modal-dialog';
 
-import pencil from '@cfpb/cfpb-icons/src/icons/pencil.svg';
-import deleteIcon from '@cfpb/cfpb-icons/src/icons/delete.svg';
-import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
-import arrowLeft from '@cfpb/cfpb-icons/src/icons/arrow-left.svg';
-import dragHandle from '@cfpb/cfpb-icons/src/icons/hamburger.svg';
+import {
+  delete as deleteIcon,
+  hamburger as dragHandle,
+  arrowRight,
+  arrowLeft,
+  pencil,
+} from '../../../lib/icons';
 
 const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
@@ -43,7 +44,7 @@ const DetailRow = ({ event, onRequestEdit, onRequestDelete, balanceIsNegative = 
     <div className="calendar-details__event-name">{event.name}</div>
     <div className="calendar-details__event-total">{formatCurrency(event.total)}</div>
     <div className="calendar-details__drag-handle">
-      <span className="calendar-details__drag-icon" dangerouslySetInnerHTML={{__html: dragHandle }} />
+      <span className="calendar-details__drag-icon" dangerouslySetInnerHTML={{ __html: dragHandle }} />
     </div>
   </SlideListItem>
 );
@@ -89,9 +90,7 @@ function Details() {
 
   useLockBodyScroll(modalOpen);
 
-  const events = eventStore.eventsByWeek.get(uiStore.currentWeek.startOf('week').valueOf());
-  const income = events ? events.filter(({ totalCents }) => totalCents > 0) : [];
-  const expenses = events ? events.filter(({ totalCents }) => totalCents < 0) : [];
+  const events =  eventStore.getEventsForWeek(uiStore.currentWeek) || [];
   const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative');
 
   return (
@@ -110,7 +109,7 @@ function Details() {
             Week starting balance: {uiStore.weekStartingBalanceText}
           </div>
           {!uiStore.weekHasNegativeBalance && (
-            <div className={endBalanceClasses}>Week ending balance: {uiStore.weekEndingBalanceText}</div>
+            <div className={endBalanceClasses}>Weekly ending balance: {uiStore.weekEndingBalanceText}</div>
           )}
         </div>
 
@@ -125,35 +124,33 @@ function Details() {
       {uiStore.weekHasNegativeBalance && (
         <div className={endBalanceClasses}>
           <Notification
-            message="You're in the red!"
+            message="You are going to be in the red!"
             variant="error"
             actionLink={
-              <Link to="/strategies" className="m-notification_button">
+              <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className="m-notification_button">
                 Fix it
               </Link>
             }
           >
-            <p className="m-notification_explanation">Week ending balance: {uiStore.weekEndingBalanceText}</p>
+            <p className="m-notification_explanation">
+              Week ending balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span>
+            </p>
           </Notification>
         </div>
       )}
 
       <div className="calendar-details__events-section">
-        <h3 className="calendar-details__events-section-title">Income</h3>
+        <h3 className="calendar-details__events-section-title">Weekly Transactions</h3>
 
         <ul className="calendar-details__events-list">
-          {income.map((e) => (
-            <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} />
-          ))}
-        </ul>
-      </div>
-
-      <div className="calendar-details__events-section">
-        <h3 className="calendar-details__events-section-title">Expenses</h3>
-
-        <ul className="calendar-details__events-list">
-          {expenses.map((e) => (
-            <DetailRow event={e} onRequestEdit={editEvent(e)} onRequestDelete={confirmDelete(e)} key={e.id} balanceIsNegative={eventStore.getBalanceForDate(e.dateTime) < 1} />
+          {events.map((e) => (
+            <DetailRow
+              event={e}
+              onRequestEdit={editEvent(e)}
+              onRequestDelete={confirmDelete(e)}
+              key={e.id}
+              balanceIsNegative={e.total < 0 && eventStore.getBalanceForDate(e.dateTime) < 1}
+            />
           ))}
         </ul>
       </div>

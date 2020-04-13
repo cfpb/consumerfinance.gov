@@ -97,15 +97,17 @@ export default class UIStore {
   }
 
   @action setCurrentMonth(month) {
-    this.currentMonth = toDayJS(month);
+    const date = toDayJS(month);
+    this.currentMonth = date;
+    this.currentWeek = date.startOf('month').startOf('week');
   }
 
   @action nextMonth() {
-    this.currentMonth = this.currentMonth.add(1, 'month');
+    this.setCurrentMonth(this.currentMonth.add(1, 'month'));
   }
 
   @action prevMonth() {
-    this.currentMonth = this.currentMonth.subtract(1, 'month');
+    this.setCurrentMonth(this.currentMonth.subtract(1, 'month'));
   }
 
   @action setSelectedDate(date) {

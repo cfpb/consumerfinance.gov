@@ -3,7 +3,7 @@ import { useReducer, useCallback } from 'react';
 import { formatCurrency, toCents } from '../lib/currency-helpers';
 import { recurrenceRules, DAY_OPTIONS } from '../lib/calendar-helpers';
 
-import closeRound from '@cfpb/cfpb-icons/src/icons/close-round.svg';
+import { closeRound } from '../lib/icons';
 
 export const Checkbox = ({ id, name, onChange, checked, label, value = '1', ...props }) => {
   const changeHandler = useCallback(
