@@ -14,6 +14,7 @@ pipeline {
         IMAGE_REPO="cfpb/cfgov-python"
         IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
+        NOTIFICATION_CHANNEL = 'foobar'
     }
 
     parameters {
@@ -105,6 +106,12 @@ pipeline {
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
+        }
+    }
+
+    post {
+        always {
+            notify("${NOTIFICATION_CHANNEL}", "${currentBuild.result} ${env.JOB_NAME} ${env.BRANCH_NAME}")
         }
     }
 }
