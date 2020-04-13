@@ -7,6 +7,10 @@ services:
         image: elasticsearch:2.4-alpine
         networks:
             - app
+        deploy:
+            placement:
+                constraints:
+                - node.role!=manager
 
     postgres:
         image: postgres:10-alpine
@@ -20,6 +24,10 @@ services:
             - app
         secrets:
             - PGPASSWORD
+        deploy:
+            placement:
+                constraints:
+                - node.role!=manager
 
     python:
         image: ${CFGOV_PYTHON_IMAGE}
