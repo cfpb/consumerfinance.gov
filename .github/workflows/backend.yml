@@ -12,7 +12,7 @@ jobs:
         toxenv:
           - lint-current
           - unittest-current
-          # - unittest-future
+          - unittest-future
 
     services:
       postgres:
