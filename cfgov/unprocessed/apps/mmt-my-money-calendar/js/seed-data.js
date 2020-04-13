@@ -87,6 +87,19 @@ function seedCashFlowEvents() {
       }),
     },
     {
+      name: 'Water Bill',
+      date: randDay(),
+      category: 'expense.utilities.waterSewage',
+      totalCents: -5000,
+      recurs: true,
+      recurrenceType: 'monthly',
+      recurrenceRule: new RRule({
+        freq: RRule.MONTHLY,
+        dtstart: currentDate,
+        count: 3,
+      }),
+    },
+    {
       name: 'Student Loan',
       date: randDay(),
       category: 'expense.debt.studentLoan',
