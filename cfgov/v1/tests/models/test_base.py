@@ -101,6 +101,12 @@ class TestCFGOVPage(TestCase):
         response = page.serve_post(request)
         self.assertIsInstance(response, HttpResponseBadRequest)
 
+    def test_serve_post_returns_400_for_invalid_form_id_non_number_index(self):
+        page = BrowsePage(title='test', slug='test')
+        request = self.factory.post('/', {'form_id': 'form-content-abc'})
+        response = page.serve_post(request)
+        self.assertIsInstance(response, HttpResponseBadRequest)
+
     def test_serve_post_valid_calls_feedback_block_handler(self):
         """A valid post should call the feedback block handler.
 
