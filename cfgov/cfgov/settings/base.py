@@ -113,44 +113,25 @@ OPTIONAL_APPS = [
 
 POSTGRES_APPS = []
 
-if django.VERSION < (2, 0):
-    MIDDLEWARE_CLASSES = (
-        "django.contrib.sessions.middleware.SessionMiddleware",
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.http.ConditionalGetMiddleware",
-        "django.middleware.common.CommonMiddleware",
-        "django.middleware.csrf.CsrfViewMiddleware",
-        "django.contrib.auth.middleware.AuthenticationMiddleware",
-        "django.contrib.messages.middleware.MessageMiddleware",
-        "core.middleware.ParseLinksMiddleware",
-        "core.middleware.DownstreamCacheControlMiddleware",
-        "flags.middleware.FlagConditionsMiddleware",
-        "wagtail.core.middleware.SiteMiddleware",
-        "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-    )
-else:
-    MIDDLEWARE = (
-        "django.contrib.sessions.middleware.SessionMiddleware",
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.http.ConditionalGetMiddleware",
-        "django.middleware.common.CommonMiddleware",
-        "django.middleware.csrf.CsrfViewMiddleware",
-        "django.contrib.auth.middleware.AuthenticationMiddleware",
-        "django.contrib.messages.middleware.MessageMiddleware",
-        "core.middleware.ParseLinksMiddleware",
-        "core.middleware.DownstreamCacheControlMiddleware",
-        "flags.middleware.FlagConditionsMiddleware",
-        "wagtail.core.middleware.SiteMiddleware",
-        "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-    )
+MIDDLEWARE = (
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.http.ConditionalGetMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "core.middleware.ParseLinksMiddleware",
+    "core.middleware.DownstreamCacheControlMiddleware",
+    "flags.middleware.FlagConditionsMiddleware",
+    "wagtail.core.middleware.SiteMiddleware",
+    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+)
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
 
 if "CSP_ENFORCE" in os.environ:
-    if django.VERSION < (2, 0):
-        MIDDLEWARE_CLASSES += CSP_MIDDLEWARE
-    else:
-        MIDDLEWARE += CSP_MIDDLEWARE
+    MIDDLEWARE += CSP_MIDDLEWARE
 
 ROOT_URLCONF = "cfgov.urls"
 
@@ -443,10 +424,7 @@ for app in OPTIONAL_APPS:
         for name in app.get("apps", ()):
             if name not in INSTALLED_APPS:
                 INSTALLED_APPS += (name,)
-        if django.VERSION < (2, 0):
-            MIDDLEWARE_CLASSES += app.get("middleware", ())
-        else:
-            MIDDLEWARE += app.get("middleware", ())
+        MIDDLEWARE += app.get("middleware", ())
     except ImportError:
         pass
 

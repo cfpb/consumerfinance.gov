@@ -81,7 +81,7 @@ class TestCDNManagementView(TestCase):
 
     def test_requires_authentication(self):
         response = self.client.get(reverse("manage-cdn"))
-        expected_url = "http://testserver/admin/login/?next=/admin/cdn/"
+        expected_url = "/admin/login/?next=/admin/cdn/"
         self.assertRedirects(
             response, expected_url, fetch_redirect_response=False
         )

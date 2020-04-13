@@ -376,7 +376,7 @@ urlpatterns = [
     re_path(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-es-json'),
-    re_path(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$',
+    re_path(r'^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$(?i)',
         view_answer,
         name='ask-english-answer'),
     re_path(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/$',
@@ -385,13 +385,13 @@ urlpatterns = [
     re_path(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
         view_answer,
         name='ask-spanish-answer'),
-    re_path(r'^(?i)ask-cfpb/search/$',
+    re_path(r'^ask-cfpb/search/$(?i)',
         ask_search,
         name='ask-search-en'),
-    re_path(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
+    re_path(r'^ask-cfpb/search/(?P<as_json>json)/$(?i)',
         ask_search,
         name='ask-search-en-json'),
-    re_path(r'^(?i)ask-cfpb/api/autocomplete/$',
+    re_path(r'^ask-cfpb/api/autocomplete/$(?i)',
         ask_autocomplete, name='ask-autocomplete-en'),
     re_path(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
@@ -399,11 +399,11 @@ urlpatterns = [
     re_path(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 
     re_path(
-        r'^(?i)consumer-tools/financial-well-being/',
+        r'^consumer-tools/financial-well-being/',
         include('wellbeing.urls')
     ),
     re_path(
-        r'^(?i)about-us/diversity-and-inclusion/',
+        r'^about-us/diversity-and-inclusion/',
         include((
             'diversity_inclusion.urls',
             'diversity_inclusion'),
@@ -460,92 +460,92 @@ urlpatterns = [
 
 # Ask CFPB category and subcategory redirects
 category_redirects = [
-    re_path(r'^(?i)ask-cfpb/category-auto-loans/(.*)$',
+    re_path(r'^ask-cfpb/category-auto-loans/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/auto-loans/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-bank-accounts-and-services/(.*)$',
+    re_path(r'^ask-cfpb/category-bank-accounts-and-services/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/bank-accounts/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-credit-cards/(.*)$',
+    re_path(r'^ask-cfpb/category-credit-cards/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/credit-cards/answers/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-credit-reporting/(.*)$',
+    re_path(r'^ask-cfpb/category-credit-reporting/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/credit-reports-and-scores/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-debt-collection/(.*)$',
+    re_path(r'^ask-cfpb/category-debt-collection/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/debt-collection/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-families-money/(.*)$',
+    re_path(r'^ask-cfpb/category-families-money/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/money-as-you-grow/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-money-transfers/(.*)$',
+    re_path(r'^ask-cfpb/category-money-transfers/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/money-transfers/answers/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-mortgages/(.*)$',
+    re_path(r'^ask-cfpb/category-mortgages/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/mortgages/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-payday-loans/(.*)$',
+    re_path(r'^ask-cfpb/category-payday-loans/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/payday-loans/answers',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-prepaid-cards/(.*)$',
+    re_path(r'^ask-cfpb/category-prepaid-cards/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/prepaid-cards/',
             permanent=True)),
-    re_path(r'^(?i)ask-cfpb/category-student-loans/(.*)$',
+    re_path(r'^ask-cfpb/category-student-loans/(.*)$(?i)',
         RedirectView.as_view(
             url='/consumer-tools/student-loans/',
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
+    re_path(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$(?i)',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$(?i)',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cuentas-bancarias/',
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$(?i)',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
+    re_path(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$(?i)',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/',  # noqa: E501
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
+    re_path(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$(?i)',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cobro-de-deudas/',
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$',
+    re_path(r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$(?i)',
         RedirectView.as_view(
             url='/es/el-dinero-mientras-creces/',
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
+    re_path(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$(?i)',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-comprar-una-casa/(.*)$',
+    re_path(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$(?i)',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/hipotecas/',
             permanent=True)),
     re_path(
-        r'^(?i)es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$',
+        r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$(?i)',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',  # noqa: E501
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$(?i)',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^(?i)es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
+    re_path(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$(?i)',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-estudiantiles/',  # noqa: E501
             permanent=True))
@@ -559,7 +559,7 @@ if settings.ALLOW_ADMIN_URL:
             check_permissions,
             name='check_permissions'),
         re_path(r'^login/welcome/$', welcome, name='welcome'),
-        re_path(r'^logout/$', auth_views.logout),
+        re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
         re_path(r'^admin/login/$',
             RedirectView.as_view(url='/login/',
                                  permanent=True,
@@ -581,10 +581,10 @@ if settings.ALLOW_ADMIN_URL:
                 name='password_reset_confirm')
         ])),
         re_path(r'^django-admin/password_change',
-            auth_views.password_change,
+            auth_views.PasswordChangeView.as_view(),
             {'password_change_form': CFGOVPasswordChangeForm}),
         re_path(r'^password/change/done/$',
-            auth_views.password_change_done,
+            auth_views.PasswordChangeDoneView.as_view(),
             name='password_change_done'),
         re_path(r'^admin/account/change_password/$',
             change_password,
