@@ -385,11 +385,11 @@ urlpatterns = [
     re_path(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 
     re_path(
-        r'^consumer-tools/financial-well-being/',
+        r'^(?i)consumer-tools/financial-well-being/',
         include('wellbeing.urls')
     ),
     re_path(
-        r'^about-us/diversity-and-inclusion/',
+        r'^(?i)about-us/diversity-and-inclusion/',
         include((
             'diversity_inclusion.urls',
             'diversity_inclusion'),
