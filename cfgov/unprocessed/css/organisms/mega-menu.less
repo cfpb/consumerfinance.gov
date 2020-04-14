@@ -744,6 +744,14 @@ body {
                 }
             }
 
+            &-list ul {
+                display: table;
+                width: 100%;
+
+                // Constrain the menu spacing.
+                max-width: unit( 1000px / @base-font-size-px, em );
+            }
+
             &-list-group {
                 margin-bottom: 0;
                 // Truncate the expanded menu to this element.
@@ -751,8 +759,7 @@ body {
             }
 
             &-item {
-                display: inline-block;
-                margin-right: 0;
+                display: table-cell;
 
                 .no-js &:hover {
                     .o-mega-menu_content-2 {
@@ -766,6 +773,8 @@ body {
             }
 
             &-link {
+                display: inline-block;
+
                 position: relative;
                 z-index: 30;
                 padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -963,6 +972,13 @@ body {
                 padding-right: 0;
             }
 
+            // Move the first link in each mega menu list group up a bit so that it aligns
+            // with the featured links box. We do this instead of removing the top padding
+            // to preserve the links' hover state.
+            &-item:first-child &-link {
+                margin-top: unit( -12px / @base-font-size-px, em );
+            }
+
             &-overview-link,
             &-link {
                 padding: unit( 10px / 18px, em );
@@ -1037,8 +1053,12 @@ body {
             display: none;
         }
 
-        &_group-heading__hidden {
-            visibility: hidden;
+        &_group-heading {
+            margin-bottom: unit( 30px / @base-font-size-px, em );
+
+            &__hidden {
+                visibility: hidden;
+            }
         }
 
         // Hide global header CTA container and eyebrow at desktop size.
@@ -1060,12 +1080,6 @@ body {
         &:after {
             left: -@grid_gutter-width;
             width: @menu_max_width_px + ( @grid_gutter-width * 2 );
-        }
-
-        &_content-1 {
-            &-item {
-                margin-right: @grid_gutter-width * 2;
-            }
         }
 
         &_content-2 {

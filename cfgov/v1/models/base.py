@@ -270,10 +270,11 @@ class CFGOVPage(Page):
                     except ValueError:
                         streamfield_index = None
 
-                    try:
-                        form_module = streamfield[streamfield_index]
-                    except IndexError:
-                        form_module = None
+                    if streamfield_index is not None:
+                        try:
+                            form_module = streamfield[streamfield_index]
+                        except IndexError:
+                            form_module = None
 
         if form_module is None:
             return self._return_bad_post_response(request)
@@ -350,7 +351,7 @@ class CFGOVPageCategory(Orderable):
 # keep encrypted passwords around to ensure that user does not re-use
 # any of the previous 10
 class PasswordHistoryItem(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()  # password becomes invalid at...
     locked_until = models.DateTimeField()  # password cannot be changed until
@@ -374,7 +375,7 @@ class PasswordHistoryItem(models.Model):
 
 # User Failed Login Attempts
 class FailedLoginAttempt(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # comma-separated timestamp values, right now it's a 10 digit number,
     # so we can store about 91 last failed attempts
     failed_attempts = models.CharField(max_length=1000)
@@ -405,6 +406,6 @@ class FailedLoginAttempt(models.Model):
 
 
 class TemporaryLockout(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()

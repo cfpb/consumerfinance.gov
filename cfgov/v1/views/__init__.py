@@ -7,11 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url
 from django.template.response import TemplateResponse
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
@@ -25,6 +24,12 @@ from v1.auth_forms import (
 )
 from v1.util.util import all_valid_destinations_for_request
 from v1.util.wrap_password_reset import _wrap_password_reset_view
+
+
+try:
+    from django.urls import resolve
+except ImportError:
+    from django.core.urlresolvers import resolve
 
 
 # Overrided Wagtail Views
@@ -98,7 +103,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
             return HttpResponseRedirect(
                 '/login/check_permissions/?next=' + redirect_to)
     else:
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return HttpResponseRedirect(
                 '/login/check_permissions/?next=' + redirect_to)
         form = LoginForm(request)
@@ -123,7 +128,7 @@ def check_permissions(request):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(
             "%s?%s=%s" % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, redirect_to)
         )
@@ -166,7 +171,7 @@ def custom_password_reset_confirm(
 
     try:
         # urlsafe_base64_decode() decodes to bytestring on Python 3
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = UserModel._default_manager.get(pk=uid)
     except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
         user = None

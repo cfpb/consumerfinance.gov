@@ -2,12 +2,17 @@ import re
 from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
 from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 NON_GOV_LINKS = re.compile(
@@ -88,7 +93,7 @@ def get_link_tags(html):
     return A_TAG.findall(html)
 
 
-def add_link_markup(tag):
+def add_link_markup(tag, request_path):
     """Add necessary markup to the given link and return if modified.
 
     Add an external link icon if the input is not a CFPB (internal) link.
@@ -106,6 +111,17 @@ def add_link_markup(tag):
         return None
 
     class_attrs = tag.attrs.setdefault('class', [])
+
+    if request_path is not None:
+        # Strips the path of the current page from hrefs that are internal page
+        # anchor links.
+        # TODO: Remove that functionality when we get to Wagtail>=2.7, which
+        # adds the ability to create anchor links.
+        in_page_anchor_pattern = request_path + '#'
+        if tag['href'].startswith(in_page_anchor_pattern):
+            # Strip current path from in-page anchor links
+            tag['href'] = tag['href'].replace(request_path, '')
+            return str(tag)
 
     if tag['href'].startswith('/external-site/?'):
         # Sets the icon to indicate you're leaving consumerfinance.gov
@@ -189,7 +205,7 @@ def slugify_unique(context, value):
     If the context lacks a request, this function falls back to the default
     behavior of Django slugify:
 
-    https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.text.slugify
+    https://docs.djangoproject.com/en/stable/ref/utils/#django.utils.text.slugify
 
     >>> context = {}
     >>> slugify_unique(context, 'Some text')

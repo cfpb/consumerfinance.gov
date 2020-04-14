@@ -1,6 +1,6 @@
 from imp import reload
 
-from django.conf.urls import url
+import django
 from django.test import RequestFactory, TestCase, override_settings
 
 import mock
@@ -9,9 +9,11 @@ from cfgov import urls
 
 
 try:
-    from django.urls import RegexURLPattern, RegexURLResolver
+    from django.urls import re_path, URLPattern, URLResolver
 except ImportError:
-    from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
+    from django.conf.urls import url as re_path
+    from django.core.urlresolvers import RegexURLPattern as URLPattern
+    from django.core.urlresolvers import RegexURLResolver as URLResolver
 
 
 # Whitelist is a list of *strings* that match the beginning of a regex string.
@@ -34,14 +36,21 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=''):
     """ Extract a list of all regexes from the given urlpatterns """
     regexes = []
     for p in urlpatterns:
-        if isinstance(p, RegexURLPattern) or hasattr(p, '_get_callback'):
-            regexes.append(base + p.regex.pattern)
-        elif (isinstance(p, RegexURLResolver) or
+        if isinstance(p, URLPattern) or hasattr(p, '_get_callback'):
+            if django.VERSION < (2, 0):
+                regexes.append(base + p.regex.pattern)
+            else:
+                regexes.append(base + p.pattern.regex.pattern)
+        elif (isinstance(p, URLResolver) or
               hasattr(p, 'url_patterns') or
               hasattr(p, '_get_url_patterns')):
             patterns = p.url_patterns
-            regexes.extend(extract_regexes_from_urlpatterns(
-                patterns, base + p.regex.pattern))
+            if django.VERSION < (2, 0):
+                regexes.extend(extract_regexes_from_urlpatterns(
+                    patterns, base + p.regex.pattern))
+            else:
+                regexes.extend(extract_regexes_from_urlpatterns(
+                    patterns, base + p.pattern.regex.pattern))
         else:
             raise TypeError("%s does not appear to be a urlpattern object" % p)
     return regexes
@@ -82,7 +91,8 @@ def dummy_external_site_view(request):
 
 urlpatterns = [
     # Needed for rendering of base template that calls reverse('external-site')
-    url(r'^external-site/$', dummy_external_site_view, name='external-site'),
+    re_path(r'^external-site/$', dummy_external_site_view,
+            name='external-site'),
 
     urls.flagged_wagtail_only_view('MY_TEST_FLAG', r'^$'),
 ]
