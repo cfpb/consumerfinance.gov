@@ -24,8 +24,8 @@ def write_agreements_data(path=''):
 
     agreements_location = path + 'prepaid_metadata_all_agreements.csv'
     products_location = path + 'prepaid_metadata_recent_agreements.csv'
-    agreements_file = open(agreements_location, 'w')
-    products_file = open(products_location, 'w')
+    agreements_file = open(agreements_location, 'w', encoding='utf-8')
+    products_file = open(products_location, 'w', encoding='utf-8')
 
     agreements_writer = csv.DictWriter(
         agreements_file,
@@ -58,17 +58,17 @@ def write_agreements_data(path=''):
         if other_relevant_parties:
             other_relevant_parties = other_relevant_parties.replace(
                 '\n', '; '
-            ).encode('utf-8')
+            )
         else:
             other_relevant_parties = 'No information provided'
 
         program_manager = product.program_manager
         if program_manager:
-            program_manager = program_manager.encode('utf-8')
+            program_manager = program_manager
 
         data = {
-            'issuer_name': product.issuer_name.encode('utf-8'),
-            'product_name': product.name.encode('utf-8'),
+            'issuer_name': product.issuer_name,
+            'product_name': product.name,
             'product_id': product.pk,
             'agreement_effective_date': agreement.effective_date,
             'created_date': created_time,
