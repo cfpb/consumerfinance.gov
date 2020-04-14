@@ -1,6 +1,7 @@
 import logging
 
 from django.conf import settings
+from django.conf.urls import include
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
@@ -18,12 +19,14 @@ from wagtail.core.whitelist import attribute_rule
 from scripts import export_enforcement_actions
 
 from ask_cfpb.models.snippets import GlossaryTerm
+from v1 import template_debug
 from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.util import util
+from v1.views.template_debug import TemplateDebugView
 
 
 try:
@@ -55,9 +58,9 @@ def register_export_menu_item():
 @hooks.register('register_admin_urls')
 def register_export_url():
     return [re_path(
-        'export-enforcement-actions',
-        export_data,
-        name='export-enforcement-actions')]
+            'export-enforcement-actions',
+            export_data,
+            name='export-enforcement-actions')]
 
 
 @hooks.register('before_delete_page')
@@ -404,3 +407,26 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
         content_type__app_label='v1',
         codename='export_feedback'
     )
+
+
+@hooks.register('register_admin_urls')
+def register_template_debug_urls():
+    urls = [
+        re_path(
+            rf'^template_debug/v1/{template_name}/',
+            TemplateDebugView.as_view(
+                debug_template_name=(
+                    f'_includes/molecules/{template_name}.html'
+                ),
+                debug_test_cases=getattr(
+                    template_debug,
+                    f'{template_name}_test_cases'
+                )
+            ),
+            name=f'template_debug_{template_name}'
+        ) for template_name in (
+            'notification',
+        )
+    ]
+
+    return [re_path('', include(urls, namespace='v1'))]
