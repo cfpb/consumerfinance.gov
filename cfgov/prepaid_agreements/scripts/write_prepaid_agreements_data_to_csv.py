@@ -62,10 +62,6 @@ def write_agreements_data(path=''):
         else:
             other_relevant_parties = 'No information provided'
 
-        program_manager = product.program_manager
-        if program_manager:
-            program_manager = program_manager
-
         data = {
             'issuer_name': product.issuer_name,
             'product_name': product.name,
@@ -76,7 +72,7 @@ def write_agreements_data(path=''):
             'current_status': product.status,
             'prepaid_product_type': product.prepaid_type,
             'program_manager_exists': product.program_manager_exists,
-            'program_manager': program_manager,
+            'program_manager': product.program_manager,
             'other_relevant_parties': other_relevant_parties,
             'path': agreement.bulk_download_path,
             'direct_download': agreement.compressed_files_url,
