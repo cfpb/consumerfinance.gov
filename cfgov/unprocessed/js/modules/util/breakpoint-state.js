@@ -8,7 +8,9 @@ import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
  * @returns {number} The base font size set on the body element.
  */
 function _getBodyBaseFontSize() {
-  return parseFloat( getComputedStyle( document.body ).fontSize );
+  let fontSize = getComputedStyle( document.body ).fontSize;
+  fontSize = fontSize === '' ? -1 : fontSize;
+  return parseFloat( fontSize );
 }
 
 /**
@@ -21,8 +23,8 @@ function _inBreakpointRange( breakpointRange, width ) {
   let breakpointRangeMax = breakpointRange.max;
 
   // Whether the user has set a custom size for the font in their browser.
-  const useEmsConversation = isNaN( _getBodyBaseFontSize() ) ||
-                             _getBodyBaseFontSize() === 16 ? false : true;
+  const useEmsConversation = _getBodyBaseFontSize() > 0 &&
+                             _getBodyBaseFontSize() !== 16;
   if ( useEmsConversation ) {
     /* 16 = base font size without adjustments.
        The CSS converts breakpoints to ems, which then change the width of the
