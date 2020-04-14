@@ -111,6 +111,10 @@ export default class CashFlowStore {
     );
   }
 
+  @computed get hasStartingBalance() {
+    return this.eventCategories.includes('income.startingBalance');
+  }
+
   /**
    * Get the user's available balance for the specified date
    *
