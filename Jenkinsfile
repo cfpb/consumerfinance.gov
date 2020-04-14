@@ -105,7 +105,7 @@ pipeline {
                     dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
-                notify("${NOTIFICATION_CHANNEL}", "Site deployed via ${env.BUILD_URL} and available at: https://${CFGOV_HOSTNAME}")
+                notify("${NOTIFICATION_CHANNEL}", "Site deployed by ${env.CHANGE_AUTHOR} via ${env.BUILD_URL} and available at: https://${CFGOV_HOSTNAME}")
             }
         }
     }
