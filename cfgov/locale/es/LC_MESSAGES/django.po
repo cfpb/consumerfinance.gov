@@ -1441,6 +1441,88 @@ msgstr "Fecha de publicación:"
 msgid "September 26, 2017"
 msgstr "26 de septiembre de 2017"
 
+# Manually added translations from within wellbeing/jinja2/wellbeing/views.py
+
+#: wellbeing/jinja2/wellbeing/views.py:163
+msgid "18-24 year olds"
+msgstr "18-24 años"
+
+#: wellbeing/jinja2/wellbeing/views.py:164
+msgid "25-34 year olds"
+msgstr "25-34 años"
+
+#: wellbeing/jinja2/wellbeing/views.py:165
+msgid "35-44 year olds"
+msgstr "35-44 años"
+
+#: wellbeing/jinja2/wellbeing/views.py:166
+msgid "45-54 year olds"
+msgstr "45-54 años"
+
+#: wellbeing/jinja2/wellbeing/views.py:167
+msgid "55-64 year olds"
+msgstr "55-64 años"
+
+#: wellbeing/jinja2/wellbeing/views.py:168
+msgid "65-74 year olds"
+msgstr "65-74 años"
+
+#: wellbeing/jinja2/wellbeing/views.py:169
+msgid "75+ year olds"
+msgstr "75+ años"
+
+#: wellbeing/jinja2/wellbeing/views.py:172
+msgid "Less than $20,000"
+msgstr "Menos de $20,000"
+
+#: wellbeing/jinja2/wellbeing/views.py:173
+msgid "$20,000 to 29,999"
+msgstr "$20,000 a 29,999"
+
+#: wellbeing/jinja2/wellbeing/views.py:174
+msgid "$30,000 to 49,999"
+msgstr "$30,000 a 49,999"
+
+#: wellbeing/jinja2/wellbeing/views.py:175
+msgid "$50,000 to 74,999"
+msgstr "$50,000 a 74,999"
+
+#: wellbeing/jinja2/wellbeing/views.py:176
+msgid "$75,000 to 99,999"
+msgstr "$75,000 a 99,999"
+
+#: wellbeing/jinja2/wellbeing/views.py:177
+msgid "$100,000 and higher"
+msgstr "$100,000 o más"
+
+#: wellbeing/jinja2/wellbeing/views.py:180
+msgid "Self-employed"
+msgstr "Empleado por cuenta propia"
+
+#: wellbeing/jinja2/wellbeing/views.py:181
+msgid "Full-time or part-time"
+msgstr "Empleado a tiempo completo o parcial"
+
+#: wellbeing/jinja2/wellbeing/views.py:182
+msgid "Homemaker"
+msgstr "Ama/o de casa"
+
+#: wellbeing/jinja2/wellbeing/views.py:183
+msgid "Student"
+msgstr "Estudiante"
+
+#: wellbeing/jinja2/wellbeing/views.py:184
+msgid "Sick or disabled"
+msgstr "Enfermo o discapacitado"
+
+#: wellbeing/jinja2/wellbeing/views.py:185
+msgid "Unemployed or laid off"
+msgstr "Desempleado o despedido"
+
+#: wellbeing/jinja2/wellbeing/views.py:186
+msgid "Retired"
+msgstr "Jubilado"
+
 #~ msgid "Take the next step"
 #~ msgstr "Dar el siguiente paso"
 
