@@ -11,12 +11,11 @@ const { InjectManifest } = WorkboxPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-// Used for toggling debug output. Inherit Django debug value to cut down on redundant environment variables:
-const {
+let {
   DJANGO_DEBUG: DEBUG = false,
   NODE_ENV = 'development',
   ANALYZE = false,
-  SERVICE_WORKER_ENABLED = false,
+  SERVICE_WORKER_ENABLED = process.env.NODE_ENV === 'production',
 } = process.env;
 
 const COMMON_BUNDLE_NAME = 'common.js';
