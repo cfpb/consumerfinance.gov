@@ -42,7 +42,15 @@ class StrategiesStore {
     ],
     largestBillableExpense: [
       {
-        categories: ['expense.utilities.fuel', 'expense.utilities.waterSewage'],
+        categories: [
+          'expense.utilities.fuel',
+          'expense.utilities.waterSewage',
+          'expense.utilities.electricity',
+          'expense.utilities.trash',
+          'expense.utilities.cable',
+          'expense.utilities.internet',
+          'expense.utilities.phone',
+        ],
         title: 'Budget Utility Billing',
         text: 'Contact your utility company to find out about budget billing',
       },
