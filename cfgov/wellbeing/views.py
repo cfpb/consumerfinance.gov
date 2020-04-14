@@ -16,11 +16,11 @@ class ResultsView(TranslatedTemplateView):
             # Question 1
             'question': _('I could handle a major unexpected expense'),
             'answers': [
-                _('Not at all'),
-                _('Very little'),
-                _('Somewhat'),
-                _('Very well'),
-                _('Completely'),
+                'Not at all',
+                'Very little',
+                'Somewhat',
+                'Very well',
+                'Completely',
             ]
         },
         {
@@ -158,10 +158,12 @@ class ResultsView(TranslatedTemplateView):
 
     avg_score = FWBScore.avg()
 
+    # Actual translation happens in the template, not here. Translation tags are
+    # added so `makemessages` picks up strings that need translation.
     group_means = {
         'age': OrderedDict([
-            ('18-24 year olds', FWBScore(51)),
-            ('25-34 year olds', FWBScore(51)),
+            ( _('18-24 year olds'), FWBScore(51)),
+            ( _('25-34 year olds'), FWBScore(51)),
             ('35-44 year olds', FWBScore(52)),
             ('45-54 year olds', FWBScore(54)),
             ('55-64 year olds', FWBScore(55)),
