@@ -1,6 +1,4 @@
 from django.conf import settings
-from django.conf.urls import url
-from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.utils.html import format_html
 
@@ -10,6 +8,13 @@ from wagtail.core.models import Page
 
 from ask_cfpb.models import Answer, AnswerPage
 from ask_cfpb.scripts import export_ask_data
+
+
+try:
+    from django.urls import re_path, reverse
+except ImportError:
+    from django.conf.urls import url as re_path
+    from django.core.urlresolvers import reverse
 
 
 def export_data(request):
@@ -38,7 +43,7 @@ def register_export_menu_item():
 
 @hooks.register('register_admin_urls')
 def register_export_url():
-    return [url('export-ask', export_data, name='export-ask')]
+    return [re_path('^export-ask', export_data, name='export-ask')]
 
 
 @hooks.register('after_create_page')

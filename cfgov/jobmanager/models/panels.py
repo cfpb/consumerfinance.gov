@@ -39,6 +39,7 @@ class USAJobsApplicationLink(Orderable, models.Model):
     url = models.URLField(max_length=255)
     applicant_type = models.ForeignKey(
         ApplicantType,
+        on_delete=models.CASCADE,
         related_name='usajobs_application_links',
     )
 
@@ -55,7 +56,10 @@ class USAJobsApplicationLink(Orderable, models.Model):
 
 
 class GradePanel(Orderable, models.Model):
-    grade = models.ForeignKey(Grade, related_name='grade_panels')
+    grade = models.ForeignKey(
+        Grade,
+        on_delete=models.CASCADE,
+        related_name='grade_panels')
     job_listing = ParentalKey(JobListingPage, related_name='grades')
 
     class Meta:

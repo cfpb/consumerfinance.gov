@@ -9,7 +9,7 @@ frontend() {
 
 # Install backend dependencies
 backend() {
-    pip install -r requirements/travis.txt
+    pip install -r requirements/ci.txt
 }
 
 docs() {
