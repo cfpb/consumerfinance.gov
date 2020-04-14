@@ -354,8 +354,8 @@
                     <tbody>
                     {% for question in questions %}
                         <tr>
-                            <td>{{ question['question'] }}</td>
-                            <td>{{ question['answers'][answers[loop.index - 1]] }}</td>
+                            <td>{{ _(question['question']) }}</td>
+                            <td>{{ _(question['answers'][answers[loop.index - 1]]) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -393,18 +393,29 @@
                         </a>
                         {{ _('to see and manage your everyday expenses.') }}
                     </li>
+                    {% if (current_language == 'en') %}
                     <li>
-                        <b>{{ _('Get a grip on debt.') }}</b>
-                        {{ _('Stay on top of what you owe with our') }}
+                        <b>Get a grip on debt.</b>
+                        Stay on top of what you owe with our
                         <a class="a-link
                                   a-link__icon"
                            href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_debt-worksheet.pdf">
-                            <span class="a-link_text">{{ _('debt log') }}</span>
+                            <span class="a-link_text">debt log</span>
                             {{ svg_icon('download') }}
                         </a>
-                        {{ _('and find templates to help you communicate with') }}
-                        {{ _('<a href="/consumer-tools/debt-collection/">debt collectors</a>') }}.
+                        and find templates to help you communicate with
+                        <a href="/consumer-tools/debt-collection/">
+                          debt collectors</a>.
                     </li>
+                    {% endif %}
+                    {% if (current_language == 'es') %}
+                    <li>
+                      <b>Tome control de sus deudas.</b>
+                      Vea nuestro recursos para ayudarle a
+                      <a href="/es/obtener-respuestas/que-es-un-cobrador-de-deudas-y-por-que-trata-de-comunicarse-conmigo-es-330/">
+                        comunicarse con un cobrador de deudas</a>.
+                    </li>
+                    {% endif %}
                     <li>
                         <b>{{ _('Repay student loans wisely.') }}</b>
                         {{ _('Use our tool to see your choices about how you') }}
@@ -416,43 +427,79 @@
 
             <div class="content-l_col content-l_col-1-2">
                 <h3>{{ _('Get on track for your financial future') }}</h3>
+                {% if (current_language == 'en') %}
                 <ul>
                     <li>
-                        <b>{{ _('Look toward home ownership.') }}</b>
-			                  {{ _('Consult our') }}
-                        <a href="{{ _('/owning-a-home/') }}">
-                        {{ _('Buying a House') }}
-                        </a>
-                        {{ _('tools and resources.') }}
+                        <b>Look toward home ownership.</b>
+			                  Consult our <a href="/owning-a-home/">Buying a House</a>
+                        tools and resources.
                     </li>
                     <li>
-                        <b>{{ _('Create an action plan to meet your goals.') }}</b>
-                        {{ _('Use our') }}
-                        <a class="a-link a-link__icon" href={{ _('https://files.consumerfinance.gov/f/documents/201705_cfpb_My-New-Money-Goal.pdf') }}>
+                        <b>Create an action plan to meet your goals.</b>
+                        Use our
+                        <a class="a-link a-link__icon"
+                        href="https://files.consumerfinance.gov/f/documents/201705_cfpb_My-New-Money-Goal.pdf">
                         <span class="a-link_text">
-                          {{ _('worksheet') }}
+                          worksheet
                         </span>
                             {{ svg_icon('download') }}</a>
-                        {{ _('or') }}
+                        or
                         <a class="a-link
                                   a-link__icon"
                            href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_monthly-budget.pdf">
-                            <span class="a-link_text">{{ _('budgeting tool') }}</span>
+                            <span class="a-link_text">budgeting tool</span>
                             {{ svg_icon('download') }}
                         </a>.
                     </li>
                     <li>
-                        <b>{{ _('Consider the right age for claiming Social Security.') }}</b>
-                        {{ _('Use our') }}
+                        <b>Consider the right age for claiming Social Security.</b>
+                        Use our
                         <a href="/retirement/before-you-claim/">
-                        {{ _('Planning for Retirement tool') }}
+                        Planning for Retirement tool
                         </a>
-                        {{ _('before you make your decision.') }}
+                        before you make your decision.
                     </li>
                     <li>
-                        <b>{{ _('Build and maintain your credit record.') }}</b>
+                        <b>Build and maintain your credit record.</b>
+                        Understand
+                        <a href="/consumer-tools/credit-reports-and-scores/">
+                            credit reports and scores
+                        </a>
+                        and their effect on your cost of borrowing.
                     </li>
                 </ul>
+                {% endif %}
+                {% if (current_language == 'es') %}
+                <ul>
+                    <li>
+                        <b>¿Está considerando comprar una casa?</b>
+			                  Tenemos <a href="/es/prepararse-para-comprar-casa/">
+                          recursos para ayudarle</a>.
+                    </li>
+                    <li>
+                        <b>Desarrolle un plan de acción para alcanzar sus metas.</b>
+                        Use esta
+                        <a href="https://pueblo.gpo.gov/CFPBLibs/CFPBLibsPubs.php?PubID=13757">
+                          hoja de cálculo
+                        </a>
+                        , o herramienta para hacer un presupuesto.
+                    </li>
+                    <li>
+                        <b>Considere a que edad desea reclamar su beneficio del Seguro Social.</b>
+                        Use nuestro
+                        <a href="/consumer-tools/retirement/before-you-claim/es/">
+                          calculador</a>
+                        antes de tomar una decisión.
+                    </li>
+                    <li>
+                        <b>Mantenga un buen historial de crédito.</b>
+                        Conozca más sobre cómo
+                        <a href="/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/">
+                            su historial y puntaje de crédito</a>
+                        determinan el costo de tomar un préstamo.
+                    </li>
+                </ul>
+                {% endif %}
             </div>
         </div>
 
@@ -464,14 +511,24 @@
         </p>
 
         <ul>
+            {% if (current_language == 'en') %}
             <li>
-                <b>{{ _('A nonprofit credit counselor') }}</b>
-                {{ _('can help you set up a reasonable repayment plan for credit cards and other consumer debt.') }}
-                {{ _('See ') }}
+                <b>A nonprofit credit counselor</b> can help you set up a
+                reasonable repayment plan for credit cards and other consumer
+                debt. See
                 <a href="/ask-cfpb/how-do-i-choose-which-credit-counselor-is-right-for-me-en-1355/">
-                {{ _('tips for choosing a credit counselor') }}
-                </a>.
+                  tips for choosing a credit counselor</a>.
             </li>
+            {% endif %}
+            {% if (current_language == 'es') %}
+            <li>
+                <b>Un asesor de crédito de una organización sin fines de lucro</b>
+                puede ayudarle a hacer un plan de pago para sus tarjetas de
+                crédito y otras deudas. Estos son algunos
+                <a href="/es/obtener-respuestas/como-elijo-el-asesor-de-credito-adecuado-para-mi-es-1355/ ">
+                  consejos para escoger un asesor de crédito</a>.
+            </li>
+            {% endif %}
             <li>
                 <b>{{ _('A HUD-certified housing counselor') }}</b>
                 {{ _('can give advice if you’re having trouble paying your mortgage') }}
@@ -561,7 +618,7 @@
 
         {% for slug, means in group_means.items() %}
             {% for group_name, group_data in means.items() %}
-                <dt class="comparison_data-point {{ slug }}_group">{{ group_name }}</dt>
+                <dt class="comparison_data-point {{ slug }}_group">{{ _(group_name) }}</dt>
                 <dd class="comparison_data-point {{ slug }}_mean">
                     <span style="left: {{ group_data.pct }}%; border-color: {{ group_data.color }};">
                         {{ group_data }}
