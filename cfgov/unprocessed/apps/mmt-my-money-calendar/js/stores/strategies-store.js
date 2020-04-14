@@ -92,7 +92,9 @@ class StrategiesStore {
         ],
         title: 'Adjust Spending this Week',
         template: (categoryName) =>
-          `${categoryName} ${isPlural(categoryName) ? 'were' : 'was'} your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
+          `${categoryName} ${
+            isPlural(categoryName) ? 'were' : 'was'
+          } your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
       },
     ],
   };
@@ -116,7 +118,7 @@ class StrategiesStore {
   }
 
   @computed get fixItResults() {
-    return compact(
+    const results = compact(
       Object.entries(this.fixItWeekAnalysis).map(([type, event]) => {
         if (!event) return;
 
@@ -133,6 +135,19 @@ class StrategiesStore {
         return strategy;
       })
     );
+
+    if (results.length) return results;
+
+    return [
+      {
+        title: 'No Fix-It Strategies Found',
+        text: "There are no recommendations specific to this week's transactions.",
+        link: {
+          href: '/strategies',
+          text: 'View General Strategies',
+        },
+      },
+    ];
   }
 
   @computed get strategyResults() {
