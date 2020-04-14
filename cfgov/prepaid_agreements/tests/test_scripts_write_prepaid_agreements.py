@@ -51,8 +51,6 @@ class TestViews(TestCase):
         # Run the write function
         write_agreements_data()
 
-        print(mock_open.mock_calls)
-
         mock_file_handle = mock_open()
 
         # Make sure each file's headers exist
