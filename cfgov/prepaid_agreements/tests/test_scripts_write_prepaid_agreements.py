@@ -1,8 +1,7 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from unittest import mock
 
 from django.test import TestCase
-from django.utils import timezone
 
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 from prepaid_agreements.scripts.write_prepaid_agreements_data_to_csv import (
@@ -26,28 +25,28 @@ class TestViews(TestCase):
         self.product2.save()
 
         effective_date = date(month=2, day=3, year=2019)
+        created_date = datetime(month=4, day=1, year=2020)
         self.agreement_old = PrepaidAgreement(
             effective_date=effective_date,
-            created_time=timezone.now() - timedelta(hours=1),
+            created_time=created_date - timedelta(hours=1),
             product=self.product1,
         )
         self.agreement_old.save()
         self.agreement_older = PrepaidAgreement(
             effective_date=effective_date,
-            created_time=timezone.now() - timedelta(hours=2),
+            created_time=created_date - timedelta(hours=2),
             product=self.product2,
         )
         self.agreement_older.save()
         self.agreement_new = PrepaidAgreement(
             effective_date=effective_date,
-            created_time=timezone.now(),
+            created_time=created_date,
             product=self.product1,
         )
         self.agreement_new.save()
 
     @mock.patch("builtins.open", new_callable=mock.mock_open)
     def test_write_agreements_data(self, mock_open):
-
         # Run the write function
         write_agreements_data()
 
@@ -71,22 +70,22 @@ class TestViews(TestCase):
 
         # Make sure expected data rows exist
         mock_file_handle.write.assert_any_call(
-            'Bank of CFPB,,1,2019-02-03,1,No,2020-04-14 14:26:48,,,Tax,,,'
+            'Bank of CFPB,,1,2019-02-03,1,No,2020-04-01 03:00:00,,,Tax,,,'
             'No information provided,,\r\n'
         )
         mock_file_handle.write.assert_any_call(
-            'Bank of CFPB,,1,2019-02-03,3,2020-04-14 15:26:48,,,Tax,,,'
+            'Bank of CFPB,,1,2019-02-03,3,2020-04-01 04:00:00,,,Tax,,,'
             'No information provided,,\r\n'
         )
         mock_file_handle.write.assert_any_call(
-            'Bank of CFPB,,1,2019-02-03,3,Yes,2020-04-14 15:26:48,,,Tax,,,'
+            'Bank of CFPB,,1,2019-02-03,3,Yes,2020-04-01 04:00:00,,,Tax,,,'
             'No information provided,,\r\n'
         )
         mock_file_handle.write.assert_any_call(
-            'CFPB Bank,,2,2019-02-03,2,2020-04-14 13:26:48,,,Tax,,,'
+            'CFPB Bank,,2,2019-02-03,2,2020-04-01 02:00:00,,,Tax,,,'
             'Party,,\r\n'
         )
         mock_file_handle.write.assert_any_call(
-            'CFPB Bank,,2,2019-02-03,2,Yes,2020-04-14 13:26:48,,,Tax,,,'
+            'CFPB Bank,,2,2019-02-03,2,Yes,2020-04-01 02:00:00,,,Tax,,,'
             'Party,,\r\n'
         )
