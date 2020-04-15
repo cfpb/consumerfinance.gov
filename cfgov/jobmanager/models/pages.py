@@ -104,8 +104,7 @@ class JobListingPage(CFGOVPage):
     )
     allow_remote = models.BooleanField(
         default=False,
-        help_text='Adds remote option to jobs with office locations.',
-        verbose_name="Location can also be remote"
+        verbose_name="Office location can also be remote"
     )
     regions = ParentalManyToManyField(
         Region,
