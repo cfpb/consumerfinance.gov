@@ -70,22 +70,40 @@ class TestViews(TestCase):
 
         # Make sure expected data rows exist
         mock_file_handle.write.assert_any_call(
-            'Bank of CFPB,,1,2019-02-03,1,No,2020-04-01 03:00:00,,,Tax,,,'
+            'Bank of CFPB,,'
+            + str(self.product1.pk) +
+            ',2019-02-03,'
+            + str(self.agreement_old.pk) +
+            ',No,2020-04-01 03:00:00,,,Tax,,,'
             'No information provided,,\r\n'
         )
         mock_file_handle.write.assert_any_call(
-            'Bank of CFPB,,1,2019-02-03,3,2020-04-01 04:00:00,,,Tax,,,'
+            'Bank of CFPB,,'
+            + str(self.product1.pk) +
+            ',2019-02-03,'
+            + str(self.agreement_new.pk) +
+            ',2020-04-01 04:00:00,,,Tax,,,'
             'No information provided,,\r\n'
         )
         mock_file_handle.write.assert_any_call(
-            'Bank of CFPB,,1,2019-02-03,3,Yes,2020-04-01 04:00:00,,,Tax,,,'
+            'Bank of CFPB,,'
+            + str(self.product1.pk) +
+            ',2019-02-03,'
+            + str(self.agreement_new.pk) +
+            ',Yes,2020-04-01 04:00:00,,,Tax,,,'
             'No information provided,,\r\n'
         )
         mock_file_handle.write.assert_any_call(
-            'CFPB Bank,,2,2019-02-03,2,2020-04-01 02:00:00,,,Tax,,,'
-            'Party,,\r\n'
+            'CFPB Bank,,'
+            + str(self.product2.pk) +
+            ',2019-02-03,'
+            + str(self.agreement_older.pk) +
+            ',2020-04-01 02:00:00,,,Tax,,,Party,,\r\n'
         )
         mock_file_handle.write.assert_any_call(
-            'CFPB Bank,,2,2019-02-03,2,Yes,2020-04-01 02:00:00,,,Tax,,,'
-            'Party,,\r\n'
+            'CFPB Bank,,'
+            + str(self.product2.pk) +
+            ',2019-02-03,'
+            + str(self.agreement_older.pk) +
+            ',Yes,2020-04-01 02:00:00,,,Tax,,,Party,,\r\n'
         )
