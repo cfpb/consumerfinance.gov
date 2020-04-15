@@ -115,6 +115,11 @@ for job in job_listing_details_test_cases.values():
         job.setdefault(k, v)
 
 
+job_listing_list_defaults = {
+    'more_jobs_url': '/about-us/careers/current-openings/',
+}
+
+
 job_listing_list_test_cases = {
     'No open jobs': {},
 
@@ -138,6 +143,11 @@ job_listing_list_test_cases = {
         ],
     },
 }
+
+
+for job_list in job_listing_list_test_cases.values():
+    for k, v in job_listing_list_defaults.items():
+        job_list.setdefault(k, v)
 
 
 job_listing_table_test_cases = {

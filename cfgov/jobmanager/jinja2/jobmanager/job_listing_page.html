@@ -256,12 +256,12 @@
                     "@type": "PostalAddress",
                     "addressCountry": "US"
                 }
-			{% else -%}
-				{%- set city_lists =
-					regions | map( attribute='major_cities' ) | list +
+            {% else -%}
+                {%- set city_lists =
+                    regions | map( attribute='major_cities' ) | list +
                     [ offices ]
-				-%}
-				{% for city_list in city_lists %}
+                -%}
+                {% for city_list in city_lists %}
                     {% for city in city_list %}
                         {
                             "@type": "PostalAddress",
