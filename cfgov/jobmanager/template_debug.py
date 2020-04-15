@@ -93,6 +93,8 @@ job_listing_details_test_cases = {
 
     'Job with no grades': {'grades': []},
 
+    'Job with fixed salary': {'salary_min': 10000, 'salary_max': 10000},
+
     'Job with month that should not get abbreviated': {
         'close_date': date(2099, 6, 1),
     },

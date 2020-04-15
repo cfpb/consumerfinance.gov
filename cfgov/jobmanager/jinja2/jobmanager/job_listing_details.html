@@ -122,8 +122,10 @@
         <dt>Salary:</dt>
         <dd>
             ${{ '{:,.0f}'.format( value.salary_min ) -}}
+            {%- if value.salary_min != value.salary_max -%}
             &ndash;
             {{- '{:,.0f}'.format( value.salary_max ) }}
+            {%- endif %}
         </dd>
         {% if value.applicant_types %}
         <dt>Who may apply:</dt>
