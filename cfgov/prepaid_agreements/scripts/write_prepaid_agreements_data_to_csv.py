@@ -27,6 +27,10 @@ def write_agreements_data(path=''):
     agreements_file = open(agreements_location, 'w', encoding='utf-8')
     products_file = open(products_location, 'w', encoding='utf-8')
 
+    # Write a BOM at the top of the file so Excel knows it's UTF-8
+    agreements_file.write('\ufeff')
+    products_file.write('\ufeff')
+
     agreements_writer = csv.DictWriter(
         agreements_file,
         fieldnames=agreements_fieldnames
