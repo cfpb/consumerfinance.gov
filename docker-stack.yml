@@ -45,6 +45,40 @@ services:
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
       MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
+      REFRESH_DB: "False"
+    ports:
+      - 8000
+    networks:
+      - app
+      - lb
+    secrets:
+      - CFGOV_PROD_DB_LOCATION
+      - DJANGO_ADMIN_PASSWORD
+      - PGPASSWORD
+      - SECRET_KEY
+    deploy:
+      placement:
+        constraints:
+          - node.role!=manager
+          - REFRESH_DB=True
+      restart_policy:
+        condition: none
+      labels:
+        - com.docker.lb.hosts=${CFGOV_HOSTNAME}
+        - com.docker.lb.port=8000
+        - com.docker.lb.network=${LB_NETWORK}
+    command: /bin/bash -c './refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND'
+
+    python:
+    image: ${CFGOV_PYTHON_IMAGE}
+    environment:
+      ALLOW_ADMIN_URL: "True"
+      APACHE_PORT: 8000
+      APACHE_UPLOADS_F_ALIAS: /src/cfgov-refresh/cfgov/f/
+      DATABASE_URL: postgres://cfpb@postgres/cfgov
+      DJANGO_ADMIN_USERNAME: admin
+      ES_HOST: elasticsearch
+      MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
     ports:
       - 8000
     networks:
@@ -65,7 +99,6 @@ services:
         - com.docker.lb.hosts=${CFGOV_HOSTNAME}
         - com.docker.lb.port=8000
         - com.docker.lb.network=${LB_NETWORK}
-    command: /bin/bash -c './refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND'
 
 networks:
   app:
