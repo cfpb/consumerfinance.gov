@@ -22,6 +22,11 @@ pipeline {
             defaultValue: false,
             description: 'Deploy the stack?'
         )
+        booleanParam(
+            name: 'REFRESH_DB',
+            defaultValue: false,
+        description: 'Refresh PSQL DB?'
+        )
     }
 
     options {
@@ -94,6 +99,7 @@ pipeline {
         stage('Deploy Stack') {
             // Deploys only on master branch or deploy is set to true
             when {
+                expression { params.REFRESH_DB == false }
                 anyOf { 
                     branch 'master'
                     expression { return params.DEPLOY }
@@ -102,6 +108,23 @@ pipeline {
             steps {
                 script {
                     dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
+                }
+                echo "Site available at: https://${CFGOV_HOSTNAME}"
+            }
+        }
+
+        stage('Refresh DB') {
+            // Deploys only on master branch or deploy is set to true
+            when {
+                expression { return params.REFRESH_DB }
+                anyOf { 
+                    branch 'master'
+                    expression { return params.DEPLOY }
+                }
+            } 
+            steps {
+                script {
+                    dockerStack.deploy(env.STACK_NAME, 'docker-stack-refresh-db.yml')
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
