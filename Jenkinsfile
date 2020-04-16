@@ -116,18 +116,11 @@ pipeline {
         stage('Refresh DB') {
             // Deploys only on master branch or deploy is set to true
             when {
-                expression { return params.REFRESH_DB }
                 anyOf { 
                     branch 'master'
                     expression { return params.DEPLOY }
                 }
             } 
-            steps {
-                script {
-                    dockerStack.deploy(env.STACK_NAME, 'docker-stack-refresh-db.yml')
-                }
-                echo "Site available at: https://${CFGOV_HOSTNAME}"
-            }
         }
     }
 }
