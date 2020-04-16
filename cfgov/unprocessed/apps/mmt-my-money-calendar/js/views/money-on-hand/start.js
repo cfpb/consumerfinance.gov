@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useScrollToTop } from '../../components/scroll-to-top';
 import { useBEM } from '../../lib/hooks';
 
 export default function Start() {
   const bem = useBEM('wizard');
 
+  useScrollToTop();
+
   return (
-    <section className={bem()}>
+    <>
       <header className={bem('header')}>
         <h1 className={bem('header-app-title')}>MyMoneyCalendar</h1>
 
@@ -24,6 +27,6 @@ export default function Start() {
 
         <Link className="a-btn" to="/money-on-hand/sources">Begin</Link>
       </main>
-    </section>
+    </>
   );
 }

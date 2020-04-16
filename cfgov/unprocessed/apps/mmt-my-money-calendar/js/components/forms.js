@@ -5,17 +5,24 @@ import { recurrenceRules, DAY_OPTIONS } from '../lib/calendar-helpers';
 
 import { closeRound } from '../lib/icons';
 
-export const Checkbox = ({ id, name, onChange, checked, label, value = '1', ...props }) => {
+export const Checkbox = ({ id, name, onChange, checked, label, value = '1', castToBoolean = true, largeTarget = false, ...props }) => {
   const changeHandler = useCallback(
     (evt) => {
-      evt.target.value = evt.target.checked;
+
+      if (castToBoolean)
+        evt.target.value = evt.target.checked;
+
       onChange(evt);
     },
-    [onChange]
+    [onChange, castToBoolean]
   );
 
+  const classes = clsx('m-form-field', 'm-form-field__checkbox', {
+    'm-form-field__lg-target': largeTarget,
+  });
+
   return (
-    <div className="m-form-field m-form-field__checkbox">
+    <div className={classes}>
       <input
         className="a-checkbox"
         type="checkbox"
