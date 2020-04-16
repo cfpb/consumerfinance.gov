@@ -128,6 +128,8 @@ class StrategiesStore {
   }
 
   @computed get strategyResults() {
+    if (!this.eventStore.hasStartingBalance) return [];
+
     const strategyIDs = new Set();
     const results = this.eventStore.eventCategories.map((catPath) => {
       const { strategy } = Categories.get(catPath) || {};

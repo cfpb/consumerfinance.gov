@@ -11,10 +11,9 @@ import arrowRight from '@cfpb/cfpb-icons/src/icons/arrow-right.svg';
 function Home() {
   useScrollToTop();
 
-  const history = useHistory();
   const { eventStore } = useStore();
 
-  if (eventStore.events.length > 0) return <Redirect to="/calendar" />;
+  if (eventStore.eventsLoaded && eventStore.events.length > 0) return <Redirect to="/calendar" />;
 
   // This is the Home Page of the app
   return (
@@ -31,7 +30,7 @@ function Home() {
         Estimates are acceptable.
       </div>
       <br />
-      <ButtonLink icon={arrowRight} iconSide="right" to="/calendar">Get started</ButtonLink>
+      <ButtonLink icon={arrowRight} iconSide="right" to="/money-on-hand">Get started</ButtonLink>
     </main>
   );
 }

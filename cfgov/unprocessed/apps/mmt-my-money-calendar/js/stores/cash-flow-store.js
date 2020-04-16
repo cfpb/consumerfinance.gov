@@ -112,7 +112,7 @@ export default class CashFlowStore {
   }
 
   @computed get hasStartingBalance() {
-    return this.eventCategories.includes('income.startingBalance');
+    return this.eventsLoaded && this.eventCategories.includes('income.startingBalance');
   }
 
   /**
