@@ -58,6 +58,7 @@
     "lightbox2": "2.11.0",
     "lodash.throttle": "4.1.1",
     "merge-stream": "2.0.0",
+    "node": "13.13.0",
     "number-to-words": "1.2.4",
     "postcss-unmq": "1.0.2",
     "require-dir": "1.2.0",
@@ -69,7 +70,8 @@
     "vinyl-named": "1.1.0",
     "webpack": "4.41.5",
     "webpack-stream": "5.0.0",
-    "xdr": "0.5.3"
+    "xdr": "0.5.3",
+    "yarn": "1.22.4"
   },
   "devDependencies": {
     "babel-jest": "24.9.0",
