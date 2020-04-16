@@ -103,7 +103,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
             return HttpResponseRedirect(
                 '/login/check_permissions/?next=' + redirect_to)
     else:
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return HttpResponseRedirect(
                 '/login/check_permissions/?next=' + redirect_to)
         form = LoginForm(request)
@@ -128,7 +128,7 @@ def check_permissions(request):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(
             "%s?%s=%s" % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, redirect_to)
         )
