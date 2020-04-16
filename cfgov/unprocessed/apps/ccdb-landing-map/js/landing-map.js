@@ -1,12 +1,13 @@
 import Chart from './Chart';
+import debounce from 'debounce';
 
-let perCapBtn, rawBtn;
+let perCapBtn, rawBtn,
+    isPerCapita = false;
 
 /**
  * Wrapper function around the chart cleanup and chart initialization
- * @param {boolean} isPerCapita display per capita complaints (decimals)
  */
-function start( isPerCapita ) {
+function start() {
   const el = document.getElementById( 'landing-map' );
   const elements = el.querySelectorAll( '*' );
   for ( let i = 0; i < elements.length; i++ ) {
@@ -33,16 +34,22 @@ function init() {
   perCapBtn.onclick = () => {
     perCapBtn.classList.add( 'selected' );
     rawBtn.classList.remove( 'selected' );
-    start( true );
+    isPerCapita = true;
+    start();
   };
 
   rawBtn.onclick = () => {
     rawBtn.classList.add( 'selected' );
     perCapBtn.classList.remove( 'selected' );
-    start( false );
+    isPerCapita = false;
+    start();
   };
 
-  start( false );
+  window.addEventListener( 'resize', debounce( function() {
+    start();
+  }, 200 ) );
+
+  start();
 }
 
 export default { init };
