@@ -6,6 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-30 16:30+0000\n"
 "Language: es\n"
