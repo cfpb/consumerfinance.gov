@@ -24,6 +24,7 @@
     "es6-promise": "4.2.8",
     "highcharts": "7.2.1",
     "moment": "2.24.0",
+    "sinon": "9.0.2",
     "whatwg-fetch": "3.0.0"
   }
 }
