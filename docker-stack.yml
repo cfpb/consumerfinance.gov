@@ -66,9 +66,9 @@ services:
         - com.docker.lb.hosts=${CFGOV_HOSTNAME}
         - com.docker.lb.port=8000
         - com.docker.lb.network=${LB_NETWORK}
-    command: /bin/bash -c './refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND' 
+    command: django-admin inspectdb wagtailcore_page && httpd -d cfgov/apache -D FOREGROUND' 
     # command:  > 
-    # if [ django-admin inspect wagtailcore_page ]
+    # if [ django-admin inspectdb wagtailcore_page ]
     # then
     #   /bin/bash -c './refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND' 
     # else
