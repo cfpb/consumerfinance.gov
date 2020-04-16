@@ -1,6 +1,8 @@
+import * as sinon from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/node_modules/sinon';
 import Chart from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js';
 import landingMap from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/landing-map.js';
 import { simulateEvent } from '../../../../util/simulate-event';
+
 
 jest.mock( '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js' );
 
@@ -19,7 +21,6 @@ describe( 'Landing Page App', () => {
   let perCapBtn, rawBtn;
 
   beforeEach( () => {
-    Chart.mockClear();
     document.body.innerHTML = HTML_SNIPPET;
     perCapBtn = document.getElementsByClassName( 'capita' )[0];
     rawBtn = document.getElementsByClassName( 'raw' )[0];
@@ -41,6 +42,37 @@ describe( 'Landing Page App', () => {
     } );
   } );
 
+  afterEach( () => {
+    Chart.mockClear();
+  } );
+
+  describe( 'Window Resize events', () => {
+    let clock;
+    beforeEach( () => {
+      clock = sinon.useFakeTimers();
+    } );
+
+    afterEach( () => {
+      clock.restore();
+    } );
+
+    it( 'redraws after resize', () => {
+      landingMap.init();
+
+      global.innerWidth = 500;
+      global.dispatchEvent( new Event( 'resize' ) );
+
+      global.innerWidth = 600;
+      global.dispatchEvent( new Event( 'resize' ) );
+
+      global.innerWidth = 700;
+      global.dispatchEvent( new Event( 'resize' ) );
+
+      clock.tick( 1000 );
+
+      expect( Chart ).toHaveBeenCalledTimes( 2 );
+    } );
+  } );
   it( 'should not throw any errors on init', () => {
     landingMap.init();
     expect( perCapBtn.classList.contains( 'a-btn__disabled' ) ).toBeTruthy();
