@@ -112,15 +112,6 @@ pipeline {
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
         }
-
-        stage('Refresh DB') {
-            // Deploys only on master branch or deploy is set to true
-            when {
-                anyOf { 
-                    branch 'master'
-                    expression { return params.DEPLOY }
-                }
-            } 
         }
     }
 }
