@@ -53,6 +53,10 @@ export default class WizardStore {
     return Object.keys(this.fundingSourceOptions).reduce((sum, opt) => sum + this[`${opt}Cents`], 0);
   }
 
+  @computed get totalStartingFunds() {
+    return this.totalStartingFundsCents / 100;
+  }
+
   @computed get fundingSourceBalances() {
     return Object.keys(this.fundingSourceOptions).reduce((result, source) => {
       result[source] = this[`${source}Cents`];

@@ -4,6 +4,7 @@ import { useBEM } from '../../lib/hooks';
 import Start from './start';
 import Sources from './sources';
 import BalanceForm from './balance-form';
+import Summary from './summary';
 
 function MoneyOnHand({ match }) {
   const { eventStore } = useStore();
@@ -26,6 +27,10 @@ function MoneyOnHand({ match }) {
 
         <Route exact path={`${match.path}/balances`}>
           <BalanceForm />
+        </Route>
+
+        <Route path={`${match.path}/summary`}>
+          <Summary />
         </Route>
 
         <Route path={match.path}>
