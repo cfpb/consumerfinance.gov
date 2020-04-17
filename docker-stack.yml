@@ -45,6 +45,7 @@ services:
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
       MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
+      REFRESH_DB: ${REFRESH_DB}
     ports:
       - 8000
     networks:
@@ -65,7 +66,18 @@ services:
         - com.docker.lb.hosts=${CFGOV_HOSTNAME}
         - com.docker.lb.port=8000
         - com.docker.lb.network=${LB_NETWORK}
-    command: /bin/bash -c './refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND'
+    command: >
+            /bin/bash -c "
+            if django-admin inspectdb wagtailcore_page | grep \"db_table = \'wagtailcore_page\'\" && $REFRESH_DB == false;
+              then 
+                echo 'Skipping DB refresh as db already exists'
+                httpd -d cfgov/apache -D FOREGROUND
+            elif $REFRESH_DB == true;
+              then
+                ./refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND
+            else
+                ./refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND
+            fi "
 
 networks:
   app:
