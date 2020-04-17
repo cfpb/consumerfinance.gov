@@ -99,7 +99,6 @@ pipeline {
         stage('Deploy Stack') {
             // Deploys only on master branch or deploy is set to true
             when {
-                expression { params.REFRESH_DB == false }
                 anyOf { 
                     branch 'master'
                     expression { return params.DEPLOY }
