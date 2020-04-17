@@ -28,7 +28,7 @@ describe( 'Tile map', () => {
 
   it( 'Calculates date interval', () => {
     // set the date so result is always the same in the test
-    const DATE_TO_USE = new Date( '2016' );
+    const DATE_TO_USE = new Date( 'December 31, 2015 20:00:00' );
     global.Date = jest.fn( () => DATE_TO_USE );
     const result = sut.calculateDateInterval();
     expect( result ).toContain( '12/31/2012 - 12/31/2015' );
