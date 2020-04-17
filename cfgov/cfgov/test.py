@@ -1,6 +1,5 @@
 import logging
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -9,10 +8,8 @@ from io import StringIO
 
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import RequestFactory
 from django.test.runner import DiscoverRunner
 
-from mock import Mock
 from scripts import initial_data, test_data
 
 
@@ -124,28 +121,6 @@ class AcceptanceTestRunner(TestRunner):
         self.run_suite()
 
         return
-
-
-class HtmlMixin(object):
-    def assertHtmlRegexpMatches(self, s, r):
-        s_no_right_spaces = re.sub(r'>\s*', '>', s)
-        s_no_left_spaces = re.sub(r'\s*([<"])', r'\1', s_no_right_spaces)
-        s_no_extra_spaces = re.sub(r'\s+', ' ', s_no_left_spaces)
-
-        self.assertIsNotNone(
-            re.search(r, s_no_extra_spaces.strip(), flags=re.DOTALL),
-            '{} did not match {}'.format(s_no_extra_spaces, r)
-        )
-
-    def assertPageIncludesHtml(self, page, s):
-        request = RequestFactory().get('/')
-        request.user = Mock()
-
-        rendered_html = page.serve(request).render()
-        try:
-            self.assertHtmlRegexpMatches(str(rendered_html), s)
-        except AssertionError:
-            self.fail('rendered page HTML did not match {}'.format(s))
 
 
 class StdoutCapturingTestRunner(TestRunner):

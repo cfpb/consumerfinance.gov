@@ -2,7 +2,7 @@ import os
 from zipfile import ZipFile
 
 from django.core.management.base import BaseCommand, CommandError
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from agreements.management.commands import _util
 from agreements.models import Agreement, Issuer
@@ -54,7 +54,7 @@ class Command(BaseCommand):
         # https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
         all_pdfs = [
             info.filename if (info.flag_bits & 0x800) == 0
-            else force_text(info.filename, 'cp437')
+            else force_str(info.filename, 'cp437')
             for info in agreements_zip.infolist()
             if info.filename.upper().endswith('.PDF')
         ]

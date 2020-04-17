@@ -8,25 +8,20 @@
 
    Creates jobs list when given:
 
-   careers:        List of currently open jobs.
+   jobs:                    List of currently open jobs.
 
-   heading:        The heading of the jobs list.
-                         Default is "Career Openings".
+   no_jobs_message:         Message to show if no jobs exist.
 
-   more_jobs_page: A Wagtail page listing more jobs.
-
-   more_jobs_text: A string for the text of the more jobs link.
+   value.more_jobs_page:    A Wagtail page listing more jobs.
 
    ========================================================================== #}
 
 <aside class="m-jobs-list"
        data-qa-hook="openings-section">
-    {% if careers.exists() %}
-    <h3>
-        {{ heading or 'Career Openings' }}
-    </h3>
+    {% if jobs.exists() %}
+    <h3>Current openings</h3>
     <ul class="m-list m-list__unstyled m-list__links">
-        {% for job in careers %}
+        {% for job in jobs %}
         <li class="m-list_item">
             <a class="m-list_link"
                href="{{ pageurl(job) }}">
@@ -41,10 +36,10 @@
         {% endfor %}
     </ul>
     <a class="a-btn a-btn__full-on-xs"
-       href="{{ pageurl(more_jobs_page) }}">
-       {{ more_jobs_text or 'View all job openings' }}
+       href="{{ pageurl(value.more_jobs_page) }}">
+       View all job openings
     </a>
     {% else %}
-    <h3 class='short-desc'>There are no current openings at this time.</h3>
+    <h3 class='short-desc'>{{ no_jobs_message }}</h3>
     {% endif %}
 </aside>

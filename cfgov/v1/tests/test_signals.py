@@ -3,12 +3,12 @@ from unittest import TestCase
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from model_mommy import mommy
+from model_bakery import baker
 
 
 class UserSaveTestCase(TestCase):
     def make_user(self, password, is_superuser=False):
-        user = mommy.prepare(User, is_superuser=is_superuser)
+        user = baker.prepare(User, is_superuser=is_superuser)
         user.set_password(password)
         user.save()
         return user

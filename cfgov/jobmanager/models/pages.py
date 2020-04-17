@@ -1,17 +1,32 @@
 from django.db import models
+from django.utils import timezone
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
     TabbedInterface
 )
 from wagtail.core.fields import RichTextField
-from wagtail.core.models import PageManager
+from wagtail.core.models import PageManager, PageQuerySet
 
 from jobmanager.models.django import (
     JobCategory, JobLength, JobLocation, ServiceType
 )
 from v1.models import CFGOVPage
 from v1.models.snippets import ReusableText
+
+
+class JobListingPageQuerySet(PageQuerySet):
+    def open(self):
+        today = timezone.now().date()
+
+        return self \
+            .filter(live=True) \
+            .filter(open_date__lte=today) \
+            .filter(close_date__gte=today) \
+            .order_by('close_date', 'title')
+
+
+JobListingPageManager = PageManager.from_queryset(JobListingPageQuerySet)
 
 
 class JobListingPage(CFGOVPage):
@@ -133,7 +148,7 @@ class JobListingPage(CFGOVPage):
 
     template = 'job-description-page/index.html'
 
-    objects = PageManager()
+    objects = JobListingPageManager()
 
     def get_context(self, request, *args, **kwargs):
         context = super(JobListingPage, self).get_context(request)
