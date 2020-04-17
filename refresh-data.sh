@@ -8,6 +8,17 @@
 
 set -e
 
+if django-admin inspectdb wagtailcore_page | grep "db_table = 'wagtailcore_page'" && $REFRESH_DB == false;
+    then 
+        echo 'Skipping DB refresh as db already exists'
+        exit 1
+    elif $REFRESH_DB == true;
+        then
+            continue
+    else
+        continue
+fi
+
 refresh_dump_name=$1
 
 USAGE=$(cat << 'EOF'
