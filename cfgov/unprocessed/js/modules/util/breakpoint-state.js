@@ -15,6 +15,7 @@ function _getBodyBaseFontSize() {
 
 /**
  * @param {Object} breakpointRange - Object containing breakpoint constants.
+ *   For example, for `bpXS` the value `{ min: 0, max: 600 }` would be passed.
  * @param {integer} width - Current window width.
  * @returns {boolean} Whether the passed width is within a breakpoint range.
  */
