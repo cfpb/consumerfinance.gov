@@ -391,7 +391,7 @@ class TileMap {
 
     if ( isPerCapita ) {
       bins = getPerCapitaBins( quantiles, scale );
-      legendTitle = 'Complaints per 1,000';
+      legendTitle = 'Complaints per 1,000 population';
     } else {
       bins = getBins( quantiles, scale );
       legendTitle = 'Complaints';
