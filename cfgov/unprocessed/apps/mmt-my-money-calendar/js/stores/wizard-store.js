@@ -49,8 +49,15 @@ export default class WizardStore {
     this.logger.debug('initialize wizard store: %O', this);
   }
 
-  @computed get totalStartingFunds() {
-    return Object.values(this.startingFunds).reduce((sum, amount) => sum + amount, 0);
+  @computed get totalStartingFundsCents() {
+    return Object.keys(this.fundingSourceOptions).reduce((sum, opt) => sum + this[`${opt}Cents`], 0);
+  }
+
+  @computed get fundingSourceBalances() {
+    return Object.keys(this.fundingSourceOptions).reduce((result, source) => {
+      result[source] = this[`${source}Cents`];
+      return result;
+    }, {});
   }
 
   @action setFundingSources(sources = []) {
@@ -59,5 +66,10 @@ export default class WizardStore {
 
   @action setStartingFunds(obj = {}) {
     this.startingFunds = obj;
+  }
+
+  @action setFundingSourceBalance(source, balance) {
+    this[`${source}Cents`] = Number(balance);
+    this.logger.debug('Set funding source balance: %s %s', source, balance);
   }
 }

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { useStore } from '../../stores';
 import { useBEM } from '../../lib/hooks';
 import { CurrencyField } from '../../components/forms';
@@ -17,6 +17,15 @@ function BalanceForm() {
 
   useScrollToTop();
 
+  if (!wizardStore.fundingSources.length)
+    return <Redirect to="/money-on-hand" />;
+
+  const currentIndex = wizardStore.fundingSources.indexOf(source);
+  const prevSource = currentIndex > 0 ? wizardStore.fundingSources[currentIndex - 1] : null;
+  const prevStep = prevSource ? `/money-on-hand/balances/${prevSource}` : '/money-on-hand/sources';
+  const nextSource = wizardStore.fundingSources.length >= currentIndex + 1 ? wizardStore.fundingSources[currentIndex + 1] : null;
+  const nextStep = nextSource ? `/money-on-hand/balances/${nextSource}` : '/money-on-hand/summmary';
+
   return (
     <>
       <header className={bem('header')}>
@@ -30,10 +39,11 @@ function BalanceForm() {
 
         <Formik
           initialValues={{
-            [source]: 0,
+            [source]: wizardStore.fundingSourceBalances[source] || 0,
           }}
           onSubmit={(values) => {
-
+            wizardStore.setFundingSourceBalance(source, values[source]);
+            history.push(nextStep);
           }}
         >
           {(formik) => (
@@ -48,7 +58,7 @@ function BalanceForm() {
               />
 
               <div className={bem('buttons')}>
-                <BackButton onClick={(e) => e.preventDefault()}>Back</BackButton>
+                <BackButton onClick={() => history.push(prevStep)}>Back</BackButton>
                 <NextButton type="submit">
                   Next
                 </NextButton>
