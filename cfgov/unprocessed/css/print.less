@@ -34,17 +34,20 @@
     }
 
     a[href*="://"]:after {
-        // Output href in parentheses for links with a protocol already there
+        // Output href in parentheses for links with a protocol already there.
         content: " (" attr(href) ")";
     }
 
-    a[href^="/"]:after {
-        // Output root-relative hrefs in parentheses with our domain prepended
+    a[href^="/"]:not([href*="?authors"]):not([href="/"]):after {
+        // Output root-relative hrefs in parentheses with our domain prepended,
+        // as long as they are not author links or the logo homepage link.
         content: " (https://www.consumerfinance.gov" attr(href) ")";
     }
 
-    a[href^="#"] {
-        // Style in-page anchor links (like page TOCs) to not look like links
+    a[href^="#"],
+    a[href*="?authors"]{
+        // Style in-page anchor links (like page TOCs) and author links
+        // to not look like links.
         color: @dark-gray;
         border-bottom-width: 0;
     }
@@ -60,9 +63,29 @@
         content: "Watch the video at https://www.youtube.com/watch?v=" attr(data-id);
     }
 
+    .m-global-eyebrow,
     .join-the-conversation,
     .o-email-signup,
     .rss-subscribe {
         display: none;
+    }
+
+    // Solving Firefox's longstanding issue of cutting off inline-block
+    // elements after one page.
+    @-moz-document url-prefix() {
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content_main {
+            margin: 0;
+            display: block !important;
+        }
+
+        .content_sidebar {
+            display: block !important;
+        }
     }
 });
