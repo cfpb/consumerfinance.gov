@@ -44,7 +44,7 @@ export default class WizardStore {
       };
 
       return result;
-    }, {}));
+    }));
 
     this.logger.debug('initialize wizard store: %O', this);
   }
