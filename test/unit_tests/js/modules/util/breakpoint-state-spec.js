@@ -33,28 +33,28 @@ function setBaseFontSize( size ) {
 describe( 'breakpoint-state', () => {
   describe( '.getBreakpointState()', () => {
     it( 'should correctly return bpXS state', () => {
-      windowResizeTo(  300 );
-      expect( getBreakpointState() ).toStrictEqual( {"bpLG": false, "bpMED": false, "bpSM": false, "bpXL": false, "bpXS": true} );
+      windowResizeTo( 300 );
+      expect( getBreakpointState() ).toStrictEqual( { bpLG: false, bpMED: false, bpSM: false, bpXL: false, bpXS: true } );
     } );
 
     it( 'should correctly return bpSM state', () => {
-      windowResizeTo(  700 );
-      expect( getBreakpointState() ).toStrictEqual( {"bpLG": false, "bpMED": false, "bpSM": true, "bpXL": false, "bpXS": false} );
+      windowResizeTo( 700 );
+      expect( getBreakpointState() ).toStrictEqual( { bpLG: false, bpMED: false, bpSM: true, bpXL: false, bpXS: false } );
     } );
 
     it( 'should correctly return bpMED state', () => {
-      windowResizeTo(  1000 );
-      expect( getBreakpointState() ).toStrictEqual( {"bpLG": false, "bpMED": true, "bpSM": false, "bpXL": false, "bpXS": false} );
+      windowResizeTo( 1000 );
+      expect( getBreakpointState() ).toStrictEqual( { bpLG: false, bpMED: true, bpSM: false, bpXL: false, bpXS: false } );
     } );
 
     it( 'should correctly return bpLG state', () => {
-      windowResizeTo(  1100 );
-      expect( getBreakpointState() ).toStrictEqual( {"bpLG": true, "bpMED": false, "bpSM": false, "bpXL": false, "bpXS": false} );
+      windowResizeTo( 1100 );
+      expect( getBreakpointState() ).toStrictEqual( { bpLG: true, bpMED: false, bpSM: false, bpXL: false, bpXS: false } );
     } );
 
     it( 'should correctly return bpXL state', () => {
-      windowResizeTo(  1300 );
-      expect( getBreakpointState() ).toStrictEqual( {"bpLG": false, "bpMED": false, "bpSM": false, "bpXL": true, "bpXS": false} );
+      windowResizeTo( 1300 );
+      expect( getBreakpointState() ).toStrictEqual( { bpLG: false, bpMED: false, bpSM: false, bpXL: true, bpXS: false } );
     } );
 
     it( 'should set the correct state property when passed width', () => {
@@ -82,10 +82,10 @@ describe( 'breakpoint-state', () => {
 
       // Test that live code still works with base font size change.
       setBaseFontSize( 16 );
-      windowResizeTo(  900 );
-      expect( getBreakpointState() ).toStrictEqual( {"bpLG": false, "bpMED": false, "bpSM": true, "bpXL": false, "bpXS": false} );
+      windowResizeTo( 900 );
+      expect( getBreakpointState() ).toStrictEqual( { bpLG: false, bpMED: false, bpSM: true, bpXL: false, bpXS: false } );
       setBaseFontSize( 24 );
-      expect( getBreakpointState() ).toStrictEqual( {"bpLG": false, "bpMED": false, "bpSM": false, "bpXL": false, "bpXS": true} );
+      expect( getBreakpointState() ).toStrictEqual( { bpLG: false, bpMED: false, bpSM: false, bpXL: false, bpXS: true } );
     } );
 
   } );
