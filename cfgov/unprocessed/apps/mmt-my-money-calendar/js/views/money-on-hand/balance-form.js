@@ -57,6 +57,7 @@ function BalanceForm() {
           {(formik) => (
             <form onSubmit={formik.handleSubmit}>
               <CurrencyField
+                required
                 id={source}
                 name={source}
                 label={wizardStore.fundingSourceOptions[source].label}

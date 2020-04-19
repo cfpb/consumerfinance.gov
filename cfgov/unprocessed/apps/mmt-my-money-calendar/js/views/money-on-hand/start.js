@@ -18,14 +18,12 @@ export default function Start() {
       </header>
 
       <main className={bem('main')}>
-        <p>
-          Enter your income, expenses, and cash-on-hand to build your calendar.
-        </p>
-        <p>
-          It's okay to estimate.
-        </p>
+        <p>Enter your income, expenses, and cash-on-hand to build your calendar.</p>
+        <p>It's okay to estimate.</p>
 
-        <Link className="a-btn" to="/money-on-hand/sources">Begin</Link>
+        <Link className="a-btn" to="/money-on-hand/sources">
+          Begin
+        </Link>
       </main>
     </>
   );

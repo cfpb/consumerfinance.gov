@@ -13,23 +13,25 @@ function Summary() {
   const { eventStore, wizardStore } = useStore();
   const bem = useBEM('wizard');
   const history = useHistory();
-  const saveAndRedirect = useCallback(async (evt) => {
-    evt.preventDefault();
+  const saveAndRedirect = useCallback(
+    async (evt) => {
+      evt.preventDefault();
 
-    await eventStore.saveEvent({
-      name: 'Starting Balance',
-      category: 'income.startingBalance',
-      totalCents: wizardStore.totalStartingFundsCents,
-      date: new Date(),
-    });
+      await eventStore.saveEvent({
+        name: 'Starting Balance',
+        category: 'income.startingBalance',
+        totalCents: wizardStore.totalStartingFundsCents,
+        date: new Date(),
+      });
 
-    history.push('/calendar');
-  }, [wizardStore.totalStartingFundsCents]);
+      history.push('/calendar');
+    },
+    [wizardStore.totalStartingFundsCents]
+  );
 
   useScrollToTop();
 
-  if (!wizardStore.fundingSources.length)
-    return <Redirect to="/money-on-hand" />;
+  if (!wizardStore.fundingSources.length) return <Redirect to="/money-on-hand" />;
 
   return (
     <>
