@@ -241,7 +241,9 @@ class CFGOVPage(Page):
             .filter(path__regex=F('url_pattern'))
 
         if self.schema_json:
-            context['schema_json'] = mark_safe(json.dumps(self.schema_json))
+            context['schema_json'] = mark_safe(
+                json.dumps(self.schema_json, indent=2)
+            )
 
         return context
 
