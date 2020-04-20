@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { observer } from 'mobx-react';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -24,8 +24,12 @@ function BalanceForm() {
   const prevSource = currentIndex > 0 ? wizardStore.fundingSources[currentIndex - 1] : null;
   const prevStep = prevSource ? `/money-on-hand/balances/${prevSource}` : '/money-on-hand/sources';
   const nextSource =
-    wizardStore.fundingSources.length >= currentIndex + 1 ? wizardStore.fundingSources[currentIndex + 1] : null;
+    wizardStore.fundingSources.length > currentIndex + 1 ? wizardStore.fundingSources[currentIndex + 1] : null;
   const nextStep = nextSource ? `/money-on-hand/balances/${nextSource}` : '/money-on-hand/summary';
+  const goBack = (evt) => {
+    evt.preventDefault();
+    history.push(prevStep);
+  };
 
   const initialValues = useMemo(
     () =>
@@ -67,7 +71,7 @@ function BalanceForm() {
               />
 
               <div className={bem('buttons')}>
-                <BackButton onClick={() => history.push(prevStep)}>Back</BackButton>
+                <BackButton onClick={goBack}>Back</BackButton>
                 <NextButton type="submit">Next</NextButton>
               </div>
             </form>
