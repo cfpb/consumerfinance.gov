@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -241,9 +239,7 @@ class CFGOVPage(Page):
             .filter(path__regex=F('url_pattern'))
 
         if self.schema_json:
-            context['schema_json'] = mark_safe(
-                json.dumps(self.schema_json, indent=2)
-            )
+            context['schema_json'] = self.schema_json
 
         return context
 
