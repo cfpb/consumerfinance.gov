@@ -2,6 +2,7 @@ import { useMemo, useCallback } from 'react';
 import { observer } from 'mobx-react';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { Formik } from 'formik';
+import * as yup from 'yup';
 import { useStore } from '../../stores';
 import { useBEM } from '../../lib/hooks';
 import { CurrencyField } from '../../components/forms';
@@ -53,6 +54,9 @@ function BalanceForm() {
 
         <Formik
           initialValues={initialValues}
+          validationSchema={yup.object({
+            [source]: yup.number('Balance must be a number').required('Balance is required'),
+          })}
           onSubmit={(values) => {
             wizardStore.setFundingSourceBalance(source, Number(values[source]));
             history.push(nextStep);
@@ -68,6 +72,8 @@ function BalanceForm() {
                 value={formik.values[source]}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                errors={formik.errors[source]}
+                touched={formik.touched[source]}
               />
 
               <div className={bem('buttons')}>
