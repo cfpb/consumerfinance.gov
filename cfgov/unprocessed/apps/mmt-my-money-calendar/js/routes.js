@@ -6,6 +6,7 @@ import BottomNav from './components/bottom-nav';
 import FixItStrategies from './views/strategies/fix-it';
 import Strategies from './views/strategies';
 import MoneyOnHand from './views/money-on-hand';
+import More from './views/more';
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">
@@ -37,6 +38,10 @@ const Routes = () => (
 
         <Route path="/strategies">
           <Strategies />
+        </Route>
+
+        <Route path="/more">
+          <More />
         </Route>
       </Switch>
 

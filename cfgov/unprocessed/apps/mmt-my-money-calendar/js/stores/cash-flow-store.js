@@ -345,4 +345,9 @@ export default class CashFlowStore {
 
     this.addEvents(savedEvents);
   });
+
+  clearAllData = flow(function* () {
+    yield CashFlowEvent.destroyAll();
+    this.setEvents([]);
+  });
 }

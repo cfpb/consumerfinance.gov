@@ -1,30 +1,28 @@
-import { Link } from 'react-router-dom';
 import { useScrollToTop } from '../../components/scroll-to-top';
-import { useBEM } from '../../lib/hooks';
+import { ButtonLink } from '../../components/button';
+import Hero from '../../components/hero';
+
+import heroImg from 'img/Hero_2.png';
+import { arrowRight } from '../../lib/icons';
 
 export default function Start() {
-  const bem = useBEM('wizard');
-
   useScrollToTop();
 
   return (
     <>
-      <header className={bem('header')}>
-        <h1 className={bem('header-app-title')}>MyMoneyCalendar</h1>
-
-        <p className={bem('header-intro')}>
-          See how your money flows from week to week and learn how to avoid coming up short.
-        </p>
-      </header>
-
-      <main className={bem('main')}>
+      <Hero
+        title="MyMoney Calendar"
+        subtitle="See how your money flows from week to week and learn how to avoid coming up short."
+        image={heroImg}
+        alt="MyMoney Calendar"
+      />
+      <br />
+      <div className="m-hero_subhead">
         <p>Enter your income, expenses, and cash-on-hand to build your calendar.</p>
         <p>It's okay to estimate.</p>
 
-        <Link className="a-btn" to="/money-on-hand/sources">
-          Begin
-        </Link>
-      </main>
+        <ButtonLink icon={arrowRight} iconSide="right" to="/money-on-hand/sources">Begin</ButtonLink>
+      </div>
     </>
   );
 }
