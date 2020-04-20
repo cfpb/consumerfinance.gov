@@ -171,12 +171,13 @@
                 </li>
             {% endif %}
         {% endfor %}
+
         {% if is_share_view and is_printable %}
             <li class="m-list_item m-social-media_print">
                 <a class="m-social-media_icon"
-                    href="{{print_info.share_url}}"
-                    aria-label="{{print_info.name}}">
-                     {{ svg_icon(print_info.icon) }}
+                   href="{{ print_info.share_url }}"
+                   aria-label="{{ print_info.name }}">
+                    {{ svg_icon(print_info.icon) }}
                 </a>
             </li>
         {% endif %}
