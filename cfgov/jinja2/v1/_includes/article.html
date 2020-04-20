@@ -43,7 +43,8 @@
             'category': page.categories.all(),
             'heading': page.title,
             'date': page.date_published,
-            'has_social': True
+            'has_social': True,
+            'social_options': {'is_printable': true}
         } %}
 
         {% for block in page.header -%}

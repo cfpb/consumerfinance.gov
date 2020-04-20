@@ -17,6 +17,10 @@
    value.is_share_view:     Whether the "Share this" heading is shown.
                             Default is true.
 
+   value.is_printable:      Whether the molecule is on a page meant to be
+                            printed and should thus show the print link.
+                            Default is false.
+
    value.email_title        Sets subject for email
 
    value.email_text         Sets body for email
@@ -50,6 +54,7 @@
                 'Look what I found on the CFPB’s site!') %}
 {% set parsed_url = request.build_absolute_uri() | urlencode %}
 {% set is_share_view = value.is_share_view | default( true ) %}
+{% set is_printable = value.is_printable | default( false ) %}
 {% set email_title = value.email_title or blurb %}
 {% set email_text = value.email_text or 'Check out this page from the CFPB - ' %}
 {% set email_signature = ' ' + value.email_signature if value.email_signature else '' %}
@@ -110,6 +115,12 @@
             'icon': 'flickr'
         } %}
 
+        {% set print_info = {
+            'name': 'Print this page',
+            'share_url': 'javascript:window.print();',
+            'icon': 'print-round'
+        } %}
+
         {% if is_share_view %}
             {% set links = [
                 facebook_info,
@@ -148,6 +159,15 @@
                 </li>
             {% endif %}
         {% endfor %}
+        {% if is_share_view and is_printable %}
+            <li class="m-list_item m-social-media_print">
+                <a class="m-social-media_icon"
+                    href="{{print_info.share_url}}"
+                    aria-label="{{print_info.name}}">
+                     {{ svg_icon(print_info.icon) }}
+                </a>
+            </li>
+        {% endif %}
 
     </ul>
 </div>
