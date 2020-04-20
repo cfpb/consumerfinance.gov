@@ -10,7 +10,11 @@
 
 {% block content_sidebar %}
     {% if page %}
-        {% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}
+        {% if is_report %}
+          {% import 'organisms/sidenav-toc.html' as secondary_navigation with context %}
+        {% else %}
+          {% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}
+        {% endif %}
         {{ secondary_navigation.render() }}
     {% else %}
         {# TODO: Remove `active_nav_id` and `sec_nav_items` parameters when
