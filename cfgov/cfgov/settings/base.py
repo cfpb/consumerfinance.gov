@@ -65,7 +65,6 @@ INSTALLED_APPS = (
     "haystack",
     "ask_cfpb",
     "agreements",
-    "overextends",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -153,7 +152,7 @@ TEMPLATES = [
         # Look for Django templates in each app under a templates subdirectory
         "APP_DIRS": True,
         "OPTIONS": {
-            "builtins": ["overextends.templatetags.overextends_tags"],
+            "builtins": [],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
