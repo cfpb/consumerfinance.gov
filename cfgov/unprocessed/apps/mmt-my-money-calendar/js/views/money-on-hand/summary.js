@@ -31,7 +31,7 @@ function Summary() {
 
   useScrollToTop();
 
-  if (!wizardStore.fundingSources.length) return <Redirect to="/money-on-hand" />;
+  if (!wizardStore.fundingSources.length && !wizardStore.noStartingFunds) return <Redirect to="/money-on-hand" />;
 
   return (
     <>
@@ -49,7 +49,7 @@ function Summary() {
         <p>You have money in the following places:</p>
 
         <ul>
-          {wizardStore.fundingSources.map((source, idx) => {
+          {Boolean(wizardStore.fundingSources.length) && wizardStore.fundingSources.map((source, idx) => {
             const { name } = wizardStore.fundingSourceOptions[source];
             const balance = wizardStore.fundingSourceBalances[source];
 
@@ -60,6 +60,12 @@ function Summary() {
               </li>
             );
           })}
+
+          {wizardStore.noStartingFunds && (
+            <li className="funding-source">
+              <em>No starting funds</em>
+            </li>
+          )}
         </ul>
 
         <p>

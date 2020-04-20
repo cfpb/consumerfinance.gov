@@ -29,6 +29,7 @@ export default class WizardStore {
   };
 
   @observable fundingSources = [];
+  @observable noStartingFunds = false;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -75,5 +76,9 @@ export default class WizardStore {
   @action setFundingSourceBalance(source, balance) {
     this[`${source}Cents`] = Number(balance);
     this.logger.debug('Set funding source balance: %s %s', source, balance);
+  }
+
+  @action setNoStartingFunds(value = true) {
+    this.noStartingFunds = Boolean(value);
   }
 }

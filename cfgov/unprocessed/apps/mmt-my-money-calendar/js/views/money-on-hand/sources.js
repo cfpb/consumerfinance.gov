@@ -37,6 +37,7 @@ function Sources() {
           }}
           onSubmit={(values) => {
             if (values.noFunds) {
+              wizardStore.setNoStartingFunds();
               history.push('/money-on-hand/summary');
               return;
             }
@@ -94,7 +95,7 @@ function Sources() {
 
               <div className={bem('buttons')}>
                 <BackButton onClick={(e) => e.preventDefault()}>Back</BackButton>
-                <NextButton type="submit" disabled={!formik.values.fundingSources.length}>
+                <NextButton type="submit" disabled={!formik.values.fundingSources.length && !formik.values.noFunds}>
                   Next
                 </NextButton>
               </div>
