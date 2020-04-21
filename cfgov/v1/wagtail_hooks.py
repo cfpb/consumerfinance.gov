@@ -23,7 +23,7 @@ from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
-from v1.template_debug import register_template_debug, test_cases
+from v1.template_debug import notification_test_cases, register_template_debug
 from v1.util import util
 
 
@@ -411,5 +411,5 @@ register_template_debug(
     'v1',
     'notification',
     '_includes/molecules/notification.html',
-    test_cases.notification_test_cases
+    notification_test_cases
 )

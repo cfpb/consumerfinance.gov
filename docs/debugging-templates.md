@@ -52,12 +52,7 @@ be loaded in a browser.
 from myapp.template_debug import link_test_cases
 from v1.template_debug import register_template_debug
 
-register_template_debug(
-    'myapp',
-    'link',
-    'path/to/myapp/templates/link.html',
-    myapp_test_cases
-)
+register_template_debug('myapp', 'link', 'myapp/link.html', link_test_cases)
 ```
 
 Once logged into the Wagtail admin, the template debug view for this module

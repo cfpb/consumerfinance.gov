@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ debug_template_name }}{% endblock %}
+{% block title %}Debugging template {{ debug_template_name }}{% endblock %}
 
 {% block css %}
 {{ super() }}
@@ -45,7 +45,7 @@
         <div id="{{ name | slugify }}" class="test-case">
             <h2>
                 {{ name }}
-                <a class="test-case_link" href="#{{ name | slugify }}">&para;</a>
+                <a class="test-case_link" href="#{{ name | slugify }}">#</a>
             </h2>
             <div class="test-case_render">
             {{ rendered | safe }}

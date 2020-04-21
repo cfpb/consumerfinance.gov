@@ -2,6 +2,8 @@ from wagtail.core import hooks
 
 from v1.views.template_debug import TemplateDebugView
 
+from .notification import notification_test_cases  # noqa 401
+
 
 try:
     from django.urls import re_path
