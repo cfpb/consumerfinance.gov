@@ -174,11 +174,12 @@
 
         {% if is_share_view and is_printable %}
             <li class="m-list_item m-social-media_print">
-                <a class="m-social-media_icon"
-                   href="{{ print_info.share_url }}"
-                   aria-label="{{ print_info.name }}">
+                <button class="a-btn a-btn__link m-social-media_icon"
+                   onclick="{{ print_info.share_url }}"
+                   aria-label="{{ print_info.name }}"
+                   type="button">
                     {{ svg_icon(print_info.icon) }}
-                </a>
+                </button>
             </li>
         {% endif %}
 
