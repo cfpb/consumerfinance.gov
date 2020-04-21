@@ -16,8 +16,9 @@
     "node": ">=8.5.0"
   },
   "dependencies": {
-    "@babel/core": "7.8.3",
-    "@babel/preset-env": "7.8.3",
+    "@babel/compat-data": "7.9.0",
+    "@babel/core": "7.9.0",
+    "@babel/preset-env": "7.9.0",
     "@cfpb/cfpb-atomic-component": "0.1.0",
     "@cfpb/cfpb-buttons": "0.1.0",
     "@cfpb/cfpb-core": "0.1.0",
