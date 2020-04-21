@@ -11,26 +11,26 @@ except ImportError:
 
 
 urlpatterns = [
-    url(
+    re_path(
         r'^$',
         TranslatedTemplateView.as_view(
             template_name='wellbeing/home.html'
         ),
         name='fwb_home_en'
     ),
-    url(
+    re_path(
         r'^results/$',
         ResultsView.as_view(),
         name='fwb_results_en'
     ),
-    url(
+    re_path(
         r'^about/$',
         TranslatedTemplateView.as_view(
             template_name='wellbeing/about.html'
         ),
         name='fwb_about_en'
     ),
-    url(
+    re_path(
         r'^error/$',
         TranslatedTemplateView.as_view(
             template_name='wellbeing/error.html'
@@ -38,7 +38,7 @@ urlpatterns = [
         name='fwb_error_en'
     ),
 
-    url(
+    re_path(
         r'^es/$',
         TranslatedTemplateView.as_view(
             template_name='wellbeing/home.html',
@@ -46,12 +46,12 @@ urlpatterns = [
         ),
         name='fwb_home_es'
     ),
-    url(
+    re_path(
         r'^results/es/$',
         ResultsView.as_view(language='es'),
         name='fwb_results_es'
     ),
-    url(
+    re_path(
         r'^about/es/$',
         TranslatedTemplateView.as_view(
             template_name='wellbeing/about.html',
@@ -59,7 +59,7 @@ urlpatterns = [
         ),
         name='fwb_about_es'
     ),
-    url(
+    re_path(
         r'^error/es/$',
         TranslatedTemplateView.as_view(
             template_name='wellbeing/error.html',
