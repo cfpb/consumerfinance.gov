@@ -10,7 +10,7 @@
 
 {% block content_sidebar %}
     {% if page %}
-        {% if is_report %}
+        {% if is_report == True %}
           {% import 'organisms/sidenav-toc.html' as secondary_navigation with context %}
         {% else %}
           {% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}

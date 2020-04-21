@@ -3,10 +3,16 @@
    ========================================================================== */
 
 const sidenav = document.querySelector( '.o-report-sidenav' );
+const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
+const offsets = Array.prototype.map.call(
+  document.querySelectorAll( '.content_main h3' ),
+  function( v ) { return v.offsetTop; }
+);
 const top = sidenav.offsetTop;
 let set = 0;
+let lastTargetIndex;
 
-function stickOnScroll( e ) {
+function stickIfNeeded( e ) {
   if ( window.scrollY > top ) {
     if ( !set ) {
       sidenav.classList.add( 'sticky' );
@@ -18,5 +24,29 @@ function stickOnScroll( e ) {
   }
 }
 
-window.addEventListener( 'scroll', stickOnScroll );
-stickOnScroll();
+function highlightTOC() {
+  const sY = window.scrollY;
+  const len = offsets.length - 1;
+  for ( let i = 0; i <= len; i++ ) {
+    if ( sY < offsets[i] ) {
+      let next = i - 1;
+      if ( next === -1 ) next = 0;
+      if ( next === lastTargetIndex ) return;
+      if ( lastTargetIndex !== undefined )tocHeaders[lastTargetIndex].classList.remove( 'current-section' );
+      tocHeaders[next].classList.add( 'current-section' );
+      lastTargetIndex = next;
+      return;
+    }
+  }
+  if ( lastTargetIndex !== undefined )tocHeaders[lastTargetIndex].classList.remove( 'current-section' );
+  tocHeaders[len].classList.add( 'current-section' );
+  lastTargetIndex = len;
+}
+
+function onScroll() {
+  stickIfNeeded();
+  highlightTOC();
+}
+
+window.addEventListener( 'scroll', onScroll );
+onScroll();
