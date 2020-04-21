@@ -17,9 +17,15 @@ const StrategyCards = ({ results }) => (
           <p>{result.text}</p>
 
           <div className="m-card_footer">
-            <ButtonLink icon={pencil} to={`/calendar/add/${result.event.id}/edit`} variant="secondary">
-              Edit {result.event.categoryDetails.name}
-            </ButtonLink>
+            {result.event ? (
+              <ButtonLink icon={pencil} to={`/calendar/add/${result.event.id}/edit`} variant="secondary">
+                Edit {result.event.categoryDetails.name}
+              </ButtonLink>
+            ) : (
+              <ButtonLink icon={pencil} to={result.link.href} variant="secondary">
+                {result.link.text}
+              </ButtonLink>
+            )}
           </div>
         </Card>
       ))}
@@ -51,8 +57,9 @@ function FixItStrategies() {
 
         {strategies.fixItResults.length ? (
           <p className="strategies-header__intro">
-            This week the total cost of your expenses was more than your income, putting you into the red. The strategies below are tailored to the specific expenses in your budget for the week.
-            Commit to implementing one or two of them to prevent from going into the red in the future.
+            This week the total cost of your expenses was more than your income, putting you into the red. The
+            strategies below are tailored to the specific expenses in your budget for the week. Commit to implementing
+            one or two of them to prevent from going into the red in the future.
           </p>
         ) : (
           <p>

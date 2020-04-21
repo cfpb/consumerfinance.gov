@@ -69,4 +69,23 @@
     .rss-subscribe {
         display: none;
     }
+
+    // Solving Firefox's longstanding issue of cutting off inline-block
+    // elements after one page.
+    @-moz-document url-prefix() {
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content_main {
+            margin: 0;
+            display: block !important;
+        }
+
+        .content_sidebar {
+            display: block !important;
+        }
+    }
 });
