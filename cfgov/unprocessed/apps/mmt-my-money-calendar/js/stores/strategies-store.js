@@ -42,7 +42,15 @@ class StrategiesStore {
     ],
     largestBillableExpense: [
       {
-        categories: ['expense.utilities.fuel', 'expense.utilities.waterSewage'],
+        categories: [
+          'expense.utilities.fuel',
+          'expense.utilities.waterSewage',
+          'expense.utilities.electricity',
+          'expense.utilities.trash',
+          'expense.utilities.cable',
+          'expense.utilities.internet',
+          'expense.utilities.phone',
+        ],
         title: 'Budget Utility Billing',
         text: 'Contact your utility company to find out about budget billing',
       },
@@ -84,7 +92,9 @@ class StrategiesStore {
         ],
         title: 'Adjust Spending this Week',
         template: (categoryName) =>
-          `${categoryName} ${isPlural(categoryName) ? 'were' : 'was'} your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
+          `${categoryName} ${
+            isPlural(categoryName) ? 'were' : 'was'
+          } your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
       },
     ],
   };
@@ -108,7 +118,7 @@ class StrategiesStore {
   }
 
   @computed get fixItResults() {
-    return compact(
+    const results = compact(
       Object.entries(this.fixItWeekAnalysis).map(([type, event]) => {
         if (!event) return;
 
@@ -125,11 +135,22 @@ class StrategiesStore {
         return strategy;
       })
     );
+
+    if (results.length) return results;
+
+    return [
+      {
+        title: 'Explore Your General Strategies',
+        text: 'While you have gone into the red, we could not recommend any "Fix It" Strategies based upon your budget. However, there are plenty of solutions you can implement to balance your budget from the general strategies tab.',
+        link: {
+          href: '/strategies',
+          text: 'View General Strategies',
+        },
+      },
+    ];
   }
 
   @computed get strategyResults() {
-    if (!this.eventStore.hasStartingBalance) return [];
-
     const strategyIDs = new Set();
     const results = this.eventStore.eventCategories.map((catPath) => {
       const { strategy } = Categories.get(catPath) || {};
