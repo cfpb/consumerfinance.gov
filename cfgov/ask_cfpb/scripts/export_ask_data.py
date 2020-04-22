@@ -9,8 +9,6 @@ import unicodecsv
 from ask_cfpb.models.pages import AnswerPage
 
 
-html_parser = HTMLParser.HTMLParser()
-
 HEADINGS = [
     'ASK_ID',
     'PAGE_ID',
