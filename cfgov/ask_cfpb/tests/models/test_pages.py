@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from django.utils import timezone, translation
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
@@ -36,12 +37,6 @@ from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import (
     get_free_path, get_or_create_page, set_stream_data
 )
-
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 
 html_parser = HTMLParser()
