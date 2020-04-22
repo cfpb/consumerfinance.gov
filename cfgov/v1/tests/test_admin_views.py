@@ -93,7 +93,7 @@ class TestCDNManagementView(TestCase):
         # blocked from POST'ing
         self.client.login(username="noperm", password="password")
         response = self.client.post(reverse("manage-cdn"))
-        self.assertEquals(response.status_code, 403)
+        self.assertEqual(response.status_code, 403)
 
     def test_user_with_permission(self):
         self.client.login(username="cdn", password="password")
