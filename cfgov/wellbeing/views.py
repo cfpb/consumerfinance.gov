@@ -14,7 +14,7 @@ class ResultsView(TranslatedTemplateView):
     QUESTIONS = [
         {
             # Question 1
-            'question': _('I could handle a major unexpected expense'),
+            'question': 'I could handle a major unexpected expense',
             'answers': [
                 'Not at all',
                 'Very little',
