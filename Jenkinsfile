@@ -14,7 +14,7 @@ pipeline {
         IMAGE_REPO="cfpb/cfgov-python"
         IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
-        NOTIFICATION_CHANNEL = 'foobar'
+        NOTIFICATION_CHANNEL = 'cfgov-deployments'
     }
 
     parameters {
