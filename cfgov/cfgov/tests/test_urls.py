@@ -1,4 +1,4 @@
-from imp import reload
+from importlib import reload
 
 import django
 from django.test import RequestFactory, TestCase, override_settings
