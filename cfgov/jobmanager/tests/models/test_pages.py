@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from django.http import HttpRequest
 from django.test import TestCase
+from django.urls import reverse
 from django.utils import timezone
 
 from wagtail.core.models import Site
@@ -12,12 +13,6 @@ from jobmanager.models.django import (
 )
 from jobmanager.models.pages import JobListingPage
 from v1.models.snippets import ReusableText
-
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 
 class JobListingPageQuerySetTests(TestCase):
