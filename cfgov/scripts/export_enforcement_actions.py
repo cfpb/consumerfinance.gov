@@ -26,7 +26,7 @@ HEADINGS = [
 
 
 def clean_and_strip(data):
-    unescaped = html_parser.unescape(data)
+    unescaped = html.unescape(data)
     return html.strip_tags(unescaped).strip()
 
 
