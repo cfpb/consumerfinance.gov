@@ -15,8 +15,7 @@
     <p>
       {% if (current_language == 'en') %}
       <a href="{{ url('fwb_error_es') }}">Ver página en español</a>
-      {% endif %}
-      {% if (current_language == 'es') %}
+      {% else %}
       <a href="{{ url('fwb_error_en') }}">View page in English</a>
       {% endif %}
     </p>
