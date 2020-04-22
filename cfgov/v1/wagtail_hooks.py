@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
+from django.urls import re_path, reverse
 from django.utils.html import format_html_join
 
 from wagtail.admin.menu import MenuItem
@@ -25,13 +26,6 @@ from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.template_debug import notification_test_cases, register_template_debug
 from v1.util import util
-
-
-try:
-    from django.urls import re_path, reverse
-except ImportError:
-    from django.conf.urls import url as re_path
-    from django.core.urlresolvers import reverse
 
 
 logger = logging.getLogger(__name__)
