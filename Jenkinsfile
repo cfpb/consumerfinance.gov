@@ -111,8 +111,8 @@ pipeline {
     }
 
     post {
-        always {
-            notify("${NOTIFICATION_CHANNEL}", "${currentBuild.result} ${env.JOB_NAME} ${env.BRANCH_NAME}")
+        unsuccessful {
+            notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed to deploy. See: ${env.BUILD_URL}.")
         }
     }
 }
