@@ -11,8 +11,6 @@ from v1.models import DocumentDetailPage
 from v1.util.migrations import get_stream_data
 
 
-html_parser = HTMLParser.HTMLParser()
-
 HEADINGS = [
     'Matter name',
     'Date filed',
