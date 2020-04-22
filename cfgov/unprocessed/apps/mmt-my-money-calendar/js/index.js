@@ -8,14 +8,6 @@ import { Categories } from './stores/models/categories';
 
 configureMobX({ enforceActions: 'observed' });
 
-let installPromptEvent;
-
-window.addEventListener('beforeinstallprompt', (event) => {
-  event.preventDefault();
-  installPromptEvent = event;
-  console.debug('Install prompt event: %O', installPromptEvent);
-});
-
 if (process.env.SERVICE_WORKER_ENABLED && 'serviceWorker' in navigator) {
   const wb = new Workbox('/mmt-my-money-calendar/service-worker.js', { scope: '/mmt-my-money-calendar' });
 

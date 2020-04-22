@@ -18,6 +18,7 @@ export default class UIStore {
   @observable selectedCategory = '';
   @observable showBottomNav = true;
   @observable isTouchDevice = false;
+  @observable installPromptEvent;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -26,6 +27,7 @@ export default class UIStore {
     this.logger.debug('Initialize UI Store: %O', this);
 
     window.addEventListener('touchstart', this.setIsTouchDevice);
+    window.addEventListener('beforeinstallprompt', this.setInstallPromptEvent);
   }
 
 
@@ -162,6 +164,19 @@ export default class UIStore {
     this.logger.debug('touch device detected');
     window.removeEventListener('touchstart', this.setIsTouchDevice);
   };
+
+  @action setInstallPromptEvent = (event) => {
+    this.installPromptEvent = event;
+    this.logger.debug('Store install prompt event: %O', this.installPromptEvent);
+    window.removeEventListener('beforeinstallprompt', this.setInstallPromptEvent);
+  };
+
+  async showInstallPrompt() {
+    if (!this.installPromptEvent) return false;
+    this.installPromptEvent.prompt();
+    const { outcome } = await this.installPromptEvent.userChoice;
+    return outcome;
+  }
 
   toggleNav() {
     this.setNavOpen(!this.navOpen);
