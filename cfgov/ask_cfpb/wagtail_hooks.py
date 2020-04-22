@@ -35,7 +35,7 @@ def editor_css():
 def register_export_menu_item():
     return MenuItem(
         'Export Ask data',
-        reverse('export-ask'),
+        reverse("export-ask"),
         classnames='icon icon-download',
         order=99999,
     )

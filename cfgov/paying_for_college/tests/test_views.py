@@ -188,7 +188,7 @@ class OfferTest(django.test.TestCase):
         """request for offer disclosure."""
 
         url = reverse("paying_for_college:disclosures:offer")
-        # offer_test_url = reverse('paying_for_college:disclosures:offer_test')
+        # offer_test_url = reverse("paying_for_college:disclosures:offer_test")
         qstring = (
             "?iped=408039&pid=981&"
             "oid=f38283b5b7c939a058889f997949efa566c616c5&"

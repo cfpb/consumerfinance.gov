@@ -90,7 +90,7 @@ def dummy_external_site_view(request):
 
 
 urlpatterns = [
-    # Needed for rendering of base template that calls reverse('external-site')
+    # Needed for rendering of base template that calls reverse("external-site")
     re_path(r'^external-site/$', dummy_external_site_view,
             name='external-site'),
 

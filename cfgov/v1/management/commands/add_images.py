@@ -44,7 +44,7 @@ class Command(WagtailClient, BaseCommand):
         with open(filename, 'rb') as f:
             image_file = SimpleUploadedFile(filename_only, f.read())
 
-        response = self.client.post(reverse('wagtailimages:add'), {
+        response = self.client.post(reverse("wagtailimages:add"), {
             'title': filename_only,
             'file': image_file,
         })

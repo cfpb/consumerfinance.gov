@@ -47,7 +47,7 @@ def export_data(request):
 def register_export_menu_item():
     return MenuItem(
         'Enforcement actions',
-        reverse('export-enforcement-actions'),
+        reverse("export-enforcement-actions"),
         classnames='icon icon-download',
         order=99999,
     )
@@ -197,7 +197,7 @@ class PermissionCheckingMenuItem(MenuItem):
 def register_export_feedback_menu_item():
     return PermissionCheckingMenuItem(
         'Export feedback',
-        reverse('export-feedback'),
+        reverse("export-feedback"),
         classnames='icon icon-download',
         order=99999,
         permission='v1.export_feedback'
@@ -208,7 +208,7 @@ def register_export_feedback_menu_item():
 def register_django_admin_menu_item():
     return MenuItem(
         'Django Admin',
-        reverse('admin:index'),
+        reverse("admin:index"),
         classnames='icon icon-redirect',
         order=99999
     )
@@ -217,7 +217,7 @@ def register_django_admin_menu_item():
 @hooks.register('register_admin_menu_item')
 def register_frank_menu_item():
     return MenuItem('CDN Tools',
-                    reverse('manage-cdn'),
+                    reverse("manage-cdn"),
                     classnames='icon icon-cogs',
                     order=10000)
 
@@ -370,7 +370,7 @@ modeladmin_register(SnippetModelAdminGroup)
 @hooks.register('construct_main_menu')
 def hide_snippets_menu_item(request, menu_items):
     menu_items[:] = [item for item in menu_items
-                     if item.url != reverse('wagtailsnippets:index')]
+                     if item.url != reverse("wagtailsnippets:index")]
 
 
 # The construct_whitelister_element_rules was depricated in Wagtail 2,

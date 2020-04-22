@@ -66,12 +66,12 @@ def signed_redirect(url):
     query_args = {'ext_url': url,
                   'signature': signature}
 
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def unsigned_redirect(url):
     query_args = {'ext_url': url}
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def extract_answers_from_request(request):
