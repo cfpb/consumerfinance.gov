@@ -1,7 +1,12 @@
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from wagtail.tests.utils import WagtailTestUtils
+
+
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 class TemplateDebugViewTests(TestCase, WagtailTestUtils):
