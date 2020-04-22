@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-from html.parser import HTMLParser
 from unittest import mock
 
 from django.apps import apps
@@ -39,7 +38,6 @@ from v1.util.migrations import (
 )
 
 
-html_parser = HTMLParser()
 now = timezone.now()
 
 

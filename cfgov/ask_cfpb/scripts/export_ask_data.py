@@ -1,8 +1,8 @@
 import datetime
-import html.parser as html_parser
+import html
 
 from django.http import HttpResponse
-from django.utils import html
+from django.utils import html as html_util
 
 import unicodecsv
 
@@ -27,8 +27,8 @@ HEADINGS = [
 
 
 def clean_and_strip(data):
-    unescaped = html_parser.HTMLParser().unescape(data)
-    return html.strip_tags(unescaped).strip()
+    unescaped = html.unescape(data)
+    return html_util.strip_tags(unescaped).strip()
 
 
 def assemble_output():

@@ -1,4 +1,4 @@
-import html.parser
+import html
 
 from django.utils.module_loading import import_string
 
