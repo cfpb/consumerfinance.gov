@@ -8,7 +8,7 @@ class TemplateDebugViewTests(TestCase, WagtailTestUtils):
     def check(self, template_name):
         self.login()
 
-        url = reverse(f'jobmanager:template_debug_{template_name}')
+        url = reverse(f'template_debug_jobmanager_{template_name}')
         response = self.client.get(url)
         self.assertContains(response, f'jobmanager/{template_name}.html')
 
