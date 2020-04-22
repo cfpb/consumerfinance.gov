@@ -26,7 +26,13 @@ export default class UIStore {
 
     this.logger.debug('Initialize UI Store: %O', this);
 
+    // Detect whether user is interacting with the site via a multitouch-capable input device:
     window.addEventListener('touchstart', this.setIsTouchDevice);
+
+    /**
+     * Save Chrome's install prompt event in order to customize the PWA installation process
+     * @see {@link https://web.dev/customize-install/}
+     */
     window.addEventListener('beforeinstallprompt', this.setInstallPromptEvent);
   }
 
