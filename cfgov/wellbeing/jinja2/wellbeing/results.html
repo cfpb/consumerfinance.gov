@@ -467,21 +467,17 @@
                         and their effect on your cost of borrowing.
                     </li>
                 </ul>
-                {% endif %}
-                {% if (current_language == 'es') %}
+                {% else %}
                 <ul>
                     <li>
                         <b>¿Está considerando comprar una casa?</b>
-			                  Tenemos <a href="/es/prepararse-para-comprar-casa/">
-                          recursos para ayudarle</a>.
+                        Tenemos <a href="/es/prepararse-para-comprar-casa/">recursos para ayudarle</a>.
                     </li>
                     <li>
                         <b>Desarrolle un plan de acción para alcanzar sus metas.</b>
                         Use esta
-                        <a href="https://pueblo.gpo.gov/CFPBLibs/CFPBLibsPubs.php?PubID=13757">
-                          hoja de cálculo
-                        </a>
-                        , o herramienta para hacer un presupuesto.
+                        <a href="https://pueblo.gpo.gov/CFPBLibs/CFPBLibsPubs.php?PubID=13757">hoja de cálculo</a>,
+                        o herramienta para hacer un presupuesto.
                     </li>
                     <li>
                         <b>Considere a que edad desea reclamar su beneficio del Seguro Social.</b>
@@ -518,8 +514,7 @@
                 <a href="/ask-cfpb/how-do-i-choose-which-credit-counselor-is-right-for-me-en-1355/">
                   tips for choosing a credit counselor</a>.
             </li>
-            {% endif %}
-            {% if (current_language == 'es') %}
+            {% else %}
             <li>
                 <b>Un asesor de crédito de una organización sin fines de lucro</b>
                 puede ayudarle a hacer un plan de pago para sus tarjetas de
@@ -538,7 +533,7 @@
                 <b>{{ _('A financial coach') }}</b>
                 {{ _('can assess your situation and work with you over time to resolve issues and get ahead.') }}
                 <a href="/about-us/blog/the-launch-of-the-cfpb-financial-coaching-initiative/">
-                {{ _('Find out about the CFPB coaching initiative.') }}
+                    {{ _('Find out about the CFPB coaching initiative.') }}
                 </a>
             </li>
             <li>
