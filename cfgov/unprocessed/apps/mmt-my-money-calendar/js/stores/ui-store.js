@@ -69,6 +69,10 @@ export default class UIStore {
     return this.weekHasEvents && this.weekEndingBalance < 0;
   }
 
+  @computed get isRunningAsApp() {
+    return navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  }
+
   @action setNavOpen(val) {
     this.navOpen = Boolean(val);
   }
