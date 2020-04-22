@@ -58,6 +58,7 @@ function BalanceForm() {
             [source]: yup.number('Balance must be a number').required('Balance is required'),
           })}
           onSubmit={(values) => {
+            wizardStore.logger.debug('Submit form: %O', values);
             wizardStore.setFundingSourceBalance(source, Number(values[source]));
             history.push(nextStep);
           }}
@@ -77,7 +78,7 @@ function BalanceForm() {
               />
 
               <div className={bem('buttons')}>
-                <BackButton onClick={goBack}>Back</BackButton>
+                <BackButton type="button" onClick={goBack}>Back</BackButton>
                 <NextButton type="submit">Next</NextButton>
               </div>
             </form>
