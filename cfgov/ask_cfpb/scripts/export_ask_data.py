@@ -1,5 +1,5 @@
 import datetime
-import html.parser
+import html.parser as html_parser
 
 from django.http import HttpResponse
 from django.utils import html
@@ -27,7 +27,7 @@ HEADINGS = [
 
 
 def clean_and_strip(data):
-    unescaped = html.parser.HTMLParser().unescape(data)
+    unescaped = html_parser.HTMLParser().unescape(data)
     return html.strip_tags(unescaped).strip()
 
 
