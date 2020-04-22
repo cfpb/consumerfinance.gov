@@ -43,19 +43,16 @@
 */
 
 .o-expandable__read-more-mobile {
-    .o-expandable_target__collapsed {
+    .o-expandable_target__collapsed,
+    .o-expandable_content__collapsed:after {
         display: none;
     }
 
-    .o-expandable_content__collapsed {
+    .o-expandable_content {
         // These two !important values override basic expandable styling,
         // because these don't function like expandables on sm+ screens.
         display: block !important;
         max-height: 100% !important;
-
-        &:after {
-            display: none;
-        }
     }
 
     @media only screen and (max-width: @bp-xs-max) {
