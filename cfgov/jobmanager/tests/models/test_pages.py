@@ -1,8 +1,8 @@
 from datetime import timedelta
 
-from django.core.urlresolvers import reverse
 from django.http import HttpRequest
 from django.test import TestCase
+from django.urls import reverse
 from django.utils import timezone
 
 from wagtail.core.models import Site
