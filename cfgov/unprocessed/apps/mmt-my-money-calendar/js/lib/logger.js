@@ -2,7 +2,27 @@
 
 import { useEffect } from 'react';
 
+/**
+ * An object wrapping the Console API methods
+ * @typedef {Object} ConsoleWrapper
+ * @property {Function} debug
+ * @property {Function} log
+ * @property {Function} info
+ * @property {Function} warn
+ * @property {Function} error
+ * @property {Function} time
+ * @property {Function} timeEnd
+ * @property {Function} count
+ * @property {Function} group
+ * @property {Function} groupEnd
+ * @property {Function} groupCollapsed
+ */
+
 class Logger {
+  /**
+   * The methods that will be present in the Console API wrapper object returned by addGroup
+   * @type {string[]}
+   */
   static wrappedMethods = [
     'debug',
     'log',
@@ -17,12 +37,20 @@ class Logger {
     'groupCollapsed',
   ];
 
+  /**
+   * The localStorage key under which a JSON object of persistent settings will be saved
+   * @type {string}
+   */
   static storageKey = 'mmtLogger';
 
   static defaults = {
     active: [],
   };
 
+  /**
+   * An array of background/foreground hex string pairs used in color coding group messages
+   * @type {Array<string[]>}
+   */
   colors = [
     ['#a6cee3', '#000'],
     ['#1f78b4', '#fff'],
@@ -49,6 +77,11 @@ class Logger {
 
   usedColors = [];
 
+  /**
+   * Computed property returning either localStorage or an ephemeral object in memory if
+   * localStorage is not available (e.g. in incognito mode)
+   * @type {Object}
+   */
   get storage() {
     if (this._storage) return this._storage;
 
@@ -65,6 +98,10 @@ class Logger {
     }
   }
 
+  /**
+   * Configuration object, auto loaded from localStorage
+   * @type {Object}
+   */
   get config() {
     if (this._config) return this._config;
 
@@ -72,15 +109,26 @@ class Logger {
     return this._config;
   }
 
+  /**
+   * Setter that automatically saves config object to localStorage
+   */
   set config(obj) {
     this.storage[this.constructor.storageKey] = JSON.stringify(obj);
     this._config = obj;
   }
 
+  /**
+   * An array of registered group names
+   * @type {string[]}
+   */
   get groupNames() {
     return [...this.groups.keys()];
   }
 
+  /**
+   * An array of currently enabled groups
+   * @type {string[]}
+   */
   get activeGroups() {
     return this.config.active;
   }
@@ -94,6 +142,11 @@ class Logger {
     if (!this.storage[storageKey]) this.storage[storageKey] = JSON.stringify(defaults);
   }
 
+  /**
+   * Get a random color pair
+   *
+   * @returns {string[]}
+   */
   randomColor() {
     return this.colors[Math.floor(Math.random() * this.colors.length)];
   }
@@ -114,17 +167,34 @@ class Logger {
     return this.unusedColorPair();
   }
 
+  /**
+   * Load and parse JSON configuration from localStorage
+   *
+   * @returns {Object}
+   */
   loadConfig() {
     const config = this.storage[this.constructor.storageKey];
     const parsed = config ? JSON.parse(config) : {};
     return parsed;
   }
 
+  /**
+   * Updates runtime config and persists it to localStorage
+   *
+   * @param {Object} params New configuration parameters
+   * @returns {undefined}
+   */
   updateConfig(params = {}) {
     this.config = Object.assign({}, this.config, params);
     this._info('Logger config updated: %O', this.config);
   }
 
+  /**
+   * Registers a new message group and returns an object of wrapped console methods.
+   *
+   * @param {string} name The name of the new group
+   * @returns {ConsoleWrapper}
+   */
   addGroup(name) {
     if (this.groups.has(name)) return this.groups.get(name);
 
@@ -164,6 +234,11 @@ class Logger {
     return group;
   }
 
+  /**
+   * Makes messages from specified groups print to console
+   *
+   * @param  {...string} groupNames Names of groups to enable
+   */
   enable(...groupNames) {
     for (const groupName of groupNames) {
       if (!this.groupNames.includes(groupName)) {
@@ -183,6 +258,11 @@ class Logger {
     }
   }
 
+  /**
+   * Hides messages from specified groups and prevents them from printing to console.
+   *
+   * @param  {...any} groupNames Names of groups to disable
+   */
   disable(...groupNames) {
     for (const groupName of groupNames) {
       let { active } = this.config;
@@ -199,6 +279,11 @@ class Logger {
     }
   }
 
+  /**
+   * Enables all registered groups
+   *
+   * @returns {undefined}
+   */
   enableAll() {
     this.updateConfig({
       active: this.groupNames,
@@ -206,6 +291,11 @@ class Logger {
     this._info('Enabled all groups (%O)', this.groupNames);
   }
 
+  /**
+   * Disables all registered groups
+   *
+   * @returns {undefined}
+   */
   disableAll() {
     this.updateConfig({ active: [] });
     this._info('All groups disabled');
