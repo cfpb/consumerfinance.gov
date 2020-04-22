@@ -100,8 +100,8 @@
 {% endblock %}
 
 {% block content_sidebar %}
+    {% if (current_language == 'en') %}
     <div class="block block__flush-top">
-        {% if (current_language == 'en') %}
         <header class="m-slug-header">
             <h2 class="a-heading">For further reading and research</h2>
         </header>
