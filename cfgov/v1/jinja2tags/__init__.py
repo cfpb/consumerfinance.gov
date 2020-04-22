@@ -1,4 +1,4 @@
-import html.parser as HTMLParser
+import html.parser
 
 from django.utils.module_loading import import_string
 
@@ -84,7 +84,7 @@ def render_stream_child(context, stream_child):
 
     # Render the template with the context
     html = template.render(new_context)
-    unescaped = HTMLParser.HTMLParser().unescape(html)
+    unescaped = html.parser.HTMLParser().unescape(html)
     # Return the rendered template as safe html
     return Markup(unescaped)
 
