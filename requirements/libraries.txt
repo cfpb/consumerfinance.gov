@@ -11,11 +11,11 @@ django-haystack==2.7.0
 # django-js-asset is required by teachers-digital-platform
 django-js-asset==1.1.0
 # django-localflavor is required by django-college-costs-comparison
-django-localflavor==2.2
+django-localflavor==3.0
 # django-mptt is required by teachers-digital-platform
 django-mptt==0.9.0
 django-storages==1.7.1
-django-treebeard==3.0
+django-treebeard==4.2.0
 django-watchman==0.15.0
 edgegrid-python==1.0.10
 elasticsearch==2.4.1

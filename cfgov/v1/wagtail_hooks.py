@@ -23,6 +23,7 @@ from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.template_debug import notification_test_cases, register_template_debug
 from v1.util import util
 
 
@@ -404,3 +405,11 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
         content_type__app_label='v1',
         codename='export_feedback'
     )
+
+
+register_template_debug(
+    'v1',
+    'notification',
+    '_includes/molecules/notification.html',
+    notification_test_cases
+)
