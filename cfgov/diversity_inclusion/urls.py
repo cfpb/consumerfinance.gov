@@ -11,19 +11,19 @@ except ImportError:
 
 urlpatterns = [
     re_path(
-        r"^voluntary-assessment-onboarding-form/$(?i)",
+        r"^voluntary-assessment-onboarding-form/$",
         GetAssessmentForm.as_view(),
         name="voluntary_assessment_form",
     ),
     re_path(
-        r"^voluntary-assessment-onboarding-form/form-submitted/$(?i)",
+        r"^voluntary-assessment-onboarding-form/form-submitted/$",
         TemplateView.as_view(
             template_name="diversity_inclusion/form-submitted.html"
         ),
         name="form_submitted",
     ),
     re_path(
-        r"^voluntary-assessment-onboarding-form/privacy-act-statement/$(?i)",
+        r"^voluntary-assessment-onboarding-form/privacy-act-statement/$",
         TemplateView.as_view(
             template_name="diversity_inclusion/privacy.html"
         ),

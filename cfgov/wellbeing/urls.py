@@ -11,13 +11,13 @@ except ImportError:
 
 urlpatterns = [
     re_path(
-        r"^$(?i)",
+        r"^$",
         TemplateView.as_view(template_name="wellbeing/home.html"),
         name="fwb_home",
     ),
-    re_path(r"^results/$(?i)", ResultsView.as_view(), name="fwb_results"),
+    re_path(r"^results/$", ResultsView.as_view(), name="fwb_results"),
     re_path(
-        r"^about/$(?i)",
+        r"^about/$",
         TemplateView.as_view(template_name="wellbeing/about.html"),
         name="fwb_about",
     ),
