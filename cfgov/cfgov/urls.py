@@ -21,7 +21,6 @@ from wagtailautocomplete.urls.admin import (
 from ask_cfpb.views import (
     ask_autocomplete, ask_search, redirect_ask_search, view_answer
 )
-from core.conditional_urls import include_if_app_enabled
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
 )
@@ -227,16 +226,17 @@ urlpatterns = [
         'transcripts'),
         namespace='transcripts')),
 
-    re_path(r'^paying-for-college/',
-        include_if_app_enabled('comparisontool', 'comparisontool.urls')),
+    re_path(r'^paying-for-college/', include('comparisontool.urls')),
 
-    re_path(r'^paying-for-college2/', include((
-        'paying_for_college.urls',
-        'paying_for_college'),
-        namespace='paying_for_college')),
+    re_path(
+        r'^paying-for-college2/',
+        include(
+            ('paying_for_college.urls', 'paying_for_college'),
+            namespace='paying_for_college'
+        )
+    ),
 
-    re_path(r'^credit-cards/agreements/',
-        include('agreements.urls')),
+    re_path(r'^credit-cards/agreements/', include('agreements.urls')),
 
     flagged_re_path(
         'PREPAID_AGREEMENTS_SEARCH',
@@ -246,11 +246,11 @@ urlpatterns = [
             'prepaid_agreements'),
             namespace='prepaid_agreements')),
 
-    re_path(r'^consumer-tools/retirement/', include_if_app_enabled(
-        'retirement_api',
-        'retirement_api.urls',
-        namespace='retirement_api'
-    )),
+    re_path(
+        r'^consumer-tools/retirement/',
+        include('retirement_api.urls', namespace='retirement_api')
+    ),
+
     re_path(r'^data-research/consumer-complaints/$',
         ComplaintLandingView.as_view(),
         name='complaint-landing'),
@@ -259,19 +259,17 @@ urlpatterns = [
     flagged_re_path(
         'CCDB5_RELEASE',
         r'^data-research/consumer-complaints/search/api/v1/',
-        include_if_app_enabled('complaint_search',
-                               'complaint_search.urls')),
+        include('complaint_search.urls')
+    ),
 
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
     flagged_re_path(
         'CCDB5_RELEASE',
         r'^data-research/consumer-complaints/search/',
-        include_if_app_enabled('ccdb5_ui', 'ccdb5_ui.config.urls')),
+        include('ccdb5_ui.config.urls')),
 
-    re_path(r'^oah-api/rates/',
-        include_if_app_enabled('ratechecker', 'ratechecker.urls')),
-    re_path(r'^oah-api/county/',
-        include_if_app_enabled('countylimits', 'countylimits.urls')),
+    re_path(r'^oah-api/rates/', include('ratechecker.urls')),
+    re_path(r'^oah-api/county/', include('countylimits.urls')),
 
     re_path(r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
@@ -302,8 +300,10 @@ urlpatterns = [
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
     # data-research-api
-    re_path(r'^data-research/mortgages/api/v1/',
-        include_if_app_enabled('data_research', 'data_research.urls')),
+    re_path(
+        r'^data-research/mortgages/api/v1/',
+        include('data_research.urls')
+    ),
 
     # educational resources
     re_path(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
@@ -382,7 +382,7 @@ urlpatterns = [
     re_path(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
 
-    re_path(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
+    re_path(r'^_status/', include('watchman.urls')),
 
     re_path(
         r'^consumer-tools/financial-well-being/',
@@ -402,8 +402,7 @@ urlpatterns = [
 
     re_path(
         r'^practitioner-resources/youth-financial-education/',
-        include_if_app_enabled('teachers_digital_platform',
-                               'teachers_digital_platform.urls')
+        include('teachers_digital_platform.urls')
     ),
 
     re_path(
