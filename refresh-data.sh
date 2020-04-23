@@ -8,7 +8,6 @@
 
 set -e
 
-
 refresh_dump_name=$1
 
 USAGE=$(cat << 'EOF'
