@@ -1,7 +1,6 @@
 from django.contrib.admin.utils import quote
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from django.urls import re_path
 from django.utils.decorators import method_decorator
 
 from wagtail.contrib.modeladmin.views import InstanceSpecificView
@@ -9,6 +8,12 @@ from wagtail.contrib.modeladmin.views import InstanceSpecificView
 from treemodeladmin.helpers import TreeButtonHelper
 from treemodeladmin.options import TreeModelAdmin
 from treemodeladmin.views import TreeViewParentMixin
+
+
+try:
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
 
 
 class CopyButtonHelper(TreeButtonHelper):

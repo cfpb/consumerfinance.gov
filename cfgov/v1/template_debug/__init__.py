@@ -1,10 +1,14 @@
-from django.urls import re_path
-
 from wagtail.core import hooks
 
 from v1.views.template_debug import TemplateDebugView
 
 from .notification import notification_test_cases  # noqa 401
+
+
+try:
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
 
 
 def register_template_debug(app_name, url_path, template_name, test_cases):

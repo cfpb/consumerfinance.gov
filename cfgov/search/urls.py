@@ -1,6 +1,10 @@
-from django.urls import re_path
-
 from search.views import results_view
+
+
+try:
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
 
 
 urlpatterns = [

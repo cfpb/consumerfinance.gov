@@ -1,7 +1,12 @@
-from django.urls import re_path
 from django.views.generic import TemplateView
 
 from diversity_inclusion.views import GetAssessmentForm
+
+
+try:
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
 
 
 urlpatterns = [
