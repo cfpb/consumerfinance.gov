@@ -59,7 +59,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.build(env.IMAGE_NAME_LOCAL, "--build-arg scl_python_version=rh-python36 --target cfgov-prod . --squash")
+                    docker.build(env.IMAGE_NAME_LOCAL, "--build-arg scl_python_version=rh-python36 --target cfgov-prod .")
                     docker images 
                 }
             }

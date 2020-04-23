@@ -1,5 +1,6 @@
-# Ignore all
+doc# Ignore all
 **
+**/*
 
 # ...except these directories
 !cfgov
