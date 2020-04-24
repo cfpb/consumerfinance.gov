@@ -1,12 +1,12 @@
 from collections import OrderedDict
 
 from django.shortcuts import render
-from django.views.generic import TemplateView
 
+from core.views import TranslatedTemplateView
 from wellbeing.forms import FWBScore, ResultsForm
 
 
-class ResultsView(TemplateView):
+class ResultsView(TranslatedTemplateView):
     template_name = 'wellbeing/results.html'
 
     # for simplicity, answers below are reordered in order of worst to best
