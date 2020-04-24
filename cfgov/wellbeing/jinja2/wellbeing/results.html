@@ -559,14 +559,25 @@
     <div class="block">
         <h2>{{ _('See how your score compares to group averages') }}</h2>
 
-    {% if not user_score %}
+    {% if not user_score and (current_language == 'en') %}
         <div class="u-mb15">
         {{ notification.render(
             'warning',
             true,
-            _('We never collect or store answers to the financial well-being questionnaire.'),
-            _('If you would like to see your score and answers on the page below, please start with the <a href="../">questionnaire</a> and enter your responses.')
+            'We never collect or store answers to the financial well-being questionnaire.',
+            'If you would like to see your score and answers on the page below,
+            please start with the <a href="../">questionnaire</a> and enter your responses.' | safe
         ) }}
+        </div>
+    {% elif not user_score and (current_language == 'es') %}
+        <div class="u-mb15">
+            {{ notification.render(
+                'warning',
+                true,
+                'No guardamos sus respuestas.',
+                'Si usted desea obtener su puntuación y respuestas en esta página,
+                necesita completar el <a href="../">cuestionario</a>.' | safe
+            ) }}
         </div>
     {% endif %}
 
