@@ -1,3 +1,5 @@
+import unittest
+
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
@@ -6,11 +8,20 @@ from wagtail.core.models import Page
 from mock import Mock
 from model_bakery import baker
 
-from jobmanager.models.django import ApplicantType, JobLocation
+from jobmanager.models.django import ApplicantType, Grade
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import (
-    EmailApplicationLink, USAJobsApplicationLink
+    EmailApplicationLink, GradePanel, USAJobsApplicationLink
 )
+
+
+class GradePanelTests(unittest.TestCase):
+    def test_str(self):
+        grade = Grade(grade='53', salary_min=1, salary_max=100)
+        self.assertEqual(
+            str(GradePanel(grade=grade, job_listing_id=123)),
+            '53'
+        )
 
 
 class ApplicationLinkTestCaseMixin(object):
@@ -22,12 +33,7 @@ class ApplicationLinkTestCaseMixin(object):
         cls.root = Page.objects.get(slug='root')
 
     def setUp(self):
-        location = JobLocation.objects.create(abbreviation='US', name='USA')
-        self.job_listing = baker.prepare(
-            JobListingPage,
-            description='foo',
-            location=location
-        )
+        self.job_listing = baker.prepare(JobListingPage, description='foo')
         self.job_listing.full_clean = Mock(return_value=None)
         self.root.add_child(instance=self.job_listing)
 

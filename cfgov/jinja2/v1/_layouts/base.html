@@ -162,6 +162,13 @@
   the head, then file an issue or PR to discuss including it.
 #}
 
+    {# Schema data in JSON-LD format #}
+    {% if schema_json %}
+    <script type="application/ld+json">
+{{ schema_json | tojson(indent=2) }}
+    </script>
+    {% endif %}
+
     {% block javascript_loader %}
     <script>
       {# Minified dynamic JavaScript loader that injects a script tag in the head of the page. #}

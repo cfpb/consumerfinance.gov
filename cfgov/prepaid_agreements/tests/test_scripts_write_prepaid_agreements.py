@@ -2,6 +2,7 @@ from datetime import date, datetime, timedelta
 from unittest import mock
 
 from django.test import TestCase
+from django.utils.timezone import make_aware
 
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 from prepaid_agreements.scripts.write_prepaid_agreements_data_to_csv import (
@@ -25,7 +26,7 @@ class TestViews(TestCase):
         self.product2.save()
 
         effective_date = date(month=2, day=3, year=2019)
-        created_date = datetime(month=4, day=1, year=2020)
+        created_date = make_aware(datetime(month=4, day=1, year=2020))
         self.agreement_old = PrepaidAgreement(
             effective_date=effective_date,
             created_time=created_date - timedelta(hours=1),

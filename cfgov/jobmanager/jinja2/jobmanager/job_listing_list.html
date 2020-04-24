@@ -8,23 +8,27 @@
 
    Creates jobs list when given:
 
-   jobs:                    List of currently open jobs.
+   value.jobs:              List of currently open jobs, where each job has:
 
-   no_jobs_message:         Message to show if no jobs exist.
+   job.title:               Title of open job.
 
-   value.more_jobs_page:    A Wagtail page listing more jobs.
+   job.url:                 Link to job listing page.
+
+   job.close_date:          Date when open job closes.
+
+   value.more_jobs_url:     Link to page listing all open jobs.
 
    ========================================================================== #}
 
 <aside class="m-jobs-list"
        data-qa-hook="openings-section">
-    {% if jobs.exists() %}
+    {% if value.jobs %}
     <h3>Current openings</h3>
     <ul class="m-list m-list__unstyled m-list__links">
-        {% for job in jobs %}
+        {% for job in value.jobs %}
         <li class="m-list_item">
             <a class="m-list_link"
-               href="{{ pageurl(job) }}">
+               href="{{ job.url }}">
                   {{ job.title }}
                 <span class="m-list_link-subtext">
                     Closing
@@ -36,10 +40,10 @@
         {% endfor %}
     </ul>
     <a class="a-btn a-btn__full-on-xs"
-       href="{{ pageurl(value.more_jobs_page) }}">
+       href="{{ value.more_jobs_url }}">
        View all job openings
     </a>
     {% else %}
-    <h3 class='short-desc'>{{ no_jobs_message }}</h3>
+    <h3 class='short-desc'>There are no current openings at this time.</h3>
     {% endif %}
 </aside>
