@@ -27,9 +27,10 @@ export default class CashFlowStore {
   }
 
   /**
-   * All events in the store as a map, keyed by date
+   * All events in the store as a map, keyed by date. Keys are unix timestamp integers, in milliseconds,
+   * of the beginning of each day.
    *
-   * @type {Map}
+   * @type {Map<number,CashFlowEvent[]>}
    */
   @computed get eventsByDate() {
     return this.events.reduce((output, event) => {
@@ -58,7 +59,7 @@ export default class CashFlowStore {
   /**
    * All events in the store as a map, keyed by the timestamp of the beginning of the month in which they occur, in milliseconds
    *
-   * @type {Map}
+   * @type {Map<number,CashFlowEvent[]>}
    */
   @computed get eventsByMonth() {
     return this.events.reduce((output, event) => {
@@ -199,6 +200,12 @@ export default class CashFlowStore {
     return this.eventsByDate.get(date.startOf('day').valueOf());
   }
 
+  /**
+   * Gets all events occurring in the same week as the specified date
+   *
+   * @param {Date|dayjs} date - A date in the week to check
+   * @returns {CashFlowEvent[]|undefined}
+   */
   getEventsForWeek(date) {
     date = toDayJS(date).startOf('week');
     return this.eventsByWeek.get(date.valueOf());
@@ -220,10 +227,22 @@ export default class CashFlowStore {
     //console.profileEnd('loadEvents');
   });
 
+  /**
+   * Get a single event from the store, by ID
+   *
+   * @param {number} id The event ID from the database
+   * @returns {CashFlowEvent|undefined}
+   */
   getEvent(id) {
     return this.eventsById.get(Number(id));
   }
 
+  /**
+   * Directly sets the events array
+   *
+   * @param {CashFlowEvent[]} events An array of CashFlowEvent instances
+   * @returns {undefined}
+   */
   @action setEvents(events) {
     this.events = events;
   }
@@ -277,12 +296,22 @@ export default class CashFlowStore {
     }
   });
 
+  /**
+   * Adds a single event to the store, but does not persist it to the DB.
+   *
+   * @param {CashFlowEvent|Object} event The event to add
+   */
   @action addEvent(event) {
     if (CashFlowEvent.isCashFlowEvent(event)) return this.events.push(event);
 
     this.events.push(new CashFlowEvent(event));
   }
 
+  /**
+   * Adds multiple events to the store at once. Does not persist them to the DB.
+   *
+   * @param {CashFlowEvent[]} events An array of CashFlowEvents
+   */
   @action addEvents(events) {
     this.events = [...this.events, ...events];
   }
@@ -315,6 +344,12 @@ export default class CashFlowStore {
     this.events = this.events.filter((e) => !deletedIDs.includes(e.id));
   });
 
+  /**
+   * Automatically creates recurrences for events based on their recurrence rules, adding them to the store and persisting them to the DB.
+   * This is currently not called explicitly - it runs as a callback when events are saved.
+   *
+   * @param {CashFlowEvent} event The event to create recurrences for
+   */
   createRecurrences = flow(function* (event) {
     const copies = event.recurrenceDates.map(
       (dateTime) =>
@@ -346,6 +381,9 @@ export default class CashFlowStore {
     this.addEvents(savedEvents);
   });
 
+  /**
+   * Delete all data from the DB and clear the store's events array
+   */
   clearAllData = flow(function* () {
     yield CashFlowEvent.destroyAll();
     this.setEvents([]);
