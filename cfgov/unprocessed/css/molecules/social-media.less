@@ -84,12 +84,21 @@
         .u-link__no-border();
     }
 
+    &_print {
+        padding-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+        border-left: 1px solid @black;
+    }
+
     // Hide on print.
     .respond-to-print( {
         & {
             display: none;
         }
     } );
+}
+
+.no-js .m-social-media_print {
+    display: none;
 }
 
 /* topdoc

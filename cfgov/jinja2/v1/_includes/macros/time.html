@@ -19,19 +19,19 @@
 
 {% macro render(datetime,
                 show_value_for={'date':true, 'time':true, 'timezone':true},
-                text_format=False) %}
+                text_format=False) -%}
 <span class="datetime">
-    {% if show_value_for.date == true  %}
+    {%- if show_value_for.date == true  -%}
     <time class="datetime_date" datetime="{{ dt.format_datetime(datetime) }}">
-      {{ dt.format_date(datetime, text_format) }}
+        {{- dt.format_date(datetime, text_format) -}}
     </time>
-    {% endif %}
+    {%- endif -%}
 
-    {% if show_value_for.date == true and show_value_for.time == true %}
+    {%- if show_value_for.date == true and show_value_for.time == true %}
     <span class="datetime_divider">@</span>
     {% endif %}
 
-    {% if show_value_for.time == true %}
+    {%- if show_value_for.time == true %}
     <time class="datetime_time" datetime="{{ dt.format_datetime(datetime) }}">
         {% if show_value_for.timezone == true %}
         {{ dt.format_time(localtime(datetime), show_timezone=true) }}
@@ -39,6 +39,6 @@
         {{ dt.format_time(datetime) }}
         {% endif %}
     </time>
-    {% endif %}
+    {%- endif %}
 </span>
-{% endmacro %}
+{%- endmacro %}

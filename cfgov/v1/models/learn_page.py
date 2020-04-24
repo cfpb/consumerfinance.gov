@@ -65,6 +65,7 @@ class AbstractFilterPage(CFGOVPage):
             FieldPanel('secondary_link_text'),
             ImageChooserPanel('preview_image'),
         ], heading='Page Preview Fields', classname='collapsible'),
+        FieldPanel('schema_json', 'Structured Data'),
         FieldPanel('authors', 'Authors'),
         MultiFieldPanel([
             FieldPanel('date_published'),
