@@ -1,5 +1,10 @@
-{% set language = page.language if page and page.language else 'en' %}
-
+{%- if current_language -%}
+  {% set language = current_language %}
+{%- elif page and page.language -%}
+  {% set language = page.language %}
+{%- else -%}
+  {% set language = 'en' %}
+{% endif -%}
 <!DOCTYPE html>
 {% if flag_enabled('CFPB_RECRUITING', request) %}
 <!--
