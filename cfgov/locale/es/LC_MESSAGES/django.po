@@ -594,7 +594,7 @@ msgid ""
 "At the CFPB, we work to help consumers like you take control of your "
 "financial life to reach your own life goals,"
 msgstr ""
-"En el CFPB trabajamos ayudar a los consumidores como usted tomar control "
+"En el CFPB trabajamos para ayudar a los consumidores como usted tomar control "
 "sobre sus finanzas para que pueda alcanzar sus propias metas,"
 
 #: wellbeing/jinja2/wellbeing/about.html:37
@@ -613,7 +613,7 @@ msgid ""
 "Financial well-being means how much your financial situation and money "
 "choices provide you with security and freedom of choice."
 msgstr ""
-"El bienestar financiero quiere decir como su situación financiera y "
+"El bienestar financiero quiere decir, cómo su situación financiera y "
 "decisiones monetarias le proporcionan seguridad y libertad en sus decisiones."
 
 #: wellbeing/jinja2/wellbeing/about.html:44
