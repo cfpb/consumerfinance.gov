@@ -1,7 +1,6 @@
 from collections import OrderedDict
 
 from django.shortcuts import render
-from django.utils.translation import gettext as _
 
 from core.views import TranslatedTemplateView
 from wellbeing.forms import FWBScore, ResultsForm
