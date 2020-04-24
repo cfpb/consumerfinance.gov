@@ -1,6 +1,6 @@
 import * as d3scale from 'd3-scale';
 import * as d3selection from 'd3-selection';
-
+import Analytics from '../../../js/modules/Analytics';
 import Highcharts from 'highcharts/highmaps';
 import { STATE_TILES } from './constants';
 import accessibility from 'highcharts/modules/accessibility';
@@ -203,10 +203,16 @@ export function pointDescriptionFormatter( p ) {
  * @param {object} t the highchart element containing point, and other props
  */
 export function clickHandler( isPerCapita, t ) {
+  const stateAbbr = t.point.name;
+  Analytics.sendEvent(
+    Analytics.getDataLayerOptions( 'State Event: click', stateAbbr,
+      'Consumer Complaint Search' )
+  );
+
   let capText = 'dataNormalization=';
   capText += isPerCapita ? 'Per%201000%20pop.' : 'None';
   const stateUrl = 'search/?dateInterval=3y&' + capText +
-    '&state=' + t.point.name;
+    '&state=' + stateAbbr;
   const loc = location.protocol + '//' + location.host + location.pathname;
   location.assign( loc + stateUrl );
 }
