@@ -16,8 +16,6 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@cfpb/cfpb-core": "0.0.9",
-    "@cfpb/cfpb-layout": "0.0.9",
     "core-js": "3.3.6",
     "d3": "5.15.1",
     "debounce": "1.2.0",

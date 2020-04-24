@@ -205,8 +205,8 @@ export function pointDescriptionFormatter( p ) {
 export function clickHandler( isPerCapita, t ) {
   const stateAbbr = t.point.name;
   Analytics.sendEvent(
-    Analytics.getDataLayerOptions('State Event: click', stateAbbr,
-      'Consumer Complaint Search'),
+    Analytics.getDataLayerOptions( 'State Event: click', stateAbbr,
+      'Consumer Complaint Search' )
   );
 
   let capText = 'dataNormalization=';
