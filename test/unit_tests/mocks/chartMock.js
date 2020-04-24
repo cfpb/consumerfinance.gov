@@ -14,8 +14,8 @@ const props = [
 ];
 
 for ( let i = 0; i < props.length; i++ ) {
-  const propName = props[ i ];
-  chartMock[ propName ] = jest.fn(() => { return chartMock; });
+  const propName = props[i];
+  chartMock[propName] = jest.fn( () => chartMock );
 }
 
 export default chartMock;
