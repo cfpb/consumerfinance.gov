@@ -26,6 +26,7 @@ from v1.models.portal_topics import (
     PortalCategory, PortalCategoryTag, PortalTopic, PortalTopicTag
 )
 from v1.models.report_sidenav import ReportSidenav 
+from v1.models.report_sections_sidenav import ReportSectionsSidenav 
 from v1.models.resources import Resource, ResourceTag, TaggableSnippetManager
 from v1.models.snippets import Contact, ReusableText
 from v1.models.sublanding_filterable_page import (
