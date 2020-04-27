@@ -133,7 +133,7 @@ class HandleErrorTestCase(TestCase):
 
     @mock.patch('cfgov.urls.render')
     def test_handle_error(self, mock_render):
-        request = self.factory.get('/test')
+        request = self.factory.get('/Test')
         urls.handle_error(404, request)
         mock_render.assert_called_with(
             request, '404.html', context={'request': request}, status=404
