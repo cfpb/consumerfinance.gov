@@ -81,4 +81,12 @@ export default class WizardStore {
   @action setNoStartingFunds(value = true) {
     this.noStartingFunds = Boolean(value);
   }
+
+  @action reset() {
+    this.fundingSources = [];
+
+    for (const key of Object.keys(this.fundingSourceOptions)) {
+      this[`${key}Cents`] = 0;
+    }
+  }
 }

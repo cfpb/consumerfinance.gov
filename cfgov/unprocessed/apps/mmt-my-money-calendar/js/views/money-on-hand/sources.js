@@ -1,9 +1,8 @@
 import clsx from 'clsx';
+import { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
 import { Formik, FieldArray } from 'formik';
-import * as yup from 'yup';
-import { Link } from 'react-router-dom';
 import { useScrollToTop } from '../../components/scroll-to-top';
 import { useBEM } from '../../lib/hooks';
 import { useStore } from '../../stores';
@@ -16,6 +15,10 @@ function Sources() {
   const bem = useBEM('wizard');
   const { wizardStore } = useStore();
   const history = useHistory();
+
+  useEffect(() => {
+    wizardStore.reset();
+  });
 
   useScrollToTop();
 
@@ -87,9 +90,11 @@ function Sources() {
                   id="funding-source-none"
                   name="noFunds"
                   checked={Boolean(formik.values.noFunds)}
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    formik.setFieldValue('fundingSources', []);
+                    formik.handleChange(e);
+                  }}
                   label="None"
-                  disabled={formik.values.fundingSources.length > 0}
                 />
               </div>
 
