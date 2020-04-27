@@ -86,7 +86,7 @@ describe( 'Tile map', () => {
     sut.clickHandler( false, evt );
     expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=None&state=TX' );
     expect( Analytics.getDataLayerOptions )
-      .toHaveBeenCalledWith( 'State Event: clicked', 'TX', 'Consumer Complaint Search' );
+      .toHaveBeenCalledWith( 'State Event: click', 'TX', 'Consumer Complaint Search' );
     expect( Analytics.sendEvent ).toHaveBeenCalled();
   } );
 
