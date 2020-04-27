@@ -139,6 +139,14 @@ class HandleErrorTestCase(TestCase):
             request, '404.html', context={'request': request}, status=404
         )
 
+    @mock.patch('cfgov.urls.render')
+    def test_handle_404_error(self, mock_render):
+        request = self.factory.get('/test')
+        urls.handle_404_error(404, request)
+        mock_render.assert_called_with(
+            request, '404.html', context={'request': request}, status=404
+        )
+
 
 class TestBetaRefreshEndpoint(TestCase):
     def test_beta_testing_endpoint_returns_404_when_disabled(self):
