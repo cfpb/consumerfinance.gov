@@ -1,7 +1,10 @@
 import * as complaints from '../../../mocks/complaints';
 import * as sut from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap.js';
+import Analytics from '../../../../../cfgov/unprocessed/js/modules/Analytics';
 import TileMap from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap';
 import chartMock from '../../../mocks/chartMock';
+
+jest.mock( '../../../../../cfgov/unprocessed/js/modules/Analytics' );
 
 describe( 'Tile map', () => {
   const colors = [
@@ -73,6 +76,8 @@ describe( 'Tile map', () => {
   it( 'navigates the url to all complaints when clicked', () => {
     window.location.assign = jest.fn();
     expect( window.location.href ).toEqual( 'http://localhost/' );
+    Analytics.getDataLayerOptions = jest.fn();
+    Analytics.sendEvent = jest.fn();
     const evt = {
       point: {
         name: 'TX'
@@ -80,6 +85,9 @@ describe( 'Tile map', () => {
     };
     sut.clickHandler( false, evt );
     expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=None&state=TX' );
+    expect( Analytics.getDataLayerOptions )
+      .toHaveBeenCalledWith( 'State Event: clicked', 'TX', 'Consumer Complaint Search' );
+    expect( Analytics.sendEvent ).toHaveBeenCalled();
   } );
 
   it( 'navigates the url to per capita when clicked', () => {
