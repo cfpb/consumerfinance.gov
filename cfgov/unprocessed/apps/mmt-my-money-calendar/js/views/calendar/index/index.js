@@ -72,20 +72,22 @@ function Calendar() {
         />
       </header>
 
-      <div className="calendar__rows">
-        {[
-          dayLabels,
-          ...uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
-            <CalendarWeekRow
-              days={days}
-              key={`week-${weekNumber}`}
-              selected={uiStore.currentWeek.week() === weekNumber}
-            />
-          )),
-        ]}
-      </div>
+      <div className="calendar__cols">
+        <div className="calendar__rows">
+          {[
+            dayLabels,
+            ...uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
+              <CalendarWeekRow
+                days={days}
+                key={`week-${weekNumber}`}
+                selected={uiStore.currentWeek.week() === weekNumber}
+              />
+            )),
+          ]}
+        </div>
 
-      <Details />
+        <Details />
+      </div>
     </section>
   );
 }
