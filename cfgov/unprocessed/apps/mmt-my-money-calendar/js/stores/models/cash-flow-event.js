@@ -151,6 +151,11 @@ export default class CashFlowEvent {
     return this.getAllFromCursor(cursor);
   }
 
+  static async destroyAll() {
+    const { store } = await this.transaction('readwrite');
+    return store.clear();
+  }
+
   static async getAllFromCursor(cursor) {
     const results = [];
 

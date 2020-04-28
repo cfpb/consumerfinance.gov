@@ -1,4 +1,5 @@
 @bottom_nav_active_bg: #e6e8e9;
+@bottom_nav_disabled_color: #adb9c5;
 
 .bottom-nav {
   box-sizing: border-box;
@@ -75,6 +76,23 @@
     &:active,
     &.active {
       background-color: @bottom_nav_active_bg;
+    }
+
+    &.disabled {
+      color: @bottom_nav_disabled_color;
+
+      &:visited,
+      &:active {
+        color: @bottom_nav_disabled_color;
+      }
+
+      .cf-icon-svg {
+        fill: @bottom_nav_disabled_color;
+      }
+
+      .bottom-nav__link-label {
+        color: @bottom_nav_disabled_color;
+      }
     }
   }
 

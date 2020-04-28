@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useEffect, useMemo } from 'react';
+import { useLocation, useParams, Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
 import { useClickHandler, useClickConfirm } from '../../../lib/hooks';
@@ -10,11 +10,6 @@ import { useScrollToTop } from '../../../components/scroll-to-top';
 import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
 
 import { arrowLeft, arrowRight } from '../../../lib/icons';
-
-const ifDevelopment = (fn) => {
-  if (process.env.NODE_ENV !== 'development') return null;
-  return fn();
-};
 
 const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
@@ -35,22 +30,27 @@ function Calendar() {
   const location = useLocation();
   const params = useParams();
 
-  const nextMonth = useClickHandler(() => uiStore.nextMonth(), []);
-  const prevMonth = useClickHandler(() => uiStore.prevMonth(), []);
-  const gotoToday = useClickHandler(() => uiStore.gotoDate(dayjs()), []);
-
   useEffect(() => {
     uiStore.setPageTitle('myMoney Calendar');
     uiStore.setSubtitle(uiStore.currentMonth.format('MMMM YYYY'));
   }, [location, params, uiStore.currentMonth]);
 
-  const dayLabels = (
-    <div className="calendar__row" key="dayLabels">
-      {DAY_LABELS.map((label, idx) => <div key={`label-${idx}`} className="calendar__day-label">{label}</div>)}
-    </div>
+  const dayLabels = useMemo(
+    () => (
+      <div className="calendar__row" key="dayLabels">
+        {DAY_LABELS.map((label, idx) => (
+          <div key={`label-${idx}`} className="calendar__day-label">
+            {label}
+          </div>
+        ))}
+      </div>
+    ),
+    []
   );
 
   useScrollToTop();
+
+  if (eventStore.eventsLoaded && !eventStore.hasStartingBalance) return <Redirect to="/money-on-hand" />;
 
   return (
     <section className="calendar">
@@ -76,8 +76,12 @@ function Calendar() {
         {[
           dayLabels,
           ...uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
-            <CalendarWeekRow days={days} key={`week-${weekNumber}`} selected={uiStore.currentWeek.week() === weekNumber} />
-          ))
+            <CalendarWeekRow
+              days={days}
+              key={`week-${weekNumber}`}
+              selected={uiStore.currentWeek.week() === weekNumber}
+            />
+          )),
         ]}
       </div>
 

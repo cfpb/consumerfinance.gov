@@ -189,7 +189,7 @@ export const Categories = new CategoryTree({
       name: 'Utilities',
       fuel: {
         name: 'Natural Gas, Oil, Propane',
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
           id: 'utilityPaymentPlans',
@@ -199,7 +199,7 @@ export const Categories = new CategoryTree({
       },
       waterSewage: {
         name: 'Water/Sewage',
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
           id: 'utilityPaymentPlans',
@@ -209,7 +209,7 @@ export const Categories = new CategoryTree({
       },
       electricity: {
         name: 'Electricity',
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
           id: 'utilityPaymentPlans',
@@ -219,12 +219,12 @@ export const Categories = new CategoryTree({
       },
       trash: {
         name: 'Trash',
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
       },
       cable: {
         name: 'Cable/Satellite',
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
           id: 'cablePlans',
@@ -238,7 +238,7 @@ export const Categories = new CategoryTree({
       },
       internet: {
         name: 'Internet',
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
           id: 'lifelinePhoneInternet',
@@ -252,7 +252,7 @@ export const Categories = new CategoryTree({
       },
       phone: {
         name: 'Phone/Cell',
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
           id: 'lifelinePhoneInternet',

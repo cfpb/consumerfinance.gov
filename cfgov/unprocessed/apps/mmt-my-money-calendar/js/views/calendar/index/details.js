@@ -35,7 +35,7 @@ const DetailRow = ({ event, onRequestEdit, onRequestDelete, balanceIsNegative = 
         icon: deleteIcon,
         className: 'slide-list-item__button--delete',
         onClick: onRequestDelete,
-        disabled: event.category === 'startingBalance',
+        disabled: event.category === 'income.startingBalance',
       },
     ]}
     {...props}

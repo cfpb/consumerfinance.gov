@@ -1,0 +1,22 @@
+.wizard {
+  &__field {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #adb9c5;
+
+    &.last {
+      border-bottom: 0;
+    }
+  }
+
+  &__field + &__field {
+    margin-top: 1rem;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row nowrap;
+    margin-top: 2rem;
+  }
+}

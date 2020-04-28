@@ -18,6 +18,7 @@ export default class UIStore {
   @observable selectedCategory = '';
   @observable showBottomNav = true;
   @observable isTouchDevice = false;
+  @observable installPromptEvent;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -25,7 +26,14 @@ export default class UIStore {
 
     this.logger.debug('Initialize UI Store: %O', this);
 
+    // Detect whether user is interacting with the site via a multitouch-capable input device:
     window.addEventListener('touchstart', this.setIsTouchDevice);
+
+    /**
+     * Save Chrome's install prompt event in order to customize the PWA installation process
+     * @see {@link https://web.dev/customize-install/}
+     */
+    window.addEventListener('beforeinstallprompt', this.setInstallPromptEvent);
   }
 
 
@@ -64,7 +72,11 @@ export default class UIStore {
   }
 
   @computed get weekHasNegativeBalance() {
-    return this.weekHasEvents && this.weekEndingBalance < 1;
+    return this.weekHasEvents && this.weekEndingBalance < 0;
+  }
+
+  @computed get isRunningAsApp() {
+    return navigator.standalone || matchMedia('(display-mode: standalone)').matches;
   }
 
   @action setNavOpen(val) {
@@ -162,6 +174,19 @@ export default class UIStore {
     this.logger.debug('touch device detected');
     window.removeEventListener('touchstart', this.setIsTouchDevice);
   };
+
+  @action setInstallPromptEvent = (event) => {
+    this.installPromptEvent = event;
+    this.logger.debug('Store install prompt event: %O', this.installPromptEvent);
+    window.removeEventListener('beforeinstallprompt', this.setInstallPromptEvent);
+  };
+
+  async showInstallPrompt() {
+    if (!this.installPromptEvent) return false;
+    this.installPromptEvent.prompt();
+    const { outcome } = await this.installPromptEvent.userChoice;
+    return outcome;
+  }
 
   toggleNav() {
     this.setNavOpen(!this.navOpen);
