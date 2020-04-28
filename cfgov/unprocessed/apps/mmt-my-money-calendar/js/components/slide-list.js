@@ -16,6 +16,7 @@ export function SlideListItem({
 }) {
   const bem = useBEM('slide-list-item');
   const rootClasses = clsx(bem(), className);
+  const debounced = useRef(false);
   const background = useRef(null);
   const foreground = useRef(null);
   const isDragging = useRef(false);
@@ -48,22 +49,41 @@ export function SlideListItem({
     isOpen.current = false;
   };
 
-  const bind = useDrag(({ first, last, vxvy: [vx], movement: [mx], cancel, canceled }) => {
-    if (first) isDragging.current = true;
-    else if (last) isDragging.current = false;
+  const setDebounceDelay = (delay = 100) => {
+    debounced.current = true;
+    setTimeout(() => (debounced.current = false), delay);
+  };
 
-    // If user drags past slideWidth multiplied by props.threshold, cancel animation and set state to open
-    if (!isOpen.current && mx < -(slideWidth.current * (1 + threshold))) cancel();
-    else if (isOpen.current && mx > 0) cancel();
+  const bind = useDrag(
+    ({ first, last, vxvy: [vx], movement: [mx], cancel, canceled, tap, down }) => {
+      if (first) isDragging.current = true;
+      else if (last) isDragging.current = false;
 
-    // If user has dragged past a certain threshold, snap actions open. Otherwise return to closed
-    if (last && !isOpen.current)
-      mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5 ? close(vx) : open({ canceled });
-    else if (last && isOpen.current)
-      mx > -(slideWidth.current - slideWidth.current * (1 - threshold)) ? close(vx) : open({ canceled });
-    // when user keeps dragging, move according to touch or cursor position:
-    else set({ x: mx, immediate: false, config: springConfig });
-  });
+      // Handle isolated tap and click events
+      if (last && tap && !isOpen.current) {
+        if (debounced.current) return;
+        setDebounceDelay();
+        return open({ canceled: true });
+      } else if (last && tap && isOpen.current) {
+        if (debounced.current) return;
+        setDebounceDelay();
+        return close();
+      }
+
+      // If user drags past slideWidth multiplied by props.threshold, cancel animation and set state to open
+      if (!isOpen.current && mx < -(slideWidth.current * (1 + threshold))) cancel();
+      else if (isOpen.current && mx > 0) cancel();
+
+      // If user has dragged past a certain threshold, snap actions open. Otherwise return to closed
+      if (last && !isOpen.current)
+        mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5 ? close(vx) : open({ canceled });
+      else if (last && isOpen.current)
+        mx > -(slideWidth.current - slideWidth.current * (1 - threshold)) ? close(vx) : open({ canceled });
+      // when user keeps dragging, move according to touch or cursor position:
+      else set({ x: mx, immediate: false, config: springConfig });
+    },
+    { filterTaps: true }
+  );
 
   useLayoutEffect(() => {
     if (!background.current) return;
@@ -82,6 +102,8 @@ export function SlideListItem({
       window.removeEventListener('resize', setSlideWidth);
     };
   }, [background.current]);
+
+  console.log('drag bind: %O', bind);
 
   return (
     <li className={rootClasses} {...props}>
