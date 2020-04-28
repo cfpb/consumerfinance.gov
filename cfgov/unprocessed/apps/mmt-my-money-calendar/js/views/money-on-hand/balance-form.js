@@ -66,6 +66,7 @@ function BalanceForm() {
           {(formik) => (
             <form onSubmit={formik.handleSubmit}>
               <CurrencyField
+                autoFocus
                 required
                 id={source}
                 name={source}

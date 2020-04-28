@@ -30,6 +30,8 @@ function BottomNav() {
   const { uiStore, strategiesStore, eventStore: { hasStartingBalance } } = useStore();
   const classes = clsx('bottom-nav', uiStore.showBottomNav && 'bottom-nav--visible');
 
+  if (!hasStartingBalance) return null;
+
   return (
     <footer className={classes}>
       <nav className="bottom-nav__nav">
