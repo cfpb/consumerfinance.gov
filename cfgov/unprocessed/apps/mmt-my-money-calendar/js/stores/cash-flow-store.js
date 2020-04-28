@@ -8,6 +8,11 @@ import CashFlowEvent from './models/cash-flow-event';
 
 
 export default class CashFlowStore {
+  static snapCategories = [
+    'expense.food.groceries',
+    'income.benefits.snap',
+  ];
+
   @observable eventsLoaded = false;
   @observable events = [];
 
@@ -123,15 +128,54 @@ export default class CashFlowStore {
    * @returns {Number} the balance in dollars
    */
   getBalanceForDate = computedFn(function getBalanceForDate(stopDate) {
+    return this.getNonSnapBalanceForDate(stopDate) + this.getSnapBalanceForDate(stopDate);
+  });
+
+  /**
+   * Get non-SNAP balance for the given date
+   *
+   * @param {Date|dayjs} stopDate - the date to check the balance for
+   * @returns {Number} the balance in dollars
+   */
+  getNonSnapBalanceForDate = computedFn(function getNonSnapBalanceForDate(stopDate) {
     stopDate = toDayJS(stopDate).endOf('day');
     const stopTimestamp = stopDate.valueOf();
 
-    if (!this.events.length) return totalInCents;
+    if (!this.events.length) return 0;
 
     const totalInCents = this.events.reduce((total, event) => {
       const eventTimestamp = event.dateTime.endOf('day').valueOf();
 
       if (eventTimestamp > stopTimestamp) return total;
+      if (this.constructor.snapCategories.includes(event.category)) return total;
+
+      this.logger.debug(event.totalCents);
+
+      return total + event.totalCents;
+    }, 0);
+
+    this.logger.debug(totalInCents);
+
+    return totalInCents / 100;
+  });
+
+  /**
+   * Get the user's SNAP balance for the given date, if applicable.
+   *
+   * @param {Date|dayjs} stopDate - The date to check the balance for
+   * @returns {Number} the balance in dollars
+   */
+  getSnapBalanceForDate = computedFn(function getSnapBalanceForDate(stopDate) {
+    stopDate = toDayJS(stopDate).endOf('day');
+    const stopTimestamp = stopDate.valueOf();
+
+    if (!this.events.length) return 0;
+
+    const totalInCents = this.events.reduce((total, event) => {
+      const eventTimestamp = event.dateTime.endOf('day').valueOf();
+
+      if (eventTimestamp > stopTimestamp) return total;
+      if (!this.constructor.snapCategories.includes(event.category)) return total;
 
       return total + event.totalCents;
     }, 0);
