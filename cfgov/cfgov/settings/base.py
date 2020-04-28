@@ -795,11 +795,12 @@ REGULATIONS_REFERENCE_MAPPING = [
 # middleware. This list of regular expressions defines a set of URLs against
 # which we don't want this logic to be run.
 PARSE_LINKS_EXCLUSION_LIST = [
-    # Wagtail admin pages, except preview and draft views
+    # Wagtail admin pages, except preview, draft, and debug views
     (
         r"^/admin/(?!"
         r"pages/\d+/(edit/preview|view_draft)/|"
-        r"mega_menu/menu/preview/\w+/"
+        r"mega_menu/menu/preview/\w+/|"
+        r"template_debug/"
         r")"
     ),
     # Django admin pages
