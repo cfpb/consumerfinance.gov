@@ -488,5 +488,10 @@ export const Categories = new CategoryTree({
         },
       },
     },
+    other: {
+      name: 'Other',
+      recurrenceTypes: ['monthly', 'weekly'],
+      hasBill: false,
+    },
   },
 });
