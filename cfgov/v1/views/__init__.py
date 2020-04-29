@@ -1,3 +1,4 @@
+import django
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import (
@@ -84,8 +85,14 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
 
         if form.is_valid():
             # Ensure the user-originating redirection url is safe.
-            if not is_safe_url(url=redirect_to, host=request.get_host()):
-                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+            if django.VERSION > (2, 0):
+                if not is_safe_url(
+                    url=redirect_to, allowed_hosts=request.get_host()
+                ):
+                    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+            else:
+                if not is_safe_url(url=redirect_to, host=request.get_host()):
+                    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
             user = form.get_user()
             try:
