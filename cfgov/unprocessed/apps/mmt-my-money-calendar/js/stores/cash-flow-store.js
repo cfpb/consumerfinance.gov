@@ -149,12 +149,8 @@ export default class CashFlowStore {
       if (eventTimestamp > stopTimestamp) return total;
       if (this.constructor.snapCategories.includes(event.category)) return total;
 
-      this.logger.debug(event.totalCents);
-
       return total + event.totalCents;
     }, 0);
-
-    this.logger.debug(totalInCents);
 
     return totalInCents / 100;
   });
