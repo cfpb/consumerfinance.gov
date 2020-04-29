@@ -1,72 +1,69 @@
 from wagtail.core import blocks
 
 from jobmanager.models import JobListingPage
-from v1.util.util import extended_strftime
 
 
-class JobListingsMixin:
-    def get_context(self, value, parent_context=None):
-        context = super().get_context(value, parent_context=parent_context)
-        context.update({
-            'jobs': self.get_job_listings(),
-            'no_jobs_message': (
-                'There are no current openings at this time.'
-            ),
-        })
-        return context
-
-    def get_job_listings(self):
-        return JobListingPage.objects.open()
-
-
-class JobListingList(JobListingsMixin, blocks.StructBlock):
+class JobListingList(blocks.StructBlock):
     more_jobs_page = blocks.PageChooserBlock(
         help_text='Link to full list of jobs'
     )
 
-    def get_job_listings(self):
-        return super().get_job_listings()[:5]
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+
+        jobs = JobListingPage.objects.open()[:5]
+        request = context.get('request')
+
+        context['value'] = {
+            'jobs': [
+                {
+                    'title': job.title,
+                    'url': job.get_url(request=request),
+                    'close_date': job.close_date,
+                } for job in jobs
+            ],
+            'more_jobs_url': value['more_jobs_page'].get_url(request=request),
+        }
+
+        return context
 
     class Meta:
         icon = 'list-ul'
         template = 'jobmanager/job_listing_list.html'
 
 
-class JobListingTable(JobListingsMixin, blocks.StaticBlock):
+class JobListingTable(blocks.StaticBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
 
-        jobs = context['jobs']
+        jobs = JobListingPage.objects.open().prefetch_related('grades__grade')
+
         request = context.get('request')
 
-        header = [['TITLE', 'GRADE', 'POSTING CLOSES', 'LOCATION']]
-        data = [
-            [
-                '<a href="%s">%s</a>' % (
-                    job.get_url(request=request),
-                    job.title,
-                ),
-                ', '.join(map(str, job.grades.all())),
-                extended_strftime(job.close_date, '%_m %_d, %Y'),
-                str(job.location),
-            ] for job in jobs
-        ]
-
-        return {
-            'value': {
-                'data': header + data,
-                'empty_table_msg': context['no_jobs_message'],
-                'first_row_is_table_header': True,
-                'has_data': bool(data),
-                'is_stacked': True,
-            },
+        context['value'] = {
+            'jobs': [
+                {
+                    'title': job.title,
+                    'url': job.get_url(request=request),
+                    'grades': list(map(str, job.grades.all())),
+                    'close_date': job.close_date,
+                    'offices': [
+                        {
+                            'name': office.name,
+                            'state_id': office.state_id,
+                        } for office in job.offices.all()
+                    ],
+                    'regions': [
+                        {
+                            'name': region.name,
+                        } for region in job.regions.all()
+                    ],
+                } for job in jobs
+            ],
         }
 
-    def get_job_listings(self):
-        return super().get_job_listings() \
-            .select_related('location') \
-            .prefetch_related('grades__grade')
+        return context
 
     class Meta:
         icon = 'table'
-        template = '_includes/organisms/table.html'
+        template = 'jobmanager/job_listing_table.html'

@@ -14,6 +14,7 @@ pipeline {
         IMAGE_REPO="cfpb/cfgov-python"
         IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
+        NOTIFICATION_CHANNEL = 'cfgov-deployments'
     }
 
     parameters {
@@ -104,7 +105,14 @@ pipeline {
                     dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
+                notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR ${env.CHANGE_URL} deployed by ${env.CHANGE_AUTHOR} via ${env.BUILD_URL} and available at https://${CFGOV_HOSTNAME}.")
             }
+        }
+    }
+
+    post {
+        unsuccessful {
+            notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed to deploy. See: ${env.BUILD_URL}.")
         }
     }
 }
