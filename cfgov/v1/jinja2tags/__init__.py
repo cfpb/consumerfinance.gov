@@ -88,6 +88,10 @@ def render_stream_child(context, stream_child):
     # Return the rendered template as safe html
     return Markup(unescaped)
 
+def render_section(section):
+    unescaped = HTMLParser.HTMLParser().unescape(section.section_body)
+    # Return the rendered template as safe html
+    return Markup(unescaped)
 
 class V1Extension(Extension):
     def __init__(self, environment):
@@ -110,6 +114,7 @@ class V1Extension(Extension):
             'is_report': ref.is_report,
             'is_filter_selected': contextfunction(is_filter_selected),
             'render_stream_child': contextfunction(render_stream_child),
+            'render_section': render_section,
             'app_url': app_url,
             'app_page_url': app_page_url,
         })

@@ -26,8 +26,9 @@
           {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 
-    {% for section in page.report_sections.all() -%}
-      {{section.section_body|safe}}
+    {% for section in page.report_sections.all().order_by('pk') -%}
+    <h3><a style="color:black;" id="{{section.section_id}}" href="#{{section.section_id}}">{{section.section_header}}</a></h3>
+      {{ render_section(section) }}
     {%- endfor %}
     
     {% for block in page.footnotes -%}
