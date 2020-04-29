@@ -166,7 +166,7 @@ export const Categories = new CategoryTree({
       },
       rent: {
         name: 'Rent',
-        recurrenceTypes: ['weekly', 'monthly'],
+        recurrenceTypes: ['weekly', 'monthly', 'biweekly'],
         hasBill: true,
       },
       propertyTaxes: {
