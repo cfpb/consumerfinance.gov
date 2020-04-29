@@ -100,7 +100,8 @@ export const CurrencyField = ({ id, name, onChange, onBlur, label, value, ...pro
       onChange={handleChange}
       onBlur={onBlur}
       label={label}
-      value={formatCurrency(value / 100)}
+      inputmode="decimal"
+      value={formatCurrency(value / 100, { symbol: false })}
       {...props}
     />
   );

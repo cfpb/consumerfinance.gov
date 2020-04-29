@@ -6,6 +6,7 @@ import ModalDialog from '../../components/modal-dialog';
 import { useStore } from '../../stores';
 import { useBEM } from '../../lib/hooks';
 import { Button } from '../../components/button';
+import { useScrollToTop } from '../../components/scroll-to-top';
 
 function More() {
   const { eventStore, uiStore } = useStore();
@@ -18,6 +19,8 @@ function More() {
     await eventStore.clearAllData();
     history.push('/');
   }, [eventStore, history]);
+
+  useScrollToTop();
 
   return (
     <section className={bem()}>
