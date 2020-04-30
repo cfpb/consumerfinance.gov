@@ -14,26 +14,6 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
-def get_toc_nav_items(request, current_page):
-    nav_items = [
-        {
-          'title': 'Introduction',
-          'url': '#introduction'
-        },
-        {
-          'title': 'Public Record Information on Reports and Credit Scores',
-          'url': '#public-record'
-        },
-        {
-          'title': 'Credit Scores and Consumers’ credit performance',
-          'url': '#credit-scores'
-        },
-        {
-          'title': 'Summary and Conclusion',
-          'url': '#summary'
-        }
-    ]
-    return nav_items
 
 class ReportSection(models.Model):
     section_header = models.CharField(max_length=200, blank=True)
@@ -42,6 +22,7 @@ class ReportSection(models.Model):
     action = ParentalKey('v1.ReportSectionsSidenav',
                          on_delete=models.CASCADE,
                          related_name='report_sections')
+
 
 class ReportSectionsSidenav(CFGOVPage):
     content = StreamField([
@@ -93,10 +74,3 @@ class ReportSectionsSidenav(CFGOVPage):
         return (
             super(ReportSectionsSidenav, self).page_js + ['report-sidenav.js']
         )
-
-    def get_context(self, request, *args, **kwargs):
-        context = super(ReportSectionsSidenav, self).get_context(request, *args, **kwargs)
-        context.update({
-            'get_toc_nav_items': get_toc_nav_items
-        })
-        return context
