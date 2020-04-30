@@ -20,6 +20,9 @@
 
    ========================================================================== #}
 {% macro _render_secondary_navigation() %}
+{% if nav_items is not defined  %}
+    {% set nav_items = get_toc_nav_items(request, page) %}
+{% endif %}
 <nav class="o-report-sidenav o-secondary-navigation o-secondary-navigation__no-children"
      aria-label="Section navigation">
     {% set sec_nav_settings = {
@@ -37,15 +40,15 @@
                    m-list__unstyled
                    o-secondary-navigation_list
                    o-secondary-navigation_list__parents">
-        {%- for section in page.report_sections.all().order_by('pk') %}
-            <li class="m-list_item">
-                {{ nav_link.render(section.section_header, "#" + section.section_id, true) }}
-            {%- if section.children -%}
+         {%- for item in nav_items %}
+            <li class="m-list_item" data-nav-is-active="{{ item.expanded }}">
+                {{ nav_link.render(item.title, item.url, true) }}
+            {%- if item.children -%}
                 <ul class="m-list
                            m-list__unstyled
                            o-secondary-navigation_list
                            o-secondary-navigation_list__children">
-                {%- for child in section.children -%}
+                {%- for child in item.children -%}
                     <li class="m-list_item">
                         {{ nav_link.render(child.title, child.url, false) }}
                     </li>

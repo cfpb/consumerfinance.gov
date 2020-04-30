@@ -15,6 +15,10 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
 
+def get_toc_nav_items(request, page):
+    return [{'title': section.section_header, 'url': '#' + section.section_id} for
+            section in page.report_sections.all().order_by('pk')]
+
 class ReportSection(models.Model):
     section_header = models.CharField(max_length=200, blank=True)
     section_id = models.CharField(max_length=50, blank=True)
@@ -74,3 +78,10 @@ class ReportSectionsSidenav(CFGOVPage):
         return (
             super(ReportSectionsSidenav, self).page_js + ['report-sidenav.js']
         )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(ReportSectionsSidenav, self).get_context(request, *args, **kwargs)
+        context.update({
+            'get_toc_nav_items': get_toc_nav_items
+        })
+        return context
