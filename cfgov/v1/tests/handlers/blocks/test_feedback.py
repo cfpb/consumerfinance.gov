@@ -201,12 +201,15 @@ class TestFeedbackHandler(TestCase):
     def _post_feedback(self, page=None, referrer='None', is_helpful='None'):
         page = page or CFGOVPage.objects.first()
 
+        post_data = {}
+        if referrer is not None:
+            post_data['referrer'] = referrer
+        if is_helpful is not None:
+            post_data['is_helpful'] = is_helpful
+
         request = self.factory.post(
             '/',
-            {
-                'referrer': referrer,
-                'is_helpful': is_helpful,
-            },
+            post_data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
 
