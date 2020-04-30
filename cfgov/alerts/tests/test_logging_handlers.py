@@ -8,6 +8,11 @@ from django.test import RequestFactory, TestCase
 from mock import patch
 
 
+class ObjectThatCantBeRepresented(object):
+    def __repr__(self):
+        raise Exception
+
+
 @patch('alerts.sqs_queue.SQSQueue.post')
 class TestLoggingHandlers(TestCase):
     @classmethod
@@ -110,10 +115,6 @@ class TestLoggingHandlers(TestCase):
 
     def test_body_handles_unparseable_dict(self, sqs_queue_post):
         """Handle when calls to format request.COOKIES or META fail."""
-        class ObjectThatCantBeRepresented(object):
-            def __repr__(self):
-                raise Exception
-
         request = RequestFactory().get('/')
         request.COOKIES = {'test': ObjectThatCantBeRepresented()}
         request.META = {'test': ObjectThatCantBeRepresented()}
@@ -125,7 +126,7 @@ class TestLoggingHandlers(TestCase):
     def test_body_handles_request_with_invalid_post(self, sqs_queue_post):
         """Handle case when a request was generated with an invalid POST."""
         request = RequestFactory().post('/')
-        request._mark_post_parse_error()
+        request._post = {'test': ObjectThatCantBeRepresented()}
         self.logger.error('something', extra={'request': request})
 
         args, kwargs = sqs_queue_post.call_args
