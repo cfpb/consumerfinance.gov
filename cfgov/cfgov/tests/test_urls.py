@@ -147,6 +147,16 @@ class HandleErrorTestCase(TestCase):
             request, '404.html', context={'request': request}, status=404
         )
 
+    def test_handle_404_error_case_insensitive_redirect(self):
+        request = self.factory.get('/TEst')
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/test',
+            target_status_code=302,
+            fetch_redirect_response=False
+        )
+
 
 class TestBetaRefreshEndpoint(TestCase):
     def test_beta_testing_endpoint_returns_404_when_disabled(self):
