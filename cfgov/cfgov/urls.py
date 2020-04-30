@@ -621,7 +621,7 @@ def handle_error(code, request, exception=None):
 # Using (?i) in url() patterns is deprecated in Django 2.1
 def handle_404_error(code, request, exception=None):
     if request.path != request.path.lower():
-        return redirect(request.path.lower())
+        return redirect(request.path.lower(), permanent=True)
     return handle_error(code, request, exception)
 
 
