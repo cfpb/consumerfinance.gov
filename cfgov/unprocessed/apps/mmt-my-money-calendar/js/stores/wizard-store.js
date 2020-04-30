@@ -66,7 +66,7 @@ export default class WizardStore {
   }
 
   @action setFundingSources(sources = []) {
-    this.fundingSources = sources;
+    this.fundingSources = Object.keys(this.fundingSourceOptions).filter((opt) => sources.includes(opt));
   }
 
   @action setStartingFunds(obj = {}) {
@@ -83,6 +83,7 @@ export default class WizardStore {
   }
 
   @action reset() {
+    this.logger.debug('resetting wizard state');
     this.fundingSources = [];
     this.noStartingFunds = false;
 

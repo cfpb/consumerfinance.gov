@@ -24,6 +24,8 @@ function Summary() {
         date: new Date(),
       });
 
+      wizardStore.reset();
+
       history.push('/calendar');
     },
     [wizardStore.totalStartingFundsCents]
