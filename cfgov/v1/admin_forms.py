@@ -1,6 +1,7 @@
 import zipfile
 from io import BytesIO, StringIO
 
+import django
 from django import forms
 from django.core.management import call_command
 
@@ -73,16 +74,24 @@ class ExportFeedbackForm(forms.Form):
 
     def generate_zipfile_csv(self, name, pages, exclude=False):
         csv_contents = StringIO()
-
-        call_command(
-            'export_feedback',
-            pages=pages,
-            exclude=exclude,
-            from_date=self.cleaned_data['from_date'],
-            to_date=self.cleaned_data['to_date'],
-            stdout=csv_contents
-        )
-
         csv_filename = 'feedback_%s_%s.csv' % (name, self.get_filename_dates())
+
+        if django.VERSION > (2, 1):
+            call_command(
+                'export_feedback',
+                exclude=exclude,
+                from_date=self.cleaned_data['from_date'],
+                to_date=self.cleaned_data['to_date'],
+                stdout=csv_contents
+            )
+        else:
+            call_command(
+                'export_feedback',
+                pages=pages,
+                exclude=exclude,
+                from_date=self.cleaned_data['from_date'],
+                to_date=self.cleaned_data['to_date'],
+                stdout=csv_contents
+            )
 
         return csv_filename, csv_contents.getvalue()
