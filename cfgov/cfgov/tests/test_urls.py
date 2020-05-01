@@ -153,11 +153,13 @@ class HandleErrorTestCase(TestCase):
         response = urls.handle_404_error(404, request)
         self.assertEqual(response.status_code, 301)
         self.assertIsInstance(response, HttpResponsePermanentRedirect)
+        self.assertEqual(response.get('location'), '/test')
         # self.assertRedirects(
-        #     response,
-        #     '/test',
-        #     target_status_code=301,
-        #     fetch_redirect_response=True
+        #      response,
+        #      '/test',
+        #      status_code=301,
+        #      target_status_code=200,
+        #      fetch_redirect_response=True
         # )
 
 
