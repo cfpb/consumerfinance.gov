@@ -4,6 +4,14 @@
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+    max-width: 40%;
+
+    @media screen and (min-width: 600px) {
+      max-width: 100%;
+      justify-content: flex-start;
+    }
   }
 
   &__step-image-asset {

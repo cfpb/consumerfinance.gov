@@ -33,6 +33,7 @@ function BalanceForm() {
     evt.preventDefault();
     history.push(prevStep);
   };
+  const icon = categoryIcons[wizardStore.fundingSourceOptions[source].icon];
 
   const initialValues = useMemo(
     () =>
@@ -51,7 +52,7 @@ function BalanceForm() {
 
       <main className={bem('main')}>
         <figure className={bem('step-image')}>
-          <img src={iconPlaceholder} alt="placeholder" />
+          <SvgImage src={icon} />
         </figure>
 
         <Formik

@@ -8,8 +8,7 @@ import categoryIcons from '../../lib/category-icons';
 export default function Start() {
   useScrollToTop();
 
-  console.log(categoryIcons);
-  const { MoneyOnHand } = categoryIcons;
+  const { moneyOnHand } = categoryIcons;
 
   return (
     <>
@@ -17,7 +16,7 @@ export default function Start() {
         title="MyMoney Calendar"
         subtitle="See how your money flows from week to week and learn how to avoid coming up short."
         isSVG
-        image={MoneyOnHand}
+        image={moneyOnHand}
         alt="MyMoney Calendar"
       />
       <br />

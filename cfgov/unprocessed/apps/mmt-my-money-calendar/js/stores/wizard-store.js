@@ -9,22 +9,27 @@ export default class WizardStore {
     'checking': {
       name: 'Checking Account',
       label: 'How much do you have in your checking account?',
+      icon: 'paycheck',
     },
     'savings': {
       name: 'Savings Account',
       label: 'How much do you have in your savings account?',
+      icon: 'emergencySavings',
     },
     'cash': {
       name: 'Cash',
       label: 'How much cash do you have?',
+      icon: 'funMoney',
     },
     'prepaid': {
       name: 'Prepaid Cards',
       label: 'How much do have in prepaid cards?',
+      icon: 'creditCard'
     },
     'other': {
       name: 'Other',
       label: 'How much other money on hand do you have?',
+      icon: 'other',
     },
   };
 
