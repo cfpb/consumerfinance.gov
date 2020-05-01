@@ -62,12 +62,12 @@ class GradePanel(Orderable, models.Model):
         related_name='grade_panels')
     job_listing = ParentalKey(JobListingPage, related_name='grades')
 
+    def __str__(self):
+        return str(self.grade)
+
     class Meta:
         ordering = ('grade',)
 
     panels = [
         FieldPanel('grade'),
     ]
-
-    def __str__(self):
-        return self.grade.grade

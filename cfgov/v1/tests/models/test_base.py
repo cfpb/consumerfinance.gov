@@ -1,5 +1,3 @@
-import datetime
-
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponseBadRequest
@@ -26,38 +24,6 @@ class TestCFGOVPage(TestCase):
         save_new_page(self.page)
         key = self.page.post_preview_cache_key
         self.assertIn(str(self.page.id), key)
-
-    @mock.patch('v1.models.base.hooks.get_hooks')
-    def test_get_context_calls_get_hooks(self, mock_get_hooks):
-        self.page.get_context(self.request)
-        mock_get_hooks.assert_called_with('cfgovpage_context_handlers')
-
-    def test_get_context_no_banners(self):
-        test_context = self.page.get_context(self.request)
-        self.assertFalse(test_context['banners'])
-
-    def test_get_context_one_banner_not_matching(self):
-        Banner.objects.create(title='Banner', url_pattern='foo', enabled=True)
-        test_context = self.page.get_context(self.request)
-        self.assertFalse(test_context['banners'])
-
-    def test_get_context_one_banner_matching(self):
-        Banner.objects.create(title='Banner', url_pattern='/', enabled=True)
-        test_context = self.page.get_context(self.request)
-        self.assertTrue(test_context['banners'])
-
-    def test_get_context_one_banner_matching_disabled(self):
-        Banner.objects.create(title='Banner', url_pattern='/', enabled=False)
-        test_context = self.page.get_context(self.request)
-        self.assertFalse(test_context['banners'])
-
-    def test_get_context_multiple_banners_matching(self):
-        Banner.objects.create(title='Banner', url_pattern='/', enabled=True)
-        Banner.objects.create(title='Banner2', url_pattern='/', enabled=True)
-        Banner.objects.create(title='Banner3', url_pattern='/', enabled=False)
-        Banner.objects.create(title='Banner4', url_pattern='foo', enabled=True)
-        test_context = self.page.get_context(self.request)
-        self.assertEqual(test_context['banners'].count(), 2)
 
     @mock.patch('builtins.super')
     def test_serve_calls_super_on_non_ajax_request(self, mock_super):
@@ -265,6 +231,67 @@ class TestCFGOVPage(TestCase):
             self.request, mock_get_template(), mock_get_context()
         )
         self.assertEqual(result, mock_response())
+
+
+class TestCFGOVPageContext(TestCase):
+    def setUp(self):
+        self.page = CFGOVPage(title='Test', slug='test')
+        self.factory = RequestFactory()
+        self.request = self.factory.get('/')
+
+    def test_post_preview_cache_key_contains_page_id(self):
+        save_new_page(self.page)
+        key = self.page.post_preview_cache_key
+        self.assertIn(str(self.page.id), key)
+
+    @mock.patch('v1.models.base.hooks.get_hooks')
+    def test_get_context_calls_get_hooks(self, mock_get_hooks):
+        self.page.get_context(self.request)
+        mock_get_hooks.assert_called_with('cfgovpage_context_handlers')
+
+    def test_get_context_no_banners(self):
+        test_context = self.page.get_context(self.request)
+        self.assertFalse(test_context['banners'])
+
+    def test_get_context_one_banner_not_matching(self):
+        Banner.objects.create(title='Banner', url_pattern='foo', enabled=True)
+        test_context = self.page.get_context(self.request)
+        self.assertFalse(test_context['banners'])
+
+    def test_get_context_one_banner_matching(self):
+        Banner.objects.create(title='Banner', url_pattern='/', enabled=True)
+        test_context = self.page.get_context(self.request)
+        self.assertTrue(test_context['banners'])
+
+    def test_get_context_one_banner_matching_disabled(self):
+        Banner.objects.create(title='Banner', url_pattern='/', enabled=False)
+        test_context = self.page.get_context(self.request)
+        self.assertFalse(test_context['banners'])
+
+    def test_get_context_multiple_banners_matching(self):
+        Banner.objects.create(title='Banner', url_pattern='/', enabled=True)
+        Banner.objects.create(title='Banner2', url_pattern='/', enabled=True)
+        Banner.objects.create(title='Banner3', url_pattern='/', enabled=False)
+        Banner.objects.create(title='Banner4', url_pattern='foo', enabled=True)
+        test_context = self.page.get_context(self.request)
+        self.assertEqual(test_context['banners'].count(), 2)
+
+    def test_get_context_no_schema_json(self):
+        test_context = self.page.get_context(self.request)
+        self.assertNotIn('schema_json', test_context)
+
+    def test_get_context_with_schema_json(self):
+        self.page.schema_json = {
+            "@type": "SpecialAnnouncement",
+            "@context": "http://schema.org",
+            "category": "https://www.wikidata.org/wiki/Q81068910",
+            "name": "Special announcement headline",
+            "text": "Special announcement details",
+            "datePosted": "2020-03-17",
+            "expires": "2020-03-24"
+        }
+        test_context = self.page.get_context(self.request)
+        self.assertIn('schema_json', test_context)
 
 
 class TestCFGOVPageQuerySet(TestCase):
