@@ -1,7 +1,6 @@
 from importlib import reload
 
 import django
-from django.http import HttpResponsePermanentRedirect
 from django.test import RequestFactory, TestCase, override_settings
 
 import mock
@@ -151,16 +150,12 @@ class HandleErrorTestCase(TestCase):
     def test_handle_404_error_case_insensitive_redirect(self):
         request = self.factory.get('/TEst')
         response = urls.handle_404_error(404, request)
-        self.assertEqual(response.status_code, 301)
-        self.assertIsInstance(response, HttpResponsePermanentRedirect)
-        self.assertEqual(response.get('location'), '/test')
-        # self.assertRedirects(
-        #      response,
-        #      '/test',
-        #      status_code=301,
-        #      target_status_code=200,
-        #      fetch_redirect_response=True
-        # )
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
 
 
 class TestBetaRefreshEndpoint(TestCase):
