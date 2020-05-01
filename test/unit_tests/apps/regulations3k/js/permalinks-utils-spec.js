@@ -40,33 +40,6 @@ const HTML_SNIPPET3 = `
   <p class="regdown-block level-0" data-label="33-a-2-Interp-2" id="33-a-2-Interp-2">Foo.</p>
 `;
 
-const HTML_SNIPPET4 = `
-<div class="o-expandable o-expandable__padded o-expandable__background o-expandable__border inline-interpretation">
-  <button class="o-expandable_header o-expandable_target o-expandable_target__collapsed" data-section="Paragraph A">
-    <span class="o-expandable_header-left o-expandable_label">
-        Official interpretation of Paragraph A
-    </span>
-    <span class="o-expandable_header-right o-expandable_link">
-        <span class="o-expandable_cue o-expandable_cue-open">
-            <span class="u-visually-hidden-on-mobile">
-                Show
-            </span>
-        </span>
-        <span class="o-expandable_cue o-expandable_cue-close">
-            <span class="u-visually-hidden-on-mobile">
-                Hide
-            </span>
-        </span>
-    </span>
-  </button>
-  <div class="o-expandable_content o-expandable_content__transition o-expandable_content__collapsed u-hidden">
-    <p class="regdown-block level-0" data-label="A-1" id="A-1">
-      Offical comment A-1
-    </p>
-  </div>
-</div>
-`;
-
 describe( 'The Regs3K permalinks utils', () => {
 
   describe( 'Debounce', () => {
@@ -151,20 +124,6 @@ describe( 'The Regs3K permalinks utils', () => {
       expect( utils.getParagraphPositions( paragraphs ) ).toEqual(
         [ { id: 'z-14-i', position: -30 }, { id: 'c', position: -30 }, { id: 'Interp-1', position: -30 } ]
       );
-    } );
-
-  } );
-
-  describe( 'toggle display of expandable interpretation contents', () => {
-
-    it( 'should toggle the u-hidden class', () => {
-      document.body.innerHTML = HTML_SNIPPET4;
-      utils.toggleInterpDisplay();
-      expect( document.querySelectorAll( '.o-expandable_content' )[0].classList.value)
-        .toEqual( 'o-expandable_content o-expandable_content__transition o-expandable_content__collapsed' );
-      utils.toggleInterpDisplay();
-      expect( document.querySelectorAll( '.o-expandable_content' )[0].classList.value)
-        .toEqual( 'o-expandable_content o-expandable_content__transition o-expandable_content__collapsed u-hidden' );
     } );
 
   } );

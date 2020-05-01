@@ -1,3 +1,5 @@
+import { closest } from '../../../js/modules/util/dom-traverse';
+
 // Array that tracks paragraph positions
 let paragraphPositions;
 const regs3kMainContent = document.querySelector( '.regulations3k' );
@@ -236,20 +238,6 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
   }
 };
 
-
-/**
- * toggleInterpDisplay - Toggles the 'u-hidden' class (which sets display: none)
- * in inline interpretation expandables so that their positions can be correctly
- * calculated
- */
-const toggleInterpDisplay = () => {
-  const interpContents = document.querySelectorAll( '.inline-interpretation .o-expandable_content__collapsed' );
-  // IE doesn't support `forEach` w/ node lists
-  for ( let i = 0; i < interpContents.length; i++ ) {
-    interpContents[i].classList.toggle( 'u-hidden' );
-  }
-};
-
 /**
  * updateParagraphPositions - Update the array that tracks paragraph positions
  *
@@ -257,9 +245,15 @@ const toggleInterpDisplay = () => {
  */
 const updateParagraphPositions = () => {
   const paragraphs = document.querySelectorAll( '.regdown-block' );
-  toggleInterpDisplay();
-  paragraphPositions = getParagraphPositions( paragraphs );
-  toggleInterpDisplay();
+  let visibleParagraphs = [];
+  // IE doesn't support `forEach` w/ node lists
+  for ( let i = 0; i < paragraphs.length; i++ ) {
+    let hiddenParagraphContainer = closest( paragraphs[i], '.u-hidden' );
+    if ( !hiddenParagraphContainer ) {
+      visibleParagraphs.push( paragraphs[i] );
+    }
+  }
+  paragraphPositions = getParagraphPositions( visibleParagraphs );
   return paragraphPositions;
 };
 
@@ -283,7 +277,7 @@ const debounce = ( event, delay, cb ) => {
   return timeout;
 };
 
-module.exports = {
+export {
   debounce,
   getCommentMarker,
   getWayfinderInfo,
@@ -292,7 +286,6 @@ module.exports = {
   getParagraphPositions,
   getYLocation,
   scrollY,
-  toggleInterpDisplay,
   updateParagraphPositions,
   updateUrlHash,
   updateWayfinder
