@@ -5,6 +5,7 @@ import unittest
 import django
 from django.http import HttpRequest
 from django.test import RequestFactory
+from django.urls import reverse
 
 import mock
 
@@ -14,11 +15,6 @@ from paying_for_college.views import (
     get_school, school_search_api, validate_oid, validate_pid
 )
 
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 # def setup_view(view, request, *args, **kwargs):
 #     """Mimic as_view() returned callable, return view instance instead."""
@@ -188,7 +184,7 @@ class OfferTest(django.test.TestCase):
         """request for offer disclosure."""
 
         url = reverse("paying_for_college:disclosures:offer")
-        # offer_test_url = reverse('paying_for_college:disclosures:offer_test')
+        # offer_test_url = reverse("paying_for_college:disclosures:offer_test")
         qstring = (
             "?iped=408039&pid=981&"
             "oid=f38283b5b7c939a058889f997949efa566c616c5&"

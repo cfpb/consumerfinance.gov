@@ -141,7 +141,7 @@ class JobListingPageFormTests(TestCase, WagtailTestUtils):
 
         return self.client.post(
             reverse(
-                'wagtailadmin_pages:add',
+                "wagtailadmin_pages:add",
                 args=('jobmanager', 'joblistingpage', self.root_page.id)
             ),
             post_data

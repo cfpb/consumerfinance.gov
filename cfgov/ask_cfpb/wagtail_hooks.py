@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.html import format_html
 
 from wagtail.admin.menu import MenuItem
@@ -11,10 +12,9 @@ from ask_cfpb.scripts import export_ask_data
 
 
 try:
-    from django.urls import re_path, reverse
+    from django.urls import re_path
 except ImportError:
     from django.conf.urls import url as re_path
-    from django.core.urlresolvers import reverse
 
 
 def export_data(request):
@@ -35,7 +35,7 @@ def editor_css():
 def register_export_menu_item():
     return MenuItem(
         'Export Ask data',
-        reverse('export-ask'),
+        reverse("export-ask"),
         classnames='icon icon-download',
         order=99999,
     )

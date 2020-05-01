@@ -63,7 +63,7 @@ class Command(BaseCommand):
             key = market['market_key']
             snapshot_stream_data = self.find_data_snapshot(key, snapshots)
             if not snapshot_stream_data:  # Market may not have been added to Wagtail yet  # noqa
-                logger.warn('Market key {} not found'.format(key))
+                logger.warning('Market key {} not found'.format(key))
                 continue
 
             # Update snapshot fields with the provided values

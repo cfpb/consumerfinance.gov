@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-from html.parser import HTMLParser
 from unittest import mock
 
 from django.apps import apps
@@ -8,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from django.utils import timezone, translation
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
@@ -38,13 +38,6 @@ from v1.util.migrations import (
 )
 
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-
-
-html_parser = HTMLParser()
 now = timezone.now()
 
 

@@ -1,15 +1,13 @@
 import datetime
-import html.parser as HTMLParser
+import html
 
 from django.http import HttpResponse
-from django.utils import html
+from django.utils import html as html_util
 
 import unicodecsv
 
 from ask_cfpb.models.pages import AnswerPage
 
-
-html_parser = HTMLParser.HTMLParser()
 
 HEADINGS = [
     'ASK_ID',
@@ -29,8 +27,8 @@ HEADINGS = [
 
 
 def clean_and_strip(data):
-    unescaped = html_parser.unescape(data)
-    return html.strip_tags(unescaped).strip()
+    unescaped = html.unescape(data)
+    return html_util.strip_tags(unescaped).strip()
 
 
 def assemble_output():
