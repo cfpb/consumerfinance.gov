@@ -236,6 +236,20 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
   }
 };
 
+
+/**
+ * toggleInterpDisplay - Toggles the 'u-hidden' class (which sets display: none)
+ * in inline interpretation expandables so that their positions can be correctly
+ * calculated
+ */
+const toggleInterpDisplay = () => {
+  const interpContents = document.querySelectorAll( '.inline-interpretation .o-expandable_content__collapsed' );
+  // IE doesn't support `forEach` w/ node lists
+  for ( let i = 0; i < interpContents.length; i++ ) {
+    interpContents[i].classList.toggle( 'u-hidden' );
+  }
+};
+
 /**
  * updateParagraphPositions - Update the array that tracks paragraph positions
  *
@@ -243,7 +257,9 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
  */
 const updateParagraphPositions = () => {
   const paragraphs = document.querySelectorAll( '.regdown-block' );
+  toggleInterpDisplay();
   paragraphPositions = getParagraphPositions( paragraphs );
+  toggleInterpDisplay();
   return paragraphPositions;
 };
 
@@ -276,6 +292,7 @@ module.exports = {
   getParagraphPositions,
   getYLocation,
   scrollY,
+  toggleInterpDisplay,
   updateParagraphPositions,
   updateUrlHash,
   updateWayfinder
