@@ -25,7 +25,7 @@
     "handlebars": "4.5.3",
     "handlebars-loader": "git+https://github.com/Waavi/handlebars-loader.git",
     "highcharts": "7.2.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jumbo-mortgage": "3.0.0",
     "median": "0.0.2",
     "rangeslider-js": "^3.0.2",
