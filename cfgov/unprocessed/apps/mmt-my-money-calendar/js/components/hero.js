@@ -1,5 +1,15 @@
-const Hero = ({ title, subtitle, image, alt = '' }) => {
-  const imageTag = (typeof image === 'string') ? <img src={image} alt={alt} className="u-hide-on-print" /> : image;
+import { useState, useMemo } from 'react';
+
+const Hero = ({ title, subtitle, isSVG = false, image, alt = '' }) => {
+  let imageTag;
+
+  if (isSVG && typeof image === 'string') {
+    imageTag = <img src={`data:image/svg+xml;base64,${btoa(image)}`} className="u-hide-on-print hero-image" />;
+  } else if (typeof image === 'string') {
+    imageTag = <img src={image} alt={alt} className="u-hide-on-print hero-image" />;
+  } else {
+    imageTag = image;
+  }
 
   return (
     <section className="m-hero">
@@ -11,7 +21,7 @@ const Hero = ({ title, subtitle, image, alt = '' }) => {
           </div>
         </div>
         <div className="m-hero_image-wrapper">
-          <div className="m-hero_image">
+          <div className="m-hero_image" style={{ textAlign: 'center' }}>
             {imageTag}
           </div>
         </div>

@@ -195,6 +195,7 @@ const conf = {
   resolve: {
     alias: {
       img: path.resolve(__dirname, 'img'),
+      'category-icons': 'img/category-icons',
       rrule: 'rrule/dist/esm/src',
       lodash: path.join(__dirname, 'node_modules/lodash'),
     },

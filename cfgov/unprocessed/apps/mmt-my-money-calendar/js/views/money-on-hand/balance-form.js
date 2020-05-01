@@ -8,8 +8,10 @@ import { useBEM } from '../../lib/hooks';
 import { CurrencyField } from '../../components/forms';
 import { BackButton, NextButton } from '../../components/button';
 import { useScrollToTop } from '../../components/scroll-to-top';
+import SvgImage from '../../components/svg-image';
 
 import iconPlaceholder from '../../../img/icon-placeholder.png';
+import categoryIcons from '../../lib/category-icons';
 
 function BalanceForm() {
   const { wizardStore } = useStore();

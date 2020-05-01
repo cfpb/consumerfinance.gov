@@ -8,13 +8,15 @@ import { useBEM } from '../../lib/hooks';
 import { useStore } from '../../stores';
 import { BackButton, NextButton } from '../../components/button';
 import { Checkbox } from '../../components/forms';
+import SvgImage from '../../components/svg-image';
 
-import iconPlaceholder from '../../../img/icon-placeholder.png';
+import categoryIcons from '../../lib/category-icons';
 
 function Sources() {
   const bem = useBEM('wizard');
   const { wizardStore } = useStore();
   const history = useHistory();
+  const { moneyOnHand } = categoryIcons;
 
   useEffect(() => {
     wizardStore.reset();
@@ -30,7 +32,7 @@ function Sources() {
 
       <main className={bem('main')}>
         <figure className={bem('step-image')}>
-          <img src={iconPlaceholder} alt="placeholder" />
+          <SvgImage src={moneyOnHand} alt="placeholder" className={bem('step-image-asset')} />
         </figure>
 
         <Formik

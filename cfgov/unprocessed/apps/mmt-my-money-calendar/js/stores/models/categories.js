@@ -1,9 +1,11 @@
 import dotProp from 'dot-prop';
 import { isEmpty, filterProps } from '../../lib/object-helpers';
+import icons from '../../lib/category-icons';
 
 export class CategoryTree {
   static internalProps = [
     'name',
+    'icon',
     'description',
     'restricted',
     'recurrenceTypes',
@@ -75,6 +77,7 @@ export const Categories = new CategoryTree({
     },
     salary: {
       name: 'Job',
+      icon: icons.job,
       description: 'Income from employment',
       recurrenceTypes: ['weekly', 'biweekly', 'monthly', 'semimonthly'],
       strategy: {
@@ -89,8 +92,10 @@ export const Categories = new CategoryTree({
     },
     benefits: {
       name: 'Benefits',
+      icon: icons.benefits,
       va: {
         name: 'Veterans Benefits',
+        icon: icons.veteransBenefits,
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'vetBenefits',
@@ -104,6 +109,7 @@ export const Categories = new CategoryTree({
       },
       disability: {
         name: 'Disability Benefits',
+        icon: icons.disabilityBenefits,
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'disabilityBenefits',
@@ -117,10 +123,12 @@ export const Categories = new CategoryTree({
       },
       socialSecurity: {
         name: 'Social Security Benefits',
+        icon: icons.socialSecurity,
         recurrenceTypes: ['monthly'],
       },
       unemployment: {
         name: 'Unemployment',
+        icon: icons.unemployment,
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'jobTraining',
@@ -133,15 +141,18 @@ export const Categories = new CategoryTree({
       },
       tanf: {
         name: 'TANF',
+        icon: icons.tanf,
         recurrenceTypes: ['monthly'],
       },
       snap: {
         name: 'SNAP',
+        icon: icons.snap,
         recurrenceTypes: ['monthly'],
       },
     },
     other: {
       name: 'Other',
+      icon: icons.other,
       description: 'Includes child support payments, etc.',
       recurrenceTypes: ['weekly', 'biweekly', 'monthly', 'semimonthly'],
     },
@@ -150,8 +161,10 @@ export const Categories = new CategoryTree({
     name: 'Expense',
     housing: {
       name: 'Housing',
+      icon: icons.housing,
       mortgage: {
         name: 'Mortgage',
+        icon: icons.mortgage,
         recurrenceTypes: ['monthly'],
         hasBill: true,
         strategy: {
@@ -166,29 +179,35 @@ export const Categories = new CategoryTree({
       },
       rent: {
         name: 'Rent',
+        icon: icons.rent,
         recurrenceTypes: ['weekly', 'monthly', 'biweekly'],
         hasBill: true,
       },
       propertyTaxes: {
         name: 'Property Taxes',
+        icon: icons.propertyTaxes,
         recurrenceTypes: ['monthly'],
         hasBill: true,
       },
       rentersInsurance: {
         name: 'Renters Insurance',
+        icon: icons.rentersInsurance,
         recurrenceTypes: ['monthly'],
         hasBill: true,
       },
       homeownersInsurance: {
         name: 'Homeowners Insurance',
+        icon: icons.homeownersInsurance,
         recurrenceTypes: ['monthly'],
         hasBill: true,
       },
     },
     utilities: {
       name: 'Utilities',
+      icon: icons.utilities,
       fuel: {
         name: 'Natural Gas, Oil, Propane',
+        icon: icons.naturalgas,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
@@ -199,6 +218,7 @@ export const Categories = new CategoryTree({
       },
       waterSewage: {
         name: 'Water/Sewage',
+        icon: icons.water,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
@@ -209,6 +229,7 @@ export const Categories = new CategoryTree({
       },
       electricity: {
         name: 'Electricity',
+        icon: icons.electricity,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
@@ -219,11 +240,13 @@ export const Categories = new CategoryTree({
       },
       trash: {
         name: 'Trash',
+        icon: icons.trash,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
       },
       cable: {
         name: 'Cable/Satellite',
+        icon: icons.cable,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
@@ -238,6 +261,7 @@ export const Categories = new CategoryTree({
       },
       internet: {
         name: 'Internet',
+        icon: icons.internet,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
@@ -252,6 +276,7 @@ export const Categories = new CategoryTree({
       },
       phone: {
         name: 'Phone/Cell',
+        icon: icons.phone,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
@@ -267,8 +292,10 @@ export const Categories = new CategoryTree({
     },
     transportation: {
       name: 'Transportation',
+      icon: icons.transportation,
       carPayment: {
         name: 'Car Payment',
+        icon: icons.carPayment,
         recurrenceTypes: ['monthly'],
         hasBill: true,
         strategy: {
@@ -283,6 +310,7 @@ export const Categories = new CategoryTree({
       },
       carMaintenance: {
         name: 'Car Maintenance',
+        icon: icons.carMaintenance,
         hasBill: false,
         strategy: {
           id: 'carMaintenance',
@@ -292,6 +320,7 @@ export const Categories = new CategoryTree({
       },
       carInsurance: {
         name: 'Car Insurance',
+        icon: icons.carInsurance,
         recurrenceTypes: ['monthly'],
         hasBill: true,
         strategy: {
@@ -302,6 +331,7 @@ export const Categories = new CategoryTree({
       },
       gas: {
         name: 'Gas',
+        icon: icons.gas,
         recurrenceTypes: ['weekly'],
         hasBill: false,
         strategy: {
@@ -312,6 +342,7 @@ export const Categories = new CategoryTree({
       },
       publicTransportation: {
         name: 'Public Transportation Fare',
+        icon: icons.publicTransportation,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
         strategy: {
@@ -323,8 +354,10 @@ export const Categories = new CategoryTree({
     },
     food: {
       name: 'Food',
+      icon: icons.food,
       eatingOut: {
         name: 'Eating Out',
+        icon: icons.eatingOut,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
         strategy: {
@@ -335,6 +368,7 @@ export const Categories = new CategoryTree({
       },
       groceries: {
         name: 'Groceries',
+        icon: icons.groceries,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
         strategy: {
@@ -346,18 +380,22 @@ export const Categories = new CategoryTree({
     },
     personal: {
       name: 'Personal',
+      icon: icons.personal,
       emergencySavings: {
         name: 'Emergency Savings',
+        icon: icons.emergencySavings,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
       },
       healthcare: {
         name: 'Health Care',
+        icon: icons.healthcare,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
       },
       subscriptions: {
         name: 'Subscriptions',
+        icon: icons.subscriptions,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: true,
         strategy: {
@@ -368,6 +406,7 @@ export const Categories = new CategoryTree({
       },
       clothing: {
         name: 'Clothing',
+        icon: icons.clothing,
         hasBill: false,
         strategy: {
           id: 'secondHandClothing',
@@ -381,6 +420,7 @@ export const Categories = new CategoryTree({
       },
       giving: {
         name: 'Giving',
+        icon: icons.giving,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
         strategy: {
@@ -395,11 +435,13 @@ export const Categories = new CategoryTree({
       },
       education: {
         name: 'Education',
+        icon: icons.education,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: true,
       },
       childCare: {
         name: 'Child Care',
+        icon: icons.childCare,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: true,
         strategy: {
@@ -414,27 +456,32 @@ export const Categories = new CategoryTree({
       },
       personalCare: {
         name: 'Personal Care/Cosmetics',
+        icon: icons.personalCareCosmetics,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
       },
       pets: {
         name: 'Pets',
+        icon: icons.pets,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
       },
       householdSupplies: {
         name: 'Household Supplies',
+        icon: icons.householdSupplies,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
       },
       funMoney: {
         name: 'Fun Money',
+        icon: icons.funMoney,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
       },
     },
     debt: {
       name: 'Debt',
+      icon: icons.debt,
       strategy: {
         id: 'dealWithDebt',
         title: 'Explore CFPB\'s Resources for Dealing With Debt',
@@ -446,6 +493,7 @@ export const Categories = new CategoryTree({
       },
       medicalBill: {
         name: 'Medical Bill',
+        icon: icons.medicalBill,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: true,
         strategy: {
@@ -460,21 +508,25 @@ export const Categories = new CategoryTree({
       },
       courtOrderedExpenses: {
         name: 'Court-Ordered Expenses',
+        icon: icons.courtOrderedExpenses,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: true,
       },
       personalLoan: {
         name: 'Personal Loan',
+        icon: icons.personalLoan,
         recurrenceTypes: ['monthly'],
         hasBill: true,
       },
       creditCard: {
         name: 'Credit Card',
+        icon: icons.creditCard,
         recurrenceTypes: ['monthly'],
         hasBill: true,
       },
       studentLoan: {
         name: 'Student Loan',
+        icon: icons.studentLoan,
         recurrenceTypes: ['monthly'],
         hasBill: true,
         strategy: {
@@ -490,6 +542,7 @@ export const Categories = new CategoryTree({
     },
     other: {
       name: 'Other',
+      icon: icons.other,
       recurrenceTypes: ['monthly', 'weekly'],
       hasBill: false,
     },

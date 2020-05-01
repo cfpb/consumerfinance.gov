@@ -5,6 +5,7 @@ import { Categories } from '../../../stores/models/categories';
 import { useLogger } from '../../../lib/logger';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { BackButton } from '../../../components/button';
+import SvgImage from '../../../components/svg-image';
 
 import iconPlaceholder from '../../../../img/icon-placeholder.png';
 
@@ -52,7 +53,7 @@ function CategoryBrowser({ match }) {
         {Object.entries(subcategories).map(([key, cat]) => !cat.restricted && (
           <li key={key} className="category-links__item">
             <Link className="category-links__link" to={`/calendar/add/${categories}/${key}${Categories.hasSubcategories(cat) ? '' : '/new'}`}>
-              <img src={iconPlaceholder} className="category-links__icon" alt={`Category: ${cat.name}`} />
+              <SvgImage src={cat.icon} className="category-links__icon" alt={`Category: ${cat.name}`} />
               <span className="category-links__label">{cat.name}</span>
             </Link>
           </li>
