@@ -15,11 +15,15 @@ const days = (num) => minutes(num) * 60 * 24;
 precacheAndRoute(self.__WB_MANIFEST);
 
 // Precache app landing page:
-precacheAndRoute(['/mmt-my-money-calendar']);
+precacheAndRoute(['/mmt-my-money-calendar', '/mmt-my-money-calendar/calendar', '/mmt-my-money-calendar/add/income']);
 
 // All navigation routes hit the single-page-app landing page:
 const rootHandler = createHandlerBoundToURL('/mmt-my-money-calendar');
-const navRoute = new NavigationRoute(rootHandler);
+const navRoute = new NavigationRoute(rootHandler, {
+  allowList: [
+    /mmt-my-money-calendar/,
+  ],
+});
 registerRoute(navRoute);
 
 /*
