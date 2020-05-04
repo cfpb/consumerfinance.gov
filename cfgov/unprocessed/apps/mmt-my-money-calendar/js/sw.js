@@ -78,6 +78,14 @@ registerRoute(
   })
 );
 
+// Cache static JS collected by Django
+registerRoute(
+  /static\/apps\/mmt-my-money-calendar/,
+  new StaleWhileRevalidate({
+    cacheName: 'appAssets',
+  })
+);
+
 self.addEventListener('message', ({ data, ports: [port] }) => {
   console.log('Receive message from window: %O', data);
   port.postMessage(data);
