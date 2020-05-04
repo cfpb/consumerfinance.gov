@@ -1,7 +1,6 @@
 import datetime
 import unittest
 
-# from django.core.urlresolvers import reverse
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator

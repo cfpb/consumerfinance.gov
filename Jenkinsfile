@@ -23,6 +23,11 @@ pipeline {
             defaultValue: false,
             description: 'Deploy the stack?'
         )
+        booleanParam(
+            name: 'REFRESH_DB',
+            defaultValue: false,
+            description: 'Refresh the database?'
+        )
     }
 
     options {

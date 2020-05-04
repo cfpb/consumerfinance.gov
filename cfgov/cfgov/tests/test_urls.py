@@ -1,4 +1,4 @@
-from imp import reload
+from importlib import reload
 
 import django
 from django.test import RequestFactory, TestCase, override_settings
@@ -90,7 +90,7 @@ def dummy_external_site_view(request):
 
 
 urlpatterns = [
-    # Needed for rendering of base template that calls reverse('external-site')
+    # Needed for rendering of base template that calls reverse("external-site")
     re_path(r'^external-site/$', dummy_external_site_view,
             name='external-site'),
 
@@ -133,10 +133,28 @@ class HandleErrorTestCase(TestCase):
 
     @mock.patch('cfgov.urls.render')
     def test_handle_error(self, mock_render):
-        request = self.factory.get('/test')
+        request = self.factory.get('/Test')
         urls.handle_error(404, request)
         mock_render.assert_called_with(
             request, '404.html', context={'request': request}, status=404
+        )
+
+    @mock.patch('cfgov.urls.render')
+    def test_handle_404_error(self, mock_render):
+        request = self.factory.get('/test')
+        urls.handle_404_error(404, request)
+        mock_render.assert_called_with(
+            request, '404.html', context={'request': request}, status=404
+        )
+
+    def test_handle_404_error_case_insensitive_redirect(self):
+        request = self.factory.get('/TEst')
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
         )
 
 

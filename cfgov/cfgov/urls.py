@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -362,7 +362,7 @@ urlpatterns = [
     re_path(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-es-json'),
-    re_path(r'^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$(?i)',
+    re_path(r'^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$',
         view_answer,
         name='ask-english-answer'),
     re_path(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/$',
@@ -371,13 +371,13 @@ urlpatterns = [
     re_path(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
         view_answer,
         name='ask-spanish-answer'),
-    re_path(r'^ask-cfpb/search/$(?i)',
+    re_path(r'^ask-cfpb/search/$',
         ask_search,
         name='ask-search-en'),
-    re_path(r'^ask-cfpb/search/(?P<as_json>json)/$(?i)',
+    re_path(r'^ask-cfpb/search/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-en-json'),
-    re_path(r'^ask-cfpb/api/autocomplete/$(?i)',
+    re_path(r'^ask-cfpb/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-en'),
     re_path(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
@@ -445,92 +445,92 @@ urlpatterns = [
 
 # Ask CFPB category and subcategory redirects
 category_redirects = [
-    re_path(r'^ask-cfpb/category-auto-loans/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-auto-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/auto-loans/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-bank-accounts-and-services/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-bank-accounts-and-services/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/bank-accounts/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-credit-cards/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-credit-cards/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/credit-cards/answers/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-credit-reporting/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-credit-reporting/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/credit-reports-and-scores/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-debt-collection/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-debt-collection/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/debt-collection/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-families-money/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-families-money/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/money-as-you-grow/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-money-transfers/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-money-transfers/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/money-transfers/answers/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-mortgages/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-mortgages/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/mortgages/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-payday-loans/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-payday-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/payday-loans/answers',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-prepaid-cards/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-prepaid-cards/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/prepaid-cards/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-student-loans/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-student-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/student-loans/',
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$(?i)',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cuentas-bancarias/',
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$(?i)',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cobro-de-deudas/',
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$',
         RedirectView.as_view(
             url='/es/el-dinero-mientras-creces/',
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/hipotecas/',
             permanent=True)),
     re_path(
-        r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$(?i)',
+        r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$(?i)',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-estudiantiles/',  # noqa: E501
             permanent=True))
@@ -617,5 +617,13 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-handler404 = partial(handle_error, 404)
+# Handle case-insensitive URLs
+# Using (?i) in url() patterns is deprecated in Django 2.1
+def handle_404_error(code, request, exception=None):
+    if request.path != request.path.lower():
+        return redirect(request.path.lower(), permanent=True)
+    return handle_error(code, request, exception)
+
+
+handler404 = partial(handle_404_error, 404)
 handler500 = partial(handle_error, 500)
