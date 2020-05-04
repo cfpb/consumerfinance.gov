@@ -6,6 +6,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.test import RequestFactory, TestCase, override_settings
 from django.urls import reverse
 
+from wagtail.core.models import Site
+from wagtail.tests.testapp.models import SimplePage
+
 import mock
 
 from v1.admin_views import ExportFeedbackView
@@ -162,8 +165,12 @@ class TestExportFeedbackView(TestCase):
         )
 
     def test_post_generates_zipfile(self):
+        root_page = Site.objects.get(is_default_site=True).root_page
+        page = SimplePage(title='owning-a-home', slug='owning-a-home', content='owning-a-home', live=True)
+        root_page.add_child(instance=page)
+
         request = RequestFactory().post(
-            "/", {"from_date": "2019-01-01", "to_date": "2019-03-31",}
+            "/", {"from_date": "2019-01-01", "to_date": "2019-03-31"}
         )
         request.user = get_user_model().objects.get(is_superuser=True)
 
