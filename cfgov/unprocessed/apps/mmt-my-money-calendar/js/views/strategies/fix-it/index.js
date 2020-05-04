@@ -1,13 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { observer } from 'mobx-react';
-import { Link, Redirect, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useStore } from '../../../stores';
 import { CardGroup, Card } from '../../../components/card';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { dayjs } from '../../../lib/calendar-helpers';
-import { ButtonLink } from '../../../components/button';
+import { Button, ButtonLink } from '../../../components/button';
 
 import { pencil, arrowLeft, ideaRound } from '../../../lib/icons';
+
+const FixItButton = ({ result }) => {
+  const href = result.event ? `/calendar/add/${result.event.id}/edit` : result.link.href;
+  const label = result.event ? `Edit ${result.event.categoryDetails.name}` : result.link.text;
+  const { eventStore } = useStore();
+  const history = useHistory();
+  const buttonAction = useCallback(async (evt) => {
+    evt.preventDefault();
+
+    // Hide "Split Payment" fix-it strategies for this event once the user clicks Fix It once
+    if (result.event && result.event.category.includes('housing')) {
+      result.event.setHideFixItStrategy(true);
+      await eventStore.saveEvent(result.event, true);
+    }
+
+    history.push(href);
+  }, [result.event, href]);
+
+  return (
+    <Button icon={pencil} onClick={buttonAction} variant="secondary">
+      {label}
+    </Button>
+  );
+};
 
 const StrategyCards = ({ results }) => (
   <main className="strategies-cards">
@@ -17,15 +41,7 @@ const StrategyCards = ({ results }) => (
           <p>{result.text}</p>
 
           <div className="m-card_footer">
-            {result.event ? (
-              <ButtonLink icon={pencil} to={`/calendar/add/${result.event.id}/edit`} variant="secondary">
-                Edit {result.event.categoryDetails.name}
-              </ButtonLink>
-            ) : (
-              <ButtonLink icon={pencil} to={result.link.href} variant="secondary">
-                {result.link.text}
-              </ButtonLink>
-            )}
+            <FixItButton result={result} />
           </div>
         </Card>
       ))}

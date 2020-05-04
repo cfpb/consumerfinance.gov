@@ -298,7 +298,7 @@ export default class CashFlowStore {
           if (recurrence.dateTime.isBefore(event.dateTime)) continue;
 
           const stateEvent = this.getEvent(recurrence.id);
-          stateEvent.update({ totalCents: event.totalCents });
+          stateEvent.update({ totalCents: event.totalCents, hideFixItStrategy: event.hideFixItStrategy });
           yield stateEvent.save();
           this.logger.debug('Update recurrence total (id: %d, total: %d)', recurrence.id, recurrence.total);
         }
