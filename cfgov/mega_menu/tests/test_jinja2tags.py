@@ -16,33 +16,28 @@ class MegaMenuTests(TestCase):
             {'type': 'submenu', 'value': {'title': 'Spanish'}},
         ]))
 
-    def test_empty_context_fails_due_to_missing_request(self):
-        with self.assertRaises(KeyError):
-            get_mega_menu_content({})
-
     def test_returns_none_if_no_menus_exist(self):
         Menu.objects.all().delete()
 
         request = RequestFactory().get('/')
         self.assertIsNone(get_mega_menu_content({'request': request}))
 
-    def test_uses_request_falls_back_to_default_language(self):
+    def test_empty_context_falls_back_to_default_language(self):
+        content = get_mega_menu_content({})
+        self.assertIn('English', json.dumps(content))
+
+    def test_ignores_request_falls_back_to_default_language(self):
         request = RequestFactory().get('/')
         content = get_mega_menu_content({'request': request})
         self.assertIn('English', json.dumps(content))
 
-    def test_uses_request_language_if_set(self):
+    def test_ignores_request_language_if_set(self):
         request = RequestFactory().get('/', HTTP_ACCEPT_LANGUAGE='es')
-        content = get_mega_menu_content({'request': request})
-        self.assertIn('Spanish', json.dumps(content))
-
-    def test_unsupported_language_falls_back_to_default_language(self):
-        request = RequestFactory().get('/', HTTP_ACCEPT_LANGUAGE='fr')
         content = get_mega_menu_content({'request': request})
         self.assertIn('English', json.dumps(content))
 
     def test_uses_language_from_context_instead_of_request(self):
-        request = RequestFactory().get('/', HTTP_ACCEPT_LANGUAGE='en')
+        request = RequestFactory().get('/')
         content = get_mega_menu_content({'request': request, 'language': 'es'})
         self.assertIn('Spanish', json.dumps(content))
 
