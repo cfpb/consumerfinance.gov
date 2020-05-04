@@ -7,7 +7,8 @@ import { useScrollToTop } from '../../components/scroll-to-top';
 import { formatCurrency } from '../../lib/currency-helpers';
 import { BackButton, NextButton } from '../../components/button';
 
-import iconPlaceholder from '../../../img/icon-placeholder.png';
+import categoryIcons from '../../lib/category-icons';
+import SvgImage from '../../components/svg-image';
 
 function Summary() {
   const { eventStore, wizardStore } = useStore();
@@ -43,7 +44,7 @@ function Summary() {
 
       <main className={bem('main')}>
         <figure className={bem('step-image')}>
-          <img src={iconPlaceholder} alt="placeholder" />
+          <SvgImage src={categoryIcons.moneyOnHand} alt="Money on Hand icon" />
         </figure>
 
         <h3>Starting Balance Summary</h3>
