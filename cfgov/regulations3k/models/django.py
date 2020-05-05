@@ -4,6 +4,7 @@ import re
 from datetime import date
 
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -14,6 +15,16 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 import regdown
+
+
+# Labels always require at least 1 alphanumeric character, then any number of
+# alphanumeric characters and hyphens.
+label_re_str = r'[\w]+[-\w]*'
+validate_label = RegexValidator(
+    re.compile(r'^' + label_re_str + r'$'),
+    'Enter a valid “label” consisting of letters, numbers, and hyphens.',
+    'invalid'
+)
 
 
 def sortable_label(label, separator='-'):
@@ -148,7 +159,12 @@ class EffectiveVersion(models.Model):
 
 
 class Subpart(models.Model):
-    label = models.CharField(max_length=255)
+    label = models.CharField(
+        max_length=255,
+        validators=[validate_label],
+        help_text='Labels always require at least 1 alphanumeric character, '
+                  'then any number of alphanumeric characters and hyphens.',
+    )
     title = models.CharField(max_length=255, blank=True)
     version = models.ForeignKey(
         EffectiveVersion,
@@ -201,7 +217,12 @@ class Subpart(models.Model):
 
 
 class Section(models.Model):
-    label = models.CharField(max_length=255)
+    label = models.CharField(
+        max_length=255,
+        validators=[validate_label],
+        help_text='Labels always require at least 1 alphanumeric character, '
+                  'then any number of alphanumeric characters and hyphens.',
+    )
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
     subpart = models.ForeignKey(
