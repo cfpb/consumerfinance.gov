@@ -71,9 +71,9 @@ class Part(models.Model):
         return str(self)
 
     def __str__(self):
-        name = "{} CFR Part {}".format(self.cfr_title_number, self.part_number)
+        name = f"{self.cfr_title_number} CFR Part {self.part_number}"
         if self.short_name:
-            name += " ({})".format(self.short_name)
+            name += f" ({self.short_name})"
         return name
 
     class Meta:
@@ -114,7 +114,7 @@ class EffectiveVersion(models.Model):
     ]
 
     def __str__(self):
-        return "Effective on {}".format(self.effective_date)
+        return str(self.part) + f", Effective on {self.effective_date}"
 
     @property
     def live_version(self):
@@ -192,7 +192,7 @@ class Subpart(models.Model):
     ]
 
     def __str__(self):
-        return self.title
+        return str(self.version) + ", " + self.title
 
     @property
     def type(self):
@@ -239,7 +239,7 @@ class Section(models.Model):
     ]
 
     def __str__(self):
-        return self.title
+        return str(self.subpart) + ", " + self.title
 
     class Meta:
         ordering = ['sortable_label']
