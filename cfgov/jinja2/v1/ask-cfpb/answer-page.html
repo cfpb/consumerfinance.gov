@@ -27,7 +27,7 @@
 {%- endblock %}
 
 {% block content_main %}
-<div {% if flag_enabled('HOW_TO_SCHEMA', request) %}
+<div {% if flag_enabled('HOW_TO_SCHEMA') %}
         itemscope=""
         itemtype="http://schema.org/HowTo"
      {% endif %}>
@@ -37,7 +37,7 @@
         {% if last_edited %}
         <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
         {% endif %}
-        <h1 {% if flag_enabled('HOW_TO_SCHEMA', request) %}itemprop="name"{% endif %}>
+        <h1 {% if flag_enabled('HOW_TO_SCHEMA') %}itemprop="name"{% endif %}>
             {{ page.question | striptags }}
         </h1>
     </div>
