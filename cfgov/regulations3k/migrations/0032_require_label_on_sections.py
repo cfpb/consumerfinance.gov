@@ -17,11 +17,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='section',
             name='label',
-            field=models.CharField(help_text='Labels always require at least 1 alphanumeric character, then any number of alphanumeric characters and hyphens.', max_length=255, validators=[django.core.validators.RegexValidator(re.compile('^[\\w]+[-\\w]*$', 32), 'Enter a valid “label” consisting of letters, numbers, and hyphens.', 'invalid')]),
+            field=models.CharField(help_text='Labels always require at least 1 alphanumeric character, then any number of alphanumeric characters and hyphens, with no spaces.', max_length=255, validators=[django.core.validators.RegexValidator(re.compile('^[\\w]+[-\\w]*$', 32), 'Enter a valid “label” consisting of letters, numbers, and hyphens.', 'invalid')]),
         ),
         migrations.AlterField(
             model_name='subpart',
             name='label',
-            field=models.CharField(help_text='Labels always require at least 1 alphanumeric character, then any number of alphanumeric characters and hyphens.', max_length=255, validators=[django.core.validators.RegexValidator(re.compile('^[\\w]+[-\\w]*$', 32), 'Enter a valid “label” consisting of letters, numbers, and hyphens.', 'invalid')]),
+            field=models.CharField(help_text='Labels always require at least 1 alphanumeric character, then any number of alphanumeric characters and hyphens, with no spaces.', max_length=255, validators=[django.core.validators.RegexValidator(re.compile('^[\\w]+[-\\w]*$', 32), 'Enter a valid “label” consisting of letters, numbers, and hyphens.', 'invalid')]),
         ),
     ]

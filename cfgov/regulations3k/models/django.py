@@ -22,7 +22,8 @@ import regdown
 label_re_str = r'[\w]+[-\w]*'
 validate_label = RegexValidator(
     re.compile(r'^' + label_re_str + r'$'),
-    'Enter a valid “label” consisting of letters, numbers, and hyphens.',
+    'Enter a valid “label” consisting of letters, numbers, hyphens, '
+    'and no spaces.',
     'invalid'
 )
 
@@ -163,7 +164,8 @@ class Subpart(models.Model):
         max_length=255,
         validators=[validate_label],
         help_text='Labels always require at least 1 alphanumeric character, '
-                  'then any number of alphanumeric characters and hyphens.',
+                  'then any number of alphanumeric characters and hyphens, '
+                  'with no spaces.',
     )
     title = models.CharField(max_length=255, blank=True)
     version = models.ForeignKey(
@@ -221,7 +223,8 @@ class Section(models.Model):
         max_length=255,
         validators=[validate_label],
         help_text='Labels always require at least 1 alphanumeric character, '
-                  'then any number of alphanumeric characters and hyphens.',
+                  'then any number of alphanumeric characters and hyphens, '
+                  'with no spaces.',
     )
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
