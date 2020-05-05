@@ -148,7 +148,7 @@ class EffectiveVersion(models.Model):
 
 
 class Subpart(models.Model):
-    label = models.CharField(max_length=255, blank=True)
+    label = models.CharField(max_length=255)
     title = models.CharField(max_length=255, blank=True)
     version = models.ForeignKey(
         EffectiveVersion,
@@ -201,7 +201,7 @@ class Subpart(models.Model):
 
 
 class Section(models.Model):
-    label = models.CharField(max_length=255, blank=True)
+    label = models.CharField(max_length=255)
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
     subpart = models.ForeignKey(
