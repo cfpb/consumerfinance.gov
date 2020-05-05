@@ -1,4 +1,3 @@
-
 {# ==========================================================================
 
    How To block
@@ -11,34 +10,43 @@
 
    value: Object defined from a Streamfield block.
 
-   value.description: 			  Text overview of how to.
+   value.description:         Text overview of how to.
 
-   value.steps: 	  			    List of steps
+   value.steps:               List of steps
 
-   value.step.title:  			  Title of step
+   value.step.title:          Title of step
 
-   value.step.step_contents  	Output of streamblock
+   value.step.step_contents   Output of streamblock
 
    ========================================================================== #}
 
 
-<div class="schema-block schema-block__how-to">
-    {% if value.description %}
-  	<div itemprop="description" class="schema-block_description">
-  		{{ value.description | richtext }}
-  	</div>
-    {% endif %}
-  	{% for step in value.steps %}
-  		<div itemprop="step"
-           itemscope itemtype="http://schema.org/HowToStep"
-           class="schema-block_item">
-    		<h2 itemprop="name">{{ step.title }}</h2>
-    		<div itemprop="text">
-            {% include_block step.step_content %}
-    		</div>
-  		</div>
-  {% endfor %}
+<div itemscope
+     itemtype="http://schema.org/HowTo"
+     class="schema-block schema-block__how-to">
+{%- if value.title %}
+    <h2 itemprop="name" class="schema-block_title">
+        {{ value.title }}
+    </h2>
+{% endif -%}
+
+{%- if value.description %}
+    <div itemprop="description" class="schema-block_description">
+        {{ value.description | richtext }}
+    </div>
+{% endif -%}
+
+    <ol>
+    {% for step in value.steps %}
+        <li itemprop="step"
+            itemscope
+            itemtype="http://schema.org/HowToStep"
+            class="schema-block_item">
+            <h3 itemprop="name" class="h4">{{ step.title }}</h3>
+            <div itemprop="text">
+                {% include_block step.step_content %}
+            </div>
+        </li>
+    {% endfor %}
+    </ol>
 </div>
-
-
-
