@@ -40,6 +40,7 @@ pipeline {
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
+                sh 'echo TEST'
             }
         }
 
