@@ -29,23 +29,18 @@ class ReportSection(models.Model):
 
 
 class ReportSectionsSidenav(CFGOVPage):
-    content = StreamField([
-      ('full_width_text', organisms.FullWidthText()),
-      ('table_block', organisms.AtomicTableBlock(
-          table_options={'renderer': 'html'}
-      )),
-      ('raw_html_block', blocks.RawHTMLBlock(
-          label='Raw HTML block'
-      )),
-    ], blank=True)
-
-    footnotes = StreamField([
-      ('full_width_text', organisms.FullWidthText()),
-    ], blank=True)
+    header = models.CharField(max_length=200, default='')
+    subheader = RichTextField(blank=True)
+    pdf_location = models.CharField(max_length=150, default='')
+    footnotes = RichTextField(blank = True)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('content'),
+        MultiFieldPanel([
+          FieldPanel('header'),
+          FieldPanel('subheader'),
+          FieldPanel('pdf_location')
+        ], heading='Report Header'),
         MultiFieldPanel([
           InlinePanel(
             'report_sections',
@@ -53,7 +48,7 @@ class ReportSectionsSidenav(CFGOVPage):
             min_num=1
           ),
         ], heading='Report Sections'),
-        StreamFieldPanel('footnotes')
+        FieldPanel('footnotes')
     ]
 
     sidefoot_panels = CFGOVPage.sidefoot_panels
@@ -68,10 +63,6 @@ class ReportSectionsSidenav(CFGOVPage):
     template = 'report/section.html'
 
     objects = PageManager()
-
-    search_fields = CFGOVPage.search_fields + [
-        index.SearchField('content'),
-    ]
 
     @property
     def page_js(self):

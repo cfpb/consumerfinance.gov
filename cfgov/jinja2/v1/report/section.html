@@ -2,6 +2,7 @@
 {% extends 'layout-side-nav.html' %}
 
 {% import 'form_block.html' as form_block with context %}
+{% import 'atoms/pdf-download.html' as pdf_download with context %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -10,30 +11,20 @@
 {%- endblock %}
 
 {% block content_main %}
-    {% for block in page.header -%}
-        {% if 'featured_content' in block.block_type %}
-            <div class="block
-                        {{ 'u-mt0' if loop.first }}">
-                        {# u-mt0 is used instead of block__flush-top to keep top border #}
-                {% include_block block %}
-            </div>
-        {% else %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
-    {%- endfor %}
-
-    {% for block in page.content -%}
-          {{ render_block.render(block, loop.index) }}
-    {%- endfor %}
+    <div class="block block__flush-top">
+      <h1>{{ page.header }}</h1>
+      {{ render_rich_html(page.subheader) }}
+      {{ pdf_download.render({'pdf_url': page.pdf_location }) }}
+    </div>
 
     {% for section in page.report_sections.all().order_by('pk') -%}
     <h3><a style="color:black;" id="{{section.section_id}}" href="#{{section.section_id}}">{{section.section_header}}</a></h3>
-      {{ render_section(section) }}
+      {{ render_rich_html(section.section_body) }}
     {%- endfor %}
     
-    {% for block in page.footnotes -%}
-          {{ render_block.render(block, loop.index) }}
-    {%- endfor %}
+    <div class="block block__flush-top">
+      {{ render_rich_html(page.footnotes) }}:
+    </div>
 
     {% if page.sidefoot %}
         <aside class="o-prefooter">
