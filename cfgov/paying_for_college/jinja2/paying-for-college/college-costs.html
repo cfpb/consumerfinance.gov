@@ -33,7 +33,7 @@
                 
             </div>
             <div class="m-hero_image-wrapper">
-                <div class="m-hero_image" style="background-image: url({{ static('apps/paying-for-college/img/ph-hero.png') }})"></div>
+                <div class="m-hero_image" stylefoo="background-image: url({{ static('apps/paying-for-college/img/pfc_tool_hero.png') }}); background-size: contain;"></div>
             </div>
         </div>
     </div>
@@ -286,6 +286,16 @@
                 </div>
                 <div class="financial-item form-group_item">
                     <div class="financial-item_label-wrapper">
+                        <label class="form-label" for="costs__otherDirect">
+                            Other direct costs
+                        </label>
+                    </div>
+                    <div class="financial-item_input-wrapper">
+                        <input type="text" id="costs__otherDirect" name="costs__otherDirect" data-financial-item="dirCost_other" autocorrect="off" value="0">
+                    </div>
+                </div>
+                <div class="financial-item form-group_item">
+                    <div class="financial-item_label-wrapper">
                         <span class="financial-item_total">Estimated direct costs</span>
                     </div>
                     <div class="financial-item_input-wrapper">
@@ -315,17 +325,17 @@
 
                     </div>
                     <div class="financial-item_input-wrapper">
-                        <input type="text" id="costs__other" name="costs__other" data-financial-item="indiCost_other" autocorrect="off" value="0">
+                        <input type="text" id="costs__other" name="costs__other" data-financial-item="indiCost_otherMisc" autocorrect="off" value="0">
                     </div>
                 </div>
                 <div class="financial-item form-group_item">
                     <div class="financial-item_label-wrapper">
-                        <label class="form-label" for="costs__transportation">
-                            Transportation
+                        <label class="form-label" for="costs__otherIndirect">
+                            Other indirect costs
                         </label>
                     </div>
                     <div class="financial-item_input-wrapper">
-                        <input type="text" id="costs__transportation" name="costs__transportation" data-financial-item="indiCost_transportation" autocorrect="off" value="0">
+                        <input type="text" id="costs__otherIndirect" name="costs__otherIndirect" data-financial-item="indiCost_otherIndirect" autocorrect="off" value="0">
                     </div>
                 </div>
 
@@ -411,6 +421,17 @@
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="grants__otherFederal">
+                    Other Federal Grants
+                </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="grants__otherFederal" name="grants__otherFederal" data-financial-item="grant_otherFederal" autocorrect="off" value="0">
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
                     <label class="form-label" for="grants__state">
                         State grant(s)
                     </label>
@@ -448,7 +469,7 @@
                     <label class="form-label" for="grants__gibill">
                         GI Bill
                     </label>
-                    <span class="label-note">We recommend checking out the <a href="https://www.va.gov/gi-bill-comparison-tool/" target="_blank" class="external-link">GI Bill&reg; Comparison Too</a> too.</span>
+                    <span class="label-note">We recommend checking out the <a href="https://www.va.gov/gi-bill-comparison-tool/" target="_blank" class="external-link">GI Bill&reg; Comparison Tool</a> too.</span>
                 </div>
                 <div class="financial-item_input-wrapper">
                     <input type="text" id="grants__gibill" name="grants__gibill" data-financial-item="grant_gibill" autocorrect="off" value="0">
@@ -885,14 +906,6 @@
                     <input id="loans__schoolLoanFee" name="loans__schoolLoanFee" data-financial-item="fee_institutionalLoan" value="9.99%">
                 </div>
             </div>
-            <div class="financial-item form-group_item financial-item__lined">
-                <div class="financial-item_label-wrapper financial-item_total">
-                    <span class="financial-item_total financial-item_total__large">Total loans from your state, this school, or a nonprofit</span>
-                </div>
-                <div class="financial-item_input-wrapper">
-                    <span class="financial-item_total financial-item_total__large financial-item_total" data-financial-item="total_otherLoans">$99,999</span>
-                </div>
-            </div>
 
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
@@ -918,6 +931,16 @@
                 </div>
                 <div class="financial-item_input-wrapper">
                     <input id="loans__nonprofitLoanFee" name="loans__nonprofitLoanFee" data-financial-item="fee_nonprofit" value="9.99%">
+                </div>
+            </div>
+
+
+            <div class="financial-item form-group_item financial-item__lined">
+                <div class="financial-item_label-wrapper financial-item_total">
+                    <span class="financial-item_total financial-item_total__large">Total loans from your state, this school, or a nonprofit</span>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <span class="financial-item_total financial-item_total__large financial-item_total" data-financial-item="total_otherLoans">$99,999</span>
                 </div>
             </div>
 
@@ -995,32 +1018,45 @@
             </div>
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="income__job">
+                    <label class="form-label" for="income__offCampusJob">
                         Estimated income from off-campus job
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="income__job" name="income__job" data-financial-item="income_job" autocorrect="off" value="0">
+                    <input type="text" id="income__offCampusJob" name="income__offCampusJob" data-financial-item="income_offCampusJob" autocorrect="off" value="0">
                 </div>
             </div>
+
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="income__tanf">
-                        Estimated income from TANF
+                    <label class="form-label" for="income__onCampusJob">
+                        Estimated income from on-campus job (not work-study)
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="income__tanf" name="income__tanf" data-financial-item="income_tanf" autocorrect="off" value="0">
+                    <input type="text" id="income__onCampusJob" name="income__onCampusJob" data-financial-item="income_onCampusJob" autocorrect="off" value="0">
                 </div>
             </div>
+
             <div class="financial-item form-group_item">
                 <div class="financial-item_label-wrapper">
-                    <label class="form-label" for="income__snap">
-                        Estimated income from SNAP
+                    <label class="form-label" for="income__employerAssistance">
+                        Employer tuition assistance or reimbursement
                     </label>
                 </div>
                 <div class="financial-item_input-wrapper">
-                    <input type="text" id="income__snap" name="income__snap" data-financial-item="income_snap" autocorrect="off" value="0">
+                    <input type="text" id="income__employerAssistance" name="income__employerAssistance" data-financial-item="income_employerAssistance" autocorrect="off" value="0">
+                </div>
+            </div>
+
+            <div class="financial-item form-group_item">
+                <div class="financial-item_label-wrapper">
+                    <label class="form-label" for="income_otherFunding">
+                            Other funding
+                    </label>
+                </div>
+                <div class="financial-item_input-wrapper">
+                    <input type="text" id="income_otherFunding" name="income_otherFunding" data-financial-item="incomeotherFunding" autocorrect="off" value="0">
                 </div>
             </div>
 
@@ -1142,7 +1178,7 @@
                             title="Expand content">
                         <div class="financial-item_label-wrapper">
                             <label class="form-label" for="plan_cost">
-                                Cost of attendance
+                                Costs
                             </label>
                         </div>
                         <div class="financial-item_input-wrapper">
@@ -1184,6 +1220,16 @@
                         </div>
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__otherDirectCosts">
+                                    Other direct costs
+                                </label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input type="text" id="plan__otherDirectCosts" name="plan__otherDirectCosts" data-financial-item="dirCost_other" autocorrect="off" value="0">
+                            </div>
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
                                 <label class="form-label" for="plan__books">
                                     Books
                                 </label>
@@ -1199,17 +1245,17 @@
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
-                                <input type="text" id="plan__other" name="plan__other" data-financial-item="indiCost_other" autocorrect="off" value="0">
+                                <input type="text" id="plan__other" name="plan__other" data-financial-item="indiCost_otherMisc" autocorrect="off" value="0">
                             </div>
                         </div>
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
-                                <label class="form-label" for="plan__transportation">
-                                    Transportation
+                                <label class="form-label" for="plan__otherIndirectCosts">
+                                    Other indirect costs
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
-                                <input type="text" id="plan__transportation" name="plan__transportation" data-financial-item="indiCost_transportation" autocorrect="off" value="0">
+                                <input type="text" id="plan__otherIndirectCosts" name="plan__otherIndirectCosts" data-financial-item="indiCost_otherIndirect" autocorrect="off" value="0">
                             </div>
                         </div>
                     </div>
@@ -1427,7 +1473,7 @@
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
                                 <label class="form-label" for="plan__collegeSavingsPlan">
-                                    Personal funds
+                                    College savings plan (like 529 plans)
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
@@ -1451,29 +1497,39 @@
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
-                                <input type="text" id="plan__jobIncome" name="plan__jobIncome" data-financial-item="income_job" autocorrect="off" value="0">
+                                <input type="text" id="plan__jobIncome" name="plan__jobIncome" data-financial-item="income_offCampusJob" autocorrect="off" value="0">
                             </div>
                         </div>
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
-                                <label class="form-label" for="plan__tanf">
-                                    Estimated income from TANF
+                                <label class="form-label" for="plan__onCampusJob">
+                                    Estimated on-campus job income (not work-study)
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
-                                <input type="text" id="plan__tanf" name="plan__tanf" data-financial-item="income_tanf" autocorrect="off" value="0">
+                                <input type="text" id="plan__onCampusJob" name="plan__onCampusJob" data-financial-item="income_onCampusJob" autocorrect="off" value="0">
                             </div>
                         </div>
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
-                                <label class="form-label" for="plan__snap">
-                                    Estimated income from SNAP
+                                <label class="form-label" for="plan__employerAssistance">
+                                    Employer tuition assistance or reimbursement
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
-                                <input type="text" id="plan__snap" name="plan__snap" data-financial-item="income_snap" autocorrect="off" value="0">
+                                <input type="text" id="plan__employerAssistance" name="plan__employerAssistance" data-financial-item="income_employerAssistance" autocorrect="off" value="0">
                             </div>
-                        </div>                        
+                        </div>
+                        <div class="financial-item form-group_item">
+                            <div class="financial-item_label-wrapper">
+                                <label class="form-label" for="plan__otherFunding">
+                                    Other funding
+                                </label>
+                            </div>
+                            <div class="financial-item_input-wrapper">
+                                <input type="text" id="plan__otherFunding" name="plan__otherFunding" data-financial-item="income_otherFunding" autocorrect="off" value="0">
+                            </div>
+                        </div>
                     </div>  
                 </div>
 
@@ -1639,15 +1695,6 @@
                                 <input id="plan__schoolLoanFee" name="plan__schoolLoanFee" data-financial-item="fee_institutionalLoan" value="9.99%">
                             </div>
                         </div>
-                        <div class="financial-item form-group_item financial-item__lined">
-                            <div class="financial-item_label-wrapper financial-item_total">
-                                <span class="financial-item_total financial-item_total__large">Total loans from your state, this school, or a nonprofit</span>
-                            </div>
-                            <div class="financial-item_input-wrapper">
-                                <span class="financial-item_total financial-item_total__large financial-item_total" data-financial-item="total_otherLoans">$99,999</span>
-                            </div>
-                        </div>
-
                         <div class="financial-item form-group_item">
                             <div class="financial-item_label-wrapper">
                                 <label class="form-label" for="plan__nonprofitLoan">
@@ -2198,17 +2245,7 @@
                                 </label>
                             </div>
                             <div class="financial-item_input-wrapper">
-                                <span type="text" class="financial-item" data-financial-item="indiCost_other" ></span>
-                            </div>
-                        </div>
-                        <div class="financial-item form-group_item">
-                            <div class="financial-item_label-wrapper">
-                                <label class="form-label">
-                                    Transportation
-                                </label>
-                            </div>
-                            <div class="financial-item_input-wrapper">
-                                <span type="text" class="financial-item" data-financial-item="indiCost_transportation" ></span>
+                                <span type="text" class="financial-item" data-financial-item="indiCost_otherMisc" ></span>
                             </div>
                         </div>
                     </div>

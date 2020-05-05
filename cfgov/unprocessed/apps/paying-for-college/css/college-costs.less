@@ -23,7 +23,14 @@
 	padding-bottom: unit( 60px / @base-font-size-px, em );
 
 	.m-hero {
+		background-color: @teal-40;
 		margin-bottom: unit( 45px / @base-font-size-px, em );
+
+		&_image {
+			/* background-image: url('https://files.consumerfinance.gov/f/images/pfc_tool_hero.png'); */
+			background: url('/static/apps/paying-for-college/img/pfc_tool_hero.png') no-repeat center;
+			background-size: contain;
+		}
 	}
 }
 
