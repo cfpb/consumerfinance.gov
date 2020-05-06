@@ -37,7 +37,7 @@ sha3==0.2.1
 unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 urllib3==1.25.2
-wagtail-autocomplete==0.1.1
+wagtail-autocomplete==0.5
 wagtail-flags==4.1.1
 wagtail-inventory==1.0
 wagtail-sharing==2.1
