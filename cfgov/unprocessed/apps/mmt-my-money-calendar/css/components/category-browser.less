@@ -1,3 +1,6 @@
+@income_color: #257675;
+@expense_color: #B4267A;
+
 .category-browser {
   &__tab-nav {
     margin-bottom: 32px;
@@ -75,6 +78,18 @@
     width: 60px;
     height: auto;
     margin-bottom: 16px;
+
+    &.-income {
+      svg, svg path {
+        fill: @income_color;
+      }
+    }
+
+    &.-expense {
+      svg, svg path {
+        fill: @expense_color;
+      }
+    }
   }
 
   &__label {

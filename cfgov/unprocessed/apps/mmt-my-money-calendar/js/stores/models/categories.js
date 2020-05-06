@@ -342,7 +342,7 @@ export const Categories = new CategoryTree({
       },
       publicTransportation: {
         name: 'Public Transportation Fare',
-        icon: icons.publicTransportation,
+        icon: icons.publicTransportationFare,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
         strategy: {
