@@ -52,7 +52,7 @@ function BalanceForm() {
 
       <main className={bem('main')}>
         <figure className={bem('step-image')}>
-          <SvgImage src={icon} />
+          <SvgImage src={categoryIcons.moneyOnHand} />
         </figure>
 
         <Formik
