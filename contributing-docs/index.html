@@ -192,10 +192,6 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../travis/">How We Use Travis CI</a>
-                </li>
-                <li class="">
-                    
     <a class="" href="../github-actions/">How We Use GitHub Actions</a>
                 </li>
     </ul>
@@ -271,23 +267,23 @@
 <p>Our documentation is written as Markdown files and served via GitHub Pages
 by <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
 <h2 id="writing-the-docs">Writing the docs<a class="headerlink" href="#writing-the-docs" title="Permanent link">¶</a></h2>
-<p>As our documentation is written in Markdown, 
-the <a href="https://daringfireball.net/projects/markdown/">base Markdown specification</a> 
-is a useful reference. MkDocs also includes 
+<p>As our documentation is written in Markdown,
+the <a href="https://daringfireball.net/projects/markdown/">base Markdown specification</a>
+is a useful reference. MkDocs also includes
 <a href="https://www.mkdocs.org/user-guide/writing-your-docs/#writing-with-markdown">some documentation to get you started writing in Markdown</a>.</p>
 <p>In addition to standard Markdown, our documentation supports the following extensions:</p>
 <ul>
 <li>
 <p><a href="https://python-markdown.github.io/extensions/admonition/">Admonitions</a>
-    adds specially called-out text anywhere within the document 
+    adds specially called-out text anywhere within the document
     as notes, warnings, and other types.</p>
 </li>
 <li>
-<p><a href="https://facelessuser.github.io/pymdown-extensions/extensions/betterem/">BetterEm</a> 
+<p><a href="https://facelessuser.github.io/pymdown-extensions/extensions/betterem/">BetterEm</a>
     improves the handling of bold and italics.</p>
 </li>
 <li>
-<p><a href="https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/">MagicLink</a> 
+<p><a href="https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/">MagicLink</a>
     provides automatic linking for URLs in the Markdown text.</p>
 </li>
 <li>
@@ -295,7 +291,7 @@ is a useful reference. MkDocs also includes
     makes a number of improvements to standard Markdown code fences.</p>
 </li>
 <li>
-<p><a href="https://facelessuser.github.io/pymdown-extensions/extensions/tilde/">Tilde</a> 
+<p><a href="https://facelessuser.github.io/pymdown-extensions/extensions/tilde/">Tilde</a>
     adds support for creating <code>&lt;del&gt;&lt;/del&gt;</code> tags with <code>~~</code>.</p>
 </li>
 <li>
@@ -303,9 +299,9 @@ is a useful reference. MkDocs also includes
     adds support for tables to standard Markdown.</p>
 </li>
 </ul>
-<p>When creating new documents, they should be added to the 
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/mkdocs.yml">mkdocs.yml file</a> 
-in the appropriate place under <code>nav:</code> to get them to appear in the sidebar navigation. 
+<p>When creating new documents, they should be added to the
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/mkdocs.yml">mkdocs.yml file</a>
+in the appropriate place under <code>nav:</code> to get them to appear in the sidebar navigation.
 For example:</p>
 <pre class="highlight"><code>nav:
 - Introduction: index.md</code></pre>
@@ -315,9 +311,9 @@ For example:</p>
 <p>When running cfgov-refresh using <a href="../installation/#docker-based-installation">Docker-compose</a>,
 this documentation is running by default at <a href="http://localhost:8888">http://localhost:8888</a>.</p>
 <h3 id="manually">Manually<a class="headerlink" href="#manually" title="Permanent link">¶</a></h3>
-<p>When using 
+<p>When using
 <a href="../installation/#stand-alone-installation">the stand-alone installation</a>
-of cfgov-refresh, 
+of cfgov-refresh,
 you can run these docs with:</p>
 <pre class="highlight"><code class="language-bash">workon cfgov-refresh
 pip install -r requirements/docs.txt
@@ -325,17 +321,17 @@ mkdocs serve -a :8888</code></pre>
 
 <p>Once running, they are accessible at <a href="http://localhost:8888">http://localhost:8888</a>.</p>
 <h2 id="deploying-the-docs-to-github-pages">Deploying the docs to GitHub Pages<a class="headerlink" href="#deploying-the-docs-to-github-pages" title="Permanent link">¶</a></h2>
-<p>Every time a PR is merged to master, 
-Travis will build and deploy the documentation to <a href="https://cfpb.github.io/cfgov-refresh">https://cfpb.github.io/cfgov-refresh</a>. 
-See <a href="https://github.com/cfpb/cfgov-refresh/blob/master/docs/travis.md">How we use Travis CI</a> 
-for more info.</p>
-<p>If you would like to deploy to a fork of cfgov-refresh owned by another user 
+<p>Every time a PR is merged to master,
+GitHub Actions will build and deploy the documentation to
+<a href="https://cfpb.github.io/cfgov-refresh/">https://cfpb.github.io/cfgov-refresh/</a>.
+See <a href="../github-actions/">How we use GitHub Actions</a> for more info.</p>
+<p>If you would like to deploy to a fork of cfgov-refresh owned by another user
 you can provide the <code>-r</code> argument:</p>
 <pre class="highlight"><code class="language-bash">mkdocs gh-deploy -r USER</code></pre>
 
-<p>Where <code>USER</code> is the GitHub user. 
+<p>Where <code>USER</code> is the GitHub user.
 The docs will then be available at <a href="https://USER.github.io/cfgov-refresh/">https://USER.github.io/cfgov-refresh/</a> after a short period of time.</p>
-<p>See the 
+<p>See the
 <a href="https://www.mkdocs.org/user-guide/deploying-your-docs/">the MkDocs documentation</a>
 for more information.</p>
               

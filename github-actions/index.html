@@ -175,10 +175,6 @@
                     
     <a class="" href="../development-tips/">Development Tips</a>
                 </li>
-                <li class="">
-                    
-    <a class="" href="../travis/">How We Use Travis CI</a>
-                </li>
                 <li class=" current">
                     
     <a class="current" href="./">How We Use GitHub Actions</a>
@@ -292,7 +288,7 @@
 </ul>
 <p>Our workflows are defined in our <a href="https://github.com/cfpb/cfgov-refresh/tree/master/.github/workflows"><code>.github/workflows</code></a> directory.</p>
 <h2 id="an-extra-task-for-satellite-repositories">An extra task for satellite repositories<a class="headerlink" href="#an-extra-task-for-satellite-repositories" title="Permanent link">¶</a></h2>
-<p>For our <a href="../related-projects/#satellite-apps">satellite apps</a>, We use Travis to build and attach a deployment wheel file to every release.</p>
+<p>For our <a href="../related-projects/#satellite-apps">satellite apps</a>, we use GitHub Actions (or Travis, if a repo hasn't been migrated to Actions yet) to build and attach a deployment wheel file to every release.</p>
 <p>An example is the <code>.whl</code> file on <a href="https://github.com/cfpb/retirement/releases/tag/0.7.6">this release of the retirement app</a>.</p>
               
             </div>
@@ -304,7 +300,7 @@
         <a href="../ask-cfpb/" class="btn btn-neutral float-right" title="Ask CFPB">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../travis/" class="btn btn-neutral" title="How We Use Travis CI"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../development-tips/" class="btn btn-neutral" title="Development Tips"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -332,7 +328,7 @@
           <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../travis/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../development-tips/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../ask-cfpb/" style="color: #fcfcfc">Next &raquo;</a></span>

@@ -198,10 +198,6 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="../travis/">How We Use Travis CI</a>
-                </li>
-                <li class="">
-                    
     <a class="" href="../github-actions/">How We Use GitHub Actions</a>
                 </li>
     </ul>
@@ -360,7 +356,8 @@ If a PR with a migration gets merged between the time you create your migration
 and the time that your PR is ready for merging,
 you will have to update your branch as normal to be current with master
 and then re-create your migration.
-Also note that our <a href="../travis/">back-end tests that run in Travis</a>
+Also note that our
+<a href="../github-actions/">back-end tests that run in GitHub Actions</a>
 will fail if a required schema migration is missing or if
 migrations are in conflict with one another.</p>
 <h2 id="data-migrations">Data migrations<a class="headerlink" href="#data-migrations" title="Permanent link">¶</a></h2>
@@ -412,8 +409,8 @@ class Migration(migrations.Migration):
 that need to happen to a model's data are made.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>While backwards migrations are necessary in external libraries that we create, 
-we do not require them in cfgov-refresh 
+<p>While backwards migrations are necessary in external libraries that we create,
+we do not require them in cfgov-refresh
 because we prefer not to rollback migrations that have already been applied.</p>
 </div>
 <h3 id="wagtail-specific-considerations">Wagtail-specific considerations<a class="headerlink" href="#wagtail-specific-considerations" title="Permanent link">¶</a></h3>
@@ -480,11 +477,11 @@ class Migration(migrations.Migration):
         migrations.RunPython(forwards, backwards),
     ]</code></pre>
 
-<p><code>field_name</code> is the name of the StreamField on the Page model that contains the blocks to migrate. 
+<p><code>field_name</code> is the name of the StreamField on the Page model that contains the blocks to migrate.
 <code>block_name</code> is the name of the block within a StreamField that contains the data to be migrated.</p>
-<p>StreamBlocks can themselves also contain child blocks. 
-The block name can be given as a list of block names 
-that form the "path" to the block that needs to be migrated. 
+<p>StreamBlocks can themselves also contain child blocks.
+The block name can be given as a list of block names
+that form the "path" to the block that needs to be migrated.
 For example :</p>
 <pre class="highlight"><code class="language-python">def forwards(apps, schema_editor):
     page_types_and_fields = [
@@ -496,38 +493,38 @@ For example :</p>
         forward_mapper
     )</code></pre>
 
-<p>In this example, 
-a block with the name <code>child_block</code> 
-that is inside a block named <code>parent_block</code> 
+<p>In this example,
+a block with the name <code>child_block</code>
+that is inside a block named <code>parent_block</code>
 will be passed to the <code>forward_mapper</code> function.</p>
 <p>The <code>data</code> that gets passed to the <code>forward_mapper</code> or <code>backward_mapper</code>
 is a JSON-compatible Python <code>dict</code> that corresponds to the block's schema.</p>
 <h3 id="utility-functions">Utility functions<a class="headerlink" href="#utility-functions" title="Permanent link">¶</a></h3>
 <p>These functions, defined in <code>v1.util.migrations</code>,
-are used in the above data migration example. 
+are used in the above data migration example.
 They reduce the amount of boilerplate required
 to work with Wagtail StreamField data in data migrations.</p>
 <h4 id="migrate_page_types_and_fieldsapps-page_types_and_fields-mapper"><code>migrate_page_types_and_fields(apps, page_types_and_fields, mapper)</code><a class="headerlink" href="#migrate_page_types_and_fieldsapps-page_types_and_fields-mapper" title="Permanent link">¶</a></h4>
 <p>Migrate the fields of a Wagtail page type using the given <code>mapper</code> function.
 <code>page_types_and_fields</code> should be a list of 4-tuples providing
-<code>('app', 'PageType', 'field_name', 'block_name')</code> or 
-<code>('app', 'PageType', 'field_name', ['parent_block_name', 'child_block_name'])</code>. </p>
-<p><code>field_name</code> is the name of the StreamField on the Page model. </p>
-<p><code>block_name</code> is the name of the StreamBlock within the StreamField to migrate. </p>
-<p>The mapper function should take <code>page_or_revision</code> 
+<code>('app', 'PageType', 'field_name', 'block_name')</code> or
+<code>('app', 'PageType', 'field_name', ['parent_block_name', 'child_block_name'])</code>.</p>
+<p><code>field_name</code> is the name of the StreamField on the Page model.</p>
+<p><code>block_name</code> is the name of the StreamBlock within the StreamField to migrate.</p>
+<p>The mapper function should take <code>page_or_revision</code>
 and the stream block's value as a <code>dict</code>.</p>
 <p>This function calls <code>migrate_stream_field()</code>.</p>
 <h4 id="migrate_stream_fieldpage_or_revision-field_name-block_path-mapper"><code>migrate_stream_field(page_or_revision, field_name, block_path, mapper)</code><a class="headerlink" href="#migrate_stream_fieldpage_or_revision-field_name-block_path-mapper" title="Permanent link">¶</a></h4>
-<p>Migrate all occurrences of the block name 
+<p>Migrate all occurrences of the block name
 contained within the <code>block_path</code> list
 belonging to the page or revision using the <code>mapper</code> function.</p>
-<p>The mapper function should take <code>page_or_revision</code> 
+<p>The mapper function should take <code>page_or_revision</code>
 and the stream block's value as a <code>dict</code>.</p>
 <p>This function calls <code>migrate_stream_data()</code>.</p>
 <h4 id="migrate_stream_datapage_or_revision-block_path-stream_data-mapper"><code>migrate_stream_data(page_or_revision, block_path, stream_data, mapper)</code><a class="headerlink" href="#migrate_stream_datapage_or_revision-block_path-stream_data-mapper" title="Permanent link">¶</a></h4>
-<p>Migrate all occurrences of the block name 
+<p>Migrate all occurrences of the block name
 contained within the <code>block_path</code> list
-within the <code>stream_data</code> <code>dict</code> 
+within the <code>stream_data</code> <code>dict</code>
 using the given <code>mapper</code> function.</p>
 <p>The mapper function should take <code>page_or_revision</code>
 and the stream block's value as a <code>dict</code>.</p>
@@ -542,42 +539,42 @@ If commit is <code>True</code> (default),
 <p><code>stream_data</code> must be a list of <code>dict</code>-like objects
 containing the blocks within the given StreamField.</p>
 <h2 id="recreating-migrations">Recreating migrations<a class="headerlink" href="#recreating-migrations" title="Permanent link">¶</a></h2>
-<p><a href="#schema-migrations">As described above</a>, 
-each time a Django model's definition changes it requires the generation of a new Django migration. 
-Over time, the number of migrations in our apps can grow very large, 
+<p><a href="#schema-migrations">As described above</a>,
+each time a Django model's definition changes it requires the generation of a new Django migration.
+Over time, the number of migrations in our apps can grow very large,
 slowing down testing and the <code>migrate</code> command.</p>
-<p>For this reason it may be desirable to periodically delete and recreate the migration files, 
-so that instead of a series of files detailing every change over time 
-we have a smaller set that just describes the current state of models in the code. </p>
-<p>Django does provide an automated 
-<a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations">squashing</a> 
-process for migrations, 
+<p>For this reason it may be desirable to periodically delete and recreate the migration files,
+so that instead of a series of files detailing every change over time
+we have a smaller set that just describes the current state of models in the code.</p>
+<p>Django does provide an automated
+<a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations">squashing</a>
+process for migrations,
 but this is often not optimal when migrations contain manual <code>RunPython</code> blocks that we don't necessarily care about keeping around.</p>
-<p>Instead, we delete all existing migration files and then run <code>manage.py makemigrations</code> to create new ones. 
-This will generate the smallest number of migration files needed to describe the state of models in the code; 
+<p>Instead, we delete all existing migration files and then run <code>manage.py makemigrations</code> to create new ones.
+This will generate the smallest number of migration files needed to describe the state of models in the code;
 typically one per app although sometimes multiple are needed due to app dependencies.</p>
 <p>This process does have these critical side effects:</p>
 <ol>
 <li>
-<p>Databases that exist at some migration state before the one at the point of the recreation will no longer be able to be migrated to the current state, 
-    as the intermediate changes will have been lost. 
-    This means that those databases will need to be recreated. 
-    This also means that historical database archives will require a bit more work to resurrect; 
-    they'll need to first be migrated to the point just before the recreation, 
+<p>Databases that exist at some migration state before the one at the point of the recreation will no longer be able to be migrated to the current state,
+    as the intermediate changes will have been lost.
+    This means that those databases will need to be recreated.
+    This also means that historical database archives will require a bit more work to resurrect;
+    they'll need to first be migrated to the point just before the recreation,
     and then updated to code at or after that point.</p>
-<p>For example, say a database dump exists at a point where N migrations occur. 
-At such time as N + 1 migrations occur, 
-we decide to go through the recreation process. 
-Now we have a new migration numbered N + 2 that represents the equivalent of all (1..N+1) migrations that it replaces. 
-If you try to load and migrate the dump at point N, 
-Django no longer has the code necessary to go from N-&gt;N+1 only -- 
-it only has the ability to go from 0-&gt;N+2. 
-To recover such a dump, you'll need to check out the code at the point before the recreation was done, 
+<p>For example, say a database dump exists at a point where N migrations occur.
+At such time as N + 1 migrations occur,
+we decide to go through the recreation process.
+Now we have a new migration numbered N + 2 that represents the equivalent of all (1..N+1) migrations that it replaces.
+If you try to load and migrate the dump at point N,
+Django no longer has the code necessary to go from N-&gt;N+1 only --
+it only has the ability to go from 0-&gt;N+2.
+To recover such a dump, you'll need to check out the code at the point before the recreation was done,
 migrate from N-&gt;N+1, and then check out latest and migrate forwards.</p>
 </li>
 <li>
-<p>Any open pull requests at the time of the recreation that reference 
-    or depend on some of the existing migrations 
+<p>Any open pull requests at the time of the recreation that reference
+    or depend on some of the existing migrations
     will need to be modified to instead refer to the new migration files.</p>
 </li>
 </ol>
@@ -592,13 +589,13 @@ migrate from N-&gt;N+1, and then check out latest and migrate forwards.</p>
 <p>Create new migration files from the state of model Python code:</p>
 <pre class="highlight"><code class="language-sh">cfgov/manage.py makemigrations --noinput</code></pre>
 
-<p>As it happens this creates new initial migrations (<code>0001_initial</code>) for all apps, 
-plus some subsequent migrations (<code>0002_something</code>) for apps that depend on other apps 
+<p>As it happens this creates new initial migrations (<code>0001_initial</code>) for all apps,
+plus some subsequent migrations (<code>0002_something</code>) for apps that depend on other apps
 (for example, <code>ask_cfpb</code> has its own initial migration and then some changes that rely on <code>v1</code>).</p>
 </li>
 <li>
-<p>Rename the created migration files so that they follow in sequence the migration files that used to exist. 
-   For example, if at the time of recreation there are 101 <code>v1</code> migrations, 
+<p>Rename the created migration files so that they follow in sequence the migration files that used to exist.
+   For example, if at the time of recreation there are 101 <code>v1</code> migrations,
    the first new migration should be numbered 102.</p>
 </li>
 <li>
@@ -606,18 +603,18 @@ plus some subsequent migrations (<code>0002_something</code>) for apps that depe
 <p>This involves adding lines to these files like:</p>
 <pre class="highlight"><code class="language-py">replaces = [('app_name', '0002_foo'), ('app_name', '0003_bar'), ...]</code></pre>
 
-<p>This tells Django that these new files replace the old files, 
-so that when migrations are run again, 
+<p>This tells Django that these new files replace the old files,
+so that when migrations are run again,
 it doesn't need to do anything.</p>
-<p>Also manually update any new subsequent migration files so that they properly refer to each other. 
-For example, if an app has two new migrations 102 and 103, 
+<p>Also manually update any new subsequent migration files so that they properly refer to each other.
+For example, if an app has two new migrations 102 and 103,
 the 103 file needs to properly depend on 102.</p>
 </li>
 </ol>
 <p>To apply these new migration files to an existing database, you can simply run:</p>
 <pre class="highlight"><code class="language-sh">cfgov/manage.py migrate --noinput</code></pre>
 
-<p>You'll see that there are no changes to apply, 
+<p>You'll see that there are no changes to apply,
 as the new files should exactly describe the current model state in the same way that the old migrations did.</p>
 <p>See <a href="https://github.com/cfpb/cfgov-refresh/pull/3770">cfgov-refresh#3770</a> for an example of when this was done.</p>
               

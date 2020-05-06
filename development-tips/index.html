@@ -179,20 +179,16 @@
     
         <ul>
         
-            <li><a class="toctree-l4" href="#tip-developing-on-nested-satellite-apps">TIP: Developing on nested satellite apps</a></li>
+            <li><a class="toctree-l4" href="#main-front-end-templateasset-locations">Main front-end template/asset locations</a></li>
         
-            <li><a class="toctree-l4" href="#tip-working-with-the-templates">TIP: Working with the templates</a></li>
+            <li><a class="toctree-l4" href="#installing-new-front-end-dependencies">Installing new front-end dependencies</a></li>
         
-            <li><a class="toctree-l4" href="#tip-installing-new-frontend-dependencies">TIP: Installing new frontend dependencies</a></li>
+            <li><a class="toctree-l4" href="#developing-on-nested-satellite-apps">Developing on nested satellite apps</a></li>
         
         </ul>
     
 
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../travis/">How We Use Travis CI</a>
                 </li>
                 <li class="">
                     
@@ -267,33 +263,50 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="development-tips">Development tips<a class="headerlink" href="#development-tips" title="Permanent link">¶</a></h2>
-<h3 id="tip-developing-on-nested-satellite-apps">TIP: Developing on nested satellite apps<a class="headerlink" href="#tip-developing-on-nested-satellite-apps" title="Permanent link">¶</a></h3>
+                <h1 id="development-tips">Development tips<a class="headerlink" href="#development-tips" title="Permanent link">¶</a></h1>
+<h2 id="main-front-end-templateasset-locations">Main front-end template/asset locations<a class="headerlink" href="#main-front-end-templateasset-locations" title="Permanent link">¶</a></h2>
+<p><strong>Templates</strong> that are served by the Django server: <code>cfgov/jinja2/v1</code></p>
+<p><strong>Static assets</strong> prior to processing (combilation, minification, etc.):
+<code>cfgov/unprocessed</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After running <code>gulp build</code> the site's assets are copied over to <code>cfgov/static_built</code>,
+ready to be served by Django.</p>
+</div>
+<h2 id="installing-new-front-end-dependencies">Installing new front-end dependencies<a class="headerlink" href="#installing-new-front-end-dependencies" title="Permanent link">¶</a></h2>
+<ul>
+<li>Use <code>yarn add new_dep@se.m.ver</code> to install new dependencies
+  or update existing dependencies.</li>
+<li>If you can't do this for some reason or are looking to freshen all dependencies,
+  you will need to edit <code>.yarnrc</code>, temporarily commenting out the <code>--install.pure-lockfile true</code>
+  and <code>--install.offline true</code> flags before proceeding with your installation or update.</li>
+<li>In the rare but observed case that <code>yarn add new_dep@se.m.ver</code> doesn't add
+  every needed package to the offline cache, you likely need to first run
+  <code>yarn cache clean</code>.</li>
+</ul>
+<h2 id="developing-on-nested-satellite-apps">Developing on nested satellite apps<a class="headerlink" href="#developing-on-nested-satellite-apps" title="Permanent link">¶</a></h2>
 <p>Some projects can sit inside cfgov-refresh, but manage their own asset
-dependencies. These projects have their own package.json and base templates.</p>
+dependencies. These projects have their own <code>package.json</code> and base templates.</p>
 <p>The structure looks like this:</p>
-<h4 id="npm-modules">npm modules<a class="headerlink" href="#npm-modules" title="Permanent link">¶</a></h4>
+<h3 id="npm-modules">npm modules<a class="headerlink" href="#npm-modules" title="Permanent link">¶</a></h3>
 <ul>
-<li>App's own dependency list is in
-  <code>cfgov/unprocessed/apps/[project namespace]/package.json</code></li>
-<li>App's <code>node_modules</code> path is listed in the Travis config
-  <a href="https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml#L10">https://github.com/cfpb/cfgov-refresh/blob/master/.travis.yml#L10</a>
-  so that their dependencies will be available when Travis runs.</li>
+<li>List an app's own dependencies in
+  <code>cfgov/unprocessed/apps/[project namespace]/package.json</code>.</li>
 </ul>
-<h4 id="webpack">Webpack<a class="headerlink" href="#webpack" title="Permanent link">¶</a></h4>
+<h3 id="webpack">Webpack<a class="headerlink" href="#webpack" title="Permanent link">¶</a></h3>
 <ul>
-<li>Apps may include their own webpack-config.js configuration that adjusts how
+<li>Apps may include their own <code>webpack-config.js</code> configuration that adjusts how
   their app-specific assets should be built. This configuration appears in
-  <code>cfgov/unprocessed/apps/[project namespace]/webpack-config.js</code></li>
+  <code>cfgov/unprocessed/apps/[project namespace]/webpack-config.js</code>.</li>
 </ul>
-<h4 id="browserlist">Browserlist<a class="headerlink" href="#browserlist" title="Permanent link">¶</a></h4>
+<h3 id="browserslist">Browserslist<a class="headerlink" href="#browserslist" title="Permanent link">¶</a></h3>
 <ul>
 <li>Apps may include a
-  <a href="https://github.com/browserslist/browserslist#config-file">browserlist config</a>
+  <a href="https://github.com/browserslist/browserslist#config-file">browserslist config</a>
   file, which is automatically picked up by <code>@babel/preset-env</code> inside the
   webpack config, if no <code>browsers</code> option is supplied.</li>
 </ul>
-<h4 id="adding-images">Adding Images<a class="headerlink" href="#adding-images" title="Permanent link">¶</a></h4>
+<h3 id="adding-images">Adding Images<a class="headerlink" href="#adding-images" title="Permanent link">¶</a></h3>
 <ul>
 <li>Images should be compressed and optimized before being committed to the repo</li>
 <li>In order to keep builds fast and reduce dependencies, the front-end build does not contain an image optimization step</li>
@@ -302,9 +315,9 @@ dependencies. These projects have their own package.json and base templates.</p>
 <li>Reexport that PNG from Adobe Fireworks as an 8-bit PNG</li>
 <li>Run the 8-bit PNG through <a href="https://imageoptim.com">ImageOptim</a></li>
 </ul>
-<h4 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">¶</a></h4>
+<h3 id="templates">Templates<a class="headerlink" href="#templates" title="Permanent link">¶</a></h3>
 <ul>
-<li>Apps use a jinja template that extends the <code>base.html</code>
+<li>Apps use a Jinja template that extends the <code>base.html</code>
   template used by the rest of the site.
   This template would reside in <code>cfgov/jinja2/v1/[project namespace]/index.html</code>
   or similar (for example, <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/owning-a-home/explore-rates/index.html">owning-a-home</a>).</li>
@@ -315,25 +328,6 @@ dependencies. These projects have their own package.json and base templates.</p>
 by including the required dependencies, polyfills, etc. in its
 template's <code>{% block css %}</code> or <code>{% block javascript scoped %}</code> blocks.</p>
 </div>
-<h3 id="tip-working-with-the-templates">TIP: Working with the templates<a class="headerlink" href="#tip-working-with-the-templates" title="Permanent link">¶</a></h3>
-<h4 id="front-end-templateasset-locations">Front-End Template/Asset Locations<a class="headerlink" href="#front-end-templateasset-locations" title="Permanent link">¶</a></h4>
-<p><strong>Templates</strong> that are served by the Django server: <code>cfgov\jinja2\v1</code></p>
-<p><strong>Static assets</strong> prior to processing (minifying etc.): <code>cfgov\unprocessed</code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>After running <code>gulp build</code> the site's assets are copied over to <code>cfgov\static_built</code>,
-ready to be served by Django.</p>
-</div>
-<h3 id="tip-installing-new-frontend-dependencies">TIP: Installing new frontend dependencies<a class="headerlink" href="#tip-installing-new-frontend-dependencies" title="Permanent link">¶</a></h3>
-<ul>
-<li>Use <code>yarn add new_dep@se.m.ver</code> to install new dependencies.</li>
-<li>If you can't do this for some reason or are looking to freshen all dependencies,
-  you will need to edit <code>.yarnrc</code>, temporarily commenting out the <code>--install.pure-lockfile true</code>
-  and <code>--install.offline true</code> flags before proceeding with your installation or update.</li>
-<li>In the rare but observed case that <code>yarn add new_dep@se.m.ver</code> doesn't add
-  every needed package to the offline cache, you likely need to first run
-  <code>yarn cache clean</code>.</li>
-</ul>
               
             </div>
           </div>
@@ -341,7 +335,7 @@ ready to be served by Django.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../travis/" class="btn btn-neutral float-right" title="How We Use Travis CI">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../github-actions/" class="btn btn-neutral float-right" title="How We Use GitHub Actions">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../related-projects/" class="btn btn-neutral" title="Related Projects"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -375,7 +369,7 @@ ready to be served by Django.</p>
         <span><a href="../related-projects/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../travis/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../github-actions/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -194,10 +194,6 @@
                 </li>
                 <li class="">
                     
-    <a class="" href="travis/">How We Use Travis CI</a>
-                </li>
-                <li class="">
-                    
     <a class="" href="github-actions/">How We Use GitHub Actions</a>
                 </li>
     </ul>
@@ -275,15 +271,11 @@
 <li>macOS</li>
 <li><a href="https://brew.sh">Homebrew</a> - package manager for installing system software on OSX</li>
 <li><a href="https://docs.python.org/3.6/">Python 3.6</a> and <a href="https://pip.pypa.io/en/stable/user_guide/">pip (Python package manager)</a></li>
-<li><a href="http://jinja.pocoo.org/docs/2.10/">Jinja2 templates</a> for front-end rendering. See <a href="https://github.com/cfpb/cfgov-refresh/tree/master/requirements/libraries.txt"><code>requirements/libraries.txt</code></a> for version.</li>
+<li><a href="https://jinja.palletsprojects.com/">Jinja2 templates</a> for front-end rendering. See <a href="https://github.com/cfpb/cfgov-refresh/tree/master/requirements/libraries.txt"><code>requirements/libraries.txt</code></a> for version.</li>
 <li><a href="https://wagtail.io">Wagtail CMS</a> for content administration. See <a href="https://github.com/cfpb/cfgov-refresh/tree/master/requirements/wagtail.txt"><code>requirements/wagtail.txt</code></a> for version.</li>
 <li><a href="https://www.postgresql.org/">PostgreSQL 10.5</a> is the database we use in production and locally.</li>
-<li>
-<p><a href="http://initd.org/psycopg/">Psycopg</a> is the Python library that lets Python talk to Postgres. See <a href="https://github.com/cfpb/cfgov-refresh/tree/master/requirements/libraries.txt"><code>requirements/libraries.txt</code></a> for current version. </p>
-</li>
-<li>
-<p>Additional dependencies, listed below</p>
-</li>
+<li><a href="http://initd.org/psycopg/">Psycopg</a> is the Python library that lets Python talk to Postgres. See <a href="https://github.com/cfpb/cfgov-refresh/tree/master/requirements/libraries.txt"><code>requirements/libraries.txt</code></a> for current version.</li>
+<li>Additional dependencies, listed below.</li>
 </ul>
 <h2 id="additional-dependencies">Additional dependencies<a class="headerlink" href="#additional-dependencies" title="Permanent link">¶</a></h2>
 <ul>
@@ -301,15 +293,14 @@
 <a href="https://github.com/cfpb/cfgov-refresh/tree/master/requirements">https://github.com/cfpb/cfgov-refresh/tree/master/requirements</a></p>
 <ul>
 <li><code>base.txt</code>: shortcut for <code>django.txt</code> + <code>wagtail.txt</code> + <code>libraries.txt</code></li>
-<li><code>deployment.txt</code>: requirements for deployment, includes <code>base.txt</code> and <code>postgres.txt</code> and a New Relic library which we don't install anywhere else.</li>
+<li><code>ci.txt</code>: specific requirements for the continuous integration environment. Should/could be moved to CI configuration files?</li>
+<li><code>deployment.txt</code>: requirements for deployment, includes <code>base.txt</code> and a New Relic library that we don't install anywhere else.</li>
 <li><code>django.txt</code>: specifies the Django version. The file is used when running the site, but by having it separate we can test against other versions of Django by excluding this file.</li>
+<li><code>docs.txt</code>: requirements to build the cfgov-refresh docs.</li>
 <li><code>libraries.txt</code>: Python libraries.</li>
-<li><code>local.txt</code>: includes <code>base.txt</code> and <code>postgres.txt</code> and some useful libraries when developing locally.</li>
-<li><code>docs.txt</code>: requirements to build the cfgov-refresh docs. </li>
-<li><code>postgres.txt</code>: requirements to connect Django to Postgres.</li>
+<li><code>local.txt</code>: includes <code>base.txt</code> and some useful libraries when developing locally.</li>
 <li><code>scripts.txt</code>: Requirements for running certain jobs on Jenkins, so scripts can run in Jenkins without having to install all the other requirements.</li>
 <li><code>test.txt</code>: requirements for running Python tests.</li>
-<li><code>travis.txt</code>: extra requirements for Travis. Should/could be moved to explicitly listed in the .travis.yml file?</li>
 <li><code>wagtail.txt</code>: specifies Wagtail version. In its own file to make it easier to test multiple versions, same as with <code>django.txt</code>.</li>
 </ul>
               
@@ -362,5 +353,5 @@
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2020-05-06 15:50:32
+Build Date UTC : 2020-05-06 20:20:43
 -->
