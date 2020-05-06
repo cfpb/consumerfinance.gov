@@ -282,6 +282,9 @@
             &_content {
                 right: @margin_half__em;
                 width: auto;
+                // Add margin so that the focus rectangle isn't cropped by
+                // the hidden overflow of the search container element.
+                margin-left: 3px;
             }
         }
     } );
