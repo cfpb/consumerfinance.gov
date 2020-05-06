@@ -253,10 +253,6 @@ export const Categories = new CategoryTree({
           id: 'cablePlans',
           title: 'Consider Entertainment Alternatives',
           body: 'Many cable providers offer multiple options for new and existing customers. Contact your provider and ask about lower-cost plans or consider a cheaper streaming service.',
-          link: {
-            href: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/',
-            text: 'Cutting Expenses (Your Money Your Goals)',
-          },
         },
       },
       internet: {
