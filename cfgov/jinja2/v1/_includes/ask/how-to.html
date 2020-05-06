@@ -1,22 +1,31 @@
 {# ==========================================================================
 
-   How To block
+   HowTo block
 
    ==========================================================================
 
    Description:
 
-   Implements Google's recommended elements of HowTo schema when given:
+   Implements Google's recommended elements of HowTo schema
+   (see https://developers.google.com/search/docs/data-types/how-to)
+   when given:
 
-   value: Object defined from a Streamfield block.
+   value:                         Object defined from a Streamfield block.
 
-   value.description:         Text overview of how to.
+   value.title:                   Main title for the HowTo. Marked up as the
+                                  HowTo's `name` field.
 
-   value.steps:               List of steps
+   value.description:             Text overview of the HowTo. Marked up as the
+                                  HowTo's `description` field.
 
-   value.step.title:          Title of step
+   value.steps:                   List of steps in the HowTo. Marked up as
+                                  HowToStep objects.
 
-   value.step.step_contents   Output of streamblock
+   value.steps.step.title:        Title of an individual step. Marked up as the
+                                  HowToStep's `name` field.
+
+   value.steps.step.step_content: StreamBlock containing the step content.
+                                  Marked up as the HowToStep's `text` field.
 
    ========================================================================== #}
 
