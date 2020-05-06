@@ -7,26 +7,31 @@ const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 export default class WizardStore {
   fundingSourceOptions = {
     'checking': {
+      order: 1,
       name: 'Checking Account',
       label: 'How much do you have in your checking account?',
       icon: 'paycheck',
     },
     'savings': {
+      order: 2,
       name: 'Savings Account',
       label: 'How much do you have in your savings account?',
       icon: 'emergencySavings',
     },
     'cash': {
+      order: 3,
       name: 'Cash',
       label: 'How much cash do you have?',
       icon: 'funMoney',
     },
     'prepaid': {
+      order: 4,
       name: 'Prepaid Cards',
       label: 'How much do have in prepaid cards?',
       icon: 'creditCard'
     },
     'other': {
+      order: 5,
       name: 'Other',
       label: 'How much other money on hand do you have?',
       icon: 'other',
@@ -71,7 +76,8 @@ export default class WizardStore {
   }
 
   @action setFundingSources(sources = []) {
-    this.fundingSources = Object.keys(this.fundingSourceOptions).filter((opt) => sources.includes(opt));
+    this.fundingSources = sources.sort((a, b) => this.fundingSourceOptions[a].order - this.fundingSourceOptions[b].order);
+    this.logger.debug('Funding sources: %O', this.fundingSources);
   }
 
   @action setStartingFunds(obj = {}) {
