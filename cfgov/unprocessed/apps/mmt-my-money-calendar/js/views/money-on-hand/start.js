@@ -3,20 +3,18 @@ import { ButtonLink } from '../../components/button';
 import Hero from '../../components/hero';
 
 import { arrowRight } from '../../lib/icons';
-import categoryIcons from '../../lib/category-icons';
+import hero from 'img/Hero_2.png';
 
 export default function Start() {
   useScrollToTop();
 
-  const { moneyOnHand } = categoryIcons;
 
   return (
     <>
       <Hero
         title="MyMoney Calendar"
         subtitle="See how your money flows from week to week and learn how to avoid coming up short."
-        isSVG
-        image={moneyOnHand}
+        image={hero}
         alt="MyMoney Calendar"
       />
       <br />
