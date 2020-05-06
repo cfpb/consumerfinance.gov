@@ -104,6 +104,7 @@ function Form() {
 
       <h2 className="add-event__title">{category.name}</h2>
       <p className="add-event__intro">Enter your {category.name.toLowerCase()} details.</p>
+      {!!category.description && <p className="add-event__description">{category.description}</p>}
 
       <Formik
         initialValues={event.toFormValues()}
