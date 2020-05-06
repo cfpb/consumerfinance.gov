@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import ModalDialog from '../../components/modal-dialog';
 import { useStore } from '../../stores';
 import { useBEM } from '../../lib/hooks';
-import { Button } from '../../components/button';
+import { Button, ButtonLink } from '../../components/button';
 import { useScrollToTop } from '../../components/scroll-to-top';
 
 function More() {
@@ -31,6 +31,24 @@ function More() {
 
       <main className={bem('main')}>
         <ul className={bem('actions')}>
+          <li className={bem('actions-item')}>
+            <ButtonLink
+              fullWidth
+              variant="primary"
+              to="/more/export/strategies"
+            >
+              Save Strategies
+            </ButtonLink>
+          </li>
+          <li className={bem('actions-item')}>
+            <ButtonLink
+              fullWidth
+              variant="primary"
+              to="/more/export/calendar"
+            >
+              Save Calendar
+            </ButtonLink>
+          </li>
           <li className={bem('actions-item')}>
             <Button
               fullWidth

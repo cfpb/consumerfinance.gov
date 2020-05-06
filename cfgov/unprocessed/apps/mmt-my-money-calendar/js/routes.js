@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Home from './views/home';
 import Calendar from './views/calendar/index';
 import AddEvent from './views/calendar/add';
@@ -7,6 +7,7 @@ import FixItStrategies from './views/strategies/fix-it';
 import Strategies from './views/strategies';
 import MoneyOnHand from './views/money-on-hand';
 import More from './views/more';
+import Export from './views/more/export';
 
 const Routes = () => (
   <Router basename="/mmt-my-money-calendar">
@@ -40,7 +41,15 @@ const Routes = () => (
           <Strategies />
         </Route>
 
-        <Route path="/more">
+        <Route exact path="/more/export">
+          <Redirect to="/more" />
+        </Route>
+
+        <Route exact path="/more/export/:dataType">
+          <Export />
+        </Route>
+
+        <Route exact path="/more">
           <More />
         </Route>
       </Switch>
