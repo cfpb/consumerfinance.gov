@@ -6,7 +6,7 @@
   {% set language = 'en' %}
 {% endif -%}
 <!DOCTYPE html>
-{% if flag_enabled('CFPB_RECRUITING', request) %}
+{% if flag_enabled('CFPB_RECRUITING') %}
 <!--
     ============================================================================
 
@@ -178,7 +178,7 @@
     </script>
     {% endblock javascript_loader %}
 
-    {% if flag_enabled('AB_TESTING', request) %}
+    {% if flag_enabled('AB_TESTING') %}
     {# Google Optimize page-hiding snippet #}
     <style>
         .optimize-loading { opacity: 0 !important; }
@@ -336,7 +336,7 @@
           {% if js_source | length > 0 %}
             s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
           {% endif %}
-          {% if flag_enabled('TURBOLINKS', request) %}
+          {% if flag_enabled('TURBOLINKS') %}
             s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
           {% endif %}
           {# Pass scripts to JavaScript loader. #}
