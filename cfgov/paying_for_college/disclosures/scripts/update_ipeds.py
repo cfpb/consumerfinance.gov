@@ -19,7 +19,7 @@ SCRIPT = os.path.basename(__file__).partition('.')[0]
 PFC_ROOT = Path(__file__).ancestor(3)
 # LATEST_YEAR specifies first year of academic-year data
 # So 2015 would fetch data for 2015-2016 cycle
-LATEST_YEAR = datetime.datetime.now().year - 1
+LATEST_YEAR = datetime.datetime.now().year - 2
 ipeds_directory = '{}/data_sources/ipeds'.format(PFC_ROOT)
 ipeds_data_url = 'http://nces.ed.gov/ipeds/datacenter/data'
 data_slug = 'IC{}_AY'.format(LATEST_YEAR)
@@ -85,7 +85,7 @@ def icomma(value):
 
 
 def unzip_file(filepath):
-    """Unzip a .zip file and store contents in the ipeds directory"""
+    """Unzip a .zip file and store contents in the ipeds directory."""
     zip_ref = zipfile.ZipFile(filepath, 'r')
     zip_ref.extractall(ipeds_directory)
     zip_ref.close()
@@ -93,7 +93,7 @@ def unzip_file(filepath):
 
 
 def download_zip_file(url, zip_file):
-    """Download a .zip file, unzip it, and then delete the .zip file"""
+    """Download a .zip file, unzip it, and then delete the .zip file."""
     resp = requests.get(url, stream=True)
     if resp.ok:
         with open(zip_file, 'wb') as f:
@@ -115,21 +115,8 @@ def write_clean_csv(fpath, fieldnames, clean_headings, data):
             writer.writerow([row[name] for name in fieldnames])
 
 
-def clean_csv_headings():
-    """Strip nasty leading or trailing spaces from column headings"""
-    for slug in ['universe', 'data', 'services']:
-        original_file = DATA_VARS['{}_csv'.format(slug)]
-        cleaned_file = DATA_VARS['{}_cleaned'.format(slug)]
-        fieldnames, data = read_csv(original_file, encoding='latin-1')
-        clean_headings = [name.strip() for name in fieldnames]
-        write_clean_csv(cleaned_file, fieldnames, clean_headings, data)
-
-
 def download_files():
-    """
-    Download and clean the latest IPEDS Institutional Characterstics files
-    and the data dictionary for reference"""
-
+    """Download the latest IPEDS Institutional Characterstics file."""
     for slug in ['universe', 'data', 'services']:
         url = DATA_VARS['{}_url'.format(slug)]
         target = DATA_VARS['{}_zip'.format(slug)]
@@ -144,10 +131,10 @@ def download_files():
 def read_csv(fpath, encoding='utf-8'):
     if not os.path.isfile(fpath):
         download_files()
-        with open(fpath, newline='', encoding=encoding) as f:
-            reader = cdr(f)
-            data = [row for row in reader]
-            return reader.fieldnames, data
+    with open(fpath, newline='', encoding=encoding) as f:
+        reader = cdr(f)
+        data = [row for row in reader]
+        return reader.fieldnames, data
 
 
 def dump_csv(fpath, header, data):
@@ -158,8 +145,18 @@ def dump_csv(fpath, header, data):
             writer.writerow([row[heading] for heading in header])
 
 
+def clean_csv_headings():
+    """Strip nasty leading or trailing spaces from column headings."""
+    for slug in ['universe', 'data', 'services']:
+        original_file = DATA_VARS['{}_csv'.format(slug)]
+        cleaned_file = DATA_VARS['{}_cleaned'.format(slug)]
+        fieldnames, data = read_csv(original_file, encoding='latin-1')
+        clean_headings = [name.strip() for name in fieldnames]
+        write_clean_csv(cleaned_file, fieldnames, clean_headings, data)
+
+
 def process_datafiles(add_schools=[]):
-    """Collect data points from IPEDS csvs and deliver them as a dict"""
+    """Collect data points from IPEDS csvs and deliver them as a dict."""
     collector = {}
     if add_schools:  # we have a list of school IDs to add to our database
         names, data = read_csv(DATA_VARS['universe_cleaned'])
@@ -189,16 +186,16 @@ def create_school(id, data):
     school = School(school_id=id, data_json=STARTER_DATA_JSON)
     for field in data:
         if field == 'alias':
-            ALIAS = data['alias']
+            _alias = data['alias']
         else:
             setattr(school, field, data[field])
     school.zip5 = school.zip5[:5]
     school.save()
-    create_alias(ALIAS, school)
+    create_alias(_alias, school)
 
 
 def process_missing(missing_ids):
-    """Create missing school and alias objects and dump csv of additions"""
+    """Create missing school and alias objects and dump csv of additions.   """
     csv_out_data = []
     csv_slug = '{}/schools_added_on_{}.csv'.format(ipeds_directory,
                                                    datetime.date.today())

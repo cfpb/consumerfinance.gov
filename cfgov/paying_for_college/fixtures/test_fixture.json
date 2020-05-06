@@ -119,6 +119,7 @@
         "main_campus": null,
         "median_monthly_debt": null,
         "median_total_debt": "8500.0",
+        "program_count": 0,
         "repay_3yr": "0.5447138700",
         "url": "",
         "enrollment": null,
@@ -134,7 +135,7 @@
 },
 {
     "fields": {
-        "control": "Public",
+        "control": "Private",
         "ownership": "1",
         "offers_perkins": true,
         "under_investigation": false,
@@ -172,7 +173,7 @@
 },
 {
     "fields": {
-        "control": "Public",
+        "control": "",
         "ownership": "1",
         "offers_perkins": true,
         "under_investigation": false,

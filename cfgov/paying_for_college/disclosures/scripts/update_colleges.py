@@ -18,7 +18,7 @@ from paying_for_college.disclosures.scripts.api_utils import (
     DECIMAL_MAP, MODEL_MAP
 )
 from paying_for_college.models import (
-    CONTROL_MAP, FAKE_SCHOOL_PK, PROGRAM_LEVELS, Program, School
+    CONTROL_MAP, FAKE_SCHOOL_PK, OFFICE_IDS, PROGRAM_LEVELS, Program, School
 )
 
 
@@ -60,8 +60,8 @@ def update_programs(api_data, school):
                 'program_name': entry['title'],
                 'cip_code': cip_code,
                 'completers': entry['counts']['titleiv'],
-                'level_code': level_code,
-                'level': PROGRAM_LEVELS.get(int(level_code)),
+                'level': level_code,
+                'level_name': PROGRAM_LEVELS.get(int(level_code)),
                 'salary': entry['earnings']['median_earnings'],
                 'median_student_loan_completers': (
                     entry['debt']['median_debt']),
@@ -167,7 +167,8 @@ def update(exclude_ids=[], single_school=None, store_programs=False):
     Optionally, you can store program data and limit actions to one school.
     """
     programs_created = 0
-    exclude_ids += [FAKE_SCHOOL_PK]
+
+    excluded_ids = OFFICE_IDS + [FAKE_SCHOOL_PK] + exclude_ids
     no_data = []  # API failed to respond or provided no data
     closed = []  # schools that have closed since our last scrape
     job_msg = (
@@ -178,7 +179,7 @@ def update(exclude_ids=[], single_school=None, store_programs=False):
     processed = 0
     update_count = 0
     id_url = "{}&id={}&fields={}"
-    base_query = School.objects.exclude(pk__in=exclude_ids)
+    base_query = School.objects.exclude(pk__in=excluded_ids)
     if single_school:
         if not base_query.filter(pk=single_school).exists():
             no_school_msg = "Could not find school with ID {}".format(
