@@ -38,7 +38,7 @@ https://github.com/cfpb/cfgov-refresh/tree/master/requirements
 
 - `base.txt`: shortcut for `django.txt` + `wagtail.txt` + `libraries.txt`
 - `ci.txt`: specific requirements for the continuous integration environment. Should/could be moved to CI configuration files?
-- `deployment.txt`: requirements for deployment, includes `base.txt` and a New Relic library which we don't install anywhere else.
+- `deployment.txt`: requirements for deployment, includes `base.txt` and a New Relic library that we don't install anywhere else.
 - `django.txt`: specifies the Django version. The file is used when running the site, but by having it separate we can test against other versions of Django by excluding this file.
 - `docs.txt`: requirements to build the cfgov-refresh docs.
 - `libraries.txt`: Python libraries.
