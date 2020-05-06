@@ -33,7 +33,6 @@ function BalanceForm() {
     evt.preventDefault();
     history.push(prevStep);
   };
-  const icon = categoryIcons[wizardStore.fundingSourceOptions[source].icon];
 
   const initialValues = useMemo(
     () =>
