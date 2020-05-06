@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Django and Wagtail Migrations - cfgov-refresh</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../css/overrides.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Django and Wagtail Migrations";
+    var mkdocs_page_input_path = "migrations.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installation/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Running this Project</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../running-virtualenv/">Running in a Virtual Environment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../running-docker/">Running in Docker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-monitoring/">Debugging and Monitoring</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../deployment/">Artifacts and Deployment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Pages and Components</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../atomic-structure/">Atomic Structure and Design</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editing-components/">Creating and Editing Components</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-templates/">Debugging Templates</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Django and Wagtail Migrations</a>
+    <ul class="subnav">
+            
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#table-of-contents">Table of contents</a></li>
+        
+            <li><a class="toctree-l4" href="#reference-material">Reference material</a></li>
+        
+            <li><a class="toctree-l4" href="#do-i-need-to-create-a-migration">Do I need to create a migration?</a></li>
+        
+            <li><a class="toctree-l4" href="#schema-migrations">Schema migrations</a></li>
+        
+            <li><a class="toctree-l4" href="#data-migrations">Data migrations</a></li>
+        
+            <li><a class="toctree-l4" href="#recreating-migrations">Recreating migrations</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../forms-in-wagtail/">Forms in Wagtail Page Context</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wagtail-pages/">Wagtail Pages</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Supporting Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../caching/">Caching</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../feature-flags/">Feature Flags</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../split-testing/">Split Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../translation/">Translation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Testing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../browser-acceptance-tests/">Browser/Acceptance Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../javascript-unit-tests/">JavaScript Unit Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../python-unit-tests/">Python Unit Testing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Contributing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../branching-merging/">Branching and Merging</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../contributing-docs/">Contributing to the Docs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../related-projects/">Related Projects</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../development-tips/">Development Tips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../travis/">How We Use Travis CI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../github-actions/">How We Use GitHub Actions</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">APIs and Data</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ask-cfpb/">Ask CFPB</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../consumer-complaint-database/">Consumer Complaints</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../housing-counselor-tool/">Find a Housing Counselor Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hmda/">HMDA Data</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-feedback/">Website Feedback</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">cfgov-refresh</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Pages and Components &raquo;</li>
+        
+      
+    
+    <li>Django and Wagtail Migrations</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/migrations.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="django-and-wagtail-migrations">Django and Wagtail Migrations<a class="headerlink" href="#django-and-wagtail-migrations" title="Permanent link">¶</a></h1>
+<p>Adding or changing fields on Django models, Wagtail page models
+(which are a particular kind of Django model), or StreamField block classes
+will always require a new <a href="#schema-migrations">Django schema migration</a>;
+additionally, changing field names or types on an existing block will require a
+<a href="#data-migrations">Django data migration</a>.</p>
+<h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
+<ol>
+<li><a href="#reference-material">Reference material</a></li>
+<li><a href="#do-i-need-to-create-a-migration">Do I need to create a migration?</a></li>
+<li><a href="#schema-migrations">Schema migrations</a></li>
+<li><a href="#data-migrations">Data migrations</a></li>
+<li><a href="#wagtail-specific-considerations">Wagtail-specific consideration</a></li>
+<li><a href="#utility-functions">Utility functions</a></li>
+<li><a href="#recreating-migrations">Recreating migrations</a></li>
+</ol>
+<h2 id="reference-material">Reference material<a class="headerlink" href="#reference-material" title="Permanent link">¶</a></h2>
+<p>The following links may be useful for setting context or diving deeper
+into the concepts presented throughout this page:</p>
+<ul>
+<li><a href="https://docs.djangoproject.com/en/1.11/topics/migrations/">Django migrations documentation</a></li>
+<li><a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations">Django data migrations documentation</a></li>
+<li><a href="https://docs.wagtail.io/en/stable/topics/streamfield.html#migrations">Wagtail Streamfield migrations documentation</a></li>
+</ul>
+<h2 id="do-i-need-to-create-a-migration">Do I need to create a migration?<a class="headerlink" href="#do-i-need-to-create-a-migration" title="Permanent link">¶</a></h2>
+<p>A new Django migration is required for most, but not all, changes that you
+make to the definitions of Django model classes. Even experienced Django
+developers may find it unintuitive to determine which changes will require
+a migration.</p>
+<p>Example model changes that require a migration:</p>
+<ul>
+<li>Adding, removing, or renaming a model field</li>
+<li>Changing a model field definition in a way that impacts the database schema
+(for example, changing the size of a <code>CharField</code>)</li>
+<li>Changing a model field definition in a way that does not impact the database schema
+(for example, changing the field's <code>help_text</code>)</li>
+</ul>
+<p>Example model changes that do not require a migration:</p>
+<ul>
+<li>Adding, removing, renaming, or modifying a model class method</li>
+<li>Modifying a model class <a href="https://docs.djangoproject.com/en/1.11/topics/db/managers/">manager</a></li>
+</ul>
+<p>The best way to tell if your changes require a migration is to ask Django to
+determine that for you. Django's
+<a href="https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-makemigrations">makemigrations</a>
+management command can be used for this purpose:</p>
+<pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations --dry-run</code></pre>
+
+<p>If you haven't made any changes to your local source code that would necessitate the
+creation of a new migration, this command will print <code>No changes detected</code>.</p>
+<p>Otherwise, if you have made changes that require a migration, Django will print
+information about the migration that would need to be created:</p>
+<pre class="highlight"><code class="language-bash">Migrations for 'v1':
+  cfgov/v1/migrations/0154_auto_20190412_1008.py
+    - Alter field alt on cfgovimage</code></pre>
+
+<p>Running with the <code>--dry-run</code> flag won't actually create any migration files on disk.
+See below for more information on how to do this, including how to give your
+migrations a more descriptive name.</p>
+<h2 id="schema-migrations">Schema migrations<a class="headerlink" href="#schema-migrations" title="Permanent link">¶</a></h2>
+<p>Any time you add or change a field on a Django model, Wagtail page model
+(which are a particular kind of Django model), or StreamField block class, a
+<a href="https://docs.djangoproject.com/en/1.11/topics/migrations">Django schema migration</a>
+will be required. This includes changes as small as modifying the <code>help_text</code> string.</p>
+<p>To automatically generate a schema migration,
+run the following, editing it to give your migration a name
+that briefly describes the change(s) you're making:</p>
+<pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations -n &lt;description_of_changes&gt;</code></pre>
+
+<p>For examples of good migration names, look through some of
+<a href="https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/migrations">our existing migration files</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some changes will generate multiple migration files.
+If you change a block that is used in pages defined in different sub-apps,
+you will see a migration file for each of those sub-apps.</p>
+</div>
+<h3 id="migration-numbering-and-conflicts">Migration numbering and conflicts<a class="headerlink" href="#migration-numbering-and-conflicts" title="Permanent link">¶</a></h3>
+<p>When a migration file is generated, it will automatically be given
+a unique four-digit number at the beginning of its filename.
+These numbers are assigned in sequence, and they end up being
+a regular source of conflicts between pull requests
+that are in flight at the same time.
+If a PR with a migration gets merged between the time you create your migration
+and the time that your PR is ready for merging,
+you will have to update your branch as normal to be current with master
+and then re-create your migration.
+Also note that our <a href="../travis/">back-end tests that run in Travis</a>
+will fail if a required schema migration is missing or if
+migrations are in conflict with one another.</p>
+<h2 id="data-migrations">Data migrations<a class="headerlink" href="#data-migrations" title="Permanent link">¶</a></h2>
+<p><a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations">Data migrations</a>
+are required any time you:</p>
+<ul>
+<li>rename an existing field</li>
+<li>change the type of an existing field</li>
+<li>delete an existing field</li>
+<li>rename a block within a StreamField</li>
+<li>delete a block</li>
+</ul>
+<p>if you do not want to lose any data already stored in that field or block.</p>
+<p>In other words, if an existing field or block is changing,
+any data stored in that field or block has to be migrated to a different place,
+unless you're OK with jettisoning it.</p>
+<p>There is no automatic generation mechanism like there is for schema migrations.
+You must write the script by hand that automates the transfer of data
+from old fields to new fields.</p>
+<p>To generate an empty migration file for your data migration, run:</p>
+<pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations --empty yourappname</code></pre>
+
+<p>You can also copy the code below to get started with
+<code>forward()</code> and <code>backward()</code> functions to migrate your model's data:</p>
+<pre class="highlight"><code class="language-python">from django.db import migrations
+
+
+def forwards(apps, schema_editor):
+    MyModel = apps.get_model('yourappname', 'MyModel')
+    for obj in MyModel.objects.all():
+        # Make forward changes to the object
+        pass
+
+
+def backwards(apps, schema_editor):
+    MyModel = apps.get_model('yourappname', 'MyModel')
+    for obj in MyModel.objects.all():
+        # Make backward changes to the object
+        pass
+
+
+class Migration(migrations.Migration):
+    dependencies = []
+    operations = [
+        migrations.RunPython(forwards, backwards),
+    ]</code></pre>
+
+<p>The <code>forwards()</code> and <code>backwards()</code> functions are where any changes
+that need to happen to a model's data are made.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While backwards migrations are necessary in external libraries that we create, 
+we do not require them in cfgov-refresh 
+because we prefer not to rollback migrations that have already been applied.</p>
+</div>
+<h3 id="wagtail-specific-considerations">Wagtail-specific considerations<a class="headerlink" href="#wagtail-specific-considerations" title="Permanent link">¶</a></h3>
+<p>Django data migrations with Wagtail can be challenging because
+<a href="https://github.com/wagtail/wagtail/issues/1101">programmatic editing of Wagtail pages is difficult</a>,
+and pages have both revisions and StreamFields.
+This section describes ways we try to address these challenges in cfgov-refresh.</p>
+<p>The data migration needs to modify both the existing Wagtail pages
+that correspond to the changed model and all revisions of that page.
+It also needs to be able to manipulate the contents of StreamFields.</p>
+<p>As described in the
+<a href="../editing-components/#editing-a-field">editing a component guide</a>,
+it's a three-step process to modify a field without losing data:</p>
+<ol>
+<li>Create the new field with an automatic schema migration</li>
+<li>Use a handwritten data migration script to move data
+   from the old field to the new field</li>
+<li>Delete the old field with an automatic schema migration</li>
+</ol>
+<p>We've written some utility functions in cfgov-refresh
+that make writing data migrations for StreamFields easier.
+Using these utilities, a Django data migration that modifies a StreamField
+would use the following format:</p>
+<pre class="highlight"><code class="language-python">from django.db import migrations
+
+from v1.util.migrations import migrate_page_types_and_fields
+
+
+def forward_mapper(page_or_revision, data):
+    # Manipulate the stream block data forwards
+    return data
+
+
+def backward_mapper(page_or_revision, data):
+    # Manipulate the stream block data backwards
+    return data
+
+
+def forwards(apps, schema_editor):
+    page_types_and_fields = [
+        ('myapp', 'MyPage', 'field_name', 'block_name'),
+    ]
+    migrate_page_types_and_fields(
+        apps,
+        page_types_and_fields,
+        forward_mapper
+    )
+
+
+def backwards(apps, schema_editor):
+    page_types_and_fields = [
+        ('myapp', 'MyPage', 'field_name', 'block_name'),
+    ]
+    migrate_page_types_and_fields(
+        apps,
+        page_types_and_fields,
+        backward_mapper
+    )
+
+
+class Migration(migrations.Migration):
+    dependencies = []
+    operations = [
+        migrations.RunPython(forwards, backwards),
+    ]</code></pre>
+
+<p><code>field_name</code> is the name of the StreamField on the Page model that contains the blocks to migrate. 
+<code>block_name</code> is the name of the block within a StreamField that contains the data to be migrated.</p>
+<p>StreamBlocks can themselves also contain child blocks. 
+The block name can be given as a list of block names 
+that form the "path" to the block that needs to be migrated. 
+For example :</p>
+<pre class="highlight"><code class="language-python">def forwards(apps, schema_editor):
+    page_types_and_fields = [
+        ('myapp', 'MyPage', 'field_name', ['parent_block', 'child_block']),
+    ]
+    migrate_page_types_and_fields(
+        apps,
+        page_types_and_fields,
+        forward_mapper
+    )</code></pre>
+
+<p>In this example, 
+a block with the name <code>child_block</code> 
+that is inside a block named <code>parent_block</code> 
+will be passed to the <code>forward_mapper</code> function.</p>
+<p>The <code>data</code> that gets passed to the <code>forward_mapper</code> or <code>backward_mapper</code>
+is a JSON-compatible Python <code>dict</code> that corresponds to the block's schema.</p>
+<h3 id="utility-functions">Utility functions<a class="headerlink" href="#utility-functions" title="Permanent link">¶</a></h3>
+<p>These functions, defined in <code>v1.util.migrations</code>,
+are used in the above data migration example. 
+They reduce the amount of boilerplate required
+to work with Wagtail StreamField data in data migrations.</p>
+<h4 id="migrate_page_types_and_fieldsapps-page_types_and_fields-mapper"><code>migrate_page_types_and_fields(apps, page_types_and_fields, mapper)</code><a class="headerlink" href="#migrate_page_types_and_fieldsapps-page_types_and_fields-mapper" title="Permanent link">¶</a></h4>
+<p>Migrate the fields of a Wagtail page type using the given <code>mapper</code> function.
+<code>page_types_and_fields</code> should be a list of 4-tuples providing
+<code>('app', 'PageType', 'field_name', 'block_name')</code> or 
+<code>('app', 'PageType', 'field_name', ['parent_block_name', 'child_block_name'])</code>. </p>
+<p><code>field_name</code> is the name of the StreamField on the Page model. </p>
+<p><code>block_name</code> is the name of the StreamBlock within the StreamField to migrate. </p>
+<p>The mapper function should take <code>page_or_revision</code> 
+and the stream block's value as a <code>dict</code>.</p>
+<p>This function calls <code>migrate_stream_field()</code>.</p>
+<h4 id="migrate_stream_fieldpage_or_revision-field_name-block_path-mapper"><code>migrate_stream_field(page_or_revision, field_name, block_path, mapper)</code><a class="headerlink" href="#migrate_stream_fieldpage_or_revision-field_name-block_path-mapper" title="Permanent link">¶</a></h4>
+<p>Migrate all occurrences of the block name 
+contained within the <code>block_path</code> list
+belonging to the page or revision using the <code>mapper</code> function.</p>
+<p>The mapper function should take <code>page_or_revision</code> 
+and the stream block's value as a <code>dict</code>.</p>
+<p>This function calls <code>migrate_stream_data()</code>.</p>
+<h4 id="migrate_stream_datapage_or_revision-block_path-stream_data-mapper"><code>migrate_stream_data(page_or_revision, block_path, stream_data, mapper)</code><a class="headerlink" href="#migrate_stream_datapage_or_revision-block_path-stream_data-mapper" title="Permanent link">¶</a></h4>
+<p>Migrate all occurrences of the block name 
+contained within the <code>block_path</code> list
+within the <code>stream_data</code> <code>dict</code> 
+using the given <code>mapper</code> function.</p>
+<p>The mapper function should take <code>page_or_revision</code>
+and the stream block's value as a <code>dict</code>.</p>
+<h4 id="get_stream_datapage_or_revision-field_name"><code>get_stream_data(page_or_revision, field_name)</code><a class="headerlink" href="#get_stream_datapage_or_revision-field_name" title="Permanent link">¶</a></h4>
+<p>Get the StreamField data for a given field name on a page or a revision.</p>
+<p>This function will return a list of <code>dict</code>-like objects
+containing the blocks within the given StreamField.</p>
+<h4 id="set_stream_datapage_or_revision-field_name-stream_data-committrue"><code>set_stream_data(page_or_revision, field_name, stream_data, commit=True)</code><a class="headerlink" href="#set_stream_datapage_or_revision-field_name-stream_data-committrue" title="Permanent link">¶</a></h4>
+<p>Set the StreamField data for a given field name on a page or a revision.
+If commit is <code>True</code> (default),
+<code>save()</code> is called on the <code>page_or_revision</code> object.</p>
+<p><code>stream_data</code> must be a list of <code>dict</code>-like objects
+containing the blocks within the given StreamField.</p>
+<h2 id="recreating-migrations">Recreating migrations<a class="headerlink" href="#recreating-migrations" title="Permanent link">¶</a></h2>
+<p><a href="#schema-migrations">As described above</a>, 
+each time a Django model's definition changes it requires the generation of a new Django migration. 
+Over time, the number of migrations in our apps can grow very large, 
+slowing down testing and the <code>migrate</code> command.</p>
+<p>For this reason it may be desirable to periodically delete and recreate the migration files, 
+so that instead of a series of files detailing every change over time 
+we have a smaller set that just describes the current state of models in the code. </p>
+<p>Django does provide an automated 
+<a href="https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations">squashing</a> 
+process for migrations, 
+but this is often not optimal when migrations contain manual <code>RunPython</code> blocks that we don't necessarily care about keeping around.</p>
+<p>Instead, we delete all existing migration files and then run <code>manage.py makemigrations</code> to create new ones. 
+This will generate the smallest number of migration files needed to describe the state of models in the code; 
+typically one per app although sometimes multiple are needed due to app dependencies.</p>
+<p>This process does have these critical side effects:</p>
+<ol>
+<li>
+<p>Databases that exist at some migration state before the one at the point of the recreation will no longer be able to be migrated to the current state, 
+    as the intermediate changes will have been lost. 
+    This means that those databases will need to be recreated. 
+    This also means that historical database archives will require a bit more work to resurrect; 
+    they'll need to first be migrated to the point just before the recreation, 
+    and then updated to code at or after that point.</p>
+<p>For example, say a database dump exists at a point where N migrations occur. 
+At such time as N + 1 migrations occur, 
+we decide to go through the recreation process. 
+Now we have a new migration numbered N + 2 that represents the equivalent of all (1..N+1) migrations that it replaces. 
+If you try to load and migrate the dump at point N, 
+Django no longer has the code necessary to go from N-&gt;N+1 only -- 
+it only has the ability to go from 0-&gt;N+2. 
+To recover such a dump, you'll need to check out the code at the point before the recreation was done, 
+migrate from N-&gt;N+1, and then check out latest and migrate forwards.</p>
+</li>
+<li>
+<p>Any open pull requests at the time of the recreation that reference 
+    or depend on some of the existing migrations 
+    will need to be modified to instead refer to the new migration files.</p>
+</li>
+</ol>
+<p>Migrations can be recreated with this process:</p>
+<ol>
+<li>
+<p>Remove all existing migration files:</p>
+<pre class="highlight"><code class="language-sh">rm -f -v cfgov/*/migrations/0*</code></pre>
+
+</li>
+<li>
+<p>Create new migration files from the state of model Python code:</p>
+<pre class="highlight"><code class="language-sh">cfgov/manage.py makemigrations --noinput</code></pre>
+
+<p>As it happens this creates new initial migrations (<code>0001_initial</code>) for all apps, 
+plus some subsequent migrations (<code>0002_something</code>) for apps that depend on other apps 
+(for example, <code>ask_cfpb</code> has its own initial migration and then some changes that rely on <code>v1</code>).</p>
+</li>
+<li>
+<p>Rename the created migration files so that they follow in sequence the migration files that used to exist. 
+   For example, if at the time of recreation there are 101 <code>v1</code> migrations, 
+   the first new migration should be numbered 102.</p>
+</li>
+<li>
+<p>Manually alter all new migration files to indicate that they replace the old migration files.</p>
+<p>This involves adding lines to these files like:</p>
+<pre class="highlight"><code class="language-py">replaces = [('app_name', '0002_foo'), ('app_name', '0003_bar'), ...]</code></pre>
+
+<p>This tells Django that these new files replace the old files, 
+so that when migrations are run again, 
+it doesn't need to do anything.</p>
+<p>Also manually update any new subsequent migration files so that they properly refer to each other. 
+For example, if an app has two new migrations 102 and 103, 
+the 103 file needs to properly depend on 102.</p>
+</li>
+</ol>
+<p>To apply these new migration files to an existing database, you can simply run:</p>
+<pre class="highlight"><code class="language-sh">cfgov/manage.py migrate --noinput</code></pre>
+
+<p>You'll see that there are no changes to apply, 
+as the new files should exactly describe the current model state in the same way that the old migrations did.</p>
+<p>See <a href="https://github.com/cfpb/cfgov-refresh/pull/3770">cfgov-refresh#3770</a> for an example of when this was done.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../forms-in-wagtail/" class="btn btn-neutral float-right" title="Forms in Wagtail Page Context">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../debugging-templates/" class="btn btn-neutral" title="Debugging Templates"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../debugging-templates/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../forms-in-wagtail/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>JavaScript Unit Testing - cfgov-refresh</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../css/overrides.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "JavaScript Unit Testing";
+    var mkdocs_page_input_path = "javascript-unit-tests.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installation/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Running this Project</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../running-virtualenv/">Running in a Virtual Environment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../running-docker/">Running in Docker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-monitoring/">Debugging and Monitoring</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../deployment/">Artifacts and Deployment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Pages and Components</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../atomic-structure/">Atomic Structure and Design</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editing-components/">Creating and Editing Components</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-templates/">Debugging Templates</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../migrations/">Django and Wagtail Migrations</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../forms-in-wagtail/">Forms in Wagtail Page Context</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wagtail-pages/">Wagtail Pages</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Supporting Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../caching/">Caching</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../feature-flags/">Feature Flags</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../split-testing/">Split Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../translation/">Translation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Testing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../browser-acceptance-tests/">Browser/Acceptance Testing</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">JavaScript Unit Testing</a>
+    <ul class="subnav">
+            
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#table-of-contents">Table of contents</a></li>
+        
+            <li><a class="toctree-l4" href="#running-unit-tests">Running unit tests</a></li>
+        
+            <li><a class="toctree-l4" href="#where-to-find-tests">Where to find tests</a></li>
+        
+            <li><a class="toctree-l4" href="#test-driven-development">Test-driven development</a></li>
+        
+            <li><a class="toctree-l4" href="#setting-up-tests">Setting up tests</a></li>
+        
+            <li><a class="toctree-l4" href="#common-test-patterns">Common test patterns</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../python-unit-tests/">Python Unit Testing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Contributing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../branching-merging/">Branching and Merging</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../contributing-docs/">Contributing to the Docs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../related-projects/">Related Projects</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../development-tips/">Development Tips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../travis/">How We Use Travis CI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../github-actions/">How We Use GitHub Actions</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">APIs and Data</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ask-cfpb/">Ask CFPB</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../consumer-complaint-database/">Consumer Complaints</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../housing-counselor-tool/">Find a Housing Counselor Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hmda/">HMDA Data</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-feedback/">Website Feedback</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">cfgov-refresh</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Testing &raquo;</li>
+        
+      
+    
+    <li>JavaScript Unit Testing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/javascript-unit-tests.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="javascript-unit-tests">JavaScript Unit Tests<a class="headerlink" href="#javascript-unit-tests" title="Permanent link">¶</a></h1>
+<p>This page provides instructions for writing and running
+JavaScript (JS) unit tests in cfgov-refresh.</p>
+<p><a href="https://jestjs.io/docs/en/getting-started">Jest</a> is the framework we use
+for writing and running JavaScript unit tests.
+If you’re not familiar with it,
+it would be a good idea to peruse their docs before diving in here.</p>
+<h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¶</a></h2>
+<ol>
+<li><a href="#running-unit-tests">Running unit tests</a><ol>
+<li><a href="#running-a-single-test-file">Running a single test file</a></li>
+<li><a href="#run-a-directory-of-unit-tests">Run a directory of unit tests</a></li>
+<li><a href="#run-all-unit-tests">Run all unit tests</a></li>
+</ol>
+</li>
+<li><a href="#where-to-find-tests">Where to find tests</a></li>
+<li><a href="#test-driven-development">Test-driven development</a></li>
+<li><a href="#setting-up-tests">Setting up tests</a><ol>
+<li><a href="#new-test-file-from-sample">New test file from sample</a></li>
+<li><a href="#folder-structure-where-to-put-your-javascript-and-tests">Folder structure (where to put your JavaScript and tests)</a></li>
+<li><a href="#first-test-run">First test run</a></li>
+<li><a href="#file-structure-basic-layout-of-a-test-file">File structure (basic layout of a test file)</a></li>
+<li><a href="#providing-test-data">Providing test data</a></li>
+</ol>
+</li>
+<li><a href="#common-test-patterns">Common test patterns</a><ol>
+<li><a href="#testing-a-basic-function">Testing a basic function</a></li>
+<li><a href="#testing-dom-manipulation">Testing DOM manipulation</a></li>
+<li><a href="#testing-browser-state">Testing browser state</a></li>
+<li><a href="#testing-user-interaction">Testing user interaction</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="running-unit-tests">Running unit tests<a class="headerlink" href="#running-unit-tests" title="Permanent link">¶</a></h2>
+<h3 id="run-a-single-test-file">Run a single test file<a class="headerlink" href="#run-a-single-test-file" title="Permanent link">¶</a></h3>
+<p>To run a single test file, use the <code>--specs</code> flag to specify a file path:</p>
+<pre class="highlight"><code class="language-bash">gulp test:unit --specs=js/organisms/Footer-spec.js</code></pre>
+
+<p>The above command tests the code at <code>cfgov/unprocessed/js/organisms/Footer.js</code>.</p>
+<h3 id="run-a-directory-of-unit-tests">Run a directory of unit tests<a class="headerlink" href="#run-a-directory-of-unit-tests" title="Permanent link">¶</a></h3>
+<p>A directory of unit tests can be run with:</p>
+<pre class="highlight"><code class="language-bash">gulp test:unit --specs=js/molecules/</code></pre>
+
+<h3 id="run-all-unit-tests">Run all unit tests<a class="headerlink" href="#run-all-unit-tests" title="Permanent link">¶</a></h3>
+<p>To run all of the unit tests:</p>
+<pre class="highlight"><code class="language-bash">gulp test:unit</code></pre>
+
+<h2 id="where-to-find-tests">Where to find tests<a class="headerlink" href="#where-to-find-tests" title="Permanent link">¶</a></h2>
+<p>The following links list out the main directories containing tests
+(as of January 2019, this page’s initial publication date).</p>
+<ul>
+<li><a href="https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests">All unit tests</a></li>
+<li><a href="https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/apps">Tests for individual apps</a></li>
+<li><a href="https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/modules">Tests for regular modules</a></li>
+<li><a href="https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/molecules">Tests for molecules</a></li>
+<li><a href="https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/organisms">Tests for organisms</a></li>
+</ul>
+<h2 id="test-driven-development">Test-driven development<a class="headerlink" href="#test-driven-development" title="Permanent link">¶</a></h2>
+<p>We recommend using test-driven development (TDD) when coding new JavaScript.
+The general concept is to start by writing your test <strong>first</strong>,
+with the expected behavior and functionality well-described,
+<strong>then</strong> you write the code that makes the test pass.
+<a href="http://www.javiersaldana.com/tech/2014/11/26/refactoring-the-three-laws-of-tdd.html">A good pithy summary</a>
+is:</p>
+<blockquote>
+<ol>
+<li>Write only enough of a unit test to fail.</li>
+<li>Write only enough production code to make the failing unit test pass.</li>
+</ol>
+</blockquote>
+<p>Then repeat that process until you have written all of the code you need.</p>
+<p><a href="https://medium.freecodecamp.org/test-driven-development-what-it-is-and-what-it-is-not-41fa6bca02a2?gi=3c8d8b476cc9">Read this primer on test-driven development</a>
+to learn more about how it differs from
+the typical approach to programming and unit tests.</p>
+<h2 id="setting-up-tests">Setting up tests<a class="headerlink" href="#setting-up-tests" title="Permanent link">¶</a></h2>
+<h3 id="new-test-file-from-sample">New test file from sample<a class="headerlink" href="#new-test-file-from-sample" title="Permanent link">¶</a></h3>
+<p>For this guide, we’ll use very basic sample code files
+to illustrate how to use the test framework in cfgov-refresh
+and how to test very common code patterns.</p>
+<p>Another common approach is to look for existing tests
+that are testing something similar to what you are writing now.
+Feel free to do so and copy from an existing module and its tests
+instead of copying the sample files referenced below.
+For links to existing tests,
+<a href="#where-to-find-tests">refer back to the “Where to find tests” section</a>.</p>
+<p>Now, let’s begin! Let’s make a new unit test fail,
+then we will make it pass, following the principles of TDD.</p>
+<ol>
+<li>
+<p>Copy the sample test file to a new location by
+   running this command from the root of cfgov-refresh:</p>
+<pre class="highlight"><code class="language-bash">cp docs/samples/sample-spec.js test/unit_tests/js/modules/</code></pre>
+
+</li>
+<li>
+<p>Copy the sample module file to a new location by running this command:</p>
+<pre class="highlight"><code class="language-bash">cp docs/samples/sample.js cfgov/unprocessed/js/modules/</code></pre>
+
+</li>
+</ol>
+<p>Test file names should always match what they are testing,
+with the addition of a <code>-spec</code> suffix.</p>
+<h3 id="folder-structure-where-to-put-your-javascript-and-tests">Folder structure (where to put your JavaScript and tests)<a class="headerlink" href="#folder-structure-where-to-put-your-javascript-and-tests" title="Permanent link">¶</a></h3>
+<p>JavaScript unit test files belong in the
+<a href="https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests"><code>test/unit_tests/</code></a>
+directory.</p>
+<p>The folder structure of the test files mirrors
+the structure of the project JavaScript in
+<a href="https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/js"><code>cfgov/unprocessed/js/</code></a>.</p>
+<p>When considering exactly where to place JavaScript in these directories,
+it might be helpful to review the documentation about
+<a href="../atomic-structure">atomic components in cfgov-refresh</a>.
+JavaScript corresponding to atomic elements should go into
+the appropriate subfolder for the type of element being implemented.
+In our case, <code>sample.js</code> and <code>sample-spec.js</code> don’t relate to atomic elements,
+so they can be placed into the uncategorized <code>modules</code> subfolders:
+<code>cfgov/unprocessed/js/modules</code> and <code>test/unit_tests/modules</code>, respectively.</p>
+<div class="admonition note">
+<p class="admonition-title">Child apps</p>
+<p>If you’re working on something in a child app,
+put it in <code>test/unit_test/appname/js/</code>.
+Otherwise, if you’re working on something that
+belongs to cfgov-refresh generally,
+it should go in the corresponding folder under <code>test/unit_test/js/</code>.</p>
+</div>
+<h3 id="first-test-run">First test run<a class="headerlink" href="#first-test-run" title="Permanent link">¶</a></h3>
+<p>Now that you have your sample JS and test files in the right places,
+let’s try running them and see what happens!
+I’ll refer to <code>sample-spec.js</code> and <code>sample.js</code> in the instructions below,
+but you should work in your own new test file and JavaScript file
+to save and commit your changes.</p>
+<ol>
+<li>
+<p>Edit line 6 of your spec file and remove the call to the <code>.skip</code> method.
+   The line should now read:</p>
+<pre class="highlight"><code class="language-js">it( 'should return a string with expected value', () =&gt; {
+  …
+} );</code></pre>
+
+</li>
+<li>
+<p>Run your sample test using</p>
+<pre class="highlight"><code class="language-bash">gulp test:unit --specs=js/modules/sample-spec.js</code></pre>
+
+<p>(substituting your own filename).</p>
+<p>You should see output like this:</p>
+<p><img alt="Console output for failing unit test: &quot;sample should return a string with expected value&quot;" src="../img/js-unit-test-output-fail.png" /></p>
+<p>The test should fail – this is expected.
+Remember, when doing TDD, we want to write our test to fail first,
+then write the corresponding JavaScript that will make the test pass.</p>
+</li>
+<li>
+<p>Make the test pass by changing your script’s line 7
+   (<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/sample.js">see <code>sample.js</code></a>)
+   to the following:</p>
+<pre class="highlight"><code class="language-js">return 'Shredder';</code></pre>
+
+</li>
+<li>
+<p>Run the test again to confirm the test now passes.
+   You should see output like this:</p>
+<p><img alt="Console output for passing unit test: &quot;PASS test/unit_tests/js/modules/sample-spec.js&quot;" src="../img/js-unit-test-output-pass.png" /></p>
+<p>Doesn’t it feel good?</p>
+</li>
+</ol>
+<p><a href="#running-unit-tests">Refer back to the “Running unit tests” section</a>
+for additional commands to run tests.</p>
+<h3 id="file-structure-basic-layout-of-a-test-file">File structure (basic layout of a test file)<a class="headerlink" href="#file-structure-basic-layout-of-a-test-file" title="Permanent link">¶</a></h3>
+<p>In order to make the <code>sample-spec.js</code> more meaningful to your own use case,
+you’ll need to know how to structure a unit test using Jest methods.
+Let’s take a look at the structure of our very basic sample test file.</p>
+<h4 id="loading-dependencies">Loading dependencies<a class="headerlink" href="#loading-dependencies" title="Permanent link">¶</a></h4>
+<p>Line 1 of any spec file will use an <code>import</code> statement to
+include the JavaScript file that you are testing.
+Additional dependencies should be added in the same manner.</p>
+<pre class="highlight"><code class="language-js">import sample from '../../../../cfgov/unprocessed/js/modules/sample.js';</code></pre>
+
+<p>Some test files use <code>const</code> declarations to
+<code>require</code> scripts instead of <code>import</code>,
+because those files were written before <code>import</code> was available.
+We prefer to use <code>import</code> because it allows for
+<a href="https://webpack.js.org/guides/tree-shaking/">tree shaking in Webpack</a>,
+meaning if two modules are importing the same module
+it should only be included in the bundle once,
+whereas with <code>require</code> it would be included twice.</p>
+<p>A consequence is that variables can’t be used in the import path,
+as they prevent Webpack from figuring out which modules are duplicates.
+For example, this snippet shows how a <code>require</code> statement
+should be converted to an <code>import</code> statement,
+but without including the <code>BASE_JS_PATH</code> variable in the file path:</p>
+<pre class="highlight"><code class="language-js">// This works, but could duplicate footer-button.js, if other files also require it.
+const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
+
+// This doesn't work and the build will fail.
+import * as FooterButton from BASE_JS_PATH + 'modules/footer-button.js';
+
+// This is ugly, but it works and supports tree shaking.
+import * as FooterButton from '../../../../cfgov/unprocessed/js/modules/footer-button.js';</code></pre>
+
+<p><code>import</code> also provides a benefit in that you can choose specific parts
+of a module so that you only import the dependencies you need.
+For testing purposes, we will typically import the whole module
+to make sure we have full test coverage.
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">Read the <code>import</code> reference guide on MDN</a>
+on how to implement <code>import</code> for different use cases.</p>
+<h4 id="the-describe-function">The <code>describe</code> function<a class="headerlink" href="#the-describe-function" title="Permanent link">¶</a></h4>
+<p>In Jest (whose syntax is based on Jasmine),
+<a href="https://jestjs.io/docs/en/api#describename-fn"><code>describe</code> blocks</a>
+serve as organizational structures that you can use
+to outline the methods you need in your JS module.</p>
+<p>The root <code>describe</code> method is where we put
+the name of the JavaScript module we are testing.
+For the sample, the name of our module is <code>sample</code>,
+so we set this up on line 4 of <code>sample-spec.js</code>:</p>
+<pre class="highlight"><code class="language-js">describe( 'sample', () =&gt; {
+  …
+} );</code></pre>
+
+<p>This module name will appear in your test output in the console
+when the test is running:</p>
+<p><img alt="Snippet of console output for a unit test that reads 'sample: should return a string with expected value'" src="../img/js-unit-test-output-with-describes.png" /></p>
+<p>More complex tests will have additional <code>describe</code> blocks –
+children of the root <code>describe</code> block –
+that should correspond to a particular method in the module.
+For example, if we want to add more functionality to our sample JS,
+we could start by writing these tests in <code>sample-spec.js</code>:</p>
+<pre class="highlight"><code class="language-js">describe( 'sample', () =&gt; {
+
+  describe( 'gimmeString()', () =&gt; {
+
+    it( 'should return a string with expected value', () =&gt; {
+      const sampleString = 'Shredder';
+      expect( sample.gimmeString() ).toBe( sampleString );
+    } );
+
+  } );
+
+  describe( 'gimmeObject()', () =&gt; {
+
+    it( 'should return an object with expected value', () =&gt; {
+      const sampleObject = {
+        image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+        caption: 'Krang portrait'
+      };
+      expect( sample.gimmeObject() ).toBe( sampleObject );
+    } );
+
+  } );
+
+} );</code></pre>
+
+<p>(We’ll talk more about writing the individual tests in the next section.)</p>
+<p>And then we would create the <code>gimmeString</code> and <code>gimmeObject</code> methods
+in our <code>sample.js</code> file.</p>
+<p>Another example is
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/breakpoint-state-spec.js"><code>breakpoint-state-spec.js</code></a>,
+which tests several methods, including <code>getBreakpointState</code> and <code>viewportIsIn</code>,
+on the module <code>breakpoint-state</code>.</p>
+<p>When using TDD, you may prefer to add <code>describe</code> blocks later,
+during the refactor stage of writing code.</p>
+<h4 id="individual-tests">Individual tests<a class="headerlink" href="#individual-tests" title="Permanent link">¶</a></h4>
+<p>Within a <code>describe</code> block, individual tests are encapsulated by <code>it</code> methods,
+which is an alias of
+<a href="https://jestjs.io/docs/en/api#testname-fn-timeout">Jest’s <code>test</code> method</a>.</p>
+<p>Each test must include one or more assertions (usually only one)
+that confirm that the result of executing some code is what you expected.
+These are called <a href="https://jestjs.io/docs/en/using-matchers">“matchers”</a>
+in Jest parlance, and they all follow this format:</p>
+<pre class="highlight"><code class="language-js">expect( someValue ).someKindOfComparisonWith( someOtherValue );</code></pre>
+
+<p>For example, let’s take another look at the sample tests we wrote above:</p>
+<pre class="highlight"><code class="language-js">describe( 'sample', () =&gt; {
+
+  describe( 'gimmeString()', () =&gt; {
+
+    it( 'should return a string with expected value', () =&gt; {
+      const sampleString = 'Shredder';
+      expect( sample.gimmeString() ).toBe( sampleString );
+    } );
+
+  } );
+
+  describe( 'gimmeObject()', () =&gt; {
+
+    it( 'should return an object with expected value', () =&gt; {
+      const sampleObject = {
+        image: 'https://vignette.wikia.nocookie.net/tmnt/images/0/00/Krangnobody.png',
+        caption: 'Krang portrait'
+      };
+      expect( sample.gimmeObject() ).toBe( sampleObject );
+    } );
+
+  } );
+
+} );</code></pre>
+
+<p>In these tests, we check <em>(<code>expect</code>)</em> that
+the string returned by <code>sample.gimmeString()</code>
+and the object returned by <code>sample.gimmeObject()</code>
+match <em>(<code>toBe</code>)</em> the <code>sampleString</code> and <code>sampleObject</code>
+that we defined in the tests.</p>
+<p>There are many kinds of assertions you can use
+besides the simple equality comparison of <code>toBe</code>.
+See <a href="https://jestjs.io/docs/en/using-matchers">the Jest Using Matchers guide</a>
+for a primer on them and
+<a href="https://jestjs.io/docs/en/expect">the Jest <code>expect</code> API docs</a>
+for the full list of its matchers.</p>
+<h3 id="providing-test-data">Providing test data<a class="headerlink" href="#providing-test-data" title="Permanent link">¶</a></h3>
+<p>The first principle of test data for unit tests is to
+<strong>keep test data as simple as possible</strong> –
+use the minimum needed to test the code.</p>
+<h4 id="direct-definition-of-test-data">Direct definition of test data<a class="headerlink" href="#direct-definition-of-test-data" title="Permanent link">¶</a></h4>
+<p>The simplest way to set up test data is to
+declare it as variables within each test, e.g., the tests in
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/strings-spec.js">strings-spec.js</a>.
+This can include HTML markup for DOM manipulation tests,
+if each test requires different markup.</p>
+<h4 id="setup-and-teardown-methods">Setup and teardown methods<a class="headerlink" href="#setup-and-teardown-methods" title="Permanent link">¶</a></h4>
+<p>If you will need to leverage the same test data across different tests,
+Jest has setup and teardown methods, such as
+<a href="https://jestjs.io/docs/en/setup-teardown#repeating-setup-for-many-tests"><code>beforeEach</code> and <code>afterEach</code></a>, or <a href="https://jestjs.io/docs/en/setup-teardown#one-time-setup"><code>beforeAll</code> and <code>afterAll</code></a>,
+which can be used to performing actions
+that are needed before and after running all tests or each test in a suite.
+For example, the tests in
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/Analytics-spec.js#L7-L32"><code>Analytics-spec.js</code></a>
+use both <code>beforeAll</code> and <code>beforeEach</code> inside the root <code>describe</code> block to
+do a variable definition for all tests at the beginning of the suite
+and reset the <code>dataLayer</code> before each test, respectively.</p>
+<p><a href="https://jestjs.io/docs/en/setup-teardown">Check out the Jest documentation on “Setup and teardown” methods.</a></p>
+<p>A common structure when the DOM is involved
+is to create a constant representing an HTML snippet to test,
+then – in a <code>beforeEach</code> or <code>beforeAll</code>
+(depending on whether the tests modify the markup or not) –
+set <code>document.body.innerHTML</code> to that snippet.</p>
+<p>Use <code>beforeAll</code> to attach HTML markup that is unaffected by the tests,
+e.g., the tests in
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/footer-button-spec.js"><code>footer-button-spec.js</code></a>.
+Use <code>beforeEach</code> to reset manipulated markup between tests, e.g., the tests in
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/molecules/Notification-spec.js"><code>Notification-spec.js</code></a>.</p>
+<p><a href="#testing-dom-manipulation">See “Testing DOM manipulation”</a>
+in the “Common test patterns” section of this page
+for a more in-depth discussion of this scenario.</p>
+<h2 id="common-test-patterns">Common test patterns<a class="headerlink" href="#common-test-patterns" title="Permanent link">¶</a></h2>
+<h3 id="testing-a-basic-function">Testing a basic function<a class="headerlink" href="#testing-a-basic-function" title="Permanent link">¶</a></h3>
+<p>Testing simple functions is pretty straightforward.
+Each function in a module should have tests set up as
+a child <code>describe</code> within the module’s own <code>describe</code>.
+Then, write a number of <code>it</code> statements in prose that describe
+how the function should respond to various kinds of input.
+Inside each <code>it</code>, invoke the function
+with the input described in the <code>it</code> statement
+and use <code>expect</code> to check that you receive the desired result.</p>
+<p>Here is a simple example from our
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/util/array-helpers.js">array helpers module</a>
+(<code>cfgov/unprocessed/js/modules/util/array-helpers.js</code>):</p>
+<pre class="highlight"><code class="language-js">function indexOfObject( array, key, val ) {
+  let match = -1;
+
+  if ( !array.length &gt; 0 ) {
+    return match;
+  }
+
+  array.forEach( function( item, index ) {
+    if ( item[key] === val ) {
+      match = index;
+    }
+  } );
+
+  return match;
+}</code></pre>
+
+<p>Tests for that function, from
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/array-helpers-spec.js">test/unit_tests/js/modules/util/array-helpers-spec.js</a>:</p>
+<pre class="highlight"><code class="language-js">describe( 'indexOfObject()', () =&gt; {
+  it( 'should return -1 if the array is empty', () =&gt; {
+    array = [];
+    index = arrayHelpers.indexOfObject( array, 'foo' );
+
+    expect( index ).toBe( -1 );
+  } );
+
+  it( 'should return -1 if there is no match', () =&gt; {
+    array = [
+      { value: 'bar' },
+      { value: 'baz' }
+    ];
+    index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+
+    expect( index ).toBe( -1 );
+  } );
+
+  it( 'should return the matched index', () =&gt; {
+    array = [
+      { value: 'foo' },
+      { value: 'bar' },
+      { value: 'baz' }
+    ];
+    index = arrayHelpers.indexOfObject( array, 'value', 'foo' );
+
+    expect( index ).toBe( 0 );
+  } );
+} );</code></pre>
+
+<h3 id="testing-dom-manipulation">Testing DOM manipulation<a class="headerlink" href="#testing-dom-manipulation" title="Permanent link">¶</a></h3>
+<p><a href="https://jestjs.io/en/">Jest</a>, the JavaScript testing framework we use,
+<a href="https://jestjs.io/docs/en/configuration#testenvironment-string">includes jsdom</a>,
+which simulates a DOM environment as if you were in the browser.
+This means that we can call any
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">DOM API</a>
+in our test code and observe it in the same way as we do
+in the module code itself, which acts on the browser’s DOM.</p>
+<p>As an example, let’s look at our Notification component.
+The Notification component uses a common set of markup
+with different classes and SVG icon code to style it
+as a particular kind of notification (success, warning, etc.). In
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/molecules/Notification.js">the component JS</a>,
+we have this function that sets the type of a notification before displaying it:</p>
+<pre class="highlight"><code class="language-js">function _setType( type ) {
+  // If type hasn't changed, return.
+  if ( _currentType === type ) {
+    return this;
+  }
+
+  // Remove existing type class
+  const classList = _dom.classList;
+  classList.remove(  `${ BASE_CLASS }__${ _currentType }` );
+
+
+  if ( type === SUCCESS ||
+       type === WARNING ||
+       type === ERROR ) {
+    // Add new type class and update the value of _currentType
+    classList.add(  `${ BASE_CLASS }__${ type }` );
+    _currentType = type;
+
+    // Replace &lt;svg&gt; element with contents of type_ICON
+    const currentIcon = _dom.querySelector( '.cf-icon-svg' );
+    const newIconSetup = document.createElement( 'div' );
+    newIconSetup.innerHTML = ICON[type];
+    const newIcon = newIconSetup.firstChild;
+    _dom.replaceChild( newIcon, currentIcon );
+  } else {
+    throw new Error( `${ type } is not a supported notification type!` );
+  }
+  return this;
+}</code></pre>
+
+<p>This function would be invoked by an instance of the Notification class.
+<code>_dom</code> is the DOM node for the Notification.
+As you can see from the code comments above,
+it has a few different steps that modify the DOM node.</p>
+<p>Now let’s look at the tests.
+Here are the first 22 lines of
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/molecules/Notification-spec.js">the spec file</a>
+that tests this component:</p>
+<pre class="highlight"><code class="language-js">import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
+const BASE_CLASS = 'm-notification';
+const HTML_SNIPPET = `
+  &lt;div class=&quot;m-notification&quot;&gt;
+    &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 1000 1200&quot; class=&quot;cf-icon-svg&quot;&gt;&lt;/svg&gt;
+    &lt;div class=&quot;m-notification_content&quot;&gt;
+      &lt;div class=&quot;h4 m-notification_message&quot;&gt;Notification content&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+`;
+
+describe( 'Notification', () =&gt; {
+  let notificationElem;
+  let notification;
+  let thisNotification;
+
+  beforeEach( () =&gt; {
+    document.body.innerHTML = HTML_SNIPPET;
+    notificationElem = document.querySelector( `.${ BASE_CLASS }` );
+    notification = new Notification( notificationElem, BASE_CLASS, {} );
+  } );
+
+  …
+} );</code></pre>
+
+<p>The main things to note here at the beginning of the file are
+the addition of the <code>HTML_SNIPPET</code> definition,
+containing the markup we will used for testing
+as it would be rendered for this component,
+and the <code>beforeEach</code> function that
+(1) uses jsdom to add that snippet to the test environment
+and assigns the component node to the <code>notificationElem</code> variable, and
+(2) creates a new instance of the Notification class.</p>
+<div class="admonition note">
+<p class="admonition-title">A word about <code>HTML_SNIPPET</code>s</p>
+<p>Right now it’s possible to update a component’s Jinja template,
+forget to update the corresponding JavaScript,
+and the unit tests would still pass,
+because they're using their own <code>HTML_SNIPPET</code>.
+It would be preferable if we had a canonical component markup template
+that is pulled in by the application, the unit tests, and the docs.
+We haven’t yet figured out how to do this, since
+our component templates contain Jinja tags that
+the tests would have to reconcile
+into a complete, finished chunk of markup.
+For now, just be aware of this when
+<a href="../editing-components/">editing a Wagtail component that includes JavaScript</a>.</p>
+</div>
+<p>Further down, here are some of the tests that cover the <code>_setType</code> function
+(by way of the <code>setTypeAndContent</code> function that
+wraps both <code>_setType</code> and <code>_setContent</code>):</p>
+<pre class="highlight"><code class="language-js">describe( 'setTypeAndContent()', () =&gt; {
+  it( 'should update the notification type for the success state', () =&gt; {
+    notification.init();
+
+    notification.setTypeAndContent(
+      notification.SUCCESS,
+      ''
+    );
+
+    expect( notificationElem.classList ).toContain( 'm-notification__success' );
+  } );
+
+  it( 'should update the notification type for the warning state', () =&gt; {
+    notification.init();
+
+    notification.setTypeAndContent(
+      notification.WARNING,
+      ''
+    );
+
+    expect( notificationElem.classList ).toContain( 'm-notification__warning' );
+  } );
+
+  …
+} );</code></pre>
+
+<p>This part mostly works like testing any other function.
+The notable distinction here is that the test invokes the function
+using the DOM nodes and class set up in <code>beforeEach</code>.</p>
+<h3 id="testing-browser-state">Testing browser state<a class="headerlink" href="#testing-browser-state" title="Permanent link">¶</a></h3>
+<p>Another common thing to test is code that interacts with
+the state of the browser itself,
+e.g., fragment identifiers, query strings, or other things in the URL;
+the window object; session storage; page history; etc.</p>
+<p>One way of doing this is to create a <strong>spy</strong>
+(a special kind of mocked function)
+that watches for browser API calls to be made
+a certain number of times or with a specific payload.
+One example is found in
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/o-table-row-links-spec.js">the tests for our full-table-row-linking code</a>.</p>
+<p>In
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/o-table-row-links.js">the module code</a>
+(<code>o-table-row-links.js</code>),
+if an event listener detects a click anywhere on
+one of these special table rows,
+it invokes <code>window.location</code> to send the browser
+to the <code>href</code> of the first link in that row:</p>
+<pre class="highlight"><code class="language-js">window.location.assign( target.querySelector( 'a' ).getAttribute( 'href' ) );</code></pre>
+
+<p>To test this, in the aforementioned <code>o-table-row-links-spec.js</code> file, we first
+<a href="https://jestjs.io/docs/en/mock-functions">set up a standard Jest mock</a>
+for <code>window.location.assign</code>, and then
+<a href="https://jestjs.io/docs/en/jest-object#jestspyonobject-methodname">create our spy</a>
+to watch it:</p>
+<pre class="highlight"><code class="language-js">describe( 'o-table-row-links', () =&gt; {
+  beforeEach( () =&gt; {
+    window.location.assign = jest.fn();
+    locationSpy = jest.spyOn( window.location, 'assign' );
+    …
+  } );
+
+  …
+} );</code></pre>
+
+<p>A little further down (after finishing the DOM setup
+and initializing the module we’re testing),
+we have three tests that simulate clicks
+and then assert things that the spy can answer for us:
+whether it was called with a particular location parameter,
+and that it was called a specific number of times (zero).</p>
+<pre class="highlight"><code class="language-js">it( 'should navigate to new location when link row cell clicked', () =&gt; {
+  simulateEvent( 'click', linkRowCellDom );
+  expect( locationSpy ).toBeCalledWith( 'https://www.example.com' );
+} );
+
+it( 'should not set window location when link is clicked', () =&gt; {
+  simulateEvent( 'click', linkDom );
+  expect( locationSpy ).toHaveBeenCalledTimes( 0 );
+} );
+
+it( 'should not navigate to new location when non link row cell clicked',
+  () =&gt; {
+    simulateEvent( 'click', nonLinkRowCellDom );
+    expect( locationSpy ).toHaveBeenCalledTimes( 0 );
+  }
+);</code></pre>
+
+<h3 id="testing-user-interaction">Testing user interaction<a class="headerlink" href="#testing-user-interaction" title="Permanent link">¶</a></h3>
+<p>Testing user interaction with simulated pointer events, keystrokes,
+or form submissions is best handled via browser tests, not unit tests.
+User interaction in a unit test could falsely pass
+if the component wasn’t visible on the page, for instance.
+<a href="../browser-acceptance-tests/">Read more about how we run browser tests.</a></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../python-unit-tests/" class="btn btn-neutral float-right" title="Python Unit Testing">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../browser-acceptance-tests/" class="btn btn-neutral" title="Browser/Acceptance Testing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../browser-acceptance-tests/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../python-unit-tests/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

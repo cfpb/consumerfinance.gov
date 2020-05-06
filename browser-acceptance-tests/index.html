@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Browser/Acceptance Testing - cfgov-refresh</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../css/overrides.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Browser/Acceptance Testing";
+    var mkdocs_page_input_path = "browser-acceptance-tests.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installation/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Running this Project</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../running-virtualenv/">Running in a Virtual Environment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../running-docker/">Running in Docker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-monitoring/">Debugging and Monitoring</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../deployment/">Artifacts and Deployment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Pages and Components</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../atomic-structure/">Atomic Structure and Design</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editing-components/">Creating and Editing Components</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-templates/">Debugging Templates</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../migrations/">Django and Wagtail Migrations</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../forms-in-wagtail/">Forms in Wagtail Page Context</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wagtail-pages/">Wagtail Pages</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Supporting Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../caching/">Caching</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../feature-flags/">Feature Flags</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../split-testing/">Split Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../translation/">Translation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Testing</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Browser/Acceptance Testing</a>
+    <ul class="subnav">
+            
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#run-tests-with-localhost-server">Run tests with localhost server</a></li>
+        
+            <li><a class="toctree-l4" href="#run-tests-with-tox-server">Run tests with Tox server:</a></li>
+        
+            <li><a class="toctree-l4" href="#cucumber-tool-for-running-automated-tests-written-in-plain-language">Cucumber - tool for running automated tests written in plain language</a></li>
+        
+            <li><a class="toctree-l4" href="#sauce-connect-send-tests-to-the-cloud">Sauce Connect - send tests to the cloud</a></li>
+        
+            <li><a class="toctree-l4" href="#manual-test-configuration">Manual test configuration</a></li>
+        
+            <li><a class="toctree-l4" href="#tests">Tests</a></li>
+        
+            <li><a class="toctree-l4" href="#further-reading">Further reading</a></li>
+        
+            <li><a class="toctree-l4" href="#performance-testing">Performance testing</a></li>
+        
+            <li><a class="toctree-l4" href="#accessibility-testing">Accessibility Testing</a></li>
+        
+            <li><a class="toctree-l4" href="#source-code-linting">Source code linting</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../javascript-unit-tests/">JavaScript Unit Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../python-unit-tests/">Python Unit Testing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Contributing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../branching-merging/">Branching and Merging</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../contributing-docs/">Contributing to the Docs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../related-projects/">Related Projects</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../development-tips/">Development Tips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../travis/">How We Use Travis CI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../github-actions/">How We Use GitHub Actions</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">APIs and Data</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ask-cfpb/">Ask CFPB</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../consumer-complaint-database/">Consumer Complaints</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../housing-counselor-tool/">Find a Housing Counselor Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hmda/">HMDA Data</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-feedback/">Website Feedback</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">cfgov-refresh</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Testing &raquo;</li>
+        
+      
+    
+    <li>Browser/Acceptance Testing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/browser-acceptance-tests.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="browseracceptance-tests">Browser/Acceptance Tests<a class="headerlink" href="#browseracceptance-tests" title="Permanent link">¶</a></h1>
+<h2 id="run-tests-with-localhost-server">Run tests with localhost server<a class="headerlink" href="#run-tests-with-localhost-server" title="Permanent link">¶</a></h2>
+<ol>
+<li>Ensure that the following env vars are set (they should already be in your <a href="https://github.com/cfpb/cfgov-refresh/blob/master/.env_SAMPLE"><code>.env</code></a> file):</li>
+<li><code>export TEST_HTTP_HOST=localhost</code></li>
+<li><code>export DJANGO_HTTP_PORT=8000</code></li>
+<li>Then reload the virtual environment if needed: <code>source .env</code></li>
+<li>Get your local version of cf.gov running at <a href="http://localhost:8000">http://localhost:8000</a>:
+   <pre class="highlight"><code>./runserver.sh</code></pre></li>
+<li>Run the browser tests against your localhost:
+   <pre class="highlight"><code>gulp test:acceptance:new</code></pre></li>
+</ol>
+<h2 id="run-tests-with-tox-server">Run tests with Tox server:<a class="headerlink" href="#run-tests-with-tox-server" title="Permanent link">¶</a></h2>
+<p>To run browser tests, open a new Terminal window or tab and change to the project directory,
+then tell gulp to start the tests:</p>
+<pre class="highlight"><code class="language-sh">gulp build
+gulp test:acceptance ( tox -e acceptance can be run as well )</code></pre>
+
+<p>There are several options you can pass to run a particular suite of tests,
+to run a particular list of features,
+and/or to run it in "fast" mode:</p>
+<pre class="highlight"><code class="language-sh">gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin suite )
+gulp test:acceptance --specs=multiselect.feature ( runs just the multiselect feature )
+gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )
+gulp test:acceptance --recreate ( runs the tests and recreates the virtual environment )</code></pre>
+
+<p>The same options can be used with tox (--omitted):</p>
+<pre class="highlight"><code class="language-sh">tox -e acceptance suite=wagtail-admin
+tox -e acceptance specs=multiselect.feature
+tox -e acceptance tags=@mobile</code></pre>
+
+<p>These tests will run on their own server; you do not need to be running your development server.</p>
+<h2 id="cucumber-tool-for-running-automated-tests-written-in-plain-language">Cucumber - tool for running automated tests written in plain language<a class="headerlink" href="#cucumber-tool-for-running-automated-tests-written-in-plain-language" title="Permanent link">¶</a></h2>
+<p>Below are some suggested standards for Cucumber Feature files:</p>
+<p><em>Table copied from <a href="https://saucelabs.com/blog/write-great-cucumber-tests">https://saucelabs.com/blog/write-great-cucumber-tests</a> by Greg Sypolt, with moderate modifications</em>
+<table>
+   <tbody>
+      <tr>
+         <td>Feature Files</td>
+         <td>Every *.feature file consists in a single feature, focused on the business value.</td>
+      </tr>
+      <tr>
+      <td><a href="https://github.com/cucumber/cucumber/wiki/Gherkin">Gherkin</a></td>
+         <td>
+            <pre>Feature:Title (one line describing the story)
+Narrative Description: As a [role], I want [feature], so that I [benefit]<br>
+Scenario: Title (acceptance criteria of user story)
+  Given [context]
+  And [some more context]...
+  When [event]
+  Then [outcome]
+  And [another outcome]...<br>
+Scenario:...
+</pre>
+</td>
+      </tr>
+      <tr>
+         <td>Given, When, and Then Statements</td>
+         <td>
+           There might be some confusion surrounding where to put the verification step in the Given, When, Then sequence. Each statement has a purpose. <br><br></p>
+<ul>
+<li><strong>Given</strong> is the pre-condition to put the system into a known state before the user starts interacting with the application</li>
+<li><strong>When</strong> describes the key action the user performs</li>
+<li><strong>Then</strong> is observing the expected outcome</li>
+</ul>
+<p>Just remember the <em>‘then’</em> step is an acceptance criteria of the story.
+   </td>
+      </tr>
+      <tr>
+         <td><a href="https://github.com/cucumber/cucumber/wiki/Background">Background</a></td>
+         <td>The background needs to be used wisely. If you use the same steps at the beginning of all scenarios of a feature, put them into the feature’s background scenario. The background steps are run before each scenario.
+<pre>
+Background:
+  Given I am logged into Wagtail as an admin
+  And I create a Wagtail Sublanding Page
+  And I open the content menu</pre>
+        </td>
+      </tr>
+      <tr>
+         <td>Scenarios</td>
+         <td>Keep each scenario independent. The scenarios should run independently, without any dependencies on other scenarios.  Scenarios should be between 3 to 6 statements, if possible.</td>
+      </tr>
+      <tr>
+         <td><a href="https://github.com/cucumber/cucumber/wiki/Scenario-Outlines">Scenario Outline</a></td>
+         <td>If you identify the need to use a scenario outline, take a step back and ask the following question: Is it necessary to repeat this scenario ‘x’ amount of times just to exercise the different combination of data? In most cases, one time is enough for UI level testing.</td>
+      </tr>
+      <tr>
+         <td>Declarative Vs Imperative Scenarios</td>
+         <td>
+            The declarative style describes behavior at a higher level, which improves the readability of the feature by abstracting out the implementation details of the application.  The imperative style is more verbose but better describes the expected behavior.  Either style is acceptable.<br><br>
+<u>Example: Declarative</u>
+<pre>
+Scenario:User logs in
+  Given I am on the homepage
+  When I log in
+  Then I should see a login notification
+</pre>
+<u>Example: Imperative</u>
+<pre>
+Scenario: User logs in
+  Given I am on the homepage
+  When I click on the "Login" button
+  And I fill in the "Email" field with "<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;">&#109;&#101;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;</a>"
+  And I fill in the "Password" field with "secret"
+  And I click on "Submit"
+  Then I should see "Welcome to the app, John Doe"
+</pre>
+         </td>
+      </tr>
+   </tbody>
+</table></p>
+<h2 id="sauce-connect-send-tests-to-the-cloud">Sauce Connect - send tests to the cloud<a class="headerlink" href="#sauce-connect-send-tests-to-the-cloud" title="Permanent link">¶</a></h2>
+<p>Sauce Labs can be used to run tests remotely in the cloud.</p>
+<ol>
+<li>
+<p>Log into <a href="https://saucelabs.com/account">https://saucelabs.com/account</a>.</p>
+</li>
+<li>
+<p>Update and uncomment the <code>SAUCE_USERNAME</code>, <code>SAUCE_ACCESS_KEY</code>,
+   and <code>SAUCE_SELENIUM_URL</code> values in your <code>.env</code> file.
+   The access key can be found on the Sauce Labs
+   <a href="https://saucelabs.com/beta/user-settings">user settings page</a>.</p>
+</li>
+<li>
+<p>Reload the settings with <code>source .env</code>.</p>
+</li>
+<li>
+<p>Run the tests with <code>gulp test:acceptance --sauce</code>.</p>
+</li>
+<li>
+<p>Monitor progress of the tests
+   on the <a href="https://saucelabs.com/dashboard">Sauce Labs dashboard</a> Automated Tests tab.</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you get the error <code>Error: ENOTFOUND getaddrinfo ENOTFOUND</code>
+while running a test, it likely means that Sauce Connect is not running.</p>
+</div>
+<h2 id="manual-test-configuration">Manual test configuration<a class="headerlink" href="#manual-test-configuration" title="Permanent link">¶</a></h2>
+<p>A number of command-line arguments can be set to test particular configurations:</p>
+<ul>
+<li><code>--suite</code>: Choose a particular suite or suites to run.
+   For example, <code>gulp test:acceptance --suite=content</code> or <code>gulp test:acceptance --suite=content,functional</code>.</li>
+<li><code>--specs</code>: Choose a particular spec or specs to run.
+   For example, <code>gulp test:acceptance --specs=header.feature</code>, <code>gulp test:acceptance --specs=header.feature,pagination.feature</code>, or <code>gulp test:acceptance --specs=filterable*.feature</code>. If <code>--suite</code> is specified, this argument will be ignored. If neither <code>--suite</code> nor <code>--specs</code> are specified, all specs will be run.</li>
+<li><code>--windowSize</code>: Set the window size in pixels in <code>w,h</code> format.
+   For example, <code>gulp test:acceptance --windowSize=900,400</code>.</li>
+<li><code>--browserName</code>: Set the browser to run.
+   For example, <code>gulp test:acceptance --browserName=firefox</code>.</li>
+<li><code>--version</code>: Set the browser version to run.
+   For example, <code>gulp test:acceptance --version='44.0'</code>.</li>
+<li><code>--platform</code>: Set the OS platform to run.
+   For example, <code>gulp test:acceptance --platform='osx 10.10'</code>.</li>
+<li><code>--sauce</code>: Whether to run on Sauce Labs or not.
+   For example, <code>gulp test:acceptance --sauce=false</code>.</li>
+</ul>
+<h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">¶</a></h2>
+<p>Tests are organized into suites under the <code>test/browser_tests/cucumber/features</code> directory. Any new tests should be added to an existing suite (e.g. "default"), or placed into a new suite directory. All tests start with writing a <code>.feature</code> spec in one of these suites, and then adding corresponding step definitions, found in <code>test/browser_tests/cucumber/step_definitions</code>.</p>
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://github.com/cucumber/cucumber/wiki/Feature-Introduction">Cucumber features</a></li>
+<li><a href="https://angular.github.io/protractor/#/">Protractor</a></li>
+<li><a href="https://www.seleniumhq.org/docs/03_webdriver.jsp#locating-ui-elements-webelements">Select elements on a page</a></li>
+<li><a href="https://jasmine.github.io/2.0/introduction.html#section-Expectations">Writing Jasmin expectations</a>.</li>
+<li><a href="https://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings">Understanding Page Objects</a></li>
+</ul>
+<h2 id="performance-testing">Performance testing<a class="headerlink" href="#performance-testing" title="Permanent link">¶</a></h2>
+<p>To audit if the site complies with performance best practices and guidelines,
+run <code>gulp audit:perf</code>.</p>
+<p>The audit will run against
+<a href="https://github.com/GoogleChrome/lighthouse">Google's Lighthouse</a>.</p>
+<h2 id="accessibility-testing">Accessibility Testing<a class="headerlink" href="#accessibility-testing" title="Permanent link">¶</a></h2>
+<p>Run the acceptance tests with an <code>--a11y</code> flag (i.e. <code>gulp test:acceptance --a11y</code>)
+to check every webpage for WCAG and Section 508 compliancy using Protractor's
+<a href="https://github.com/angular/protractor-accessibility-plugin">accessibility plugin</a>.</p>
+<p>If you'd like to audit a specific page, use <code>gulp audit:a11y</code>:</p>
+<ol>
+<li>Enable the environment variable <code>ACHECKER_ID</code> in your <code>.env</code> file.
+     Get a free <a href="https://achecker.ca/register.php">AChecker API ID</a> for the value.</li>
+<li>Reload your <code>.env</code> with <code>source ./.env</code> while in the project root directory.</li>
+<li>Run <code>gulp audit:a11y</code> to run an audit on the homepage.</li>
+<li>To test a page aside from the homepage, add the <code>--u=&lt;path_to_test&gt;</code> flag.
+     For example, <code>gulp audit:a11y --u=contact-us</code>
+     or <code>gulp audit:a11y --u=the-bureau/bureau-structure/</code>.</li>
+</ol>
+<h2 id="source-code-linting">Source code linting<a class="headerlink" href="#source-code-linting" title="Permanent link">¶</a></h2>
+<p>The default test task includes linting of the JavaScript source, build,
+and test files.
+Use the <code>gulp lint</code> command from the command-line to run the ESLint linter,
+which checks the JavaScript against the rules configured in <code>.eslintrc</code>.
+<a href="https://eslint.org/docs/rules/">See the ESLint docs</a>
+for detailed rule descriptions.</p>
+<p>There are a number of options to the command:</p>
+<ul>
+<li><code>gulp lint:build</code>: Lint only the gulp build scripts.</li>
+<li><code>gulp lint:test</code>: Lint only the test scripts.</li>
+<li><code>gulp lint:scripts</code>: Lint only the project source scripts.</li>
+<li><code>--fix</code>: Add this flag (like <code>gulp lint --fix</code> or <code>gulp lint:build --fix</code>).
+   to auto-fix some errors, where ESLint has support to do so.</li>
+<li><code>--path</code>: Add this flag to specify a file to lint,
+   rather than all files. Path is relative to the project root,
+   such as <code>gulp lint --path=cfgov/unprocessed/js/modules/Analytics.js</code>.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../javascript-unit-tests/" class="btn btn-neutral float-right" title="JavaScript Unit Testing">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../translation/" class="btn btn-neutral" title="Translation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../translation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../javascript-unit-tests/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

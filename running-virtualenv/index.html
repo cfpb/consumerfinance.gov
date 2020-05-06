@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Running in a Virtual Environment - cfgov-refresh</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../css/overrides.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Running in a Virtual Environment";
+    var mkdocs_page_input_path = "running-virtualenv.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installation/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Running this Project</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">Running in a Virtual Environment</a>
+    <ul class="subnav">
+            
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#1-git-operations">1. Git operations</a></li>
+        
+            <li><a class="toctree-l4" href="#2-run-elasticsearch-optional">2. Run Elasticsearch (optional)</a></li>
+        
+            <li><a class="toctree-l4" href="#3-launch-site">3. Launch Site</a></li>
+        
+            <li><a class="toctree-l4" href="#reinstalling-the-virtual-environment">Reinstalling the virtual environment</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../running-docker/">Running in Docker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-monitoring/">Debugging and Monitoring</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../deployment/">Artifacts and Deployment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Pages and Components</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../atomic-structure/">Atomic Structure and Design</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editing-components/">Creating and Editing Components</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-templates/">Debugging Templates</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../migrations/">Django and Wagtail Migrations</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../forms-in-wagtail/">Forms in Wagtail Page Context</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wagtail-pages/">Wagtail Pages</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Supporting Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../caching/">Caching</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../feature-flags/">Feature Flags</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../split-testing/">Split Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../translation/">Translation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Testing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../browser-acceptance-tests/">Browser/Acceptance Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../javascript-unit-tests/">JavaScript Unit Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../python-unit-tests/">Python Unit Testing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Contributing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../branching-merging/">Branching and Merging</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../contributing-docs/">Contributing to the Docs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../related-projects/">Related Projects</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../development-tips/">Development Tips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../travis/">How We Use Travis CI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../github-actions/">How We Use GitHub Actions</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">APIs and Data</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ask-cfpb/">Ask CFPB</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../consumer-complaint-database/">Consumer Complaints</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../housing-counselor-tool/">Find a Housing Counselor Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hmda/">HMDA Data</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-feedback/">Website Feedback</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">cfgov-refresh</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Running this Project &raquo;</li>
+        
+      
+    
+    <li>Running in a Virtual Environment</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/running-virtualenv.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="running-in-a-virtual-environment">Running in a Virtual Environment<a class="headerlink" href="#running-in-a-virtual-environment" title="Permanent link">¶</a></h1>
+<p>First, follow
+<a href="../installation/#stand-alone-installation">the standalone installation instructions</a>
+to create your virtual environment, install required dependencies, and run
+the setup scripts.</p>
+<p>You will generally have three tabs (or windows) open in your terminal,
+which will be used for:</p>
+<ol>
+<li><strong>Git operations</strong>.
+    Perform Git operations and general development in the repository,
+    such as <code>git checkout master</code>.</li>
+<li><strong>Elasticsearch</strong>.
+    Run an Elasticsearch (ES) instance.
+    See instructions <a href="#2-run-elasticsearch-optional">below</a>.</li>
+<li><strong>Django server</strong>. Start and stop the web server.
+    Server is started with <code>./runserver.sh</code>,
+    but see more details <a href="#3-load-indexes--launch-site">below</a>.</li>
+</ol>
+<p>What follows are the specific steps for each of these tabs.</p>
+<h3 id="1-git-operations">1. Git operations<a class="headerlink" href="#1-git-operations" title="Permanent link">¶</a></h3>
+<p>From this tab you can do Git operations,
+such as checking out our master branch:</p>
+<pre class="highlight"><code class="language-bash">git checkout master</code></pre>
+
+<h4 id="updating-all-dependencies">Updating all dependencies<a class="headerlink" href="#updating-all-dependencies" title="Permanent link">¶</a></h4>
+<p>Each time you fetch from the upstream repository (this repo), run <code>./setup.sh</code>.
+This setup script will remove and reinstall the project dependencies
+and rebuild the site's JavaScript and CSS assets.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You may also run <code>./backend.sh</code> or <code>./frontend.sh</code>
+if you only want to re-build the backend or front-end, respectively.</p>
+</div>
+<h5 id="setting-environments">Setting environments<a class="headerlink" href="#setting-environments" title="Permanent link">¶</a></h5>
+<p>The <code>NODE_ENV</code> environment variable can be set in your <code>.env</code> file to either
+<code>development</code> or <code>production</code>, which will affect how the build is made and what
+gulp tasks are available. To install dependencies of one environment
+or the other run <code>./frontend.sh</code> (dependencies and devDependencies)
+or <code>./frontend.sh production</code> (dependencies but not devDependencies).</p>
+<h3 id="2-run-elasticsearch-optional">2. Run Elasticsearch (optional)<a class="headerlink" href="#2-run-elasticsearch-optional" title="Permanent link">¶</a></h3>
+<p>Elasticsearch is needed for certain pieces of this project but is not a
+requirement for basic functionality.</p>
+<p>If Elasticsearch is installed via <a href="https://brew.sh">Homebrew</a>, you can see
+instructions for running manually or as a background service using:</p>
+<pre class="highlight"><code class="language-bash">brew info elasticsearch</code></pre>
+
+<p>Typically to run Elasticsearch as a background service you can run:</p>
+<pre class="highlight"><code class="language-bash">brew services start elasticsearch</code></pre>
+
+<h3 id="3-launch-site">3. Launch Site<a class="headerlink" href="#3-launch-site" title="Permanent link">¶</a></h3>
+<p>First, move into the <code>cfgov-refresh</code> project directory
+and ready your environment:</p>
+<pre class="highlight"><code class="language-bash"># Use the cfgov-refresh virtualenv.
+workon cfgov-refresh
+
+# cd into this directory (if you aren't already there)
+cd cfgov-refresh</code></pre>
+
+<p>From the project root, start the Django server:</p>
+<pre class="highlight"><code class="language-bash">./runserver.sh</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If prompted to migrate database changes,
+stop the server with <code>ctrl</code> + <code>c</code> and run these commands:</p>
+</div>
+<pre class="highlight"><code class="language-bash">python cfgov/manage.py migrate
+./initial-data.sh
+./runserver.sh</code></pre>
+
+<p>To view the site browse to: <a href="http://localhost:8000">http://localhost:8000</a></p>
+<div class="admonition note">
+<p class="admonition-title">Using a different port</p>
+<p>If you want to run the server at a port other than 8000 use</p>
+<p><code>python cfgov/manage.py runserver &lt;port number&gt;</code></p>
+<p>Specify an alternate port number, e.g. <code>8001</code>.</p>
+</div>
+<p>To view the Wagtail admin login,
+browse to <a href="http://localhost:8000/admin">http://localhost:8000/admin</a> and login with username <code>admin</code>
+and password <code>admin</code> (created in <code>initial-data.sh</code> above; note that this
+password will expire after 60 days).</p>
+<div class="admonition note">
+<p class="admonition-title">Using HTTPS locally</p>
+<p>To access a local server using HTTPS use</p>
+<p><code>./runserver.sh ssl</code></p>
+<p>You'll need to ignore any browser certificate errors.</p>
+</div>
+<h4 id="available-gulp-tasks">Available Gulp Tasks<a class="headerlink" href="#available-gulp-tasks" title="Permanent link">¶</a></h4>
+<p>There are a number of important gulp tasks,
+particularly <code>build</code> and <code>test</code>,
+which will build the project and test it, respectively.
+Tasks are invoked via an <code>yarn run</code> command so that the local gulp-cli can be used.
+Using the <code>yarn run gulp -- --tasks</code> command you can view all available tasks.
+The important ones are listed below:</p>
+<pre class="highlight"><code>yarn run gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
+yarn run gulp clean           # Remove the contents of the production /dist/ directory.
+yarn run gulp lint            # Lint the scripts and build files.
+yarn run gulp docs            # Generate JSDocs from the scripts.
+yarn run gulp test            # Run linting, unit and acceptance tests (see below).
+yarn run gulp test:unit       # Run only unit tests on source code.
+yarn run gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
+yarn run gulp audit           # Run code quality audits.</code></pre>
+
+<h3 id="reinstalling-the-virtual-environment">Reinstalling the virtual environment<a class="headerlink" href="#reinstalling-the-virtual-environment" title="Permanent link">¶</a></h3>
+<p>To remove an existing virtual environment for 
+<a href="../installation/#stand-alone-installation">a reinstall of cfgov-refresh</a>, 
+first deactivate the virtual environment if it is active:</p>
+<pre class="highlight"><code class="language-bash">deactivate</code></pre>
+
+<p>Then remove the existing virtual environment:</p>
+<pre class="highlight"><code class="language-bash">rmvirtualenv cfgov-refresh</code></pre>
+
+<p>After this, you may follow 
+<a href="installation/#stand-alone-installation">the installation instructions</a>
+again.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../running-docker/" class="btn btn-neutral float-right" title="Running in Docker">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../installation/" class="btn btn-neutral" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../installation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../running-docker/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

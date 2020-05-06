@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Python Unit Testing - cfgov-refresh</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../css/overrides.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Python Unit Testing";
+    var mkdocs_page_input_path = "python-unit-tests.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installation/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Running this Project</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../running-virtualenv/">Running in a Virtual Environment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../running-docker/">Running in Docker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-monitoring/">Debugging and Monitoring</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../deployment/">Artifacts and Deployment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Pages and Components</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../atomic-structure/">Atomic Structure and Design</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editing-components/">Creating and Editing Components</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-templates/">Debugging Templates</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../migrations/">Django and Wagtail Migrations</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../forms-in-wagtail/">Forms in Wagtail Page Context</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wagtail-pages/">Wagtail Pages</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Supporting Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../caching/">Caching</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../feature-flags/">Feature Flags</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../split-testing/">Split Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../translation/">Translation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Testing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../browser-acceptance-tests/">Browser/Acceptance Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../javascript-unit-tests/">JavaScript Unit Testing</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Python Unit Testing</a>
+    <ul class="subnav">
+            
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#writing-tests">Writing tests</a></li>
+        
+            <li><a class="toctree-l4" href="#prerequisites">Prerequisites</a></li>
+        
+            <li><a class="toctree-l4" href="#running-tests">Running tests</a></li>
+        
+            <li><a class="toctree-l4" href="#test-output">Test output</a></li>
+        
+            <li><a class="toctree-l4" href="#govdelivery">GovDelivery</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Contributing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../branching-merging/">Branching and Merging</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../contributing-docs/">Contributing to the Docs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../related-projects/">Related Projects</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../development-tips/">Development Tips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../travis/">How We Use Travis CI</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../github-actions/">How We Use GitHub Actions</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">APIs and Data</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ask-cfpb/">Ask CFPB</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../consumer-complaint-database/">Consumer Complaints</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../housing-counselor-tool/">Find a Housing Counselor Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../hmda/">HMDA Data</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-feedback/">Website Feedback</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">cfgov-refresh</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Testing &raquo;</li>
+        
+      
+    
+    <li>Python Unit Testing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/python-unit-tests.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="python-testing">Python testing<a class="headerlink" href="#python-testing" title="Permanent link">¶</a></h1>
+<h2 id="writing-tests">Writing tests<a class="headerlink" href="#writing-tests" title="Permanent link">¶</a></h2>
+<p>We have multiple resources for writing new unit tests for Django, Wagtial, and Python code:</p>
+<ul>
+<li><a href="https://github.com/cfpb/development/blob/master/guides/unittesting-django-wagtail.md">CFPB Django and Wagtail unit testing documentation</a></li>
+<li><a href="https://docs.djangoproject.com/en/1.11/topics/testing/overview/">The Django testing documentation</a></li>
+<li><a href="http://docs.wagtail.io/en/stable/advanced_topics/testing.html">The Wagtail testing documentation</a></li>
+<li><a href="https://realpython.com/testing-in-django-part-1-best-practices-and-examples/">Real Python's "Testing in Django"</a></li>
+</ul>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<p>If you have set up 
+<a href="/installation/#install-system-level-requirements">a standalone installation of cfgov-refresh</a>, 
+you'll need to 
+<a href="/running-virtualenv/#3-launch-site">activate your virtual environment</a> 
+before running the tests:</p>
+<pre class="highlight"><code class="language-sh">workon cfgov-refresh</code></pre>
+
+<p>If you have not set up the standalone installation of cfgov-refresh,
+you can still run the tests if you install Tox in your 
+<a href="https://github.com/cfpb/development/blob/master/guides/installing-python.md">local installation of Python</a>:</p>
+<pre class="highlight"><code>pip install tox</code></pre>
+
+<p>If you have set up 
+<a href="/installation/#docker-based-installation">a Docker-based installation of cfgov-refresh</a>,
+you can run the tests there by<br />
+<a href="http://localhost:8888/running-docker/#access-a-containers-shell">accessing the Python container's shell</a>: </p>
+<pre class="highlight"><code class="language-sh">docker-compose exec python bash</code></pre>
+
+<h2 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permanent link">¶</a></h2>
+<p>Our test suite can either be run in a local virtualenv or in Docker. 
+Please note, the tests run quite slow in Docker.</p>
+<p>To run the the full suite of Python tests using Tox, 
+make sure you are in the cfgov-refresh root and then run:</p>
+<pre class="highlight"><code class="language-sh">tox</code></pre>
+
+<p>Tox runs different isolated Python environments with different versions of dependencies.
+We use it to lint our Python files, check out import sorting, and run unit tests
+in both Python 3.6 and Python 3.8.
+You can select specific environments using <code>-e</code>.</p>
+<p>Running <code>tox</code> by itself is the same as running:</p>
+<pre class="highlight"><code class="language-sh">tox -e lint -e unittest</code></pre>
+
+<p>These default environments are:</p>
+<ul>
+<li><code>lint</code>, which runs our <a href="#linting">linting</a> tools. We require this 
+  environment to pass in CI.</li>
+<li><code>unittest</code>, which runs unit tests against the current production 
+  versions of Python, Django, and Wagtail. We require this environment to 
+  pass in CI.</li>
+</ul>
+<p>In addition, we also have this environment:</p>
+<ul>
+<li><code>unittest-future</code>, which runs unit tests against upcoming versions of 
+  Python, Django, and Wagtail. We do not require this environment to pass in 
+  CI.</li>
+</ul>
+<p>By default this uses a local SQLite database for tests. To override this, you
+can set the <code>TEST_DATABASE_URL</code> environment variable to a database connection
+string as supported by <a href="https://github.com/kennethreitz/dj-database-url">dj-database-url</a>.</p>
+<p>If you would like to run only a specific test, or the tests for a specific app, 
+you can provide a dotted path to the test as the final argument to any of the above calls to <code>tox</code>:</p>
+<pre class="highlight"><code class="language-sh">tox -e unittest regulations3k.tests.test_regdown</code></pre>
+
+<h3 id="linting">Linting<a class="headerlink" href="#linting" title="Permanent link">¶</a></h3>
+<p>We use the <code>flake8</code> and <code>isort</code> tools to ensure compliance with 
+<a href="https://www.python.org/dev/peps/pep-0008/">PEP8 style guide</a>,
+<a href="https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/">Django coding style guidelines</a>,
+and the 
+<a href="https://github.com/cfpb/development/blob/master/standards/python.md#linting">CFPB Python style guide</a>.</p>
+<p>Both <code>flake8</code> and <code>isort</code> can be run using the Tox <code>lint</code> environment:</p>
+<pre class="highlight"><code class="language-sh">tox -e lint</code></pre>
+
+<p>This will run <code>isort</code> in check-only mode and it will print diffs for imports 
+that need to be fixed. To automatically fix import sort issues, run:</p>
+<pre class="highlight"><code class="language-sh">isort --recursive cfgov/</code></pre>
+
+<p>From the root of <code>cfgov-refresh</code>.</p>
+<h3 id="coverage">Coverage<a class="headerlink" href="#coverage" title="Permanent link">¶</a></h3>
+<p>To see Python code coverage information, run</p>
+<pre class="highlight"><code class="language-sh">coverage report -m</code></pre>
+
+<p>To see coverage for a limited number of files, 
+use the <code>--include</code> argument to <code>coverage</code> and provide a path to the files you wish to see:</p>
+<pre class="highlight"><code class="language-sh">coverage report -m --include=./cfgov/regulations3k/*</code></pre>
+
+<h2 id="test-output">Test output<a class="headerlink" href="#test-output" title="Permanent link">¶</a></h2>
+<p>Python tests should avoid writing to stdout as part of their normal execution.
+To enforce this convention, the tests can be run using a custom Django test
+runner that fails if anything is written to stdout. This test runner is at
+<code>cfgov.test.StdoutCapturingTestRunner</code> and can be enabled with the <code>TEST_RUNNER</code>
+environment variable:</p>
+<pre class="highlight"><code class="language-sh">TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e unittest</code></pre>
+
+<p>This test runner is enabled when tests are run automatically on <a href="https://travis-ci.org/">Travis CI</a>,
+but is not used by default when running tests locally.</p>
+<h2 id="govdelivery">GovDelivery<a class="headerlink" href="#govdelivery" title="Permanent link">¶</a></h2>
+<p>If you write Python code that interacts with the GovDelivery subscription API, you can use the functionality provided in <code>core.govdelivery.MockGovDelivery</code> as a mock interface to avoid the use of <code>patch</code> in unit tests.</p>
+<p>This object behaves similarly to the real <code>govdelivery.api.GovDelivery</code> class in that it handles all requests and returns a valid (200) <code>requests.Response</code> instance.</p>
+<p>Conveniently for unit testing, all calls are stored in a class-level list that can be retrieved at <code>MockGovDelivery.calls</code>. This allows for testing of code that interacts with GovDelivery by checking the contents of this list to ensure that the right methods were called.</p>
+<p>This pattern is modeled after Django's <a href="https://docs.djangoproject.com/en/2.0/topics/testing/tools/#email-services"><code>django.core.mail.outbox</code></a> which provides similar functionality for testing sending of emails.</p>
+<p>The related classes <code>ExceptionMockGovDelivery</code> and <code>ServerErrorMockGovDelivery</code> can similarly be used in unit tests to test for cases where a call to the GovDelivery API raises an exception and returns an HTTP status code of 500, respectively.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../branching-merging/" class="btn btn-neutral float-right" title="Branching and Merging">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../javascript-unit-tests/" class="btn btn-neutral" title="JavaScript Unit Testing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../javascript-unit-tests/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../branching-merging/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
