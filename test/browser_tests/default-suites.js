@@ -63,7 +63,7 @@ const defaultSuites = {
     }
   ],
 
-  // Headless browser to run on Travis.
+  // Headless browser to run on CI.
   headless: [
     {
       browserName:   'chrome',
