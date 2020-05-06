@@ -80,15 +80,6 @@ export const Categories = new CategoryTree({
       icon: icons.job,
       description: 'Income from employment',
       recurrenceTypes: ['weekly', 'biweekly', 'monthly', 'semimonthly'],
-      strategy: {
-        id: 'directDeposit',
-        title: 'Sign Up for Direct Deposit',
-        body: 'Direct deposit may help you to avoid fees and interest associated with Check Cashing.',
-        link:  {
-          href: 'https://www.consumerfinance.gov/ask-cfpb/should-i-enroll-in-direct-deposit-en-1027/',
-          text: 'Should I enroll in direct deposit?',
-        },
-      },
     },
     benefits: {
       name: 'Benefits',
