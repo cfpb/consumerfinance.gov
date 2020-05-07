@@ -157,6 +157,24 @@ class HandleErrorTestCase(TestCase):
             fetch_redirect_response=False
         )
 
+    def test_handle_404_error_strip_extraneous_chars(self):
+        request = self.factory.get('/learnmore)')
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/learnmore',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+        request = self.factory.get('/help%20)')
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/help',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
 
 class TestBetaRefreshEndpoint(TestCase):
     def test_beta_testing_endpoint_returns_404_when_disabled(self):

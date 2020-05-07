@@ -617,11 +617,20 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-# Handle case-insensitive URLs
+# Handle case-insensitive and extraneous characters at end of URLs
+# i.e. URLs that end in %20) have these two characters removed
 # Using (?i) in url() patterns is deprecated in Django 2.1
 def handle_404_error(code, request, exception=None):
+    extraneous_char_list = [
+        '!', '#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', ':', ';',
+        '<', '=', '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~'
+    ]
     if request.path != request.path.lower():
         return redirect(request.path.lower(), permanent=True)
+    if request.path[-2:] == " )":
+        return redirect(request.path[:-2:], permanent=True)
+    if request.path[-1] in extraneous_char_list:
+        return redirect(request.path[:-1:], permanent=True)
     return handle_error(code, request, exception)
 
 
