@@ -1,5 +1,1 @@
-<svg width="60" height="61" viewBox="0 0 60 61" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="restaurant_24px">
-<path id="icon/maps/restaurant_24px" fill-rule="evenodd" clip-rule="evenodd" d="M18.0002 32.9637H22.2144V18.2139H26.4287V32.9637C26.4287 37.6205 22.6569 41.3922 18.0002 41.3922V60.3564H13.7859V41.3922C9.12918 41.3922 5.35742 37.6205 5.35742 32.9637V18.2139H9.57167V32.9637H13.7859V18.2139H18.0002V32.9637ZM32.7506 43.4994V26.6424C32.7506 22.9338 37.4706 18.2139 43.2862 18.2139V60.3564H39.072V43.4994H32.7506Z" fill="#B4267A"/>
-</g>
-</svg>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><defs><style>.cls-1{fill:#b3287a;fill-rule:evenodd;}</style></defs><g id="restaurant_24px" data-name="restaurant 24px"><path id="icon_maps_restaurant_24px" data-name="icon/maps/restaurant_24px" class="cls-1" d="M25,25.2h7.2V0h7.2V25.2A14.4,14.4,0,0,1,25,39.6V72h-7.2V39.6A14.39,14.39,0,0,1,3.42,25.2V0h7.2V25.2h7.2V0H25Zm25.2,18V14.4c0-6.34,8.06-14.4,18-14.4V72H61V43.2Z"/></g></svg>
