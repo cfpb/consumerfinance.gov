@@ -29,7 +29,6 @@ openpyxl==2.5.8
 psycopg2==2.7.3.2
 pyelasticsearch==0.6.1
 python-dateutil==2.7.3
-PyYAML==3.13
 regdown==1.0.2
 requests==2.22.0
 requests_toolbelt==0.8.0
