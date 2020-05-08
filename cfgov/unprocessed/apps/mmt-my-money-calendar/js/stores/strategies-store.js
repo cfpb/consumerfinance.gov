@@ -180,7 +180,9 @@ class StrategiesStore {
           if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
             results.largestBillableExpense = event;
           }
-        } else if (event.totalCents < 0 && !event.categoryDetails.hasBill) {
+        }
+
+        if (event.totalCents < 0 && !event.categoryDetails.hasBill) {
           if (!results.largestAdHocExpense || results.largestAdHocExpense.isLessThan(event)) {
             results.largestAdHocExpense = event;
           }

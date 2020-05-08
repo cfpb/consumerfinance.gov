@@ -100,8 +100,7 @@ function Sources() {
                 />
               </div>
 
-              <div className={bem('buttons')}>
-                <BackButton onClick={(e) => e.preventDefault()}>Back</BackButton>
+              <div className={bem('buttons')} style={{ justifyContent: 'flex-end' }}>
                 <NextButton type="submit" disabled={!formik.values.fundingSources.length && !formik.values.noFunds}>
                   Next
                 </NextButton>
