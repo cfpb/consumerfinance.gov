@@ -67,18 +67,17 @@
                             There is also a
                             <a class="a-link a-link__icon"
                                href="{{ signed_redirect( 'https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm' ) }}">
-                               <span class="a-link_text">
-                                   list of nationwide
-                                   HUD-approved counseling agencies
-                               </span>
-                               {{ svg_icon( 'external-link' ) }}</a>.
+                                <span class="a-link_text">list of nationwide HUD-approved counseling agencies</span>
+                                {{ svg_icon( 'external-link' ) }}</a>.
                         </p>
                     </div>
 
                     <div class="block block__border u-screen-only">
-                        {# Set the `no-js` class on page load,
-                           which is reverted if and when the map is
-                           loaded via JavaScript. #}
+                        {#
+                            Set the `no-js` class on page load,
+                            which is reverted if and when the map is
+                            loaded via JavaScript.
+                        #}
                         <section id="hud_search_container"
                                  class="no-js
                                         hud-search-container">
@@ -124,8 +123,8 @@
                                                     This tool is powered by
                                                     <a class="a-link a-link__icon"
                                                        href="{{ signed_redirect( 'https://data.hud.gov/housing_counseling.html' ) }}">
-                                                    <span class="a-link_text">HUD's</span>
-                                                    {{ svg_icon( 'external-link' ) }}</a>
+                                                        <span class="a-link_text">HUD's</span>
+                                                        {{ svg_icon( 'external-link' ) }}</a>
                                                     official list of housing counselors.
                                                 </p>
                                                 <p>
@@ -170,9 +169,7 @@
                                               a-link__icon"
                                        id="hud_print-page-link"
                                        href="#">
-                                        <span class="a-link_text">
-                                            Print list
-                                        </span>
+                                        <span class="a-link_text">Print list</span>
                                         {{ svg_icon( 'print' ) }}
                                     </a>
                                 </li>
@@ -182,22 +179,17 @@
                                        href="{{ pdf_url }}"
                                        target="_blank"
                                        rel="noopener noreferrer">
-                                        <span class="a-link_text">
-                                            Save list as
-                                            <abbr title="Portable Document Format">
-                                              PDF
-                                            </abbr>
-                                        </span>
+                                        <span class="a-link_text">Save list as <abbr title="Portable Document Format">PDF</abbr></span>
                                         {{ svg_icon( 'download' ) }}
                                     </a>
                                 </li>
                             </ul>
 
                             <h2 class="h4">
-                              Displaying the
-                              {{ api_json.counseling_agencies | length }}
-                              locations closest to ZIP code
-                              {{ zipcode | escape }}
+                                Displaying the
+                                {{ api_json.counseling_agencies | length }}
+                                locations closest to ZIP code
+                                {{ zipcode | escape }}
                             </h2>
                         </div>
 
@@ -224,10 +216,8 @@
                                                     {% if counselor.weburl %}
                                                     <a class="a-link a-link__icon"
                                                        href="{{ signed_redirect( counselor.weburl ) }}">
-                                                      <span class="a-link_text">
-                                                          <b itemprop="name">{{ counselor.nme }}</b>
-                                                      </span>
-                                                      {{ svg_icon( 'external-link' ) }}
+                                                        <span class="a-link_text"><b itemprop="name">{{ counselor.nme }}</b></span>
+                                                        {{ svg_icon( 'external-link' ) }}
                                                     </a>
                                                     {% else %}
                                                     <b itemprop="name">{{ counselor.nme }}</b>
@@ -254,9 +244,7 @@
                                                     <a class="a-link a-link__icon"
                                                        href="{{ signed_redirect( counselor.weburl ) }}"
                                                        itemprop="url">
-                                                        <span class="a-link_text">
-                                                            {{ counselor.weburl }}
-                                                        </span>
+                                                        <span class="a-link_text">{{ counselor.weburl }}</span>
                                                         {{ svg_icon( 'external-link' ) }}
                                                     </a>
                                                     </dd>
@@ -331,11 +319,8 @@
                                     collection is
                                     <a class="a-link a-link__icon"
                                        href="{{ signed_redirect( 'https://www.reginfo.gov/public/do/PRAOMBHistory?ombControlNumber=3170-0025' ) }}">
-                                       <span class="a-link_text"
-                                             aria-label="The OMB control number for this collection is 3170-0025">
-                                           3170-0025
-                                       </span>
-                                       {{ svg_icon( 'external-link' ) }}</a>.
+                                        <span class="a-link_text" aria-label="The OMB control number for this collection is 3170-0025">3170-0025</span>
+                                        {{ svg_icon( 'external-link' ) }}</a>.
                                     It expires on 04/30/2016. Using this tool
                                     to generate a list of HUD-Approved Housing
                                     Counseling Agencies is voluntary however,

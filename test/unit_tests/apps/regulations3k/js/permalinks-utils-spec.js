@@ -203,6 +203,7 @@ describe( 'The Regs3K permalinks utils', () => {
       expect( utils.getCommentMarker( '17-a-1-Interp-1' ) ).toEqual( '17(a)(1)-1' );
       expect( utils.getCommentMarker( '3-d-Interp-1' ) ).toEqual( '3(d)-1' );
       expect( utils.getCommentMarker( '3-c-2-Interp-1' ) ).toEqual( '3(c)(2)-1' );
+      expect( utils.getCommentMarker( '1' ) ).toEqual( '' );
     } );
 
   } );

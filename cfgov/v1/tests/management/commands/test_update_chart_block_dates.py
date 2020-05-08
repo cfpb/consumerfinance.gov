@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
+from wagtail.core.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 

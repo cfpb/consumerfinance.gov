@@ -1,11 +1,9 @@
-from __future__ import absolute_import
-
 import os.path
 
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
+from django.urls import reverse
 from django.utils.translation import ugettext, ungettext
 
 from jinja2 import Environment

@@ -4,15 +4,15 @@ Feature: Test the default values in the Loan Comparison page
   So that I can compare loan costs easily
 
 Background:
-   Given I navigate to the "Loan Comparison" page
+  Given I navigate to the "Loan Comparison" page
 
 @loan_comparison
 Scenario: First time visitor should see default State selected
- Then I should see "Alabama" as default State
+  Then I should see "Alabama" as default State
 
 @loan_comparison
 Scenario: First time visitor should see default Credit Score
- Then I should see "701 - 720" as default Credit Score
+  Then I should see "701 - 720" as default Credit Score
 
 @loan_comparison
 Scenario: First time visitor should see Loan A but NOT Loan B or C

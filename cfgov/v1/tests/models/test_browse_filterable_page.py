@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Page, Site
+from wagtail.core.models import Page, Site
 
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory

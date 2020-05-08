@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_changes
+from v1.util.migrations import set_stream_data
 
 
 logger = logging.getLogger(__name__)
@@ -15,13 +16,13 @@ class Command(BaseCommand):
     help = 'Monthly updates to data snapshot values'
 
     def expand_path(self, path):
-        """Expands a relative path into an absolute path"""
+        """Expand a relative path into an absolute path."""
         rootpath = os.path.abspath(os.path.expanduser(path))
 
         return rootpath
 
     def add_arguments(self, parser):
-        """Adds all arguments to be processed."""
+        """Add all arguments to be processed."""
         parser.add_argument(
             '--snapshot_file',
             required=True,
@@ -29,44 +30,44 @@ class Command(BaseCommand):
         )
 
     def get_data_snapshots(self):
-        """ Gets all data snapshots from browse pages
-        Assumes there is a maximum of one data snapshot per page
+        """
+        Get all data snapshots from browse pages.
+
+        Assumes there is a maximum of one data snapshot per page.
         """
         snapshots = []
         for page in BrowsePage.objects.all():
-            stream_data = page.specific.content.stream_data
-            snapshot = list(filter(
-                lambda item: item['type'] == 'data_snapshot',
-                stream_data
-            ))
-            if snapshot:
-                snapshot[0]['value']['page'] = page
-                snapshots.append(snapshot[0]['value'])
+            stream_data = page.content.stream_data
+            if stream_data and stream_data[0]['type'] == 'data_snapshot':
+                stream_data[0]['value']['page'] = page.pk
+                snapshots.append(stream_data)
         return snapshots
 
     def find_data_snapshot(self, market_key, snapshots):
-        """ Look up data snapshot by the provided market key
-        Assumes there is one data snapshot per key
+        """
+        Look up data snapshot by the provided market key.
+
+        Assumes there is one data snapshot per key.
         """
         for snapshot in snapshots:
-            if snapshot['market_key'] == market_key:
+            if snapshot[0]['value']['market_key'] == market_key:
                 return snapshot
 
     def handle(self, *args, **options):
-        # Read markets from file into update dicts
+        """Read markets from file into update dicts."""
         with open(self.expand_path(options['snapshot_file'])) as json_data:
             data = json.load(json_data)
-
         markets = data['markets']
         snapshots = self.get_data_snapshots()
         for market in markets:
             key = market['market_key']
-            snapshot = self.find_data_snapshot(key, snapshots)
-            if not snapshot:  # Market may not have been added to Wagtail yet
-                logger.warn('Market key {} not found'.format(key))
+            snapshot_stream_data = self.find_data_snapshot(key, snapshots)
+            if not snapshot_stream_data:  # Market may not have been added to Wagtail yet  # noqa
+                logger.warning('Market key {} not found'.format(key))
                 continue
 
             # Update snapshot fields with the provided values
+            snapshot = snapshot_stream_data[0]['value']
             snapshot['last_updated_projected_data'] = market['data_month']
             snapshot['num_originations'] = market['num_originations']
             snapshot['value_originations'] = market['value_originations']
@@ -91,5 +92,7 @@ class Command(BaseCommand):
                 snapshot['tightness_year_over_year_change'] = ""
 
             # Publish changes to the browse page the data snapshot lives on
-            page = snapshot['page']
-            publish_changes(page.specific)
+            page = BrowsePage.objects.get(pk=snapshot['page'])
+            del snapshot['page']
+            set_stream_data(page, 'content', snapshot_stream_data)
+            publish_changes(page)

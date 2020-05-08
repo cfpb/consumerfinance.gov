@@ -1,11 +1,12 @@
 // Required modules.
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import { scrollIntoView } from '../modules/util/scroll';
 import AlphaTransition from '../modules/transition/AlphaTransition';
 import BaseTransition from '../modules/transition/BaseTransition';
 import ERROR_MESSAGES from '../config/error-messages-config';
-import Notification from '../molecules/Notification';
 import EventObserver from '../modules/util/EventObserver';
+import Notification from '../molecules/Notification';
+import { scrollIntoView } from '../modules/util/scroll';
+
 const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
 
 /**

@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.apps import apps
 from django.test import TestCase
 
+from wagtail.core.models import Page
 from wagtail.tests.testapp.models import StreamPage
-from wagtail.wagtailcore.models import Page, PageRevision
 
 import mock
 
@@ -108,7 +106,7 @@ class MigrationsUtilTestCase(TestCase):
             self.page, ['not-migratory', 'migratory'], stream_data, mapper
         )
         self.assertTrue(migrated)
-        self.assertEquals(result[0]['value'][0]['value'], 'new text')
+        self.assertEqual(result[0]['value'][0]['value'], 'new text')
 
     def test_migrate_stream_data_flat(self):
         mapper = mock.Mock(return_value='new text')
@@ -126,7 +124,7 @@ class MigrationsUtilTestCase(TestCase):
             self.page, ['migratory', ], stream_data, mapper
         )
         self.assertTrue(migrated)
-        self.assertEquals(result[1]['value'], 'new text')
+        self.assertEqual(result[1]['value'], 'new text')
 
     def test_migrate_stream_data_empty_block_path(self):
         mapper = mock.Mock(return_value='new text')

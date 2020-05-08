@@ -1,27 +1,22 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import datetime
 import json
-import six
 import smtplib
 from collections import OrderedDict
+from csv import writer as csw
 from string import Template
 
+from django.contrib.postgres.fields import JSONField
 from django.core.mail import send_mail
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 import requests
 
 
-if six.PY2:  # pragma: no cover
-    from unicodecsv import writer as csw  # pragma: no cover
-    from unicodecsv import DictReader as cdr  # noqa # pragma: no cover
-else:  # pragma: no cover
-    from csv import writer as csw  # pragma: no cover
-    from csv import DictReader as cdr  # noqa # pragma: no cover
-
+# Our database has a fake school for demo purposes
+# It should be discoverable via search and API calls, but should be excluded
+# from cohort calculations and from periodic college scorecard API updates.
+FAKE_SCHOOL_PK = 999999
 REGION_MAP = {'MW': ['IL', 'IN', 'IA', 'KS', 'MI', 'MN',
                      'MO', 'NE', 'ND', 'OH', 'SD', 'WI'],
               'NE': ['CT', 'ME', 'MA', 'NH', 'NJ',
@@ -49,7 +44,8 @@ HIGHEST_DEGREES = {  # highest-awarded values from Ed API and our CSV spec
     '4': "Graduate degree"
 }
 
-LEVELS = {  # Dept. of Ed classification of post-secondary degree levels
+# Legacy Dept. of Ed classifications of post-secondary degree levels
+LEVELS = {
     '1': "Program of less than 1 academic year",
     '2': "Program of at least 1 but less than 2 academic years",
     '3': "Associate's degree",
@@ -61,6 +57,18 @@ LEVELS = {  # Dept. of Ed classification of post-secondary degree levels
     '17': "Doctor's degree-research/scholarship",
     '18': "Doctor's degree-professional practice",
     '19': "Doctor's degree-other"
+}
+
+# Dept. of Ed program degree levels specific to new program data in 2019
+PROGRAM_LEVELS = {
+    1: "Certificate",
+    2: "Associate's degree",
+    3: "Bachelor's degree",
+    4: "Post-baccalaureate certificate",
+    5: "Master's degree",
+    6: "Doctoral degree",
+    7: "First professional degree",
+    8: "Graduate/professional certificate",
 }
 
 NOTIFICATION_TEMPLATE = Template("""Disclosure notification for offer ID $oid\n\
@@ -86,7 +94,6 @@ def make_divisible_by_6(value):
         return value + (6 - (value % 6))
 
 
-@python_2_unicode_compatible
 class ConstantRate(models.Model):
     """Rate values that generally only change annually"""
     name = models.CharField(max_length=255)
@@ -104,7 +111,6 @@ class ConstantRate(models.Model):
         ordering = ['slug']
 
 
-@python_2_unicode_compatible
 class ConstantCap(models.Model):
     """Cap values that generally only change annually"""
     name = models.CharField(max_length=255)
@@ -170,7 +176,6 @@ class ConstantCap(models.Model):
 # ZIP (now school.zip5)
 
 
-@python_2_unicode_compatible
 class Contact(models.Model):
     """school endpoint or email to which we send confirmations"""
     contacts = models.TextField(
@@ -186,7 +191,14 @@ class Contact(models.Model):
         )
 
 
-@python_2_unicode_compatible
+def format_for_null(value):
+    """If a Python value is None, we want it to convert to null in json."""
+    if value is None:
+        return value
+    else:
+        return "{}".format(value)
+
+
 class School(models.Model):
     """
     Represents a school
@@ -198,7 +210,11 @@ class School(models.Model):
         max_length=100,
         blank=True,
         default='')
-    contact = models.ForeignKey(Contact, blank=True, null=True)
+    contact = models.ForeignKey(
+        Contact,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
     data_json = models.TextField(blank=True)
     city = models.CharField(max_length=50, blank=True)
     state = models.CharField(max_length=2, blank=True)
@@ -213,6 +229,8 @@ class School(models.Model):
     url = models.TextField(blank=True)
     degrees_predominant = models.TextField(blank=True)
     degrees_highest = models.TextField(blank=True)
+    program_count = models.IntegerField(blank=True, null=True)
+    program_most_popular = JSONField(blank=True, null=True)
     main_campus = models.NullBooleanField()
     online_only = models.NullBooleanField()
     operating = models.BooleanField(default=True)
@@ -238,47 +256,83 @@ class School(models.Model):
         decimal_places=10,
         blank=True, null=True,
         help_text="GRADS WITH A DECLINING BALANCE AFTER 3 YRS")
+    repay_5yr = models.DecimalField(
+        max_digits=13,
+        decimal_places=10,
+        blank=True, null=True,
+        help_text="GRADS WITH A DECLINING BALANCE AFTER 5 YRS")
     default_rate = models.DecimalField(
         max_digits=5,
         decimal_places=3,
         blank=True, null=True,
-        help_text="LOAN DEFAULT RATE AT 3 YRS")
+        help_text="LOAN DEFAULT RATE AT 5 YRS")
     median_total_debt = models.DecimalField(
         max_digits=7,
         decimal_places=1,
         blank=True, null=True,
-        help_text="MEDIAN STUDENT DEBT")
+        help_text="MEDIAN STUDENT DEBT 10 YRS AFTER ENROLLING")
     median_monthly_debt = models.DecimalField(
-        max_digits=14,
-        decimal_places=9,
+        max_digits=7,
+        decimal_places=2,
         blank=True, null=True,
         help_text=("MEDIAN STUDENT MONTHLY DEBT"))
     median_annual_pay = models.IntegerField(
         blank=True,
         null=True,
         help_text=("MEDIAN PAY 10 YRS AFTER ENTRY"))
+    median_annual_pay_6yr = models.IntegerField(
+        blank=True,
+        null=True,
+        help_text=("MEDIAN PAY 6 YRS AFTER ENTRY"))
     avg_net_price = models.IntegerField(
         blank=True,
         null=True,
         help_text="OVERALL AVERAGE")
+    avg_net_price_slices = JSONField(blank=True, null=True)
     tuition_out_of_state = models.IntegerField(blank=True, null=True)
     tuition_in_state = models.IntegerField(blank=True, null=True)
     offers_perkins = models.BooleanField(default=False)
+    cohort_ranking_by_control = JSONField(blank=True, null=True)
+    cohort_ranking_by_highest_degree = JSONField(blank=True, null=True)
+    cohort_ranking_by_state = JSONField(blank=True, null=True)
+    associate_transfer_rate = models.DecimalField(
+        max_digits=5,
+        decimal_places=3,
+        blank=True, null=True,
+        help_text=(
+            "Transfer rate for first-time, full-time students at "
+            "less-than-four-year institutions "
+            "(150% of expected time to completion)"))
 
     def as_json(self):
-        """delivers pertinent data points as json"""
+        """
+        Deliver pertinent data points as json.
+
+        Fields marked below as "legacy" may duplicate other fields
+        but are maintained for backward compatibility, for the sake of
+        the orignal for-profit version of the tool.
+        """
+
         region = get_region(self)
         ordered_out = OrderedDict()
         jdata = json.loads(self.data_json)
         dict_out = {
             'books': jdata['BOOKS'],
             'city': self.city,
+            'cohortRankByControl': self.cohort_ranking_by_control,
+            'cohortRankByHighestDegree': self.cohort_ranking_by_highest_degree,
+            'cohortRankByState': self.cohort_ranking_by_state,
             'control': self.control,
-            'defaultRate': "{0}".format(self.default_rate),
-            'gradRate': "{0}".format(self.grad_rate),
+            'defaultRate': format_for_null(self.default_rate),  # legacy
+            'enrollment': self.enrollment,
+            'gradRate': format_for_null(self.grad_rate),  # legacy
             'highestDegree': self.get_highest_degree(),
-            'medianMonthlyDebt': "{0}".format(self.median_monthly_debt),
-            'medianTotalDebt': "{0}".format(self.median_total_debt),
+            'medianAnnualPay': self.median_annual_pay,
+            'medianAnnualPay6Yr': self.median_annual_pay_6yr,
+            'medianMonthlyDebt': format_for_null(self.median_monthly_debt),
+            'medianTotalDebt': format_for_null(self.median_total_debt),
+            'netPriceAvg': self.avg_net_price,
+            'netPriceAvgSlices': self.avg_net_price_slices,
             'nicknames': ", ".join([nick.nickname for nick
                                     in self.nickname_set.all()]),
             'offersPerkins': self.offers_perkins,
@@ -287,9 +341,16 @@ class School(models.Model):
             'otherOffCampus': jdata['OTHEROFFCAMPUS'],
             'otherOnCampus': jdata['OTHERONCAMPUS'],
             'otherWFamily': jdata['OTHERWFAMILY'],
+            'programCount': self.program_count,
+            'programsPopular': self.program_most_popular,
             'predominantDegree': self.get_predominant_degree(),
+            'rateAssociateTransfer': format_for_null(
+                self.associate_transfer_rate),
+            'rateDefault': format_for_null(self.default_rate),
+            'rateGraduation': format_for_null(self.grad_rate),
+            'rateRepay3yr': format_for_null(self.repay_3yr),
             'region': region,
-            'repay3yr': "{0}".format(self.repay_3yr),
+            'repay3yr': format_for_null(self.repay_3yr),  # legacy
             'roomBrdOffCampus': jdata['ROOMBRDOFFCAMPUS'],
             'roomBrdOnCampus': jdata['ROOMBRDONCAMPUS'],
             'school': self.primary_alias,
@@ -303,8 +364,10 @@ class School(models.Model):
             'tuitionUnderInDis': jdata['TUITIONUNDERINDIS'],
             'tuitionUnderInS': self.tuition_in_state,
             'tuitionUnderOoss': self.tuition_out_of_state,
+            'underInvestigation': self.under_investigation,
             'url': self.url,
             'zip5': self.zip5,
+
         }
         for key in sorted(dict_out.keys()):
             ordered_out[key] = dict_out[key]
@@ -447,10 +510,9 @@ class Feedback(DisclosureBase):
     message = models.TextField()
 
 
-@python_2_unicode_compatible
 class Notification(DisclosureBase):
     """record of a disclosure verification"""
-    institution = models.ForeignKey(School)
+    institution = models.ForeignKey(School, on_delete=models.CASCADE)
     oid = models.CharField(max_length=40)
     timestamp = models.DateTimeField()
     errors = models.CharField(max_length=255)
@@ -484,7 +546,7 @@ class Notification(DisclosureBase):
         if school.contact:
             if school.contact.endpoint:
                 endpoint = school.contact.endpoint
-                if type(endpoint) == six.text_type:
+                if type(endpoint) == str:
                     endpoint = endpoint.encode('utf-8')
                 try:
                     resp = requests.post(endpoint, data=payload, timeout=10)
@@ -519,7 +581,7 @@ class Notification(DisclosureBase):
                             "response reason: {}\nstatus_code: {}\n"
                             "content: {}\n\n".format(
                                 now,
-                                endpoint,
+                                endpoint.decode('utf-8'),
                                 resp.reason,
                                 resp.status_code,
                                 resp.content)
@@ -558,17 +620,17 @@ class Notification(DisclosureBase):
             return no_contact_msg
 
 
-@python_2_unicode_compatible
 class Program(models.Model):
     """
     Cost and outcome info for an individual course of study at a school
     """
     DEBT_NOTE = "TITLEIV_DEBT + PRIVATE_DEBT + INSTITUTIONAL_DEBT"
-    institution = models.ForeignKey(School)
-    program_name = models.CharField(max_length=255)
+    institution = models.ForeignKey(School, on_delete=models.CASCADE)
     accreditor = models.CharField(max_length=255, blank=True)
-    level = models.CharField(max_length=255, blank=True)
+    program_name = models.CharField(max_length=255)
     program_code = models.CharField(max_length=255, blank=True)
+    level = models.CharField(max_length=255, blank=True)
+    level_code = models.CharField(max_length=255, blank=True)
     campus = models.CharField(max_length=255, blank=True)
     cip_code = models.CharField(max_length=255, blank=True)
     soc_codes = models.CharField(max_length=255, blank=True)
@@ -589,6 +651,9 @@ class Program(models.Model):
         blank=True, null=True, help_text=DEBT_NOTE)
     median_student_loan_completers = models.IntegerField(
         blank=True, null=True, help_text=DEBT_NOTE)
+    median_monthly_debt = models.IntegerField(
+        blank=True, null=True,
+        help_text="MEDIAN MONTHLY PAYMENT FOR A 10-YEAR LOAN")
     default_rate = models.DecimalField(
         blank=True, null=True, max_digits=5, decimal_places=2)
     salary = models.IntegerField(
@@ -638,9 +703,10 @@ class Program(models.Model):
             'institutionalDebt': self.institutional_debt,
             'jobNote': self.job_note,
             'jobRate': "{0}".format(self.job_rate),
-            'level': self.get_level(),
-            'levelCode': self.level,
+            'level': self.level,
+            'levelCode': self.level_code,
             'meanStudentLoanCompleters': self.mean_student_loan_completers,
+            'medianMonthlyDebt': self.median_monthly_debt,
             'medianStudentLoanCompleters': self.median_student_loan_completers,
             'privateDebt': self.private_debt,
             'programCode': self.program_code,
@@ -719,12 +785,11 @@ class Program(models.Model):
             ])
 
 
-@python_2_unicode_compatible
 class Alias(models.Model):
     """
     One of potentially several names for a school
     """
-    institution = models.ForeignKey(School)
+    institution = models.ForeignKey(School, on_delete=models.CASCADE)
     alias = models.TextField()
     is_primary = models.BooleanField(default=False)
 
@@ -735,12 +800,11 @@ class Alias(models.Model):
         verbose_name_plural = "Aliases"
 
 
-@python_2_unicode_compatible
 class Nickname(models.Model):
     """
     One of potentially several nicknames for a school
     """
-    institution = models.ForeignKey(School)
+    institution = models.ForeignKey(School, on_delete=models.CASCADE)
     nickname = models.TextField()
     is_female = models.BooleanField(default=False)
 

@@ -73,7 +73,7 @@ const conf = {
   mode: 'production',
   output: {
     filename: '[name]',
-    jsonpFunction: 'oah'
+    jsonpFunction: 'yes'
   },
   resolveLoader: {
     alias: {

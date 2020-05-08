@@ -1,21 +1,29 @@
-import Expandable from 'cf-expandables/src/Expandable';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
+import {
+  averageCostView,
+  daysPerWeekView,
+  drivingCostEstimateView,
+  milesView,
+  transitTimeView
+} from './views/route/form-questions';
 import { addRouteOptionAction } from './reducers/route-option-reducer';
-import budgetFormView from './budget-form-view';
-import createRoute from './route.js';
-import averageCostView from './views/average-cost';
-import daysPerWeekView from './views/days-per-week';
-import milesView from './views/miles';
-import goalsView from './views/goals';
-import reviewGoalsView from './views/review/goals';
-import routeOptionFormView from './route-option-view';
-import routeOptionToggleView from './route-option-toggle-view';
-import routeDetailsView from './views/route-details';
+import { toArray } from './util';
+import budgetFormView from './views/budget';
+import createRoute from './models/route';
 import expandableView from './views/expandable';
+import goalsView from './views/goals';
+import printButton from './views/print-button';
+import reviewChoiceView from './views/review/choice';
+import reviewDetailsView from './views/review/details';
+import reviewGoalsView from './views/review/goals';
+import routeDetailsView from './views/route/details';
+import routeOptionFormView from './views/route/option-form';
+import routeOptionToggleView from './views/route/option-toggle';
 import store from './store';
-import transitTimeView from './views/transit-time';
 
-Array.prototype.slice.call(
-  document.querySelectorAll( 'input' )
+
+toArray(
+  document.querySelectorAll( 'input, textarea' )
 ).forEach( input => {
   input.removeAttribute( 'disabled' );
 } );
@@ -23,7 +31,6 @@ Array.prototype.slice.call(
 const BUDGET_CLASSES = budgetFormView.CLASSES;
 const OPTION_CLASSES = routeOptionFormView.CLASSES;
 const OPTION_TOGGLE_CLASSES = routeOptionToggleView.CLASSES;
-const DETAILS_CLASSES = routeDetailsView.CLASSES;
 const GOALS_CLASSES = goalsView.CLASSES;
 const REVIEW_GOALS_CLASSES = reviewGoalsView.CLASSES;
 
@@ -34,8 +41,6 @@ goalsFormView.init();
 const budgetFormEl = document.querySelector( `.${ BUDGET_CLASSES.FORM }` );
 const budgetForm = budgetFormView( budgetFormEl, { store } );
 budgetForm.init();
-
-reviewGoalsView( document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }` ), { store } ).init();
 
 const expandables = Expandable.init();
 
@@ -52,19 +57,17 @@ const routeOptionForms = expandables.map( ( expandable, index ) => {
   return routeOptionFormView( routeOptionsEl, {
     store,
     routeIndex: index,
-    detailsView: routeDetailsView( document.querySelector( `.${ DETAILS_CLASSES.CONTAINER }` ) ),
+    routeDetailsView,
     averageCostView,
     daysPerWeekView,
+    drivingCostEstimateView,
     milesView,
     transitTimeView
   } );
 } );
 
-/**
- * Only initialize the first route option form, the second is initialized when
- * the user clicks the 'add another option' button.
-*/
-routeOptionForms[0].init();
+expandables[0].element.querySelector( '.o-expandable_target' ).click();
+expandables[1].element.classList.add( 'u-hidden' );
 routeOptionToggleView(
   document.querySelector( `.${ OPTION_TOGGLE_CLASSES.BUTTON }` ), {
     expandable: expandables[1],
@@ -72,5 +75,32 @@ routeOptionToggleView(
   }
 ).init();
 
-expandables[0].element.querySelector( '.o-expandable_target' ).click();
-expandables[1].element.classList.add( 'u-hidden' );
+/**
+ * Only initialize the first route option form, the second is initialized when
+ * the user clicks the 'add another option' button.
+*/
+routeOptionForms[0].init();
+
+// Initialize subviews for the review section
+function handleShowReviewPlan() {
+  reviewGoalsView(
+    document.querySelector( `.${ REVIEW_GOALS_CLASSES.CONTAINER }`
+    ), { store }
+  ).init();
+
+  const reviewDetailsEl = document.querySelector(
+    `.${ reviewDetailsView.CLASSES.CONTAINER }`
+  );
+  reviewDetailsView( reviewDetailsEl, {
+    store, routeDetailsView
+  } ).init();
+
+  printButton(
+    document.querySelector( `.${ printButton.CLASSES.BUTTON }` )
+  ).init();
+}
+
+reviewChoiceView(
+  document.querySelector( `.${ reviewChoiceView.CLASSES.CONTAINER }` ),
+  { store, onShowReviewPlan: handleShowReviewPlan }
+).init();

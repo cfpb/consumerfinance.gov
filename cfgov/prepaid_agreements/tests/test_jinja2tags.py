@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from six.moves.urllib.parse import urlencode
+from urllib.parse import urlencode
 
 from django.http import HttpRequest, QueryDict
 from django.template import engines

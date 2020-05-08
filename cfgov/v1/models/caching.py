@@ -8,9 +8,9 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
-from wagtail.contrib.wagtailfrontendcache.utils import PurgeBatch
-from wagtail.wagtaildocs.models import Document
+from wagtail.contrib.frontend_cache.backends import BaseBackend
+from wagtail.contrib.frontend_cache.utils import PurgeBatch
+from wagtail.documents.models import Document
 
 import requests
 from akamai.edgegrid import EdgeGridAuth
@@ -25,7 +25,7 @@ class CDNHistory(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=2083)
     message = models.CharField(max_length=255)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class AkamaiBackend(BaseBackend):

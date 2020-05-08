@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from wagtail.contrib.wagtailfrontendcache.utils import purge_url_from_cache
+from wagtail.contrib.frontend_cache.utils import purge_url_from_cache
 
 
 class Command(BaseCommand):

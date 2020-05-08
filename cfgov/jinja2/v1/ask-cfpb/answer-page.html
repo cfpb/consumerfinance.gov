@@ -27,7 +27,7 @@
 {%- endblock %}
 
 {% block content_main %}
-<div {% if flag_enabled('HOW_TO_SCHEMA', request) %}
+<div {% if flag_enabled('HOW_TO_SCHEMA') %}
         itemscope=""
         itemtype="http://schema.org/HowTo"
      {% endif %}>
@@ -37,7 +37,7 @@
         {% if last_edited %}
         <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
         {% endif %}
-        <h1 {% if flag_enabled('HOW_TO_SCHEMA', request) %}itemprop="name"{% endif %}>
+        <h1 {% if flag_enabled('HOW_TO_SCHEMA') %}itemprop="name"{% endif %}>
             {{ page.question | striptags }}
         </h1>
     </div>
@@ -72,17 +72,6 @@
                     </span>
                 </button>
             </div>
-        {% if page.related_resource and page.related_resource.trans_text(page.language) | striptags %}
-            <div class="block next-steps">
-                <div class="o-well">
-                <h2 class="u-mb15">
-                    {{ _('Take the next step') }}
-                </h2>
-                <h3 class="u-mt15">{{ page.related_resource.trans_title(page.language) | safe }}</h3>
-                {{ page.related_resource.trans_text(page.language) | safe }}
-                </div>
-            </div>
-        {% endif %}
 
         <div class="block related-questions">
             <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>

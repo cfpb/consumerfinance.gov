@@ -1,8 +1,5 @@
-from __future__ import unicode_literals
-
 import json
-
-from paying_for_college.models import cdr
+from csv import DictReader as cdr
 
 
 """

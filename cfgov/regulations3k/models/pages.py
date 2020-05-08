@@ -1,12 +1,10 @@
-from __future__ import absolute_import, unicode_literals
-
 import logging
 import re
+import urllib
 from collections import OrderedDict
 from datetime import date
 from functools import partial
-from six.moves import urllib
-from six.moves.urllib.parse import urljoin
+from urllib.parse import urljoin
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
@@ -16,12 +14,12 @@ from django.template.loader import get_template
 from django.template.response import TemplateResponse
 from haystack.query import SearchQuerySet
 
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
 
 import requests
 from jinja2 import Markup
@@ -29,7 +27,7 @@ from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
-from regulations3k.models import Part, Section, SectionParagraph
+from regulations3k.models import Part, Section, SectionParagraph, label_re_str
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
@@ -398,7 +396,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             context
         )
 
-    @route(r'^versions/(?:(?P<section_label>[0-9A-Za-z-]+)/)?$',
+    @route(r'^versions/(?:(?P<section_label>' + label_re_str + r')/)?$',
            name="versions")
     def versions_page(self, request, section_label=None):
         section_query = self.get_section_query(request=request)
@@ -432,7 +430,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
 
     @route(r'^(?:(?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})/)?'
-           r'(?P<section_label>[0-9A-Za-z-]+)/$',
+           r'(?P<section_label>' + label_re_str + r')/$',
            name="section")
     def section_page(self, request, date_str=None, section_label=None):
         """ Render a section of the currently effective regulation """

@@ -20,7 +20,7 @@
         </div>
 
         {% if results %}
-            {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
+            {% if flag_enabled('ASK_SEARCH_TYPOS') %}
                 {% if tag %}
                     <h3 class="results-header">{{ _('Showing results for ') }} “{{ tag }}”</h3>
                 {% else %}
@@ -42,17 +42,10 @@
 
                 <div class="question_list">
                 {% for question in results %}
-                {% if tag %}
-                    <article class="question_summary question_summary__full">
-                        <p class="question_title"><a href="{{ question.url }}" class="kbq">{{ question.question|safe }}</a></p>
-                        <p class="qans">{{ question.answer | safe | striptags | truncate }}</p>
-                    </article>
-                {% else %}
                     <article class="question_summary question_summary__full">
                         <p class="question_title"><a href="{{ question[0] }}" class="kbq">{{ question[1]|safe }}</a></p>
                         <p class="qans">{{ question[2] }}</p>
                     </article>
-                {% endif %}
                 {% endfor %}
 
                 </div>
@@ -74,14 +67,14 @@
 
         <section class="search-results block
                         block__flush-top">
-            <div class="no-results-message">
+            <div class="no-results-message" data-gtm_ask-no-results="true">
                 {% if tag %}
                     <h3 class="results-header">{{ _('No results found for') }} “{{ tag }}”</h3>
                 {% else %}
                     <h3 class="results-header">{{ _('No results found for') }} “{{ page.query }}”</h3>
                 {% endif %}
 
-                {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
+                {% if flag_enabled('ASK_SEARCH_TYPOS') %}
                     {% if page.suggestion %}
                     <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
                     {% endif %}

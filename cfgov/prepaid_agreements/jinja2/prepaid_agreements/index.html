@@ -27,7 +27,7 @@
     {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
     {% set breadcrumb_items = [{
         'href': '/data-research/prepaid-accounts/',
-        'title': 'Prepaid Account Agreeements'
+        'title': 'Prepaid Account Agreements'
     }]%}
     {{ breadcrumbs.render(breadcrumb_items) }}
 
@@ -69,17 +69,19 @@
                     </div>
                     <div class="flex-all">
                         <div class="m-btn-inside-input input-contains-label">
-                            <label for="searchText" class="input-contains-label_before input-contains-label_before__search">
+                            <label for="searchText"
+                                   class="input-contains-label_before input-contains-label_before__search"
+                                   aria-hidden="true">
                                 {{ svg_icon('search') }}
-                                <span class="u-visually-hidden">The term to search for</span>
                             </label>
-                            <input id="searchText" 
+                            <input id="searchText"
                                    type="text"
                                    autocomplete="off"
                                    class="a-text-input"
                                    name="q"
                                    placeholder="Enter search term"
-                                   value="{{ query }}">
+                                   value="{{ query }}"
+                                   aria-label="The term to search for">
                             <a class="a-btn a-btn__link" href="{{ remove_url_parameter(request, { 'q': [query] }) }}">{{ svg_icon('remove') }} Clear</a>
                         </div>
                     </div>

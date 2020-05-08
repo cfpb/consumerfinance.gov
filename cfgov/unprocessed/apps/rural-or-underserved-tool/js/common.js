@@ -2,7 +2,7 @@
    Common application-wide scripts for rural-or-underserved-tool.
    ========================================================================== */
 
-import Expandable from '../../../../../node_modules/cf-expandables/src/Expandable.js';
+import Expandable from '../../../../../node_modules/@cfpb/cfpb-expandables/src/Expandable.js';
 
 Expandable.init();
 

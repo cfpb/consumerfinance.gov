@@ -21,20 +21,10 @@ services:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
+        ports:
+            - "5432:5432"
 
-    python2:
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                scl_python_version: python27
-        depends_on:
-            - elasticsearch
-            - postgres
-        stdin_open: true
-        tty: true
-
-    python3:
+    python:
         build:
             context: .
             dockerfile: Dockerfile

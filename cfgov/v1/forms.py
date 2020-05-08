@@ -8,16 +8,10 @@ from django.forms import widgets
 
 from taggit.models import Tag
 
+from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
 from v1.util.date_filter import end_of_time_period
-
-from .models.base import Feedback
-
-
-class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
-    def validate(self, value):
-        pass
 
 
 class FilterableDateField(forms.DateField):
@@ -86,7 +80,7 @@ class FilterableListForm(forms.Form):
         widget=widgets.CheckboxSelectMultiple()
     )
 
-    topics = MultipleChoiceFieldNoValidation(
+    topics = forms.MultipleChoiceField(
         required=False,
         choices=[],
         widget=widgets.SelectMultiple(attrs={
@@ -247,6 +241,24 @@ class FilterableListForm(forms.Form):
             'title__icontains',      # title
             'date_published__gte',   # from_date
             'date_published__lte',   # to_date
+            'categories__name__in',  # categories
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
+        ]
+
+
+class EnforcementActionsFilterForm(FilterableListForm):
+    def get_page_set(self):
+        query = self.generate_query()
+        return self.filterable_pages.filter(query).distinct().order_by(
+            '-date_filed'
+        )
+
+    def get_query_strings(self):
+        return [
+            'title__icontains',      # title
+            'date_filed__gte',       # from_date
+            'date_filed__lte',       # to_date
             'categories__name__in',  # categories
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors

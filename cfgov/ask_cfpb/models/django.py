@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
-# from collections import Counter
-from six.moves import html_parser as HTMLParser
-
 from django.contrib.auth.models import User
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.fields import RichTextField
+from wagtail.images.edit_handlers import ImageChooserPanel
 
-
-html_parser = HTMLParser.HTMLParser()
 
 ENGLISH_PARENT_SLUG = 'ask-cfpb'
 SPANISH_PARENT_SLUG = 'obtener-respuestas'
@@ -78,7 +71,11 @@ class Category(models.Model):
 
 
 class Answer(models.Model):
-    last_user = models.ForeignKey(User, blank=True, null=True)
+    last_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
     question = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

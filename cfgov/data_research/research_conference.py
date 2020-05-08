@@ -1,12 +1,10 @@
-from __future__ import unicode_literals
-
 import re
 
 from django.core.mail import EmailMessage
 from django.template import loader
 from django.utils.functional import cached_property
 
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook

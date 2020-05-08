@@ -1,0 +1,55 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block meta_viewport %}
+    {{ super() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block title -%}
+    Your voluntary diversity assessment onboarding has been submitted
+{%- endblock %}
+
+{% block css %}
+    {{ super() }}
+    <style>
+
+    </style>
+{% endblock %}
+
+{% block pre_content %}
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            {{ svg_icon('left') }}
+            <a class="breadcrumbs_link" href="/about-us/diversity-and-inclusion/">
+                Diversity and Inclusion at the Bureau
+            </a>
+        </nav>
+    </div>
+{% endblock %}
+
+
+{% block content_main %}
+    <div class="block block__flush-top">
+        <h1>Voluntary diversity assessment onboarding form</h1>
+    </div>
+    <div class="block">
+        <div class="m-notification m-notification__visible m-notification__success">
+            {{ svg_icon('approved-round') }}
+            <div class="m-notification_content">
+                <div class="h4 m-notification_message">
+                    Your voluntary diversity assessment onboarding has been submitted
+                </div>
+                <p class="m-notification_explanation">
+                    We’ll use the information you submitted to give you access to the Inclusivity Portal.
+                    You’ll receive an email when your portal account has been created with instructions for logging in.
+                    If you have any questions, please contact the Office of Minority and Women Inclusion’s Diversity Assessments Support Team at
+                    <a href="mailto:OMWI_diversityassessments@cfpb.gov">OMWI_diversityassessments@cfpb.gov</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content_sidebar -%}
+    {% include '_sidebar.html' %}
+{%- endblock %}

@@ -92,15 +92,19 @@
     }
 
     &__list {
-        padding: unit( @grid_gutter-width / 2 / 12px, em )
-                 unit( @grid_gutter-width / 2 / 12px, em )
-                 unit( @grid_gutter-width / 12px, em );
-        border-top: 1px solid @gray-40;
+        padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+        padding-left: unit( @grid_gutter-width / @base-font-size-px, rem );
+        padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, rem );
+
+        .a-tagline {
+            line-height: unit( 18px / @base-font-size-px, rem );
+        }
 
         .m-global-eyebrow_actions {
-            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
             border-top: 1px solid @gray-40;
-            margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
 
             text-align: left;
         }
@@ -108,7 +112,33 @@
         .m-global-eyebrow_phone,
         .m-global-eyebrow_languages {
             display: block;
-            padding-left: 32px; //22px flag + 15px spacing
+            padding-left: 0;
+        }
+
+        .m-global-eyebrow_phone {
+          border-top: 1px solid @gray-40;
+          padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+
+          // Apply padding to the phone number to increase the touch area.
+          a {
+            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+            padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+          }
+        }
+
+        .m-global-eyebrow_languages {
+          margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+
+          .m-list_item {
+            // Apply padding to the language links to increase their touch area.
+            a {
+              display: block;
+              text-align: center;
+              min-width: 48px;
+              padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+              padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+            }
+          }
         }
     }
 }

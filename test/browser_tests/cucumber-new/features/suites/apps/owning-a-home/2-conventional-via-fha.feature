@@ -16,15 +16,15 @@ Scenario Outline: Triggering a Conventional loan when FHA high balance is not av
     And I should see the County field highlighted
 
 Examples:
-| state_name 	|
-| Alabama 	 	|
-| Arizona    	|
-| Colorado   	|
-| Florida    	|
-| Indiana    	|
-| Utah        |
-| Kansas      |
-| Montana     |
+| state_name |
+| Alabama    |
+| Arizona    |
+| Colorado   |
+| Florida    |
+| Indiana    |
+| Utah       |
+| Kansas     |
+| Montana    |
 
 @high_balance @hp_first
 Scenario Outline: Triggering a Conventional loan when FHA high balance is not available
@@ -40,15 +40,15 @@ Scenario Outline: Triggering a Conventional loan when FHA high balance is not av
     But I should NOT see the County field highlighted
 
  Examples:
-| state_name | county_name 		    | FHA_max_loan_amount    |
-| Alabama 	 | Bibb County 		    | $275,665               |
-| Arizona    | Apache County 	    | $275,665               |
-| Colorado   | Morgan County 	    | $275,665 		           |
-| Florida    | Okeechobee County  | $275,665               |
-| Indiana 	 | Monroe County 	    | $275,665               |
-| Utah 		   | Salt Lake County   | $312,800               |
-| Kansas 	   | Johnson County     | $278,300 		           |
-| Montana 	 | Missoula County    | $289,800               |
+| state_name | county_name       | FHA_max_loan_amount |
+| Alabama    | Bibb County       | $275,665            |
+| Arizona    | Apache County     | $275,665            |
+| Colorado   | Morgan County     | $275,665            |
+| Florida    | Okeechobee County | $275,665            |
+| Indiana    | Monroe County     | $275,665            |
+| Utah       | Salt Lake County  | $312,800            |
+| Kansas     | Johnson County    | $278,300            |
+| Montana    | Missoula County   | $289,800            |
 
 @high_balance @lt_first
 Scenario Outline: Triggering a Conventional loan when FHA high balance is not available
@@ -60,15 +60,15 @@ Scenario Outline: Triggering a Conventional loan when FHA high balance is not av
     And I should see the County field highlighted
 
 Examples:
-| state_name 	|
-| Alabama 	 	|
-| Arizona    	|
-| Colorado   	|
-| Florida    	|
-| Indiana    	|
-| Utah 	  		|
-| Kansas      |
-| Montana     |
+| state_name |
+| Alabama    |
+| Arizona    |
+| Colorado   |
+| Florida    |
+| Indiana    |
+| Utah       |
+| Kansas     |
+| Montana    |
 
 @high_balance @lt_first
 Scenario Outline: Triggering a Conventional loan when FHA high balance is not available
@@ -84,12 +84,12 @@ Scenario Outline: Triggering a Conventional loan when FHA high balance is not av
     But I should NOT see the County field highlighted
 
  Examples:
-| state_name  | county_name 		   | FHA_max_loan_amount |
-| Alabama     | Bibb County        | $275,665            |
-| Arizona     | Apache County      | $275,665            |
-| Colorado    | Morgan County      | $275,665            |
-| Florida     | Okeechobee County  | $275,665            |
-| Indiana     | Monroe County      | $275,665            |
-| Utah        | Salt Lake County   | $312,800            |
-| Kansas      | Johnson County     | $278,300            |
-| Montana     | Missoula County    | $289,800            |
+| state_name | county_name       | FHA_max_loan_amount |
+| Alabama    | Bibb County       | $275,665            |
+| Arizona    | Apache County     | $275,665            |
+| Colorado   | Morgan County     | $275,665            |
+| Florida    | Okeechobee County | $275,665            |
+| Indiana    | Monroe County     | $275,665            |
+| Utah       | Salt Lake County  | $312,800            |
+| Kansas     | Johnson County    | $278,300            |
+| Montana    | Missoula County   | $289,800            |

@@ -18,5 +18,6 @@
   },
   "dependencies": {
     "workbox-build": "^3.4.1"
-  }
+  },
+  "devDependencies": {}
 }

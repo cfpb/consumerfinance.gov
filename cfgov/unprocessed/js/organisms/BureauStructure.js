@@ -4,7 +4,7 @@
    ========================================================================== */
 
 import BreakpointHandler from '../modules/BreakpointHandler';
-import Expandable from 'cf-expandables/src/Expandable';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 
 let BS;
 

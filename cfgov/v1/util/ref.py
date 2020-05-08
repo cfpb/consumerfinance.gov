@@ -80,9 +80,8 @@ categories = [
         ('gaming', 'Gaming'),
     )),
     ('Enforcement Action', (
-        ('fed-district-case', 'Federal district court case'),
-        ('administrative-adjudication-2', 'Administrative adjudication'),
-        ('stipulation-and-consent-order-2', 'Stipulation and consent order'),
+        ('civil-action', 'Civil Action'),
+        ('administrative-proceeding', 'Administrative Proceeding')
     )),
     ('Final rule', (
         ('interim-final-rule', 'Interim final rule'),

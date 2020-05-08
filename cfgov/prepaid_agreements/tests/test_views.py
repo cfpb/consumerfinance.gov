@@ -15,6 +15,13 @@ from prepaid_agreements.views import (
 class TestViews(TestCase):
 
     def test_get_available_filters(self):
+        products = PrepaidProduct.objects
+
+        self.assertEqual(
+            get_available_filters(products),
+            {'prepaid_type': [], 'status': [], 'issuer_name': []}
+        )
+
         product1 = PrepaidProduct(
             issuer_name='Bank of CFPB',
             prepaid_type='Tax'
@@ -22,7 +29,6 @@ class TestViews(TestCase):
         product1.save()
         product2 = PrepaidProduct(prepaid_type='Travel')
         product2.save()
-        products = PrepaidProduct.objects.all()
         self.assertEqual(
             get_available_filters(products),
             {
@@ -87,7 +93,7 @@ class TestViews(TestCase):
 
     def test_get_breadcrumb_if_referrer_is_search_page_with_query(self):
         request = HttpRequest()
-        search_path_with_query = reverse('prepaid_agreements:index') + '?q=a'
+        search_path_with_query = reverse("prepaid_agreements:index") + "?q=a"
         request.META.update({'HTTP_REFERER': search_path_with_query})
         self.assertEqual(
             get_detail_page_breadcrumb(request),
@@ -96,23 +102,23 @@ class TestViews(TestCase):
 
     def test_get_breadcrumb_if_referrer_is_search_page_without_query(self):
         request = HttpRequest()
-        search_path = reverse('prepaid_agreements:index')
+        search_path = reverse("prepaid_agreements:index")
         request.META.update({'HTTP_REFERER': search_path})
         self.assertEqual(get_detail_page_breadcrumb(request), search_path)
 
     def test_get_breadcrumb_if_referrer_is_not_search_page(self):
         request = HttpRequest()
-        search_path = reverse('prepaid_agreements:index')
+        search_path = reverse("prepaid_agreements:index")
         request.META.update({'HTTP_REFERER': '/random-path/'})
         self.assertEqual(get_detail_page_breadcrumb(request), search_path)
 
     def test_get_breadcrumb_if_referrer_is_random_page_with_query(self):
         request = HttpRequest()
-        search_path = reverse('prepaid_agreements:index')
+        search_path = reverse("prepaid_agreements:index")
         request.META.update({'HTTP_REFERER': '/random-path/?q=test'})
         self.assertEqual(get_detail_page_breadcrumb(request), search_path)
 
     def test_get_breadcrumb_if_no_referrer(self):
         request = HttpRequest()
-        search_path = reverse('prepaid_agreements:index')
+        search_path = reverse("prepaid_agreements:index")
         self.assertEqual(get_detail_page_breadcrumb(request), search_path)

@@ -1,6 +1,7 @@
+import { isNumber } from './util';
 const _centsPerDollar = 100;
 const _decimals = 2;
-const _dollarsToPrecisionRegexp = new RegExp( `(\\d+\\.?\\d{0,${ _decimals }})` );
+const _dollarsToPrecisionRegexp = new RegExp( `(-?(\\d+,?)*\\.?\\d{0,${ _decimals }})` );
 
 /**
  * Converts an input string into a scaled dollar value, or zero.
@@ -11,10 +12,19 @@ const _dollarsToPrecisionRegexp = new RegExp( `(\\d+\\.?\\d{0,${ _decimals }})` 
 function toDollars( dollars ) {
   const safeDollars = typeof dollars === 'string' ? dollars : String( dollars );
   const matches = safeDollars.match( _dollarsToPrecisionRegexp );
-  const dollarsFixed = ( matches && matches[0] ) || 0;
+  let dollarsFixed;
+
+  if ( matches ) {
+    dollarsFixed = matches[0].replace( /,/g, '' );
+  }
+
+  if ( !isNumber( dollarsFixed ) ) {
+    dollarsFixed = 0;
+  }
+
   const dollarAmount = dollarsFixed * _centsPerDollar / _centsPerDollar;
 
-  return Math.ceil( dollarAmount );
+  return dollarAmount;
 }
 
 const dollars = {

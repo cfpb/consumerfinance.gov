@@ -1,9 +1,6 @@
-from __future__ import absolute_import, print_function
-
 import json
 import os
 import shutil
-import six
 import tempfile
 from unittest import TestCase
 
@@ -42,8 +39,7 @@ class TestGeneratorCounselorJson(TestCase):
 
     def test_generate_creates_json_files(self):
         generate_counselor_json(self.counselors, self.zipcodes, self.tempdir)
-        six.assertCountEqual(
-            self,
+        self.assertCountEqual(
             os.listdir(self.tempdir),  # os.listdir order not guaranteed.
             ['20001.json', '20002.json']
         )
@@ -76,7 +72,7 @@ class TestGeneratorCounselorJson(TestCase):
         ]
 
         for a, b in zip(agencies, expected_agencies):
-            six.assertCountEqual(self, a.keys(), b.keys())
+            self.assertCountEqual(a.keys(), b.keys())
 
             for k in a:
                 self.assertAlmostEqual(a[k], b[k])

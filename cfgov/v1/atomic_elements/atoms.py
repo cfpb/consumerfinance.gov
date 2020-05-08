@@ -3,8 +3,8 @@ import re
 from django import forms
 from django.core.exceptions import ValidationError
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailimages.blocks import ImageChooserBlock
+from wagtail.core import blocks
+from wagtail.images.blocks import ImageChooserBlock
 
 
 def number_validator(value, search=re.compile(r'[^0-9]').search):

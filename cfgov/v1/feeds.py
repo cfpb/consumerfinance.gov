@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.contrib.syndication.views import Feed
 
-from wagtail.wagtailcore.url_routing import RouteResult
+from wagtail.core.url_routing import RouteResult
 
 import pytz
 

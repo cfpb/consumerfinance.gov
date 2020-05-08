@@ -8,6 +8,8 @@ Education's CollegeScorecard API. The script intentionally runs slowly \
 to avoid triggering API rate limits, so allow an hour to run."""
 PARSER_HELP = """Optionally specify a single school to update \
 by passing '--school_id' and a college IPEDS ID."""
+PROGRAMS_HELP = """Optionally choose to harvest program-level data \
+by passing the '--save_programs' option."""
 ID_ERROR = "School could not be found for ID {}"
 
 
@@ -16,12 +18,20 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--school_id', help=PARSER_HELP, default=False)
+        parser.add_argument(
+            '--save_programs', action='store_true', help=PROGRAMS_HELP)
 
     def handle(self, *args, **options):
-        try:
-            (failed, no_data, endmsg) = update_colleges.update(
-                single_school=options['school_id'])
-        except(IndexError):
-            self.stdout.write(ID_ERROR.format(options['school_id']))
+        save_programs = options.get('save_programs') or False
+        single_school = options.get('school_id')
+        if save_programs and single_school:
+            (no_data, endmsg) = update_colleges.update(
+                single_school=single_school, store_programs=True)
+        elif single_school:
+            (no_data, endmsg) = update_colleges.update(
+                single_school=single_school)
+        elif save_programs:
+            (no_data, endmsg) = update_colleges.update(store_programs=True)
         else:
-            self.stdout.write(endmsg)
+            (no_data, endmsg) = update_colleges.update()
+        self.stdout.write(endmsg)

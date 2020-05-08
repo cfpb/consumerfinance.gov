@@ -1,7 +1,5 @@
-
-.hallotoolbar,
-.table-block-modal {
-    z-index: 10000;
+.hallotoolbar {
+    z-index: 10000 !important;
 }
 
 .heading-text-block,

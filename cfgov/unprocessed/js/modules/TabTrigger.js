@@ -17,13 +17,13 @@ function createElement( type, target ) {
 }
 
 /**
- * MegaMenu
+ * TabTrigger
  * @class
  *
- * @classdesc Initializes a new MegaMenu organism.
+ * @classdesc Initializes a new TabTrigger module.
  *
  * @param {HTMLNode} element
- *   The DOM element within which to search for the organism.
+ *   The DOM element within which to search for the module's root node.
  * @returns {TabTrigger} An instance.
  */
 function TabTrigger( element ) {

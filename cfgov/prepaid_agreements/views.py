@@ -1,4 +1,4 @@
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from django.contrib.postgres.search import SearchVector
 from django.core.paginator import InvalidPage, Paginator
@@ -32,7 +32,7 @@ def validate_page_number(request, paginator):
 
 def get_available_filters(products):
     available_filters = {'prepaid_type': [], 'status': [], 'issuer_name': []}
-    for product in products:
+    for product in products.all():
         prepaid_type = product.prepaid_type
         if prepaid_type and prepaid_type != '':
             if prepaid_type not in available_filters['prepaid_type']:
@@ -95,11 +95,11 @@ def get_support_text():
 
 
 def index(request):
-    params = dict(request.GET.iterlists())
+    params = dict(request.GET.lists())
     available_filters = {}
     search_term = None
     search_field = None
-    products = PrepaidProduct.objects
+    products = PrepaidProduct.objects.valid()
     total_count = products.count()
     valid_filters = [
         'prepaid_type', 'status', 'issuer_name'
@@ -154,7 +154,7 @@ def get_detail_page_breadcrumb(request):
     """
     http_referer = request.META.get('HTTP_REFERER', '')
     referrer = urlparse(http_referer)
-    search_page_path = reverse('prepaid_agreements:index')
+    search_page_path = reverse("prepaid_agreements:index")
     if referrer.query and referrer.path == search_page_path:
         return http_referer
     else:

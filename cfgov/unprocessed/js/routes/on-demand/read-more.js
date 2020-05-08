@@ -1,1 +1,1 @@
-require( 'cf-expandables/src/Expandable' ).init();
+require( '@cfpb/cfpb-expandables/src/Expandable' ).init();

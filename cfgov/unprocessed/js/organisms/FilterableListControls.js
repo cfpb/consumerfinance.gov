@@ -8,7 +8,7 @@ import {
 import Analytics from '../modules/Analytics';
 import ERROR_MESSAGES from '../config/error-messages-config';
 import EventObserver from '../modules/util/EventObserver';
-import Expandable from 'cf-expandables/src/Expandable';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import FormModel from '../modules/util/FormModel';
 import Multiselect from '../molecules/Multiselect';
 

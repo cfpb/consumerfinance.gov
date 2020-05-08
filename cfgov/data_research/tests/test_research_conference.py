@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.test import TestCase
 
 from data_research.research_conference import get_conference_details_from_page

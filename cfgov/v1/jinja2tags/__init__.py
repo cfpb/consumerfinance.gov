@@ -1,4 +1,4 @@
-from six.moves import html_parser as HTMLParser
+import html
 
 from django.utils.module_loading import import_string
 
@@ -8,13 +8,13 @@ from jinja2.ext import Extension
 from hmda.templatetags.hmda_banners import hmda_outage_banner
 from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
-from v1.models import CFGOVRendition
+from v1.models.images import CFGOVRendition
 from v1.templatetags.app_urls import app_page_url, app_url
-from v1.templatetags.complaint_banners import (
-    complaint_issue_banner, complaint_maintenance_banner
+from v1.templatetags.banners import (
+    collect_outage_banner, complaint_issue_banner,
+    complaint_maintenance_banner, omwi_salesforce_outage_banner
 )
 from v1.templatetags.email_popup import email_popup
-from v1.templatetags.mega_menu import get_menu_items
 from v1.util import ref
 from v1.util.util import get_unique_id
 
@@ -83,8 +83,8 @@ def render_stream_child(context, stream_child):
         new_context['value'] = stream_child
 
     # Render the template with the context
-    html = template.render(new_context)
-    unescaped = HTMLParser.HTMLParser().unescape(html)
+    html_result = template.render(new_context)
+    unescaped = html.unescape(html_result)
     # Return the rendered template as safe html
     return Markup(unescaped)
 
@@ -97,9 +97,10 @@ class V1Extension(Extension):
             'category_label': ref.category_label,
             'choices_for_page_type': ref.choices_for_page_type,
             'email_popup': email_popup,
+            'collect_outage_banner': collect_outage_banner,
             'complaint_issue_banner': complaint_issue_banner,
             'complaint_maintenance_banner': complaint_maintenance_banner,
-            'get_menu_items': get_menu_items,
+            'omwi_salesforce_outage_banner': omwi_salesforce_outage_banner,
             'get_model': get_model,
             'get_unique_id': get_unique_id,
             'hmda_outage_banner': hmda_outage_banner,

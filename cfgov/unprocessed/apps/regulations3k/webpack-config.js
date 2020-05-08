@@ -24,6 +24,7 @@ const MANIFEST_DEST = `${ paths.processed }/apps/${ APP_NAME }/${ MANIFEST_FILEN
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
+  extractComments: false,
   terserOptions: {
     ie8: false,
     ecma: 5,
@@ -115,6 +116,7 @@ const conf = {
     jsonpFunction: 'apps'
   },
   optimization: {
+    minimize: true,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 from django.test import TestCase, override_settings
 
@@ -11,17 +10,28 @@ from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
+class TestDownstreamCacheControlMiddleware(TestCase):
+
+    def test_edge_control_header_in_response(self):
+        response = self.client.get('/', CSRF_COOKIE='', CSRF_COOKIE_USED=True)
+        self.assertIn('Edge-Control', response)
+
+    def test_edge_control_header_not_in_response(self):
+        response = self.client.get('/')
+        self.assertNotIn('Edge-Control', response)
+
+
 @mock.patch('core.middleware.parse_links')
 class TestParseLinksMiddleware(TestCase):
     def test_parse_links_gets_called(self, mock_parse_links):
         """Middleware correctly invokes parse links when rendering webpage"""
-        response = self.client.get('/foo/bar')
-        mock_parse_links.assert_called_with(response.content, encoding='utf-8')
+        self.client.get('/')
+        mock_parse_links.assert_called_once()
 
-    @override_settings(PARSE_LINKS_EXCLUSION_LIST=[r'^/foo/'])
+    @override_settings(PARSE_LINKS_EXCLUSION_LIST=[r'^/'])
     def test_parse_links_does_not_get_called_excluded(self, mock_parse_links):
         """Middleware does not invoke parse links when path is excluded"""
-        self.client.get('/foo/bar')
+        self.client.get('/')
         mock_parse_links.assert_not_called()
 
 
@@ -167,3 +177,45 @@ class TestParseLinks(TestCase):
         output = parse_links(s)
         soup = BeautifulSoup(output, 'html.parser')
         self.assertEqual(len(soup.find_all('a')), 2)
+
+    def check_after_parse_links_has_this_many_svgs(self, count, s):
+        output = parse_links(s)
+        soup = BeautifulSoup(output, 'html.parser')
+        self.assertEqual(len(soup.find_all('svg')), count)
+
+    def test_link_ending_with_svg_doesnt_get_another_svg(self):
+        self.check_after_parse_links_has_this_many_svgs(1, (
+            '<a href="https://external.gov">'
+            '<span>Text before icon</span> '
+            '<svg>something</svg>'
+            '</a>'
+        ))
+
+    def test_link_ending_with_svg_and_whitespace_doesnt_get_another_svg(self):
+        self.check_after_parse_links_has_this_many_svgs(1, (
+            '<a href="https://external.gov">'
+            '<span>Text before icon</span> '
+            '<svg>something</svg>   \n\t'
+            '</a>'
+        ))
+
+    def test_with_svg_not_at_the_end_still_gets_svg(self):
+        self.check_after_parse_links_has_this_many_svgs(2, (
+            '<a href="https://external.gov">'
+            '<span><svg>something</svg> Text after icon</span>'
+            '</a>'
+        ))
+
+    def test_with_svg_then_span_still_gets_svg(self):
+        self.check_after_parse_links_has_this_many_svgs(2, (
+            '<a href="https://external.gov">'
+            '<svg>something</svg>'
+            '<span>Text after icon</span>'
+            '</a>'
+        ))
+
+    def test_in_page_anchor_links_have_current_path_stripped(self):
+        s = '<a href="/foo/bar/#anchor">Anchor</a>'
+        output = parse_links(s, request_path='/foo/bar/')
+        self.assertNotIn('/foo/bar/', output)
+        self.assertIn('href="#anchor"', output)

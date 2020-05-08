@@ -25,24 +25,30 @@
 
    ========================================================================== #}
 
-{% if value.has_rule %}
-    <div class="a-rule-break"></div>
-{% endif %}
-
-{% if value.heading %}
-    <h3>{{ value.heading }}</h3>
-{% endif %}
-
-{% if value.body %}
-    <p>{{ value.body | safe }}</p>
-{% endif %}
-
-<div class="o-expandable-group
-            {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
-    {# Should be a stack of Expandable instances. #}
-    {% if value.expandables %}
-        {% for expandable in value.expandables %}
-            {{ expandable }}
-        {% endfor %}
+<div
+    {%- if value.heading %}
+        id="{{ value.heading | slugify_unique }}"
+    {% endif -%}
+>
+    {% if value.has_rule %}
+        <div class="a-rule-break"></div>
     {% endif %}
+
+    {% if value.heading %}
+        <h3>{{ value.heading }}</h3>
+    {% endif %}
+
+    {% if value.body %}
+        <p>{{ value.body | safe }}</p>
+    {% endif %}
+
+    <div class="o-expandable-group
+                {{ 'o-expandable-group__accordion' if value.is_accordion else '' }}">
+        {# Should be a stack of Expandable instances. #}
+        {% if value.expandables %}
+            {% for expandable in value.expandables %}
+                {{ expandable }}
+            {% endfor %}
+        {% endif %}
+    </div>
 </div>

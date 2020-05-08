@@ -1,12 +1,14 @@
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailsearch import index
+from wagtail.core import blocks
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.search import index
+
+from youth_employment.blocks import YESChecklist
 
 from data_research.blocks import (
     ConferenceRegistrationForm, MortgageDataDownloads
@@ -47,6 +49,7 @@ class BrowsePage(CFGOVPage):
         ('data_snapshot', organisms.DataSnapshot()),
         ('job_listing_table', JobListingTable()),
         ('bureau_structure', organisms.BureauStructure()),
+        ('yes_checklist', YESChecklist()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
@@ -85,5 +88,7 @@ class BrowsePage(CFGOVPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)
-        context.update({'get_secondary_nav_items': get_secondary_nav_items})
+        context.update({
+            'get_secondary_nav_items': get_secondary_nav_items
+        })
         return context

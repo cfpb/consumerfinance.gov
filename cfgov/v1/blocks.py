@@ -3,8 +3,8 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+from wagtail.core import blocks
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 from bs4 import BeautifulSoup
 

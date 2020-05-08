@@ -17,7 +17,7 @@ const HTML_SNIPPET = `
     <div class="o-mega-menu_content o-mega-menu_content-1 u-hidden-overflow u-move-transition u-move-to-origin" aria-expanded="false" data-js-hook="behavior_flyout-menu_content">
         <div class="o-mega-menu_content-wrapper o-mega-menu_content-1-wrapper ">
 
-            <div class="o-mega-menu_content-grid o-mega-menu_content-1-grid o-mega-menu_content-1-grid__three-col">
+            <div class="o-mega-menu_content-grid o-mega-menu_content-1-grid">
 
                 <div class="o-mega-menu_content-lists o-mega-menu_content-1-lists ">
 
@@ -50,7 +50,7 @@ const HTML_SNIPPET = `
                                                 Back
                                             </button>
 
-                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid o-mega-menu_content-2-grid__three-col">
+                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid">
                                                 <h3 class="o-mega-menu_content-overview o-mega-menu_content-2-overview o-mega-menu_content-overview-heading o-mega-menu_content-2-overview-heading">
                                                     <span class="o-mega-menu_content-overview-heading-text o-mega-menu_content-2-overview-heading-text ">Consumer Tools</span>
                                                 </h3>
@@ -167,7 +167,7 @@ const HTML_SNIPPET = `
                                                 Back
                                             </button>
 
-                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid o-mega-menu_content-2-grid__three-col">
+                                            <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid">
 
                                                 <h3 class="o-mega-menu_content-overview o-mega-menu_content-2-overview o-mega-menu_content-overview-heading o-mega-menu_content-2-overview-heading">
                                                     <a class="o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link" href="https://content.consumerfinance.gov/data-research/">Data &amp; Research Overview</a>

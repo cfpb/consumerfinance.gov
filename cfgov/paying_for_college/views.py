@@ -3,9 +3,9 @@ import os
 import re
 from collections import OrderedDict
 
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import TemplateView, View
 from haystack.query import SearchQuerySet
@@ -299,7 +299,7 @@ def school_search_api(request):
                  'city': school.city,
                  'nicknames': school.nicknames,
                  'state': school.state,
-                 'url': reverse('paying_for_college:disclosures:school-json',
+                 'url': reverse("paying_for_college:disclosures:school-json",
                                 args=[school.school_id])}
                 for school in sqs]
     json_doc = json.dumps(document)

@@ -1,8 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+from wagtail.core.blocks import StreamValue
+from wagtail.images.tests.utils import get_test_image_file
 
 from scripts import _atomic_helpers as atomic
 
@@ -186,9 +186,9 @@ class OrganismsTestCase(TestCase):
         table = TableBlock()
         html = str(table.render(table.to_python(value)))
 
-        self.assertRegexpMatches(html, 'Header One')
-        self.assertRegexpMatches(html, 'Row 1-1')
-        self.assertRegexpMatches(html, 'Row 2-1')
+        self.assertRegex(html, 'Header One')
+        self.assertRegex(html, 'Row 1-1')
+        self.assertRegex(html, 'Row 2-1')
 
         self.assertIsNone(value.get('first_row_is_table_header'), None)
         self.assertIsNone(value.get('first_col_is_header'), None)

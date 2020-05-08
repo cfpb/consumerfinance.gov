@@ -1,0 +1,30 @@
+{# ==========================================================================
+
+   Collect outage banner
+
+   ==========================================================================
+
+   Description:
+
+   Banner that displays in the event of a Salesforce system outage
+   Should only be included on pages that prominently feature Collect
+
+   ========================================================================== #}
+
+{% import 'molecules/notification.html' as notification %}
+<div class="m-global-banner">
+    <div class="wrapper
+                wrapper__match-content">
+        {{ notification.render(
+            'warning',
+            true,
+            'We are currently experiencing technical difficulties with the Collect community.',
+            'We are actively working on the issue, so please check back later
+             if you need to access the Collect community.',
+            [{
+                'text': 'You can also contact the Collect Support team at Collect_Support@cfpb.gov',
+                'url':'mailto:Collect_Support@cfpb.gov'
+            }]
+         ) }}
+    </div>
+</div>

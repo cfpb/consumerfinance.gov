@@ -1,26 +1,29 @@
-from datetime import date
+from datetime import date, datetime
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
     StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Page, PageManager
-from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsearch import index
+from wagtail.core import blocks
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page, PageManager
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
 
 from localflavor.us.models import USStateField
+from modelcluster.fields import ParentalKey
+from pytz import timezone
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
 
 
@@ -55,13 +58,14 @@ class AbstractFilterPage(CFGOVPage):
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         MultiFieldPanel([
-            FieldPanel('preview_title', classname="full"),
-            FieldPanel('preview_subheading', classname="full"),
-            FieldPanel('preview_description', classname="full"),
-            FieldPanel('secondary_link_url', classname="full"),
-            FieldPanel('secondary_link_text', classname="full"),
+            FieldPanel('preview_title'),
+            FieldPanel('preview_subheading'),
+            FieldPanel('preview_description'),
+            FieldPanel('secondary_link_url'),
+            FieldPanel('secondary_link_text'),
             ImageChooserPanel('preview_image'),
         ], heading='Page Preview Fields', classname='collapsible'),
+        FieldPanel('schema_json', 'Structured Data'),
         FieldPanel('authors', 'Authors'),
         MultiFieldPanel([
             FieldPanel('date_published'),
@@ -104,8 +108,9 @@ class AbstractFilterPage(CFGOVPage):
 class LearnPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
-        ('info_unit_group_25_75_only', organisms.InfoUnitGroup2575Only()),
+        ('info_unit_group', organisms.InfoUnitGroup()),
         ('expandable_group', organisms.ExpandableGroup()),
+        ('contact_expandable_group', organisms.ContactExpandableGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
         ('call_to_action', molecules.CallToAction()),
@@ -116,6 +121,7 @@ class LearnPage(AbstractFilterPage):
         )),
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
+
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')
     )
@@ -142,6 +148,113 @@ class DocumentDetailPage(AbstractFilterPage):
         content_panel=StreamFieldPanel('content')
     )
     template = 'document-detail/index.html'
+
+    objects = PageManager()
+
+    search_fields = AbstractFilterPage.search_fields + [
+        index.SearchField('content')
+    ]
+
+
+class EnforcementActionStatus(models.Model):
+    institution = models.CharField(max_length=200, blank=True)
+    status = models.CharField(max_length=50, choices=[
+        ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
+        ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
+        ('Pending Litigation', 'Pending Litigation')
+    ])
+    action = ParentalKey('v1.EnforcementActionPage',
+                         on_delete=models.CASCADE,
+                         related_name='statuses')
+
+
+class EnforcementActionDocket(models.Model):
+    docket_number = models.CharField(max_length=50)
+    action = ParentalKey('v1.EnforcementActionPage',
+                         on_delete=models.CASCADE,
+                         related_name='docket_numbers')
+
+
+class EnforcementActionPage(AbstractFilterPage):
+    sidebar_header = models.CharField(
+        default='Action details',
+        max_length=100
+    )
+    court = models.CharField(default='', max_length=150, blank=True)
+    institution_type = models.CharField(max_length=50, choices=[
+        ('Nonbank', 'Nonbank'),
+        ('Bank', 'Bank')
+    ])
+
+    content = StreamField([
+        ('full_width_text', organisms.FullWidthText()),
+        ('expandable', organisms.Expandable()),
+        ('expandable_group', organisms.ExpandableGroup()),
+        ('notification', molecules.Notification()),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
+        ('feedback', v1_blocks.Feedback()),
+    ], blank=True)
+
+    content_panels = [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content')
+    ]
+
+    metadata_panels = [
+        MultiFieldPanel([
+            FieldPanel('sidebar_header'),
+            FieldPanel('court'),
+            FieldPanel('institution_type'),
+            FieldPanel('date_filed'),
+            FieldPanel('tags', 'Tags'),
+        ], heading='Basic Metadata'),
+        MultiFieldPanel([
+            InlinePanel(
+                'docket_numbers',
+                label="Docket Number",
+                min_num=1
+            ),
+        ], heading='Docket Number'),
+        MultiFieldPanel([
+            InlinePanel('statuses', label="Enforcement Status", min_num=1),
+        ], heading='Enforcement Status'),
+        MultiFieldPanel([
+            InlinePanel('categories', label="Categories",
+                        min_num=1, max_num=2),
+        ], heading='Categories'),
+    ]
+
+    settings_panels = [
+        MultiFieldPanel(CFGOVPage.promote_panels, 'Settings'),
+        MultiFieldPanel([
+            FieldPanel('preview_title'),
+            FieldPanel('preview_subheading'),
+            FieldPanel('preview_description'),
+            FieldPanel('secondary_link_url'),
+            FieldPanel('secondary_link_text'),
+            ImageChooserPanel('preview_image'),
+        ], heading='Page Preview Fields', classname='collapsible'),
+        FieldPanel('authors', 'Authors'),
+        MultiFieldPanel([
+            FieldPanel('date_published'),
+            FieldPanel('comments_close_by'),
+        ], 'Relevant Dates', classname='collapsible'),
+        MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
+        FieldPanel('language', 'Language'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(
+            AbstractFilterPage.content_panels + content_panels,
+            heading='General Content'
+        ),
+        ObjectList(metadata_panels, heading='Metadata'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(settings_panels, heading='Configuration')
+    ])
+
+    template = 'enforcement-action/index.html'
 
     objects = PageManager()
 
@@ -184,7 +297,7 @@ class EventPage(AbstractFilterPage):
             'v1.ReusableText'
         )),
     ], blank=True)
-    start_dt = models.DateTimeField("Start", blank=True, null=True)
+    start_dt = models.DateTimeField("Start")
     end_dt = models.DateTimeField("End", blank=True, null=True)
     future_body = RichTextField(blank=True)
     archive_image = models.ForeignKey(
@@ -310,21 +423,21 @@ class EventPage(AbstractFilterPage):
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        FieldPanel('body', classname="full"),
+        FieldPanel('body'),
         FieldRowPanel([
             FieldPanel('start_dt', classname="col6"),
             FieldPanel('end_dt', classname="col6"),
         ]),
         MultiFieldPanel([
-            FieldPanel('archive_body', classname="full"),
+            FieldPanel('archive_body'),
             ImageChooserPanel('archive_image'),
             DocumentChooserPanel('video_transcript'),
             DocumentChooserPanel('speech_transcript'),
             FieldPanel('flickr_url'),
             FieldPanel('youtube_url'),
         ], heading='Archive Information'),
-        FieldPanel('live_body', classname="full"),
-        FieldPanel('future_body', classname="full"),
+        FieldPanel('live_body'),
+        FieldPanel('future_body'),
         StreamFieldPanel('persistent_body'),
         MultiFieldPanel([
             FieldPanel('live_stream_availability'),
@@ -374,8 +487,34 @@ class EventPage(AbstractFilterPage):
     template = 'events/event.html'
 
     @property
+    def event_state(self):
+        if self.end_dt:
+            end = convert_date(self.end_dt, 'America/New_York')
+            if end < datetime.now(timezone('America/New_York')):
+                return 'past'
+
+        if self.live_stream_date:
+            start = convert_date(
+                self.live_stream_date,
+                'America/New_York'
+            )
+        else:
+            start = convert_date(self.start_dt, 'America/New_York')
+
+        if datetime.now(timezone('America/New_York')) > start:
+            return 'present'
+
+        return 'future'
+
+    @property
     def page_js(self):
-        return super(EventPage, self).page_js + ['video-player.js']
+        if (
+            (self.live_stream_date and self.event_state == 'present')
+            or (self.youtube_url and self.event_state == 'past')
+        ):
+            return super(EventPage, self).page_js + ['video-player.js']
+
+        return super(EventPage, self).page_js
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
         if not self.venue_coords:
@@ -408,3 +547,8 @@ class EventPage(AbstractFilterPage):
     def save(self, *args, **kwargs):
         self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
         return super(EventPage, self).save(*args, **kwargs)
+
+    def get_context(self, request):
+        context = super(EventPage, self).get_context(request)
+        context['event_state'] = self.event_state
+        return context

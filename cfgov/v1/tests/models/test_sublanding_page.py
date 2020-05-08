@@ -1,7 +1,7 @@
 import datetime as dt
 from unittest import TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
+from wagtail.core.blocks import StreamValue
 
 import mock
 import scripts._atomic_helpers as atomic

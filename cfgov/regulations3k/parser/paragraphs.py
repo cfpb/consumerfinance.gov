@@ -4,7 +4,6 @@ Provide string-manipulation functions for regulation paragraphs.
 Paragraph parsing operations that manipulate paragraph IDs are handled
 by the patterns.IdLevelState class.
 """
-from __future__ import unicode_literals
 
 import re
 

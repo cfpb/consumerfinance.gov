@@ -1,4 +1,4 @@
-from .test_nomigrations import *
+from .test import *
 
 
 TEST_RUNNER = 'cfgov.test.AcceptanceTestRunner'

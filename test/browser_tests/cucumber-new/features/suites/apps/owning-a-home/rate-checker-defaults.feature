@@ -6,14 +6,15 @@ Feature: Verify that Rate Checker fields default to the correct values
 Background:
   Given I navigate to the "Rate Checker" page
 
+
 @smoke_testing @rate_checker
 Scenario: Default credit score range
   Then I should see the Credit Score Range displayed as "700 - 719"
 
- 
+
 @smoke_testing @rate_checker
 Scenario: Default location
-  Then I should see "District of Columbia" as the selected location 
+  Then I should see "District of Columbia" as the selected location
 
 
 @smoke_testing @rate_checker
@@ -36,7 +37,7 @@ Scenario: Default loan amount
   Then I should see "$180,000" as Loan Amount
 
 
-@smoke_testing @rate_checker  
+@smoke_testing @rate_checker
 Scenario: Default Rate Structure
   Then I should see "Fixed" as the selected Rate Structure
 
@@ -47,12 +48,12 @@ Scenario: Deafult ARM Type
   Then I should see "5/1" as the selected ARM Type
 
 
-@smoke_testing @rate_checker  
+@smoke_testing @rate_checker
 Scenario: Default Loan Term
   Then I should see "30 Years" as the selected Loan Term
 
 
-@smoke_testing @rate_checker  
+@smoke_testing @rate_checker
 Scenario: Default Loan Type
   Then I should see "Conventional" as the selected Loan Type
 
@@ -65,6 +66,7 @@ Scenario: Default tab
 @smoke_testing @rate_checker
 Scenario: County should NOT be visible by default
   Then I should NOT see the County selection
+
 
 @smoke_testing @rate_checker
 Scenario: ARM Type should NOT be visible by default

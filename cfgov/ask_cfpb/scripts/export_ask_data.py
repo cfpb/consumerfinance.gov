@@ -1,17 +1,13 @@
-from __future__ import unicode_literals
-
 import datetime
-from six.moves import html_parser as HTMLParser
+import html
 
 from django.http import HttpResponse
-from django.utils import html
+from django.utils import html as html_util
 
 import unicodecsv
 
 from ask_cfpb.models.pages import AnswerPage
 
-
-html_parser = HTMLParser.HTMLParser()
 
 HEADINGS = [
     'ASK_ID',
@@ -31,8 +27,8 @@ HEADINGS = [
 
 
 def clean_and_strip(data):
-    unescaped = html_parser.unescape(data)
-    return html.strip_tags(unescaped).strip()
+    unescaped = html.unescape(data)
+    return html_util.strip_tags(unescaped).strip()
 
 
 def assemble_output():
@@ -71,10 +67,18 @@ def assemble_output():
             # If no text block is found,
             # there is either a HowTo or FAQ schema block.
             # Both define a description field, so we'll use that here.
-            answer_schema = filter(
-                lambda item: item['type'] == 'how_to_schema' or
-                item['type'] == 'faq_schema', answer_streamfield)
-            answer = answer_schema[0].get('value').get('description')
+            answer_schema = list(
+                filter(
+                    lambda item: item['type'] == 'how_to_schema' or
+                    item['type'] == 'faq_schema', answer_streamfield
+                )
+            )
+            if answer_schema:
+                answer = answer_schema[0].get('value').get('description')
+            else:
+                # This is a question with no answer, possibly a new draft.
+                answer = ''
+
         output['Answer'] = clean_and_strip(answer).replace('\x81', '')
         output['ShortAnswer'] = clean_and_strip(page['short_answer'])
         output['URL'] = page['url_path'].replace('/cfgov', '')

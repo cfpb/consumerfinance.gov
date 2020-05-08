@@ -1,8 +1,11 @@
+import { addCommas } from './sanitizers';
+
 let UNDEFINED;
 
 const REDUCER_RETURN_ERROR = 'Reducer must return a state object';
 const INVALID_ARG_ERROR = 'The "reducers" argument must be an object, where each value is a reducer function';
 const INVALID_OBJECT_ERROR = 'The `entries` function must be passed an object as its first argument';
+const HTML_MINUS = '&#8722;';
 
 /**
  * Helper method to generate an action creator
@@ -176,18 +179,105 @@ function toArray( arrayLike ) {
  * @returns {Boolean} If value is a number or not
  */
 function isNumber( maybeNum ) {
+  /* An empty string, false, or null will all resolve to 0, which is not the intended effect.
+     Check for them explicitly. */
+  if ( maybeNum === '' || maybeNum === false || maybeNum === null ) {
+    return false;
+  }
+
   // NaN is never equal to itself, and is thus the only real way pre es6 to check for its existence
   const num = Number( maybeNum );
   // eslint-disable-next-line no-self-compare
   return typeof num === 'number' && num === num;
 }
 
+/**
+ * Helper function to control showing and hiding cf-notification alert nodes
+ * @param {HTMLElement} node The element in which to search for the notification,
+ * or the notification itself
+ * @param {Boolean} doShow Whether to show or hide the element
+ */
+function toggleCFNotification( node, doShow ) {
+  if ( node ) {
+    if ( !( node instanceof HTMLElement ) ) {
+      throw new TypeError( 'First argument must be a valid DOM node.' );
+    }
+
+    const notification = node.classList.contains( 'm-notification' ) ?
+      node : node.querySelector( '.m-notification' );
+
+    if ( notification ) {
+      if ( doShow ) {
+        notification.classList.add( 'm-notification__visible' );
+      } else {
+        notification.classList.remove( 'm-notification__visible' );
+      }
+    }
+  }
+}
+
+/**
+ * Right-pad a string with some number of zeros
+ * @param {String} value The string to convert to a fixed precision number
+ * @param {Number} precision The number of places after the decimal to truncate to
+ * @returns {String} A new string with the correct precision
+ */
+function toPrecision( value = '', precision = 0 ) {
+  if ( !value && !precision ) {
+    return String( 0 );
+  }
+
+  if ( !isNumber( value ) ) {
+    return value;
+  }
+
+  let safeValue;
+
+  if ( typeof value === 'string' ) {
+    safeValue = value.replace( /,+/, '' );
+  } else {
+    safeValue = Number( value );
+  }
+
+  return addCommas( String( ( Math.round( ( safeValue * 1000 ) / 10 ) / 100 ).toFixed( precision ) ) );
+}
+
+function formatNegative( num ) {
+  if ( !isNumber( num ) ) {
+    return num;
+  }
+
+  const [ significant, decimalZeros = '' ] = num.split( '.' );
+  let decimals = '';
+
+  // Math.abs will preserve decimals, but not if they are a zero
+  if ( ( /0+/ ).test( decimalZeros ) ) {
+    decimals = decimalZeros;
+  }
+
+  let formattedTotal = significant;
+
+  if ( significant < 0 ) {
+    formattedTotal = `${ HTML_MINUS }${ Math.abs( significant ) }`;
+  }
+
+  if ( !decimals ) {
+    return formattedTotal;
+  }
+
+  return `${ formattedTotal }.${ decimals }`;
+}
+
+
 export {
   actionCreator,
   assign,
   combineReducers,
   entries,
+  formatNegative,
   isNumber,
   toArray,
+  toPrecision,
+  toggleCFNotification,
   UNDEFINED
 };

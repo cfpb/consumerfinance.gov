@@ -1,10 +1,8 @@
-from __future__ import unicode_literals
-
 import logging
 
 from django.db import models
 
-from wagtail.wagtailcore.models import PageManager
+from wagtail.core.models import PageManager
 
 from dateutil import parser
 from jsonfield import JSONField

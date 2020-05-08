@@ -35,6 +35,6 @@ Scenario: Lowest credit score range alerts
 @credit_score @rate_checker
 Scenario: Lowest credit score range alerts go away when score range increases
   When I move the credit score slider to the "lowest" range
-  	And I move the credit score slider to the "right"
+    And I move the credit score slider to the "right"
   Then I should see the credit score slider handle turns "green"
     And I should NOT see an alert for borowers with less than 620 score
