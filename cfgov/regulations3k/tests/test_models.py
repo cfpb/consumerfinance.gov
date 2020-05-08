@@ -17,7 +17,7 @@ from model_bakery import baker
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, SectionParagraph, Subpart,
-    effective_version_saved, section_saved, sortable_label
+    effective_version_saved, section_saved, sortable_label, validate_label
 )
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, RegulationsSearchPage,
@@ -214,12 +214,16 @@ class RegModelTests(DjangoTestCase):
     def test_subpart_string_method(self):
         self.assertEqual(
             self.subpart.__str__(),
-            'Subpart A - General')
+            '12 CFR Part 1002 (Regulation B), Effective on 2014-01-18, '
+            'Subpart A - General'
+        )
 
     def test_section_string_method(self):
         self.assertEqual(
             self.section_num4.__str__(),
-            '\xa7\xa01002.4 General rules.')
+            '12 CFR Part 1002 (Regulation B), Effective on 2014-01-18, '
+            'Subpart A - General, \xa7\xa01002.4 General rules.'
+        )
 
     def test_section_export_graphs(self):
         test_counts = self.section_num4.extract_graphs()
@@ -245,7 +249,8 @@ class RegModelTests(DjangoTestCase):
     def test_effective_version_string_method(self):
         self.assertEqual(
             self.effective_version.__str__(),
-            'Effective on 2014-01-18')
+            '12 CFR Part 1002 (Regulation B), Effective on 2014-01-18'
+        )
 
     def test_live_version_true(self):
         self.assertTrue(self.effective_version.live_version)
@@ -672,6 +677,21 @@ class RegModelTests(DjangoTestCase):
             response.context_data['next_version'],
             self.effective_version
         )
+
+    def test_validate_label(self):
+        with self.assertRaises(ValidationError):
+            validate_label('label with spaces')
+
+        with self.assertRaises(ValidationError):
+            validate_label('')
+
+        with self.assertRaises(ValidationError):
+            validate_label('-')
+
+        validate_label('a')
+        validate_label('a-good-label')
+        validate_label('Interp-2')
+        validate_label('ünicode-labels')
 
 
 class SectionNavTests(unittest.TestCase):
