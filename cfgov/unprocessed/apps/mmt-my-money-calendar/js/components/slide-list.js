@@ -103,8 +103,6 @@ export function SlideListItem({
     };
   }, [background.current]);
 
-  console.log('drag bind: %O', bind);
-
   return (
     <li className={rootClasses} {...props}>
       <animated.div className={bem('background')} ref={background} style={bgStyle}>

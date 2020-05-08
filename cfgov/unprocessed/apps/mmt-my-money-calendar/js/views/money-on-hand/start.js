@@ -2,18 +2,19 @@ import { useScrollToTop } from '../../components/scroll-to-top';
 import { ButtonLink } from '../../components/button';
 import Hero from '../../components/hero';
 
-import heroImg from 'img/Hero_2.png';
 import { arrowRight } from '../../lib/icons';
+import hero from 'img/Hero_2.png';
 
 export default function Start() {
   useScrollToTop();
+
 
   return (
     <>
       <Hero
         title="MyMoney Calendar"
         subtitle="See how your money flows from week to week and learn how to avoid coming up short."
-        image={heroImg}
+        image={hero}
         alt="MyMoney Calendar"
       />
       <br />

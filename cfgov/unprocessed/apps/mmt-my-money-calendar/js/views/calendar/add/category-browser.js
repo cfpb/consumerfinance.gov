@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { observer } from 'mobx-react';
 import { Link, NavLink, useParams, useHistory, withRouter } from 'react-router-dom';
 import { useStore } from '../../../stores';
@@ -5,8 +6,7 @@ import { Categories } from '../../../stores/models/categories';
 import { useLogger } from '../../../lib/logger';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { BackButton } from '../../../components/button';
-
-import iconPlaceholder from '../../../../img/icon-placeholder.png';
+import { SvgSpan } from '../../../components/svg-image';
 
 function CategoryBrowser({ match }) {
   const { eventStore, uiStore } = useStore();
@@ -18,6 +18,8 @@ function CategoryBrowser({ match }) {
   const pathSegments = categoryPath.split('.');
   const parentCategoryPath = pathSegments.slice(0, pathSegments.length - 1)
   const backPath = parentCategoryPath.length ? `/calendar/add/${parentCategoryPath.join('/')}` : '/calendar';
+  const isIncome = categoryPath.includes('income');
+  const iconClass = clsx('category-links__icon', isIncome && '-income', !isIncome && '-expense');
 
   useLogger(
     'categoryBrowser',
@@ -52,7 +54,7 @@ function CategoryBrowser({ match }) {
         {Object.entries(subcategories).map(([key, cat]) => !cat.restricted && (
           <li key={key} className="category-links__item">
             <Link className="category-links__link" to={`/calendar/add/${categories}/${key}${Categories.hasSubcategories(cat) ? '' : '/new'}`}>
-              <img src={iconPlaceholder} className="category-links__icon" alt={`Category: ${cat.name}`} />
+              <SvgSpan src={cat.icon} className={iconClass} />
               <span className="category-links__label">{cat.name}</span>
             </Link>
           </li>

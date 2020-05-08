@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useRef, useLayoutEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -8,8 +8,10 @@ import { useBEM } from '../../lib/hooks';
 import { CurrencyField } from '../../components/forms';
 import { BackButton, NextButton } from '../../components/button';
 import { useScrollToTop } from '../../components/scroll-to-top';
+import SvgImage from '../../components/svg-image';
 
 import iconPlaceholder from '../../../img/icon-placeholder.png';
+import categoryIcons from '../../lib/category-icons';
 
 function BalanceForm() {
   const { wizardStore } = useStore();
@@ -49,7 +51,7 @@ function BalanceForm() {
 
       <main className={bem('main')}>
         <figure className={bem('step-image')}>
-          <img src={iconPlaceholder} alt="placeholder" />
+          <SvgImage src={categoryIcons.moneyOnHand} />
         </figure>
 
         <Formik

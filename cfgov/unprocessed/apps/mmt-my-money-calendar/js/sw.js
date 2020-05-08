@@ -1,34 +1,48 @@
-workbox.setConfig({ debug: true });
-workbox.core.skipWaiting();
-workbox.core.clientsClaim();
+import { clientsClaim, skipWaiting } from 'workbox-core';
+import { ExpirationPlugin } from 'workbox-expiration';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+import { registerRoute, NavigationRoute } from 'workbox-routing';
+import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
+import { CacheFirst, StaleWhileRevalidate, NetworkFirst } from 'workbox-strategies';
 
-const { Plugin: ExpirationPlugin } = workbox.expiration;
-const { Plugin: CacheableResponsePlugin } = workbox.cacheableResponse;
+skipWaiting();
+clientsClaim();
+
 const minutes = (num) => num * 60;
 const days = (num) => minutes(num) * 60 * 24;
 
 // Precache compiled Webpack assets:
-workbox.precaching.precacheAndRoute(self.__precacheManifest);
+precacheAndRoute(self.__WB_MANIFEST);
 
 // Precache app landing page:
-workbox.precaching.precacheAndRoute(['/mmt-my-money-calendar']);
+precacheAndRoute(['/mmt-my-money-calendar', '/mmt-my-money-calendar/calendar', '/mmt-my-money-calendar/add/income']);
 
 // All navigation routes hit the single-page-app landing page:
+const rootHandler = createHandlerBoundToURL('/mmt-my-money-calendar');
+const navRoute = new NavigationRoute(rootHandler, {
+  allowList: [
+    /mmt-my-money-calendar/,
+  ],
+});
+registerRoute(navRoute);
+
+/*
 workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL('/mmt-my-money-calendar'), {
   whitelist: [/mmt-my-money-calendar/],
 });
+*/
 
 // Cache Google fonts long term:
-workbox.routing.registerRoute(
+registerRoute(
   /^https:\/\/fonts\.google\.com/,
-  new workbox.strategies.StaleWhileRevalidate({
+  new StaleWhileRevalidate({
     cacheName: 'googleFonts',
   })
 );
 
-workbox.routing.registerRoute(
+registerRoute(
   /^https:\/\/fonts\.gstatic\.com/,
-  new workbox.strategies.CacheFirst({
+  new CacheFirst({
     cacheName: 'googleFonts',
     plugins: [
       new CacheableResponsePlugin({
@@ -43,9 +57,9 @@ workbox.routing.registerRoute(
 );
 
 // Cache images w/ cache-first strategy
-workbox.routing.registerRoute(
+registerRoute(
   /\.(png|gif|jpe?g|svg)$/,
-  new workbox.strategies.CacheFirst({
+  new CacheFirst({
     cacheName: 'images',
     plugins: [
       new ExpirationPlugin({
@@ -57,10 +71,18 @@ workbox.routing.registerRoute(
 );
 
 // Cache main CFPB stylesheet and our app's overrides
-workbox.routing.registerRoute(
+registerRoute(
   /main\.css$/,
-  new workbox.strategies.StaleWhileRevalidate({
+  new StaleWhileRevalidate({
     cacheName: 'styles',
+  })
+);
+
+// Cache static JS collected by Django
+registerRoute(
+  /static\/apps\/mmt-my-money-calendar/,
+  new StaleWhileRevalidate({
+    cacheName: 'appAssets',
   })
 );
 

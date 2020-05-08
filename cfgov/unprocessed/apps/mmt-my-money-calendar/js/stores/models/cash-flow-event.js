@@ -24,6 +24,7 @@ export default class CashFlowEvent {
   @observable recurrenceType;
   @observable payday1 = 15;
   @observable payday2 = 30;
+  @observable hideFixItStrategy = false;
 
   static MIN_DATE = dayjs(0);
 
@@ -80,6 +81,7 @@ export default class CashFlowEvent {
     'recurrenceType',
     'createdAt',
     'updatedAt',
+    'hideFixItStrategy',
   ];
 
   /**
@@ -336,6 +338,10 @@ export default class CashFlowEvent {
     const now = new Date();
     this.createdAt = this.createdAt || now;
     this.updatedAt = now;
+  }
+
+  @action setHideFixItStrategy(value = true) {
+    this.hideFixItStrategy = Boolean(value);
   }
 
   /**

@@ -28,7 +28,7 @@ const AUTOLOAD_REACT = new webpack.ProvidePlugin({
 const ENVIRONMENT_VARIABLES = new webpack.DefinePlugin({
   'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
   'process.env.DEBUG': JSON.stringify(DEBUG),
-  'process.env.SERVICE_WORKER_ENABLED': JSON.stringify(SERVICE_WORKER_ENABLED),
+  'process.env.SERVICE_WORKER_ENABLED': JSON.stringify(Boolean(SERVICE_WORKER_ENABLED)),
 });
 
 const COPY_PWA_MANIFEST = new CopyPlugin([
@@ -43,7 +43,7 @@ const EXTRACT_CSS = new MiniCssExtractPlugin({
 });
 
 const GENERATE_SERVICE_WORKER = new InjectManifest({
-  swSrc: 'cfgov/unprocessed/apps/mmt-my-money-calendar/js/sw.js',
+  swSrc: './cfgov/unprocessed/apps/mmt-my-money-calendar/js/sw.js',
   swDest: SERVICE_WORKER_DESTINATION,
   exclude: [
     /components\/.+\.(js|map)$/,
@@ -195,6 +195,7 @@ const conf = {
   resolve: {
     alias: {
       img: path.resolve(__dirname, 'img'),
+      'category-icons': 'img/category-icons',
       rrule: 'rrule/dist/esm/src',
       lodash: path.join(__dirname, 'node_modules/lodash'),
     },

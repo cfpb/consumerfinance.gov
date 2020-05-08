@@ -104,6 +104,7 @@ function Form() {
 
       <h2 className="add-event__title">{category.name}</h2>
       <p className="add-event__intro">Enter your {category.name.toLowerCase()} details.</p>
+      {!!category.description && <p className="add-event__description">{category.description}</p>}
 
       <Formik
         initialValues={event.toFormValues()}
@@ -163,7 +164,7 @@ function Form() {
               errors={formik.errors.name}
               touched={formik.touched.name}
               tabIndex="0"
-              placeholder={category.name}
+              placeholder={`e.g. ${category.name}`}
             />
 
             <CurrencyField

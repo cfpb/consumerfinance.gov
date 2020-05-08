@@ -46,10 +46,6 @@ class StrategiesStore {
           'expense.utilities.fuel',
           'expense.utilities.waterSewage',
           'expense.utilities.electricity',
-          'expense.utilities.trash',
-          'expense.utilities.cable',
-          'expense.utilities.internet',
-          'expense.utilities.phone',
         ],
         title: 'Budget Utility Billing',
         text: 'Contact your utility company to find out about budget billing',
@@ -120,7 +116,7 @@ class StrategiesStore {
   @computed get fixItResults() {
     const results = compact(
       Object.entries(this.fixItWeekAnalysis).map(([type, event]) => {
-        if (!event) return;
+        if (!event || event.hideFixItStrategy) return;
 
         const strategy = this.fixItStrategies[type].find((sgy) => sgy.categories.includes(event.category));
 

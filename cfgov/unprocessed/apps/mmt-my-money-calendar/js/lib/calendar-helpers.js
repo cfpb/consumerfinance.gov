@@ -162,7 +162,7 @@ export const recurrenceRules = {
       new RRule({ freq: RRule.WEEKLY, dtstart, ...options }),
   },
   biweekly: {
-    label: 'Bi-weekly',
+    label: 'Every 2 weeks',
     handler: (dtstart, options = {}) =>
       new RRule({
         freq: RRule.WEEKLY,
@@ -176,7 +176,7 @@ export const recurrenceRules = {
     handler: (dtstart, options = {}) => new RRule({ freq: RRule.MONTHLY, dtstart, ...options }),
   },
   semimonthly: {
-    label: 'Semi-monthly',
+    label: 'Twice a month',
     handler: (dtstart, payday1 = 15, payday2 = 30) => {
       const rules = new RRuleSet();
 
