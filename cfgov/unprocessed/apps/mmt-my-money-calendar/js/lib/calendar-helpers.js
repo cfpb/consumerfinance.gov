@@ -176,7 +176,7 @@ export const recurrenceRules = {
     handler: (dtstart, options = {}) => new RRule({ freq: RRule.MONTHLY, dtstart, ...options }),
   },
   semimonthly: {
-    label: 'Semi-monthly (two specific dates each month)',
+    label: 'Twice a month',
     handler: (dtstart, payday1 = 15, payday2 = 30) => {
       const rules = new RRuleSet();
 
