@@ -1,0 +1,49 @@
+{# ==========================================================================
+
+   Job Listings List
+
+   ==========================================================================
+
+   Description:
+
+   Creates jobs list when given:
+
+   value.jobs:              List of currently open jobs, where each job has:
+
+   job.title:               Title of open job.
+
+   job.url:                 Link to job listing page.
+
+   job.close_date:          Date when open job closes.
+
+   value.more_jobs_url:     Link to page listing all open jobs.
+
+   ========================================================================== #}
+
+<aside class="m-jobs-list"
+       data-qa-hook="openings-section">
+    {% if value.jobs %}
+    <h3>Current openings</h3>
+    <ul class="m-list m-list__unstyled m-list__links">
+        {% for job in value.jobs %}
+        <li class="m-list_item">
+            <a class="m-list_link"
+               href="{{ job.url }}">
+                  {{ job.title }}
+                <span class="m-list_link-subtext">
+                    Closing
+                    {% import 'macros/time.html' as time %}
+                    {{ time.render(job.close_date, {'date': true}, text_format=True) }}
+               </span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a class="a-btn a-btn__full-on-xs"
+       href="{{ value.more_jobs_url }}">
+       View all job openings
+    </a>
+    {% else %}
+    <h3 class='short-desc'>There are no current openings at this time.</h3>
+    {% endif %}
+</aside>

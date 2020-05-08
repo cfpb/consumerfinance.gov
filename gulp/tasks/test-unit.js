@@ -60,7 +60,7 @@ function testUnitScripts( cb ) {
     `--testRegex=${ fileTestRegex }`
   ];
 
-  if ( params.travis ) {
+  if ( params.ci ) {
     jestOptions.push( '--maxWorkers=2' );
   }
 

@@ -20,8 +20,8 @@ class TestActivityFeed(TestCase):
         publish_page(page2)
 
         activities = activity_feed.get_latest_activities(activity_type='blog')
-        self.assertEquals(len(activities), 1)
-        self.assertEquals(activities[0].specific, page1)
+        self.assertEqual(len(activities), 1)
+        self.assertEqual(activities[0].specific, page1)
 
     def test_get_latest_activities_returns_activities_sorted(self):
         page1 = BlogPage(title='oldest page', date_published=datetime.date(2015, 9, 3))  # noqa
@@ -40,7 +40,7 @@ class TestActivityFeed(TestCase):
         publish_page(page3)
 
         activities = activity_feed.get_latest_activities(activity_type='newsroom')  # noqa
-        self.assertEquals(len(activities), 3)
-        self.assertEquals(activities[0].specific, page3)
-        self.assertEquals(activities[1].specific, page2)
-        self.assertEquals(activities[2].specific, page1)
+        self.assertEqual(len(activities), 3)
+        self.assertEqual(activities[0].specific, page3)
+        self.assertEqual(activities[1].specific, page2)
+        self.assertEqual(activities[2].specific, page1)

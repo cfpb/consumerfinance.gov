@@ -2,7 +2,7 @@ import os
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management.base import BaseCommand, CommandError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from wagtail.images import get_image_model
 
@@ -39,7 +39,7 @@ class Command(WagtailClient, BaseCommand):
         with open(filename, 'rb') as f:
             image_file = SimpleUploadedFile(filename_only, f.read())
 
-        response = self.client.post(reverse('wagtailimages:add'), {
+        response = self.client.post(reverse("wagtailimages:add"), {
             'title': filename_only,
             'file': image_file,
         })

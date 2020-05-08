@@ -1,12 +1,11 @@
 import logging
 
 from django.conf import settings
-from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.html import format_html_join
 
 from wagtail.admin.menu import MenuItem
@@ -21,10 +20,18 @@ from scripts import export_enforcement_actions
 
 from ask_cfpb.models.snippets import GlossaryTerm
 from v1.admin_views import ExportFeedbackView, manage_cdn
+from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.template_debug import notification_test_cases, register_template_debug
 from v1.util import util
+
+
+try:
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
 
 
 logger = logging.getLogger(__name__)
@@ -40,7 +47,7 @@ def export_data(request):
 def register_export_menu_item():
     return MenuItem(
         'Enforcement actions',
-        reverse('export-enforcement-actions'),
+        reverse("export-enforcement-actions"),
         classnames='icon icon-download',
         order=99999,
     )
@@ -48,7 +55,7 @@ def register_export_menu_item():
 
 @hooks.register('register_admin_urls')
 def register_export_url():
-    return [url(
+    return [re_path(
         'export-enforcement-actions',
         export_data,
         name='export-enforcement-actions')]
@@ -117,10 +124,10 @@ def editor_js():
 def editor_css():
     css_files = [
         'css/bureau-structure.css',
-        'css/deprecated-blocks.css',
         'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
+        'css/hero.css',
         'css/table-block.css',
     ]
 
@@ -190,7 +197,7 @@ class PermissionCheckingMenuItem(MenuItem):
 def register_export_feedback_menu_item():
     return PermissionCheckingMenuItem(
         'Export feedback',
-        reverse('export-feedback'),
+        reverse("export-feedback"),
         classnames='icon icon-download',
         order=99999,
         permission='v1.export_feedback'
@@ -201,7 +208,7 @@ def register_export_feedback_menu_item():
 def register_django_admin_menu_item():
     return MenuItem(
         'Django Admin',
-        reverse('admin:index'),
+        reverse("admin:index"),
         classnames='icon icon-redirect',
         order=99999
     )
@@ -210,7 +217,7 @@ def register_django_admin_menu_item():
 @hooks.register('register_admin_menu_item')
 def register_frank_menu_item():
     return MenuItem('CDN Tools',
-                    reverse('manage-cdn'),
+                    reverse("manage-cdn"),
                     classnames='icon icon-cogs',
                     order=10000)
 
@@ -218,10 +225,10 @@ def register_frank_menu_item():
 @hooks.register('register_admin_urls')
 def register_admin_urls():
     return [
-        url(r'^cdn/$', manage_cdn, name='manage-cdn'),
-        url(r'^export-feedback/$',
-            ExportFeedbackView.as_view(),
-            name='export-feedback'),
+        re_path(r'^cdn/$', manage_cdn,
+                name='manage-cdn'),
+        re_path(r'^export-feedback/$', ExportFeedbackView.as_view(),
+                name='export-feedback'),
     ]
 
 
@@ -283,6 +290,15 @@ class ResourceModelAdmin(ModelAdmin):
     ordering = ('title',)
     list_filter = (ResourceTagsFilter,)
     search_fields = ('title',)
+
+
+@modeladmin_register
+class BannerModelAdmin(ModelAdmin):
+    model = Banner
+    menu_icon = 'warning'
+    list_display = ('title', 'url_pattern', 'enabled')
+    ordering = ('title',)
+    search_fields = ('title', 'url_pattern', 'content')
 
 
 class ContactModelAdmin(ModelAdmin):
@@ -354,7 +370,7 @@ modeladmin_register(SnippetModelAdminGroup)
 @hooks.register('construct_main_menu')
 def hide_snippets_menu_item(request, menu_items):
     menu_items[:] = [item for item in menu_items
-                     if item.url != reverse('wagtailsnippets:index')]
+                     if item.url != reverse("wagtailsnippets:index")]
 
 
 # The construct_whitelister_element_rules was depricated in Wagtail 2,
@@ -389,3 +405,11 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
         content_type__app_label='v1',
         codename='export_feedback'
     )
+
+
+register_template_debug(
+    'v1',
+    'notification',
+    '_includes/molecules/notification.html',
+    notification_test_cases
+)

@@ -16,7 +16,7 @@ class ApplicantType(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.applicant_type
+        return self.display_title or self.applicant_type
 
     class Meta:
         ordering = ['applicant_type']
@@ -77,11 +77,9 @@ class JobLength(models.Model):
         ordering = ['job_length']
 
 
-class JobLocation(ClusterableModel):
-    abbreviation = models.CharField(
-        max_length=2,
-        primary_key=True)
+class Region(ClusterableModel):
     name = models.CharField(max_length=255)
+    abbreviation = models.CharField(max_length=2, primary_key=True)
 
     def __str__(self):
         return self.name
@@ -89,34 +87,22 @@ class JobLocation(ClusterableModel):
     class Meta:
         ordering = ('abbreviation',)
 
-
-class Region(JobLocation):
     panels = [
-        FieldPanel('abbreviation'),
         FieldPanel('name'),
+        FieldPanel('abbreviation'),
         InlinePanel('states', label="States"),
-        InlinePanel('cities', label="Cities"),
-    ]
-
-
-class Office(JobLocation):
-    panels = [
-        FieldPanel('abbreviation'),
-        FieldPanel('name'),
-        InlinePanel('cities', label="Office location", max_num=1),
+        InlinePanel('major_cities', label="Major cities"),
     ]
 
 
 class State(models.Model):
-    name = models.CharField(
-        max_length=255,
-        verbose_name="State name")
-    abbreviation = models.CharField(
-        max_length=2,
-        primary_key=True)
+    name = models.CharField(max_length=255)
+    abbreviation = models.CharField(max_length=2, primary_key=True)
     region = ParentalKey(
-        'Region',
-        related_name="states")
+        Region,
+        related_name='states',
+        on_delete=models.PROTECT
+    )
 
     def __str__(self):
         return self.name
@@ -124,24 +110,35 @@ class State(models.Model):
     class Meta:
         ordering = ('abbreviation',)
 
+    def __lt__(self, other):
+        return self.abbreviation < other.abbreviation
 
-class City(models.Model):
-    name = models.CharField(
-        max_length=255,
-        verbose_name="City name")
-    state = models.ForeignKey(
-        State,
-        null=False,
-        blank=False,
-        default=None,
-        related_name='cities')
-    location = ParentalKey(
-        'JobLocation',
-        related_name='cities'
-    )
+    def __gt__(self, other):
+        return self.abbreviation > other.abbreviation
+
+
+class AbstractCity(models.Model):
+    name = models.CharField(max_length=255)
+    state = models.ForeignKey(State, on_delete=models.PROTECT)
 
     class Meta:
-        ordering = ('state_id', 'name')
+        abstract = True
+        ordering = ('state', 'name')
 
     def __str__(self):
-        return '{}, {}'.format(self.name, self.state.abbreviation)
+        return ', '.join((self.name, self.state_id))
+
+
+class Office(AbstractCity):
+    abbreviation = models.CharField(max_length=2, primary_key=True)
+
+    class Meta:
+        ordering = ('abbreviation',)
+
+
+class MajorCity(AbstractCity):
+    region = ParentalKey(
+        Region,
+        on_delete=models.PROTECT,
+        related_name='major_cities'
+    )

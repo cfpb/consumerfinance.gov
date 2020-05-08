@@ -35,6 +35,8 @@ class AskContent(blocks.StreamBlock):
 
 
 class HowTo(blocks.StructBlock):
+    title = blocks.CharBlock(max_length=500)
+
     description = blocks.RichTextBlock(
         features=[
             'ol', 'ul', 'bold', 'italic', 'link', 'document-link'

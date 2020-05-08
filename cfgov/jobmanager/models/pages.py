@@ -1,17 +1,68 @@
+from django import forms
 from django.db import models
+from django.utils import timezone
+from django.utils.safestring import mark_safe
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
-    TabbedInterface
+    FieldPanel, FieldRowPanel, HelpPanel, InlinePanel, MultiFieldPanel,
+    ObjectList, TabbedInterface
 )
+from wagtail.admin.forms import WagtailAdminPageForm
 from wagtail.core.fields import RichTextField
-from wagtail.core.models import PageManager
+from wagtail.core.models import PageManager, PageQuerySet
+
+from modelcluster.fields import ParentalManyToManyField
 
 from jobmanager.models.django import (
-    JobCategory, JobLength, JobLocation, ServiceType
+    JobCategory, JobLength, Office, Region, ServiceType
 )
 from v1.models import CFGOVPage
 from v1.models.snippets import ReusableText
+
+
+class JobListingPageQuerySet(PageQuerySet):
+    def open(self):
+        today = timezone.now().date()
+
+        return self \
+            .filter(live=True) \
+            .filter(open_date__lte=today) \
+            .filter(close_date__gte=today) \
+            .order_by('close_date', 'title')
+
+
+JobListingPageManager = PageManager.from_queryset(JobListingPageQuerySet)
+
+
+LOCATION_HELP_TEXT = (
+    "Select <strong>either</strong> one or more offices "
+    "<strong>or</strong> one or more regions."
+)
+
+
+class JobListingPageForm(WagtailAdminPageForm):
+    def clean(self):
+        cleaned_data = super().clean()
+
+        offices = cleaned_data.get('offices')
+        has_offices = offices.exists() if offices else False
+
+        regions = cleaned_data.get('regions')
+        has_regions = regions.exists() if regions else False
+
+        if (
+            (has_offices and has_regions) or
+            (not has_offices and not has_regions)
+        ):
+            self.add_error('regions', mark_safe(LOCATION_HELP_TEXT))
+
+        if has_regions and cleaned_data['allow_remote']:
+            self.add_error(
+                'allow_remote',
+                "Remote option only applies to jobs with office locations."
+            )
+
+        return cleaned_data
 
 
 class JobListingPage(CFGOVPage):
@@ -46,15 +97,19 @@ class JobListingPage(CFGOVPage):
         null=True,
         blank=True
     )
-    location = models.ForeignKey(
-        JobLocation,
+    offices = ParentalManyToManyField(
+        Office,
         related_name='job_listings',
-        on_delete=models.PROTECT
+        blank=True
     )
     allow_remote = models.BooleanField(
         default=False,
-        help_text='Adds remote option to jobs with office locations.',
-        verbose_name="Location can also be remote"
+        verbose_name="Office location can also be remote"
+    )
+    regions = ParentalManyToManyField(
+        Region,
+        related_name='job_listings',
+        blank=True
     )
     responsibilities = RichTextField(
         'Responsibilities',
@@ -87,6 +142,7 @@ class JobListingPage(CFGOVPage):
         help_text='Optional: Add content for an additional section '
                   'that will display at end of job description.'
     )
+
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('division'),
@@ -105,8 +161,12 @@ class JobListingPage(CFGOVPage):
             ]),
         ], heading='Details'),
         MultiFieldPanel([
-            FieldPanel('location'),
-            FieldPanel('allow_remote'),
+            HelpPanel(LOCATION_HELP_TEXT),
+            FieldRowPanel([
+                FieldPanel('offices', widget=forms.CheckboxSelectMultiple),
+                FieldPanel('allow_remote'),
+            ]),
+            FieldPanel('regions', widget=forms.CheckboxSelectMultiple),
         ], heading='Location'),
         MultiFieldPanel([
             FieldPanel('description'),
@@ -131,35 +191,43 @@ class JobListingPage(CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    template = 'job-description-page/index.html'
+    base_form_class = JobListingPageForm
 
-    objects = PageManager()
+    objects = JobListingPageManager()
 
     def get_context(self, request, *args, **kwargs):
         context = super(JobListingPage, self).get_context(request)
+
         try:
             context['about_us'] = ReusableText.objects.get(
-                title='About us (For consumers)')
-        except Exception:
+                title='About us (For consumers)'
+            )
+        except ReusableText.DoesNotExist:
             pass
-        if hasattr(self.location, 'region'):
-            context['states'] = [state.abbreviation for state in
-                                 self.location.region.states.all()]
-            context['location_type'] = 'region'
-        else:
-            context['states'] = []
-            context['location_type'] = 'office'
-        context['cities'] = self.location.cities.all()
+
+        context.update({
+            'offices': [
+                {
+                    'name': office.name,
+                    'state_id': office.state_id,
+                } for office in self.offices.all()
+            ],
+            'regions': [
+                {
+                    'name': region.name,
+                    'states': [
+                        state.abbreviation for state in region.states.all()
+                    ],
+                    'major_cities': list(
+                        region.major_cities.values('name', 'state_id')
+                    ),
+                } for region in self.regions.all()
+            ],
+            'grades': list(map(str, self.grades.all())),
+        })
+
         return context
 
     @property
     def page_js(self):
         return super(JobListingPage, self).page_js + ['read-more.js']
-
-    @property
-    def ordered_grades(self):
-        """Return a list of job grades in numerical order.
-        Non-numeric grades are sorted alphabetically after numeric grades.
-        """
-        grades = set(g.grade.grade for g in self.grades.all())
-        return sorted(grades, key=lambda g: '{0:0>8}'.format(g))

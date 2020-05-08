@@ -8,7 +8,7 @@ import django
 import mock
 import unicodecsv
 from dateutil import parser
-from model_mommy import mommy
+from model_bakery import baker
 
 from data_research.models import (
     County, CountyMortgageData, MetroArea, MortgageDataConstant,
@@ -51,13 +51,13 @@ class SourceToTableTest(django.test.TestCase):
                 '1443', '10', '5', '4', '2', '2891']
 
     def setUp(self):
-        AL = mommy.make(
+        AL = baker.make(
             State,
             fips='01',
             abbr='AL',
             name='Alabama')
 
-        Autauga = mommy.make(
+        Autauga = baker.make(
             County,
             id=2891,
             fips='01001',
@@ -65,7 +65,7 @@ class SourceToTableTest(django.test.TestCase):
             state=AL,
             valid=True)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             fips='01001',
             date=self.start_date,
@@ -161,7 +161,7 @@ class DataLoadIntegrityTest(django.test.TestCase):
 
     def setUp(self):
 
-        FL = mommy.make(
+        FL = baker.make(
             State,
             fips='12',
             abbr='FL',
@@ -173,7 +173,7 @@ class DataLoadIntegrityTest(django.test.TestCase):
             non_msa_valid=True)
         FL.save()
 
-        mommy.make(
+        baker.make(
             County,
             fips='12081',
             name='Manatee County',
@@ -251,7 +251,7 @@ class MergeTheDadesTest(django.test.TestCase):
         self.old_dade_fips = '12025'
         self.new_dade_fips = '12086'
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=100,
             date=datetime.date(2008, 1, 1),
@@ -262,7 +262,7 @@ class MergeTheDadesTest(django.test.TestCase):
             thirty=100,
             total=500)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=100,
             date=datetime.date(2008, 1, 1),
@@ -303,7 +303,7 @@ class DataExportTest(django.test.TestCase):
 
     def setUp(self):
 
-        mommy.make(
+        baker.make(
             State,
             fips='12',
             abbr='FL',
@@ -314,14 +314,14 @@ class DataExportTest(django.test.TestCase):
             non_msa_counties=["12001"],
             non_msa_valid=True)
 
-        mommy.make(
+        baker.make(
             County,
             fips='12081',
             name='Manatee County',
             state=State.objects.get(fips='12'),
             valid=True)
 
-        mommy.make(
+        baker.make(
             MetroArea,
             fips='35840',
             name='North Port-Sarasota-Bradenton, FL',
@@ -329,7 +329,7 @@ class DataExportTest(django.test.TestCase):
             counties=["12081", "12115"],
             valid=True)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=1250,
             date=datetime.date(2008, 1, 1),
@@ -341,7 +341,7 @@ class DataExportTest(django.test.TestCase):
             thirty=100,
             total=1650)
 
-        mommy.make(
+        baker.make(
             MSAMortgageData,
             current=5250,
             date=datetime.date(2008, 1, 1),
@@ -353,7 +353,7 @@ class DataExportTest(django.test.TestCase):
             thirty=3676,
             total=22674)
 
-        mommy.make(
+        baker.make(
             NonMSAMortgageData,
             current=5250,
             date=datetime.date(2008, 1, 1),
@@ -365,7 +365,7 @@ class DataExportTest(django.test.TestCase):
             thirty=3676,
             total=22674)
 
-        mommy.make(
+        baker.make(
             StateMortgageData,
             current=250081,
             date=datetime.date(2008, 1, 1),
@@ -377,7 +377,7 @@ class DataExportTest(django.test.TestCase):
             thirty=6766,
             total=26748)
 
-        mommy.make(
+        baker.make(
             NationalMortgageData,
             current=2500000,
             date=datetime.date(2008, 1, 1),
@@ -470,7 +470,7 @@ class DataLoadTest(django.test.TestCase):
 
     def setUp(self):
 
-        FL = mommy.make(
+        FL = baker.make(
             State,
             fips='12',
             abbr='FL',
@@ -482,7 +482,7 @@ class DataLoadTest(django.test.TestCase):
             non_msa_valid=True)
         FL.save()
 
-        manatee = mommy.make(
+        manatee = baker.make(
             County,
             fips='12081',
             name='Manatee County',
@@ -490,7 +490,7 @@ class DataLoadTest(django.test.TestCase):
             valid=True)
         manatee.save()
 
-        mommy.make(
+        baker.make(
             MetroArea,
             fips='35840',
             name='North Port-Sarasota-Bradenton, FL',
@@ -498,13 +498,13 @@ class DataLoadTest(django.test.TestCase):
             states='["12"]',
             valid=True)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12081',
             county=manatee)
 
-        mommy.make(
+        baker.make(
             MSAMortgageData,
             current=5250,
             date=datetime.date(2016, 1, 1),
@@ -516,7 +516,7 @@ class DataLoadTest(django.test.TestCase):
             thirty=3676,
             total=22674)
 
-        mommy.make(
+        baker.make(
             NonMSAMortgageData,
             current=250081,
             date=datetime.date(2016, 1, 1),
@@ -528,7 +528,7 @@ class DataLoadTest(django.test.TestCase):
             thirty=6766,
             total=26748)
 
-        mommy.make(
+        baker.make(
             StateMortgageData,
             current=250081,
             date=datetime.date(2016, 1, 1),
@@ -614,7 +614,7 @@ class UpdateSamplingDatesTest(django.test.TestCase):
 
     def setUp(self):
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=1250,
             date=datetime.date(2008, 1, 1),

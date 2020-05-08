@@ -17,13 +17,13 @@ const HTML_SNIPPET = `
     <div class="o-mega-menu_content o-mega-menu_content-1 u-hidden-overflow u-move-transition u-move-to-origin" aria-expanded="false" data-js-hook="behavior_flyout-menu_content">
         <div class="o-mega-menu_content-wrapper o-mega-menu_content-1-wrapper ">
 
-            <div class="o-mega-menu_content-grid o-mega-menu_content-1-grid">
+            <div class="o-mega-menu_content-lists o-mega-menu_content-1-lists">
 
-                <div class="o-mega-menu_content-lists o-mega-menu_content-1-lists ">
+                <div class="o-mega-menu_content-list-group o-mega-menu_content-1-list-group">
 
-                    <div class="o-mega-menu_content-list o-mega-menu_content-1-list ">
+                    <div class="o-mega-menu_content-list o-mega-menu_content-1-list">
 
-                        <ul class="m-list m-list__unstyled">
+                        <ul>
                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-1-item ">
                                 <div class="m-global-header-cta
                                             m-global-header-cta__list">
@@ -36,8 +36,8 @@ const HTML_SNIPPET = `
 
                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-1-item" data-js-hook="behavior_flyout-menu">
                                 <a class="o-mega-menu_content-link o-mega-menu_content-1-link o-mega-menu_content-link__has-children o-mega-menu_content-1-link__has-children " href="#" data-js-hook="behavior_flyout-menu_trigger" aria-haspopup="menu" role="menuitem" data-gtm_ignore="true" aria-expanded="false">
-                                      Consumer Tools
-                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                        Consumer Tools
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                 </a>
 
                                 <div class="o-mega-menu_content o-mega-menu_content-2 u-hidden-overflow u-move-transition" aria-expanded="false" data-js-hook="behavior_flyout-menu_content">
@@ -52,8 +52,8 @@ const HTML_SNIPPET = `
                                             <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid">
                                                 <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview ">
                                                     <a class="u-link__disabled
-                                                              o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link
-                                                              ">
+                                                                o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link
+                                                                ">
                                                         Consumer Tools
                                                     </a>
                                                 </span>
@@ -68,44 +68,44 @@ const HTML_SNIPPET = `
                                                         <ul class="m-list m-list__unstyled">
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/auto-loans/" role="menuitem">
-                                                                      Auto Loans
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Auto Loans
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/bank-accounts/" role="menuitem">
-                                                                      Bank Accounts &amp; Services
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Bank Accounts &amp; Services
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/ask-cfpb/category-credit-cards/" role="menuitem">
-                                                                      Credit Cards
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Credit Cards
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/credit-reports-and-scores/" role="menuitem">
-                                                                      Credit Reports &amp; Scores
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Credit Reports &amp; Scores
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/debt-collection/" role="menuitem">
-                                                                      Debt Collection
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Debt Collection
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/fraud/" role="menuitem">
-                                                                      Fraud &amp; Scams
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Fraud &amp; Scams
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -119,7 +119,7 @@ const HTML_SNIPPET = `
                                                             Browse answers to hundreds of financial questions.
                                                         </span>
                                                         <a aria-label="Browse answers to hundreds of financial questions with Ask CFPB." href="/ask-cfpb/">
-                                                           Ask CFPB
+                                                            Ask CFPB
                                                         </a>
                                                     </p>
                                                     <p>
@@ -127,7 +127,7 @@ const HTML_SNIPPET = `
                                                             Have an issue with a financial product?
                                                         </span>
                                                         <a aria-label="Have an issue with a financial product? Submit a complaint." href="/complaint/">
-                                                           Submit a complaint
+                                                            Submit a complaint
                                                         </a>
                                                     </p>
                                                 </div>
@@ -140,7 +140,7 @@ const HTML_SNIPPET = `
                                                     <img src="/static/img/fmc-consumer-tools-540x300.png" alt="" height="150" width="270">
 
                                                     <div>
-                                                      Get your financial well-being score
+                                                        Get your financial well-being score
                                                     </div>
                                                 </a>
                                                 <p>
@@ -156,8 +156,8 @@ const HTML_SNIPPET = `
                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-1-item" data-js-hook="behavior_flyout-menu">
 
                                 <a class="o-mega-menu_content-link o-mega-menu_content-1-link o-mega-menu_content-link__has-children o-mega-menu_content-1-link__has-children " href="/data-research/" data-js-hook="behavior_flyout-menu_trigger" aria-haspopup="menu" role="menuitem" data-gtm_ignore="true" aria-expanded="false">
-                                      Data &amp; Research
-                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                        Data &amp; Research
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                 </a>
 
                                 <div class="o-mega-menu_content o-mega-menu_content-2 u-hidden-overflow u-move-transition" aria-expanded="false" data-js-hook="behavior_flyout-menu_content">
@@ -173,8 +173,8 @@ const HTML_SNIPPET = `
 
                                                 <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview ">
                                                     <a class="o-mega-menu_content-overview-link
-                                                              o-mega-menu_content-2-overview-link"
-                                                       href="/data-research/">
+                                                                o-mega-menu_content-2-overview-link"
+                                                        href="/data-research/">
                                                         Data &amp; Research Overview
                                                     </a>
                                                 </span>
@@ -185,22 +185,22 @@ const HTML_SNIPPET = `
                                                         <ul class="m-list m-list__unstyled">
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/data-research/research-reports/" role="menuitem">
-                                                                      Research &amp; Reports
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Research &amp; Reports
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/data-research/consumer-complaints/" role="menuitem">
-                                                                      Consumer Complaint Database
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Consumer Complaint Database
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/data-research/mortgage-data-hmda/" role="menuitem">
-                                                                      Mortgage Database (HMDA)
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Mortgage Database (HMDA)
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -216,7 +216,7 @@ const HTML_SNIPPET = `
                                                     <img src="/static/img/fmc-data-research-540x300.png" alt="" height="150" width="270">
 
                                                     <div>
-                                                      Help advance financial well-being
+                                                        Help advance financial well-being
                                                     </div>
                                                 </a>
                                                 <p>
@@ -248,8 +248,8 @@ const HTML_SNIPPET = `
 
                                                 <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview ">
                                                     <a class="o-mega-menu_content-overview-link
-                                                              o-mega-menu_content-2-overview-link"
-                                                       href="/about-us/">
+                                                                o-mega-menu_content-2-overview-link"
+                                                        href="/about-us/">
                                                         About Us Overview
                                                     </a>
                                                 </span>
@@ -260,29 +260,29 @@ const HTML_SNIPPET = `
                                                         <ul class="m-list m-list__unstyled">
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/the-bureau/" role="menuitem">
-                                                                      The Bureau
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        The Bureau
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/budget-strategy/" role="menuitem">
-                                                                      Budget &amp; Strategy
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Budget &amp; Strategy
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/payments-harmed-consumers/" role="menuitem">
-                                                                      Payments to Harmed Consumers
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Payments to Harmed Consumers
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/diversity-and-inclusion/" role="menuitem">
-                                                                      Diversity &amp; Inclusion
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Diversity &amp; Inclusion
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -292,29 +292,29 @@ const HTML_SNIPPET = `
                                                         <ul class="m-list m-list__unstyled">
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/activity-log/" role="menuitem">
-                                                                      Recent Updates
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Recent Updates
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/blog/" role="menuitem">
-                                                                      Blog
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Blog
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/newsroom/" role="menuitem">
-                                                                      Newsroom
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Newsroom
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/events/" role="menuitem">
-                                                                      Events
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Events
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -324,8 +324,8 @@ const HTML_SNIPPET = `
                                                         <ul class="m-list m-list__unstyled">
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item " data-js-hook="behavior_flyout-menu">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link o-mega-menu_content-link__has-children o-mega-menu_content-2-link__has-children " href="/about-us/careers/" data-js-hook="behavior_flyout-menu_trigger" aria-haspopup="menu" role="menuitem" data-gtm_ignore="true" aria-expanded="false">
-                                                                      Careers
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Careers
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
 
                                                                 <div class="o-mega-menu_content o-mega-menu_content-3 u-hidden-overflow u-move-transition" aria-expanded="false" data-js-hook="behavior_flyout-menu_content">
@@ -341,8 +341,8 @@ const HTML_SNIPPET = `
 
                                                                                 <span class="o-mega-menu_content-overview o-mega-menu_content-3-overview ">
                                                                                     <a class="o-mega-menu_content-overview-link
-                                                                                              o-mega-menu_content-3-overview-link"
-                                                                                       href="/about-us/careers/">
+                                                                                                o-mega-menu_content-3-overview-link"
+                                                                                        href="/about-us/careers/">
                                                                                         Careers Overview
                                                                                     </a>
                                                                                 </span>
@@ -352,29 +352,29 @@ const HTML_SNIPPET = `
                                                                                         <ul class="m-list m-list__unstyled">
                                                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-3-item ">
                                                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-3-link " href="/about-us/careers/working-at-cfpb/" role="menuitem">
-                                                                                                      Working @ CFPB
-                                                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                                                        Working @ CFPB
+                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                                                 </a>
                                                                                             </li>
 
                                                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-3-item ">
                                                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-3-link " href="/about-us/careers/application-process/" role="menuitem">
-                                                                                                      Job Application Process
-                                                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                                                        Job Application Process
+                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                                                 </a>
                                                                                             </li>
 
                                                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-3-item ">
                                                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-3-link " href="/about-us/careers/students-and-graduates/" role="menuitem">
-                                                                                                      Students &amp; Recent Graduates
-                                                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                                                        Students &amp; Recent Graduates
+                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                                                 </a>
                                                                                             </li>
 
                                                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-3-item ">
                                                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-3-link " href="/about-us/careers/current-openings/" role="menuitem">
-                                                                                                      All Current Openings
-                                                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                                                        All Current Openings
+                                                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                                                 </a>
                                                                                             </li>
                                                                                         </ul>
@@ -390,29 +390,29 @@ const HTML_SNIPPET = `
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/doing-business-with-us/" role="menuitem">
-                                                                      Doing Business With Us
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Doing Business With Us
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/advisory-groups/" role="menuitem">
-                                                                      Advisory Groups
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Advisory Groups
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/project-catalyst/" role="menuitem">
-                                                                      Project Catalyst
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Project Catalyst
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
 
                                                             <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
                                                                 <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/about-us/contact-us/" role="menuitem">
-                                                                      Contact Us
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                        Contact Us
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                                                 </a>
                                                             </li>
                                                         </ul>

@@ -38,9 +38,9 @@ class TestAkamaiBackend(TestCase):
             'ACCESS_TOKEN': 'access token',
         }
         akamai_backend = AkamaiBackend(credentials)
-        self.assertEquals(akamai_backend.client_token, 'token')
-        self.assertEquals(akamai_backend.client_secret, 'secret')
-        self.assertEquals(akamai_backend.access_token, 'access token')
+        self.assertEqual(akamai_backend.client_token, 'token')
+        self.assertEqual(akamai_backend.client_secret, 'secret')
+        self.assertEqual(akamai_backend.access_token, 'access token')
 
 
 @override_settings(

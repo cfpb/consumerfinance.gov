@@ -38,7 +38,7 @@ class MockStaticfilesFinderTests(TestCase):
 
         This test serves as a baseline to demonstrate default Django behavior.
         """
-        self.assertRegexpMatches(
+        self.assertRegex(
             finders.find('icons/test.svg'),
             'icons/test.svg$'
         )
@@ -101,7 +101,7 @@ class MockStaticfilesFinderTests(TestCase):
         icons/test.svg instead. Because we have a FileSystemFinder that can
         handle that redirected request, this call should succeed.
         """
-        self.assertRegexpMatches(
+        self.assertRegex(
             finders.find('missing/file.svg'),
             'icons/test.svg$'
         )

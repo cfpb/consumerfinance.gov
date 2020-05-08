@@ -94,7 +94,7 @@ class FrontendConverterTests(TestCase):
         return page
 
     def do_conversion(self, menu):
-        request = RequestFactory().get('/')
+        request = RequestFactory().get('/consumer-tools/')
         converter = FrontendConverter(menu, request=request)
         return converter.get_menu_items()
 
@@ -117,12 +117,13 @@ class FrontendConverterTests(TestCase):
             self.do_conversion(self.menu)
 
     def test_conversion_output(self):
-        self.maxDiff = None
         self.assertEqual(self.do_conversion(self.menu), [
             {
+                'selected': True,
                 'overview': {
                     'url': '/consumer-tools/',
                     'text': 'Consumer Tools',
+                    'selected': True,
                 },
                 'nav_groups': [
                     {

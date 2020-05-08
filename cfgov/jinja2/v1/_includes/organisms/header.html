@@ -25,7 +25,7 @@
 
 <header class="o-header{% if mega_menu_content %} o-header__mega-menu{% endif %}">
 
-    {% if flag_enabled('BETA_NOTICE', request) and show_banner %}
+    {% if flag_enabled('BETA_NOTICE') and show_banner %}
     {% import 'molecules/notification.html' as notification with context %}
     <div class="m-global-banner">
       <div class="wrapper
@@ -40,23 +40,34 @@
     </div>
     {% endif %}
 
-    {% if flag_enabled('COLLECT_OUTAGE', request) %}
+    {% if banners %}
+        {% for banner in banners %}
+            <div class="m-global-banner">
+                <div class="wrapper
+                          wrapper__match-content">
+                    {% include_block banner.content %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if flag_enabled('COLLECT_OUTAGE') %}
         {{ collect_outage_banner(request) }}
     {% endif %}
 
-    {% if flag_enabled('COMPLAINT_INTAKE_TECHNICAL_ISSUES', request) %}
+    {% if flag_enabled('COMPLAINT_INTAKE_TECHNICAL_ISSUES') %}
         {{ complaint_issue_banner(request) }}
     {% endif %}
 
-    {% if flag_enabled('COMPLAINT_INTAKE_MAINTENANCE', request) %}
+    {% if flag_enabled('COMPLAINT_INTAKE_MAINTENANCE') %}
         {{ complaint_maintenance_banner(request) }}
     {% endif %}
 
-    {% if flag_enabled('HMDA_OUTAGE', request) %}
+    {% if flag_enabled('HMDA_OUTAGE') %}
         {{ hmda_outage_banner(request) }}
     {% endif %}
 
-    {% if flag_enabled('OMWI_SALESFORCE_OUTAGE', request) %}
+    {% if flag_enabled('OMWI_SALESFORCE_OUTAGE') %}
         {{ omwi_salesforce_outage_banner(request) }}
     {% endif %}
 
@@ -97,7 +108,7 @@
             {% endif %}
 
             {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-            {{ global_header_cta.render( true, language ) }}
+            {{ global_header_cta.render( language ) }}
 
             {% import 'molecules/global-search.html' as global_search with context %}
             {{ global_search.render() }}

@@ -2,8 +2,8 @@ import re
 from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 from bs4 import BeautifulSoup
 
@@ -61,12 +61,12 @@ def signed_redirect(url):
     query_args = {'ext_url': url,
                   'signature': signature}
 
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def unsigned_redirect(url):
     query_args = {'ext_url': url}
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def extract_answers_from_request(request):
@@ -88,7 +88,7 @@ def get_link_tags(html):
     return A_TAG.findall(html)
 
 
-def add_link_markup(tag):
+def add_link_markup(tag, request_path):
     """Add necessary markup to the given link and return if modified.
 
     Add an external link icon if the input is not a CFPB (internal) link.
@@ -106,6 +106,17 @@ def add_link_markup(tag):
         return None
 
     class_attrs = tag.attrs.setdefault('class', [])
+
+    if request_path is not None:
+        # Strips the path of the current page from hrefs that are internal page
+        # anchor links.
+        # TODO: Remove that functionality when we get to Wagtail>=2.7, which
+        # adds the ability to create anchor links.
+        in_page_anchor_pattern = request_path + '#'
+        if tag['href'].startswith(in_page_anchor_pattern):
+            # Strip current path from in-page anchor links
+            tag['href'] = tag['href'].replace(request_path, '')
+            return str(tag)
 
     if tag['href'].startswith('/external-site/?'):
         # Sets the icon to indicate you're leaving consumerfinance.gov
@@ -171,21 +182,6 @@ def add_link_markup(tag):
     return str(tag)
 
 
-class NoMigrations(object):
-    """Class to disable app migrations through settings.MIGRATION_MODULES.
-
-    The MIGRATION_MODULES setting can be used to tell Django where to look
-    for an app's migrations (by default this is the "migrations" subdirectory).
-    This class simulates a dictionary where a lookup for any app returns a
-    value that causes Django to think that no migrations exist.
-    """
-    def __contains__(self, item):
-        return True
-
-    def __getitem__(self, item):
-        return None
-
-
 def slugify_unique(context, value):
     """Generates a slug, making it unique for a context, if possible.
 
@@ -204,7 +200,7 @@ def slugify_unique(context, value):
     If the context lacks a request, this function falls back to the default
     behavior of Django slugify:
 
-    https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.text.slugify
+    https://docs.djangoproject.com/en/stable/ref/utils/#django.utils.text.slugify
 
     >>> context = {}
     >>> slugify_unique(context, 'Some text')

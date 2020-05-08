@@ -247,6 +247,24 @@ class FilterableListForm(forms.Form):
         ]
 
 
+class EnforcementActionsFilterForm(FilterableListForm):
+    def get_page_set(self):
+        query = self.generate_query()
+        return self.filterable_pages.filter(query).distinct().order_by(
+            '-date_filed'
+        )
+
+    def get_query_strings(self):
+        return [
+            'title__icontains',      # title
+            'date_filed__gte',       # from_date
+            'date_filed__lte',       # to_date
+            'categories__name__in',  # categories
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
+        ]
+
+
 class EventArchiveFilterForm(FilterableListForm):
     def get_query_strings(self):
         return [
