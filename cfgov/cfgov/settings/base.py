@@ -99,6 +99,7 @@ INSTALLED_APPS = (
     "ratechecker",
     "countylimits",
     "complaint_search",
+    "rest_framework",
     "ccdb5_ui",
     "mptt",
     "teachers_digital_platform",
