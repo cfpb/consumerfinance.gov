@@ -623,12 +623,10 @@ def handle_error(code, request, exception=None):
 # Using (?i) in url() patterns is deprecated in Django 2.1
 def handle_404_error(code, request, exception=None):
     url_length = len(request.path)
-    extraneous_char_re = re.compile(r'[!#$%&()*+,-.:;<=>?@\[\]^_`{|}~]+$')
+    extraneous_char_re = re.compile(r'[ !#$%&()*+,-.:;<=>?@\[\]^_`{|}~]+$')
 
     if request.path != request.path.lower():
         return redirect(request.path.lower(), permanent=True)
-    if request.path[-2:] == " )":
-        return redirect(request.path[:-2], permanent=True)
 
     request.path = re.sub(extraneous_char_re, '', request.path)
     if len(request.path) < url_length:
