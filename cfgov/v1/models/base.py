@@ -1,10 +1,12 @@
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import F, Value
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone, translation
 from django.utils.module_loading import import_string
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.admin.edit_handlers import (
@@ -17,8 +19,8 @@ from wagtail.core.models import Orderable, Page, PageManager, PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
@@ -77,6 +79,21 @@ class CFGOVPage(Page):
             'Maximum size: 4096w x 4096h.'
         )
     )
+    schema_json = JSONField(
+        null=True,
+        blank=True,
+        verbose_name='Schema JSON',
+        help_text=mark_safe(
+            'Enter structured data for this page in JSON-LD format, '
+            'for use by search engines in providing rich search results. '
+            '<a href="https://developers.google.com/search/docs/guides/'
+            'intro-structured-data">Learn more.</a> '
+            'JSON entered here will be output in the '
+            '<code>&lt;head&gt;</code> of the page between '
+            '<code>&lt;script type="application/ld+json"&gt;</code> and '
+            '<code>&lt;/script&gt;</code> tags.'
+        ),
+    )
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
@@ -115,6 +132,7 @@ class CFGOVPage(Page):
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        FieldPanel('schema_json', 'Structured Data'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),
     ]
@@ -219,6 +237,9 @@ class CFGOVPage(Page):
                 # the url_pattern defined on each enabled banner.
                 path=Value(request.path, output_field=models.CharField())) \
             .filter(path__regex=F('url_pattern'))
+
+        if self.schema_json:
+            context['schema_json'] = self.schema_json
 
         return context
 

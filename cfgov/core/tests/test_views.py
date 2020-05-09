@@ -4,21 +4,16 @@ from urllib.parse import urlencode
 
 from django.http import Http404, QueryDict
 from django.test import RequestFactory, TestCase, override_settings
+from django.urls import reverse
 
 from mock import Mock, patch
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.govdelivery import MockGovDelivery
 from core.views import (
-    ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment,
-    submit_comment
+    ExternalURLNoticeView, TranslatedTemplateView, govdelivery_subscribe,
+    regsgov_comment, submit_comment
 )
-
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 
 class GovDeliverySubscribeTest(TestCase):
@@ -362,3 +357,22 @@ class TestExternalURLNoticeView(TestCase):
         request = self.factory.post("/")
         with self.assertRaises(Http404):
             view(request)
+
+
+class TranslatedTemplateViewTestCase(TestCase):
+
+    def test_language_activation(self):
+        request = RequestFactory().get('/')
+
+        view = TranslatedTemplateView.as_view(
+            template_name='test.html'
+        )
+        response = view(request)
+        self.assertEqual(response.context_data['current_language'], 'en')
+
+        view = TranslatedTemplateView.as_view(
+            template_name='test.html',
+            language='es'
+        )
+        response = view(request)
+        self.assertEqual(response.context_data['current_language'], 'es')

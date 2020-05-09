@@ -1,1 +1,1 @@
-{{ object.question|striptags|safe }}
+{{ object.question | striptags | safe }}

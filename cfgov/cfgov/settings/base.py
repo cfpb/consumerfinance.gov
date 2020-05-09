@@ -92,29 +92,21 @@ INSTALLED_APPS = (
     "diversity_inclusion",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
+
+    # Satellites
+    "comparisontool",
+    "retirement_api",
+    "ratechecker",
+    "countylimits",
+    "complaint_search",
+    "rest_framework",
+    "ccdb5_ui",
+    "mptt",
+    "teachers_digital_platform",
 )
-
-OPTIONAL_APPS = [
-    {"import": "comparisontool", "apps": ("comparisontool", "haystack",)},
-    {"import": "retirement_api", "apps": ("retirement_api",)},
-    {"import": "ratechecker", "apps": ("ratechecker", "rest_framework")},
-    {"import": "countylimits", "apps": ("countylimits", "rest_framework")},
-    {
-        "import": "complaint_search",
-        "apps": ("complaint_search", "rest_framework"),
-    },
-    {"import": "ccdb5_ui", "apps": ("ccdb5_ui",)},
-    {
-        "import": "teachers_digital_platform",
-        "apps": ("teachers_digital_platform", "mptt", "haystack"),
-    },
-]
-
-POSTGRES_APPS = []
 
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -414,18 +406,6 @@ if os.environ.get("S3_ENABLED", "False") == "True":
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
-
-# LOAD OPTIONAL APPS
-# code from https://gist.github.com/msabramo/945406
-for app in OPTIONAL_APPS:
-    try:
-        __import__(app["import"])
-        for name in app.get("apps", ()):
-            if name not in INSTALLED_APPS:
-                INSTALLED_APPS += (name,)
-        MIDDLEWARE += app.get("middleware", ())
-    except ImportError:
-        pass
 
 # Removes wagtail version update check banner from admin page
 WAGTAIL_ENABLE_UPDATE_CHECK = False
@@ -792,11 +772,12 @@ REGULATIONS_REFERENCE_MAPPING = [
 # middleware. This list of regular expressions defines a set of URLs against
 # which we don't want this logic to be run.
 PARSE_LINKS_EXCLUSION_LIST = [
-    # Wagtail admin pages, except preview and draft views
+    # Wagtail admin pages, except preview, draft, and debug views
     (
         r"^/admin/(?!"
         r"pages/\d+/(edit/preview|view_draft)/|"
-        r"mega_menu/menu/preview/\w+/"
+        r"mega_menu/menu/preview/\w+/|"
+        r"template_debug/"
         r")"
     ),
     # Django admin pages

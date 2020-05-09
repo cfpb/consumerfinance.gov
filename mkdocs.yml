@@ -13,6 +13,7 @@ nav:
 - Pages and Components:
     - Atomic Structure and Design: atomic-structure.md
     - Creating and Editing Components: editing-components.md
+    - Debugging Templates: debugging-templates.md
     - Django and Wagtail Migrations: migrations.md
     - Forms in Wagtail Page Context: forms-in-wagtail.md
     - Wagtail Pages: wagtail-pages.md
@@ -30,7 +31,6 @@ nav:
     - Contributing to the Docs: contributing-docs.md
     - Related Projects: related-projects.md
     - Development Tips: development-tips.md
-    - How We Use Travis CI: travis.md
     - How We Use GitHub Actions: github-actions.md
 - APIs and Data:
     - Ask CFPB: ask-cfpb.md

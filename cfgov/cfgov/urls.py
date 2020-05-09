@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -21,7 +21,6 @@ from wagtailautocomplete.urls.admin import (
 from ask_cfpb.views import (
     ask_autocomplete, ask_search, redirect_ask_search, view_answer
 )
-from core.conditional_urls import include_if_app_enabled
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
 )
@@ -227,16 +226,17 @@ urlpatterns = [
         'transcripts'),
         namespace='transcripts')),
 
-    re_path(r'^paying-for-college/',
-        include_if_app_enabled('comparisontool', 'comparisontool.urls')),
+    re_path(r'^paying-for-college/', include('comparisontool.urls')),
 
-    re_path(r'^paying-for-college2/', include((
-        'paying_for_college.urls',
-        'paying_for_college'),
-        namespace='paying_for_college')),
+    re_path(
+        r'^paying-for-college2/',
+        include(
+            ('paying_for_college.urls', 'paying_for_college'),
+            namespace='paying_for_college'
+        )
+    ),
 
-    re_path(r'^credit-cards/agreements/',
-        include('agreements.urls')),
+    re_path(r'^credit-cards/agreements/', include('agreements.urls')),
 
     flagged_re_path(
         'PREPAID_AGREEMENTS_SEARCH',
@@ -246,11 +246,11 @@ urlpatterns = [
             'prepaid_agreements'),
             namespace='prepaid_agreements')),
 
-    re_path(r'^consumer-tools/retirement/', include_if_app_enabled(
-        'retirement_api',
-        'retirement_api.urls',
-        namespace='retirement_api'
-    )),
+    re_path(
+        r'^consumer-tools/retirement/',
+        include('retirement_api.urls', namespace='retirement_api')
+    ),
+
     re_path(r'^data-research/consumer-complaints/$',
         ComplaintLandingView.as_view(),
         name='complaint-landing'),
@@ -259,19 +259,17 @@ urlpatterns = [
     flagged_re_path(
         'CCDB5_RELEASE',
         r'^data-research/consumer-complaints/search/api/v1/',
-        include_if_app_enabled('complaint_search',
-                               'complaint_search.urls')),
+        include('complaint_search.urls')
+    ),
 
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
     flagged_re_path(
         'CCDB5_RELEASE',
         r'^data-research/consumer-complaints/search/',
-        include_if_app_enabled('ccdb5_ui', 'ccdb5_ui.config.urls')),
+        include('ccdb5_ui.config.urls')),
 
-    re_path(r'^oah-api/rates/',
-        include_if_app_enabled('ratechecker', 'ratechecker.urls')),
-    re_path(r'^oah-api/county/',
-        include_if_app_enabled('countylimits', 'countylimits.urls')),
+    re_path(r'^oah-api/rates/', include('ratechecker.urls')),
+    re_path(r'^oah-api/county/', include('countylimits.urls')),
 
     re_path(r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
@@ -302,8 +300,10 @@ urlpatterns = [
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
     # data-research-api
-    re_path(r'^data-research/mortgages/api/v1/',
-        include_if_app_enabled('data_research', 'data_research.urls')),
+    re_path(
+        r'^data-research/mortgages/api/v1/',
+        include('data_research.urls')
+    ),
 
     # educational resources
     re_path(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
@@ -362,7 +362,7 @@ urlpatterns = [
     re_path(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-es-json'),
-    re_path(r'^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$(?i)',
+    re_path(r'^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$',
         view_answer,
         name='ask-english-answer'),
     re_path(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/$',
@@ -371,18 +371,18 @@ urlpatterns = [
     re_path(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
         view_answer,
         name='ask-spanish-answer'),
-    re_path(r'^ask-cfpb/search/$(?i)',
+    re_path(r'^ask-cfpb/search/$',
         ask_search,
         name='ask-search-en'),
-    re_path(r'^ask-cfpb/search/(?P<as_json>json)/$(?i)',
+    re_path(r'^ask-cfpb/search/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-en-json'),
-    re_path(r'^ask-cfpb/api/autocomplete/$(?i)',
+    re_path(r'^ask-cfpb/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-en'),
     re_path(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
 
-    re_path(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
+    re_path(r'^_status/', include('watchman.urls')),
 
     re_path(
         r'^consumer-tools/financial-well-being/',
@@ -402,8 +402,7 @@ urlpatterns = [
 
     re_path(
         r'^practitioner-resources/youth-financial-education/',
-        include_if_app_enabled('teachers_digital_platform',
-                               'teachers_digital_platform.urls')
+        include('teachers_digital_platform.urls')
     ),
 
     re_path(
@@ -446,92 +445,92 @@ urlpatterns = [
 
 # Ask CFPB category and subcategory redirects
 category_redirects = [
-    re_path(r'^ask-cfpb/category-auto-loans/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-auto-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/auto-loans/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-bank-accounts-and-services/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-bank-accounts-and-services/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/bank-accounts/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-credit-cards/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-credit-cards/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/credit-cards/answers/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-credit-reporting/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-credit-reporting/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/credit-reports-and-scores/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-debt-collection/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-debt-collection/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/debt-collection/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-families-money/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-families-money/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/money-as-you-grow/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-money-transfers/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-money-transfers/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/money-transfers/answers/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-mortgages/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-mortgages/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/mortgages/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-payday-loans/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-payday-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/payday-loans/answers',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-prepaid-cards/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-prepaid-cards/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/prepaid-cards/',
             permanent=True)),
-    re_path(r'^ask-cfpb/category-student-loans/(.*)$(?i)',
+    re_path(r'^ask-cfpb/category-student-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/student-loans/',
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$(?i)',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cuentas-bancarias/',
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$(?i)',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cobro-de-deudas/',
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$',
         RedirectView.as_view(
             url='/es/el-dinero-mientras-creces/',
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/hipotecas/',
             permanent=True)),
     re_path(
-        r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$(?i)',
+        r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$(?i)',  # noqa: E501
+    re_path(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$(?i)',
+    re_path(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-estudiantiles/',  # noqa: E501
             permanent=True))
@@ -618,5 +617,13 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-handler404 = partial(handle_error, 404)
+# Handle case-insensitive URLs
+# Using (?i) in url() patterns is deprecated in Django 2.1
+def handle_404_error(code, request, exception=None):
+    if request.path != request.path.lower():
+        return redirect(request.path.lower(), permanent=True)
+    return handle_error(code, request, exception)
+
+
+handler404 = partial(handle_404_error, 404)
 handler500 = partial(handle_error, 500)

@@ -95,13 +95,10 @@ class CFGovErrorHandler(logging.Handler):
         except Exception:
             get = '<could not parse>'
 
-        if request._post_parse_error:
+        try:
+            post = pformat(POST_override)
+        except Exception:
             post = '<could not parse>'
-        else:
-            try:
-                post = pformat(POST_override)
-            except Exception:
-                post = '<could not parse>'
 
         try:
             cookies = pformat(request.COOKIES)

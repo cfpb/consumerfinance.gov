@@ -65,6 +65,7 @@ class SchemaBlocksTestCase(TestCase):
     def test_how_to_block_renders_schema(self):
         block = HowTo()
         data = {
+            'title': 'test title',
             'description': 'test description',
             'steps': [{
                 'title': 'Step one',
@@ -72,15 +73,22 @@ class SchemaBlocksTestCase(TestCase):
             }]
         }
         expected_html = (
-            '<div class="schema-block schema-block__how-to">'
+            '<div itemscope'
+            '     itemtype="http://schema.org/HowTo"'
+            '     class="schema-block schema-block__how-to">'
+            '<h2 itemprop="name" class="schema-block_title">test title</h2>'
             '<div itemprop="description" class="schema-block_description">'
             '<div class="rich-text">test description</div>'
             '</div>'
-            '<div itemprop="step" itemscope '
-            'itemtype="http://schema.org/HowToStep" class="schema-block_item">'
-            '<h2 itemprop="name">Step one</h2>'
+            '<ol>'
+            '<li itemprop="step"'
+            '     itemscope'
+            '     itemtype="http://schema.org/HowToStep"'
+            '     class="schema-block_item">'
+            '<h3 itemprop="name" class="h4">Step one</h3>'
             '<div itemprop="text">Step content</div>'
-            '</div>'
+            '</li>'
+            '</ol>'
             '</div>'
         )
         html = block.render(data)

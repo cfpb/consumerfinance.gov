@@ -5,6 +5,8 @@ except ImportError:
 
 
 urlpatterns = [
-    re_path(r'^understanding-your-financial-aid-offer/',
-            include('paying_for_college.disclosures.urls')),
+    re_path(
+        r"^understanding-your-financial-aid-offer/",
+        include("paying_for_college.disclosures.urls"),
+    ),
 ]

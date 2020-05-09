@@ -156,12 +156,12 @@ class BulkZipCodeGeocoder(object):
 
             feature = item['features'][0]
             if feature.get('place_type') != ['postcode']:
-                logger.warn('zipcode %s geocoded to non-postcode', zipcode)
+                logger.warning('zipcode %s geocoded to non-postcode', zipcode)
                 continue
 
             geometry = feature.get('geometry')
             if geometry.get('type') != 'Point':
-                logger.warn('zipcode %s geocoded to non-point', zipcode)
+                logger.warning('zipcode %s geocoded to non-point', zipcode)
                 continue
 
             longitude, latitude = geometry['coordinates']
