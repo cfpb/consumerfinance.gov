@@ -2,6 +2,7 @@ import { observable, computed, action } from 'mobx';
 import logger from '../lib/logger';
 import { getWeekRows, toDayJS, dayjs } from '../lib/calendar-helpers';
 import { formatCurrency } from '../lib/currency-helpers';
+import Day from './models/day';
 
 export default class UIStore {
   @observable navOpen = false;
@@ -19,6 +20,7 @@ export default class UIStore {
   @observable showBottomNav = true;
   @observable isTouchDevice = false;
   @observable installPromptEvent;
+  @observable days = [];
 
   constructor(rootStore) {
     this.rootStore = rootStore;

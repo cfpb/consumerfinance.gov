@@ -1,11 +1,11 @@
-import { flow, observable, computed, action } from 'mobx';
+import { reaction, flow, observable, computed, action } from 'mobx';
 import { asyncComputed } from 'computed-async-mobx';
 import { computedFn } from 'mobx-utils';
 import logger from '../lib/logger';
 import { toDayJS, dayjs } from '../lib/calendar-helpers';
 import { toMap } from '../lib/array-helpers';
 import CashFlowEvent from './models/cash-flow-event';
-
+import Day from './models/day';
 
 export default class CashFlowStore {
   static snapCategories = [
@@ -29,6 +29,20 @@ export default class CashFlowStore {
     });
 
     this.logger.debug('Initialize CashFlowStore: %O', this);
+  }
+
+  @computed get days() {
+    const result = [];
+    const startDate = this.events.length ? this.events[0].dateTime : dayjs();
+    const stopDate = dayjs().add(90, 'days');
+    let currentDate = startDate.clone();
+
+    while (currentDate.isSameOrBefore(stopDate)) {
+      result.push(new Day(this, currentDate));
+      currentDate = currentDate.add(1, 'day');
+    }
+
+    return result;
   }
 
   /**
