@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import yearDay from 'dayjs/plugin/dayOfYear';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { RRule, RRuleSet } from 'rrule';
 
@@ -9,6 +10,7 @@ dayjs.extend(yearDay);
 dayjs.extend(weekOfYear);
 dayjs.extend(customParseFormat);
 dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 export { dayjs as dayjs };
 
