@@ -28,38 +28,45 @@ export default class CashFlowStore {
     this.logger.debug('Initialize CashFlowStore: %O', this);
   }
 
+  @computed get hasSnapEvents() {
+    return Boolean(this.events.find(({ category }) => category === 'income.benefits.snap'));
+  }
+
   /**
    * An array of individual Day objects representing the entire time horizon of the calendar,
    * snapshotting each day's income and expenses.
    *
-   * @type {Day[]}
+   * @type {Map.<dayjs,Day>}
    */
   @computed get days() {
-    const result = [];
-    const startDate = this.events.length ? this.events[0].dateTime : dayjs();
+    const result = new Map();
+    const startDate = this.events.length ? this.earliestEventDate.startOf('day') : dayjs().startOf('day');
     const stopDate = dayjs().add(90, 'days');
     let currentDate = startDate.clone();
-    let idx = 0;
 
     while (currentDate.isSameOrBefore(stopDate)) {
-      let day;
+      const dayProps = {
+        date: currentDate,
+      };
 
       if (currentDate.isSame(startDate)) {
-        day = new Day(this, {
-          date: currentDate,
-          snapBalanceCents: this.getSnapBalanceForDate(currentDate),
-          nonSnapBalanceCents: this.getNonSnapBalanceForDate(currentDate),
-        });
+        dayProps.snapBalance = this.getSnapBalanceForDate(currentDate);
+        dayProps.nonSnapBalance = this.getNonSnapBalanceForDate(currentDate);
       } else {
-        const prevDay = result[idx - 1];
-        day = new Day(this, { date: currentDate, previousDay: prevDay });
+        dayProps.previousDay = result.get(currentDate.subtract(1, 'day').valueOf());
       }
-      result.push(day);
+
+      const day = new Day(this, dayProps);
+      result.set(currentDate.valueOf(), day);
+
       currentDate = currentDate.add(1, 'day');
-      idx++;
     }
 
     return result;
+  }
+
+  getDay(date) {
+    return this.days.get(toDayJS(date).startOf('day').valueOf());
   }
 
   /**
