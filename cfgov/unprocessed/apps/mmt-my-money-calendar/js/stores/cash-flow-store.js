@@ -8,10 +8,7 @@ import CashFlowEvent from './models/cash-flow-event';
 import Day from './models/day';
 
 export default class CashFlowStore {
-  static snapCategories = [
-    'expense.food.groceries',
-    'income.benefits.snap',
-  ];
+  static snapCategories = ['expense.food.groceries', 'income.benefits.snap'];
 
   @observable eventsLoaded = false;
   @observable events = [];
@@ -31,15 +28,35 @@ export default class CashFlowStore {
     this.logger.debug('Initialize CashFlowStore: %O', this);
   }
 
+  /**
+   * An array of individual Day objects representing the entire time horizon of the calendar,
+   * snapshotting each day's income and expenses.
+   *
+   * @type {Day[]}
+   */
   @computed get days() {
     const result = [];
     const startDate = this.events.length ? this.events[0].dateTime : dayjs();
     const stopDate = dayjs().add(90, 'days');
     let currentDate = startDate.clone();
+    let idx = 0;
 
     while (currentDate.isSameOrBefore(stopDate)) {
-      result.push(new Day(this, currentDate));
+      let day;
+
+      if (currentDate.isSame(startDate)) {
+        day = new Day(this, {
+          date: currentDate,
+          snapBalanceCents: this.getSnapBalanceForDate(currentDate),
+          nonSnapBalanceCents: this.getNonSnapBalanceForDate(currentDate),
+        });
+      } else {
+        const prevDay = result[idx - 1];
+        day = new Day(this, { date: currentDate, previousDay: prevDay });
+      }
+      result.push(day);
       currentDate = currentDate.add(1, 'day');
+      idx++;
     }
 
     return result;

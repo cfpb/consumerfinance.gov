@@ -12,6 +12,8 @@ export class CategoryTree {
     'recurrenceTypes',
     'strategy',
     'hasBill',
+    'hasRestrictions',
+    'allowableExpenses',
   ];
 
   @observable categories = {};

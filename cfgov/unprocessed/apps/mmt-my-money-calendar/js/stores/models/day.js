@@ -4,13 +4,31 @@ import logger from '../../lib/logger';
 
 export default class Day {
   @observable date;
+  @observable snapBalanceCents = 0;
+  @observable nonSnapBalanceCents = 0;
 
-  constructor(store, date = dayjs()) {
+  constructor(store, props = {}) {
+    const { date = dayjs(), snapBalanceCents = 0, nonSnapBalanceCents = 0, previousDay } = props;
     this.store = store;
     this.date = toDayJS(date);
+    this.snapBalanceCents = snapBalanceCents;
+    this.nonSnapBalanceCents = nonSnapBalanceCents;
     this.logger = logger.addGroup('day');
 
+    if (previousDay) {
+      this.snapBalanceCents = this.snapTotal + previousDay.snapTotal;
+      this.nonSnapBalanceCents = this.nonSnapTotal + previousDay.nonSnapTotal;
+    }
+
     this.logger.debug('Initialize Day: %O', this);
+  }
+
+  @computed get totalBalanceCents() {
+    return this.snapBalanceCents + this.nonSnapBalanceCents;
+  }
+
+  @computed get totalBalance() {
+    return this.totalBalanceCents / 100;
   }
 
   @computed get timestamp() {
@@ -18,7 +36,7 @@ export default class Day {
   }
 
   @computed get events() {
-    return this.store.eventsByDate.get(this.timestamp);
+    return this.store.eventsByDate.get(this.timestamp) || [];
   }
 
   @computed get nonSnapExpenses() {
@@ -37,19 +55,31 @@ export default class Day {
     return this.events.filter((event) => event.category === 'income.benefits.snap');
   }
 
+  @computed get nonSnapTotal() {
+    return [...this.nonSnapIncome, ...this.nonSnapExpenses].reduce((sum, event) => sum + event.totalCents, 0);
+  }
+
+  @computed get snapTotal() {
+    return [...this.snapExpenses, ...this.snapIncome].reduce((sum, event) => sum + event.totalCents, 0);
+  }
+
   @computed get snapBalance() {
-    return this.store.getSnapBalanceForDate(this.date);
+    return this.snapBalanceCents / 100;
   }
 
   @computed get nonSnapBalance() {
-    return this.store.getNonSnapBalanceForDate(this.date)
-  }
-
-  @computed get balance() {
-    return this.store.getBalanceForDate(this.date);
+    return this.nonSnapBalanceCents / 100;
   }
 
   @action setDate(date) {
     this.date = toDayJS(date);
+  }
+
+  @action setSnapBalance(balance) {
+    this.snapBalance = Number(balance);
+  }
+
+  @action setNonSnapBalance(balance) {
+    this.nonSnapBalance = Number(balance);
   }
 }
