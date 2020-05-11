@@ -4,7 +4,17 @@ import { isEmpty, filterProps } from '../../lib/object-helpers';
 import icons from '../../lib/category-icons';
 
 export class CategoryTree {
-  static internalProps = ['name', 'description', 'restricted', 'recurrenceTypes', 'strategy', 'hasBill'];
+  static internalProps = [
+    'name',
+    'icon',
+    'description',
+    'restricted',
+    'recurrenceTypes',
+    'strategy',
+    'hasBill',
+    'hasRestrictions',
+    'allowableExpenses',
+  ];
 
   @observable categories = {};
 
