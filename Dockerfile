@@ -1,6 +1,6 @@
 FROM centos:7 AS cfgov-dev
 
-MAINTAINER tech@cfpb.gov 
+LABEL maintainer="tech@cfpb.gov" 
 
 # Specify SCL-based Python version
 # Currently used option: rh-python36
