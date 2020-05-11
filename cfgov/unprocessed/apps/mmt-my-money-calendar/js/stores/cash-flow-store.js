@@ -43,6 +43,7 @@ export default class CashFlowStore {
     const startDate = this.events.length ? this.earliestEventDate.startOf('day') : dayjs().startOf('day');
     const stopDate = dayjs().add(90, 'days');
     let currentDate = startDate.clone();
+    let idx = 0;
 
     while (currentDate.isSameOrBefore(stopDate)) {
       const dayProps = {
@@ -60,6 +61,7 @@ export default class CashFlowStore {
       result.set(currentDate.valueOf(), day);
 
       currentDate = currentDate.add(1, 'day');
+      idx++;
     }
 
     return result;
