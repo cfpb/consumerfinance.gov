@@ -635,14 +635,14 @@ def handle_404_error(code, request, exception=None):
     extraneous_char_re = re.compile(
         r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
     )
-    path = re.sub(extraneous_char_re, '', path)
+    path = extraneous_char_re.sub('', path)
 
     # If the path has changed, try resolving the new path.
     if path != request.path:
         try:
             # Add trailing slash if not present, because resolve() doesn't go
             # through the CommonMiddleware that performs that task.
-            if path[-1] != '/':
+            if path[:-1] != '/':
                 path += '/'
             # If it resolves, redirect to it.
             resolve(path)
