@@ -7,7 +7,6 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import resolve, Resolver404
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -622,10 +621,11 @@ def handle_error(code, request, exception=None):
 def handle_404_error(code, request, exception=None):
     """Attempt to self-heal 404-ing URLs.
 
-    Takes a 404ing request and tries to transform it to a successful request by
-    lowercasing the path and stripping extraneous characters from the end.
-    If successful, it redirects to the working URL. If unsuccessful, it returns
-    the expected 404 for the original requested path.
+    Takes a 404ing request and tries to transform it to a successful request
+    by lowercasing the path and stripping extraneous characters from the end.
+    If those result in a modified path, redirect to the modified path.
+    If the path did not change, this is a legitimate 404, so continue handling
+    that as normal.
     """
 
     # Lowercase the path.
@@ -637,20 +637,9 @@ def handle_404_error(code, request, exception=None):
     )
     path = extraneous_char_re.sub('', path)
 
-    # If the path has changed, try resolving the new path.
+    # If the path has changed, redirect to the new path.
     if path != request.path:
-        try:
-            # Add trailing slash if not present, because resolve() doesn't go
-            # through the CommonMiddleware that performs that task.
-            if path[:-1] != '/':
-                path += '/'
-            # If it resolves, redirect to it.
-            resolve(path)
-            return redirect(path, permanent=True)
-        except Resolver404:
-            # If the new path didn't resolve, pass out of here onto the return
-            # statement below to raise the 404 for the original path.
-            pass
+        return redirect(path, permanent=True)
 
     return handle_error(code, request, exception)
 
