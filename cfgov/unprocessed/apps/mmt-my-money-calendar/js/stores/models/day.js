@@ -4,31 +4,27 @@ import logger from '../../lib/logger';
 
 export default class Day {
   @observable date;
-  @observable snapBalanceCents = 0;
-  @observable nonSnapBalanceCents = 0;
+  @observable snapBalance = 0;
+  @observable nonSnapBalance = 0;
 
   constructor(store, props = {}) {
-    const { date = dayjs(), snapBalanceCents = 0, nonSnapBalanceCents = 0, previousDay } = props;
+    const { date = dayjs(), snapBalance = 0, nonSnapBalance = 0, previousDay } = props;
     this.store = store;
     this.date = toDayJS(date);
-    this.snapBalanceCents = snapBalanceCents;
-    this.nonSnapBalanceCents = nonSnapBalanceCents;
+    this.snapBalance = snapBalance;
+    this.nonSnapBalance = nonSnapBalance;
     this.logger = logger.addGroup('day');
 
     if (previousDay) {
-      this.snapBalanceCents = this.snapTotal + previousDay.snapTotal;
-      this.nonSnapBalanceCents = this.nonSnapTotal + previousDay.nonSnapTotal;
+     this.snapBalance = previousDay.snapBalance + this.snapTotal;
+     this.nonSnapBalance = previousDay.nonSnapBalance + this.nonSnapTotal;
     }
 
     this.logger.debug('Initialize Day: %O', this);
   }
 
-  @computed get totalBalanceCents() {
-    return this.snapBalanceCents + this.nonSnapBalanceCents;
-  }
-
   @computed get totalBalance() {
-    return this.totalBalanceCents / 100;
+    return this.snapBalance + this.nonSnapBalance;
   }
 
   @computed get timestamp() {
@@ -40,7 +36,7 @@ export default class Day {
   }
 
   @computed get nonSnapExpenses() {
-    return this.events.filter((event) => event.category !== 'expense.food.groceries' && event.totalCents < 0);
+    return this.events.filter((event) => event.category !== 'expense.food.groceries' && event.total < 0);
   }
 
   @computed get snapExpenses() {
@@ -48,7 +44,7 @@ export default class Day {
   }
 
   @computed get nonSnapIncome() {
-    return this.events.filter((event) => event.category !== 'income.benefits.snap' && event.totalCents > 0);
+    return this.events.filter((event) => event.category !== 'income.benefits.snap' && event.total > 0);
   }
 
   @computed get snapIncome() {
@@ -56,19 +52,11 @@ export default class Day {
   }
 
   @computed get nonSnapTotal() {
-    return [...this.nonSnapIncome, ...this.nonSnapExpenses].reduce((sum, event) => sum + event.totalCents, 0);
+    return [...this.nonSnapIncome, ...this.nonSnapExpenses].reduce((sum, event) => sum + event.total, 0);
   }
 
   @computed get snapTotal() {
-    return [...this.snapExpenses, ...this.snapIncome].reduce((sum, event) => sum + event.totalCents, 0);
-  }
-
-  @computed get snapBalance() {
-    return this.snapBalanceCents / 100;
-  }
-
-  @computed get nonSnapBalance() {
-    return this.nonSnapBalanceCents / 100;
+    return [...this.snapExpenses, ...this.snapIncome].reduce((sum, event) => sum + event.total, 0);
   }
 
   @action setDate(date) {
