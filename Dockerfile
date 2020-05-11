@@ -1,5 +1,7 @@
 FROM centos:7 AS cfgov-dev
 
+MAINTAINER tech@cfpb.gov 
+
 # Specify SCL-based Python version
 # Currently used option: rh-python36
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
