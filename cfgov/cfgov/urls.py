@@ -622,15 +622,14 @@ def handle_error(code, request, exception=None):
 # i.e. URLs that end in %20) have these two characters removed
 # Using (?i) in url() patterns is deprecated in Django 2.1
 def handle_404_error(code, request, exception=None):
-    url_length = len(request.path)
     extraneous_char_re = re.compile(r'[ !#$%&()*+,-.:;<=>?@\[\]^_`{|}~]+$')
 
     if request.path != request.path.lower():
         return redirect(request.path.lower(), permanent=True)
 
-    request.path = re.sub(extraneous_char_re, '', request.path)
-    if len(request.path) < url_length:
-        return redirect(request.path, permanent=True)
+    stripped_path = re.sub(extraneous_char_re, '', request.path)
+    if stripped_path != request.path:
+        return redirect(stripped_path, permanent=True)
     return handle_error(code, request, exception)
 
 
