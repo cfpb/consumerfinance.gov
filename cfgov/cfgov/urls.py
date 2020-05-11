@@ -7,6 +7,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
+from django.urls import resolve, Resolver404
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -618,18 +619,39 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-# Handle case-insensitive and extraneous characters at end of URLs
-# i.e. URLs that end in %20) have these two characters removed
-# Using (?i) in url() patterns is deprecated in Django 2.1
 def handle_404_error(code, request, exception=None):
-    extraneous_char_re = re.compile(r'[ !#$%&()*+,-.:;<=>?@\[\]^_`{|}~]+$')
+    """Attempt to self-heal 404-ing URLs.
 
-    if request.path != request.path.lower():
-        return redirect(request.path.lower(), permanent=True)
+    Takes a 404ing request and tries to transform it to a successful request by
+    lowercasing the path and stripping extraneous characters from the end.
+    If successful, it redirects to the working URL. If unsuccessful, it returns
+    the expected 404 for the original requested path.
+    """
 
-    stripped_path = re.sub(extraneous_char_re, '', request.path)
-    if stripped_path != request.path:
-        return redirect(stripped_path, permanent=True)
+    # Lowercase the path.
+    path = request.path.lower()
+
+    # Check for and remove extraneous characters at the end of the path.
+    extraneous_char_re = re.compile(
+        r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
+    )
+    path = re.sub(extraneous_char_re, '', path)
+
+    # If the path has changed, try resolving the new path.
+    if path != request.path:
+        try:
+            # Add trailing slash if not present, because resolve() doesn't go
+            # through the CommonMiddleware that performs that task.
+            if path[-1] != '/':
+                path += '/'
+            # If it resolves, redirect to it.
+            resolve(path)
+            return redirect(path, permanent=True)
+        except Resolver404:
+            # If the new path didn't resolve, pass out of here onto the return
+            # statement below to raise the 404 for the original path.
+            pass
+
     return handle_error(code, request, exception)
 
 
