@@ -58,9 +58,45 @@ export default class UIStore {
     return this.rootStore.eventStore.getDay(this.currentWeek.endOf('week')).totalBalance;
   }
 
+  @computed get weekStartingNonSnapBalance() {
+    return this.rootStore.eventStore.getDay(this.currentWeek.startOf('week')).nonSnapBalance;
+  }
+
+  @computed get weekStartingSnapBalance() {
+    return this.rootStore.eventStore.getDay(this.currentWeek.startOf('week')).snapBalance;
+  }
+
+  @computed get weekStartingNonSnapBalanceText() {
+    if (typeof this.weekStartingNonSnapBalance === 'undefined') return '$0.00';
+    return formatCurrency(this.weekStartingNonSnapBalance);
+  }
+
+  @computed get weekStartingSnapBalanceText() {
+    if (typeof this.weekStartingSnapBalance === 'undefined') return '$0.00';
+    return formatCurrency(this.weekStartingSnapBalance);
+  }
+
   @computed get weekStartingBalanceText() {
     if (typeof this.weekStartingBalance === 'undefined') return '$0.00';
     return formatCurrency(this.weekStartingBalance);
+  }
+
+  @computed get weekEndingNonSnapBalance() {
+    return this.rootStore.eventStore.getDay(this.currentWeek.endOf('week')).nonSnapBalance;
+  }
+
+  @computed get weekEndingSnapBalance() {
+    return this.rootStore.eventStore.getDay(this.currentWeek.endOf('week')).snapBalance;
+  }
+
+  @computed get weekEndingNonSnapBalanceText() {
+    if (typeof this.weekEndingNonSnapBalance === 'undefined') return '$0.00';
+    return formatCurrency(this.weekEndingNonSnapBalance);
+  }
+
+  @computed get weekEndingSnapBalanceText() {
+    if (typeof this.weekEndingSnapBalance === 'undefined') return '$0.00';
+    return formatCurrency(this.weekEndingSnapBalance);
   }
 
   @computed get weekEndingBalanceText() {

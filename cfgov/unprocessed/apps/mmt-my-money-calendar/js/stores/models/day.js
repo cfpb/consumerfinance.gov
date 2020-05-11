@@ -20,6 +20,13 @@ export default class Day {
      this.nonSnapBalance = previousDay.nonSnapBalance + this.nonSnapTotal;
     }
 
+    // SNAP can't go below 0
+    // Deduct SNAP expenses from non-snap balance if snap would be negative
+    if (this.snapBalance < 0) {
+      this.nonSnapBalance += this.snapBalance;
+      this.snapBalance = 0;
+    }
+
     this.logger.debug('Initialize Day: %O', this);
   }
 
