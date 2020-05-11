@@ -66,7 +66,7 @@ export default class CashFlowStore {
   }
 
   getDay(date) {
-    return this.days.get(toDayJS(date).startOf('day').valueOf());
+    return this.days.get(toDayJS(date).startOf('day').valueOf()) || {};
   }
 
   /**

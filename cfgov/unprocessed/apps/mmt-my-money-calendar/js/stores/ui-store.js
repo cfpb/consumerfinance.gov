@@ -51,11 +51,11 @@ export default class UIStore {
   }
 
   @computed get weekStartingBalance() {
-    return this.rootStore.eventStore.getBalanceForDate(this.currentWeek.startOf('week'));
+    return this.rootStore.eventStore.getDay(this.currentWeek.startOf('week')).totalBalance;
   }
 
   @computed get weekEndingBalance() {
-    return this.rootStore.eventStore.getBalanceForDate(this.currentWeek.endOf('week'));
+    return this.rootStore.eventStore.getDay(this.currentWeek.endOf('week')).totalBalance;
   }
 
   @computed get weekStartingBalanceText() {
