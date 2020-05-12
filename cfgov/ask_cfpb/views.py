@@ -171,7 +171,7 @@ def redirect_ask_search(request, language='en'):
             return redirect('/ask-cfpb/search/', permanent=True)
         return redirect(
             '/ask-cfpb/search/?q={query}'.format(
-                query=querystring, permanent=True))
+                query=querystring), permanent=True)
     else:
         facets = request.GET.getlist('selected_facets')
         if not facets or not facets[0]:
