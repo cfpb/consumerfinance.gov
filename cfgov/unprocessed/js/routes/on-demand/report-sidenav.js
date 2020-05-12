@@ -5,7 +5,7 @@
 const sidenav = document.querySelector( '.o-report-sidenav' );
 const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
 const offsets = Array.prototype.map.call(
-  document.querySelectorAll( '.content_main h3' ),
+  document.querySelectorAll( '.content_main .report-header' ),
   function( v ) { return v.offsetTop; }
 );
 const top = sidenav.offsetTop;
