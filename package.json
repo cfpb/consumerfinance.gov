@@ -103,5 +103,5 @@
     "gulp": "gulp",
     "watch": "gulp watch"
   },
-  "snyk": true
+  "snyk": false
 }
