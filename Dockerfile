@@ -1,5 +1,8 @@
 FROM centos:7 AS cfgov-dev
 
+# Ensure that the environment uses UTF-8 encoding by default
+ENV LANG en_US.UTF-8  
+
 # Specify SCL-based Python version
 # Currently used option: rh-python36
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
