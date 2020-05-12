@@ -18,8 +18,12 @@
     </div>
 
     {% for section in page.report_sections.all().order_by('pk') -%}
-    <h3><a style="color:black;" id="{{section.section_id}}" href="#{{section.section_id}}">{{section.section_header}}</a></h3>
-      {{ render_rich_html(section.section_body) }}
+      <h3><a style="color:black;" id="{{section.html_id}}" href="#{{section.html_id}}">{{section.header}}</a></h3>
+      {{ render_rich_html(section.body) }}
+      {% for subsection in section.report_subsections.all().order_by('pk') -%}
+        <h4><a style="color:black;" id="{{subsection.html_id}}" href="#{{subsection.html_id}}">{{subsection.header}}</a></h3>
+        {{ render_rich_html(subsection.body) }}
+      {%- endfor %}
     {%- endfor %}
     
     <div class="block block__flush-top">

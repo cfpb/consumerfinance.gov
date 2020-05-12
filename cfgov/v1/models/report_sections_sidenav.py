@@ -3,11 +3,14 @@ from django.db import models
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
+from wagtail.admin.forms.pages import WagtailAdminPageForm
+from wagtail.admin.forms.models import WagtailAdminModelFormMetaclass
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import PageManager
 from wagtail.search import index
 
+from modelcluster.models import ClusterableModel
 from modelcluster.fields import ParentalKey
 
 from v1 import blocks as v1_blocks
@@ -16,19 +19,49 @@ from v1.models.base import CFGOVPage
 
 
 def get_toc_nav_items(request, page):
-    return [{'title': section.section_header, 'url': '#' + section.section_id} for
-            section in page.report_sections.all().order_by('pk')]
+    return [{
+        'title': section.header,
+        'url': '#' + section.html_id,
+        'children': [{
+            'title': subsection.header, 'url': '#' + subsection.html_id
+        } for subsection in section.report_subsections.all().order_by('pk')]
+    } for section in page.report_sections.all().order_by('pk')]
 
-class ReportSection(models.Model):
-    section_header = models.CharField(max_length=200, blank=True)
-    section_id = models.CharField(max_length=50, blank=True)
-    section_body = RichTextField(blank=True)
+class ReportSection(ClusterableModel):
+    header = models.CharField(max_length=200, blank=True)
+    html_id = models.CharField(max_length=50, blank=True)
+    body = RichTextField(blank=True)
+    panels = [
+        FieldPanel('header'),
+        FieldPanel('body'),
+        InlinePanel('report_subsections', label='Subsection'),
+    ]
     action = ParentalKey('v1.ReportSectionsSidenav',
                          on_delete=models.CASCADE,
                          related_name='report_sections')
 
 
+class ReportSubSection(models.Model):
+    header = models.CharField(max_length=200)
+    html_id = models.CharField(max_length=50, blank=True)
+    body = RichTextField(blank=True)
+    action = ParentalKey('v1.ReportSection',
+                         on_delete=models.CASCADE,
+                         related_name='report_subsections')
+
+
+class ReportMetaclass(WagtailAdminModelFormMetaclass):
+    @classmethod
+    def child_form(cls):
+        return ReportForm
+
+
+class ReportForm(WagtailAdminPageForm, metaclass=ReportMetaclass):
+    pass
+
+
 class ReportSectionsSidenav(CFGOVPage):
+    base_form_class = ReportForm
     header = models.CharField(max_length=200, default='')
     subheader = RichTextField(blank=True)
     pdf_location = models.CharField(max_length=150, default='')
@@ -41,13 +74,11 @@ class ReportSectionsSidenav(CFGOVPage):
           FieldPanel('subheader'),
           FieldPanel('pdf_location')
         ], heading='Report Header'),
-        MultiFieldPanel([
-          InlinePanel(
-            'report_sections',
-            label='Section',
-            min_num=1
-          ),
-        ], heading='Report Sections'),
+        InlinePanel(
+          'report_sections',
+          label='Section',
+          min_num=1
+        ),
         FieldPanel('footnotes')
     ]
 
