@@ -29,9 +29,24 @@ const HTML_SNIPPET = `
 </table>
 `;
 
+/**
+ * Create a mock for the window.location object, for testing purposes.
+ */
+function mockWindowLocation() {
+  delete window.location;
+  window.location = {
+    protocol: 'http:',
+    host: 'localhost',
+    pathname: '/',
+    href: 'http://localhost/',
+    assign: jest.fn()
+  };
+}
+
 describe( 'o-table-row-links', () => {
   beforeEach( () => {
-    window.location.assign = jest.fn();
+    mockWindowLocation();
+
     locationSpy = jest.spyOn( window.location, 'assign' );
 
     document.body.innerHTML = HTML_SNIPPET;
