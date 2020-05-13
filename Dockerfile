@@ -1,6 +1,9 @@
 FROM centos:7 AS cfgov-dev
 
-LABEL maintainer="tech@cfpb.gov" 
+# Ensure that the environment uses UTF-8 encoding by default
+ENV LANG en_US.UTF-8
+
+LABEL maintainer="tech@cfpb.gov"
 
 # Specify SCL-based Python version
 # Currently used option: rh-python36
@@ -48,7 +51,6 @@ EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
-
 
 # Production-like Apache-based image
 FROM cfgov-dev as cfgov-prod

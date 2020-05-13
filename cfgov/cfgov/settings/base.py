@@ -511,6 +511,7 @@ CSP_SCRIPT_SRC = (
     "www.federalregister.gov",
     "storage.googleapis.com",
     "api.consumerfinance.gov",
+    "files.consumerfinance.gov",
 )
 
 # These specify valid sources of CSS code
