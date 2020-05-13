@@ -577,7 +577,8 @@ class AnswerPage(CFGOVPage):
             SnippetChooserPanel('related_resource'),
             AutocompletePanel(
                 'related_questions',
-                target_model='ask_cfpb.AnswerPage')],
+                page_type='ask_cfpb.AnswerPage',
+                is_single=False)],
             heading="Related resources",
             classname="collapsible"),
         MultiFieldPanel([
@@ -593,7 +594,7 @@ class AnswerPage(CFGOVPage):
             classname="collapsible"),
         MultiFieldPanel([
             AutocompletePanel(
-                'redirect_to_page', target_model='ask_cfpb.AnswerPage')],
+                'redirect_to_page', page_type='ask_cfpb.AnswerPage')],
             heading="Redirect to another answer",
             classname="collapsible"),
         MultiFieldPanel([
