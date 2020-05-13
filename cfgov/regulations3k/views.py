@@ -169,7 +169,7 @@ def redirect_eregs(request, **kwargs):
             # permanently redirect current or unknown versions
             if doc not in VERSION_MAP[part]:
                 return redirect("{}{}/{}/".format(
-                    new_base, part, section, permanent=True))
+                    new_base, part, section), permanent=True)
             version_date = get_version_date(part, doc)
             # if known version is not ready, temp redirect to current
             if not version_date:
