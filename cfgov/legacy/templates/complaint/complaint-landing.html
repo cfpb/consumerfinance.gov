@@ -5,8 +5,7 @@
 
 {% block page_css %}
 <!-- The CSS file below was generated using LESS files from github.com/cfpb/complaint -->
-    <link rel="stylesheet" href="{% static 'complaint/css/main.min.css' %}">
-    <link rel="stylesheet" href="{% static 'complaint/css/notifications.min.css' %}">
+    <link rel="stylesheet" href="/static/apps/ccdb-landing-map/css/main.css">
 {% endblock %}
 
 {% block page_viewport %}
@@ -38,7 +37,6 @@
     </div>
   </div>
 
-
   <section class="hero">
     <div class="hero_wrapper wrapper wrapper__match-content">
       <div class="hero_text">
@@ -50,7 +48,7 @@
   </section>
   <div class="wrapper wrapper__match-content content_wrapper">
     <div class="content_full">
-      <div class="block block__bg block__flush-bottom block__border-top block__border-bottom">
+      <div class="block block__bg block__border-top block__border-bottom ">
         <div class="content-l">
           <div class="content-l_col content-l_col-2-3">
             <h2 class="h3">
@@ -77,27 +75,55 @@
           </div>
         </div>
       </div>
+
+      <div class="block block__flush-top">
+        <h2 class="h3">New! Map complaints by state</h3>
+        <p>
+          Our interactive map shows complaints submitted during the last three years. You can switch between the total complaints submitted or complaints submitted per 1,000 population (the total number of complaints in the geographic area per 1,000 persons living in that area, based on the 2017 American Community Survey (ACS) data).</p>
+
+        <p>
+          Selecting a state takes you to the Consumer Complaint Database where you can apply more filters or change the time period. 
+          <a href="search/">View interactive map</a>
+        </p>
+      </div>
+
+      <div class="block block__flush-top">
+        <div class="layout-row refine">
+            <div class="per-capita m-btn-group">
+                <p>Map shading</p>
+                <button class="a-btn raw selected">Complaints</button>
+                <button class="a-btn capita a-btn__disabled">Complaints per 1,000 <span>population</span></button>
+            </div>
+        </div>
+      </div>
+
+      <div class="block block__border-bottom">
+        <div id="landing-map" class="cfpb-chart">
+             Complaints by state the last 3 years
+        </div>
+      </div>
+
       <div class="block">
         <div class="section-one ccdb-landing_section content-l">
           <div class="content-l_col content-l_col-1-3">
-            <img class="isocon" alt="Complaint data" src="{% static 'complaint/img/view.png' %}">
+            <img class="isocon" alt="" src="{% static 'complaint/img/icons_complaintData.png' %}">
             <p>View, sort, and filter data right in your browser.</p>
             <div class="btn-holder">
               <p><a href="/data-research/consumer-complaints/search/" class="btn">View complaint data</a></p>
             </div>
           </div>
           <div class="content-l_col content-l_col-1-3">
-            <img class="isocon" alt="Download data and access the API" src="{% static 'complaint/img/download.png' %}">
+            <img class="isocon" alt="" src="{% static 'complaint/img/icons_API.png' %}">
             <p>All complaint data we publish is freely available for anyone to use, analyze, and build on.</p>
             <div class="btn-holder">
               <p><a href="#download-the-data" class="btn">Download options and API</a></p>
             </div>
           </div>
           <div class="content-l_col content-l_col-1-3">
-            <img class="isocon" alt="Consumer narratives" src="{% static 'complaint/img/analyze.png' %}">
-            <p>We publish reports on complaints and share information with state and federal agencies.</p>
+            <img class="isocon" alt="Annual Report" src="{% static 'complaint/img/icons_annualReport.png' %}">
+            <p>Every spring, we report to Congress about trends observed in the complaints we received the prior year in our Consumer Response Annual Report.</p>
             <div class="btn-holder">
-              <p><a href="/data-research/research-reports/?title=&categories=consumer-complaint" class="btn">Read complaint reports</a></p>
+              <p><a href="/data-research/research-reports/2019-consumer-response-annual-report/" class="btn">Read our annual report</a></p>
             </div>
           </div>
         </div>
@@ -137,9 +163,8 @@
             <h2>How we use complaint data</h2>
             <p>
               Complaints can give us insights into problems people are experiencing in the marketplace and help us regulate consumer financial products and services under existing federal consumer financial laws, enforce those laws judiciously, and educate and empower consumers to make informed financial decisions. We also report on complaint trends annually in
-              <a href="/data-research/research-reports/2018-consumer-response-annual-report/">
-                Consumer Response’s Annual Report to Congress
-              </a>.
+              <a href="/data-research/research-reports/2019-consumer-response-annual-report/">
+                Consumer Response’s Annual Report to Congress</a>.
             </p>
             <p>
               <a href="/complaint/data-use/">
@@ -258,3 +283,7 @@
   </div>
 </div>
 {% endblock %}
+
+{% block page_js %}
+<script src="/static/apps/ccdb-landing-map/js/index.js" type="text/javascript"></script>
+{% endblock page_js %}

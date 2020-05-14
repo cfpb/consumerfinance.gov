@@ -1,5 +1,5 @@
 // Required modules.
-import * as breakpointState from '../modules/util/breakpoint-state';
+import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state';
 import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import ClearableInput from '../modules/ClearableInput';
 import EventObserver from '../modules/util/EventObserver';
@@ -86,7 +86,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   function _handleBodyClick( event ) {
     const target = event.target;
 
-    const isInDesktop = breakpointState.isInDesktop();
+    const isInDesktop = viewportIsIn( DESKTOP );
     if ( isInDesktop && !_isDesktopTarget( target ) ||
          !isInDesktop && !_isMobileTarget( target ) ) {
       collapse();

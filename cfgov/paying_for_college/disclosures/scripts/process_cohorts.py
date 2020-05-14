@@ -2,6 +2,7 @@ import datetime
 import sys
 
 import localflavor
+
 from paying_for_college.models import (
     CONTROL_MAP, FAKE_SCHOOL_PK, HIGHEST_DEGREES, School
 )

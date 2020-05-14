@@ -1,3 +1,6 @@
+from itertools import chain
+
+
 class FrontendConverter:
     def __init__(self, menu, request=None):
         self.menu = menu
@@ -9,34 +12,45 @@ class FrontendConverter:
         ]
 
     def get_menu_item(self, submenu):
-        menu_item = {
-            'link': self.make_link({
+        # Normally we want to mark menu links as selected if the current
+        # request is either on that link or one of its children; this lets us
+        # properly highlight the menu if on the child of a menu link. But we
+        # don't want to do this for overview links, which are always the parent
+        # of all links beneath them.
+        overview_link = self.make_link(
+            {
                 'page': submenu.get('overview_page'),
                 'text': submenu.get('title'),
-            }),
-        }
+            },
+            selected_exact_only=True
+        )
+
+        menu_item = {'overview': overview_link}
 
         columns = self.get_columns(submenu)
         if columns:
             menu_item['nav_groups'] = columns
 
-        # For legacy menu
-        footer = self.get_footer(submenu)
-        if footer:
-            menu_item['footer'] = footer
-
-        featured_content = self.get_featured_content(submenu)
-        if featured_content:
-            menu_item['featured_content'] = featured_content
-
-        # For new menu variations
         featured_links = self.make_links(submenu.get('featured_links'))
         if featured_links:
-            menu_item['featured_links'] = featured_links
+            menu_item['featured_items'] = featured_links
 
         other_links = self.make_links(submenu.get('other_links'))
         if other_links:
-            menu_item['other_links'] = other_links
+            menu_item['other_items'] = other_links
+
+        # If the current request either matches or is a child of this menu's
+        # links (overview, other, and columns, deliberately excluding
+        # featured), then we mark this menu as selected.
+        for link in chain(
+            [overview_link],
+            other_links,
+            *chain(column['nav_items'] for column in columns)
+        ):
+            url = link.get('url')
+            if url and self.request.path.startswith(url):
+                menu_item['selected'] = True
+                break
 
         return menu_item
 
@@ -48,101 +62,49 @@ class FrontendConverter:
             heading = column.get('heading')
 
             columns.append({
-                'value': {
-                    'group_title': heading or last_heading,
-                    'hide_group_title': not heading,
-                    'nav_items': [
-                        self.make_link(link)
-                        for link in (column.get('links') or [])
-                    ],
-                },
+                'title': heading or last_heading,
+                'title_hidden': not heading,
+                'nav_items': [
+                    self.make_link(link)
+                    for link in (column.get('links') or [])
+                ],
             })
 
             last_heading = heading
 
         return columns
 
-    def get_footer(self, submenu):
-        footer_links = []
-
-        for other_link in submenu.get('other_links') or []:
-            page = other_link.get('page')
-
-            if page:
-                link = self.make_link_for_page(page)
-                text = other_link['text']
-                url = link['external_link']
-                link_text = link['link_text']
-            else:
-                text = ''
-                url = other_link['url']
-                link_text = other_link['text']
-
-            html = '<p>'
-
-            if text:
-                html += '<span aria-hidden="true">{}</span> '.format(text)
-
-            html += '<a'
-
-            if text:
-                html += ' aria-label="{} {}"'.format(text, link_text)
-
-            html += ' href="{}">{}</a></p>'.format(url, link_text)
-
-            footer_links.append(html)
-
-        return '\n'.join(footer_links)
-
-    def get_featured_content(self, submenu):
-        featured_links = submenu.get('featured_links')
-
-        if featured_links:
-            featured_link = featured_links[0]
-
-            value = {'link': self.make_link(featured_link)}
-
-            value.update({
-                'body': featured_link['body'],
-                'image': {
-                    'url': (
-                        featured_link['image'].get_rendition('original').url
-                    ),
-                },
-            })
-
-            return {'value': value}
-
     def make_links(self, values):
-        if values:
-            return list(map(self.make_link, values))
+        return list(map(self.make_link, values)) if values else []
 
-    def make_link(self, value):
+    def make_link(self, value, selected_exact_only=False):
         page = value.get('page')
         text = value.get('text')
         icon = value.get('icon')
 
         if page:
-            return self.make_link_for_page(page, text=text, icon=icon)
+            url = page.get_url(request=self.request)
 
-        link = {'link_text': text}
+            link = {
+                'url': url,
+                'text': text or page.title,
+            }
+        else:
+            link = {'text': text}
 
-        if icon:
-            link['icon'] = icon
-
-        url = value.get('url')
-        if url:
-            link['external_link'] = url
-
-        return link
-
-    def make_link_for_page(self, page, text=None, icon=None):
-        link = {
-            'external_link': page.get_url(request=self.request),
-            'link_text': text or page.title,
-        }
+            url = value.get('url')
+            if url:
+                link['url'] = url
 
         if icon:
             link['icon'] = icon
+
+        if selected_exact_only:
+            selected = url and self.request.path == url
+        else:
+            selected = url and self.request.path.startswith(url)
+
+        if selected:
+            link['selected'] = True
 
         return link

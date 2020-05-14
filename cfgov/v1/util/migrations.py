@@ -3,13 +3,9 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
+from wagtail.core.blocks import StreamValue
+
 from treebeard.mp_tree import MP_Node
-
-
-try:
-    from wagtail.core.blocks import StreamValue
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.blocks import StreamValue
 
 
 def get_page(page_cls, slug):
@@ -77,17 +73,11 @@ def get_stream_data(page_or_revision, field_name):
     revision """
     if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
-        stream_block = field.stream_block
-        stream_data = stream_block.get_prep_value(field)
+        return field.stream_data
     else:
         revision_content = json.loads(page_or_revision.content_json)
-        if revision_content.get(field_name):
-            field = revision_content[field_name]
-            stream_data = json.loads(field)
-        else:
-            stream_data = []
-
-    return stream_data
+        field = revision_content.get(field_name, "[]")
+        return json.loads(field)
 
 
 def set_stream_data(page_or_revision, field_name, stream_data, commit=True):

@@ -1,5 +1,4 @@
 # -*- coding: utf8 -*-
-from __future__ import unicode_literals
 
 import datetime
 import smtplib
@@ -12,13 +11,13 @@ from django.test import TestCase
 from django.utils import timezone
 
 import requests
+
 from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
     Alias, CollegeCostsPage, ConstantCap, ConstantRate, Contact, Feedback,
     Nickname, Notification, Program, RepayingStudentDebtPage, School,
     StudentLoanQuizPage, get_region, make_divisible_by_6
 )
-
 from v1.models import HomePage
 from v1.util.migrations import set_stream_data
 

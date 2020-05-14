@@ -12,15 +12,6 @@ class CommandTests(unittest.TestCase):
 
     @mock.patch(
         'paying_for_college.management.commands.'
-        'update_pfc_national_stats.nat_stats.'
-        'update_national_stats_file')
-    def test_update_pfc_national_stats(self, mock_update):
-        mock_update.return_value = 'OK'
-        call_command('update_pfc_national_stats')
-        self.assertEqual(mock_update.call_count, 1)
-
-    @mock.patch(
-        'paying_for_college.management.commands.'
         'tag_schools.tag_settlement_schools.tag_schools')
     def test_tag_schools(self, mock_tag):
         mock_tag.return_value = 'Aye Aye'
@@ -53,15 +44,22 @@ class CommandTests(unittest.TestCase):
     @mock.patch(
         'paying_for_college.management.commands.'
         'update_via_api.update_colleges.update')
-    def test_api_update(self, mock_update):
+    def test_api_command_calls_update(self, mock_update):
         mock_update.return_value = ([], 'OK')
         call_command('update_via_api')
         self.assertTrue(mock_update.call_count == 1)
-        call_command('update_via_api', '--school_id', '99999')
+        call_command('update_via_api', '--school_id', '999999')
         self.assertTrue(mock_update.call_count == 2)
-        mock_update.side_effect = IndexError("no such school ID")
-        call_command('update_via_api', '--school_id', '99999')
+        self.assertTrue(mock_update.called_with(single_school=999999))
+        call_command(
+            'update_via_api', '--school_id', '999999', '--save_programs')
         self.assertTrue(mock_update.call_count == 3)
+        self.assertTrue(mock_update.called_with(
+            single_school=999999, store_programs=True))
+        call_command(
+            'update_via_api', '--save_programs')
+        self.assertTrue(mock_update.call_count == 4)
+        self.assertTrue(mock_update.called_with(store_programs=True))
 
     @mock.patch(
         'paying_for_college.management.commands.'

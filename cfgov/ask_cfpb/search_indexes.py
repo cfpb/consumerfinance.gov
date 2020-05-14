@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
 from haystack import indexes
@@ -41,9 +39,7 @@ class AnswerPageIndex(indexes.SearchIndex, indexes.Indexable):
         boost=10.0)
     autocomplete = indexes.EdgeNgramField(
         use_template=True)
-    url = indexes.CharField(
-        use_template=True,
-        indexed=False)
+    url = indexes.CharField(model_attr='url', indexed=False)
     tags = indexes.MultiValueField(
         boost=10.0)
     language = indexes.CharField(

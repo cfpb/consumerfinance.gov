@@ -1,7 +1,12 @@
-{% set language = page.language if page and page.language else 'en' %}
-
+{%- if current_language -%}
+  {% set language = current_language %}
+{%- elif page and page.language -%}
+  {% set language = page.language %}
+{%- else -%}
+  {% set language = 'en' %}
+{% endif -%}
 <!DOCTYPE html>
-{% if flag_enabled('CFPB_RECRUITING', request) %}
+{% if flag_enabled('CFPB_RECRUITING') %}
 <!--
     ============================================================================
 
@@ -117,17 +122,6 @@
     {% block css %}
     <!--[if lt IE 10]><link rel="stylesheet" href="{{ static('css/main.ie.css') }}"><![endif]-->
     <!--[if gt IE 9]><!--><link rel="stylesheet" href="{{ static('css/main.css') }}"><!--<![endif]-->
-
-    {# TODO: Remove when 2020 Mega Menu modifications are finalized. #}
-    {% if not flag_enabled('MEGA_MENU_VAR_1', request) %}
-      <style>
-        .o-header {
-          /* Force header bottom border to CFPB green. */
-          border-bottom: 5px solid #20aa3f !important;
-        }
-      </style>
-    {% endif %}
-
     {% endblock css %}
 
 {#
@@ -168,6 +162,13 @@
   the head, then file an issue or PR to discuss including it.
 #}
 
+    {# Schema data in JSON-LD format #}
+    {% if schema_json %}
+    <script type="application/ld+json">
+{{ schema_json | tojson(indent=2) }}
+    </script>
+    {% endif %}
+
     {% block javascript_loader %}
     <script>
       {# Minified dynamic JavaScript loader that injects a script tag in the head of the page. #}
@@ -177,7 +178,7 @@
     </script>
     {% endblock javascript_loader %}
 
-    {% if flag_enabled('AB_TESTING', request) %}
+    {% if flag_enabled('AB_TESTING') %}
     {# Google Optimize page-hiding snippet #}
     <style>
         .optimize-loading { opacity: 0 !important; }
@@ -250,7 +251,11 @@
 
     {% block header %}
         {% import 'organisms/header.html' as o_header with context %}
-        {{ o_header.render( true, language ) }}
+        {{ o_header.render(
+            show_banner=true,
+            show_mega_menu=true,
+            language=language
+        ) }}
     {% endblock header %}
 
     {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
@@ -284,14 +289,6 @@
 #}
 
     {% block javascript scoped %}
-
-    {# TODO: Remove when 2020 Mega Menu modifications are finalized. #}
-    {% if flag_enabled('MEGA_MENU_VAR_1', request) %}
-      <script>
-        window.cfpb = window.cfpb || {};
-        window.cfpb.megaMenuVar1 = true;
-      </script>
-    {% endif %}
 
     {#
       Modernizr adds a no-js class the HTML element if ECMAScript 5 features aren't
@@ -339,7 +336,7 @@
           {% if js_source | length > 0 %}
             s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
           {% endif %}
-          {% if flag_enabled('TURBOLINKS', request) %}
+          {% if flag_enabled('TURBOLINKS') %}
             s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
           {% endif %}
           {# Pass scripts to JavaScript loader. #}

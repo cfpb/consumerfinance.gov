@@ -38,7 +38,7 @@ class Command(BaseCommand):
         snapshots = []
         for page in BrowsePage.objects.all():
             stream_data = page.content.stream_data
-            if stream_data[0]['type'] == 'data_snapshot':
+            if stream_data and stream_data[0]['type'] == 'data_snapshot':
                 stream_data[0]['value']['page'] = page.pk
                 snapshots.append(stream_data)
         return snapshots
@@ -63,7 +63,7 @@ class Command(BaseCommand):
             key = market['market_key']
             snapshot_stream_data = self.find_data_snapshot(key, snapshots)
             if not snapshot_stream_data:  # Market may not have been added to Wagtail yet  # noqa
-                logger.warn('Market key {} not found'.format(key))
+                logger.warning('Market key {} not found'.format(key))
                 continue
 
             # Update snapshot fields with the provided values

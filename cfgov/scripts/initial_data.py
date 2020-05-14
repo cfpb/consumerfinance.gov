@@ -5,15 +5,10 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db import transaction
 
+from wagtail.core.models import Page, Site
 from wagtailsharing.models import SharingSite
 
 from v1.models import HomePage
-
-
-try:
-    from wagtail.core.models import Page, Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page, Site
 
 
 logger = logging.getLogger(__name__)
@@ -65,7 +60,7 @@ def run():
 
         # Delete the legacy Wagtail "hello world" page, if it exists.
         # This page is created as part of the default Wagtail install.
-        # https://github.com/wagtail/wagtail/blob/v1.13.4/wagtail/wagtailcore/migrations/0002_initial_data.py#L33
+        # https://github.com/wagtail/wagtail/blob/master/wagtail/core/migrations/0002_initial_data.py#L29
         try:
             hello_world = Page.objects.get(slug='home', url_path='/home/')
         except Page.DoesNotExist:

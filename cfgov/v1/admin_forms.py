@@ -4,11 +4,7 @@ from io import BytesIO, StringIO
 from django import forms
 from django.core.management import call_command
 
-
-try:
-    from wagtail.core.models import Page
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 
 class CacheInvalidationForm(forms.Form):
@@ -80,7 +76,7 @@ class ExportFeedbackForm(forms.Form):
 
         call_command(
             'export_feedback',
-            pages=pages,
+            *pages,
             exclude=exclude,
             from_date=self.cleaned_data['from_date'],
             to_date=self.cleaned_data['to_date'],

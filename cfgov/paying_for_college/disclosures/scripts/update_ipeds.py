@@ -9,9 +9,10 @@ from subprocess import call
 from django.contrib.humanize.templatetags.humanize import intcomma
 
 import requests
+from unipath import Path
+
 from paying_for_college.models import Alias, School
 from paying_for_college.views import get_school
-from unipath import Path
 
 
 SCRIPT = os.path.basename(__file__).partition('.')[0]

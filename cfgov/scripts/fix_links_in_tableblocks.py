@@ -1,17 +1,12 @@
 from django.shortcuts import get_object_or_404
 
+from wagtail.core.models import Page
+from wagtail.documents.models import get_document_model
+
 from bs4 import BeautifulSoup
 
 from v1.models.base import CFGOVPage
 from v1.tests.wagtail_pages.helpers import publish_changes
-
-
-try:
-    from wagtail.core.models import Page
-    from wagtail.documents.models import get_document_model
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page
-    from wagtail.wagtaildocs.models import get_document_model
 
 
 def get_tableblocks(page):

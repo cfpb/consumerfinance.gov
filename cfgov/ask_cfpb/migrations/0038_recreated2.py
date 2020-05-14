@@ -10,21 +10,11 @@ import v1.atomic_elements.molecules
 import v1.atomic_elements.organisms
 import v1.blocks
 import v1.models.snippets
-import wagtail
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.contrib.routable_page import models as routable_models
-    from wagtail.core import blocks as core_blocks
-    from wagtail.core import fields as core_fields
-    from wagtail.search import index
-    from wagtail.snippets import blocks as snippets_blocks
-else:
-    from wagtail.contrib.wagtailroutablepage import models as routable_models
-    from wagtail.wagtailcore import blocks as core_blocks
-    from wagtail.wagtailcore import fields as core_fields
-    from wagtail.wagtailsearch import index
-    from wagtail.wagtailsnippets import blocks as snippets_blocks
+from wagtail.contrib.routable_page import models as routable_models
+from wagtail.core import blocks as core_blocks
+from wagtail.core import fields as core_fields
+from wagtail.search import index
+from wagtail.snippets import blocks as snippets_blocks
 
 
 class Migration(migrations.Migration):

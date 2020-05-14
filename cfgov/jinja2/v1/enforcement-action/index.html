@@ -1,0 +1,41 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import 'form_block.html' as form_block with context %}
+{% import 'molecules/enforcement-action-metadata.html' as enforcement_action_metadata with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'templates/render_block.html' as render_block with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.header -%}
+        {% if block.block_type == 'item_introduction' %}
+            {% import 'organisms/item-introduction.html' as item_introduction with context %}
+            {{ item_introduction.render(block.value) }}
+        {% else %}
+            <div class="block
+                        block__flush-top">
+                {{ render_stream_child(block) }}
+            </div>
+        {% endif %}
+    {%- endfor %}
+
+    {% for block in page.content -%}
+        {% if block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content enforcement-action-sidebar
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    {{ enforcement_action_metadata.render() }}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+{%- endblock %}

@@ -12,6 +12,7 @@ from v1.models.browse_filterable_page import (
 )
 from v1.models.browse_page import BrowsePage
 from v1.models.caching import CDNHistory
+from v1.models.campaign_page import CampaignPage
 from v1.models.feedback import Feedback
 from v1.models.home_page import HomePage
 from v1.models.images import CFGOVImage, CFGOVRendition
@@ -20,7 +21,6 @@ from v1.models.learn_page import (
     AbstractFilterPage, AgendaItemBlock, DocumentDetailPage, EventPage,
     LearnPage
 )
-from v1.models.menu_item import MenuItem
 from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
 from v1.models.portal_topics import (
     PortalCategory, PortalCategoryTag, PortalTopic, PortalTopicTag

@@ -3,18 +3,10 @@ Feature: Test the Ask CFPB page in English and Spanish
   I want to search using the Ask CFPB page in English and Spanish
   So that I can verify the correct results are returned
 
-@smoke_testing @ask_cfpb 
-Scenario Outline: Make sure incorrect slug in URL is corrected
-  Given I visit the incorrect consumerfinance <bad_url> URL
-  Then I should be directed to consumerfinance <correct_url> URL
-  And I should see the page title contains "<title>"
-
-Examples:
-| bad_url                                           | correct_url                           | title                    |
-| ask-cfpb/1163/what-wire-transfer_THIS_IS_Bad.html | ask-cfpb/1163/what-wire-transfer.html | What is a wire transfer? |
-| ask-cfpb/1065/what-is-an-ach_THIS_IS_BAD.html     | ask-cfpb/1065/what-is-an-ach.html     | What is an ACH?          |
-| es/obtener-respuestas/c/manejar-una-cuenta-bancaria/983/como-suspendo-el-pago-de-un-cheque_BAD.html | es/obtener-respuestas/c/manejar-una-cuenta-bancaria/983/como-suspendo-el-pago-de-un-cheque.html | ¿Cómo suspendo el pago de un cheque? |
-| es/obtener-respuestas/c/obtener-una-tarjeta-de-credito/47/que-es-un-periodo_BAD.html                | es/obtener-respuestas/c/obtener-una-tarjeta-de-credito/47/que-es-un-periodo-de-gracia-como-funciona.html | Qué es un período de gracia |
+@smoke_testing @ask_cfpb
+Scenario: Old Ask CFPB print URLs redirect correctly
+  Given I go to redirecting URL "/askcfpb/1163/slug-doesnt-matter.print.html"
+  Then I should be redirected to URL "/ask-cfpb/(.+)-en-1163/"
 
 @ask_cfpb_autocomplete
 Scenario Outline: Search for a term, select a question using auto-complete and verify that the window title includes the search term

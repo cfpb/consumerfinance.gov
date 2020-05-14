@@ -1,22 +1,15 @@
 from django.core.validators import URLValidator
 from django.db import models
 
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.fields import RichTextField
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
-
-
-try:
-    from wagtail.admin.edit_handlers import FieldPanel
-    from wagtail.core.fields import RichTextField
-    from wagtail.documents.edit_handlers import DocumentChooserPanel
-    from wagtail.images.edit_handlers import ImageChooserPanel
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import FieldPanel
-    from wagtail.wagtailcore.fields import RichTextField
-    from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
-    from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 class ResourceTag(TaggedItemBase):

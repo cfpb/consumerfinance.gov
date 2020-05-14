@@ -1,5 +1,10 @@
 FROM centos:7 AS cfgov-dev
 
+# Ensure that the environment uses UTF-8 encoding by default
+ENV LANG en_US.UTF-8
+
+LABEL maintainer="tech@cfpb.gov"
+
 # Specify SCL-based Python version
 # Currently used option: rh-python36
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
@@ -18,11 +23,13 @@ SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
 # Install common OS packages
 RUN yum -y install \
         centos-release-scl \
-        epel-release \
-        https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm && \
+        epel-release && \
+    rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
     curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
+    yum -y update && \
     yum -y install \
+        gcc \
         mailcap \
         postgresql10 \
         which \
@@ -38,27 +45,20 @@ ENV PIP_NO_CACHE_DIR true
 
 # Install python requirements
 COPY requirements requirements
-
-RUN yum -y install gcc && \
-    pip install -r requirements/local.txt -r requirements/deployment.txt && \
-    yum -y remove gcc && \
-    yum clean all && rm -rf /var/cache/yum
-
+RUN pip install -r requirements/local.txt -r requirements/deployment.txt
 
 EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
-
-
+# Production-like Apache-based image
 FROM cfgov-dev as cfgov-prod
 
 ENV SCL_HTTPD_VERSION httpd24
 ENV SCL_HTTPD_ROOT /opt/rh/${SCL_HTTPD_VERSION}/root
 
 # Apache HTTPD settings
-#ENV APACHE_SERVER_ROOT ${SCL_HTTPD_ROOT}/etc/httpd
 ENV APACHE_SERVER_ROOT ${APP_HOME}/cfgov/apache
 ENV APACHE_PROCESS_COUNT 4
 ENV ACCESS_LOG /dev/stdout
@@ -75,30 +75,39 @@ ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
 ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
 ENV ALLOWED_HOSTS '["*"]'
 
+# Install and enable SCL-based Apache server and mod_wsgi,
+# and converts all Docker Secrets into environment variables.
 RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     yum clean all && rm -rf /var/cache/yum && \
-    echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh
+    echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
+    echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
 # See .dockerignore for details on which files are included
-COPY . .
+COPY --chown=apache:apache . .
+
+RUN yum -y install nodejs yarn  && \
+    yum clean all && rm -rf /var/cache/yum && \
+    chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
+
+# Remove files flagged by image vulnerability scanner
+RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
+    rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
+
+USER apache
 
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
 # - /tmp/eregs_cache/ - Django file-based cache
-RUN yum -y install nodejs yarn  && \
-    ./frontend.sh production && \
+RUN ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
-    yum -y remove nodejs yarn && \
-    yum clean all && rm -rf /var/cache/yum && \
-    rm -rf \
-        cfgov/apache/www \
-        cfgov/unprocessed \
-        node_modules && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
-    mkdir -p cfgov/f/ && chown -R apache:apache cfgov/f/ && \
-    mkdir /tmp/eregs_cache && chown apache:apache /tmp/eregs_cache
+    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
+    rm -rf cfgov/apache/www cfgov/unprocessed node_modules && \
+    mkdir -p cfgov/f /tmp/eregs_cache
+    
+# Healthcheck retry set high since database loads take a while
+HEALTHCHECK --start-period=15s --interval=30s --retries=30 \
+            CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
 
-EXPOSE 80
-
-CMD ["httpd", "-d", "./cfgov/apache", "-D", "FOREGROUND"]
+CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]

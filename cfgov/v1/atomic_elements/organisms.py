@@ -1,7 +1,6 @@
 import itertools
 import json
 from collections import Counter
-from functools import partial
 from urllib.parse import urlencode
 
 from django import forms
@@ -10,11 +9,16 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
-from django.utils.encoding import smart_text
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 
 from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.core import blocks
+from wagtail.core.models import Page
+from wagtail.core.rich_text import expand_db_html
+from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.images import blocks as images_blocks
+from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.utils.widgets import WidgetWithScript
 
 from jinja2 import Markup
@@ -23,22 +27,6 @@ from taggit.models import Tag
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 from v1.util import ref
-
-
-try:
-    from wagtail.core import blocks
-    from wagtail.core.models import Page
-    from wagtail.core.rich_text import expand_db_html
-    from wagtail.documents.blocks import DocumentChooserBlock
-    from wagtail.images import blocks as images_blocks
-    from wagtail.snippets.blocks import SnippetChooserBlock
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore import blocks
-    from wagtail.wagtailcore.models import Page
-    from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
-    from wagtail.wagtaildocs.blocks import DocumentChooserBlock
-    from wagtail.wagtailimages import blocks as images_blocks
-    from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 
 class AskSearch(blocks.StructBlock):
@@ -427,40 +415,21 @@ class SidebarContactInfo(MainContactInfo):
 
 
 class BureauStructurePosition(blocks.StructBlock):
-    office_name = blocks.CharBlock()
-    lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
-    title = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 1")),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 2"))
-    ])
+    name = blocks.CharBlock()
+    title = blocks.TextBlock(required=False)
 
 
-class BureauStructureDivision(blocks.StructBlock):
-    division = v1_blocks.PlaceholderCharBlock(label='Division')
-    division_lead = v1_blocks.PlaceholderCharBlock(placeholder='Name')
-    title = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 1')),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 2'))
-    ])
-    division_lead_1 = v1_blocks.PlaceholderCharBlock(required=False,
-                                                     placeholder='Name',
-                                                     label='Division Lead')
-    title_1 = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 1')),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 2'))
-    ], label='Title')
-    link_to_division_page = atoms.Hyperlink(required=False)
-    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+class BureauStructureOffice(blocks.StructBlock):
+    name = blocks.CharBlock()
+    leads = blocks.ListBlock(BureauStructurePosition())
 
 
-class BureauStructureOffice(BureauStructurePosition):
-    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+class BureauStructureOffices(BureauStructureOffice):
+    offices = blocks.ListBlock(BureauStructureOffice())
+
+
+class BureauStructureDivision(BureauStructureOffices):
+    overview_page = blocks.CharBlock()
 
 
 class BureauStructure(blocks.StructBlock):
@@ -469,7 +438,8 @@ class BureauStructure(blocks.StructBlock):
     director = blocks.CharBlock()
     divisions = blocks.ListBlock(BureauStructureDivision())
     office_of_the_director = blocks.ListBlock(
-        BureauStructureOffice(), label='Office of the Director'
+        BureauStructureOffices(),
+        label='Office of the Director'
     )
 
     class Meta:
@@ -489,7 +459,7 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
     def render(self, name, value, attrs=None):
         value = self.json_dict_apply(
             value,
-            partial(expand_db_html, for_editor=True)
+            expand_db_html
         )
 
         html = super(RichTextTableInput, self).render(name, value, attrs)
@@ -510,7 +480,10 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
             data, files, name
         )
 
-        return self.json_dict_apply(value, DbWhitelister.clean)
+        try:
+            return self.json_dict_apply(value, DbWhitelister.clean)
+        except NameError:
+            return value
 
     @staticmethod
     def json_dict_apply(value, callback):
@@ -612,135 +585,6 @@ class ModelBlock(blocks.StructBlock):
 
     def get_limit(self, value):
         return self.limit
-
-
-class ModelTable(ModelBlock):
-    """Abstract StructBlock that can generate a table from a Django model.
-
-    Subclasses must override the 'fields' and 'field_headers' class attributes
-    to specify which model fields to include in the generated table.
-
-    By default model instance values will be converted to text for display
-    in table rows. To override this, subclasses may define custom field
-    formatter methods, using the name 'make_FIELD_value'. This may be useful
-    if fields are non-text types, for example when formatting dates.
-
-    For example:
-
-        def make_created_value(self, instance, value):
-            return value.strftime('%b %d, %Y')
-
-    """
-    fields = None
-    field_headers = None
-
-    first_row_is_table_header = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        help_text='Display the first row as a header.'
-    )
-    first_col_is_header = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        help_text='Display the first column as a header.'
-    )
-    is_full_width = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        help_text='Display the table at full width.'
-    )
-    is_striped = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        help_text='Display the table with striped rows.'
-    )
-    is_stacked = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        help_text='Stack the table columns on mobile.'
-    )
-    empty_table_msg = blocks.CharBlock(
-        label='No Table Data Message',
-        required=False,
-        help_text='Message to display if there is no table data.'
-    )
-
-    def render(self, value, context=None):
-        rows = [self.field_headers]
-
-        rows.extend([
-            self.make_row(instance) for instance in self.get_queryset(value)
-        ])
-
-        table_value = {
-            'data': rows,
-        }
-
-        table_value.update((k, value.get(k)) for k in (
-            'first_row_is_table_header',
-            'first_col_is_header',
-            'is_full_width',
-            'is_striped',
-            'is_stacked',
-            'empty_table_msg',
-        ))
-
-        table = AtomicTableBlock()
-        value = table.to_python(table_value)
-        return table.render(value, context=context)
-
-    def make_row(self, instance):
-        return [
-            self.make_value(instance, field)
-            for field in self.fields
-        ]
-
-    def make_value(self, instance, field):
-        value = getattr(instance, field)
-        return self.format_field_value(instance, field, value)
-
-    def format_field_value(self, instance, field, value):
-        custom_formatter_name = 'make_{}_value'.format(field)
-        custom_formatter = getattr(self, custom_formatter_name, None)
-
-        if custom_formatter:
-            return custom_formatter(instance, value)
-        else:
-            return smart_text(value)
-
-    class Meta:
-        icon = 'table'
-
-
-class ModelList(ModelBlock):
-    """Abstract StructBlock that can generate a list from a Django model.
-
-    Subclasses must define a 'render' method that renders the model QuerySet
-    to a string.
-
-    For example:
-
-        def render(self, value, context=None):
-            value['objects'] = self.get_queryset(value)
-            template = 'path/to/template.html'
-            return render_to_string(template, value)
-
-    """
-    limit = atoms.IntegerBlock(
-        default=5,
-        label='Maximum items',
-        min_value=0,
-        help_text='Limit list to this number of items'
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(ModelList, self).__init__(*args, **kwargs)
-
-    def get_limit(self, value):
-        return value.get('limit')
-
-    class Meta:
-        icon = 'list-ul'
 
 
 class FullWidthText(blocks.StreamBlock):

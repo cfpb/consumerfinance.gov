@@ -7,7 +7,7 @@ for example: Heroes, Expandable Groups, or Info Unit Groups. The
 describes the design and intended usage of many of these components.
 
 In Wagtail parlance, these are called
-["StreamField blocks"](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html)*
+["StreamField blocks"](https://docs.wagtail.io/en/stable/topics/streamfield.html)*
 (or just "blocks").
 We sometimes also refer to them as "modules", because we think that
 the terms "component" and "module" may be more obvious to non-developers.
@@ -63,7 +63,7 @@ of atoms, molecules, and organisms.
 
 A component's fields and other properties are defined in a Python class,
 typically a subclass of Wagtail's
-[`StructBlock`](http://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#structblock).
+[`StructBlock`](http://docs.wagtail.io/en/stable/topics/streamfield.html#structblock).
 These classes are located in a number of different files across the repository,
 but there are two major categories they fall into:
 
@@ -95,19 +95,19 @@ class RelatedContent(blocks.StructBlock):                      # 1
 There are a few things happening here:
 
 1. The `RelatedContent` class is a subclass of
-   [Wagtail's `StructBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#structblock),
+   [Wagtail's `StructBlock`](https://docs.wagtail.io/en/stable/topics/streamfield.html#structblock),
    which allows for the combination of a fixed number of other sub-blocks
    (see previous comment about blocks being nested within other blocks)
    into a single unit (what we'd think of as a "module" in the Wagtail editor).
    This one has three sub-blocks (lines 2, 3, and 4).
 2. The `heading` field uses the basic Wagtail
-   [`CharBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#charblock),
+   [`CharBlock`](https://docs.wagtail.io/en/stable/topics/streamfield.html#charblock),
    which results in a field with a basic single-line text input.
 3. The `paragraph` field uses the basic Wagtail
-   [`RichTextBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#richtextblock),
+   [`RichTextBlock`](https://docs.wagtail.io/en/stable/topics/streamfield.html#richtextblock),
    which results in a field with a multiline WYSIWYG text input.
 4. The `links` field uses another basic Wagtail block,
-   [`ListBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#listblock),
+   [`ListBlock`](https://docs.wagtail.io/en/stable/topics/streamfield.html#listblock),
    which is a special type of block that can hold a variable number of
    some other block (the `Hyperlink` atom block, in this case).
 5. The `Meta` class defines some properties on the `RelatedContent` block
@@ -132,7 +132,7 @@ that comprise the sub-blocks that are our fields.
 
 There are two common optional things that are also used in component classes:
 
-1. [Overriding the default `get_context` method](http://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#streamfield-get-context)
+1. [Overriding the default `get_context` method](http://docs.wagtail.io/en/stable/topics/streamfield.html#streamfield-get-context)
    to pass additional data to the template
 2. [Adding component-specific JavaScript](#adding-javascript)
     via the `Media` class
@@ -361,7 +361,7 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
    `field_name = blocks.BlockName()`.
     - Replace `field_name` with a succinct name for what data the field contains
     - Replace `BlockName` with one of the
-      [basic Wagtail block types](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
+      [basic Wagtail block types](https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types).
       Sometimes we create our own custom blocks that can be used, as well.
       See, for example, the
       [`HeadingBlock`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/blocks.py#L147-L165),
@@ -378,7 +378,7 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
       specific default value, e.g., `True` to have a `BooleanBlock` checkbox
       default to checked.
     - Certain blocks may take other arguments, as described in the
-      [basic Wagtail blocks documentation](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
+      [basic Wagtail blocks documentation](https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types).
 1. [Edit the component template](#the-html-template) to do something with the
    field's data – output it, use it to trigger a CSS class, etc.
 1. [Create a schema migration.](#creating-migrations-for-streamfield-blocks)

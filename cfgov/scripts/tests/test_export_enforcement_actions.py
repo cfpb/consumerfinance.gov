@@ -2,19 +2,13 @@ import datetime
 
 from django.test import TestCase
 
-import wagtail
+from wagtail.core.models import Page, Site
 
 from scripts.export_enforcement_actions import assemble_output
 
 from v1.models import DocumentDetailPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.core.models import Page, Site
-else:
-    from wagtail.wagtailcore.models import Page, Site
 
 
 class TestExportEnforcementActions(TestCase):

@@ -1,23 +1,16 @@
 from django.db import models
 
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.search import index
+from wagtail.snippets.models import register_snippet
+
 from v1.atomic_elements import molecules
 # We import ReusableTextChooserBlock here because this is where it used to
 # live. That caused circular imports when it was imported into models. It's no
 # longer imported into models from this file, but there are migrations which
 # still look for it here.
 from v1.blocks import ReusableTextChooserBlock  # noqa
-
-
-try:
-    from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-    from wagtail.core.fields import RichTextField, StreamField
-    from wagtail.search import index
-    from wagtail.snippets.models import register_snippet
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
-    from wagtail.wagtailcore.fields import RichTextField, StreamField
-    from wagtail.wagtailsearch import index
-    from wagtail.wagtailsnippets.models import register_snippet
 
 
 @register_snippet
@@ -51,6 +44,7 @@ class Contact(models.Model):
     heading = models.CharField(verbose_name=('Heading'), max_length=255,
                                help_text=("The snippet heading"))
     body = RichTextField(blank=True)
+    body_shown_in_expandables = models.BooleanField(default=False)
 
     contact_info = StreamField([
         ('email', molecules.ContactEmail()),
@@ -62,6 +56,7 @@ class Contact(models.Model):
     panels = [
         FieldPanel('heading'),
         FieldPanel('body'),
+        FieldPanel('body_shown_in_expandables'),
         StreamFieldPanel('contact_info'),
     ]
 

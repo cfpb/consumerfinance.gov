@@ -2,10 +2,10 @@ import re
 from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
-from bs4 import BeautifulSoup, NavigableString
+from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
 
@@ -20,9 +20,9 @@ NON_CFPB_LINKS = re.compile(
 DOWNLOAD_LINKS = re.compile(
     r'(?i)(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 )
-LINK_ICON_CLASSES = 'a-link a-link__icon'
+LINK_ICON_CLASSES = ['a-link', 'a-link__icon']
 
-LINK_ICON_TEXT_CLASSES = 'a-link_text'
+LINK_ICON_TEXT_CLASSES = ['a-link_text']
 
 # Regular expression to match <a> links in HTML strings
 A_TAG = re.compile(
@@ -61,12 +61,12 @@ def signed_redirect(url):
     query_args = {'ext_url': url,
                   'signature': signature}
 
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def unsigned_redirect(url):
     query_args = {'ext_url': url}
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def extract_answers_from_request(request):
@@ -88,7 +88,7 @@ def get_link_tags(html):
     return A_TAG.findall(html)
 
 
-def add_link_markup(tag):
+def add_link_markup(tag, request_path):
     """Add necessary markup to the given link and return if modified.
 
     Add an external link icon if the input is not a CFPB (internal) link.
@@ -99,13 +99,24 @@ def add_link_markup(tag):
     """
     icon = False
 
-    tag = BeautifulSoup(tag, 'html.parser').find('a', href=True)
+    soup = BeautifulSoup(tag, 'html.parser')
+    tag = soup.find('a', href=True)
 
     if tag is None:
         return None
 
-    if not tag.attrs.get('class', None):
-        tag.attrs.update({'class': []})
+    class_attrs = tag.attrs.setdefault('class', [])
+
+    if request_path is not None:
+        # Strips the path of the current page from hrefs that are internal page
+        # anchor links.
+        # TODO: Remove that functionality when we get to Wagtail>=2.7, which
+        # adds the ability to create anchor links.
+        in_page_anchor_pattern = request_path + '#'
+        if tag['href'].startswith(in_page_anchor_pattern):
+            # Strip current path from in-page anchor links
+            tag['href'] = tag['href'].replace(request_path, '')
+            return str(tag)
 
     if tag['href'].startswith('/external-site/?'):
         # Sets the icon to indicate you're leaving consumerfinance.gov
@@ -128,11 +139,17 @@ def add_link_markup(tag):
         # Sets the icon to indicate you're downloading a file
         icon = 'download'
 
-    # If the already ends in an SVG, we never want to append an icon.
-    # If it has an SVG but other content comes after it, we still add one.
+    # If the tag already ends in an SVG, we never want to append an icon.
+    # If it has one or more SVGs but other content comes after them, we still
+    # want to add one.
     svgs = tag.find_all('svg')
-    if svgs and not all((svg.next_sibling or '').strip() for svg in svgs):
-        return str(tag)
+    if svgs:
+        last_svg = svgs[-1]
+        if not any(
+            str(sibling or '').strip()
+            for sibling in last_svg.next_siblings
+        ):
+            return str(tag)
 
     if tag.select(', '.join(ICONLESS_LINK_CHILD_ELEMENTS)):
         # If this tag has any children that are in our list of child elements
@@ -140,34 +157,29 @@ def add_link_markup(tag):
         # be an external link and modified accordingly above.
         return str(tag)
 
-    if icon:
-        tag.attrs['class'].append(LINK_ICON_CLASSES)
-        # Wraps the link text in a span that provides the underline
-        contents = tag.contents
-        span = BeautifulSoup('', 'html.parser').new_tag('span')
-        span['class'] = LINK_ICON_TEXT_CLASSES
-        span.contents = contents
-        tag.contents = [span, NavigableString(' ')]
-        # Appends the SVG icon
-        tag.contents.append(BeautifulSoup(svg_icon(icon), 'html.parser'))
-        return str(tag)
-
-    return None
-
-
-class NoMigrations(object):
-    """Class to disable app migrations through settings.MIGRATION_MODULES.
-
-    The MIGRATION_MODULES setting can be used to tell Django where to look
-    for an app's migrations (by default this is the "migrations" subdirectory).
-    This class simulates a dictionary where a lookup for any app returns a
-    value that causes Django to think that no migrations exist.
-    """
-    def __contains__(self, item):
-        return True
-
-    def __getitem__(self, item):
+    if not icon:
         return None
+
+    # We have an icon to append.
+    for cls in LINK_ICON_CLASSES:
+        if cls not in class_attrs:
+            class_attrs.append(cls)
+
+    icon_classes = {'class': LINK_ICON_TEXT_CLASSES}
+    spans = tag.findAll('span', icon_classes)
+
+    if spans:
+        span = spans[-1]
+    else:
+        span = soup.new_tag('span', **icon_classes)
+        span.contents = list(tag.contents)
+
+        tag.clear()
+        tag.append(span)
+
+    span.insert_after(BeautifulSoup(' ' + svg_icon(icon), 'html.parser'))
+
+    return str(tag)
 
 
 def slugify_unique(context, value):
@@ -188,7 +200,7 @@ def slugify_unique(context, value):
     If the context lacks a request, this function falls back to the default
     behavior of Django slugify:
 
-    https://docs.djangoproject.com/en/1.11/ref/utils/#django.utils.text.slugify
+    https://docs.djangoproject.com/en/stable/ref/utils/#django.utils.text.slugify
 
     >>> context = {}
     >>> slugify_unique(context, 'Some text')

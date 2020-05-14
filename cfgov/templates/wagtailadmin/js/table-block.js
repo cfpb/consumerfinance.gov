@@ -498,9 +498,7 @@
                                         '<input id="table-block-editor" maxlength="255" name="title" type="text">',
                                     '</div><br>',
                                     '<div class="row active nice-padding m-t-10">',
-                                        '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">',
-                                            '<span class="icon"></span><em>Save</em>',
-                                        '</button>',
+                                        '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save</button>',
                                     '</div>' ].join( '' );
 
         // Set body template.
@@ -542,7 +540,9 @@
     function _createRichTextEditor( initialValue ) {
         var id = 'table-block-editor'
         var input = $( '#' + id );
-        var richText = $( '<div class="richtext"></div>' ).html( initialValue );
+        var richText = $(
+            '<div class="richtext halloeditor" data-hallo-editor></div>'
+        ).html( initialValue );
         var removeStylingPending = false;
 
         richText.insertBefore( input );
@@ -570,31 +570,38 @@
         var closestObj = input.closest( '.object' );
 
 
-        richText.hallo({
+        richText.hallo( {
             toolbar: 'halloToolbarFixed',
-            toolbarCssClass: ( closestObj.hasClass( 'full' ) ) ? 'full' : (closestObj.hasClass( 'stream-field' )) ? 'stream-field' : '',
-            plugins: halloPlugins,
+            toolbarCssClass: ( closestObj.hasClass( 'full' ) ) ? 'full' : '',
+            plugins: {
+                "halloformat": {},
+                "halloheadings": {},
+                "hallowagtaillink": {},
+                "hallowagtaildoclink": {},
+                "hallolists": {},
+                "halloreundo": {},
+            },
             editable: true,
-        } ).bind( 'hallomodified', function( event, data ) {
+        } ).on( 'hallomodified', function( event, data ) {
             input.val( data.content );
             if ( !removeStylingPending ) {
                 setTimeout( removeStyling, 100 );
                 removeStylingPending = true;
             }
-        } ).bind( 'paste drop', function( event, data ) {
+        } ).on( 'paste drop', function( event, data ) {
             setTimeout(function() {
                 removeStyling();
                 setModified();
             }, 1);
         /* Animate the fields open when you click into them. */
-        } ).bind( 'halloactivated', function( event, data ) {
+        } ).on( 'halloactivated', function( event, data ) {
             $( event.target ).addClass( 'expanded', 200, function(e) {
                 /* Hallo's toolbar will reposition itself on the scroll event.
                 This is useful since animating the fields can cause it to be
                 positioned badly initially. */
                 $( window ).trigger( 'scroll' );
             } );
-        } ).bind( 'hallodeactivated', function( event, data ) {
+        } ).on( 'hallodeactivated', function( event, data ) {
             $( window ).trigger( 'scroll' );
         } );
 
@@ -620,10 +627,10 @@
     }
 
     function insertRichTextDeleteControl( element ) {
-        var link = $( '<a class="icon icon-cross text-replace delete-control">Delete</a>' );
-        $ ( element ).addClass( 'rich-text-deletable' ).prepend( link );
-        link.click( function() {
-            var widget = $( element ).parent( '.richtext' ).data( 'IKS-hallo' );
+        var link = $( '<a class="icon icon-cross text-replace halloembed__delete">Delete</a>' );
+        $ ( element ).addClass( 'halloembed' ).prepend( link );
+        link.on( 'click', function() {
+            var widget = $( element ).parent( '[data-hallo-editor]' ).data( 'IKS-hallo' );
             $( element ).fadeOut( function() {
                 $( element ).remove();
                 if ( widget != undefined && widget.options.editable ) {
@@ -634,7 +641,7 @@
     }
 
     $( function() {
-        $( '.richtext [contenteditable="false"]' ).each( function() {
+        $( '[data-hallo-editor] [contenteditable="false"]' ).each( function() {
             insertRichTextDeleteControl( this );
         } );
     } );

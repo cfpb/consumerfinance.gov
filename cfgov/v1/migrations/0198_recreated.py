@@ -18,28 +18,14 @@ import v1.feeds
 import v1.models.snippets
 import v1.util.filterable_list
 import v1.util.ref
-import wagtail
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.core import blocks as core_blocks
-    from wagtail.core import fields as core_fields
-    from wagtail.core import models as core_models
-    from wagtail.documents import blocks as docs_blocks
-    from wagtail.images import blocks as images_blocks
-    from wagtail.images import models as images_models
-    from wagtail.search import index
-    from wagtail.snippets import blocks as snippets_blocks
-
-else:
-    from wagtail.wagtailcore import blocks as core_blocks
-    from wagtail.wagtailcore import fields as core_fields
-    from wagtail.wagtailcore import models as core_models
-    from wagtail.wagtaildocs import blocks as docs_blocks
-    from wagtail.wagtailimages import blocks as images_blocks
-    from wagtail.wagtailimages import models as images_models
-    from wagtail.wagtailsearch import index
-    from wagtail.wagtailsnippets import blocks as snippets_blocks
+from wagtail.core import blocks as core_blocks
+from wagtail.core import fields as core_fields
+from wagtail.core import models as core_models
+from wagtail.documents import blocks as docs_blocks
+from wagtail.images import blocks as images_blocks
+from wagtail.images import models as images_models
+from wagtail.search import index
+from wagtail.snippets import blocks as snippets_blocks
 
 
 class Migration(migrations.Migration):

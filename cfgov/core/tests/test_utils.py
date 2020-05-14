@@ -2,9 +2,7 @@ import unittest
 
 from django.test import TestCase
 
-from core.utils import (
-    NoMigrations, extract_answers_from_request, format_file_size
-)
+from core.utils import extract_answers_from_request, format_file_size
 
 
 class FakeRequest(object):
@@ -27,17 +25,6 @@ class ExtractAnswersTest(TestCase):
         result = extract_answers_from_request(request)
         assert result == [('another', 'another_answer'),
                           ('first', 'some_answer')]
-
-
-class TestNoMigrations(TestCase):
-    def setUp(self):
-        self.nomigrations = NoMigrations()
-
-    def test_contains(self):
-        self.assertTrue('random-string' in self.nomigrations)
-
-    def test_getitem(self):
-        self.assertIsNone(self.nomigrations['random-string'])
 
 
 class FormatFileSizeTests(unittest.TestCase):
