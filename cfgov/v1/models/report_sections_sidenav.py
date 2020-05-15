@@ -22,7 +22,7 @@ def get_toc_nav_items(request, page):
         'title': section.header,
         'url': '#' + section.html_id,
         'children': [{
-            'title': subsection.subheader, 'url': '#' + subsection.html_id
+            'title': subsection.sub_header, 'url': '#' + subsection.sub_id
         } for subsection in section.report_subsections.all().order_by('pk')]
     } for section in page.report_sections.all().order_by('pk')]
 
@@ -33,6 +33,7 @@ class ReportSection(ClusterableModel):
     body = RichTextField(blank=True)
     panels = [
         FieldPanel('header'),
+        FieldPanel('html_id'),
         FieldPanel('body'),
         InlinePanel('report_subsections', label='Subsection'),
     ]
@@ -42,9 +43,9 @@ class ReportSection(ClusterableModel):
 
 
 class ReportSubSection(models.Model):
-    subheader = models.CharField(max_length=200)
-    html_id = models.CharField(max_length=50, blank=True)
-    body = RichTextField(blank=True)
+    sub_header = models.CharField(max_length=200)
+    sub_id = models.CharField(max_length=50, blank=True)
+    sub_body = RichTextField(blank=True)
     action = ParentalKey('v1.ReportSection',
                          on_delete=models.CASCADE,
                          related_name='report_subsections')

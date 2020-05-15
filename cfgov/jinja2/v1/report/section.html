@@ -31,13 +31,13 @@
         <h4 class="report-header">
           <a
             style="color:black;"
-            id="{{subsection.html_id}}"
-            href="#{{subsection.html_id}}">
-              {{subsection.subheader}}
+            id="{{subsection.sub_id}}"
+            href="#{{subsection.sub_id}}">
+              {{subsection.sub_header}}
           </a>
         </h4>
 
-        {{ render_rich_html(subsection.body) }}
+        {{ render_rich_html(subsection.sub_body) }}
       {%- endfor %}
     {%- endfor %}
     
