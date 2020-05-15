@@ -1,19 +1,18 @@
 from django.db import models
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface
 )
 from wagtail.admin.forms.pages import WagtailAdminPageForm
 from wagtail.admin.forms.models import WagtailAdminModelFormMetaclass
 from wagtail.core import blocks
-from wagtail.core.fields import StreamField, RichTextField
+from wagtail.core.fields import RichTextField
 from wagtail.core.models import PageManager
 from wagtail.search import index
 
 from modelcluster.models import ClusterableModel
 from modelcluster.fields import ParentalKey
 
-from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
@@ -23,9 +22,10 @@ def get_toc_nav_items(request, page):
         'title': section.header,
         'url': '#' + section.html_id,
         'children': [{
-            'title': subsection.header, 'url': '#' + subsection.html_id
+            'title': subsection.subheader, 'url': '#' + subsection.html_id
         } for subsection in section.report_subsections.all().order_by('pk')]
     } for section in page.report_sections.all().order_by('pk')]
+
 
 class ReportSection(ClusterableModel):
     header = models.CharField(max_length=200, blank=True)
@@ -42,7 +42,7 @@ class ReportSection(ClusterableModel):
 
 
 class ReportSubSection(models.Model):
-    header = models.CharField(max_length=200)
+    subheader = models.CharField(max_length=200)
     html_id = models.CharField(max_length=50, blank=True)
     body = RichTextField(blank=True)
     action = ParentalKey('v1.ReportSection',

@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* ==========================================================================
    Scripts for Report Sidenav organism
    ========================================================================== */
@@ -12,7 +13,7 @@ const top = sidenav.offsetTop;
 let set = 0;
 let lastTargetIndex;
 
-function stickIfNeeded( e ) {
+function stickIfNeeded() {
   if ( window.scrollY > top ) {
     if ( !set ) {
       sidenav.classList.add( 'sticky' );
@@ -23,6 +24,7 @@ function stickIfNeeded( e ) {
     set = 0;
   }
 }
+
 
 function highlightTOC() {
   const sY = window.scrollY;
@@ -42,6 +44,7 @@ function highlightTOC() {
   tocHeaders[len].classList.add( 'current-section' );
   lastTargetIndex = len;
 }
+
 
 function onScroll() {
   stickIfNeeded();
