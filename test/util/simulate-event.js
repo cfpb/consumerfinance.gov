@@ -14,7 +14,7 @@ function simulateEvent( eventType, target, eventOption = {} ) {
       view: window
     } );
   } else {
-    event = document.createEvent( 'Event', eventOption.currentTarget );
+    event = window.document.createEvent( 'Event', eventOption.currentTarget );
   }
   if ( eventOption && eventOption.keyCode ) {
     event.keyCode = eventOption.keyCode;
