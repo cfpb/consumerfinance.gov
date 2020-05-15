@@ -3,6 +3,20 @@ import * as sut from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/
 import TileMap from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap';
 import chartMock from '../../../mocks/chartMock';
 
+/**
+ * Create a mock for the window.location object, for testing purposes.
+ */
+function mockWindowLocation() {
+  delete window.location;
+  window.location = {
+    protocol: 'http:',
+    host: 'localhost',
+    pathname: '/',
+    href: 'http://localhost/',
+    assign: jest.fn()
+  };
+}
+
 describe( 'Tile map', () => {
   const colors = [
     'rgba(247, 248, 249, 0.5)',
@@ -71,7 +85,8 @@ describe( 'Tile map', () => {
   } );
 
   it( 'navigates the url to all complaints when clicked', () => {
-    window.location.assign = jest.fn();
+    mockWindowLocation();
+
     expect( window.location.href ).toEqual( 'http://localhost/' );
     const evt = {
       point: {
@@ -83,7 +98,8 @@ describe( 'Tile map', () => {
   } );
 
   it( 'navigates the url to per capita when clicked', () => {
-    window.location.assign = jest.fn();
+    mockWindowLocation();
+
     expect( window.location.href ).toEqual( 'http://localhost/' );
     const evt = {
       point: {
@@ -114,8 +130,11 @@ describe( 'Tile map', () => {
       name: 'FA'
     };
 
-    Object.defineProperty( window.navigator, 'userAgent',
-      { value: 'MSIE' } );
+    Object.defineProperty(
+      window.navigator,
+      'userAgent',
+      { value: 'MSIE' }
+    );
 
     const result = sut.tileFormatter();
     expect( result )
