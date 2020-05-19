@@ -1,0 +1,16 @@
+{% extends 'layout-1-3.html' %}
+
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    <p>{{ page.eyebrow }}</p>
+    <p>{{ page.report_title }}</p>
+    <p>{{ page.subtitle }}</p>
+    <p>Date published: {{ page.date_published }}</p>
+    <p>{{ page.main_content | safe }}</p>
+{% endblock %}
