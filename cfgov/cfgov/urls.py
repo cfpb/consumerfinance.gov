@@ -1,3 +1,4 @@
+import re
 from functools import partial
 
 from django.conf import settings
@@ -751,11 +752,29 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-# Handle case-insensitive URLs
-# Using (?i) in url() patterns is deprecated in Django 2.1
 def handle_404_error(code, request, exception=None):
-    if request.path != request.path.lower():
-        return redirect(request.path.lower(), permanent=True)
+    """Attempt to self-heal 404-ing URLs.
+
+    Takes a 404ing request and tries to transform it to a successful request
+    by lowercasing the path and stripping extraneous characters from the end.
+    If those result in a modified path, redirect to the modified path.
+    If the path did not change, this is a legitimate 404, so continue handling
+    that as normal.
+    """
+
+    # Lowercase the path.
+    path = request.path.lower()
+
+    # Check for and remove extraneous characters at the end of the path.
+    extraneous_char_re = re.compile(
+        r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
+    )
+    path = extraneous_char_re.sub('', path)
+
+    # If the path has changed, redirect to the new path.
+    if path != request.path:
+        return redirect(path, permanent=True)
+
     return handle_error(code, request, exception)
 
 
