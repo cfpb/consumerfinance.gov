@@ -201,7 +201,7 @@ class CFGOVPage(Page):
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors().specific()
         for i, ancestor in enumerate(ancestors):
-            if ancestor.is_descendant_of(request.site.root_page):
+            if ancestor.is_child_of(request.site.root_page):
                 if ancestor.specific.force_breadcrumbs:
                     return ancestors[i:]
                 return ancestors[i + 1:]
