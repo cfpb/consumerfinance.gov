@@ -18,6 +18,8 @@
 
    placeholder: String; text to enter for the search input's placeholder value.
 
+   label_level:  String; heading level to use for the label.
+
    ========================================================================== #}
 
 {% macro render(
@@ -25,13 +27,14 @@
     language='en',
     show_label=True,
     autocomplete=True,
-    placeholder=''
+    placeholder='',
+    label_level='h3'
 ) %}
 <div class="o-search-bar">
     <form method="get" action="{{ _('/ask-cfpb/search/') }}">
         {% if show_label %}
         <label for="o-search-bar_query">
-            <h3>{{ _('Search for your question') }}</h3>
+            <{{ label_level }}>{{ _('Search for your question') }}</{{ label_level }}>
         </label>
         {% endif %}
 
