@@ -5,11 +5,12 @@
 
 const sidenav = document.querySelector( '.o-report-sidenav' );
 const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
+const top = sidenav.offsetTop;
+const headerOffset = 224
 const offsets = Array.prototype.map.call(
   document.querySelectorAll( '.content_main .report-header' ),
-  function( v ) { return v.offsetTop; }
+  function( v ) { return v.offsetTop + headerOffset; }
 );
-const top = sidenav.offsetTop;
 let set = 0;
 let lastTargetIndex;
 

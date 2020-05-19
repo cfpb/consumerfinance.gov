@@ -19,6 +19,7 @@ from v1.models.base import CFGOVPage
 
 def get_toc_nav_items(request, page):
     return [{
+        'expanded': False,
         'title': section.header,
         'url': '#' + section.html_id,
         'children': [{
