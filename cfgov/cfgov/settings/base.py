@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     "diversity_inclusion",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
+    "research_reports",  #consider making a Config
 
     # Satellites
     "comparisontool",
