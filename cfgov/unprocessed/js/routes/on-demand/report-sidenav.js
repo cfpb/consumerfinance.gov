@@ -7,10 +7,15 @@ const sidenav = document.querySelector( '.o-report-sidenav' );
 const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
 const top = sidenav.offsetTop;
 const headerOffset = 224
-const offsets = Array.prototype.map.call(
-  document.querySelectorAll( '.content_main .report-header' ),
-  function( v ) { return v.offsetTop + headerOffset; }
-);
+const headers = document.querySelectorAll( '.content_main .report-header' )
+let offsets = [];
+let offsetIsH3 = [];
+(function(){
+  for(let i=0; i<headers.length; i++){
+    offsets.push(headers[i].offsetTop + headerOffset)
+    offsetIsH3.push(headers[i].tagName === 'H3')
+  }
+})();
 let set = 0;
 let lastTargetIndex;
 
@@ -27,21 +32,33 @@ function stickIfNeeded() {
 }
 
 
-function highlightTOC() {
+function getParentHeader(index){
+  for(let i=index; i>=0; i--){
+    if(offsetIsH3[i]) return tocHeaders[i].parentNode
+  }
+}
+
+
+function hightlightTOC() {
   const sY = window.scrollY;
   const len = offsets.length - 1;
+
   for ( let i = 0; i <= len; i++ ) {
     if ( sY < offsets[i] ) {
-      let next = i - 1;
-      if ( next === -1 ) next = 0;
-      if ( next === lastTargetIndex ) return;
-      if ( lastTargetIndex !== undefined )tocHeaders[lastTargetIndex].classList.remove( 'current-section' );
-      tocHeaders[next].classList.add( 'current-section' );
-      lastTargetIndex = next;
+      let hl = i ? i - 1 : i;
+      if ( hl === lastTargetIndex ) return;
+      if ( lastTargetIndex !== undefined ){
+        tocHeaders[lastTargetIndex].classList.remove( 'current-section' );
+        getParentHeader(lastTargetIndex).classList.remove('parent-header')
+      }
+
+      tocHeaders[hl].classList.add( 'current-section' );
+      getParentHeader(hl).classList.add( 'parent-header' );
+      lastTargetIndex = hl;
       return;
     }
   }
-  if ( lastTargetIndex !== undefined )tocHeaders[lastTargetIndex].classList.remove( 'current-section' );
+  if ( lastTargetIndex !== undefined ) tocHeaders[lastTargetIndex].classList.remove( 'current-section' );
   tocHeaders[len].classList.add( 'current-section' );
   lastTargetIndex = len;
 }
@@ -49,7 +66,7 @@ function highlightTOC() {
 
 function onScroll() {
   stickIfNeeded();
-  highlightTOC();
+  hightlightTOC();
 }
 
 window.addEventListener( 'scroll', onScroll );
