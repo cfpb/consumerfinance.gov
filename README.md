@@ -25,11 +25,6 @@ We follow the following steps for developing and creating end-of-sprint pull-req
 7. When functionality is ensured, a PR is opened from `cfgov-refres/my-money-calendar` to `cfgov-refres/master`
 
 
-## Technical Overview
-
-....
-
-
 ## Quickstart
 
 Full installation and usage instructions are available in
