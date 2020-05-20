@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     "hmda",
     "youth_employment",
     "diversity_inclusion",
+    "teachers_digital_platform",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
 
@@ -102,7 +103,6 @@ INSTALLED_APPS = (
     "rest_framework",
     "ccdb5_ui",
     "mptt",
-    "teachers_digital_platform",
 )
 
 MIDDLEWARE = (
