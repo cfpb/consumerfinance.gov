@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "rest_framework",
     "ccdb5_ui",
     "mptt",
+    "crtool",
 )
 
 MIDDLEWARE = (
