@@ -164,7 +164,7 @@ function Form() {
               errors={formik.errors.name}
               touched={formik.touched.name}
               tabIndex="0"
-              placeholder={`e.g. ${category.name}`}
+              placeholder={`For example: ${category.name}`}
             />
 
             <CurrencyField

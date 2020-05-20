@@ -271,6 +271,14 @@ export default class CashFlowStore {
 
       if (event.recurrenceType !== params.recurrenceType) {
         recurrenceTypeChanged = true;
+        yield this.deleteRecurrences(event, true);
+        updateRecurrences = false;
+      }
+
+      if (event.recurs && !event.dateTime.isSame(params.dateTime)) {
+        yield this.deleteRecurrences(event, true);
+        params.originalEventID = null;
+        updateRecurrences = false;
       }
 
       event.update(params);
@@ -280,13 +288,6 @@ export default class CashFlowStore {
     }
 
     try {
-      if (recurrenceTypeChanged) {
-        yield this.deleteRecurrences(event);
-
-        // All recurrences have been deleted, so none need to be updated.
-        updateRecurrences = false;
-      }
-
       yield event.save();
 
       if (!params.id) this.events.push(event);
@@ -400,11 +401,13 @@ export default class CashFlowStore {
    * @param {CashFlowEvent} event - The event whose recurrences should be deleted
    * @return {Promise}
    */
-  deleteRecurrences = flow(function* (event) {
+  deleteRecurrences = flow(function* (event, onlyFuture = false) {
     const recurrences = yield event.getAllRecurrences();
     const deletedIDs = [];
 
     for (const recurrence of recurrences) {
+      if (onlyFuture && !recurrence.dateTime.isAfter(event.dateTime)) continue;
+      this.logger.debug('Delete event recurrence with ID %d', recurrence.id);
       yield recurrence.destroy();
       deletedIDs.push(recurrence.id);
     }
