@@ -264,7 +264,6 @@ export default class CashFlowStore {
   saveEvent = flow(function* (params, updateRecurrences = false) {
     let event;
     let recurrenceTypeChanged = false;
-    let recurringEventDateChanged = false;
 
     if (params.id) {
       this.logger.debug('updating existing event %O', params);
