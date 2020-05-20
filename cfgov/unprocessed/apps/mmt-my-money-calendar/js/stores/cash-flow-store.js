@@ -276,7 +276,6 @@ export default class CashFlowStore {
       }
 
       if (event.recurs && !event.dateTime.isSame(params.dateTime)) {
-        recurringEventDateChanged = true;
         yield this.deleteRecurrences(event, true);
         params.originalEventID = null;
         updateRecurrences = false;
