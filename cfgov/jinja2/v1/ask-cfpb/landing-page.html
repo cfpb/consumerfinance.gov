@@ -17,7 +17,7 @@
 {% block content_main %}
     <div class="content-l">
         <section class="ask-search block__sub block__flush-top">
-            {{ ask_search.render( language=page.language, label_level='h2' ) }}
+            {{ ask_search.render( language=page.language, is_subsection=False ) }}
         </section>
 
         <section class="ask-categories">
