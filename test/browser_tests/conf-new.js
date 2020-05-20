@@ -46,7 +46,7 @@ function _chooseSuite( params ) {
     const windowSize = `--window-size=${ windowWidthPx }x${ windowHeightPx }`;
     capabilities[0].chromeOptions.args.push( windowSize );
 
-    if ( envvars.TRAVIS ) {
+    if ( envvars.CI ) {
       capabilities[0].chromeOptions.args.push( '--no-sandbox' );
     }
   } else if ( paramsAreNotSet && _useSauceLabs() ) {

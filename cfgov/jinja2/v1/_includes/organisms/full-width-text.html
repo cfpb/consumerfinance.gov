@@ -30,7 +30,7 @@
            or 'cta' in block_type and block.value.is_inset %}
             <div class="m-inset
                     {{ 'm-inset__test'
-                       if flag_enabled('INSET_TEST', request) else '' }}">
+                       if flag_enabled('INSET_TEST') else '' }}">
                 {{ block | safe }}
             </div>
         {% elif block_type in ['email_signup'] %}

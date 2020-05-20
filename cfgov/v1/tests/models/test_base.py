@@ -362,3 +362,64 @@ class TestCFGOVPageMediaProperty(TestCase):
         # The page media should only include the default BrowsePae media, and
         # shouldn't add any additional files because of the FullWithText.
         self.assertEqual(page.media, ['secondary-navigation.js'])
+
+
+class TestCFGOVPageBreadcrumbs(TestCase):
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+        self.site = Site.objects.first()
+        self.root_page = self.site.root_page
+
+        self.top_level_page = CFGOVPage(
+            title='top',
+            slug='top',
+            live=True
+        )
+        save_new_page(self.top_level_page, root=self.root_page)
+
+        self.second_level_page = CFGOVPage(
+            title='second',
+            slug='second',
+            live=True
+        )
+        save_new_page(self.second_level_page, root=self.top_level_page)
+
+        self.third_level_page = CFGOVPage(
+            title='third',
+            slug='third',
+            live=True
+        )
+        save_new_page(self.third_level_page, root=self.second_level_page)
+
+    def test_get_breadcrumbs_forced_homepage_descendant(self):
+        request = self.factory.get('/top/second')
+        request.site = self.site
+        self.top_level_page.force_breadcrumbs = True
+        self.top_level_page.save()
+        self.assertIn(
+            'top',
+            [p.slug for p in self.second_level_page.get_breadcrumbs(request)]
+        )
+
+    def test_get_breadcrumbs_no_homepage_descendant(self):
+        request = self.factory.get('/top/second')
+        request.site = self.site
+        self.assertNotIn(
+            'top',
+            [p.slug for p in self.second_level_page.get_breadcrumbs(request)]
+        )
+
+    def test_get_breadcrumbs_two_levels_deep(self):
+        request = self.factory.get('/top/second/third')
+        request.site = self.site
+
+        self.assertNotIn(
+            'top',
+            [p.slug for p in self.third_level_page.get_breadcrumbs(request)]
+        )
+        self.assertIn(
+            'second',
+            [p.slug for p in self.third_level_page.get_breadcrumbs(request)]
+        )

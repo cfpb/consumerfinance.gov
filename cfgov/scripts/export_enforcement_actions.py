@@ -1,17 +1,15 @@
 import datetime
-import html.parser as HTMLParser
+import html
 import re
 
 from django.http import HttpResponse
-from django.utils import html
+from django.utils import html as html_util
 
 import unicodecsv
 
 from v1.models import DocumentDetailPage
 from v1.util.migrations import get_stream_data
 
-
-html_parser = HTMLParser.HTMLParser()
 
 HEADINGS = [
     'Matter name',
@@ -26,8 +24,8 @@ HEADINGS = [
 
 
 def clean_and_strip(data):
-    unescaped = html_parser.unescape(data)
-    return html.strip_tags(unescaped).strip()
+    unescaped = html.unescape(data)
+    return html_util.strip_tags(unescaped).strip()
 
 
 def assemble_output():

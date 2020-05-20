@@ -1,7 +1,6 @@
 import copy
 import datetime
 import json
-import os
 import unittest
 from decimal import Decimal
 from unittest import mock
@@ -28,14 +27,6 @@ from paying_for_college.models import (
 
 
 COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)
-os.path.join(os.path.dirname(__file__), '../..')
-MOCK_YAML = """\
-completion_rate:\n\
-  min: 0\n\
-  max: 1\n\
-  median: 0.4379\n\
-  average_range: [.3180, .5236]\n
-"""
 
 
 class ProgamDataTest(django.test.TestCase):
@@ -667,56 +658,6 @@ class TestScripts(django.test.TestCase):
              len(api_utils.YEAR_FIELDS) +
              len(api_utils.PROGRAM_FIELDS))
         )
-
-    @patch('paying_for_college.disclosures.scripts.nat_stats.requests.get')
-    def test_bad_nat_stats_request(self, mock_requests):
-        mock_requests.side_effect = requests.exceptions.ConnectionError
-        self.assertEqual(nat_stats.get_stats_yaml(), {})
-
-    @patch('paying_for_college.disclosures.scripts.nat_stats.yaml.safe_load')
-    @patch('paying_for_college.disclosures.scripts.nat_stats.requests.get')
-    def test_nat_stats_request_returns_none(self, mock_requests, mock_yaml):
-        mock_yaml.side_effect = AttributeError
-        self.assertEqual(nat_stats.get_stats_yaml(), {})
-
-    @patch('paying_for_college.disclosures.scripts.nat_stats.requests.get')
-    def test_get_stats_yaml(self, mock_requests):
-        mock_response = mock.Mock()
-        mock_response.text = MOCK_YAML
-        mock_response.ok = True
-        mock_requests.return_value = mock_response
-        data = nat_stats.get_stats_yaml()
-        self.assertTrue(mock_requests.call_count == 1)
-        self.assertTrue(data['completion_rate']['max'] == 1)
-        mock_response.ok = False
-        mock_requests.return_value = mock_response
-        data = nat_stats.get_stats_yaml()
-        self.assertTrue(mock_requests.call_count == 2)
-        self.assertTrue(data == {})
-        mock_requests.side_effect = requests.exceptions.ConnectTimeout
-        data = nat_stats.get_stats_yaml()
-        self.assertTrue(data == {})
-
-    @patch('paying_for_college.disclosures.scripts.nat_stats.get_stats_yaml')
-    def test_update_national_stats_file(self, mock_get_yaml):
-        mock_get_yaml.return_value = {}
-        update_try = nat_stats.update_national_stats_file()
-        self.assertTrue('Could not' in update_try)
-
-    @patch(
-        'paying_for_college.disclosures.scripts.nat_stats'
-        '.update_national_stats_file')
-    def test_get_national_stats(self, mock_update):
-        mock_update.return_value = 'OK'
-        data = nat_stats.get_national_stats()
-        self.assertTrue(mock_update.call_count == 0)
-        self.assertTrue(data['completion_rate']['max'] == 1)
-        data2 = nat_stats.get_national_stats(update=True)
-        self.assertTrue(mock_update.call_count == 1)
-        self.assertTrue(data2['completion_rate']['max'] == 1)
-        mock_update.return_value = 'Could not'
-        data = nat_stats.get_national_stats(update=True)
-        self.assertTrue("retention_rate_4" in data)
 
     def test_get_prepped_stats(self):
         stats = nat_stats.get_prepped_stats()

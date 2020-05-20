@@ -76,7 +76,7 @@ class ExportFeedbackForm(forms.Form):
 
         call_command(
             'export_feedback',
-            pages=pages,
+            *pages,
             exclude=exclude,
             from_date=self.cleaned_data['from_date'],
             to_date=self.cleaned_data['to_date'],

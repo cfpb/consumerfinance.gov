@@ -1,16 +1,11 @@
 from django.core.files.base import ContentFile
 from django.http import Http404, StreamingHttpResponse
 from django.test import RequestFactory, TestCase, override_settings
+from django.urls import resolve, reverse
 
 from wagtail.documents.models import get_document_model
 
 from v1.views.documents import DocumentServeView
-
-
-try:
-    from django.urls import resolve, reverse
-except ImportError:
-    from django.core.urlresolvers import resolve, reverse
 
 
 def create_document(filename):
@@ -47,7 +42,7 @@ class ServeViewTestCase(TestCase):
         # named test.txt already exists, the filename will get 7 random
         # alphanumeric characters appended. See Django docs:
         # https://docs.djangoproject.com/en/stable/howto/custom-file-storage/#django.core.files.storage.get_available_name
-        self.assertRegexpMatches(
+        self.assertRegex(
             response["Location"], "/test(_[a-zA-Z0-9]{7})?.txt$"
         )
 

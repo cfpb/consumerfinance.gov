@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 
 from django.http import Http404, QueryDict
 from django.test import RequestFactory, TestCase, override_settings
+from django.urls import reverse
 
 from mock import Mock, patch
 from requests_toolbelt.multipart.encoder import MultipartEncoder
@@ -13,12 +14,6 @@ from core.views import (
     ExternalURLNoticeView, TranslatedTemplateView, govdelivery_subscribe,
     regsgov_comment, submit_comment
 )
-
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 
 class GovDeliverySubscribeTest(TestCase):
