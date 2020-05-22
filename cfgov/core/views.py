@@ -1,22 +1,24 @@
 import json
 import logging
 
-import requests
 from django.conf import settings
 from django.contrib import messages
-from django.http import (Http404, HttpResponse, HttpResponseForbidden,
-                         JsonResponse)
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
+from django.utils.translation import activate, get_language
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
-from govdelivery.api import GovDelivery
+
+import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.forms import ExternalURLForm
+from core.govdelivery import get_govdelivery_api
 from core.utils import extract_answers_from_request
+
 
 logger = logging.getLogger(__name__)
 
@@ -45,9 +47,13 @@ def govdelivery_subscribe(request):
                 redirect('govdelivery:user_error')
     email_address = request.POST['email']
     codes = request.POST.getlist('code')
-    gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
+
+    gd = get_govdelivery_api()
     try:
-        subscription_response = gd.set_subscriber_topics(email_address, codes)
+        subscription_response = gd.set_subscriber_topics(
+            email_address,
+            codes,
+            send_notifications=True)
         if subscription_response.status_code != 200:
             return failing_response
     except Exception:
@@ -133,24 +139,6 @@ def submit_comment(data):
     return response
 
 
-@csrf_exempt
-def csp_violation_report(request):
-    if request.method == 'POST':
-        try:
-            csp_dict = json.loads(request.body)['csp-report']
-        # bare except is non-ideal, but if parsing fails for any reason
-        # we need to abort
-        except:
-            return HttpResponseForbidden()
-
-        message_template = ('{blocked-uri} blocked on {document-uri}, '
-                            'violated {violated-directive}')
-        message = message_template.format(**csp_dict)
-        logger.warn(message)
-        return HttpResponse()
-    return HttpResponseForbidden()
-
-
 class ExternalURLNoticeView(FormMixin, TemplateView):
     template_name = 'external-site/index.html'
     form_class = ExternalURLForm
@@ -177,13 +165,37 @@ class ExternalURLNoticeView(FormMixin, TemplateView):
 
     def get(self, request):
         form = self.get_form()
-        if form.is_valid():
-            return super(ExternalURLNoticeView, self).get(request)
-        else:
-            raise Http404("URL invalid, not whitelisted, or signature"
-                          " validation failed")
+
+        if not form.is_valid():
+            return self.raise_404()
+
+        return super(ExternalURLNoticeView, self).get(request)
 
     def post(self, request):
         form = self.get_form()
-        if form.is_valid():
-            return redirect(form.cleaned_data['validated_url'])
+
+        if not form.is_valid():
+            return self.raise_404()
+
+        return redirect(form.cleaned_data['validated_url'])
+
+    def raise_404(self):
+        raise Http404(
+            'URL invalid, not whitelisted, or signature validation failed'
+        )
+
+
+class TranslatedTemplateView(TemplateView):
+    """ A TemplateView that will activate a language for translation.
+    It takes a "language" argument (default: en), activates that language,
+    and adds the 'current_language' to the template context. """
+
+    language = 'en'
+
+    def get_context_data(self, **kwargs):
+        activate(self.language)
+        context = super(TranslatedTemplateView, self).get_context_data(
+            **kwargs
+        )
+        context['current_language'] = get_language()
+        return context

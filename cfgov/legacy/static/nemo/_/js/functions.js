@@ -295,9 +295,9 @@ $(function(){
     var $show_hide_content = $show_hide.find("> .show-hide-content");
     //console.log($_show_hide_content)
 
-    var textshow = $(this).attr('data-textshow');
+    var textshow = escape($(this).attr('data-textshow'));
     //console.log('_textshow: ' + _textshow);
-    var texthide = $(this).attr('data-texthide');
+    var texthide = escape($(this).attr('data-texthide'));
     //console.log('_texthide: ' + _texthide);
 
     if($show_hide.hasClass("default-hidden")) {

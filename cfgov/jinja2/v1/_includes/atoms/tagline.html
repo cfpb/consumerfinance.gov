@@ -1,0 +1,18 @@
+
+{# ==========================================================================
+
+   tagline.render()
+
+   ==========================================================================
+
+   Description:
+
+   Render HTML for the United States government site tagline.
+
+   ========================================================================== #}
+
+{% macro render( is_large ) %}
+<div class="a-tagline{{ ' a-tagline__large' if is_large else '' }}">
+	{{ _('An official website of the United States government') }}
+</div>
+{% endmacro %}

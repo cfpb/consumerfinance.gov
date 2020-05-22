@@ -1,5 +1,5 @@
-from django.core.urlresolvers import reverse
 from django.test import Client, TestCase
+from django.urls import reverse
 
 
 class TestLegacyPagesRender(TestCase):
@@ -11,7 +11,7 @@ class TestLegacyPagesRender(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_fellowship_page(self):
-        self.check_named_url('technology_innovation_fellows')
+        self.check_named_url("technology_innovation_fellows")
 
     def test_supervision_page(self):
-        self.check_named_url('jobs_supervision')
+        self.check_named_url("jobs_supervision")

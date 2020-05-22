@@ -1,16 +1,20 @@
-from django.test import Client, TestCase
-from wagtail.wagtailcore.blocks import StreamValue
+from django.core.exceptions import ValidationError
+from django.test import SimpleTestCase, TestCase
+
+from wagtail.core.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
+
+from v1.atomic_elements.molecules import (
+    ContactEmail, ContactHyperlink, RSSFeed, TextIntroduction
+)
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import DocumentDetailPage, LearnPage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.sublanding_page import SublandingPage
-from v1.tests.wagtail_pages.helpers import publish_page
-
-django_client = Client()
+from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
 class MoleculesTestCase(TestCase):
@@ -27,7 +31,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=bfp)
-        response = django_client.get('/browse-filterable-page/')
+        response = self.client.get('/browse-filterable-page/')
         self.assertContains(response, 'this is an intro')
 
     def test_featured_content(self):
@@ -46,7 +50,7 @@ class MoleculesTestCase(TestCase):
             atomic.expandable_group
         ], True)
         publish_page(child=bp)
-        response = django_client.get('/browse-page/')
+        response = self.client.get('/browse-page/')
         self.assertContains(response, 'this is a featured content body')
 
     def test_content_with_anchor(self):
@@ -61,7 +65,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=learn_page)
-        response = django_client.get('/learn/')
+        response = self.client.get('/learn/')
         self.assertContains(response, 'full width text block')
         self.assertContains(response, 'this is an anchor link')
 
@@ -77,7 +81,7 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=learn_page)
-        response = django_client.get('/learn/')
+        response = self.client.get('/learn/')
         self.assertContains(response, 'this is a quote')
         self.assertContains(response, 'a citation')
 
@@ -93,8 +97,25 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=learn_page)
-        response = django_client.get('/learn/')
+        response = self.client.get('/learn/')
         self.assertContains(response, 'this is a call to action')
+
+    def test_notification(self):
+        """Notification correctly displays on a Sublanding Page"""
+        sublanding_page = SublandingPage(
+            title='Sublanding Page',
+            slug='sublanding',
+        )
+        sublanding_page.content = StreamValue(
+            sublanding_page.content.stream_block,
+            [atomic.notification],
+            True
+        )
+        publish_page(child=sublanding_page)
+        response = self.client.get('/sublanding/')
+        self.assertContains(response, 'this is a notification message')
+        self.assertContains(response, 'this is a notification explanation')
+        self.assertContains(response, 'this is a notification link')
 
     def test_hero(self):
         """Hero heading correctly displays on a Sublanding Filterable Page"""
@@ -108,9 +129,8 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=sfp)
-        response = django_client.get('/sfp/')
+        response = self.client.get('/sfp/')
         self.assertContains(response, 'this is a hero heading')
-
 
     def test_related_links(self):
         """Related links value correctly displays on a Landing Page"""
@@ -124,38 +144,8 @@ class MoleculesTestCase(TestCase):
             True
         )
         publish_page(child=landing_page)
-        response = django_client.get('/landing/')
+        response = self.client.get('/landing/')
         self.assertContains(response, 'this is a related link')
-
-    def test_half_width_link_blob(self):
-        """Half width link blob value correctly displays on a Landing Page"""
-        landing_page = LandingPage(
-            title='Landing Page',
-            slug='landing',
-        )
-        landing_page.content = StreamValue(
-            landing_page.content.stream_block,
-            [atomic.half_width_link_blob_group],
-            True
-        )
-        publish_page(child=landing_page)
-        response = django_client.get('/landing/')
-        self.assertContains(response, 'this is a half width link blob')
-
-    def test_rss_feed(self):
-        """RSS feed correctly displays on a Sublanding Page"""
-        sublanding_page = SublandingPage(
-            title='Sublanding Page',
-            slug='sublanding',
-        )
-        sublanding_page.sidefoot = StreamValue(
-            sublanding_page.sidefoot.stream_block,
-            [atomic.rss_feed],
-            True
-        )
-        publish_page(sublanding_page)
-        response = django_client.get('/sublanding/')
-        self.assertContains(response, 'rss-subscribe-section')
 
     def test_expandable(self):
         """Expandable label value correctly displays on a Browse Page"""
@@ -169,7 +159,7 @@ class MoleculesTestCase(TestCase):
             True,
         )
         publish_page(child=browse_page)
-        response = django_client.get('/browse/')
+        response = self.client.get('/browse/')
         self.assertContains(response, 'this is an expandable')
 
     def test_related_metadata(self):
@@ -184,39 +174,155 @@ class MoleculesTestCase(TestCase):
             True,
         )
         publish_page(child=ddp)
-        response = django_client.get('/ddp/')
+        response = self.client.get('/ddp/')
         self.assertContains(response, 'this is a related metadata heading')
 
-    def test_image_texts(self):
-        """Image Text molecules correctly display on a Landing Page"""
-        landing_page = LandingPage(
-            title='Landing Page',
-            slug='landing',
-        )
-        landing_page.content = StreamValue(
-            landing_page.content.stream_block,
-            [
-                atomic.image_text_50_50_group,
-                atomic.image_text_25_75_group
-            ],
-            True,
-        )
-        publish_page(child=landing_page)
-        response = django_client.get('/landing/')
-        self.assertContains(response, 'this is an image text in a 50 50 group')
-        self.assertContains(response, 'this is an image text in a 25 75 group')
 
-    def test_formfield_with_button(self):
-        """FormField with Button correctly displays on a Sublanding Page"""
-        sublanding_page = DocumentDetailPage(
-            title='Sublanding Page',
-            slug='sublanding',
+class ContactEmailTests(SimpleTestCase):
+    def test_clean_email_required(self):
+        block = ContactEmail()
+        value = block.to_python({'emails': []})
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_clean_valid(self):
+        block = ContactEmail()
+        value = block.to_python({'emails': [{'url': 'foo@example.com'}]})
+        self.assertTrue(block.clean(value))
+
+    def test_render_no_link_text(self):
+        block = ContactEmail()
+        value = block.to_python({'emails': [{'url': 'foo@example.com'}]})
+        self.assertInHTML(
+            '<a href="mailto:foo@example.com">foo@example.com</a>',
+            block.render(value)
         )
-        sublanding_page.sidefoot = StreamValue(
-            sublanding_page.sidefoot.stream_block,
-            [atomic.email_signup],
-            True,
+
+    def test_render_with_link_text(self):
+        block = ContactEmail()
+        value = block.to_python({
+            'emails': [
+                {
+                    'url': 'foo@example.com',
+                    'text': 'Bar',
+                },
+            ],
+        })
+
+        self.assertInHTML(
+            '<a href="mailto:foo@example.com">Bar</a>',
+            block.render(value)
         )
-        publish_page(child=sublanding_page)
-        response = django_client.get('/sublanding/')
-        self.assertContains(response, 'this is a form field with button')
+
+
+class ContactHyperlinkTests(SimpleTestCase):
+    def test_render_no_link_text(self):
+        block = ContactHyperlink()
+        value = block.to_python({'url': 'https://example.com'})
+        self.assertInHTML(
+            '<a href="https://example.com">https://example.com</a>',
+            block.render(value)
+        )
+
+    def test_render_with_link_text(self):
+        block = ContactHyperlink()
+        value = block.to_python({
+            'url': 'https://example.com',
+            'text': 'Example',
+        })
+        self.assertInHTML(
+            '<a href="https://example.com">Example</a>',
+            block.render(value)
+        )
+
+
+class TestTextIntroductionValidation(TestCase):
+
+    def test_text_intro_without_eyebrow_or_heading_passes_validation(self):
+        block = TextIntroduction()
+        value = block.to_python({})
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('no heading and no eyebrow should not fail validation')
+
+    def test_text_intro_with_just_heading_passes_validation(self):
+        block = TextIntroduction()
+        value = block.to_python({'heading': 'Heading'})
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('heading without eyebrow should not fail validation')
+
+    def test_text_intro_with_eyebrow_but_no_heading_fails_validation(self):
+        block = TextIntroduction()
+        value = block.to_python({'eyebrow': 'Eyebrow'})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_text_intro_with_heading_and_eyebrow_passes_validation(self):
+        block = TextIntroduction()
+        value = block.to_python({
+            'heading': 'Heading',
+            'eyebrow': 'Eyebrow'
+        })
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('eyebrow with heading should not fail validation')
+
+
+class RSSFeedTests(TestCase):
+    def render(self, context):
+        block = RSSFeed()
+
+        # RSSFeed doesn't take any options.
+        value = block.to_python({})
+
+        return block.render(value=value, context=context)
+
+    def assertHTMLContainsLinkToPageFeed(self, html, page):
+        feed = page.url + 'feed/'
+        self.assertIn('<a class="a-btn" href="{}">'.format(feed), html)
+
+    def test_render_no_page_in_context_renders_nothing(self):
+        html = self.render(context={})
+        self.assertFalse(html.strip())
+
+    def test_render_page_doesnt_provide_feed_renders_nothing(self):
+        page = BrowsePage(title='test', slug='test')
+        save_new_page(page)
+
+        html = self.render(context={'page': page})
+        self.assertFalse(html.strip())
+
+    def test_render_page_provides_feed(self):
+        page = SublandingFilterablePage(title='test', slug='test')
+        save_new_page(page)
+
+        html = self.render(context={'page': page})
+        self.assertHTMLContainsLinkToPageFeed(html, page)
+
+    def test_render_parent_page_provides_feed(self):
+        parent_page = SublandingFilterablePage(title='test', slug='test')
+        save_new_page(parent_page)
+
+        child_page = BrowsePage(title='test', slug='test')
+        save_new_page(child_page, root=parent_page)
+
+        html = self.render(context={'page': child_page})
+        self.assertHTMLContainsLinkToPageFeed(html, parent_page)
+
+    def test_render_both_child_and_parent_page_provide_feed(self):
+        parent_page = SublandingFilterablePage(title='test', slug='test')
+        save_new_page(parent_page)
+
+        child_page = SublandingFilterablePage(title='test', slug='test')
+        save_new_page(child_page, root=parent_page)
+
+        html = self.render(context={'page': child_page})
+        self.assertHTMLContainsLinkToPageFeed(html, child_page)

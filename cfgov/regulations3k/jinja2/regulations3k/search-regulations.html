@@ -1,0 +1,232 @@
+{% extends 'layout-full.html' %}
+{% import 'atoms/checkbox.html' as checkbox %}
+{% import 'atoms/radio-button.html' as radio %}
+{% import 'atoms/tag.html' as tag %}
+{% import 'regulations3k/regulations3k-search-bar.html' as search_bar %}
+{% import 'regulations3k/regulations3k-search-result-item.html' as search_item %}
+{% import 'molecules/pagination.html' as pagination with context %}
+{% from 'organisms/expandable.html' import expandable with context %}
+
+{# HEAD items #}
+
+{% block title -%}
+    Regulations Search | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block desc -%}
+    Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.
+{%- endblock desc %}
+
+{% block og_image -%}
+    <meta property="og:image" content="{{ meta_image_url }}">
+    <meta property="twitter:image" content="{{ meta_image_url }}">
+    {# Optional property if you want to use Twitter's large card format
+       https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary-card-with-large-image
+    <meta name="twitter:card" content="summary_large_image">
+    #}
+{%- endblock og_image %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block preload %}
+    {{ super() }}
+    <link rel="manifest" href="{{ static('apps/regulations3k/regulations3k-manifest.json') }}">
+    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
+    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Regs">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#20aa3f"/>
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
+{%- endblock css %}
+
+
+{# BODY items #}
+
+{% block body_classes %}
+    {{ super() }}
+{% endblock body_classes %}
+
+{% block content_main_modifiers -%}
+    content__1-3
+{%- endblock %}
+
+{% block content_main scoped %}
+
+<div class="content_wrapper search_form">
+    <div class="block block__sub search_intro">
+        <h1>
+            Search
+            <span class="search_intro__all">
+                regulations
+            </span>
+        </h1>
+        <div class="lead-paragraph">
+            <p>
+                <span class="search_intro__all">
+                    Search for terms in the sections, interpretations, and appendices in the Bureau regulations we currently have online.
+                </span>
+            </p>
+        </div>
+    </div>
+    <div class="search_wrapper u-mt30">
+        {{ search_bar.render(
+            [{ 'name': 'regs', 'value': page.results.regs | join(',') }],
+            page.results.search_query
+        ) }}
+    </div>
+</div>
+{% if page.results.search_query %}
+<div class="content_wrapper search_results">
+    <div class="block block__flush-top">
+        <aside class="content_sidebar content__flush-top-on-small content__flush-sides-on-small filters">
+            <h3>Refine results</h3>
+            <form action="." method="get" data-js-hook="behavior_change-filter">
+                {% set expandable_settings = {
+                    'label': 'Regulation',
+                    'is_expanded': true,
+                    'is_midtone': true,
+                    'hide_cue_label': true
+                } %}
+                {% call() expandable(expandable_settings) %}
+                <div class="o-form_group">
+                    <fieldset class="o-form_fieldset">
+                        {% if page.results.search_query %}
+                        <input type="hidden" name="q" value="{{ page.results.search_query }}">
+                        {% endif %}
+                        <p> </p>
+                        <ul class="m-list m-list__unstyled">
+                        {% for reg in page.results.all_regs %}
+                            {%- set reg_name = '(' ~ reg.short_name | regs_hide_on_mobile ~ ')' -%}
+                            <li>
+                                {{ checkbox.render({
+                                    'label': reg.id ~ ' ' ~ reg_name | safe,
+                                    'value': reg.id,
+                                    'id': 'regulation-' ~ reg.id,
+                                    'class': 'reg-checkbox',
+                                    'name': 'regs',
+                                    'selected': reg.selected
+                                }) }}
+                                <div class="num-results">{{ reg.num_results }}</div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </fieldset>
+                </div>
+                {% endcall %}
+                {% set expandable_settings = {
+                    'label': 'Results per page',
+                    'is_expanded': false,
+                    'is_midtone': true,
+                    'hide_cue_label': true
+                } %}
+                {% call() expandable(expandable_settings) %}
+                <div class="o-form_group">
+                    <fieldset class="o-form_fieldset">
+                        <p> </p>
+                        {{ radio.render({
+                            'label': '25 per page',
+                            'value': '25',
+                            'id': 'results_25',
+                            'class': 'reg-radio',
+                            'name': 'results',
+                            'selected': true if (num_results == 25)
+                        }) }}
+                        {{ radio.render({
+                            'label': '50 per page',
+                            'value': '50',
+                            'id': 'results_50',
+                            'class': 'reg-radio',
+                            'name': 'results',
+                            'selected': true if (num_results == 50)
+                        }) }}
+                        {{ radio.render({
+                            'label': '100 per page',
+                            'value': '100',
+                            'id': 'results_100',
+                            'class': 'reg-radio',
+                            'name': 'results',
+                            'selected': true if (num_results == 100)
+                        }) }}
+                    </fieldset>
+                </div>
+                {% endcall %}
+                {% set expandable_settings = {
+                    'label': 'Order',
+                    'is_expanded': false,
+                    'is_midtone': true,
+                    'hide_cue_label': true
+                } %}
+                {% call() expandable(expandable_settings) %}
+                <div class="o-form_group">
+                    <fieldset class="o-form_fieldset">
+                        <p> </p>
+                        {{ radio.render({
+                            'label': 'By relevance',
+                            'value': 'relevance',
+                            'id': 'sort_rel',
+                            'class': 'reg-radio',
+                            'name': 'order',
+                            'selected': true if (order == 'relevance')
+                        }) }}
+                        {{ radio.render({
+                            'label': 'By regulation',
+                            'value': 'regulation',
+                            'id': 'sort_reg',
+                            'class': 'reg-radio',
+                            'name': 'order',
+                            'selected': true if (order == 'regulation')
+                        }) }}
+                    </fieldset>
+                </div>
+                {% endcall %}
+                <div class="o-form_group regs3k-js">
+                    <fieldset class="o-form_fieldset u-mt20">
+                        <div class="input-with-btn_btn">
+                            <button class="a-btn" type="submit">
+                                Update
+                            </button>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </aside>
+        <div id="regs3k-results" class="content_main content__flush-all-on-small content__flush-bottom">
+            {% include 'search-regulations-results.html' %}
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="content_wrapper search_results_empty">
+    <p class="results_initial__all">
+        Search for a term above, then filter the results to find what you’re looking for.
+    </p>
+</div>
+{% endif %}
+
+{% endblock content_main %}
+
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/regulations3k/js/index.js') }}'
+            {% if page.results.search_query %}
+            ,'{{ static('apps/regulations3k/js/search.js') }}'
+            {% endif %}
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

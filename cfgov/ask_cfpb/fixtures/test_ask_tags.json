@@ -1,0 +1,138 @@
+[
+{
+    "model": "taggit.tag",
+    "pk": 10,
+    "fields": {
+        "name": "Auto loans",
+        "slug": "auto-loans"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 1022,
+    "fields": {
+        "name": "Bank accounts",
+        "slug": "bank-accounts"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 19,
+    "fields": {
+        "name": "Credit cards",
+        "slug": "credit-cards"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 117,
+    "fields": {
+        "name": "Credit reports and scores",
+        "slug": "credit-reports-and-scores"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 65,
+    "fields": {
+        "name": "Debt collection",
+        "slug": "debt-collection"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 1025,
+    "fields": {
+        "name": "Fraud and scams",
+        "slug": "fraud-and-scams_1"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 62,
+    "fields": {
+        "name": "Money transfers",
+        "slug": "money-transfers"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 30,
+    "fields": {
+        "name": "Mortgages",
+        "slug": "mortgages"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 6,
+    "fields": {
+        "name": "Payday loans",
+        "slug": "payday-loans"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 13,
+    "fields": {
+        "name": "Prepaid cards",
+        "slug": "prepaid-cards"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 115,
+    "fields": {
+        "name": "Reverse mortgages",
+        "slug": "reverse-mortgages"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 15,
+    "fields": {
+        "name": "Student loans",
+        "slug": "student-loans"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 1028,
+    "fields": {
+        "name": "Basics",
+        "slug": "basics"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 1029,
+    "fields": {
+        "name": "Know your rights",
+        "slug": "know-your-rights"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 1030,
+    "fields": {
+        "name": "How-to",
+        "slug": "how-to"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 1031,
+    "fields": {
+        "name": "Key terms",
+        "slug": "key-terms"
+    }
+},
+{
+    "model": "taggit.tag",
+    "pk": 1032,
+    "fields": {
+        "name": "Common issues",
+        "slug": "common-issues"
+    }
+}
+]

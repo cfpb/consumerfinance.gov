@@ -2,9 +2,11 @@ import logging
 
 from django.utils import timezone
 
-from v1.models.browse_filterable_page import (BrowseFilterablePage,
-                                              EventArchivePage)
+from v1.models.browse_filterable_page import (
+    BrowseFilterablePage, EventArchivePage
+)
 from v1.models.learn_page import EventPage
+
 
 logger = logging.getLogger(__name__)
 
@@ -29,13 +31,13 @@ def run():
                         if event.end_dt < timezone.now():
                             if event.can_move_to(archived_events):
                                 event.move(archived_events, pos='last-child')
-                                logger.info(event.title + ' Event …archived')
+                                logger.info(event.title + ' archived')
         else:
-            logger.info('No events to archive found…')
+            logger.info('No events to archive found...')
     elif not event_page_exists:
-        logger.info('Events browse filterable page has not been created…')
+        logger.info('Events browse filterable page has not been created...')
     elif not archive_event_page_exists:
         logger.info('No Archived events Browse filterable page named '
-                    '\'Archive\' exist…')
+                    '\'Archive\' exist...')
     else:
-        logger.info('No events exist in the database…')
+        logger.info('No events exist in the database...')

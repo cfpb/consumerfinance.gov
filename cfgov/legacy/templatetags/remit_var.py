@@ -2,6 +2,7 @@ import os
 
 from django import template
 
+
 register = template.Library()
 
 
@@ -12,4 +13,4 @@ def is_remit():
         return False
 
 
-register.assignment_tag(is_remit)
+register.simple_tag(is_remit)

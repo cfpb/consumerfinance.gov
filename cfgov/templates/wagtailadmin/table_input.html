@@ -14,11 +14,49 @@
 
 <div id="{{ attrs.id }}-handsontable-input-container">
 
+<div class="field">
+    <label for="{{ attrs.id }}-handsontable-heading">Heading</label>
+
+    <div class="field-content">
+        <div class="heading-text-block">
+            <label for="{{ attrs.id }}-handsontable-heading-text">Text:</label>
+            <div class="input">
+                <input type="text"
+                       id="{{ attrs.id }}-handsontable-heading-text"
+                       name="handsontable-heading-text">
+            </div>
+        </div>
+        <div class="heading-level-block">
+            <label for="{{ attrs.id }}-handsontable-heading-level">Level:</label>
+            <div class="input">
+                <select id="{{ attrs.id }}-handsontable-heading-level"
+                        name="handsontable-heading-level"
+                        placeholder="Level">
+                    <option value="h2">H2</option>
+                    <option value="h3">H3</option>
+                    <option value="h4">H4</option>
+                </select>
+            </div>
+        </div>
+        <div class="heading-icon-block">
+            <label for="{{ attrs.id }}-handsontable-heading-icon">Icon:</label>
+            <div class="input">
+                <input type="text"
+                       id="{{ attrs.id }}-handsontable-heading-icon"
+                       name="handsontable-heading-icon">
+                <span class="help">Input the name of an icon to appear to the left of the heading. E.g., approved, help-round, etc. <a href="https://cfpb.github.io/capital-framework/components/cf-icons/#the-icons">See full list of icons</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="field boolean_field widget-checkbox_input">
     <label for="{{ attrs.id }}-handsontable-striped-rows">Striped rows</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-striped-rows" name="handsontable-striped-rows"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-striped-rows"
+                   name="handsontable-striped-rows">
             <span class="help">( Display the Table with striped rows )</span>
         </div>
 
@@ -28,7 +66,9 @@
     <label for="{{ attrs.id }}-handsontable-striped-rows">Stacked on mobile</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-stack-on-mobile" name="handsontable-stack-on-mobile"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-stack-on-mobile"
+                   name="handsontable-stack-on-mobile">
             <span class="help">( Stack the table columns on mobile )</span>
         </div>
     </div>
@@ -37,7 +77,9 @@
     <label for="{{ attrs.id }}-handsontable-full-width">Full-width</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-full-width" name="handsontable-full-width"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-full-width"
+                   name="handsontable-full-width">
             <span class="help">( Display the table at full-width )</span>
         </div>
     </div>
@@ -46,7 +88,9 @@
     <label for="{{ attrs.id }}-handsontable-header">Row header</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-header" name="handsontable-header"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-header"
+                   name="handsontable-header">
             <span class="help">( Display the first row as a header )</span>
         </div>
     </div>
@@ -55,12 +99,139 @@
     <label for="{{ attrs.id }}-handsontable-col-header">Column header</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-col-header" name="handsontable-col-header"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-col-header"
+                   name="handsontable-col-header">
             <span class="help">( Display the first column as a header )</span>
         </div>
     </div>
 </div>
-<br/>
+<div class="field boolean_field widget-checkbox_input">
+    <label for="{{ attrs.id }}-handsontable-col-fixed">Fixed-width columns</label>
+    <div class="field-content">
+        <div class="input">
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-col-fixed"
+                   name="handsontable-col-fixed">
+            <span class="help">( Enable fixed width columns )</span>
+        </div>
+    </div>
+</div>
+<div class="field boolean_field widget-checkbox_input">
+    <label for="{{ attrs.id }}-handsontable-sortable">Sortable table</label>
+    <div class="field-content">
+        <div class="input">
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-sortable"
+                   name="handsontable-sortable">
+            <span class="help">( Enable sortable table functionality )</span>
+        </div>
+    </div>
+</div>
+<br>
+<div id="{{ attrs.id }}-width_warning"
+     class="table-block-warning">
+    Warning! Your total column width is greater than 100%!
+    Please adjust your column widths to be less than 100% total before continuing.
+</div>
+
+<table id="{{ attrs.id }}-fixed-width-column-input">
+  <tr>
+    <td>
+      <p class="column-width-input_container">
+        <select class="column-width-input">
+          <option value="">Flexible width</option>
+          <option value="u-w10pct">10%</option>
+          <option value="u-w20pct">20%</option>
+          <option value="u-w25pct">25%</option>
+          <option value="u-w30pct">30%</option>
+          <option value="u-w33pct">33%</option>
+          <option value="u-w40pct">40%</option>
+          <option value="u-w50pct">50%</option>
+          <option value="u-w60pct">60%</option>
+          <option value="u-w66pct">66%</option>
+          <option value="u-w70pct">70%</option>
+          <option value="u-w75pct">75%</option>
+          <option value="u-w80pct">80%</option>
+          <option value="u-w90pct">90%</option>
+        </select>
+      </p>
+    </td>
+    <td>
+      <p class="column-width-input_container">
+        <select class="column-width-input">
+          <option value="">Flexible width</option>
+          <option value="u-w10pct">10%</option>
+          <option value="u-w20pct">20%</option>
+          <option value="u-w25pct">25%</option>
+          <option value="u-w30pct">30%</option>
+          <option value="u-w33pct">33%</option>
+          <option value="u-w40pct">40%</option>
+          <option value="u-w50pct">50%</option>
+          <option value="u-w60pct">60%</option>
+          <option value="u-w66pct">66%</option>
+          <option value="u-w70pct">70%</option>
+          <option value="u-w75pct">75%</option>
+          <option value="u-w80pct">80%</option>
+          <option value="u-w90pct">90%</option>
+        </select>
+      </p>
+    </td>
+    <td>
+      <p class="column-width-input_container">
+        <select class="column-width-input">
+          <option value="">Flexible width</option>
+          <option value="u-w10pct">10%</option>
+          <option value="u-w20pct">20%</option>
+          <option value="u-w25pct">25%</option>
+          <option value="u-w30pct">30%</option>
+          <option value="u-w33pct">33%</option>
+          <option value="u-w40pct">40%</option>
+          <option value="u-w50pct">50%</option>
+          <option value="u-w60pct">60%</option>
+          <option value="u-w66pct">66%</option>
+          <option value="u-w70pct">70%</option>
+          <option value="u-w75pct">75%</option>
+          <option value="u-w80pct">80%</option>
+          <option value="u-w90pct">90%</option>
+        </select>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<table id="{{ attrs.id }}-sortable-input">
+  <tr>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Alphabetical</option>
+        <option value="number">Numerical</option>
+        <option value="string-default">Alphabetical - Default</option>
+        <option value="number-default">Numerical - Default</option>
+      </select>
+    </td>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Alphabetical</option>
+        <option value="number">Numerical</option>
+        <option value="string-default">Alphabetical - Default</option>
+        <option value="number-default">Numerical - Default</option>
+      </select>
+    </td>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Alphabetical</option>
+        <option value="number">Numerical</option>
+        <option value="string-default">Alphabetical - Default</option>
+        <option value="number-default">Numerical - Default</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
 <div id="{{ attrs.id }}-handsontable-container"></div>
 
 {{ original_field_html }}

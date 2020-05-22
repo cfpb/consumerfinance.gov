@@ -1,6 +1,6 @@
 /* ==========================================================================
    cfgov-refresh
-   Master Less File.
+   Master Less file for the nonresponsive on-demand footer
    ========================================================================== */
 
 
@@ -10,27 +10,29 @@
 
 // Import required CF components.
 // Combined CF components.
-@import (less) 'cf-core/src/cf-core.less';
-@import (less) 'cf-icons/src/cf-icons.less';
-@import (less) 'cf-buttons/src/cf-buttons.less';
-@import (less) 'cf-forms/src/cf-forms.less';
+@import (less) 'cfpb-core.less';
+@import (less) 'cfpb-icons.less';
+@import (less) 'cfpb-buttons.less';
+@import (less) 'cfpb-forms.less';
 
 .o-footer {
-    @import (less) 'cf-buttons/src/cf-buttons.less';
-    @import (less) 'cf-layout/src/cf-layout.less';
+    @import (less) 'cfpb-buttons.less';
+    @import (less) 'cfpb-layout.less';
 }
-@import (less) 'cf-typography/src/cf-typography.less';
+@import (less) 'cfpb-typography.less';
 
-// The Capital Framework (CF) brand color palette.
-@import (less) "../brand-palette.less";
+// // Icon font path
+@cf-icon-path: '/static/icons';
 
-// Override the CF theme variables with colors from the brand color palette.
-@import (less) "../cf-theme-overrides.less";
+// Webfont variables
+// This is the path for self-hosted fonts.
+@cf-fonts-path: '/static/fonts';
+// Whether or not to override the local path and retrieve fonts from fonts.net.
+@use-font-cdn: true;
 
 // Enhancements that are on a migration path to being added to CF.
 // CF Core
 @import (less) "../enhancements/vars.less";
-@import (less) "../enhancements/media-queries.less";
 @import (less) "../enhancements/utilities.less";
 @import (less) "../enhancements/base.less";
 

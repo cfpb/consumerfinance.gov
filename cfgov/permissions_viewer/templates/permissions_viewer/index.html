@@ -1,0 +1,35 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% block titletag %}{% trans "Permissions Viewer" %}{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title="View user permissions" %}
+
+    <div class="nice-padding">
+	    <h1> {{group}} </h1>
+	    <h2>Active Users</h2>
+	    <ul>
+	{% for user in active_users %}
+	<li><a href="{% url "permissions:user" user.pk %}">{{ user }}</a></li>
+	{% empty %}
+	<li>There are no active users</li>
+	{% endfor %}
+	 </ul>
+	    <h2>Inactive Users</h2>
+	    <ul>
+	{% for user in inactive_users %}
+	<li><a href="{% url "permissions:user" user.pk %}">{{ user }}</a></li>
+	{% empty %}
+	<li>There are no inactive users</li>
+	{% endfor %}
+	 </ul>
+	    <h2>Group Rosters</h2>
+	    <ul>
+	{% for group in groups %}
+	<li><a href="{% url "permissions:group" group.pk %}">{{ group }}</a></li>
+	{% empty %}
+	<li>There are no groups defined</li>
+	{% endfor %}
+	 </ul>
+    </div>
+{% endblock %}

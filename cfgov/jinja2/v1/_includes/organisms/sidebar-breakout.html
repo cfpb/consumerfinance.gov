@@ -8,24 +8,25 @@
 
    Creates Sidebar Breakout markup when given:
 
-   page.content:                   An object used to customize the markup.
+   page.content: An object used to customize the markup.
 
-   page.content.text_introduction  An object containing the text intro molecule
+   page.content.text_introduction: An object containing the text intro molecule.
 
-   page.sidebar_breakout:          An object used to customize the markup.
+   page.sidebar_breakout: An object used to customize the markup.
 
-   page.sidebar_breakout.heading:  A string containing heading text. (Optional)
+   page.sidebar_breakout.heading: (Optional) A string containing heading text.
 
-   page.sidebar_breakout.image:    An object used to customize the image
-                                    markup. (Optional)
+   page.sidebar_breakout.image: (Optional) An object used to customize the image
+                                markup.
 
-   page.sidebar_breakout.intro.body:  A string containing body text. (Optional)
 
-   page.sidebar_breakout.intro.heading: A string containing heading text.
-                                          (Optional)
+   page.sidebar_breakout.intro.body: (Optional) A string containing body text.
 
-   page.sidebar_breakout.related_posts: An object used to customize the related
-                                          posts markup. (Optional)
+   page.sidebar_breakout.intro.heading: (Optional) A string containing heading
+                                        text.
+
+   page.sidebar_breakout.related_posts: (Optional) An object used to customize
+                                        the related posts markup.
 
    ========================================================================== #}
 
@@ -62,7 +63,7 @@
                         {% if blocks.image is defined %}
                             {% set photo = image(blocks.image.value, 'original') %}
                             <div class="o-sidebar-breakout_img-container
-                                        {{ 'o-sidebar-breakout_img-container__round' 
+                                        {{ 'o-sidebar-breakout_img-container__round'
                                            if blocks.is_round | string == 'True' else '' }}
                                         u-centered-on-mobile">
                               <div class="o-sidebar-breakout_img
@@ -74,40 +75,33 @@
                                 <div class="o-sidebar-breakout_text-container">
                                 {% if blocks.heading.value %}
                                     <h4 class="o-sidebar-breakout_text-heading">
-                                        <span class="cf-icon
-                                                     cf-icon-{{ blocks.icon.render()
-                                                                if blocks.icon is defined else '' }}"></span>
+                                        {% if blocks.icon %}
+                                            {{ svg_icon(blocks.icon) }}
+                                        {% endif %}
                                         {{ blocks.heading.render() }}
                                     </h4>
                                 {% endif %}
                                 {% if blocks.body.value %}
                                     <p class="o-sidebar-breakout_text-body">
-                                        {{ parse_links(blocks.body.render()) | safe }}
+                                        {{ blocks.body.render() | safe }}
                                     </p>
                                 {% endif %}
                                 </div>
                             {% endif %}
                         {% endif %}
-                    {% elif 'related_posts' in block.block_type %}
-                        {% set posts = page.related_posts(block, request.site.hostname) %}
-                        {% if posts %}
-                            <div class="block {{- 'block__flush-top' if loop.index == 1 else '' -}}">
-                                {{ related_posts.render(posts, block, half_width) }}
-                            </div>
-                        {% else %}
-                            {% set blocks = streamfield|list %}
-                            {{ loop(blocks[loop.index:]) }}
-                            {% break %}
-                        {% endif %}
+                    {% elif block.block_type in ['job_listing_list', 'related_posts'] %}
+                        <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                            {% include_block block %}
+                        </div>
                     {% elif 'slug' in block.block_type %}
-                        <h2 class="header-slug">
-                            <span class="header-slug_inner">
+                        <header class="m-slug-header">
+                            <h2 class="a-heading">
                                 {{ block.value }}
-                            </span>
-                        </h2>
+                            </h2>
+                        </header>
                     {% elif 'paragraph' in block.block_type %}
                         <p class="o-sidebar-breakout_text-body">
-                            {{ parse_links(block.value) | safe }}
+                            {{ block.value | safe }}
                         </p>
                     {% else %}
                         {% import 'templates/render_block.html' as render_block with context %}

@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Helper Classes & Styles
+   ========================================================================== */
+
+.alert-positive {
+    color: @green;
+}
+
+.alert-warning {
+    color: @red;
+}
+
+.alert-neutral {
+    color:  @gray-40;
+}
+
+.a-form-alert {
+    color: @dark-gray;
+    font-size: 0.75em;
+}
+
+// alert containers have a background color but no border
+.alert-container {
+    padding: unit( 20px / @base-font-size-px, em );
+    background: @gray-5;
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.block__bg {
+    background-color: @block__bg;
+}
+
+.clear {
+    /* IE 8 */
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+    opacity: 0;
+}
+
+.highlight-dropdown {
+    border-color: @gold;
+    border-width: 2px;
+}
+
+/* add a margin above an element */
+.l-bump {
+    margin-top: 2em;
+}
+
+/* lead paragraphs are typically the first paragraph in a content area */
+.lead {
+    margin-bottom: unit( 30px / @base-font-size-px, em );
+    font-size: 1.125em;
+}
+
+@keyframes fadein {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+.loaded {
+    animation: fadein 0.5s;
+}
+
+.loading {
+    /* IE 8 */
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=30)';
+    opacity: 0.3;
+}
+
+/* notes are subtle call out boxes with top and bottom borders */
+.note {
+    color: @black;
+    padding: 20px 10px;
+    margin: 1em 0;
+    border-top: 1px solid @gray-10;
+    border-bottom: 1px solid @gray-10;
+
+    p:last-child {
+        .u-reset;
+    }
+
+    h4:first-child,
+    h5:first-child {
+        margin-top: 0;
+    }
+}
+
+.placeholder {
+    min-height: 200px;
+    background: @gray-10;
+    line-height: 200px;
+    text-align: center;
+}
+
+/* use sans-serif typeface */
+.sans {
+    strong {
+        font-weight: 600;
+    }
+}
+
+.u-hidden {
+    display: none !important;
+}
+
+.u-no-bg {
+    background-color: transparent;
+}
+
+.u-pb0 {
+    padding-bottom: 0 !important;
+}
+
+.u-right-on-desktop {
+    .respond-to-min( 801px, {
+        text-align: right;
+    } );
+}
+
+.u-link-underline {
+    border-bottom: 1px dotted;
+}
+
+
+.respond-to-min( 620p, {
+    .note {
+        padding: unit( 20px / @base-font-size-px, em ) 12%;
+    }
+} );
+
+.respond-to-max( 800px, {
+    .mobi-no {
+        display: none;
+    }
+} );
+
+.respond-to-min( 800px, {
+    .mobi-yes {
+        display: none;
+    }
+} );

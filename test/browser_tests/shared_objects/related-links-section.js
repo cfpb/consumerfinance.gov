@@ -1,15 +1,13 @@
-'use strict';
+const _relatedLinksSection = element( by.css( '.related-links' ) );
 
-var _relatedLinksSection = element( by.css( '.related-links' ) );
-
-var relatedLinksSection = {
+const relatedLinksSection = {
 
   relatedLinksSection: _relatedLinksSection,
 
   relatedLinksSectionTitles: _relatedLinksSection.all( by.css( 'h2' ) ),
 
   relatedLinksSectionDescriptions:
-  _relatedLinksSection.all( by.css( '.short-desc' ) ),
+    _relatedLinksSection.all( by.css( '.short-desc' ) ),
 
   relatedLinks: _relatedLinksSection.all( by.css( 'a' ) )
 };

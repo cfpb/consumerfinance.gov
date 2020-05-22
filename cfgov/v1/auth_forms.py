@@ -3,11 +3,13 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
-                                       PasswordResetForm, SetPasswordForm)
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
+)
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
-from wagtail.wagtailusers import forms as wagtailforms
+
+from wagtail.users import forms as wagtailforms
 
 from .email import send_password_reset_email
 from .models import base
@@ -97,7 +99,7 @@ class LoginForm(AuthenticationForm):
                         'This account is temporarily locked; '
                         'please try later or <a href="/admin/password_reset/" '
                         'style="color:white;font-weight:bold">'
-                        'reset your password</a>'
+                        'reset your password</a>.'
                     )
                 else:
                     fa.save()
@@ -117,11 +119,10 @@ class LoginForm(AuthenticationForm):
 
                     if dt_now > current_password_data.expires_at:
                         raise ValidationError(
-                            'This account is temporarily locked; '
-                            'please try later or '
+                            'Your password has expired. Please '
                             '<a href="/admin/password_reset/" '
                             'style="color:white;font-weight:bold">'
-                            'reset your password</a>'
+                            'reset your password</a>.'
                         )
 
                 except ObjectDoesNotExist:
@@ -140,7 +141,7 @@ class LoginForm(AuthenticationForm):
                 'This account is temporarily locked; '
                 'please try later or <a href="/admin/password_reset/" '
                 'style="color:white;font-weight:bold">'
-                'reset your password</a>'
+                'reset your password</a>.'
             )
 
 

@@ -1,17 +1,17 @@
 from django.db import models
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
-from django.utils.six import string_types
-from wagtail.wagtailimages.image_operations import (DoNothingOperation,
-                                                    MinMaxOperation,
-                                                    WidthHeightOperation)
-from wagtail.wagtailimages.models import (AbstractImage, AbstractRendition,
-                                          Filter, Image)
+from django.utils.functional import cached_property
+
+from wagtail.images.image_operations import (
+    DoNothingOperation, MinMaxOperation, WidthHeightOperation
+)
+from wagtail.images.models import (
+    AbstractImage, AbstractRendition, Filter, Image
+)
 
 
 class CFGOVImage(AbstractImage):
     alt = models.CharField(max_length=100, blank=True)
-
+    file_hash = models.CharField(max_length=40, blank=True, editable=False)
     admin_form_fields = Image.admin_form_fields + (
         'alt',
     )
@@ -38,9 +38,9 @@ class CFGOVImage(AbstractImage):
         Template tags with Wagtail size-related filters (width, height, max,
         and min), e.g. {% image image 'max-165x165' %}, will generate an
         <img> tag with appropriate size parameters, following logic from
-        wagtail.wagtailimages.image_operations.
+        wagtail.images.image_operations.
         """
-        if isinstance(rendition_filter, string_types):
+        if isinstance(rendition_filter, str):
             rendition_filter = Filter(spec=rendition_filter)
 
         width = self.width
@@ -84,23 +84,53 @@ class CFGOVImage(AbstractImage):
         operation.run(mock_image, image=None, env={})
         return mock_image.width, mock_image.height
 
+    @property
+    def default_alt_text(self):
+        # Override Wagtail default of setting alt text to the image title.
+        return self.alt
+
+    # If the image is both large and its height-to-width ratio is approximately
+    # 1/2 we instruct the template to render large Twitter cards
+    # See https://dev.twitter.com/cards/types/summary-large-image
+    @property
+    def should_display_summary_large_image(self):
+        image_ratio = float(self.height) / self.width
+        return self.width >= 1000 and 0.4 <= image_ratio <= 0.6
+
 
 class CFGOVRendition(AbstractRendition):
-    image = models.ForeignKey(CFGOVImage, related_name='renditions')
+    image = models.ForeignKey(
+        CFGOVImage,
+        on_delete=models.CASCADE,
+        related_name='renditions')
+
+    @property
+    def alt(self):
+        return self.image.alt
+
+    @cached_property
+    def orientation(self):
+        orientation = 'square'
+        if self.is_portrait:
+            orientation = 'portrait'
+        elif self.is_landscape:
+            orientation = 'landscape'
+
+        return orientation
+
+    @cached_property
+    def is_square(self):
+        return self.height == self.width
+
+    @cached_property
+    def is_portrait(self):
+        return self.height > self.width
+
+    @cached_property
+    def is_landscape(self):
+        return self.height < self.width
 
     class Meta:
         unique_together = (
             ('image', 'filter_spec', 'focal_point_key'),
         )
-
-
-# Delete the source image file when an image is deleted
-@receiver(pre_delete, sender=CFGOVImage)
-def image_delete(sender, instance, **kwargs):
-    instance.file.delete(False)
-
-
-# Delete the rendition image file when a rendition is deleted
-@receiver(pre_delete, sender=CFGOVRendition)
-def rendition_delete(sender, instance, **kwargs):
-    instance.file.delete(False)

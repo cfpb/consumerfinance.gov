@@ -18,8 +18,10 @@
 
    contact.phones:           An array containing phone number information.
    contact.phones.number:    A phone number.
+   contact.phones.extension: A phone extension.
    contact.phones.vanity:    An associated vanity phone number.
    contact.phones.tty:       An associated TTY/TDD number.
+   contact.phones.tty_ext:   An associated TTY/TDD extension.
 
    contact.faxes:            An object containing fax numbers.
    contact.faxes.number:     A fax number.
@@ -33,6 +35,11 @@
    contact.address.city:     A string containing a city.
    contact.address.state:    A string containing a state.
    contact.address.zip_code: A string containing a zip code.
+   
+   has_top_rule_line:        Boolean for whether or not to add top
+                             border to main-contact-info. Used in
+                             'render_block.html' to modify classes on
+                             wrapping 'div.block'.
 
    ========================================================================== #}
 
@@ -40,7 +47,7 @@
     <div class="o-main-contact-info">
         <h2>{{ value.contact.heading }}</h2>
 
-        {{ parse_links(value.contact.body) | safe }}
+        {{ value.contact.body | safe }}
 
         {% if value.contact.contact_info %}
 

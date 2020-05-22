@@ -1,14 +1,27 @@
-from unittest import TestCase
+import unittest
 
 from django.core.exceptions import ValidationError
-from mock import Mock
-from model_mommy import mommy
-from wagtail.wagtailcore.models import Page
+from django.test import TestCase
 
-from jobmanager.models.django import ApplicantType
+from wagtail.core.models import Page
+
+from mock import Mock
+from model_bakery import baker
+
+from jobmanager.models.django import ApplicantType, Grade
 from jobmanager.models.pages import JobListingPage
-from jobmanager.models.panels import (EmailApplicationLink,
-                                      USAJobsApplicationLink)
+from jobmanager.models.panels import (
+    EmailApplicationLink, GradePanel, USAJobsApplicationLink
+)
+
+
+class GradePanelTests(unittest.TestCase):
+    def test_str(self):
+        grade = Grade(grade='53', salary_min=1, salary_max=100)
+        self.assertEqual(
+            str(GradePanel(grade=grade, job_listing_id=123)),
+            '53'
+        )
 
 
 class ApplicationLinkTestCaseMixin(object):
@@ -16,10 +29,11 @@ class ApplicationLinkTestCaseMixin(object):
 
     @classmethod
     def setUpClass(cls):
+        super(ApplicationLinkTestCaseMixin, cls).setUpClass()
         cls.root = Page.objects.get(slug='root')
 
     def setUp(self):
-        self.job_listing = mommy.prepare(JobListingPage, description='foo')
+        self.job_listing = baker.prepare(JobListingPage, description='foo')
         self.job_listing.full_clean = Mock(return_value=None)
         self.root.add_child(instance=self.job_listing)
 
@@ -37,7 +51,7 @@ class USAJobsApplicationLinkTestCase(ApplicationLinkTestCaseMixin, TestCase):
 
     def setUp(self):
         super(USAJobsApplicationLinkTestCase, self).setUp()
-        self.applicant_type = mommy.make(ApplicantType)
+        self.applicant_type = baker.make(ApplicantType)
 
     def test_all_fields_passes_validation(self):
         self.check_clean(
@@ -80,7 +94,7 @@ class EmailApplicationLinkTestCase(ApplicationLinkTestCaseMixin, TestCase):
         )
 
     def test_mailto_link(self):
-        job = mommy.prepare(
+        job = baker.prepare(
             JobListingPage,
             title='This is a page title!',
             description='This is a page description'

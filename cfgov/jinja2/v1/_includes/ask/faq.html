@@ -1,0 +1,48 @@
+
+{# ==========================================================================
+
+   FAQ block
+
+   ==========================================================================
+
+   Description:
+
+   Implements Google's recommended elements of FAQ schema when given:
+
+   value: Object defined from a Streamfield block.
+
+   value.description:                Text overview.
+
+   value.questions: 	               List of questions
+
+   value.question.question           Text of question   
+
+   value.question.answer_contents    Output of streamblock
+
+   ========================================================================== #}
+
+
+<div itemscope=""
+     itemtype="http://schema.org/FAQPage"
+     class="schema-block schema-block__faq">
+    {% if value.description %}
+  	<div itemprop="description" class="schema-block_description">
+  		  {{ value.description | richtext }}
+  	</div>
+    {% endif %}
+  	{% for question in value.questions %}
+  		  <div itemscope=""
+             itemprop="mainEntity"
+             itemtype="http://schema.org/Question"
+             class="schema-block_item">
+    		    <h2 itemprop="name">{{ question.question }}</h2>
+    		    <div itemprop="acceptedAnswer" 
+                 itemscope=""
+                 itemtype="http://schema.org/Answer">
+                <div itemprop="text">
+                  {% include_block question.answer_content %}
+                </div>
+    		    </div>
+  		  </div>
+    {% endfor %}
+</div>

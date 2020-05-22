@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Capital Framework
+   Color variables
+   ========================================================================== */
+
+// Official palette.
+// Current as of November 13, 2015.
+// To view the colors in the Design Manual, visit:
+// https://cfpb.github.io/design-manual/identity/color-principles.html#palette
+//
+// | Green      | Teal       | Pacific    | Navy       | Red        | Gold       | Neutral    | Black/Gray |
+// | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+// |            |            |            |            |            |            |            | 101820     |
+// |            |            |            |            |            |            |            |            |
+// | 1e9642     | 005e5d     | 0050b4     | 002d72     | b63014     | dc731c     | 63574e     | 43484e     | dark
+// | 20aa3f     | 257675     | 0072ce     | 254b87     | d14124     | ff9e1b     | 796e65     | 5a5d61     | base
+// | 66c368     | 579695     | 4497dc     | 5674a3     | dd735d     | ffb858     | 948b84     | 75787b     | 80
+// | addc91     | 89b6b5     | 7eb7e8     | 889cc0     | e79e8e     | ffce8d     | b5aca5     | 919395     | 60
+// | c7e5b3     | b4d2d1     | afd2f2     | b3c0d9     | f0c3b8     | ffe1b9     | cdc7c2     | b4b5b6     | 40
+// | e2efd8     | d4e7e6     | d6e8fa     | d3daeb     | f7e0d9     | fff0dd     | e3e2df     | d2d3d5     | 20
+// |            |            |            |            |            |            |            | e7e8e9     | 10
+// |            |            |            |            |            |            |            | f7f8f9     | 5
+
+
+// Green family
+
+@dark-green:   #1e9642;
+@green:        #20aa3f; // Primary brand green color
+@green-80:     #66c368;
+@green-60:     #addc91; // Formerly known as "Green: Midtone"
+@green-40:     #c7e5b3;
+@green-20:     #e2efd8;
+
+
+// Teal family
+
+@dark-teal:    #005e5d; // Formerly known as regular ol' "Teal"
+@teal:         #257675; // Close to what was previously called "Teal 80"
+@teal-80:      #579695;
+@teal-60:      #89b6b5;
+@teal-40:      #b4d2d1;
+@teal-20:      #d4e7e6;
+
+
+// Pacific family
+
+@dark-pacific: #0050b4;
+@pacific:      #0072ce;
+@pacific-80:   #4497dc;
+@pacific-60:   #7eb7e8;
+@pacific-40:   #afd2f2;
+@pacific-20:   #d6e8fa;
+
+
+// Navy family
+
+@dark-navy:    #002d72; // Formerly known as regular ol' "Navy"
+@navy:         #254b87; // Close to what was previously called "Navy 80"
+@navy-80:      #5674a3;
+@navy-60:      #889cc0;
+@navy-40:      #b3c0d9;
+@navy-20:      #d3daeb;
+
+
+// Red family (formerly known as "Red Orange")
+
+@dark-red:     #b63014;
+@red:          #d14124;
+@red-80:       #dd735d;
+@red-60:       #e79e8e;
+@red-40:       #f0c3b8;
+@red-20:       #f7e0d9;
+
+
+// Gold family
+
+@dark-gold:    #dc731c;
+@gold:         #ff9e1b;
+@gold-80:      #ffb858;
+@gold-60:      #ffce8d;
+@gold-40:      #ffe1b9;
+@gold-20:      #fff0dd;
+
+
+
+// Neutral family
+
+@dark-neutral: #63574e;
+@neutral:      #796e65;
+@neutral-80:   #948b84;
+@neutral-60:   #b5aca5;
+@neutral-40:   #cdc7c2;
+@neutral-20:   #e3e2df;
+
+
+// Gray family
+
+@black:        #101820; // Also known as "CFPB Black"
+
+@dark-gray:    #43484e;
+@gray:         #5a5d61;
+@gray-80:      #75787b; // Formerly known as regular ol' "Gray"
+@gray-60:      #919395; // Formerly known as "Gray 80"
+@gray-40:      #b4b5b6; // Close to what was known as "Gray 50"
+@gray-20:      #d2d3d5;
+@gray-10:      #e7e8e9; // Close to what was known as "Gray 20"
+@gray-5:       #f7f8f9;
+
+@white:        #fff;
+
+
+/**
+ * Deprecated or significantly modified color variables as of the version of
+ * this file that appears in generator-cf v1.4.0
+ *
+ * Run project-wide Find and Replace actions to update variables
+ * as specified below.
+ *
+ * IMPORTANT: You must execute these in the specified order
+ * to ensure that you don't overwrite previous updates.
+ */
+
+//     Replace:         With:
+// --------------------------------
+//  1. @green-midtone   @green-60
+//  2. @green-tint      @green-20
+//  3. @teal            @dark-teal
+//  4. @teal-80         @teal
+//  5. @teal-50         @teal-60
+//  6. @pacific-50      @pacific-60
+//  7. @navy            @dark-navy
+//  8. @navy-80         @navy
+//  9. @navy-50         @navy-60
+// 10. @dark-redorange  @dark-red
+// 11. @redorange       @red
+// 12. @redorange-80    @red-80
+// 13. @redorange-50    @red-60
+// 14. @redorange-20    @red-20
+// 15. @gold-50         @gold-60
+// 16. @neutral-50      @neutral-60
+// 17. @darkgray        @dark-gray
+// 18. @gray-80         @gray-60
+// 19. @gray            @gray-80
+// 20. @gray-50         @gray-40
+// 21. @gray-20         @gray-10

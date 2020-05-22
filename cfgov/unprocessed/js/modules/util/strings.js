@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Escapes a string.
  * @param   {string} s The string to escape.
@@ -7,16 +5,6 @@
  */
 function stringEscape( s ) {
   return s.replace( /[-\\^$*+?.()|[\]{}]/g, '\\$&' );
-}
-
-/**
- * Tests whether a string contains special characters.
- * @param   {string}  s The string to test.
- * @returns {boolean}
- *   True if string `s` contains special characters, false otherwise.
- */
-function stringValid( s ) {
-  return !( /[~`!.#$%\^&*+=\[\]\\';,/{}|\\":<>\?]/g ).test( s );
 }
 
 /**
@@ -29,8 +17,7 @@ function stringMatch( x, y ) {
   return RegExp( stringEscape( y.trim() ), 'i' ).test( x );
 }
 
-module.exports = {
-  stringEscape: stringEscape,
-  stringValid:  stringValid,
-  stringMatch:  stringMatch
+export {
+  stringEscape,
+  stringMatch
 };

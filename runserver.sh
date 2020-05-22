@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # ==========================================================================
 # Setup script for running Django Server
@@ -9,24 +9,14 @@
 # Set script to exit on any errors.
 set -e
 
-mysql(){
-  if ! mysql.server status; then
-    mysql.server start
-  fi
-}
+DJANGO_HTTP_PORT=${DJANGO_HTTP_PORT:-8000}
 
-# Run tasks to build the project for distribution.
-server(){
-  if [ "$1" == "ssl" ]; then
-    echo '\033[0;32mStarting SSL Django server on port' $DJANGO_HTTP_PORT '...'
-    python cfgov/manage.py runsslserver $DJANGO_HTT_PORT
-  else
-    echo '\033[0;32mStarting the Django server on port' $DJANGO_HTTP_PORT '...'
-    python cfgov/manage.py runserver $DJANGO_HTTP_PORT
-  fi
-}
-
-mysql
-server "$1"
-
-
+if [ "$1" == "ssl" ]; then
+  echo -e '\033[0;32mStarting SSL Django server on port' $DJANGO_HTTP_PORT '...'
+  tput sgr0
+  python cfgov/manage.py runsslserver $DJANGO_HTTP_PORT
+else
+  echo -e '\033[0;32mStarting the Django server on port' $DJANGO_HTTP_PORT '...'
+  tput sgr0
+  python cfgov/manage.py runserver $DJANGO_HTTP_PORT
+fi

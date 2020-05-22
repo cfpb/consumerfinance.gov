@@ -1,11 +1,8 @@
-'use strict';
-
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var GlobalBanner = require( '../molecules/GlobalBanner.js' );
-var GlobalSearch = require( '../molecules/GlobalSearch.js' );
-var MegaMenu = require( '../organisms/MegaMenu.js' );
-var standardType = require( '../modules/util/standard-type' );
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import GlobalSearch from '../molecules/GlobalSearch';
+import MegaMenu from '../organisms/MegaMenu';
+
 
 /**
  * Header
@@ -19,58 +16,44 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function Header( element ) {
 
-  var BASE_CLASS = 'o-header';
+  const BASE_CLASS = 'o-header';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
 
-  var _globalbanner;
-  var _globalSearch;
-  var _megaMenu;
-  var _overlay;
+  let _globalSearch;
+  let _megaMenu;
+  let _overlay;
 
   /**
    * @param {HTMLNode} overlay
    *   Overlay to show/hide when mobile mega menu is shown.
-   * @returns {Header|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Header} An instance.
    */
   function init( overlay ) {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
-    }
-
-    // TODO: Investigate a better method of handling optional elements.
-    //       Banner is optional, so we don't want to throw a nice error
-    //       when its DOM isn't found.
-    try {
-      _globalbanner = new GlobalBanner( _dom );
-      _globalbanner.init();
-    } catch ( err ) {
-      // No Banner to initialize.
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     // Semi-opaque overlay that shows over the content when the menu flies out.
     _overlay = overlay;
 
     _globalSearch = new GlobalSearch( _dom );
-    _globalSearch.addEventListener( 'expandBegin', _searchExpandBegin );
-    _globalSearch.init();
 
-    _megaMenu = new MegaMenu( _dom );
-    _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
-    _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
-    _megaMenu.init();
+    // Don't initialize the mega menu if it isn't on the page.
+    if ( _dom.classList.contains( `${ BASE_CLASS }__mega-menu` ) ) {
+      _megaMenu = new MegaMenu( _dom );
+      _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
+      _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
+      _megaMenu.init();
+
+      // If we have a mega menu, it needs to be collapsed when search is expanded.
+      _globalSearch.addEventListener( 'expandBegin', _megaMenu.collapse );
+    }
+
+    _globalSearch.init();
 
     return this;
   }
-
-  /**
-   * Handler for opening the search.
-   */
-  function _searchExpandBegin() {
-    _megaMenu.collapse();
-  }
-
 
   /**
    * Handler for when the mega menu begins expansion.
@@ -94,4 +77,4 @@ function Header( element ) {
   return this;
 }
 
-module.exports = Header;
+export default Header;

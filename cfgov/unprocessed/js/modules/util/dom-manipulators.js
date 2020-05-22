@@ -1,20 +1,19 @@
-'use strict';
-
-var queryOne = require( './dom-traverse' ).queryOne;
+import { queryOne } from './dom-traverse';
 
 /**
- * Shortcut for creating new dom elements
- * @param   {string} tag     The html elem to create
- * @param   {Object} options The options for building the elem
- * @returns {HTMLNode}       The created elem
+ * Shortcut for creating new dom elements.
+ * @param {string} tag - The html elem to create.
+ * @param {Object} options - The options for building the elem.
+ * @returns {HTMLNode} The created elem.
  */
 function create( tag, options ) {
-  var elem = document.createElement( tag );
+  const elem = document.createElement( tag );
 
-  for ( var i in options ) {
+  let i;
+  for ( i in options ) {
     if ( options.hasOwnProperty( i ) ) {
-      var val = options[i];
-      var ref;
+      const val = options[i];
+      let ref;
 
       if ( i === 'inside' ) {
         ref = queryOne( val );
@@ -34,6 +33,6 @@ function create( tag, options ) {
   return elem;
 }
 
-module.exports = {
-  create: create
+export {
+  create
 };

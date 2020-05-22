@@ -24,31 +24,26 @@
         margin-right: -@margin;
     } );
 
-    // Expandable Overrides
-    // TODO: Remove these when base expandable is created.
-    .o-expandable_target {
-        padding: 0;
-        border: none;
+    .o-expandable {
+        margin-top: @margin;
     }
 
-    .o-expandable_content-animated {
-        padding: 0;
-    }
+    .o-expandable_header {
+        border-top: 1px solid @expandable__border;
+        border-bottom: 1px solid @expandable__border;
+        padding-top: unit( 20px / @base-font-size-px, em );
+        padding-bottom: unit( 20px / @base-font-size-px, em );
 
-    .o-expandable_cue-label {
-        display: inline-block;
-    }
-
-    .o-expandable_header-left {
-        width: 73%;
-    }
-
-    .o-expandable_header-right {
-        width: 27%;
+        font-size: 0.9em;
     }
 
     .respond-to-max( @bp-xs-max, {
         overflow: hidden;
+
+        .m-list, .m-list__links {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     } );
 }
 
@@ -65,6 +60,7 @@
         .respond-to-max( @bp-xs-max, {
             margin-bottom: @margin;
             background: @white;
+
 
             &:after {
                 content: '';
@@ -177,17 +173,15 @@
 
 .o-bureau-structure_nav-item {
     margin-bottom: @margin;
-    background-color: inherit;
+    background-color: #fff;
     color: @pacific;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid @node-border-color;
+    border-bottom: 1px solid @node-border-color;
 
     .respond-to-max( @bp-xs-max, {
         display: inline-block;
-
-        .cf-icon,
-        &:before,
-        &:after {
-            color: @pacific;
-        }
 
         &:focus {
             outline: thin dotted;
@@ -197,61 +191,39 @@
             color: @pacific-60;
             border-color: @pacific-60;
             z-index: 2;
-
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @pacific-60;
-            }
         }
 
         &:active {
             color: @navy;
             border-color: @navy;
-
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @navy;
-            }
         }
     } );
 }
 
 .o-bureau-structure_node {
-    .webfont-regular();
-    position: relative;
-    box-sizing: border-box;
     padding: @margin @margin / 2;
     border-bottom: @node-border-width solid @node-border-color;
     margin: 0 auto @margin / 2;
     background: @white;
 
     // nested .org-chart_node blocks have different borders.
-    .o-bureau-structure_nodes {
-        border: none;
+    .o-bureau-structure_node {
+        padding-top: @margin / 2;
+        border-width: 1px;
+        margin-bottom: 0;
 
-        .o-bureau-structure_node {
-            padding-top: @margin / 2;
-            border-width: 1px;
-            margin-bottom: 0;
-
-            &:after {
-                border: none;
-            }
-
-            &:last-child {
-                border: none;
-            }
-
-            .respond-to-max( @bp-xs-max, {
-                margin: 0;
-            } );
+        &:last-child {
+            border: none;
+            padding-bottom: 0;
         }
+
+        .respond-to-max( @bp-xs-max, {
+            margin: 0;
+        } );
     }
 
     .respond-to-max( @bp-xs-max, {
-        &:not(:first-child) {
+        .o-bureau-structure_nodes > &:not( :first-child ) {
             margin: @margin / 2;
         }
     } );
@@ -282,13 +254,6 @@
     } );
 }
 
-.o-bureau-structure_node_expander {
-    overflow: auto;
-    padding: @margin / 2 0;
-    border-top: 1px solid @node-border-color;
-    border-bottom: 1px solid @node-border-color;
-}
-
 .o-bureau-structure_node_more-info {
     .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
     .u-link__no-border();
@@ -302,17 +267,16 @@
 
     &_name,
     &_title {
-        .webfont-regular();
         display: block;
     }
 
     &_name {
-        .webfont-medium();
+        font-weight: 500;
     }
+}
 
-    + .o-expandable_target {
-        margin-top: @margin;
-    }
+.o-bureau-structure_role + .o-bureau-structure_role {
+    margin-top: @margin / 2;
 }
 
 .o-bureau-structure_legend {
@@ -325,11 +289,12 @@
         display: block;
         width: @margin;
         float: left;
+        text-align: right;
     }
 
     &_definition {
         display: block;
-        margin-left: @margin;
+        margin-left: @margin * 1.25;
     }
 
     .respond-to-max( @bp-xs-max, {

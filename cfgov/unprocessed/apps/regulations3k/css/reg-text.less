@@ -1,0 +1,48 @@
+/* ==========================================================================
+   Regulations 3000
+   Regulation section text styling and type hierarchy
+   ========================================================================== */
+
+.generateLevel(6);
+
+// Generate six indentation levels for reg text
+.generateLevel(@n, @i: 1) when (@i =< @n) {
+    .level-@{i} {
+        box-sizing: border-box;
+        padding-left: (@i * 2em);
+    }
+    .generateLevel(@n, (@i + 1));
+}
+
+.regdown-block {
+    overflow: hidden;
+}
+
+.regdown-form_extend {
+    font-size: 0;
+    position: relative;
+    span {
+        border-top: 1px solid @black;
+        content: '';
+        display: block;
+        left: 100%;
+        position: absolute;
+        top: 1.2em;
+        width: 1000px;
+    }
+}
+
+.regulation-meta {
+    margin-bottom: unit( 25px / @base-font-size-px, rem );
+
+    .a-date {
+        margin-bottom: unit( 8px / @base-font-size-px, rem );
+        white-space: normal;
+    }
+}
+
+// Helper class to correct regs3k notifications alignment
+.block__flush-regs3k {
+    margin-top: -30px;
+    margin-bottom: 30px;
+}

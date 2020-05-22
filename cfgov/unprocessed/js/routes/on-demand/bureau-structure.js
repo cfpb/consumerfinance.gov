@@ -1,10 +1,7 @@
-
 /* ==========================================================================
    Bureau structure.
    Scripts for `/the-bureau/bureau-structure/`.
    ========================================================================== */
 
-'use strict';
-
-var BureauStructure = require('../../organisms/BureauStructure');
+import BureauStructure from '../../organisms/BureauStructure';
 BureauStructure.initialize();

@@ -1,9 +1,18 @@
 {% extends 'content-base.html' %}
 
+{% block skip_nav_target -%}
+    {# Overrides the default skip nav target of #main so that we skip over the
+       left side nav on pages that extend this template and go right to the
+       main content area. #}
+    #content_main
+{%- endblock %}
+
 {% block pre_content scoped -%}
     {# TODO: Remove non-wagtail logic once old pages have been converted #}
     {% if page %}
+        {% if not breadcrumb_items %}
         {% set breadcrumb_items = page.get_breadcrumbs(request) %}
+        {% endif %}
         {% if breadcrumb_items | length > 0 %}
             <div class="content_wrapper">
                 {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
@@ -21,15 +30,13 @@
 {%- endblock %}
 
 {% block body_content scoped %}
-<div class="wrapper content_wrapper">
+<div class="wrapper content_wrapper {% block content_wrapper_modifiers -%}{%- endblock %}">
     <aside class="content_sidebar {% block content_sidebar_modifiers -%}{%- endblock %}">
         {% block content_sidebar scoped -%}{%- endblock %}
     </aside>
-    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
-        {%- import 'macros/accessible-languages.html' as accessible_languages with context-%}
-        <section {{ accessible_languages.render() }}>
-            {% block content_main scoped -%}{%- endblock %}
-        </section>
+    <div class="content_main {% block content_main_modifiers -%}{%- endblock %}"
+         id="content_main">
+        {% block content_main scoped -%}{%- endblock %}
     </div>
 </div>
 {% endblock %}

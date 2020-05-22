@@ -7,31 +7,39 @@
 
    Description:
 
+   See [GHE]/CFPB/hubcap/wiki/Full-Width-Text
+
    Create a full width text organism.
-   See [GHE]/flapjack/Modules-V1/wiki/Full-Width-Copy
 
    ========================================================================== #}
 
 <div class="o-full-width-text-group">
     {% for block in value %}
-        {% if 'content_with_anchor' in block.block_type %}
+        {% set block_type = block.block_type %}
+        {% if 'content_with_anchor' in block_type %}
                 {{ render_stream_child(block) | safe }}
-        {% elif 'content' in block.block_type %}
+        {% elif 'content' in block_type %}
             <div class="m-full-width-text">
-                {{ parse_links(block.value) | safe }}
+                {{ block.value | safe }}
             </div>
-        {% elif 'table' in block.block_type %}
+        {% elif 'table' in block_type %}
             <div class="m-full-width-text">
-                {{ render_stream_child(block) | safe}}
+                {% include_block block %}
             </div>
-        {% elif 'media' in block.block_type %}
-            <div class="m-full-width-media">
-                {% set media = image(block.value, 'original') %}
-                <img class="m-full-width-media_image" src="{{ media.url }}" alt="{{ media.alt }}">
-            </div>
-        {% elif block.block_type in ['quote', 'cta', 'related-links'] %}
-            <div class="m-inset">
+        {% elif block_type in ['quote', 'related_links']
+           or 'cta' in block_type and block.value.is_inset %}
+            <div class="m-inset
+                    {{ 'm-inset__test'
+                       if flag_enabled('INSET_TEST') else '' }}">
                 {{ block | safe }}
+            </div>
+        {% elif block_type in ['email_signup'] %}
+            <div class="m-inset__email">
+                {{ block | safe }}
+            </div>
+        {% elif block_type in ['well', 'well_with_ask_search'] %}
+            <div class="block">
+                {% include_block block %}
             </div>
         {% else %}
             {{ block | safe }}

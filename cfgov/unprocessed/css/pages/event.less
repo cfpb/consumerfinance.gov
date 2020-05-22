@@ -37,85 +37,16 @@
    ========================================================================== */
 
 .post__event {
+    > footer {
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
     .respond-to-min(@bp-med-min, {
-        padding-right: unit(@grid_gutter-width / @base-font-size-px, em);
-        margin-right: unit(@grid_gutter-width  / @base-font-size-px, em);
+        padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+        margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
     });
 }
 
-
-/* Event-Post-Preview
-   ========================================================================== */
-
-.post-preview__event {
-    border-top: 1px solid @gray-40;
-    padding-top: unit(30px / @base-font-size-px, em);
-
-    .media-object_image-container {
-        top: 0;
-        .respond-to-max(@bp-xs-max, {
-            display: none;
-        });
-    }
-}
-
-
-/* Event-Media-Body
-   ========================================================================== */
-
-.media_body__event{
-
-    .calendar-icon {
-        .cf-calendar-icon( attr(data-month), attr(data-day), @gray-40, @white, 1);
-        float: left;
-        margin: 0 (@grid_gutter-width / 2) 0 0;
-    }
-
-    .event-meta {
-        color: @dark-gray;
-    }
-
-    .event-meta_address {
-        margin: 0;
-
-        // Adding em dash after address
-        &:after {
-            content: "\2014";
-            margin-left: .2em;
-        }
-
-        .respond-to-max(@bp-xs-max, {
-            display: block;
-
-            &:after {
-                content: none;
-                margin-right: 0;
-            }
-        });
-    }
-
-    .summary_header {
-        margin-bottom: 1em;
-    }
-
-    .summary_heading {
-        // Setting margin-top to align with calendar icon.
-        margin: -1 * unit(2px / @base-font-size-px, em) 0 0 0;
-
-        .respond-to-max(@bp-xs-max, {
-            .h3();
-            margin-bottom: 0;
-        });
-    }
-
-    .summary-meta_container {
-        overflow: auto;
-    }
-
-    .tags_list {
-        margin: 0;
-    }
-}
 
 /* Event-Media-Container
    ========================================================================== */
@@ -130,7 +61,7 @@
 
 .event-meta {
     &__medium {
-        .webfont-medium();
+        font-weight: 500;
     }
 }
 
@@ -210,20 +141,6 @@
         text-transform: uppercase;
     }
 
-    .event-calendar_download {
-        .webfont-demi();
-
-        display: block;
-        padding-top: .2em;
-        text-decoration: none;
-        text-transform: none;
-
-        .respond-to-max(@bp-xs-max, {
-            margin-top: 1em;
-            padding-top: .5em;
-        });
-    }
-
     .event-meta_address {
         .respond-to-max(@bp-xs-max, {
             margin: 0;
@@ -245,12 +162,6 @@
     color: @black;
     text-transform: uppercase;
     padding: 6px 15px 4px;
-
-    .cf-icon {
-        font-size: 20px;
-        vertical-align: middle;
-        margin-right: 5px;
-    }
 }
 
 .event-venu_live-btn_text {
@@ -267,14 +178,14 @@
 
 /* Event-Footer
    ========================================================================== */
-
+/*
 .event-footer {
     .respond-to-max(@bp-xs-max, {
         a {
             display: block;
         }
 
-        .btn {
+        .a-btn {
             text-align: center;
         }
 
@@ -306,3 +217,4 @@
         });
     }
 }
+*/

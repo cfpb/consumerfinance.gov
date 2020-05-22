@@ -1,160 +1,203 @@
 # Notes on Atomic Design
 
-Check out [Don't Build Pages, Build Modules](http://www.ebaytechblog.com/?p=3113). It encompasses exactly what we are trying to achieve by building components using atomic design. It's important to note that our front-end atomic architecture is still evolving.
+Our components employ the concept of atomic design, meaning that
+we break them down into atoms, molecules, and organisms,
+each successive level being more complex than the previous.
+(We do not currently use the template or page concepts as described in
+[Brad Frost's seminal article introducing atomic design](http://bradfrost.com/blog/post/atomic-web-design/)).
 
-Our components are broken down into templates, organisms, molecules, and atoms. We opted not to use the page component, although it exists in atomic design. Our components are composed of HTML, CSS, and JavaScript. If a component doesn’t have user interactions or require styling, then it won’t have an associated js and/or css file. We compose our atomic components as follows:
+Our components are composed (on the front-end) of HTML, Less, and JavaScript.
+If a component doesn’t have user interactions or require styling,
+then it won’t have an associated JS and/or Less file.
+Components that are available for adding to a Wagtail page also
+require some Python programming—see the
+[creating and editing components](../editing-components/) page for details.
 
-### Atoms
+We compose our atomic components as follows:
 
-Prefixed with “a-” in CSS, JavaScript, and HTML files.
 
-#### HTML
+## Atoms
+
+The smallest kind of component.
+May not contain any other components.
+Prefixed with `a-` in class names.
+
+### HTML
 
 ```html
-<div class="a-overlay u-hidden"></div>
+<div class="a-tag">
+    Tag label {{ svg_icon('remove') }}
+</div>
 ```
 
-#### CSS
+### Less
 
 ```css
- .a-overlay {
-        // Only show overlay at mobile/tablet size.
-        .respond-to-max( @bp-sm-max, {
-            height: 100%;
-            width: 100%;
+.a-tag {
+    cursor: default;
+    display: inline-block;
+    padding: 5px 10px;
+    …
+}
 ```
 
+### JavaScript
 
-### Molecules ###
+None of our atoms require any JavaScript at this time.
 
-Prefixed with “m-” in CSS, JavaScript, and HTML files.
 
-#### HTML
+## Molecules
+
+The medium-sized component.
+May contain atoms.
+Prefixed with `m-` in class names.
+
+### HTML
 
 ```html
-<div class="m-notification m-notification__error m-notification__visible" data-js-hook="state_atomic_init">
-      <span class="m-notification_icon cf-icon"></span>
-      <div class="m-notification_content" role="alert"></div>
- </div>
+<div class="m-notification
+            m-notification__visible
+            m-notification__error"
+     data-js-hook="state_atomic_init">
+    {{ svg_icon('error') }}
+    <div class="m-notification_content" role="alert">
+        <div class="h4 m-notification_message">Page not found.</div>
+    </div>
+</div>
 ```
 
-#### CSS
+### Less
 
 ```css
 .m-notification {
     display: none;
     position: relative;
-    padding: @m-notification-padding__px;
-    padding-left: 40px;
+    padding: @notification-padding__px;
+    …
+}
 ```
 
-#### JavaScript
+### JavaScript
 
-```javascript
-function Notification( element ) { 
-   // eslint-disable-line max-statements, inline-comments, max-len
-   var BASE_CLASS = 'm-notification';
+```js
+function Notification( element ) {
+  const BASE_CLASS = 'm-notification';
 
-   // Constants for the state of this Notification.
-   var SUCCESS = 'success';
-   var WARNING = 'warning';
-   var ERROR = 'error'; 
-   // Constants for the Notification modifiers.
-   var MODIFIER_VISIBLE = BASE_CLASS + '__visible'; 
-   var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  // Constants for the state of this Notification.
+  const SUCCESS = 'success';
+  const WARNING = 'warning';
+  const ERROR = 'error';
+
+  // Constants for the Notification modifiers.
+  const MODIFIER_VISIBLE = BASE_CLASS + '__visible';
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  …
+}
 ```
 
-The notification molecule can be instantiated with the following code:
+The Notification molecule can be instantiated
+by adding the following to your project's JavaScript code:
 
-```javascript
-_notification = new Notification( _dom );
-_notification.init();
+```js
+const notification = new Notification( _dom );
+notification.init();
 ```
 
-### Organisms
 
-Prefixed with “o-” in CSS, JavaScript, and HTML.
+## Organisms
 
-#### HTML
+The largest component.
+May contain atoms, molecules, or
+(if no other solution is viable) other organisms.
+Prefixed with `o-` in class names.
+
+### HTML
 
 ```html
-<div data-qa-hook="expandable" class="o-expandable 
-                                      o-expandable__borders 
-                                      o-expandable__midtone 
-                                      o-expandable__expanded" 
-                               data-js-hook="state_atomic_init">
+<div class="o-expandable
+            o-expandable__borders
+            o-expandable__midtone
+            o-expandable__expanded"
+     data-js-hook="state_atomic_init">
     <button class="o-expandable_target" aria-pressed="true">
         <div class="o-expandable_header">
+        …
 ```
 
-JavaScript:
+### Less
 
-```javascript
- function Expandable( element ) { 
-  var BASE_CLASS = 'o-expandable';
+```css
+.o-expandable {
+    position: relative;
+
+    &_target {
+        padding: 0;
+        border: 0;
+        …
+    }
+    …
+}
+```
+
+### JavaScript
+
+```js
+ function Expandable( element ) {
+  const BASE_CLASS = 'o-expandable';
 
   // Bitwise flags for the state of this Expandable.
-  var COLLAPSED = 0;
-  var COLLAPSING = 1;
-  var EXPANDING = 2;
-  var EXPANDED = 3;
+  const COLLAPSED = 0;
+  const COLLAPSING = 1;
+  const EXPANDING = 2;
+  const EXPANDED = 3;
 
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
-  var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
+  const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  …
+}
 ```
-  
-The Expandable organism can be instantiated with the following code:
 
-```javascript
-_expandable = new Expandable( _dom.querySelector( '.o-expandable' ) );
-_expandable.init( _expandable.EXPANDED );
+The Expandable organism can be instantiated
+by adding the following to your project's JavaScript code:
+
+```js
+const expandable = new Expandable( _dom.querySelector( '.o-expandable' ) );
+expandable.init( _expandable.EXPANDED );
 ```
 
 or
 
-```javascript
-var atomicHelpers = require( '../../modules/util/atomic-helpers' );
-var Expandable = require( '../../organisms/Expandable' );
+```js
+const atomicHelpers = require( '../../modules/util/atomic-helpers' );
+const Expandable = require( '../../organisms/Expandable' );
 atomicHelpers.instantiateAll( '.o-expandable', Expandable );
 ```
 
-### Templates
 
-Prefixed with “t-” in CSS, JavaScript, and HTML.
+## Folder structure
 
-#### CSS
-```css
-.t-careers {
-    &_social .m-social-media {
-        float: right;
-    }
+Our atomic components are separated and named based on asset type.
+HTML, Less, and JavaScript for each component are in separate directories.
 
-    // TODO: Consolidate site-wide media_image responsive sizes into one class.
-    &_students-and-graduates .media_image {
-        width: 130px;
-        .respond-to-min( @bp-med-min, {
-            width: 150px;
-        } );
-```
+### HTML
 
-### Folder Structure
-
-Atomic code is currently separated and named based on asset type. This is a mistake in my view, as I believe we should begin migrating to a modular folder structure based on the component.
-
-#### Current Structure
-
-#### HTML
 ```
 cfgov-refresh/cfgov/jinja2/v1/_includes/atoms/
 cfgov-refresh/cfgov/jinja2/v1/_includes/molecules/
 cfgov-refresh/cfgov/jinja2/v1/_includes/organisms/
 ```
 
-#### CSS
+!!! note
+    Some of our foundational components get their Less and JavaScript
+    from the [Design System](https://cfpb.github.io/design-system/),
+    but the HTML for their Wagtail block templates
+    is stored in the above folders.
+
+### CSS
 
 ```
 cfgov-refresh/cfgov/unprocessed/css/atoms/
@@ -162,41 +205,30 @@ cfgov-refresh/cfgov/unprocessed/css/molecules/
 cfgov-refresh/cfgov/unprocessed/css/organisms/
 ```
 
-#### JavaScript
+### JavaScript
 
 ```
-cfgov-refresh/cfgov/unprocessed/js/atoms/
 cfgov-refresh/cfgov/unprocessed/js/molecules/
 cfgov-refresh/cfgov/unprocessed/js/organisms/
 ```
 
-#### Test
+### Tests
 
 ```
-cfgov-refresh/test/unit_tests/atoms/
-cfgov-refresh/test/unit_tests/molecules/
-cfgov-refresh/test/unit_tests/organisms/
+cfgov-refresh/test/unit_tests/js/molecules/
+cfgov-refresh/test/unit_tests/js/organisms/
 ```
 
-#### Proposed Folder Structure
 
-```
-cfgov-refresh/cfgov/front-end/molecules/Expandable
+## JavaScript architecture
 
-Expandable.html
-Expandable.css
-Expandable.js
-Expandable-unit-test.js
-README.MD
-```
+JavaScript components are built to be rendered on the server
+and then enhanced via JavaScript on the client.
+The basic interface for the components is as follows:
 
-### JavaScript Architecture
-
-There was considerable discussion on how we should create JS components. The components aren't constructed to be used on SPAs (Single Page Applications). They are built to be rendered on the sever and then enhanced via JavaScript on the client. The basic interface for the components is as follows:
-
-```javascript
+```js
 function AtomicComponent( domElement ) {
-    // Ensure the passed in Element is in the DOM. 
+    // Ensure the passed in Element is in the DOM.
     // Query and store references to sub-elements.
     // Instantiate child atomic components.
     // Bind necessary events for referenced DOM elements.
@@ -210,45 +242,53 @@ function AtomicComponent( domElement ) {
 }
 ```
 
-We aren't testing for interface adherence but we probably should. We generally favor composition over inheritance. You can get more information by reading the following:
+We generally favor composition over inheritance.
+You can get more information by reading the following:
 
-#### Articles
+- [A Simple Challenge to Classical Inheritance Fans](https://medium.com/javascript-scene/a-simple-challenge-to-classical-inheritance-fans-e78c2cf5eead#.mtrvhcjiw)
+- [Composition over Inheritance (YouTube)](https://www.youtube.com/watch?v=wfMtDGfHWpA)
 
-[A Simple Challenge to Classical Inheritance Fans](https://medium.com/javascript-scene/a-simple-challenge-to-classical-inheritance-fans-e78c2cf5eead#.mtrvhcjiw)
-[Composition over Inheritance (Youtube)](https://www.youtube.com/watch?v=wfMtDGfHWpA)
 
-#### Code and Related PRs
+## Component build pipeline
 
-[View Unit Test](https://github.com/cfpb/cfgov-refresh/pull/916)
-[Expandable example 1](http://jsfiddle.net/0j9u66h0/9/)
-[Expandable example 2](https://jsfiddle.net/cpsyLy3L/2/)
+### Gulp
 
-## Component Build Pipeline
+Gulp is used as a task automation tool.
+Tasks include compiling CSS, creating a standard Webpack workflow for bundling
+scripts, minifying code, linting, running unit tests,
+and [more](https://github.com/cfpb/cfgov-refresh/tree/master/gulp).
 
-#### Gulp
+### Webpack
 
-Gulp is used as a task automation tool. A specific breakdown of each task is contained [here](https://github.com/cfpb/cfgov-refresh#available-gulp-tasks).
+Wepback is used as a module bundler, although it's capable of more.
+We create page, global, and component-specific bundles.
+The configuration for the bundles is contained in
+[`config/webpack-config.js`](https://github.com/cfpb/cfgov-refresh/blob/master/config/webpack-config.js).
+An explanation for the usage of each bundle is contained in
+[`gulp/tasks/scripts.js`](https://github.com/cfpb/cfgov-refresh/blob/master/gulp/tasks/scripts.js).
 
-#### Webpack
+### Routes
 
-Wepback is used as a module bundler although it's capable of more. We create page, global, and atomic specific bundles. The configuration for the bundles is contained in webpack-config.js. An explanation for the usage of each bundle is contained in scripts.js.
+Routes are used to serve JavaScript bundles to the browser based
+on the requested URL or Wagtail page's `Media` definition.
+This happens via code contained in
+[`base.html`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L85-L123). This file serves as the base HTML template for serving Wagtail pages.
 
-#### Routes
+### Wagtail page `Media` class
 
-Routes are used to serve JavaScript bundles to the browser based on the requested URL or Wagtail page Media property. The happens via code contained in base.html.
+Each atomic component has a `Media` class that lists the JavaScript files
+that should be loaded via `base.html`.
+When a page is requested via the browser, code contained in `base.html` will
+loop all atomic components for the requested page and load
+the appropriate atomic JavaScript bundles.
 
-#### Base.html
+Here is an example of the `Media` class on a component,
+[the `EmailSignUp` organism](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L223-L244):
 
-This file serves as the base document for serving up assets and content. It's currently very complicated, obtrusive, and needs to be refactored.
+```python
+class Media:
+    js = ['email-signup.js']
+```
 
-#### Wagtail Page Media Property
-
-Each Atomic component has a media property which list the JavaScript files that should be rendered via base.html. When a page is requested via the browser, code contained in base.html will loop all Atomic components for the requested page and render the appropriate Atomic JavaScript bundles.
-
-#### Questions and Concerns
-
-- How do we support Single Page Applications and be functional when JavaScript is disabled?
-- How do we ensure creation of performant atomic components?
-- Is the codebase lacking uniformity?
-- CSS bloat when multiple components are on the same page but from different Django apps.
-- Ensuring simplicity over complexity.
+This will load the `email-signup.js` script on any page
+that includes the `EmailSignUp` organism in one of its StreamFields.

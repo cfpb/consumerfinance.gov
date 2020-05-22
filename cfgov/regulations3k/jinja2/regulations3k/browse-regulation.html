@@ -1,0 +1,330 @@
+{% extends 'regulations3k/regulations3k-side-nav.html' %}
+
+{% import 'form_block.html' as form_block with context %}
+{% import 'regulations3k-search-bar.html' as search_bar with context %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{# HEAD items #}
+
+{% block title -%}
+    {%- if section -%}
+        {{section.title}}
+    {%- elif versions -%}
+        All versions of {{ page.regulation }}
+    {%- else -%}
+        {{ page.title }}
+    {%- endif %} | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block desc -%}
+    {#- 'section' pages are ones that show the actual text of the regulation -#}
+    {% if section -%}
+        {% if section.subpart.type == 'Appendix' -%}
+            Appendix {{ section.label }}
+        {% elif section.subpart.type == 'Interpretation' %}
+            {#- section.label[7:] strips out the "Interp-" part of the label -#}
+            The comment for {{ regulation.part_number }}.{{ section.label[7:] }}
+        {% else -%}
+            § {{ regulation.part_number }}.{{ section.label }}
+        {% endif -%}
+        {% if requested_version.effective_date < current_version.effective_date -%}
+            is part of a previous version of {{ page.regulation }} with
+            amendments that went into effect on
+            {{ ap_date(requested_version.effective_date) }}.
+        {% elif requested_version.effective_date > current_version.effective_date -%}
+            is part of a future version of {{ page.regulation }} with
+            amendments that will go into effect on
+            {{ ap_date(requested_version.effective_date) }}.
+        {% else -%}
+            is part of {{ page.regulation }}.
+        {% endif -%}
+    {#- 'versions' is the page that lists all versions of a regulation -#}
+    {% elif versions -%}
+        View the current, previous, and future versions of {{ page.regulation }}.
+    {% endif -%}
+    {#- super() tacks on the regulaation's description from Wagtail for more
+    context and also takes care of the regulation's landing page -#}
+    {{ super() }}
+{%- endblock desc %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block preload %}
+    {{ super() }}
+    {% if next_section %}
+    <link rel="prerender" href="{{ routablepageurl(page, 'section', next_section.section_number) }}">
+    {% endif %}
+    <link rel="manifest" href="{{ static('apps/regulations3k/regulations3k-manifest.json') }}">
+    <link rel="icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
+    <link rel="apple-touch-startup-image" href="{{ static('apps/regulations3k/img/regulations-icon-192.png') }}">
+    <meta name="apple-mobile-web-app-title" content="Regs">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#20aa3f"/>
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/regulations3k/css/main.css') }}">
+{%- endblock css %}
+
+{# BODY items #}
+
+{% block body_classes %}
+    {{ super() }}
+{% endblock body_classes %}
+
+{% block content_modifiers -%}
+    {{ super() }} content__hide-horizontal-overflow
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom regulations3k
+{%- endblock %}
+
+{% block content_main %}
+    {% if section %}
+        <h1>{{section.title}}</h1>
+
+        <div class="regulation-meta">
+            {% if requested_version == current_version %}
+                <div class="a-date">
+                    This version is the current regulation
+                </div>
+                <ul class="m-list m-list__links">
+                    {% if num_versions > 1 %}
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">
+                            {{ svg_icon('date') }}
+                            View all versions of this regulation
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="{{ search_url }}">
+                            {{ svg_icon('search') }}
+                            Search this regulation
+                        </a>
+                    </li>
+                </ul>
+            {% else %}
+                <div class="m-full-width-text
+                            m-notification
+                            m-notification__visible
+                            m-notification__warning">
+                    {{ svg_icon('warning-round') }}
+                    <div class="m-notification_content">
+                        <div class="h4 m-notification_message">This version is not the current regulation.</div>
+                        <p class="m-notification_explanation">
+                        {% if requested_version.effective_date < current_version.effective_date %}
+                            You are viewing a previous version of this regulation with amendments that went into effect on
+                        {% endif %}
+                        {% if requested_version.effective_date > current_version.effective_date %}
+                            You are viewing a future version of this regulation with amendments that will go into effect on
+                        {% endif %}
+                        {{ ap_date(requested_version.effective_date) }}. <a class="m-list_link" href="{{ routablepageurl(page, 'versions', section_label=section.label) }}">View all versions of this regulation</a>
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if requested_version == current_version %}
+            <div class="a-rule-break m-full-width-text"></div>
+        {% endif %}
+
+        <section class="block block__flush-top">
+            <div class="o-regulations-wayfinder" aria-hidden="true" data-section="{{section}}">
+                <div class="wrapper content_wrapper">
+                    <div class="content_sidebar content__flush-top content__flush-bottom">
+                        <span class="h4">
+                            {{ regulation.short_name }}
+                        </span>
+                    </div>
+                    <div class="content_main content__flush-top content__flush-bottom">
+                        <div class="o-regulations-wayfinder__content">
+                            <div class="o-regulations-wayfinder__heading">
+                                <a href="#" class="h4 o-regulations-wayfinder_link">
+                                    <span class="o-regulations-wayfinder_section-title"></span><span class="o-regulations-wayfinder_marker"></span>
+                                </a>
+                            </div>
+                            <div class="o-regulations-wayfinder__version">
+                                {% if requested_version.effective_date < current_version.effective_date %}
+                                    Previous version (effective
+                                    {{ ap_date(requested_version.effective_date) }} to
+                                    {{ ap_date(next_version.effective_date) }})
+                                {% endif %}
+                                {% if requested_version.effective_date > current_version.effective_date %}
+                                    Future version (effective
+                                    {{ ap_date(requested_version.effective_date) }})
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{content|safe}}
+        </section>
+
+    {% elif versions %}
+
+        <h3>All versions of {{ page.regulation }}</h3>
+        <ul>
+        {% for version in versions %}
+            <li>
+                {% if section_label %}
+                    {% if version.effective_date == current_version.effective_date  %}
+                        <a href="{{ routablepageurl(page, 'section', section_label=section_label) }}">
+                    {% else %}
+                        <a href="{{ routablepageurl(page, 'section', date_str=version.date_str, section_label=section_label) }}">
+                    {% endif %}
+                {% else %}
+                    <a href="{{ routablepageurl(page, 'index', version.date_str) }}">
+                {% endif %}
+                   {{ ap_date(version.effective_date) }}
+                </a>
+
+                {% if version.effective_date == current_version.effective_date %}
+                (current regulation)
+                {% elif version.draft %}
+                (draft)
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+
+    {% else %}
+        <div class="block block__flush-top block__flush-bottom">
+            <h1>{{ page.title }}</h1>
+            {% if requested_version == current_version %}
+                <div class="regulation-meta">
+                    <div class="a-date">
+                            Most recently amended {{ ap_date(requested_version.effective_date) }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        {% for block in page.header -%}
+            {{ render_block.render(block, loop.index) }}
+        {%- endfor %}
+
+        {% if requested_version != current_version %}
+        <div class="block block__flush-regs3k">
+            <div class="m-full-width-text
+                        m-notification
+                        m-notification__visible
+                        m-notification__warning">
+                {{ svg_icon('warning-round') }}
+                <div class="m-notification_content">
+                    <div class="h4 m-notification_message">This version is not the current regulation.</div>
+                    <p class="m-notification_explanation">
+                        {% if requested_version.effective_date < current_version.effective_date %}
+                            You are viewing a previous version of this regulation with amendments that went into effect on {{ ap_date(requested_version.effective_date) }}.
+                        {% endif %}
+                        {% if requested_version.effective_date > current_version.effective_date %}
+                            You are viewing a future version of this regulation with amendments that will go into effect on {{ ap_date(requested_version.effective_date) }}.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="block block__flush-regs3k">
+                <ul class="m-list m-list__links m-full-width-text">
+                    {% if requested_version == current_version %}
+                        <li class="m-list_item">
+                            <a class="m-list_link" href="{{ routablepageurl(page, 'section', section_label=sections[0].label) }}">
+                                View current regulation
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="m-list_item">
+                            <a class="m-list_link" href="{{ routablepageurl(page, 'section', date_str=date_str, section_label=sections[0].label) }}">
+                                View this version
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if num_versions > 1 %}
+                        <li class="m-list_item">
+                            <a class="m-list_link" href="{{ routablepageurl(page, 'versions') }}">
+                                View all versions of this regulation
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if requested_version == current_version %}
+                        <li class="m-list_item">
+                            <a class="m-list_link" href="{{ search_url }}">
+                                Search this regulation
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+        </div>
+
+        <div class="a-rule-break m-full-width-text"></div>
+
+        {% for block in page.content -%}
+            {{ render_block.render(block, loop.index) }}
+        {%- endfor %}
+
+    {% endif %}
+
+    {% if section %}
+        <div class="block block__sub">
+            <nav class="section-nav" role="navigation">
+                <ul>
+                    {% if previous_section %}
+                    <li class="previous next-prev">
+                        <a href="{{ previous_url }}"
+                           class="navigation-link backward next-prev-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M494.5 1090.7c-17.3 0-33.8-6.8-46-19L19 642.1c-25.4-25.4-25.4-66.5 0-91.9l429.5-429.5c25.6-25.1 66.8-24.8 91.9.8 24.8 25.3 24.8 65.8 0 91.1L156.9 596.2l383.6 383.6c25.4 25.4 25.4 66.5.1 91.9-12.3 12.2-28.8 19-46.1 19z"></path></svg>
+                            <span class="next-prev-label">Previous section - </span>{{previous_section.numeric_label or previous_section.label}}
+                        </a>
+                        <span class="next-prev-title">{{previous_section.title_content}}</span>
+                    </li>
+                    {% endif %}
+                    {% if next_section %}
+                    <li class="next next-prev">
+                        <a href="{{ next_url }}"
+                           class="navigation-link forward next-prev-link">
+                            <span class="next-prev-label">Next section - </span>{{next_section.numeric_label or next_section.label}}
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                        </a>
+                        <span class="next-prev-title">{{next_section.title_content}}</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    {% else %}
+        {% if page.sidefoot %}
+            <aside class="o-prefooter">
+                {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+            </aside>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/regulations3k/js/index.js') }}',
+            '{{ static('apps/regulations3k/js/permalinks.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}

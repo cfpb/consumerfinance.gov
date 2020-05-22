@@ -1,12 +1,9 @@
-'use strict';
-
 // Required modules.
-var EventObserver = require( '../../modules/util/EventObserver' );
-var BaseTransition = require( './BaseTransition' );
-var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
+import BaseTransition from './BaseTransition';
+import EventObserver from '../../modules/util/EventObserver';
 
 // Exported constants.
-var CLASSES = {
+const CLASSES = {
   BASE_CLASS: 'u-alpha-transition',
   ALPHA_100:  'u-alpha-100',
   ALPHA_0:    'u-alpha-0'
@@ -24,16 +21,16 @@ var CLASSES = {
  */
 function AlphaTransition( element ) {
 
-  var _baseTransition = new BaseTransition( element, CLASSES );
+  const _baseTransition = new BaseTransition( element, CLASSES );
 
   /**
    * @returns {AlphaTransition} An instance.
    */
   function init() {
     _baseTransition.init();
-    var _transitionCompleteBinded = fnBind( _transitionComplete, this );
+    const _transitionCompleteBinded = _transitionComplete.bind( this );
     _baseTransition.addEventListener( BaseTransition.END_EVENT,
-                                      _transitionCompleteBinded );
+      _transitionCompleteBinded );
     return this;
   }
 
@@ -65,7 +62,7 @@ function AlphaTransition( element ) {
   }
 
   // Attach public events.
-  var eventObserver = new EventObserver();
+  const eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
   this.removeEventListener = eventObserver.removeEventListener;
@@ -87,4 +84,4 @@ function AlphaTransition( element ) {
 // Public static properties.
 AlphaTransition.CLASSES = CLASSES;
 
-module.exports = AlphaTransition;
+export default AlphaTransition;

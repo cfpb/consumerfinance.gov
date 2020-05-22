@@ -1,10 +1,13 @@
-'use strict';
+import EventObserver from '../modules/util/EventObserver';
+import { isArray } from './util/type-checkers';
 
-var isArray = require( './util/type-checkers' ).isArray;
-
-var Analytics = {
+const eventObserver = new EventObserver();
+const Analytics = {
 
   tagManagerIsLoaded: false,
+  addEventListener: eventObserver.addEventListener,
+  removeEventListener: eventObserver.removeEventListener,
+  dispatchEvent: eventObserver.dispatchEvent,
 
   EVENT_CATEGORY: 'Page Interaction',
 
@@ -35,7 +38,7 @@ var Analytics = {
     if ( window.hasOwnProperty( 'google_tag_manager' ) ) {
       Analytics.tagManagerIsLoaded = true;
     } else {
-      var _tagManager;
+      let _tagManager;
       Object.defineProperty( window, 'google_tag_manager', {
         enumerable: true,
         configurable: true,
@@ -44,7 +47,10 @@ var Analytics = {
         },
         set: function( value ) {
           _tagManager = value;
-          Analytics.tagManagerIsLoaded = true;
+          if ( !Analytics.tagManagerIsLoaded ) {
+            Analytics.tagManagerIsLoaded = true;
+            Analytics.dispatchEvent( 'gtmLoaded' );
+          }
         }
       } );
     }
@@ -59,11 +65,12 @@ var Analytics = {
    * @param {object} dataLayerOptions Type of event.
    */
   sendEvent: function( dataLayerOptions ) {
-    var callback = dataLayerOptions.eventCallback;
+    const callback = dataLayerOptions.eventCallback;
     if ( Analytics.tagManagerIsLoaded ) {
       window.dataLayer.push( dataLayerOptions );
     } else if ( callback && typeof callback === 'function' ) {
-      callback();  // eslint-disable-line callback-return, inline-comments, max-len
+      // eslint-disable-next-line callback-return
+      callback();
     }
   },
 
@@ -78,7 +85,7 @@ var Analytics = {
    */
   sendEvents: function( eventsArray ) {
     if ( isArray( eventsArray ) ) {
-      for ( var i = 0, len = eventsArray.length; i < len; i++ ) {
+      for ( let i = 0, len = eventsArray.length; i < len; i++ ) {
         Analytics.sendEvent( eventsArray[i] );
       }
     }
@@ -88,4 +95,4 @@ var Analytics = {
 
 Analytics.init();
 
-module.exports = Analytics;
+export default Analytics;

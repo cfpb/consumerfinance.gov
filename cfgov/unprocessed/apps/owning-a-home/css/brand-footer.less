@@ -1,0 +1,67 @@
+/* ==========================================================================
+   "Brand footer" custom styles
+   ========================================================================== */
+
+.brand-footer {
+    background-color: @gray-5;
+    padding-top: @grid_gutter-width;
+    padding-bottom: 60px;
+    border-top: 1px solid @gray-40;
+
+    .o-email-signup {
+        width: 100%;
+    }
+
+    .title-link {
+        border-bottom-width: 1px;
+    }
+
+    &_img {
+        text-align: center;
+
+        .respond-to-min( @bp-sm-min, {
+            text-align: left;
+        } );
+
+        img {
+            width: 150px;
+            padding-bottom: unit( ( @grid_gutter-width - 5 ) / @base-font-size-px, em );
+        }
+    }
+
+    &_headline {
+        margin-bottom: 0;
+        .grid_column( 12 );
+
+        .cf-icon {
+            position: relative;
+            top: 2px;
+            padding-right: 2px;
+            color: @green;
+            font-size: unit( 20px / @base-font-size-px, em );
+        }
+    }
+
+    &_container {
+        padding-top: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
+
+        &-1 {
+            padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+
+        .grid_column( 12 );
+
+        .respond-to-min( @bp-sm-min, {
+            .grid_column( 6 );
+
+            &-2 {
+                padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            }
+        } );
+
+        .respond-to-min( 1000px, {
+            padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            .grid_column( 3 );
+        } );
+    }
+}

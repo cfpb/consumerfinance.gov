@@ -31,19 +31,17 @@
                 <div class="m-global-header-cta"></div>
                 <div class="m-global-search"></div>
                 <a class="o-header_logo" href="/">
-                    <img class="header_logo u-js-only"
-                         src="{{ static('img/logo_sm-exec.svg')}}"
-                         onerror="this.onerror=null;this.src='{{ static('img/logo_sm-exec.png')}}';"
-                         alt="Consumer Financial Protection Bureau"
-                         width="237"
-                         height="50">
-                    <noscript>
-                        <img class="header_logo logo__no-js"
-                             src="{{ static('img/logo_sm-exec.png')}}"
-                             alt="Consumer Financial Protection Bureau"
-                             width="237"
-                             height="50">
-                    </noscript>
+                    <img class="o-header_logo-img"
+                         src="{{ static('img/logo_237x50.png') }}"
+                         srcset="{{ static('img/logo_161x34.png') }} 161w,
+                                 {{ static('img/logo_161x34@2x.png') }} 322w,
+                                 {{ static('img/logo_161x34@3x.png') }} 483w,
+                                 {{ static('img/logo_161x34@4x.png') }} 644w,
+                                 {{ static('img/logo_237x50.png') }} 237w,
+                                 {{ static('img/logo_237x50@2x.png') }} 474w"
+                         sizes="(max-width: 900px) 161px,
+                                237px"
+                         alt="Consumer Financial Protection Bureau">
                 </a>
             </div>
             [o-mega-menu]
@@ -59,11 +57,6 @@
               .o-header_logo
             .o-mega-menu
       notes:
-        - "The `onerror` attribute allows for the usage of an SVG logo for
-           browsers that support SVG, with a fallback to PNG for browsers that
-           don't."
-        - "The `noscript` element displays the PNG fallback in the event that
-           JavaScript is not available."
         - "The path in the `src` attribute has been adjusted for these docs."
   tags:
     - cfgov-organisms
@@ -86,7 +79,6 @@
     .respond-to-min( @bp-lg-min, {
         min-width: @bp-lg-min;
     } );
-
     &_content {
         position: relative;
 
@@ -104,7 +96,7 @@
                 } );
 
                 // Tablet size.
-                .respond-to-range( @bp-sm-min, @bp-sm-max {
+                .respond-to-range( @bp-sm-min, @bp-sm-max, {
                     margin-right: -30px;
                 } );
             }
@@ -120,7 +112,9 @@
                 }
 
                 > .m-global-search {
-                    min-width: 340px;
+                    // Width should visually be 340px, plus 3px to accommodate
+                    // the focus state.
+                    min-width: 343px;
                 }
             }
         } );
@@ -147,14 +141,6 @@
 
     &_logo {
 
-        // Tablet/mobile sizes.
-        .respond-to-max( @bp-sm-max, {
-            .js & {
-                // Offset logo by width of mega menu trigger + 10px gap.
-                margin-left: @mobile_trigger_ht__px + ( @grid_gutter-width / 2 );
-            }
-        } );
-
         &-img {
             // Size is to fit 320px minimum width for older iPhones, etc.
             height: @mobile_trigger_ht__px - 20px;
@@ -169,27 +155,41 @@
             .respond-to-min( @bp-med-min, {
                 margin: 0 0 unit( 20px / @base-font-size-px, em ) 0;
                 height: 50px;
-                width: 237px;
             } );
         }
+    }
 
-        noscript .o-header_logo-img {
-            display: none;
-        }
+    &__mega-menu {
+
+        // Setting the minimum height allocates room for the mega menu
+        // so the header height doesn't change when it loads in.
+        .respond-to-min( @bp-med-min, {
+            min-height: 167px;
+        } );
+
+    }
+
+    &__mega-menu &_logo  {
+
+        // Tablet/mobile sizes.
+        .respond-to-max( @bp-sm-max, {
+            .js & {
+                // Offset logo by width of mega menu trigger + 15px gap.
+                // The margin-left starts inside the 15px padding of the page
+                // page already, so a value that matches the width of the trigger
+                // will give it the desired spacing to the right of the trigger.
+                margin-left: @mobile_trigger_ht__px;
+            }
+        } );
     }
 }
 
-// Display logo if JavaScript is turned off.
-.no-js noscript .o-header_logo-img {
-    display: block;
-    // TODO: Check that these settings can't be covered by `.o-header_logo-img`.
-    //       To test, turn off JavaScript. The logo PNG should look the same as the SVG.
-    margin-bottom: 10px;
-    margin-top: 0;
-    padding-top: 10px;
 
-    .respond-to-max( @bp-sm-max, {
-        padding-left: 10px;
+// Used on /external-site/ template, where the header has no nav and eyebrow.
+.o-header__no-nav {
+    min-height: auto;
+    .respond-to-min( @bp-med-min, {
+        margin-top: 15px;
     } );
 }
 

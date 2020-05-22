@@ -396,6 +396,7 @@ a.link-container:active .link-container-highlight {
    ========================================================================== */
 
 .heading-inner-small {
+    margin: 3em 0 1em;
     font-size: 0.625em; /* 10/16 */
     font-family: "Avenir Next Medium", Arial, sans-serif;
     font-weight: 500;
@@ -661,6 +662,7 @@ h2 .icon-40 {
         background-size: 22px 22px;
     }
 
+    // TODO: Refactor to fit with Design System's @cfpb/cfpb-buttons package.
     .btn-block-on-small {
         /* Full-width */
         display: block;
@@ -1715,13 +1717,19 @@ ol.unstyled > li:before {
     margin: 0 0 1em 1em; /* 16/16 */
 }
 
-.complaint-step h2,
+.complaint-step h3 {
+    /* Recreating h2 styling when correcting heading level markup, 12/1/2017 */
+    font-size: 1.25em; /* 20/16 */
+    text-transform: none;
+}
+
+.complaint-step h3,
 .complaint-step p {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.complaint-step h2 + p {
+.complaint-step h3 + p {
     margin-top: 0.5em; /* 8/16 */
 }
 
@@ -1747,7 +1755,11 @@ ol.unstyled > li:before {
         margin: -4px 0 0 0;
     }
 
-    .complaint-step h2,
+    .complaint-step h3 {
+        font-size: 1.625em; /* 26/16 */
+    }
+
+    .complaint-step h3,
     .complaint-step p {
         /**
          * icon width: 128px

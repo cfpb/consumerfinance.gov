@@ -1,0 +1,223 @@
+
+{# ==========================================================================
+
+   render( data )
+
+   ==========================================================================
+
+   Description:
+
+   Renders the entire form explainer.
+
+   data: The data structure is as follows:
+         [
+          { 'img':   'url-to-form-img',
+             'terms': [ ... ]
+           }
+         ]
+
+   ========================================================================== #}
+
+{% macro render( data ) %}
+<div class="explain" aria-controls="form-explainer">
+    <ul class="tabs explain_tabs">
+        <li class="tab-list active-tab">
+            <button class="tab-link tab-link__checklist"
+                    data-target="checklist"
+                    tabindex="0">
+                {{ svg_icon('check-round') }}
+                <span class="tab-label">Check details</span>
+            </button>
+        </li>
+        <li class="tab-list">
+            <button class="tab-link tab-link__definitions"
+                    data-target="definitions"
+                    tabindex="0">
+                {{ svg_icon('help-round') }}
+                <span class="tab-label">Get definitions</span>
+            </button>
+        </li>
+    </ul>
+    {{ render_pagination( data ) }}
+    {% for page in data %}
+    <figure class="explain_page"
+            id="explain_page-{{ loop.index }}"
+            role="tablist"
+            aria-multiselectable="true">
+        <div class="image-map explain_image-map">
+            <div class="image-map_wrapper">
+                <div class="form-explainer_page-buttons">
+                    <button class="prev a-btn a-btn__disabled"
+                            aria-label="Previous page">
+                        {{ svg_icon('left') }}
+                    </button>
+                    <button class="a-btn next"
+                            aria-label="Next page">
+                        {{ svg_icon('right') }}
+                    </button>
+                  </div>
+                <img class="image-map_image"
+                     src="{{ page.img }}"
+                     alt="">
+                {{ render_map_points( page.terms, loop.index ) }}
+            </div>
+        </div>
+        <figcaption class="terms explain_terms">
+            <div class="o-expandable-group
+                        o-expandable-group__form-explainer
+                        {{ 'o-expandable-group__accordion' if true else '' }}">
+                {{ render_terms( page.terms, loop.index ) }}
+            </div>
+        </figcaption>
+    </figure>
+    {% endfor %}
+</div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   render_map_points( terms, page_num )
+
+   ==========================================================================
+
+   Description:
+
+   Render a list of o-expandable terms with definitions.
+
+   terms:    An array of term objects.
+
+   page_num: The page that these map points belong to.
+
+   ========================================================================== #}
+
+{% macro render_map_points( terms, page_num ) %}
+{% for item in terms %}
+<a class="image-map_overlay image-map_overlay__{{ item.category }}"
+   style="{{ 'top:' + item.top + ';' 'left:' + item.left + ';' }}
+          {{ 'width:' + item.width + ';' 'height:' + item.height + ';'
+          if item.width and item.height }}"
+   href="{{ '#page-' + page_num | string + '-' + item.category + '-' + item.id }}"
+   id="{{ 'image-map_overlay__' + page_num|string + '-' + item.category + '-' + item.id }}"
+   tabindex="-1">
+    <span class="u-visually-hidden">{{ item.term }}</span>
+ </a>
+{% endfor %}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   render_terms( terms, page_num )
+
+   ==========================================================================
+
+   Description:
+
+   Render a list of o-expandable terms with definitions.
+
+   terms:    An array of term objects.
+
+   page_num: The page that these terms belong to.
+
+   ========================================================================== #}
+
+{% macro render_terms( terms, page_num ) %}
+{% for item in terms %}
+    {{ render_term( item, loop.index, page_num ) }}
+{% endfor %}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   render_term( term, index, page_num )
+
+   ==========================================================================
+
+   Description:
+
+   Render an o-expandable term with a definition.
+
+   item:      A term object. Term objects have the following structure:
+              {
+                'category':   'String containing the name of the category.'
+                'definition': 'This definition can contain HTML.',
+                'highlight':  'String containing a url to an image.',
+                'id':         'a-unique-html-id.',
+                'term':       'Term name.'
+              }
+
+   index:    The term's position within the array.
+
+   page_num: The page that this term belongs to.
+
+   ========================================================================== #}
+
+{% macro render_term( item, index, page_num ) %}
+<div class="o-expandable
+            o-expandable__padded
+            o-expandable__form-explainer
+            o-expandable__form-explainer-{{ item.category }}"
+     id="{{ 'page-' + page_num|string + '-' + item.category + '-' + item.id }}">
+    <button class="o-expandable_header o-expandable_target"
+            tabindex="0">
+        <span class="h4 o-expandable_header-left o-expandable_label">
+            {{ svg_icon(
+              'check-round' if item.category == 'checklist' else 'question-round'
+            ) }}
+            {{ item.term }}
+        </span>
+        <span class="o-expandable_header-right o-expandable_link">
+            <span class="o-expandable_cue-open" aria-label="Show">
+                {{ svg_icon('plus-round') }}
+            </span>
+            <span class="o-expandable_cue-close" aria-label="Hide">
+                {{ svg_icon('minus-round') }}
+            </span>
+        </span>
+    </button>
+    <div class="o-expandable_content" tabindex="0">
+        {{ item.definition | safe }}
+        {% if item.highlight -%}
+            <img src="{{ item.highlight }}" alt="">
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   render_pagination( pages )
+
+   ==========================================================================
+
+   Description:
+
+   Render pagination.
+
+   pages: Pages in form. The data structure is as follows:
+          [
+            { 'img':   'url-to-form-img',
+              'terms': [ ... ]
+            }
+          ]
+
+   ========================================================================== #}
+
+{% macro render_pagination( pages ) %}
+<nav class="pagination explain_pagination">
+    <span class="form-explainer_nav-label">Viewing page:</span>
+    <ul class="form-explainer_page-links">
+        {% for page in pages %}
+        <li>
+            <a class="form-explainer_page-link {{ 'current-page' if loop.index == 1 else '' }}"
+               data-page="{{ loop.index }}">
+               {{ loop.index }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endmacro %}

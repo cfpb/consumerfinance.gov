@@ -11,13 +11,23 @@ set -e
 
 # Initialize project dependency directories.
 init() {
-  # Set cli_flag variable.
-  source cli-flag.sh 'Front end' $1
+  # Set NODE_ENV variable.
+  # Set default command-line environment flag, if user didn't supply one.
+  NODE_ENV=$1
 
-  NODE_DIR=node_modules
-  DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
+  # Warn if unsupported command-line flag was used.
+  if [ "$NODE_ENV" != "development" ] &&
+     [ "$NODE_ENV" != "production" ]; then
+    supplied_cli_flag=$NODE_ENV
+    NODE_ENV='development'
+    echo "WARNING: '$supplied_cli_flag' flag not found, reverting to $NODE_ENV environment."
+  fi
 
-  echo "npm components directory: $NODE_DIR"
+  # Notify of environment that user is in.
+  echo "Front-end environment: $NODE_ENV"
+
+  # Set the NODE_ENV for this session.
+  export NODE_ENV=$NODE_ENV
 }
 
 # Clean project dependencies.
@@ -25,97 +35,49 @@ clean() {
   # If the node directory already exists,
   # clear it so we know we're working with a clean
   # slate of the dependencies listed in package.json.
-  if [ -d $NODE_DIR ]; then
-    echo 'Removing project dependency directories…'
-    rm -rf $NODE_DIR
-    echo 'Project dependencies have been removed.'
+  if [ -d node_modules ]; then
+    echo "Removing project dependency directories…"
+    rm -rf node_modules
+    echo "Project dependencies have been removed."
   fi
 }
 
 # Install project dependencies.
 install() {
-  echo 'Installing front-end dependencies…'
+  if [ "$NODE_ENV" = "development" ]; then
 
-  if [ "$cli_flag" = "development" ] ||
-     [ "$cli_flag" = "test" ]; then
+    echo "Installing frontend development dependencies…"
+    yarn install
 
-    # Before installing dependencies,
-    # create variables for globally-installed ones.
-    local is_installed_protractor=$(is_installed protractor)
-
-    npm install -d --loglevel warn
-
-    # Copy globally-installed packages.
     # Protractor = JavaScript acceptance testing framework.
-    if [ $is_installed_protractor = 0 ]; then
-      echo 'Installing Protractor dependencies locally…'
-      ./$NODE_DIR/protractor/bin/webdriver-manager update
-    else
-      echo 'Global Protractor installed. Copying global install locally…'
-      protractor_symlink=$(command -v protractor)
-      protractor_binary=$(readlink $protractor_symlink)
-      protractor_full_path=$(dirname $protractor_symlink)/$(dirname $protractor_binary)/../../protractor
-      if [ ! -d $protractor_full_path/node_modules/webdriver-manager/selenium ]; then
-        echo 'ERROR: Please run `webdriver-manager update` and try again!'
-        exit
-      fi
-      mkdir -p ./$NODE_DIR/protractor
-      cp -r $protractor_full_path ./$NODE_DIR/
-    fi
+    echo "Installing Protractor dependencies locally…"
+    # We skip Gecko here (--gecko false) because webdriver pulls its release
+    # directly from a GitHub.com URL which enforces rate-limiting. This can
+    # cause installation failures when running automated testing. Currently
+    # we don't rely on Gecko for testing.
+    ./node_modules/protractor/bin/webdriver-manager update --gecko false --standalone false
 
   else
-    npm install --production --loglevel warn --no-optional
-  fi
-
-}
-
-# If the node directory exists, $NODE_DIR/CHECKSUM exists, and
-# the contents DO NOT match the checksum of package.json, clear
-# $NODE_DIR so we know we're working with a clean slate of the
-# dependencies listed in package.json.
-clean_and_install() {
-  if [ ! -f $NODE_DIR/CHECKSUM ] || 
-     [ "$DEP_CHECKSUM" != "$(cat $NODE_DIR/CHECKSUM)" ]; then
-    clean
-    install
-    # Add a checksum file
-    echo -n "$DEP_CHECKSUM" > $NODE_DIR/CHECKSUM
-  else
-    echo 'Dependencies are up to date.'
+    echo "Installing frontend production dependencies…"
+    yarn install --production --ignore-optional
   fi
 }
+
 
 # Run tasks to build the project for distribution.
 build() {
-  echo 'Building project…'
-  gulp clean
-  gulp build
-
-  if [ "$cli_flag" = "production" ]; then
-    gulp scripts:ondemand
-  fi
-}
-
-# Returns 1 if a global command-line program installed, else 0.
-# For example, echo "node: $(is_installed node)".
-is_installed() {
-  # Set to 1 initially.
-  local return_=1
-
-  # Set to 0 if program is not found.
-  type $1 >/dev/null 2>&1 || { local return_=0; }
-
-  echo "$return_"
+  echo "Building project…"
+  yarn run gulp build
 }
 
 # Execute requested (or all) functions.
 if [ "$1" == "init" ]; then
   init ""
-  clean_and_install
+  install
 elif [ "$1" == "build" ]; then
   build
 else
   init "$1"
-  clean_and_install
+  install
   build
 fi

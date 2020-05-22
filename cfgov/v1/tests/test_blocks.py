@@ -1,9 +1,11 @@
-import mock
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.safestring import SafeText
 
-from v1.blocks import AbstractFormBlock, AnchorLink, PlaceholderCharBlock
+import mock
+
+from v1.blocks import AbstractFormBlock, AnchorLink, Link, PlaceholderCharBlock
 
 
 class TestAbstractFormBlock(TestCase):
@@ -24,12 +26,12 @@ class TestAbstractFormBlock(TestCase):
         self.block.get_result(self.page, self.request, self.block_value, True)
         mock_getclass()().process.assert_called_with(True)
 
-    def test_get_handler_class_raises_AttributeError_for_unset_handler_meta(self):
+    def test_get_handler_class_raises_AttributeError_for_unset_handler_meta(self):  # noqa
         with self.assertRaises(AttributeError) as e:
             self.block.get_handler_class()
 
     @mock.patch('v1.blocks.import_string')
-    def test_get_handler_class_returns_load_class_with_handler_path(self, mock_import):
+    def test_get_handler_class_returns_load_class_with_handler_path(self, mock_import):  # noqa
         self.block.meta.handler = 'handler.dot.path'
         self.block.get_handler_class()
         mock_import.assert_called_with(self.block.meta.handler)
@@ -93,7 +95,7 @@ class TestPlaceholderBlock(TestCase):
     def test_render_no_placeholder_provided(self):
         block = PlaceholderCharBlock()
         html = block.render_form('Hello world!')
-        self.assertIn(
+        self.assertInHTML(
             (
                 '<input id="" name="" placeholder="" '
                 'type="text" value="Hello world!" />'
@@ -146,3 +148,21 @@ class TestPlaceholderBlock(TestCase):
         html = '<input id="foo" /><input id="bar" />'
         with self.assertRaises(ValueError):
             PlaceholderCharBlock.replace_placeholder(html, 'a')
+
+
+class TestLink(TestCase):
+    def test_link_with_external_url_validates(self):
+        block = Link()
+        value = block.to_python(
+            {'link_text': 'Link', 'external_link': '/path'}
+        )
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('Link with url should not fail validation')
+
+    def test_link_without_external_or_page_link_fails(self):
+        block = Link()
+        value = block.to_python({'link_text': 'Link'})
+        with self.assertRaises(ValidationError):
+            block.clean(value)

@@ -2,8 +2,9 @@ import re
 
 from django import forms
 from django.core.exceptions import ValidationError
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailimages.blocks import ImageChooserBlock
+
+from wagtail.core import blocks
+from wagtail.images.blocks import ImageChooserBlock
 
 
 def number_validator(value, search=re.compile(r'[^0-9]').search):
@@ -104,9 +105,21 @@ class Hyperlink(blocks.StructBlock):
         template = '_includes/atoms/hyperlink.html'
 
 
+class Button(Hyperlink):
+    size = blocks.ChoiceBlock(choices=[
+        ('regular', 'Regular'),
+        ('large', 'Large Primary'),
+    ], default='regular')
+
+
 class ImageBasic(blocks.StructBlock):
     upload = ImageChooserBlock(required=False)
-    alt = blocks.CharBlock(required=False)
+    alt = blocks.CharBlock(
+        required=False,
+        help_text='If the image is decorative (i.e., if a screenreader '
+                  'wouldn\'t have anything useful to say about it), leave the '
+                  'Alt field blank.'
+    )
 
     def __init__(self, required=True):
         self.is_required = required

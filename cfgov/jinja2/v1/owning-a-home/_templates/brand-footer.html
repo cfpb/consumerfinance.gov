@@ -1,0 +1,101 @@
+
+{# ==========================================================================
+
+   render( links )
+
+   ==========================================================================
+
+   Description:
+
+   Renders all the brand footer content: 3 link sections and email section.
+
+   links: An array of three link objects, each containing:
+            - text (req): text of link section
+            - img:        img for link section
+            - label:      link label
+            - url:        link url
+
+            Macro will display max of three link sections. If there are
+            more than three link objects, only the first three will
+            be shown. If no links are passed in, only the email signup
+            will be shown.
+   ========================================================================== #}
+
+{% macro render( links=[] ) %}
+<footer aria-label="Buying a House footer" class="brand-footer content">
+    <div class="content_wrapper">
+        <h3 class="brand-footer_headline">
+            {{ svg_icon('house') }}
+            Check out other tools and resources from
+            <a href="/owning-a-home" class="title-link">Buying a House</a>
+        </h3>
+        {% for link in links %}
+        {% if loop.index < 4 %}
+            <div class="brand-footer_container brand-footer_container-{{ loop.index }}">
+                {{ render_link( link ) }}
+            </div>
+        {% endif %}
+        {% endfor %}
+        <div class="brand-footer_container brand-footer_container-{{ links | length + 1 }}">
+            {% set value = {
+                'heading': 'Buying a house?',
+                'default_heading': True,
+                'text': 'Sign up for our 2-week Get Homebuyer Ready boot camp. We’ll take you step-by-step through the entire homebuying process.',
+                'gd_code': 'USCFPB_127',
+                'disclaimer_url': '/owning-a-home/privacy-act-statement/'
+            } %}
+            {% include '_includes/organisms/email-signup.html' %}
+        </div>
+    </div>
+</footer>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   render_link( link )
+
+   ==========================================================================
+
+   Description:
+
+   Render a link.
+
+   link: An object, containing:
+          - intro (req): text of link section
+          - img:         img for link section
+          - text:        link text
+          - label:       link accessible label
+          - url:         link url
+
+   ========================================================================== #}
+
+{% macro render_link( link ) %}
+<div class="brand-footer_img">
+    <a href="{{ link.url }}">
+        <img src="{{ link.img }}" alt="{{ link.label }}">
+    </a>
+</div>
+<p>{{ link.intro | safe }}</p>
+{% if link.is_jump_link %}
+<a class="a-link
+          a-link__jump
+          a-link__icon
+          a-link__no-wrap"
+   href="{{ link.url }}"
+   aria-label="{{ link.label }}>
+    <span class="a-link_text"">
+        {{ link.text | safe }}
+    </span>
+    {{ svg_icon('download') }}
+</a>
+{% else %}
+<a class="a-link a-link__jump"
+   href="{{ link.url }}"
+   aria-label="{{ link.label }}">
+    <span class="a-link_text">
+        {{ link.text | safe }}
+    </span>
+</a>
+{% endif %}
+{% endmacro %}

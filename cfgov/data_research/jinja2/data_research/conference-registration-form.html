@@ -1,0 +1,274 @@
+{% import 'atoms/submit-button.html' as submit_button %}
+{% import 'molecules/notification.html' as notification %}
+
+{% macro render(value, settings, form_id) %}
+
+    {#
+        If the form was just successfully submitted, display a message
+        telling the user. Uses the `is_successful_submission` value
+        provided by the ConferenceRegistrationHandler class.
+    #}
+
+    {% if settings.is_successful_submission %}
+        <div class="block block__flush-top">
+            {{- notification.render(
+                'success',
+                true,
+                value.success_message | richtext
+            ) }}
+        </div>
+    {% endif %}
+
+    {#
+        If the conference is already at capacity, show a message telling
+        the user and display form with only the ability to register virtually.
+        Uses the `at_capacity_message` value entered by the user in
+        the ConferenceRegistrationForm in the Wagtail admin.
+    #}
+    {% if settings.is_at_capacity %}
+        <div class="block block__flush-top">
+            {{ value.at_capacity_message | richtext }}
+        </div>
+
+        {#
+            Display the conference registration form itself. Uses the `form`
+            object provided by the ConferenceRegistrationHandler. This may
+            be an empty form on first load or may contain user input that
+            failed validation and is being displayed with one or more errors.
+        #}
+
+        <section class="o-form-section">
+        <form id="registration-form"
+              method="post"
+              action="."
+              class="o-form js-validate-filters"
+         >
+
+            {#
+                Display any error messages created during form submission.
+                Rendered above the form for styling purposes.
+            #}
+            <div class="u-mb15">
+            {% set form = settings.form %}
+            {% for error in form.non_field_errors() %}
+                {{- notification.render('error', true, error | richtext ) }}
+            {% endfor %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{- notification.render('error', true, error) }}
+                {% endfor %}
+            {% endfor %}
+            </div>
+
+            <input type="hidden" name="form_id" value="{{ form_id }}">
+
+            {{ csrf_input }}
+
+            {#
+                It would be preferable to be able to loop over form.fields
+                here instead of hardcoding them here, but unfortunately it's
+                difficult to reconcile Django's form field rendering with how
+                the Design System wants fields to be wrapped.
+            #}
+
+            {# Attendee Type -- Only virtual allowed when at capacity #}
+            <div class="o-form_group">
+                <b>Note:</b> Physical attendee capacity has been reached;
+                you may still register to attend virtually.
+                <input type="hidden" name="attendee_type" value="Virtually">
+            </div>
+
+            {# Name #}
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label a-label__heading"
+                           for="{{ form.name.id_for_label }}"
+                    >{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+            </div>
+
+            {# Organization #}
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label a-label__heading"
+                           for="{{ form.organization.id_for_label }}"
+                    >
+                        {{ form.organization.label }}
+                        <small class="a-label_helper">(optional)</small>
+                    </label>
+                    {{ form.organization }}
+                </div>
+            </div>
+
+            {# Email #}
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label a-label__heading"
+                           for="{{ form.email.id_for_label }}"
+                    >{{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            {# Sessions attending #}
+            {# <div class="o-form_group{% if form.sessions.errors %} m-form-field__error{% endif %}">
+                <legend class="a-legend"
+                        for="{{ form.sessions.id_for_label }}"
+                >{{ form.sessions.label }}</legend>
+                <fieldset class="o-form_fieldset">
+                    {{ form.sessions }}
+                </fieldset>
+            </div> #}
+
+            {# Accommodations #}
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label"
+                           for="{{ form.other_accommodations.id_for_label }}"
+                    >Any accessibility accommodations needed to attend?</label>
+                    {{ form.other_accommodations }}
+                </div>
+            </div>
+
+            {{ submit_button.render({'button_text': 'Register'})}}
+        </form>
+        </section>
+
+    {% else %}
+
+        {#
+            Display the conference registration form itself. Uses the `form`
+            object provided by the ConferenceRegistrationHandler. This may
+            be an empty form on first load or may contain user input that
+            failed validation and is being displayed with one or more errors.
+        #}
+
+        <section class="o-form-section">
+        <form id="registration-form"
+              method="post"
+              action="."
+              class="o-form js-validate-filters"
+         >
+
+            {#
+                Display any error messages created during form submission.
+                Rendered above the form for styling purposes.
+            #}
+            <div class="u-mb15">
+            {% set form = settings.form %}
+            {% for error in form.non_field_errors() %}
+                {{- notification.render('error', true, error | richtext) }}
+            {% endfor %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{- notification.render('error', true, error) }}
+                {% endfor %}
+            {% endfor %}
+            </div>
+
+            <input type="hidden" name="form_id" value="{{ form_id }}">
+
+            {{ csrf_input }}
+
+            {#
+                It would be preferable to be able to loop over form.fields
+                here instead of hardcoding them here, but unfortunately it's
+                difficult to reconcile Django's form field rendering with how
+                the Design System wants fields to be wrapped.
+            #}
+
+            {# Attendee Type #}
+            <div class="o-form_group">
+                <legend class="a-legend">
+                    {{ form.attendee_type.label }}
+                </legend>
+                <fieldset class="o-form_fieldset">
+                    {{ form.attendee_type }}
+                </fieldset>
+            </div>
+
+            {# Name #}
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label a-label__heading"
+                           for="{{ form.name.id_for_label }}"
+                    >{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+            </div>
+
+            {# Organization #}
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label a-label__heading"
+                           for="{{ form.organization.id_for_label }}"
+                    >
+                        {{ form.organization.label }}
+                        <small class="a-label_helper">(optional)</small>
+                    </label>
+                    {{ form.organization }}
+                </div>
+            </div>
+
+            {# Email #}
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label a-label__heading"
+                           for="{{ form.email.id_for_label }}"
+                    >{{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+            </div>
+
+            {# Sessions attending #}
+            {# <div class="o-form_group{% if form.sessions.errors %} m-form-field__error{% endif %}">
+                <legend class="a-legend"
+                        for="{{ form.sessions.id_for_label }}"
+                >{{ form.sessions.label }}</legend>
+                <fieldset class="o-form_fieldset">
+                    {{ form.sessions }}
+                </fieldset>
+            </div> #}
+
+            {# Dietary restrictions #}
+            <div class="o-form_group">
+                <legend class="a-legend">
+                    {{ form.dietary_restrictions.label }}
+                </legend>
+                <fieldset class="o-form_fieldset">
+                    {{ form.dietary_restrictions }}
+                </fieldset>
+            </div>
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label"
+                           for="{{ form.other_dietary_restrictions.id_for_label }}"
+                    >{{ form.other_dietary_restrictions.label }}</label>
+                    {{ form.other_dietary_restrictions }}
+                </div>
+            </div>
+
+            {# Accommodations #}
+            <div class="o-form_group">
+                <legend class="a-legend">
+                    {{ form.accommodations.label }}
+                </legend>
+                <fieldset class="o-form_fieldset">
+                    {{ form.accommodations }}
+                </fieldset>
+            </div>
+            <div class="o-form_group">
+                <div class="m-form-field">
+                    <label class="a-label"
+                           for="{{ form.other_accommodations.id_for_label }}"
+                    >Any other accommodations needed to attend?</label>
+                    {{ form.other_accommodations }}
+                </div>
+            </div>
+
+            {{ submit_button.render({'button_text': 'Register'})}}
+        </form>
+        </section>
+    {% endif %}
+{% endmacro %}

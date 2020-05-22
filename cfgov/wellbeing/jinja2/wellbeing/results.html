@@ -1,0 +1,728 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block meta_viewport %}
+    {{ super() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block title -%}
+    {{ _('Your financial well-being score') }}
+{%- endblock %}
+
+{% block desc -%}
+    {{ _('See your survey results and learn how you may be able to improve your score.') }}
+{%- endblock %}
+
+{% block og_desc -%}
+    {{ _('See your survey results and learn how you may be able to improve your score.') }}
+{%- endblock %}
+
+{% block og_image %}
+        <meta property="og:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta property="twitter:image" content="https://files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+
+{% block css %}
+    {{ super() }}
+    <style>
+        .save-links {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #b4b5b6;
+            margin: 30px 0;
+            text-align: right;
+        }
+        .spectrum {
+            padding-top: 120px;
+            margin-top: 30px;
+            position: relative;
+            max-width: 770px;
+        }
+        .score-box {
+            height: 150px;
+            border-color: #101820;
+            border-style: solid;
+            position: absolute;
+            top: 0;
+        }
+        .score-box__left {
+            padding-left: 10px;
+            border-width: 0 0 0 1px;
+        }
+        .score-box__right {
+            padding-right: 10px;
+            border-width: 0 1px 0 0;
+            text-align: right;
+        }
+        .score-box__avg {
+            height: 70px;
+            top: 80px;
+        }
+        .score-box a {
+            border-bottom-width: 1px;
+        }
+        .spectrum_x-label {
+            padding-top: 5px;
+            padding-left: 5px;
+            border-left: 1px solid #b4b5b6;
+            position: absolute;
+            font-size: 0.75em;
+            list-style: none;
+        }
+        .spectrum_x-label__40 { left: 32.0987654321% }
+        .spectrum_x-label__50 { left: 44.4444444444% }
+        .spectrum_x-label__60 { left: 56.7901234568% }
+        .spectrum_x-label__70 { left: 69.1358024691% }
+        .spectrum_x-label__overall {
+            width: 100%;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .comparison-chart_toggle {
+            padding: 0;
+            border: none;
+            margin: 0;
+        }
+        .comparison-chart_toggle-button {
+            margin-bottom: 5px;
+            background-color: #d6e8fa;
+            color: #101820;
+            font-size: 0.875em;
+        }
+        .comparison-chart_toggle-button:hover,
+        .comparison-chart_toggle-button:focus,
+        .comparison-chart_toggle-button__selected {
+            background-color: #7eb7e8;
+        }
+        .comparison-chart_title {
+            margin-top: 30px;
+        }
+        .comparison-chart_list {
+            margin-top: 30px;
+            position: relative;
+        }
+        .comparison-chart_list dt,
+        .comparison-chart_source dt {
+            font-size: inherit;
+            letter-spacing: normal;
+            text-transform: none;
+        }
+        .comparison-chart_list dt {
+            width: 30%;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .comparison-chart_list dd {
+            width: 65%;
+            border-bottom: 1px solid #b4b5b6;
+            position: relative;
+            bottom: 0.25em;
+        }
+        .comparison-chart_list dd:not(.u-hidden),
+        .lt-ie9 .comparison-chart_list dd {
+            display: inline-block;
+        }
+        .comparison-chart_list dd span {
+            height: 30px;
+            padding-left: 5px;
+            border-left-width: 4px;
+            border-left-style: solid;
+            margin-left: -2px;
+            position: absolute;
+            bottom: -0.5em;
+            line-height: 1;
+        }
+        .comparison-chart_source {
+            padding-top: 15px;
+            border-top: 1px solid #b4b5b6;
+            margin-top: 30px;
+            color: #75787b;
+            font-size: 0.75em;
+        }
+
+        /* CF Enhancements */
+        .u-left {
+            float: left;
+        }
+
+        .o-expandable {
+            border-top: 1px solid #b4b5b6;
+            border-bottom: 1px solid #b4b5b6;
+        }
+
+        @media all and (max-width: 37.5em) {
+            .comparison-chart_toggle-button {
+                display: block;
+            }
+        }
+
+        @media print {
+            /* Force all these things back on when printing, regardless
+               of how the user has interacted with the page */
+            .js .comparison_data-point {
+                display: inline-block !important;
+            }
+
+            .o-expandable_content {
+                /* Using !important to work around IE not handling the
+                   :not([aria-expanded="true"]) selector */
+                height: auto !important;
+            }
+
+            .o-expandable_content table {
+                height: 510px;
+            }
+
+            .o-expandable_content thead {
+                border-bottom: none;
+            }
+
+            .o-expandable_content th:last-child {
+                width: 25% !important;
+            }
+
+            .o-expandable_content tbody tr {
+                border-bottom: none;
+            }
+
+            .content_main {
+                display: block !important;
+            }
+
+            .content_main * {
+                overflow: visible !important;
+            }
+
+            /* Hide various things when printing */
+            .save-links,
+            .o-expandable_link,
+            .comparison-chart_toggle,
+            .content_sidebar,
+            .o-footer {
+                display: none !important;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block pre_content %}
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home_' + current_language) }}">
+                {{ svg_icon( 'left' ) }}
+                {{ _('Back to the questionnaire') }}
+            </a>
+        </nav>
+    </div>
+{% endblock %}
+
+{% set user_pct = user_score.pct if user_score else 0 %}
+{% if user_pct > 50 %}
+    {% set user_pct_spectrum = 100 - user_pct %}
+    {% set score_box_positioning = 'right' %}
+{% else %}
+    {% set user_pct_spectrum = user_pct %}
+    {% set score_box_positioning = 'left' %}
+{% endif %}
+{% set avg_pct = avg_score.pct %}
+{% set avg_pct_spectrum = avg_pct if score_box_positioning == 'left' else 100 - avg_pct %}
+{% import 'molecules/notification.html' as notification with context %}
+
+
+{% block content_main %}
+    <h1>{{ _('Your financial well-being score') }}</h1>
+
+{% if user_score %}
+    <p class="lead-paragraph">
+        {{ _('You’ve taken a good step in understanding your financial picture.') }}
+    </p>
+{% elif (current_language == 'en') %}
+    <div class="u-mb15">
+        {{ notification.render(
+            'warning',
+            true,
+            'We never collect or store answers to the financial well-being questionnaire.',
+	          'If you would like to see your score and answers on the page below,
+            please start with the <a href="../">questionnaire</a> and enter your responses.' | safe
+        ) }}
+    </div>
+{% else %}
+    <div class="u-mb15">
+        {{ notification.render(
+            'warning',
+            true,
+            'No guardamos sus respuestas.',
+            'Si usted desea obtener su puntuación y respuestas en esta página,
+            necesita completar el <a href="../">cuestionario</a>.' | safe
+        ) }}
+    </div>
+{% endif %}
+
+
+    <p>
+        {{ _('Your financial well-being score is calculated based on the answers you gave.') }}
+    </p>
+
+    <p>
+        {{ _('Review your score and your answers below and think about whether you want to take action and make improvements.') }}
+        {{ _('Our tools and resources can help.') }}
+        {{ _('You can return and retake the questionnaire to see if you are able to answer the questions differently next time.') }}
+    </p>
+
+    <ul class="save-links m-list m-list__horizontal">
+        <li class="m-list_item u-js-only">
+            <a class="m-list_link
+                      a-link
+                      a-link__icon"
+               href="javascript:window.print()">
+                {{ svg_icon('print') }}
+                <span class="a-link_text">{{ _('Print') }}</span>
+            </a>
+        </li>
+        <li class="m-list_item">
+            <a class="m-list_link
+                      a-link
+                      a-link__icon"
+               href="../../save-as-pdf-instructions/"
+               target="_blank"
+               rel="noopener noreferrer">
+                {{ svg_icon('download') }}
+                <span class="a-link_text">{{ _('Save as PDF') }}</span>
+            </a>
+        </li>
+    </ul>
+
+    <h2>{{ _('Your result') }}</h2>
+
+    <figure class="spectrum u-clearfix">
+        <img src="{{ static('apps/wellbeing/img/spectrum_1540x60.png') }}"
+             alt="Chart showing that financial well-being scores below 40 are in the lowest of five ranges. Scores between 40 and 50 are in the second lowest. Scores between 50 and 60 are in the middle range. Scores between 60 and 70 are in the second highest range. Scores above 70 are in the highest range."
+             height="30">
+    {% if user_score %}
+        <div class="score-box score-box__user score-box__{{ score_box_positioning }}"
+             style="{{ score_box_positioning }}: {{ user_pct_spectrum }}%">
+            {{ _('Your score:') }} <b class="score-value">{{ user_score }}</b>
+            <div>
+                <a id="compare-link" href="#compare">
+                    {{ _('More score comparisons') }}
+                </a>
+            </div>
+        </div>
+    {% endif %}
+        <div class="score-box score-box__avg score-box__{{ score_box_positioning }}"
+             style="{{ score_box_positioning }}: {{ avg_pct_spectrum }}%" id="score-box__avg">
+            {{ _('U.S. average:') }} <b id="score-value__avg">{{ avg_score }}</b>
+        </div>
+        <figcaption class="spectrum_x-labels">
+            <ol>
+                <li class="spectrum_x-label spectrum_x-label__40">40</li>
+                <li class="spectrum_x-label spectrum_x-label__50">50</li>
+                <li class="spectrum_x-label spectrum_x-label__60">60</li>
+                <li class="spectrum_x-label spectrum_x-label__70">70</li>
+            </ol>
+        </figcaption>
+        <figcaption class="spectrum_x-label__overall">
+            {{ _('Financial well-being score') }}
+        </figcaption>
+    </figure>
+
+    <div class="block">
+        <p>
+            {{ _('Your score is based on the answers to the financial well-being questionnaire.') }}
+            {{ _('If you’d like to be able to answer the questions differently next time, ') }}
+            {{ _('see our suggestions and next steps.') }}
+        </p>
+    {% if user_score %}
+        <div class="o-expandable
+                    o-expandable__padded">
+            <button class="o-expandable_header o-expandable_target">
+                <span class="o-expandable_header-left o-expandable_label">
+                    {{ _('Review your answers') }}
+                </span>
+                <span class="o-expandable_header-right o-expandable_link">
+                    <span class="o-expandable_cue o-expandable_cue-open">
+                        <span class="u-visually-hidden-on-mobile">
+                            {{ _('Show') }}
+                        </span>
+                        {{ svg_icon('plus-round') }}
+                    </span>
+                    <span class="o-expandable_cue o-expandable_cue-close">
+                        <span class="u-visually-hidden-on-mobile">
+                            {{ _('Hide') }}
+                        </span>
+                        {{ svg_icon('minus-round') }}
+                    </span>
+                </span>
+            </button>
+            <div class="o-expandable_content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{ _('Question') }}</th>
+                            <th>{{ _('Your answer') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for question in questions %}
+                        <tr>
+                            <td>{{ _(question['question']) }}</td>
+                            <td>{{ _(question['answers'][answers[loop.index - 1]]) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    </div>
+
+    <div class="block">
+        <h2>{{ _('What would you like to do next?') }}</h2>
+        <p>
+            {{ _('If you have a sense of the top money challenges or goals you’d like to work on, you can get started on your own.') }}
+        </p>
+
+        <div class="content-l u-mt30 u-mb30">
+            <div class="content-l_col content-l_col-1-2">
+                <h3>{{ _('Take control of day-to-day money management') }}</h3>
+                <ul>
+                    <li>
+                        <b>{{ _('Track where your money goes.') }}</b>
+                        {{ _('Fill out the') }}
+                        <a class="a-link
+                                  a-link__icon"
+                           href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_bill-calendar.pdf">
+                            <span class="a-link_text">{{ _('bill calendar') }}</span>
+                            {{ svg_icon('download') }}
+                        </a>
+                        {{ _('and') }}
+                        <a class="a-link
+                                  a-link__icon"
+                           href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_spending-tracker.pdf">
+                            <span class="a-link_text">{{ _('spending tracker') }}</span>
+                            {{ svg_icon('download') }}
+                        </a>
+                        {{ _('to see and manage your everyday expenses.') }}
+                    </li>
+                    {% if (current_language == 'en') %}
+                    <li>
+                        <b>Get a grip on debt.</b>
+                        Stay on top of what you owe with our
+                        <a class="a-link
+                                  a-link__icon"
+                           href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_debt-worksheet.pdf">
+                            <span class="a-link_text">debt log</span>
+                            {{ svg_icon('download') }}
+                        </a>
+                        and find templates to help you communicate with
+                        <a href="/consumer-tools/debt-collection/">
+                          debt collectors</a>.
+                    </li>
+                    {% else %}
+                    <li>
+                      <b>Tome control de sus deudas.</b>
+                      Vea nuestro recursos para ayudarle a
+                      <a href="/es/obtener-respuestas/que-es-un-cobrador-de-deudas-y-por-que-trata-de-comunicarse-conmigo-es-330/">
+                        comunicarse con un cobrador de deudas</a>.
+                    </li>
+                    {% endif %}
+                    <li>
+                        <b>{{ _('Repay student loans wisely.') }}</b>
+                        {{ _('Use our tool to see your choices about how you') }}
+                        <a href="/paying-for-college/repay-student-debt/">
+                          {{ _('repay your student debt') }}</a>.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-l_col content-l_col-1-2">
+                <h3>{{ _('Get on track for your financial future') }}</h3>
+                {% if (current_language == 'en') %}
+                <ul>
+                    <li>
+                        <b>Look toward home ownership.</b>
+                        Consult our <a href="/owning-a-home/">Buying a House</a>
+                        tools and resources.
+                    </li>
+                    <li>
+                        <b>Create an action plan to meet your goals.</b>
+                        Use our
+                        <a class="a-link
+                                  a-link__icon"
+                           href="https://files.consumerfinance.gov/f/documents/201705_cfpb_My-New-Money-Goal.pdf">
+                            <span class="a-link_text">worksheet</span>
+                            {{ svg_icon('download') }}
+                        </a>
+                        or
+                        <a class="a-link
+                                  a-link__icon"
+                           href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_monthly-budget.pdf">
+                            <span class="a-link_text">budgeting tool</span>
+                            {{ svg_icon('download') }}
+                        </a>.
+                    </li>
+                    <li>
+                        <b>Consider the right age for claiming Social Security.</b>
+                        Use our
+                        <a href="/retirement/before-you-claim/">
+                        Planning for Retirement tool
+                        </a>
+                        before you make your decision.
+                    </li>
+                    <li>
+                        <b>Build and maintain your credit record.</b>
+                        Understand
+                        <a href="/consumer-tools/credit-reports-and-scores/">
+                            credit reports and scores
+                        </a>
+                        and their effect on your cost of borrowing.
+                    </li>
+                </ul>
+                {% else %}
+                <ul>
+                    <li>
+                        <b>¿Está considerando comprar una casa?</b>
+                        Tenemos <a href="/es/prepararse-para-comprar-casa/">recursos para ayudarle</a>.
+                    </li>
+                    <li>
+                        <b>Desarrolle un plan de acción para alcanzar sus metas.</b>
+                        Use esta
+                        <a href="https://pueblo.gpo.gov/CFPBLibs/CFPBLibsPubs.php?PubID=13757">hoja de cálculo</a>,
+                        o herramienta para hacer un presupuesto.
+                    </li>
+                    <li>
+                        <b>Considere a que edad desea reclamar su beneficio del Seguro Social.</b>
+                        Use nuestro
+                        <a href="/consumer-tools/retirement/before-you-claim/es/">
+                          calculador</a>
+                        antes de tomar una decisión.
+                    </li>
+                    <li>
+                        <b>Mantenga un buen historial de crédito.</b>
+                        Conozca más sobre cómo
+                        <a href="/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/">
+                            su historial y puntaje de crédito</a>
+                        determinan el costo de tomar un préstamo.
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+
+        <h3>{{ _('Get personalized help') }}</h3>
+        <p>
+            {{ _('If you’re looking for a more thorough financial assessment and personalized advice,') }}
+            {{ _('free and low-cost services may be available.') }}
+            {{ _('Here are a few ways to get help:') }}
+        </p>
+
+        <ul>
+            {% if (current_language == 'en') %}
+            <li>
+                <b>A nonprofit credit counselor</b> can help you set up a
+                reasonable repayment plan for credit cards and other consumer
+                debt. See
+                <a href="/ask-cfpb/how-do-i-choose-which-credit-counselor-is-right-for-me-en-1355/">
+                  tips for choosing a credit counselor</a>.
+            </li>
+            {% else %}
+            <li>
+                <b>Un asesor de crédito de una organización sin fines de lucro</b>
+                puede ayudarle a hacer un plan de pago para sus tarjetas de
+                crédito y otras deudas. Estos son algunos
+                <a href="/es/obtener-respuestas/como-elijo-el-asesor-de-credito-adecuado-para-mi-es-1355/ ">
+                  consejos para escoger un asesor de crédito</a>.
+            </li>
+            {% endif %}
+            <li>
+                <b>{{ _('A HUD-certified housing counselor') }}</b>
+                {{ _('can give advice if you’re having trouble paying your mortgage') }}
+                {{ _('or help you get ready for homeownership.') }}
+                <a href="/find-a-housing-counselor/">{{ _('Find one in your area.') }}</a>
+            </li>
+            <li>
+                <b>{{ _('A financial coach') }}</b>
+                {{ _('can assess your situation and work with you over time to resolve issues and get ahead.') }}
+                <a href="/about-us/blog/the-launch-of-the-cfpb-financial-coaching-initiative/">
+                    {{ _('Find out about the CFPB coaching initiative.') }}
+                </a>
+            </li>
+            <li>
+                <b>{{ _('Your local library') }}</b>
+                {{ _('can often connect you with organizations and people in your area.') }}
+            </li>
+        </ul>
+    </div>
+
+    <span id="compare"></span>
+
+    <div class="block">
+        <h2>{{ _('See how your score compares to group averages') }}</h2>
+
+    {% if not user_score and (current_language == 'en') %}
+        <div class="u-mb15">
+        {{ notification.render(
+            'warning',
+            true,
+            'We never collect or store answers to the financial well-being questionnaire.',
+            'If you would like to see your score and answers on the page below,
+            please start with the <a href="../">questionnaire</a> and enter your responses.' | safe
+        ) }}
+        </div>
+    {% elif not user_score and (current_language == 'es') %}
+        <div class="u-mb15">
+            {{ notification.render(
+                'warning',
+                true,
+                'No guardamos sus respuestas.',
+                'Si usted desea obtener su puntuación y respuestas en esta página,
+                necesita completar el <a href="../">cuestionario</a>.' | safe
+            ) }}
+        </div>
+    {% endif %}
+
+        <figure class="comparison-chart" id="comparison-chart">
+            <div class="comparison-chart_toggle u-js-only">
+                <h4>{{ _('Compare by') }}</h4>
+                <button class="a-btn
+                               comparison-chart_toggle-button
+                               comparison-chart_toggle-button__selected"
+                        data-compare-by="age"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Age"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
+                    {{ _('Age') }}
+                </button>
+                <button class="a-btn
+                               comparison-chart_toggle-button"
+                        data-compare-by="income"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Household income"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
+                    {{ _('Household income') }}
+                </button>
+                <button class="a-btn
+                               comparison-chart_toggle-button"
+                        data-compare-by="employment"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Employment status"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
+                    {{ _('Employment status') }}
+                </button>
+            </div>
+
+            <!-- <h3 class="comparison-chart_title">
+                Distribution of scores for <span id="comparison-chart_title_grouping">all adults</span>
+            </h3> -->
+
+            <dl class="comparison-chart_list">
+            {% if user_score %}
+                <dt><b>{{ _('Your score') }}</b></dt>
+                <dd>
+                    <span style="left: {{ user_score.pct }}%; border-color: {{ user_score.color }};">
+                        {{ user_score }}
+                    </span>
+                </dd>
+            {% endif %}
+
+                <dt>{{ _('U.S. average') }}</dt>
+                <dd>
+                    <span style="left: {{ avg_score.pct }}%; border-color: {{ avg_score.color }};">
+                        {{ avg_score }}
+                    </span>
+                </dd>
+
+        {% for slug, means in group_means.items() %}
+            {% for group_name, group_data in means.items() %}
+                <dt class="comparison_data-point {{ slug }}_group">{{ _(group_name) }}</dt>
+                <dd class="comparison_data-point {{ slug }}_mean">
+                    <span style="left: {{ group_data.pct }}%; border-color: {{ group_data.color }};">
+                        {{ group_data }}
+                    </span>
+                </dd>
+            {% endfor %}
+        {% endfor %}
+            </dl>
+
+            <figcaption class="comparison-chart_source">
+                <dl>
+                    <dt>{{ _('Source:') }}</dt>
+                    <dd>
+                        <a href="/data-research/research-reports/financial-well-being-america/">Financial Well-Being in America report</a> |
+                        <a href="https://files.consumerfinance.gov/f/documents/cfpb_well-being_score-comparison-data.csv">{{ _('Download CSV file') }}</a>
+                    </dd>
+
+                    <dt>{{ _('Date published:') }}</dt>
+                    <dd>{{ _('September 26, 2017') }}</dd>
+                </dl>
+            </figcaption>
+        </figure>
+    </div>
+{% endblock %}
+
+{% block content_sidebar %}
+    {% if (current_language == 'en') %}
+    <div class="block block__flush-top">
+        <header class="m-slug-header">
+            <h2 class="a-heading">Looking for more help?</h2>
+        </header>
+        <p>
+            You can further explore the tips, tools, answers, and resources
+            in our Consumer Tools section, including:
+        </p>
+        <ul class="m-list m-list__links">
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/debt-collection/">
+                  Debt collection
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/student-loans/">
+                  Student loans
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/credit-reports-and-scores/">
+                  Credit reports and scores
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/ask-cfpb/category-credit-cards/">
+                  Credit cards
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/mortgages/">
+                  Mortgages
+                </a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">{{ _('About this questionnaire') }}</h2>
+        </header>
+        <p>
+            {{ _('CFPB researchers developed the questionnaire and a way to score it, as a tool to help measure your current financial well-being—') }}
+            {{ _('that is, how well your current money situation is providing you with financial security and freedom of choice, today and for the future.') }}
+        </p>
+        <a class="a-link a-link__jump" href="{{ url('fwb_about_' + current_language) }}">
+            <span class="a-link_text">{{ _('See more background') }}</span>
+        </a>
+    </div>
+
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">{{ _('Legal disclaimer') }}</h2>
+        </header>
+        <p>
+            {{ _('The content on this page provides general consumer information.') }}
+            {{ _('It is not legal advice or regulatory guidance.') }}
+            {{ _('The CFPB updates this information periodically.') }}
+            {{ _('This information may include links or references to third-party resources or content.') }}
+            {{ _('We do not endorse the third-party or guarantee the accuracy of this third-party information.') }}
+            {{ _('There may be other resources that also serve your needs.') }}
+        </p>
+    </div>
+{% endblock %}

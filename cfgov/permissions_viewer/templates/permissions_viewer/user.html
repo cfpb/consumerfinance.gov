@@ -1,0 +1,140 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% block titletag %}{% trans "Permissions for" %} {{user}}{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title="User Permissions" %}
+
+    <div class="nice-padding">
+	    <h1> {{user}} </h1>
+	    {% if not user.is_active %}
+	    <p class="help-block help-info">
+	    This user is <strong>not active</strong>, and has no access to the site.
+            </p>
+	    {% elif user.is_superuser %}
+	    <p class="help-block help-warning">
+	    This user is an administrator, and thus has complete access to the site.
+            </p>
+	    {% elif user.is_staff %}
+		<div class="help-block help-info">
+			<p>This user is <em>staff</em>, which generally means they have access to Django Admin</p>
+            </div>
+	    {% endif %}
+	    <h2> Page Permissions</h2>
+	    <table class="listing">
+		    <thead>
+		    <tr>
+			    <td></td> 
+			{% for group in groups %}
+			<td class="title">
+				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>
+			{% endfor %}
+		    </tr>
+		    </thead>
+		    {% for page_perms in page_permissions %}
+		    <tr>
+		    <td> {{page_perms.page.url_path}}</td>
+			    {% for group_perm in page_perms.group_permissions %}
+				    <td>
+					    <ul>
+					{% for perm in group_perm %}
+					<li>{{perm.get_permission_type_display }}</li>
+					{% endfor %}
+					    </ul>
+
+				    </td>
+			   {% endfor %}
+		    {% empty %}
+		    <td> User has no page permissions assigned via groups</td>
+		    {% endfor %}
+		   </tr>
+
+	    </table>
+	    <h2> Collection Permissions</h2>
+	    <table class="listing">
+		    <thead>
+		    <tr>
+			    <td></td> 
+			{% for group in groups %}
+			<td class="title">
+				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>
+			{% endfor %}
+		    </tr>
+		    </thead>
+		    {% for collection_perms in collection_permissions %}
+		    <tr>
+		    <td> {{collection_perms.collection}}</td>
+			    {% for group_perm in collection_perms.group_permissions %}
+				    <td>
+					    <ul>
+					{% for gcp in group_perm %}
+					<li>{{gcp.permission.name }}</li>
+					{% endfor %}
+					    </ul>
+
+				    </td>
+			   {% endfor %}
+		    {% empty %}
+		    <td> User has no collection permissions assigned via groups</td>
+		    {% endfor %}
+		   </tr>
+
+	    </table>
+
+	    <h2> Model Permissions (group) </h2>
+	    <table class="listing">
+		    <thead>
+		    <tr>
+			    <td></td> 
+			{% for group in groups %}
+			<td class="title">
+				<a href="{% url "permissions:group" group.pk %}">{{group}}</a></td>
+			{% endfor %}
+		    </tr>
+		    </thead>
+		    {% for ct_perms in group_ct_permissions %}
+		    <tr>
+			    <td> {{ ct_perms.content_type.app_label }}.{{ ct_perms.content_type.name }}</td>
+			     {% for perm_set in ct_perms.group_permissions %}
+				    <td>
+					    <ul>
+					{% for perm in perm_set %}
+					<li>{{perm.name }}</li>
+					{% endfor %}
+					    </ul>
+
+				    </td>
+			    {% endfor %}
+		    {% empty %}
+		    <td> User has no model permissions assigned via groups</td>
+		    {% endfor %}
+		   </tr>
+
+	    </table>
+	    <h2>Model Permissions (individual)</h2>
+	    <table class="listing">
+		    <thead>
+		    <tr>
+			<td class="title">Content type</td>
+			<td class="title">Permissions</td>
+		    </tr>
+		    </thead>
+		    {% for content_type, permissions in users_ct_permissions.items %}
+		    <tr>
+			    <td> {{ content_type.app_label }}.{{ content_type.name }}</td>
+				    <td>
+					    <ul>
+			    {% for permission in permissions %}
+					<li>{{ permission.name }}</li>
+			   {% endfor %}
+					    </ul>
+
+				    </td>
+		    {% empty %}
+		    <td> User has no permissions assigned directly</td>
+		    {% endfor %}
+		   </tr>
+
+	    </table>
+    </div>
+{% endblock %}

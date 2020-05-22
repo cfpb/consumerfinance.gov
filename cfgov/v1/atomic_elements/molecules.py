@@ -1,63 +1,66 @@
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailimages.blocks import ImageChooserBlock
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+from django.forms.utils import ErrorList
+from django.utils.safestring import mark_safe
 
-from . import atoms
-from ..blocks import AnchorLink
-from ..util import ref
+from wagtail.core import blocks
+from wagtail.images.blocks import ImageChooserBlock
+
+from v1.atomic_elements import atoms
+from v1.blocks import AnchorLink, HeadingBlock
+from v1.feeds import get_appropriate_rss_feed_url_for_page
 
 
-class HalfWidthLinkBlob(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False, label="H3 heading")
-    sub_heading = blocks.CharBlock(required=False, label="H4 heading")
-    sub_heading_icon = blocks.CharBlock(
+class InfoUnit(blocks.StructBlock):
+    image = atoms.ImageBasic(
         required=False,
-        label="H4 heading icon",
-        help_text=(
-            'A list of icon names can be obtained at: '
-            'https://cfpb.github.io/capital-framework/components/cf-icons/. '
-            'Examples: linkedin-square, facebook-square, etc.'
-        )
     )
+
+    heading = HeadingBlock(
+        required=False,
+        default={'level': 'h3'}
+    )
+
     body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
-        icon = 'link'
-        template = '_includes/molecules/link-blob.html'
-
-
-class ImageText5050(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(blank=True, required=False)
-    image = atoms.ImageBasic()
-    is_widescreen = blocks.BooleanBlock(required=False, label="Use 16:9 image")
-    is_button = blocks.BooleanBlock(required=False,
-                                    label="Show links as button")
-    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-
-    class Meta:
         icon = 'image'
-        template = '_includes/molecules/image-text-50-50.html'
-
-
-class ImageText2575(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    image = atoms.ImageBasic()
-    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-    has_rule = blocks.BooleanBlock(required=False)
-
-    class Meta:
-        icon = 'image'
-        template = '_includes/molecules/image-text-25-75.html'
+        template = '_includes/molecules/info-unit.html'
 
 
 class TextIntroduction(blocks.StructBlock):
+    eyebrow = blocks.CharBlock(
+        required=False,
+        help_text=('Optional: Adds an H5 eyebrow above H1 heading text. '
+                   'Only use in conjunction with heading.'),
+        label='Pre-heading'
+    )
     heading = blocks.CharBlock(required=False)
     intro = blocks.RichTextBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
-    has_rule = blocks.BooleanBlock(required=False)
+    has_rule = blocks.BooleanBlock(
+        required=False,
+        label="Has bottom rule",
+        help_text=('Check this to add a horizontal rule line to bottom of '
+                   'text introduction.')
+    )
+
+    def clean(self, value):
+        cleaned = super(TextIntroduction, self).clean(value)
+
+        # Eyebrow requires a heading.
+        if cleaned.get('eyebrow') and not cleaned.get('heading'):
+            raise ValidationError(
+                'Validation error in TextIntroduction: '
+                'pre-heading requires heading',
+                params={'heading': ErrorList([
+                    'Required if a pre-heading is entered.'
+                ])}
+            )
+
+        return cleaned
 
     class Meta:
         icon = 'title'
@@ -65,141 +68,124 @@ class TextIntroduction(blocks.StructBlock):
         classname = 'block__flush-top'
 
 
-class Hero(blocks.StructBlock):
+class AbstractHero(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False,
-        help_text='Maximum character count: 25 (including spaces)'
+        help_text=mark_safe(
+            'For complete guidelines on creating heroes, visit our '
+            '<a href="https://cfpb.github.io/design-system/components/heroes">'
+            'Design System</a>. '
+            'Character counts (including spaces) at largest breakpoint:'
+            '<ul class="help">'
+            '    <li>&bull; 41 characters max (one-line heading)</li>'
+            '    <li>&bull; 82 characters max (two-line heading)</li>'
+            '</ul>')
     )
     body = blocks.RichTextBlock(
+        label="Sub-heading",
         required=False,
-        help_text='Maximum character count: 185 (including spaces)'
+        help_text=mark_safe(
+            'Character counts (including spaces) at largest breakpoint:'
+            '<ul class="help">'
+            '    <li>&bull; 165-186 characters (after a one-line heading)</li>'
+            '    <li>&bull; 108-124 characters (after a two-line heading)</li>'
+            '</ul>')
     )
-
-    links = blocks.ListBlock(
-        atoms.Hyperlink(),
-        help_text='If your hero needs a call-to-action link, '
-                  'enter it here, rather than inside the body field.'
-    )
-    is_button = blocks.BooleanBlock(
-        required=False,
-        help_text='Select to render any links given above as buttons.'
-    )
-
     image = ImageChooserBlock(
+        label="Large image",
         required=False,
-        help_text='Should be exactly 390px tall, and up to 940px wide, '
-                  'unless this is an overlay or bleeding style hero.'
-    )
-    is_overlay = blocks.BooleanBlock(
-        required=False,
-        help_text='Select if you want the provided image to be '
-                  'a background image under the entire hero.'
-    )
-
-    background_color = blocks.CharBlock(
-        required=False,
-        help_text='Specify a hex value (with the # sign) '
-                  'from our official palette: '
-                  'https://github.com/cfpb/cf-theme-cfpb/blob/'
-                  'master/src/color-palette.less'
-    )
-    is_white_text = blocks.BooleanBlock(
-        required=False,
-        help_text='Turns the hero text white. Useful if using '
-                  'a dark background color or background image.'
-    )
-    cta_link_color = blocks.CharBlock(
-        required=False,
-        label='CTA link color',
-        help_text='If using a dark background color or background image, '
-                  'you may need to specify an alternate color '
-                  'for the call-to-action link. Specify a hex value '
-                  '(with the # sign) from our official palette: '
-                  'https://github.com/cfpb/cf-theme-cfpb/blob/'
-                  'master/src/color-palette.less'
-    )
-
-    is_bleeding = blocks.BooleanBlock(
-        required=False,
-        help_text='Select if you want the provided image to bleed '
-                  'vertically off the top and bottom of the hero.'
+        help_text=mark_safe(
+            'When saving illustrations, use a transparent background. '
+            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa: E501
+            'See image dimension guidelines.</a>')
     )
     small_image = ImageChooserBlock(
         required=False,
-        help_text='Provide an alternate image for small displays '
-                  'when using a bleeding or overlay hero.'
+        help_text=mark_safe(
+            '<b>Optional.</b> Provides an alternate image for '
+            'small displays when using a photo or bleeding hero. '
+            'Not required for the standard illustration. '
+            '<a href="https://cfpb.github.io/design-system/components/heroes#style">'  # noqa:E501
+            'See image dimension guidelines.</a>')
+    )
+    background_color = blocks.CharBlock(
+        required=False,
+        help_text=mark_safe(
+            'Specify a hex value (including the # sign) from our '
+            '<a href="https://cfpb.github.io/design-manual/brand-guidelines/color-principles.html">'  # noqa: E501
+            'official color palette</a>.')
+    )
+    is_white_text = blocks.BooleanBlock(
+        label="White text",
+        required=False,
+        help_text=mark_safe(
+            '<b>Optional.</b> Turns the hero text white. Useful if using '
+            'a dark background color or background image.')
     )
 
     class Meta:
-        icon = 'image'
         template = '_includes/molecules/hero.html'
         classname = 'block__flush-top block__flush-bottom'
+        icon = 'image'
 
 
-class FormFieldWithButton(blocks.StructBlock):
-    btn_text = blocks.CharBlock(required=False)
+class Hero(AbstractHero):
+    is_overlay = blocks.BooleanBlock(
+        label="Photo",
+        required=False,
+        help_text=mark_safe(
+            '<b>Optional.</b> Uses the large image as a background under '
+            'the entire hero, creating the "Photo" style of hero (see '
+            '<a href="https://cfpb.github.io/design-system/components/heroes">'
+            'Design System</a> for details). When using this option, '
+            'make sure to specify a background color (above) for the '
+            'left/right margins that appear when screens are wider than '
+            '1200px and for the text section when the photo and text '
+            'stack at mobile sizes.')
+    )
+    is_bleeding = blocks.BooleanBlock(
+        label="Bleed",
+        required=False,
+        help_text=mark_safe(
+            '<b>Optional.</b> Select if you want the illustration to bleed '
+            'vertically off the top and bottom of the hero space.')
+    )
 
-    required = blocks.BooleanBlock(required=False)
 
-    info = blocks.RichTextBlock(required=False, label="Disclaimer")
-    label = blocks.CharBlock(required=True)
-    type = blocks.ChoiceBlock(choices=[
-        ('text', 'Text'),
-        ('checkbox', 'Checkbox'),
-        ('email', 'Email'),
-        ('number', 'Number'),
-        ('url', 'URL'),
-        ('radio', 'Radio'),
-    ], required=False)
-    placeholder = blocks.CharBlock(required=False)
+class JumboHeroValue(blocks.StructValue):
+    def is_jumbo(self):
+        return True
+
+
+class JumboHero(AbstractHero):
+    class Meta:
+        value_class = JumboHeroValue
+
+
+class Notification(blocks.StructBlock):
+    message = blocks.CharBlock(
+        required=True,
+        help_text='The main notification message to display.'
+    )
+    explanation = blocks.TextBlock(
+        required=False,
+        help_text='Explanation text appears below the message in smaller type.'
+    )
+    links = blocks.ListBlock(
+        atoms.Hyperlink(required=False),
+        required=False,
+        help_text='Links appear on their own lines below the explanation.'
+    )
 
     class Meta:
-        icon = 'mail'
-        template = '_includes/molecules/form-field-with-button.html'
-
-
-class FeaturedContent(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-
-    category = blocks.ChoiceBlock(choices=ref.fcm_types, required=False)
-    post = blocks.PageChooserBlock(required=False)
-
-    show_post_link = blocks.BooleanBlock(required=False,
-                                         label="Render post link?")
-    post_link_text = blocks.CharBlock(required=False)
-
-    image = atoms.ImageBasic(required=False)
-    links = blocks.ListBlock(atoms.Hyperlink(required=False),
-                             label='Additional Links')
-
-    video = blocks.StructBlock([
-        ('id', blocks.CharBlock(
-            required=False,
-            label='ID',
-            help_text='E.g., in "https://www.youtube.com/watch?v=en0Iq8II4fA",'
-                      ' the ID is everything after the "?v=".')),
-        ('url', blocks.CharBlock(
-            required=False,
-            label='URL',
-            help_text='You must use the embed URL, e.g., '
-                      'https://www.youtube.com/embed/'
-                      'JPTg8ZB3j5c?autoplay=1&enablejsapi=1')),
-        ('height', blocks.CharBlock(default='320', required=False)),
-        ('width', blocks.CharBlock(default='568', required=False)),
-    ])
-
-    class Meta:
-        template = '_includes/molecules/featured-content.html'
-        icon = 'doc-full-inverse'
-        label = 'Featured Content'
-        classname = 'block__flush'
+        icon = 'warning'
+        template = '_includes/molecules/notification.html'
 
 
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
     paragraph_text = blocks.RichTextBlock(required=False)
-    button = atoms.Hyperlink()
+    button = atoms.Button()
 
     class Meta:
         template = '_includes/molecules/call-to-action.html'
@@ -222,7 +208,29 @@ class ContactAddress(blocks.StructBlock):
 
 
 class ContactEmail(blocks.StructBlock):
-    emails = blocks.ListBlock(atoms.Hyperlink())
+    emails = blocks.ListBlock(
+        blocks.StructBlock([
+            ('url', blocks.EmailBlock(label="Email address")),
+            ('text', blocks.CharBlock(
+                required=False,
+                label="Link text (optional)"
+            )),
+        ])
+    )
+
+    def clean(self, value):
+        cleaned = super(ContactEmail, self).clean(value)
+
+        if not cleaned.get('emails'):
+            raise ValidationError(
+                "Validation error in ContactEmail: "
+                "at least one email address is required",
+                params={'heading': ErrorList([
+                    "At least one email address is required."
+                ])}
+            )
+
+        return cleaned
 
     class Meta:
         icon = 'mail'
@@ -230,14 +238,41 @@ class ContactEmail(blocks.StructBlock):
         label = 'Email'
 
 
+def phone_number_format_validator():
+    return RegexValidator(
+        regex=r'^\d*$',
+        message="Enter a numeric phone number, without punctuation.")
+
+
 class ContactPhone(blocks.StructBlock):
     fax = blocks.BooleanBlock(default=False, required=False,
                               label='Is this number a fax?')
     phones = blocks.ListBlock(
         blocks.StructBlock([
-            ('number', blocks.CharBlock(max_length=15)),
-            ('vanity', blocks.CharBlock(max_length=15, required=False)),
-            ('tty', blocks.CharBlock(max_length=15, required=False)),
+            ('number', blocks.CharBlock(
+                max_length=15,
+                help_text='Do not include spaces or dashes. Ex. 8554112372',
+                validators=[phone_number_format_validator()]
+            )),
+            ('extension', blocks.CharBlock(max_length=4, required=False)),
+            ('vanity', blocks.CharBlock(
+                max_length=15,
+                required=False,
+                help_text='A phoneword version of the above number. '
+                          'Include any formatting. Ex. (555) 222-CFPB'
+            )),
+            ('tty', blocks.CharBlock(
+                max_length=15,
+                required=False,
+                label="TTY",
+                help_text='Do not include spaces or dashes. Ex. 8554112372',
+                validators=[phone_number_format_validator()]
+            )),
+            ('tty_ext', blocks.CharBlock(
+                max_length=4,
+                required=False,
+                label="TTY Extension"
+            )),
         ]))
 
     class Meta:
@@ -246,27 +281,42 @@ class ContactPhone(blocks.StructBlock):
         label = 'Phone'
 
 
-class ImageInset(blocks.StructBlock):
+class ContactHyperlink(blocks.StructBlock):
+    url = blocks.URLBlock()
+    text = blocks.CharBlock(required=False)
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/molecules/contact-hyperlink.html'
+        label = 'Hyperlink'
+
+
+class ContentImage(blocks.StructBlock):
     image = atoms.ImageBasic()
-    image_position = blocks.ChoiceBlock(choices=[('right', 'right'),
-                                                 ('left', 'left')],
-                                        default='right')
-    is_image_decorative = blocks.BooleanBlock(required=False,
-                                              label='Image decorative')
-    image_width = blocks.ChoiceBlock(choices=[(170, '170px'),
-                                              (270, '270px')],
-                                     default=270,
-                                     label='Image Width',
-                                     help_text='Default is 270px.')
-    text = blocks.RichTextBlock(required=False)
-    is_bottom_rule = blocks.BooleanBlock(required=False,
-                                         default=True,
-                                         label='Bottom Rule')
+    image_width = blocks.ChoiceBlock(
+        choices=[('full', 'full'),
+                 (470, '470px'),
+                 (270, '270px'),
+                 (170, '170px')],
+        default='full',)
+    image_position = blocks.ChoiceBlock(
+        choices=[('right', 'right'),
+                 ('left', 'left')],
+        default='right',
+        help_text='Does not apply if the image is full-width',
+    )
+    text = blocks.RichTextBlock(required=False, label='Caption')
+    is_bottom_rule = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Has bottom rule line',
+        help_text='Check to add a horizontal rule line to bottom of inset.'
+    )
 
     class Meta:
         icon = 'image'
-        template = '_includes/molecules/image-inset.html'
-        label = 'Image inset'
+        template = '_includes/molecules/content-image.html'
+        label = 'Image'
 
 
 class RelatedLinks(blocks.StructBlock):
@@ -282,7 +332,8 @@ class RelatedLinks(blocks.StructBlock):
 
 class Quote(blocks.StructBlock):
     body = blocks.TextBlock()
-    citation = blocks.TextBlock()
+    citation = blocks.TextBlock(required=False)
+    is_large = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = 'openquote'
@@ -302,14 +353,24 @@ class RelatedMetadata(blocks.StructBlock):
         ], icon='list-ul')),
         ('date', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100)),
-            ('date', blocks.DateBlock(required=False))
+            ('date', blocks.DateBlock())
         ], icon='date')),
         ('topics', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100, default='Topics')),
             ('show_topics', blocks.BooleanBlock(default=True, required=False))
         ], icon='tag')),
+        ('categories', blocks.StructBlock([
+            ('heading', blocks.CharBlock(
+                max_length=100,
+                default='Categories'
+            )),
+            ('show_categories', blocks.BooleanBlock(
+                default=True,
+                required=False
+            ))
+        ], icon='list-ul')),
     ])
-    half_width = blocks.BooleanBlock(required=False, default=False)
+    is_half_width = blocks.BooleanBlock(required=False, default=False)
 
     class Meta:
         icon = 'grip'
@@ -317,16 +378,30 @@ class RelatedMetadata(blocks.StructBlock):
         label = 'Related metadata'
 
 
-class RSSFeed(blocks.ChoiceBlock):
-    choices = [
-        ('blog_feed', 'Blog Feed'),
-        ('newsroom_feed', 'Newsroom Feed'),
-    ]
-
+class RSSFeed(blocks.StaticBlock):
     class Meta:
         icon = 'plus'
         template = '_includes/molecules/rss-feed.html'
         label = 'RSS feed'
+        admin_text = mark_safe(
+            '<h3>RSS Feed</h3>'
+            'If this page or one of its ancestors provides an RSS feed, '
+            'this block renders a link to that feed. If not, this block '
+            'renders nothing.'
+        )
+
+    def get_context(self, value, parent_context=None):
+        context = super(RSSFeed, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        page = context.get('page')
+
+        if page:
+            context['value'] = get_appropriate_rss_feed_url_for_page(page)
+
+        return context
 
 
 class SocialMedia(blocks.StructBlock):

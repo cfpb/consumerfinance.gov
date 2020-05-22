@@ -1,0 +1,66 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% load humanize %}
+
+{% block titletag %}{% trans "CDN Manager" %}{% endblock %}
+
+{% block content %}
+
+    {% include "wagtailadmin/shared/header.html" with title="CDN Manager" icon="tag" %}
+
+    <div class="nice-padding">
+        <h2>Cache Invalidator</h2>
+
+    {% if user_can_purge %}
+        <div class="help-block help-info">
+            <p>
+                 Enter a full URL (e.g., <code>https://www.consumerfinance.gov/about-us/</code>
+                 or <code>https://files.consumerfinance.gov/f/documents/example.pdf</code>)
+                 to invalidate its cache, or leave it blank to invalidate the cache for the entire site.
+            </p>
+        </div>
+        <form method="post" id="flush_site">
+            {% csrf_token %}
+            <ul class="fields">
+                <li>
+                    <div class="field url_field url_input">
+                        <div class="input">
+                        {{ form.url }}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <button type="submit" name="flush" class="button">Invalidate cache</button>
+        </form>
+    {% else %}
+        <div class="help-block help-info">
+            <p>
+                You do not have permission to submit purge requests,
+                but you are welcome to view the history.
+            </p>
+        </div>
+    {% endif %}
+
+        <h2>History</h2>
+
+        <table class="listing">
+            <thead>
+                <tr>
+                    <th>When</th>
+                    <th>Who</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for history_item in history %}
+                <tr>
+                    <td>{{ history_item.created | naturaltime }}</td>
+                    <td>{{ history_item.user }}</td>
+                    <td>{{ history_item.message }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

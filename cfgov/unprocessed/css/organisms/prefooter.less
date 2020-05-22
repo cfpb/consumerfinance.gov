@@ -1,12 +1,14 @@
 // TODO: Investigate where this fits in the organisms wiki.
-//       Also, investigating prefixing classes as o-prefooter.
+//       Remove margin from this file as it doesn't fit within
+//       our atomic rules.
+
 /* topdoc
-  name: Pre-footer
+  name: Pre-footer organism
   family: cfgov-organisms
   patterns:
     - name: Default example
       markup: |
-        <div class="prefooter">
+        <div class="o-prefooter">
             <div class="block block__flush">
               <div class="m-related-posts"></div>
             </div>
@@ -18,14 +20,14 @@
         - |
           Structural cheat sheet:
           -----------------------
-          .prefooter
+          .o-prefooter
             .block.block__flush
             .block
   tags:
     - cfgov-organisms
 */
 
-.prefooter {
+.o-prefooter {
     .block();
 
     margin-right: unit( @grid_gutter-width / -2 / @base-font-size-px, em );
@@ -52,4 +54,3 @@
         padding-right: unit( @grid_gutter-width / @base-font-size-px, em);
     });
 }
-

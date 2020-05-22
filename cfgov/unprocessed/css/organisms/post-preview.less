@@ -5,23 +5,27 @@
      - name: Default post
       markup: |
         <article class="o-post-preview">
-            <div class="meta-header">
-                <span class="date meta-header_right">
-                    Published
-                    <span class="datetime">
-                        <time class="datetime_date" datetime="2003-08-05T21:36:11.000000-0400">
-                            AUG 05, 2003
-                        </time>
+            <div class="m-meta-header">
+                <div class="m-meta-header_right">
+                    <span class="a-date">
+                        Published
+                        <span class="datetime">
+                            <time class="datetime_date" datetime="2003-08-05T21:36:11.000000-0400">
+                                AUG 05, 2003
+                            </time>
+                        </span>
                     </span>
-                </span>
-                <a href="/about-us/blog/?filter_blog_category=Info+for+Consumers" class="category-slug post_slug meta-header_left">
-                    <span class="category-slug_icon cf-icon cf-icon-information"></span>
-                    <span class="u-visually-hidden">Category:</span>
-                    Info for Consumers
-                </a>
+                </div>
+                <div class="m-meta-header_left">
+                    <a href="/about-us/blog/?filter_blog_category=Info+for+Consumers" class="a-heading a-heading__icon">
+                        {{ svg_icon('information') }}
+                        <span class="u-visually-hidden">Category:</span>
+                        Info for Consumers
+                    </a>
+                </div>
             </div>
             <div class="o-post-preview_image-container">
-                <img class="o-post-preview_image" src="http://www.placehold.it/160x90" alt="">
+                <img class="o-post-preview_image" src="https://www.placehold.it/160x90" alt="">
             </div>
             <div class="o-post-preview_content">
                 <h3 class="o-post-preview_title">
@@ -30,7 +34,7 @@
                 <p class="o-post-preview_description">
                     Sed senectus feugiat arcu tempor, ac vulputate sem pulvinar porta hendrerit magnis, interdum habitasse taciti.
                 </p>
-                <div class="post_meta">
+                <div class="o-post-preview_byline-group">
                     <span class="o-post-preview_byline">
                         By <a href="/about-us/blog/?filter_author=Tom">
                             Tom
@@ -64,60 +68,151 @@
           Structural cheat sheet:
           -----------------------
           article.o-post-preview
-            div.meta-header
+            div.m-meta-header
             div.o-post-preview_image-container
                 img.o-post-preview_image
             div.o-post-preview_content
                 h3.o-post-preview_title
                 p.o-post-preview_description
             p.post_dek
-            div.post_meta
-              span.post_byline
-              span.post_date
-              div.post_meta
-                span.o-post-preview_byline
-                div.tags
+            div.o-post-preview_byline-group
+              span
+            div.tags
   tags:
     - cfgov-organisms
 */
 
 .o-post-preview {
+    border-bottom: 1px solid @meta-header_border;
+    padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    grid-template-areas:
+        "header header"
+        "content image";
+
+    .respond-to-max( @bp-xs-max, {
+        grid-template-areas:
+            "header"
+            "image"
+            "content";
+    } );
 
     + .o-post-preview {
-        margin-top: unit( @grid_gutter-width * 2 / @base-font-size-px, em);
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
+    .m-meta-header {
+        border-bottom: none;
+        grid-area: header;
+
+        .respond-to-max( @bp-xs-max, {
+            display: grid;
+
+            grid-template-areas:
+                "date"
+                "category";
+            .m-meta-header_left {
+                display: block;
+
+                margin-bottom: unit( 5px / @base-font-size-px, em );
+                grid-area: category;
+
+                .m-meta-header_separator {
+                    display: none;
+                }
+            }
+            .m-meta-header_right {
+                display: block;
+                grid-area: date;
+            }
+        } );
+
+        .respond-to-min( @bp-sm-min, {
+            .a-date {
+                line-height: 1.35;
+                vertical-align: bottom;
+            }
+        } );
+
+        &_left,
+        &_right {
+            display: inline-block;
+            float: none;
+        }
+
+        &_left {
+            .heading-4();
+            line-height: unit( 24px / 18px );
+
+            .m-meta-header_separator {
+                padding-left: 0.25em;
+                padding-right: 0.25em;
+            }
+        }
+
+        &_right {
+            line-height: 1.5;
+
+            .a-date {
+                line-height: unit( 24px / 14px );
+            }
+        }
+    }
+
+    &_content {
+        grid-area: content;
+        padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+
+        > .calendar-icon {
+            float: left;
+            margin-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+            margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+        }
+    }
+
+    &_description {
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
     }
 
     &_image-container {
-        .respond-to-max(@bp-sm-max, {
-            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-        });
-        .respond-to-min(@bp-med-min, {
-            .grid_column(4);
-        });
+        grid-area: image;
+
+        .respond-to-max( @bp-sm-max, {
+            margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+        } );
+
+        .respond-to-min( @bp-med-min, {
+            width: unit( 270px / @base-font-size-px, em );
+        } );
     }
+
     &_image {
         display: block;
         width: 100%;
     }
+
     &_title a {
         .u-link__colors( @black, @pacific-80 );
     }
-}
 
-.o-post-preview_image-container + .o-post-preview_content {
-    .respond-to-min(@bp-med-min, {
-        .grid_column(8);
-    });
+    &_subtitle {
+        .heading-6();
+
+        // margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+        clear: both;
+    }
+
+    &_byline-group,
+    .tags {
+        display: block;
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+    }
 }
 
 .o-post-preview_image-container {
     position: relative;
-
-    .calendar-icon {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-    }
 }
 
 /* topdoc

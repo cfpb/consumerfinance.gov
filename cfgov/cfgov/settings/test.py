@@ -1,27 +1,43 @@
 from .local import *
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(REPOSITORY_ROOT, 'db.sqlite3'),
-    }
-}
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
-TEST_RUNNER = 'cfgov.test.TestDataTestRunner'
-
-LOGGING = {}
+TEST_RUNNER = os.environ.get('TEST_RUNNER', 'cfgov.test.TestRunner')
 
 INSTALLED_APPS += (
+    'wagtail.contrib.settings',
     'wagtail.tests.testapp',
 )
 
 WAGTAILADMIN_RICH_TEXT_EDITORS = {
     'default': {
-        'WIDGET': 'wagtail.wagtailadmin.rich_text.HalloRichTextArea',
+        'WIDGET': 'wagtail.admin.rich_text.HalloRichTextArea',
     },
     'custom': {
         'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
     },
 }
+
+GOVDELIVERY_API = 'core.govdelivery.MockGovDelivery'
+
+STATICFILES_FINDERS += [
+    'core.testutils.mock_staticfiles.MockStaticfilesFinder',
+]
+
+STATICFILES_DIRS += [
+    PROJECT_ROOT.child('core', 'testutils', 'staticfiles'),
+]
+
+MOCK_STATICFILES_PATTERNS = {
+    'icons/*.svg': 'icons/placeholder.svg',
+}
+
+FLAG_SOURCES = (
+    'flags.sources.SettingsFlagsSource',
+)
+
+# We use a custom MEDIA_ROOT for testing so that tests that create images and
+# other files don't write them to the local development media directory. The
+# test runner cleans up this directory after the tests run.
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'cfgov', 'tests', 'test-media')

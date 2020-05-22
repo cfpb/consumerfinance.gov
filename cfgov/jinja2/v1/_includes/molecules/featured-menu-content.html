@@ -1,55 +1,56 @@
 {# ==========================================================================
 
-   featured_menu_content.render()
+   Featured Menu Content
 
    ==========================================================================
 
    Description:
 
-   Create a featured content molecule. See
+   Create a featured menu content molecule. See
    [GHE]/flapjack/Modules-V1/wiki/Featured-Menu-Content
 
-   value:               Object defined from a StreamField block.
+   value:                       Object defined from a StreamField block.
 
-   value.is_horizontal: Boolean on whether in a horizontal layout or not.
-                        Default to false.
+   value.link:                  A link object, containing:
 
-   value.link:          A tuple of link info, containing:
+   value.link.page_link:        A Wagtail page link.
 
-   value.link.url:      A string for the URL of the link.
+   value.link.external_link:    URL for page outside Wagtail.
 
-   value.link.text:     A string for the text of the link.
+   value.link.link_text:        A string for the text of the link.
 
-   value.body:          Body text.
+   value.body:                  Body text.
 
-   value.image:         A tuple of image info, containing:
-
-   value.image.src:     A string for the image source URI.
-
-   value.image.alt:     A string for the image alt text.
+   value.image:                 An image object
 
    ========================================================================== #}
 
 {% macro render( value ) %}
-<aside class="m-featured-menu-content
-              {{ 'm-featured-menu-content__horizontal'
-                 if value.is_horizontal == true else '' }}">
-    <div class="m-featured-menu-content_text">
-        <p class="h4">
-            <a href="{{ value.link.url }}">
-                  {{ value.link.text }}
-            </a>
-        </p>
-        <p>
-            {{ value.body }}
-        </p>
-    </div>
-    <a href="{{ value.link.url }}"
-       class="m-featured-menu-content_img">
-        <img src="{{ static(value.image.src) }}"
-             alt="{{ value.image.alt }}"
+{% if value.image and value.image.upload %}
+    {% set featured_image = image(value.image.upload, 'original') %}
+    {% set img_src = featured_image.url if featured_image.url else '' %}
+{% else %}
+    {% set featured_image = value.image %}
+    {% set img_src = featured_image.url if featured_image.url else '' %}
+{% endif %}
+{% if value.link %}
+    {% set link = value.link %}
+    {% set link_url = pageurl(link.page_link) if link.page_link else link.external_link %}
+    {% set link_text = link.link_text %}
+{% endif %}
+
+<aside class="m-featured-menu-content">
+    <a class="m-featured-menu-content_link" href="{{ link_url }}">
+        {% if img_src %}
+        <img src="{{ img_src }}"
+             alt=""
              height="150"
              width="270">
+        {% endif %}
+        <div>
+          {{ link_text }}
+        </div>
     </a>
+    {{ value.body }}
 </aside>
 {% endmacro %}

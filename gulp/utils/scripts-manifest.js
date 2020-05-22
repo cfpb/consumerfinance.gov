@@ -3,11 +3,10 @@
    for consumption by a script loader.
    ========================================================================== */
 
-'use strict';
 
-var fs = require( 'fs' );
+const fs = require( 'fs' );
 
-var _sourcePathCache = {};
+const _sourcePathCache = {};
 
 /**
  * Traverse a directory and return an object with keys
@@ -21,13 +20,13 @@ var _sourcePathCache = {};
  */
 function _traverseDirectory( dir, list, baseDir ) {
   if ( !baseDir ) { baseDir = dir; }
-  var stats = fs.lstatSync( dir ); // eslint-disable-line no-sync, no-inline-comments, max-len
+  const stats = fs.lstatSync( dir ); // eslint-disable-line no-sync, no-inline-comments, max-len
   if ( stats.isDirectory() ) {
     fs.readdirSync( dir ).map( function( child ) { // eslint-disable-line no-sync, no-inline-comments, max-len
       return _traverseDirectory( dir + '/' + child, list, baseDir );
     } );
   } else if ( !_isHidden( dir ) ) {
-    var relativePath = dir.substring( baseDir.length + 1 );
+    const relativePath = dir.substring( baseDir.length + 1 );
     list[relativePath] = './' + relativePath;
   }
 
@@ -40,7 +39,7 @@ function _traverseDirectory( dir, list, baseDir ) {
  * @returns {boolean} true if the source is hidden, otherwise false.
  */
 function _isHidden( path ) {
-  return ( /(^|\/)\.[^\/\.]/g ).test( path );
+  return ( /(^|\/)\.[^/.]/g ).test( path );
 }
 
 /**
@@ -51,9 +50,9 @@ function _isHidden( path ) {
  *   Hash with keys and values equal to the files in the directory tree.
  */
 function getDirectoryMap( dir ) {
-  var cache = _sourcePathCache[dir];
+  let cache = _sourcePathCache[dir];
   if ( !_sourcePathCache[dir] ) {
-    var directoryMap = _traverseDirectory( dir, {} );
+    const directoryMap = _traverseDirectory( dir, {} );
     _sourcePathCache[dir] = directoryMap;
     cache = directoryMap;
   }

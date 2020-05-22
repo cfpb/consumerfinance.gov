@@ -1,0 +1,123 @@
+[
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1002",
+        "short_name": "Regulation B",
+        "title": "Equal Credit Opportunity Act"
+    },
+    "model": "regulations3k.part",
+    "pk": 1
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1003",
+        "short_name": "Regulation C",
+        "title": "Home Mortgage Disclosure"
+    },
+    "model": "regulations3k.part",
+    "pk": 2
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1004",
+        "short_name": "Regulation D",
+        "title": "Alternative Mortgage Transaction Parity"
+    },
+    "model": "regulations3k.part",
+    "pk": 3
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1005",
+        "short_name": "Regulation E",
+        "title": "Electronic Fund Transfers"
+    },
+    "model": "regulations3k.part",
+    "pk": 4
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1010",
+        "short_name": "Regulation J",
+        "title": "Land Registration"
+    },
+    "model": "regulations3k.part",
+    "pk": 5
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1011",
+        "short_name": "Regulation K",
+        "title": "Purchasers' Revocation Rights, Sales Practices And Standards"
+    },
+    "model": "regulations3k.part",
+    "pk": 6
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1012",
+        "short_name": "Regulation L",
+        "title": "Special Rules Of Practice"
+    },
+    "model": "regulations3k.part",
+    "pk": 7
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1013",
+        "short_name": "Regulation M",
+        "title": "Consumer Leasing"
+    },
+    "model": "regulations3k.part",
+    "pk": 8
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1024",
+        "short_name": "Regulation X",
+        "title": "Real Estate Settlement Procedures Act"
+    },
+    "model": "regulations3k.part",
+    "pk": 9
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1026",
+        "short_name": "Regulation Z",
+        "title": "Truth In Lending"
+    },
+    "model": "regulations3k.part",
+    "pk": 10
+},
+{
+    "fields": {
+        "cfr_title_number": "12",
+        "chapter": "X",
+        "part_number": "1030",
+        "short_name": "Regulation DD",
+        "title": "Truth In Savings"
+    },
+    "model": "regulations3k.part",
+    "pk": 11
+}
+]

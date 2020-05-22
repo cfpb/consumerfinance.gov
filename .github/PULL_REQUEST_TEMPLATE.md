@@ -1,4 +1,4 @@
-Short description explaining the high-level reason for the pull request
+[Short description explaining the high-level reason for the pull request]
 
 ## Additions
 
@@ -14,7 +14,7 @@ Short description explaining the high-level reason for the pull request
 
 ## Testing
 
--
+1.
 
 ## Screenshots
 
@@ -29,14 +29,39 @@ Short description explaining the high-level reason for the pull request
 
 ## Checklist
 
-* [ ] PR has an informative and human-readable title
-* [ ] Changes are limited to a single goal (no scope creep)
-* [ ] Code can be automatically merged (no conflicts)
-* [ ] Code follows the standards laid out in the [front end playbook](https://github.com/cfpb/front-end)
-* [ ] Passes all existing automated tests
-* [ ] New functions include new tests
-* [ ] New functions are documented (with a description, list of inputs, and expected output)
-* [ ] Placeholder code is flagged
-* [ ] Visually tested in supported browsers and devices
-* [ ] Project documentation has been updated
-* [ ] Reviewers requested with the [Assignee tool](https://help.github.com/articles/assigning-issues-and-pull-requests-to-other-github-users/) :arrow_right:
+- [ ] PR has an informative and human-readable title
+- [ ] Changes are limited to a single goal (no scope creep)
+- [ ] Code can be automatically merged (no conflicts)
+- [ ] Code follows the standards laid out in the [CFPB development guidelines](https://github.com/cfpb/development)
+- [ ] Passes all existing automated tests
+- [ ] Any _change_ in functionality is tested
+- [ ] New functions are documented (with a description, list of inputs, and expected output)
+- [ ] Placeholder code is flagged / future todos are captured in comments
+- [ ] Visually tested in supported browsers and devices (see checklist below :point_down:)
+- [ ] Project documentation has been updated
+- [ ] Reviewers requested with the [Reviewers tool](https://help.github.com/articles/requesting-a-pull-request-review/) :arrow_right:
+
+## Testing checklist
+
+### Browsers
+
+- [ ] Chrome on desktop
+- [ ] Firefox
+- [ ] Safari on macOS
+- [ ] Edge
+- [ ] Internet Explorer 9, 10, and 11
+- [ ] Safari on iOS
+- [ ] Chrome on Android
+
+### Accessibility
+
+- [ ] Keyboard friendly
+- [ ] Screen reader friendly
+
+### Other
+
+- [ ] Is useable without CSS
+- [ ] Is useable without JS
+- [ ] Flexible from small to large screens
+- [ ] No linting errors or warnings
+- [ ] JavaScript tests are passing

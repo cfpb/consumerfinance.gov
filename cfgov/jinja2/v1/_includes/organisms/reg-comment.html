@@ -43,7 +43,8 @@
                     if not value.generic_regs_link
                     else ''
                }}"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
                 <span class="icon-link_text">Regulations.gov</span>
             </a>.
         </p>
@@ -65,7 +66,7 @@
             <span class="label_note">(optional)</span>
         </label>
         <input type="email" id="email" name="email"
-               placeholder="example@mail.com">
+               placeholder="mail@example.com">
 
         <p class="o-reg-comment_disclaimer">
             <span class="o-reg-comment_disclaimer-em">
@@ -81,7 +82,7 @@
             identifying or contact information.
         </p>
 
-        <input class="btn btn__full" type="submit" value="Submit your feedback">
+        <input class="a-btn a-btn__full-on-xs" type="submit" value="Submit your feedback">
 
         <input type="hidden" name="comment_on" value="{{ value.document_id }}">
     </form>

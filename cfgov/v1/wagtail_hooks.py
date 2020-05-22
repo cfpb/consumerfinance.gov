@@ -1,55 +1,69 @@
-import json
 import logging
-import os
-import requests
 
-from django.core.exceptions import PermissionDenied
 from django.conf import settings
+from django.contrib import admin
 from django.contrib.auth.models import Permission
-from django.core.urlresolvers import reverse
-from django.http import Http404
-from django.utils import timezone
-from django.utils.html import escape, format_html_join
-from django.utils.translation import ugettext_lazy as _
-from wagtail.wagtailadmin import widgets as wagtailadmin_widgets
-from wagtail.wagtailadmin.menu import MenuItem
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.models import Page
-from urlparse import urlsplit
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render
+from django.urls import reverse
+from django.utils.html import format_html_join
 
-from v1.models import CFGOVPage
-from v1.templatetags.share import v1page_permissions
+from wagtail.admin.menu import MenuItem
+from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
+from wagtail.contrib.modeladmin.options import (
+    ModelAdmin, ModelAdminGroup, modeladmin_register
+)
+from wagtail.core import hooks
+from wagtail.core.whitelist import attribute_rule
+
+from scripts import export_enforcement_actions
+
+from ask_cfpb.models.snippets import GlossaryTerm
+from v1.admin_views import ExportFeedbackView, manage_cdn
+from v1.models.banners import Banner
+from v1.models.portal_topics import PortalCategory, PortalTopic
+from v1.models.resources import Resource
+from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.template_debug import notification_test_cases, register_template_debug
 from v1.util import util
+
+
+try:
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
 
 
 logger = logging.getLogger(__name__)
 
 
+def export_data(request):
+    if request.method == 'POST':
+        return export_enforcement_actions.export_actions(http_response=True)
+    return render(request, 'wagtailadmin/export_data.html')
+
+
+@hooks.register('register_admin_menu_item')
+def register_export_menu_item():
+    return MenuItem(
+        'Enforcement actions',
+        reverse("export-enforcement-actions"),
+        classnames='icon icon-download',
+        order=99999,
+    )
+
+
+@hooks.register('register_admin_urls')
+def register_export_url():
+    return [re_path(
+        'export-enforcement-actions',
+        export_data,
+        name='export-enforcement-actions')]
+
+
 @hooks.register('before_delete_page')
 def raise_delete_error(request, page):
     raise PermissionDenied('Deletion via POST is disabled')
-
-
-@hooks.register('after_create_page')
-@hooks.register('after_edit_page')
-def share_the_page(request, page):
-    page = Page.objects.get(id=page.id).specific
-    parent_page = page.parent()
-    is_publishing = bool(request.POST.get('action-publish', False))
-    is_sharing = bool(request.POST.get('action-share', False))
-
-    check_permissions(parent_page, request.user, is_publishing, is_sharing)
-
-    is_live = False
-    goes_live_in_future = page.go_live_at and page.go_live_at > timezone.now()
-
-    if is_publishing and not goes_live_in_future:
-        is_live = True
-
-    share(page, is_sharing, is_live)
-    configure_page_revision(page, is_sharing, is_live)
-    if is_live:
-        flush_akamai()
 
 
 @hooks.register('after_delete_page')
@@ -68,27 +82,35 @@ def log_page_deletion(request, page):
     )
 
 
-def check_permissions(parent, user, is_publishing, is_sharing):
-    parent_perms = parent.permissions_for_user(user)
-    if parent.slug != 'root':
-        is_publishing = is_publishing and parent_perms.can_publish()
-        is_sharing = is_sharing and parent_perms.can_publish()
-
-
-def share(page, is_sharing, is_live):
-    if is_sharing or is_live:
-        page.shared = True
-        page.has_unshared_changes = False
-    else:
-        page.has_unshared_changes = True
-    page.save()
-
-
 @hooks.register('insert_editor_js')
 def editor_js():
-    js_files = [
-        'js/table-block.js',
-    ]
+    js_files = ['js/table-block.js']
+
+    # Temporarily adding Hallo-related JavaScript files to all admin pages
+    # to support the continued use of Hallo in our RichTextTableInput
+    # until we can take more time to migrate that to Draftail.
+    js_files.insert(0, 'wagtailadmin/js/vendor/hallo.js')
+    js_files.insert(0, 'wagtailadmin/js/hallo-plugins/hallo-hr.js')
+    js_files.insert(
+        0,
+        'wagtailadmin/js/hallo-plugins/hallo-requireparagraphs.js'
+    )
+    js_files.insert(
+        0, 'wagtailadmin/js/hallo-plugins/hallo-wagtaillink.js'
+    )
+    js_files.insert(
+        0,
+        'wagtaildocs/js/hallo-plugins/hallo-wagtaildoclink.js'
+    )
+    js_files.insert(
+        0,
+        'wagtailembeds/js/hallo-plugins/hallo-wagtailembeds.js'
+    )
+    js_files.insert(
+        0,
+        'wagtailimages/js/hallo-plugins/hallo-wagtailimage.js'
+    )
+
     js_includes = format_html_join(
         '\n',
         '<script src="{0}{1}"></script>',
@@ -101,129 +123,26 @@ def editor_js():
 @hooks.register('insert_editor_css')
 def editor_css():
     css_files = [
+        'css/bureau-structure.css',
+        'css/form-explainer.css',
+        'css/general-enhancements.css',
+        'css/heading-block.css',
+        'css/hero.css',
         'css/table-block.css',
-        'css/richtext.css',
-        'css/bureau-structure.css'
     ]
+
+    # Temporarily adding Hallo CSS to all admin pages
+    # to support the continued use of Hallo in our RichTextTableInput
+    # until we can take more time to migrate that to Draftail.
+    css_files.insert(0, 'wagtailadmin/css/panels/hallo.css')
+
     css_includes = format_html_join(
         '\n',
-        '<link rel="stylesheet" href="{0}{1}"><link>',
+        '<link rel="stylesheet" href="{0}{1}">',
         ((settings.STATIC_URL, filename) for filename in css_files)
     )
 
     return css_includes
-
-
-# `CFGOVPage.route()` will select the latest revision of the page where `live`
-# is set to True and return that revision as a page object to serve the request
-# so here we configure the latest revision to fall in line with that logic.
-#
-# This is also used as a signal callback when publishing in code or via
-# management command like publish_scheduled_pages.
-def configure_page_revision(page, is_sharing, is_live):
-    latest = page.get_latest_revision()
-    content_json = json.loads(latest.content_json)
-    content_json['live'] = is_live
-    content_json['shared'] = is_sharing or is_live
-    content_json['has_unshared_changes'] = not is_sharing and not is_live
-    latest.content_json = json.dumps(content_json)
-    latest.save()
-
-
-def get_akamai_credentials():
-    object_id = getattr(settings, 'AKAMAI_OBJECT_ID', None)
-    user = getattr(settings, 'AKAMAI_USER', None)
-    password = getattr(settings, 'AKAMAI_PASSWORD', None)
-
-    if not all((object_id, user, password)):
-        raise ValueError(
-            'AKAMAI_OBJECT_ID, AKAMAI_USER, and AKAMAI_PASSWORD '
-            'must be configured.'
-        )
-
-    return object_id, (user, password)
-
-
-def should_flush():
-    """Only initiate an Akamai flush if it is enabled in settings."""
-    return settings.ENABLE_AKAMAI_CACHE_PURGE
-
-
-def flush_akamai():
-    if should_flush():
-        object_id, auth = get_akamai_credentials()
-        headers = {'content-type': 'application/json'}
-        payload = {
-            'action': 'invalidate',
-            'type': 'cpcode',
-            'domain': 'production',
-            'objects': [object_id]
-        }
-        r = requests.post(
-            settings.AKAMAI_PURGE_URL,
-            headers=headers,
-            data=json.dumps(payload),
-            auth=auth
-        )
-        logger.info(
-            'Initiated Akamai flush with response {text}'.format(text=r.text)
-        )
-        if r.status_code == 201:
-            return True
-    return False
-
-
-@hooks.register('before_serve_page')
-def check_request_site(page, request, serve_args, serve_kwargs):
-    if request.site.hostname == os.environ.get('DJANGO_STAGING_HOSTNAME'):
-        if isinstance(page, CFGOVPage):
-            if not page.shared:
-                raise Http404
-
-
-@hooks.register('register_permissions')
-def register_share_permissions():
-    return Permission.objects.filter(codename='share_page')
-
-
-class CFGovLinkHandler(object):
-    """
-    CFGovLinkHandler will be invoked whenever we encounter an <a> element in
-    HTML content with an attribute of data-linktype="page". The resulting
-    element in the database representation will be:
-    <a linktype="page" id="42">hello world</a>
-    """
-
-    @staticmethod
-    def get_db_attributes(tag):
-        """
-        Given an <a> tag that we've identified as a page link embed (because it
-        has a data-linktype="page" attribute), return a dict of the attributes
-        we should have on the resulting <a linktype="page"> element.
-        """
-        return {'id': tag['data-id']}
-
-    @staticmethod
-    def expand_db_attributes(attrs, for_editor):
-        try:
-            page = Page.objects.get(id=attrs['id'])
-
-            if for_editor:
-                editor_attrs = 'data-linktype="page" data-id="%d" ' % page.id
-            else:
-                editor_attrs = ''
-
-            return '<a %shref="%s">' % (
-                editor_attrs,
-                escape(urlsplit(page.url).path)
-            )
-        except Page.DoesNotExist:
-            return "<a>"
-
-
-@hooks.register('register_rich_text_link_handler')
-def register_cfgov_link_handler():
-    return ('page', CFGovLinkHandler)
 
 
 @hooks.register('cfgovpage_context_handlers')
@@ -254,31 +173,243 @@ def form_module_handlers(page, request, context, *args, **kwargs):
                         is_submitted
                     )
                     form_modules[fieldname].update({index: module_context})
-
     if form_modules:
         context['form_modules'] = form_modules
+
+
+class PermissionCheckingMenuItem(MenuItem):
+    """
+    MenuItem that only displays if the user has a certain permission.
+
+    This subclassing approach is recommended by the Wagtail documentation:
+    https://docs.wagtail.io/en/stable/reference/hooks.html#register-admin-menu-item
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.permission = kwargs.pop('permission')
+        super(PermissionCheckingMenuItem, self).__init__(*args, **kwargs)
+
+    def is_shown(self, request):
+        return request.user.has_perm(self.permission)
+
+
+@hooks.register('register_admin_menu_item')
+def register_export_feedback_menu_item():
+    return PermissionCheckingMenuItem(
+        'Export feedback',
+        reverse("export-feedback"),
+        classnames='icon icon-download',
+        order=99999,
+        permission='v1.export_feedback'
+    )
 
 
 @hooks.register('register_admin_menu_item')
 def register_django_admin_menu_item():
     return MenuItem(
         'Django Admin',
-        reverse('admin:index'),
+        reverse("admin:index"),
         classnames='icon icon-redirect',
         order=99999
     )
 
 
-@hooks.register('register_page_listing_more_buttons')
-def page_listing_more_buttons(page, page_perms, is_parent=False):
-    page = page.specific
+@hooks.register('register_admin_menu_item')
+def register_frank_menu_item():
+    return MenuItem('CDN Tools',
+                    reverse("manage-cdn"),
+                    classnames='icon icon-cogs',
+                    order=10000)
 
-    context = {'request': type('obj', (object,), {'user': page_perms.user})}
-    v1_page_perms = v1page_permissions(context, page)
 
-    shared = getattr(page, 'shared', False)
-    if shared and not page.live and v1_page_perms.can_unshare():
-        yield wagtailadmin_widgets.Button(
-            _('Unshare'), reverse('unshare', args=[page.id]),
-            attrs={"title": _('Unshare this page')}, priority=41
-        )
+@hooks.register('register_admin_urls')
+def register_admin_urls():
+    return [
+        re_path(r'^cdn/$', manage_cdn,
+                name='manage-cdn'),
+        re_path(r'^export-feedback/$', ExportFeedbackView.as_view(),
+                name='export-feedback'),
+    ]
+
+
+@hooks.register('before_serve_page')
+def serve_latest_draft_page(page, request, args, kwargs):
+    if page.pk in settings.SERVE_LATEST_DRAFT_PAGES:
+        latest_draft = page.get_latest_revision_as_page()
+        response = latest_draft.serve(request, *args, **kwargs)
+        response['Serving-Wagtail-Draft'] = '1'
+        return response
+
+
+def get_resource_tags():
+    tag_list = []
+
+    for resource in Resource.objects.all():
+        for tag in resource.tags.all():
+            tuple = (tag.slug, tag.name)
+            if tuple not in tag_list:
+                tag_list.append(tuple)
+
+    return sorted(tag_list, key=lambda tup: tup[0])
+
+
+class ResourceTagsFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = 'tags'
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'tag'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        return get_resource_tags()
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        for tag in get_resource_tags():
+            if self.value() == tag[0]:
+                return queryset.filter(tags__slug__iexact=tag[0])
+
+
+class ResourceModelAdmin(ModelAdmin):
+    model = Resource
+    menu_label = 'Resources'
+    menu_icon = 'snippet'
+    list_display = ('title', 'desc', 'order', 'thumbnail')
+    ordering = ('title',)
+    list_filter = (ResourceTagsFilter,)
+    search_fields = ('title',)
+
+
+@modeladmin_register
+class BannerModelAdmin(ModelAdmin):
+    model = Banner
+    menu_icon = 'warning'
+    list_display = ('title', 'url_pattern', 'enabled')
+    ordering = ('title',)
+    search_fields = ('title', 'url_pattern', 'content')
+
+
+class ContactModelAdmin(ModelAdmin):
+    model = Contact
+    menu_icon = 'snippet'
+    list_display = ('heading', 'body')
+    ordering = ('heading',)
+    search_fields = ('heading', 'body', 'contact_info')
+
+
+class PortalTopicModelAdmin(ModelAdmin):
+    model = PortalTopic
+    menu_icon = 'snippet'
+    list_display = ('heading', 'heading_es')
+    ordering = ('heading',)
+    search_fields = ('heading', 'heading_es')
+
+
+class PortalCategoryModelAdmin(ModelAdmin):
+    model = PortalCategory
+    menu_icon = 'snippet'
+    list_display = ('heading', 'heading_es')
+    ordering = ('heading',)
+    search_fields = ('heading', 'heading_es')
+
+
+class ReusableTextModelAdmin(ModelAdmin):
+    model = ReusableText
+    menu_icon = 'snippet'
+    list_display = ('title', 'sidefoot_heading', 'text')
+    ordering = ('title',)
+    search_fields = ('title', 'sidefoot_heading', 'text')
+
+
+class RelatedResourceModelAdmin(ModelAdmin):
+    model = RelatedResource
+    menu_icon = 'snippet'
+    list_display = ('title', 'text')
+    ordering = ('title',)
+    search_fields = ('title', 'text')
+
+
+class GlossaryTermModelAdmin(ModelAdmin):
+    model = GlossaryTerm
+    menu_icon = 'snippet'
+    list_display = ('name_en', 'definition_en', 'portal_topic')
+    ordering = ('name_en',)
+    search_fields = ('name_en', 'definition_en', 'name_es', 'definition_es')
+
+
+class SnippetModelAdminGroup(ModelAdminGroup):
+    menu_label = 'Snippets'
+    menu_icon = 'snippet'
+    menu_order = 400
+    items = (
+        ContactModelAdmin,
+        ResourceModelAdmin,
+        ReusableTextModelAdmin,
+        RelatedResourceModelAdmin,
+        PortalTopicModelAdmin,
+        PortalCategoryModelAdmin,
+        GlossaryTermModelAdmin)
+
+
+modeladmin_register(SnippetModelAdminGroup)
+
+
+# Hide default Snippets menu item
+@hooks.register('construct_main_menu')
+def hide_snippets_menu_item(request, menu_items):
+    menu_items[:] = [item for item in menu_items
+                     if item.url != reverse("wagtailsnippets:index")]
+
+
+# The construct_whitelister_element_rules was depricated in Wagtail 2,
+# so we'll use register_rich_text_features instead.
+# Only applies to Hallo editors, which only remain in our custom
+# AtomicTableBlock table cells.
+@hooks.register('register_rich_text_features')
+def register_span_feature(features):
+    allow_html_class = attribute_rule({
+        'class': True,
+        'id': True,
+    })
+
+    # register a feature 'span'
+    # which whitelists the <span> element
+    features.register_converter_rule('editorhtml', 'span', [
+        WhitelistRule('span', allow_html_class),
+    ])
+
+    # add 'span' to the default feature set
+    features.default_features.append('span')
+
+
+@hooks.register('before_serve_shared_page')
+def set_served_by_wagtail_sharing(page, request, args, kwargs):
+    setattr(request, 'served_by_wagtail_sharing', True)
+
+
+@hooks.register('register_permissions')
+def add_export_feedback_permission_to_wagtail_admin_group_view():
+    return Permission.objects.filter(
+        content_type__app_label='v1',
+        codename='export_feedback'
+    )
+
+
+register_template_debug(
+    'v1',
+    'notification',
+    '_includes/molecules/notification.html',
+    notification_test_cases
+)

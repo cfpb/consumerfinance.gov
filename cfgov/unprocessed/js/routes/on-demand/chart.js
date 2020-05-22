@@ -2,7 +2,8 @@
    Scripts for Line Chart molecule.
    ========================================================================== */
 
-'use strict';
+// Polyfill Promise for IE11
+import 'core-js/features/promise';
 
 // See https://github.com/cfpb/cfpb-chart-builder
-require( 'cfpb-chart-builder' );
+import 'cfpb-chart-builder';

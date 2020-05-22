@@ -2,7 +2,7 @@
    Scripts for Footer organism.
    ========================================================================== */
 
-'use strict';
+import Footer from '../../organisms/Footer.js';
 
-var Footer = require( '../../organisms/Footer.js' );
-var footer = new Footer( document.body ).init();
+const footer = new Footer( document.body );
+footer.init();

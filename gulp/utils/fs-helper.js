@@ -1,6 +1,4 @@
-'use strict';
-
-var path = require( 'path' );
+const path = require( 'path' );
 
 /**
  * Retrieve a reference path to a binary.
@@ -14,7 +12,7 @@ var path = require( 'path' );
 function getBinary( packageName, binaryName, binaryDir ) {
   binaryName = binaryName || packageName;
   binaryDir = binaryDir || 'bin';
-  var pkgPath = require.resolve( packageName );
+  const pkgPath = require.resolve( packageName );
   binaryDir = path.resolve(
     path.join( path.dirname( pkgPath ), binaryDir, '/' + binaryName )
   );

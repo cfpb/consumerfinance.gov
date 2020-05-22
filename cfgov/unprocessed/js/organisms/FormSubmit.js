@@ -1,13 +1,13 @@
-'use strict';
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var scroll = require( '../modules/util/scroll' );
-var AlphaTransition = require( '../modules/transition/AlphaTransition' );
-var BaseTransition = require( '../modules/transition/BaseTransition' );
-var ERROR_MESSAGES = require( '../config/error-messages-config' );
-var FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
-var Notification = require( '../molecules/Notification' );
-var EventObserver = require( '../modules/util/EventObserver' );
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import AlphaTransition from '../modules/transition/AlphaTransition';
+import BaseTransition from '../modules/transition/BaseTransition';
+import ERROR_MESSAGES from '../config/error-messages-config';
+import EventObserver from '../modules/util/EventObserver';
+import Notification from '../molecules/Notification';
+import { scrollIntoView } from '../modules/util/scroll';
+
+const FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
 
 /**
  * FormSubmit
@@ -25,28 +25,30 @@ var EventObserver = require( '../modules/util/EventObserver' );
  */
 function FormSubmit( element, baseClass, opts ) {
   opts = opts || {};
-  var UNDEFINED;
-  var _baseElement = atomicHelpers.checkDom( element, baseClass );
-  var _formElement = _baseElement.querySelector( 'form' );
-  var _notificationElement = _baseElement.querySelector( '.m-notification' );
-  var _notification = new Notification( _baseElement );
-  var _cachedFields;
-  var eventObserver = new EventObserver();
-  var self = this;
+  const _baseElement = checkDom( element, baseClass );
+  const _formElement = _baseElement.querySelector( 'form' );
+  const _notificationElement = _baseElement.querySelector(
+    `.${ Notification.BASE_CLASS }`
+  );
+  let _notification;
+  let _cachedFields;
+  const eventObserver = new EventObserver();
+  const self = this;
   this.addEventListener = eventObserver.addEventListener;
   this.removeEventListener = eventObserver.removeEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
 
   /**
-   * @returns {FormSubmit|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {FormSubmit} An instance.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _baseElement ) ) {
-      return UNDEFINED;
+    if ( !setInitFlag( _baseElement ) ) {
+      return this;
     }
     _cachedFields = _cacheFields();
     _formElement.addEventListener( 'submit', _onSubmit );
+    _notification = new Notification( _baseElement );
+    _notification.init();
 
     return this;
   }
@@ -57,12 +59,12 @@ function FormSubmit( element, baseClass, opts ) {
    */
   function _onSubmit( event ) {
     event.preventDefault();
-    var errors = _validateForm();
+    const errors = _validateForm();
 
     _baseElement.classList.add( 'form-submitted' );
 
     if ( errors ) {
-      _displayNotification( _notification.ERROR, errors );
+      _displayNotification( Notification.ERROR, errors );
     } else {
       _submitForm();
     }
@@ -77,6 +79,7 @@ function FormSubmit( element, baseClass, opts ) {
     if ( typeof opts.validator === 'function' ) {
       return opts.validator( _cachedFields );
     }
+    let UNDEFINED;
     return UNDEFINED;
   }
 
@@ -86,9 +89,9 @@ function FormSubmit( element, baseClass, opts ) {
    * @param {content} content for notification.
    */
   function _displayNotification( type, content ) {
-    _notification.setTypeAndContent( type, content );
+    _notification.update( type, content );
     _notification.show();
-    scroll.scrollIntoView( _notificationElement );
+    scrollIntoView( _notificationElement );
   }
 
   /**
@@ -96,8 +99,8 @@ function FormSubmit( element, baseClass, opts ) {
    * @param {formData} form data object with field name/value pairs
    */
   function _submitForm() {
-    var DONE_CODE = 4;
-    var SUCCESS_CODES = {
+    const DONE_CODE = 4;
+    const SUCCESS_CODES = {
       200: 'ok',
       201: 'created',
       202: 'accepted',
@@ -106,36 +109,38 @@ function FormSubmit( element, baseClass, opts ) {
       205: 'reset content',
       206: 'partial content'
     };
-    var message;
-    var heading;
-    var state = 'ERROR';
-    var xhr = new XMLHttpRequest();
+    let message = '';
+    let heading = '';
+    let state = 'ERROR';
+    const xhr = new XMLHttpRequest();
     xhr.open( 'POST', _formElement.action );
     xhr.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
     xhr.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' );
     xhr.onreadystatechange = function() {
       if ( xhr.readyState === DONE_CODE ) {
         if ( xhr.status in SUCCESS_CODES ) {
-          var result;
+          let result;
           try {
-            var response = JSON.parse( xhr.responseText );
+            const response = JSON.parse( xhr.responseText );
             result = response.result;
-            message = response.message;
-            heading = response.header;
+            message = response.message || '';
+            heading = response.heading || '';
           } catch ( err ) {
             // ignore lack of response
           }
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';
         }
         if ( state === 'SUCCESS' && opts.replaceForm ) {
-          heading = heading || 'Thank you!';
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
-          _displayNotification( _notification[state],
-                              message || FORM_MESSAGES[state] );
+          const key = opts.language === 'es' ? state + '_ES' : state;
+          _displayNotification(
+            Notification[state],
+            message || FORM_MESSAGES[key]
+          );
         }
         if ( state === 'SUCCESS' ) {
-          self.dispatchEvent( 'success', { target: this, form: _formElement} );
+          self.dispatchEvent( 'success', { target: this, form: _formElement } );
         }
       }
     };
@@ -147,8 +152,8 @@ function FormSubmit( element, baseClass, opts ) {
    *  Replaces form with notification on success.
    */
   function _replaceFormWithNotification( message ) {
-    var transition = new AlphaTransition( _baseElement ).init();
-    scroll.scrollIntoView( _formElement, { offset: 100, callback: fadeOutForm } );
+    const transition = new AlphaTransition( _baseElement ).init();
+    scrollIntoView( _formElement, { offset: 100, callback: fadeOutForm } );
 
     function fadeOutForm() {
       transition.addEventListener( BaseTransition.END_EVENT, fadeInMessage );
@@ -156,10 +161,9 @@ function FormSubmit( element, baseClass, opts ) {
     }
 
     function fadeInMessage() {
-      _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
-      _formElement.style.display = 'none';
-      _notification.setTypeAndContent( _notification.SUCCESS, message );
+      _notification.update( Notification.SUCCESS, message );
       _notification.show();
+      _baseElement.replaceChild( _notificationElement, _formElement );
       transition.removeEventListener( BaseTransition.END_EVENT, fadeInMessage );
       transition.fadeIn();
     }
@@ -170,11 +174,11 @@ function FormSubmit( element, baseClass, opts ) {
    *   Checkboxes and radio fields are stored in array.
    */
   function _cacheFields() {
-    var nonInputTypes = [ 'file', 'reset', 'submit', 'button' ];
-    var cachedFields = {};
-    var fields = ( _formElement || {} ).elements;
-    for ( var f = 0; f < fields.length; f++ ) {
-      var field = fields[f];
+    const nonInputTypes = [ 'file', 'reset', 'submit', 'button' ];
+    const cachedFields = {};
+    const fields = ( _formElement || {} ).elements;
+    for ( let f = 0; f < fields.length; f++ ) {
+      const field = fields[f];
       if ( field.name && !field.disabled && nonInputTypes.indexOf( field.type ) === -1 ) {
         if ( field.type === 'radio' || field.type === 'checkbox' ) {
           cachedFields[field.name] = cachedFields[field.name] || [];
@@ -203,19 +207,19 @@ function FormSubmit( element, baseClass, opts ) {
    * Example: param1=value1&param2=value2
    */
   function _serializeFormData() {
-    var data = [];
+    const data = [];
     Object.keys( _cachedFields ).forEach( function( fieldName ) {
-      var field = _cachedFields[fieldName];
+      const field = _cachedFields[fieldName];
       if ( field.type === 'select-multiple' && field.options ) {
-        var options = field.options;
-        for ( var i = 0; i < options.length; i++ ) {
-          var option = options[i];
+        const options = field.options;
+        for ( let i = 0; i < options.length; i++ ) {
+          const option = options[i];
           if ( option.selected ) {
             data.push( _serializeField( fieldName, option.value ) );
           }
         }
       } else if ( Array.isArray( field ) ) {
-        for ( var f = 0; f < field.length; f++ ) {
+        for ( let f = 0; f < field.length; f++ ) {
           if ( field[f].checked ) {
             data.push( _serializeField( fieldName, field[f].value ) );
           }
@@ -233,4 +237,4 @@ function FormSubmit( element, baseClass, opts ) {
   return this;
 }
 
-module.exports = FormSubmit;
+export default FormSubmit;

@@ -1,38 +1,35 @@
-import csv
-import json
-from collections import OrderedDict
-from cStringIO import StringIO
-from itertools import chain
-from urllib import urlencode
-
-from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django.db.models import Q
-from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
-                         JsonResponse)
+from django.db.models import F, Value
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
-from django.utils import timezone
+from django.utils import timezone, translation
+from django.utils.module_loading import import_string
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from modelcluster.fields import ParentalKey
-from modelcluster.tags import ClusterTaggableManager
-from taggit.models import TaggedItemBase
-from wagtail.wagtailadmin.edit_handlers import (FieldPanel, InlinePanel,
-                                                MultiFieldPanel, ObjectList,
-                                                StreamFieldPanel,
-                                                TabbedInterface)
-from wagtail.wagtailcore import blocks, hooks
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import (Orderable, Page, PageManager,
-                                        PagePermissionTester, PageQuerySet,
-                                        UserPagePermissionsProxy)
-from wagtail.wagtailcore.url_routing import RouteResult
 
-from v1 import get_protected_url
+from wagtail.admin.edit_handlers import (
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
+    TabbedInterface
+)
+from wagtail.core import hooks
+from wagtail.core.fields import StreamField
+from wagtail.core.models import Orderable, Page, PageManager, PageQuerySet
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
+
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.fields import ParentalKey
+from taggit.models import TaggedItemBase
+from wagtailinventory.helpers import get_page_blocks
+
+from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.models.snippets import ReusableText, ReusableTextChooserBlock
+from v1.models.banners import Banner
+from v1.models.snippets import ReusableText
 from v1.util import ref
+from v1.util.util import validate_social_sharing_image
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -51,28 +48,12 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
-class CFGOVPageQuerySet(PageQuerySet):
-    def shared_q(self):
-        return Q(shared=True)
-
-    def shared(self):
-        return self.filter(self.shared_q())
-
-    def live_shared_q(self):
-        return self.live_q() | self.shared_q()
-
-    def live_shared(self, hostname):
-        if settings.STAGING_HOSTNAME in hostname:
-            return self.filter(self.live_shared_q())
-        else:
-            return self.live()
-
-
 class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
-        return CFGOVPageQuerySet(self.model).order_by('path')
+        return PageQuerySet(self.model).order_by('path')
 
-CFGOVPageManager = BaseCFGOVPageManager.from_queryset(CFGOVPageQuerySet)
+
+CFGOVPageManager = BaseCFGOVPageManager.from_queryset(PageQuerySet)
 
 
 class CFGOVPage(Page):
@@ -83,16 +64,58 @@ class CFGOVPage(Page):
                                      related_name='authored_pages')
     tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
                                   related_name='tagged_pages')
-    shared = models.BooleanField(default=False)
-    has_unshared_changes = models.BooleanField(default=False)
     language = models.CharField(
         choices=ref.supported_languagues, default='en', max_length=2
+    )
+    social_sharing_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Optionally select a custom image to appear when users share this '
+            'page on social media websites. Recommended size: 1200w x 630h. '
+            'Maximum size: 4096w x 4096h.'
+        )
+    )
+    schema_json = JSONField(
+        null=True,
+        blank=True,
+        verbose_name='Schema JSON',
+        help_text=mark_safe(
+            'Enter structured data for this page in JSON-LD format, '
+            'for use by search engines in providing rich search results. '
+            '<a href="https://developers.google.com/search/docs/guides/'
+            'intro-structured-data">Learn more.</a> '
+            'JSON entered here will be output in the '
+            '<code>&lt;head&gt;</code> of the page between '
+            '<code>&lt;script type="application/ld+json"&gt;</code> and '
+            '<code>&lt;/script&gt;</code> tags.'
+        ),
+    )
+    force_breadcrumbs = models.BooleanField(
+        "Force breadcrumbs on child pages",
+        default=False,
+        blank=True,
+        help_text=(
+            "Normally breadcrumbs don't appear on pages one or two levels "
+            "below the homepage. Check this option to force breadcrumbs to "
+            "appear on all children of this page no matter how many levels "
+            "below the homepage they are (for example, if you want "
+            "breadcrumbs to appear on all children of a top-level campaign "
+            "page)."
+        ),
     )
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
     objects = CFGOVPageManager()
+
+    search_fields = Page.search_fields + [
+        index.SearchField('sidefoot'),
+    ]
 
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
@@ -105,19 +128,25 @@ class CFGOVPage(Page):
         ('sidebar_contact', organisms.SidebarContactInfo()),
         ('rss_feed', molecules.RSSFeed()),
         ('social_media', molecules.SocialMedia()),
-        ('reusable_text', ReusableTextChooserBlock(ReusableText)),
+        ('reusable_text', v1_blocks.ReusableTextChooserBlock(ReusableText)),
     ], blank=True)
 
     # Panels
+    promote_panels = Page.promote_panels + [
+        ImageChooserPanel('social_sharing_image'),
+        FieldPanel('force_breadcrumbs', 'Breadcrumbs'),
+    ]
+
     sidefoot_panels = [
         StreamFieldPanel('sidefoot'),
     ]
 
     settings_panels = [
-        MultiFieldPanel(Page.promote_panels, 'Settings'),
+        MultiFieldPanel(promote_panels, 'Settings'),
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        FieldPanel('schema_json', 'Structured Data'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),
     ]
@@ -128,6 +157,10 @@ class CFGOVPage(Page):
         ObjectList(sidefoot_panels, heading='Sidebar/Footer'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
+
+    def clean(self):
+        super(CFGOVPage, self).clean()
+        validate_social_sharing_image(self.social_sharing_image)
 
     def get_authors(self):
         """ Returns a sorted list of authors. Default is alphabetical """
@@ -143,125 +176,64 @@ class CFGOVPage(Page):
         # Then sort by last name
         return sorted(author_names, key=lambda x: x.name.split()[-1])
 
-    def generate_view_more_url(self, request):
-        activity_log = CFGOVPage.objects.get(slug='activity-log').specific
-        tags = []
-        index = activity_log.form_id()
-        tags = urlencode([('filter%s_topics' % index, tag)
-                          for tag in self.tags.slugs()])
-        return (get_protected_url({'request': request}, activity_log)
-                + '?' + tags)
+    def related_metadata_tags(self):
+        # Set the tags to correct data format
+        tags = {'links': []}
+        filter_page = self.get_filter_data()
+        for tag in self.specific.tags.all():
+            tag_link = {'text': tag.name, 'url': ''}
+            if filter_page:
+                relative_url = filter_page.relative_url(filter_page.get_site())
+                param = '?topics=' + tag.slug
+                tag_link['url'] = relative_url + param
+            tags['links'].append(tag_link)
+        return tags
 
-    def related_posts(self, block, hostname):
-        from v1.models.learn_page import AbstractFilterPage
-        related = {}
-        query = models.Q(('tags__name__in', self.tags.names()))
-        search_types = [
-            ('blog', 'posts', 'Blog', query),
-            ('newsroom', 'newsroom', 'Newsroom', query),
-            ('events', 'events', 'Events', query),
-        ]
-
-        def fetch_children_by_specific_category(block, parent_slug):
-            """
-            This used to be a Page.objects.get, which would throw
-            an exception if the requested parent wasn't found. As of
-            Django 1.6, you can now do Page.objects.filter().first();
-            the advantage here is that you can check for None right
-            away and not have to rely on catching exceptions, which
-            in any case didn't do anything useful other than to print
-            an error message. Instead, we just return an empty query
-            which has no effect on the final result.
-            """
-            parent = Page.objects.filter(slug=parent_slug).first()
-            if parent:
-                child_query = Page.objects.child_of_q(parent)
-                if 'specific_categories' in block.value:
-                    child_query &= specific_categories_query(
-                        block, parent_slug)
-            else:
-                child_query = Q()
-            return child_query
-
-        def specific_categories_query(block, parent_slug):
-            specific_categories = ref.related_posts_category_lookup(
-                block.value['specific_categories']
-            )
-            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
-            categories = [c for c in specific_categories if c in choices]
-            if categories:
-                return Q(('categories__name__in', categories))
-            else:
-                return Q()
-
-        for parent_slug, search_type, search_type_name, search_query in \
-                search_types:
-            search_query &= fetch_children_by_specific_category(
-                block, parent_slug)
-            if parent_slug == 'events':
-                search_query |= fetch_children_by_specific_category(
-                    block, 'archive-past-events') & query
-            relate = block.value.get('relate_{}'.format(search_type), None)
-            if relate:
-                related[search_type_name] = (
-                    AbstractFilterPage.objects.live_shared(
-                        hostname
-                    ).filter(
-                        search_query
-                    ).distinct().exclude(id=self.id).order_by(
-                        '-date_published'
-                    )[:block.value['limit']])
-
-        # Return a dictionary of lists of each type when there's at least one
-        # hit for that type.
-        return {search_type: queryset for search_type, queryset in
-                related.items() if queryset}
-
-    def get_appropriate_page_version(self, request):
-        # If we're on the production site, make sure the version of the page
-        # displayed is the latest version that has `live` set to True for
-        # the live site or `shared` set to True for the staging site.
-        revisions = self.revisions.all().order_by('-created_at')
-        for revision in revisions:
-            page_version = json.loads(revision.content_json)
-            if not request.is_staging:
-                if page_version['live']:
-                    return revision.as_page_object()
-            else:
-                if page_version['shared']:
-                    return revision.as_page_object()
+    def get_filter_data(self):
+        for ancestor in self.get_ancestors().reverse().specific():
+            if ancestor.specific_class.__name__ in ['BrowseFilterablePage',
+                                                    'SublandingFilterablePage',
+                                                    'EventArchivePage',
+                                                    'NewsroomLandingPage']:
+                return ancestor
+        return None
 
     def get_breadcrumbs(self, request):
-        ancestors = self.get_ancestors()
-        home_page_children = request.site.root_page.get_children()
+        ancestors = self.get_ancestors().specific()
         for i, ancestor in enumerate(ancestors):
-            if ancestor in home_page_children:
-                return [ancestor.specific.get_appropriate_page_version(request)
-                        for ancestor in ancestors[i + 1:]]
+            if ancestor.is_child_of(request.site.root_page):
+                if ancestor.specific.force_breadcrumbs:
+                    return ancestors[i:]
+                return ancestors[i + 1:]
         return []
 
-    def get_appropriate_descendants(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).descendant_of(
+    def get_appropriate_descendants(self, inclusive=True):
+        return CFGOVPage.objects.live().descendant_of(
             self, inclusive)
 
-    def get_appropriate_siblings(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).sibling_of(
-            self, inclusive)
-
-    def get_next_appropriate_siblings(self, hostname, inclusive=False):
-        return self.get_appropriate_siblings(
-            hostname=hostname, inclusive=inclusive).filter(
-            path__gte=self.path).order_by('path')
-
-    def get_prev_appropriate_siblings(self, hostname, inclusive=False):
-        return self.get_appropriate_siblings(
-            hostname=hostname, inclusive=inclusive).filter(
-            path__lte=self.path).order_by('-path')
+    def get_appropriate_siblings(self, inclusive=True):
+        return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+
         for hook in hooks.get_hooks('cfgovpage_context_handlers'):
             hook(self, request, context, *args, **kwargs)
+
+        # Add any banners that are enabled and match the current request path
+        # to a context variable.
+        context['banners'] = Banner.objects \
+            .filter(enabled=True) \
+            .annotate(
+                # This annotation creates a path field in the QuerySet
+                # that we can use in the filter below to compare with
+                # the url_pattern defined on each enabled banner.
+                path=Value(request.path, output_field=models.CharField())) \
+            .filter(path__regex=F('url_pattern'))
+
+        if self.schema_json:
+            context['schema_json'] = self.schema_json
+
         return context
 
     def serve(self, request, *args, **kwargs):
@@ -272,130 +244,75 @@ class CFGOVPage(Page):
         if request.method == 'POST':
             return self.serve_post(request, *args, **kwargs)
 
+        # Force the page's language on the request
+        translation.activate(self.language)
+        request.LANGUAGE_CODE = translation.get_language()
         return super(CFGOVPage, self).serve(request, *args, **kwargs)
 
+    def _return_bad_post_response(self, request):
+        if request.is_ajax():
+            return JsonResponse({'result': 'error'}, status=400)
+
+        return HttpResponseBadRequest(self.url)
+
     def serve_post(self, request, *args, **kwargs):
-        """
-        Attempts to retreive form_id from the POST request and returns a JSON
-        response.
+        """Handle a POST to a specific form on the page.
+
+        Attempts to retrieve form_id from the POST request, which must be
+        formatted like "form-name-index" where the "name" part is the name of a
+        StreamField on the page and the "index" part refers to the index of the
+        form element in the StreamField.
 
         If form_id is found, it returns the response from the block method
         retrieval.
 
         If form_id is not found, it returns an error response.
         """
+        form_module = None
         form_id = request.POST.get('form_id', None)
-        if not form_id:
-            if request.is_ajax():
-                return JsonResponse({'result': 'error'}, status=400)
 
-            return HttpResponseBadRequest(self.url)
+        if form_id:
+            form_id_parts = form_id.split('-')
 
-        sfname, index = form_id.split('-')[1:]
+            if len(form_id_parts) == 3:
+                streamfield_name = form_id_parts[1]
+                streamfield = getattr(self, streamfield_name, None)
 
-        streamfield = getattr(self, sfname)
-        module = streamfield[int(index)]
+                if streamfield is not None:
+                    try:
+                        streamfield_index = int(form_id_parts[2])
+                    except ValueError:
+                        streamfield_index = None
 
-        result = module.block.get_result(self, request, module.value, True)
+                    if streamfield_index is not None:
+                        try:
+                            form_module = streamfield[streamfield_index]
+                        except IndexError:
+                            form_module = None
+
+        if form_module is None:
+            return self._return_bad_post_response(request)
+
+        result = form_module.block.get_result(
+            self,
+            request,
+            form_module.value,
+            True
+        )
 
         if isinstance(result, HttpResponse):
             return result
-        else:
-            context = self.get_context(request, *args, **kwargs)
-            context['form_modules'][sfname].update({int(index): result})
 
-            return TemplateResponse(
-                request,
-                self.get_template(request, *args, **kwargs),
-                context
-            )
+        context = self.get_context(request, *args, **kwargs)
+        context['form_modules'][streamfield_name].update({
+            streamfield_index: result
+        })
 
-    @property
-    def status_string(self):
-        page = CFGOVPage.objects.get(id=self.id)
-        if page.expired:
-            return _("expired")
-        elif page.approved_schedule:
-            return _("scheduled")
-        elif page.live and page.shared:
-            if page.has_unpublished_changes:
-                if page.has_unshared_changes:
-                    for revision in page.revisions.order_by(
-                            '-created_at', '-id'):
-                        content = json.loads(revision.content_json)
-                        if content['shared']:
-                            if content['live']:
-                                return _('live + draft')
-                            else:
-                                return _('live + (shared + draft)')
-                else:
-                    return _("live + shared")
-            else:
-                return _("live")
-        elif page.live:
-            if page.has_unpublished_changes:
-                return _('live + draft')
-            else:
-                return _('live')
-        elif page.shared:
-            if page.has_unshared_changes:
-                return _("shared + draft")
-            else:
-                return _("shared")
-        else:
-            return _("draft")
-
-    def sharable_pages(self):
-        """
-        Return a queryset of the pages that this user has permission to share.
-        """
-        # Deal with the trivial cases first...
-        if not self.user.is_active:
-            return Page.objects.none()
-        if self.user.is_superuser:
-            return Page.objects.all()
-
-        sharable_pages = Page.objects.none()
-
-        for perm in self.permissions.filter(permission_type='share'):
-            # User has share permission on any subpage of perm.page
-            # (including perm.page itself).
-            sharable_pages |= Page.objects.descendant_of(perm.page,
-                                                         inclusive=True)
-
-        return sharable_pages
-
-    def can_share_pages(self):
-        """Return True if the user has permission to publish any pages"""
-        return self.sharable_pages().exists()
-
-    def route(self, request, path_components):
-        if path_components:
-            # Request is for a child of this page.
-            child_slug = path_components[0]
-            remaining_components = path_components[1:]
-
-            try:
-                subpage = self.get_children().get(slug=child_slug)
-            except Page.DoesNotExist:
-                raise Http404
-
-            return subpage.specific.route(request, remaining_components)
-
-        else:
-            # Request is for this very page.
-            page = self.get_appropriate_page_version(request)
-            if page:
-                return RouteResult(page)
-            raise Http404
-
-    def permissions_for_user(self, user):
-        """
-        Return a CFGOVPagePermissionTester object defining what actions the
-        user can perform on this page
-        """
-        user_perms = CFGOVUserPagePermissionsProxy(user)
-        return user_perms.for_page(self)
+        return TemplateResponse(
+            request,
+            self.get_template(request, *args, **kwargs),
+            context
+        )
 
     class Meta:
         app_label = 'v1'
@@ -405,56 +322,35 @@ class CFGOVPage(Page):
         return parent
 
     # To be overriden if page type requires JS files every time
-    # 'template' is used as the key for front-end consistency
-    def add_page_js(self, js):
-        js['template'] = []
+    @property
+    def page_js(self):
+        return []
 
-    # Retrieves the stream values on a page from it's Streamfield
-    def _get_streamfield_blocks(self):
-        lst = [value for key, value in vars(self).iteritems()
-               if type(value) is StreamValue]
-        return list(chain(*lst))
+    @property
+    def streamfield_js(self):
+        js = []
 
-    # Gets the JS from the Streamfield data
-    def _add_streamfield_js(self, js):
-        # Create a dict with keys ordered organisms, molecules, then atoms
-        for child in self._get_streamfield_blocks():
-            self._add_block_js(child.block, js)
+        block_cls_names = get_page_blocks(self)
+        for block_cls_name in block_cls_names:
+            block_cls = import_string(block_cls_name)
+            if hasattr(block_cls, 'Media') and hasattr(block_cls.Media, 'js'):
+                js.extend(block_cls.Media.js)
 
-    # Recursively search the blocks and classes for declared Media.js
-    def _add_block_js(self, block, js):
-        self._assign_js(block, js)
-        if issubclass(type(block), blocks.StructBlock):
-            for child in block.child_blocks.values():
-                self._add_block_js(child, js)
-        elif issubclass(type(block), blocks.ListBlock):
-            self._add_block_js(block.child_block, js)
+        return js
 
-    # Assign the Media js to the dictionary appropriately
-    def _assign_js(self, obj, js):
-        try:
-            if hasattr(obj.Media, 'js'):
-                for key in js.keys():
-                    if obj.__module__.endswith(key):
-                        js[key] += obj.Media.js
-                if not [key for key in js.keys()
-                        if obj.__module__.endswith(key)]:
-                    js.update({'other': obj.Media.js})
-        except:
-            pass
-
-    # Returns all the JS files specific to this page and it's current
-    # Streamfield's blocks
+    # Returns the JS files required by this page and its StreamField blocks.
     @property
     def media(self):
-        js = OrderedDict()
-        for key in ['template', 'organisms', 'molecules', 'atoms']:
-            js.update({key: []})
-        self.add_page_js(js)
-        self._add_streamfield_js(js)
-        for key, js_files in js.iteritems():
-            js[key] = OrderedDict.fromkeys(js_files).keys()
-        return js
+        return sorted(set(self.page_js + self.streamfield_js))
+
+    # Returns an image for the page's meta Open Graph tag
+    @property
+    def meta_image(self):
+        return self.social_sharing_image
+
+    @property
+    def post_preview_cache_key(self):
+        return 'post_preview_{}'.format(self.id)
 
 
 class CFGOVPageCategory(Orderable):
@@ -466,38 +362,10 @@ class CFGOVPageCategory(Orderable):
     ]
 
 
-class CFGOVPagePermissionTester(PagePermissionTester):
-    def can_unshare(self):
-        if not self.user.is_active:
-            return False
-        if not self.page.shared or self.page_is_root:
-            return False
-
-        # Must check edit in self.permissions because `share` cannot be added.
-        return self.user.is_superuser or ('edit' in self.permissions)
-
-    def can_share(self):
-        if not self.user.is_active:
-            return False
-        if self.page_is_root:
-            return False
-
-        # Must check edit in self.permissions because `share` cannot be added.
-        return self.user.is_superuser or ('edit' in self.permissions)
-
-
-class CFGOVUserPagePermissionsProxy(UserPagePermissionsProxy):
-    def for_page(self, page):
-        """Return a CFGOVPagePermissionTester object that can be used to query
-            whether this user has permission to perform specific tasks on the
-            given page."""
-        return CFGOVPagePermissionTester(self, page)
-
-
 # keep encrypted passwords around to ensure that user does not re-use
 # any of the previous 10
 class PasswordHistoryItem(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()  # password becomes invalid at...
     locked_until = models.DateTimeField()  # password cannot be changed until
@@ -521,7 +389,7 @@ class PasswordHistoryItem(models.Model):
 
 # User Failed Login Attempts
 class FailedLoginAttempt(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # comma-separated timestamp values, right now it's a 10 digit number,
     # so we can store about 91 last failed attempts
     failed_attempts = models.CharField(max_length=1000)
@@ -552,45 +420,6 @@ class FailedLoginAttempt(models.Model):
 
 
 class TemporaryLockout(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
-
-
-class Feedback(models.Model):
-    submitted_on = models.DateTimeField(auto_now_add=True)
-    page = models.ForeignKey(
-        Page,
-        related_name='feedback',
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-    comment = models.TextField(blank=True, null=True)
-    referrer = models.CharField(max_length=255, blank=True, null=True)
-    is_helpful = models.NullBooleanField()
-    expect_to_buy = models.CharField(max_length=255, blank=True, null=True)
-    currently_own = models.CharField(max_length=255, blank=True, null=True)
-    email = models.EmailField(max_length=250, blank=True, null=True)
-
-    def assemble_csv(self, queryset):
-        headings = [
-            'comment',
-            'currently_own',
-            'expect_to_buy',
-            'email',
-            'is_helpful',
-            'page',
-            'referrer',
-            'submitted_on'
-        ]
-        csvfile = StringIO()
-        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-        writer.writerow([field for field in headings])
-        for feedback in queryset:
-            feedback.submitted_on = "{}".format(feedback.submitted_on.date())
-            feedback.comment = feedback.comment.encode('utf-8')
-            writer.writerow(
-                ["{}".format(getattr(feedback, heading))
-                 for heading in headings]
-            )
-        return csvfile.getvalue()

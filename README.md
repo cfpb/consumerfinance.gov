@@ -1,61 +1,94 @@
 # cfgov-refresh
 
+<<<<<<< HEAD
 
 [![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=master)](https://travis-ci.org/cfpb/cfgov-refresh?branch=master)
 [![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=master)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/cfpb/cfgov-refresh/badge.svg?branch=master)](https://coveralls.io/github/cfpb/cfgov-refresh?branch=master)
+=======
+[![Build Status](https://github.com/cfpb/cfgov-refresh/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/cfgov-refresh/actions)
+>>>>>>> f5e9c2de97c2896aeb159c55b7d96c0f3c7b2dba
 
-The redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website.
+The master repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
 This Django project includes the front-end assets and build tools,
-[Jinja templates](http://jinja.pocoo.org) for front-end rendering,
-and [Wagtail CMS](https://wagtail.io) for content administration.
-
-![Screenshot of cfgov-refresh](homepage.png)
-
+[Jinja templates](https://jinja.palletsprojects.com/) for front-end rendering,
+code to configure our CMS, [Wagtail](https://wagtail.io/),
+and several standalone Django apps for specific parts of the site.
 
 ## Quickstart
 
-Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
-and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
-are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
+Full installation and usage instructions are available in
+[our documentation](https://cfpb.github.io/cfgov-refresh).
 
-Ensure that Elasticsearch and MySQL are installed and that MySQL is
-either running or runnable by our
-[backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41)
-and our
-[runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
+This project requires Python 3.6, Node 8, and Gulp 4.
+We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and
+[virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
+for keeping the project's Python dependencies contained.
 
-```
+Clone the repository:
+
+```sh
 git clone git@github.com:cfpb/cfgov-refresh.git
+```
+
+Create a virtual environment for Python dependencies:
+
+```sh
 cd cfgov-refresh
-pip install virtualenv virtualenvwrapper
-npm install -g gulp
-source load-env.sh
-source setup.sh
+mkvirtualenv --python=python3.6 cfgov-refresh
+```
+
+Create and load initial environment settings:
+
+```sh
+cp -a .env_SAMPLE .env
+source .env
+```
+
+Install third-party dependencies and build frontend assets:
+
+```sh
+./setup.sh
+```
+
+Create a local database, a Wagtail admin user, and a site homepage:
+
+```sh
+./initial-data.sh
+```
+
+Start your local Django server:
+
+```sh
 ./runserver.sh
 ```
+
+Your site will be available locally at <http://localhost:8000/>.
+
+The Wagtail admin area will be available at <http://localhost:8000/admin/>,
+which you can log into with the credentials `admin`/`admin`.
 
 
 ## Documentation
 
-Documentation for this project is available in the [docs](docs/) directory
+Full documentation for this project is available in the [docs/](docs/) directory
 and [online](https://cfpb.github.io/cfgov-refresh/).
 
 If you would like to browse the documentation locally, you can do so
-with `mkdocs`:
+with [`mkdocs`](https://www.mkdocs.org/):
 
-```
-git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh
-pip install virtualenv virtualenvwrapper
-source activate-virtualenv.sh
-pip install mkdocs
+```sh
+pip install -r requirements/docs.txt
 mkdocs serve
 ```
+
+Documentation will be available locally at
+[http://localhost:8000/](http://localhost:8000/).
 
 
 ## Getting help
 
+<<<<<<< HEAD
 Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues) to follow the
 development conversation.
 
@@ -285,10 +318,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues)
 to follow the development conversation.
 
+=======
+Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues)
+to follow the development conversation.
+>>>>>>> f5e9c2de97c2896aeb159c55b7d96c0f3c7b2dba
 If you find a bug not listed in the issue tracker,
-please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new?body=
-%23%23%20URL%0D%0D%0D%23%23%20Actual%20Behavior%0D%0D%0D%23%23%20Expected%20Behavior
-%0D%0D%0D%23%23%20Steps%20to%20Reproduce%0D%0D%0D%23%23%20Screenshot&labels=bug).
+please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new).
 
 
 ## Getting involved
@@ -297,7 +332,7 @@ We welcome your feedback and contributions.
 See the [contribution guidelines](CONTRIBUTING.md) for more details.
 
 Additionally, you may want to consider
-[contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
+[contributing to the Design System](https://cfpb.github.io/design-system/#help-us-make-improvements),
 which is the front-end pattern library used in this project.
 
 <
@@ -474,6 +509,7 @@ for the field 'dtstart', have a date in January, 2014.
 ----
 
 ## Open source licensing info
+
 1. [TERMS](TERMS.md)
 2. [LICENSE](LICENSE)
 3. [CFPB Source Code Policy](https://github.com/cfpb/source-code-policy/)
@@ -484,6 +520,7 @@ for the field 'dtstart', have a date in January, 2014.
 
 ## Credits and references
 
+<<<<<<< HEAD
 
 
 
@@ -491,3 +528,7 @@ As mentioned in this Readme,
 the project uses the [Capital Framework](https://github.com/cfpb/capital-framework)
 
 for its user interface and layout components.
+=======
+This project uses [Design System](https://github.com/cfpb/design-system)
+as the basis of its user interface and layout components.
+>>>>>>> f5e9c2de97c2896aeb159c55b7d96c0f3c7b2dba

@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Regulations 3000
+   Custom eRegs footers
+   ========================================================================== */
+
+/* Next/Previous Links */
+
+.section-nav {
+    margin-top: 50px;
+    max-width: 41.875rem;
+}
+
+.next-prev {
+    border-top: 2px solid @gray-40;
+    width: 45%;
+}
+
+.next-prev-title {
+    font-weight: 600;
+}
+
+.pager {
+    color: @gray-80;
+    text-align: center;
+}
+
+.previous {
+    float: left;
+    padding: 0 15px 0 15px;
+    margin-left: -15px;
+
+    .cf-icon-svg {
+        margin-left: -15px;
+        float: left;
+    }
+}
+
+.next {
+    float: right;
+    text-align: right;
+    padding: 0 15px 0 15px;
+
+    .cf-icon-svg {
+        margin-right: -15px;
+        float: right;
+    }
+}
+
+/* Link Styles */
+
+.next-prev-link {
+    display: block;
+    margin: 16px 0 0 0;
+}
+
+.next-prev-link:link,
+.next-prev-link:visited {
+    color: @pacific;
+    text-decoration: none;
+}
+
+
+/* Small Screens */
+
+@media only screen and ( max-width: 480px ) {
+    .section-nav {
+
+        .next-prev {
+            font-size: 1.125em;
+        }
+    }
+
+    .application-footer {
+        .title-logo {
+            display: block;
+            margin-bottom: 1em;
+
+            h1 {
+                //display: inline-block;
+                font-size: 1em;
+                margin-bottom: 1em;
+            }
+        }
+    }
+}
+
+@media only screen and ( max-width: 600px ) {
+
+    .section-nav {
+        margin-top: 1.5em;
+    }
+
+    .next-prev {
+        border-top: none;
+        margin-bottom: 1.5em;
+    }
+
+    .next-prev-title {
+        display: none;
+    }
+
+    .next-prev-label {
+        display: none;
+    }
+
+    .previous {
+        margin-left: -25px;
+    }
+}
+
+@media only screen and ( max-width: 780px ) {
+
+    .landing-footer {
+
+        .logo-wrap {
+            width: 100%;
+            float: none;
+        }
+
+        .footer-links {
+            width: 100%;
+            float: none;
+        }
+    }
+
+}
+
+@media only screen and ( max-width: 1100px ) {
+
+    .application-footer {
+        margin-left: 40px;
+    }
+
+}

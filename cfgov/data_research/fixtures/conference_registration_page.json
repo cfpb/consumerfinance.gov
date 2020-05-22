@@ -1,0 +1,51 @@
+[
+{
+    "fields": {
+        "locked": false,
+        "title": "Conference registration test",
+        "draft_title": "Conference registration test",
+        "numchild": 0,
+        "show_in_menus": false,
+        "live": true,
+        "seo_title": "",
+        "latest_revision_created_at": "2018-03-05T15:20:09.032Z",
+        "depth": 3,
+        "search_description": "",
+        "content_type": [
+            "v1",
+            "browsepage"
+        ],
+        "has_unpublished_changes": false,
+        "owner": [
+            "admin"
+        ],
+        "path": "000100020001",
+        "first_published_at": "2018-03-05T15:07:11.647Z",
+        "url_path": "/cfgov/conference-registration-test/",
+        "expired": false,
+        "slug": "conference-registration-test",
+        "expire_at": null,
+        "go_live_at": null
+    },
+    "model": "wagtailcore.page",
+    "pk": 99999
+},
+{
+    "fields": {
+        "social_sharing_image": null,
+        "sidefoot": "[]",
+        "language": "en"
+    },
+    "model": "v1.cfgovpage",
+    "pk": 99999
+},
+{
+    "fields": {
+        "content": "[{\"type\": \"conference_registration_form\", \"value\": {\"capacity\": 100, \"govdelivery_code\": \"TEST-GOVDELIVERY-CODE\", \"failure_message\": \"<p>Sorry, the conference is already at capacity.</p>\", \"success_message\": \"<p>You've successfully registered for the conference.</p>\", \"at_capacity_message\": \"<p>Sorry, something went wrong with your registration.</p>\"}}]",
+        "header": "[{\"type\": \"text_introduction\", \"value\": {\"body\": \"\", \"has_rule\": false, \"intro\": \"\", \"heading\": \"Register for the conference\", \"links\": [{\"url\": \"/\", \"text\": \"\"}]}}]",
+        "secondary_nav_exclude_sibling_pages": false
+    },
+    "model": "v1.browsepage",
+    "pk": 99999
+}
+]

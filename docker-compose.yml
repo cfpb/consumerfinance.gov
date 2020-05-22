@@ -1,0 +1,55 @@
+version: "3.4"
+
+volumes:
+    postgres_data:
+
+services:
+    elasticsearch:
+        build:
+            context: ./
+            dockerfile: ./docker/elasticsearch/Dockerfile
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+
+    postgres:
+        image: postgres:10.3
+        restart: always
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            POSTGRES_USER: cfpb
+            POSTGRES_PASSWORD: cfpb
+            POSTGRES_DB: cfgov
+        ports:
+            - "5432:5432"
+
+    python:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                scl_python_version: rh-python36
+        depends_on:
+            - elasticsearch
+            - postgres
+        stdin_open: true
+        tty: true
+
+    docs:
+        build:
+            context: ./
+            dockerfile: ./docker/docs/Dockerfile
+        ports:
+            - "8888:8888"
+        environment:
+            LANG: en_US.utf8
+            LC_ALL: en_US.utf8
+        volumes:
+            - ./:/src/cfgov-refresh
+        entrypoint:
+            - sh
+            - /src/cfgov-refresh/docker/docs/entrypoint.sh
+        working_dir: /src/cfgov-refresh
+        stdin_open: true
+        tty: true

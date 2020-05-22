@@ -1,0 +1,115 @@
+/*
+    Range slider for credit score
+    --------------------------- */
+.a-range {
+    position: relative;
+    margin-bottom: 1.5em;
+
+    &_labels {
+        margin: unit( 15px / @base-font-size-px, em ) 0 unit( 8px / @base-font-size-px, em );
+        font-size: 0.625em;
+        line-height: 0;
+
+        &-max {
+            float: right;
+        }
+    }
+
+    &_text {
+        position: absolute;
+        display: block;
+        margin-left: unit( -10px / @base-font-size-px, em );
+        font-size: 0.875em;
+        white-space: nowrap;
+        text-align: center;
+    }
+}
+
+.rangeslider {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 20px;
+    background: transparent
+                url( '@{image_path}/slider-bg.png' )
+                scroll
+                no-repeat
+                center
+                center;
+    background-size: 100%;
+}
+
+.rangeslider__fill {
+    position: absolute;
+    top: 0;
+    background: #0f0;
+}
+
+.rangeslider__handle {
+    position: absolute;
+    top: 12px;
+    display: inline-block;
+    width: 22px;
+    height: 21px;
+    border: 0;
+    background: transparent
+                url( '@{image_path}/slider-handle.png' )
+                no-repeat
+                0
+                0;
+    background-size: 100%;
+
+    &.warning {
+        width: 22px;
+        height: 21px;
+        background: transparent
+                    url( '@{image_path}/slider-handle.png' )
+                    no-repeat
+                    0
+                    100%;
+        background-size: 100%;
+    }
+
+}
+
+.a-range_input:focus + .rangeslider .rangeslider__handle {
+    border: 1px solid #0072ce;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: 1px solid #0072ce;
+    outline-offset: 0;
+}
+
+@media( -webkit-min-device-pixel-ratio: 2),
+    ( min-resolution: 192dpi ) {
+    .rangeslider__handle {
+        width: 22px;
+        height: 21px;
+        border: 0;
+        background: transparent
+                    url( '@{image_path}/slider-handle@2x.png' )
+                    no-repeat
+                    0
+                    0;
+        background-size: 100%;
+
+        &.warning {
+            width: 22px;
+            height: 21px;
+            background: transparent
+                        url( '@{image_path}/slider-handle@2x.png' )
+                        no-repeat
+                        0
+                        100%;
+            background-size: 100%;
+        }
+    }
+}
+
+// Print styles
+@media print {
+    .rangeslider,
+    .a-range_labels {
+        display: none;
+    }
+}

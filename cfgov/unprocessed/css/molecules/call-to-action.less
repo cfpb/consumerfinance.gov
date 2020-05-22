@@ -5,9 +5,9 @@
     - name: Default example
       markup: |
           <div class="m-call-to-action">
-              <p class="short-desc">
-              </p>
-              <a class="btn btn__full" href="/">
+              <div class="m-call-to-action_text">
+              </div>
+              <a class="a-btn a-btn__full-on-xs" href="/">
               </a>
           </div>
       codenotes:
@@ -15,21 +15,21 @@
           Structural cheat sheet:
           -----------------------
           .m-call-to-action
-            .short-desc
-            .btn.btn__full
+            .m-call-to-action_text
+            .a-btn.a-btn__full-on-xs
+            .a-btn.a-btn__super
   tags:
     - cfgov-molecules
 */
 
 .m-call-to-action {
-    padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em ) * 2;
-
-    .respond-to-range(@bp-sm-min, @bp-sm-max, {
-        .grid_column(6);
-    });
 
     .btn {
         text-align: center;
+    }
+
+    &_text {
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
     }
 }
 

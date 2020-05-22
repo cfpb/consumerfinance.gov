@@ -1,14 +1,14 @@
 /* ==========================================================================
    Validators
-
    Various utility functions to check if a field contains a valid value
    ========================================================================== */
 
-'use strict';
-
 // Required Modules
-var ERROR_MESSAGES = require( '../../config/error-messages-config' );
-var typeCheckers = require( '../../modules/util/type-checkers' );
+import * as typeCheckers from '../../modules/util/type-checkers';
+import ERROR_MESSAGES from '../../config/error-messages-config';
+
+/* TODO: Update all the validators to return both passed and failed states
+   instead of returning an empty object if the value passed */
 
 /**
  * date Determines if a field contains a valid date.
@@ -19,10 +19,24 @@ var typeCheckers = require( '../../modules/util/type-checkers' );
  *   otherwise an object with msg and type properties if it failed.
  */
 function date( field, currentStatus ) {
-  var status = currentStatus || {};
-  var dateRegex =
-    /^\d{2}$|^\d{4}$|^\d{2}\/(?:\d{4}|\d{2})$|^\d{2}\/\d{2}\/\d{4}$/;
-  if ( field.value && dateRegex.test( field.value ) === false ) {
+  const status = currentStatus || {};
+
+  /* Date regexes match the date patterns that are
+     allowed in cfgov/v1/forms.py FilterableDateField */
+
+  // https://regex101.com/r/M0ipdX/1
+  const yearRegex = /^\d{4}$/;
+  // https://regex101.com/r/PEa2se/1
+  const monthYearRegex = /^(?:\d{1}|\d{2})(?:\-|\/)(?:\d{4}|\d{2})$/;
+  // https://regex101.com/r/1SGTLF/1
+  const dayMonthYearRegex =
+    /^(?:\d{1}|\d{2})(?:\-|\/)(?:\d{1}|\d{2})(?:\-|\/)(?:\d{4}|\d{2})$/;
+
+  const inputIsValid = yearRegex.test( field.value ) ||
+    monthYearRegex.test( field.value ) ||
+    dayMonthYearRegex.test( field.value );
+
+  if ( field.value && !inputIsValid ) {
     status.msg = status.msg || '';
     status.msg += ERROR_MESSAGES.DATE.INVALID;
     status.date = false;
@@ -35,24 +49,44 @@ function date( field, currentStatus ) {
  *
  * @param {Object} field         Field to test.
  * @param {Object} currentStatus A previous tested status for the field.
+ * @param {Object} options       Options object.
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
-function email( field, currentStatus ) {
-  var status = currentStatus || {};
-  var regex =
+function email( field, currentStatus, options ) {
+  const status = currentStatus || {};
+  const opts = options || {};
+  const regex =
     '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9' +
     '\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
     '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
-  var emailRegex = new RegExp( regex, 'i' );
-  if ( field.value && emailRegex.test( field.value ) === false ) {
+  const emailRegex = new RegExp( regex, 'i' );
+  const emptyValidation = empty( field );
+  const isFilled = typeof emptyValidation.required === 'undefined' ?
+    true : emptyValidation.required;
+  let state;
+  let key;
+
+  if ( !isFilled ) {
+    // TODO: Create a language checker instead of doing this inline like this
+    state = 'REQUIRED';
+    key = opts.language === 'es' ? state + '_ES' : state;
+
     status.msg = status.msg || '';
-    status.msg += ERROR_MESSAGES.EMAIL.INVALID;
+    status.msg += ERROR_MESSAGES.EMAIL[key];
+    status.email = false;
+  } else if ( emailRegex.test( field.value ) === false ) {
+    state = 'INVALID';
+    key = opts.language === 'es' ? state + '_ES' : state;
+
+    status.msg = status.msg || '';
+    status.msg += ERROR_MESSAGES.EMAIL[key];
     status.email = false;
   }
   return status;
 }
 
+// TODO: Rename this so it's clearer it's checking a required attribute
 /**
  * empty Determines if a required field contains a value.
  *
@@ -62,8 +96,8 @@ function email( field, currentStatus ) {
  *   otherwise an object with msg and type properties if it failed.
  */
 function empty( field, currentStatus ) {
-  var status = currentStatus || {};
-  var isRequired = field.getAttribute( 'required' ) !== null;
+  const status = currentStatus || {};
+  const isRequired = field.getAttribute( 'required' ) !== null;
   if ( isRequired && typeCheckers.isEmpty( field.value ) ) {
     status.msg = status.msg || '';
     status.msg += ERROR_MESSAGES.FIELD.REQUIRED;
@@ -83,7 +117,7 @@ function empty( field, currentStatus ) {
  *   otherwise an object with msg and type properties if it failed.
  */
 function checkbox( field, currentStatus, fieldset ) {
-  var status = currentStatus || {};
+  const status = currentStatus || {};
   return _checkableInput( field, status, fieldset, 'checkbox' );
 }
 
@@ -97,7 +131,7 @@ function checkbox( field, currentStatus, fieldset ) {
  *   otherwise an object with msg and type properties if it failed.
  */
 function radio( field, currentStatus, fieldset ) {
-  var status = currentStatus || {};
+  const status = currentStatus || {};
   return _checkableInput( field, status, fieldset, 'radio' );
 }
 
@@ -114,9 +148,9 @@ function radio( field, currentStatus, fieldset ) {
  *   otherwise an object with msg and type properties if it failed.
  */
 function _checkableInput( field, currentStatus, fieldset, type ) {
-  var statusMsg = currentStatus.msg || '';
-  var required = parseInt( field.getAttribute( 'data-required' ) || 0, 10 );
-  var groupFieldsLength = fieldset.length;
+  let statusMsg = currentStatus.msg || '';
+  const required = parseInt( field.getAttribute( 'data-required' ) || 0, 10 );
+  const groupFieldsLength = fieldset.length;
 
   if ( groupFieldsLength < required ) {
     statusMsg += ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', required );
@@ -127,10 +161,10 @@ function _checkableInput( field, currentStatus, fieldset, type ) {
   return currentStatus;
 }
 
-module.exports = {
-  date:     date,
-  email:    email,
-  empty:    empty,
-  checkbox: checkbox,
-  radio:    radio
+export {
+  date,
+  email,
+  empty,
+  checkbox,
+  radio
 };

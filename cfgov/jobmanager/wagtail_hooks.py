@@ -1,10 +1,15 @@
 from django.forms.models import ModelForm
-from tinymce.widgets import TinyMCE
-from wagtail.contrib.modeladmin.options import (ModelAdmin, ModelAdminGroup,
-                                                modeladmin_register)
+
+from wagtail.contrib.modeladmin.options import (
+    ModelAdmin, ModelAdminGroup, modeladmin_register
+)
 from wagtail.contrib.modeladmin.views import CreateView, EditView, InspectView
 
-from jobmanager.models import ApplicantType, Grade, JobCategory, JobRegion
+from jobmanager import template_debug
+from jobmanager.models import (
+    ApplicantType, Grade, JobCategory, JobLength, Office, Region, ServiceType
+)
+from v1.template_debug import register_template_debug
 
 
 class ApplicantTypeModelAdmin(ModelAdmin):
@@ -24,9 +29,6 @@ class JobCategoryForm(ModelForm):
     class Meta:
         fields = '__all__'
         model = JobCategory
-        widgets = {
-            'blurb': TinyMCE(attrs={'cols': 80, 'rows': 15}),
-        }
 
 
 class JobCategoryModelFormMixin(object):
@@ -56,10 +58,36 @@ class JobCategoryModelAdmin(ModelAdmin):
 
 
 class JobRegionModelAdmin(ModelAdmin):
-    model = JobRegion
+    model = Region
     menu_label = 'Regions'
     menu_icon = 'site'
-    list_display = ('abbreviation', 'name')
+
+    def states_in_region(self):
+        return ", ".join(str(state) for state in self.states.all())
+
+    def major_cities(self):
+        return "; ".join(str(city) for city in self.major_cities.all())
+
+    list_display = ('abbreviation', 'name', states_in_region, major_cities)
+
+
+class JobOfficeModelAdmin(ModelAdmin):
+    model = Office
+    menu_label = 'Offices'
+    menu_icon = 'site'
+    list_display = ('abbreviation', '__str__')
+
+
+class ServiceTypeModelAdmin(ModelAdmin):
+    model = ServiceType
+    menu_label = 'Service Type'
+    menu_icon = 'site'
+
+
+class JobLengthModelAdmin(ModelAdmin):
+    model = JobLength
+    menu_label = 'Job Length'
+    menu_icon = 'site'
 
 
 @modeladmin_register
@@ -70,5 +98,21 @@ class MyModelAdminGroup(ModelAdminGroup):
         ApplicantTypeModelAdmin,
         JobCategoryModelAdmin,
         JobGradeModelAdmin,
-        JobRegionModelAdmin,
+        ServiceTypeModelAdmin,
+        JobLengthModelAdmin,
+        JobOfficeModelAdmin,
+        JobRegionModelAdmin
+    )
+
+
+for _debug_template_name in (
+    'job_listing_details',
+    'job_listing_list',
+    'job_listing_table',
+):
+    register_template_debug(
+        'jobmanager',
+        _debug_template_name,
+        f'jobmanager/{_debug_template_name}.html',
+        getattr(template_debug, f'{_debug_template_name}_test_cases')
     )

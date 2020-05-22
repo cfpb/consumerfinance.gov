@@ -4,6 +4,7 @@ from functools import wraps
 from django import template
 from django.http import Http404
 
+
 register = template.Library()
 
 
@@ -35,4 +36,4 @@ def is_feature_active(feature_name, request):
     return False
 
 
-register.assignment_tag(is_feature_active)
+register.simple_tag(is_feature_active)

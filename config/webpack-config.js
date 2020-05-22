@@ -2,98 +2,209 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-'use strict';
+const BROWSER_LIST = require( '../config/browser-list-config' );
+const envvars = require( '../config/environment' ).envvars;
+const webpack = require( 'webpack' );
+const TerserPlugin = require( 'terser-webpack-plugin' );
 
-var BannerFooterPlugin = require( 'banner-footer-webpack-plugin' );
-var path = require( 'path' );
-var paths = require( '../config/environment' ).paths;
-var scriptsManifest = require( '../gulp/utils/scripts-manifest' );
-var webpack = require( 'webpack' );
+// Constants
+const COMMON_BUNDLE_NAME = 'common.js';
 
-// Constants.
-var JS_ROUTES_PATH = '/js/routes';
-var COMMON_BUNDLE_NAME = 'common.js';
+/* This sets the default mode for webpack configurations to satisfy the need
+   of webpack to have a `mode` set.
+   This value gets overridden when NODE_ENV=development.
+   See the `if ( envvars.NODE_ENV === 'development' )` block below. */
+const WEBPACK_MODE_DEFAULT = 'production';
 
-var modernConf = {
-  // jQuery is imported globally in the HTML head section in base.html,
-  // so it needs to be defined here as an external script to ignore for
-  // unmet dependency references.
-  externals: { jquery: 'jQuery' },
-  context:   path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
-  entry:     scriptsManifest.getDirectoryMap( paths.unprocessed +
-                                              JS_ROUTES_PATH ),
-  output: {
-    path:     path.join( __dirname, 'js' ),
-    filename: '[name]'
-  },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin( COMMON_BUNDLE_NAME ),
-    new webpack.optimize.CommonsChunkPlugin( COMMON_BUNDLE_NAME,
-                                             [ COMMON_BUNDLE_NAME ] ),
-    // Change `warnings` flag to true to view linter-style warnings at runtime.
-    new webpack.optimize.UglifyJsPlugin( {
-      compress: { warnings: false }
-    } ),
-    // Wrap JS in raw Jinja tags so included JS won't get parsed by Jinja.
-    new BannerFooterPlugin( '{% raw %}', '{% endraw %}', { raw: true } )
-  ]
+/* Commmon webpack 'module' option used in each configuration.
+   Runs code through Babel and uses global supported browser list. */
+const COMMON_MODULE_CONFIG = {
+  rules: [ {
+    test: /\.js$/,
+
+    /* The `exclude` rule is a double negative.
+       It excludes all of `node_modules/` but it then un-excludes modules that
+       start with `cf-` and `cfpb-` (CF components and cfpb-chart-builder).
+       Regex test: https://regex101.com/r/zizz3V/5 */
+    exclude: {
+      test: /node_modules/,
+      exclude: /node_modules\/(?:cf-.+|cfpb-.+)/
+    },
+    use: {
+      loader: 'babel-loader?cacheDirectory=true',
+      options: {
+        presets: [ [ '@babel/preset-env', {
+          targets: {
+            browsers: BROWSER_LIST.LAST_2_IE_11_UP
+          },
+          debug: false
+        } ] ]
+      }
+    }
+  } ]
 };
 
-var ieConf = {
-  entry: paths.unprocessed + '/js/ie/common.ie.js',
-  output: {
-    filename: 'common.ie.js'
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin( {
-      compress: { warnings: false }
-    } )
-  ]
-};
+/* Set warnings to true to show linter-style warnings.
+   Set mangle to false and beautify to true to debug the output code. */
+const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
+  cache: true,
+  parallel: true,
+  extractComments: false,
+  terserOptions: {
+    ie8: false,
+    ecma: 5,
+    warnings: false,
+    mangle: true,
+    output: {
+      comments: false,
+      beautify: false
+    }
+  }
+} );
 
-var externalConf = {
-  entry: paths.unprocessed + JS_ROUTES_PATH + '/external-site/index.js',
-  output: {
-    filename: 'external-site.js'
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin( {
-      compress: { warnings: false }
-    } )
-  ]
-};
+const COMMON_CHUNK_CONFIG = new webpack.optimize.SplitChunksPlugin( {
+  name: COMMON_BUNDLE_NAME
+} );
 
-var onDemandConf = {
-  context: path.join( __dirname, '/../', paths.unprocessed,
-                      JS_ROUTES_PATH + '/on-demand' ),
-  entry:   scriptsManifest.getDirectoryMap( paths.unprocessed +
-                                            JS_ROUTES_PATH + '/on-demand' ),
-  output: {
-    path:     path.join( __dirname, 'js' ),
-    filename: '[name]'
-  },
-  plugins: [
-    // Change warnings flag to true to view linter-style warnings at runtime.
-    new webpack.optimize.UglifyJsPlugin( {
-      compress: { warnings: false }
-    } )
-  ]
-};
-
-var onDemandHeaderRawConf = {
-  context: path.join( __dirname, '/../', paths.unprocessed,
-                      JS_ROUTES_PATH + '/on-demand' ),
-  entry:   './header.js',
-  output: {
-    path:     path.join( __dirname, 'js' ),
-    filename: '[name]'
+const STATS_CONFIG = {
+  stats: {
+    entrypoints: false
   }
 };
 
-module.exports = {
-  onDemandHeaderRawConf: onDemandHeaderRawConf,
-  onDemandConf:          onDemandConf,
-  ieConf:                ieConf,
-  modernConf:            modernConf,
-  externalConf:          externalConf
+const commonConf = {
+  cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
+  module: COMMON_MODULE_CONFIG,
+  output: {
+    filename: '[name]'
+  },
+  optimization: {
+    minimizer: [
+      COMMON_MINIFICATION_CONFIG
+    ]
+  },
+  resolve: {
+    symlinks: false
+  },
+  stats: STATS_CONFIG.stats
 };
+
+const externalConf = {
+  cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
+  module: COMMON_MODULE_CONFIG,
+  output: {
+    filename: 'external-site.js'
+  },
+  optimization: {
+    minimizer: [
+      COMMON_MINIFICATION_CONFIG
+    ]
+  },
+  resolve: {
+    symlinks: false
+  },
+  stats: STATS_CONFIG.stats
+};
+
+const modernConf = {
+  cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
+  module: COMMON_MODULE_CONFIG,
+  output: {
+    filename: '[name]'
+  },
+  plugins: [
+    COMMON_CHUNK_CONFIG
+  ],
+  optimization: {
+    minimizer: [
+      COMMON_MINIFICATION_CONFIG
+    ]
+  },
+  resolve: {
+    symlinks: false
+  },
+  stats: STATS_CONFIG.stats
+};
+
+const onDemandHeaderRawConf = {
+  mode: WEBPACK_MODE_DEFAULT,
+  module: COMMON_MODULE_CONFIG,
+  resolve: {
+    symlinks: false
+  }
+};
+
+const appsConf = {
+  cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
+  module: COMMON_MODULE_CONFIG,
+  output: {
+    filename: '[name]',
+    jsonpFunction: 'apps'
+  },
+  plugins: [
+    COMMON_CHUNK_CONFIG
+  ],
+  optimization: {
+    minimizer: [
+      COMMON_MINIFICATION_CONFIG
+    ]
+  },
+  resolve: {
+    symlinks: false
+  },
+  stats: STATS_CONFIG.stats
+};
+
+const spanishConf = {
+  cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
+  module: COMMON_MODULE_CONFIG,
+  output: {
+    filename: 'spanish.js'
+  },
+  optimization: {
+    minimizer: [
+      COMMON_MINIFICATION_CONFIG
+    ]
+  },
+  resolve: {
+    symlinks: false
+  },
+  stats: STATS_CONFIG.stats
+};
+
+const devConf = {
+  devtool: 'inline-source-map',
+  mode: 'development',
+  module: COMMON_MODULE_CONFIG,
+  plugins: [],
+  resolve: {
+    symlinks: false
+  }
+};
+
+const configExports = {
+  commonConf,
+  devConf,
+  externalConf,
+  modernConf,
+  onDemandHeaderRawConf,
+  appsConf,
+  spanishConf
+};
+
+if ( envvars.NODE_ENV === 'development' ) {
+  // eslint-disable-next-line guard-for-in
+  let key;
+  for ( key in configExports ) {
+    if ( {}.hasOwnProperty.call( configExports, key ) ) {
+      Object.assign( configExports[key], devConf );
+    }
+  }
+}
+
+module.exports = configExports;

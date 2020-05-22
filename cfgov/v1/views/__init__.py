@@ -1,69 +1,31 @@
-from wagtail.wagtailcore.models import Page
-from django.shortcuts import render, redirect, get_object_or_404
-from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
-from wagtail.wagtailadmin import messages as wagtail_messages
-from django.utils.translation import ugettext as _
-from django.core.urlresolvers import reverse
+import django
 from django.conf import settings
-from django.http import Http404
-
-from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth import (
-    update_session_auth_hash,
-    REDIRECT_FIELD_NAME,
-    login
+    REDIRECT_FIELD_NAME, get_user_model, login, update_session_auth_hash
 )
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponseRedirect
-from django.shortcuts import resolve_url
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import redirect, render, resolve_url
+from django.template.response import TemplateResponse
+from django.urls import resolve
+from django.utils.encoding import force_str
+from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from django.utils.encoding import force_text
-from django.utils.http import is_safe_url, urlsafe_base64_decode
-from django.template.response import TemplateResponse
-from django.core.urlresolvers import resolve
 
-from wagtail.wagtailadmin.views import account
+from wagtail.admin.views import account
 
 from v1.auth_forms import (
     CFGOVPasswordChangeForm, CFGOVSetPasswordForm, LoginForm
 )
-from v1.signals import page_unshared
 from v1.util.util import all_valid_destinations_for_request
-
-
-def unshare(request, page_id):
-    page = get_object_or_404(Page, id=page_id).specific
-    if not page.permissions_for_user(request.user).can_unshare():
-        raise PermissionDenied
-
-    if request.method == 'POST':
-        page.shared = False
-        page.save_revision(user=request.user, submitted_for_moderation=False)
-        page.save()
-
-        page_unshared.send(sender=page.specific_class, instance=page.specific)
-
-        wagtail_messages.success(
-            request,
-            _("Page '{0}' unshared.").format(page.title),
-            buttons=[
-                wagtail_messages.button(
-                    reverse('wagtailadmin_pages:edit', args=(page.id,)),
-                    _('Edit')
-                )
-            ]
-        )
-
-        return redirect('wagtailadmin_explore', page.get_parent().id)
-
-    return render(request, 'wagtailadmin/pages/confirm_unshare.html', {
-        'page': page,
-    })
+from v1.util.wrap_password_reset import _wrap_password_reset_view
 
 
 # Overrided Wagtail Views
@@ -113,7 +75,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
-    # redirects to http://example.com should not be allowed
+    # Redirects to https://example.com should not be allowed.
     if redirect_to:
         if '//' in redirect_to:
             redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
@@ -123,8 +85,14 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
 
         if form.is_valid():
             # Ensure the user-originating redirection url is safe.
-            if not is_safe_url(url=redirect_to, host=request.get_host()):
-                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+            if django.VERSION > (2, 0):
+                if not is_safe_url(
+                    url=redirect_to, allowed_hosts=request.get_host()
+                ):
+                    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+            else:
+                if not is_safe_url(url=redirect_to, host=request.get_host()):
+                    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
             user = form.get_user()
             try:
@@ -137,7 +105,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
             return HttpResponseRedirect(
                 '/login/check_permissions/?next=' + redirect_to)
     else:
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return HttpResponseRedirect(
                 '/login/check_permissions/?next=' + redirect_to)
         form = LoginForm(request)
@@ -162,7 +130,7 @@ def check_permissions(request):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(
             "%s?%s=%s" % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, redirect_to)
         )
@@ -205,7 +173,7 @@ def custom_password_reset_confirm(
 
     try:
         # urlsafe_base64_decode() decodes to bytestring on Python 3
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = UserModel._default_manager.get(pk=uid)
     except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
         user = None
@@ -252,5 +220,6 @@ def welcome(request):
             {'destinations': valid_destinations}
         )
 
-password_reset_confirm = account._wrap_password_reset_view(
+
+password_reset_confirm = _wrap_password_reset_view(
     custom_password_reset_confirm)

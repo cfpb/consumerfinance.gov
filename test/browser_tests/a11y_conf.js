@@ -1,10 +1,8 @@
-'use strict';
-
-var config = require( './conf' ).config;
+const config = require( './conf' ).config;
 
 config.plugins = [ {
-  axe: true,
-  package: 'protractor-accessibility-plugin'
+  'axe':     true,
+  'package': 'protractor-accessibility-plugin'
 } ];
 
 exports.config = config;

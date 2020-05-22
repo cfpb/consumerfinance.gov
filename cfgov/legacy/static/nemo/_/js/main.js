@@ -1,5 +1,5 @@
 $(function() {
-    $('.hero a[href^="http://youtu.be"]').cfpbVideoReplace();
+    $('.hero a[href^="https://youtu.be"]').cfpbVideoReplace();
     $('.js-showtoggle').cfpbShowToggle();
     $('.ui-autocomplete-input').cfpbInputFilledCheck();
     $('.ac-search-form').appendAround();

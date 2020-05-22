@@ -1,24 +1,21 @@
-'use strict';
-var paginationContent = element( by.css( '.m-pagination' ) );
+const paginationContent = element( by.css( '.m-pagination' ) );
 
-var pagination = {
+const pagination = {
 
-  paginationContent:
-    paginationContent,
+  paginationContent: paginationContent,
 
-  paginationForm:
-    paginationContent.element( by.css( 'form' ) ),
+  form: paginationContent.element( by.css( 'form' ) ),
 
-  paginationPrevBtn:
+  previousBtn:
     paginationContent.element( by.css( '.m-pagination_btn-prev' ) ),
 
-  paginationNextBtn:
+  nextBtn:
     paginationContent.element( by.css( '.m-pagination_btn-next' ) ),
 
-  paginationPageInput:
+  pageInput:
     paginationContent.element( by.css( '.m-pagination_current-page' ) ),
 
-  paginationPageBtn:
+  pageBtn:
     paginationContent.element( by.css( '.m-pagination_submit-btn' ) )
 
 };

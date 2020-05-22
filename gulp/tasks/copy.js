@@ -1,11 +1,14 @@
-'use strict';
+const gulp = require( 'gulp' );
+const gulpChanged = require( 'gulp-changed' );
+const handleErrors = require( '../utils/handle-errors' );
+const paths = require( '../../config/environment' ).paths;
 
-var gulp = require( 'gulp' );
-var gulpChanged = require( 'gulp-changed' );
-var gulpReplace = require( 'gulp-replace' );
-var configCopy = require( '../config' ).copy;
-var handleErrors = require( '../utils/handle-errors' );
-var browserSync = require( 'browser-sync' );
+/*
+  Path to the cf-icons SVG icons folder,
+  which gets copied into the static directory on production
+  so SVG references in CSS get resolved.
+*/
+const iconSrc = `${ paths.modules }/@cfpb/cfpb-icons/src/icons/*.svg`;
 
 /**
  * Generic copy files flow from source to destination.
@@ -17,53 +20,62 @@ function _genericCopy( src, dest ) {
   return gulp.src( src )
     .pipe( gulpChanged( dest ) )
     .on( 'error', handleErrors )
-    .pipe( gulp.dest( dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+    .pipe( gulp.dest( dest ) );
 }
 
-gulp.task( 'copy:icons', function() {
-  var icons = configCopy.icons;
-  return _genericCopy( icons.src, icons.dest );
+gulp.task( 'copy:root', () => {
+  const stream = _genericCopy(
+    `${ paths.unprocessed }/root/**/*`,
+    paths.processed
+  );
+  return stream;
 } );
 
-gulp.task( 'copy:vendorfonts', function() {
-  var vendorFonts = configCopy.vendorFonts;
-  return _genericCopy( vendorFonts.src, vendorFonts.dest );
+gulp.task( 'copy:icons:main', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/icons/`
+  );
+  return stream;
 } );
 
-gulp.task( 'copy:vendorcss', function() {
-  var vendorCss = configCopy.vendorCss;
-  return gulp.src( vendorCss.src )
-    .pipe( gulpChanged( vendorCss.dest ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpReplace(
-      /url\(".\/ajax-loader.gif"\)/ig,
-      'url("/img/ajax-loader.gif")'
-    ) )
-    .pipe( gulp.dest( vendorCss.dest ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+gulp.task( 'copy:icons:oah', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/owning-a-home/icons/`
+  );
+  return stream;
 } );
 
-gulp.task( 'copy:vendorimg', function() {
-  var vendorImg = configCopy.vendorImg;
-  return _genericCopy( vendorImg.src, vendorImg.dest );
+gulp.task( 'copy:icons:r3k', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/regulations3k/icons/`
+  );
+  return stream;
 } );
 
-gulp.task( 'copy:vendorjs', function() {
-  var vendorJs = configCopy.vendorJs;
-  return _genericCopy( vendorJs.src, vendorJs.dest );
+gulp.task( 'copy:lightbox2', () => {
+  const stream = _genericCopy(
+    `${ paths.modules }/lightbox2/dist/**/*`,
+    `${ paths.processed }/lightbox2`
+  );
+  return stream;
 } );
+
+
+gulp.task( 'copy:icons',
+  gulp.parallel(
+    'copy:icons:main',
+    'copy:icons:oah',
+    'copy:icons:r3k'
+  )
+);
 
 gulp.task( 'copy',
-  [
+  gulp.parallel(
     'copy:icons',
-    'copy:vendorfonts',
-    'copy:vendorcss',
-    'copy:vendorimg',
-    'copy:vendorjs'
-  ]
+    'copy:lightbox2',
+    'copy:root'
+  )
 );

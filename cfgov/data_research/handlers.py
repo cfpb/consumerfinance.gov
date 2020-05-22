@@ -1,95 +1,69 @@
-import json
 import logging
 
-from django.conf import settings
-from django.core.exceptions import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect
-from govdelivery.api import GovDelivery
 
 from data_research.forms import ConferenceRegistrationForm
-from data_research.models import ConferenceRegistration
 from v1.handlers import Handler
+
 
 logger = logging.getLogger(__name__)
 
 
 class ConferenceRegistrationHandler(Handler):
     SUCCESS_QUERY_STRING_PARAMETER = 'success'
+    """Query string parameter that gets set on successful form submission.
 
-    def __init__(self, page, request, block_value):
+    This parameter gets set in the redirect URL that gets returned after
+    the conference registration form is successfully submitted.
+    """
+
+    def __init__(self, page, request, block_value, form_cls=None):
         super(ConferenceRegistrationHandler, self).__init__(page, request)
-        self.block_value = block_value
+        self.govdelivery_code = block_value['govdelivery_code']
+        self.govdelivery_question_id = block_value['govdelivery_question_id']
+        self.govdelivery_answer_id = block_value['govdelivery_answer_id']
+        self.capacity = block_value['capacity']
+        self.failure_message = block_value['failure_message']
+        self.form_cls = form_cls or ConferenceRegistrationForm
 
     def process(self, is_submitted):
-        if self.is_at_capacity():
-            return {'is_at_capacity': True}
+        is_successful_submission = self._is_successful_submission()
 
-        if is_submitted:
-            data = self.get_post_data()
-            form = ConferenceRegistrationForm(data)
-
-            if form.is_valid():
-                attendee = form.save(commit=False)
-
-                if self.subscribe(attendee.email, attendee.code):
-                    attendee.save()
-                    return HttpResponseRedirect(self.success_url)
-
-                form.add_error(
-                    NON_FIELD_ERRORS,
-                    self.block_value['failure_message']
-                )
-
-            return {'form': form}
-
-        return {
-            'form': ConferenceRegistrationForm(),
-            'is_successful_submission': self.is_successful_submission(),
+        form_kwargs = {
+            'capacity': self.capacity,
+            'govdelivery_code': self.govdelivery_code,
+            'govdelivery_question_id': self.govdelivery_question_id,
+            'govdelivery_answer_id': self.govdelivery_answer_id
         }
 
-    def is_at_capacity(self):
-        capacity = self.block_value['capacity']
-        code = self.block_value['code']
+        # If the form was submitted, and there's still room in the conference,
+        # and this isn't being processed as part of the response after a
+        # successful submission, go ahead with the registration flow.
+        if (
+            is_submitted and
+            not is_successful_submission
+        ):
+            form = self.form_cls(data=self.request.POST, **form_kwargs)
 
-        attendees = ConferenceRegistration.objects.filter(code=code)
-        return attendees.count() >= capacity
+            try:
+                if form.is_valid():
+                    form.save()
 
-    def is_successful_submission(self):
+                    return HttpResponseRedirect('{}?{}'.format(
+                        self.request.path,
+                        self.SUCCESS_QUERY_STRING_PARAMETER
+                    ))
+            except Exception:
+                logger.exception("conference registration form error")
+                form.add_error(None, self.failure_message)
+        else:
+            form = self.form_cls(**form_kwargs)
+
+        return {
+            'form': form,
+            'is_at_capacity': form.at_capacity,
+            'is_successful_submission': is_successful_submission,
+        }
+
+    def _is_successful_submission(self):
         return self.SUCCESS_QUERY_STRING_PARAMETER in self.request.GET
-
-    def get_post_data(self):
-        data = self.request.POST.copy()
-
-        sessions = self.get_sessions()
-        data['sessions'] = json.dumps(sessions) if sessions else ''
-
-        return data
-
-    def get_sessions(self):
-        ids = self.request.POST.getlist('form_sessions', [])
-        sessions = self.block_value.get('sessions', [])
-        return [session for i, session in enumerate(sessions) if str(i) in ids]
-
-    def subscribe(self, email, code):
-        try:
-            logger.info('subscribing to GovDelivery')
-            gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
-
-            subscription_response = gd.set_subscriber_topics(
-                email_address=email,
-                topic_codes=[code]
-            )
-
-            subscription_response.raise_for_status()
-        except Exception:
-            logger.exception('error subscribing to GovDelivery')
-            return False
-
-        return True
-
-    @property
-    def success_url(self):
-        return '{}?{}'.format(
-            self.request.path,
-            self.SUCCESS_QUERY_STRING_PARAMETER
-        )

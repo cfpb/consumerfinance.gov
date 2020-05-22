@@ -1,0 +1,98 @@
+[
+{
+    "model": "v1.portaltopic",
+    "pk": 1,
+    "fields": {
+        "heading": "Auto loans",
+        "heading_es": "Pr\u00e9stamos para veh\u00edculos"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 2,
+    "fields": {
+        "heading": "Bank accounts",
+        "heading_es": "Cuentas bancarias"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 3,
+    "fields": {
+        "heading": "Credit cards",
+        "heading_es": "Tarjetas de cr\u00e9dito"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 4,
+    "fields": {
+        "heading": "Credit reports and scores",
+        "heading_es": "Informes y puntajes de cr\u00e9dito"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 5,
+    "fields": {
+        "heading": "Debt collection",
+        "heading_es": "Cobro de deudas"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 7,
+    "fields": {
+        "heading": "Fraud and scams",
+        "heading_es": "Fraudes y estafas"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 8,
+    "fields": {
+        "heading": "Money transfers",
+        "heading_es": "Transferencias de dinero"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 9,
+    "fields": {
+        "heading": "Mortgages",
+        "heading_es": "Hipotecas"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 10,
+    "fields": {
+        "heading": "Payday loans",
+        "heading_es": "Pr\u00e9stamos del d\u00eda de pago"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 11,
+    "fields": {
+        "heading": "Prepaid cards",
+        "heading_es": "Tarjetas prepagadas"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 12,
+    "fields": {
+        "heading": "Reverse mortgages",
+        "heading_es": "Hipotecas inversas"
+    }
+},
+{
+    "model": "v1.portaltopic",
+    "pk": 13,
+    "fields": {
+        "heading": "Student loans",
+        "heading_es": "Pr\u00e9stamos estudiantiles"
+    }
+}
+]

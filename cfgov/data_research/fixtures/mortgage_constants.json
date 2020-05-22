@@ -1,0 +1,50 @@
+[
+{
+    "fields": {
+        "note": "The year used to determine count thresholds for counties and metro areas.",
+        "updated": "2017-07-30",
+        "name": "threshold_year",
+        "value": 2016,
+        "date_value": null,
+        "slug": "threshold-year"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 1
+},
+{
+    "fields": {
+        "note": "The average number of mortgages reported per month during our threshold year.  Jurisdictions that fall below this count are not displayed in visualizations.",
+        "updated": "2017-07-30",
+        "name": "threshold_count",
+        "value": 1000,
+        "date_value": null,
+        "slug": "threshold-count"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 2
+},
+{
+    "fields": {
+        "note": "The through_date represents the last month of data we intend to represent in visualizations for a given quarterly set of source data. Although the true time unit is a month, we use a date -- the first of a month --\r\n as a reference point that can be parsed as a date in scripts and as a finite point in time that can be represented as an epoch value tick for charting software.\r\n\r\nBecause of observed data fall-off problems with the most recent months available in quarterly updates, we decided to omit the three most recent months from any quarterly update. By setting this value before processing a quarterly update, we can intentionally narrow down source data to our desired range.\r\n",
+        "updated": "2017-10-10",
+        "name": "through_date",
+        "value": null,
+        "date_value": "2017-03-01",
+        "slug": "through-date"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 8
+},
+{
+    "fields": {
+        "note": "This value will be used both in processing and in data visualizations. Our processing pipeline will ignore data before this date, and our visualizations will display values between this date and our through_date.",
+        "updated": "2017-10-09",
+        "name": "starting_date",
+        "value": null,
+        "date_value": "2008-01-01",
+        "slug": "starting-date"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 9
+}
+]

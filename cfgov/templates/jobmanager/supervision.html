@@ -1,6 +1,10 @@
 {% extends "front/base_nonresponsive.html" %}
 {% load static from staticfiles %}
 
+{% block jquery %}
+<script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
+{% endblock %}
+
 {% block page_meta %}
 <meta charset="UTF-8" />
 <meta property="og:title" content="Supervision"/>
@@ -11,9 +15,9 @@
 {% block title %}Supervision > Jobs{% endblock %}
 
 {% block breadcrumbs %}
-	<li><a href="/" class="internal-link">Home</a></li>
-  <li><a href="/about-us/careers/" class="internal-link">Jobs</a></li>
-    <li>Supervision</li>
+<li><a href="/" class="internal-link">Home</a></li>
+<li><a href="/about-us/careers/" class="internal-link">Jobs</a></li>
+<li>Supervision</li>
 {% endblock %}
 
 {% block page_css %}
@@ -21,7 +25,7 @@
 {% endblock %}
 
 {% block page_js %}
-    <script src="{% static 'jobmanager/js/supervision.js' %}"></script>
+<script src="{% static 'jobmanager/js/supervision.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -41,7 +45,7 @@
 
 <section id='jobs-right-sect'>
     <div class='border-top-sect job-box gray-box'>
-        
+
     <h1><span style='font-size:.75em;'>Apply Now for the CFPB Supervision Team</span></h1>
     <span ' class='green-button goto-jobs internal-page-link'>Learn more: View Jobs</span>
 
@@ -53,6 +57,11 @@
             <fieldset>
                 <input type="hidden" name="code" value="USCFPB_21">
                 <p><label for="email">Email address</label> <input type="email" name="email" id='email'></p>
+                <div class="u-mt15 u-mb15">
+                    <a href="/about-us/careers/students-and-graduates/privacy-act-statement/">
+                        Privacy Act statement
+                    </a>
+                </div>
                 <p><span id='signup_for_update' class='green-button'>Sign up for updates</span></p>
                 <div id='email-error-box'></div>
             </fieldset>
@@ -122,12 +131,12 @@
     <ul>
         <li>Provide evenhanded oversight that will renew trust in the financial marketplace!</li>
         <li>Learn about both bank and nonbank supervision and compliance.</li>
-        <li>Come in at the ground level of creating a new agency.</li> 
+        <li>Come in at the ground level of creating a new agency.</li>
         <li>Be a leader in your field by creating a federal supervision program focused on ensuring that markets work for American families.</li>
     </ul>
     <p>The purpose of the CFPB's supervision program is to assess compliance with Federal consumer financial laws, obtain information about supervised entities' activities and compliance systems and procedures, and detect and assess risks to consumers and the consumer financial markets.  In this way, the supervision program will promote the development of markets for consumer financial products and services that are fair, transparent, and competitive.  Supervision team members are working to provide consistent supervisory coverage that will help level the playing field for all industry participants to create a fairer marketplace for consumers and the responsible businesses that serve them.</p>
     <p>We have built &mdash; and continue to build &mdash; a diverse, talented, and highly qualified supervision and examination staff to execute on all of our important goals.  Our team comes from a range of backgrounds and is stationed throughout the country. Supervision headquarters are in Washington, D.C., and we have regional offices in San Francisco (West), Chicago (Midwest), New York (Northeast), and Washington, D.C. (Southeast).  Now, we need you!</p>
-    
+
     <div class='job-quote'>
         <div class='by-line'>"Working for the CFPB is rewarding both professionally and personally.  At the end of the day, I feel good about the job I do safeguarding the financial interests of all Americans &mdash; after all, we are all consumers of the financial markets one way or another."</div>
         <div class='dept-name'> &mdash; Welkis Malveau, Examiner</div>
@@ -152,7 +161,7 @@
 
             <h4>Examiner, CN-30, CN-40 and CN-51:</h4>
             <p>As an Examiner at the CN-30, CN-40 or CN-51 band, you will participate as a member of a team in compliance examinations of financial institutions or financial services companies. You will participate in developing solutions to issues and problems with broad impact on consumers and the industry.</p>
-            
+
             <h4>Examiner CN-52, CN-53 and CN-60:</h4>
             <p>As an Examiner at the CN-52, CN-53 or CN-60 band, you will lead teams as Examiner-in-charge in compliance examinations of financial institutions or financial services companies. You will participate as a technical expert in developing solutions to issues and problems with broad impact on consumers and the industry.</p>
         </li>
@@ -163,15 +172,11 @@
     </ul>
 </section>
 
-
-
 <div class='breaker'></div>
 
 <section>
     <h2>Interested? Questions?</h2>
     <p>Interested in a job with CFPB supervision, but don't see a current vacancy that is right for you? Please contact <a href='mailto:jobs@cfpb.gov' class="email-link">jobs@cfpb.gov</a>.  We'll let you know if a job that is right for you becomes available.
 </section>
-
-
 
 {% endblock %}

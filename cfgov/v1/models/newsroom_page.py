@@ -1,4 +1,5 @@
-from . import BlogPage, CFGOVPageManager, LegacyBlogPage
+from v1.models.base import CFGOVPageManager
+from v1.models.blog_page import BlogPage, LegacyBlogPage
 
 
 class NewsroomPage(BlogPage):

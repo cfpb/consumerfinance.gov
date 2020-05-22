@@ -9,16 +9,16 @@
 
    Create an info unit group organism when given:
 
+   heading: A string containing title of the info unit group.
+
    blocks:  A list composed of Wagtail Streamfield blocks.
 
    columns: (Optional) Number of columns in the info unit group.
 
-   heading: A string containing title of the info unit group.
-
 
    ========================================================================== #}
 
-{% macro info_unit_group(blocks=[], columns=2, heading) %}
+{% macro info_unit_group(heading, blocks=[], columns=2) %}
 {% set column_ratio_lookup = {
     2: 'half',
     3: 'third'

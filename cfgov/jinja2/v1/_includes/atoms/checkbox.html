@@ -1,0 +1,55 @@
+{# ==========================================================================
+
+   form.input()
+
+   ==========================================================================
+
+   Description: Builds form checkbox.
+
+   label:       The checkbox's label attribute. Required.
+
+   id:          The checkbox's id attribute. Defaults to `input_${ label }`
+
+   class:       The checkbox's class attribute. Optional.
+
+   value:       The checkbox's value attribute. Defaults to `id`.
+
+   name:        The checkbox's name attribute. Defaults to `id`.
+
+   behavior:    The checkbox's JS behavior. Optional.
+
+   selected:    Whether or not the checkbox is selected by default.
+                Boolean. Defaults to false.
+
+   el_wrapper:  Element to wrap the checkbox in. Defaults to div.
+
+   disabled:    Whether the field is disabled. Defaults to false.
+
+   ========================================================================== #}
+{% from 'macros/util/format/url.html' import slugify as slugify %}
+
+{% macro render(value) -%}
+
+{%- set id = value.id or get_unique_id('input_', '_') ~ slugify( value.label ) -%}
+{%- set el = value.el_wrapper if value.el_wrapper else 'div' -%}
+{%- set val = value.value if value.value else id -%}
+{%- set name = value.name if value.name else id -%}
+{%- set behavior = 'data-js-hook=behavior_' ~ value.behavior if value.behavior else '' -%}
+{%- set checked = 'checked' if value.selected else '' -%}
+
+<{{ el }} class="m-form-field m-form-field__checkbox {{ value.class }}">
+    <input class="a-checkbox"
+           type="checkbox"
+           value="{{ val }}"
+           id="{{ id }}"
+           name="{{ name }}"
+           {{ behavior }}
+           {{ checked }}
+           {{ 'disabled' if value.disabled else ''}}>
+    <label class="a-label"
+           for="{{ id }}">
+        <span>{{ value.label }}</span>
+    </label>
+</{{ el }}>
+
+{%- endmacro %}

@@ -1,10 +1,9 @@
-'use strict';
-
-var configLint = require( '../config' ).lint;
-var gulp = require( 'gulp' );
-var gulpEslint = require( 'gulp-eslint' );
-var handleErrors = require( '../utils/handle-errors' );
-var minimist = require( 'minimist' );
+const configLint = require( '../config' ).lint;
+const gulp = require( 'gulp' );
+const gulpEslint = require( 'gulp-eslint' );
+const handleErrors = require( '../utils/handle-errors' );
+const minimist = require( 'minimist' );
+const through2 = require( 'through2' );
 
 /**
  * Generic lint a script source.
@@ -12,12 +11,19 @@ var minimist = require( 'minimist' );
  * @returns {Object} An output stream from gulp.
  */
 function _genericLint( src ) {
-  // Grab the --fix flag from the command-line, if available.
-  var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var willFix = commandLineParams.fix || false;
+  // Pass all command line flags to EsLint.
+  const options = minimist( process.argv.slice( 2 ) );
+  let errorHandler = through2.obj();
+
+  if ( options.ci ) {
+    options.quiet = true;
+    errorHandler = gulpEslint.failAfterError();
+  }
+
   return gulp.src( src, { base: './' } )
-    .pipe( gulpEslint( { fix: willFix } ) )
+    .pipe( gulpEslint( options ) )
     .pipe( gulpEslint.format() )
+    .pipe( errorHandler )
     .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );
 }
@@ -25,29 +31,35 @@ function _genericLint( src ) {
 /**
  * Lints the gulpfile for errors.
  */
-gulp.task( 'lint:build', function() {
-  return _genericLint( configLint.build );
-} );
+gulp.task( 'lint:build', () => _genericLint( configLint.build ) );
 
 /**
  * Lints the test js files for errors.
  */
-gulp.task( 'lint:tests', function() {
-  return _genericLint( configLint.test );
-} );
+gulp.task( 'lint:tests', () => _genericLint( configLint.test ) );
 
 /**
  * Lints the source js files for errors.
  */
-gulp.task( 'lint:scripts', function() {
-  return _genericLint( configLint.src );
-} );
+gulp.task( 'lint:scripts', () => _genericLint( configLint.src ) );
 
 /**
  * Lints all the js files for errors
  */
-gulp.task( 'lint', [
-  'lint:build',
-  'lint:tests',
-  'lint:scripts'
-] );
+gulp.task( 'lint',
+
+  /* Checks to see if a flag for a specific file is present, if so, use it
+     Else, returns a list of sane default tasks to run */
+  ( () => {
+    let UNDEFINED;
+    const argv = minimist( process.argv.slice( 3 ) );
+    if ( argv.path !== UNDEFINED ) {
+      return gulp.parallel( () => _genericLint( argv.path ) );
+    }
+    return gulp.parallel(
+      'lint:build',
+      'lint:tests',
+      'lint:scripts'
+    );
+  } )()
+);

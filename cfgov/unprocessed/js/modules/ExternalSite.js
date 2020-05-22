@@ -3,9 +3,11 @@
    Used on at least `/external-site/`.
    ========================================================================== */
 
-'use strict';
+import { checkDom } from '../modules/util/atomic-helpers';
 
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
+const BASE_CLASS = 'external-site';
+const TOTAL_DURATION = 5;
+const INTERVAL = 1000;
 
 /**
  * ExternalSite
@@ -16,22 +18,18 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
  * @param {HTMLElement} element DOM Element.
  */
 function ExternalSite( element ) {
-  var BASE_CLASS = 'external-site_container';
-  var TOTAL_DURATION = 5;
-  var INTERVAL = 1000;
-
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _durationEl = _dom.querySelector( '.external-site_reload-container' );
-  var _directEl = _dom.querySelector( '.external-site_proceed-btn' );
-  var _duration = TOTAL_DURATION;
-  var _intervalId;
+  const _dom = checkDom( element, BASE_CLASS );
+  const _durationEl = _dom.querySelector( `.${ BASE_CLASS }_reload-container` );
+  const _proceedBtnEl = _dom.querySelector( `#${ BASE_CLASS }_proceed-btn` );
+  let _duration = TOTAL_DURATION;
+  let _intervalId;
 
   /**
    * Initialize the events and timer.
    */
   function init() {
     _intervalId = setInterval( _tick, INTERVAL );
-    _directEl.addEventListener( 'click', _proceedClicked );
+    _proceedBtnEl.addEventListener( 'click', _proceedClickedHandler );
   }
 
   /**
@@ -48,7 +46,7 @@ function ExternalSite( element ) {
    * Go to the redirect URL.
    */
   function _gotoUrl() {
-    var _formEl = _dom.querySelector( 'form#proceed' );
+    const _formEl = _dom.querySelector( 'form#proceed' );
     clearInterval( _intervalId );
     _formEl.submit();
   }
@@ -57,9 +55,9 @@ function ExternalSite( element ) {
    * Update the timer HTML content.
    */
   function _updateContent() {
-    var plurality = _duration === 1 ? '' : 's';
-    var content = '<span class=\'external-site_reload-duration\'>' +
-                  _duration + '</span> second' + plurality;
+    const plurality = _duration === 1 ? '' : 's';
+    const content = '<span class=\'external-site_reload-duration\'>' +
+                    _duration + '</span> second' + plurality;
     _durationEl.innerHTML = content;
   }
 
@@ -67,7 +65,7 @@ function ExternalSite( element ) {
    * Proceed to external site button was clicked.
    * @param {Object} event Click event object.
    */
-  function _proceedClicked( event ) {
+  function _proceedClickedHandler( event ) {
     event.stopImmediatePropagation();
     _gotoUrl();
   }
@@ -77,5 +75,7 @@ function ExternalSite( element ) {
   return this;
 }
 
+ExternalSite.BASE_CLASS = BASE_CLASS;
+
 // Expose public methods.
-module.exports = ExternalSite;
+export default ExternalSite;

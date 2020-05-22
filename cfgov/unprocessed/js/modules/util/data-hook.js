@@ -1,7 +1,5 @@
-'use strict';
-
 // Required modules.
-var standardType = require( './standard-type' );
+import { JS_HOOK } from './standard-type';
 
 /**
  * @param {HTMLNode} element - DOM element.
@@ -13,15 +11,15 @@ var standardType = require( './standard-type' );
  */
 function add( element, value ) {
   if ( value.indexOf( ' ' ) !== -1 ) {
-    var msg = standardType.JS_HOOK + ' values cannot contain spaces!';
+    const msg = JS_HOOK + ' values cannot contain spaces!';
     throw new Error( msg );
   }
 
-  var values = element.getAttribute( standardType.JS_HOOK );
+  const values = element.getAttribute( JS_HOOK );
   if ( values !== null ) {
     value = values + ' ' + value;
   }
-  element.setAttribute( standardType.JS_HOOK, value );
+  element.setAttribute( JS_HOOK, value );
 
   return value;
 }
@@ -33,12 +31,12 @@ function add( element, value ) {
  * @returns {boolean} True if value was removed, false otherwise.
  */
 function remove( element, value ) {
-  var values = element.getAttribute( standardType.JS_HOOK );
-  var index = values.indexOf( value );
-  var valuesList = values.split( ' ' );
+  const values = element.getAttribute( JS_HOOK );
+  const index = values.indexOf( value );
+  const valuesList = values.split( ' ' );
   if ( index > -1 ) {
     valuesList.splice( index, 1 );
-    element.setAttribute( standardType.JS_HOOK, valuesList.join( ' ' ) );
+    element.setAttribute( JS_HOOK, valuesList.join( ' ' ) );
     return true;
   }
 
@@ -53,7 +51,7 @@ function remove( element, value ) {
  */
 function contains( element, value ) {
   if ( !element ) { return false; }
-  var values = element.getAttribute( standardType.JS_HOOK );
+  let values = element.getAttribute( JS_HOOK );
   // If JS data-* hook is not set return immediately.
   if ( !values ) { return false; }
   values = values.split( ' ' );
@@ -61,8 +59,8 @@ function contains( element, value ) {
   return values.indexOf( value ) > -1 ? true : false;
 }
 
-module.exports = {
-  add:      add,
-  contains: contains,
-  remove:   remove
+export {
+  add,
+  contains,
+  remove
 };

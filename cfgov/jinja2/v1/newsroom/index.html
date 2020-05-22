@@ -1,6 +1,5 @@
 {% extends 'layout-side-nav.html' %}
 
-{% import 'molecules/featured-content.html' as featured_content %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
@@ -11,8 +10,9 @@
     {% for block in page.header %}
         {% if 'featured_content' in block.block_type %}
             <div class="block
-                        block__flush-sides">
-                {{ featured_content.render(block.value) }}
+                        {{ 'u-mt0' if loop.first }}">
+                        {# u-mt0 is used instead of block__flush-top to keep top border #}
+                {% include_block block %}
             </div>
         {% elif loop.index == 1 %}
         <div class="block
@@ -23,18 +23,15 @@
     {% endfor %}
     {% for block in page.content %}
         {% if 'filter_controls' in block.block_type %}
-            <div class="block
-                    block__flush-top">
-
-                {% import 'organisms/filterable-list-controls.html' as flc with context %}
-                {{ flc.render(block.value, loop.index0) }}
+            <div class="block block__flush-top">
+                {% include_block block %}
             </div>
         {% else %}
             {% import 'templates/render_block.html' as render_block with context %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {% endfor %}
-    <aside class="prefooter">
+    <aside class="o-prefooter">
         {% if page.sidefoot %}
             {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
         {% endif %}

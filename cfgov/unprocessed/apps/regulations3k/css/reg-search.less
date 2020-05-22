@@ -1,0 +1,237 @@
+/* ==========================================================================
+   Regulations 3000
+   Regulations search
+   ========================================================================== */
+
+/* Search page */
+
+.search_wrapper {
+    &.o-well {
+        max-width: 100%;
+    }
+}
+
+.filters_applied {
+    padding: 30px 15px;
+    border-bottom: 1px solid @gray-40;
+    &-label {
+        display: inline-block;
+        margin-right: 15px;
+        font-weight: 600;
+    }
+}
+
+.filters_tags {
+    display: inline-block;
+}
+
+.search_results {
+    .content_sidebar {
+        padding: 45px 15px 0;
+        border: 1px solid @gray-40;
+        background-color: #f7f8f9;
+
+        .o-expandable_content,
+        .o-expandable_target {
+            border: 0;
+            padding: 0;
+            &:before,
+            &:after {
+                border: 0;
+                padding: 0;
+            }
+        }
+
+        .reg-checkbox {
+            display: inline-block;
+        }
+        .num-results {
+            float: right;
+        }
+        .o-expandable {
+            padding-bottom: 15px;
+            border-bottom: 1px solid @gray-40;
+            margin-bottom: 15px;
+            &:nth-child(3n) {
+                border-bottom: none;
+            }
+            &_label {
+                .h4;
+                margin-bottom: 0;
+            }
+        }
+        .o-form_group {
+            margin-bottom: 0;
+        }
+    }
+    .content_main {
+        &:after {
+            border: 0;
+        }
+        border: 0;
+        border-top: 1px solid @gray-40;
+        padding-top: 0;
+    }
+    .results_count {
+        padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
+                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
+                 0
+                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        border-right: 1px solid @gray-40;
+        border-bottom: 1px solid @gray-40;
+        background-color: @green-20;
+        &.no-results {
+            background-color: @red-20;
+            padding-bottom: 15px;
+        }
+    }
+    .results_list {
+        padding: unit( @grid_gutter-width / @base-font-size-px, em )
+                 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        li {
+            list-style-type: none;
+        }
+    }
+    .results_item {
+        margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        &+ .results_item {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            h4 {
+                padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+                border-top: 1px solid @gray-40;
+            }
+        }
+    }
+    .results_paginator {
+        margin: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        padding: 0 unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        max-width: 41.875rem;
+    }
+}
+
+.respond-to-max( @bp-sm-max, {
+    .search_results {
+        .content_sidebar {
+            padding-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        }
+        .content_main {
+            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        }
+        .results_count {
+            border-left: 1px solid @gray-40;
+        }
+    }
+});
+
+// We have an awkward state where text in the filters sidebar is too long on
+// mid-size screens but is fine on desktop and mobile
+.u-hide-on-tablet {
+    .respond-to-range( @bp-sm-max, 1100px, {
+        display: none;
+    } );
+}
+
+/* PWA */
+
+.regs3k-js {
+    display: none;
+}
+
+.no-js {
+    .regs3k-js {
+        display: block;
+    }
+    .a-tag .cf-icon-svg,
+    .a-btn.filters_clear {
+        display: none;
+    }
+}
+
+/* Footer search bar */
+
+.o-search-bar {
+    &_label .break {
+        display: block;
+    }
+
+    .respond-to-max(@bp-xs-max, {
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
+        .o-search-bar_col + .o-search-bar_col {
+            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        }
+
+        form {
+            margin-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+        }
+    });
+
+    .respond-to-min(@bp-sm-min, {
+        .o-search-bar_col {
+            .grid_column( 6 );
+        }
+    });
+
+    &__full {
+        form {
+            max-width: 700px;
+        }
+    }
+
+    &__with-sidebar {
+        .search-bar__full-width-content {
+            .search-bar_label .break {
+                display: inline;
+            }
+            .o-search-bar_col {
+                width: 100%;
+            }
+            .o-search-bar_col + .o-search-bar_col {
+                margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+            }
+        }
+
+        .search-bar__variable-cols {
+            form {
+                display: table;
+                width: 100%;
+            }
+            .o-search-bar_col {
+                display: table-cell;
+            }
+            .o-search-bar_label {
+                width: auto;
+                vertical-align: top;
+                padding-right: unit( ( @grid_gutter-width / 2) / @base-font-size-px, em );
+                white-space: nowrap;
+                .break {
+                    display: block;
+                }
+            }
+            .o-search-bar_input {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+
+        .respond-to-range( @bp-xs-max, 700px, {
+            .search-bar__full-width-content;
+        } );
+
+        .respond-to-range( 700px, @bp-sm-max, {
+            .search-bar__variable-cols;
+        } );
+
+        .respond-to-range(@bp-med-min, @bp-med-max, {
+            .search-bar__full-width-content;
+        });
+
+        .respond-to-min(@bp-lg-min, {
+            .search-bar__variable-cols;
+        });
+    }
+
+    &.block__bg-branded {
+        background: @green-20;
+    }
+}

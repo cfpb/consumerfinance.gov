@@ -18,32 +18,30 @@
                        Remember to leverage vars.path instead of
                        using the literal string '/about-us/blog/'.
                        Path is used to create the filtered URL:
-                       {{ href }}?filter_category={{ category }}
+                       {{ href }}?category={{ category }}
 
    classes (optional): Space separated list of class names.
 
-   use_blog_category:  Whether to use the blog category filter or not.
-                       Defaults to false.
+   use_blog_category (optional): Whether to use the blog category filter or not.
+                                 Defaults to false.
 
    ========================================================================== #}
 
-{% macro render(category, href, classes, use_blog_category=false, index=0, sheerpage=false) %}
+{% macro render(category, href, classes='', use_blog_category=false) %}
     {% import 'macros/category-icon.html' as category_icon %}
 
     {% if href %}
         {# TODO: Remove use_blog_category parameter when this element becomes atomic. #}
         {% if use_blog_category %}
-            {% set href = href + '?filter_blog_category=' + category | urlencode | replace('%20', '+') %}
-        {% elif sheerpage %}
-            {% set href = href + '?filter_category=' + category | urlencode | replace('%20', '+') %}
+            {% set href = href + '?blog_category=' + category | urlencode | replace('%20', '+') %}
         {% else %}
-            {% set href = href + '?filter' + index | string + '_categories=' + category | urlencode | replace('%20', '+') %}
+            {% set href = href + '?categories=' + category | urlencode | replace('%20', '+') %}
         {% endif %}
     {% endif %}
 
     {% call _category_link(href, classes) %}
         {% set cat = category_label(category) or category %}
-        {{ category_icon.render(cat, 'category-slug_icon') | safe }}
+        {{ category_icon.render(cat) | safe }}
         <span class="u-visually-hidden">Category:</span>
         {{ cat | safe }}
     {% endcall %}
@@ -52,7 +50,7 @@
 {% macro _category_link(href, classes) %}
     {% if href %}
         <a href="{{ href }}"
-           class="category-slug {{ classes if classes else '' }}">
+           class="a-heading a-heading__icon {{ classes }}">
     {% endif %}
        {{ caller() }}
     {% if href %}

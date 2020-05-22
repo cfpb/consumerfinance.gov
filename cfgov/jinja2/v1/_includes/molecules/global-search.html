@@ -10,22 +10,35 @@
 
    ========================================================================== #}
 
+
+
+{% macro render() %}
+
 <div class="m-global-search"
      data-js-hook="behavior_flyout-menu">
     <button class="m-global-search_trigger"
             data-js-hook="behavior_flyout-menu_trigger">
-        <span class="m-global-search_trigger-label">
-            <span class="u-visually-hidden">Search</span>
+        <span class="m-global-search_trigger-open-label">
+            {{ svg_icon('search') }}
+            <span class="u-hide-on-mobile">{{ _('Search') }}</span>
+        </span>
+        <span class="m-global-search_trigger-close-label">
+            {{ svg_icon('delete') }}
+            <span class="u-hide-on-mobile">{{ _('Close') }}</span>
         </span>
     </button>
     <div class="m-global-search_content
                 u-hidden"
          data-js-hook="behavior_flyout-menu_content"
-         aria-expanded="false">
+         aria-expanded="false"
+         role="search">
         <form class="m-global-search_content-form"
               action="https://search.consumerfinance.gov/search"
               method="get">
-            {# The following inputs are required by the CFPB search portal. #}
+            {#
+                The following two inputs are required by the search portal.
+                See https://search.digitalgov.gov/manual/code.html
+            #}
             <input type="hidden"
                    name="utf8"
                    value="✓">
@@ -33,55 +46,64 @@
                    id="affiliate"
                    name="affiliate"
                    value="cfpb">
-            <div class="input-with-btn">
-                <div class="input-with-btn_input
-                            input-contains-label">
-                    <label for="query"
-                           class="input-contains-label_before
-                                  input-contains-label_before__search">
-                    </label>
-                    <label for="query"
-                           class="input-contains-label_after
-                                  input-contains-label_after__clear
-                                  u-hidden">
-                    </label>
-                    <input type="text"
-                           id="query"
-                           name="query"
-                           value=""
-                           placeholder="Search the CFPB">
-                </div>
-                <div class="input-with-btn_btn">
-                    <button class="btn" type="submit">Search</button>
-                </div>
+
+            <div class="o-form__input-w-btn">
+               <div class="o-form__input-w-btn_input-container">
+                   <div class="m-btn-inside-input
+                               input-contains-label">
+                       <label for="m-global-search_query"
+                              class="input-contains-label_before
+                                     input-contains-label_before__search">
+                            {{ svg_icon('search') }}
+                            <span class="u-visually-hidden">{{ _('Search') }}</span>
+                       </label>
+                       <input id="m-global-search_query"
+                              name="query"
+                              type="text"
+                              title="{{ _('Search the CFPB') }}"
+                              class="a-text-input"
+                              value=""
+                              placeholder="{{ _('Search the CFPB') }}">
+                       <label for="m-global-search_query"
+                              class="input-contains-label_after
+                                     input-contains-label_after__clear
+                                     u-hidden">
+                            {{ svg_icon('delete') }}
+                            <span class="u-visually-hidden">{{ _('Clear search') }}</span>
+                       </label>
+                   </div>
+               </div>
+               <div class="o-form__input-w-btn_btn-container">
+                   <button class="a-btn">{{ _('Search') }}</button>
+               </div>
             </div>
 
             <div class="m-global-search_content-suggestions">
-                <p class="h5">Suggested search terms:</p>
-                <ul class="list list__horizontal">
-                    <li class="list_item">
-                        <a class="list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=regulations">
-                            Regulations
+                <p class="h5">{{ _('Suggested search terms:') }}</p>
+                <ul class="m-list m-list__horizontal">
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=regulations">
+                            {{ _('Regulations') }}
                         </a>
                     </li>
-                    <li class="list_item">
-                        <a class="list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=compliance+guides">
-                            Compliance guides
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=compliance+guides">
+                            {{ _('Compliance guides') }}
                         </a>
                     </li>
-                    <li class="list_item">
-                        <a class="list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=mortgage">
-                            Mortgage
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=mortgage">
+                            {{ _('Mortgage') }}
                         </a>
                     </li>
-                    <li class="list_item">
-                        <a class="list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=college+loans">
-                            College loans
+                    <li class="m-list_item">
+                        <a class="m-list_link" href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=college+loans">
+                            {{ _('College loans') }}
                         </a>
                     </li>
                 </ul>
             </div>
         </form>
-        <button class="m-global-search_tab-trigger" aria-hidden="true"></button>
     </div>
 </div>
+{% endmacro %}

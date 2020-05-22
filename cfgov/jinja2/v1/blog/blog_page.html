@@ -16,17 +16,30 @@
 
 {% block content_main %}
     {% include 'article.html' %}
-    <div class="block">
+    {% block post_article_content %}
+    <div class="block join-the-conversation">
         <p>
-            Due to technical issues, the commenting feature of our blog is temporarily unavailable. We’re working to bring this functionality back, and look forward to hearing your feedback and comments about the CFPB’s work soon.
+            Join the conversation. Follow CFPB on
+            <a class="a-link
+                      a-link__icon"
+               href="{{ unsigned_redirect('https://twitter.com/CFPB') }}">
+                <span class="a-link_text">Twitter</span>
+            </a> and
+            <a class="a-link
+                      a-link__icon"
+               href="{{ unsigned_redirect('https://www.facebook.com/CFPB') }}">
+                <span class="a-link_text">Facebook</span></a>.
         </p>
     </div>
+    {% endblock %}
 {% endblock %}
 
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
-    <div class="block block__sub" data-qa-hook="rss-subscribe-section">
-        {% import 'rss.html' as rss %}
-        {{ rss.render('/about-us/blog/feed/') }}
+    {% if rss_feed %}
+    <div class="block block__sub">
+        {% import 'molecules/rss-feed.html' as rss %}
+        {{ rss.render(rss_feed) }}
     </div>
+    {% endif %}
 {% endblock %}

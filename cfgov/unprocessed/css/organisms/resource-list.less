@@ -1,0 +1,57 @@
+/* =========================================================================
+   cfgov-refresh
+   o-resource-list
+   ========================================================================= */
+
+.o-resource-list_list {
+    display: table;
+    width: 100%;
+    margin-top: unit( 30px / @base-font-size-px, em );
+    border-collapse: collapse; // must be set to allow borders on table-rows
+
+    [data-display-table="row-group"] {
+        display: table-row-group;
+        padding: 0;
+    }
+
+    [data-display-table="thead"],
+    [data-display-table="row"] {
+        display: table-row;
+        border-bottom: 1px solid @gray-40;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    [data-display-table="cell"] {
+        display: table-cell;
+        padding: unit( 10px / @base-font-size-px, em );
+        vertical-align: middle;
+    }
+
+    &-heading {
+        .heading-5();
+
+        padding: unit( 10px / @font-size, em );
+        background: @gray-5;
+    }
+
+    &-thumbnail {
+        width: 150px;
+
+        img {
+            width: 150px;
+        }
+    }
+
+    &-item-title {
+        font-weight: 500;
+    }
+
+    &-action-list {
+        margin-top: 0;
+
+        > li {
+            margin-bottom: 0;
+        }
+    }
+}

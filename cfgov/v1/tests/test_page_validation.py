@@ -35,12 +35,12 @@ class TestConvertHttpImageLinks(TestCase):
         html = (
             '<img src="http://bucket.name/img.png">'
             '<div>Other text</div>'
-            '<img src="http://www.com/wp-content/uploads/img2.png">'
+            '<img src="http://www.com/static/uploads/img2.png">'
             '<img src="/relative/img3.png">'
         )
         url_mappings = [
             ('http://bucket.name/', 'https://bucket.name/'),
-            ('http://www.com/wp-content/uploads/', 'https://other.site/'),
+            ('http://www.com/static/uploads/', 'https://other.site/'),
         ]
         self.assertEqual(
             convert_http_image_links(html, url_mappings),

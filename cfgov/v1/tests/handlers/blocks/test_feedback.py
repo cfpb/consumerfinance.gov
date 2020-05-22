@@ -1,7 +1,11 @@
-import mock
+# -*- coding: utf-8 -*-
+
 from django.test import RequestFactory, TestCase
 
+import mock
+
 from v1.handlers.blocks.feedback import FeedbackHandler, get_feedback_type
+from v1.models import CFGOVPage, Feedback
 
 
 class TestFeedbackHandler(TestCase):
@@ -13,6 +17,7 @@ class TestFeedbackHandler(TestCase):
             'is_helpful': 1,
             'comment': 'Example comment.',
         }
+        page.language = 'en'
         request = self.factory.post('/', post_data)
         self.handler = FeedbackHandler(
             page, request, block_value={'was_it_helpful_text': 1,
@@ -20,9 +25,23 @@ class TestFeedbackHandler(TestCase):
                                         'radio_intro': None}
         )
 
+    def test_sanitize_non_ascii_referrer(self):
+        """Make sure referrers with non-ascii characters are handled."""
+        page = mock.Mock()
+        page.url = '/es/obtener-respuestas/'
+        page.language = 'es'
+        non_ascii_referrer = (
+            'https://www.consumerfinance.gov/es/obtener-respuestas/'
+            'buscar-por-etiqueta/línea_de_crédito_personal/'
+        )
+        request = self.factory.get('/')
+        request.META = {'HTTP_REFERER': non_ascii_referrer}
+        handler = FeedbackHandler(page, request, block_value={})
+        sanitized = handler.sanitize_referrer()
+        self.assertIn('é', sanitized)
+
     @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.get_response')
-    def test_process_calls_handler_get_response(self,
-                                                mock_get_response):
+    def test_process_calls_handler_get_response(self, mock_get_response):
         mock_get_response.return_value = "Success!"
         msg = self.handler.process(is_submitted=True)
         self.assertEqual(mock_get_response.call_count, 1)
@@ -30,9 +49,8 @@ class TestFeedbackHandler(TestCase):
 
     @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.get_response')
     @mock.patch('v1.handlers.blocks.feedback.FeedbackForm')
-    def test_process_does_not_bind_form_non_submissions(self,
-                                                        mock_form,
-                                                        mock_get_response):
+    def test_process_does_not_bind_form_non_submissions(
+            self, mock_form, mock_get_response):
         self.handler.process(is_submitted=False)
         self.assertEqual(mock_get_response.call_count, 0)
 
@@ -56,25 +74,6 @@ class TestFeedbackHandler(TestCase):
         form.is_valid.return_value = False
         self.handler.get_response(form)
         mock_fail.assert_called_with(form)
-
-    @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.success')
-    def test_get_response_sets_attrs(self, mock_success):
-        form = mock.Mock()
-        self.handler.get_response(form)
-        self.assertTrue(form.save().is_helpful)
-        self.assertEqual(form.save().page, self.handler.page)
-
-    @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.success')
-    def test_get_response_saves_feedback(self, mock_success):
-        form = mock.Mock()
-        self.handler.get_response(form)
-        self.assertTrue(form.save.called)
-
-    @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.success')
-    def test_get_response_calls_sucess_for_valid(self, mock_success):
-        form = mock.Mock()
-        self.handler.get_response(form)
-        self.assertTrue(mock_success.called)
 
     @mock.patch('v1.handlers.blocks.feedback.HttpResponseRedirect')
     @mock.patch('v1.handlers.blocks.feedback.JsonResponse')
@@ -198,3 +197,49 @@ class TestFeedbackHandler(TestCase):
     def test_get_feedback_type_no_block_value(self):
         block_value = None
         self.assertEqual(get_feedback_type(block_value), 'helpful')
+
+    def _post_feedback(self, page=None, referrer='None', is_helpful='None'):
+        page = page or CFGOVPage.objects.first()
+
+        post_data = {}
+        if referrer is not None:
+            post_data['referrer'] = referrer
+        if is_helpful is not None:
+            post_data['is_helpful'] = is_helpful
+
+        request = self.factory.post(
+            '/',
+            post_data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+
+        # Create a block that will use the standard FeedbackForm.
+        block_value = {'was_it_helpful_text': 'Was this helpful?'}
+        handler = FeedbackHandler(page, request, block_value=block_value)
+        response = handler.process(is_submitted=True)
+        self.assertEqual(response.status_code, 200)
+
+        return Feedback.objects.last()
+
+    def test_page_gets_saved_with_feedback(self):
+        page = CFGOVPage.objects.last()
+        feedback = self._post_feedback(page=page)
+        self.assertEqual(feedback.page.pk, page.pk)
+
+    def test_is_helpful_gets_saved_with_feedback(self):
+        feedback = self._post_feedback(is_helpful=True)
+        self.assertTrue(feedback.is_helpful)
+
+        feedback = self._post_feedback(is_helpful=False)
+        self.assertFalse(feedback.is_helpful)
+
+        feedback = self._post_feedback(is_helpful='None')
+        self.assertIsNone(feedback.is_helpful)
+
+    def test_referrer_gets_saved_with_feedback(self):
+        feedback = self._post_feedback(referrer='foo')
+        self.assertEqual(feedback.referrer, 'foo')
+
+    def test_referrer_gets_truncated_if_excessively_long(self):
+        feedback = self._post_feedback(referrer='x' * 1000)
+        self.assertEqual(feedback.referrer, 'x' * 255)

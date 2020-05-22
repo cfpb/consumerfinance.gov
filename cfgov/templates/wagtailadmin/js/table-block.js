@@ -11,7 +11,7 @@
  */
 ( function( win ) {
 
-    function initAtomicTable( id, options ) {
+    function initRichTextTable( id, options ) {
         id = '#' + id;
 
         var utilities = {
@@ -31,7 +31,10 @@
             DIMENSIONS: {
                 WIDTH:  0,
                 HEIGHT: 1
-            }
+            },
+
+            $colWidthSelect: {},
+            $sortableSelect: {}
         };
 
         var HandsonTable = {
@@ -42,11 +45,13 @@
                 }
 
                 var onTableChange = $.proxy( this.onTableChange, this );
+                var onCreateCol = $.proxy( this.onCreateCol, this );
+                var onRemoveCol = $.proxy( this.onRemoveCol, this );
 
                 options.afterChange = onTableChange;
-                options.afterCreateCol = onTableChange;
+                options.afterCreateCol = onCreateCol;
                 options.afterCreateRow = onTableChange;
-                options.afterRemoveCol = onTableChange;
+                options.afterRemoveCol = onRemoveCol;
                 options.afterRemoveRow = onTableChange;
                 options.contextMenu = [ 'row_above',
                                         'row_below',
@@ -96,6 +101,7 @@
                         $( win ).resize();
                     } );
                 }
+
                 options.editor = RichTextEditor;
 
                 return options;
@@ -109,6 +115,30 @@
                 this.$element.trigger( 'table:change', [this.instance.getData()] );
 
                 return this;
+            },
+
+            onCreateCol: function onCreateCol( index, change ) {
+              HandsonTableWagtailBridge.ui.$fixedWidthColInput
+                .find( 'td' ).eq( index - 1 )
+                .after( '<td>' + utilities.$colWidthSelect + '</td>' );
+
+              HandsonTableWagtailBridge.ui.$sortableInput
+                .find( 'td' ).eq( index - 1 )
+                .after( '<td>' + utilities.$sortableSelect + '</td>' );
+
+              this.$element.trigger( 'table:change', [this.instance.getData()] );
+
+              return this;
+            },
+
+            onRemoveCol: function onRemoveCol( index, change ) {
+              HandsonTableWagtailBridge.ui.$fixedWidthColInput
+                .find( 'td' ).eq( index )
+                .remove();
+
+              this.$element.trigger( 'table:change', [this.instance.getData()] );
+
+              return this;
             }
         };
 
@@ -117,6 +147,9 @@
             initialize: function initialize( id , options ) {
                 var _this = this;
                 var hiddenFieldData;
+
+                utilities.$colWidthSelect = $( this.ui.$inputContainer + ' .column-width-input' ).prop( 'outerHTML' );
+                utilities.$sortableSelect = $( this.ui.$inputContainer + ' .sortable-type-input' ).prop( 'outerHTML' );
 
                 this.options = utilities.assign( {} , options );
                 this.element = document.querySelector( this.ui.$inputContainer );
@@ -133,6 +166,7 @@
                 this.handsonTable.$element.on( 'table:change', function( event, data ) {
                     _this.saveDataToHiddenField( data );
                 } );
+
                 this.initializeEvents();
                 this.initializeForm( hiddenFieldData );
             },
@@ -159,43 +193,162 @@
 
                 if ( 'resize' in $window ) {
                     this.resize( utilities.DIMENSIONS.HEIGHT, this.getHeight() );
-                    $window.load( function() {
+                    $window.on('load', function() {
                         $window.resize();
                     } );
                 }
+
+                // On click, toggle visibility of fixed width inputs
+                $( id + '-handsontable-col-fixed' ).click( function() {
+                  if ( $( this ).is( ':checked' ) ) {
+                    _this.toggleInputTable( _this.ui.$fixedWidthColInput, true );
+                  } else {
+                    _this.toggleInputTable( _this.ui.$fixedWidthColInput, false );
+                  }
+                } );
+
+                // On click, toggle visibility of sortable inputs
+                $( id + '-handsontable-sortable' ).click( function() {
+                  if ( $( this ).is( ':checked' ) ) {
+                    _this.toggleInputTable( _this.ui.$sortableInput, true );
+                  } else {
+                    _this.toggleInputTable( _this.ui.$sortableInput, false );
+                  }
+                } );
+
+                // On change to Heading level, save data
+                $( id + '-handsontable-heading-level' ).on( 'change', function() {
+                    _this.saveDataToHiddenField( 'no data' );
+                } );
+
+                // On change of fixed width values, save data
+                $( id + '-fixed-width-column-input' ).on( 'change', '.column-width-input', function() {
+                  _this.saveDataToHiddenField( 'no data' );
+                } );
+
+                // On change of sortable values, save data
+                $( id + '-sortable-input' ).on( 'change', '.sortable-type-input', function() {
+                  _this.saveDataToHiddenField( 'no data' );
+                } );
             },
 
             ui: {
                 $container:                 id + '-handsontable-container',
                 $inputContainer:            id + '-handsontable-input-container',
+                $headingText:               id + '-handsontable-heading-text',
+                $headingLevel:              id + '-handsontable-heading-level',
+                $headingIcon:               id + '-handsontable-heading-icon',
                 $hasColHeaderCheckbox:      id + '-handsontable-col-header',
                 $hasRowHeaderCheckbox:      id + '-handsontable-header',
                 $hiddenField:               id,
                 $isFullWidthCheckbox:       id + '-handsontable-full-width',
                 $isStackedOnMobileCheckbox: id + '-handsontable-stack-on-mobile',
                 $isTableStripedCheckbox:    id + '-handsontable-striped-rows',
+                $fixedWidthColsCheckbox:    id + '-handsontable-col-fixed',
+                $fixedWidthColInput:        id + '-fixed-width-column-input',
+                $widthWarning:              id + '-width_warning',
+                $isSortableCheckbox:        id + '-handsontable-sortable',
+                $sortableInput:             id + '-sortable-input',
                 $resizeTargets:             '.input > .handsontable, .wtHider, .wtHolder'
             },
 
             initializeForm: function initializeForm( hiddenFieldData ) {
                 var ui = this.ui;
                 var uiMap;
+                var elem;
                 var value;
 
                 if ( hiddenFieldData !== null ) {
-                    uiMap = { first_row_is_table_header:   ui.$hasRowHeaderCheckbox,
+                    uiMap = { heading_text:                ui.$headingText,
+                              heading_level:               ui.$headingLevel,
+                              heading_icon:                ui.$headingIcon,
+                              first_row_is_table_header:   ui.$hasRowHeaderCheckbox,
                               first_col_is_header:         ui.$hasColHeaderCheckbox,
                               is_full_width:               ui.$isFullWidthCheckbox,
                               is_striped:                  ui.$isTableStripedCheckbox,
-                              is_stacked:                  ui.$isStackedOnMobileCheckbox
+                              is_stacked:                  ui.$isStackedOnMobileCheckbox,
+                              fixed_col_widths:            ui.$fixedWidthColsCheckbox,
+                              is_sortable:                 ui.$isSortableCheckbox
                           };
 
                     Object.keys( uiMap ).forEach( function( key ) {
-                        if ( value = hiddenFieldData[key] ) {
+                        elem = uiMap[key][0];
+                        value = hiddenFieldData[key];
+
+                        if ( elem.tagName === 'INPUT' && elem.type === 'checkbox' && value ) {
                             uiMap[key].prop( 'checked', value );
+                        } else if ( elem.tagName === 'INPUT' && elem.type === 'text' && value ) {
+                            uiMap[key].prop( 'value', value );
+                        } else if ( elem.tagName === 'SELECT' && value ) {
+                            uiMap[key].prop( 'value', value );
+                        } else {
+                            return;
                         }
                     } );
                 }
+
+                // update fixed width input to match table
+                var count = this.handsonTable.instance.countCols();
+                var fixedWidthRow = this.ui.$fixedWidthColInput.find( 'tr' );
+                fixedWidthRow.empty();
+                for ( var x = 0; x < count; x++ ) {
+                  fixedWidthRow.append( '<td>' + utilities.$colWidthSelect + '</td>' );
+                }
+
+                // update sortable input to match table
+                var sortableRow = this.ui.$sortableInput.find( 'tr' );
+                sortableRow.empty();
+                for ( var x = 0; x < count; x++ ) {
+                  sortableRow.append( '<td>' + utilities.$sortableSelect + '</td>' );
+                }
+
+                if ( ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
+                  this.toggleInputTable( this.ui.$fixedWidthColInput, true );
+                  ui.$fixedWidthColInput.find( 'td' ).each( function( index, value ) {
+                    $( this ).find( 'select' ).val( hiddenFieldData.column_widths[index] );
+                  } );
+                  this.getColumnWidths();
+                }
+
+                if ( ui.$isSortableCheckbox.is( ':checked' ) ) {
+                  this.toggleInputTable( this.ui.$sortableInput, true );
+                  ui.$sortableInput.find( 'td' ).each( function( index, value ) {
+                    $( this ).find( 'select' ).val( hiddenFieldData.sortable_types[index] );
+                  } );
+                }
+            },
+
+            displayWidthWarning: function displayWidthWarning( totalWidth ) {
+              // Display warning for width > 100%
+              if ( totalWidth > 100 && this.ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
+                this.ui.$widthWarning.show();
+              } else {
+                this.ui.$widthWarning.hide();
+              }
+            },
+
+            getColumnWidths: function getColumnWidths() {
+              var colCount = this.ui.$fixedWidthColInput.find( 'tr td' ).length,
+                  array = [],
+                  totalWidth = 0;
+
+              for ( var x = 0; x < colCount; x++ ) {
+                var i = x + 1;
+                var widthClass = this.ui.$fixedWidthColInput
+                                     .find( 'tr td:nth-child( ' + i + ' ) select option:selected' )
+                                     .val();
+                if ( widthClass !== '' ) {
+                  totalWidth += Number( widthClass.substring( 3, 5 ) );
+                } else {
+                  totalWidth += 1;
+                }
+
+                array[x] = widthClass;
+              }
+
+              this.displayWidthWarning( totalWidth );
+
+              return array;
             },
 
             getWidth: function getWidth() {
@@ -208,6 +361,21 @@
 
                 return tableParent.find( '.htCore' ).height() +
                        ( tableParent.find( '.input' ).height() * 2 );
+            },
+
+            getSortableTypes: function getSortableTypes() {
+              var colCount = this.ui.$sortableInput.find( 'tr td' ).length,
+                  array = [];
+
+              for ( var x = 0; x < colCount; x++ ) {
+                var i = x + 1;
+
+                array[x] = this.ui.$sortableInput
+                               .find( 'tr td:nth-child( ' + i + ' ) select option:selected' )
+                               .val();
+              }
+
+              return array;
             },
 
             getHiddenFieldData: function getHiddenFieldData() {
@@ -249,11 +417,18 @@
 
                 ui.$hiddenField.val( JSON.stringify( {
                     data:                      this.handsonTable.instance.getData(),
+                    column_widths:             this.getColumnWidths(),
+                    sortable_types:            this.getSortableTypes(),
+                    heading_text:              ui.$headingText.prop( 'value' ),
+                    heading_level:             ui.$headingLevel.prop( 'value' ),
+                    heading_icon:              ui.$headingIcon.prop( 'value' ),
                     first_row_is_table_header: ui.$hasRowHeaderCheckbox.prop( 'checked' ),
                     first_col_is_header:       ui.$hasColHeaderCheckbox.prop( 'checked' ),
                     is_full_width:             ui.$isFullWidthCheckbox.prop( 'checked' ),
                     is_striped:                ui.$isTableStripedCheckbox.prop( 'checked' ),
-                    is_stacked:                ui.$isStackedOnMobileCheckbox.prop( 'checked' )
+                    is_stacked:                ui.$isStackedOnMobileCheckbox.prop( 'checked' ),
+                    fixed_col_widths:          ui.$fixedWidthColsCheckbox.prop( 'checked' ),
+                    is_sortable:               ui.$isSortableCheckbox.prop( 'checked' )
                 } ) );
             },
 
@@ -277,6 +452,16 @@
             onTableChange: function onTableChange( index ) {
                 this.resize( utilities.DIMENSIONS.HEIGHT, this.getHeight() );
                 this.saveDataToHiddenField();
+            },
+
+            toggleInputTable: function toggleInputTable( inputTable, state ) {
+              state = state || true;
+
+              if ( state === true ) {
+                inputTable.show();
+              } else {
+                inputTable.hide();
+              }
             }
         };
 
@@ -311,11 +496,9 @@
                                     '</header>',
                                     '<div class="row active nice-padding struct-block object">',
                                         '<input id="table-block-editor" maxlength="255" name="title" type="text">',
-                                    '</div></br>',
+                                    '</div><br>',
                                     '<div class="row active nice-padding m-t-10">',
-                                        '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button" >',
-                                            '<span class="icon"></span><em>Save</em>',
-                                        '</button>',
+                                        '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save</button>',
                                     '</div>' ].join( '' );
 
         // Set body template.
@@ -357,7 +540,9 @@
     function _createRichTextEditor( initialValue ) {
         var id = 'table-block-editor'
         var input = $( '#' + id );
-        var richText = $( '<div class="richtext"></div>' ).html( initialValue );
+        var richText = $(
+            '<div class="richtext halloeditor" data-hallo-editor></div>'
+        ).html( initialValue );
         var removeStylingPending = false;
 
         richText.insertBefore( input );
@@ -385,31 +570,38 @@
         var closestObj = input.closest( '.object' );
 
 
-        richText.hallo({
+        richText.hallo( {
             toolbar: 'halloToolbarFixed',
-            toolbarCssClass: ( closestObj.hasClass( 'full' ) ) ? 'full' : (closestObj.hasClass( 'stream-field' )) ? 'stream-field' : '',
-            plugins: halloPlugins,
+            toolbarCssClass: ( closestObj.hasClass( 'full' ) ) ? 'full' : '',
+            plugins: {
+                "halloformat": {},
+                "halloheadings": {},
+                "hallowagtaillink": {},
+                "hallowagtaildoclink": {},
+                "hallolists": {},
+                "halloreundo": {},
+            },
             editable: true,
-        } ).bind( 'hallomodified', function( event, data ) {
+        } ).on( 'hallomodified', function( event, data ) {
             input.val( data.content );
             if ( !removeStylingPending ) {
                 setTimeout( removeStyling, 100 );
                 removeStylingPending = true;
             }
-        } ).bind( 'paste drop', function( event, data ) {
+        } ).on( 'paste drop', function( event, data ) {
             setTimeout(function() {
                 removeStyling();
                 setModified();
             }, 1);
         /* Animate the fields open when you click into them. */
-        } ).bind( 'halloactivated', function( event, data ) {
+        } ).on( 'halloactivated', function( event, data ) {
             $( event.target ).addClass( 'expanded', 200, function(e) {
                 /* Hallo's toolbar will reposition itself on the scroll event.
                 This is useful since animating the fields can cause it to be
                 positioned badly initially. */
                 $( window ).trigger( 'scroll' );
             } );
-        } ).bind( 'hallodeactivated', function( event, data ) {
+        } ).on( 'hallodeactivated', function( event, data ) {
             $( window ).trigger( 'scroll' );
         } );
 
@@ -435,10 +627,10 @@
     }
 
     function insertRichTextDeleteControl( element ) {
-        var link = $( '<a class="icon icon-cross text-replace delete-control">Delete</a>' );
-        $ ( element ).addClass( 'rich-text-deletable' ).prepend( link );
-        link.click( function() {
-            var widget = $( element ).parent( '.richtext' ).data( 'IKS-hallo' );
+        var link = $( '<a class="icon icon-cross text-replace halloembed__delete">Delete</a>' );
+        $ ( element ).addClass( 'halloembed' ).prepend( link );
+        link.on( 'click', function() {
+            var widget = $( element ).parent( '[data-hallo-editor]' ).data( 'IKS-hallo' );
             $( element ).fadeOut( function() {
                 $( element ).remove();
                 if ( widget != undefined && widget.options.editable ) {
@@ -449,12 +641,11 @@
     }
 
     $( function() {
-        $( '.richtext [contenteditable="false"]' ).each( function() {
+        $( '[data-hallo-editor] [contenteditable="false"]' ).each( function() {
             insertRichTextDeleteControl( this );
         } );
     } );
 
-    win.initAtomicTable = initAtomicTable;
+    win.initRichTextTable = initRichTextTable;
 
 } ) ( window );
-

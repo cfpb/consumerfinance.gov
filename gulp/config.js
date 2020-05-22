@@ -1,11 +1,11 @@
-'use strict';
-
-var fs = require( 'fs' );
-var paths = require( '../config/environment' ).paths;
-var globAll = require( 'glob-all' );
+const fs = require( 'fs' );
+const environment = require( '../config/environment' );
+const paths = environment.paths;
+const globAll = require( 'glob-all' );
 
 module.exports = {
-  pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
+  // eslint-disable-next-line no-sync
+  pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ),
   banner:
       '/*!\n' +
       ' *               ad$$               $$\n' +
@@ -25,27 +25,33 @@ module.exports = {
       ' *  A public domain work of the Consumer Financial Protection Bureau\n' +
       ' */\n',
   lint: {
-    src: [ paths.unprocessed + '/js/**/*.js' ],
+    src: [
+      `${ paths.unprocessed }/js/**/*.js`,
+      `${ paths.unprocessed }/apps/**/js/**/*.js`,
+      `!${ paths.unprocessed }/apps/**/node_modules/**`
+    ],
     test:  [
+      paths.test + '/util/**/*.js',
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
     ],
     build: [
       'config/**/*.js',
       'gulpfile.js',
-      'gulp/**/*.js'
+      'gulp/**/*.js',
+      'scripts/npm/**/*.js',
+      'jest.config.js'
     ]
   },
-  test: {
-    src:   paths.unprocessed + '/js/**/*.js',
-    tests: paths.test,
-    reporter: process.env.CONTINUOUS_INTEGRATION // eslint-disable-line no-process-env
-  },
-  clean: {
-    dest: paths.processed
-  },
   scripts: {
-    src: paths.unprocessed + '/js/**/*.js'
+    src: paths.unprocessed + '/js/**/*.js',
+    otherBuildTriggerFiles: [
+      paths.unprocessed + '/js/**/*.js',
+      paths.unprocessed + '/apps/**/js/**/*.js',
+      paths.modules,
+      './config/**/*.js',
+      './gulp/**/*.js'
+    ]
   },
   styles: {
     cwd:      paths.unprocessed + '/css',
@@ -53,12 +59,22 @@ module.exports = {
     dest:     paths.processed + '/css',
     settings: {
       paths:  globAll.sync( [
-        paths.modules + '/capital-framework/**',
-        paths.modules + '/cfpb-chart-builder/**',
-        paths.lib
+        paths.modules + '/@cfpb/cfpb-*/src',
+        paths.modules + '/cfpb-chart-builder/src/**',
+        paths.modules + '/highcharts/css'
       ] ),
       compress: true
-    }
+    },
+    otherBuildTriggerFiles: [
+      paths.unprocessed + '/css/**/*.less',
+      paths.modules,
+      './config/**/*.js',
+      './gulp/**/*.js'
+    ],
+    otherBuildTriggerFilesNemo: [
+      paths.legacy + '/nemo/**/*.css',
+      paths.legacy + '/nemo/**/*.less'
+    ]
   },
   legacy: {
     cwd: paths.legacy,
@@ -72,36 +88,5 @@ module.exports = {
       paths.legacy + '/nemo/_/js/main.js',
       paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
-  },
-  images: {
-    src:  paths.unprocessed + '/img/**',
-    dest: paths.processed + '/img'
-  },
-  copy: {
-    icons: {
-      src:  paths.modules + '/capital-framework/src/cf-icons/src/fonts/*',
-      dest: paths.processed + '/fonts/'
-    },
-    vendorFonts: {
-      src:  paths.unprocessed + '/fonts/pdfreactor/*',
-      dest: paths.processed + '/fonts/pdfreactor'
-    },
-    vendorCss: {
-      src: [
-        paths.unprocessed + '/css/pdfreactor-fonts.css'
-      ],
-      dest: paths.processed + '/css'
-    },
-    vendorImg: {
-      src: [],
-      dest: paths.processed + '/img'
-    },
-    vendorJs: {
-      src: [
-        paths.modules + '/jquery/dist/jquery.min.js',
-        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js'
-      ],
-      dest: paths.processed + '/js/'
-    }
   }
 };

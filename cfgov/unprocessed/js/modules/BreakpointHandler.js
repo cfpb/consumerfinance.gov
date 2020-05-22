@@ -1,13 +1,5 @@
-'use strict';
-
-var getBreakpointState = require( './util/breakpoint-state' ).get;
-var _breakpointsConfig = require( '../config/breakpoints-config' );
-
-// Used for checking browser capabilities.
-// TODO: Check what browsers this is necessary for and
-// check whether it is still applicable.
-var _viewportEl;
-var _propPrefix;
+import breakpointsConfig from '@cfpb/cfpb-core/src/vars-breakpoints';
+import { getBreakpointState } from './util/breakpoint-state';
 
 /**
  * BreakpointHandler
@@ -17,7 +9,7 @@ var _propPrefix;
  * and calls `enter` or `leave` callback if breakpoint
  * region has just been entered or exited.
  *
- * @param {object} opts Options object. Takes form:
+ * @param {Object} opts Options object. Takes form:
  * {
  *  breakpoint: number (600) or range [600, 1023],
  *  type:       range, max, or min (type of media query to emulate),
@@ -26,19 +18,19 @@ var _propPrefix;
  * }
  */
 function BreakpointHandler( opts ) {
-  var hasRequiredArgs =
-  Boolean( opts && opts.breakpoint && opts.enter && opts.leave );
-  var breakpoint;
+  const hasRequiredArgs = Boolean(
+    opts && opts.breakpoint && opts.enter && opts.leave
+  );
 
   if ( hasRequiredArgs === false ) {
     throw new Error( 'BreakpointHandler constructor requires arguments!' );
   }
 
-  breakpoint = opts.breakpoint;
+  const breakpoint = opts.breakpoint;
   this.match = false;
   this.type = opts.type || 'max';
-  this.breakpoint = _breakpointsConfig[breakpoint] &&
-                    _breakpointsConfig[breakpoint][this.type] ||
+  this.breakpoint = breakpointsConfig[breakpoint] &&
+                    breakpointsConfig[breakpoint][this.type] ||
                     breakpoint;
   this.enter = opts.enter;
   this.leave = opts.leave;
@@ -51,16 +43,6 @@ function BreakpointHandler( opts ) {
  * @param {object} self Reference to instance.
  */
 function _init( self ) {
-  // TODO: Check what browsers this is necessary for and
-  // check whether it is still applicable.
-  _viewportEl = window;
-  _propPrefix = 'inner';
-  var modernBrowser = 'innerWidth' in window;
-  if ( !modernBrowser ) {
-    _viewportEl = document.documentElement || document.body;
-    _propPrefix = 'client';
-  }
-
   self.handleViewportChange();
   self.watchWindowResize();
 }
@@ -69,7 +51,7 @@ function _init( self ) {
  * Add event listener for changes in the viewport size.
  */
 function watchWindowResize() {
-  var self = this;
+  const self = this;
   window.addEventListener( 'resize', function() {
     self.handleViewportChange();
   } );
@@ -79,9 +61,9 @@ function watchWindowResize() {
  * Test the viewport size and set whether the test passes on the instance.
  */
 function handleViewportChange() {
-  var width = _viewportEl[_propPrefix + 'Width'];
-  var match = this.testBreakpoint( width );
-  var breakpointState;
+  const width = window.innerWidth;
+  const match = this.testBreakpoint( width );
+  let breakpointState;
 
   if ( match !== this.match ) {
     breakpointState = getBreakpointState( width );
@@ -98,7 +80,7 @@ function handleViewportChange() {
  *   Whether viewport width is within the expected breakpoint.
  */
 function testBreakpoint( width ) {
-  var bp = {
+  const bp = {
     max:   width <= this.breakpoint,
     min:   width >= this.breakpoint,
     range: width >= this.breakpoint[0] && width <= this.breakpoint[1]
@@ -111,4 +93,4 @@ BreakpointHandler.prototype.watchWindowResize = watchWindowResize;
 BreakpointHandler.prototype.handleViewportChange = handleViewportChange;
 BreakpointHandler.prototype.testBreakpoint = testBreakpoint;
 
-module.exports = BreakpointHandler;
+export default BreakpointHandler;

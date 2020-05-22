@@ -1,6 +1,5 @@
 /* ==========================================================================
    Web Storage proxy utility.
-
    An interface for interacting with web storage
    (local storage and session storage).
    Note: values stored in local storage are not accessible from session storage
@@ -9,10 +8,8 @@
    to keep the fuctionality of the API, but will not be saved across sessions.
    ========================================================================= */
 
-'use strict';
-
 // Default storage type.
-var _storage;
+let _storage;
 
 /**
  * Set an item value specified by the key in web storage.
@@ -59,7 +56,7 @@ function getItem( key, storage ) {
  */
 function removeItem( key, storage ) {
   storage = _getStorageType( storage );
-  var returnVal = true;
+  let returnVal = true;
 
   if ( !getItem( key, storage ) ) {
     returnVal = false;
@@ -78,7 +75,7 @@ function removeItem( key, storage ) {
 
 /**
  * Set the default session type.
- * @param {object} storage
+ * @param {Object} storage
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @throws {Error} If parameter isn't a object.
@@ -117,9 +114,9 @@ function _getStorageType( storage ) {
 }
 
 // Expose public methods.
-module.exports = {
-  setItem:    setItem,
-  getItem:    getItem,
-  removeItem: removeItem,
-  setStorage: setStorage
+export {
+  setItem,
+  getItem,
+  removeItem,
+  setStorage
 };

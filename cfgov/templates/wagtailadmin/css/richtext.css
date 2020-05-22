@@ -1,7 +1,0 @@
-/*
- * Keep richtext fields within the desktop viewport, even if long or wide
- * blocks of information are entered in them.
- */
-.richtext {
-    max-width: 1000px;
-}

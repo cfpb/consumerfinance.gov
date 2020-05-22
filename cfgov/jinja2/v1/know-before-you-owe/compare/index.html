@@ -1,0 +1,283 @@
+{% extends 'content-base-main-only.html' %}
+
+{% block title %}
+     Compare: Know before you owe: Mortgages &gt; Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block desc %}
+    Compare: Know before you owe: Mortgages &gt; Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block css %}
+
+<style>
+    .kbyo-compare-intro {
+        padding-bottom: 2.8125em;
+    }
+
+    .kbyo-compare-tiles {
+        margin-bottom: 0.9375em;
+        position: relative;
+    }
+
+    .kbyo-compare-col {
+        padding-bottom: 2.8125em;
+    }
+
+    @media only all and (min-width: 50em) {
+        .kbyo-compare-row {
+            display: block;
+            position: relative;
+            margin-left: -15px;
+            margin-right: -15px;
+         }
+
+         .kbyo-compare-col {
+            display: inline-block;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border: solid transparent;
+            border-width: 0 15px;
+            margin-right: -0.25em;
+            vertical-align: top;
+            width: 50%;
+        }
+
+    }
+
+    .kbyo-compare-tiles-overlay {
+        height: 374px;
+    }
+
+    .kbyo-compare-tiles img {
+        border: 1px solid #c5c3c1;
+        box-shadow: 3px 3px 3px #c5c3c1;
+        display: inline-block;
+        zoom: 1;
+        margin: 10px 10px 0 0;
+        vertical-align: top;
+    }
+
+    .kbyo-compare-tiles-overlay img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+        z-index: 100;
+    }
+
+    .kbyo-compare-tiles-overlay a + a img {
+        position: absolute;
+        top: 50px;
+        left: 75px;
+        z-index: 90;
+    }
+
+    .kbyo-compare-tiles-overlay a + a + a img {
+        position: absolute;
+        top: 100px;
+        left: 150px;
+        z-index: 80;
+    }
+
+    .kbyo-footer {
+        background-color: #f1f2f2;
+        border-bottom: 1px solid #e3e4e5;
+        border-top: 1px solid #e3e4e5;
+        padding-top: 2.8125em;
+    }
+</style>
+<link rel="stylesheet" href="{{ static('lightbox2/css/lightbox.min.css') }}">
+{{ super() }}
+{% endblock %}
+
+
+{% block pre_content %}
+<div class="content_wrapper">
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        <a class="breadcrumbs_link" href="/know-before-you-owe/">
+            Know before you owe
+        </a>
+    </nav>
+</div>
+{% endblock %}
+
+
+{% block content_main %}
+
+<article>
+    <div class="kbyo-compare-intro">
+        <header>
+            <h1>How we improved the disclosures</h1>
+        </header>
+        <p>
+            When shopping for a mortgage, consumers historically received two different,
+            but overlapping federal disclosure forms explaining the terms and costs of
+            the mortgage loans they were considering. Consumers also received two different
+            final disclosures at closing. Congress directed us to combine the existing federal
+            mortgage disclosure forms, which we’ve done by creating the Loan Estimate and
+            Closing Disclosure. The rule implementing the new forms takes effect on October 3, 2015.
+            Here you can see some of the work we’ve done.
+        </p>
+
+        <ul class="m-list m-list__links">
+            <li class="m-list_item">
+                <a class="a-link
+                          a-link__icon
+                          m-list_link"
+                    href="https://files.consumerfinance.gov/f/201207_cfpb_report_tila-respa-testing.pdf">
+                    <span class="a-link_text">
+                        Read a report on our qualitative testing of the new disclosures
+                    </span>
+                    {{ svg_icon('download') }}
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="a-link
+                          a-link__icon
+                          m-list_link"
+                    href="https://files.consumerfinance.gov/f/201311_cfpb_report_tila-respa_testing-spanish-refinancing.pdf">
+                    <span class="a-link_text">
+                        Read a report on our post-proposal qualitative testing of the new Spanish and refinance disclosures
+                    </span>
+                    {{ svg_icon('download') }}
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="a-link
+                          a-link__icon
+                          m-list_link"
+                    href="https://files.consumerfinance.gov/f/201311_cfpb_study_tila-respa_disclosure-comparison.pdf">
+                    <span class="a-link_text">
+                        Read a report on our quantitative testing of the new disclosures
+                    </span>
+                    {{ svg_icon('download') }}
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="a-link
+                          m-list_link"
+                   href="/regulations/integrated-mortgage-disclosures-under-the-real-estate-settlement-procedures-act-regulation-x-and-the-truth-in-lending-act-regulation-z/">
+                    <span class="a-link_text">
+                        Read a detailed summary of the final rule
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="kbyo-compare-row">
+        <div class="kbyo-compare-col">
+            <h2>Before</h2>
+            <h3>Initial TIL disclosure + Good Faith Estimate</h3>
+            <div class="kbyo-compare-tiles">
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_til_prelim1.png" data-lightbox="compare-before" title="Loan estimate, before, Truth in Lending, page 1">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-til_prelim1.png" alt="Loan estimate, before, Truth in Lending, page 1" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_til_prelim2.png" data-lightbox="compare-before" title="Loan estimate, before, Truth in Lending, page 2">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-til_prelim2.png" alt="Loan estimate, before, Truth in Lending, page 2" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_gfe1.png" data-lightbox="compare-before" title="Loan estimate, before, Good Faith Estimate, page 1">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-gfe1.png" alt="Loan estimate, before, Good Faith Estimate, page 1" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_gfe2.png" data-lightbox="compare-before" title="Loan estimate, before, Good Faith Estimate, page 2">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-gfe2.png" alt="Loan estimate, before, Good Faith Estimate, page 2" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_gfe3.png" data-lightbox="compare-before" title="Loan estimate, before, Good Faith Estimate, page 3">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-gfe3.png" alt="Loan estimate, before, Good Faith Estimate, page 3" title="Click to enlarge"> </a>
+            </div>
+            <p>
+                <a href="https://files.consumerfinance.gov/f/201207_combined_til_gfe.pdf" class="jump-link icon-link icon-link__download">
+                <span class="jump-link_text">View these two forms as a PDF</span></a>
+            </p>
+        </div>
+        <!-- /.grid_col-6 -->
+        <div class="kbyo-compare-col">
+            <h2>After</h2>
+            <h3>Loan Estimate</h3>
+            <div class="kbyo-compare-tiles kbyo-compare-tiles-overlay">
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_le_page1.png" data-lightbox="new-loan-estimate" title="Loan Estimate page 1">
+                <img src="https://files.consumerfinance.gov/f/201311_cfpb_le_small_page1.png" alt="Loan Estimate page 1" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_le_page2.png" data-lightbox="new-loan-estimate" title="Loan Estimate page 2">
+                <img src="https://files.consumerfinance.gov/f/201311_cfpb_le_small_page2.png" alt="Loan Estimate page 2" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_le_page1.png" data-lightbox="new-loan-estimate" title="Loan Estimate page 3">
+                <img src="https://files.consumerfinance.gov/f/201311_cfpb_le_small_page3.png" alt="Loan Estimate page 3" title="Click to enlarge"> </a>
+            </div>
+            <p>
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_kbyo_loan-estimate.pdf" class="jump-link icon-link icon-link__download">
+                <span class="jump-link_text">View the Loan Estimate as a PDF</span></a>
+            </p>
+        </div>
+    </div>
+    <div class="kbyo-compare-row">
+
+        <div class="kbyo-compare-col">
+            <h2>Before</h2>
+            <h3>Final TIL disclosure + HUD-1 Settlement Statement</h3>
+            <div class="kbyo-compare-tiles">
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_til_final1.png" data-lightbox="compare-final" title="Closing disclosure, before, Truth In Lending closing disclosure, page 1">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-til_final1.png" alt="Closing disclosure, before, Truth In Lending closing disclosure, page 1" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_til_final2.png" data-lightbox="compare-final" title="Closing disclosure, before, Truth In Lending closing disclosure, page 2">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-til_final2.png" alt="Closing disclosure, before, Truth In Lending closing disclosure, page 2" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_hud1_1.png" data-lightbox="compare-final" title="Closing disclosure, before, HUD-1, page 1">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-hud1_1.png" alt="Closing disclosure, before, HUD-1, page 1" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_hud1_2.png" data-lightbox="compare-final" title="Closing disclosure, before, HUD-1, page 2">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-hud1_2.png" alt="Closing disclosure, before, HUD-1, page 2" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201207_cfpb_img_hud1_3.png" data-lightbox="compare-final" title="Closing disclosure, before, HUD-1, page 3">
+                <img src="https://files.consumerfinance.gov/f/201207_cfpb_img_t-hud1_3.png" alt="Closing disclosure, before, HUD-1, page 3" title="Click to enlarge"> </a>
+            </div>
+            <p>
+                <a href="https://files.consumerfinance.gov/f/201207_combined_til_hud1.pdf" class="jump-link icon-link icon-link__download">
+                <span class="jump-link_text">View these two forms as a PDF</span></a>
+            </p>
+        </div>
+        <div class="kbyo-compare-col">
+            <h2>After</h2>
+            <h3>Closing Disclosure</h3>
+            <div class="kbyo-compare-tiles">
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_closing-disclosure-fixed_page-1_768.png" data-lightbox="compare-closing" title="Closing Disclosure page 1">
+                <img src="https://files.consumerfinance.gov/f/201311_cfpb_cd_small_page1.png" alt="Closing Disclosure page 1" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_closing-disclosure-fixed_page-2_768.png" data-lightbox="compare-closing" title="Closing Disclosure page 2">
+                <img src="https://files.consumerfinance.gov/f/201311_cfpb_cd_small_page2.png" alt="Closing Disclosure page 2" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_closing-disclosure-fixed_page-3_768.png" data-lightbox="compare-closing" title="Closing Disclosure page 3">
+                <img src="https://files.consumerfinance.gov/f/201311_cfpb_cd_small_page3.png" alt="Closing Disclosure page 3" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_closing-disclosure-fixed_page-4_768.png" data-lightbox="compare-closing" title="Closing Disclosure page 4">
+                <img src="https://files.consumerfinance.gov/f/201311_cfpb_cd_small_page4.png" alt="Closing Disclosure page 4" title="Click to enlarge"> </a>
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_closing-disclosure-fixed_page-5_768.png" data-lightbox="compare-closing" title="Closing Disclosure page 5">
+                <img src="https://files.consumerfinance.gov/f/201311_cfpb_cd_small_page5.png" alt="Closing Disclosure page 5" title="Click to enlarge"> </a>
+            </div>
+            <p>
+                <a href="https://files.consumerfinance.gov/f/201311_cfpb_kbyo_closing-disclosure.pdf" class="jump-link icon-link icon-link__download">
+                <span class="jump-link_text">View the Closing Disclosure as a PDF</span></a>
+            </p>
+        </div>
+    </div>
+</article>
+<section class="kbyo-footer">
+    <div class="wrapper wrapper__match-content">
+        <div class="content-l">
+          <div class="content-l_col
+                      content-l_col-1-2
+                      u-mb45">
+            <header class="m-slug-header">
+                <h2 class="a-heading">
+                    Legal disclaimer
+                </h2>
+            </header>
+            <p>
+              The content on this page provides general consumer information.
+              It is not legal advice or regulatory guidance.
+              The CFPB updates this information periodically.
+              This information may include links or references
+              to third-party resources or content.
+              We do not endorse the third-party or guarantee the accuracy
+              of this third-party information.
+              There may be other resources that also serve your needs.
+            </p>
+          </div><!-- /.kbyo-footer__col -->
+        </div><!-- /.kbyo-footer__row -->
+      </div><!-- /.kbyo-footer__wrapper -->
+</section>
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script type="text/javascript"
+            src='{{ static("lightbox2/js/lightbox-plus-jquery.min.js") }}'></script>
+{% endblock %}

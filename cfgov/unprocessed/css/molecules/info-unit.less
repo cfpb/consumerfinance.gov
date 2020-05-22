@@ -5,7 +5,7 @@
     - name: Default example
       markup: |
         <div class="m-info-unit">
-            <img src="http://placehold.it/267x150"
+            <img src="https://placehold.it/267x150"
                  alt="Image alt"
                  class="m-info-unit_image">
             <div class="m-info-unit_content">
@@ -17,15 +17,15 @@
                     Body text
                 </p>
 
-                <ul class="list list__links">
-                    <li class="list_item">
-                        <a class="list_link"
+                <ul class="m-list m-list__links">
+                    <li class="m-list_item">
+                        <a class="m-list_link"
                            href="#">
                             Link Text
                         </a>
                     </li>
-                    <li class="list_item">
-                        <a class="list_link"
+                    <li class="m-list_item">
+                        <a class="m-list_link"
                            href="#">
                             Link Text
                         </a>
@@ -42,13 +42,13 @@
             .m-info-unit_content
               h2
               p
-              ul.list list__links
-                li.list_item
-                  a.list_link
+              ul.m-list.m-list__links
+                li.m-list_item
+                  a.m-list_link
     - name: Square/Circle image
       markup: |
         <div class="m-info-unit">
-            <img src="http://placehold.it/267x150"
+            <img src="https://placehold.it/267x150"
                  alt="Image alt"
                  class="m-info-unit_image
                         m-info-unit_image__square">
@@ -68,7 +68,7 @@
       markup: |
         <div class="m-info-unit
                     m-info-unit__inline">
-            <img src="http://placehold.it/267x150"
+            <img src="https://placehold.it/267x150"
                  alt="Image alt"
                  class="m-info-unit_image
                         m-info-unit_image__square">
@@ -98,22 +98,27 @@
  */
 .u-info-unit-base() {
     &_image {
+        display: block;
         margin-right: auto;
         margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         margin-left: auto;
-        display: block;
+        background-size: cover;
 
         &__square {
             width: unit( @m-info-unit_img__sm / @base-font-size-px, em );
             height: unit( @m-info-unit_img__sm / @base-font-size-px, em );
-
-            background-size: cover;
 
             .respond-to-min( @bp-med-min, {
                 width: unit( @m-info-unit_img__lg / @base-font-size-px, em );
                 height: unit( @m-info-unit_img__lg / @base-font-size-px, em );
             } );
         }
+    }
+
+    &_heading-link {
+        display: block;
+
+        .u-link__colors( @black, @pacific-80 );
     }
 
     &_btn {
@@ -139,7 +144,8 @@
         margin-bottom: 0;
     }
 
-    .m-info-unit_content {
+    .m-info-unit_content,
+    .m-info-unit_heading-text {
         margin-left: unit( ( @img_size + @grid_gutter-width ) / @base-font-size-px, em );
     }
 }

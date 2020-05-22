@@ -2,26 +2,27 @@
 
 ## Clone the repository
 
-Using the console, navigate to the root directory in which your projects live and clone this project's repository:
+Using the console, navigate to the root directory in which your projects
+live and clone this project's repository:
 
 ```bash
 git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 
-You may also wish to fork the repository on GitHub and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
+You may also wish to fork the repository on GitHub and clone the resultant
+personal fork. This is advised if you are going to be doing development on
+`cfgov-refresh` and contributing to the project.
 
 There are two ways to install cfgov-refresh:
 
 - [Stand-alone installation](#stand-alone-installation)
-- [Vagrant-box installation](#vagrant-box-installation)
+- [Docker-based installation](#docker-based-installation)
 
-!!! danger
-    The instruction for Vagrant are not currently working.
 
 ## Stand-alone installation
 
-These instructions are somewhat specific to developing on Mac OS X,
+These instructions are somewhat specific to developing on macOS,
 but if you're familiar with other Unix-based systems,
 it should be fairly easy to adapt them to your needs.
 
@@ -44,7 +45,7 @@ This project uses a large number of environment variables.
 To automatically define environment variables and launch the virtualenv
 upon `cd`ing to the project folder,
 [install Autoenv](https://github.com/kennethreitz/autoenv#install).
-We recommend using [Homebrew](http://brew.sh):
+We recommend using [Homebrew](https://brew.sh):
 
 ```bash
 brew install autoenv
@@ -58,8 +59,8 @@ To finish the installation, source activate.sh in your shell:
 ```
 
 Run that now for your initial setup.
-Any time you run the project you’ll need to run that last line, so
-if you’ll be working with the project consistently,
+Any time you run the project you’ll need to run that last line,
+so if you’ll be working with the project consistently,
 we suggest adding it to your Bash profile by running:
 
 ```bash
@@ -72,95 +73,96 @@ If you need to find this info again later, you can run:
 brew info autoenv
 ```
 
-
 !!! note
     If you use Zsh you’ll need to use
-	[zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
-	but we can’t provide support for issues that may arise.
-
-#### MySQL
-
-If you're developing on OS X, this should be installed by default,
-and you shouldn't have to do anything else to get it working.
-You can optionally install a different version with Homebrew.
-
-#### Elasticsearch
-
-[Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
-however you’d like. We use [Homebrew](http://brew.sh) for developing on OS X):
-
-```bash
-brew tap homebrew/versions
-brew search elasticsearch
-brew install homebrew/versions/elasticsearch17
-```
-
-Just as with Autoenv, Homebrew will output similar instructions after installation:
-
-```bash
-# To have launchd start homebrew/versions/elasticsearch17 now and restart at login:
-  brew services start homebrew/versions/elasticsearch17
-# Or, if you don't want/need a background service you can just run:
-  elasticsearch --config=/Users/[YOUR USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
-```
-
-Any time you resume work on the project after restarting your machine,
-you’ll need to open a new tab and run that last line.
-If you’ll be working on the project consistently,
-we suggest using the first option, so you don't have to worry about that.
-Note that some older versions of Homebrew may suggest
-using `launchctl` instead of `brew services`.
-
-If you need to find this info again later, you can run:
-
-```bash
-brew info elasticsearch17
-```
+    [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
+    but we can’t provide support for issues that may arise.
 
 #### Front-end dependencies
 
-The cfgov-refresh front end currently uses the following frameworks / tools:
+The cfgov-refresh front-end build process currently
+includes the following frameworks / tools:
 
-- [Gulp](http://gulpjs.com): task management for pulling in assets,
+- [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
-- [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
+- [Design System](https://cfpb.github.io/design-system/getting-started/):
   User interface pattern-library produced by the CFPB.
-
-!!! note
-    If you’re new to Capital Framework, we encourage you to
-	[start here](https://cfpb.github.io/capital-framework/getting-started).
-
-1. Install [Node.js](http://nodejs.org) however you’d like.
-   We recommend using [nvm](https://github.com/creationix/nvm), though.
-
-2. Install [Gulp](http://gulpjs.com):
+- [Node.js](https://nodejs.org). Install however you’d like.
+  We recommend using [nvm](https://github.com/creationix/nvm), though.
+  If your node version is outdated you should receive a console error to upgrade
+  while attempting to build the project.
+- [Yarn](https://yarnpkg.com).
+  We recommend installing using [Homebrew](https://brew.sh):
 
 ```bash
-npm install -g gulp
+# Use --ignore-dependencies to use your system installed node version
+brew install yarn --ignore-dependencies
 ```
 
-!!! note
-	This project requires Node.js v5.5 or higher, and npm v3 or higher.
 
+#### Webfonts
+
+The site uses a proprietary licensed font, Avenir.
+If you want to pull this from a content delivery network (CDN),
+you can set the
+[`@use-font-cdn`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/css/main.less#L30)
+to `true` and rebuild the assets with `yarn run gulp build`.
+If you want to install self-hosted fonts locally, you can place the font files
+in `static.in/cfgov-fonts/fonts/` and restart the local web server.
+If you are a CFPB employee, you can perform this step with:
+
+```
+cd static.in/ && git clone https://[GHE]/CFGOV/cfgov-fonts/
+```
+Where `[GHE]` is our GitHub Enterprise URL.
 
 #### Set up your environment
 
-If this is the first time you're setting up the project, run the following
-script to copy `.env_SAMPLE` to `.env`, export your environment variables,
-and activate your virtualenv for the first time.
+The Django app relies on environment variables defined in a `.env` file. If this
+is your first time setting up the project, copy `.env_SAMPLE` to `.env` and then
+`source` that file:
 
 ```bash
-source load-env.sh
+cp -a .env_SAMPLE .env
+source .env
 ```
 
 Each time you start a new session for working on this project, you'll need to
 get those environment variables and get your virtualenv running again.
+
 If you setup Autoenv earlier, this will happen for you automatically when you
 `cd` into the project directory.
 
 If you prefer not to use Autoenv, just be sure to `source .env` every time
 you start a new session of work on the project.
+
+#### Install Postgres
+
+If you're on a Mac and use Homebrew, you can easily install Postgres:
+
+```bash
+brew install postgresql
+```
+
+Once it's installed, you can configure it to run as a service:
+
+```bash
+brew services start postgresql
+```
+
+Then create the database, associated user, and schema for that user:
+
+```bash
+dropdb --if-exists cfgov && dropuser --if-exists cfpb
+createuser --createdb cfpb && createdb -O cfpb cfgov
+psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
+```
+
+We don't support using an SQLite database, because we use database fields 
+that are specific to Postgres. The `--createdb` flag above allows Django to 
+create temporary Postgres databases when running unit tests.
+
 
 #### Run the setup script
 
@@ -175,7 +177,7 @@ Once cloned, from the project root (`~/Projects/cf.gov/cfgov-refresh/`),
 run this command to complete the setup process:
 
 ```bash
-source setup.sh
+./setup.sh
 ```
 
 This will take several minutes, going through the steps in these scripts:
@@ -192,74 +194,103 @@ that you may want to perform before continuing.
 Want to know more about what the setup scripts are doing?
 [Read the detailed rundown.](#curious-about-what-the-setup-scripts-are-doing)
 
-Get any errors? [See our troubleshooting tips.](#troubleshooting)
+**Continue following the [usage instructions](../running-virtualenv/).**
 
-**Continue following the [usage instructions](usage).**
+## Docker-based installation
 
+### Tools we use for developing with Docker
 
-## Vagrant-box installation
+- **Docker**: You may not need to interact directly with Docker, but you
+  should know that it's a client/server application for managing _containers_
+  (a way of running software in an isolated environment) and _images_ (a
+  snapshot of all of the files neccessary to run a container).
+- **Docker Compose**: Compose allows you to configure and run a collection of
+  connected containers (like a web application and its database).
 
-!!! danger
-	These instructions are not currently working, but we'd like to get them working soon. [PRs welcome](contributing).
+### 1. Setup your Docker environment
 
-### 1. Environment variables setup
+If you have never installed Docker before, follow the instructions
+[here](https://docs.docker.com/install/) or from your operating system vendor.
 
-The project uses a number of environment variables.
-The `setup.sh` script will create a `.env` file for you
-from the `.env_SAMPLE` file found in the repository,
-if you don't already have one.
+The default Docker installation on some systems includes Docker Compose.
+For systems where this is not the case, Docker Compose will need to be
+[installed manually](https://docs.docker.com/compose/install/).
 
-Inside the `.env` file you can customize the project environment configuration.
+To verify the installation of Docker Compose, the command
+`docker-compose ps` should run without error if Docker is running locally.
 
-If you would like to manually copy the environment settings,
-copy the `.env_SAMPLE` file and un-comment each variable after
-adding your own values.
-```bash
-cp -a .env_SAMPLE .env && open -t .env
-```
+#### Copy the `.env_SAMPLE` file over
 
-Then load the environment variables with:
-```bash
-. ./.env
-```
-
-### 2. Fetch extra playbooks
-
-The project pulls together various open source and closed source plays. The plays are
-managed through ansible-galaxy, a core module for this exact purpose. To download all
-the dependencies, use this command:
+The Docker Compose setup (see `docker-compose.yml`) provides the environment
+variables defined in `.env` to the container running the Django app. If
+this is your first time setting up the project, copy `.env_SAMPLE` to
+`.env`:
 
 ```bash
-ansible-galaxy install -r ansible/requirements.yml
+cp -a .env_SAMPLE .env
 ```
 
-### 3. Launch Vagrant virtual environment
+### 2. Setup your frontend environment
 
-The project uses Vagrant to create the simulated virtual environment allowing the developer
-to work on a production-like environment while maintaining development work on the
-local machine. To create this virtual environment, you need to execute the following command.
+Refer to the [front-end dependencies](#front-end-dependencies) described above
+in the [standalone installation instructions](#stand-alone-installation).
+
+### 3. Run setup
+
+`./setup.sh docker`
+
+This will install and build the frontend and set up the docker environment.
+
+### 4. Run Docker Compose for the first time
+
+`docker-compose up`
+
+This will download and/or build images, and then start the containers, as
+described in the docker-compose.yml file. This will take a few minutes, or
+longer if you are on a slow internet connection.
+
+When it's all done, you should be able to load http://localhost:8000 in your
+browser, and see a database error.
+
+### 5. Setup the database
+
+Open a bash shell inside your Python container.
 
 ```bash
-vagrant up
+docker-compose exec python bash
 ```
 
-!!! note
-	Please be patient the first time you run this step.
+You can either [load initial data](#load-initial-data-into-database) per the
+instructions below, or load a database dump.
 
-### 4. Front-end Tools
+You could save some time and effort later (if you have access to the CFPB
+network), by configuring a URL for database dumps in the `.env` file.
 
-In order to run the application, we must generate the front-end assets.
-After running the following commands, visit http://localhost:8001 to see the site running.
-You can also place the first two export commands into your `.bashrc` to simplify things later.
-
-```bash
-export CFGOV_HOME=path/to/cfgov-refresh
-export PATH=$PATH:$CFGOV_HOME/bin
-cfgov init
-cfgov assets
-cfgov start django
+```
+CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 ```
 
+You can get that URL at
+[GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
+
+The first time you add this value to `.env` (and any time you make a
+change to that file) you will either need to run `source .env` from
+the container or `docker-compose down && docker-compose up` from your
+standard shell to pick up the changes.
+
+With `CFGOV_PROD_DB_LOCATION` in `.env` you should be able to run:
+
+`./refresh-data.sh`
+
+Otherwise, [the instructions to load a database dump](#load-a-database-dump)
+below should be enough to get you started.
+
+Once you have a database loaded, you should have a functioning copy of site
+working at [http://localhost:8000](http://localhost:8000)
+
+### 6. Next Steps
+
+See [Running in Docker](../running-docker/) to continue after that.
 
 ## Optional steps
 
@@ -269,27 +300,36 @@ The `initial-data.sh` script can be used to initialize a new database to make
 it easy to get started working on Wagtail. This script first ensures that all
 migrations are applied to the database, and then does the following:
 
-- Creates an `admin` superuser with a password as specified in the
-`WAGTAIL_ADMIN_PW` environment variable, if set.
+- Creates an `admin` superuser with password `admin`.
 - If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
 with a slug of `cfgov`.
-- Updates the default Wagtail site to use the port defined by the `DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is set to 80.
-- If it doesn't already exist, creates a new Wagtail staging Site with a hostname defined by the `DJANGO_STAGING_HOSTNAME` environment variable, with the root page set to the `CFGOV` home page. The staging site port is set using the same logic as the default site port described above.
+- Updates the default Wagtail site to use the port defined by the
+`DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is
+set to 80.
+- If it doesn't already exist, creates a new
+[wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
+a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
+`DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump
 
 If you're installing this fresh, the initial data you receive will not be
 as extensive as you'd probably like it to be.
 
-You can get a database dump using the `cf.gov-dump-rdbms`
-Jenkins job. Download the `sql.gz` file,
-unzip it, and then run:
+You can get a database dump by:
+
+1. Going to [GHE]/CFGOV/platform/wiki/Database-downloads
+1. Selecting one of the extractions and downloading the
+   `production_django.sql.gz` file
+1. Run:
 
 ```bash
-./refresh-data.sh /path/to/dump.sql
+./refresh-data.sh /path/to/dump.sql.gz
 ```
 
-The `refresh-data.sh` script will apply the same changes as the `initial-data.sh` script described above (including setting up the `admin` superuser), but will not apply migrations.
+The `refresh-data.sh` script will apply the same changes as the
+`initial-data.sh` script described above (including setting up the `admin`
+superuser), but will not apply migrations.
 
 To apply any unapplied migrations to a database created from a dump, run:
 
@@ -297,32 +337,67 @@ To apply any unapplied migrations to a database created from a dump, run:
 python cfgov/manage.py migrate
 ```
 
-### Install Protractor locally
+### Sync local image storage
 
-Protractor (for the test suites) can be installed globally
-to avoid downloading Chromedriver repeatedly.
-To do so, run:
+If using a database dump, pages will contain links to images that exist in
+the database but don't exist on your local disk. This will cause broken or
+missing images when browsing the site locally.
+
+For example, in production images are stored on S3, but when running locally
+they are stored on disk.
+
+This project includes a Django management command that can be used to download
+any remote images referenced in the database so that they can be served when
+running locally.
 
 ```bash
-npm install -g protractor && webdriver-manager update
+cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
 ```
 
-### Install dependencies for working with the GovDelivery API
+This downloads all remote images (and image renditions) referenced in the
+database, retrieving them from the specified URL and storing them in the
+specified local directory.
 
-Install the following GovDelivery dependencies into your virtual environment:
-
-```bash
-pip install git+git://github.com/dpford/flask-govdelivery
-pip install git+git://github.com/rosskarchner/govdelivery
-```
+### Set variables for working with the GovDelivery API
 
 Uncomment and set the GovDelivery environment variables in your `.env` file.
 
 !!! note
-	GovDelivery is a third-party web service that powers our emails.
-	The API is used by subscribe forms on our website.
-	Users may decide to swap this tool out for another third-party service.
+    GovDelivery is a third-party web service that powers our emails.
+    The API is used by subscribe forms on our website.
+    Users may decide to swap this tool out for another third-party service.
 
+### Install GNU gettext for Django translation support
+
+In order to generate Django translations as documented
+[here](translation.md), you'll need to install the
+[GNU gettext](https://www.gnu.org/software/gettext/) library.
+
+On MacOS, GNU gettext is available via Homebrew:
+
+```
+brew install gettext
+```
+
+but it gets installed as
+["keg-only"](https://docs.brew.sh/FAQ#what-does-keg-only-mean) due to conflicts
+with the default installation of BSD gettext. This means that GNU gettext won't
+be loaded in your PATH by default. To fix this, you can run
+
+```
+brew link --force gettext
+```
+
+to force its installation, or see `brew info gettext` for an alternate
+solution.
+
+If installed locally, you should be able to run this command successfully:
+
+```
+$ gettext --version
+```
+
+GNU gettext is also required to run our translation-related unit tests locally.
 
 ## Curious about what the setup scripts are doing?
 
@@ -336,23 +411,43 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    that can trigger different options for different environments.
    Since you ran it with no arguments, it will set up the dev environment.
 
-   It will then set some env vars for the Node and Bower dependency directories.
-1. **Clean project dependencies** (`clean`)
+   It then creates a checksum for `package-lock.json` (if it exists) and
+   `package.json`.
+   This will be used later to determine if dependencies need to be installed.
 
-   The script will now empty out all installed dependencies,
-   so the new installation can start fresh.
-1. **Install project dependencies** (`install`)
+   It will then set some env vars for the Node dependency directories.
+1. **Clean and install project dependencies** (`clean_and_install`)
 
-   Node and Bower dependencies are installed.
+   The script will now compare the checksums to see if it needs to install
+   dependencies, or if they are already up-to-date.
+
+   If the checksums do not match, the script will empty out all installed
+   dependencies (`clean`) so the new installation can start fresh,
+   then install the latest requested dependencies (`install`).
+
    The `devDependencies` from `package.json` are not installed
    if the environment is production, and if it's the dev or test environment,
    it checks to see if Protractor is globally installed.
+
+   Finally, it creates a new checksum for future comparisons.
 1. **Run tasks to build the project for distribution** (`build`)
 
-   Finally, the script executes `gulp clean` to wipe out any lingering
-   `dist` files, then runs `gulp build` to rebuild everything.
+   Finally, the script runs `yarn run gulp build` to rebuild the front-end assets.
+   It no longer cleans first, because the gulp-changed plugin prevents
+   rebuilding assets that haven't changed since the last build.
+
+   If this is the production environment, it also triggers style and script
+   builds for `ondemand` and `nemo`, which aren't part of a standard
+   `gulp build`.
+
+!!! note
+    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
+
 
 ### 2. `backend.sh`
+
+!!! note
+    `backend.sh` is not used for our Docker setup.
 
 1. **Confirm environment** (`init`)
 
@@ -363,32 +458,8 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    It will then run a script to ensure that you're in a virtualenv.
    If not, the script will end, to prevent you from accidentally installing
    your Python dependencies globally.
+
 1. **Install project dependencies** (`install`)
 
    Python dependencies are installed into the virtualenv via pip.
    Dependencies vary slightly depending on whether we're in dev, test, or prod.
-1. **Setup MySQL server** (`db_setup`)
-
-   Finally, the script will start the MySQL server, if it's not already running,
-   run `create-mysql-db.sh` to create the database using
-   the variables given in `.env`, if it's not already there,
-   and will run `initial-data.sh` to create the first Wagtail user
-   and load some basic initial data.
-
-
-## Troubleshooting
-
-Here are some common issues and how you can fix them:
-
-### Errors referencing South, or other Python errors:
-
-Since moving to Django 1.8, we use Django's built-in migration engine,
-and we no longer use South.
-If you're getting South errors, you probably have it installed globally.
-To solve this, from outside the virtual environment, run `pip uninstall south`.
-
-If you're getting other kinds of Python errors (for example, when running tox),
-you may even want to go as far as uninstalling all globally-installed
-Python packages: `pip freeze | grep -v "^-e" | xargs pip uninstall -y`.
-After doing that, you'll need to reinstall virtualenv:
-`pip install virtualenv virtualenvwrapper`.

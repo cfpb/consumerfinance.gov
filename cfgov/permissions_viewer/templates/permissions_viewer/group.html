@@ -1,0 +1,27 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% block titletag %}{% trans "Roster and Permissions for" %} {{group}}{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title="Members and Permissions" %}
+
+    <div class="nice-padding">
+	    <h1> {{group}} </h1>
+	    <h2>Active Users</h2>
+	    <ul>
+	{% for user in active_users %}
+	<li><a href="{% url "permissions:user" user.pk %}">{{ user }}</a></li>
+	{% empty %}
+	<li>There are no active users</li>
+	{% endfor %}
+	 </ul>
+	    <h2>Inactive Users</h2>
+	    <ul>
+	{% for user in inactive_users %}
+	<li><a href="{% url "permissions:user" user.pk %}">{{ user }}</a></li>
+	{% empty %}
+	<li>There are no inactive users</li>
+	{% endfor %}
+	 </ul>
+    </div>
+{% endblock %}
