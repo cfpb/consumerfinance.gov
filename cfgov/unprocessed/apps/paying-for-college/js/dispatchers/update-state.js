@@ -1,8 +1,11 @@
 /**
  * Update the application state model, then trigger updates in views
  */
-import { navigationView } from '../views/navigation-view.js';
 import { stateModel } from '../models/state-model.js';
+
+import { navigationView } from '../views/navigation-view.js';
+import { financialView } from '../views/financial-view.js';
+import { searchView } from '../views/search-view.js';
 
 const updateState = {
 
@@ -13,19 +16,10 @@ const updateState = {
    * @param {string} item - Value of 'data-nav_item' attribute
    */
   activeSection: item => {
-    stateModel.setValue( 'activeSection', item );
+    stateModel.activeSection = item;
 
     navigationView.update();
-  },
-
-  getStarted: bool => {
-    if ( bool === true ) {
-      stateModel.setValue( 'gotStarted', true );
-    }
-  },
-
-  byProperty: function( prop, value ) {
-    stateModel.setValue( prop, value );
+    financialView.updateSection();
   }
 
 };

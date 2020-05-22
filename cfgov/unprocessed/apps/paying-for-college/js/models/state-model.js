@@ -5,25 +5,11 @@
 */
 
 const stateModel = {
-  values: {
-    activeSection: null,
-    schoolSelected: null,
-    gotStarted: false,
-    handleCostsButtonClicked: false,
-    programType: null,
-    programLength: null,
-    programRate: null,
-    programHousing: null
-  },
+  activeSection: null,
 
-  setValue: function( name, value ) {
-    stateModel.values[name] = value;
-    console.log( stateModel.values );
-  },
 
   init: () => {
-    // PLACEHOLDER - Add more interesting stuff later
-    stateModel.foo = 'bar';
+    stateModel.activeSection = 'school-info';
   }
 
 };

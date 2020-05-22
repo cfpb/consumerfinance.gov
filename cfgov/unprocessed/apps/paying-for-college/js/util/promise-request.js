@@ -9,6 +9,7 @@ const promiseRequest = function( method, url ) {
     xhr.onreadystatechange = function() {
       // Do not run unless xhr is complete
       if ( xhr.readyState !== 4 ) return;
+
       if ( xhr.status >= 200 && xhr.status < 300 ) {
         resolve( xhr );
       } else {
@@ -16,6 +17,10 @@ const promiseRequest = function( method, url ) {
       }
     };
 
+    // Make XHR request
+    if ( typeof method === 'undefined' ) {
+      method = 'GET';
+    }
     xhr.open( method, url, true );
 
     xhr.send();

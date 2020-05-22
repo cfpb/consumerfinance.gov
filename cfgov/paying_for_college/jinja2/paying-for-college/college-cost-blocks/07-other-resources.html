@@ -1,0 +1,93 @@
+<section class="college-costs_tool-section" data-tool-section="other-resources">
+    <h2>Other sources (not on your offer)</h2>
+    <p>Thank you for entering everything from your financial aid offer. What other funding sources are available to you?</p>
+    <div class="block block__mid financial-items">
+        {{
+            input.render({
+                'label': 'Personal funds',
+                'id': 'savings__personal',
+                'helperText': 'Do you have money set aside for school this year?',
+                'value': '0',
+                'data_attribute': 'data-financial-item="savings_personal"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'College savings plan (like 529 plans)',
+                'id': 'savings__collegeSavings',
+                'value': '0',
+                'data_attribute': 'data-financial-item="savings_collegeSavings"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Family contribution',
+                'id': 'savings__family',
+                'helperText': 'What can your family afford to spend on your education this year?',
+                'value': '0',
+                'data_attribute': 'data-financial-item="savings_family"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Estimated income from off-campus job',
+                'id': 'income__offCampusJob',
+                'value': '0',
+                'data_attribute': 'data-financial-item="income_offCampusJob"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Estimated income from on-campus job (not work-study)',
+                'id': 'income__onCampusJob',
+                'value': '0',
+                'data_attribute': 'data-financial-item="income_onCampusJob"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Employer tuition assistance or reimbursement',
+                'id': 'income__employerAssistance',
+                'value': '0',
+                'data_attribute': 'data-financial-item="income_employerAssistance"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Other funding',
+                'id': 'income_otherFunding',
+                'value': '0',
+                'data_attribute': 'data-financial-item="incomeotherFunding"'
+            })
+        }}
+        {{
+            text_item.render({
+                'label': 'Total from other sources',
+                'value': '$99, 999',
+                'type': 'total',
+                'data_attribute': 'data-financial-item="total_otherResources"'
+            })
+        }}
+    </div>
+
+    {{ notification.render(
+        'money-tips',
+        true,
+        'Money saving tips',
+        '<ul>
+            <li>Some states offer grants and funding for specific costs related to education, like childcare. Ask the financial aid office.</li> 
+            <li> Depending on your circumstances and location, you may be eligible for government benefits like TANF (welfare), SNAP (food stamps), Medicaid, and subsidized housing. Reach out to the financial aid office if you are struggling to afford necessities.</li>
+        </ul>' | safe
+    ) }}
+
+    {{ notification.render(
+        'default',
+        true,
+        'Did you know?',
+        '<ul>
+            <li> Working while in school can help you cut down the amount you need to borrow, but studies suggest that working more than 20 hours a week is associated with a lower GPA. Low grades put financial aid eligibility at risk.</li>
+            <li>If you currently receive government benefits, going to school can affect how much you receive. Ask your caseworker or the financial aid office for help, and plan accordingly.</li>
+        </ul>' | safe
+    ) }}
+
+</section>
