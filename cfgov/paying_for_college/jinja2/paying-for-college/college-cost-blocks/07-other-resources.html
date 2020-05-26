@@ -70,6 +70,15 @@
         }}
     </div>
 
+    <div class="costs-not-covered__notification">
+        {{ notification.render(
+                'caution',
+                true,
+                '',
+                '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
+        ) }} 
+    </div>
+
     {{ notification.render(
         'money-tips',
         true,
