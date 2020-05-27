@@ -9,7 +9,7 @@
     ) }} 
     <div class="grants-and-scholarships_content-section financial-items">
         <div class="block block__mid">
-            <h3 class="header__border-bottom">Grants</h3>
+            <h3 class="u-border-bottom">Grants</h3>
             {{
                 input.render({
                     'label': 'Federal Pell Grants',
@@ -51,7 +51,7 @@
                 })
             }}
             <div class="block block__sub">
-                <h4 class="header__border-bottom">Servicemember benefits</h4>
+                <h4 class="u-border-bottom">Servicemember benefits</h4>
                 {{
                     input.render({
                         'label': 'Military Tuition Assistance',
@@ -63,7 +63,7 @@
                 {{
                     input.render({
                         'label': 'GI Bill',
-                        'helper_text': 'We recommend checking out the <a href="https://www.va.gov/gi-bill-comparison-tool/" target="_blank" class="external-link">GI Bill&reg; Comparison Tool</a> too.' | safe,
+                        'helper_text': 'We recommend checking out the <a href="https://www.va.gov/gi-bill-comparison-tool/" target="_blank" class="external-link" rel="noreferrer noopener">GI Bill&reg; Comparison Tool</a> too.' | safe,
                         'id': 'grants__gibill',
                         'value': '0',
                         'data_attribute': 'data-financial-item="grant_gibill"'
@@ -90,7 +90,7 @@
     </div>
     <div class="grants-and-scholarships_content-section financial-items">
         <div class="block block__mid">
-            <h3 class="header__border-bottom">Scholarships</h3>
+            <h3 class="u-border-bottom">Scholarships</h3>
             {{
                 input.render({
                     'label': 'State scholarship(s)',
@@ -133,7 +133,7 @@
             }}
         </div>
     </div>
-    <div class="costs-not-covered__notification">
+    <div class="costs-not-covered-notification">
         {{ notification.render(
                 'caution',
                 true,

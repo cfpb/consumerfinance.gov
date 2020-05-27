@@ -8,7 +8,7 @@
         }
     }
     
-	.costs-not-covered__sticky {
+	.costs-not-covered-sticky {
 		display: none;
 	}
 
@@ -20,7 +20,7 @@
 		    .app {
 		    	width: 70%;
 		    }
-		    .costs-not-covered__sticky {
+		    .costs-not-covered-sticky {
 		    	display: block;
 		    	width: 30%;
 		    	.number-callout {
@@ -28,14 +28,14 @@
 					top: unit( 10px / @base-font-size-px, em );
 		    	}
 		    }
-		    .costs-not-covered__notification {
+		    .costs-not-covered-notification {
 		    	display: none;
 		    }
 		}
 	});
 
-	.header__border-bottom {
-		border-bottom: 1px solid @block__border-top;
+	.u-border-bottom {
+		border-bottom: 1px solid @block__border-bottom;
 	}
 	
 	.block.block__mid {
@@ -73,7 +73,7 @@
 			}
 		}
 
-		&#college-costs_school-search {
+		&__school-search {
 			.m-notification {
 				margin-bottom: unit( 15px / @base-font-size-px, em );
 				margin-top: unit( 15px / @base-font-size-px, em );
@@ -84,7 +84,7 @@
 			}
 		}
 
-		&.costs {
+		&__costs {
 			.a-btn.active {
 				background-color: @white;
 				color: @pacific;
@@ -92,7 +92,7 @@
 			}
 		}
 
-		&.summary {
+		&__summary {
 			.financial-item {
 				margin-top: 0;
 			}

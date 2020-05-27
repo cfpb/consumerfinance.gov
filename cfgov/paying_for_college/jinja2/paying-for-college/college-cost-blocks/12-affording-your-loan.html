@@ -1,4 +1,4 @@
-<section class="college-costs_tool-section affording" data-tool-section="affording-your-loans">
+<section class="college-costs_tool-section college-costs_tool-section__affording" data-tool-section="affording-your-loans">
     <h2>Can I afford my payment?</h2>
 
     <p> Skipping monthly loan payments can cause financial and legal problems. Default—missing too many payments—can result in low credit scores, additional fees, wage garnishment, and ineligibility for further federal student aid. This page gives you two ways to estimate the affordability of your projected monthly payment.</p>
@@ -21,7 +21,7 @@
             'value': '$4,016.67'
         }) 
     }}
-    <p>Your actual monthly salary will depend on many different factors, including your field of work, and the area where you will live. To get more information about the salary levels of different careers, visit the <a href="">BLS Wage Data</a> website.</p>
+    <p>Your actual monthly salary will depend on many different factors, including your field of work, and the area where you will live. To get more information about the salary levels of different careers, visit the <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">BLS Wage Data</a> website.</p>
 
     {{ notification.render(
         'default',
@@ -38,12 +38,12 @@
         }) 
     }}
 
-    <div class="m-form-field m-form-field m-form-field__select">
+    <div class="m-form-field m-form-field__select">
         <label class="a-label a-label__heading" for="expenses__region">
             What part of the US do you plan to live in after graduation?
         </label>
         <div class="a-select">
-            <select id="expenses_region">
+            <select id="expenses__region">
                 <option value="south">South region</option>
             </select>
         </div>
@@ -51,7 +51,7 @@
     {{
         input.render({
             'label': 'Housing',
-            'id': 'expenses___housing',
+            'id': 'expenses__housing',
             'value': '$1,138',
             'data_attribute': 'data-expenses-item="item_housing"'
         })
