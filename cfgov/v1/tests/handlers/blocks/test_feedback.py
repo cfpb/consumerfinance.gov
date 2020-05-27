@@ -198,15 +198,18 @@ class TestFeedbackHandler(TestCase):
         block_value = None
         self.assertEqual(get_feedback_type(block_value), 'helpful')
 
-    def _post_feedback(self, page=None, referrer=None, is_helpful=None):
+    def _post_feedback(self, page=None, referrer='None', is_helpful='None'):
         page = page or CFGOVPage.objects.first()
+
+        post_data = {}
+        if referrer is not None:
+            post_data['referrer'] = referrer
+        if is_helpful is not None:
+            post_data['is_helpful'] = is_helpful
 
         request = self.factory.post(
             '/',
-            {
-                'referrer': referrer,
-                'is_helpful': is_helpful,
-            },
+            post_data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
 
@@ -230,7 +233,7 @@ class TestFeedbackHandler(TestCase):
         feedback = self._post_feedback(is_helpful=False)
         self.assertFalse(feedback.is_helpful)
 
-        feedback = self._post_feedback(is_helpful=None)
+        feedback = self._post_feedback(is_helpful='None')
         self.assertIsNone(feedback.is_helpful)
 
     def test_referrer_gets_saved_with_feedback(self):

@@ -92,29 +92,21 @@ INSTALLED_APPS = (
     "diversity_inclusion",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
+
+    # Satellites
+    "comparisontool",
+    "retirement_api",
+    "ratechecker",
+    "countylimits",
+    "complaint_search",
+    "rest_framework",
+    "ccdb5_ui",
+    "mptt",
+    "teachers_digital_platform",
 )
-
-OPTIONAL_APPS = [
-    {"import": "comparisontool", "apps": ("comparisontool", "haystack",)},
-    {"import": "retirement_api", "apps": ("retirement_api",)},
-    {"import": "ratechecker", "apps": ("ratechecker", "rest_framework")},
-    {"import": "countylimits", "apps": ("countylimits", "rest_framework")},
-    {
-        "import": "complaint_search",
-        "apps": ("complaint_search", "rest_framework"),
-    },
-    {"import": "ccdb5_ui", "apps": ("ccdb5_ui",)},
-    {
-        "import": "teachers_digital_platform",
-        "apps": ("teachers_digital_platform", "mptt", "haystack"),
-    },
-]
-
-POSTGRES_APPS = []
 
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -415,18 +407,6 @@ if os.environ.get("S3_ENABLED", "False") == "True":
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
 
-# LOAD OPTIONAL APPS
-# code from https://gist.github.com/msabramo/945406
-for app in OPTIONAL_APPS:
-    try:
-        __import__(app["import"])
-        for name in app.get("apps", ()):
-            if name not in INSTALLED_APPS:
-                INSTALLED_APPS += (name,)
-        MIDDLEWARE += app.get("middleware", ())
-    except ImportError:
-        pass
-
 # Removes wagtail version update check banner from admin page
 WAGTAIL_ENABLE_UPDATE_CHECK = False
 
@@ -531,6 +511,7 @@ CSP_SCRIPT_SRC = (
     "www.federalregister.gov",
     "storage.googleapis.com",
     "api.consumerfinance.gov",
+    "files.consumerfinance.gov",
 )
 
 # These specify valid sources of CSS code
@@ -686,12 +667,6 @@ FLAGS = {
             "required": True,
         },
     ],
-    # Add HowTo schema markup to answer page
-    # Intended for use with path conditions in admin for specific ask pages,
-    # such as: is enabled when path matches ^/ask-cfpb/what-is-an-ach-en-1065/
-    # Delete after Google schema pilot completes and schema usage is
-    # discontinued or implemented with a toggle in answer page admin.
-    "HOW_TO_SCHEMA": [],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.

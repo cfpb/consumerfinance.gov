@@ -1,13 +1,8 @@
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
+from django.urls import reverse
 
 from flags.sources import get_flags
-
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 
 # Remove this file after the HMDA API is retired (hopefully summer 2019)
