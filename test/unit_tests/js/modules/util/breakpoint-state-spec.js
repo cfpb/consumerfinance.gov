@@ -27,7 +27,9 @@ function windowResizeTo( width, height ) {
  * @param  {number} size - Font size to set for the base body font size.
  */
 function setBaseFontSize( size ) {
-  global.document.body.style.fontSize = size;
+  global.document.body.outerHTML = `
+    <body style="font-size: ${ size }px;"></body>
+  `;
 }
 
 describe( 'breakpoint-state', () => {
@@ -76,9 +78,9 @@ describe( 'breakpoint-state', () => {
     it( 'should correctly handle non-standard base font sizes', () => {
       // Ensure test utility is working.
       setBaseFontSize( 16 );
-      expect( getComputedStyle( document.body ).fontSize ).toBe( '16' );
+      expect( window.getComputedStyle( document.body ).fontSize ).toBe( '16px' );
       setBaseFontSize( 24 );
-      expect( getComputedStyle( document.body ).fontSize ).toBe( '24' );
+      expect( window.getComputedStyle( document.body ).fontSize ).toBe( '24px' );
 
       // Test that live code still works with base font size change.
       setBaseFontSize( 16 );

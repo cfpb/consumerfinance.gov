@@ -4,6 +4,7 @@ import re
 from datetime import date
 
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -14,6 +15,17 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
 import regdown
+
+
+# Labels always require at least 1 alphanumeric character, then any number of
+# alphanumeric characters and hyphens.
+label_re_str = r'[\w]+[-\w]*'
+validate_label = RegexValidator(
+    re.compile(r'^' + label_re_str + r'$'),
+    'Enter a valid “label” consisting of letters, numbers, hyphens, '
+    'and no spaces.',
+    'invalid'
+)
 
 
 def sortable_label(label, separator='-'):
@@ -60,9 +72,9 @@ class Part(models.Model):
         return str(self)
 
     def __str__(self):
-        name = "{} CFR Part {}".format(self.cfr_title_number, self.part_number)
+        name = f"{self.cfr_title_number} CFR Part {self.part_number}"
         if self.short_name:
-            name += " ({})".format(self.short_name)
+            name += f" ({self.short_name})"
         return name
 
     class Meta:
@@ -103,7 +115,7 @@ class EffectiveVersion(models.Model):
     ]
 
     def __str__(self):
-        return "Effective on {}".format(self.effective_date)
+        return str(self.part) + f", Effective on {self.effective_date}"
 
     @property
     def live_version(self):
@@ -148,7 +160,13 @@ class EffectiveVersion(models.Model):
 
 
 class Subpart(models.Model):
-    label = models.CharField(max_length=255, blank=True)
+    label = models.CharField(
+        max_length=255,
+        validators=[validate_label],
+        help_text='Labels always require at least 1 alphanumeric character, '
+                  'then any number of alphanumeric characters and hyphens, '
+                  'with no spaces.',
+    )
     title = models.CharField(max_length=255, blank=True)
     version = models.ForeignKey(
         EffectiveVersion,
@@ -176,7 +194,7 @@ class Subpart(models.Model):
     ]
 
     def __str__(self):
-        return self.title
+        return str(self.version) + ", " + self.title
 
     @property
     def type(self):
@@ -201,7 +219,13 @@ class Subpart(models.Model):
 
 
 class Section(models.Model):
-    label = models.CharField(max_length=255, blank=True)
+    label = models.CharField(
+        max_length=255,
+        validators=[validate_label],
+        help_text='Labels always require at least 1 alphanumeric character, '
+                  'then any number of alphanumeric characters and hyphens, '
+                  'with no spaces.',
+    )
     title = models.CharField(max_length=255, blank=True)
     contents = models.TextField(blank=True)
     subpart = models.ForeignKey(
@@ -218,7 +242,7 @@ class Section(models.Model):
     ]
 
     def __str__(self):
-        return self.title
+        return str(self.subpart) + ", " + self.title
 
     class Meta:
         ordering = ['sortable_label']

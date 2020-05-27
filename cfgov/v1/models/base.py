@@ -19,8 +19,8 @@ from wagtail.core.models import Orderable, Page, PageManager, PageQuerySet
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
@@ -94,6 +94,19 @@ class CFGOVPage(Page):
             '<code>&lt;/script&gt;</code> tags.'
         ),
     )
+    force_breadcrumbs = models.BooleanField(
+        "Force breadcrumbs on child pages",
+        default=False,
+        blank=True,
+        help_text=(
+            "Normally breadcrumbs don't appear on pages one or two levels "
+            "below the homepage. Check this option to force breadcrumbs to "
+            "appear on all children of this page no matter how many levels "
+            "below the homepage they are (for example, if you want "
+            "breadcrumbs to appear on all children of a top-level campaign "
+            "page)."
+        ),
+    )
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
@@ -121,6 +134,7 @@ class CFGOVPage(Page):
     # Panels
     promote_panels = Page.promote_panels + [
         ImageChooserPanel('social_sharing_image'),
+        FieldPanel('force_breadcrumbs', 'Breadcrumbs'),
     ]
 
     sidefoot_panels = [
@@ -185,33 +199,12 @@ class CFGOVPage(Page):
         return None
 
     def get_breadcrumbs(self, request):
-        ancestors = self.get_ancestors()
-        home_page_children = request.site.root_page.get_children()
+        ancestors = self.get_ancestors().specific()
         for i, ancestor in enumerate(ancestors):
-            if ancestor in home_page_children:
-                # Add top level parent page and `/process/` url segments
-                # where necessary to BAH page breadcrumbs.
-                # TODO: Remove this when BAH moves under /consumer-tools
-                # and redirects are added after 2018 homebuying campaign.
-                if ancestor.slug == 'owning-a-home':
-                    breadcrumbs = []
-                    for ancestor in ancestors[i:]:
-                        ancestor_url = ancestor.relative_url(request.site)
-                        if ancestor_url.startswith((
-                                '/owning-a-home/prepare',
-                                '/owning-a-home/explore',
-                                '/owning-a-home/compare',
-                                '/owning-a-home/close',
-                                '/owning-a-home/sources')):
-                            ancestor_url = ancestor_url.replace(
-                                'owning-a-home', 'owning-a-home/process')
-                        breadcrumbs.append({
-                            'title': ancestor.title,
-                            'href': ancestor_url,
-                        })
-                    return breadcrumbs
-                # END TODO
-                return [ancestor for ancestor in ancestors[i + 1:]]
+            if ancestor.is_child_of(request.site.root_page):
+                if ancestor.specific.force_breadcrumbs:
+                    return ancestors[i:]
+                return ancestors[i + 1:]
         return []
 
     def get_appropriate_descendants(self, inclusive=True):

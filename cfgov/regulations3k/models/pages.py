@@ -27,7 +27,7 @@ from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
-from regulations3k.models import Part, Section, SectionParagraph
+from regulations3k.models import Part, Section, SectionParagraph, label_re_str
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
@@ -396,7 +396,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             context
         )
 
-    @route(r'^versions/(?:(?P<section_label>[0-9A-Za-z-]+)/)?$',
+    @route(r'^versions/(?:(?P<section_label>' + label_re_str + r')/)?$',
            name="versions")
     def versions_page(self, request, section_label=None):
         section_query = self.get_section_query(request=request)
@@ -430,7 +430,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
 
     @route(r'^(?:(?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})/)?'
-           r'(?P<section_label>[0-9A-Za-z-]+)/$',
+           r'(?P<section_label>' + label_re_str + r')/$',
            name="section")
     def section_page(self, request, date_str=None, section_label=None):
         """ Render a section of the currently effective regulation """

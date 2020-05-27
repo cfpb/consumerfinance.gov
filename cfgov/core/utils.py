@@ -3,16 +3,11 @@ from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
-
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 
 NON_GOV_LINKS = re.compile(
@@ -66,12 +61,12 @@ def signed_redirect(url):
     query_args = {'ext_url': url,
                   'signature': signature}
 
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def unsigned_redirect(url):
     query_args = {'ext_url': url}
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def extract_answers_from_request(request):

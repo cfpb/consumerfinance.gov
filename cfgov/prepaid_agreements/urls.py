@@ -8,7 +8,6 @@ except ImportError:
 
 
 urlpatterns = [
-    re_path(r'^$', index, name='index'),
-    re_path(r'^detail/(?P<product_id>\d+)/$',
-            detail, name='detail'),
+    re_path(r"^$", index, name="index"),
+    re_path(r"^detail/(?P<product_id>\d+)/$", detail, name="detail"),
 ]

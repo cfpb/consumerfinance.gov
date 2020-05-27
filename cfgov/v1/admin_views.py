@@ -1,13 +1,13 @@
 import datetime
 import logging
 
+import django
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import FileResponse, HttpResponseForbidden
 from django.shortcuts import render
 from django.utils import timezone
-from django.views.generic import FormView
 
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 
@@ -16,6 +16,12 @@ from requests.exceptions import HTTPError
 
 from v1.admin_forms import CacheInvalidationForm, ExportFeedbackForm
 from v1.models.caching import AkamaiBackend, CDNHistory
+
+
+try:
+    from django.views.generic.edit import FormView
+except ImportError:
+    from django.views.generic import FormView
 
 
 logger = logging.getLogger(__name__)
@@ -112,10 +118,17 @@ class ExportFeedbackView(PermissionRequiredMixin, FormView):
     def form_valid(self, form):
         # TODO: In Django 2.1, use as_attachment=True and pass the filename
         # as an argument instead of manually specifying the content headers.
-        response = FileResponse(
-            form.generate_zipfile(),
-            content_type='application/zip'
-        )
+        if django.VERSION > (2, 1):
+            response = FileResponse(
+                form.generate_zipfile(),
+                as_attachment=True,
+                content_type='application/zip'
+            )
+        else:
+            response = FileResponse(
+                form.generate_zipfile(),
+                content_type='application/zip'
+            )
         response['Content-Disposition'] = (
             'attachment;filename=feedback_%s.zip' % form.get_filename_dates()
         )

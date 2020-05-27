@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-from html.parser import HTMLParser
 from unittest import mock
 
 from django.apps import apps
@@ -8,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from django.utils import timezone, translation
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
@@ -38,13 +38,6 @@ from v1.util.migrations import (
 )
 
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-
-
-html_parser = HTMLParser()
 now = timezone.now()
 
 
@@ -1135,15 +1128,3 @@ class AnswerPageTestCase(TestCase):
         request = HttpRequest()
         request.GET.update({"page": "<script>Boo</script>"})
         self.assertEqual(validate_page_number(request, paginator), 1)
-
-    def test_schema_html_does_not_appear_when_flag_is_off(self):
-        with override_settings(FLAGS={"HOW_TO_SCHEMA": [("boolean", False)]}):
-            response = self.client.get(self.page1.url)
-            self.assertNotContains(
-                response, 'itemtype="http://schema.org/HowTo"'
-            )
-
-    def test_schema_html_appears_when_flag_is_on(self):
-        with override_settings(FLAGS={"HOW_TO_SCHEMA": [("boolean", True)]}):
-            response = self.client.get(self.page1.url)
-            self.assertContains(response, 'itemtype="http://schema.org/HowTo"')

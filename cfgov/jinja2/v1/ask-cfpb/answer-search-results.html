@@ -20,7 +20,7 @@
         </div>
 
         {% if results %}
-            {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
+            {% if flag_enabled('ASK_SEARCH_TYPOS') %}
                 {% if tag %}
                     <h3 class="results-header">{{ _('Showing results for ') }} “{{ tag }}”</h3>
                 {% else %}
@@ -74,7 +74,7 @@
                     <h3 class="results-header">{{ _('No results found for') }} “{{ page.query }}”</h3>
                 {% endif %}
 
-                {% if flag_enabled('ASK_SEARCH_TYPOS', request) %}
+                {% if flag_enabled('ASK_SEARCH_TYPOS') %}
                     {% if page.suggestion %}
                     <p>{{ _('Search instead for') }} <a href="{{ _('/ask-cfpb/search') }}?q={{ page.suggestion }}">{{ page.suggestion }}</a></p>
                     {% endif %}

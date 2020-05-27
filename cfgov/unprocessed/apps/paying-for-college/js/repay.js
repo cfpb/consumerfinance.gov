@@ -79,10 +79,10 @@ const decisionStacker = function( appElement, targets ) {
         let destinationElement;
 
         if ( writingHash === true ) {
-          if ( location.hash !== '' ) {
-            location.hash += ':';
+          if ( window.location.hash !== '' ) {
+            window.location.hash += ':';
           }
-          location.hash += button.getAttribute( 'data-ds-name' );
+          window.location.hash += button.getAttribute( 'data-ds-name' );
         }
 
         // destination is a question
@@ -165,7 +165,7 @@ const decisionStacker = function( appElement, targets ) {
           hide( document, '.ds-clear-all' );
         }
         // reset hash
-        location.hash = hash;
+        window.location.hash = hash;
 
         // scrollToDestination( section );
       } );
@@ -179,7 +179,7 @@ const decisionStacker = function( appElement, targets ) {
   };
 
   const processHash = position => {
-    const hashes = location.hash.replace( '#', '' ).split( ':' );
+    const hashes = window.location.hash.replace( '#', '' ).split( ':' );
     const selector = '.ds-buttons:visible button[data-ds-name="' + hashes[position] + '"]';
 
     document.querySelectorAll( selector ).forEach( button => {
