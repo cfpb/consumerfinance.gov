@@ -68,7 +68,7 @@
     "turbolinks": "5.1.1",
     "vinyl-named": "1.1.0",
     "webpack": "4.41.5",
-    "webpack-stream": "5.0.0",
+    "webpack-stream": "5.2.1",
     "xdr": "0.5.3"
   },
   "devDependencies": {
