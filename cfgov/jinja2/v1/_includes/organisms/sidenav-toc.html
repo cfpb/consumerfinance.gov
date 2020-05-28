@@ -33,7 +33,7 @@
                  o-secondary-navigation_list__parents">
        {%- for item in nav_items %}
           <li class="m-list_item">
-              {{ nav_link.render(item.title, item.url, true) }}
+            {{ nav_link.render(loop.index|string + '. ' + item.title, item.url, true) }}
           {%- if item.children -%}
               <ul class="m-list
                          m-list__unstyled
