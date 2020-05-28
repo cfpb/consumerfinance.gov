@@ -17,7 +17,7 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
 
-def get_toc_nav_items(request, page):
+def get_toc_sections(request, page):
     return [{
         'expanded': False,
         'title': section.header,
@@ -25,16 +25,28 @@ def get_toc_nav_items(request, page):
         'children': [{
             'title': subsection.sub_header, 'url': '#' + subsection.sub_id
         } for subsection in section.report_subsections.all().order_by('pk')]
-    } for section in page.report_sections.all().order_by('pk')]
+    } for section in page.report_sections.all().order_by('pk') if not section.is_appendix]
+
+def get_toc_appendices(request, page):
+    return [{
+        'expanded': False,
+        'title': section.header,
+        'url': '#' + section.html_id,
+        'children': [{
+            'title': subsection.sub_header, 'url': '#' + subsection.sub_id
+        } for subsection in section.report_subsections.all().order_by('pk')]
+    } for section in page.report_sections.all().order_by('pk') if section.is_appendix]
 
 
 class ReportSection(ClusterableModel):
     header = models.CharField(max_length=200, blank=True)
     html_id = models.CharField(max_length=50, blank=True)
+    is_appendix = models.BooleanField(default=False)
     body = RichTextField(blank=True)
     panels = [
         FieldPanel('header'),
         FieldPanel('html_id'),
+        FieldPanel('is_appendix'),
         FieldPanel('body'),
         InlinePanel('report_subsections', label='Subsection'),
     ]
@@ -106,6 +118,7 @@ class ReportSectionsSidenav(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(ReportSectionsSidenav, self).get_context(request, *args, **kwargs)
         context.update({
-            'get_toc_nav_items': get_toc_nav_items
+            'get_toc_sections': get_toc_sections,
+            'get_toc_appendices': get_toc_appendices
         })
         return context

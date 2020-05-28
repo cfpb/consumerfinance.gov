@@ -20,9 +20,16 @@
 
    ========================================================================== #}
 {% macro _render_secondary_navigation() %}
-{% if nav_items is not defined  %}
-    {% set nav_items = get_toc_nav_items(request, page) %}
+{% if toc_sections is not defined  %}
+    {% set toc_sections = get_toc_sections(request, page) %}
 {% endif %}
+
+{% if toc_appendices is not defined  %}
+    {% set toc_appendices = get_toc_appendices(request, page) %}
+{% endif %}
+
+{% set alpha_map = '_ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+
 <nav class="o-report-sidenav o-secondary-navigation o-secondary-navigation__no-children"
      aria-label="Section navigation">
       {% import 'molecules/nav-link.html' as nav_link %}
@@ -31,9 +38,35 @@
                  m-list__unstyled
                  o-secondary-navigation_list
                  o-secondary-navigation_list__parents">
-       {%- for item in nav_items %}
+       {%- for item in toc_sections %}
           <li class="m-list_item">
             {{ nav_link.render(loop.index|string + '. ' + item.title, item.url, true) }}
+          {% if item.children %}
+              <ul class="m-list
+                         m-list__unstyled
+                         o-secondary-navigation_list
+                         o-secondary-navigation_list__children">
+              {%- for child in item.children -%}
+                  <li class="m-list_item">
+                      {{ nav_link.render(child.title, child.url, false) }}
+                  </li>
+              {%- endfor %}
+              </ul>
+          {% endif %}
+          </li>
+      {%- endfor %}
+      </ul>
+      {% if toc_appendices %}
+        <h4>Appendices</h4>
+      {% endif %}
+      <ul class="m-list
+                 m-list__unstyled
+                 o-secondary-navigation_list
+                 o-secondary-navigation_list__parents
+                 o-report-sidenav__appendix">
+       {%- for item in toc_appendices %}
+          <li class="m-list_item">
+            {{ nav_link.render(alpha_map[loop.index] + '. ' + item.title, item.url, true) }}
           {%- if item.children -%}
               <ul class="m-list
                          m-list__unstyled
@@ -47,7 +80,6 @@
               </ul>
           {%- endif -%}
           </li>
-
       {%- endfor %}
       </ul>
 </nav>
