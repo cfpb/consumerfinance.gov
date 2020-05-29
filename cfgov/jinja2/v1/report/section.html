@@ -14,9 +14,11 @@
       <div class="lead-paragraph">{{ page.subheader }}</div>
       <p>{% for author in page.report_author_names.all().order_by('pk') %}
         {% if loop.index == 1 %}By {% endif %}
-          <a href={{author.bio_link.url}}>{{author.name}}</a>{%
-            if not loop.last and loop.length != 2 %}, {% endif %}
-          {% if loop.index == loop.length -1 %}and {% endif %}
+        {%- if author.bio_link -%}<a href={{author.bio_link.url}}>{{author.name}}</a>
+        {%- else -%}<span>{{ author.name }}</span>
+        {%- endif -%}
+        {% if not loop.last and loop.length != 2 %}, {% endif %}
+        {% if loop.index == loop.length -1 %}and {% endif %}
         {% endfor %}
       </p>
       {{ pdf_download.render({'pdf_url': page.pdf_location }) }}
