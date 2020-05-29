@@ -11,7 +11,14 @@
 {% block content_main %}
     <div class="block block__flush-top">
       <h1>{{ page.header }}</h1>
-      {{ render_rich_html(page.subheader) }}
+      <div class="lead-paragraph">{{ page.subheader }}</div>
+      <p>{% for author in page.report_author_names.all().order_by('pk') %}
+        {% if loop.index == 1 %}By {% endif %}
+          <a href={{author.bio_link.url}}>{{author.name}}</a>{%
+            if not loop.last and loop.length != 2 %}, {% endif %}
+          {% if loop.index == loop.length -1 %}and {% endif %}
+        {% endfor %}
+      </p>
       {{ pdf_download.render({'pdf_url': page.pdf_location }) }}
     </div>
 

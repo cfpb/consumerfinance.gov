@@ -1,7 +1,7 @@
 from django.db import models
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface, PageChooserPanel
 )
 from wagtail.admin.forms.pages import WagtailAdminPageForm
 from wagtail.admin.forms.models import WagtailAdminModelFormMetaclass
@@ -63,6 +63,21 @@ class ReportSubSection(models.Model):
                          on_delete=models.CASCADE,
                          related_name='report_subsections')
 
+class AuthorNames(models.Model):
+    name = models.CharField(max_length=50)
+    bio_link = models.ForeignKey(
+      'wagtailcore.Page',
+      null=True,
+      blank=True,
+      on_delete=models.CASCADE
+    )
+    panels = [
+      FieldPanel('name'),
+      PageChooserPanel('bio_link')
+    ]
+    action = ParentalKey('v1.ReportSectionsSidenav',
+                         on_delete=models.CASCADE,
+                         related_name='report_author_names')
 
 class ReportMetaclass(WagtailAdminModelFormMetaclass):
     @classmethod
@@ -77,7 +92,7 @@ class ReportForm(WagtailAdminPageForm, metaclass=ReportMetaclass):
 class ReportSectionsSidenav(CFGOVPage):
     base_form_class = ReportForm
     header = models.CharField(max_length=200, default='')
-    subheader = RichTextField(blank=True)
+    subheader = models.TextField(blank=True)
     pdf_location = models.CharField(max_length=150, default='')
     footnotes = RichTextField(blank = True)
 
@@ -86,6 +101,11 @@ class ReportSectionsSidenav(CFGOVPage):
         MultiFieldPanel([
           FieldPanel('header'),
           FieldPanel('subheader'),
+          InlinePanel(
+            'report_author_names',
+            label='Author Name',
+            min_num=0
+          ),
           FieldPanel('pdf_location')
         ], heading='Report Header'),
         InlinePanel(
