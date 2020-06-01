@@ -41,10 +41,10 @@ function getParentHeader(index){
 
 function hightlightTOC() {
   const sY = window.scrollY;
-  const len = offsets.length - 1;
+  const len = offsets.length;
 
   for ( let i = 0; i <= len; i++ ) {
-    if ( sY < offsets[i] ) {
+    if ( i === len || sY < offsets[i] ) {
       let hl = i ? i - 1 : i;
       if ( hl === lastTargetIndex ) return;
       if ( lastTargetIndex !== undefined ){
@@ -58,9 +58,6 @@ function hightlightTOC() {
       return;
     }
   }
-  if ( lastTargetIndex !== undefined ) tocHeaders[lastTargetIndex].classList.remove( 'current-section' );
-  tocHeaders[len].classList.add( 'current-section' );
-  lastTargetIndex = len;
 }
 
 
