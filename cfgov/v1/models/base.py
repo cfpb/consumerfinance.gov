@@ -266,7 +266,8 @@ class CFGOVPage(Page):
         If form_id is found, it returns the response from the block method
         retrieval.
 
-        If form_id is not found, it returns an error response.
+        If form_id is not found, or if form_id is not a block that implements
+        get_result() to process the POST, it returns an error response.
         """
         form_module = None
         form_id = request.POST.get('form_id', None)
@@ -290,15 +291,15 @@ class CFGOVPage(Page):
                         except IndexError:
                             form_module = None
 
-        if form_module is None:
+        try:
+            result = form_module.block.get_result(
+                self,
+                request,
+                form_module.value,
+                True
+            )
+        except AttributeError:
             return self._return_bad_post_response(request)
-
-        result = form_module.block.get_result(
-            self,
-            request,
-            form_module.value,
-            True
-        )
 
         if isinstance(result, HttpResponse):
             return result
