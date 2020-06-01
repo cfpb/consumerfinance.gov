@@ -266,7 +266,8 @@ class CFGOVPage(Page):
         If form_id is found, it returns the response from the block method
         retrieval.
 
-        If form_id is not found, it returns an error response.
+        If form_id is not found, or if form_id is not a block that implements
+        get_result() to process the POST, it returns an error response.
         """
         form_module = None
         form_id = request.POST.get('form_id', None)
