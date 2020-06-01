@@ -1,10 +1,9 @@
+import csv
 import datetime
 import html
 
 from django.http import HttpResponse
 from django.utils import html as html_util
-
-import unicodecsv
 
 from ask_cfpb.models.pages import AnswerPage
 
@@ -17,6 +16,7 @@ HEADINGS = [
     'Answer',
     'URL',
     'Live',
+    'LastEdited',
     'Redirect',
     'PortalTopics',
     'PortalCategories',
@@ -38,10 +38,13 @@ def assemble_output():
         'portal_topic__heading',
         'portal_category__heading')
     answer_pages = list(AnswerPage.objects.prefetch_related(
-        *prefetch_fields).order_by('language', '-answer_base__id').values(
-            'id', 'answer_base__id', 'question', 'short_answer',
-            'answer_content', 'url_path', 'live', 'redirect_to_page_id',
-            'related_resource__title', 'language', *prefetch_fields))
+        *prefetch_fields
+    ).order_by('language', '-answer_base__id').values(
+        'id', 'answer_base__id', 'question', 'short_answer',
+        'answer_content', 'url_path', 'live', 'last_edited',
+        'redirect_to_page_id', 'related_resource__title', 'language',
+        *prefetch_fields
+    ))
     output_rows = []
     seen = []
 
@@ -83,6 +86,7 @@ def assemble_output():
         output['ShortAnswer'] = clean_and_strip(page['short_answer'])
         output['URL'] = page['url_path'].replace('/cfgov', '')
         output['Live'] = page['live']
+        output['LastEdited'] = page['last_edited']
         output['Redirect'] = page['redirect_to_page_id']
 
         # Group the ManyToMany fields together:
@@ -106,21 +110,18 @@ def assemble_output():
         output['RelatedQuestions'] = " | ".join(related_questions)
         output['PortalTopics'] = " | ".join(portal_topics)
         output['PortalCategories'] = " | ".join(portal_categories)
+
         output_rows.append(output)
+
     return output_rows
 
 
 def export_questions(path='/tmp', http_response=False):
     """
-    A script for exporting Ask CFPB Answer content
-    to a CSV that can be opened easily in Excel.
+    A script for exporting Ask CFPB Answer content to an Excel-friendly CSV.
 
     Run from within cfgov-refresh with:
     `python cfgov/manage.py runscript export_ask_data`
-
-    CEE staffers use a version of Excel that can't easily import UTF-8
-    non-ascii encodings. So we throw in the towel and encode the CSV
-    with windows-1252.
 
     By default, the script will dump the file to `/tmp/`,
     unless a path argument is supplied,
@@ -128,7 +129,6 @@ def export_questions(path='/tmp', http_response=False):
     A command that passes in path would look like this:
     `python cfgov/manage.py runscript export_ask_data --script-args [PATH]`
     """
-
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     slug = 'ask-cfpb-{}.csv'.format(timestamp)
     if http_response:
@@ -137,12 +137,12 @@ def export_questions(path='/tmp', http_response=False):
         write_questions_to_csv(response)
         return response
     file_path = '{}/{}'.format(path, slug).replace('//', '/')
-    with open(file_path, 'w') as f:
+    with open(file_path, 'w', encoding='windows-1252') as f:
         write_questions_to_csv(f)
 
 
 def write_questions_to_csv(csvfile):
-    writer = unicodecsv.writer(csvfile, encoding='windows-1252')
+    writer = csv.writer(csvfile)
     writer.writerow(HEADINGS)
     for row in assemble_output():
         writer.writerow([row.get(key) for key in HEADINGS])
