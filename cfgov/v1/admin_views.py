@@ -130,7 +130,7 @@ class ExportFeedbackView(PermissionRequiredMixin, FormView):
                 content_type='application/zip'
             )
         response['Content-Disposition'] = (
-            'attachment;filename=feedback_%s.zip' % form.get_filename_dates()
+            f'attachment;filename=feedback_{form.filename_dates}.zip'
         )
 
         return response
