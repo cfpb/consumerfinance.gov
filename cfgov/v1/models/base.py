@@ -290,15 +290,15 @@ class CFGOVPage(Page):
                         except IndexError:
                             form_module = None
 
-        if form_module is None:
+        try:
+            result = form_module.block.get_result(
+                self,
+                request,
+                form_module.value,
+                True
+            )
+        except AttributeError:
             return self._return_bad_post_response(request)
-
-        result = form_module.block.get_result(
-            self,
-            request,
-            form_module.value,
-            True
-        )
 
         if isinstance(result, HttpResponse):
             return result
