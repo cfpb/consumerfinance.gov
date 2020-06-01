@@ -12,6 +12,7 @@ from wagtail.tests.testapp.models import SimplePage
 import mock
 
 from v1.admin_views import ExportFeedbackView
+from v1.tests.wagtail_pages.helpers import save_new_page
 
 
 def create_admin_access_permissions():
@@ -166,8 +167,30 @@ class TestExportFeedbackView(TestCase):
 
     def test_post_generates_zipfile(self):
         root_page = Site.objects.get(is_default_site=True).root_page
-        page = SimplePage(title='owning-a-home', slug='owning-a-home', content='owning-a-home', live=True)
-        root_page.add_child(instance=page)
+        save_new_page(
+            SimplePage(
+                title='Ask CFPB',
+                slug='ask-cfpb',
+                content='ask cfpb'
+            ),
+            root=root_page
+        )
+        save_new_page(
+            SimplePage(
+                title='Obtener respuestas',
+                slug='obtener-respuestas',
+                content='obtener respuestas'
+            ),
+            root=root_page
+        )
+        save_new_page(
+            SimplePage(
+                title='Buying a House',
+                slug='owning-a-home',
+                content='buying a house'
+            ),
+            root=root_page
+        )
 
         request = RequestFactory().post(
             "/", {"from_date": "2019-01-01", "to_date": "2019-03-31"}
