@@ -274,59 +274,11 @@ browser, and see a database error.
     gets packaged up and made available to us in Self Service,
     so we need a workaround.
 
-    #### 1. Install pipx
+    #### 1. Install pipx, if you haven't yet
 
-    We're going to use [pipx](https://github.com/pipxproject/pipx),
-    a utility application for installing and
-    running Python applications in isolated environments,
-    to install the latest Docker Compose.
-
-    If you don't have pipx installed, install it with Homebrew:
-
-    ```bash
-    brew install pipx
-    ```
-
-    If you've already installed it, it couldn't hurt to update it now:
-
-    ```bash
-    brew update && brew upgrade pipx
-    ```
-
-    We'll run a little helper to add the things that pipx installs to your path,
-    so you can run them:
-
-    ```bash
-    pipx ensurepath
-    ```
-
-    The only catch with that command is that it adds the pipx binary path
-    _after_ your existing path;
-    as a result, the Docker Desktop version of Docker Compose
-    will take precedence.
-    So, we need to modify what it added.
-    Open your `~/.bashrc` or `~/.zshrc` file and
-    look toward the bottom for the following line:
-
-    ```bash
-    export PATH="$PATH:/Users/<username>/.local/bin"
-    ```
-
-    We're going to reverse the order of that so `~/.local/bin`
-    comes before the existing `$PATH`.
-    Update it to look like so
-    (remembering to replace `<username>` if you copy and paste from here):
-
-    ```bash
-    export PATH="/Users/<username>/.local/bin:$PATH"
-    ```
-
-    You might also want to take this opportunity to
-    move it to wherever you have other path modifications,
-    or you can just let your dotfiles just be the wild west. Your call ;)
-
-    Now open a new shell,
-    or `source` whatever file(s) you just modified in your current shell.
+    If you have not yet set up pipx on your computer, follow our
+    [guide to installing and using pipx](https://github.com/cfpb/development/blob/master/guides/pipx.md)
+    to do so.
 
     #### 2. Install docker-compose with pipx
 
