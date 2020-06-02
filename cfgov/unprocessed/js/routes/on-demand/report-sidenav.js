@@ -10,14 +10,18 @@ const headerOffset = 224
 const headers = document.querySelectorAll( '.content_main .report-header' )
 let offsets = [];
 let offsetIsH3 = [];
+let set = 0;
+let lastTargetIndex;
+
 (function(){
   for(let i=0; i<headers.length; i++){
     offsets.push(headers[i].offsetTop + headerOffset)
     offsetIsH3.push(headers[i].tagName === 'H3')
   }
 })();
-let set = 0;
-let lastTargetIndex;
+
+document.querySelector('.o-footer').classList.add( 'report-global-footer' );
+
 
 function stickIfNeeded() {
   if ( window.scrollY > top ) {
