@@ -73,6 +73,19 @@ class TestCFGOVPage(TestCase):
         response = page.serve_post(request)
         self.assertIsInstance(response, HttpResponseBadRequest)
 
+    def test_serve_post_returns_400_for_invalid_form_id_no_form_present(self):
+        page = BrowsePage(title='test', slug='test')
+        page.content = blocks.StreamValue(
+            page.content.stream_block,
+            [{'type': 'full_width_text', 'value': []}],
+            True
+        )
+        save_new_page(page)
+
+        request = self.factory.post('/', {'form_id': 'form-content-0'})
+        response = page.serve_post(request)
+        self.assertIsInstance(response, HttpResponseBadRequest)
+
     def test_serve_post_valid_calls_feedback_block_handler(self):
         """A valid post should call the feedback block handler.
 
