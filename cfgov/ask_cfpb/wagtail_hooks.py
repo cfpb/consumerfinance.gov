@@ -1,23 +1,20 @@
-from __future__ import unicode_literals
-
 from django.conf import settings
-from django.conf.urls import url
-from django.core.urlresolvers import reverse
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.html import format_html
+
+from wagtail.admin.menu import MenuItem
+from wagtail.core import hooks
+from wagtail.core.models import Page
 
 from ask_cfpb.models import Answer, AnswerPage
 from ask_cfpb.scripts import export_ask_data
 
 
 try:
-    from wagtail.admin.menu import MenuItem
-    from wagtail.core import hooks
-    from wagtail.core.models import Page
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.menu import MenuItem
-    from wagtail.wagtailcore import hooks
-    from wagtail.wagtailcore.models import Page
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
 
 
 def export_data(request):
@@ -38,7 +35,7 @@ def editor_css():
 def register_export_menu_item():
     return MenuItem(
         'Export Ask data',
-        reverse('export-ask'),
+        reverse("export-ask"),
         classnames='icon icon-download',
         order=99999,
     )
@@ -46,7 +43,7 @@ def register_export_menu_item():
 
 @hooks.register('register_admin_urls')
 def register_export_url():
-    return [url('export-ask', export_data, name='export-ask')]
+    return [re_path('^export-ask', export_data, name='export-ask')]
 
 
 @hooks.register('after_create_page')

@@ -16,8 +16,12 @@
 
 {% block content_main %}
     <div class="content-l">
+        <section class="ask-search block__sub block__flush-top">
+            {{ ask_search.render( language=page.language, is_subsection=False ) }}
+        </section>
+
         <section class="ask-categories">
-            <h2 class="u-show-on-mobile u-mt30">
+            <h2 class="u-show-on-mobile u-mt45">
                 {{ _('Browse questions by category') }}
             </h2>
             <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
@@ -37,11 +41,11 @@
                 {% endfor %}
             </ul>
 
-            <div class="u-hide-on-mobile question-categories">
+            <div class="u-hide-on-mobile question-categories u-mb15">
 
                 {#
                     TODO: This can use the standard card-group.html template
-                            if the partially styled links are removed.
+                          if the partially styled links are removed.
                 #}
                 <div class="o-card-group o-card-group__column-2">
                     <div class="o-card-group_cards">
@@ -80,13 +84,6 @@
 
             </div>
         </section>
-
-        <section class="ask-search block block__sub block__flush-bottom">
-            <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
-            {{ ask_search.render( language=page.language ) }}
-        </section>
-
-
     </div>
 
 {% endblock %}

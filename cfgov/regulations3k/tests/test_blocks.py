@@ -1,24 +1,15 @@
-from __future__ import unicode_literals
-
 import datetime
 
 from django.test import TestCase, override_settings
 
-import wagtail
+from wagtail.core.blocks import StreamValue
+from wagtail.core.models import Page
 
-from model_mommy import mommy
+from model_bakery import baker
 
 from regulations3k.blocks import RegulationsList
 from regulations3k.models.django import EffectiveVersion, Part
 from regulations3k.models.pages import RegulationLandingPage, RegulationPage
-
-
-if wagtail.VERSION >= (2, 0):
-    from wagtail.core.blocks import StreamValue
-    from wagtail.core.models import Page
-else:
-    from wagtail.wagtailcore.blocks import StreamValue
-    from wagtail.wagtailcore.models import Page
 
 
 @override_settings(
@@ -35,26 +26,26 @@ class RegulationsListTestCase(TestCase):
         )
         self.ROOT_PAGE.add_child(instance=self.landing_page)
 
-        self.part_1002 = mommy.make(
+        self.part_1002 = baker.make(
             Part,
             part_number='1002',
             title='Equal Credit Opportunity Act',
             short_name='Regulation B',
             chapter='X'
         )
-        self.part_1003 = mommy.make(
+        self.part_1003 = baker.make(
             Part,
             part_number='1003',
             title='Home Mortgage Disclosure',
             short_name='Regulation C',
             chapter='X'
         )
-        self.effective_version = mommy.make(
+        self.effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2014, 1, 18),
             part=self.part_1002
         )
-        self.future_effective_version = mommy.make(
+        self.future_effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2022, 1, 1),
             part=self.part_1002

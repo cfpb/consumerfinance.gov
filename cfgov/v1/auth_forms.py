@@ -9,15 +9,11 @@ from django.contrib.auth.forms import (
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
 
+from wagtail.users import forms as wagtailforms
+
 from .email import send_password_reset_email
 from .models import base
 from .util import password_policy
-
-
-try:
-    from wagtail.users import forms as wagtailforms
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailusers import forms as wagtailforms
 
 
 class PasswordValidationMixin(object):

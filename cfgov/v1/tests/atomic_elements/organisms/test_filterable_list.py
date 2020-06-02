@@ -2,6 +2,8 @@ from datetime import datetime
 
 from django.test import TestCase
 
+from wagtail.core.blocks import StreamValue
+
 from pytz import timezone
 from scripts._atomic_helpers import filter_controls as controls
 
@@ -9,12 +11,6 @@ from v1.atomic_elements.organisms import FilterableList
 from v1.models import BlogPage, BrowseFilterablePage
 from v1.models.learn_page import AbstractFilterPage, EventPage
 from v1.tests.wagtail_pages import helpers
-
-
-try:
-    from wagtail.core.blocks import StreamValue
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.blocks import StreamValue
 
 
 class TestFilterableList(TestCase):

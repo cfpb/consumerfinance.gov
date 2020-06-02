@@ -3,14 +3,10 @@ import json
 from django.test import RequestFactory, TestCase
 from django.utils.text import slugify
 
+from wagtail.core.models import Page, Site
+
 from mega_menu.frontend_conversion import FrontendConverter
 from mega_menu.models import Menu
-
-
-try:
-    from wagtail.core.models import Page, Site
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailcore.models import Page, Site
 
 
 class FrontendConverterTests(TestCase):
@@ -98,7 +94,7 @@ class FrontendConverterTests(TestCase):
         return page
 
     def do_conversion(self, menu):
-        request = RequestFactory().get('/')
+        request = RequestFactory().get('/consumer-tools/')
         converter = FrontendConverter(menu, request=request)
         return converter.get_menu_items()
 
@@ -121,12 +117,13 @@ class FrontendConverterTests(TestCase):
             self.do_conversion(self.menu)
 
     def test_conversion_output(self):
-        self.maxDiff = None
         self.assertEqual(self.do_conversion(self.menu), [
             {
+                'selected': True,
                 'overview': {
                     'url': '/consumer-tools/',
                     'text': 'Consumer Tools',
+                    'selected': True,
                 },
                 'nav_groups': [
                     {

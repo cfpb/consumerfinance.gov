@@ -5,13 +5,13 @@ First, follow
 to setup your Docker environment and create the project Docker containers.
 
 We use [`docker-compose`](https://docs.docker.com/compose/reference/overview/)
-to run an Elasticsearch container, a PostgreSQL container, 
-and Django in a Python container. 
-There is also a container serving the documentation. 
+to run an Elasticsearch container, a PostgreSQL container,
+and Django in a Python container.
+There is also a container serving the documentation.
 
-All of these containers are configured in our 
-[`docker-compose.yml` file](https://github.com/cfpb/cfgov-refresh/blob/master/docker-compose.yml). 
-See the [Docker documentation](https://docs.docker.com/compose/compose-file/) 
+All of these containers are configured in our
+[`docker-compose.yml` file](https://github.com/cfpb/cfgov-refresh/blob/master/docker-compose.yml).
+See the [Docker documentation](https://docs.docker.com/compose/compose-file/)
 for more about the format and use of this file.
 
 The following URLs are mapped to your host from the containers:
@@ -29,20 +29,20 @@ docker-compose up
 
 ## Environment variables
 
-Environment variables from your `.env` file are sourced 
+Environment variables from your `.env` file are sourced
 when the Python container starts
-and when you [access the running Python container](#access-a-containers-shell). 
-Your local shell environment variables, however, 
+and when you [access the running Python container](#access-a-containers-shell).
+Your local shell environment variables, however,
 are not visible to applications running in Docker.
-To add new environment variables, simply add them to the `.env` file, 
-stop docker-compose with Ctrl+C, 
+To add new environment variables, simply add them to the `.env` file,
+stop docker-compose with Ctrl+C,
 and start it again with `docker-compose up`.
 
 
 ## Commands that must be run from within the Python container
 
-Django `manage.py` commands can only be run after you've 
-[opened up a shell in the Python container](#access-a-containers-shell). 
+Django `manage.py` commands can only be run after you've
+[opened up a shell in the Python container](#access-a-containers-shell).
 From there, commands like `cfgov/manage.py migrate` should run as expected.
 
 The same goes for scripts like `./refresh-data.sh` and `./initial-data.sh` —
@@ -58,8 +58,8 @@ they will work as expected once you’re inside the Python container.
 
 ## Update Python dependencies
 
-If the Python package requirements files have changed, 
-you will need to stop `docker-compose` (if it is running) 
+If the Python package requirements files have changed,
+you will need to stop `docker-compose` (if it is running)
 and rebuild the Python container using:
 
 ```bash
@@ -74,8 +74,8 @@ See [“Using Docker” on the Related Projects page](../related-projects/#using
 
 ## Attach for debugging
 
-If you have inserted a [PDB breakpoint](https://docs.python.org/3/library/pdb.html) in your code 
-and need to interact with the running Django process when the breakpoint is reached 
+If you have inserted a [PDB breakpoint](https://docs.python.org/3/library/pdb.html) in your code
+and need to interact with the running Django process when the breakpoint is reached
 you can run [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach/):
 
 ```bash
@@ -87,7 +87,7 @@ When you're done, you can detach with `Ctrl+P Ctrl+Q`.
 
 ## Useful Docker commands
 
-For `docker-compose` commands, 
+For `docker-compose` commands,
 `[SERVICE]` is the service name that is defined in `docker-compose.yml`.
 
 For `docker` commands, `[CONTAINER]` is the container name displayed with `docker ps`.
@@ -177,6 +177,15 @@ change configs locally without having to rebuild the image each time.
     docker-compose rm -sf python
     docker-compose up --build python
     ```
+
+#### Jenkins CI + Docker Swarm
+
+This repo also includes a Docker Swarm-compatible Compose file
+(`docker-stack.yml`).
+This file is intended for use with the project's `Jenkinsfile`
+[multibranch build pipeline](https://jenkins.io/doc/tutorials/build-a-multibranch-pipeline-project/).
+It follows a standard Docker build/scan/push workflow,
+optionally deploying to our Docker Swarm cluster.
 
 ### How does it work?
 

@@ -1,3 +1,5 @@
+import { closest } from '../../../js/modules/util/dom-traverse';
+
 // Array that tracks paragraph positions
 let paragraphPositions;
 const regs3kMainContent = document.querySelector( '.regulations3k' );
@@ -243,7 +245,15 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
  */
 const updateParagraphPositions = () => {
   const paragraphs = document.querySelectorAll( '.regdown-block' );
-  paragraphPositions = getParagraphPositions( paragraphs );
+  let visibleParagraphs = [];
+  // IE doesn't support `forEach` w/ node lists
+  for ( let i = 0; i < paragraphs.length; i++ ) {
+    let hiddenParagraphContainer = closest( paragraphs[i], '.u-hidden' );
+    if ( !hiddenParagraphContainer ) {
+      visibleParagraphs.push( paragraphs[i] );
+    }
+  }
+  paragraphPositions = getParagraphPositions( visibleParagraphs );
   return paragraphPositions;
 };
 
@@ -267,7 +277,7 @@ const debounce = ( event, delay, cb ) => {
   return timeout;
 };
 
-module.exports = {
+export {
   debounce,
   getCommentMarker,
   getWayfinderInfo,

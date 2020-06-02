@@ -1,20 +1,13 @@
-from __future__ import absolute_import
-
 from django.db import models
 from django.utils.http import urlquote
+
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.models import Orderable
 
 from modelcluster.fields import ParentalKey
 
 from jobmanager.models.django import ApplicantType, Grade
 from jobmanager.models.pages import JobListingPage
-
-
-try:
-    from wagtail.admin.edit_handlers import FieldPanel
-    from wagtail.core.models import Orderable
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import FieldPanel
-    from wagtail.wagtailcore.models import Orderable
 
 
 class EmailApplicationLink(Orderable, models.Model):
@@ -46,6 +39,7 @@ class USAJobsApplicationLink(Orderable, models.Model):
     url = models.URLField(max_length=255)
     applicant_type = models.ForeignKey(
         ApplicantType,
+        on_delete=models.CASCADE,
         related_name='usajobs_application_links',
     )
 
@@ -62,8 +56,14 @@ class USAJobsApplicationLink(Orderable, models.Model):
 
 
 class GradePanel(Orderable, models.Model):
-    grade = models.ForeignKey(Grade, related_name='grade_panels')
+    grade = models.ForeignKey(
+        Grade,
+        on_delete=models.CASCADE,
+        related_name='grade_panels')
     job_listing = ParentalKey(JobListingPage, related_name='grades')
+
+    def __str__(self):
+        return str(self.grade)
 
     class Meta:
         ordering = ('grade',)
@@ -71,6 +71,3 @@ class GradePanel(Orderable, models.Model):
     panels = [
         FieldPanel('grade'),
     ]
-
-    def __str__(self):
-        return self.grade.grade

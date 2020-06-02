@@ -1,32 +1,20 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 
+from wagtail.admin.edit_handlers import (
+    FieldPanel, InlinePanel, ObjectList, TabbedInterface
+)
+from wagtail.admin.forms import (
+    WagtailAdminModelFormMetaclass, WagtailAdminPageForm
+)
+from wagtail.core.models import Orderable, PageManager
+from wagtail.images import get_image_model_string
+from wagtail.images.edit_handlers import ImageChooserPanel
+
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 from v1.models.base import CFGOVPage
-
-
-try:
-    from wagtail.admin.edit_handlers import (
-        FieldPanel, InlinePanel, ObjectList, TabbedInterface
-    )
-    from wagtail.admin.forms import (
-        WagtailAdminModelFormMetaclass, WagtailAdminPageForm
-    )
-    from wagtail.core.models import Orderable, PageManager
-    from wagtail.images import get_image_model_string
-    from wagtail.images.edit_handlers import ImageChooserPanel
-except ImportError:  # pragma: no cover; fallback for Wagtail < 2.0
-    from wagtail.wagtailadmin.edit_handlers import (
-        FieldPanel, InlinePanel, ObjectList, TabbedInterface
-    )
-    from wagtail.wagtailadmin.forms import (
-        WagtailAdminModelFormMetaclass, WagtailAdminPageForm
-    )
-    from wagtail.wagtailcore.models import Orderable, PageManager
-    from wagtail.wagtailimages import get_image_model_string
-    from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 
 # These classes are used to add support for nested InlinePanels, and are

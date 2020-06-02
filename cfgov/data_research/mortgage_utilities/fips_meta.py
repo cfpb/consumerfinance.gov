@@ -1,10 +1,7 @@
-from __future__ import unicode_literals
-
+import csv
 import logging
 
 from django.conf import settings
-
-import unicodecsv
 
 
 PROJECT_ROOT = settings.PROJECT_ROOT
@@ -212,9 +209,9 @@ def load_fips_meta(counties=True):
         4: county_name
     """
     for filename in ['state_county_fips.csv', 'msa_county_crosswalk.csv']:
-        with open("{}/{}".format(FIPS_DATA_PATH, filename), 'rb') as f:
-            reader = unicodecsv.DictReader(f)
-            fips_data = [row for row in reader]
+        with open("{}/{}".format(FIPS_DATA_PATH, filename), 'r') as f:
+            reader = csv.DictReader(f)
+            fips_data = list(reader)
             if 'state' in filename:
                 FIPS.county_fips = {row['complete_fips']:
                                     {'county': row['county_name'],

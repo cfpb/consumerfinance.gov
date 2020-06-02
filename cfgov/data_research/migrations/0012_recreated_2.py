@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
@@ -30,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='MortgagePerformancePage',
             fields=[
-                ('browsepage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.BrowsePage')),
+                ('browsepage_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='v1.BrowsePage')),
             ],
             options={
                 'abstract': False,
@@ -49,7 +48,9 @@ class Migration(migrations.Migration):
                 ('sixty', models.IntegerField(null=True)),
                 ('ninety', models.IntegerField(null=True)),
                 ('other', models.IntegerField(null=True)),
-                ('msa', models.ForeignKey(to='data_research.MetroArea', null=True)),
+                ('msa', models.ForeignKey(to='data_research.MetroArea',
+                                          on_delete=models.CASCADE,
+                                          null=True)),
             ],
             options={
                 'ordering': ['date'],
@@ -121,7 +122,9 @@ class Migration(migrations.Migration):
                 ('sixty', models.IntegerField(null=True)),
                 ('ninety', models.IntegerField(null=True)),
                 ('other', models.IntegerField(null=True)),
-                ('state', models.ForeignKey(to='data_research.State', null=True)),
+                ('state', models.ForeignKey(to='data_research.State',
+                                            on_delete=models.CASCADE,
+                                            null=True)),
             ],
             options={
                 'ordering': ['date'],
@@ -131,12 +134,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='nonmsamortgagedata',
             name='state',
-            field=models.ForeignKey(to='data_research.State', null=True),
+            field=models.ForeignKey(to='data_research.State',
+                                    on_delete=models.CASCADE,
+                                    null=True),
         ),
         migrations.AddField(
             model_name='countymortgagedata',
             name='county',
-            field=models.ForeignKey(to='data_research.County', null=True),
+            field=models.ForeignKey(to='data_research.County',
+                                    on_delete=models.CASCADE,
+                                    null=True),
         ),
         migrations.AddField(
             model_name='county',
