@@ -1,3 +1,4 @@
+import re
 from functools import partial
 
 from django.conf import settings
@@ -83,12 +84,16 @@ urlpatterns = [
         template_name='rural-or-underserved/index.html'),
         name='rural-or-underserved'),
 
-    re_path(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
+    re_path(
+        r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
         DocumentServeView.as_view(),
-        name='wagtaildocs_serve'),
+        name='wagtaildocs_serve'
+    ),
 
-    re_path(r'^home/(?P<path>.*)$',
-        RedirectView.as_view(url='/%(path)s', permanent=True)),
+    re_path(
+        r'^home/(?P<path>.*)$',
+        RedirectView.as_view(url='/%(path)s', permanent=True)
+    ),
 
     re_path(r'^owning-a-home/static/(?P<path>.*)$', RedirectView.as_view(
         url='/static/owning-a-home/static/%(path)s', permanent=True)),
@@ -110,25 +115,32 @@ urlpatterns = [
 
     # Temporarily serve Wagtail OAH journey pages at `/process/` urls.
     # TODO: change to redirects after 2018 homebuying campaign.
-    re_path(r'^owning-a-home/process/(?P<path>.*)$',
+    re_path(
+        r'^owning-a-home/process/(?P<path>.*)$',
         lambda req, path: ServeView.as_view()(
             req, 'owning-a-home/{}'.format(path or 'prepare/')
         ),
     ),
     # END TODO
 
-    re_path(r'^know-before-you-owe/$',
+    re_path(
+        r'^know-before-you-owe/$',
         TemplateView.as_view(
-        template_name='know-before-you-owe/index.html'),
-        name='know-before-you-owe'),
-    re_path(r'^know-before-you-owe/timeline/$',
+            template_name='know-before-you-owe/index.html'),
+        name='know-before-you-owe'
+    ),
+    re_path(
+        r'^know-before-you-owe/timeline/$',
         TemplateView.as_view(
-        template_name='know-before-you-owe/timeline/index.html'),
-        name='kbyo-timeline'),
-    re_path(r'^know-before-you-owe/compare/$',
+            template_name='know-before-you-owe/timeline/index.html'),
+        name='kbyo-timeline'
+    ),
+    re_path(
+        r'^know-before-you-owe/compare/$',
         TemplateView.as_view(
-        template_name='know-before-you-owe/compare/index.html'),
-        name='kbyo-compare'),
+            template_name='know-before-you-owe/compare/index.html'),
+        name='kbyo-compare'
+    ),
 
     re_path(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
@@ -136,16 +148,20 @@ urlpatterns = [
         template_name='fair-lending/index.html'),
         name='fair-lending'),
 
-    re_path(r'^practitioner-resources/students/knowbeforeyouowe/$',
+    re_path(
+        r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
             template_name='students/knowbeforeyouowe/index.html'),
-            name='students-knowbeforeyouowe'),
-    re_path(r'^practitioner-resources/students/'
-         'helping-borrowers-find-ways-to-stay-afloat/$',
-            TemplateView.as_view(
-                template_name='students/helping-borrowers-find-'
-                              'ways-to-stay-afloat/index.html'),
-                name='students-helping-borrowers'),
+        name='students-knowbeforeyouowe'
+    ),
+    re_path(
+        r'^practitioner-resources/students/'
+        'helping-borrowers-find-ways-to-stay-afloat/$',
+        TemplateView.as_view(
+            template_name='students/helping-borrowers-find-'
+            'ways-to-stay-afloat/index.html'),
+        name='students-helping-borrowers'
+    ),
 
     re_path(r'^parents/(?P<path>.*)$', RedirectView.as_view(
         url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -157,34 +173,57 @@ urlpatterns = [
     re_path(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/the-bureau/%(path)s', permanent=True)),
 
-    re_path(r'^about-us/leadership-calendar/(?P<path>.*)$',
+    re_path(
+        r'^about-us/leadership-calendar/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/the-bureau/leadership-calendar/%(path)s',
-            permanent=True)),
+            permanent=True)
+    ),
 
-    re_path(r'^doing-business-with-us/(?P<path>.*)$', RedirectView.as_view(
-        url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
+    re_path(
+        r'^doing-business-with-us/(?P<path>.*)$',
+        RedirectView.as_view(
+            url='/about-us/doing-business-with-us/%(path)s', permanent=True)
+    ),
 
-    re_path(r'^external-site/$', ExternalURLNoticeView.as_view(),
-        name='external-site'),
+    re_path(
+        r'^external-site/$', ExternalURLNoticeView.as_view(),
+        name='external-site'
+    ),
 
-    re_path(r'^subscriptions/new/$', govdelivery_subscribe,
-        name='govdelivery'),
+    re_path(
+        r'^subscriptions/new/$', govdelivery_subscribe,
+        name='govdelivery'
+    ),
 
-    re_path(r'^govdelivery-subscribe/', include((
-        [
-            re_path(r'^success/$', TemplateView.as_view(
-                template_name='govdelivery-subscribe/success/index.html'),
-                name='success'),
-            re_path(r'^error/$', TemplateView.as_view(
-                template_name='govdelivery-subscribe/error/index.html'),
-                name='user_error'),
-            re_path(r'^server-error/$', TemplateView.as_view(
-                template_name='govdelivery-subscribe/server-error/index.html'),
-                name='server_error')
-        ],
-        'govdelivery'),
-        namespace='govdelivery')),
+    re_path(
+        r'^govdelivery-subscribe/', include((
+            [
+                re_path(
+                    r'^success/$',
+                    TemplateView.as_view(
+                        template_name='govdelivery-subscribe/success/index.html'  # noqa: E501
+                    ),
+                    name='success'
+                ),
+                re_path(
+                    r'^error/$',
+                    TemplateView.as_view(
+                        template_name='govdelivery-subscribe/error/index.html'
+                    ),
+                    name='user_error'
+                ),
+                re_path(
+                    r'^server-error/$',
+                    TemplateView.as_view(
+                        template_name='govdelivery-subscribe/server-error/index.html'  # noqa: E501
+                    ),
+                    name='server_error'
+                )
+            ],
+            'govdelivery'),
+            namespace='govdelivery')
+    ),
 
     re_path(r'^regulation-comment/new/$', regsgov_comment, name='reg_comment'),
 
@@ -218,10 +257,12 @@ urlpatterns = [
 
     re_path(r'^transcripts/', include((
         [
-            re_path(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$',
+            re_path(
+                r'^how-to-apply-for-a-federal-job-with-the-cfpb/$',
                 TemplateView.as_view(
                     template_name='transcripts/how-to-apply-for-a-federal-job-with-the-cfpb/index.html'),  # noqa: E501
-                    name='how-to-apply-for-a-federal-job-with-the-cfpb'),
+                name='how-to-apply-for-a-federal-job-with-the-cfpb'
+            ),
         ],
         'transcripts'),
         namespace='transcripts')),
@@ -251,9 +292,11 @@ urlpatterns = [
         include('retirement_api.urls', namespace='retirement_api')
     ),
 
-    re_path(r'^data-research/consumer-complaints/$',
+    re_path(
+        r'^data-research/consumer-complaints/$',
         ComplaintLandingView.as_view(),
-        name='complaint-landing'),
+        name='complaint-landing'
+    ),
 
     # CCDB5-API
     flagged_re_path(
@@ -271,12 +314,16 @@ urlpatterns = [
     re_path(r'^oah-api/rates/', include('ratechecker.urls')),
     re_path(r'^oah-api/county/', include('countylimits.urls')),
 
-    re_path(r'^find-a-housing-counselor/$',
+    re_path(
+        r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
-        name='housing-counselor'),
-    re_path(r'^save-hud-counselors-list/$',
+        name='housing-counselor'
+    ),
+    re_path(
+        r'^save-hud-counselors-list/$',
         HousingCounselorPDFView.as_view(),
-        name='housing-counselor-pdf'),
+        name='housing-counselor-pdf'
+    ),
 
     # Report redirects
     re_path(r'^reports/(?P<path>.*)$', RedirectView.as_view(
@@ -308,16 +355,20 @@ urlpatterns = [
     # educational resources
     re_path(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
         url='/practitioner-resources/%(path)s', permanent=True)),
-    re_path(r'^practitioner-resources/resources-for-older-adults' +
-         '/managing-someone-elses-money/(?P<path>.*)$',
-            RedirectView.as_view(
-                url='/consumer-tools/managing-someone-elses-money/%(path)s',  # noqa: E501
-                permanent=True)),
-    re_path(r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
-            RedirectView.as_view(
-                url='/consumer-tools/money-as-you-grow/%(path)s',
-                permanent=True)),
-    re_path(r'^practitioner-resources/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
+    re_path(
+        r'^practitioner-resources/resources-for-older-adults/managing-someone-elses-money/(?P<path>.*)$',  # noqa: E501
+        RedirectView.as_view(
+            url='/consumer-tools/managing-someone-elses-money/%(path)s',  # noqa: E501
+            permanent=True)
+    ),
+    re_path(
+        r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
+        RedirectView.as_view(
+            url='/consumer-tools/money-as-you-grow/%(path)s',
+            permanent=True)
+    ),
+    re_path(
+        r'^practitioner-resources/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
         FlaggedTemplateView.as_view(
             flag_name='YOUTH_EMPLOYMENT_SUCCESS',
             template_name='youth_employment_success/index.html'
@@ -341,46 +392,70 @@ urlpatterns = [
             permanent=True)),
 
     # ask-cfpb
-    re_path(r'^askcfpb/$',
+    re_path(
+        r'^askcfpb/$',
+        RedirectView.as_view(url='/ask-cfpb/', permanent=True)
+    ),
+    re_path(
+        r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
         RedirectView.as_view(
-            url='/ask-cfpb/',
+            url='/es/obtener-respuestas/slug-es-%(ask_id)s',
+            permanent=True
+        )
+    ),
+    re_path(
+        r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
+        RedirectView.as_view(
+            url='/ask-cfpb/slug-en-%(ask_id)s',
             permanent=True)),
-    re_path(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
-         RedirectView.as_view(
-             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
-             permanent=True)),
-    re_path(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
-         RedirectView.as_view(
-             url='/ask-cfpb/slug-en-%(ask_id)s',
-             permanent=True)),
-    re_path(r'^askcfpb/search/',
+    re_path(
+        r'^askcfpb/search/',
         redirect_ask_search,
-        name='redirect-ask-search'),
-    re_path(r'^(?P<language>es)/obtener-respuestas/buscar/$',
+        name='redirect-ask-search'
+    ),
+    re_path(
+        r'^(?P<language>es)/obtener-respuestas/buscar/$',
         ask_search,
-        name='ask-search-es'),
-    re_path(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
+        name='ask-search-es'
+    ),
+    re_path(
+        r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search,
-        name='ask-search-es-json'),
-    re_path(r'^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$',
+        name='ask-search-es-json'
+    ),
+    re_path(
+        r'^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$',
         view_answer,
-        name='ask-english-answer'),
-    re_path(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/$',
+        name='ask-english-answer'
+    ),
+    re_path(
+        r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/$',
         view_answer,
-        name='ask-spanish-answer'),
-    re_path(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
+        name='ask-spanish-answer'
+    ),
+    re_path(
+        r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
         view_answer,
-        name='ask-spanish-answer'),
-    re_path(r'^ask-cfpb/search/$',
+        name='ask-spanish-answer'
+    ),
+    re_path(
+        r'^ask-cfpb/search/$',
         ask_search,
-        name='ask-search-en'),
-    re_path(r'^ask-cfpb/search/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-en-json'),
-    re_path(r'^ask-cfpb/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-en'),
-    re_path(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-es'),
+        name='ask-search-en'
+    ),
+    re_path
+    (r'^ask-cfpb/search/(?P<as_json>json)/$',
+     ask_search,
+     name='ask-search-en-json'
+     ),
+    re_path(
+        r'^ask-cfpb/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-en'
+    ),
+    re_path(
+        r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-es'
+    ),
 
     re_path(r'^_status/', include('watchman.urls')),
 
@@ -408,8 +483,9 @@ urlpatterns = [
     re_path(
         r'^regulations3k-service-worker.js',
         TemplateView.as_view(
-        template_name='regulations3k/regulations3k-service-worker.js',
-        content_type='application/javascript'),
+            template_name='regulations3k/regulations3k-service-worker.js',
+            content_type='application/javascript'
+        ),
         name='regulations3k-service-worker.js'
     ),
 
@@ -433,7 +509,8 @@ urlpatterns = [
 
     # Temporary: HMDA Legacy pages
     # Will be deleted when HMDA API is retired (hopefully Summer 2019)
-    re_path(r'data-research/hmda/explore$',
+    re_path(
+        r'data-research/hmda/explore$',
         FlaggedTemplateView.as_view(
             flag_name='HMDA_LEGACY_PUBLISH',
             template_name='hmda/orange-explorer.html'
@@ -445,118 +522,170 @@ urlpatterns = [
 
 # Ask CFPB category and subcategory redirects
 category_redirects = [
-    re_path(r'^ask-cfpb/category-auto-loans/(.*)$',
+    re_path(
+        r'^ask-cfpb/category-auto-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/auto-loans/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-bank-accounts-and-services/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-bank-accounts-and-services/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/bank-accounts/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-credit-cards/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-credit-cards/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/credit-cards/answers/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-credit-reporting/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-credit-reporting/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/credit-reports-and-scores/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-debt-collection/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-debt-collection/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/debt-collection/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-families-money/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-families-money/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/money-as-you-grow/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-money-transfers/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-money-transfers/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/money-transfers/answers/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-mortgages/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-mortgages/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/mortgages/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-payday-loans/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-payday-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/payday-loans/answers',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-prepaid-cards/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-prepaid-cards/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/prepaid-cards/',
-            permanent=True)),
-    re_path(r'^ask-cfpb/category-student-loans/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^ask-cfpb/category-student-loans/(.*)$',
         RedirectView.as_view(
             url='/consumer-tools/student-loans/',
-            permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^es/obtener-respuestas/categoria-comprar-un-vehiculo/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-para-vehiculos/respuestas/',  # noqa: E501
-            permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
+            permanent=True)
+    ),
+    re_path(
+        r'^es/obtener-respuestas/categoria-manejar-una-cuenta-bancaria/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cuentas-bancarias/',
-            permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
+            permanent=True)
+    ),
+    re_path(
+        r'^es/obtener-respuestas/categoria-obtener-una-tarjeta-de-credito/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-de-credito/respuestas/',  # noqa: E501
-            permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^es/obtener-respuestas/categoria-adquirir-credito/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/informes-y-puntajes-de-credito/',  # noqa: E501
-            permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^es/obtener-respuestas/categoria-manejar-una-deuda/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/cobro-de-deudas/',
-            permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^es/obtener-respuestas/categoria-ensenar-a-otros/(.*)$',
         RedirectView.as_view(
             url='/es/el-dinero-mientras-creces/',
-            permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
+            permanent=True)
+    ),
+    re_path(
+        r'^es/obtener-respuestas/categoria-enviar-dinero/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/transferencias-de-dinero/respuestas/',  # noqa: E501
-            permanent=True)),
+            permanent=True)
+    ),
     re_path(r'^es/obtener-respuestas/categoria-comprar-una-casa/(.*)$',
-        RedirectView.as_view(
-            url='/es/herramientas-del-consumidor/hipotecas/',
-            permanent=True)),
+            RedirectView.as_view(
+                url='/es/herramientas-del-consumidor/hipotecas/',
+                permanent=True)),
     re_path(
         r'^es/obtener-respuestas/categoria-prestamos-de-dia-de-pago/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-del-dia-de-pago/',  # noqa: E501
-            permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
+            permanent=True)
+    ),
+    re_path(
+        r'^es/obtener-respuestas/categoria-escoger-una-tarjeta-prepagada/(.*)$',  # noqa: E501
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/tarjetas-prepagadas/respuestas/',  # noqa: E501
             permanent=True)),
-    re_path(r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
+    re_path(
+        r'^es/obtener-respuestas/categoria-pagar-la-universidad/(.*)$',
         RedirectView.as_view(
             url='/es/herramientas-del-consumidor/prestamos-estudiantiles/',  # noqa: E501
-            permanent=True))
+            permanent=True)
+    )
 ]
 urlpatterns = urlpatterns + category_redirects
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
         re_path(r'^login/$', login_with_lockout, name='cfpb_login'),
-        re_path(r'^login/check_permissions/$',
+        re_path(
+            r'^login/check_permissions/$',
             check_permissions,
-            name='check_permissions'),
+            name='check_permissions'
+        ),
         re_path(r'^login/welcome/$', welcome, name='welcome'),
         re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
-        re_path(r'^admin/login/$',
-            RedirectView.as_view(url='/login/',
-                                 permanent=True,
-                                 query_string=True)),
-        re_path(r'^django-admin/login/$',
-            RedirectView.as_view(url='/login/',
-                                 permanent=True,
-                                 query_string=True)),
+        re_path(
+            r'^admin/login/$',
+            RedirectView.as_view(
+                url='/login/',
+                permanent=True,
+                query_string=True
+            )
+        ),
+        re_path(
+            r'^django-admin/login/$',
+            RedirectView.as_view(
+                url='/login/',
+                permanent=True,
+                query_string=True
+            )
+        ),
 
-        re_path(r'^django-admin/password_change',
+        re_path(
+            r'^django-admin/password_change',
             change_password,
-            name='django_admin_account_change_password'),
+            name='django_admin_account_change_password'
+        ),
         re_path(r'^django-admin/', admin.site.urls),
 
         # Override Django and Wagtail password views with our password policy
@@ -565,15 +694,21 @@ if settings.ALLOW_ADMIN_URL:
                 password_reset_confirm,
                 name='password_reset_confirm')
         ])),
-        re_path(r'^django-admin/password_change',
+        re_path(
+            r'^django-admin/password_change',
             auth_views.PasswordChangeView.as_view(),
-            {'password_change_form': CFGOVPasswordChangeForm}),
-        re_path(r'^password/change/done/$',
+            {'password_change_form': CFGOVPasswordChangeForm}
+        ),
+        re_path(
+            r'^password/change/done/$',
             auth_views.PasswordChangeDoneView.as_view(),
-            name='password_change_done'),
-        re_path(r'^admin/account/change_password/$',
+            name='password_change_done'
+        ),
+        re_path(
+            r'^admin/account/change_password/$',
             change_password,
-            name='wagtailadmin_account_change_password'),
+            name='wagtailadmin_account_change_password'
+        ),
         re_path(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         re_path(r'^admin/', include(wagtailadmin_urls)),
 
@@ -617,11 +752,29 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-# Handle case-insensitive URLs
-# Using (?i) in url() patterns is deprecated in Django 2.1
 def handle_404_error(code, request, exception=None):
-    if request.path != request.path.lower():
-        return redirect(request.path.lower(), permanent=True)
+    """Attempt to self-heal 404-ing URLs.
+
+    Takes a 404ing request and tries to transform it to a successful request
+    by lowercasing the path and stripping extraneous characters from the end.
+    If those result in a modified path, redirect to the modified path.
+    If the path did not change, this is a legitimate 404, so continue handling
+    that as normal.
+    """
+
+    # Lowercase the path.
+    path = request.path.lower()
+
+    # Check for and remove extraneous characters at the end of the path.
+    extraneous_char_re = re.compile(
+        r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
+    )
+    path = extraneous_char_re.sub('', path)
+
+    # If the path has changed, redirect to the new path.
+    if path != request.path:
+        return redirect(path, permanent=True)
+
     return handle_error(code, request, exception)
 
 

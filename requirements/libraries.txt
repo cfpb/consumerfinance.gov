@@ -29,12 +29,10 @@ openpyxl==2.5.8
 psycopg2==2.7.3.2
 pyelasticsearch==0.6.1
 python-dateutil==2.7.3
-PyYAML==3.13
 regdown==1.0.2
 requests==2.22.0
 requests_toolbelt==0.8.0
 sha3==0.2.1
-unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 urllib3==1.25.2
 wagtail-autocomplete==0.1.1
@@ -47,6 +45,6 @@ wagtail-treemodeladmin==1.1.1
 https://github.com/cfpb/owning-a-home-api/releases/download/0.15.0/owning_a_home_api-0.15.0-py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.12.0/retirement-0.12.0-py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.4.0/ccdb5_api-1.4.0-py3-none-any.whl
-https://github.com/cfpb/ccdb5-ui/releases/download/2.0.3/ccdb5_ui-2.0.3-py3-none-any.whl
-https://github.com/cfpb/django-college-costs-comparison/releases/download/1.15.0/comparisontool-1.15.0-py3-none-any.whl
-https://github.com/cfpb/teachers-digital-platform/releases/download/1.4.1/teachers_digital_platform-1.4.1-py3-none-any.whl
+https://github.com/cfpb/ccdb5-ui/releases/download/2.1.0/ccdb5_ui-2.1.0-py3-none-any.whl
+https://github.com/cfpb/django-college-costs-comparison/releases/download/1.15.1/comparisontool-1.15.1-py3-none-any.whl
+https://github.com/cfpb/teachers-digital-platform/releases/download/1.4.2/teachers_digital_platform-1.4.2-py3-none-any.whl
