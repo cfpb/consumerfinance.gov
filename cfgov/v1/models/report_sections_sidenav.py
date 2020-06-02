@@ -91,6 +91,7 @@ class ReportForm(WagtailAdminPageForm, metaclass=ReportMetaclass):
 
 class ReportSectionsSidenav(CFGOVPage):
     base_form_class = ReportForm
+    report_type = models.CharField(max_length=100, default='')
     header = models.CharField(max_length=200, default='')
     subheader = models.TextField(blank=True)
     pdf_location = models.CharField(max_length=150, default='')
@@ -99,6 +100,7 @@ class ReportSectionsSidenav(CFGOVPage):
     # General content tab
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
+          FieldPanel('report_type'),
           FieldPanel('header'),
           FieldPanel('subheader'),
           InlinePanel(

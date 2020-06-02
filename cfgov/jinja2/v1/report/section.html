@@ -10,6 +10,7 @@
 
 {% block content_main %}
     <div class="block block__flush-top">
+      <div class="eyebrow">{{ page.report_type }}</div>
       <h1>{{ page.header }}</h1>
       <div class="lead-paragraph">{{ page.subheader }}</div>
       <p>{% for author in page.report_author_names.all().order_by('pk') %}
