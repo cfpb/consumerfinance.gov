@@ -371,8 +371,8 @@ you start a new session of work on the project.</p>
 createuser --createdb cfpb &amp;&amp; createdb -O cfpb cfgov
 psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'</code></pre>
 
-<p>We don't support using an SQLite database, because we use database fields 
-that are specific to Postgres. The <code>--createdb</code> flag above allows Django to 
+<p>We don't support using an SQLite database, because we use database fields
+that are specific to Postgres. The <code>--createdb</code> flag above allows Django to
 create temporary Postgres databases when running unit tests.</p>
 <h4 id="run-the-setup-script">Run the setup script<a class="headerlink" href="#run-the-setup-script" title="Permanent link">¶</a></h4>
 <p>At this point, your machine should have everything it needs to automate the
@@ -402,7 +402,7 @@ that you may want to perform before continuing.</p>
 <li><strong>Docker</strong>: You may not need to interact directly with Docker, but you
   should know that it's a client/server application for managing <em>containers</em>
   (a way of running software in an isolated environment) and <em>images</em> (a
-  snapshot of all of the files neccessary to run a container).</li>
+  snapshot of all of the files necessary to run a container).</li>
 <li><strong>Docker Compose</strong>: Compose allows you to configure and run a collection of
   connected containers (like a web application and its database).</li>
 </ul>
@@ -430,10 +430,60 @@ in the <a href="#stand-alone-installation">standalone installation instructions<
 <h3 id="4-run-docker-compose-for-the-first-time">4. Run Docker Compose for the first time<a class="headerlink" href="#4-run-docker-compose-for-the-first-time" title="Permanent link">¶</a></h3>
 <p><code>docker-compose up</code></p>
 <p>This will download and/or build images, and then start the containers, as
-described in the docker-compose.yml file. This will take a few minutes, or
-longer if you are on a slow internet connection.</p>
+described in the <code>docker-compose.yml</code> file. This will take a few minutes, or
+longer if you are on a slow Internet connection.</p>
 <p>When it's all done, you should be able to load <a href="http://localhost:8000">http://localhost:8000</a> in your
 browser, and see a database error.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Trying to use Docker Compose and finding that it gives you an error?
+Something like:</p>
+<pre class="highlight"><code>ERROR: In file ./.env: environment variable name
+`export DJANGO_HTTP_PORT` may not contain whitespace.</code></pre>
+
+<p>You've probably running the latest version of Docker Desktop
+that's available to us (CFPB developers) in Self Service,
+which comes with a version of Docker Compose
+that changes how it handles <code>.env</code> files.</p>
+<p>Docker Compose has been updated to fix this,
+but the fix is still in the Release Candidate stage (as of June 1, 2020),
+it may be some time before that fix gets packaged
+with a new version of Docker Desktop,
+and longer still before that version of Docker Desktop
+gets packaged up and made available to us in Self Service,
+so we need a workaround.</p>
+<h4 id="1-install-pipx-if-you-havent-yet">1. Install pipx, if you haven't yet<a class="headerlink" href="#1-install-pipx-if-you-havent-yet" title="Permanent link">¶</a></h4>
+<p>If you have not yet set up pipx on your computer, follow our
+<a href="https://github.com/cfpb/development/blob/master/guides/pipx.md">guide to installing and using pipx</a>
+to do so.</p>
+<h4 id="2-install-docker-compose-with-pipx">2. Install docker-compose with pipx<a class="headerlink" href="#2-install-docker-compose-with-pipx" title="Permanent link">¶</a></h4>
+<p>With that all set, we're ready to install the latest Docker Compose.</p>
+<pre class="highlight"><code class="language-bash">pipx install git+https://github.com/docker/compose.git</code></pre>
+
+<p>Confirm that it installed properly by running <code>which docker-compose</code>
+and seeing the pipx path:</p>
+<pre class="highlight"><code class="language-bash">$ which docker-compose
+/Users/&lt;username&gt;/.local/bin/docker-compose</code></pre>
+
+<p>Finally, we'll need to inject another Python package, python-dotenv,
+into pipx's isolated docker-compose environment:</p>
+<pre class="highlight"><code class="language-bash">pipx inject docker-compose python-dotenv</code></pre>
+
+<h4 id="3-profit">3. Profit!<a class="headerlink" href="#3-profit" title="Permanent link">¶</a></h4>
+<p>At this point, you should be able to run <code>docker-compose</code> commands again.</p>
+<p><strong>Note:</strong> When running <code>docker-compose up</code> in cfgov-refresh
+with our typical <code>.env</code> file, you may see some warnings like the following:</p>
+<pre class="highlight"><code>WARNING: Python-dotenv could not parse statement starting at line 236
+WARNING: Python-dotenv could not parse statement starting at line 239
+WARNING: Python-dotenv could not parse statement starting at line 236
+WARNING: Python-dotenv could not parse statement starting at line 239
+WARNING: Python-dotenv could not parse statement starting at line 236
+WARNING: Python-dotenv could not parse statement starting at line 239</code></pre>
+
+<p>These are caused by the <code>if</code> statement that will override some of the variables
+when sourcing the <code>.env</code> file in a local (non-Docker) environment.
+They can safely be ignored.</p>
+</div>
 <h3 id="5-setup-the-database">5. Setup the database<a class="headerlink" href="#5-setup-the-database" title="Permanent link">¶</a></h3>
 <p>Open a bash shell inside your Python container.</p>
 <pre class="highlight"><code class="language-bash">docker-compose exec python bash</code></pre>

@@ -278,12 +278,12 @@
 <a href="../installation/#docker-based-installation">the Docker installation instructions</a>
 to setup your Docker environment and create the project Docker containers.</p>
 <p>We use <a href="https://docs.docker.com/compose/reference/overview/"><code>docker-compose</code></a>
-to run an Elasticsearch container, a PostgreSQL container, 
-and Django in a Python container. 
-There is also a container serving the documentation. </p>
-<p>All of these containers are configured in our 
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/docker-compose.yml"><code>docker-compose.yml</code> file</a>. 
-See the <a href="https://docs.docker.com/compose/compose-file/">Docker documentation</a> 
+to run an Elasticsearch container, a PostgreSQL container,
+and Django in a Python container.
+There is also a container serving the documentation.</p>
+<p>All of these containers are configured in our
+<a href="https://github.com/cfpb/cfgov-refresh/blob/master/docker-compose.yml"><code>docker-compose.yml</code> file</a>.
+See the <a href="https://docs.docker.com/compose/compose-file/">Docker documentation</a>
 for more about the format and use of this file.</p>
 <p>The following URLs are mapped to your host from the containers:</p>
 <ul>
@@ -295,17 +295,17 @@ for more about the format and use of this file.</p>
 <pre class="highlight"><code class="language-bash">docker-compose up</code></pre>
 
 <h2 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h2>
-<p>Environment variables from your <code>.env</code> file are sourced 
+<p>Environment variables from your <code>.env</code> file are sourced
 when the Python container starts
-and when you <a href="#access-a-containers-shell">access the running Python container</a>. 
-Your local shell environment variables, however, 
+and when you <a href="#access-a-containers-shell">access the running Python container</a>.
+Your local shell environment variables, however,
 are not visible to applications running in Docker.
-To add new environment variables, simply add them to the <code>.env</code> file, 
-stop docker-compose with Ctrl+C, 
+To add new environment variables, simply add them to the <code>.env</code> file,
+stop docker-compose with Ctrl+C,
 and start it again with <code>docker-compose up</code>.</p>
 <h2 id="commands-that-must-be-run-from-within-the-python-container">Commands that must be run from within the Python container<a class="headerlink" href="#commands-that-must-be-run-from-within-the-python-container" title="Permanent link">¶</a></h2>
-<p>Django <code>manage.py</code> commands can only be run after you've 
-<a href="#access-a-containers-shell">opened up a shell in the Python container</a>. 
+<p>Django <code>manage.py</code> commands can only be run after you've
+<a href="#access-a-containers-shell">opened up a shell in the Python container</a>.
 From there, commands like <code>cfgov/manage.py migrate</code> should run as expected.</p>
 <p>The same goes for scripts like <code>./refresh-data.sh</code> and <code>./initial-data.sh</code> —
 they will work as expected once you’re inside the Python container.</p>
@@ -316,22 +316,22 @@ they will work as expected once you’re inside the Python container.</p>
 <li>PostgreSQL: <code>docker-compose exec postgres bash</code></li>
 </ul>
 <h2 id="update-python-dependencies">Update Python dependencies<a class="headerlink" href="#update-python-dependencies" title="Permanent link">¶</a></h2>
-<p>If the Python package requirements files have changed, 
-you will need to stop <code>docker-compose</code> (if it is running) 
+<p>If the Python package requirements files have changed,
+you will need to stop <code>docker-compose</code> (if it is running)
 and rebuild the Python container using:</p>
 <pre class="highlight"><code class="language-bash">docker-compose up --build python</code></pre>
 
 <h2 id="work-on-satellite-apps">Work on satellite apps<a class="headerlink" href="#work-on-satellite-apps" title="Permanent link">¶</a></h2>
 <p>See <a href="../related-projects/#using-docker">“Using Docker” on the Related Projects page</a>.</p>
 <h2 id="attach-for-debugging">Attach for debugging<a class="headerlink" href="#attach-for-debugging" title="Permanent link">¶</a></h2>
-<p>If you have inserted a <a href="https://docs.python.org/3/library/pdb.html">PDB breakpoint</a> in your code 
-and need to interact with the running Django process when the breakpoint is reached 
+<p>If you have inserted a <a href="https://docs.python.org/3/library/pdb.html">PDB breakpoint</a> in your code
+and need to interact with the running Django process when the breakpoint is reached
 you can run <a href="https://docs.docker.com/engine/reference/commandline/attach/"><code>docker attach</code></a>:</p>
 <pre class="highlight"><code class="language-bash">docker attach cfgov-refresh_python_1</code></pre>
 
 <p>When you're done, you can detach with <code>Ctrl+P Ctrl+Q</code>.</p>
 <h2 id="useful-docker-commands">Useful Docker commands<a class="headerlink" href="#useful-docker-commands" title="Permanent link">¶</a></h2>
-<p>For <code>docker-compose</code> commands, 
+<p>For <code>docker-compose</code> commands,
 <code>[SERVICE]</code> is the service name that is defined in <code>docker-compose.yml</code>.</p>
 <p>For <code>docker</code> commands, <code>[CONTAINER]</code> is the container name displayed with <code>docker ps</code>.</p>
 <ul>
@@ -407,12 +407,12 @@ docker-compose up --build python</code></pre>
 </li>
 </ol>
 <h4 id="jenkins-ci-docker-swarm">Jenkins CI + Docker Swarm<a class="headerlink" href="#jenkins-ci-docker-swarm" title="Permanent link">¶</a></h4>
-<p>This repo also includes a Docker Swarm compatible Compose file
-<a href="../docker-stack.yml"><code>docker-stack.yml</code></a>.  This file is intended
-for use with the project's <a href="../Jenkinsfile"><code>Jenkinsfile</code></a> <a href="https://jenkins.io/doc/tutorials/build-a-multibranch-pipeline-project/">multibranch build
-pipeline</a>.
-It follows a standard Docker build/scan/push workflow, optionally
-deploying to our Docker Swarm cluster.</p>
+<p>This repo also includes a Docker Swarm-compatible Compose file
+(<code>docker-stack.yml</code>).
+This file is intended for use with the project's <code>Jenkinsfile</code>
+<a href="https://jenkins.io/doc/tutorials/build-a-multibranch-pipeline-project/">multibranch build pipeline</a>.
+It follows a standard Docker build/scan/push workflow,
+optionally deploying to our Docker Swarm cluster.</p>
 <h3 id="how-does-it-work">How does it work?<a class="headerlink" href="#how-does-it-work" title="Permanent link">¶</a></h3>
 <p>The production image extends the development image. If you look at the <code>Dockerfile</code>, this is spelled out by the line:</p>
 <pre class="highlight"><code>FROM cfgov-dev as cfgov-prod</code></pre>
