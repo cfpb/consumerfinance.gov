@@ -58,6 +58,24 @@ class StudentLoanQuizPage(PayingForCollegePage):
 
 class CollegeCostsPage(PayingForCollegePage):
     """Breaking down financial aid and loans for prospective students."""
+    header = StreamField([
+        ('hero', molecules.Hero()),
+        ('text_introduction', molecules.TextIntroduction()),
+        ('featured_content', organisms.FeaturedContent()),
+    ], blank=True)
+
+    content_panels = CFGOVPage.content_panels + [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+
+    # Tab handler interface
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='General Content'),
+        # ObjectList(, heading='School and living situation'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+    objects = CFGOVPageManager()
     content = StreamField(PayingForCollegeContent, blank=True)
     template = 'paying-for-college/college-costs.html'
 
