@@ -15,7 +15,7 @@
   "engines": {
     "node": ">=10.x"
   },
-  "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 9",
+  "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 11",
   "dependencies": {
     "@babel/core": "7.9.6",
     "@babel/preset-env": "7.9.6",
