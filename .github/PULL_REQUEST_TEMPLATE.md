@@ -3,7 +3,22 @@ _[Enter an explanation of what the pull request does and why.]_
 
 ---
 
-_[Feel free to delete any checkboxes that are not applicable to this PR.]_
+_[Feel free to delete any sections that are not applicable to this PR.]_
+
+
+## Additions
+
+-
+
+
+## Removals
+
+-
+
+
+## Changes
+
+-
 
 
 ## How to test this PR
@@ -41,8 +56,8 @@ _[Feel free to delete any checkboxes that are not applicable to this PR.]_
 ### Front-end testing
 
 _[When new or significantly modified front-end functionality is present,
-  the following things should be tested. Feel free to delete this section
-  if not applicable to this PR.]_
+  the following things should be tested.
+  Feel free to delete this section if not applicable to this PR.]_
 
 #### Browser testing
 
