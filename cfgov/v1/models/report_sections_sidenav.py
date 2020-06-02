@@ -12,9 +12,9 @@ from wagtail.search import index
 
 from modelcluster.models import ClusterableModel
 from modelcluster.fields import ParentalKey
-
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
+from v1.models.sublanding_filterable_page import SublandingFilterablePage
 
 
 def get_toc_sections(request, page):
@@ -27,6 +27,7 @@ def get_toc_sections(request, page):
         } for subsection in section.report_subsections.all().order_by('pk')]
     } for section in page.report_sections.all().order_by('pk') if not section.is_appendix]
 
+
 def get_toc_appendices(request, page):
     return [{
         'expanded': False,
@@ -36,6 +37,10 @@ def get_toc_appendices(request, page):
             'title': subsection.sub_header, 'url': '#' + subsection.sub_id
         } for subsection in section.report_subsections.all().order_by('pk')]
     } for section in page.report_sections.all().order_by('pk') if section.is_appendix]
+
+
+def get_researchers():
+    return dict([(r.title, r.url) for r in SublandingFilterablePage.objects.get(pk=4833).get_children()])
 
 
 class ReportSection(ClusterableModel):
@@ -65,16 +70,6 @@ class ReportSubSection(models.Model):
 
 class AuthorNames(models.Model):
     name = models.CharField(max_length=50)
-    bio_link = models.ForeignKey(
-      'wagtailcore.Page',
-      null=True,
-      blank=True,
-      on_delete=models.CASCADE
-    )
-    panels = [
-      FieldPanel('name'),
-      PageChooserPanel('bio_link')
-    ]
     action = ParentalKey('v1.ReportSectionsSidenav',
                          on_delete=models.CASCADE,
                          related_name='report_author_names')
@@ -141,6 +136,7 @@ class ReportSectionsSidenav(CFGOVPage):
         context = super(ReportSectionsSidenav, self).get_context(request, *args, **kwargs)
         context.update({
             'get_toc_sections': get_toc_sections,
-            'get_toc_appendices': get_toc_appendices
+            'get_toc_appendices': get_toc_appendices,
+            'get_researchers': get_researchers
         })
         return context

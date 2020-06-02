@@ -8,6 +8,8 @@
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
+{% set researchers = get_researchers() %}
+
 {% block content_main %}
     <div class="block block__flush-top">
       <div class="eyebrow">{{ page.report_type }}</div>
@@ -15,7 +17,8 @@
       <div class="lead-paragraph">{{ page.subheader }}</div>
       <p>{% for author in page.report_author_names.all().order_by('pk') %}
         {% if loop.index == 1 %}By {% endif %}
-        {%- if author.bio_link -%}<a href={{author.bio_link.url}}>{{author.name}}</a>
+        {% set link_url = researchers.get(author.name) %}
+        {%- if link_url -%}<a href={{ link_url }}>{{ author.name }}</a>
         {%- else -%}<span>{{ author.name }}</span>
         {%- endif -%}
         {% if not loop.last and loop.length != 2 %}, {% endif %}
