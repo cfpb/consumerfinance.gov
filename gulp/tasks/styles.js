@@ -120,54 +120,6 @@ function stylesFeatureFlags() {
 }
 
 /**
- * Process Nemo CSS.
- * @returns {PassThrough} A source stream.
- */
-function stylesNemoProd() {
-  return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles.less' )
-    .pipe( gulpNewer( {
-      dest:  configLegacy.dest + '/nemo/_/c/es-styles.min.css',
-      extra: configStyles.otherBuildTriggerFiles
-        .concat( configStyles.otherBuildTriggerFilesNemo )
-    } ) )
-    .pipe( gulpLess( { compress: true } ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpPostcss( [
-      autoprefixer()
-    ] ) )
-    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpRename( {
-      suffix:  '.min',
-      extname: '.css'
-    } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) );
-}
-
-/**
- * Process Nemo IE8 CSS.
- * @returns {PassThrough} A source stream.
- */
-function stylesNemoIE8() {
-  return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles-ie.less' )
-    .pipe( gulpNewer( {
-      dest:  configLegacy.dest + '/nemo/_/c/es-styles-ie.min.css',
-      extra: configStyles.otherBuildTriggerFiles
-        .concat( configStyles.otherBuildTriggerFilesNemo )
-    } ) )
-    .pipe( gulpLess( { compress: true } ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpPostcss( [
-      autoprefixer( { overrideBrowserslist: ['ie 8'] } )
-    ] ) )
-    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpRename( {
-      suffix:  '.min',
-      extname: '.css'
-    } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) );
-}
-
-/**
  * Process application CSS in /apps/.
  * @returns {PassThrough} A source stream.
  */
@@ -218,22 +170,12 @@ gulp.task( 'styles:ie', stylesIE );
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ondemand', stylesOnDemand );
 
-gulp.task( 'styles:nemoProd', stylesNemoProd );
-gulp.task( 'styles:nemoIE8', stylesNemoIE8 );
-gulp.task( 'styles:nemo',
-  gulp.parallel(
-    'styles:nemoProd',
-    'styles:nemoIE8'
-  )
-);
-
 gulp.task( 'styles',
   gulp.parallel(
     'styles:apps',
     'styles:featureFlags',
     'styles:ie',
     'styles:modern',
-    'styles:nemo',
     'styles:ondemand'
   )
 );
