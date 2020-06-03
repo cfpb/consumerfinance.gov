@@ -233,6 +233,10 @@
 <li class="{{ _content_classes( nav_depth, '-item' ) }}
            {{- _content_classes( nav_depth, '-item__has-icon' ) if link.icon_pre else '' -}}"
     {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
+
+    {% if nav_depth == 1 %}
+    <h2>
+    {% endif %}
     <a class="{{- _content_classes( nav_depth, '-link' ) -}}
               {{- _content_classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
               {{- _content_classes( nav_depth, '-link__current' ) if nav_item.selected else '' -}}"
@@ -254,6 +258,10 @@
           <span class="{{- _content_classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
           {% endif %}
     </a>
+    {% if nav_depth == 1 %}
+    </h2>
+    {% endif %}
+
     {% if has_children %}
         {{ _nav_level( nav_depth + 1, nav_item, link, language ) }}
     {% endif %}
