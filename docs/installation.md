@@ -285,7 +285,7 @@ browser, and see a database error.
     With that all set, we're ready to install the latest Docker Compose.
 
     ```bash
-    pipx install git+https://github.com/docker/compose.git
+    pipx install docker-compose
     ```
 
     Confirm that it installed properly by running `which docker-compose`
