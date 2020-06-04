@@ -30,6 +30,7 @@ RUN yum -y install \
     yum -y update && \
     yum -y install \
         gcc \
+        git \
         mailcap \
         postgresql10 \
         which \
@@ -37,7 +38,7 @@ RUN yum -y install \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \
     source /etc/profile && \
-    pip install --no-cache-dir --upgrade pip setuptools
+    pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
 # NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
