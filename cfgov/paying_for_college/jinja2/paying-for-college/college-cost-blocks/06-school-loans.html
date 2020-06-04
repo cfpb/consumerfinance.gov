@@ -1,7 +1,7 @@
-<section class="college-costs_tool-section" data-tool-section="school-loans">
-    <h2> Loans from your state, the school, and nonprofits </h2>
+<section class="college-costs_tool-section college-costs_tool-section__school-loans" data-tool-section="school-loans">
+    <h2>Other loans (loans from your state, the school, and nonprofits </h2>
 
-    <p>Your state, this school, or a nonprofit may offer you loans directly or through a bank. Before taking on this debt, do your research to make sure it is the best option for you. If you think you may want to use this funding, enter it below.</p>
+    <p>Your state, this school, or a nonprofit may offer you loans directly or through a bank. Before taking on this debt, do your research to make sure they are the best option for you. If you think you may want to use this funding, enter it below.</p>
 
     {{ notification.render(
         'caution',
@@ -9,7 +9,7 @@
         '',
         'Only borrow what you need. Entering the amount here does not obligate you to borrow this money.'
     ) }}
-    <div class="block block__mid financial-items">
+    <div class="block block__mid block__flush-top financial-item-group">
         {{
             input.render({
                 'label': 'Loan from your state',
@@ -34,9 +34,11 @@
                 'data_attribute': 'data-financial-item="fee_stateLoan"'
             })
         }}
+    </div>
+    <div class="block block__mid financial-item-group">
         {{
             input.render({
-                'label': 'Loan from this school',
+                'label': 'Loan from the school',
                 'id': 'loans__schoolLoan',
                 'value': '0',
                 'data_attribute': 'data-financial-item="instiLoan_institutional"'
@@ -58,6 +60,8 @@
                 'data_attribute': 'data-financial-item="fee_institutionalLoan"'
             })
         }}
+    </div>
+    <div class="block block__mid block__flush-bottom financial-item-group">
 
         {{
             input.render({
@@ -83,15 +87,15 @@
                 'data_attribute': 'data-financial-item="fee_nonprofit"'
             })
         }}
-        {{
-            text_item.render({
-                'label': 'Total loans from your state, this school, or a nonprofit',
-                'value': '$99, 999',
-                'type': 'total',
-                'data_attribute': 'data-financial-item="total_schoolLoans"'
-            })
-        }}
     </div>
+    {{
+        text_item.render({
+            'label': 'Total other loans',
+            'value': '$99, 999',
+            'type': 'total',
+            'data_attribute': 'data-financial-item="total_schoolLoans"'
+        })
+    }}
 
     <div class="costs-not-covered-notification">
         {{ notification.render(
@@ -107,7 +111,7 @@
         true,
         'Money saving tips',
         '<ul>
-            <li> Before committing to these loans, compare them to other federal and private options. Look at the terms: the interest rate, whether interest accumulates during school, whether you’ll have to start repaying the loan immediately after leaving school, and whether there are flexible repayment options. </li>
+            <li> Before committing to these loans, compare them to other federal and private options. Look at the terms: the interest rate, whether interest accumulates during school, how soon you’ll have to start repaying the loan after leaving school, and whether there are flexible repayment options. </li>
             <li> Many schools offer low-cost or no-cost tuition payment plans. These break up a term’s tuition into periodic payments instead of one lump payment at the beginning of the term, allowing you to pay tuition as you (and/or your family) earn money over time.</li>
         </ul>' | safe
     ) }}
