@@ -87,6 +87,16 @@
                     'data_attribute': 'data-financial-item="indiCost_other"'
                 })
             }}
+
+            {{  
+                text_item.render({  
+                    'label': 'Estimated indirect costs',    
+                    'value': '$99,999', 
+                    'type': 'subtotal', 
+                    'status': 'warning',    
+                    'data_attribute': 'data-financial-item="total_indirectCosts"'   
+                })  
+            }}
             
             {{
                 input.render({
@@ -97,6 +107,7 @@
                     'data_attribute': 'data-financial-item="indiCost_otherIndirect"'
                 })
             }}
+
             {{
                 text_item.render({
                     'label': 'Your estimated costs this year',
