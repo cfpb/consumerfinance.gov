@@ -12,6 +12,8 @@
 
    value.label:           Label text.
 
+   value.helper_text:       Label helper text.
+
    value.value:           Value text.
 
    value.type:            Item type. Options include 'subtotal' and 'total'.
@@ -29,6 +31,9 @@
             {% if value.status %} {{ 'financial-item__' + value.status }} {% endif %}">
     <div class="financial-item_label">
         {{ value.label }}
+        {%- if value.helper_text -%}
+            <p><small>{{ value.helper_text | safe }}</small></p>
+        {%- endif -%}
     </div>
     <div class="financial-item_value" 
          {% if value.data_attribute %}{{ value.data_attribute | safe }}{% endif %}>
