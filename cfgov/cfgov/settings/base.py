@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
+    "research_reports",
 
     # Satellites
     "comparisontool",
