@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
     "wagtailmedia",
+    "research_reports",
 
     # Satellites
     "comparisontool",
