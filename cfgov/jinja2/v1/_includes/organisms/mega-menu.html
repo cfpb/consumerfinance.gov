@@ -53,13 +53,13 @@
 
             {% if group.title %}
             {% set aria_group_title = group.title ~ ' continued' if group.title_hidden else group.title %}
-            <h4 class="h5
+            <h3 class="h5
                     {{ base_class ~ '_group-heading' }}
                     {{ base_class ~ '_group-heading__hidden' if group.title_hidden else ''}}"
                 id="{{ aria_group_title | slugify ~ '-menu' }}"
                 aria-label="{{ aria_group_title }}">
                 {{ group.title }}
-            </h4>
+            </h3>
             {% endif %}
             <ul
                 {% if aria_group_title %}
@@ -130,14 +130,14 @@
     <div class="{{- _content_classes( nav_depth, '-wrapper' ) -}}">
 
         {% if overview_link and overview_link.url %}
-        <h3 class="{{ _content_classes( nav_depth, '-overview' ) }}
+        <div class="{{ _content_classes( nav_depth, '-overview' ) }}
                     {{ _content_classes( nav_depth, '-overview-heading' ) }}">
             <a class="{{ _content_classes( nav_depth, '-overview-link' ) }}
                         {{ _content_classes( nav_depth, '-overview-link__current' ) if overview_link.selected else '' }}"
                href="{{ overview_link.url }}">
                 {{ overview_link.text ~ ' Overview' }}
             </a>
-        </h3>
+        </div>
         {% endif %}
 
         {# TODO: Make the following menu markup use the _nav_item macro. #}
@@ -156,9 +156,9 @@
                 {% if nav_item.featured_items %}
                 <div class="{{ _content_classes( nav_depth, '-list' ) }}
                             {{ _content_classes( nav_depth, '-list__featured' ) }}">
-                    <h4 class="h5 {{ base_class ~ '_group-heading' }}">
+                    <h3 class="h5 {{ base_class ~ '_group-heading' }}">
                         Featured
-                    </h4>
+                    </h3>
                     <ul aria-label="Featured">
                         {% for link in nav_item.featured_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
@@ -176,9 +176,9 @@
 
                 {% if nav_item.other_items %}
                 <div class="{{ _content_classes( nav_depth, '-list' ) }}">
-                    <h4 class="h5 {{ base_class ~ '_group-heading' }}">
+                    <h3 class="h5 {{ base_class ~ '_group-heading' }}">
                         Additional Resources
-                    </h4>
+                    </h3>
                     <ul aria-label="Additional Resources">
                         {% for link in nav_item.other_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
