@@ -9,7 +9,7 @@
   family: cfgov-video-player
   patterns:
       notes:
-        - "For the markup please see macros/video-player.html."
+        - "For the markup please see organisms/video-player.html."
   tags:
     - cfgov-video-player
 */
@@ -62,7 +62,8 @@
     transition: opacity .25s;
 
     .no-js &,
-    &-loaded {
+    &-loaded,
+    &__thumbnail {
         opacity: 1;
     }
 }

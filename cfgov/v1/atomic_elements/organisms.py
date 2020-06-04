@@ -846,25 +846,70 @@ class FilterableList(BaseExpandable):
         return context
 
 
+class VideoPlayerStructValue(blocks.StructValue):
+    @property
+    def thumbnail_url(self):
+        thumbnail_image = self.get('thumbnail_image')
+
+        if thumbnail_image:
+            return thumbnail_image.get_rendition('original').url
+
+
 class VideoPlayer(blocks.StructBlock):
-    video_url = blocks.RegexBlock(
-        label='YouTube Embed URL',
-        default='https://www.youtube.com/embed/',
-        required=True,
-        regex=r'^https:\/\/www\.youtube\.com\/embed\/.+$',
+    video_id = blocks.RegexBlock(
+        label='YouTube video ID',
+        # Set required=False to allow for non-required VideoPlayers.
+        # See https://github.com/wagtail/wagtail/issues/2665.
+        required=False,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        regex=r'^[\w-]{11}$',
         error_messages={
-            'required': 'The YouTube URL field is required for video players.',
-            'invalid': "The YouTube URL is in the wrong format. "
-                       "You must use the embed URL "
-                       "(https://www.youtube.com/embed/video_id), "
-                       "which can be obtained by clicking Share > Embed "
-                       "on the YouTube video page.",
-        }
+            'invalid': "The YouTube video ID is in the wrong format.",
+        },
+        help_text=mark_safe(
+            'Enter the YouTube video ID (for example '
+            '<code>1V0Ax9OIc84</code>), which can be found in the video URL '
+            '(for example https://www.youtube.com/watch?v=1V0Ax9OIc84).'
+        )
     )
+    thumbnail_image = images_blocks.ImageChooserBlock(
+        required=False,
+        help_text=mark_safe(
+            'Optional thumbnail image to show before or after the video plays.'
+        )
+    )
+
+    def clean(self, value):
+        cleaned = super().clean(value)
+
+        errors = {}
+
+        if not cleaned['video_id']:
+            if getattr(self.meta, 'required', True):
+                errors['video_id'] = ErrorList([
+                    ValidationError('This field is required.'),
+                ])
+            elif cleaned['thumbnail_image']:
+                errors['thumbnail_image'] = ErrorList([
+                    ValidationError(
+                        'This field should not be used if YouTube video ID is '
+                        'not set.'
+                    )
+                ])
+
+        if errors:
+            raise ValidationError(
+                'Validation error in VideoPlayer',
+                params=errors
+            )
+
+        return cleaned
 
     class Meta:
         icon = 'media'
         template = '_includes/organisms/video-player.html'
+        value_class = VideoPlayerStructValue
 
     class Media:
         js = ['video-player.js']

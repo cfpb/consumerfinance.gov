@@ -1,19 +1,16 @@
 from django.core.exceptions import ValidationError
-from django.test import Client, TestCase
+from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
 from wagtail.core.blocks import StreamValue
 from wagtail.images.tests.utils import get_test_image_file
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
-from v1.models.browse_page import BrowsePage
-from v1.models.images import CFGOVImage
-from v1.models.landing_page import LandingPage
-from v1.models.learn_page import LearnPage
-from v1.models.resources import Resource
-from v1.models.snippets import Contact
-from v1.models.sublanding_page import SublandingPage
+from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock, VideoPlayer
+from v1.models import (
+    BrowsePage, CFGOVImage, Contact, LandingPage, LearnPage, Resource,
+    SublandingPage
+)
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
@@ -494,3 +491,101 @@ class TestInfoUnitGroup(TestCase):
 
         with self.assertRaises(ValidationError):
             block.clean(value)
+
+
+class VideoPlayerTests(SimpleTestCase):
+    def test_video_id_required_by_default(self):
+        block = VideoPlayer()
+        value = block.to_python({'video_id': None})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_video_id_not_required_if_block_is_not_required(self):
+        block = VideoPlayer(required=False)
+        value = block.to_python({'video_id': None})
+
+        try:
+            block.clean(value)
+        except ValidationError as e:
+            self.fail('Optional VideoPlayers should not require sub-fields')
+
+    def test_invalid_video_id(self):
+        block = VideoPlayer()
+        value = block.to_python({'video_url': 'Invalid YouTube ID'})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_valid_video_id(self):
+        block = VideoPlayer(required=False)
+        value = block.to_python({'video_id': '1V0Ax9OIc84'})
+
+        try:
+            block.clean(value)
+        except ValidationError as e:
+            self.fail('VideoPlayer should support valid YouTube IDs')
+
+    def test_render(self):
+        block = VideoPlayer()
+        value = block.to_python({'video_id': '1V0Ax9OIc84'})
+
+        request = RequestFactory().get('/')
+        html = block.render(value, context={'request': request})
+
+        self.assertIn(
+            'href="https://www.youtube.com/embed/1V0Ax9OIc84',
+            html
+        )
+
+        # Default no-JS image is used if no thumbnail is provided.
+        self.assertIn(
+            'src="/static/img/cfpb_video_cover_card_1380x776.png"',
+            html
+        )
+
+
+class VideoPlayerThumbnailTests(TestCase):
+    def setUp(self):
+        self.image = CFGOVImage.objects.create(
+            title='test',
+            file=get_test_image_file()
+        )
+
+    def test_thumbnail_image_without_video_id_fails_validation(self):
+        block = VideoPlayer()
+        value = block.to_python({'thumbnail_image': self.image.pk})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_value_contains_thumbnail_url(self):
+        block = VideoPlayer()
+        value = block.to_python({
+            'video_id': '1V0Ax9OIc84',
+            'thumbnail_image': self.image.pk,
+        })
+
+        self.assertRegex(
+            value.thumbnail_url,
+            r'^.*/images/test.*\.original\.png$'
+        )
+
+    def test_render(self):
+        block = VideoPlayer()
+        value = block.to_python({
+            'video_id': '1V0Ax9OIc84',
+            'thumbnail_image': self.image.pk,
+        })
+
+        request = RequestFactory().get('/')
+        html = block.render(value, context={'request': request})
+
+        self.assertIn(
+            'href="https://www.youtube.com/embed/1V0Ax9OIc84',
+            html
+        )
+        self.assertRegex(
+            html,
+            r'src="/f/images/test.*\.original\.png"'
+        )
