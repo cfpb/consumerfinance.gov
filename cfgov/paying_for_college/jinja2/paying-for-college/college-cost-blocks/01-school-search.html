@@ -3,7 +3,7 @@
 <section class="college-costs_tool-section college-costs_tool-section__school-search" id="college-costs_school-search" data-tool-section="school-info">
     <div class="school-search_start">
         <h2>School & living situation</h2>
-        <p>Start with the school you’re considering, as well as the program and where you expect to live.</p>
+        <p>Start with the school you’re considering, plus the program and other info about your situation. Refer to your financial aid offer if you're not sure.</p>
         <label class="a-label a-label__heading u-mb15" for="search__school-input">
             Search for a college:
         </label>
@@ -64,12 +64,14 @@
         </div>
         <div class="block block__sub program-question">
             <h3 class="h4">How long do you expect your program to take?</h3>
-            {{ notification.render(
-                'default',
-                true,
-                '',
-                'Though 4 years is considered the standard length of bachelor’s degrees, data  suggests that over half of students take longer.'
-            ) }}
+            <div data-program-type-content="bachelor">
+              {{ notification.render(
+                  'default',
+                  true,
+                  '',
+                  'Though 4 years is considered the standard length of bachelor’s degrees, <a href="https://nces.ed.gov/fastfacts/display.asp?id=569" target="_blank" class="external-link" rel="noreferrer noopener">data</a> suggests that over half of students take longer.' | safe
+              ) }}
+            </div>
             {{
                 radio.render({
                   'name':  "programLength",
@@ -145,7 +147,7 @@
                   'id': 'program-rate-radio_out-of-state'
                 })
             }}
-            <!-- TODO: add option for N/A OR hide this question if N/A -->
+            <!-- TODO: add option for N/A -- all students pay the same rate OR hide this question if N/A -->
         </div>
         <div class="block block__sub program-question">
             <h3 class="h4">Where do you plan to live while in school?</h3>
@@ -171,6 +173,25 @@
                   'label': 'With family (you will not pay rent/mortgage)',
                   'value': 'withFamily',
                   'id': 'program-housing-radio_with-family'
+                })
+            }}
+        </div>
+        <div class="block block__sub program-question">
+            <h3 class="h4">Are you considered a dependent or independent student?</h3>
+            {{
+                radio.render({
+                  'name':  "programStudentType",
+                  'label': 'Dependent',
+                  'value': 'dependent',
+                  'id': 'program-student-type-radio_dependent'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programStudentType",
+                  'label': 'Independent',
+                  'value': 'independent',
+                  'id': 'program-student-type-radio_independent'
                 })
             }}
         </div>

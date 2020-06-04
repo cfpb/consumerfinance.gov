@@ -1,6 +1,6 @@
 <section class="college-costs_tool-section college-costs_tool-section__debt-guideline" data-tool-section="max-debt-guideline">
-    <h2>How do I know if this is too much debt for me?</h2>
-    <p>A simple guideline: If you’re borrowing more than you’ll earn in your first year after finishing your program, then you might be taking on more debt than you can afford. This page compares the median salary of this school’s recent students to your projected total debt at the end of your program. </p>
+    <h2>Could this be too much debt?</h2>
+    <p>A guideline that some find helpful: If you’re borrowing more than you’re likely to earn in your first year out of school, then you should consider whether you might be taking on more debt than you'll be able to afford.</p>
 
     {{ number_callout.render({
             'header': 'Projected total debt',
@@ -30,7 +30,13 @@
     {{ notification.render(
         'caution',
         true,
-        'Your projected total debt is more than the median salary of this school’s recent students.',
-        'Your projected total debt is <span data-financial-item="total_debtRuleGap">$XXXX</span> higher than the median salary of this school’s students six years after they first enrolled. Your actual salary will depend on many different factors, including your field of work and where you live. Visit the BLS Wage Data site for more information.' | safe
+        'Your projected total debt is more than the median first-year salary of this school’s graduates. Consider whether this plan is right for you.' | safe,
+        'Your projected total debt is <span data-financial-item="total_debtRuleGap">$XXXX</span> higher than the median first-year salary of this school&apos;s graduates. Your actual salary will depend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a>' | safe
+    ) }}
+    {{ notification.render(
+        'default',
+        true,
+        'Your projected total debt is not higher than the median salary of this school\'s recent students.',
+        'Your actual salary will depend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a>' | safe
     ) }}
 </section>
