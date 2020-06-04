@@ -107,7 +107,7 @@ pipeline {
             } 
             steps {
                 script {
-                    timeout(time: 10, unit: 'MINUTES') {
+                    timeout(time: 15, unit: 'MINUTES') {
                         dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                     }
                 }
