@@ -51,63 +51,64 @@ const HTML_SNIPPET = `
                                             </button>
 
                                             <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid">
-                                                <h3 class="o-mega-menu_content-overview o-mega-menu_content-2-overview o-mega-menu_content-overview-heading o-mega-menu_content-2-overview-heading">
+                                                <div class="o-mega-menu_content-overview o-mega-menu_content-2-overview o-mega-menu_content-overview-heading o-mega-menu_content-2-overview-heading">
                                                     <span class="o-mega-menu_content-overview-heading-text o-mega-menu_content-2-overview-heading-text ">Consumer Tools</span>
-                                                </h3>
+                                                </div>
 
                                                 <div class="o-mega-menu_content-lists o-mega-menu_content-2-lists ">
 
-                                                    <div class="o-mega-menu_content-list o-mega-menu_content-2-list ">
-                                                        <div class="h5 o-mega-menu_group-heading">
-                                                            Money Topics
+                                                    <div class="o-mega-menu_content-list-group">
+                                                        <div class="o-mega-menu_content-list">
+                                                            <h4 class="h5 o-mega-menu_group-heading">
+                                                                Money Topics
+                                                            </h4>
+
+                                                            <ul class="m-list m-list__unstyled">
+                                                                <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
+                                                                    <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/auto-loans/" role="menuitem">
+                                                                        Auto Loans
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
+                                                                    <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/bank-accounts/" role="menuitem">
+                                                                        Bank Accounts &amp; Services
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                    </a>
+                                                                </li>
+
+
+                                                                <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
+                                                                    <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/ask-cfpb/category-credit-cards/" role="menuitem">
+                                                                        Credit Cards
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
+                                                                    <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/credit-reports-and-scores/" role="menuitem">
+                                                                        Credit Reports &amp; Scores
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
+                                                                    <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/debt-collection/" role="menuitem">
+                                                                        Debt Collection
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
+                                                                    <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/fraud/" role="menuitem">
+                                                                        Fraud &amp; Scams
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
                                                         </div>
-
-                                                        <ul class="m-list m-list__unstyled">
-                                                            <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
-                                                                <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/auto-loans/" role="menuitem">
-                                                                      Auto Loans
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
-                                                                <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/bank-accounts/" role="menuitem">
-                                                                      Bank Accounts &amp; Services
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
-                                                                </a>
-                                                            </li>
-
-
-                                                            <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
-                                                                <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/ask-cfpb/category-credit-cards/" role="menuitem">
-                                                                      Credit Cards
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
-                                                                <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/credit-reports-and-scores/" role="menuitem">
-                                                                      Credit Reports &amp; Scores
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
-                                                                <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/debt-collection/" role="menuitem">
-                                                                      Debt Collection
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="m-list_item o-mega-menu_content-item o-mega-menu_content-2-item ">
-                                                                <a class="o-mega-menu_content-link o-mega-menu_content-2-link " href="/consumer-tools/fraud/" role="menuitem">
-                                                                      Fraud &amp; Scams
-                                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
                                                     </div>
-
                                                 </div>
 
                                                 <div class="o-mega-menu_footer">
