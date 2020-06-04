@@ -511,6 +511,7 @@ CSP_SCRIPT_SRC = (
     "www.federalregister.gov",
     "storage.googleapis.com",
     "api.consumerfinance.gov",
+    "files.consumerfinance.gov",
 )
 
 # These specify valid sources of CSS code
@@ -632,6 +633,8 @@ FLAGS = {
     "INSET_TEST": [],
     # The next version of the public consumer complaint database
     "CCDB5_RELEASE": [],
+    # The Trends feature inside Consumer Complaints
+    "CCDB5_TRENDS": [],
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
@@ -666,12 +669,6 @@ FLAGS = {
             "required": True,
         },
     ],
-    # Add HowTo schema markup to answer page
-    # Intended for use with path conditions in admin for specific ask pages,
-    # such as: is enabled when path matches ^/ask-cfpb/what-is-an-ach-en-1065/
-    # Delete after Google schema pilot completes and schema usage is
-    # discontinued or implemented with a toggle in answer page admin.
-    "HOW_TO_SCHEMA": [],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.

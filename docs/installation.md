@@ -159,8 +159,8 @@ createuser --createdb cfpb && createdb -O cfpb cfgov
 psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
 ```
 
-We don't support using an SQLite database, because we use database fields 
-that are specific to Postgres. The `--createdb` flag above allows Django to 
+We don't support using an SQLite database, because we use database fields
+that are specific to Postgres. The `--createdb` flag above allows Django to
 create temporary Postgres databases when running unit tests.
 
 
@@ -203,7 +203,7 @@ Want to know more about what the setup scripts are doing?
 - **Docker**: You may not need to interact directly with Docker, but you
   should know that it's a client/server application for managing _containers_
   (a way of running software in an isolated environment) and _images_ (a
-  snapshot of all of the files neccessary to run a container).
+  snapshot of all of the files necessary to run a container).
 - **Docker Compose**: Compose allows you to configure and run a collection of
   connected containers (like a web application and its database).
 
@@ -246,11 +246,83 @@ This will install and build the frontend and set up the docker environment.
 `docker-compose up`
 
 This will download and/or build images, and then start the containers, as
-described in the docker-compose.yml file. This will take a few minutes, or
-longer if you are on a slow internet connection.
+described in the `docker-compose.yml` file. This will take a few minutes, or
+longer if you are on a slow Internet connection.
 
 When it's all done, you should be able to load http://localhost:8000 in your
 browser, and see a database error.
+
+!!! note
+    Trying to use Docker Compose and finding that it gives you an error?
+    Something like:
+
+    ```
+    ERROR: In file ./.env: environment variable name
+    `export DJANGO_HTTP_PORT` may not contain whitespace.
+    ```
+
+    You've probably running the latest version of Docker Desktop
+    that's available to us (CFPB developers) in Self Service,
+    which comes with a version of Docker Compose
+    that changes how it handles `.env` files.
+
+    Docker Compose has been updated to fix this,
+    but the fix is still in the Release Candidate stage (as of June 1, 2020),
+    it may be some time before that fix gets packaged
+    with a new version of Docker Desktop,
+    and longer still before that version of Docker Desktop
+    gets packaged up and made available to us in Self Service,
+    so we need a workaround.
+
+    #### 1. Install pipx, if you haven't yet
+
+    If you have not yet set up pipx on your computer, follow our
+    [guide to installing and using pipx](https://github.com/cfpb/development/blob/master/guides/pipx.md)
+    to do so.
+
+    #### 2. Install docker-compose with pipx
+
+    With that all set, we're ready to install the latest Docker Compose.
+
+    ```bash
+    pipx install docker-compose
+    ```
+
+    Confirm that it installed properly by running `which docker-compose`
+    and seeing the pipx path:
+
+    ```bash
+    $ which docker-compose
+    /Users/<username>/.local/bin/docker-compose
+    ```
+
+    Finally, we'll need to inject another Python package, python-dotenv,
+    into pipx's isolated docker-compose environment:
+
+    ```bash
+    pipx inject docker-compose python-dotenv
+    ```
+
+    #### 3. Profit!
+
+    At this point, you should be able to run `docker-compose` commands again.
+
+    **Note:** When running `docker-compose up` in cfgov-refresh
+    with our typical `.env` file, you may see some warnings like the following:
+
+    ```
+    WARNING: Python-dotenv could not parse statement starting at line 236
+    WARNING: Python-dotenv could not parse statement starting at line 239
+    WARNING: Python-dotenv could not parse statement starting at line 236
+    WARNING: Python-dotenv could not parse statement starting at line 239
+    WARNING: Python-dotenv could not parse statement starting at line 236
+    WARNING: Python-dotenv could not parse statement starting at line 239
+    ```
+
+    These are caused by the `if` statement that will override some of the variables
+    when sourcing the `.env` file in a local (non-Docker) environment.
+    They can safely be ignored.
+
 
 ### 5. Setup the database
 

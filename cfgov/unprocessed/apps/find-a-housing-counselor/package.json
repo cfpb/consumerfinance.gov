@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.x"
   },
   "dependencies": {
     "babel-polyfill": "^7.0.0-beta.3"
