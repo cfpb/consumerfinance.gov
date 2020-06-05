@@ -234,9 +234,6 @@
            {{- _content_classes( nav_depth, '-item__has-icon' ) if link.icon_pre else '' -}}"
     {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
 
-    {% if nav_depth == 1 %}
-    <h2>
-    {% endif %}
     <a class="{{- _content_classes( nav_depth, '-link' ) -}}
               {{- _content_classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
               {{- _content_classes( nav_depth, '-link__current' ) if nav_item.selected else '' -}}"
@@ -246,21 +243,26 @@
           aria-haspopup=menu'
          if has_children else ''
        }}>
-          {% if link.icon_pre %}
-          <span class="{{- _content_classes( nav_depth, '-link-icon-pre' ) -}}">{{ svg_icon( link.icon_pre ) }}</span>
-          {% endif %}
+        {% if nav_depth == 1 %}
+        <h2>
+        {% endif %}
 
-          {{ link.text }}
+        {% if link.icon_pre %}
+        <span class="{{- _content_classes( nav_depth, '-link-icon-pre' ) -}}">{{ svg_icon( link.icon_pre ) }}</span>
+        {% endif %}
 
-          {% if has_children %}
-          <span class="{{- _content_classes( nav_depth, '-link-icon-post' ) -}}">{{ svg_icon('right') }}</span>
-          <span class="{{- _content_classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
-          <span class="{{- _content_classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
-          {% endif %}
+        {{ link.text }}
+
+        {% if has_children %}
+        <span class="{{- _content_classes( nav_depth, '-link-icon-post' ) -}}">{{ svg_icon('right') }}</span>
+        <span class="{{- _content_classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
+        <span class="{{- _content_classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
+        {% endif %}
+
+        {% if nav_depth == 1 %}
+        </h2>
+        {% endif %}
     </a>
-    {% if nav_depth == 1 %}
-    </h2>
-    {% endif %}
 
     {% if has_children %}
         {{ _nav_level( nav_depth + 1, nav_item, link, language ) }}
