@@ -179,7 +179,6 @@ TEMPLATES = [
                 "mega_menu.jinja2tags.MegaMenuExtension",
                 "prepaid_agreements.jinja2tags.prepaid_agreements",
                 "regulations3k.jinja2tags.regulations",
-                "research_reports.jinja2tags.ResearchReportsExtension",
                 "v1.jinja2tags.datetimes_extension",
                 "v1.jinja2tags.fragment_cache_extension",
                 "v1.jinja2tags.v1_extension",

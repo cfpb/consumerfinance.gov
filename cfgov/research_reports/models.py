@@ -5,7 +5,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.admin.forms.models import WagtailAdminModelFormMetaclass
 from wagtail.admin.forms.pages import WagtailAdminPageForm
-from wagtail.core.fields import RichTextField
 from wagtail.core.models import PageManager
 
 from modelcluster.fields import ParentalKey
@@ -52,7 +51,7 @@ class ReportSection(ClusterableModel):
     header = models.CharField(max_length=200, blank=True)
     html_id = models.CharField(max_length=50, blank=True)
     is_appendix = models.BooleanField(default=False)
-    body = RichTextField(blank=True)
+    body = models.TextField(blank=True)
     panels = [
         FieldPanel('header'),
         FieldPanel('html_id'),
@@ -68,7 +67,7 @@ class ReportSection(ClusterableModel):
 class ReportSubSection(models.Model):
     sub_header = models.CharField(max_length=200)
     sub_id = models.CharField(max_length=50, blank=True)
-    sub_body = RichTextField(blank=True)
+    sub_body = models.TextField(blank=True)
     action = ParentalKey('ReportSection',
                          on_delete=models.CASCADE,
                          related_name='report_subsections')
@@ -97,7 +96,7 @@ class Report(CFGOVPage):
     header = models.CharField(max_length=200, default='')
     subheader = models.TextField(blank=True)
     pdf_location = models.CharField(max_length=150, default='')
-    footnotes = RichTextField(blank=True)
+    footnotes = models.TextField(blank=True)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [

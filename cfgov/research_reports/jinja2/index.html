@@ -43,7 +43,7 @@
         </a>
       </h3>
 
-      {{ render_rich_html(section.body) }}
+      {{ section.body | safe }}
 
       {% for subsection in section.report_subsections.all().order_by('pk') -%}
         <h4 class="report-header">
@@ -55,12 +55,12 @@
           </a>
         </h4>
 
-        {{ render_rich_html(subsection.sub_body) }}
+        {{ subsection.sub_body | safe}}
       {%- endfor %}
     {%- endfor %}
 
     <div class="block block__flush-top">
-      {{ render_rich_html(page.footnotes) }}
+      {{ page.footnotes }}
     </div>
 
     {% if page.sidefoot %}
