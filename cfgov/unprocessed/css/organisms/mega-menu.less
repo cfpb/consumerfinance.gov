@@ -30,11 +30,20 @@ body {
       markup: |
         <nav class="o-mega-menu"
              role="navigation">
-            <h2 class="o-mega-menu_heading">
-                <button class="o-mega-menu_trigger" aria-expanded="false">
-                    <span class="u-visually-hidden">Main menu</span>
-                </button>
-            </h2>
+            <button class="o-mega-menu_trigger" aria-expanded="false">
+                <span class="u-visually-hidden">Main menu</span>
+            </button>
+            <button class="o-mega-menu_trigger" data-js-hook="behavior_flyout-menu_trigger" aria-haspopup="menu" aria-expanded="false">
+                <span class="o-mega-menu_trigger-open">
+                    [svg]
+                </span>
+                <span class="o-mega-menu_trigger-close">
+                    [svg]
+                </span>
+                <span class="u-visually-hidden">
+                    Main menu
+                </span>
+            </button>
             <div class="o-mega-menu_content"
                  aria-expanded="false">
                 <div class="o-mega-menu_content-wrapper">
@@ -47,7 +56,18 @@ body {
                                 <a class="o-mega-menu_content-link"
                                     href="/about-us/"
                                     aria-expanded="false">
-                                    About Us
+                                    <h2>
+                                        About Us
+                                        <span class="o-mega-menu_content-link-icon-post">
+                                            [svg]
+                                        </span>
+                                        <span class="o-mega-menu_content-link-icon-closed">
+                                            [svg]
+                                        </span>
+                                        <span class="o-mega-menu_content-link-icon-open">
+                                            [svg]
+                                        </span>
+                                    </h2>
                                 </a>
                                 <div class="o-mega-menu_content"
                                         aria-expanded="false">
@@ -57,20 +77,23 @@ body {
                                                 Back
                                             </button>
                                             <span class="o-mega-menu_content-overview">
-                                                <h3 class="o-mega-menu_content-overview-heading">
+                                                <div class="o-mega-menu_content-overview-heading">
                                                     <a class="o-mega-menu_content-overview-link"
                                                         href="/about-us/">
                                                         About Us Overview
                                                     </a>
-                                                </h3>
+                                                </div>
                                             </span>
                                             <div class="o-mega-menu_content-lists">
                                                 <div class="o-mega-menu_content-list-group">
                                                     <div class="o-mega-menu_content-list">
 
+                                                        <h4 class="h5 o-mega-menu_group-heading">
+                                                            Money Topics
+                                                        </h4>
+
                                                         <ul class="m-list
-                                                                    m-list__unstyled
-                                                                    o-mega-menu_content-list">
+                                                                   m-list__unstyled">
                                                             <li class="m-list_item
                                                                         o-mega-menu_content-item">
                                                                 <a class="o-mega-menu_content-link"
@@ -81,8 +104,7 @@ body {
                                                             …
                                                         </ul>
                                                         <ul class="m-list
-                                                                    m-list__unstyled
-                                                                    o-mega-menu_content-list">
+                                                                    m-list__unstyled">
                                                                 <li class="m-list_item
                                                                             o-mega-menu_content-item">
                                                                     <a class="o-mega-menu_content-link__current
@@ -115,8 +137,7 @@ body {
           Structural cheat sheet:
           -----------------------
           nav.o-mega-menu
-            .o-mega-menu_heading
-                .o-mega-menu_trigger
+            .o-mega-menu_trigger
             .o-mega-menu_content
                 .o-mega-menu_content-wrapper
                     .o-mega-menu_content-overview
@@ -127,13 +148,22 @@ body {
                     .o-mega-menu_content-lists
                         .o-mega-menu_content-list-group
                             .o-mega-menu_content-list
+                                .o-mega-menu_group-heading
                                 ul
                                     li.o-mega-menu_content-item
                                         .m-global-header-cta.m-global-header-cta__list
                                     li.o-mega-menu_content-item
-                                        a.o-mega-menu_content-link
+                                        h2
+                                            a.o-mega-menu_content-link
+                                            span.o-mega-menu_content-link-icon-post
+                                            span.o-mega-menu_content-link-icon-open
+                                            span.o-mega-menu_content-link-icon-closed
                                     li.o-mega-menu_content-item
-                                        a.o-mega-menu_content-link
+                                        h2
+                                            a.o-mega-menu_content-link
+                                            span.o-mega-menu_content-link-icon-post
+                                            span.o-mega-menu_content-link-icon-open
+                                            span.o-mega-menu_content-link-icon-closed
                                         .o-mega-menu_content
                                             .o-mega-menu_content-wrapper
                                                 button.o-mega-menu_content-alt-trigger
@@ -351,16 +381,17 @@ body {
 
 .o-mega-menu {
 
-    &_heading {
-        // Override h2 element styles.
-        margin: 0;
-        font-size: 1em;
-    }
-
     // Reset default unordered list padding and margin.
     ul {
         padding-left: 0;
         margin-top: 0;
+    }
+
+    // Reset default h2 heading styles.
+    h2 {
+        font-size: 1em;
+        line-height: 1.375;
+        margin-bottom: 0;
     }
 
     &_content {
