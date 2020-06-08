@@ -24,7 +24,7 @@
 	}
 
 	&_note,
-	&_note span {
+	&_note span:not(.a-link_text) {
 		display: block;
 	}
 
@@ -60,5 +60,11 @@
 		.financial-item_value {
 			color: @red;
 		}
+	}
+}
+
+.financial-item-group {
+	.financial-item {
+		margin-top: unit( 15px / @base-font-size-px, em );
 	}
 }
