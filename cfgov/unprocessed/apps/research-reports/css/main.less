@@ -1,0 +1,40 @@
+.o-report-sidenav {
+  &.sticky {
+    position: fixed;
+    top: 0;
+    width: 240px;
+  }
+  display: block;
+  overflow-y: scroll;
+  height: 100%;
+  h3 {
+    margin-top: 0.25em;
+  }
+  & > ul {
+    a {
+      text-indent: -1.1em;
+      padding-left: 2em;
+    }
+  }
+  .m-nav-link.current-section {
+    color: #101820;
+    border-color: #20aa3f;
+  }
+  .o-secondary-navigation_list__children {
+    display: none;
+  }
+  .parent-header {
+    .o-secondary-navigation_list__children  {
+      display: block;
+    }
+  }
+}
+
+.report-footnotes {
+  margin-left: 4px;
+}
+
+.report-global-footer {
+  position: relative;
+  z-index: 1;
+}
