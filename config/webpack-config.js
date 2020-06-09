@@ -27,7 +27,7 @@ const COMMON_MODULE_CONFIG = {
        Regex test: https://regex101.com/r/zizz3V/5 */
     exclude: {
       test: /node_modules/,
-      exclude: /node_modules\/(?:cf-.+|cfpb-.+)/
+      exclude: /node_modules\/(?:cf-.+|cfpb-.+)|@cfpb.+/
     },
     use: {
       loader: 'babel-loader?cacheDirectory=true',
