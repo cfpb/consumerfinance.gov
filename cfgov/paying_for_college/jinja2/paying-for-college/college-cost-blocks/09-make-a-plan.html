@@ -5,20 +5,25 @@
 
     <p>Thank you for entering all that info! This page will help you determine whether you have enough funding to cover the cost of attending this particular school. If you have a gap, it will help you come up with a plan.</p>
 
+    <div  data-state-based-visibility="uncovered-costs">
+        {{ notification.render(
+            'caution',
+            true,
+            '',
+            'You have <span class="make-a-plan_gap" data-financial-item="total_gap">$XX,XXX</span> of uncovered costs for this year of schooling. Make a plan to get this down to $0.' | safe,
+            'data-state_uncovered_costs="true"' | safe
+        ) }}
+    </div>
 
-    {{ notification.render(
-        'caution',
-        true,
-        '',
-        'You have <span class="make-a-plan_gap" data-financial-item="total_gap">$XX,XXX</span> of uncovered costs for this year of schooling. Make a plan to get this down to $0.' | safe
-    ) }}
-
-    {{ notification.render(
-        'caution',
-        true,
-        '',
-        'You have <span class="make-a-plan_gap" data-financial-item="total_gap">$XX,XXX</span> of excess funding for this year. Consider reducing your borrowing, starting with the highest interest loans.' | safe
-    ) }}
+    <div data-state-based-visibility="excesss-funding">
+        {{ notification.render(
+            'caution',
+            true,
+            '',
+            'You have <span class="make-a-plan_gap" data-financial-item="total_excessFunding">$XX,XXX</span> of excess funding for this year. Consider reducing your borrowing, starting with the highest interest loans.' | safe,
+            'data-state_excess_funding="true"' | safe
+        ) }}
+    </div>
 
     <h3 class="h4 header_border-bottom">Cost of attendance vs. funding</h3>
 
@@ -32,7 +37,7 @@
         <div class="o-expandable-group">
             {% set expandable_settings = {
                 'label': 'Costs',
-                'value': '$99,999',
+                'value': '$0',
                 'is_editable': 'True',
                 'status': 'warning',
                 'data_attribute': 'data-financial-item="total_costs"',
@@ -391,7 +396,7 @@
                             'label': 'Loan from this school',
                             'id': 'plan__schoolLoan',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="instiLoan_institutional"'
+                            'data_attribute': 'data-financial-item="loan_institutional"'
                         })
                     }} 
                     {{
@@ -399,7 +404,7 @@
                             'label': 'Interest rate (%)',
                             'id': 'plan__schoolLoanRate',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="rate_institutionalLoan"'
+                            'data_attribute': 'data-financial-item="rate_institutional"'
                         })
                     }}
                     {{
@@ -407,7 +412,7 @@
                             'label': 'Loan fee (%)',
                             'id': 'plan__schoolLoanFee',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="fee_institutionalLoan"'
+                            'data_attribute': 'data-financial-item="fee_institutional"'
                         })
                     }}
                 </div>
@@ -485,7 +490,7 @@
                                     'label': 'Loan amount',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="?"'
+                                    'data_attribute': 'data-financial-item="loan_privateLoan1"'
                                 })
                             }}
                             {{
@@ -493,7 +498,7 @@
                                     'label': 'Interest rate (%)',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="?"',
+                                    'data_attribute': 'data-financial-item="rate_privateLoan1"',
                                     'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
                                 })
                             }}
@@ -502,7 +507,7 @@
                                     'label': 'Loan fee (%)',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="?"',
+                                    'data_attribute': 'data-financial-item="fee_privateLoan1"',
                                     'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
                                 })
                             }}
@@ -519,21 +524,21 @@
                         <button class="a-btn a-btn__link u-mt30">{{ svg_icon('plus-round') }} Add another Private Loan</button>
                     {% endcall %}
                 </div>
-                <div class="private-loan-expandable">
+                <div class="plus-loan-expandable">
                     {% set expandable_settings = {
                         'label': '<span class="undergrad-content">Parent PLUS</span><span class="graduate-content">Direct PLUS (grad PLUS)</span> loans' | safe,
-                        'value': '$5,000',
+                        'value': '$0',
                         'is_editable': 'True',
-                        'data_attribute': 'data-financial-item="total_privateLoans"'
+                        'data_attribute': 'data-financial-item="total_plusLoans"'
                     } %}
                     {% call() expandable(expandable_settings) %}
-                        <div class="private-loan-form">
+                        <div class="plus-loan-form graduate-content">
                             {{
                                 input.render({
                                     'label': 'Loan amount',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="?"'
+                                    'data_attribute': 'data-financial-item="fedLoan_gradPlus"'
                                 })
                             }}
                             {{
@@ -541,7 +546,7 @@
                                     'label': 'Interest rate (%)',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="?"',
+                                    'data_attribute': 'data-financial-item="rate_gradPlus"',
                                     'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
                                 })
                             }}
@@ -550,7 +555,35 @@
                                     'label': 'Loan fee (%)',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="?"',
+                                    'data_attribute': 'data-financial-item="fee_gradPlus"',
+                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
+                                })
+                            }}
+                        </div>
+                         <div class="plus-loan-form undergrad-content">
+                            {{
+                                input.render({
+                                    'label': 'Loan amount',
+                                    'id': '?',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="loan_parentPlus"'
+                                })
+                            }}
+                            {{
+                                input.render({
+                                    'label': 'Interest rate (%)',
+                                    'id': '?',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="rate_parentPlus"',
+                                    'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
+                                })
+                            }}
+                            {{
+                                input.render({
+                                    'label': 'Loan fee (%)',
+                                    'id': '?',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="fee_parentPlus"',
                                     'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
                                 })
                             }}

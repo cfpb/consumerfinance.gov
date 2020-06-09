@@ -17,12 +17,12 @@
     <div data-program-type-content="undergrad">
         <p>Now that you understand how much debt you’re considering, let’s look at some statistics that indicate how well the school serves students. You’re investing a lot—make sure it pays off.</p>
 
-        <h3 class="u-border-bottom"><span data-school-item="name">Example University</span></h3>
+        <h3 class="u-border-bottom"><span data-school-item="school">Example University</span></h3>
         <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
                 <div class="school-fact">
                     <strong>Location:</strong>
-                    <span data-school-item="location">Lubbock, TX</span>
+                    <span data-school-item="city">City</span>, <span data-school-item="state"TX</span>
                 </div>
                 <div>
                     <strong>Type:</strong>
@@ -30,103 +30,105 @@
                 </div>
                 <div>
                     <strong>Student Body:</strong>
-                    <span data-school-item="studentBody">30,330</span>
+                    <span data-school-item="enrollment">1</span>
                 </div>
             </div>
             <div class="content-l_col content-l_col-1-2">
                 <div>
                     <strong>Highest degree offered:</strong>
-                    <span data-school-item="highestDegree">PhD</span>
+                    <span data-school-item="highestDegree">degree</span>
                 </div>
                 <div>
                     <strong>Number of programs:</strong>
-                    <span data-school-item="programCount">53</span>
+                    <span data-school-item="programCount">1</span>
                 </div>
                 <div>
                     <strong>Most popular programs:</strong>
-                    <span data-school-item="popularPrograms">Business, Management, Marketing and Related Support Services</span>
+                    <span data-school-item="programsPopular">Programs</span>
                 </div>
             </div>
         </div>
 
         {{ notification.render(
             'warning',
-            true,
+            false,
             '',
             'This school is under Heightened Cash Monitoring by the U.S. Department of Education. <a href="https://studentaid.gov/data-center/school/htm" target="_blank" class="external-link" rel="noreferrer noopener">Find out more.</a>' | safe
         ) }}
 
-        <div class="block block__mid">
-            <h4>Graduation rate</h4>
-            <div class="school-results_rank-display">
-                <div class="big-percentile"><span data-school-item="grad-rate_control"></span></div>
-                <div><span data-school-item="name"></span>'s graduation rate is <strong data-school-item="grad-rate_control"></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
-            </div>
-            <div class="school-results_cohort-buttons">
-                <p>Compare <span data-school-item="name"></span>'s rate to other 4 year schools that are also.:</p>
-                <div>
-                    <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]
-                    </button>
-                    <button class="a-btn btn__cohort" data-button-cohort="">[public/private]</button>
+        <div class="undergrad-content">
+            <div class="block block__mid">
+                <h4>Graduation rate</h4>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="rateGraduation"></span></div>
+                    <div><span data-school-item="name"></span>'s graduation rate is <strong data-school-item="grad-rate_control"></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
                 </div>
+                <div class="school-results_cohort-buttons">
+                    <p>Compare <span data-school-item="name"></span>'s rate to other 4 year schools that are also.:</p>
+                    <div>
+                        <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]
+                        </button>
+                        <button class="a-btn btn__cohort" data-button-cohort="">[public/private]</button>
+                    </div>
+                </div>
+                <div id="school-results_grad-meter" class="college-costs_meter-graph"></div>
+                <p><span data-school-item="name"></span>'s graduation rate is [2% higher] than the median of all [US/[state]/[public/private]] schools granting 4-year degrees. It falls in the <strong>[middle third]</strong> of these schools.</p>
             </div>
-            <div id="school-results_grad-meter" class="college-costs_meter-graph"></div>
-            <p><span data-school-item="name"></span>'s graduation rate is [2% higher] than the median of all [US/[state]/[public/private]] schools granting 4-year degrees. It falls in the <strong>[middle third]</strong> of these schools.</p>
-        </div>
 
-        <div class="block block__mid community-college-content">
-            <h4>Transfer to graduation rate</h4>
-            <div class="school-results_rank-display">
-                <div class="big-percentile"><span data-school-item="??"></span></div>
-                <div><span data-school-item="name"></span>'s graduation rate is <strong data-school-item="grad-rate_control"></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
-            </div>
-            <div class="school-results_cohort-buttons">
-                <p>Compare <span data-school-item="name"></span>'s rate to other 2 year schools that are also.:</p>
-                <div>
-                    <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]
-                    </button>
+            <div class="block block__mid community-college-content">
+                <h4>Transfer to graduation rate</h4>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="??"></span></div>
+                    <div><span data-school-item="name"></span>'s graduation rate is <strong data-school-item="grad-rate_control"></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
                 </div>
+                <div class="school-results_cohort-buttons">
+                    <p>Compare <span data-school-item="name"></span>'s rate to other 2 year schools that are also.:</p>
+                    <div>
+                        <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]
+                        </button>
+                    </div>
+                </div>
+                <div id="school-results_transfer-to-grad-meter" class="college-costs_meter-graph"></div>
+                <p><span data-school-item="name"></span>'s transfer to graduation rate is [2% higher] than the median of all US community colleges. It falls in the <strong>[middle third]</strong> of these schools.</p>
             </div>
-            <div id="school-results_transfer-to-grad-meter" class="college-costs_meter-graph"></div>
-            <p><span data-school-item="name"></span>'s transfer to graduation rate is [2% higher] than the median of all US community colleges. It falls in the <strong>[middle third]</strong> of these schools.</p>
-        </div>
 
-        <div class="block block__mid">
-            <h4>Default rate</h4>
-            <div class="school-results_rank-display">
-                <div class="big-percentile"><span data-school-item="?"></span></div>
-                <div><span data-school-item="name"></span>'s default rate is <strong data-school-item="?"></strong>. This is a sign of how many student borrowers experienced financial distress while repaying their student debt.</div>
-            </div>
-            <div class="school-results_cohort-buttons">
-                <p>Compare <span data-school-item="name"></span>'s rate to other [4-year] schools that are also.:</p>
-                <div>
-                    <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="">[public/private]</button>
+            <div class="block block__mid">
+                <h4>Default rate</h4>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="?"></span></div>
+                    <div><span data-school-item="name"></span>'s default rate is <strong data-school-item="?"></strong>. This is a sign of how many student borrowers experienced financial distress while repaying their student debt.</div>
                 </div>
+                <div class="school-results_cohort-buttons">
+                    <p>Compare <span data-school-item="name"></span>'s rate to other [4-year] schools that are also.:</p>
+                    <div>
+                        <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="">[public/private]</button>
+                    </div>
+                </div>
+                <div id="school-results_default-meter" class="college-costs_meter-graph"></div>
+                <p><span data-school-item="name"></span>'s default rate is <strong>[15% higher]</strong> than the median of all US schools grantinbg [4-year] degrees. It falls in the <strong>[top third]</strong> of these schools.</p>
             </div>
-            <div id="school-results_default-meter" class="college-costs_meter-graph"></div>
-            <p><span data-school-item="name"></span>'s default rate is <strong>[15% higher]</strong> than the median of all US schools grantinbg [4-year] degrees. It falls in the <strong>[top third]</strong> of these schools.</p>
-        </div>
 
-        <div class="block block__mid">
-            <h4>Repayment rate</h4>
-            <div class="school-results_rank-display">
-                <div class="big-percentile"><span data-school-item="?"></span></div>
-                <div><span data-school-item="name"></span>'s repayment rate is <strong data-school-item="?"></strong>. This tells you how many student borrowers have earned enought money to start paying down their debt.</div>
-            </div>
-            <div class="school-results_cohort-buttons">
-                <p>Compare <span data-school-item="name"></span>'s rate to other [4-year] schools that are also.:</p>
-                <div>
-                    <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]</button>
-                    <button class="a-btn btn__cohort" data-button-cohort="">[public/private]</button>
+            <div class="block block__mid">
+                <h4>Repayment rate</h4>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="?"></span></div>
+                    <div><span data-school-item="name"></span>'s repayment rate is <strong data-school-item="?"></strong>. This tells you how many student borrowers have earned enought money to start paying down their debt.</div>
                 </div>
+                <div class="school-results_cohort-buttons">
+                    <p>Compare <span data-school-item="name"></span>'s rate to other [4-year] schools that are also.:</p>
+                    <div>
+                        <button class="a-btn btn__cohort" data-button-cohort="">in the U.S.</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="cohortRankByState">in [State]</button>
+                        <button class="a-btn btn__cohort" data-button-cohort="">[public/private]</button>
+                    </div>
+                </div>
+                <div id="school-results_repayment-meter" class="college-costs_meter-graph"></div>
+                <p><span data-school-item="name"></span>'s repayment rate is <strong>[15% higher]</strong> than the median of all US schools grantinbg [4-year] degrees. It falls in the <strong>[top third]</strong> of these schools.</p>
             </div>
-            <div id="school-results_repayment-meter" class="college-costs_meter-graph"></div>
-            <p><span data-school-item="name"></span>'s repayment rate is <strong>[15% higher]</strong> than the median of all US schools grantinbg [4-year] degrees. It falls in the <strong>[top third]</strong> of these schools.</p>
         </div>
 
 

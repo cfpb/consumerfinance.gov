@@ -25,7 +25,7 @@
 <div class="number-callout {{ value.additional_classes if value.additional_classes else '' }}">
     <div class="number-callout_header">{{ value.header }}</div>
     <div class="number-callout_value">
-      <span {{ value.data_attribute if value.data_attribute else '' }}>
+      <span {{ value.data_attribute | safe if value.data_attribute else '' }}>
           {{ value.value if value.value else '' }}
       </span>
     </div>
