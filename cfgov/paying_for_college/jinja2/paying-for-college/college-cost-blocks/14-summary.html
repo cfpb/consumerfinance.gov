@@ -5,6 +5,7 @@
 
     <button class="a-btn">Print summary</button>
     <button class="a-btn a-btn__secondary">Save as a link</button>
+    <p><small>You will also have a chace to print all documents at the end.</small></p>
 
     <div class="block block__mid">
         <h3 class="summary_header">School and living situation</h3>
@@ -51,7 +52,15 @@
     </div>
 
     <div class="block block__mid">
-        <h3 class="summary_header">Your financial aid offer</h3>
+        <h3 class="summary_header">Covering your costs</h3>
+        <div class="costs-not-covered-notification">
+            {{ notification.render(
+                    'caution',
+                    true,
+                    '',
+                    '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
+            ) }} 
+        </div>
         <div class="o-expandable-group">
             {% set expandable_settings = {
                 'label': 'Your estimated total cost this year',
@@ -59,167 +68,144 @@
                 'data_attribute': 'data-financial-item="total_costs"'
             } %}
             {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Tuition and fees',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="dirCost_tuition"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Housing and meals',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="dirCost_housing"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Books',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="indiCost_books"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Other expenses',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="indiCost_other"'
-                    })
-                }}
+                <div class="block block__sub block">
+                    <h4>Direct costs</h4>
+                    {{
+                        text_item.render({
+                            'label': 'Tuition and fees',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="dirCost_tuition"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Housing and meals',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="dirCost_housing"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Additional direct costs',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="?"'
+                        })
+                    }}
+                </div>
+                <div class="block block__sub block">
+                    <h4>Indirect costs</h4>
+                    {{
+                        text_item.render({
+                            'label': 'Books & supplies',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="indiCost_books"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Other/miscellaneous expenses',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="indiCost_other"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Additional indirect costs',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="?"'
+                        })
+                    }}
+                </div>
             {% endcall %}
 
             {% set expandable_settings = {
-                'label': 'Total funding offered',
+                'label': 'Total funding',
                 'value': '$99,999',
                 'data_attribute': 'data-financial-item="total_offerFunding"'
             } %}
             {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Grants and scholarships',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_grantsScholarships"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Personal and family funds',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_personal"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Work-study and other jobs',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_income"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Federal Loans',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_fedLoans"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Other loans',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_otherLoans"'
-                    })
-                }}
+                <div class="block block__sub block">
+                    <h4>Non-debt</h4>
+                    {{
+                        text_item.render({
+                            'label': 'Grants and scholarships',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="total_grantsScholarships"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Work-study',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="total_income"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Other resources',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="total_personal"'
+                        })
+                    }}
+                </div>
+                <div class="block block__sub block">
+                    <h4>Debt</h4>
+                    {{
+                        text_item.render({
+                            'label': 'Federal Loans',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="total_fedLoans"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Loans from your state, the school, or a non-profit',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="?"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Private loans',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="privLoan_privLoan"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'PLUS loans',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="fedLoan_parentPlus"'
+                        })
+                    }}
+                </div>
             {% endcall %}
         </div>
     </div>
-    <div class="block block__mid">
-        <h3 class="summary_header">Covering your costs</h3>
-        
-        <div class="o-expandable-group">
-            {% set expandable_settings = {
-                'label': 'Funding beyond your offer letter',
-                'value': '$0',
-                'data_attribute': 'data-financial-item="total_beyondOffer"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Private loan',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="privLoan_privLoan"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Parent PLUS loan',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="fedLoan_parentPlus"'
-                    })
-                }}
-            {% endcall %}
-
-            {% set expandable_settings = {
-                'label': 'Uncovered costs: All funding',
-                'value': '$99,999',
-                'data_attribute': 'data-financial-item="total_gap"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Cost of Attendance',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_costs"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Offer letter',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_offerFunding"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Other funding',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_otherFunding"'
-                    })
-                }}
-            {% endcall %}
-        </div>
-    </div>
+    
     <div class="block block__mid">
         <h3 class="summary_header">Affording your loans</h3>
         <div class="o-expandable-group">
             {% set expandable_settings = {
                 'label': 'Pass debt guideline?',
-                'value': '$99,999',
-                'data_attribute': 'data-state-item="pass-debt-guideline"'
+                'value': '',
+                'data_attribute': ''
             } %}
             {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Estimated first year debt',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="debt_firstYear"'
-                    })
-                }}
+                
                 {{
                     text_item.render({
                         'label': 'Projected total debt',
@@ -230,7 +216,15 @@
                 }}
                 {{
                     text_item.render({
-                        'label': 'Projected salary',
+                        'label': 'Includes Parent PLUS loans?',
+                        'value': 'Yes',
+                        'type': 'text',
+                        'data_attribute': 'data-financial-item=""'
+                    })
+                }}
+                {{
+                    text_item.render({
+                        'label': 'Median first-year salary of this school\'s graduates',
                         'value': '$0',
                         'type': 'text',
                         'data_attribute': 'data-financial-item="salary_annual"'
@@ -245,61 +239,32 @@
                     })
                 }}    
             {% endcall %}
+
             {% set expandable_settings = {
-                'label': 'Total cost of borrowing (10 years)',
+                'label': 'What will interest cost me?',
                 'value': '$99,999',
-                'data_attribute': 'data-financial-item="debt_tenYearTotal"'
+                'data_attribute': 'data-financial-item="debt_tenYearInterest"'
             } %}
             {% call() expandable(expandable_settings) %}
                 {{
                     text_item.render({
-                        'label': 'Total borrowed',
+                        'label': 'Total cost of borrowing over 10-year repayment period',
                         'value': '$0',
                         'type': 'text',
-                        'data_attribute': 'data-financial-item="total_borrowingAtGrad"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Total interest',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="debt_tenYearInterest"'
+                        'data_attribute': 'data-financial-item="debt_tenYearTotal"'
                     })
                 }}
             {% endcall %}
+            
             {% set expandable_settings = {
-                'label': 'Total cost of borrowing (25 years)',
-                'value': '$99,999',
-                'data_attribute': 'data-financial-item="debt_twentyFiveYearTotal"'
+                'label': 'Can I afford my payment within a monthly budget?',
+                'value': 'No',
+                'data_attribute': 'data-state-item="budget_balanced"'
             } %}
             {% call() expandable(expandable_settings) %}
                 {{
                     text_item.render({
-                        'label': 'Total borrowed',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_borrowing"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Total interest',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="total_interest25year"'
-                    })
-                }}
-            {% endcall %}
-            {% set expandable_settings = {
-                'label': 'Balance monthly budget?',
-                'value': '$99,999',
-                'data_attribute': 'data-state-item="budge_balanced"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Projected monthly payment',
+                        'label': 'Estimated monthly loan payment',
                         'value': '$0',
                         'type': 'text',
                         'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
@@ -307,7 +272,7 @@
                 }}
                 {{
                     text_item.render({
-                        'label': 'Projected monthly salary',
+                        'label': 'Monthly median first-year salary for this school\'s graduates',
                         'value': '$0',
                         'type': 'text',
                         'data_attribute': 'data-financial-item="salary_monthly"'
@@ -315,15 +280,15 @@
                 }}
                 {{
                     text_item.render({
-                        'label': 'Percentage of monthly salary',
+                        'label': 'Average (or estimated) monthly expenses',
                         'value': '$0',
                         'type': 'text',
-                        'data_attribute': 'data-financial-item="debt_percentMonthlySalary"'
+                        'data_attribute': 'data-financial-item="?"'
                     })
                 }}
                 {{
                     text_item.render({
-                        'label': 'Projected money left over each month',
+                        'label': 'Additional money needed or left over',
                         'value': '$0',
                         'type': 'text',
                         'data_attribute': 'data-expenses-item="item_total_gap"'
@@ -334,67 +299,8 @@
         </div>
     </div>
     <div class="block block__mid">
-        <h3 class="summary_header">This school's results</h3>
-
-        <div class="o-expandable-group">
             {% set expandable_settings = {
-                'label': 'School basics',
-                'value': '???',
-                'data_attribute': 'data-state-item="what_goes_here"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Location',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="location"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Type',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="control"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Student body',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="enrollment"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Highest degree offered',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="highestDegree"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Number of programs',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="programCount"'
-                    })
-                }} 
-                {{
-                    text_item.render({
-                        'label': 'Most popular program',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="popularPrograms"'
-                    })
-                }}   
-            {% endcall %}
-
-            {% set expandable_settings = {
-                'label': 'School statistics',
+                'label': 'Worth your investment?',
                 'value': '???',
                 'data_attribute': 'data-state-item="what_goes_here"'
             } %}
@@ -409,6 +315,14 @@
                 }}
                 {{
                     text_item.render({
+                        'label': 'Default rate',
+                        'value': '',
+                        'type': 'text',
+                        'data_attribute': 'data-school-item="repaymentRate"'
+                    })
+                }}
+                {{
+                    text_item.render({
                         'label': 'Repayment rate',
                         'value': '',
                         'type': 'text',
@@ -416,6 +330,5 @@
                     })
                 }}
             {% endcall %}
-        </div>
     </div>
 </section>
