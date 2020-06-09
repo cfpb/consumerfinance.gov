@@ -1,14 +1,23 @@
 <section class="college-costs_tool-section" data-tool-section="other-resources">
-    <h2>Other sources (not on your offer)</h2>
-    <p>Thank you for entering everything from your financial aid offer. What other funding sources are available to you?</p>
+    <h2>Other sources</h2>
+    <p>Thank you for entering everything from your financial aid offer. What other sources of funds are available to you?</p>
     <div class="block block__mid financial-items">
         {{
             input.render({
                 'label': 'Personal funds',
                 'id': 'savings__personal',
-                'helperText': 'Do you have money set aside for school this year?',
+                'helper_text': 'Do you have money on hand to put towards school?',
                 'value': '0',
                 'data_attribute': 'data-financial-item="savings_personal"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Family contribution',
+                'id': 'savings__family',
+                'helper_text': 'Can your family chip in on your education this year?',
+                'value': '0',
+                'data_attribute': 'data-financial-item="savings_family"'
             })
         }}
         {{
@@ -19,15 +28,7 @@
                 'data_attribute': 'data-financial-item="savings_collegeSavings"'
             })
         }}
-        {{
-            input.render({
-                'label': 'Family contribution',
-                'id': 'savings__family',
-                'helperText': 'What can your family afford to spend on your education this year?',
-                'value': '0',
-                'data_attribute': 'data-financial-item="savings_family"'
-            })
-        }}
+        
         {{
             input.render({
                 'label': 'Estimated income from off-campus job',
@@ -62,7 +63,7 @@
         }}
         {{
             text_item.render({
-                'label': 'Total from other sources',
+                'label': 'Total other sources',
                 'value': '$99, 999',
                 'type': 'total',
                 'data_attribute': 'data-financial-item="total_otherResources"'
@@ -84,8 +85,8 @@
         true,
         'Money saving tips',
         '<ul>
-            <li>Some states offer grants and funding for specific costs related to education, like childcare. Ask the financial aid office.</li> 
-            <li> Depending on your circumstances and location, you may be eligible for government benefits like TANF (welfare), SNAP (food stamps), Medicaid, and subsidized housing. Reach out to the financial aid office if you are struggling to afford necessities.</li>
+            <li>Some states offer grants and funding for specific costs related to education, like childcare. Ask the financial aid office or your state or territory\'s child care fund.</li> 
+            <li> Depending on your circumstances, including state and local regulations, you may be eligible for government benefits like TANF (welfare), SNAP (food stamps), Medicaid, and subsidized housing. Reach out to the financial aid office if you are struggling to afford necessities.</li>
         </ul>' | safe
     ) }}
 
