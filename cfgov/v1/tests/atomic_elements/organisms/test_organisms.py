@@ -2,11 +2,14 @@ from django.core.exceptions import ValidationError
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
 from wagtail.core.blocks import StreamValue
+from wagtail.core.models import Site
 from wagtail.images.tests.utils import get_test_image_file
 
 from scripts import _atomic_helpers as atomic
 
-from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock, VideoPlayer
+from v1.atomic_elements.organisms import (
+    FeaturedContent, InfoUnitGroup, TableBlock, VideoPlayer
+)
 from v1.models import (
     BrowsePage, CFGOVImage, Contact, LandingPage, LearnPage, Resource,
     SublandingPage
@@ -385,6 +388,69 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'u-w40pct"')
 
 
+class FeaturedContentTests(TestCase):
+    def setUp(self):
+        self.page = Site.objects.get(is_default_site=True).root_page
+        self.image = CFGOVImage.objects.create(
+            title='test',
+            file=get_test_image_file()
+        )
+
+    def test_value_contains_single_list_of_links(self):
+        block = FeaturedContent()
+        value = block.to_python({
+            'post': self.page.pk,
+            'show_post_link': True,
+            'post_link_text': 'This is a post',
+            'links': [
+                {'text': 'A link', 'url': '/foo/'},
+                {'text': 'Another link', 'url': '/bar/'},
+            ],
+        })
+
+        self.assertEqual(value.links, [
+            {'url': self.page.url, 'text': 'This is a post'},
+            {'url': '/foo/', 'text': 'A link'},
+            {'url': '/bar/', 'text': 'Another link'},
+        ])
+
+    def test_render(self):
+        block = FeaturedContent()
+        value = block.to_python({
+            'heading': 'Featured content',
+            'body': 'This is the body',
+            'post': self.page.pk,
+            'show_post_link': True,
+            'post_link_text': 'This is a post',
+            'links': [
+                {'text': 'A link', 'url': '/foo/'},
+                {'text': 'Another link', 'url': '/bar/'},
+            ],
+            'video': {
+                'video_id': '1V0Ax9OIc84',
+		'thumbnail_image': self.image.pk,
+            },
+        })
+
+        request = RequestFactory().get('/')
+        html = block.render(value, context={'request': request})
+
+        # All links get rendered properly.
+        for url, text in (
+            (self.page.url, 'This is a post'),
+            ('/foo/', 'A link'),
+            ('/bar/', 'Another link'),
+        ):
+            self.assertIn(f'<a href="{url}">{text}</a>', html)
+
+        # VideoPlayer renders with is_fcm=True and the proper thumbnail.
+        self.assertNotIn('o-video-player_video-container__flexible', html)
+        self.assertRegex(
+            html,
+            r'src="/f/images/test.*\.original\.png"'
+        )
+
+
 class TestInfoUnitGroup(TestCase):
     def setUp(self):
         self.image = CFGOVImage.objects.create(
@@ -543,6 +609,9 @@ class VideoPlayerTests(SimpleTestCase):
             'src="/static/img/cfpb_video_cover_card_1380x776.png"',
             html
         )
+
+        # Default behavior doesn't render as FCM.
+        self.assertNotIn('o-featured-content-module_visual', html)
 
 
 class VideoPlayerThumbnailTests(TestCase):

@@ -915,6 +915,41 @@ class VideoPlayer(blocks.StructBlock):
         js = ['video-player.js']
 
 
+class FeaturedContentStructValue(blocks.StructValue):
+    @property
+    def links(self):
+        # We want to pass a single list of links to the template when the
+        # FeaturedContent organism is rendered. So we consolidate any links
+        # that have been specified: the post link and any other links. We
+        # also normalize them each to have URL and text attributes.
+        links = []
+
+        # We want to pass the post URL into the template so that it can be
+        # rendered without needing to call back to any Wagtail template tags.
+        post = self.get('post')
+        if post and self.get('show_post_link'):
+            links.append({
+                # Unfortunately, we don't have access to the request context
+                # here, so we can't do post.get_url(request).
+                'url': post.url,
+                'text': self.get('post_link_text') or post.title,
+            })
+
+        # Normalize any child Hyperlink atoms and filter empty links.
+        for hyperlink in self.get('links') or []:
+            url = hyperlink.get('url')
+            text = hyperlink.get('text')
+
+            if url and text:
+                links.append({'url': url, 'text': text})
+
+        return links
+
+    @property
+    def origin(self):
+        pass
+
+
 class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
@@ -929,27 +964,14 @@ class FeaturedContent(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink(required=False),
                              label='Additional Links')
 
-    video = blocks.StructBlock([
-        ('id', blocks.CharBlock(
-            required=False,
-            label='ID',
-            help_text='E.g., in "https://www.youtube.com/watch?v=en0Iq8II4fA",'
-                      ' the ID is everything after the "?v=".')),
-        ('url', blocks.CharBlock(
-            required=False,
-            label='URL',
-            help_text='You must use the embed URL, e.g., '
-                      'https://www.youtube.com/embed/'
-                      'JPTg8ZB3j5c?autoplay=1&enablejsapi=1')),
-        ('height', blocks.CharBlock(default='320', required=False)),
-        ('width', blocks.CharBlock(default='568', required=False)),
-    ])
+    video = VideoPlayer(required=False)
 
     class Meta:
         template = '_includes/organisms/featured-content.html'
         icon = 'doc-full-inverse'
         label = 'Featured Content'
         classname = 'block__flush'
+        value_class = FeaturedContentStructValue
 
     class Media:
         js = ['featured-content-module.js']

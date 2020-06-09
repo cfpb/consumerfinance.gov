@@ -112,6 +112,33 @@ class Button(Hyperlink):
     ], default='regular')
 
 
+class ImageBasicStructValue(blocks.StructValue):
+    @property
+    def url(self):
+        upload = self.get('upload')
+
+        if upload:
+            return upload.get_rendition('original').url
+
+    @property
+    def alt_text(self):
+        # TODO: This duplicates the logic in v1.jinja2tags.image_alt_value,
+        # which cannot be called here because of a circular import. It would
+        # be better to deprecate the image_alt_value tag in favor of using
+        # this logic wherever we use ImageBasic atoms.
+        alt = self.get('alt')
+        if alt:
+            return alt
+
+        upload = self.get('upload')
+        if upload:
+            return upload.alt
+
+        # Deliberately return the empty string. It's better to have an empty
+        # alt attribute than to have none at all.
+        return ''
+
+
 class ImageBasic(blocks.StructBlock):
     upload = ImageChooserBlock(required=False)
     alt = blocks.CharBlock(
@@ -151,6 +178,7 @@ class ImageBasic(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
+        value_class = ImageBasicStructValue
 
 
 class ImageBasicUrl(ImageBasic):

@@ -8,9 +8,6 @@ import VideoPlayer from './VideoPlayer';
 
 const BASE_CLASS = 'o-featured-content-module';
 
-let _dom;
-let _videoPlayer;
-
 /**
  * FeaturedContentModule
  * @class
@@ -22,46 +19,52 @@ let _videoPlayer;
  * @returns {FeaturedContentModule} An instance.
  */
 function FeaturedContentModule( element ) {
-  _dom = checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
 
-  this.init = init;
+  let _videoPlayer = null;
 
-  return this;
-}
+  /**
+   * @returns {FeaturedContentModule|undefined} An instance.
+   *   or undefined if it was already initialized.
+   */
+  function _init() {
+    if (!setInitFlag( _dom ) ) {
+      let UNDEFINED;
+      return UNDEFINED;
+    }
 
-/**
- * @returns {FeaturedContentModule} An instance.
- */
-function init() {
-  setInitFlag( _dom );
+    const videoPlayerDom = _dom.querySelector( `.${ VideoPlayer.BASE_CLASS }` );
 
-  const videoPlayerDom = _dom.querySelector( `.${ VideoPlayer.BASE_CLASS }` );
+    // If we don't have a video in this FCM, bail out.
+    if ( videoPlayerDom === null ) {
+      return this;
+    }
 
-  // If we don't have a video in this FCM, bail out.
-  if ( videoPlayerDom === null ) {
+    _videoPlayer = new VideoPlayer( videoPlayerDom );
+    _videoPlayer.addEventListener( 'onPlay', _videoPlayHandler.bind( this ) );
+    _videoPlayer.addEventListener( 'onStop', _videoStopHandler.bind( this ) );
+    _videoPlayer.init();
+
     return this;
   }
 
-  _videoPlayer = new VideoPlayer( videoPlayerDom );
-  _videoPlayer.addEventListener( 'onPlay', _videoPlayHandler );
-  _videoPlayer.addEventListener( 'onStop', _videoStopHandler );
-  _videoPlayer.init();
+  /**
+   * Event handler for when video has begun playing.
+   */
+  function _videoPlayHandler() {
+    _dom.classList.add( 'video-playing' );
+  }
+
+  /**
+   * Event handler for when video has stopped playing.
+   */
+  function _videoStopHandler() {
+    _dom.classList.remove( 'video-playing' );
+  }
+
+  this.init = _init;
 
   return this;
-}
-
-/**
- * Event handler for when video has begun playing.
- */
-function _videoPlayHandler() {
-  _dom.classList.add( 'video-playing' );
-}
-
-/**
- * Event handler for when video has stopped playing.
- */
-function _videoStopHandler() {
-  _dom.classList.remove( 'video-playing' );
 }
 
 FeaturedContentModule.BASE_CLASS = BASE_CLASS;

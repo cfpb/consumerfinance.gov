@@ -2,6 +2,7 @@ from wagtail.core import hooks
 
 from v1.views.template_debug import TemplateDebugView
 
+from .featured_content import featured_content_test_cases  # noqa 401
 from .notification import notification_test_cases  # noqa 401
 from .video_player import video_player_test_cases  # noqa 401
 
