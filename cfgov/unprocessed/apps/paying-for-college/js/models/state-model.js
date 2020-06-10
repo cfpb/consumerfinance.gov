@@ -6,7 +6,7 @@
 
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { setUrlQueryString } from '../util/url-parameter-utils.js';
-import { updateNavigationView, updateSchoolItems } from '../dispatchers/update-view.js';
+import { updateNavigationView, updateSchoolItems, updateStateInDom } from '../dispatchers/update-view.js';
 
 const stateModel = {
   stateDomElem: null,
@@ -71,7 +71,7 @@ const stateModel = {
    * @param {} value - the value to be assigned
    */
   setValue: function( name, value ) {
-    stateModel._setStateInDom( name, value );
+    updateStateInDom( name, value );
     if ( name !== 'activeSection' ) {
       stateModel.values[name] = value;
     } else if ( value !== stateModel.values.activeSection ) {
@@ -89,54 +89,11 @@ const stateModel = {
     setUrlQueryString();
   },
 
-  /**
-   * _setStateInDom - manages dataset for the MAIN element, which helps display UI elements
-   * properly
-   * @param {String} property - The state property to modify
-   * @param {String} value - The new value of the property
-   * NOTE: if the value is null or the Boolean 'false', the data attribute will be removed
-   */
-  _setStateInDom: function( property, value ) {
-    if ( value === false || value === null ) {
-      stateModel.stateDomElem.removeAttribute( property );
-    } else {
-      stateModel.stateDomElem.setAttribute( 'data-state_' + property, value );
-    }
-  },
-
-  /**
-   * _addPopStateListener - Add a listener for "popstate" events
-   */
-  _addPopStateListener: function() {
-    const events = {
-      popstate: stateModel._handlePopState
-    };
-    bindEvent( window, events );
-  },
-
-  /**
-   * _handlePopState - handle popstate events
-   * @param {Object} event - the popstate event
-   */
-  _handlePopState: function( event ) {
-    if ( event.state ) {
-      // window.history.replaceState( this.values, null, '' );
-      stateModel.values.activeSection = event.state.activeSection;
-      // stateModel.setValue( 'activeSection', event.state.activeSection );
-    }
-
-    updateNavigationView();
-
-  },
 
   /**
    * init - Initialize the state model
    */
   init: function() {
-    window.history.replaceState( this.values, null, '' );
-    this.stateDomElem = document.querySelector( 'main.college-costs' );
-    this._addPopStateListener();
-
   }
 
 };

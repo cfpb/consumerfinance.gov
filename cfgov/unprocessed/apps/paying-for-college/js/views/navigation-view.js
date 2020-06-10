@@ -3,7 +3,7 @@
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { getStateValue } from '../dispatchers/get-model-values.js';
+import { getStateValue, getAllStateValues } from '../dispatchers/get-model-values.js';
 
 const navigationView = {
   _contentSidebar: null,
@@ -14,6 +14,7 @@ const navigationView = {
   _navButtons: null,
   _nextButton: null,
   _appSegment: null,
+  _stateDomElememnt: null,
 
   /**
    * _addButtonListeners - Add event listeners for nav buttons
@@ -31,6 +32,16 @@ const navigationView = {
   },
 
   /**
+   * _addPopStateListener - Add a listener for "popstate" events
+   */
+  _addPopStateListener: function() {
+    const events = {
+      popstate: navigationView._handlePopState
+    };
+    bindEvent( window, events );
+  },
+
+  /**
    * _handleGetStartedBtnClick - Handle the click of the "Get Started" button
    * @param {Object} event - the click event
    */
@@ -44,26 +55,41 @@ const navigationView = {
   },
 
   /**
+   * _handlePopState - handle popstate events
+   * @param {Object} event - the popstate event
+   */
+  _handlePopState: function( event ) {
+    if ( event.state ) {
+      window.history.replaceState( getAllStateValues(), null, '' );
+
+      updateState.activeSection( event.state.activeSection );
+    }
+
+    updateNavigationView();
+
+  },
+
+  /**
    * _handleNavButtonClick - Handle click event for secondary nav
    * @param {Object} event - click event
    */
   _handleNavButtonClick: function( event ) {
     event.preventDefault();
     const target = event.target;
-
-    // Click on a nav menu page link
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
-
-    // Click on a nav section header
     } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
       // Close all open menu section
-      navigationView._navListItems.forEach( elem => {
-        elem.setAttribute( 'data-nav-is-active', 'False' );
-        elem.setAttribute( 'data-nav-is-open', 'False' );
+      navigationView._navMenu.querySelectorAll('[data-nav-is-open="True"]').forEach( elem => {
+        elem.setAttribute('data-nav-is-open', 'False');
       } );
+
       // Open the clicked menu section
-      closest( target, 'li' ).setAttribute( 'data-nav-is-open', 'True' );
+      const parent = closest( target, '.m-list_item__parent' );
+      parent.setAttribute('data-nav-is-open', 'True');
+
+      /* const elem = parent.querySelector( '.o-college-costs-nav__section ul li button' );
+         updateState.activeSection( elem.dataset.nav_item ); */
     }
   },
 
@@ -124,6 +150,21 @@ const navigationView = {
   },
 
   /**
+   * updateStateInDom - manages dataset for the MAIN element, which helps display UI elements
+   * properly
+   * @param {String} property - The state property to modify
+   * @param {String} value - The new value of the property
+   * NOTE: if the value is null or the Boolean 'false', the data attribute will be removed
+   */
+  updateStateInDom: function( property, value ) {
+    if ( value === false || value === null ) {
+      navigationView._stateDomElem.removeAttribute( property );
+    } else {
+      navigationView._stateDomElem.setAttribute( 'data-state_' + property, value );
+    }
+  },
+
+  /**
    * init - Initialize the navigation view
    * @param { Object } body - The body element of the page
    */
@@ -140,6 +181,11 @@ const navigationView = {
 
     this._addButtonListeners();
     this.updateView();
+
+    window.history.replaceState( getAllStateValues(), null, '' );
+    this._stateDomElem = document.querySelector( 'main.college-costs' );
+    this._addPopStateListener();
+
 
   }
 

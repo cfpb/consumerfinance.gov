@@ -10,7 +10,7 @@ import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { stringToNum } from '../util/number-utils.js';
 import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { updateSchoolView } from './dispatchers/update-view.js';
+import { updateSchoolView } from './update-view.js';
 
 // parameters mapped to model variables
 const _urlParamsToModelVars = {
