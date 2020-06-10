@@ -4,14 +4,51 @@
 
 // This is your project's main Less file.
 // Project-specific Less rules go after the imports.
+
+// Import Capital Framework components.
 @import (less) "cfpb-core.less";
+@import (less) "cfpb-buttons.less";
+@import (less) "cfpb-forms.less";
+@import (less) "cfpb-grid.less";
+@import (less) "cfpb-icons.less";
+@import (less) "cfpb-layout.less";
+@import (less) "cfpb-typography.less";
 
-@import (reference) '../../../css/main.less';
+// Import the brand color palette.
+@import (less) "brand-palette.less";
 
-// Import the college-costs.less files
+// Uncomment to import Avenir font on CFPB projects.
+// If this project is on a non-CFPB domain,
+// use this file as a template for adding web fonts.
+@import (less) 'licensed-fonts.css';
+
+// Override the Capital Framework theme variables with colors from the brand color palette.
+@import (less) "cf-theme-overrides.less";
+
+// Import the Capital Framework enhancements
+@import (less) "cf-enhancements.less";
+
+// import CFPB nemo theme header and footer styles
+.nemo {
+  @import "nemo.less";
+  // and a shim to override some things
+  @import "nemo-shim.less";
+}
+
+// Import the disclosures.less file
+@import (less) "disclosures.less";
+
+// Import the repay.less file
+@import (less) "repay.less";
+
+// Import the college-costs.less file
 @import (less) "college-costs/college-costs.less";
 @import (less) "college-costs/charts.less";
 @import (less) "college-costs/financial-item.less";
 @import (less) "college-costs/nav.less";
 @import (less) "college-costs/number-callout.less";
 @import (less) "college-costs/search.less";
+
+// Import the quiz.less file
+@import (less) "quiz.less";
+
