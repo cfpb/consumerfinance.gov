@@ -1,0 +1,143 @@
+
+main.college-costs {
+	.private-loan-section,
+	.parentPlus-loan-section,
+	.undergrad-content,
+	.associates-content,
+	.graduate-content,
+	.private-loan-section,
+	.parentplus-loan-section,
+	.gradplus-loan-section,
+	.costs_content-section {
+		display: none;
+	}
+
+	// Grad & undergrad content control
+
+	&:not( [data-state_programtype="graduate"] ) {
+		.undergrad-content {
+			display: block;
+		}
+	}
+
+	&[data-state_programtype="graduate"] {
+		.graduate-content {
+			display: block;
+		}
+	}
+
+	&[data-state_programtype="associates"] {
+		.associates-content {
+			display: block;
+		}
+	}
+
+
+	// Private & Plus loans content control
+
+	&[data-state_private-loan-section="active"] {
+		.private-loan-section {
+			display: block;
+		}
+	}
+
+	&[data-state_parentplus-loan-section="active"] {
+		.parentplus-loan-section {
+			display: block;
+		}
+	}
+
+	&[data-state_gradplus-loan-section="active"] {
+		.gradplus-loan-section {
+			display: block;
+		}
+	}
+
+
+	// App 
+
+	&[data-state_gotstarted="false"] .app-container {
+		display: none;
+	}
+
+	&[data-state_gotstarted="false"] .costs-not-covered-sticky {
+		display: none;
+	}
+
+	&[data-state_gotstarted="false"] .o-college-costs-nav {
+		display: none;
+	}
+
+	&[data-state_gotstarted="true"] {
+		.college-costs_intro-segment {
+			display: none;
+		}
+
+		.college-costs_tool-section.active {
+			display: block;
+		}
+	}
+
+	// Section visibility by application state
+
+	&[data-state_activesection="grants-scholarships"],
+	&[data-state_activesection="work-study"],
+	&[data-state_activesection="federal-loans"],
+	&[data-state_activesection="school-loans"],
+	&[data-state_activesection="other-resources"],
+	&[data-state_activesection="loan-counseling"],
+	&[data-state_activesection="make-a-plan"] {
+		.costs-not-covered {
+			display: block;
+		}
+	}
+
+	// Costs button content control
+	&[data-state_costsbuttonclicked] {
+		#costs_inputs-section {
+			display: block;
+		}
+	}
+
+	&[data-state_costsbuttonclicked="yes"] {
+		.costs_content-section[data-offer-costs-info="yes"] {
+			display: block;
+		}
+	}
+
+	&[data-state_costsbuttonclicked="no"] {
+		& .costs_content-section[data-offer-costs-info="no"] {
+			display: block;
+		}
+	}
+
+	// Notification visibility controls
+	[data-state-based-visibility] {
+		display: none;
+	}
+
+	&[data-state_uncoveredcosts="true"] {
+		[data-state-based-visibility="uncovered-costs"] {
+			display:block
+		}
+	}
+
+	&[data-state_excessfunding="true"] {
+		[data-state-based-visibility="excesss-funding"] {
+			display:block
+		}
+	}
+
+	&[data-state_debtruleviolation="true"] {
+		[data-state-based-visibility="debt-rule-violation"] {
+			display:block
+		}
+	}
+
+	&[data-state_debtruleviolation="false"] {
+		[data-state-based-visibility="debt-rule-okay"] {
+			display:block
+		}
+	}
+
+}

@@ -10,6 +10,9 @@
 			& > .m-nav_link {
 				font-size: unit( 18px / @base-font-size-px, em );
 			}
+
+
+
 		}
 
 		.m-nav-link {
@@ -32,6 +35,10 @@
 			display: none;
 		}
 
+		li[data-nav-is-active="True"] > a {
+			font-weight: 600;
+		}
+
 		li[data-nav-is-active="True"],
 		li[data-nav-is-open="True"] {
 			.o-secondary-navigation_list__children {
@@ -39,10 +46,10 @@
 			}
 		}
 
-		li[data-nav-is-active="True"] {
+		.m-list_item li.m-list_item[data-nav-is-active="True"] {
 			border-left: 3px solid @green;
-
-			.m-nav-link__current {
+			
+			a {
 				font-weight: 600;
 			}
 		}
