@@ -65,8 +65,13 @@ const stateModel = {
     'save-and-finish'
   ],
 
+  /**
+   * setValue - Public method to update model values
+   * @param {String} name - the name of the property to update
+   * @param {} value - the value to be assigned
+   */
   setValue: function( name, value ) {
-    stateModel.setStateInDom( name, value );
+    stateModel._setStateInDom( name, value );
     if ( name !== 'activeSection' ) {
       stateModel.values[name] = value;
     } else if ( value !== stateModel.values.activeSection ) {
@@ -85,13 +90,13 @@ const stateModel = {
   },
 
   /**
-   * setStateInDom - manages dataset for the MAIN element, which helps display UI elements
+   * _setStateInDom - manages dataset for the MAIN element, which helps display UI elements
    * properly
    * @param {String} property - The state property to modify
    * @param {String} value - The new value of the property
    * NOTE: if the value is null or the Boolean 'false', the data attribute will be removed
    */
-  setStateInDom: function( property, value ) {
+  _setStateInDom: function( property, value ) {
     if ( value === false || value === null ) {
       stateModel.stateDomElem.removeAttribute( property );
     } else {
@@ -99,7 +104,9 @@ const stateModel = {
     }
   },
 
-  /* _addPopStateListener - Add a listener for "pop" events */
+  /**
+   * _addPopStateListener - Add a listener for "popstate" events
+   */
   _addPopStateListener: function() {
     const events = {
       popstate: stateModel._handlePopState
@@ -107,6 +114,10 @@ const stateModel = {
     bindEvent( window, events );
   },
 
+  /**
+   * _handlePopState - handle popstate events
+   * @param {Object} event - the popstate event
+   */
   _handlePopState: function( event ) {
     if ( event.state ) {
       // window.history.replaceState( this.values, null, '' );
@@ -118,6 +129,9 @@ const stateModel = {
 
   },
 
+  /**
+   * init - Initialize the state model
+   */
   init: function() {
     window.history.replaceState( this.values, null, '' );
     this.stateDomElem = document.querySelector( 'main.college-costs' );

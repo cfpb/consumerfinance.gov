@@ -15,6 +15,9 @@ const navigationView = {
   _nextButton: null,
   _appSegment: null,
 
+  /**
+   * _addButtonListeners - Add event listeners for nav buttons
+   */
   _addButtonListeners: function( ) {
     navigationView._navButtons.forEach( elem => {
       const events = {
@@ -24,10 +27,13 @@ const navigationView = {
     } );
 
     bindEvent( navigationView._nextButton, { click: this._handleNextButtonClick } );
-
     bindEvent( navigationView._getStartedBtn, { click: this._handleGetStartedBtnClick } );
   },
 
+  /**
+   * _handleGetStartedBtnClick - Handle the click of the "Get Started" button
+   * @param {Object} event - the click event
+   */
   _handleGetStartedBtnClick: function( event ) {
     updateState.getStarted( true );
     updateState.activeSection( 'school-info' );
@@ -37,6 +43,10 @@ const navigationView = {
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
   },
 
+  /**
+   * _handleNavButtonClick - Handle click event for secondary nav
+   * @param {Object} event - click event
+   */
   _handleNavButtonClick: function( event ) {
     event.preventDefault();
     const target = event.target;
@@ -57,11 +67,19 @@ const navigationView = {
     }
   },
 
+  /**
+   * _handleNextButtonClick - handle the click event for the "Next" button
+   * @param {Object} event - click event
+   */
   _handleNextButtonClick: function( event ) {
     updateState.nextSection();
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
   },
 
+  /**
+   * _updateSideNav - Update the side nav
+   * @param {String} activeName - name of the active app section
+   */
   _updateSideNav: function( activeName ) {
     const navItem = navigationView._navMenu.querySelector( '[data-nav_item="' + activeName + '"]' );
     const activeElem = closest( navItem, 'li' );
@@ -78,6 +96,10 @@ const navigationView = {
 
   },
 
+  /**
+   * _showAndHideSections - Hide all app sections, then show appropriate ones
+   * @param {String} activeName - Name of the active section
+   */
   _showAndHideSections: function( activeName ) {
     const query = '.college-costs_tool-section[data-tool-section="' + activeName + '"]';
     const activeSection = document.querySelector( query );
@@ -89,6 +111,9 @@ const navigationView = {
     activeSection.classList.add( 'active' );
   },
 
+  /**
+   * updateView - Public method to run private update methods
+   */
   updateView: function() {
     const started = getStateValue( 'gotStarted' );
     if ( started ) {
@@ -98,6 +123,10 @@ const navigationView = {
     }
   },
 
+  /**
+   * init - Initialize the navigation view
+   * @param { Object } body - The body element of the page
+   */
   init: function( body ) {
     this._navMenu = body.querySelector( '.o-secondary-navigation' );
     this._navButtons = body.querySelectorAll( '.o-secondary-navigation a' );
@@ -110,7 +139,6 @@ const navigationView = {
     this._sections = body.querySelectorAll( '.college-costs_tool-section' );
 
     this._addButtonListeners();
-
     this.updateView();
 
   }

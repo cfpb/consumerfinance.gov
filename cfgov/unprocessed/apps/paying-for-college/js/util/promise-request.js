@@ -1,5 +1,11 @@
 /* Promise requests are better. */
 
+/**
+ * promiseRequest - A handy function for returning XHR Promises
+ * @param {String} method - The method, ex. POST or GET
+ * @param {String} url - The url to be requested
+ * @returns {Object} Promise of the XHR request
+ */
 const promiseRequest = function( method, url ) {
   const xhr = new XMLHttpRequest();
 

@@ -13,6 +13,9 @@ import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/upda
 /* eslint camelcase: ["error", {properties: "never"}] */
 
 
+/**
+ * debtCalculator - Calculate the debt based on financial model values
+ */
 function debtCalculator() {
   const fedLoans = [ 'directSub', 'directUnsub', 'gradPlus', 'parentPlus' ];
   const otherLoans = [ 'state', 'institutional', 'nonprofit', 'privateLoan1' ];

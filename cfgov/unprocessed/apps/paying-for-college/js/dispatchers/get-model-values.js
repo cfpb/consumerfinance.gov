@@ -46,9 +46,7 @@ function getConstantsValue( name ) {
 
 /**
  * getStateValue - gets the property from the application state model
- *
  * @param {string} prop - The property name
- *
  * @returns {string} The value of the property in the stateModel Object
  */
 function getStateValue( prop ) {

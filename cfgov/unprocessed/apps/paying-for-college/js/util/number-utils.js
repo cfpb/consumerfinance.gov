@@ -40,6 +40,12 @@ function stringToNum( numberString ) {
 
 }
 
+/**
+ * decimalToPercentString - Format decimal into a percentage string
+ * @param {Number} number - Number to be formatted
+ * @param {Number} decimalPlaces - Number of decimal places to display, default 2
+ * @returns {String} Formatted percentage version of decimal
+ */
 function decimalToPercentString( number, decimalPlaces ) {
   if ( typeof decimalPlaces === 'undefined' ) decimalPlaces = 2;
   return Number( number )
@@ -47,7 +53,13 @@ function decimalToPercentString( number, decimalPlaces ) {
       { style: 'percent',
         minimumFractionDigits: decimalPlaces } );
 }
-
+/**
+ * enforceRange - Force a number between a range
+ * @param {Number} n - Number to be checked
+ * @param {Number} min - Minimum value of n
+ * @param {Number} max - Maximum value of n
+ * @returns {Object} Error data on whether the min or max was enforced
+ */
 function enforceRange( n, min, max ) {
   let error = false;
 

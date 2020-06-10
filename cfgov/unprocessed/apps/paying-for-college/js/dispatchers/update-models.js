@@ -97,10 +97,9 @@ const _urlParamsToModelVars = {
 
 
 /**
-  * initializeFinancialModel - Create financial model values based on the input
-  * fields that exist in the DOM
-  */
-
+ * initializeFinancialModel - Create financial model values based on the input
+ * fields that exist in the DOM
+ */
 function initializeFinancialValues() {
   const financialItems = document.querySelectorAll( '[data-financial-item]' );
   financialItems.forEach( elem => {
@@ -113,27 +112,46 @@ function initializeFinancialValues() {
   * @param {String} name - The name of the property to update
   * @param {} value - The new value of the property
   */
-
 function updateFinancial( name, value ) {
   financialModel.setValue( name, value );
 }
 
+/**
+  * createFinancial - Create a new financial property
+  * @param {String} name - The name of the property to update
+  * @param {} value - The new value of the property
+  */
 function createFinancial( name, value ) {
   financialModel.createFinancialProperty( name, value );
 }
 
+/**
+  * recalculateFinancials - Run the financialModel's internal calculations
+  */
 function recalculateFinancials() {
   financialModel.recalculate();
 }
 
+/**
+  * updateExpense - Update a property of the expense model
+  * @param {String} name - The name of the property to update
+  * @param {} value - The new value of the property
+  */
 function updateExpense( name, value ) {
   expensesModel.setValue( name, value );
 }
 
+/**
+  * recalculateExpenses - Run the expenseModel's internal calculations
+  */
 function recalculateExpenses() {
   expensesModel.calculateTotals();
 }
 
+/**
+  * updateSchoolData - Fetch API data for school and update the model
+  * @param {String} iped - The id of the school
+  */
 const updateSchoolData = function( iped ) {
   return new Promise( ( resolve, reject ) => {
     getSchoolData( iped )
@@ -160,15 +178,17 @@ const updateSchoolData = function( iped ) {
 };
 
 /**
- * Copies usefulvalues from the schoolModel to the financialModel
+ * updateFinancialsFromSchool - Copies useful values from the schoolModel to the financialModel
  */
 const updateFinancialsFromSchool = function() {
   financialModel.updateModelFromSchoolModel();
   financialView.updateFinancialItems();
 };
 
-/* updateModelsFromQueryString - Takes an object build from the question string and updates
-   the models with those values */
+/**
+ * updateModelsFromQueryString - Takes an object build from the question string and updates
+ * the models with those values
+ */
 function updateModelsFromQueryString( queryObj ) {
   const modelMatch = {
     expensesModel: expensesModel.setValue,

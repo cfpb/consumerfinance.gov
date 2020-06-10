@@ -6,20 +6,28 @@ import { stateModel } from '../models/state-model.js';
 
 const updateState = {
 
-  /* activeSection - Change the active navigation view, trigger an update
-     for the navigationView
-
-     @param {string} item - Value of 'data-nav_item' attribute */
+  /**
+   * activeSection - Change the active navigation view, trigger an update
+   * for the navigationView
+   * @param {string} item - Value of 'data-nav_item' attribute
+   */
   activeSection: item => {
     stateModel.setValue( 'activeSection', item );
   },
 
+  /**
+   * getStarted - Indicate that the app has been started
+   * @param {Boolean} bool - true, if the app has started
+   */
   getStarted: bool => {
     if ( bool === true ) {
       stateModel.setValue( 'gotStarted', true );
     }
   },
 
+  /**
+   * nextSection - Advance to application state to the next section
+   */
   nextSection: () => {
     const i = stateModel.sectionOrder.indexOf( stateModel.values.activeSection );
     if ( i !== -1 ) {
@@ -28,6 +36,11 @@ const updateState = {
     }
   },
 
+  /**
+   * byProperty - Update the stateModel's property to value
+   * @param {String} prop - The property to update
+   * @param {} value - The value to assign
+   */
   byProperty: function( prop, value ) {
     stateModel.setValue( prop, value );
   }

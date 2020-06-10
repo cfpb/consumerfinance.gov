@@ -1,5 +1,9 @@
 import { promiseRequest } from '../util/promise-request';
 
+/**
+ * schoolSearch - search for schools based on searchTerm
+ * @param {String} searchTerm - Term to be searched for
+ */
 const schoolSearch = function( searchTerm ) {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/search-schools.json?q=' + searchTerm;
@@ -15,6 +19,9 @@ const schoolSearch = function( searchTerm ) {
   } );
 };
 
+/**
+ * getConstants - retrieve constants from our API
+ */
 const getConstants = function() {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/constants/';
@@ -30,6 +37,9 @@ const getConstants = function() {
   } );
 };
 
+/**
+ * getExpenses - retrieve expense data from our API
+ */
 const getExpenses = function() {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/expenses/';
@@ -45,6 +55,10 @@ const getExpenses = function() {
   } );
 };
 
+/**
+ * getSchoolData - retrieve school data from our API
+ * @param { String } iped - The school's identification number
+ */
 const getSchoolData = function( iped ) {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
     '/api/school/' + iped;
