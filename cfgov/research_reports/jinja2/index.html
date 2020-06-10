@@ -34,12 +34,13 @@
     </div>
 
     {% for section in page.report_sections.all().order_by('pk') -%}
+      {% set outer_index = loop.index %}
       <h3 class="report-header">
         <a
           style="color:black;"
           id="{{section.html_id}}"
           href="#{{section.html_id}}">
-            {{section.header}}
+            {{outer_index}}. {{section.header}}
         </a>
       </h3>
 
@@ -51,7 +52,7 @@
             style="color:black;"
             id="{{subsection.sub_id}}"
             href="#{{subsection.sub_id}}">
-              {{subsection.sub_header}}
+              {{outer_index}}-{{loop.index}}. {{subsection.sub_header}}
           </a>
         </h4>
 
