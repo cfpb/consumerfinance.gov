@@ -47,7 +47,7 @@
   <div class="rich-text">
     <h2>My Car-Buying Checklist</h2>
     <p>
-      There’s a lot to consider when buying a car. Focus on a few goals first, and once you’ve had a chance to complete them, revisit the original checklist to figure out what you’d like to focus on next.
+      There’s a lot to consider when buying a car. Focus on a few goals first, and once you’ve had a chance to complete these goals, revisit the original checklist and decide what you’d like to focus on next.
     </p>
   </div>
   <div class="block block__sub">
@@ -67,7 +67,7 @@
   
   <div class="block block__flush-bottom">
     <div class="rich-text">
-      <h3>I’ll choose goals from this list next:</h3>
+      <h3>I’ll consider these goals next:</h3>
     </div>
 
     <table class="block block__sub cbg-print-next-steps" width="100%">
@@ -80,3 +80,12 @@
     </table>
   </div>
 </div>
+{#
+    The invalid media attribute is intentional. It forces the browser to
+    download the stylesheet without blocking rendering and is updated after
+    the stylesheet is downloaded.
+#}
+<link rel="stylesheet" 
+      href="{{ static('css/blocks/car-buying-guide.css') }}"
+      media="none"
+      onload="media='all'">

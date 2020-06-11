@@ -120,6 +120,27 @@ function stylesFeatureFlags() {
     .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) );
 }
 
+
+/**
+ * Process CSS for Wagtail block CSS.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesBlocks() {
+  return gulp.src( configStyles.cwd + '/blocks/*.less' )
+    .pipe( gulpNewer( {
+      dest:  configStyles.dest + '/blocks',
+      // ext option required because this subtask uses multiple source files
+      ext:   '.css',
+      extra: configStyles.otherBuildTriggerFiles
+    } ) )
+    .pipe( gulpLess( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpPostcss( [
+      autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+    ] ) )
+    .pipe( gulp.dest( configStyles.dest + '/blocks' ) );
+}
+
 /**
  * Process Nemo CSS.
  * @returns {PassThrough} A source stream.
@@ -214,6 +235,7 @@ function stylesApps() {
 }
 
 gulp.task( 'styles:apps', stylesApps );
+gulp.task( 'styles:blocks', stylesBlocks );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:ie', stylesIE );
 gulp.task( 'styles:modern', stylesModern );
@@ -231,6 +253,7 @@ gulp.task( 'styles:nemo',
 gulp.task( 'styles',
   gulp.parallel(
     'styles:apps',
+    'styles:blocks',
     'styles:featureFlags',
     'styles:ie',
     'styles:modern',
