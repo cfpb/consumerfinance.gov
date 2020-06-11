@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils.safestring import mark_safe
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
@@ -322,15 +323,19 @@ class EventPage(AbstractFilterPage):
         related_name='+'
     )
     flickr_url = models.URLField("Flickr URL", blank=True)
-    youtube_url = models.URLField(
-        "YouTube URL",
+    archive_video_id = models.CharField(
+        'YouTube video ID (archive)',
+        null=True,
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id. "
-                  "It can be obtained by clicking on Share > "
-                  "Embed on YouTube.",
-        validators=[
-            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
-        ]
+        max_length=11,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        validators=[RegexValidator(regex=r'^[\w-]{11}$')],
+        help_text=mark_safe(
+            'Enter the YouTube video ID (for example '
+            '<code>1V0Ax9OIc84</code>), which can be found in the video URL '
+            '(for example https://www.youtube.com/watch?v=1V0Ax9OIc84).'
+        )
     )
     live_stream_availability = models.BooleanField(
         "Streaming?",
@@ -339,15 +344,19 @@ class EventPage(AbstractFilterPage):
         help_text='Check if this event will be streamed live. This causes the '
                   'event page to show the parts necessary for live streaming.'
     )
-    live_stream_url = models.URLField(
-        "URL",
+    live_video_id = models.CharField(
+        'YouTube video ID (live)',
+        null=True,
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id. "
-                  "It can be obtained by clicking on Share > "
-                  "Embed on YouTube.",
-        validators=[
-            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
-        ]
+        max_length=11,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        validators=[RegexValidator(regex=r'^[\w-]{11}$')],
+        help_text=mark_safe(
+            'Enter the YouTube video ID (for example '
+            '<code>1V0Ax9OIc84</code>), which can be found in the video URL '
+            '(for example https://www.youtube.com/watch?v=1V0Ax9OIc84).'
+        )
     )
     live_stream_date = models.DateTimeField(
         "Go Live Date",
@@ -414,9 +423,9 @@ class EventPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('body'),
         index.SearchField('archive_body'),
-        index.SearchField('live_stream_url'),
+        index.SearchField('live_video_id'),
         index.SearchField('flickr_url'),
-        index.SearchField('youtube_url'),
+        index.SearchField('archive_video_id'),
         index.SearchField('future_body'),
         index.SearchField('agenda_items')
     ]
@@ -434,14 +443,14 @@ class EventPage(AbstractFilterPage):
             DocumentChooserPanel('video_transcript'),
             DocumentChooserPanel('speech_transcript'),
             FieldPanel('flickr_url'),
-            FieldPanel('youtube_url'),
+            FieldPanel('archive_video_id'),
         ], heading='Archive Information'),
         FieldPanel('live_body'),
         FieldPanel('future_body'),
         StreamFieldPanel('persistent_body'),
         MultiFieldPanel([
             FieldPanel('live_stream_availability'),
-            FieldPanel('live_stream_url'),
+            FieldPanel('live_video_id'),
             FieldPanel('live_stream_date'),
         ], heading='Live Stream Information'),
     ]
@@ -510,7 +519,7 @@ class EventPage(AbstractFilterPage):
     def page_js(self):
         if (
             (self.live_stream_date and self.event_state == 'present')
-            or (self.youtube_url and self.event_state == 'past')
+            or (self.archive_video_id and self.event_state == 'past')
         ):
             return super(EventPage, self).page_js + ['video-player.js']
 
