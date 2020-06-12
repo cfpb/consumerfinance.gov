@@ -4,8 +4,8 @@
  * @param {Number} rate - Interest rate (as decimal)
  * @param {Number} programLength - Program length in years
  * @param {Number} deferPeriod - Deferral period, in months
+ * @returns {Number} total debt at end of programLength
  */
-
 function calcDebtAtGrad( amount, rate, programLength, deferPeriod ) {
 
   const total = amount * rate / 12 *
@@ -22,6 +22,7 @@ function calcDebtAtGrad( amount, rate, programLength, deferPeriod ) {
  * @param {Number} debt - Amount of debt at end of program
  * @param {Number} rate - Interest rate, as decimal
  * @param {Number} term - Loan term, in years
+ * @returns {Number} monthly payment of loan for term
  */
 function calcMonthlyPayment( debt, rate, term ) {
   let monthly = 0;

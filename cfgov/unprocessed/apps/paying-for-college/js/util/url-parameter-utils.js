@@ -4,11 +4,9 @@ import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 
 
-/**
- * getQueryVariables - Check the url for queryString and interpret it into an object
- *  full of key-value pairs.
- *  @returns {Object} key-value pairs of the queryString
- */
+/* getQueryVariables - Check the url for queryString and interpret it into an object
+   full of key-value pairs.
+   @returns {Object} key-value pairs of the queryString */
 function getQueryVariables() {
   const query = window.location.search.substring( 1 );
   const pairs = query.split( '&' );
@@ -23,12 +21,11 @@ function getQueryVariables() {
   return queryVariables;
 }
 
-/**
- * _buildUrlQueryString - Retreieve values from the models and transform them into a
- *  querystring
- *  @returns {String} a formatted query string based on model values
- */
-function _buildUrlQueryString() {
+/* _buildUrlQueryString - Retreieve values from the models and transform them into a
+   querystring
+   @returns {String} a formatted query string based on model values */
+
+function buildUrlQueryString() {
   const expensesValues = expensesModel.values;
   const financialValues = financialModel.values;
   const schoolValues = schoolModel.values;
@@ -79,15 +76,15 @@ function _buildUrlQueryString() {
     'subl': financialValues.fedLoan_directSub,
     'unsl': financialValues.fedLoan_directUnsub,
 
-    'insl': financialValues.instiLoan_institutional,
-    'insr': financialValues.rate_institutionalLoan,
-    'insf': financialValues.fee_institutionalLoan,
-    'stal': financialValues.loan_stateLoan,
-    'star': financialValues.rate_stateLoan,
-    'staf': financialValues.fee_stateLoan,
-    'npol': financialValues.loan_nonprofitLoan,
-    'npor': financialValues.rate_nonprofitLoan,
-    'npof': financialValues.fee_nonprofitLoan,
+    'insl': financialValues.publicLoan_institutional,
+    'insr': financialValues.rate_institutional,
+    'insf': financialValues.fee_institutional,
+    'stal': financialValues.publicLoan_state,
+    'star': financialValues.rate_state,
+    'staf': financialValues.fee_state,
+    'npol': financialValues.publicLoan_nonprofit,
+    'npor': financialValues.rate_nonprofit,
+    'npof': financialValues.fee_nonprofit,
 
     'pers': financialValues.savings_personal,
     'fams': financialValues.savings_family,
@@ -102,7 +99,7 @@ function _buildUrlQueryString() {
     'pvr1': financialValues.privloan_privLoanRate1,
     'pvf1': financialValues.privloan_privLoanFee1,
 
-    'plus': financialValues.fedLoan_parentPlus
+    'plus': financialValues.plusLoan_gradPlus
   };
 
   const expensesVariables = {
@@ -120,7 +117,7 @@ function _buildUrlQueryString() {
   };
 
   if ( stateValues.program_type === 'graduate' ) {
-    variables.plus = financialValues.loan_gradPlus;
+    variables.plus = financialValues.plusLoan_gradPlus;
   }
 
   /* TODO: Don't bother putting expenses in the URL if they equal the default
@@ -142,14 +139,7 @@ function _buildUrlQueryString() {
 
 }
 
-/**
- * setUrlQueryString - Replaces current state, adding the formatted querystring as the URL
- */
-function setUrlQueryString() {
-  // window.history.replaceState( stateModel.values, null, _buildUrlQueryString() );
-}
-
 export {
-  getQueryVariables,
-  setUrlQueryString
+  buildUrlQueryString,
+  getQueryVariables
 };

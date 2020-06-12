@@ -57,8 +57,8 @@ function getStateValue( prop ) {
  * getAllStateValues - retrieves the entire values property (object) of the stateModel
  * @returns {Object} The values stored in the stateModel Object
  */
-function getAllStateValues( prop ) {
-  return Object.assign( {}, stateModel.values );
+function getAllStateValues() {
+  return { ...stateModel.values };
 }
 
 

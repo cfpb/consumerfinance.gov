@@ -3,6 +3,7 @@
  */
 import { navigationView } from '../views/navigation-view.js';
 import { stateModel } from '../models/state-model.js';
+import { updateCostOfBorrowingChart, updateMakePlanChart, updateMaxDebtChart } from '../dispatchers/update-view.js';
 
 const updateState = {
 
@@ -13,6 +14,13 @@ const updateState = {
    */
   activeSection: item => {
     stateModel.setValue( 'activeSection', item );
+    if ( item === 'make-a-plan' ) {
+      updateMakePlanChart();
+    } else if ( item === 'max-debt-guideline' ) {
+      updateMaxDebtChart();
+    } else if ( item === 'cost-of-borrowing' ) {
+      updateCostOfBorrowingChart();
+    }
   },
 
   /**
@@ -37,9 +45,9 @@ const updateState = {
   },
 
   /**
-   * byProperty - Update the stateModel's property to value
+   * Update the stateModel's property to be equal to value
    * @param {String} prop - The property to update
-   * @param {} value - The value to assign
+   * @param {*} value - The value to assign
    */
   byProperty: function( prop, value ) {
     stateModel.setValue( prop, value );

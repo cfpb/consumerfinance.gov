@@ -3,6 +3,7 @@ import { promiseRequest } from '../util/promise-request';
 /**
  * schoolSearch - search for schools based on searchTerm
  * @param {String} searchTerm - Term to be searched for
+ * @returns {Object} Promise
  */
 const schoolSearch = function( searchTerm ) {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
@@ -21,6 +22,7 @@ const schoolSearch = function( searchTerm ) {
 
 /**
  * getConstants - retrieve constants from our API
+ * @returns {Object} Promise
  */
 const getConstants = function() {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
@@ -39,6 +41,7 @@ const getConstants = function() {
 
 /**
  * getExpenses - retrieve expense data from our API
+ * @returns {Object} Promise
  */
 const getExpenses = function() {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
@@ -58,6 +61,7 @@ const getExpenses = function() {
 /**
  * getSchoolData - retrieve school data from our API
  * @param { String } iped - The school's identification number
+ * @returns {Object} Promise
  */
 const getSchoolData = function( iped ) {
   const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
