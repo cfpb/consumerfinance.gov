@@ -47,8 +47,12 @@ const financialModel = {
     financialModel._calculateTotals();
     debtCalculator();
     recalculateExpenses();
-
     financialModel._updateStateWithFinancials();
+
+    // Debt Guide Difference
+    financialModel.values.other_debtGuideDifference = financialModel.values.salary_annual
+        - financialModel.values.debt_tenYearInterest;
+
   },
 
   /**
@@ -120,6 +124,8 @@ const financialModel = {
     if ( vals.total_gap < 0 ) {
       vals.total_gap = 0;
     }
+
+    console.log( financialModel.values );
 
   },
 

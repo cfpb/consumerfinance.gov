@@ -122,7 +122,9 @@ const schoolView = {
     this._schoolItems.forEach( elem => {
 
       const prop = elem.dataset.schoolItem;
-      const val = getSchoolValue( prop );
+      let val = getSchoolValue( prop );
+
+      if ( typeof val === 'undefined') val = '';
 
       elem.innerText = val;
 
@@ -131,7 +133,9 @@ const schoolView = {
     this._stateItems.forEach( elem => {
 
       const prop = elem.dataset.stateItem;
-      const val = getStateValue( prop );
+      let val = getStateValue( prop );
+
+      if ( typeof val === 'undefined') val = '';
 
       elem.innerText = val;
 

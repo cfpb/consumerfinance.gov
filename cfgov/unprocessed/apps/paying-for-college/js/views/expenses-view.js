@@ -29,15 +29,9 @@ const expensesView = {
       expensesView._inputChangeTimeout = setTimeout(
         function() {
           updateExpense( name, value );
-          expensesView.updateExpensesItems();
-          updateCostOfBorrowingChart();
-          updateAffordingChart();
         }, 500 );
     } else {
       updateExpense( name, value );
-      expensesView.updateExpensesItems();
-      updateCostOfBorrowingChart();
-      updateAffordingChart();
     }
   },
 
@@ -86,7 +80,6 @@ const expensesView = {
    */
   updateExpensesView: () => {
     expensesView._updateExpensesItems();
-    updateAffordingChart();
   }
 
 };

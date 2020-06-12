@@ -221,7 +221,7 @@
                         'label': 'Projected total debt',
                         'value': '$0',
                         'type': 'text',
-                        'data_attribute': 'data-financial-item="total_debtAtGrad"'
+                        'data_attribute': 'data-financial-item="debt_totalAtGrad"'
                     })
                 }}
                 {{
@@ -229,7 +229,7 @@
                         'label': 'Includes Parent PLUS loans?',
                         'value': 'Yes',
                         'type': 'text',
-                        'data_attribute': 'data-financial-item=""'
+                        'data_attribute': 'data-state-item="repayParentPlus"'
                     })
                 }}
                 {{
@@ -245,7 +245,7 @@
                         'label': 'Projected difference (Salary - Total debt)',
                         'value': '$0',
                         'type': 'text',
-                        'data_attribute': 'data-financial-item="debtGuide_difference"'
+                        'data_attribute': 'data-financial-item="other_debtGuideDifference"'
                     })
                 }}    
             {% endcall %}
@@ -293,7 +293,7 @@
                         'label': 'Average (or estimated) monthly expenses',
                         'value': '$0',
                         'type': 'text',
-                        'data_attribute': 'data-financial-item="?"'
+                        'data_attribute': 'data-expenses-item="total_expenses"'
                     })
                 }}
                 {{
@@ -301,7 +301,7 @@
                         'label': 'Additional money needed or left over',
                         'value': '$0',
                         'type': 'text',
-                        'data_attribute': 'data-expenses-item="item_total_gap"'
+                        'data_attribute': 'data-expenses-item="total_remainder"'
                     })
                 }} 
                    
@@ -320,7 +320,7 @@
                         'label': 'Graduation rate',
                         'value': '',
                         'type': 'text',
-                        'data_attribute': 'data-school-item="graduationRate"'
+                        'data_attribute': 'data-school-item="rateGraduationText"'
                     })
                 }}
                 {{
@@ -328,7 +328,7 @@
                         'label': 'Default rate',
                         'value': '',
                         'type': 'text',
-                        'data_attribute': 'data-school-item="repaymentRate"'
+                        'data_attribute': 'data-school-item="defaultRateText"'
                     })
                 }}
                 {{
@@ -336,7 +336,7 @@
                         'label': 'Repayment rate',
                         'value': '',
                         'type': 'text',
-                        'data_attribute': 'data-school-item="repaymentRate"'
+                        'data_attribute': 'data-school-item="rateRepay3yrText"'
                     })
                 }}
             {% endcall %}

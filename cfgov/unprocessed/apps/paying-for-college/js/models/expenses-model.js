@@ -1,5 +1,5 @@
 // This file contains the model for after-college expenses
-import { updateUrlQueryString, updateExpensesView, updateFinancialView } from '../dispatchers/update-view.js';
+import { updateAffordingChart, updateCostOfBorrowingChart, updateUrlQueryString, updateExpensesView, updateFinancialView } from '../dispatchers/update-view.js';
 import { getExpenses } from '../dispatchers/get-api-values.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
 import { stringToNum } from '../util/number-utils.js';
@@ -48,6 +48,9 @@ const expensesModel = {
   setValue: ( name, value ) => {
     expensesModel.values[name] = stringToNum( value );
     expensesModel.calculateTotals();
+    updateExpensesView();
+    updateCostOfBorrowingChart();
+    updateAffordingChart();
   },
 
   /**

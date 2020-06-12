@@ -161,6 +161,7 @@ const updateSchoolData = function( iped ) {
           schoolModel.setValue( key, data[key] );
         }
 
+        // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
         financialModel.setValue( 'salary_monthly', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) / 12 );
 
