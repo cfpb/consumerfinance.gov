@@ -36,6 +36,9 @@ class ProgamDataTest(django.test.TestCase):
     fixtures = ['fake_school.json', 'test_fixture.json']
 
     def setUp(self):
+        stdout_patch = mock.patch('sys.stdout')
+        stdout_patch.start()
+        self.addCleanup(stdout_patch.stop)
         self.mock_program_data = {
             'earnings': {
                 'median_earnings': 3000
