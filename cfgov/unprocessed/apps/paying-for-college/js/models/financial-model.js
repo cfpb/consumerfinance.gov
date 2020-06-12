@@ -136,6 +136,8 @@ const financialModel = {
       vals.total_gap = 0;
     }
 
+    console.log( financialModel.values );
+
   },
 
   /**
