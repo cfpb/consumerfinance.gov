@@ -123,9 +123,7 @@ const schoolView = {
 
       const prop = elem.dataset.schoolItem;
       let val = getSchoolValue( prop );
-
       if ( typeof val === 'undefined') val = '';
-
       elem.innerText = val;
 
     } );
@@ -136,7 +134,7 @@ const schoolView = {
       let val = getStateValue( prop );
 
       if ( typeof val === 'undefined') val = '';
-
+      
       elem.innerText = val;
 
     } );

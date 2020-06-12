@@ -122,6 +122,7 @@ const financialView = {
   _handleOtherLoanButtonClick: function( event ) {
     const target = event.target;
     const value = target.dataset.borrowButton;
+    
     if ( value === 'privateLoan' ) {
       updateState.byProperty( 'showPrivateLoans', 'yes' );
     } else if ( value === 'gradPlus' ) {
