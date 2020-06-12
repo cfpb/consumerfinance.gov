@@ -2,30 +2,6 @@
 # yarn lockfile v1
 
 
-"@cfpb/cfpb-core@0.0.9", "@cfpb/cfpb-core@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.0.9.tgz#638b528687bfcd5a0cb20a3832d585147d186f51"
-  integrity sha512-EiyAWmoRSojRRfZ1E3GjnFJeXY3ZrFDBScmh1oygHfsfKKvDsiGNFSqe3dOWRiweZ62yO/22oImU2jhmZhQHHw==
-  dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
-
-"@cfpb/cfpb-grid@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-grid/-/cfpb-grid-0.0.9.tgz#06e1c1e93d160168c1b1227553de5ec986ba1266"
-  integrity sha512-ArKSEsM1LnsDk8FpTWqqAm0IbROYakN2wtZBQPSOH+oXTWiVimAel6fM2v9aIppZOWOTjaK5M+Z6AXMrCh+KxQ==
-  dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
-
-"@cfpb/cfpb-layout@0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.0.9.tgz#92f79dd7ebdc2c1b29ff2226c6b2c2798b65557d"
-  integrity sha512-I+AuCz1Qjbkzg8xGUvCZM3vh3b8YrPcH2CPSaG0Qt+Bh8YmplP8puPd9dXwCAGO/gwawkvg/OHAwhxNQnUqG2Q==
-  dependencies:
-    "@cfpb/cfpb-core" "^0.0.9"
-    "@cfpb/cfpb-grid" "^0.0.9"
-
 "@sinonjs/commons@^1", "@sinonjs/commons@^1.6.0", "@sinonjs/commons@^1.7.0", "@sinonjs/commons@^1.7.2":
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.7.2.tgz#505f55c74e0272b43f6c52d81946bed7058fc0e2"
@@ -352,11 +328,6 @@ iconv-lite@0.4:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
-insert-css@0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/insert-css/-/insert-css-0.0.0.tgz#2304bfa6f893abecb8ff9ca8d9c7605d94cf2911"
-  integrity sha1-IwS/pviTq+y4/5yo2cdgXZTPKRE=
-
 isarray@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
@@ -387,18 +358,6 @@ nise@^4.0.1:
     "@sinonjs/text-encoding" "^0.7.1"
     just-extend "^4.0.2"
     path-to-regexp "^1.7.0"
-
-normalize-css@^2.0.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/normalize-css/-/normalize-css-2.3.1.tgz#fc03e3b91e3a51aa7a1836bae7b2b6ac6d51e156"
-  integrity sha1-/APjuR46Uap6GDa657K2rG1R4VY=
-  dependencies:
-    insert-css "0.0.0"
-
-normalize-legacy-addon@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/normalize-legacy-addon/-/normalize-legacy-addon-0.1.0.tgz#8ca131e8503943a3a9e4d0d70cc0e80a27a40c9e"
-  integrity sha1-jKEx6FA5Q6Op5NDXDMDoCiekDJ4=
 
 path-to-regexp@^1.7.0:
   version "1.8.0"
