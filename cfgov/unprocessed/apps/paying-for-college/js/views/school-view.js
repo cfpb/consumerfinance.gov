@@ -124,21 +124,17 @@ const schoolView = {
       const prop = elem.dataset.schoolItem;
       let val = getSchoolValue( prop );
       if ( typeof val === 'undefined') val = '';
-
       elem.innerText = val;
 
     } );
 
     this._stateItems.forEach( elem => {
-
       const prop = elem.dataset.stateItem;
       let val = getStateValue( prop );
-
       if ( typeof val === 'undefined') {
         val = '';
       }
       elem.innerText = val;
-
     } );
 
   },
