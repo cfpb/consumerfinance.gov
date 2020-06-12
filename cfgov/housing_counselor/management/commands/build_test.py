@@ -1,12 +1,22 @@
 from django.core.management.base import BaseCommand
 from v1.models.learn_page import EventPage
+import pypandoc
 
 
 def run(report_id):
     print(" *** finding report page... ***")
     mp = EventPage.objects.get(id=report_id)
-    print(" *** updating a static field... ***")
-    mp.body = 'here is more content'
+
+    print(" *** downloading the report file... ***")
+    with mp.speech_transcript.file.file.open() as f:
+        raw_report = f.read()
+
+    print(" *** converting the report with pandoc... ***")
+    output = pypandoc.convert_text(raw_report, 'docx', format='html')
+
+    print(" *** updating body field... ***")
+    mp.body = output
+
     print(" *** saving the page... ***")
     mpr = mp.save_revision()  # future: add user= keyword
     mp.save()
