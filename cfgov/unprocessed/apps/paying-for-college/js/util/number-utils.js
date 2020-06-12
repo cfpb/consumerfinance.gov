@@ -53,6 +53,7 @@ function decimalToPercentString( number, decimalPlaces ) {
       { style: 'percent',
         minimumFractionDigits: decimalPlaces } );
 }
+
 /**
  * enforceRange - Force a number between a range
  * @param {Number} n - Number to be checked

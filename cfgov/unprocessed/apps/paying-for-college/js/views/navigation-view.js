@@ -3,7 +3,7 @@
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { getStateValue, getAllStateValues } from '../dispatchers/get-model-values.js';
+import { getAllStateValues, getStateValue } from '../dispatchers/get-model-values.js';
 
 const navigationView = {
   _contentSidebar: null,
@@ -11,10 +11,12 @@ const navigationView = {
   _sections: null,
   _navMenu: null,
   _navListItems: null,
+  _navItems: null,
   _navButtons: null,
   _nextButton: null,
   _appSegment: null,
-  _stateDomElememnt: null,
+  _stateDomElem: null,
+  _affordingChoices: null,
 
   /**
    * _addButtonListeners - Add event listeners for nav buttons
@@ -23,6 +25,13 @@ const navigationView = {
     navigationView._navButtons.forEach( elem => {
       const events = {
         click: this._handleNavButtonClick
+      };
+      bindEvent( elem, events );
+    } );
+
+    navigationView._affordingChoices.forEach( elem => {
+      const events = {
+        click: this._handleAffordingChoicesClick
       };
       bindEvent( elem, events );
     } );
@@ -39,6 +48,16 @@ const navigationView = {
       popstate: navigationView._handlePopState
     };
     bindEvent( window, events );
+  },
+
+  /**
+   * _handleAffordingChoicesClick - Handle clicks on Affording Payment choices
+   * @param {Object} event - The click event
+   */
+  _handleAffordingChoicesClick: function( event ) {
+    const parent = closest( event.target, '.m-form-field' );
+    const input = parent.querySelector( 'input[name="affording-display-radio"]' );
+    updateState.byProperty( 'expensesChoice', input.value );
   },
 
   /**
@@ -64,9 +83,7 @@ const navigationView = {
 
       updateState.activeSection( event.state.activeSection );
     }
-
-    updateNavigationView();
-
+    navigationView.updateView();
   },
 
   /**
@@ -79,18 +96,9 @@ const navigationView = {
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
     } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
-      // Close all open menu section
-      navigationView._navMenu.querySelectorAll('[data-nav-is-open="True"]').forEach( elem => {
-        elem.setAttribute('data-nav-is-open', 'False');
-      } );
-
-      // Open the clicked menu section
-      const parent = closest( target, '.m-list_item__parent' );
-      parent.setAttribute('data-nav-is-open', 'True');
-
-      /* const elem = parent.querySelector( '.o-college-costs-nav__section ul li button' );
-         updateState.activeSection( elem.dataset.nav_item ); */
+      closest( target, '[data-nav-is-open]' ).setAttribute( 'data-nav-is-open', 'True' );
     }
+
   },
 
   /**
@@ -107,7 +115,15 @@ const navigationView = {
    * @param {String} activeName - name of the active app section
    */
   _updateSideNav: function( activeName ) {
-    const navItem = navigationView._navMenu.querySelector( '[data-nav_item="' + activeName + '"]' );
+    if ( typeof activeName === 'undefined' ) {
+      activeName = getStateValue( 'activeSection' );
+    }
+    // clear active-sections
+    navigationView._navItems.forEach( elem => {
+      elem.classList.remove( 'active-section' );
+    } );
+
+    const navItem = document.querySelector( '[data-nav_item="' + activeName + '"]' );
     const activeElem = closest( navItem, 'li' );
     const activeParent = closest( activeElem, 'li' );
 
@@ -119,7 +135,11 @@ const navigationView = {
     activeElem.setAttribute( 'data-nav-is-active', 'True' );
     activeParent.setAttribute( 'data-nav-is-open', 'True' );
     activeParent.setAttribute( 'data-nav-is-active', 'True' );
+    activeParent.querySelectorAll( '.m-list_item' ).forEach( elem => {
+      elem.setAttribute( 'data-nav-is-active', 'True' );
+    } );
 
+    navItem.classList.add( 'active-section' );
   },
 
   /**
@@ -172,21 +192,21 @@ const navigationView = {
     this._navMenu = body.querySelector( '.o-secondary-navigation' );
     this._navButtons = body.querySelectorAll( '.o-secondary-navigation a' );
     this._navListItems = body.querySelectorAll( '.o-secondary-navigation li' );
+    this._navItems = body.querySelectorAll( '[data-nav_item]' );
     this._nextButton = body.querySelector( '.college-costs_tool-section_buttons .btn__next-step' );
     this._contentSidebar = body.querySelector( '.content_sidebar' );
     this._introduction = body.querySelector( '.college-costs_intro-segment' );
     this._getStartedBtn = body.querySelector( '.college-costs_intro-segment .btn__get-started' );
     this._appSegment = body.querySelector( '.college-costs_app-segment' );
     this._sections = body.querySelectorAll( '.college-costs_tool-section' );
+    this._stateDomElem = document.querySelector( 'main.college-costs' );
+    this._affordingChoices = document.querySelectorAll( '.affording-loans-choices .m-form-field' );
 
     this._addButtonListeners();
     this.updateView();
 
     window.history.replaceState( getAllStateValues(), null, '' );
-    this._stateDomElem = document.querySelector( 'main.college-costs' );
     this._addPopStateListener();
-
-
   }
 
 };

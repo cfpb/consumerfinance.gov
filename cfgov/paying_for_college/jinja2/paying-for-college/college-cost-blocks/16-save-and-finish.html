@@ -9,7 +9,7 @@
             <label class="a-label a-label__heading" for="finish_link">
                 Your link
             </label>
-            <input type="text" class="a-text-input" id="finish_link" name="finish_link" autocomplete="off" value="https://www.consumerfinance.gov/paying-for-college/app-name/?value=1&b=2&c=3&d=4">
+            <pre id="finish_link" name="finish_link"></pre>
         </div>
     </div>
     <div class="o-form_group">
@@ -18,27 +18,28 @@
                 Email
             </label>
     
-            <input type="text" class="a-text-input" id="finish_email" name="finish_email" autocomplete="off" value="https://www.consumerfinance.gov/paying-for-college/app-name/?value=1&b=2&c=3&d=4">
+            <input type="text" class="a-text-input" id="finish_email" name="finish_email" autocomplete="off" value="">
+            <button class="a-btn">Email me my link</button>
         </div>
     </div>
     <div class="o-form_group">
         <div class="block block__mid">
             <h3>Did this tool help you understand your financial aid offer?</h3>
-
-            <div class="m-form-field m-form-field__radio">
-                <input id="1" type="radio" name="save_was-this-helpful" class="a-radio" value="put">
-                <label class="a-label" for="">Label</label>
+            <div class="m-btn-group" id="save_did-it-help">
+                <button class="a-btn" value="No">No</button>
+                <button class="a-btn" value="Somewhat">Somewhat</button>
+                <button class="a-btn" value="Yes">Yes</button>
             </div>
         </div>
         <div class="block block__mid">
             <h3>Did this tool help you understand the potential impact of student loans?</h3>
-            <div class="m-form-field m-form-field__radio">
-                <input id="2" type="radio" name="save_was-this-helpful" class="a-radio" value="put">
-                <label class="a-label" for="">Label</label>
+            <div class="m-btn-group" id="save_understand-loans">
+                <button class="a-btn" value="No">No</button>
+                <button class="a-btn" value="Somewhat">Somewhat</button>
+                <button class="a-btn" value="Yes">Yes</button>
             </div>
         </div>
     </div>
-    <button class="a-btn u-mb15">Submit</button>
 
 
 <div class="restart">
@@ -46,7 +47,7 @@
 
     <p>If you have another financial aid offer you can click the button below to start this form over and enter in your data for the other school.</p>
 
-    <button class="a-btn">Restart</button>
+    <a class="a-btn" href="">Restart</a>
 </div>
 
 </section>

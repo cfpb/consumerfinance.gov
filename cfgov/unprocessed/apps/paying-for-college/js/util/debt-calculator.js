@@ -2,8 +2,8 @@
  * The file interfaces between our application and the studentDebtCalculator package
  */
 
+import studentDebtCalculator from 'student-debt-calc';
 import { calcDebtAtGrad, calcMonthlyPayment } from './debt-utils.js';
-
 import { getConstantsValue, getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { constantsModel } from '../models/constants-model.js';
 import { financialModel } from '../models/financial-model.js';
@@ -12,14 +12,15 @@ import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/upda
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
 
-
 /**
- * debtCalculator - Calculate the debt based on financial model values
+ * Calculate debts based on financial values
  */
 function debtCalculator() {
-  const fedLoans = [ 'directSub', 'directUnsub', 'gradPlus', 'parentPlus' ];
-  const otherLoans = [ 'state', 'institutional', 'nonprofit', 'privateLoan1' ];
-  const allLoans = fedLoans.concat( otherLoans );
+  const fedLoans = [ 'directSub', 'directUnsub' ];
+  const plusLoans = [ 'gradPlus', 'parentPlus' ];
+  const publicLoans = [ 'state', 'institutional', 'nonprofit' ];
+  const privateLoans = [ 'privateLoan1' ];
+  const allLoans = fedLoans.concat( plusLoans, publicLoans, privateLoans );
   const fin = financialModel.values;
   const debts = {
     totalAtGrad: 0,
@@ -46,14 +47,41 @@ function debtCalculator() {
       val = 0;
     }
     debts[key] = val;
+  } );
 
+  plusLoans.forEach( key => {
+    let val = calcDebtAtGrad(
+      fin['plusLoan_' + key],
+      fin['rate_' + key],
+      fin.other_programLength,
+      6 );
+
+    if ( isNaN( val ) ) {
+      val = 0;
+    }
+    debts[key] = val;
   } );
 
   // calculate debts of other loans
 
-  otherLoans.forEach( key => {
+  publicLoans.forEach( key => {
     let val = calcDebtAtGrad(
-      fin['loan_' + key],
+      fin['publicLoan_' + key],
+      fin['rate_' + key],
+      fin.other_programLength,
+      0
+    );
+
+    if ( isNaN( val ) ) {
+      val = 0;
+    }
+    debts[key] = val;
+
+  } );
+
+  privateLoans.forEach( key => {
+    let val = calcDebtAtGrad(
+      fin['privLoan_' + key],
       fin['rate_' + key],
       fin.other_programLength,
       0
@@ -106,6 +134,8 @@ function debtCalculator() {
 
   debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad;
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
+  debts.repayHours = debts.tenYearMonthly / 15;
+  debts.repayWorkWeeks = debts.repayHours / 40;
 
   // TODO: Differentiate grads versus undergrads
 

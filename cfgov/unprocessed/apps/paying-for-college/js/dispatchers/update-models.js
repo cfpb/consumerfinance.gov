@@ -10,9 +10,8 @@ import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { stringToNum } from '../util/number-utils.js';
 import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { updateSchoolView } from './update-view.js';
+import { updateGradMeterChart, updateRepaymentMeterChart, updateSchoolView } from './update-view.js';
 
-// parameters mapped to model variables
 const _urlParamsToModelVars = {
   'iped': 'schoolModel.schoolID',
   'pid': 'schoolModel.PID',
@@ -57,15 +56,15 @@ const _urlParamsToModelVars = {
   'subl': 'financialModel.fedLoan_directSub',
   'unsl': 'financialModel.fedLoan_directUnsub',
 
-  'insl': 'financialModel.instiLoan_institutional',
-  'insr': 'financialModel.rate_institutionalLoan',
-  'insf': 'financialModel.fee_institutionalLoan',
-  'stal': 'financialModel.loan_stateLoan',
+  'insl': 'financialModel.publicLoan_institutional',
+  'insr': 'financialModel.rate_institutional',
+  'insf': 'financialModel.fee_institutional',
+  'stal': 'financialModel.publicLoan_state',
   'star': 'financialModel.rate_stateLoan',
   'staf': 'financialModel.fee_stateLoan',
-  'npol': 'financialModel.loan_nonprofitLoan',
-  'npor': 'financialModel.rate_nonprofitLoan',
-  'npof': 'financialModel.fee_nonprofitLoan',
+  'npol': 'financialModel.publicLoan_nonprofit',
+  'npor': 'financialModel.rate_nonprofit',
+  'npof': 'financialModel.fee_nonprofit',
 
   'pers': 'financialModel.savings_personal',
   'fams': 'financialModel.savings_family',
@@ -95,7 +94,6 @@ const _urlParamsToModelVars = {
   'dbtx': 'expensesModel.item_currentDebt'
 };
 
-
 /**
  * initializeFinancialModel - Create financial model values based on the input
  * fields that exist in the DOM
@@ -110,7 +108,7 @@ function initializeFinancialValues() {
 /**
   * updateFinancial - Update a property of the financial model
   * @param {String} name - The name of the property to update
-  * @param {} value - The new value of the property
+  * @param {*} value - The new value of the property
   */
 function updateFinancial( name, value ) {
   financialModel.setValue( name, value );
@@ -119,7 +117,7 @@ function updateFinancial( name, value ) {
 /**
   * createFinancial - Create a new financial property
   * @param {String} name - The name of the property to update
-  * @param {} value - The new value of the property
+  * @param {*} value - The new value of the property
   */
 function createFinancial( name, value ) {
   financialModel.createFinancialProperty( name, value );
@@ -135,7 +133,7 @@ function recalculateFinancials() {
 /**
   * updateExpense - Update a property of the expense model
   * @param {String} name - The name of the property to update
-  * @param {} value - The new value of the property
+  * @param {*} value - The new value of the property
   */
 function updateExpense( name, value ) {
   expensesModel.setValue( name, value );
@@ -151,6 +149,7 @@ function recalculateExpenses() {
 /**
   * updateSchoolData - Fetch API data for school and update the model
   * @param {String} iped - The id of the school
+  * @returns {Object} Promise of the XHR request
   */
 const updateSchoolData = function( iped ) {
   return new Promise( ( resolve, reject ) => {
@@ -188,6 +187,7 @@ const updateFinancialsFromSchool = function() {
 /**
  * updateModelsFromQueryString - Takes an object build from the question string and updates
  * the models with those values
+ * @param {Object} queryObj - An object representing the url query string.
  */
 function updateModelsFromQueryString( queryObj ) {
   const modelMatch = {

@@ -12,8 +12,11 @@ main.college-costs {
 		display: none;
 	}
 
-	// Grad & undergrad content control
+	[data-state-based-visibility] {
+		display: none;
+	}
 
+	// Grad & undergrad content control
 	&:not( [data-state_programtype="graduate"] ) {
 		.undergrad-content {
 			display: block;
@@ -111,32 +114,88 @@ main.college-costs {
 		}
 	}
 
-	// Notification visibility controls
-	[data-state-based-visibility] {
-		display: none;
+	// Make a plan - Add loans buttons
+	&[data-state_showprivateloans="yes"] {
+		[data-state-based-visibility="show-privateLoan"] {
+			display: block;
+		}
+		[data-borrow-button="privateLoan"] {
+			display: none;
+		}
 	}
 
+	&[data-state_showplusloan="gradPlus"] {
+		[data-state-based-visibility="show-gradPlus"] {
+			display: block;
+		}
+		[data-borrow-button="gradPlus"] {
+			display: none;
+		}
+	}
+
+	&[data-state_showplusloan="parentPlus"] {
+		[data-state-based-visibility="show-parentPlus"] {
+			display: block;
+		}
+		[data-borrow-button="parentPlus"] {
+			display: none;
+		}
+	}
+
+	// Notification visibility controls
 	&[data-state_uncoveredcosts="true"] {
 		[data-state-based-visibility="uncovered-costs"] {
-			display:block
+			display:block;
 		}
 	}
 
 	&[data-state_excessfunding="true"] {
 		[data-state-based-visibility="excesss-funding"] {
-			display:block
+			display:block;
 		}
 	}
 
 	&[data-state_debtruleviolation="true"] {
 		[data-state-based-visibility="debt-rule-violation"] {
-			display:block
+			display:block;
 		}
 	}
 
 	&[data-state_debtruleviolation="false"] {
 		[data-state-based-visibility="debt-rule-okay"] {
-			display:block
+			display:block;
+		}
+	}
+
+	&[data-state_expensesremainder="surplus"] {
+		[data-state-based-visibility="expenses-surplus"] {
+			display:block;
+		}
+	}
+
+	&[data-state_expensesremainder="shortage"] {
+		[data-state-based-visibility="expenses-shortage"] {
+			display:block;
+		}
+	}
+
+	// This content is visible by default
+	&[data-state_expenseschoice="hourly"] {
+		[data-state-based-visibility="expenses-hourly-wages"] {
+			display: block;
+		}
+	}
+
+	&[data-state_expenseschoice="monthly"] {
+		[data-state-based-visibility="expenses-monthly-budget"] {
+			display: block;
+		}
+	}
+
+	// Don't show the next button on the save & finish page
+	&[data-state_activesection="save-and-finish"] {
+		.college-costs_tool-section_buttons {
+			display: none;
 		}
 	}
 

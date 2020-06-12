@@ -35,7 +35,7 @@
 			display: none;
 		}
 
-		li[data-nav-is-active="True"] > a {
+		li.m-list_item__parent[data-nav-is-active="True"] > a {
 			font-weight: 600;
 		}
 
@@ -47,12 +47,15 @@
 		}
 
 		.m-list_item li.m-list_item[data-nav-is-active="True"] {
-			border-left: 3px solid @green;
-			
-			a {
-				font-weight: 600;
+			.active-section {
+				border-left: 3px solid @green;
+
+				a {
+					font-weight: 600;
+				}
 			}
 		}
+		
 
 	});
 }

@@ -91,7 +91,7 @@
                             'label': 'Additional direct costs',
                             'value': '',
                             'type': 'text',
-                            'data_attribute': 'data-financial-item="?"'
+                            'data_attribute': 'data-financial-item="dirCost_other"'
                         })
                     }}
                 </div>
@@ -107,27 +107,37 @@
                     }}
                     {{
                         text_item.render({
-                            'label': 'Other/miscellaneous expenses',
+                            'label': 'Transportation',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="indiCost_transportation"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Personal/other/miscellaneous expenses',
                             'value': '',
                             'type': 'text',
                             'data_attribute': 'data-financial-item="indiCost_other"'
                         })
                     }}
+                </div>
+                <div class="block block__sub block">
                     {{
                         text_item.render({
-                            'label': 'Additional indirect costs',
+                            'label': 'Additional financial obligations',
                             'value': '',
                             'type': 'text',
-                            'data_attribute': 'data-financial-item="?"'
+                            'data_attribute': 'data-financial-item="otherCosts_additional"'
                         })
-                    }}
+                    }}                    
                 </div>
             {% endcall %}
 
             {% set expandable_settings = {
                 'label': 'Total funding',
                 'value': '$99,999',
-                'data_attribute': 'data-financial-item="total_offerFunding"'
+                'data_attribute': 'data-financial-item="total_funding"'
             } %}
             {% call() expandable(expandable_settings) %}
                 <div class="block block__sub block">
@@ -172,7 +182,7 @@
                             'label': 'Loans from your state, the school, or a non-profit',
                             'value': '',
                             'type': 'text',
-                            'data_attribute': 'data-financial-item="?"'
+                            'data_attribute': 'data-financial-item="total_publicLoans"'
                         })
                     }}
                     {{
@@ -180,7 +190,7 @@
                             'label': 'Private loans',
                             'value': '',
                             'type': 'text',
-                            'data_attribute': 'data-financial-item="privLoan_privLoan"'
+                            'data_attribute': 'data-financial-item="privLoan_privLoan1"'
                         })
                     }}
                     {{
@@ -188,7 +198,7 @@
                             'label': 'PLUS loans',
                             'value': '',
                             'type': 'text',
-                            'data_attribute': 'data-financial-item="fedLoan_parentPlus"'
+                            'data_attribute': 'data-financial-item="total_plusLoans"'
                         })
                     }}
                 </div>

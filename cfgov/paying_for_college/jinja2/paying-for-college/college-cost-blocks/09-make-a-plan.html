@@ -5,7 +5,7 @@
 
     <p>Thank you for entering all that info! This page will help you determine whether you have enough funding to cover the cost of attending this particular school. If you have a gap, it will help you come up with a plan.</p>
 
-    <div  data-state-based-visibility="uncovered-costs">
+    <div data-state-based-visibility="uncovered-costs">
         {{ notification.render(
             'caution',
             true,
@@ -181,7 +181,7 @@
                         'label': 'Other servicemember benefits',
                         'id': 'plan__serviceMemberOther',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="grantserviceOther"'
+                        'data_attribute': 'data-financial-item="grant_servicememberOther"'
                     })
                 }}
                 {{
@@ -360,7 +360,7 @@
                 'label': '<span class="undergrad-content">Other loans</span><span class="graduate-content">Institutional loans</span>' | safe,
                 'value': '$99,999',
                 'is_editable': 'True',
-                'data_attribute': 'data-financial-item="total_schoolLoans"',
+                'data_attribute': 'data-financial-item="total_publicLoans"',
                 'note': '<strong>Borrow more from the school:</strong> Contact the financial aid office to find out more. Remember, these loans may not offer the same protections as federal student loans.' | safe
             } %}
             {% call() expandable(expandable_settings) %}
@@ -370,7 +370,7 @@
                             'label': 'Loan from your state',
                             'id': 'plan__stateLoan',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="loan_state"'
+                            'data_attribute': 'data-financial-item="publicLoan_state"'
                         })
                     }}
                     {{
@@ -396,7 +396,7 @@
                             'label': 'Loan from this school',
                             'id': 'plan__schoolLoan',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="loan_institutional"'
+                            'data_attribute': 'data-financial-item="publicLoan_institutional"'
                         })
                     }} 
                     {{
@@ -422,7 +422,7 @@
                             'label': 'Loan from a non-profit',
                             'id': 'plan__nonprofitLoan',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="loan_nonprofit"'
+                            'data_attribute': 'data-financial-item="publicLoan_nonprofit"'
                         })
                     }}
                     {{
@@ -471,13 +471,14 @@
                 ) }}
 
                 <div class="other-borrowing-btns">
-                    <button class="a-btn a-btn__add u-mb15">{{ svg_icon('plus-round') }} Add a private loan to your plan if you have an offer from a lender.</button>
-                    <button class="a-btn a-btn__add">{{ svg_icon('plus-round') }} Add <span class="undergrad-content">parent PLUS</span><span class="graduate-content">Direct PLUS (grad PLUS)</span> loan.</button>
+                    <button class="a-btn a-btn__add u-mb15" data-borrow-button="privateLoan">{{ svg_icon('plus-round') }} Add a private loan to your plan if you have an offer from a lender.</button>
+                    <button class="a-btn a-btn__add undergrad-content" data-borrow-button="parentPlus">{{ svg_icon('plus-round') }} Add parent PLUS loan.</button>
+                    <button class="a-btn a-btn__add grad-content" data-borrow-button="gradPlus">{{ svg_icon('plus-round') }}  Add Direct PLUS (grad PLUS)</button>
                 </div>
-                <div class="private-loan-expandable">
+                <div class="private-loan-expandable"  data-state-based-visibility="show-privateLoan">
                     {% set expandable_settings = {
                         'label': 'Private Loans',
-                        'value': '$5,000',
+                        'value': '$0',
                         'is_editable': 'True',
                         'data_attribute': 'data-financial-item="total_privateLoans"',
                         'note': 'If you need a private loan, you\'ll have to apply directly to lenders. Shop around for the lowest interest rates and loan fees. Private lenders typically require a cosigner for these loans.'
@@ -490,7 +491,7 @@
                                     'label': 'Loan amount',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="loan_privateLoan1"'
+                                    'data_attribute': 'data-financial-item="privLoan_privateLoan1"'
                                 })
                             }}
                             {{
@@ -524,21 +525,21 @@
                         <button class="a-btn a-btn__link u-mt30">{{ svg_icon('plus-round') }} Add another Private Loan</button>
                     {% endcall %}
                 </div>
-                <div class="plus-loan-expandable">
+                <div class="plus-loan-expandable" data-state-based-visibility="show-gradPlus">
                     {% set expandable_settings = {
-                        'label': '<span class="undergrad-content">Parent PLUS</span><span class="graduate-content">Direct PLUS (grad PLUS)</span> loans' | safe,
+                        'label': 'Direct PLUS (grad PLUS) loans' | safe,
                         'value': '$0',
                         'is_editable': 'True',
                         'data_attribute': 'data-financial-item="total_plusLoans"'
                     } %}
                     {% call() expandable(expandable_settings) %}
-                        <div class="plus-loan-form graduate-content">
+                        <div class="plus-loan-form" >
                             {{
                                 input.render({
                                     'label': 'Loan amount',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="fedLoan_gradPlus"'
+                                    'data_attribute': 'data-financial-item="plusLoan_gradPlus"'
                                 })
                             }}
                             {{
@@ -560,13 +561,29 @@
                                 })
                             }}
                         </div>
-                         <div class="plus-loan-form undergrad-content">
+                       {{ notification.render(
+                            'default',
+                            true,
+                            '',
+                            'More details about Direct PLUS (grad PLUS) loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/grad" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>' | safe
+                        ) }}
+                    {% endcall %}
+                </div>
+                <div class="plus-loan-expandable" data-state-based-visibility="show-parentPlus">
+                    {% set expandable_settings = {
+                        'label': 'Parent PLUS loans' | safe,
+                        'value': '$0',
+                        'is_editable': 'True',
+                        'data_attribute': 'data-financial-item="total_plusLoans"'
+                    } %}
+                    {% call() expandable(expandable_settings) %}
+                         <div class="plus-loan-form">
                             {{
                                 input.render({
                                     'label': 'Loan amount',
                                     'id': '?',
                                     'value': '0',
-                                    'data_attribute': 'data-financial-item="loan_parentPlus"'
+                                    'data_attribute': 'data-financial-item="plusLoan_parentPlus"'
                                 })
                             }}
                             {{
@@ -587,7 +604,7 @@
                                     'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
                                 })
                             }}
-                            <div class="undergrad-content u-mt30">
+                            <div class="u-mt30">
                                 {{
                                     checkbox.render({
                                         'id': '?',
@@ -601,7 +618,7 @@
                             'default',
                             true,
                             '',
-                            '<span class="undergrad-content">More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a></span><span class="graduate-content">More details about Direct PLUS (grad PLUS) loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/grad" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a></span>' | safe
+                            'More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a></span>' | safe
                         ) }}
                     {% endcall %}
                 </div>
