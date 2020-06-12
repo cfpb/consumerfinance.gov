@@ -1,9 +1,16 @@
 <section class="college-costs_tool-section college-costs_tool-section__finish" data-tool-section="save-and-finish">
     <h2>Great job!</h2>
+    <div class="m-info-unit m-info-unit__inline u-mb30">
+        <div class="m-info-unit_image m-info-unit_image__square" style="background-image: url( {{ static('apps/paying-for-college/img/finish-page.png') }} );">
+        </div>
+        <div class="m-info-unit_content">
+            <div class="rich-text">
+              <p>You've made a plan to cover your school costs and graduate with as little debt as possible, and learned about the impact of loans on your future.</p>
+              <p>Copy and save this link so that you can come back and review your plan. You can also email yourself the link by providing your email. We won't store this information.</p>
+            </div>
+        </div>
+    </div>
 
-    <p>You've made a plan to cover your school costs and graduate with as little debt as possible, and learned about the impact of loans on your future.</p>
-
-    <p>Copy and save this link so that you can come back and review your plan. You can also email yourself the link by providing your email. We won't store this information.</p>
     <div class="o-form_group">
         <div class="m-form-field">
             <label class="a-label a-label__heading" for="finish_link">
@@ -19,7 +26,7 @@
             </label>
     
             <input type="text" class="a-text-input" id="finish_email" name="finish_email" autocomplete="off" value="">
-            <button class="a-btn">Email me my link</button>
+            <a class="a-btn" href="mailto:" id="email-your-link">E-mail your link to yourself</a>
         </div>
     </div>
     <div class="o-form_group">

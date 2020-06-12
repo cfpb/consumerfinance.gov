@@ -121,8 +121,6 @@ const financialModel = {
       vals.total_gap = 0;
     }
 
-    console.log( financialModel.values );
-
   },
 
   /* _enforceLimits - Check and enforce various limits on federal loans

@@ -11,6 +11,7 @@ import { getAllStateValues } from '../dispatchers/get-model-values.js';
 const appView = {
   _didThisHelpBtns: null,
   _finishLink: '',
+  _sendLinkBtn: null,
 
   /**
    * Listeners for buttons
@@ -22,6 +23,8 @@ const appView = {
       };
       bindEvent( elem, events );
     } );
+
+    bindEvent( appView._sendLinkBtn, { click: appView._handleSendLinkBtn } );
   },
 
   /**
@@ -36,6 +39,14 @@ const appView = {
       .forEach( elem => {
         elem.classList.add( 'a-btn__disabled' );
       } );
+  },
+
+  _handleSendLinkBtn: event => {
+    const target = event.target;
+    let href = 'mailto:' + document.querySelector( '#finish_email' ).value;
+    href += '?subject=Link: Your financial path to graduation&body=';
+    href += window.location.href;
+    target.setAttribute( 'href', href );
   },
 
   /**
@@ -66,6 +77,7 @@ const appView = {
   init: () => {
     appView._didThisHelpBtns = document.querySelectorAll( '#save_did-it-help button, #save_understand-loans button' );
     appView._finishLink = document.querySelector( '#finish_link' );
+    appView._sendLinkBtn = document.querySelector( '#email-your-link' );
 
     appView._addButtonListeners();
   }
