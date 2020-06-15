@@ -52,12 +52,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='eventpage',
             name='archive_video_id',
-            field=models.CharField(blank=True, help_text='Enter the YouTube video ID (for example <code>1V0Ax9OIc84</code>), which can be found in the video URL (for example https://www.youtube.com/watch?v=1V0Ax9OIc84).', max_length=11, null=True, validators=[django.core.validators.RegexValidator(regex='^[\\w-]{11}$')], verbose_name='YouTube video ID (archive)'),
+            field=models.CharField(blank=True, help_text='Enter the YouTube video ID, which is located at the end of the video URL, after "v=". For example, the video ID for https://www.youtube.com/watch?v=1V0Ax9OIc84 is 1V0Ax9OIc84.', max_length=11, null=True, validators=[django.core.validators.RegexValidator(regex='^[\\w-]{11}$')], verbose_name='YouTube video ID (archive)'),
         ),
         migrations.AddField(
             model_name='eventpage',
             name='live_video_id',
-            field=models.CharField(blank=True, help_text='Enter the YouTube video ID (for example <code>1V0Ax9OIc84</code>), which can be found in the video URL (for example https://www.youtube.com/watch?v=1V0Ax9OIc84).', max_length=11, null=True, validators=[django.core.validators.RegexValidator(regex='^[\\w-]{11}$')], verbose_name='YouTube video ID (live)'),
+            field=models.CharField(blank=True, help_text='Enter the YouTube video ID, which is located at the end of the video URL, after "v=". For example, the video ID for https://www.youtube.com/watch?v=1V0Ax9OIc84 is 1V0Ax9OIc84.', max_length=11, null=True, validators=[django.core.validators.RegexValidator(regex='^[\\w-]{11}$')], verbose_name='YouTube video ID (live)'),
+        ),
+        migrations.AlterField(
+            model_name='eventpage',
+            name='post_event_image_type',
+            field=models.CharField(choices=[('placeholder', 'Placeholder image'), ('image', 'Unique image (selected below)')], default='placeholder', help_text='Choose what to display after an event concludes. This will be overridden by embedded video if the "YouTube video ID (archive)" field on the previous tab is populated. If "Unique image" is chosen here, you must select the image you want below. It should be sized to 1416x796.', max_length=16, verbose_name='Post-event image type'),
         ),
         migrations.RunPython(migrate_forwards, migrate_backwards),
         migrations.RemoveField(

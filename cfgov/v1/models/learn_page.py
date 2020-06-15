@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
-from django.utils.safestring import mark_safe
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
@@ -331,11 +330,7 @@ class EventPage(AbstractFilterPage):
         # This is a reasonable but not official regex for YouTube video IDs.
         # https://webapps.stackexchange.com/a/54448
         validators=[RegexValidator(regex=r'^[\w-]{11}$')],
-        help_text=mark_safe(
-            'Enter the YouTube video ID (for example '
-            '<code>1V0Ax9OIc84</code>), which can be found in the video URL '
-            '(for example https://www.youtube.com/watch?v=1V0Ax9OIc84).'
-        )
+        help_text=organisms.VideoPlayer.YOUTUBE_ID_HELP_TEXT
     )
     live_stream_availability = models.BooleanField(
         "Streaming?",
@@ -352,11 +347,7 @@ class EventPage(AbstractFilterPage):
         # This is a reasonable but not official regex for YouTube video IDs.
         # https://webapps.stackexchange.com/a/54448
         validators=[RegexValidator(regex=r'^[\w-]{11}$')],
-        help_text=mark_safe(
-            'Enter the YouTube video ID (for example '
-            '<code>1V0Ax9OIc84</code>), which can be found in the video URL '
-            '(for example https://www.youtube.com/watch?v=1V0Ax9OIc84).'
-        )
+        help_text=organisms.VideoPlayer.YOUTUBE_ID_HELP_TEXT
     )
     live_stream_date = models.DateTimeField(
         "Go Live Date",
@@ -402,10 +393,10 @@ class EventPage(AbstractFilterPage):
         default='placeholder',
         verbose_name='Post-event image type',
         help_text='Choose what to display after an event concludes. This will '
-                  'be overridden by embedded video if the "YouTube URL" field '
-                  'on the previous tab is populated. If "Unique image" is '
-                  'chosen here, you must select the image you want below. It '
-                  'should be sized to 1416x796.',
+                  'be overridden by embedded video if the "YouTube video ID '
+                  '(archive)" field on the previous tab is populated. If '
+                  '"Unique image" is chosen here, you must select the image '
+                  'you want below. It should be sized to 1416x796.',
     )
     post_event_image = models.ForeignKey(
         'v1.CFGOVImage',

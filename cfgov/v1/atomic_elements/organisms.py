@@ -856,6 +856,12 @@ class VideoPlayerStructValue(blocks.StructValue):
 
 
 class VideoPlayer(blocks.StructBlock):
+    YOUTUBE_ID_HELP_TEXT = (
+        'Enter the YouTube video ID, which is located at the end of the video'
+        ' URL, after "v=". For example, the video ID for '
+        'https://www.youtube.com/watch?v=1V0Ax9OIc84 is 1V0Ax9OIc84.'
+    )
+
     video_id = blocks.RegexBlock(
         label='YouTube video ID',
         # Set required=False to allow for non-required VideoPlayers.
@@ -867,11 +873,7 @@ class VideoPlayer(blocks.StructBlock):
         error_messages={
             'invalid': "The YouTube video ID is in the wrong format.",
         },
-        help_text=mark_safe(
-            'Enter the YouTube video ID (for example '
-            '<code>1V0Ax9OIc84</code>), which can be found in the video URL '
-            '(for example https://www.youtube.com/watch?v=1V0Ax9OIc84).'
-        )
+        help_text=mark_safe(YOUTUBE_ID_HELP_TEXT)
     )
     thumbnail_image = images_blocks.ImageChooserBlock(
         required=False,
