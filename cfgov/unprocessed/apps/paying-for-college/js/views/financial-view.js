@@ -15,7 +15,6 @@ const financialView = {
   _calculatingTimeout: null,
   _currentInput: null,
   _costsOfferButtons: null,
-  _actionPlanChoices: null,
   _gradProgramContent: null,
   _undergradProgramContent: null,
   _otherBorrowingButtons: null,
@@ -51,35 +50,6 @@ const financialView = {
       bindEvent( elem, events );
     } );
 
-    financialView._actionPlanChoices.forEach( elem => {
-      const events = {
-        click: this._handleActionPlanClick
-      };
-      bindEvent( elem, events );
-    } );
-
-  },
-
-  /**
-   * Event handling for action-plan choice clicks
-   * @param {Object} event - Triggering event
-   */
-  _handleActionPlanClick: function( event ) {
-    /* const target = event.target;
-       financialView._actionPlanChoices.forEach( elem => {
-         elem.classList.remove( 'highlighted' );
-       } ); */
-
-    /* if ( target.matches( '.m-form-field' ) ) {
-         target.classList.add( 'highlighted' );
-         target.querySelector( 'input' ).setAttribute( 'checked', true );
-       } else {
-         const div = closest( target, '.m-form-field' );
-         div.classList.add( 'highlighted' );
-         div.querySelector( 'input' ).setAttribute( 'checked', true );
-       } */
-
-    // financialView._actionPlanSeeSteps.removeAttribute( 'disabled' );
   },
 
   /**
@@ -238,7 +208,6 @@ const financialView = {
     this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
     this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
     this._costsOfferButtons = document.querySelectorAll( '.costs_button-section button' );
-    this._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field' );
     this._otherBorrowingButtons = document.querySelectorAll( '.other-borrowing-btns button' );
     this._addInputListeners();
     this._addButtonListeners();

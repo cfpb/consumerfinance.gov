@@ -129,18 +129,28 @@ const financialModel = {
 
   },
 
-  /* _enforceLimits - Check and enforce various limits on federal loans
-     and grants
-     @returns {Object} An object of errors found during enforcement */
+  /** 
+   * Check and enforce various limits on federal loans and grants
+   * NOTE: an error indicates the number went over "max", we don't log errors when
+   * a value is below 0.
+   * @returns {Object} An object of errors found during enforcement
+   */
   _enforceLimits: () => {
-    // Determine unsubsidized cap based on status
     let unsubCapKey = 'unsubsidizedCapYearOne';
     if ( getStateValue( 'programType' ) === 'graduate' ) {
+      // If graduate, zero out subsidized and parentPlus loans, set unsubsidized cap
       unsubCapKey = 'unsubsidizedCapGrad';
-    } else if ( getStateValue( 'programDependency' ) === 'independent' ) {
-      unsubCapKey = 'unsubsidizedCapIndepYearOne';
+      financialModel.values.fedLoan_directSub = 0
+      financialModel.values.plusLoan_parentPlus = 0;
+    } else {
+      // if undergraduate, zero out gradPlus loans, set unsubsidized cap
+      financialModel.values.plusLoan_gradPlus = 0;
+      if ( getStateValue( 'programDependency' ) === 'independent' )  {
+        unsubCapKey = 'unsubsidizedCapIndepYearOne';
+      }
     }
 
+    // Get limits from the constants model
     const limits = {
       grant_pell: [ 0, getConstantsValue( 'pellCap' ) ],
       grant_mta: [ 0, getConstantsValue( 'militaryAssistanceCap' ) ],
@@ -149,6 +159,7 @@ const financialModel = {
     };
     const errors = {};
 
+    // Check values for min/max violations, log errors
     for ( const key in limits ) {
       const result = enforceRange( financialModel.values[key], limits[key][0], limits[key][1] );
       financialModel.values[key] = result.value;
@@ -177,8 +188,7 @@ const financialModel = {
 
 
   /**
-   * updateModelFromSchoolModel - Import financial values from the schoolModel
-   * based on stateModel
+   * Import financial values from the schoolModel based on stateModel
    */
   updateModelFromSchoolModel: () => {
     const rate = getStateValue( 'programRate' );
