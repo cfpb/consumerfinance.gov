@@ -6,7 +6,7 @@ based on these costs.
 
 import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { initializeFinancialValues, recalculateExpenses } from '../dispatchers/update-models.js';
-import { updateUrlQueryString } from '../dispatchers/update-view.js';
+import { updateFinancialView, updateCostOfBorrowingChart, updateAffordingChart, updateMaxDebtChart, updateMakePlanChart, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
 import { enforceRange, stringToNum } from '../util/number-utils.js';
@@ -65,6 +65,11 @@ const financialModel = {
       financialModel.values[name] = stringToNum( value );
       financialModel.recalculate();
       updateUrlQueryString();
+      updateFinancialView();
+      updateCostOfBorrowingChart();
+      updateMakePlanChart();
+      updateMaxDebtChart();
+      updateAffordingChart();
     }
   },
 
@@ -100,7 +105,13 @@ const financialModel = {
     for ( const prop in vals ) {
       const prefix = prop.split( '_' )[0];
       if ( totals.hasOwnProperty( prefix ) ) {
-        vals[totals[prefix]] += vals[prop];
+        // For loans, get net amount after fees
+        let val = vals[prop];
+        if ( prop.indexOf( 'Loan') > 0 ) {
+          val = financialModel._amountAfterFee( prop );
+        }
+
+        vals[totals[prefix]] += val;
       }
     }
 
@@ -125,11 +136,9 @@ const financialModel = {
       vals.total_gap = 0;
     }
 
-    console.log( financialModel.values );
-
   },
 
-  /** 
+  /**
    * Check and enforce various limits on federal loans and grants
    * NOTE: an error indicates the number went over "max", we don't log errors when
    * a value is below 0.
@@ -140,12 +149,12 @@ const financialModel = {
     if ( getStateValue( 'programType' ) === 'graduate' ) {
       // If graduate, zero out subsidized and parentPlus loans, set unsubsidized cap
       unsubCapKey = 'unsubsidizedCapGrad';
-      financialModel.values.fedLoan_directSub = 0
+      financialModel.values.fedLoan_directSub = 0;
       financialModel.values.plusLoan_parentPlus = 0;
     } else {
       // if undergraduate, zero out gradPlus loans, set unsubsidized cap
       financialModel.values.plusLoan_gradPlus = 0;
-      if ( getStateValue( 'programDependency' ) === 'independent' )  {
+      if ( getStateValue( 'programDependency' ) === 'independent' ) {
         unsubCapKey = 'unsubsidizedCapIndepYearOne';
       }
     }
@@ -170,6 +179,25 @@ const financialModel = {
 
     return errors;
 
+  },
+
+  /**
+   * _amountAfterFee - return net loan amount, after fee has been removed. Also, add
+   * a value to the Object of this net amount.
+   * @param {String} prop - Property name of the loan
+   * @returns {Number} net value of loan after fee
+   */
+  _amountAfterFee( prop ) {
+    const vals = financialModel.values;
+    const loanName = prop.split( '_' )[1];
+    let fee = 0;
+    if ( vals.hasOwnProperty( 'fee_' + loanName ) ) {
+      fee = vals['fee_' + loanName];
+    }
+    const net = vals[prop] - ( vals[prop] * fee );
+    vals['net_' + loanName] = net;
+
+    return net;
   },
 
   /**

@@ -125,20 +125,9 @@ const financialView = {
       financialView._inputChangeTimeout = setTimeout(
         function() {
           updateFinancial( name, value );
-          financialView.updateFinancialItems();
-          updateCostOfBorrowingChart();
-          updateMakePlanChart();
-          updateMaxDebtChart();
-          updateAffordingChart();
         }, 500 );
     } else {
       updateFinancial( name, value );
-      financialView.updateFinancialItems();
-      updateCostOfBorrowingChart();
-      updateMakePlanChart();
-      updateMaxDebtChart();
-      updateAffordingChart();
-      updateExpensesView();
     }
   },
 
@@ -158,8 +147,8 @@ const financialView = {
 
   updateFinancialItems: function() {
     this._financialItems.forEach( elem => {
-
       if ( !elem.matches( ':focus' ) ) {
+
         const prop = elem.dataset.financialItem;
         const isRate = prop.substr( 0, 5 ) === 'rate_';
         const isFee = prop.substr( 0, 4 ) === 'fee_';
@@ -180,26 +169,8 @@ const financialView = {
         } else {
           elem.innerText = val;
         }
-
-
       }
     } );
-
-    /* financialView._financialSpans.forEach( elem => {
-       elem.innerText = 'Calculating...';
-       } ); */
-
-
-    /* financialView._calculatingTimeout = setTimeout(
-       function() {
-       financialView._financialSpans.forEach( elem => {
-       const prop = elem.dataset.financialItem;
-       let val = getFinancialValue( prop );
-       val = numberToMoney( { amount: val, decimalPlaces: 0 } );
-       elem.innerText = val;
-       } );
-       },
-       5 ); */
   },
 
   /* init - Initialize the financialView object */

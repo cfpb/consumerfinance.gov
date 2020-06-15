@@ -24,7 +24,6 @@ const appView = {
     } );
 
     appView._actionPlanChoices.forEach( elem => {
-      console.log( elem );
       bindEvent( elem, { click: this._handleActionPlanClick } );
     } );
 
@@ -37,8 +36,7 @@ const appView = {
    */
   _handleActionPlanClick: function( event ) {
     const target = event.target;
-    console.log( target );
-    updateState.byProperty( 'actionPlan', target.value )
+    updateState.byProperty( 'actionPlan', target.value );
   },
 
   /**
@@ -89,15 +87,12 @@ const appView = {
    * Initialize the View
    */
   init: () => {
-    console.log( '1' );
     appView._didThisHelpBtns = document.querySelectorAll( '#save_did-it-help button, #save_understand-loans button' );
     appView._finishLink = document.querySelector( '#finish_link' );
     appView._sendLinkBtn = document.querySelector( '#email-your-link' );
     appView._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field input.a-radio' );
 
     appView._addButtonListeners();
-
-    console.log( 'choices' , appView._actionPlanChoices );
   }
 };
 
