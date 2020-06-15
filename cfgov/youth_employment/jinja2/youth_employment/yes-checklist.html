@@ -43,7 +43,7 @@
   <div class="content_line"></div>
 </div>
 
-<div class="cbg-print-paper">
+<div class="cbg-print-paper u-hidden">
   <div class="rich-text">
     <h2>My Car-Buying Checklist</h2>
     <p>
@@ -80,12 +80,7 @@
     </table>
   </div>
 </div>
-{#
-    The invalid media attribute is intentional. It forces the browser to
-    download the stylesheet without blocking rendering and is updated after
-    the stylesheet is downloaded.
-#}
+
 <link rel="stylesheet" 
       href="{{ static('css/blocks/car-buying-guide.css') }}"
-      media="none"
-      onload="media='all'">
+      media="print">
