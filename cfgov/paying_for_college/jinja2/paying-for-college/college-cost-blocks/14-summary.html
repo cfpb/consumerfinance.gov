@@ -5,7 +5,7 @@
 
     <button class="a-btn">Print summary</button>
     <button class="a-btn a-btn__secondary">Save as a link</button>
-    <p><small>You will also have a chace to print all documents at the end.</small></p>
+    <p class="u-mt15"><small>You will also have a chace to print all documents at the end.</small></p>
 
     <div class="block block__mid">
         <h3 class="summary_header">School and living situation</h3>
@@ -68,7 +68,7 @@
                 'data_attribute': 'data-financial-item="total_costs"'
             } %}
             {% call() expandable(expandable_settings) %}
-                <div class="block block__sub block">
+                <div class="block block__sub block__flush-top">
                     <h4>Direct costs</h4>
                     {{
                         text_item.render({
@@ -122,7 +122,7 @@
                         })
                     }}
                 </div>
-                <div class="block block__sub block">
+                <div class="block block__sub block__flush-bottom">
                     {{
                         text_item.render({
                             'label': 'Additional financial obligations',
@@ -140,7 +140,7 @@
                 'data_attribute': 'data-financial-item="total_funding"'
             } %}
             {% call() expandable(expandable_settings) %}
-                <div class="block block__sub block">
+                <div class="block block__sub block__flush-top">
                     <h4>Non-debt</h4>
                     {{
                         text_item.render({
@@ -167,7 +167,7 @@
                         })
                     }}
                 </div>
-                <div class="block block__sub block">
+                <div class="block block__sub block__flush-bottom">
                     <h4>Debt</h4>
                     {{
                         text_item.render({
