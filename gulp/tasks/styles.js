@@ -101,6 +101,26 @@ function stylesOnDemand() {
 }
 
 /**
+ * Process CSS for Wagtail on demand blocks.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesOnDemandBlocks() {
+  return gulp.src( configStyles.cwd + '/on-demand/blocks/*.less' )
+    .pipe( gulpNewer( {
+      dest:  configStyles.dest + '/blocks',
+      // ext option required because this subtask uses multiple source files
+      ext:   '.css',
+      extra: configStyles.otherBuildTriggerFiles
+    } ) )
+    .pipe( gulpLess( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpPostcss( [
+      autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+    ] ) )
+    .pipe( gulp.dest( configStyles.dest + '/on-demand' ) );
+}
+
+/**
  * Process CSS for Wagtail feature flags.
  * @returns {PassThrough} A source stream.
  */
@@ -118,27 +138,6 @@ function stylesFeatureFlags() {
       autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
     ] ) )
     .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) );
-}
-
-
-/**
- * Process CSS for Wagtail block CSS.
- * @returns {PassThrough} A source stream.
- */
-function stylesBlocks() {
-  return gulp.src( configStyles.cwd + '/blocks/*.less' )
-    .pipe( gulpNewer( {
-      dest:  configStyles.dest + '/blocks',
-      // ext option required because this subtask uses multiple source files
-      ext:   '.css',
-      extra: configStyles.otherBuildTriggerFiles
-    } ) )
-    .pipe( gulpLess( configStyles.settings ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpPostcss( [
-      autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
-    ] ) )
-    .pipe( gulp.dest( configStyles.dest + '/blocks' ) );
 }
 
 /**
@@ -235,12 +234,11 @@ function stylesApps() {
 }
 
 gulp.task( 'styles:apps', stylesApps );
-gulp.task( 'styles:blocks', stylesBlocks );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:ie', stylesIE );
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ondemand', stylesOnDemand );
-
+gulp.task( 'styles:ondemandBlocks', stylesOnDemandBlocks );
 gulp.task( 'styles:nemoProd', stylesNemoProd );
 gulp.task( 'styles:nemoIE8', stylesNemoIE8 );
 gulp.task( 'styles:nemo',
@@ -253,12 +251,12 @@ gulp.task( 'styles:nemo',
 gulp.task( 'styles',
   gulp.parallel(
     'styles:apps',
-    'styles:blocks',
     'styles:featureFlags',
     'styles:ie',
     'styles:modern',
     'styles:nemo',
-    'styles:ondemand'
+    'styles:ondemand',
+    'styles:ondemandBlocks'
   )
 );
 
