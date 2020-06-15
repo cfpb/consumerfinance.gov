@@ -119,7 +119,7 @@ const financialModel = {
     vals.total_borrowing = vals.total_fedLoans + vals.total_publicLoans + vals.total_privateLoans +
         vals.total_plusLoans;
     vals.total_contributions = vals.total_grants + vals.total_scholarships + vals.total_savings +
-        vals.total_workStudy;
+        vals.total_workStudy + vals.total_income;
     vals.total_costs = vals.total_directCosts + vals.total_indirectCosts + vals.otherCost_additional;
     vals.total_grantsScholarships = vals.total_grants + vals.total_scholarships;
     vals.total_otherResources = vals.total_savings + vals.total_income;
