@@ -5,14 +5,24 @@
 
 
     <div class="affording-loans-choices block block__sub">
-        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-            <input id="affording-loans-choices_hourly" type="radio" name="affording-display-radio" class="a-radio" value="hourly">
-            <label class="a-label" for="affording-loans-choices_hourly">My payment in terms of hourly wages</label>
-        </div>
-        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-            <input id="affording-loans-choices_monthly" type="radio" name="affording-display-radio" class="a-radio" value="monthly">
-            <label class="a-label" for="affording-loans-choices_monthly">My payment within a monthly budget</label>
-        </div>
+        {{
+            radio.render({
+              'name':  "affording-display-radio",
+              'label': 'My payment in terms of hourly wages',
+              'value': 'hourly',
+              'id': 'affording-loans-choices_hourly',
+              'class': 'm-form-field__lg-target'
+            })
+        }}
+        {{
+            radio.render({
+              'name':  "affording-display-radio",
+              'label': 'My payment within a monthly budget',
+              'value': 'monthly',
+              'id': 'affording-loans-choices_monthly',
+              'class': 'm-form-field__lg-target'
+            })
+        }}
     </div>
 
     <div data-state-based-visibility="expenses-hourly-wages">

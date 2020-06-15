@@ -37,7 +37,7 @@
     </div>
     <div class="financial-item_value"> 
         <span {% if value.data_attribute %}{{ value.data_attribute | safe }}{% endif %}>
-            {{ value.value }}
+            {{ value.value | safe }}
         </span> 
     </div>
 </div>
