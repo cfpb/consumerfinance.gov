@@ -23,9 +23,17 @@
 		margin-bottom: 0;
 	}
 
-	&_note,
-	&_note span:not(.a-link_text) {
+	&_note {
 		display: block;
+
+		& span {
+			display: block;
+		}
+
+		.a-link_text,
+		.inline {
+			display: inline;
+		}
 	}
 
 	&__subtotal,
@@ -75,6 +83,14 @@
 			.o-expandable_cue-close {
 				display: inline;
 				margin-left: unit( 5px / @base-font-size-px, em );
+			}
+		}
+
+		.flex-container {
+			display: flex;
+
+			.o-expandable_label {
+				flex: 1;
 			}
 		}
 	}

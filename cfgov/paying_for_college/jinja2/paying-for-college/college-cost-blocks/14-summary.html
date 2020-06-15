@@ -53,12 +53,12 @@
 
     <div class="block block__mid">
         <h3 class="summary_header">Covering your costs</h3>
-        <div class="costs-not-covered-notification">
+        <div class="costs-not-covered">
             {{ notification.render(
                     'caution',
                     true,
                     '',
-                    '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
+                    '<b>Costs not covered yet:</b> <span data-financial-item="total_gap"></span>' | safe
             ) }} 
         </div>
         <div class="o-expandable-group">
@@ -115,7 +115,7 @@
                     }}
                     {{
                         text_item.render({
-                            'label': 'Personal/other/miscellaneous expenses',
+                            'label': 'Other/miscellaneous expenses',
                             'value': '',
                             'type': 'text',
                             'data_attribute': 'data-financial-item="indiCost_other"'
@@ -125,7 +125,7 @@
                 <div class="block block__sub block__flush-bottom">
                     {{
                         text_item.render({
-                            'label': 'Additional financial obligations',
+                            'label': 'Additional indirect costs',
                             'value': '',
                             'type': 'text',
                             'data_attribute': 'data-financial-item="otherCosts_additional"'
@@ -210,8 +210,9 @@
         <h3 class="summary_header">Affording your loans</h3>
         <div class="o-expandable-group">
             {% set expandable_settings = {
-                'label': 'Pass debt guideline?',
+                'label': 'Could this be too much debt? How does the projected total debt compare to the median first-year salary?',
                 'value': '',
+                'note': 'The projected total debt is <span class="inline" data-financial-item="other_debtGuideDifference">$0</span>more/less than the median first-year salary. ',
                 'data_attribute': ''
             } %}
             {% call() expandable(expandable_settings) %}
@@ -239,15 +240,7 @@
                         'type': 'text',
                         'data_attribute': 'data-financial-item="salary_annual"'
                     })
-                }}  
-                {{
-                    text_item.render({
-                        'label': 'Projected difference (Salary - Total debt)',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="other_debtGuideDifference"'
-                    })
-                }}    
+                }}   
             {% endcall %}
 
             {% set expandable_settings = {
@@ -267,11 +260,28 @@
             {% endcall %}
             
             {% set expandable_settings = {
-                'label': 'Can I afford my payment within a monthly budget?',
-                'value': 'No',
-                'data_attribute': 'data-state-item="budget_balanced"'
+                'label': 'Can I afford my estimated payment in terms of hours worked?',
+                'value': '',
+                'note': 'It will take xx hours to earn the estimated payment, assuming a wage of $15 an hour after taxes.',
+                'data_attribute': 'data-state-item="???"'
             } %}
             {% call() expandable(expandable_settings) %}
+                {{
+                    text_item.render({
+                        'label': 'Can I afford my payment within a monthly budget?',
+                        'value': '<span>Yes, there is room in the hypothetical budget</span><span>No, there is not room in the hypothetical budget</span>',
+                        'type': 'text',
+                        'data_attribute': ''
+                    })
+                }}
+                {{
+                    text_item.render({
+                        'label': 'Estimated monthly loan payment',
+                        'value': '$0',
+                        'type': 'text',
+                        'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
+                    })
+                }}
                 {{
                     text_item.render({
                         'label': 'Estimated monthly loan payment',
@@ -309,9 +319,10 @@
         </div>
     </div>
     <div class="block block__mid">
+         <div class="o-expandable-group">
             {% set expandable_settings = {
                 'label': 'Worth your investment?',
-                'value': '???',
+                'value': '',
                 'data_attribute': 'data-state-item="what_goes_here"'
             } %}
             {% call() expandable(expandable_settings) %}
@@ -323,6 +334,16 @@
                         'data_attribute': 'data-school-item="rateGraduationText"'
                     })
                 }}
+                <div class="community-college-content">
+                    {{
+                        text_item.render({
+                            'label': 'Transfer to graduation rate',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-school-item="???"'
+                        })
+                    }}
+                </div>
                 {{
                     text_item.render({
                         'label': 'Default rate',
@@ -340,5 +361,6 @@
                     })
                 }}
             {% endcall %}
+        </div>
     </div>
 </section>
