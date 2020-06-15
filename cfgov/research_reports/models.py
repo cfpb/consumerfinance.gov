@@ -92,10 +92,10 @@ class ReportForm(WagtailAdminPageForm, metaclass=ReportMetaclass):
 
 class Report(CFGOVPage):
     base_form_class = ReportForm
-    report_type = models.CharField(max_length=100, default='')
-    header = models.CharField(max_length=200, default='')
+    report_type = models.CharField(max_length=100, blank=True)
+    header = models.CharField(max_length=200, blank=True)
     subheader = models.TextField(blank=True)
-    pdf_location = models.CharField(max_length=150, default='')
+    pdf_location = models.CharField(max_length=150, blank=True)
     footnotes = models.TextField(blank=True)
 
     # General content tab
@@ -114,7 +114,7 @@ class Report(CFGOVPage):
         InlinePanel(
             'report_sections',
             label='Section',
-            min_num=1
+            min_num=0
         ),
         FieldPanel('footnotes')
     ]
