@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.safestring import mark_safe
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface
@@ -6,6 +7,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.admin.forms.models import WagtailAdminModelFormMetaclass
 from wagtail.admin.forms.pages import WagtailAdminPageForm
 from wagtail.core.models import PageManager
+from wagtail.documents.edit_handlers import DocumentChooserPanel
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
@@ -91,6 +93,37 @@ class ReportForm(WagtailAdminPageForm, metaclass=ReportMetaclass):
 
 
 class Report(CFGOVPage):
+    # Report Upload Fields
+    report_file = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    process_report = models.BooleanField(default=False,
+            help_text=mark_safe(
+                'If this is checked, when you press "save", the system will '
+                'read in the report document and use its contents to overwrite '
+                'the fields in the "Report Content" tab.'
+                '<ul class="help">'
+                '    <li>&bull; If you uploaded a new report file for processing, check this box.</li>'
+                '    <li>&bull; If you manually edited fields in the "Report Content" tab, do not check this box</li>'
+                '</ul>')
+            )
+
+    # Report Upload Tabs
+    upload_panels = [
+        MultiFieldPanel([
+            FieldPanel('title'),
+        ], heading="Report Title"),
+        MultiFieldPanel([
+            DocumentChooserPanel('report_file'),
+            FieldPanel('process_report'),
+        ], heading='Report Document'),
+    ]
+
+    # Report Content Fields
     base_form_class = ReportForm
     report_type = models.CharField(max_length=100, blank=True)
     header = models.CharField(max_length=200, blank=True)
@@ -98,8 +131,8 @@ class Report(CFGOVPage):
     pdf_location = models.CharField(max_length=150, blank=True)
     footnotes = models.TextField(blank=True)
 
-    # General content tab
-    content_panels = CFGOVPage.content_panels + [
+    # Report content tab
+    content_panels = [
         MultiFieldPanel([
             FieldPanel('report_type'),
             FieldPanel('header'),
@@ -123,7 +156,8 @@ class Report(CFGOVPage):
 
     # Tab handler interface
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
+        ObjectList(upload_panels, heading='Report Upload'),
+        ObjectList(content_panels, heading='Report Content'),
         ObjectList(sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
