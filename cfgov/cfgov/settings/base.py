@@ -117,6 +117,7 @@ MIDDLEWARE = (
     "flags.middleware.FlagConditionsMiddleware",
     "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "core.middleware.DeactivateTranslationsMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)

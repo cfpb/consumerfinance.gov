@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from django.test import TestCase, override_settings
+from django.test import (
+    RequestFactory, SimpleTestCase, TestCase, override_settings
+)
+from django.utils import translation
 
 import mock
 from bs4 import BeautifulSoup
 
-from core.middleware import ParseLinksMiddleware, parse_links
+from core.middleware import (
+    DeactivateTranslationsMiddleware, ParseLinksMiddleware, parse_links
+)
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
@@ -219,3 +224,20 @@ class TestParseLinks(TestCase):
         output = parse_links(s, request_path='/foo/bar/')
         self.assertNotIn('/foo/bar/', output)
         self.assertIn('href="#anchor"', output)
+
+
+class DeactivateTranslationsMiddlewareTests(SimpleTestCase):
+    def test_deactivates_translations(self):
+        self.assertEqual(translation.get_language(), 'en-us')
+
+        translation.activate('es')
+        self.assertEqual(translation.get_language(), 'es')
+
+        def get_response(request):
+            pass
+
+        middleware = DeactivateTranslationsMiddleware(get_response)
+        request = RequestFactory().get('/')
+        middleware(request)
+
+        self.assertEqual(translation.get_language(), 'en-us')
