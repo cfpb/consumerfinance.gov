@@ -29,7 +29,6 @@ const init = function() {
   financialView.init( body );
   navigationView.init( body );
   chartView.init( body );
-  console.log( 'init?' );
   appView.init();
   Expandable.init();
 
