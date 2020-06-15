@@ -136,8 +136,6 @@ const financialModel = {
       vals.total_gap = 0;
     }
 
-    console.log( financialModel.values );
-
   },
 
   /**
@@ -156,7 +154,6 @@ const financialModel = {
     } else {
       // if undergraduate, zero out gradPlus loans, set unsubsidized cap
       financialModel.values.plusLoan_gradPlus = 0;
-
       if ( getStateValue( 'programDependency' ) === 'independent' ) {
         unsubCapKey = 'unsubsidizedCapIndepYearOne';
       }
