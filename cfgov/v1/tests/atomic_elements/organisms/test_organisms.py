@@ -441,7 +441,10 @@ class FeaturedContentTests(TestCase):
             ('/foo/', 'A link'),
             ('/bar/', 'Another link'),
         ):
-            self.assertIn(f'<a href="{url}">{text}</a>', html)
+            self.assertIn(
+                f'<a class="m-list_link" href="{url}">{text}</a>',
+                html
+            )
 
         # VideoPlayer renders with is_fcm=True and the proper thumbnail.
         self.assertNotIn('o-video-player_video-container__flexible', html)

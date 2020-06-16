@@ -37,7 +37,9 @@
         <ul class="m-list m-list__links">
             {% for link in value.links %}
                 <li class="m-list_item">
-                    <a href="{{ link.url }}">{{ link.text | default( link.url ) }}</a>
+                    <a class="m-list_link" href="{{ link.url }}">
+                        {{- link.text | default( link.url ) -}}
+                    </a>
                 </li>
             {% endfor %}
         </ul>
