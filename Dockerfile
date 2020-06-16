@@ -73,21 +73,22 @@ ENV ALLOWED_HOSTS '["*"]'
 
 # Install and enable SCL-based Apache server and mod_wsgi,
 # and converts all Docker Secrets into environment variables.
-RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
+RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi nodejs yarn && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
-    echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
-
-# See .dockerignore for details on which files are included
-COPY --chown=apache:apache . .
-
-RUN yum -y install nodejs yarn  && \
-    yum clean all && rm -rf /var/cache/yum && \
+    echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
+
+# COPY --chown=apache:apache node_modules cfgov/scripts gulp cfgov/unprocessed cfgov/static_built cfgov/regulations3k/
+    
 
 # Remove files flagged by image vulnerability scanner
 RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
     rm -f ndg/httpsclient/test/pki/localhost.key sslserver/certs/development.key
+
+
+# See .dockerignore for details on which files are included
+COPY --chown=apache:apache . .
 
 USER apache
 
