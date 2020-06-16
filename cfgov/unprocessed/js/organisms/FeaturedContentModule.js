@@ -27,7 +27,7 @@ function FeaturedContentModule( element ) {
    * @returns {FeaturedContentModule|undefined} An instance.
    *   or undefined if it was already initialized.
    */
-  function _init() {
+  function init() {
     if (!setInitFlag( _dom ) ) {
       let UNDEFINED;
       return UNDEFINED;
@@ -62,7 +62,7 @@ function FeaturedContentModule( element ) {
     _dom.classList.remove( 'video-playing' );
   }
 
-  this.init = _init;
+  this.init = init;
 
   return this;
 }

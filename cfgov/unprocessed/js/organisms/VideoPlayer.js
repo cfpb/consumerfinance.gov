@@ -40,7 +40,7 @@ function VideoPlayer( element ) {
    * @returns {VideoPlayer|undefined} An instance,
    *   or undefined if it was already initialized.
    */
-  function _init() {
+  function init() {
     if ( !setInitFlag( _dom ) ) {
       let UNDEFINED;
       return UNDEFINED;
@@ -144,7 +144,7 @@ function VideoPlayer( element ) {
    * Play the video.
    * @returns {VideoPlayer} An instance.
    */
-  function _playVideo() {
+  function playVideo() {
     if ( _player ) {
       _player.playVideo();
       _dom.classList.add( 'video-playing' );
@@ -158,7 +158,7 @@ function VideoPlayer( element ) {
    * Stop the video from playing.
    * @returns {VideoPlayer} An instance.
    */
-  function _stopVideo() {
+  function stopVideo() {
     if ( _player ) {
       _player.stopVideo();
       _dom.classList.remove( 'video-playing' );
@@ -174,9 +174,9 @@ function VideoPlayer( element ) {
   this.removeEventListener = eventObserver.removeEventListener;
   this.dispatchEvent = eventObserver.dispatchEvent;
 
-  this.init = _init;
-  this.playVideo = _playVideo;
-  this.stopVideo = _stopVideo;
+  this.init = init;
+  this.playVideo = playVideo;
+  this.stopVideo = stopVideo;
 
   return this;
 }
