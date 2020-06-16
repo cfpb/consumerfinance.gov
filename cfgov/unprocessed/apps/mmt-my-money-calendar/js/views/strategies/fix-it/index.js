@@ -14,17 +14,20 @@ const FixItButton = ({ result }) => {
   const label = result.event ? `Edit ${result.event.categoryDetails.name}` : result.link.text;
   const { eventStore } = useStore();
   const history = useHistory();
-  const buttonAction = useCallback(async (evt) => {
-    evt.preventDefault();
+  const buttonAction = useCallback(
+    async (evt) => {
+      evt.preventDefault();
 
-    // Hide "Split Payment" fix-it strategies for this event once the user clicks Fix It once
-    if (result.event && result.event.category.includes('housing')) {
-      result.event.setHideFixItStrategy(true);
-      await eventStore.saveEvent(result.event, true);
-    }
+      // Hide "Split Payment" fix-it strategies for this event once the user clicks Fix It once
+      if (result.event && result.event.category.includes('housing')) {
+        result.event.setHideFixItStrategy(true);
+        await eventStore.saveEvent(result.event, true);
+      }
 
-    history.push(href);
-  }, [result.event, href]);
+      history.push(href);
+    },
+    [result.event, href]
+  );
 
   return (
     <Button icon={pencil} onClick={buttonAction} variant="secondary">
@@ -72,11 +75,44 @@ function FixItStrategies() {
         <h2 className="strategies-header__title">Fix-It Strategies</h2>
 
         {strategies.fixItResults.length ? (
-          <p className="strategies-header__intro">
-            This week the total cost of your expenses was more than your income, putting you into the red. The
-            strategies below are tailored to the specific expenses in your budget for the week. Commit to implementing
-            one or two of them to prevent from going into the red in the future.
-          </p>
+          <div className="strategy-cards">
+            <CardGroup columns={2}>
+              <div className="fixit-header">
+                <div className="fixit-header__line-first">
+                  <div>
+                    Amount that puts you in{' '}
+                    <strong>
+                      <em>RED</em>
+                    </strong>
+                    :
+                  </div>
+                  <div className="fixit-header__amount">-100</div>
+                </div>
+
+                <div className="fixit-header__line">
+                  The amount that puts you in{' '}
+                  <strong>
+                    <em>RED</em>
+                  </strong>{' '}
+                  is what you should try to reduce.
+                </div>
+              </div>
+              <div className="fixit-header">
+                <div className="fixit-header__comment">
+                  <div>Weekly Starting Balance:</div>
+                  <div className="fixit-header__comment-value">$100</div>
+                </div>
+                <div className="fixit-header__comment">
+                  <div>Total Weekly Income: </div>
+                  <div className="fixit-header__comment-value">$300</div>
+                </div>
+                <div className="fixit-header__comment">
+                  <div>Total Weekly Expense:</div>
+                  <div className="fixit-header__comment-value"> -$500</div>
+                </div>
+              </div>
+            </CardGroup>
+          </div>
         ) : (
           <p>
             <em>There are no strategy recommendations for this week</em>
