@@ -9,7 +9,8 @@ import Details from './details';
 import NarrativeModal from '../../../components/narrative-notification';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
-import { narrativeCopy } from '../../../lib/narrative-copy';
+import Modal from 'react-modal';
+import { useBEM } from '../../../lib/hooks';
 
 import { arrowLeft, arrowRight, downArrow } from '../../../lib/icons';
 
@@ -66,6 +67,37 @@ function Calendar() {
     ),
     []
   );
+  
+  //TODO: Extract this out into it's own component to be reused at different screens
+  const NarrativeModal = () => {
+    return (
+      <Modal isOpen={showModal}
+             className={bem()}
+             overlayClassName="modal-overlay"
+             appElement={document.querySelector('#mmt-my-money-calendar')}
+             style={
+               { content: {
+                  textAlign: 'center',
+                  padding: '15px'
+                 }
+               }
+            }
+      >
+        <div className='narrative-modal'>
+          <h4>Welcome to your Budget Calendar</h4>
+          <p>Start adding your weekly Expenses and Income by clicking on the Add Income and Expenses Button in the menu below.</p>
+          <div dangerouslySetInnerHTML={{__html: downArrow}}></div>
+          <button onClick={(e) => handleToggleModal(e)}>OK</button>
+        </div>
+      </Modal>
+    )
+  };
+
+  const handleToggleModal = (event) => {
+    event.preventDefault();
+    localStorage.setItem('visitedPage', true);
+    setShowModal(!showModal);
+  };
 
   const handleToggleModal = (event) => {
     event.preventDefault();
