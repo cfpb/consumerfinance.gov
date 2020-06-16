@@ -60,7 +60,7 @@
     {%- endfor %}
 
     <div class="block block__flush-top">
-      {{ page.footnotes }}
+      {{ page.footnotes | safe }}
     </div>
 
     {% if page.sidefoot %}
