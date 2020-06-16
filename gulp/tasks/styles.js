@@ -114,7 +114,7 @@ function stylesOnDemandBlocks() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-      autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+      autoprefixer()
     ] ) )
     .pipe( gulp.dest( configStyles.dest + '/on-demand' ) );
 }
