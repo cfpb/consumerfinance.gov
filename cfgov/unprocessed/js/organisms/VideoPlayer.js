@@ -69,7 +69,7 @@ function VideoPlayer( element ) {
   }
 
   /**
-   * Event handler for the when the video is ready.
+   * Event handler for when the video is ready.
    */
   function _videoPlayerReadyHandler() {
 

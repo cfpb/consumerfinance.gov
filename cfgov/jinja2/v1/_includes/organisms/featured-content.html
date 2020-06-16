@@ -46,7 +46,7 @@
 
     {% if value.video and value.video.video_id %}
         {% with value = value.video %}
-            {% do value.update({'is_fcm': true}) %}
+            {% do value.update( { 'is_fcm': true } ) %}
             {% include 'organisms/video-player.html' %}
         {% endwith %}
     {% elif value.image and value.image.url %}
