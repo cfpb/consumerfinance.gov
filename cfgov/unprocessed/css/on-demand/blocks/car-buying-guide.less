@@ -37,7 +37,7 @@
 
         table {
             td + td {
-                border-left: 1px solid #cfcfcf;
+                border-left: 1px solid @gray-20;
             }
         }
 
@@ -56,16 +56,16 @@
 
         tbody {
             tr {
-                border-bottom: 1px solid #cfcfcf;
+                border-bottom: 1px solid @gray-20;
             }
 
             th, td {
-                padding-bottom: 1.2em;
-                padding-top: 1.2em;
+                padding-bottom: unit( 20px / @base-font-size-px, em );
+                padding-top: unit( 20px / @base-font-size-px, em );
             }
 
             td + td {
-                padding-left: 1.2em;
+                padding-left: unit( 20px / @base-font-size-px, em );
             }
         }
     }
