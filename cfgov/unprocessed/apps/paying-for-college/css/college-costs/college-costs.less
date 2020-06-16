@@ -8,10 +8,6 @@
         }
     }
     
-	.costs-not-covered-sticky {
-		display: none;
-	}
-
 	.respond-to-min( @bp-med-min, {
 		@supports (position: sticky) {
 		    .app-container {
@@ -21,11 +17,14 @@
 		    	width: 70%;
 		    }
 		    .costs-not-covered-sticky {
-		    	display: block;
+		    	display: none;
 		    	width: 30%;
 		    	.number-callout {
 		    		position: sticky;
 					top: unit( 10px / @base-font-size-px, em );
+		    	}
+		    	.active {
+		    		display: block;
 		    	}
 		    }
 		    .costs-not-covered-notification {
@@ -53,6 +52,8 @@
 	}
 
 	&_tool-section {
+		display: none;
+
 		max-width: unit( 570px / @base-font-size-px, rem );
 
 		.m-notification {
@@ -98,7 +99,12 @@
 			}
 		}
 
-		.action-plan_choices {
+		.other-borrowing-btns {
+			margin-bottom: unit( 15px / @base-font-size-px, em );
+		}
+
+		.action-plan_choices,
+		.affording-loans-choices {
 			// equal height radio inputs
 			display: flex;
 
