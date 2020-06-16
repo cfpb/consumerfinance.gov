@@ -1,18 +1,16 @@
 /***** WEBFONTS *****/
 
-/* 
+/*
  * CSS as specified in the following article until IE8 support is dropped:
  * http://coding.smashingmagazine.com/2013/02/14/setting-weights-and-styles-at-font-face-declaration/
  *
- * Only the esential variants are on, by default. Uncomment any others if 
+ * Only the esential variants are on, by default. Uncomment any others if
  * you determine that you truly need them.
- * 
+ *
  * Formats:
  * .woff - Modern browsers
  * .ttf - Safari, Android, iOS
  * .svg - Legacy iOS
- *
- * EOTs for internet explorer are served seprately in eot.css.
  */
 
 @font-face {

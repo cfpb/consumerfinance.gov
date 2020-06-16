@@ -34,14 +34,14 @@
                    o-expandable_target
                    financial-item 
                    financial-item__expandable
-                   {{ ('financial-item__' + value.status) if value.status else ''}}" 
+                   {{ ('financial-item__' + value.status | safe ) if value.status else ''}}" 
             type="button">
-      <span class="u-clearfix">
+      <span class="flex-container">
         <span class="h4 o-expandable_header-left o-expandable_label">
             {{ value.label }}
         </span>
         <span class="o-expandable_header-right o-expandable_link">
-            <span class="financial-item_value" {{ data_attribute if data_attribute else ''}}>
+            <span class="financial-item_value" {{ value.data_attribute | safe if value.data_attribute else '' }} >
                {{ value.value }}
             </span>
             <span class="o-expandable_cue o-expandable_cue-open">
@@ -60,7 +60,7 @@
         </span>
         {% if value.note %}
             <span class="financial-item_note">
-                {{ value.note }}
+                {{ value.note | safe }}
             </span>
         {% endif %}
     </button>

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {# import any other needed atoms, elements here #}
 {% import 'templates/render_block.html' as render_block with context %}
+{% import 'atoms/radio-button.html' as radio %}
 {% import 'molecules/notification.html' as notification with context %}
 {% from 'college-cost-blocks/macros/financial-item-expandable.html' import expandable with context %}
 {% import 'college-cost-blocks/macros/financial-item-input.html' as input with context %}
@@ -16,7 +17,7 @@
 
 {% block content scoped %}
     {%- import 'macros/accessible-languages.html' as accessible_languages with context-%}
-    <main class="content college-costs" 
+    <main class="content college-costs" data-state_gotstarted="false"
           id="main"
           {{ accessible_languages.render() }}> <!-- content__hide-horizontal-overflow removed for position sticky to work-->
         {%- include 'college-cost-blocks/0-intro.html' -%}
@@ -53,7 +54,7 @@
                         <div class="costs-not-covered costs-not-covered-sticky">
                             {{ number_callout.render({
                                     'header': 'Costs not covered yet',
-                                    'data_attribute': 'data-financial-item="total_gap"',
+                                    'data_attribute': 'data-financial-item="total_gap"' | safe,
                                     'additional_classes': 'number-callout__warning number-callout__right'
                                 }) 
                             }}

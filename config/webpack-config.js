@@ -2,7 +2,6 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-const BROWSER_LIST = require( '../config/browser-list-config' );
 const envvars = require( '../config/environment' ).envvars;
 const webpack = require( 'webpack' );
 const TerserPlugin = require( 'terser-webpack-plugin' );
@@ -28,15 +27,15 @@ const COMMON_MODULE_CONFIG = {
        Regex test: https://regex101.com/r/zizz3V/5 */
     exclude: {
       test: /node_modules/,
-      exclude: /node_modules\/(?:cf-.+|cfpb-.+)/
+      exclude: /node_modules\/(?:cf-.+|cfpb-.+)|@cfpb.+/
     },
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ '@babel/preset-env', {
-          targets: {
-            browsers: BROWSER_LIST.LAST_2_IE_11_UP
-          },
+          /* Use useBuiltIns: 'usage' and set `debug: true` to see what
+             scripts require polyfilling. */
+          useBuiltIns: false,
           debug: false
         } ] ]
       }

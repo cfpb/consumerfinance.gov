@@ -7,7 +7,7 @@
 
     <div class="action-plan_choices block block__sub">
         <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-            <input id="action-plan_put-into-action" type="radio" name="action-plan-radio" class="a-radio" value="put">
+            <input id="action-plan_put-into-action" type="radio" name="action-plan-radio" class="a-radio" value="action">
             <label class="a-label" for="action-plan_put-into-action">How to put this plan into action</label>
         </div>
         <div class="m-form-field m-form-field__radio m-form-field__lg-target">
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="block block__sub action-plan_steps" data-action-plan="put">
+    <div class="block block__sub action-plan_steps" data-state-based-visibility="put-into-action">
         <h3>How to put this plan into action</h3>
         <div>
             <button class="a-btn">Print summary</button>
@@ -96,7 +96,7 @@
         
     </div>
 
-    <div class="block block__sub action-plan_steps" data-action-plan="consider">
+    <div class="block block__sub action-plan_steps" data-state-based-visibility="consider-other-options">
         <h3>Consider other options</h3>
 
         <div class="block block__sub">
@@ -134,11 +134,6 @@
             <p>Even if this is the only school you applied to this year, it’s not your only option. Take this year to work, save money, and pursue enrichment opportunities in your field while preparing to apply again next year.</p>
         </div>
 
-    </div>
-
-    <div class="action-plan_feeling-gauge">
-        <h3>How do you feel about your plan to pay for school?</h3>
-        <img src="{{ static('apps/paying-for-college/img/ph-feeling-gauge-end.png') }}" style="margin: 30px 0">
-    </div>            
+    </div>          
 
 </section>

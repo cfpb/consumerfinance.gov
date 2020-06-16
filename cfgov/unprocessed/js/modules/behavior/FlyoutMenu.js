@@ -120,7 +120,6 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * @returns {FlyoutMenu} An instance.
    */
   function init() {
-
     const handleTriggerClickedBinded = _handleTriggerClicked.bind( this );
     const handleTriggerOverBinded = _handleTriggerOver.bind( this );
     const handleTriggerOutBinded = _handleTriggerOut.bind( this );

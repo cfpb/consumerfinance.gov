@@ -104,7 +104,7 @@
                     'helper_text': 'Expenses not related to school and not eligible for fiancial aid, like car payments, credit card payments, helping family with bills, etc. Ask the financial aid office if you\'re not sure if an expense qualifies for financial aid.',
                     'id': 'costs__otherIndirect',
                     'value': '0',
-                    'data_attribute': 'data-financial-item="indiCost_otherIndirect"'
+                    'data_attribute': 'data-financial-item="otherCost_additional"'
                 })
             }}
 
@@ -118,15 +118,16 @@
                 })
             }}
         
-        {{ notification.render(
-            'money-tips',
-            true,
-            'Money saving tips',
-            '<ul>
-                    <li> Finish school on time. This typically requires earning 30 credits a year for an associate’s or bachelor’s. Work with your academic adviser to choose classes that add up to a degree. Graduating on time (or early) will help minimize your costs, maximize your aid eligibility, and get you into a full-time job sooner.</li>
-                    <li>Find out if this school offers block tuition (also known as flat rate tuition) &mdash; when it costs the same to take anywhere from 12 to 18 credits, for example.</li>
-                    <li data-offer-costs-info="yes">If your costs will be higher than the school predicts, contact the financial aid office. You may be eligible for more aid. </li>
-            </ul>' | safe
-        ) }}
+            {{ notification.render(
+                'money-tips',
+                true,
+                'Money saving tips',
+                '<ul>
+                        <li> Finish school on time. This typically requires earning 30 credits a year for an associate’s or bachelor’s. Work with your academic adviser to choose classes that add up to a degree. Graduating on time (or early) will help minimize your costs, maximize your aid eligibility, and get you into a full-time job sooner.</li>
+                        <li>Find out if this school offers block tuition (also known as flat rate tuition) &mdash; when it costs the same to take anywhere from 12 to 18 credits, for example.</li>
+                        <li data-offer-costs-info="yes">If your costs will be higher than the school predicts, contact the financial aid office. You may be eligible for more aid. </li>
+                </ul>' | safe
+            ) }}
+        </div>
     </div>         
 </section>
