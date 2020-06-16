@@ -125,6 +125,124 @@
       "title": "Consumer Complaint Database"
 
     },
+    
+    "dataset": [
+
+    {
+
+      "@type": "dcat:Dataset",
+
+      "accessLevel": "public",
+
+      "accrualPeriodicity": "R/P1D",
+
+      "bureauCode": [
+
+        "581:00"
+
+      ],
+
+      "contactPoint": {
+
+        "@type": "vcard:Contact",
+
+        "fn": "devops@cfpb.gov",
+
+        "hasEmail": "mailto:devops@cfpb.gov"
+
+      },
+
+      "describedBy": "https://cfpb.github.io/api/ccdb/api.html",
+
+      "description": "The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database. The database generally updates daily.",
+
+      "distribution": [
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://files.consumerfinance.gov/ccdb/complaints.csv.zip",
+
+          "mediaType": "text/csv"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "downloadURL": "https://files.consumerfinance.gov/ccdb/complaints.json.zip",
+
+          "mediaType": "application/json"
+
+        },
+
+        {
+
+          "@type": "dcat:Distribution",
+
+          "format": "API",
+
+          "accessURL": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/"
+
+        }
+
+      ],
+
+      "identifier": "CCDB",
+
+      "keyword": [
+
+        "consumer",
+
+        "finance",
+
+        "complaint",
+
+        "bank account",
+
+        "bank service",
+
+        "credit card",
+
+        "credit report",
+
+        "debt collection",
+
+        "money transfer",
+
+        "mortgage",
+
+        "student loan",
+
+        "loan"
+
+      ],
+
+      "landingPage": "https://www.consumerfinance.gov/data-research/consumer-complaints/search",
+
+      "modified": "2020-01-13",
+
+      "programCode": [
+
+        "000:000"
+
+      ],
+
+      "publisher": {
+
+        "@type": "org:Organization",
+
+        "name": "Consumer Financial Protection Bureau"
+
+      },
+
+      "spatial": "United States",
+
+      "title": "Consumer Complaint Fake Database"
+
+    },
 
     {
 
