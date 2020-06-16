@@ -27,17 +27,18 @@
 
 {% macro render( value ) -%}
 <div class="financial-item
-            {{ 'financial-item__' + value.type if value.type else 'text'}}
-            {% if value.status %} {{ 'financial-item__' + value.status }} {% endif %}">
+            {{ 'financial-item__' + value.type | safe if value.type else 'text'}}
+            {% if value.status %} {{ 'financial-item__' + value.status | safe  }} {% endif %}">
     <div class="financial-item_label">
         {{ value.label }}
         {%- if value.helper_text -%}
             <p><small>{{ value.helper_text | safe }}</small></p>
         {%- endif -%}
     </div>
-    <div class="financial-item_value" 
-         {% if value.data_attribute %}{{ value.data_attribute | safe }}{% endif %}>
-        {{ value.value }}
+    <div class="financial-item_value"> 
+        <span {% if value.data_attribute %}{{ value.data_attribute | safe }}{% endif %}>
+            {{ value.value }}
+        </span> 
     </div>
 </div>
 {%- endmacro %}
