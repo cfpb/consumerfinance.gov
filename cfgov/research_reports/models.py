@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core import management
 from django.db import models
 from django.utils.safestring import mark_safe
 
@@ -47,6 +49,10 @@ def get_researchers():
         (r.title, r.url) for r in
         SublandingFilterablePage.objects.get(pk=4833).get_children()
     ])
+
+
+def _get_deploy_environment():
+    return getattr(settings, 'DEPLOY_ENVIRONMENT', None)
 
 
 class ReportSection(ClusterableModel):
@@ -165,6 +171,23 @@ class Report(CFGOVPage):
     template = 'index.html'
 
     objects = PageManager()
+
+    def parse_report_file(self):
+        if self.report_file and self.process_report:
+            deploy_env = _get_deploy_environment()
+            if deploy_env == "build":
+                # TODO: trigger the jenkins job on Zusa
+                pass
+            elif deploy_env == "production":
+                # TODO: trigger the jenkins job on EXT Jenkins
+                pass
+            elif deploy_env == "local" or deploy_env.find('dev') >= 0:
+                # if running locally or on a DEV server, run command locally
+                management.call_command('parse_research_report', self.id)
+            else:
+                # deployed to another environment where s3 isn't configured
+                # TODO: show a friendly error message to the user
+                pass
 
     def get_context(self, request, *args, **kwargs):
         context = super(Report, self).get_context(request, *args, **kwargs)
