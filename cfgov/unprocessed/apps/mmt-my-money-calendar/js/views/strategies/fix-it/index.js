@@ -86,7 +86,7 @@ function FixItStrategies() {
                     </strong>
                     :
                   </div>
-                  <div className="fixit-header__amount">-100</div>
+                  <div className="fixit-header__amount">{uiStore.weekEndingBalanceText}</div>
                 </div>
 
                 <div className="fixit-header__line">
@@ -100,7 +100,7 @@ function FixItStrategies() {
               <div className="fixit-header">
                 <div className="fixit-header__comment">
                   <div>Weekly Starting Balance:</div>
-                  <div className="fixit-header__comment-value">$100</div>
+                  <div className="fixit-header__comment-value">{uiStore.weekStartingBalanceText}</div>
                 </div>
                 <div className="fixit-header__comment">
                   <div>Total Weekly Income: </div>
