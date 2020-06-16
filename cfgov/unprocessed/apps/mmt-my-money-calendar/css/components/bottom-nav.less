@@ -1,4 +1,5 @@
-@bottom_nav_active_bg: #e6e8e9;
+@bottom_nav_active_bg: #f0f7f6;
+@bottom_nav_link: #005e5d;
 @bottom_nav_disabled_color: #adb9c5;
 
 .bottom-nav {
@@ -7,7 +8,8 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #fff;
+  // background: #fff;
+  background: #f0f7f6;
   border-top: 5px solid #21aa3f;
   z-index: 100;
   transition: transform 200ms ease-in-out;
@@ -33,9 +35,18 @@
 
     .cf-icon-svg {
       width: 100%;
-      max-width: 40px;
+      //max-width: 40px;
+      max-width: 80px;
       height: auto;
-      fill: @text;
+      //fill: @text;
+      fill: @bottom_nav_link;
+
+      &:active,
+      &.active {
+        //background-color: @bottom_nav_active_bg;
+        //background-color: #005e5d;
+        fill: #fff;
+      }
     }
   }
 
@@ -61,25 +72,32 @@
   }
 
   &__link {
-    color: @text;
+    color: @bottom_nav_link;
     display: block;
     height: 100%;
     text-align: center;
-    padding: .5rem;
+    padding: 0.5rem;
     position: relative;
 
-    &:visited,
+    &:visited {
+      color: @bottom_nav_link;
+    }
+
     &:active {
-      color: @text;
+      //color: @text;
+      color: @bottom_nav_link;
     }
 
     &:active,
     &.active {
-      background-color: @bottom_nav_active_bg;
+      //background-color: @bottom_nav_active_bg;
+      background-color: #005e5d;
+      color: #fff;
     }
 
     &.disabled {
-      color: @bottom_nav_disabled_color;
+      //color: @bottom_nav_disabled_color;
+      color: navy;
 
       &:visited,
       &:active {
@@ -87,17 +105,20 @@
       }
 
       .cf-icon-svg {
-        fill: @bottom_nav_disabled_color;
+        //fill: @bottom_nav_disabled_color;
+        fill: yellowgreen;
       }
 
       .bottom-nav__link-label {
-        color: @bottom_nav_disabled_color;
+        //color: @bottom_nav_disabled_color;
+        color: @purple;
       }
     }
   }
 
   &__link-label {
-    color: @text;
+    //color: @text;
+    color: @bottom_nav_link;
     font-size: 10px;
   }
 }

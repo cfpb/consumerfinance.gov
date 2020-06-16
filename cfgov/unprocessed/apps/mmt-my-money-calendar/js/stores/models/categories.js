@@ -401,15 +401,21 @@ export const Categories = new CategoryTree({
         },
       },
     },
+    emergencySavings: {
+      name: 'Emergency Savings',
+      icon: icons.emergencySavings,
+      recurrenceTypes: ['weekly', 'monthly'],
+      hasBill: false,
+    },
     personal: {
       name: 'Personal',
       icon: icons.personal,
-      emergencySavings: {
-        name: 'Emergency Savings',
-        icon: icons.emergencySavings,
-        recurrenceTypes: ['weekly', 'monthly'],
-        hasBill: false,
-      },
+      //emergencySavings: {
+      //  name: 'Emergency Savings',
+      //  icon: icons.emergencySavings,
+      //  recurrenceTypes: ['weekly', 'monthly'],
+      //  hasBill: false,
+      //},
       healthcare: {
         name: 'Health Care',
         icon: icons.healthcare,
