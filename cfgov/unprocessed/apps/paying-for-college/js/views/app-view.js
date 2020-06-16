@@ -6,25 +6,37 @@ import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
 import { getAllStateValues } from '../dispatchers/get-model-values.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 
 const appView = {
   _didThisHelpBtns: null,
   _finishLink: '',
   _sendLinkBtn: null,
+  _actionPlanChoices: null,
 
   /**
    * Listeners for buttons
    */
   _addButtonListeners: function() {
     appView._didThisHelpBtns.forEach( elem => {
-      const events = {
-        click: this._handleDidThisHelpBtns
-      };
-      bindEvent( elem, events );
+      bindEvent( elem, { click: this._handleDidThisHelpBtns } );
+    } );
+
+    appView._actionPlanChoices.forEach( elem => {
+      bindEvent( elem, { click: this._handleActionPlanClick } );
     } );
 
     bindEvent( appView._sendLinkBtn, { click: appView._handleSendLinkBtn } );
+  },
+
+  /**
+   * Event handling for action-plan choice clicks
+   * @param {Object} event - Triggering event
+   */
+  _handleActionPlanClick: function( event ) {
+    const target = event.target;
+    updateState.byProperty( 'actionPlan', target.value );
   },
 
   /**
@@ -78,6 +90,7 @@ const appView = {
     appView._didThisHelpBtns = document.querySelectorAll( '#save_did-it-help button, #save_understand-loans button' );
     appView._finishLink = document.querySelector( '#finish_link' );
     appView._sendLinkBtn = document.querySelector( '#email-your-link' );
+    appView._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field input.a-radio' );
 
     appView._addButtonListeners();
   }
