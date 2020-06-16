@@ -31,9 +31,7 @@ function attachAPIReadyCallback( callback ) {
    */
   function onYouTubeIframeAPIReady() {
     _scriptLoaded = true;
-    _callbacks.forEach( function( cb ) {
-      cb();
-    } );
+    _callbacks.forEach( cb => cb() );
     _callbacks.splice( 0 );
   }
 
