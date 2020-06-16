@@ -116,7 +116,7 @@ def write_clean_csv(fpath, fieldnames, clean_headings, data):
 
 
 def download_files():
-    """Download the latest IPEDS Institutional Characterstics file."""
+    """Download the latest IPEDS Institutional Characteristics file."""
     for slug in ['universe', 'data', 'services']:
         url = DATA_VARS['{}_url'.format(slug)]
         target = DATA_VARS['{}_zip'.format(slug)]
