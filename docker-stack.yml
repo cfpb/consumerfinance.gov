@@ -68,9 +68,9 @@ services:
         - com.docker.lb.network=${LB_NETWORK}
     command: >
                 bash -c "
-                    
+
                 psql $${DATABASE_URL} -c 'SELECT COUNT(*) FROM auth_user'
-                
+
                 django_tables_exist=$$?
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then

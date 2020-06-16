@@ -142,12 +142,9 @@
             display: block;
         }
 
-        // Hover state for (x) close button.
+        // Hover state for desktop.
         &:hover {
-            border-left: 1px solid @gray-40;
-
-            // Important needed to override background color in expanded state.
-            background: @gray-20 !important;
+            color: @gray-80;
         }
     }
 
@@ -203,6 +200,15 @@
                 .m-global-search_trigger-close-label {
                     display: block;
                 }
+            }
+
+            // Hover state for (x) close button.
+            &:hover {
+                color: @black;
+                border-left: 1px solid @gray-40;
+
+                // Important needed to override background color in expanded state.
+                background: @gray-20 !important;
             }
         }
 
