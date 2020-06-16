@@ -245,10 +245,10 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
  */
 const updateParagraphPositions = () => {
   const paragraphs = document.querySelectorAll( '.regdown-block' );
-  let visibleParagraphs = [];
+  const visibleParagraphs = [];
   // IE doesn't support `forEach` w/ node lists
   for ( let i = 0; i < paragraphs.length; i++ ) {
-    let hiddenParagraphContainer = closest( paragraphs[i], '.u-hidden' );
+    const hiddenParagraphContainer = closest( paragraphs[i], '.u-hidden' );
     if ( !hiddenParagraphContainer ) {
       visibleParagraphs.push( paragraphs[i] );
     }

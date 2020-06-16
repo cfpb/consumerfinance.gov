@@ -2024,7 +2024,7 @@ const HTML_SNIPPET = `
                     ">
 
 <div class="a-tagline">
-	An official website of the United States government
+    An official website of the United States government
 </div>
 
             <div class="m-global-eyebrow_actions">
