@@ -195,7 +195,7 @@ def create_school(id, data):
 
 
 def process_missing(missing_ids):
-    """Create missing school and alias objects and dump csv of additions.   """
+    """Create missing school and alias objects and dump csv of additions."""
     csv_out_data = []
     csv_slug = '{}/schools_added_on_{}.csv'.format(ipeds_directory,
                                                    datetime.date.today())
