@@ -7,3 +7,44 @@
   }
 }
 
+.fixit-header {
+  background-color: #f3f7fa;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 0;
+  box-sizing: border-box;
+  border: 1px solid #d2d3d5;
+  border-bottom-width: 3px;
+  padding: 0.5em;
+  height: 100%;
+  width: 100%;
+
+  &__line {
+    text-align: left;
+    padding-left: 1em;
+    padding-right: 0.5em;
+  }
+
+  &__line-first {
+    display: flex;
+    padding-bottom: 1em;
+    justify-content: center;
+  }
+
+  &__amount {
+    color: red;
+    padding-left: 0.5em;
+  }
+}
+
+.fixit-header__comment {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &-value {
+    flex-basis: 30%;
+    text-align: right;
+  }
+}
