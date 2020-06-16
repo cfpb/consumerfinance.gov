@@ -3,7 +3,6 @@ const config = require( '../config' );
 const configPkg = config.pkg;
 const configBanner = config.banner;
 const configStyles = config.styles;
-const configLegacy = config.legacy;
 const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpBless = require( 'gulp-bless' );
