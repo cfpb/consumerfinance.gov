@@ -86,8 +86,8 @@ function Calendar() {
         <div className='narrative-modal'>
           <h4>Welcome to your Budget Calendar</h4>
           <p>Start adding your weekly Expenses and Income by clicking on the Add Income and Expenses Button in the menu below.</p>
-          <div dangerouslySetInnerHTML={{__html: downArrow}}></div>
-          <button onClick={(e) => handleToggleModal(e)}>OK</button>
+          <div style={{height: '20px'}} dangerouslySetInnerHTML={{__html: downArrow}}></div>
+          <button style={{float: 'right'}} onClick={(e) => handleToggleModal(e)}>OK</button>
         </div>
       </Modal>
     )
