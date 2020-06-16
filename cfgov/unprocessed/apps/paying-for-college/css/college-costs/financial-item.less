@@ -23,15 +23,22 @@
 		margin-bottom: 0;
 	}
 
-	&_note,
-	&_note span:not(.a-link_text) {
+	&_note {
 		display: block;
+
+		& span {
+			display: block;
+		}
+
+		.a-link_text,
+		.inline {
+			display: inline;
+		}
 	}
 
-	&__text,
 	&__subtotal,
 	&__total {
-		.financial-item_label,
+		.financial-item_label > :not(p),
 		.financial-item_value {
 			.heading-4();
 			margin-bottom: 0;
@@ -41,8 +48,16 @@
 	&__expandable {
 		margin-top: 0;
 
+		.h4 {
+			margin-bottom: 0;
+		}
+
 		.o-expandable_label {
 			width: auto;
+		}
+
+		.financial-item_note {
+			margin-top: unit( 15px / @base-font-size-px, em );
 		}
 		
 		.financial-item_value {
@@ -68,6 +83,14 @@
 			.o-expandable_cue-close {
 				display: inline;
 				margin-left: unit( 5px / @base-font-size-px, em );
+			}
+		}
+
+		.flex-container {
+			display: flex;
+
+			.o-expandable_label {
+				flex: 1;
 			}
 		}
 	}

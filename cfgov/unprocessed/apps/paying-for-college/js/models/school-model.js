@@ -10,8 +10,8 @@ const schoolModel = {
     schoolModel.values[name] = value;
 
     if ( schoolModel.textPercents.indexOf( name ) !== -1 ) {
-    	const key = name + 'Text';
-    	schoolModel.values[key] = decimalToPercentString( value, 1 );
+      const key = name + 'Text';
+      schoolModel.values[key] = decimalToPercentString( value, 1 );
     }
 
     updateUrlQueryString();

@@ -36,7 +36,7 @@
                    financial-item__expandable
                    {{ ('financial-item__' + value.status | safe ) if value.status else ''}}" 
             type="button">
-      <span class="u-clearfix">
+      <span class="flex-container">
         <span class="h4 o-expandable_header-left o-expandable_label">
             {{ value.label }}
         </span>
@@ -60,7 +60,7 @@
         </span>
         {% if value.note %}
             <span class="financial-item_note">
-                {{ value.note }}
+                {{ value.note | safe }}
             </span>
         {% endif %}
     </button>
