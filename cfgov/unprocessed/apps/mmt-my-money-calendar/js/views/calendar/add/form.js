@@ -154,6 +154,7 @@ function Form() {
           payday2: paydaySchema,
         })}
         onSubmit={(values) => {
+          console.log('SAVE THAT SHIT')
           if (!values.name) values.name = category.name;
 
           logger.debug('Event form submission: %O', values);

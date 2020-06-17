@@ -9,12 +9,7 @@ import Details from './details';
 import NarrativeModal from '../../../components/narrative-notification';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
-<<<<<<< HEAD
 import { narrativeCopy } from '../../../lib/narrative-copy';
-=======
-import Modal from 'react-modal';
-import { useBEM } from '../../../lib/hooks';
->>>>>>> 69a0f6944... WIP...add narrative modal to calendar view
 
 import { arrowLeft, arrowRight, downArrow } from '../../../lib/icons';
 
@@ -73,29 +68,30 @@ function Calendar() {
   );
   
   //TODO: Extract this out into it's own component to be reused at different screens
-  const NarrativeModal = () => {
-    return (
-      <Modal isOpen={showModal}
-             className={bem()}
-             overlayClassName="modal-overlay"
-             appElement={document.querySelector('#mmt-my-money-calendar')}
-             style={
-               { content: {
-                  textAlign: 'center',
-                  padding: '15px'
-                 }
-               }
-            }
-      >
-        <div className='narrative-modal'>
-          <h4>Welcome to your Budget Calendar</h4>
-          <p>Start adding your weekly Expenses and Income by clicking on the Add Income and Expenses Button in the menu below.</p>
-          <div style={{height: '20px'}} dangerouslySetInnerHTML={{__html: downArrow}}></div>
-          <button style={{float: 'right'}} onClick={(e) => handleToggleModal(e)}>OK</button>
-        </div>
-      </Modal>
-    )
-  };
+  // const NarrativeModal = () => {
+  //   return (
+  //     <Modal isOpen={showModal}
+  //            className={bem()}
+  //            overlayClassName="modal-overlay"
+  //            appElement={document.querySelector('#mmt-my-money-calendar')}
+  //            style={
+  //              { content: {
+  //                 textAlign: 'center',
+  //                 padding: '15px'
+  //                }
+  //              }
+  //           }
+  //     >
+  //       <div className='narrative-modal'>
+  //         <h4>Welcome to your Budget Calendar</h4>
+  //         <p>Start adding your weekly Expenses and Income by clicking on the Add Income and Expenses Button in the menu below.</p>
+  //         <div style={{height: '20px'}} dangerouslySetInnerHTML={{__html: downArrow}}></div>
+  //         <button style={{float: 'right'}} onClick={(e) => handleToggleModal(e)}>OK</button>
+  //       </div>
+  //       <div className='arrow-down'></div>
+  //     </Modal>
+  //   )
+  // };
 
   const handleToggleModal = (event) => {
     event.preventDefault();
@@ -123,7 +119,6 @@ function Calendar() {
 
   return (
     <section className="calendar">
-<<<<<<< HEAD
       {showModal && narrativeStep === 'step1' &&
         <NarrativeModal showModal={showModal}
                         handleOkClick={handleToggleModal}
@@ -137,10 +132,6 @@ function Calendar() {
                         copy={narrativeCopy.step2}
                         step={narrativeStep}
         />
-=======
-      {showModal && 
-        <NarrativeModal />
->>>>>>> 69a0f6944... WIP...add narrative modal to calendar view
       }
       <header className="calendar__header">
         <IconButton
