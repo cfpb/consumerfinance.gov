@@ -77,27 +77,28 @@ def run(single_school=None):
             logger.info(count)
         # degree_cohort is the default, national base cohort
         degree_cohort = DEGREE_COHORTS.get(school.degrees_highest)
-        if degree_cohort is not None:
+        if degree_cohort is None:
+            state_cohort = None
+            control_cohort = None
+        else:
             state_cohort = [
                 s for s in degree_cohort
                 if s
                 and s.state
                 and s.state == school.state
             ]
-        else:
-            state_cohort = None
         # For school control, we want cohorts only for public and private;
         # We do not want a special cohort of for-profit schools
-        if not school.control:
-            control_cohort = None
-        elif school.control == 'Public':
-            control_cohort = [
-                s for s in degree_cohort if s.control == school.control
-            ]
-        else:
-            control_cohort = [
-                s for s in degree_cohort if s.control != 'Public'
-            ]
+            if not school.control:
+                control_cohort = None
+            elif school.control == 'Public':
+                control_cohort = [
+                    s for s in degree_cohort if s.control == school.control
+                ]
+            else:
+                control_cohort = [
+                    s for s in degree_cohort if s.control != 'Public'
+                ]
         for metric in ['grad_rate', 'repay_3yr', 'median_total_debt']:
             if not getattr(school, metric):
                 by_state.update({metric: None})
