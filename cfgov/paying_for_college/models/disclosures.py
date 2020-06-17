@@ -47,7 +47,9 @@ REGION_NAMES = {'MW': 'Midwest',
                 'SO': 'South',
                 'WE': 'West'}
 
-HIGHEST_DEGREES = {  # highest-awarded values from the DOE API and our CSV spec
+# Highest-awarded values from the DOE and our CSV spec
+# For our API, we treat anything above bachelor's as graduate-degree-granting
+HIGHEST_DEGREES = {
     '0': "Non-degree-granting",
     '1': 'Certificate',
     '2': "Associate degree",
@@ -72,14 +74,14 @@ LEVELS = {
 
 # Dept. of Ed program degree levels specific to new program data in 2019
 PROGRAM_LEVELS = {
-    1: "Certificate",
-    2: "Associate degree",
-    3: "Bachelor's degree",
-    4: "Post-baccalaureate certificate",
-    5: "Master's degree",
-    6: "Doctoral degree",
-    7: "First professional degree",
-    8: "Graduate/professional certificate",
+    '1': "Certificate",
+    '2': "Associate degree",
+    '3': "Bachelor's degree",
+    '4': "Post-baccalaureate certificate",
+    '5': "Master's degree",
+    '6': "Doctoral degree",
+    '7': "First professional degree",
+    '8': "Graduate/professional certificate",
 }
 
 NOTIFICATION_TEMPLATE = Template("""Disclosure notification for offer ID $oid\n\

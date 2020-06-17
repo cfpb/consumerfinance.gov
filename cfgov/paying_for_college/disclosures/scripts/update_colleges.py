@@ -61,7 +61,7 @@ def update_programs(api_data, school):
                 'cip_code': cip_code,
                 'completers': entry['counts']['titleiv'],
                 'level': level,
-                'level_name': PROGRAM_LEVELS.get(int(level)),
+                'level_name': PROGRAM_LEVELS.get(level),
                 'salary': entry['earnings']['median_earnings'],
                 'median_student_loan_completers': (
                     entry['debt']['median_debt']),

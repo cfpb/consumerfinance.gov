@@ -18,6 +18,14 @@ DEGREE_COHORTS = {k: [] for k in HIGHEST_DEGREES.keys()}
 logger = logging.getLogger(__name__)
 
 
+def get_grad_level(school):
+    """Consider degrees higher than graduate level '4' as graduate degrees."""
+    if int(school.degrees_highest) > 4:
+        return '4'
+    else:
+        return school.degrees_highest
+
+
 def build_base_cohorts():
     """
     Pre-build the base highest-degree cohorts.
@@ -32,7 +40,7 @@ def build_base_cohorts():
             degrees_highest='')
     for key in DEGREE_COHORTS:
         DEGREE_COHORTS[key] += [
-            school for school in base_query.filter(degrees_highest=key)
+            school for school in base_query if get_grad_level(school) == key
         ]
     return base_query
 
@@ -66,39 +74,35 @@ def run(single_school=None):
     starter = datetime.datetime.now()
     base_query = build_base_cohorts()
     if single_school:
-        # a single_school query is allowed to sidestep exclusions
-        base_query = School.objects.filter(pk=single_school)
+        base_query = base_query.filter(pk=single_school)
     for school in base_query:
         by_degree = {}
         by_state = {}
         by_control = {}
         count += 1
         if count % 500 == 0:  # pragma: no cover
-            logger.info(count)
+            logger.info(f"{count} schools processed")
         # degree_cohort is the default, national base cohort
-        degree_cohort = DEGREE_COHORTS.get(school.degrees_highest)
-        if degree_cohort is None:
-            state_cohort = None
-            control_cohort = None
-        else:
-            state_cohort = [
-                s for s in degree_cohort
-                if s
-                and s.state
-                and s.state == school.state
-            ]
+        # base query weeds out schools without state or degrees_highest values
+        degree_cohort = DEGREE_COHORTS.get(get_grad_level(school))
+        state_cohort = [
+            s for s in degree_cohort
+            if s
+            and s.state
+            and s.state == school.state
+        ]
         # For school control, we want cohorts only for public and private;
         # We do not want a special cohort of for-profit schools
-            if not school.control:
-                control_cohort = None
-            elif school.control == 'Public':
-                control_cohort = [
-                    s for s in degree_cohort if s.control == school.control
-                ]
-            else:
-                control_cohort = [
-                    s for s in degree_cohort if s.control != 'Public'
-                ]
+        if not school.control:
+            control_cohort = None
+        elif school.control == 'Public':
+            control_cohort = [
+                s for s in degree_cohort if s.control == school.control
+            ]
+        else:
+            control_cohort = [
+                s for s in degree_cohort if s.control != 'Public'
+            ]
         for metric in ['grad_rate', 'repay_3yr', 'median_total_debt']:
             if not getattr(school, metric):
                 by_state.update({metric: None})
@@ -121,8 +125,6 @@ def run(single_school=None):
         school.cohort_ranking_by_control = by_control
         school.cohort_ranking_by_highest_degree = by_degree
         school.save()
-        sys.stdout.write('.')
-        sys.stdout.flush()
     logger.info("\nCohort script took {} to process {} schools".format(
         datetime.datetime.now() - starter,
         count

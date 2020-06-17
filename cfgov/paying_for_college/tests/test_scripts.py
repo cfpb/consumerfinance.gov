@@ -214,6 +214,31 @@ class TestScripts(django.test.TestCase):
             patcher.start()
             self.addCleanup(patcher.stop)
 
+    def test_get_grad_level(self):
+        """Make sure higher-degree schools join the grad-degree '4' cohort."""
+        level_2_school = School.objects.get(pk=100636)
+        level_4_school = School.objects.get(pk=243197)
+        level_5_school = School.objects.get(pk=243197)
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_2_school), '2'
+        )
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_4_school), '4'
+        )
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_5_school), '4'
+        )
+
+    def test_school_with_no_degrees_highest(self):
+        """A school with no degrees_highest value should not be in a cohort."""
+        school_pk = 155555
+        self.assertEqual(School.objects.get(pk=school_pk).degrees_highest, '')
+        process_cohorts.run(single_school=school_pk)
+        self.assertIs(
+            School.objects.get(pk=school_pk).cohort_ranking_by_highest_degree,
+            None
+        )
+
     def test_build_base_cohorts(self):
         school = School.objects.get(pk=100654)
         base_query = process_cohorts.build_base_cohorts()
