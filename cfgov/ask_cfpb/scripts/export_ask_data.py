@@ -1,10 +1,9 @@
+import csv
 import datetime
 import html
 
 from django.http import HttpResponse
 from django.utils import html as html_util
-
-import unicodecsv
 
 from ask_cfpb.models.pages import AnswerPage
 
@@ -119,15 +118,10 @@ def assemble_output():
 
 def export_questions(path='/tmp', http_response=False):
     """
-    A script for exporting Ask CFPB Answer content
-    to a CSV that can be opened easily in Excel.
+    A script for exporting Ask CFPB Answer content to an Excel-friendly CSV.
 
     Run from within cfgov-refresh with:
     `python cfgov/manage.py runscript export_ask_data`
-
-    CEE staffers use a version of Excel that can't easily import UTF-8
-    non-ascii encodings. So we throw in the towel and encode the CSV
-    with windows-1252.
 
     By default, the script will dump the file to `/tmp/`,
     unless a path argument is supplied,
@@ -135,7 +129,6 @@ def export_questions(path='/tmp', http_response=False):
     A command that passes in path would look like this:
     `python cfgov/manage.py runscript export_ask_data --script-args [PATH]`
     """
-
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     slug = 'ask-cfpb-{}.csv'.format(timestamp)
     if http_response:
@@ -144,12 +137,12 @@ def export_questions(path='/tmp', http_response=False):
         write_questions_to_csv(response)
         return response
     file_path = '{}/{}'.format(path, slug).replace('//', '/')
-    with open(file_path, 'w') as f:
+    with open(file_path, 'w', encoding='windows-1252') as f:
         write_questions_to_csv(f)
 
 
 def write_questions_to_csv(csvfile):
-    writer = unicodecsv.writer(csvfile, encoding='windows-1252')
+    writer = csv.writer(csvfile)
     writer.writerow(HEADINGS)
     for row in assemble_output():
         writer.writerow([row.get(key) for key in HEADINGS])

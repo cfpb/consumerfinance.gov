@@ -73,20 +73,12 @@ class ConferenceRegistrationForm(AbstractFormBlock):
         answer = cleaned.get('govdelivery_answer_id')
 
         # Question and answer values must both exist or neither exist
-        if question and not answer:
+        if (question and not answer) or (answer and not question):
             raise ValidationError(
                 'Validation error in Conference Registration Form: '
                 'GovDelivery question ID requires answer ID, and vice versa.',
                 params={'govdelivery_answer_id': ErrorList([
                     'Required if a GovDelivery question ID is entered.'
-                ])}
-            )
-        if answer and not question:
-            raise ValidationError(
-                'Validation error in Conference Registration Form: '
-                'GovDelivery question ID requires answer ID, and vice versa.',
-                params={'govdelivery_question_id': ErrorList([
-                    'Required if a GovDelivery answer ID is entered.'
                 ])}
             )
 

@@ -167,10 +167,11 @@ function MegaMenuDesktop( baseClass, menus ) {
    */
   function suspend() {
     if ( !_suspended ) {
+      // Clear active menu.
+      _updateMenuState( null );
+
       treeTraversal.bfs( _menus.getRoot(), _handleSuspendTraversal );
 
-      // Clear active menu.
-      _activeMenu = null;
       _suspended = true;
     }
 

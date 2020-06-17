@@ -46,3 +46,6 @@ class Banner(models.Model):
         StreamFieldPanel('content'),
         FieldPanel('enabled'),
     ]
+
+    def __str__(self):
+        return self.title

@@ -1,0 +1,66 @@
+.o-college-costs-nav {
+	.respond-to-max( @bp-sm-max, {
+		padding-left: 0;
+		padding-right: 0;
+		border-width: 0;
+	});
+
+	.o-secondary-navigation_list__parents {
+		.respond-to-min( @bp-med-min, {
+			border-top: 1px solid @gray-20;
+			border-left: 0;
+			padding-left: 0;
+
+			> .m-list_item {
+				border-bottom: 1px solid @gray-20;
+
+				& > .m-nav_link {
+					font-size: unit( 18px / @base-font-size-px, em );
+				}
+			}
+
+			.m-nav-link {
+				border: none;
+				font-weight: normal;
+				color: @black;
+				padding: unit( 5px / @base-font-size-px, em ) 0;
+				padding-left: unit( 10px / @base-font-size-px, em );
+				text-align: left;
+				width: 100%;
+				display: block;
+				box-sizing: border-box;
+
+				&:focus {
+					font-weight: 600;
+					outline: 0;
+				}
+			}
+
+			.o-secondary-navigation_list__children {
+				margin-top: 0;
+				display: none;
+			}
+
+			li.m-list_item__parent[data-nav-is-active="True"] > a {
+				font-weight: 600;
+			}
+
+			li[data-nav-is-active="True"],
+			li[data-nav-is-open="True"] {
+				.o-secondary-navigation_list__children {
+					display: block;
+				}
+			}
+
+			.m-list_item li.m-list_item[data-nav-is-active="True"] {
+				.active-section {
+					border-left: 3px solid @green;
+
+					a {
+						font-weight: 600;
+					}
+				}
+			}
+		});
+	}
+}
