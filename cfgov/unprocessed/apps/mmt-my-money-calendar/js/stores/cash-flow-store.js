@@ -1,13 +1,15 @@
-import { flow, observable, computed, action } from 'mobx';
+import { reaction, flow, observable, computed, action } from 'mobx';
 import { asyncComputed } from 'computed-async-mobx';
 import { computedFn } from 'mobx-utils';
 import logger from '../lib/logger';
 import { toDayJS, dayjs } from '../lib/calendar-helpers';
 import { toMap } from '../lib/array-helpers';
 import CashFlowEvent from './models/cash-flow-event';
-
+import Day from './models/day';
 
 export default class CashFlowStore {
+  static snapCategories = ['expense.food.groceries', 'income.benefits.snap'];
+
   @observable eventsLoaded = false;
   @observable events = [];
 
@@ -24,6 +26,47 @@ export default class CashFlowStore {
     });
 
     this.logger.debug('Initialize CashFlowStore: %O', this);
+  }
+
+  @computed get hasSnapEvents() {
+    return Boolean(this.events.find(({ category }) => category === 'income.benefits.snap'));
+  }
+
+  /**
+   * An array of individual Day objects representing the entire time horizon of the calendar,
+   * snapshotting each day's income and expenses.
+   *
+   * @type {Map.<dayjs,Day>}
+   */
+  @computed get days() {
+    const result = new Map();
+    const startDate = this.events.length ? this.earliestEventDate.startOf('day') : dayjs().startOf('day');
+    const stopDate = dayjs().add(90, 'days');
+    let currentDate = startDate.clone();
+
+    while (currentDate.isSameOrBefore(stopDate)) {
+      const dayProps = {
+        date: currentDate,
+      };
+
+      if (currentDate.isSame(startDate)) {
+        dayProps.snapBalance = this.getSnapBalanceForDate(currentDate);
+        dayProps.nonSnapBalance = this.getNonSnapBalanceForDate(currentDate);
+      } else {
+        dayProps.previousDay = result.get(currentDate.subtract(1, 'day').valueOf());
+      }
+
+      const day = new Day(this, dayProps);
+      result.set(currentDate.valueOf(), day);
+
+      currentDate = currentDate.add(1, 'day');
+    }
+
+    return result;
+  }
+
+  getDay(date) {
+    return this.days.get(toDayJS(date).startOf('day').valueOf()) || {};
   }
 
   /**
@@ -123,15 +166,50 @@ export default class CashFlowStore {
    * @returns {Number} the balance in dollars
    */
   getBalanceForDate = computedFn(function getBalanceForDate(stopDate) {
+    return this.getNonSnapBalanceForDate(stopDate) + this.getSnapBalanceForDate(stopDate);
+  });
+
+  /**
+   * Get non-SNAP balance for the given date
+   *
+   * @param {Date|dayjs} stopDate - the date to check the balance for
+   * @returns {Number} the balance in dollars
+   */
+  getNonSnapBalanceForDate = computedFn(function getNonSnapBalanceForDate(stopDate) {
     stopDate = toDayJS(stopDate).endOf('day');
     const stopTimestamp = stopDate.valueOf();
 
-    if (!this.events.length) return totalInCents;
+    if (!this.events.length) return 0;
 
     const totalInCents = this.events.reduce((total, event) => {
       const eventTimestamp = event.dateTime.endOf('day').valueOf();
 
       if (eventTimestamp > stopTimestamp) return total;
+      if (this.constructor.snapCategories.includes(event.category)) return total;
+
+      return total + event.totalCents;
+    }, 0);
+
+    return totalInCents / 100;
+  });
+
+  /**
+   * Get the user's SNAP balance for the given date, if applicable.
+   *
+   * @param {Date|dayjs} stopDate - The date to check the balance for
+   * @returns {Number} the balance in dollars
+   */
+  getSnapBalanceForDate = computedFn(function getSnapBalanceForDate(stopDate) {
+    stopDate = toDayJS(stopDate).endOf('day');
+    const stopTimestamp = stopDate.valueOf();
+
+    if (!this.events.length) return 0;
+
+    const totalInCents = this.events.reduce((total, event) => {
+      const eventTimestamp = event.dateTime.endOf('day').valueOf();
+
+      if (eventTimestamp > stopTimestamp) return total;
+      if (!this.constructor.snapCategories.includes(event.category)) return total;
 
       return total + event.totalCents;
     }, 0);

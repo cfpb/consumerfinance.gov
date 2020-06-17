@@ -2,6 +2,7 @@ import { observable, computed, action } from 'mobx';
 import logger from '../lib/logger';
 import { getWeekRows, toDayJS, dayjs } from '../lib/calendar-helpers';
 import { formatCurrency } from '../lib/currency-helpers';
+import Day from './models/day';
 
 export default class UIStore {
   @observable navOpen = false;
@@ -19,6 +20,7 @@ export default class UIStore {
   @observable showBottomNav = true;
   @observable isTouchDevice = false;
   @observable installPromptEvent;
+  @observable days = [];
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -49,16 +51,52 @@ export default class UIStore {
   }
 
   @computed get weekStartingBalance() {
-    return this.rootStore.eventStore.getBalanceForDate(this.currentWeek.startOf('week'));
+    return this.rootStore.eventStore.getDay(this.currentWeek.startOf('week')).totalBalance;
   }
 
   @computed get weekEndingBalance() {
-    return this.rootStore.eventStore.getBalanceForDate(this.currentWeek.endOf('week'));
+    return this.rootStore.eventStore.getDay(this.currentWeek.endOf('week')).totalBalance;
+  }
+
+  @computed get weekStartingNonSnapBalance() {
+    return this.rootStore.eventStore.getDay(this.currentWeek.startOf('week')).nonSnapBalance;
+  }
+
+  @computed get weekStartingSnapBalance() {
+    return this.rootStore.eventStore.getDay(this.currentWeek.startOf('week')).snapBalance;
+  }
+
+  @computed get weekStartingNonSnapBalanceText() {
+    if (typeof this.weekStartingNonSnapBalance === 'undefined') return '$0.00';
+    return formatCurrency(this.weekStartingNonSnapBalance);
+  }
+
+  @computed get weekStartingSnapBalanceText() {
+    if (typeof this.weekStartingSnapBalance === 'undefined') return '$0.00';
+    return formatCurrency(this.weekStartingSnapBalance);
   }
 
   @computed get weekStartingBalanceText() {
     if (typeof this.weekStartingBalance === 'undefined') return '$0.00';
     return formatCurrency(this.weekStartingBalance);
+  }
+
+  @computed get weekEndingNonSnapBalance() {
+    return this.rootStore.eventStore.getDay(this.currentWeek.endOf('week')).nonSnapBalance;
+  }
+
+  @computed get weekEndingSnapBalance() {
+    return this.rootStore.eventStore.getDay(this.currentWeek.endOf('week')).snapBalance;
+  }
+
+  @computed get weekEndingNonSnapBalanceText() {
+    if (typeof this.weekEndingNonSnapBalance === 'undefined') return '$0.00';
+    return formatCurrency(this.weekEndingNonSnapBalance);
+  }
+
+  @computed get weekEndingSnapBalanceText() {
+    if (typeof this.weekEndingSnapBalance === 'undefined') return '$0.00';
+    return formatCurrency(this.weekEndingSnapBalance);
   }
 
   @computed get weekEndingBalanceText() {
