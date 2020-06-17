@@ -52,7 +52,7 @@ def get_researchers():
 
 
 def _get_deploy_environment():
-    return getattr(settings, 'DEPLOY_ENVIRONMENT', None)
+    return getattr(settings, 'DEPLOY_ENVIRONMENT', 'local')
 
 
 class ReportSection(ClusterableModel):
@@ -181,7 +181,7 @@ class Report(CFGOVPage):
             elif deploy_env == "production":
                 # TODO: trigger the jenkins job on EXT Jenkins
                 pass
-            elif deploy_env == "local" or deploy_env.find('dev') >= 0:
+            elif deploy_env == 'local' or deploy_env.find('dev') >= 0:
                 # if running locally or on a DEV server, run command locally
                 management.call_command('parse_research_report', self.id)
             else:
