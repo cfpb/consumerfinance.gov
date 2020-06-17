@@ -47,14 +47,10 @@ def calculate_percentile_rank(array, score):
 
 
 def rank_by_metric(school, cohort, metric):
-    """
-    Return a school's percentile rank among a cohort by 3 metrics.
-
-    Possible cohorts are by degree (the base), by state or by control type.
-    All cohorts are first grouped by highest degree.
-    Possible metrics are grad rate, repayment rate, or median total debt.
-    """
-    values = [getattr(s, metric) for s in cohort if getattr(s, metric)]
+    """Return a school's percentile rank among a cohort by 3 metrics."""
+    values = [
+        getattr(s, metric) for s in cohort if getattr(s, metric) is not None
+    ]
     payload = {'cohort_count': len(values)}
     array = [float(val) for val in values]
     target_value = float(getattr(school, metric))
@@ -81,12 +77,15 @@ def run(single_school=None):
             logger.info(count)
         # degree_cohort is the default, national base cohort
         degree_cohort = DEGREE_COHORTS.get(school.degrees_highest)
-        state_cohort = [
-            s for s in degree_cohort
-            if s
-            and s.state
-            and s.state == school.state
-        ]
+        if degree_cohort is not None:
+            state_cohort = [
+                s for s in degree_cohort
+                if s
+                and s.state
+                and s.state == school.state
+            ]
+        else:
+            state_cohort = None
         if not school.control:
             control_cohort = None
         elif school.control == 'Public':
