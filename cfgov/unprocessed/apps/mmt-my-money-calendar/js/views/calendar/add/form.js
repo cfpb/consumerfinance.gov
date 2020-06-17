@@ -154,6 +154,7 @@ function Form() {
           payday2: paydaySchema,
         })}
         onSubmit={(values) => {
+          console.log('SAVE THAT SHIT')
           if (!values.name) values.name = category.name;
 
           logger.debug('Event form submission: %O', values);
@@ -177,10 +178,17 @@ function Form() {
             return showRecurrenceUpdateModal(true);
           }
 
+<<<<<<< HEAD
           if (!localStorage.getItem('enteredData')) {
             localStorage.setItem('enteredData', 'initial');
           } else {
             localStorage.setItem('enteredData', 'subsequent')
+=======
+          if (!localStorage.getItem('firstEntry')) {
+            localStorage.setItem('firstEntry', true);
+          } else {
+            localStorage.setItem('firstEntry')
+>>>>>>> a4ca3d877... wip...modals
           }
 
           return saveEvent(values);
