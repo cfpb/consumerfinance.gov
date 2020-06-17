@@ -70,23 +70,6 @@ module.exports = {
       paths.modules,
       './config/**/*.js',
       './gulp/**/*.js'
-    ],
-    otherBuildTriggerFilesNemo: [
-      paths.legacy + '/nemo/**/*.css',
-      paths.legacy + '/nemo/**/*.less'
-    ]
-  },
-  legacy: {
-    cwd: paths.legacy,
-    dest: paths.processed,
-    scripts: [
-      paths.legacy + '/nemo/_/js/jquery-1.5.1.min.js',
-      paths.legacy + '/nemo/_/js/jquery.easing.1.3.js',
-      paths.legacy + '/nemo/_/js/jquery.fitvids.min.js',
-      paths.legacy + '/nemo/_/js/appendAround.js',
-      paths.legacy + '/nemo/_/js/plugins.js',
-      paths.legacy + '/nemo/_/js/main.js',
-      paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
   }
 };

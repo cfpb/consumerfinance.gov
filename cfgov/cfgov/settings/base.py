@@ -633,6 +633,8 @@ FLAGS = {
     "INSET_TEST": [],
     # The next version of the public consumer complaint database
     "CCDB5_RELEASE": [],
+    # The Trends feature inside Consumer Complaints
+    "CCDB5_TRENDS": [],
     # Google Optimize code snippets for A/B testing
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
