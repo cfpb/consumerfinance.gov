@@ -8,7 +8,8 @@ import { calendar, add, idea, menu } from '../lib/icons';
 
 const NavItem = ({ href, icon, label, badge, disabled = false, ...params }) => {
   const classes = clsx('bottom-nav__link', disabled && 'disabled');
-  //const labelClasses = clsx('bottom-nav__link-label');
+  const iconClasses = clsx('bottom-nav__link-icon');
+  const labelClasses = clsx('bottom-nav__link-label');
   const clickHandler = useCallback(
     (event) => {
       if (!disabled) return true;
@@ -21,12 +22,10 @@ const NavItem = ({ href, icon, label, badge, disabled = false, ...params }) => {
 
   return (
     <li className="bottom-nav__item">
-      <NavLink onClick={clickHandler} className={classes} disabled={disabled} to={href} {...params}>
-        {/* <div dangerouslySetInnerHTML={{ __html: icon }} /> */}
-        <div className="bottom-nav__link-icon" dangerouslySetInnerHTML={{ __html: icon }} />
-        {/* <div>{label}</div> */}
-        <div className="bottom-nav__link-label">{label}</div>
-        {/* {!!badge && <div className="bottom-nav__link-badge">{badge}</div>} */}
+      <NavLink onClick={clickHandler} id="nav-link" className={classes} disabled={disabled} to={href} {...params}>
+        <div className={iconClasses} dangerouslySetInnerHTML={{ __html: icon }} />
+        <div className={labelClasses}>{label}</div>
+        {!!badge && <div className="bottom-nav__link-badge">{badge}</div>}
       </NavLink>
     </li>
   );
@@ -47,7 +46,7 @@ function BottomNav() {
       <nav className="bottom-nav__nav">
         <ul className="bottom-nav__items">
           <NavItem href="/calendar" icon={calendar} exact label="Calendar" disabled={!hasStartingBalance} />
-          <NavItem href="/calendar/add/income" icon={add} label="Income / Expense" disabled={!hasStartingBalance} />
+          <NavItem href="/calendar/add/income" icon={add} label="Add" disabled={!hasStartingBalance} />
           <NavItem
             href="/strategies"
             icon={idea}
