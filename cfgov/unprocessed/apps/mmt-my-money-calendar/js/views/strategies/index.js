@@ -39,7 +39,6 @@ function Strategies() {
           one or two of them for the coming month and see if your cash flow improves.
         </p>
       </header>
-
       {strategiesStore.strategyResults.length > 0 && <StrategyCards results={strategiesStore.strategyResults} />}
     </section>
   );
