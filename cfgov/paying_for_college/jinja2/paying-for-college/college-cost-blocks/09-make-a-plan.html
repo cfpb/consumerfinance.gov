@@ -473,7 +473,7 @@
                 <div class="other-borrowing-btns">
                     <button class="a-btn a-btn__add u-mb15" data-borrow-button="privateLoan">{{ svg_icon('plus-round') }} Add a private loan to your plan if you have an offer from a lender.</button>
                     <button class="a-btn a-btn__add undergrad-content" data-borrow-button="parentPlus">{{ svg_icon('plus-round') }} Add parent PLUS loan.</button>
-                    <button class="a-btn a-btn__add grad-content" data-borrow-button="gradPlus">{{ svg_icon('plus-round') }}  Add Direct PLUS (grad PLUS)</button>
+                    <button class="a-btn a-btn__add graduate-content" data-borrow-button="gradPlus">{{ svg_icon('plus-round') }}  Add Direct PLUS (grad PLUS)</button>
                 </div>
                 <div class="private-loan-expandable"  data-state-based-visibility="show-privateLoan">
                     {% set expandable_settings = {
@@ -522,12 +522,12 @@
                             </div>
                         </div>
 
-                        <button class="a-btn a-btn__link u-mt30">{{ svg_icon('plus-round') }} Add another Private Loan</button>
+                        <button data-state-based-visibility="none" class="a-btn a-btn__link u-mt30">{{ svg_icon('plus-round') }} Add another Private Loan</button>
                     {% endcall %}
                 </div>
                 <div class="plus-loan-expandable" data-state-based-visibility="show-gradPlus">
                     {% set expandable_settings = {
-                        'label': 'Direct PLUS (grad PLUS) loans' | safe,
+                        'label': 'Direct PLUS (Grad PLUS) loans' | safe,
                         'value': '$0',
                         'is_editable': 'True',
                         'data_attribute': 'data-financial-item="total_plusLoans"'
