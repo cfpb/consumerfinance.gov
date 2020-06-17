@@ -109,8 +109,9 @@ function initializeFinancialValues() {
   * updateFinancial - Update a property of the financial model
   * @param {String} name - The name of the property to update
   * @param {*} value - The new value of the property
+  * @param {Boolean} updateView - (defaults true) should view be updated?
   */
-function updateFinancial( name, value ) {
+function updateFinancial( name, value, updateView ) {
   financialModel.setValue( name, value );
 }
 
@@ -134,8 +135,9 @@ function recalculateFinancials() {
   * updateExpense - Update a property of the expense model
   * @param {String} name - The name of the property to update
   * @param {*} value - The new value of the property
+  * @param {Boolean} updateView - (defaults true) should view be updated?
   */
-function updateExpense( name, value ) {
+function updateExpense( name, value, updateView ) {
   expensesModel.setValue( name, value );
 }
 
@@ -200,7 +202,7 @@ function updateModelsFromQueryString( queryObj ) {
   for ( const key in queryObj ) {
     if ( _urlParamsToModelVars.hasOwnProperty( key ) ) {
       const match = _urlParamsToModelVars[key].split( '.' );
-      modelMatch[match[0]]( match[1], queryObj[key] );
+      modelMatch[match[0]]( match[1], queryObj[key], false );
 
       // If there's an iped, do a fetch of the schoolData
       if ( key === 'iped' ) {
@@ -209,7 +211,7 @@ function updateModelsFromQueryString( queryObj ) {
 
       // Also put programLength into the financial model
       if ( key === 'lenp' ) {
-        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key] ) );
+        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key], false ) );
       }
     }
   }

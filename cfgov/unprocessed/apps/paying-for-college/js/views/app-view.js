@@ -6,7 +6,7 @@ import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
 import { getAllStateValues } from '../dispatchers/get-model-values.js';
-import { updateState } from '../dispatchers/update-state.js';
+import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
 
 
 const appView = {
@@ -46,7 +46,7 @@ const appView = {
   _handleDidThisHelpBtns: event => {
     const button = event.target;
     const parent = closest( button, '.m-btn-group' );
-    button.classList.remove( 'a-btn__disabled');
+    button.classList.remove( 'a-btn__disabled' );
     parent.querySelectorAll( 'button:not( [value="' + button.value + '"]' )
       .forEach( elem => {
         elem.classList.add( 'a-btn__disabled' );
@@ -79,7 +79,7 @@ const appView = {
    * Replaces current state, adding the formatted querystring as the URL
    */
   setUrlQueryString: () => {
-    window.history.replaceState( getAllStateValues(), null, buildUrlQueryString() );
+    updateState.replaceStateInHistory( buildUrlQueryString() );
     appView._updateSaveLink();
   },
 

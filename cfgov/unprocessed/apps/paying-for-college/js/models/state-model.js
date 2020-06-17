@@ -5,7 +5,7 @@
 */
 
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { updateUrlQueryString, updateNavigationView, updateSchoolItems, updateStateInDom } from '../dispatchers/update-view.js';
+import { updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
 
 const stateModel = {
   stateDomElem: null,
@@ -65,25 +65,60 @@ const stateModel = {
   ],
 
   /**
+   * pushStateToHistory - Push current application state to window.history
+   */
+  pushStateToHistory: () => {
+    const historyState = {
+      activeSection: stateModel.values.activeSection
+    };
+    window.history.pushState( historyState, null, window.location.search );
+  },
+
+  /**
+   * replaceStateInHistory - Replace current application state in window.history
+   * @param {String} queryString - The queryString to put in the history object
+   */
+  replaceStateInHistory: queryString => {
+    const historyState = {
+      activeSection: stateModel.values.activeSection
+    };
+    if ( typeof queryString === 'undefined' ) queryString = window.location.search;
+    window.history.replaceState( historyState, null, queryString );
+  },
+
+  /**
    * setValue - Public method to update model values
    * @param {String} name - the name of the property to update
    * @param {*} value - the value to be assigned
    */
   setValue: function( name, value ) {
     updateStateInDom( name, value );
-    if ( name !== 'activeSection' ) {
+    if ( name === 'activeSection' ) {
+      // In case this method gets used to update activeSection...
+      stateModel.setActiveSection( value );
+    } else {
       stateModel.values[name] = value;
       updateUrlQueryString();
-    } else if ( value !== stateModel.values.activeSection ) {
-      stateModel.values.activeSection = value;
-      window.history.pushState( stateModel.values, null, '' );
-      updateNavigationView();
     }
     if ( stateModel.textVersions.hasOwnProperty( name ) ) {
       const key = name + 'Text';
       stateModel.values[key] = stateModel.textVersions[name][value];
       updateSchoolItems();
     }
+  },
+
+  /**
+   * setActiveSection - Method to update the app's active section
+   * @param {*} value - the value to be assigned
+   * @param {Boolean} popState - true if the update is the result of a popState event
+   */
+  setActiveSection: function( value, popState ) {
+    updateStateInDom( 'activeSection', value );
+    stateModel.values.activeSection = value;
+    if ( popState !== true ) {
+      stateModel.pushStateToHistory();
+    }
+    updateNavigationView();
   }
 
 };

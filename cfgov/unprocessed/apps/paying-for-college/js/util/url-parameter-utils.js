@@ -4,9 +4,11 @@ import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 
 
-/* getQueryVariables - Check the url for queryString and interpret it into an object
-   full of key-value pairs.
-   @returns {Object} key-value pairs of the queryString */
+/**
+ * getQueryVariables - Check the url for queryString and interpret it into an object
+ * full of key-value pairs.
+ * @returns {Object} key-value pairs of the queryString
+ */
 function getQueryVariables() {
   const query = window.location.search.substring( 1 );
   const pairs = query.split( '&' );
@@ -21,9 +23,11 @@ function getQueryVariables() {
   return queryVariables;
 }
 
-/* _buildUrlQueryString - Retreieve values from the models and transform them into a
-   querystring
-   @returns {String} a formatted query string based on model values */
+/**
+ * _buildUrlQueryString - Retreieve values from the models and transform them into a
+ * querystring
+ * @returns {String} a formatted query string based on model values
+ */
 
 function buildUrlQueryString() {
   const expensesValues = expensesModel.values;

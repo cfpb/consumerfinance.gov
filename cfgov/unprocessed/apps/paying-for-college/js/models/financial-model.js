@@ -6,7 +6,7 @@ based on these costs.
 
 import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { initializeFinancialValues, recalculateExpenses } from '../dispatchers/update-models.js';
-import { updateFinancialView, updateCostOfBorrowingChart, updateAffordingChart, updateMaxDebtChart, updateMakePlanChart, updateUrlQueryString } from '../dispatchers/update-view.js';
+import { updateAffordingChart, updateCostOfBorrowingChart, updateFinancialView, updateMakePlanChart, updateMaxDebtChart, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
 import { enforceRange, stringToNum } from '../util/number-utils.js';
@@ -50,8 +50,8 @@ const financialModel = {
     financialModel._updateStateWithFinancials();
 
     // Debt Guide Difference
-    financialModel.values.other_debtGuideDifference = financialModel.values.salary_annual
-        - financialModel.values.debt_tenYearInterest;
+    financialModel.values.other_debtGuideDifference = financialModel.values.salary_annual -
+        financialModel.values.debt_tenYearInterest;
 
   },
 
@@ -59,17 +59,21 @@ const financialModel = {
    * setValue - Used to set a value
    * @param {String} name - Property name
    * @param {Number} value - New value of property
+   * @param {Boolean} updateView - (defaults true) should view be updated?
    */
-  setValue: ( name, value ) => {
+  setValue: ( name, value, updateView ) => {
     if ( financialModel.values.hasOwnProperty( name ) ) {
       financialModel.values[name] = stringToNum( value );
       financialModel.recalculate();
-      updateUrlQueryString();
-      updateFinancialView();
-      updateCostOfBorrowingChart();
-      updateMakePlanChart();
-      updateMaxDebtChart();
-      updateAffordingChart();
+
+      if ( updateView !== false ) {
+        updateUrlQueryString();
+        updateFinancialView();
+        updateCostOfBorrowingChart();
+        updateMakePlanChart();
+        updateMaxDebtChart();
+        updateAffordingChart();
+      }
     }
   },
 
@@ -107,7 +111,7 @@ const financialModel = {
       if ( totals.hasOwnProperty( prefix ) ) {
         // For loans, get net amount after fees
         let val = vals[prop];
-        if ( prop.indexOf( 'Loan') > 0 ) {
+        if ( prop.indexOf( 'Loan' ) > 0 ) {
           val = financialModel._amountAfterFee( prop );
         }
 

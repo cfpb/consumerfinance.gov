@@ -1,5 +1,5 @@
 // This file contains the model for after-college expenses
-import { updateAffordingChart, updateCostOfBorrowingChart, updateUrlQueryString, updateExpensesView, updateFinancialView } from '../dispatchers/update-view.js';
+import { updateAffordingChart, updateCostOfBorrowingChart, updateExpensesView, updateFinancialView, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { getExpenses } from '../dispatchers/get-api-values.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
 import { stringToNum } from '../util/number-utils.js';
@@ -44,13 +44,17 @@ const expensesModel = {
    * setValue - Used to set a value
    * @param {String} name - Property name
    * @param {Number} value - New value of property
+   * @param {Boolean} updateView - (defaults true) should view be updated?
    */
-  setValue: ( name, value ) => {
+  setValue: ( name, value, updateView ) => {
     expensesModel.values[name] = stringToNum( value );
     expensesModel.calculateTotals();
-    updateExpensesView();
-    updateCostOfBorrowingChart();
-    updateAffordingChart();
+
+    if ( updateView === false ) {
+      updateExpensesView();
+      updateCostOfBorrowingChart();
+      updateAffordingChart();
+    }
   },
 
   /**

@@ -32,9 +32,7 @@ const columnChartOpts = {
     }
   },
   title: false,
-  tooltip: {
-    pointFormat: '${point.y:,.0f}'
-  },
+  tooltip: false,
   xAxis: {
     categories: [
       '10 year period',
@@ -96,9 +94,7 @@ const meterOpts = {
     enabled: false
   },
 
-  tooltip: {
-    enabled: false
-  },
+  tooltip: false,
 
   yAxis: [ {
     min: 0,
@@ -211,9 +207,7 @@ const horizontalBarOpts = {
       overflow: 'justify'
     }
   },
-  tooltip: {
-    format: '${total:,.0f}'
-  },
+  tooltip: false,
   plotOptions: {
     bar: {
       dataLabels: {

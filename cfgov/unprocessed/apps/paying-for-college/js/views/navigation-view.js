@@ -1,7 +1,7 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
 import { closest } from '../../../../js/modules/util/dom-traverse';
-import { updateState } from '../dispatchers/update-state.js';
+import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { getAllStateValues, getStateValue } from '../dispatchers/get-model-values.js';
 
@@ -79,11 +79,11 @@ const navigationView = {
    */
   _handlePopState: function( event ) {
     if ( event.state ) {
-      window.history.replaceState( getAllStateValues(), null, '' );
-
-      updateState.activeSection( event.state.activeSection );
+      const values = getAllStateValues();
+      values.activeSection = event.state.activeSection;
+      updateState.replaceStateInHistory( window.location.search );
+      updateState.activeSection( values.activeSection, true );
     }
-    navigationView.updateView();
   },
 
   /**
@@ -205,7 +205,7 @@ const navigationView = {
     this._addButtonListeners();
     this.updateView();
 
-    window.history.replaceState( getAllStateValues(), null, '' );
+    updateState.replaceStateInHistory( window.location.search );
     this._addPopStateListener();
   }
 
