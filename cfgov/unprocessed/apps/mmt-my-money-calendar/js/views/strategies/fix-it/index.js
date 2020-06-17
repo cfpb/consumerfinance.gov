@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useStore } from '../../../stores';
 import { CardGroup, Card } from '../../../components/card';
 import { useScrollToTop } from '../../../components/scroll-to-top';
+import { formatCurrency } from '../../../lib/currency-helpers';
 import { dayjs } from '../../../lib/calendar-helpers';
 import { Button, ButtonLink } from '../../../components/button';
 
@@ -30,7 +31,7 @@ const FixItButton = ({ result }) => {
   );
 
   return (
-    <Button icon={pencil} onClick={buttonAction} variant="secondary">
+    <Button icon={pencil} onClick={buttonAction} variant="strategy">
       {label}
     </Button>
   );
@@ -42,7 +43,6 @@ const StrategyCards = ({ results }) => (
       {results.map((result, index) => (
         <Card title={result.title} icon={ideaRound} key={`strategy-${index}`}>
           <p>{result.text}</p>
-
           <div className="m-card_footer">
             <FixItButton result={result} />
           </div>
@@ -53,7 +53,8 @@ const StrategyCards = ({ results }) => (
 );
 
 function FixItStrategies() {
-  const { uiStore, strategiesStore: strategies } = useStore();
+  //missy added eventStore
+  const { uiStore, eventStore, strategiesStore: strategies } = useStore();
   const { week } = useParams();
 
   useEffect(() => {
@@ -69,13 +70,19 @@ function FixItStrategies() {
 
   useScrollToTop();
 
+  //missy added this line
+  const events = eventStore.getPositiveEventsForWeek(uiStore.currentWeek) || [];
+  var positiveFilter = events.filter((event) => event.total > 0);
+  var weekIncome = positiveFilter.reduce((acc, event) => acc + event.total, 0);
+  var negativeFilter = events.filter((event) => event.total < 0);
+  var weekExpenses = negativeFilter.reduce((acc, event) => acc + event.total, 0);
   return (
     <section className="strategies">
       <header className="strategies-header">
         <h2 className="strategies-header__title">Fix-It Strategies</h2>
-
         {strategies.fixItResults.length ? (
           <div className="strategy-cards">
+            <h3 className="strategies-header__week-range">{uiStore.weekRangeText}</h3>
             <CardGroup columns={2}>
               <div className="fixit-header">
                 <div className="fixit-header__line-first">
@@ -100,15 +107,15 @@ function FixItStrategies() {
               <div className="fixit-header">
                 <div className="fixit-header__comment">
                   <div>Weekly Starting Balance:</div>
-                  <div className="fixit-header__comment-value">{uiStore.weekStartingBalanceText}</div>
+                  <div className="fixit-header__comment-value">{uiStore.weekEndingBalanceText}</div>
                 </div>
                 <div className="fixit-header__comment">
                   <div>Total Weekly Income: </div>
-                  <div className="fixit-header__comment-value">$300</div>
+                  <div className="fixit-header__comment-value">{formatCurrency(weekIncome)}</div>
                 </div>
                 <div className="fixit-header__comment">
                   <div>Total Weekly Expense:</div>
-                  <div className="fixit-header__comment-value"> -$500</div>
+                  <div className="fixit-header__comment-value">{formatCurrency(weekExpenses)}</div>
                 </div>
               </div>
             </CardGroup>

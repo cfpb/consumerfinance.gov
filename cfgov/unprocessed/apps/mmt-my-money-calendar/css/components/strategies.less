@@ -2,20 +2,44 @@
 .strategies-cards {
   margin-bottom: 1rem;
 
+  .m-card {
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
   .m-card_footer {
     text-align: center;
   }
+
+  /* .m-card_background {
+    background-color: #f4f6fa;
+    border: 5px solid;
+  } */
+
+  &__title {
+    font-weight: 600;
+  }
+}
+
+.a-btn__strategy {
+  color: orange;
+  background-color: green;
+}
+
+.strategies-header__week-range {
+  text-align: center;
 }
 
 .fixit-header {
-  background-color: #f3f7fa;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   flex-basis: 0;
+  background-color: #f3f7fa;
   box-sizing: border-box;
-  border: 1px solid #d2d3d5;
-  border-bottom-width: 3px;
+  /* border: 1px solid #d2d3d5;
+  border-bottom-width: 3px; */
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 0.5em;
   height: 100%;
   width: 100%;

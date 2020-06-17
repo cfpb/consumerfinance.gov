@@ -292,6 +292,19 @@ export default class CashFlowStore {
   }
 
   /**
+   * Missy added:  Gets all positive events occurring in the same week as the specified date
+   *
+   * @param {Date|dayjs} date - A date in the week to check
+   * @returns {CashFlowEvent[]|undefined}
+   */
+  getPositiveEventsForWeek(date) {
+    date = toDayJS(date).startOf('week');
+    const positiveEvents = this.eventsByWeek.get(date.valueOf());
+
+    return positiveEvents;
+  }
+
+  /**
    * Load all events from IndexedDB, sorted ascending by date, into the events array
    *
    * @returns {undefined}
