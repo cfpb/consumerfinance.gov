@@ -25,9 +25,9 @@
             {% block login_form %}
             {% csrf_token %}
 
-            {% url 'user_welcome' as home_url %}
-            <input type="hidden" name="next" value="{{ next|default:home_url }}" />
-
+            {% if next %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            {% endif %}
 
             <ul class="fields">
                 {% block fields %}
