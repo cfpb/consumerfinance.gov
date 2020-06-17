@@ -86,6 +86,8 @@ def run(single_school=None):
             ]
         else:
             state_cohort = None
+        # For school control, we want cohorts only for public and private;
+        # We do not want a special cohort of for-profit schools
         if not school.control:
             control_cohort = None
         elif school.control == 'Public':

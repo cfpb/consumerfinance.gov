@@ -161,11 +161,11 @@ def process_datafiles(add_schools=[]):
     if add_schools:  # we have a list of school IDs to add to our database
         names, data = read_csv(DATA_VARS['universe_cleaned'])
         for row in data:
-            ID = row['UNITID']
-            if ID in add_schools:
-                collector[ID] = {}
+            _id = row['UNITID']
+            if _id in add_schools:
+                collector[_id] = {}
                 for key in NEW_SCHOOL_DATA_POINTS:
-                    collector[ID][key] = row[NEW_SCHOOL_DATA_POINTS[key]]
+                    collector[_id][key] = row[NEW_SCHOOL_DATA_POINTS[key]]
         return collector
     snames, service_data = read_csv(DATA_VARS['services_cleaned'])
     for row in service_data:
@@ -182,16 +182,15 @@ def create_alias(alias, school):
     alias.save()
 
 
-def create_school(id, data):
-    school = School(school_id=id, data_json=STARTER_DATA_JSON)
+def create_school(iped, data):
+    school = School(school_id=iped, data_json=STARTER_DATA_JSON)
     for field in data:
-        if field == 'alias':
-            _alias = data['alias']
-        else:
-            setattr(school, field, data[field])
+        setattr(school, field, data[field])
     school.zip5 = school.zip5[:5]
     school.save()
-    create_alias(_alias, school)
+    _alias = data.get('alias')
+    if _alias:
+        create_alias(_alias, school)
 
 
 def process_missing(missing_ids):
