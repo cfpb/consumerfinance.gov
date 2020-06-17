@@ -1,4 +1,3 @@
-import builtins
 import copy
 import datetime
 import json
@@ -688,7 +687,7 @@ class TestScripts(django.test.TestCase):
 
     def test_get_bls_stats_failure(self):
         m = mock_open()
-        m.side_effect = builtins.FileNotFoundError
+        m.side_effect = FileNotFoundError
         with mock.patch('builtins.open', m):
             stats = nat_stats.get_bls_stats()
             self.assertEqual(stats, {})

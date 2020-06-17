@@ -1,4 +1,3 @@
-import builtins
 import json
 from collections import OrderedDict
 
@@ -19,7 +18,7 @@ def get_bls_stats():
     try:
         with open(BLS_FILE, 'r') as f:
             data = json.loads(f.read())
-    except builtins.FileNotFoundError:
+    except FileNotFoundError:
         data = {}
     return data
 
