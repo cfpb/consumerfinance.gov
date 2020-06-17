@@ -7,6 +7,7 @@ import { useScrollToTop } from '../../../components/scroll-to-top';
 import { formatCurrency } from '../../../lib/currency-helpers';
 import { dayjs } from '../../../lib/calendar-helpers';
 import { Button, ButtonLink } from '../../../components/button';
+import Strategies from '../index';
 
 import { pencil, arrowLeft, ideaRound } from '../../../lib/icons';
 
@@ -70,7 +71,6 @@ function FixItStrategies() {
 
   useScrollToTop();
 
-  //missy added this line
   const events = eventStore.getPositiveEventsForWeek(uiStore.currentWeek) || [];
   var positiveFilter = events.filter((event) => event.total > 0);
   var weekIncome = positiveFilter.reduce((acc, event) => acc + event.total, 0);
@@ -126,8 +126,10 @@ function FixItStrategies() {
           </p>
         )}
       </header>
-
-      {strategies.fixItResults.length > 0 && <StrategyCards results={strategies.fixItResults} />}
+      <div>{strategies.fixItResults.length > 0 && <StrategyCards results={strategies.fixItResults} />}</div>
+      <div>
+        <Strategies />
+      </div>
 
       <footer className="strategies-footer">
         <ButtonLink iconSide="left" icon={arrowLeft} to="/calendar">
