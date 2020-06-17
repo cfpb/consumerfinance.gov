@@ -3,7 +3,6 @@ import { useBEM } from '../lib/hooks';
 
 export default function NarrativeModal({showModal, handleOkClick, copy, step, ...props}) {
     const bem = useBEM('modal-dialog');
-    
     return (
       <Modal isOpen={showModal}
               className={step === 'step1' ? 'narrative-step1' : bem()} 
