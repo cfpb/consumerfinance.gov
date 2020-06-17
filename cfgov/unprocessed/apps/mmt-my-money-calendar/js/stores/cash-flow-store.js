@@ -6,7 +6,6 @@ import { toDayJS, dayjs } from '../lib/calendar-helpers';
 import { toMap } from '../lib/array-helpers';
 import CashFlowEvent from './models/cash-flow-event';
 
-
 export default class CashFlowStore {
   @observable eventsLoaded = false;
   @observable events = [];
@@ -209,6 +208,19 @@ export default class CashFlowStore {
   getEventsForWeek(date) {
     date = toDayJS(date).startOf('week');
     return this.eventsByWeek.get(date.valueOf());
+  }
+
+  /**
+   * Missy added:  Gets all positive events occurring in the same week as the specified date
+   *
+   * @param {Date|dayjs} date - A date in the week to check
+   * @returns {CashFlowEvent[]|undefined}
+   */
+  getPositiveEventsForWeek(date) {
+    date = toDayJS(date).startOf('week');
+    const positiveEvents = this.eventsByWeek.get(date.valueOf());
+
+    return positiveEvents;
   }
 
   /**

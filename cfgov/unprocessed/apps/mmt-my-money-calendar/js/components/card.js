@@ -12,7 +12,7 @@ export function CardGroup({ columns = 1, children }) {
 
 export const Card = ({ href = '#', title, icon, children, footer }) => (
   <article className="m-card">
-    <h2 className="m-card_heading">
+    <h2 className="m-card_heading m-card_background">
       <a href={href}>
         {icon && <div className="m-card_icon" dangerouslySetInnerHTML={{ __html: icon }} />}
 
