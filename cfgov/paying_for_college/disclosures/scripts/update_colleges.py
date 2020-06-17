@@ -50,9 +50,9 @@ def update_programs(api_data, school):
     for entry in program_data:
         if not test_for_program_data(entry):
             continue
-        level_code = entry['credential']['level']
+        level = entry['credential']['level']
         cip_code = entry['code']
-        program_code = "{}-{}".format(cip_code, level_code)
+        program_code = "{}-{}".format(cip_code, level)
         program, _created = Program.objects.update_or_create(
             institution=school,
             program_code=program_code,
@@ -60,8 +60,8 @@ def update_programs(api_data, school):
                 'program_name': entry['title'],
                 'cip_code': cip_code,
                 'completers': entry['counts']['titleiv'],
-                'level': level_code,
-                'level_name': PROGRAM_LEVELS.get(int(level_code)),
+                'level': level,
+                'level_name': PROGRAM_LEVELS.get(int(level)),
                 'salary': entry['earnings']['median_earnings'],
                 'median_student_loan_completers': (
                     entry['debt']['median_debt']),
