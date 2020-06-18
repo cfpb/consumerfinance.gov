@@ -49,6 +49,10 @@ function Form() {
     handleModalSession();
   }, [])
 
+  useEffect(() => {
+    handleModalSession();
+  }, [])
+
   // Toggle bottom nav bar when inputs are focused, to prevent it from obscuring text on mobile screens:
   const focusHandler = useCallback(
     (evt) => {
@@ -154,7 +158,6 @@ function Form() {
           payday2: paydaySchema,
         })}
         onSubmit={(values) => {
-          console.log('SAVE THAT SHIT')
           if (!values.name) values.name = category.name;
 
           logger.debug('Event form submission: %O', values);
