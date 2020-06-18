@@ -1,6 +1,5 @@
 import datetime
 import logging
-import sys
 
 import localflavor
 
@@ -81,7 +80,7 @@ def run(single_school=None):
         by_control = {}
         count += 1
         if count % 500 == 0:  # pragma: no cover
-            logger.info(f"{count} schools processed")
+            logger.info("{} schools processed".format(count))
         # degree_cohort is the default, national base cohort
         # base query weeds out schools without state or degrees_highest values
         degree_cohort = DEGREE_COHORTS.get(get_grad_level(school))
