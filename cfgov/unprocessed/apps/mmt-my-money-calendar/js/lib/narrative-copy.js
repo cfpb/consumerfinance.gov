@@ -6,7 +6,6 @@ export const narrativeCopy = {
     step2: {
         headline: 'Congratulations!',
         body: 'You’ve just entered your first transaction into the calendar. The more transactions you enter the more this tool can help you manage your budget. '
-<<<<<<< HEAD
     },
     step3: {
         headline: 'Have you entered all of your income and expenses?',
@@ -15,7 +14,5 @@ export const narrativeCopy = {
     step4: {
         headline: 'SNAP Benefits',
         body: 'Your SNAP Benefits can only be applied to your groceries, so the amount that you enter here will only contribute to your Groceries expense.'
-=======
->>>>>>> a4ca3d877... wip...modals
     }
 }
