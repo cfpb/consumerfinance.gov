@@ -480,7 +480,7 @@ urlpatterns = [
         include('teachers_digital_platform.urls')
     ),
 
-     re_path(
+    re_path(
         r'^practitioner-resources/youth-financial-education/curriculum-review/',  # noqa: E501
         include('crtool.urls')
     ),
