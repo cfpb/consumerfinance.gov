@@ -9,7 +9,6 @@ import Details from './details';
 import NarrativeModal from '../../../components/narrative-notification';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
-// import Modal from 'react-modal';
 import { narrativeCopy } from '../../../lib/narrative-copy';
 
 import { arrowLeft, arrowRight, downArrow } from '../../../lib/icons';
@@ -33,16 +32,18 @@ function Calendar() {
   const location = useLocation();
   const params = useParams();
   const [showModal, setShowModal] = useState();
+  const [narrativeStep, setNarrativeStep] = useState();
 
   const handleModalSession = () => {
-    let visited = localStorage.getItem('visitedPage')
+    let visited = localStorage.getItem('visitedPage'),
         enteredData = localStorage.getItem('enteredData');
 
-    console.log('first visit :', visited)
-    console.log('entered data: ', enteredData)
-    if (visited) {
+    if (visited && enteredData === 'subsequent') {
       setShowModal(false);
     } else {
+      let currentStep = (visited && enteredData === 'initial') ? 'step2' : 'step1';
+
+      setNarrativeStep(currentStep)
       setShowModal(true);
     }
   }
@@ -65,36 +66,13 @@ function Calendar() {
     ),
     []
   );
-  
-  //TODO: Extract this out into it's own component to be reused at different screens
-  // const NarrativeModal = () => {
-  //   return (
-  //     <Modal isOpen={showModal}
-  //            className={bem()}
-  //            overlayClassName="modal-overlay"
-  //            appElement={document.querySelector('#mmt-my-money-calendar')}
-  //            style={
-  //              { content: {
-  //                 textAlign: 'center',
-  //                 padding: '15px'
-  //                }
-  //              }
-  //           }
-  //     >
-  //       <div className='narrative-modal'>
-  //         <h4>Welcome to your Budget Calendar</h4>
-  //         <p>Start adding your weekly Expenses and Income by clicking on the Add Income and Expenses Button in the menu below.</p>
-  //         <div style={{height: '20px'}} dangerouslySetInnerHTML={{__html: downArrow}}></div>
-  //         <button style={{float: 'right'}} onClick={(e) => handleToggleModal(e)}>OK</button>
-  //       </div>
-  //       <div className='arrow-down'></div>
-  //     </Modal>
-  //   )
-  // };
 
   const handleToggleModal = (event) => {
     event.preventDefault();
     localStorage.setItem('visitedPage', true);
+    if (localStorage.getItem('enteredData') === 'initial') {
+      localStorage.setItem('enteredData', 'subsequent');
+    }
     setShowModal(!showModal);
   };
 
@@ -104,15 +82,15 @@ function Calendar() {
 
   return (
     <section className="calendar">
-      {showModal && 
+      {showModal && narrativeStep === 'step1' &&
         <NarrativeModal showModal={showModal}
                         handleOkClick={handleToggleModal}
                         copy={narrativeCopy.step1}
         />
       }
-      { showModal && localStorage.getItem('enteredData') &&
+      { showModal && narrativeStep === 'step2' &&
         <NarrativeModal showModal={showModal}
-                        handleModalSession={handleToggleModal}
+                        handleOkClick={handleToggleModal}
                         copy={narrativeCopy.step2}
         />
       }

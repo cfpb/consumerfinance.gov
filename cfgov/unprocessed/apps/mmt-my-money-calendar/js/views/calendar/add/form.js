@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { useMemo, useRef, useCallback, useState } from 'react';
+import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useParams, useHistory, Redirect, withRouter } from 'react-router-dom';
 import * as yup from 'yup';
@@ -14,6 +14,8 @@ import { useScrollToTop } from '../../../components/scroll-to-top';
 import Logger from '../../../lib/logger';
 import CashFlowEvent from '../../../stores/models/cash-flow-event';
 import ModalDialog from '../../../components/modal-dialog';
+import NarrativeModal from '../../../components/narrative-notification';
+import { narrativeCopy } from '../../../lib/narrative-copy';
 
 function Form() {
   useScrollToTop();
@@ -22,6 +24,7 @@ function Form() {
   const formValues = useRef(null);
   const history = useHistory();
   const [recurrenceUpdateModalState, showRecurrenceUpdateModal] = useState(false);
+  const [showModal, setShowModal] = useState();
   const logger = useMemo(() => Logger.addGroup('eventForm'), []);
   const monthDayOptions = useMemo(
     () => [...range(1, 30)].map((num) => ({ label: numberWithOrdinal(num), value: num })),
@@ -41,6 +44,10 @@ function Form() {
     []
   );
   const handleCatName = (category) => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
+
+  useEffect(() => {
+    handleModalSession();
+  }, [])
 
   // Toggle bottom nav bar when inputs are focused, to prevent it from obscuring text on mobile screens:
   const focusHandler = useCallback(
@@ -95,9 +102,31 @@ function Form() {
   const recurrenceOptions = Object.entries(
     category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
   ).map(([value, { label }]) => ({ label, value }));
+  
+  const handleModalSession = () => {
+    let snapVisit = localStorage.getItem('snapVisit');
+
+    if (category.name === 'SNAP' && !snapVisit) {
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  };
+
+  const handleToggleModal = (event) => {
+    event.preventDefault();
+    localStorage.setItem('snapVisit', true);
+    setShowModal(!showModal);
+  };
 
   return (
     <section className="add-event">
+      { showModal && 
+        <NarrativeModal showModal={showModal} 
+                        handleOkClick={handleToggleModal}
+                        copy={narrativeCopy.step4}
+        />
+      }
       <BackButton variant="secondary" onClick={() => history.goBack()}>
         Back
       </BackButton>
@@ -125,7 +154,6 @@ function Form() {
           payday2: paydaySchema,
         })}
         onSubmit={(values) => {
-          console.log('SAVE THAT SHIT')
           if (!values.name) values.name = category.name;
 
           logger.debug('Event form submission: %O', values);
@@ -149,10 +177,10 @@ function Form() {
             return showRecurrenceUpdateModal(true);
           }
 
-          if (!localStorage.getItem('firstEntry')) {
-            localStorage.setItem('firstEntry', true);
+          if (!localStorage.getItem('enteredData')) {
+            localStorage.setItem('enteredData', 'initial');
           } else {
-            localStorage.setItem('firstEntry')
+            localStorage.setItem('enteredData', 'subsequent')
           }
 
           return saveEvent(values);
