@@ -56,7 +56,7 @@
         {{ caller() | safe if caller else '' }}
         <div class="o-video-player_video-container
                     {{- ' o-video-player_video-container__flexible' if not is_fcm else '' }}
-                    show-on_video-playing">
+                    u-show-on-video-playing">
             <div class="o-video-player_iframe-container">
                 <iframe class="o-video-player_iframe"
                     width="100%"
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="o-video-player_image-container
-                    hide-on_video-playing">
+                    u-hide-on-video-playing">
 
             {#
                 This link is for the default, no-js, state of the video player.

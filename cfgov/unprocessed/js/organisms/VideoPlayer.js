@@ -27,7 +27,7 @@ function VideoPlayer( element ) {
 
   const _iframeDom = _dom.querySelector( `.${ BASE_CLASS }_iframe` );
   const _imageDom = _dom.querySelector( `.${ BASE_CLASS }_image` );
-  const _closeBtnDom = _dom.querySelector( `.${ BASE_CLASS }_close-btn` );
+  const _closeBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_close-btn` );
   const _playBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_play-btn` );
   const _playLinkDom = _dom.querySelector( `a.${ BASE_CLASS }_play-btn` );
 
