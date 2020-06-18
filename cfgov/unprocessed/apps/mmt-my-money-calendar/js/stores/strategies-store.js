@@ -16,7 +16,7 @@ class StrategiesStore {
         text: 'How to save for emergencies and the future',
       },
     },
-    'expense.personal.healthcare': {
+    /* 'expense.personal.healthcare': {
       id: 'chooseHealthPlan',
       title: 'Choose a Health Care Plan That Fits Your Budget',
       body: 'Health insurance can drastically reduce the costs of unforeseen medical bills.',
@@ -24,7 +24,7 @@ class StrategiesStore {
         href: 'https://www.healthcare.gov/',
         text: 'HealthCare.gov',
       },
-    },
+    }, */
   };
 
   fixItStrategies = {
@@ -42,11 +42,7 @@ class StrategiesStore {
     ],
     largestBillableExpense: [
       {
-        categories: [
-          'expense.utilities.fuel',
-          'expense.utilities.waterSewage',
-          'expense.utilities.electricity',
-        ],
+        categories: ['expense.utilities.fuel', 'expense.utilities.waterSewage', 'expense.utilities.electricity'],
         title: 'Budget Utility Billing',
         text: 'Contact your utility company to find out about budget billing',
       },
@@ -137,7 +133,8 @@ class StrategiesStore {
     return [
       {
         title: 'Explore Your General Strategies',
-        text: 'While you have gone into the red, we could not recommend any "Fix It" Strategies based upon your budget. However, there are plenty of solutions you can implement to balance your budget from the general strategies tab.',
+        text:
+          'While you have gone into the red, we could not recommend any "Fix It" Strategies based upon your budget. However, there are plenty of solutions you can implement to balance your budget from the general strategies tab.',
         link: {
           href: '/strategies',
           text: 'View General Strategies',

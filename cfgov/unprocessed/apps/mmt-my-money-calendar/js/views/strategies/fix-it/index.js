@@ -54,7 +54,6 @@ const StrategyCards = ({ results }) => (
 );
 
 function FixItStrategies() {
-  //missy added eventStore
   const { uiStore, eventStore, strategiesStore: strategies } = useStore();
   const { week } = useParams();
 
