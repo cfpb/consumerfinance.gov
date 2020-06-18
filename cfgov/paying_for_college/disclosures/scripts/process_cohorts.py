@@ -103,7 +103,7 @@ def run(single_school=None):
                 s for s in degree_cohort if s.control != 'Public'
             ]
         for metric in ['grad_rate', 'repay_3yr', 'median_total_debt']:
-            if not getattr(school, metric):
+            if getattr(school, metric) is None:
                 by_state.update({metric: None})
                 by_control.update({metric: None})
                 by_degree.update({metric: None})
