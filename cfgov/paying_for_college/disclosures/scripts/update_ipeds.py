@@ -19,9 +19,9 @@ SCRIPT = os.path.basename(__file__).partition('.')[0]
 PFC_ROOT = Path(__file__).ancestor(3)
 
 # DATA_YEAR specifies first year of an academic-year pair.
-# Normally we'd run this script early in a calendar year, which will be  
-# in the middle of an academic year. So the latest data available will be 
-# from the previous academic year, whose first year is two years ago. 
+# Normally we'd run this script early in a calendar year, which will be
+# in the middle of an academic year. So the latest data available will be
+# from the previous academic year, whose first year is two years ago.
 # In early 2020, the latest data came from the 2018-2019 academic year.
 DATA_YEAR = datetime.datetime.now().year - 2
 ipeds_directory = '{}/data_sources/ipeds'.format(PFC_ROOT)
