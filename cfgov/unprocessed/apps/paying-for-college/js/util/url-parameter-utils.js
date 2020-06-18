@@ -55,6 +55,7 @@ function buildUrlQueryString() {
 
     'book': financialValues.indiCost_books,
     'indo': financialValues.indiCost_other,
+    'tran': financialValues.indiCost_other,
     'nda': financialValues.indiCost_added,
 
     'pelg': financialValues.grant_pell,
@@ -129,6 +130,7 @@ function buildUrlQueryString() {
      CHECK IF THE VALUE HAS CHANGED FROM THE DEFAULT
      } */
 
+  Object.assign( variables, expensesVariables );
 
   for ( const key in variables ) {
     if ( typeof variables[key] !== 'undefined' && variables[key] !== 0 && variables[key] !== null ) {

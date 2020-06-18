@@ -50,9 +50,8 @@ const financialModel = {
     financialModel._updateStateWithFinancials();
 
     // Debt Guide Difference
-    financialModel.values.other_debtGuideDifference = financialModel.values.salary_annual -
-        financialModel.values.debt_tenYearInterest;
-
+    financialModel.values.other_debtGuideDifference =
+        financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual;
   },
 
   /**
@@ -122,11 +121,11 @@ const financialModel = {
     // Calculate more totals
     vals.total_borrowing = vals.total_fedLoans + vals.total_publicLoans + vals.total_privateLoans +
         vals.total_plusLoans;
-    vals.total_contributions = vals.total_grants + vals.total_scholarships + vals.total_savings +
-        vals.total_workStudy + vals.total_income;
-    vals.total_costs = vals.total_directCosts + vals.total_indirectCosts + vals.otherCost_additional;
     vals.total_grantsScholarships = vals.total_grants + vals.total_scholarships;
     vals.total_otherResources = vals.total_savings + vals.total_income;
+    vals.total_contributions = vals.total_grantsScholarships + vals.total_otherResources +
+        vals.total_workStudy + vals.total_fellowAssist;
+    vals.total_costs = vals.total_directCosts + vals.total_indirectCosts + vals.otherCost_additional;
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = vals.total_costs - vals.total_funding;
     vals.total_excessFunding = vals.total_funding - vals.total_costs;
@@ -134,7 +133,6 @@ const financialModel = {
     /* Borrowing total
        TODO - Update this once year-by-year DIRECT borrowing is in place */
     vals.total_borrowingAtGrad = vals.total_borrowing * vals.other_programLength;
-
 
     if ( vals.total_gap < 0 ) {
       vals.total_gap = 0;
@@ -156,8 +154,11 @@ const financialModel = {
       financialModel.values.fedLoan_directSub = 0;
       financialModel.values.plusLoan_parentPlus = 0;
     } else {
-      // if undergraduate, zero out gradPlus loans, set unsubsidized cap
+      // if undergraduate, zero out gradPlus loans, fellowships, set unsubsidized cap
       financialModel.values.plusLoan_gradPlus = 0;
+      financialModel.values.fellowAssist_fellowship = 0;
+      financialModel.values.fellowAssist_assistantship = 0;
+
       if ( getStateValue( 'programDependency' ) === 'independent' ) {
         unsubCapKey = 'unsubsidizedCapIndepYearOne';
       }

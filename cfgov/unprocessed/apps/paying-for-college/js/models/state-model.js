@@ -4,8 +4,8 @@
  * state.
 */
 
-import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
+import { bindEvent } from '../../../../js/modules/util/dom-events';
 
 const stateModel = {
   stateDomElem: null,

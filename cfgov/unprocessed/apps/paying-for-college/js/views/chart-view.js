@@ -468,7 +468,7 @@ const chartView = {
   },
 
   updateMaxDebtChart: () => {
-    const totalDebt = getFinancialValue( 'debt_tenYearTotal' );
+    const totalDebt = getFinancialValue( 'debt_totalAtGrad' );
     const salary = getFinancialValue( 'salary_annual' );
     const max = Math.max( totalDebt * 1.1, salary * 1.1 );
 

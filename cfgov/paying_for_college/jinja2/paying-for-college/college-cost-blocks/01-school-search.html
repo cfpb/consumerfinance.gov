@@ -3,7 +3,7 @@
         <h2>School & living situation</h2>
         <p>Start with the school you’re considering, plus the program and other info about your situation. Refer to your financial aid offer if you're not sure.</p>
         <label class="a-label a-label__heading u-mb15" for="search__school-input">
-            Search for a college:
+            What school are you considering?
         </label>
         <p>
             <input type="text" 
@@ -119,16 +119,8 @@
                 })
             }}
         </div>
-        <div class="block block__sub program-question">
+        <div class="block block__sub program-question" data-state-based-visibility="control-nonprivate">
             <h3 class="h4">Which tuition rate will apply to you?</h3>
-            {{
-                radio.render({
-                  'name':  "programRate",
-                  'label': 'In district',
-                  'value': 'inDistrict',
-                  'id': 'program-rate-radio_in-district'
-                })
-            }}
             {{
                 radio.render({
                   'name':  "programRate",
