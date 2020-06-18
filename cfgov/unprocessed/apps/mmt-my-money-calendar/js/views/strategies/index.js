@@ -32,7 +32,7 @@ function Strategies() {
   return (
     <section className="strategies">
       <header className="strategies-header">
-        <h2 className="strategies-header__title">Strategies to Improve Cash Flow</h2>
+        <h2 className="strategies-header__title">General Strategies to Improve Cash Flow</h2>
 
         <p className="strategies-header__intro">
           The strategies below are tailored to the specific expenses and income in your budget. Commit to implementing
