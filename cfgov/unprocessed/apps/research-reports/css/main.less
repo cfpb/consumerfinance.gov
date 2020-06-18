@@ -1,3 +1,10 @@
+/* ==========================================================================
+   Reports CSS
+   Main Less file for Report pages
+   ========================================================================== */
+
+@import (reference) '../../../css/main.less';
+
 .research-report {
   max-width: unit( (670 + 30) / 16, em);
 
@@ -10,12 +17,12 @@
 .o-report-sidenav {
   &.sticky {
     position: fixed;
+    width: 100%;
     top: 0;
-    /*width: 240px;*/
+    .respond-to-min( @bp-lg-min, {
+      max-width: 240px;
+    } );
   }
-/*  display: block;
-  overflow-y: scroll;
-  height: 100%;*/
   h3 {
     margin-top: 0.25em;
   }
@@ -29,14 +36,6 @@
     color: #101820;
     border-color: #20aa3f;
   }
-/*  .o-secondary-navigation_list__children {
-    display: none;
-  }
-  .parent-header {
-    .o-secondary-navigation_list__children  {
-      display: block;
-    }
-  }*/
 }
 
 .report-footnotes {
