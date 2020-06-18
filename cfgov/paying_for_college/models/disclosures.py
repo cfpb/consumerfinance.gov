@@ -643,7 +643,7 @@ class Program(models.Model):
     program_name = models.CharField(max_length=255)
     program_code = models.CharField(max_length=255, blank=True)
     level = models.CharField(max_length=255, blank=True)
-    level_name = models.CharField(max_length=255, blank=True)
+    level_name = models.CharField(max_length=255, blank=True, null=True)
     campus = models.CharField(max_length=255, blank=True)
     cip_code = models.CharField(max_length=255, blank=True)
     soc_codes = models.CharField(max_length=255, blank=True)
