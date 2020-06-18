@@ -177,9 +177,18 @@ main.college-costs {
 		}
 	}
 
+	&[data-state_debtruleviolation="false"] {
+		span[data-state-based-visibility="debt-rule-passed"] {
+			display: inline
+		}
+	}
+
 	&[data-state_debtruleviolation="true"] {
 		[data-state-based-visibility="debt-rule-violation"] {
 			display:block;
+		}
+		span[data-state-based-visibility="debt-rule-violation"] {
+			display: inline
 		}
 	}
 
@@ -209,6 +218,12 @@ main.college-costs {
 
 	&[data-state_expenseschoice="monthly"] {
 		[data-state-based-visibility="expenses-monthly-budget"] {
+			display: block;
+		}
+	}
+
+	&:not( [data-state_schoolcontrol="Private"] ) {
+		[data-state-based-visibility="control-nonprivate"] {
 			display: block;
 		}
 	}

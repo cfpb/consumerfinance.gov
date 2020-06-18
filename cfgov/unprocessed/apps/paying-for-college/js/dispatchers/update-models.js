@@ -31,7 +31,8 @@ const _urlParamsToModelVars = {
 
   'book': 'financialModel.indiCost_books',
   'indo': 'financialModel.indiCost_other',
-  'nda': 'financialModel.indiCost_added',
+  'nda':  'financialModel.indiCost_added',
+  'tran': 'financialValues.indiCost_other',
 
   'pelg': 'financialModel.grant_pell',
   'seog': 'financialModel.grant_seog',

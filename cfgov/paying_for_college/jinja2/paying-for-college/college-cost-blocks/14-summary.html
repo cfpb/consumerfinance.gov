@@ -212,7 +212,7 @@
             {% set expandable_settings = {
                 'label': 'Could this be too much debt? How does the projected total debt compare to the median first-year salary?',
                 'value': '',
-                'note': 'The projected total debt is <span class="inline" data-financial-item="other_debtGuideDifference">$0</span>more/less than the median first-year salary. ',
+                'note': 'The projected total debt is <span class="inline" data-financial-item="other_debtGuideDifference">$0</span> <span data-state-based-visibility="debt-rule-violation">more</span><span data-state-based-visibility="debt-rule-passed">less</span> than the median first-year salary. ',
                 'data_attribute': ''
             } %}
             {% call() expandable(expandable_settings) %}
@@ -262,7 +262,7 @@
             {% set expandable_settings = {
                 'label': 'Can I afford my estimated payment in terms of hours worked?',
                 'value': '',
-                'note': 'It will take xx hours to earn the estimated payment, assuming a wage of $15 an hour after taxes.',
+                'note': 'It will take <span class="inline" data-financial-item="debt_repayHours" data-is-number="true"> 0</span> hours to earn the estimated payment, assuming a wage of $15 an hour after taxes.',
                 'data_attribute': 'data-state-item="???"'
             } %}
             {% call() expandable(expandable_settings) %}
