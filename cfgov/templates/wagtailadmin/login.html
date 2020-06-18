@@ -25,9 +25,9 @@
             {% block login_form %}
             {% csrf_token %}
 
-            {% if next %}
-            <input type="hidden" name="next" value="{{ next }}"/>
-            {% endif %}
+            {% url 'wagtailadmin_home' as home_url %}
+            <input type="hidden" name="next" value="{{ next|default:home_url }}" />
+
 
             <ul class="fields">
                 {% block fields %}
