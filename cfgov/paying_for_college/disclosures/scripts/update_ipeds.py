@@ -17,30 +17,34 @@ from paying_for_college.views import get_school
 
 SCRIPT = os.path.basename(__file__).partition('.')[0]
 PFC_ROOT = Path(__file__).ancestor(3)
-# LATEST_YEAR specifies first year of academic-year data
-# So 2015 would fetch data for 2015-2016 cycle
-LATEST_YEAR = datetime.datetime.now().year - 2
+
+# DATA_YEAR specifies first year of an academic-year pair.
+# Normally we'd run this script early in a calendar year, which will be  
+# in the middle of an academic year. So the latest data available will be 
+# from the previous academic year, whose first year is two years ago. 
+# In early 2020, the latest data came from the 2018-2019 academic year.
+DATA_YEAR = datetime.datetime.now().year - 2
 ipeds_directory = '{}/data_sources/ipeds'.format(PFC_ROOT)
 ipeds_data_url = 'http://nces.ed.gov/ipeds/datacenter/data'
-data_slug = 'IC{}_AY'.format(LATEST_YEAR)
-dictionary_slug = 'IC{}_AY_Dict'.format(LATEST_YEAR)
+data_slug = 'IC{}_AY'.format(DATA_YEAR)
+dictionary_slug = 'IC{}_AY_Dict'.format(DATA_YEAR)
 
 DATA_VARS = {
-    'universe_url': '{}/HD{}.zip'.format(ipeds_data_url, LATEST_YEAR),
-    'universe_zip': '{}/HD{}.zip'.format(ipeds_directory, LATEST_YEAR),
-    'universe_csv': '{}/hd{}.csv'.format(ipeds_directory, LATEST_YEAR),
+    'universe_url': '{}/HD{}.zip'.format(ipeds_data_url, DATA_YEAR),
+    'universe_zip': '{}/HD{}.zip'.format(ipeds_directory, DATA_YEAR),
+    'universe_csv': '{}/hd{}.csv'.format(ipeds_directory, DATA_YEAR),
     'universe_cleaned': '{}/hd{}_cleaned.csv'.format(ipeds_directory,
-                                                     LATEST_YEAR),
+                                                     DATA_YEAR),
     'data_url': '{}/{}.zip'.format(ipeds_data_url, data_slug),
     'data_zip': '{}/{}.zip'.format(ipeds_directory, data_slug),
     'data_csv': '{}/{}.csv'.format(ipeds_directory, data_slug.lower()),
     'data_cleaned': '{}/{}_cleaned.csv'.format(ipeds_directory,
                                                data_slug.lower()),
-    'services_url': '{}/IC{}.zip'.format(ipeds_data_url, LATEST_YEAR),
-    'services_zip': '{}/IC{}.zip'.format(ipeds_directory, LATEST_YEAR),
-    'services_csv': '{}/ic{}.csv'.format(ipeds_directory, LATEST_YEAR),
+    'services_url': '{}/IC{}.zip'.format(ipeds_data_url, DATA_YEAR),
+    'services_zip': '{}/IC{}.zip'.format(ipeds_directory, DATA_YEAR),
+    'services_csv': '{}/ic{}.csv'.format(ipeds_directory, DATA_YEAR),
     'services_cleaned': '{}/ic{}_cleaned.csv'.format(ipeds_directory,
-                                                     LATEST_YEAR)
+                                                     DATA_YEAR)
 }
 
 # mapping the vars of our data_json to the IPEDS data csv
