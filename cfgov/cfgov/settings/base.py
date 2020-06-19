@@ -341,11 +341,11 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     "filter": ["haystack_edgengram"],
                 },
                 "synonym_en": {
-                    "tokenizer": "whitespace",
+                    "tokenizer": "standard",
                     "filter": ["synonyms_en"],
                 },
                 "synonym_es": {
-                    "tokenizer": "whitespace",
+                    "tokenizer": "standard",
                     "filter": ["synonyms_es"],
                 },
             },
@@ -359,7 +359,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     "type": "edgeNGram",
                     "min_gram": 3,
                     "max_gram": 15,
-                    "side": "front",
+                    "token_chars": [ "letter", "digit" ]
                 },
             },
             "filter": {
