@@ -73,6 +73,9 @@ function Calendar() {
     if (localStorage.getItem('enteredData') === 'initial') {
       localStorage.setItem('enteredData', 'subsequent');
     }
+    if (!localStorage.getItem('removeSpotlight')) {
+      localStorage.setItem('removeSpotlight', true)
+    }
     setShowModal(!showModal);
   };
 
