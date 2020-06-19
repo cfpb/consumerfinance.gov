@@ -102,10 +102,6 @@ function Details() {
           <div className="calendar-details__starting-balance">
             {eventStore.hasSnapEvents ? (
               <>
-                Week starting SNAP balance: {uiStore.weekStartingSnapBalanceText}
-                <br />
-                Week starting non-SNAP balance: {uiStore.weekStartingNonSnapBalanceText}
-                <br />
                 Week starting total balance: {uiStore.weekStartingBalanceText}
               </>
             ) : (
@@ -117,11 +113,9 @@ function Details() {
           )}
           {!uiStore.weekHasNegativeBalance && eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>
-              Weekly ending SNAP balance: {uiStore.weekEndingSnapBalanceText}
-              <br />
-              Weekly ending non-SNAP balance: {uiStore.weekEndingNonSnapBalanceText}
-              <br />
               Weekly ending total balance: {uiStore.weekEndingBalanceText}
+              <br />
+              Weekly ending SNAP balance: {uiStore.weekEndingSnapBalanceText}
             </div>
           )}
         </div>
