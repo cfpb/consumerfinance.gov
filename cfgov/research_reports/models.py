@@ -17,9 +17,11 @@ from modelcluster.models import ClusterableModel
 from v1.models import SublandingFilterablePage
 from v1.models.base import CFGOVPage
 
+
 alpha_map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-def get_report_parts(is_appendix = False):
+
+def get_report_parts(is_appendix=False):
     def format(s, *args):
         if(is_appendix):
             return s.format(*[alpha_map[arg] for arg in args])
@@ -28,8 +30,8 @@ def get_report_parts(is_appendix = False):
 
     def sec(request, page):
         sections = [section for section in
-            page.report_sections.all().order_by('pk')
-            if section.is_appendix == is_appendix]
+                    page.report_sections.all().order_by('pk')
+                    if section.is_appendix == is_appendix]
 
         return [{
             'expanded': False,
@@ -37,7 +39,7 @@ def get_report_parts(is_appendix = False):
             'body': section.body,
             'url': format('#section-{}', i),
             'numbering': format('{}. ', i),
-            'children': [   {
+            'children': [{
                 'title': subsection.sub_header,
                 'body': subsection.sub_body,
                 'url': format('#section-{}.{}', i, j),
@@ -47,11 +49,12 @@ def get_report_parts(is_appendix = False):
             )]
         } for i, section in enumerate(sections)]
 
-
     return sec
+
 
 get_report_sections = get_report_parts()
 get_report_appendices = get_report_parts(True)
+
 
 def get_researchers():
     return dict([
@@ -113,16 +116,20 @@ class Report(CFGOVPage):
         on_delete=models.SET_NULL,
         related_name='+',
     )
-    process_report = models.BooleanField(default=False,
-            help_text=mark_safe(
-                'If this is checked, when you press "save", the system will '
-                'read in the report document and use its contents to overwrite '
-                'the fields in the "Report Content" tab.'
-                '<ul class="help">'
-                '    <li>&bull; If you uploaded a new report file for processing, check this box.</li>'
-                '    <li>&bull; If you manually edited fields in the "Report Content" tab, do not check this box</li>'
-                '</ul>')
-            )
+    process_report = models.BooleanField(
+        default=False,
+        help_text=mark_safe(
+            'If this is checked, when you press "save", the system will '
+            'read in the report document and use its contents to overwrite '
+            'the fields in the "Report Content" tab.'
+            '<ul class="help">'
+            '    <li>&bull; If you uploaded a new report file for '
+            'processing, check this box.</li>'
+            '    <li>&bull; If you manually edited fields in the '
+            '"Report Content" tab, do not check this box</li>'
+            '</ul>'
+        )
+    )
 
     # Report Upload Tabs
     upload_panels = [
