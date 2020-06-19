@@ -66,12 +66,10 @@ def _get_deploy_environment():
 
 class ReportSection(ClusterableModel):
     header = models.CharField(max_length=200, blank=True)
-    html_id = models.CharField(max_length=50, blank=True)
     is_appendix = models.BooleanField(default=False)
     body = models.TextField(blank=True)
     panels = [
         FieldPanel('header'),
-        FieldPanel('html_id'),
         FieldPanel('is_appendix'),
         FieldPanel('body'),
         InlinePanel('report_subsections', label='Subsection'),
@@ -83,7 +81,6 @@ class ReportSection(ClusterableModel):
 
 class ReportSubSection(models.Model):
     sub_header = models.CharField(max_length=200)
-    sub_id = models.CharField(max_length=50, blank=True)
     sub_body = models.TextField(blank=True)
     action = ParentalKey('ReportSection',
                          on_delete=models.CASCADE,
