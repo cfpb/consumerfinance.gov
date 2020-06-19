@@ -39,25 +39,19 @@ _[Feel free to delete any sections that are not applicable to this PR.]_
 _[Feel free to delete any checkboxes that are not applicable to this PR.]_
 
 - [ ] PR has an informative and human-readable title
-  - PR titles are used to generate the change log in [releases](../../releases),
-    so good ones make that easier to scan.
-  - Consider prefixing with the feature/section you're addressing,
-    e.g., "Mega Menu: fix layout bug" or "Paying for College: Update content on Repay tool"
+  - PR titles are used to generate the change log in [releases](../../releases); good ones make that easier to scan.
+  - Consider prefixing with the feature/section you're addressing, e.g., "Mega Menu: fix layout bug" or "Paying for College: Update content on Repay tool"
 - [ ] Changes are limited to a single goal (no scope creep)
 - [ ] Code follows the standards laid out in the [CFPB development guidelines](https://github.com/cfpb/development)
 - [ ] Future todos are captured in comments and/or tickets
-- [ ] Project documentation has been updated
-  - Potential places for documentation:
-    - [This repo’s docs](https://cfpb.github.io/cfgov-refresh/) (edit the files in the `/docs` folder) –
-      for basic, close-to-the-code documentation on working with this repo
-    - CFGOV/platform wiki on GHE – for internal CFPB developer guidance
-    - CFPB/hubcap wiki on GHE – for internal CFPB design and content guidance
+- [ ] Project documentation has been updated, potentialy one or more of:
+  - [This repo’s docs](https://cfpb.github.io/cfgov-refresh/) (edit the files in the `/docs` folder) – for basic, close-to-the-code documentation on working with this repo
+  - CFGOV/platform wiki on GHE – for internal CFPB developer guidance
+  - CFPB/hubcap wiki on GHE – for internal CFPB design and content guidance
 
 ### Front-end testing
 
-_[When new or significantly modified front-end functionality is present,
-  the following things should be tested.
-  Feel free to delete this section if not applicable to this PR.]_
+_[When new or significantly modified front-end functionality is present, the following things should be tested. Feel free to delete this section if not applicable to this PR.]_
 
 #### Browser testing
 
@@ -76,8 +70,7 @@ Visually tested in the following supported browsers:
 
 - [ ] Keyboard friendly (navigable with tab, space, enter, arrow keys, etc.)
 - [ ] Screen reader friendly
-- [ ] Does not introduce new errors or warnings in
-      [WAVE](https://wave.webaim.org/extension/)
+- [ ] Does not introduce new errors or warnings in [WAVE](https://wave.webaim.org/extension/)
 
 #### Other
 

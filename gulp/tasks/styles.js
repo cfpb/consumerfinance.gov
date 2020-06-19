@@ -99,6 +99,26 @@ function stylesOnDemand() {
 }
 
 /**
+ * Process CSS for Wagtail on demand blocks.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesOnDemandBlocks() {
+  return gulp.src( configStyles.cwd + '/on-demand/blocks/*.less' )
+    .pipe( gulpNewer( {
+      dest:  configStyles.dest + '/blocks',
+      // ext option required because this subtask uses multiple source files
+      ext:   '.css',
+      extra: configStyles.otherBuildTriggerFiles
+    } ) )
+    .pipe( gulpLess( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpPostcss( [
+      autoprefixer()
+    ] ) )
+    .pipe( gulp.dest( configStyles.dest + '/on-demand' ) );
+}
+
+/**
  * Process CSS for Wagtail feature flags.
  * @returns {PassThrough} A source stream.
  */
@@ -168,6 +188,8 @@ gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:ie', stylesIE );
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ondemand', stylesOnDemand );
+gulp.task( 'styles:ondemandBlocks', stylesOnDemandBlocks );
+
 
 gulp.task( 'styles',
   gulp.parallel(
@@ -175,7 +197,8 @@ gulp.task( 'styles',
     'styles:featureFlags',
     'styles:ie',
     'styles:modern',
-    'styles:ondemand'
+    'styles:ondemand',
+    'styles:ondemandBlocks'
   )
 );
 
