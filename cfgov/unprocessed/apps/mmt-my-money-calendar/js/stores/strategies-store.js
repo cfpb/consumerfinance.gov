@@ -7,6 +7,16 @@ const isPlural = (word) => word.endsWith('s');
 
 class StrategiesStore {
   negativeStrategies = {
+    'expense.personal.coronavirus': {
+      id: 'coronaVirus',
+      title: 'Protect Your Finances During the Coronavirus Pandemic',
+      body:
+        'The CFPB is committed to providing consumers with up-to-date information and resources to protect and manage their finances during this difficult time.',
+      link: {
+        href: ' https://www.consumerfinance.gov/coronavirus/',
+        text: 'Tools and Resources',
+      },
+    },
     'expense.personal.emergencySavings': {
       id: 'saveForEmergencies',
       title: 'Save for Emergencies',
@@ -16,6 +26,7 @@ class StrategiesStore {
         text: 'How to save for emergencies and the future',
       },
     },
+
     /* 'expense.personal.healthcare': {
       id: 'chooseHealthPlan',
       title: 'Choose a Health Care Plan That Fits Your Budget',
