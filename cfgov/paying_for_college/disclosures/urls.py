@@ -1,14 +1,10 @@
+from django.urls import re_path
+
 from paying_for_college.views import (
     BaseTemplateView, ConstantsRepresentation, ExpenseRepresentation,
     FeedbackView, OfferView, ProgramRepresentation, SchoolRepresentation,
     StatsRepresentation, VerifyView, school_search_api
 )
-
-
-try:
-    from django.urls import re_path
-except ImportError:
-    from django.conf.urls import url as re_path
 
 
 app_name = "disclosures"
