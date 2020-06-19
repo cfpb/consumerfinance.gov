@@ -241,6 +241,15 @@
         max-width: 500px;
     }
 
+    // The max-width on the search bar cuts off the last few letters of the
+    // Spanish button text when the input and button are side by side; setting
+    // the width of that button to auto lets it overrun its container if needed
+    .respond-to-min( @bp-med-min, {
+        .o-form__input-w-btn_btn-container .a-btn {
+            width: auto;
+        }
+    } );
+
     .lead-paragraph {
         // This makes for line lengths between 85-95 characters
         max-width: 41.875rem;
@@ -299,6 +308,23 @@
      .o-search-bar_input {
         max-width: 31.25rem;
     }
+
+    label[for="o-search-bar_query"] h2 {
+        .heading-4();
+
+        .respond-to-min( @bp-med-min, {
+            .heading-3();
+        } );
+    }
+
+    // The max-width on the search bar cuts off the last few letters of the
+    // Spanish button text at widths where there's a sidebar; setting the width
+    // of that button to auto lets it overrun its container if needed
+    .respond-to-min( @bp-med-min, {
+        .o-form__input-w-btn_btn-container .a-btn {
+            width: auto;
+        }
+    } );
 
 }
 

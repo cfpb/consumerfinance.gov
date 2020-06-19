@@ -5,7 +5,6 @@
    from different sources, and to use watch when run from the default task. */
 
 const config = require( '../config.js' );
-const configLegacy = config.legacy;
 const configScripts = config.scripts;
 const fs = require( 'fs' );
 const gulp = require( 'gulp' );
@@ -146,23 +145,6 @@ function scriptsNonResponsive() {
 }
 
 /**
- * Process Nemo JS files.
- * @returns {PassThrough} A source stream.
- */
-function scriptsNemo() {
-  return gulp.src( configLegacy.scripts )
-    .pipe( gulpNewer( {
-      dest:  configLegacy.dest + '/nemo/_/js/scripts.min.js',
-      extra: configScripts.otherBuildTriggerFiles
-    } ) )
-    .pipe( gulpConcat( 'scripts.js' ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpTerser() )
-    .pipe( gulpRename( 'scripts.min.js' ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) );
-}
-
-/**
  * Bundle scripts in /apps/ & factor out shared modules into common.js for each.
  * @returns {PassThrough} A source stream.
  */
@@ -278,7 +260,6 @@ gulp.task( 'scripts:moneytools', scriptsMoneyTools );
 gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
-gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
@@ -298,7 +279,6 @@ gulp.task( 'scripts',
     'scripts:modern',
     'scripts:apps',
     'scripts:external',
-    'scripts:nemo',
     'scripts:ondemand'
   )
 );

@@ -10,13 +10,7 @@ import { Notification } from '../../../components/notification';
 import { SlideListItem } from '../../../components/slide-list';
 import ModalDialog from '../../../components/modal-dialog';
 
-import {
-  delete as deleteIcon,
-  hamburger as dragHandle,
-  arrowRight,
-  arrowLeft,
-  pencil,
-} from '../../../lib/icons';
+import { delete as deleteIcon, hamburger as dragHandle, arrowRight, arrowLeft, pencil } from '../../../lib/icons';
 
 const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
@@ -90,7 +84,7 @@ function Details() {
 
   useLockBodyScroll(modalOpen);
 
-  const events =  eventStore.getEventsForWeek(uiStore.currentWeek) || [];
+  const events = eventStore.getEventsForWeek(uiStore.currentWeek) || [];
   const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative');
 
   return (
@@ -106,10 +100,23 @@ function Details() {
         <div className="calendar-details__header-text">
           <h3>{uiStore.weekRangeText}</h3>
           <div className="calendar-details__starting-balance">
-            Week starting balance: {uiStore.weekStartingBalanceText}
+            {eventStore.hasSnapEvents ? (
+              <>
+                Week starting total balance: {uiStore.weekStartingBalanceText}
+              </>
+            ) : (
+              <>Week starting balance: {uiStore.weekStartingBalanceText}</>
+            )}
           </div>
-          {!uiStore.weekHasNegativeBalance && (
+          {!uiStore.weekHasNegativeBalance && !eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>Weekly ending balance: {uiStore.weekEndingBalanceText}</div>
+          )}
+          {!uiStore.weekHasNegativeBalance && eventStore.hasSnapEvents && (
+            <div className={endBalanceClasses}>
+              Weekly ending total balance: {uiStore.weekEndingBalanceText}
+              <br />
+              Weekly ending SNAP balance: {uiStore.weekEndingSnapBalanceText}
+            </div>
           )}
         </div>
 
@@ -149,7 +156,7 @@ function Details() {
               onRequestEdit={editEvent(e)}
               onRequestDelete={confirmDelete(e)}
               key={e.id}
-              balanceIsNegative={e.total < 0 && eventStore.getBalanceForDate(e.dateTime) < 1}
+              balanceIsNegative={e.total < 0 && eventStore.getDay(e.dateTime).totalBalance < 1}
             />
           ))}
         </ul>

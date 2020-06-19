@@ -16,9 +16,7 @@ const Hero = ({ title, subtitle, isSVG = false, image, alt = '' }) => {
       <div className="m-hero_wrapper wrapper">
         <div className="m-hero_text">
           <h1 className="m-hero_heading">{title}</h1>
-          <div className="m-hero_subhead">
-            {subtitle}
-          </div>
+          <div className="m-hero_subhead">{subtitle}</div>
         </div>
         <div className="m-hero_image-wrapper">
           <div className="m-hero_image" style={{ textAlign: 'center' }}>

@@ -1,12 +1,12 @@
+import csv
 import datetime
 import tempfile
 import unittest
-from io import BytesIO
+from io import StringIO
 
 import django
 
 import mock
-import unicodecsv
 from dateutil import parser
 from model_bakery import baker
 
@@ -181,9 +181,9 @@ class DataLoadIntegrityTest(django.test.TestCase):
             valid=True)
 
         # real values from a base CSV row
-        self.data_header = (b'date,fips,open,current,thirty,sixty,ninety,'
-                            b'other\n')
-        self.data_row = b'09/01/16,12081,1952,1905,21,5,10,11\n'
+        self.data_header = ('date,fips,open,current,thirty,sixty,ninety,'
+                            'other\n')
+        self.data_row = '09/01/16,12081,1952,1905,21,5,10,11\n'
         self.data_row_dict = {'date': '09/01/16',
                               'fips': '12081',
                               'open': '1952',
@@ -194,18 +194,12 @@ class DataLoadIntegrityTest(django.test.TestCase):
                               'other': '11'}
 
     @mock.patch(
-        'data_research.scripts.load_mortgage_performance_csv.'
-        'read_in_s3_csv')
-    def test_data_creation_from_base_row(
-            self, mock_read_csv):
-        """
-        Confirm that loading a single row of real base data creates
-        a CountyMortgageData object with the base row's values,
-        and that the object's calculated API values are correct.
-        """
-
-        f = BytesIO(self.data_header + self.data_row)
-        reader = unicodecsv.DictReader(f)
+        'data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv'
+    )
+    def test_data_creation_from_base_row(self, mock_read_csv):
+        """Confirm creation of a CountyMortgageData object from a CSV row."""
+        f = StringIO(self.data_header + self.data_row)
+        reader = csv.DictReader(f)
         mock_read_csv.return_value = reader
         load_values()
         self.assertEqual(CountyMortgageData.objects.count(), 1)

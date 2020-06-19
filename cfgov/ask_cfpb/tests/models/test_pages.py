@@ -133,7 +133,8 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         with mock.patch("builtins.open", m, create=True):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
-        m.assert_called_once_with("/tmp/{}".format(slug), "w")
+        m.assert_called_once_with(
+            "/tmp/{}".format(slug), "w", encoding='windows-1252')
 
     @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
     def test_export_from_admin_post(self, mock_output):
