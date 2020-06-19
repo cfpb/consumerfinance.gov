@@ -17,32 +17,41 @@ from modelcluster.models import ClusterableModel
 from v1.models import SublandingFilterablePage
 from v1.models.base import CFGOVPage
 
+alpha_map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-def get_toc_sections(request, page):
-    return [{
-        'expanded': False,
-        'title': section.header,
-        'url': '#' + section.html_id,
-        'children': [{
-            'title': subsection.sub_header, 'url': '#' + subsection.sub_id
-        } for subsection in section.report_subsections.all().order_by('pk')]
-    } for section in
-        page.report_sections.all().order_by('pk')
-        if not section.is_appendix]
+def get_report_parts(is_appendix = False):
+    def format(s, *args):
+        if(is_appendix):
+            return s.format(*[alpha_map[arg] for arg in args])
+        else:
+            return s.format(*[arg + 1 for arg in args])
+
+    def sec(request, page):
+        sections = [section for section in
+            page.report_sections.all().order_by('pk')
+            if section.is_appendix == is_appendix]
+
+        return [{
+            'expanded': False,
+            'title': section.header,
+            'body': section.body,
+            'url': format('#section-{}', i),
+            'numbering': format('{}. ', i),
+            'children': [   {
+                'title': subsection.sub_header,
+                'body': subsection.sub_body,
+                'url': format('#section-{}.{}', i, j),
+                'numbering': format('{}.{}. ', i, j)
+            } for j, subsection in enumerate(
+                section.report_subsections.all().order_by('pk')
+            )]
+        } for i, section in enumerate(sections)]
 
 
-def get_toc_appendices(request, page):
-    return [{
-        'expanded': False,
-        'title': section.header,
-        'url': '#' + section.html_id,
-        'children': [{
-            'title': subsection.sub_header, 'url': '#' + subsection.sub_id
-        } for subsection in section.report_subsections.all().order_by('pk')]
-    } for section in
-        page.report_sections.all().order_by('pk')
-        if section.is_appendix]
+    return sec
 
+get_report_sections = get_report_parts()
+get_report_appendices = get_report_parts(True)
 
 def get_researchers():
     return dict([
@@ -192,8 +201,8 @@ class Report(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(Report, self).get_context(request, *args, **kwargs)
         context.update({
-            'get_toc_sections': get_toc_sections,
-            'get_toc_appendices': get_toc_appendices,
+            'get_report_sections': get_report_sections,
+            'get_report_appendices': get_report_appendices,
             'get_researchers': get_researchers
         })
         return context

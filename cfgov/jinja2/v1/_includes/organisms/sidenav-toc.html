@@ -20,15 +20,13 @@
 
    ========================================================================== #}
 {% macro _render_secondary_navigation() %}
-{% if toc_sections is not defined  %}
-    {% set toc_sections = get_toc_sections(request, page) %}
+{% if report_sections is not defined  %}
+    {% set report_sections = get_report_sections(request, page) %}
 {% endif %}
 
-{% if toc_appendices is not defined  %}
-    {% set toc_appendices = get_toc_appendices(request, page) %}
+{% if report_appendices is not defined  %}
+    {% set report_appendices = get_report_appendices(request, page) %}
 {% endif %}
-
-{% set alpha_map = '_ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
 
 <nav class="o-report-sidenav o-secondary-navigation o-secondary-navigation__no-children"
      aria-label="Section navigation">
@@ -38,9 +36,9 @@
                  m-list__unstyled
                  o-secondary-navigation_list
                  o-secondary-navigation_list__parents">
-       {%- for item in toc_sections %}
+       {%- for item in report_sections %}
           <li class="m-list_item">
-            {{ nav_link.render(loop.index|string + '. ' + item.title, item.url, true) }}
+            {{ nav_link.render(item.numbering + item.title, item.url, true) }}
           {% if item.children %}
               <ul class="m-list
                          m-list__unstyled
@@ -56,7 +54,7 @@
           </li>
       {%- endfor %}
       </ul>
-      {% if toc_appendices %}
+      {% if report_appendices %}
         <h4>Appendices</h4>
       {% endif %}
       <ul class="m-list
@@ -64,9 +62,9 @@
                  o-secondary-navigation_list
                  o-secondary-navigation_list__parents
                  o-report-sidenav__appendix">
-       {%- for item in toc_appendices %}
+       {%- for item in report_appendices %}
           <li class="m-list_item">
-            {{ nav_link.render(alpha_map[loop.index] + '. ' + item.title, item.url, true) }}
+            {{ nav_link.render(item.numbering + item.title, item.url, true) }}
           {%- if item.children -%}
               <ul class="m-list
                          m-list__unstyled
