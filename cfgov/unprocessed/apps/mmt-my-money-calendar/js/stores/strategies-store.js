@@ -26,16 +26,6 @@ class StrategiesStore {
         text: 'How to save for emergencies and the future',
       },
     },
-
-    /* 'expense.personal.healthcare': {
-      id: 'chooseHealthPlan',
-      title: 'Choose a Health Care Plan That Fits Your Budget',
-      body: 'Health insurance can drastically reduce the costs of unforeseen medical bills.',
-      link: {
-        href: 'https://www.healthcare.gov/',
-        text: 'HealthCare.gov',
-      },
-    }, */
   };
 
   fixItStrategies = {
@@ -185,8 +175,10 @@ class StrategiesStore {
         }
 
         if (event.categoryDetails.hasBill) {
-          if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
-            results.largestBillableExpense = event;
+          if (!event.category.includes('expense.housing')) {
+            if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
+              results.largestBillableExpense = event;
+            }
           }
         }
 
@@ -195,7 +187,6 @@ class StrategiesStore {
             results.largestAdHocExpense = event;
           }
         }
-
         return results;
       },
       {
