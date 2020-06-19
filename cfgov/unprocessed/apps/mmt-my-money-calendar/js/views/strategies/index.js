@@ -13,7 +13,9 @@ const StrategyCards = ({ results }) => (
 
           {!!result.link && (
             <div className="m-card_footer">
-              <a href={result.link.href} className="a-btn a-btn__secondary a-btn__full-on-xs" target="_blank">{result.link.text}</a>
+              <a href={result.link.href} className="a-btn a-btn__secondary a-btn__full-on-xs" target="_blank">
+                {result.link.text}
+              </a>
             </div>
           )}
         </Card>
@@ -30,13 +32,13 @@ function Strategies() {
   return (
     <section className="strategies">
       <header className="strategies-header">
-        <h2 className="strategies-header__title">Strategies to Improve Cash Flow</h2>
+        <h2 className="strategies-header__title">General Strategies to Improve Cash Flow</h2>
 
         <p className="strategies-header__intro">
-          The strategies below are tailored to the specific expenses and income in your budget. Commit to implementing one or two of them for the coming month and see if your cash flow improves.
+          The strategies below are tailored to the specific expenses and income in your budget. Commit to implementing
+          one or two of them for the coming month and see if your cash flow improves.
         </p>
       </header>
-
       {strategiesStore.strategyResults.length > 0 && <StrategyCards results={strategiesStore.strategyResults} />}
     </section>
   );
