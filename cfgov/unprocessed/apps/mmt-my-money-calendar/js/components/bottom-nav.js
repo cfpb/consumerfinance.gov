@@ -6,10 +6,11 @@ import { useStore } from '../stores';
 
 import { calendar, add, idea, menu } from '../lib/icons';
 
-const NavItem = ({ href, icon, label, badge, disabled = false, ...params }) => {
+const NavItem = ({ href, icon, label, badge, disabled = false, canSpotlight, ...params }) => {
   const classes = clsx('bottom-nav__link', disabled && 'disabled');
   const iconClasses = clsx('bottom-nav__link-icon');
   const labelClasses = clsx('bottom-nav__link-label');
+  const addSpotlight = !localStorage.getItem('removeSpotlight') ? 'has-spotlight' : ''
   const clickHandler = useCallback(
     (event) => {
       if (!disabled) return true;
@@ -21,7 +22,7 @@ const NavItem = ({ href, icon, label, badge, disabled = false, ...params }) => {
   );
 
   return (
-    <li className="bottom-nav__item">
+    <li className={`bottom-nav__item ${canSpotlight ? addSpotlight : ''}`}>
       <NavLink onClick={clickHandler} id="nav-link" className={classes} disabled={disabled} to={href} {...params}>
         <div className={iconClasses} dangerouslySetInnerHTML={{ __html: icon }} />
         <div className={labelClasses}>{label}</div>
@@ -46,7 +47,7 @@ function BottomNav() {
       <nav className="bottom-nav__nav">
         <ul className="bottom-nav__items">
           <NavItem href="/calendar" icon={calendar} exact label="Calendar" disabled={!hasStartingBalance} />
-          <NavItem href="/calendar/add/income" icon={add} label="Add" disabled={!hasStartingBalance} />
+          <NavItem href="/calendar/add/income" icon={add} label="Add" disabled={!hasStartingBalance} canSpotlight={true}/>
           <NavItem
             href="/strategies"
             icon={idea}
