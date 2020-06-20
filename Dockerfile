@@ -99,14 +99,8 @@ USER apache
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
 # - /tmp/eregs_cache/ - Django file-based cache
-RUN ./frontend.sh production && \
-    cfgov/manage.py collectstatic && \
-    yarn cache clean && \
-    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
-    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
-    rm -rf cfgov/apache/www cfgov/unprocessed node_modules && \
-    mkdir -p cfgov/f /tmp/eregs_cache
-    
+RUN ./frontend.sh 
+
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=15s --interval=30s --retries=30 \
             CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
