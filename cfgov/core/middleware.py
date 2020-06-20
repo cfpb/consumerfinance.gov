@@ -60,16 +60,22 @@ class ParseLinksMiddleware(object):
 
     def __call__(self, request):
         response = self.get_response(request)
+<<<<<<< HEAD
         if self.should_parse_links(
             request.path,
             response.get('Content-Type', '')
         ):
+=======
+        if 'content-type' in response and self.should_parse_links(request.path, response['content-type']):
+>>>>>>> dev setup
             response.content = parse_links(
                 response.content,
                 request.path,
                 encoding=response.charset
             )
         return response
+
+
 
     @classmethod
     def should_parse_links(cls, request_path, response_content_type):
