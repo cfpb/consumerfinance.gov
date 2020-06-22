@@ -878,9 +878,10 @@ class VideoPlayer(blocks.StructBlock):
     thumbnail_image = images_blocks.ImageChooserBlock(
         required=False,
         help_text=mark_safe(
-            'Optional thumbnail image to show before or after the video plays.'
-            ' If the thumbnail image is not set here, the video player will '
-            'show the thumbnail that was set in YouTube instead.'
+            'Optional thumbnail image to show before and after the video '
+            'plays. If the thumbnail image is not set here, the video player '
+            'will default to showing the thumbnail that was set in (or '
+            'automatically chosen by) YouTube.'
         )
     )
 
