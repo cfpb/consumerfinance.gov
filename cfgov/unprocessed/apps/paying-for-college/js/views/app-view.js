@@ -10,7 +10,7 @@ import { replaceStateInHistory, updateState } from '../dispatchers/update-state.
 
 
 const appView = {
-  _didThisHelpBtns: null,
+  _didThisHelpChoices: null,
   _finishLink: '',
   _sendLinkBtn: null,
   _actionPlanChoices: null,
@@ -19,8 +19,8 @@ const appView = {
    * Listeners for buttons
    */
   _addButtonListeners: function() {
-    appView._didThisHelpBtns.forEach( elem => {
-      bindEvent( elem, { click: this._handleDidThisHelpBtns } );
+    appView._didThisHelpChoices.forEach( elem => {
+      bindEvent( elem, { click: this._handleDidThisHelpClick } );
     } );
 
     appView._actionPlanChoices.forEach( elem => {
@@ -43,18 +43,10 @@ const appView = {
    * Handle the click of buttons on final page
    * @param {Object} event - Click event object
    */
-  _handleDidThisHelpBtns: event => {
+  _handleDidThisHelpClick: event => {
     const button = event.target;
-    const parent = closest( button, '.m-btn-group' );
+    const parent = closest( button, '.o-form_fieldset' );
     updateState.byProperty( parent.dataset.impact, event.target.value );
-
-    // Handle view of the buttons
-    // TODO: These are probably better off being radio buttons
-    button.classList.remove( 'a-btn__disabled' );
-    parent.querySelectorAll( 'button:not( [value="' + button.value + '"]' )
-      .forEach( elem => {
-        elem.classList.add( 'a-btn__disabled' );
-      } );
   },
 
   _handleSendLinkBtn: event => {
@@ -91,7 +83,7 @@ const appView = {
    * Initialize the View
    */
   init: () => {
-    appView._didThisHelpBtns = document.querySelectorAll( '#save_did-it-help button, #save_understand-loans button' );
+    appView._didThisHelpChoices = document.querySelectorAll( '[data-impact] .m-form-field input.a-radio' );
     appView._finishLink = document.querySelector( '#finish_link' );
     appView._sendLinkBtn = document.querySelector( '#email-your-link' );
     appView._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field input.a-radio' );
