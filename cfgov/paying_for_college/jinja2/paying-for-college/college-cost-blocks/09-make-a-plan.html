@@ -95,7 +95,7 @@
                 {{
                 input.render({
                         'label': 'Additional financial obligations',
-                        'id': 'costs__otherIndirect',
+                        'id': 'plan__otherIndirect',
                         'value': '0',
                         'data_attribute': 'data-financial-item="indiCost_otherIndirect"'
                     })
@@ -210,10 +210,10 @@
                 }}
             {% endcall %}
             {% set expandable_settings = {
-                'label': 'Work-study',
+                'label': 'Work-study, fellowships, and assistantships',
                 'value': '$99,999',
                 'is_editable': 'True',
-                'data_attribute': 'data-financial-item="total_workStudy"',
+                'data_attribute': 'data-financial-item="total_workStudyFellowAssist"',
                 'note': '<strong>Pursue a work-study position:</strong> Working can reduce borrowing and provide other benefits, as long as it doesn’t interfere with academic progress.' | safe
             } %}
             {% call() expandable(expandable_settings) %}
@@ -223,6 +223,22 @@
                         'id': 'plan__workStudy',
                         'value': '0',
                         'data_attribute': 'data-financial-item="workStudy_workStudy"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Fellowship funding',
+                        'id': 'plan__fellowship',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="fellowAssist_fellowship"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Assistantship funding',
+                        'id': 'plan__assistantship',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="fellowAssist_assistantship"'
                     })
                 }}
             {% endcall %}
@@ -294,7 +310,7 @@
             {% endcall %}
 
             {% set expandable_settings = {
-                'label': 'Federal loans',
+                'label': 'Federal loans (minus loan fees)',
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_fedLoans"',
@@ -357,7 +373,7 @@
                 </div>
             {% endcall %}
             {% set expandable_settings = {
-                'label': '<span class="undergrad-content">Other loans</span><span class="graduate-content">Institutional loans</span>' | safe,
+                'label': 'Other loans (minus loan fees)' | safe,
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_publicLoans"',
@@ -447,9 +463,9 @@
                 <h3 class="other-loan-options">Additional loan options</h3>
                 <p> If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider: </p>
                 <ul>
-                    <li class="undergrad-content"><strong>Federal parent PLUS loan </strong>: For dependent students at participating schools, parents and stepparents may be able to apply for a parent PLUS loan from the U.S. Department of Education. Check with the financial aid office before including this in your plan.</li>
+                    <li class="undergrad-content"><strong>Federal Parent PLUS loan</strong>: For dependent students at participating schools, parents and stepparents may be able to apply for a Parent PLUS loan from the U.S. Department of Education. Check with the financial aid office before including this in your plan.</li>
 
-                    <li class="graduate-content"><strong>Direct PLUS loan (aka Grad PLUS)</strong>: ) Graduate students can apply for a Direct PLUS loan from the U.S. Department of Education.</li>
+                    <li class="graduate-content"><strong>Direct PLUS loan (aka Grad PLUS)</strong>: Graduate students can apply for a Direct PLUS loan from the U.S. Department of Education.</li>
 
                     <li><strong>Private student loan</strong>: You or a family member can apply for a private student loan from a bank or credit union. Students without credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>  
                 </ul>
@@ -460,7 +476,7 @@
                     '<ul>
                         <li><strong>Accessibility</strong>: <span class="undergrad-content">Parent</span><span class="graduate-content">Grad</span> PLUS Loans are typically easier to qualify for than private loans. All borrowers can save money by comparison shopping—apply to multiple lenders to get the best terms.</li>
 
-                        <li><strong>Cost</strong>: For borrowers and cosigners with strong credit, private loans may offer lower interest rates than <span class="undergrad-content">parent</span> <span class="graduate-content">grad</span> PLUS loans— but watch out for variable interest rates, which can increase in the future. Any borrower can save money on interest by starting repayment as soon as possible.</li>
+                        <li><strong>Cost</strong>: For borrowers and cosigners with strong credit, private loans may offer lower interest rates than <span class="undergrad-content">Parent</span> <span class="graduate-content">Grad</span> PLUS loans — but watch out for variable interest rates, which can increase in the future. Any borrower can save money on interest by starting repayment as soon as possible.</li>
 
                         <li><strong>Protections</strong>: <span class="undergrad-content">Parent PLUS loans offer some, but not all, of the protections as Federal Direct Loans to students.</span> Private loans are not legally required to offer the same borrower protections and repayment options as any federal loans.</li>
 
@@ -482,7 +498,7 @@
                             {{
                                 input.render({
                                     'label': 'Loan amount',
-                                    'id': 'plan_gradPlus',
+                                    'id': 'plan__gradPlus',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="plusLoan_gradPlus"'
                                 })
@@ -490,7 +506,7 @@
                             {{
                                 input.render({
                                     'label': 'Interest rate (%)',
-                                    'id': 'plan_gradPlusRate',
+                                    'id': 'plan__gradPlusRate',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="rate_gradPlus"',
                                     'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
@@ -499,7 +515,7 @@
                             {{
                                 input.render({
                                     'label': 'Loan fee (%)',
-                                    'id': 'plan_gradPlusFee',
+                                    'id': 'plan__gradPlusFee',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="fee_gradPlus"',
                                     'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
@@ -526,7 +542,7 @@
                             {{
                                 input.render({
                                     'label': 'Loan amount',
-                                    'id': 'plan_parentPlus',
+                                    'id': 'plan__parentPlus',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="plusLoan_parentPlus"'
                                 })
@@ -534,7 +550,7 @@
                             {{
                                 input.render({
                                     'label': 'Interest rate (%)',
-                                    'id': 'plan_parentPlusRate',
+                                    'id': 'plan__parentPlusRate',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="rate_parentPlus"',
                                     'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
@@ -543,7 +559,7 @@
                             {{
                                 input.render({
                                     'label': 'Loan fee (%)',
-                                    'id': 'plan_parentPlusFee',
+                                    'id': 'plan__parentPlusFee',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="fee_parentPlus"',
                                     'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
@@ -552,7 +568,7 @@
                             <div class="u-mt30">
                                 {{
                                     checkbox.render({
-                                        'id': 'plan_parentPlusFeeRepay',
+                                        'id': 'plan__parentPlusFeeRepay',
                                         'label': 'Although parent PLUS loans are made to parents only—not students—some students take responsibility for repaying parent PLUS loans. Click here if you plan to repay your parent’s PLUS loans, and this loan amount to your projected debt total.',
                                   })
                                 }}
@@ -581,7 +597,7 @@
                             {{
                                 input.render({
                                     'label': 'Loan amount',
-                                    'id': 'plan_privateLoan1',
+                                    'id': 'plan__privateLoan1',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="privLoan_privateLoan1"'
                                 })
@@ -589,7 +605,7 @@
                             {{
                                 input.render({
                                     'label': 'Interest rate (%)',
-                                    'id': 'plan_privateLoan1Rate',
+                                    'id': 'plan__privateLoan1Rate',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="rate_privateLoan1"',
                                     'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
@@ -598,7 +614,7 @@
                             {{
                                 input.render({
                                     'label': 'Loan fee (%)',
-                                    'id': 'plan_privateLoan1Fee',
+                                    'id': 'plan__privateLoan1Fee',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="fee_privateLoan1"',
                                     'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
@@ -607,7 +623,7 @@
                             <div class="undergrad-content u-mt30">
                                 {{
                                     checkbox.render({
-                                        'id': 'plan_privateLoan1Repay',
+                                        'id': 'plan__privateLoan1Repay',
                                         'label': 'Click here if you plan to repay this private loan, and this loan amount will be added to your projected debt total.',
                                   })
                                 }}

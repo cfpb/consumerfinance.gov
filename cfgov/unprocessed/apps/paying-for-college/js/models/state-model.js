@@ -13,7 +13,7 @@ const stateModel = {
     activeSection: null,
     schoolSelected: null,
     gotStarted: false,
-    costsButtonClicked: false,
+    costsQuestion: false,
     programType: null,
     programLength: null,
     programRate: null,

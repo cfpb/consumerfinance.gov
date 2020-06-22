@@ -22,10 +22,11 @@ const _urlParamsToModelVars = {
   'lenp': 'stateModel.programLength',
   'ratp': 'stateModel.programRate',
   'depp': 'stateModel.programStudentType',
-  'cobs': 'stateModel.stateCosts',
-  'regs': 'stateModel.stateRegion',
-  'iqof': 'stateValues.impactOffer',
-  'iqlo': 'stateValues.impactLoans',
+  'cobs': 'stateModel.costsQuestion',
+  'regs': 'stateModel.expensesRegion',
+  'iqof': 'stateModel.impactOffer',
+  'iqlo': 'stateModel.impactLoans',
+  'cobs': 'stateModel.costsQuestion',
 
   'tuit': 'financialModel.dirCost_tuition',
   'hous': 'financialModel.dirCost_housing',
@@ -34,7 +35,7 @@ const _urlParamsToModelVars = {
   'book': 'financialModel.indiCost_books',
   'indo': 'financialModel.indiCost_other',
   'nda':  'financialModel.indiCost_added',
-  'tran': 'financialValues.indiCost_other',
+  'tran': 'financialModel.indiCost_transportation',
 
   'pelg': 'financialModel.grant_pell',
   'seog': 'financialModel.grant_seog',
@@ -210,6 +211,26 @@ function updateModelsFromQueryString( queryObj ) {
     schoolModel: schoolModel.setValue,
     stateModel: stateModel.setValue
   };
+
+  // If there's an offerID, set cobs to 'o' (offer)
+  if ( queryObj.hasOwnProperty( 'oid' ) ) {
+    queryObj.cobs = 'o';
+  }
+  // If we have no cobs, check if there are costs values
+  if ( !queryObj.hasOwnProperty( 'cobs' ) ) {
+    const costKeys = ['tuit', 'hous', 'diro', 'book', 'indo', 'nda', 'tran' ];
+    let costsFound = false;
+    costKeys.forEach( ( key ) => {
+      if ( queryObj.hasOwnProperty( key ) ) {
+        costsFound = true;
+      }
+    } );
+
+    if ( costsFound ) {
+      queryObj.cobs = 'y';
+    }
+  }
+
   for ( const key in queryObj ) {
     if ( _urlParamsToModelVars.hasOwnProperty( key ) ) {
       const match = _urlParamsToModelVars[key].split( '.' );

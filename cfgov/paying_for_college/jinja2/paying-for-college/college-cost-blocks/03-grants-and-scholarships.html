@@ -12,7 +12,7 @@
             <h3 class="u-border-bottom">Grants</h3>
             {{
                 input.render({
-                    'label': 'Federal Pell Grants',
+                    'label': 'Federal Pell Grant',
                     'id': 'grants__pell',
                     'value': '0',
                     'data_attribute': 'data-financial-item="grant_pell"'
@@ -28,7 +28,7 @@
             }}
             {{
                 input.render({
-                    'label': 'Other federal grants',
+                    'label': 'Other federal grant(s)',
                     'id': 'grants__otherFederal',
                     'value': '0',
                     'data_attribute': 'data-financial-item="grant_otherFederal"'
@@ -116,12 +116,16 @@
                     'data_attribute': 'data-financial-item="scholarship_other"'
                 })
             }}
+        </div>
+    </div>
+    <div class="grants-and-scholarships_content-section financial-items">
+        <div class="block block__mid">
             {{
                 text_item.render({
-                    'label': 'Total scholarships',
+                    'label': 'Total grants and scholarships',
                     'value': '$99,999',
                     'type': 'subtotal',
-                    'data_attribute': 'data-financial-item="total_scholarships"'
+                    'data_attribute': 'data-financial-item="total_grantsScholarships"'
                 })
             }}
         </div>

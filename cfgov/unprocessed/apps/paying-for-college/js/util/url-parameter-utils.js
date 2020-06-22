@@ -28,7 +28,6 @@ function getQueryVariables() {
  * querystring
  * @returns {String} a formatted query string based on model values
  */
-
 function buildUrlQueryString() {
   const expensesValues = expensesModel.values;
   const financialValues = financialModel.values;
@@ -36,6 +35,8 @@ function buildUrlQueryString() {
   const stateValues = stateModel.values;
   let query = '?';
 
+  // TODO: This list of URL variables should be authoritative, and not repeated in the
+  // update-models.js file.
   const variables = {
     'iped': schoolValues.schoolID,
     'pid': schoolValues.pid,
@@ -46,7 +47,7 @@ function buildUrlQueryString() {
     'lenp': stateValues.programLength,
     'ratp': stateValues.programRate,
     'depp': stateValues.programStudentType,
-    'cobs': stateValues.stateCosts, // TODO: What is this value?
+    'cobs': stateValues.costsQuestion,
     'regs': stateValues.expensesRegion,
     'iqof': stateValues.impactOffer,
     'iqlo': stateValues.impactLoans,
@@ -57,7 +58,7 @@ function buildUrlQueryString() {
 
     'book': financialValues.indiCost_books,
     'indo': financialValues.indiCost_other,
-    'tran': financialValues.indiCost_other,
+    'tran': financialValues.indiCost_transportation,
     'nda': financialValues.indiCost_added,
 
     'pelg': financialValues.grant_pell,
@@ -135,7 +136,8 @@ function buildUrlQueryString() {
   Object.assign( variables, expensesVariables );
 
   for ( const key in variables ) {
-    if ( typeof variables[key] !== 'undefined' && variables[key] !== 0 && variables[key] !== null ) {
+    if ( typeof variables[key] !== 'undefined' && variables[key] !== 0 && 
+                variables[key] !== null && variables[key] !== false ) {
       if ( query.length > 1 ) query += '&';
       query += key + '=' + variables[key];
     }

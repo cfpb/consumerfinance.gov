@@ -7,8 +7,7 @@ main.college-costs {
 	.graduate-content,
 	.private-loan-section,
 	.parentplus-loan-section,
-	.gradplus-loan-section,
-	.costs_content-section {
+	.gradplus-loan-section {
 		display: none;
 	}
 
@@ -24,6 +23,9 @@ main.college-costs {
 		span.undergrad-content {
 			display: inline;
 		}
+		li.undergrad-content {
+			display: list-item;
+		}
 	}
 
 	&[data-state_programtype="graduate"] {
@@ -33,6 +35,9 @@ main.college-costs {
 		span.graduate-content {
 			display: inline;
 		}
+		li.graduate-content {
+			display: list-item;
+		}
 	}
 
 	&[data-state_programtype="associates"] {
@@ -41,6 +46,9 @@ main.college-costs {
 		}
 		span.associates-content {
 			display: inline;
+		}
+		li.associates-content {
+			display: list-item;
 		}
 	}
 
@@ -105,20 +113,33 @@ main.college-costs {
 	}
 
 	// Costs button content control
-	&[data-state_costsbuttonclicked] {
+	&:not( [data-state_costsquestion] ) {
+		#costs_inputs-section {
+			display: none;
+		}
+		[data-state-based-visibility="costs-question-hide"] {
+			display: block;
+		}
+	}
+
+	&[data-state_costsquestion] {
 		#costs_inputs-section {
 			display: block;
 		}
+		[data-state-based-visibility="costs-question-hide"] {
+			display: none;
+		}
 	}
 
-	&[data-state_costsbuttonclicked="yes"] {
-		.costs_content-section[data-offer-costs-info="yes"] {
+	&[data-state_costsquestion="y"],
+	&[data-state_costsquestion="o"] {
+		[data-state-based-visibility="costs-question-yes"] {
 			display: block;
 		}
 	}
 
-	&[data-state_costsbuttonclicked="no"] {
-		& .costs_content-section[data-offer-costs-info="no"] {
+	&[data-state_costsquestion="n"] {
+		[data-state-based-visibility="costs-question-no"] {
 			display: block;
 		}
 	}

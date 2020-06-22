@@ -54,27 +54,16 @@ const financialView = {
     const offerContent = document.querySelector( '[data-offer-costs-info="' + answer + '"]' );
     const costsContent = document.getElementById( 'costs_inputs-section' );
 
-    // When button is first clicked, bring in school data if 'No'
-    if ( getStateValue( 'costsButtonClicked' ) === false ) {
-      updateState.byProperty( 'costsButtonClicked', answer );
+    // When the button is clicked, bring in school data if 'No'
+    if ( getStateValue( 'costsQuestion' ) === false ) {
+      updateState.byProperty( 'costsQuestion', answer );
       // If their offer does not have costs, use the Department of Ed data
-      if ( answer === 'no' ) {
+      if ( answer === 'n' ) {
         updateFinancialsFromSchool();
       } else {
         recalculateFinancials();
       }
     }
-
-    // Show the appropriate content
-    document.querySelectorAll( '[data-offer-costs-info]' ).forEach( elem => {
-      elem.classList.remove( 'active' );
-    } );
-    document.querySelectorAll( '[data-costs_offer-answer]' ).forEach( elem => {
-      elem.classList.add( 'a-btn__disabled' );
-    } );
-    target.classList.remove( 'a-btn__disabled' );
-    offerContent.classList.add( 'active' );
-    costsContent.classList.add( 'active' );
   },
 
   /**
