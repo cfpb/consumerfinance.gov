@@ -4,6 +4,7 @@ import { closest } from '../../../../js/modules/util/dom-traverse';
 import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { getAllStateValues, getStateValue } from '../dispatchers/get-model-values.js';
+import { sendAnalyticsEvent } from '../util/analytics.js';
 
 const navigationView = {
   _contentSidebar: null,
@@ -93,6 +94,7 @@ const navigationView = {
   _handleNavButtonClick: function( event ) {
     event.preventDefault();
     const target = event.target;
+    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText )
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
     } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
@@ -108,6 +110,7 @@ const navigationView = {
   _handleNextButtonClick: function( event ) {
     updateState.nextSection();
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
+    sendAnalyticsEvent( 'Next button click', getStateValue( 'activeSection' ) );
   },
 
   /**

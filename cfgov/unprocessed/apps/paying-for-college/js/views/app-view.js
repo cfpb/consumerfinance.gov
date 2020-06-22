@@ -2,11 +2,12 @@
 application, and are otherwise inappropriate for the
 other views. */
 
-import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { closest } from '../../../../js/modules/util/dom-traverse';
-import { buildUrlQueryString } from '../util/url-parameter-utils.js';
-import { getAllStateValues } from '../dispatchers/get-model-values.js';
 import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
+import { bindEvent } from '../../../../js/modules/util/dom-events';
+import { buildUrlQueryString } from '../util/url-parameter-utils.js';
+import { closest } from '../../../../js/modules/util/dom-traverse';
+import { getAllStateValues } from '../dispatchers/get-model-values.js';
+import { sendAnalyticsEvent } from '../util/analytics.js';
 
 
 const appView = {
@@ -46,10 +47,13 @@ const appView = {
   _handleDidThisHelpClick: event => {
     const button = event.target;
     const parent = closest( button, '.o-form_fieldset' );
+    sendAnalyticsEvent( 'Impact question click: ' + parent.dataset.impact, event.target.value );
     updateState.byProperty( parent.dataset.impact, event.target.value );
   },
 
   _handleSendLinkBtn: event => {
+    sendAnalyticsEvent( 'Email your link click', window.location.search );
+
     const target = event.target;
     let href = 'mailto:' + document.querySelector( '#finish_email' ).value;
     href += '?subject=Link: Your financial path to graduation&body=';
