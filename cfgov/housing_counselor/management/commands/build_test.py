@@ -12,7 +12,9 @@ def run(report_id):
         raw_report = f.read()
 
     print(" *** converting the report with pandoc... ***")
-    print(raw_report)
+    fmts = pypandoc.get_pandoc_formats()
+    print("input formats allowed: ", fmts[0])
+    print("output formats allowed: ", fmts[1])
     output = pypandoc.convert_text(raw_report, format='docx', to='html')
 
     print(" *** updating body field... ***")
