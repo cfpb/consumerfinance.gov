@@ -15,11 +15,11 @@ def make_image(alt_text):
 
 
 class ImageBasicTests(TestCase):
-    def test_value_no_upload_returns_empty_alt(self):
+    def test_value_no_upload_undefined_url_and_alt_text(self):
         block = ImageBasic()
         value = block.to_python({})
         self.assertIsNone(value.url)
-        self.assertEqual(value.alt_text, '')
+        self.assertIsNone(value.alt_text)
 
     def test_value_no_alt_returns_empty_string(self):
         image = make_image(alt_text='')

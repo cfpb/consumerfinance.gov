@@ -131,12 +131,11 @@ class ImageBasicStructValue(blocks.StructValue):
             return alt
 
         upload = self.get('upload')
-        if upload and upload.alt:
+        if upload:
             return upload.alt
 
-        # Deliberately return the empty string. It's better to have an empty
-        # alt attribute than to have none at all.
-        return ''
+        # If this block has no upload defined, its alt text is undefined.
+        return None
 
 
 class ImageBasic(blocks.StructBlock):
