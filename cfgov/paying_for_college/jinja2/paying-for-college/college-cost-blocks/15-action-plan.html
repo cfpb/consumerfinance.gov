@@ -6,14 +6,24 @@
     <p>Do you want to put this plan into action or consider other options?</p>
 
     <div class="action-plan_choices block block__sub">
-        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-            <input id="action-plan_put-into-action" type="radio" name="action-plan-radio" class="a-radio" value="action">
-            <label class="a-label" for="action-plan_put-into-action">How to put this plan into action</label>
-        </div>
-        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-            <input id="action-plan_consider" type="radio" name="action-plan-radio" class="a-radio" value="consider">
-            <label class="a-label" for="action-plan_consider">Consider other options</label>
-        </div>
+        {{
+            radio.render({
+              'name':  "action-plan-radio",
+              'label': 'How to put this plan into action',
+              'value': 'action',
+              'id': 'action-plan_put-into-action',
+              'class': 'm-form-field__lg-target' 
+            })
+        }}
+         {{
+            radio.render({
+              'name':  "action-plan-radio",
+              'label': 'Consider other options',
+              'value': 'consider',
+              'id': 'action-plan_consider',
+              'class': 'm-form-field__lg-target' 
+            })
+        }}  
     </div>
 
     <div class="block block__sub action-plan_steps" data-state-based-visibility="put-into-action">

@@ -24,26 +24,71 @@
             <label class="a-label a-label__heading" for="finish_email">
                 Email
             </label>
-    
             <input type="text" class="a-text-input" id="finish_email" name="finish_email" autocomplete="off" value="">
-            <a class="a-btn" href="mailto:" id="email-your-link">E-mail your link to yourself</a>
+            <a class="a-btn u-mt15" href="mailto:" id="email-your-link">E-mail your link to yourself</a>
         </div>
     </div>
     <div class="o-form_group">
         <div class="block block__mid">
             <h3>Did this tool help you understand your financial aid offer?</h3>
-            <div class="m-btn-group" id="save_did-it-help" data-impact="impactOffer">
-                <button class="a-btn" value="n">No</button>
-                <button class="a-btn" value="s">Somewhat</button>
-                <button class="a-btn" value="y">Yes</button>
+                <div class="o-form_group">
+                    <fieldset class="o-form_fieldset" data-impact="impactOffer">
+                        {{
+                            radio.render({
+                              'name':  "save_did-it-help",
+                              'label': 'No',
+                              'value': 'n',
+                              'id': 'save_did-it-help_no'
+                            })
+                        }}
+                        {{
+                            radio.render({
+                              'name':  "save_did-it-help",
+                              'label': 'Somewhat',
+                              'value': 's',
+                              'id': 'save_did-it-help_somewhat'
+                            })
+                        }}
+                        {{
+                            radio.render({
+                              'name':  "save_did-it-help",
+                              'label': 'Yes',
+                              'value': 'y',
+                              'id': 'save_did-it-help_yes'
+                            })
+                        }}
+                    </fieldset>
+                </div>
             </div>
-        </div>
         <div class="block block__mid">
             <h3>Did this tool help you understand the potential impact of student loans?</h3>
-            <div class="m-btn-group" id="save_understand-loans" data-impact="impactLoans">
-                <button class="a-btn" value="n">No</button>
-                <button class="a-btn" value="s">Somewhat</button>
-                <button class="a-btn" value="y">Yes</button>
+            <div class="o-form_group">
+                <fieldset class="o-form_fieldset" data-impact="impactLoans">
+                    {{
+                        radio.render({
+                          'name':  "save_understand-loans",
+                          'label': 'No',
+                          'value': 'n',
+                          'id': 'save_understand-loans_no'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "save_understand-loans",
+                          'label': 'Somewhat',
+                          'value': 's',
+                          'id': 'save_understand-loans_somewhat'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "save_understand-loans",
+                          'label': 'Yes',
+                          'value': 'y',
+                          'id': 'save_understand-loansp_yes'
+                        })
+                    }}
+                </fieldset>
             </div>
         </div>
     </div>
