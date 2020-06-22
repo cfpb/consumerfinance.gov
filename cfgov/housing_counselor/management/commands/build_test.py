@@ -12,6 +12,7 @@ def run(report_id):
         raw_report = f.read()
 
     print(" *** converting the report with pandoc... ***")
+    print(raw_report)
     output = pypandoc.convert_text(raw_report, format='docx', to='html')
 
     print(" *** updating body field... ***")
