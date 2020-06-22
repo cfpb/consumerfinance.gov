@@ -857,8 +857,8 @@ class VideoPlayerStructValue(blocks.StructValue):
 
 class VideoPlayer(blocks.StructBlock):
     YOUTUBE_ID_HELP_TEXT = (
-        'Enter the YouTube video ID, which is located at the end of the video'
-        ' URL, after "v=". For example, the video ID for '
+        'Enter the YouTube video ID, which is located at the end of the video '
+        'URL, after "v=". For example, the video ID for '
         'https://www.youtube.com/watch?v=1V0Ax9OIc84 is 1V0Ax9OIc84.'
     )
 
