@@ -30,9 +30,12 @@
     </div>
     <div class="o-form_group">
         <div class="block block__mid">
-            <h3>Did this tool help you understand your financial aid offer?</h3>
+            
                 <div class="o-form_group">
                     <fieldset class="o-form_fieldset" data-impact="impactOffer">
+                        <legend>
+                            <h3>Did this tool help you understand your financial aid offer?</h3>
+                        </legend>
                         {{
                             radio.render({
                               'name':  "save_did-it-help",
@@ -64,9 +67,12 @@
                 </div>
             </div>
         <div class="block block__mid">
-            <h3>Did this tool help you understand the potential impact of student loans?</h3>
+            
             <div class="o-form_group">
                 <fieldset class="o-form_fieldset" data-impact="impactLoans">
+                    <legend>
+                        <h3>Did this tool help you understand the potential impact of student loans?</h3>
+                    </legend>
                     {{
                         radio.render({
                           'name':  "save_understand-loans",
