@@ -11,7 +11,15 @@
     }}
 
     <p>Assuming similar borrowing each year</p>
-    <p class="max-debt-guideline_uncovered-costs-note" data-state-based-visibility="uncovered-costs">Since you have <span data-financial-item="total_gap">$Xxxx</span> in uncovered costs, this projection may underestimate your debt.</p>
+
+    <div data-state-based-visibility="uncovered-costs">
+    {{ notification.render(
+        'caution',
+        true,
+        '',
+        'Since you have <span data-financial-item="total_gap">$Xxxx</span> in uncovered costs, this projection may underestimate your debt.' | safe
+    ) }}
+    </div>
 
     {{ number_callout.render({
             'header': 'Median salary of this school’s recent students',
