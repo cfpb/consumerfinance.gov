@@ -7,7 +7,7 @@ class LoginViewsTestCase(TestCase):
     def test_login_with_lockout_no_auth(self):
         response = self.client.get('/login/?next=https://example.com')
         self.assertTemplateUsed(response, 'wagtailadmin/login.html')
-        self.assertEqual(response.context['next'], '/login/welcome/')
+        self.assertEqual(response.context['next'], '/admin/')
 
     def test_login_with_lockout_failed_login(self):
         self.client.post(
@@ -29,7 +29,7 @@ class LoginViewsTestCase(TestCase):
         )
         self.assertRedirects(
             response,
-            '/login/check_permissions/?next=/login/welcome/',
+            '/login/check_permissions/?next=/admin/',
             target_status_code=302,
             fetch_redirect_response=False,
         )
@@ -41,7 +41,7 @@ class LoginViewsTestCase(TestCase):
         )
         self.assertRedirects(
             response,
-            '/login/check_permissions/?next=/login/welcome/',
+            '/login/check_permissions/?next=/admin/',
             target_status_code=302,
             fetch_redirect_response=False,
         )
@@ -63,7 +63,7 @@ class LoginViewsTestCase(TestCase):
     def test_check_permissions_next_url_does_not_exist(self):
         self.client.login(username='admin', password='admin')
         response = self.client.get('/login/check_permissions/?next=/badurl/')
-        self.assertRedirects(response, '/login/welcome/')
+        self.assertRedirects(response, '/admin/')
 
     def test_check_permissions_next_permissions_problem(self):
         User.objects.create_user(
