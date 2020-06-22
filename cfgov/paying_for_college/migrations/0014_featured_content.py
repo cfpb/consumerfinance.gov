@@ -42,7 +42,7 @@ def migrate_backwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('paying_for_college', '0012_add_fields_for_intro_page'),
+        ('paying_for_college', '0013_rename_program_level_code_to_level_name'),
     ]
 
     operations = [
