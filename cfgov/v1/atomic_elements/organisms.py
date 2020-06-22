@@ -950,10 +950,6 @@ class FeaturedContentStructValue(blocks.StructValue):
 
         return links
 
-    @property
-    def origin(self):
-        pass
-
 
 class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)

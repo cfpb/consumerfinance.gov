@@ -467,7 +467,7 @@ class TestInfoUnitGroup(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('no heading and no intro should not fail validation')
 
     def test_heading_only_ok(self):
@@ -480,7 +480,7 @@ class TestInfoUnitGroup(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('heading alone should not fail validation')
 
     def test_intro_only_fails_validation(self):
@@ -501,7 +501,7 @@ class TestInfoUnitGroup(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('heading with intro should not fail validation')
 
     def test_2575_with_image_ok(self):
@@ -520,7 +520,7 @@ class TestInfoUnitGroup(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('25-75 group with info unit that has an image validates')
 
     def test_2575_with_no_images_fails_validation(self):
@@ -576,7 +576,7 @@ class VideoPlayerTests(SimpleTestCase):
 
         try:
             block.clean(value)
-        except ValidationError as e:
+        except ValidationError as e:  # pragma: nocover
             self.fail('Optional VideoPlayers should not require sub-fields')
 
     def test_invalid_video_id(self):
@@ -592,7 +592,7 @@ class VideoPlayerTests(SimpleTestCase):
 
         try:
             block.clean(value)
-        except ValidationError as e:
+        except ValidationError as e:  # pragma: nocover
             self.fail('VideoPlayer should support valid YouTube IDs')
 
     def test_render(self):
@@ -625,7 +625,7 @@ class VideoPlayerThumbnailTests(TestCase):
         )
 
     def test_thumbnail_image_without_video_id_fails_validation(self):
-        block = VideoPlayer()
+        block = VideoPlayer(required=False)
         value = block.to_python({'thumbnail_image': self.image.pk})
 
         with self.assertRaises(ValidationError):
