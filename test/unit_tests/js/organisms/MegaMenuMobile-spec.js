@@ -1,6 +1,6 @@
+import HTML_SNIPPET from '../../mocks/megaMenuSnippet';
 import MegaMenu from '../../../../cfgov/unprocessed/js/organisms/MegaMenu';
 import { simulateEvent } from '../../../util/simulate-event';
-import HTML_SNIPPET from '../../mocks/megaMenuSnippet';
 
 describe( 'MegaMenu', () => {
   let navElem;
@@ -9,7 +9,8 @@ describe( 'MegaMenu', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     navElem = document.querySelector( '.o-mega-menu' );
-    megaMenu = new MegaMenu( navElem ).init();
+    megaMenu = new MegaMenu( navElem );
+    megaMenu.init();
   } );
 
   describe( 'sub-menu click handler', () => {
