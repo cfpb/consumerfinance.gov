@@ -118,6 +118,7 @@ MIDDLEWARE = (
     "flags.middleware.FlagConditionsMiddleware",
     "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "core.middleware.DeactivateTranslationsMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -440,7 +441,7 @@ CFPB_COMMON_PASSWORD_RULES = [
 LOGIN_FAIL_TIME_PERIOD = os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get("LOGIN_FAILS_ALLOWED", 5)
-LOGIN_REDIRECT_URL = "/login/welcome/"
+LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/login/"
 
 # When we generate an full HTML version of the regulation, we want to

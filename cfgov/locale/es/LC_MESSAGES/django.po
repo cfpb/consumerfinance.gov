@@ -518,10 +518,6 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: templates/welcome.html:7
-msgid "Welcome"
-msgstr ""
-
 #: v1/jinja2/v1/home_page.html:13
 msgid "homepage"
 msgstr ""

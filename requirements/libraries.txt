@@ -36,10 +36,10 @@ sha3==0.2.1
 unipath>=1.1,<=2.0
 urllib3==1.25.2
 wagtail-autocomplete==0.1.1
-wagtail-flags==4.1.1
-wagtail-inventory==1.0
-wagtail-sharing==2.1
-wagtail-treemodeladmin==1.1.1
+wagtail-flags==4.2.1
+wagtail-inventory==1.1
+wagtail-sharing==2.2
+wagtail-treemodeladmin==1.2.0
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.15.0/owning_a_home_api-0.15.0-py3-none-any.whl
