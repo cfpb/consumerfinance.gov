@@ -22,7 +22,7 @@ describe( 'MegaMenu', () => {
        See https://github.com/jsdom/jsdom/issues/1781
     */
     it( 'should expand on the first level sub-menu button click', done => {
-      window.innerWidth = 420;
+      window.innerWidth = 1220;
       const menuTrigger = navElem.querySelector( '.o-mega-menu_trigger' );
       const subTrigger = navElem.querySelector( '.o-mega-menu_content-1-link__has-children' );
       const subContent = navElem.querySelector( '.o-mega-menu_content-2' );
@@ -55,7 +55,7 @@ describe( 'MegaMenu', () => {
     } );
 
     it( 'should not be expanded by default', () => {
-      window.innerWidth = 420;
+      window.innerWidth = 1220;
       const subContent = navElem.querySelector( '.o-mega-menu_content-2' );
       const isExpanded = subContent.getAttribute( 'aria-expanded' );
 
@@ -63,44 +63,12 @@ describe( 'MegaMenu', () => {
     } );
 
     it( 'should not be expanded on the main trigger click', done => {
-      window.innerWidth = 420;
+      window.innerWidth = 1220;
       const menuTrigger = navElem.querySelector( '.o-mega-menu_trigger' );
       const subContent = navElem.querySelector( '.o-mega-menu_content-2' );
       let isExpanded;
 
       function resolveFirstClick() {
-        isExpanded = subContent.getAttribute( 'aria-expanded' );
-
-        expect( isExpanded ).toEqual( 'false' );
-        done();
-      }
-
-      simulateEvent( 'click', menuTrigger );
-
-      window.setTimeout( resolveFirstClick, 1000 );
-    } );
-
-    it( 'should collapse on the first level sub-menu back button click', done => {
-      window.innerWidth = 420;
-      const menuTrigger = navElem.querySelector( '.o-mega-menu_trigger' );
-      const subTrigger = navElem.querySelector( '.o-mega-menu_content-1-link__has-children' );
-      const subContent = navElem.querySelector( '.o-mega-menu_content-2' );
-      const subAltTrigger = subContent.querySelector( '.o-mega-menu_content-alt-trigger' );
-      let isExpanded;
-
-      function resolveFirstClick() {
-        simulateEvent( 'click', subTrigger );
-
-        window.setTimeout( resolveSecondClick, 1000 );
-      }
-
-      function resolveSecondClick() {
-        simulateEvent( 'click', subAltTrigger );
-
-        window.setTimeout( resolveThirdClick, 1000 );
-      }
-
-      function resolveThirdClick() {
         isExpanded = subContent.getAttribute( 'aria-expanded' );
 
         expect( isExpanded ).toEqual( 'false' );
