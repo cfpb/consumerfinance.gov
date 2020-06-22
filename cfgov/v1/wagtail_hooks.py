@@ -9,7 +9,9 @@ from django.urls import reverse
 from django.utils.html import format_html_join
 
 from wagtail.admin.menu import MenuItem
-from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
+from wagtail.admin.rich_text.converters.editor_html import (
+    WhitelistRule as AllowlistRule
+)
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
@@ -385,9 +387,9 @@ def register_span_feature(features):
     })
 
     # register a feature 'span'
-    # which whitelists the <span> element
+    # which allowlists the <span> element
     features.register_converter_rule('editorhtml', 'span', [
-        WhitelistRule('span', allow_html_class),
+        AllowlistRule('span', allow_html_class),
     ])
 
     # add 'span' to the default feature set

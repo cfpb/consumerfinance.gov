@@ -1,4 +1,4 @@
-WHITELIST_KEYS = {
+ALLOWLIST_KEYS = {
     'alias': 'string',
     'avgmonthlypay': 'float',
     'avgstuloandebt': 'integer',

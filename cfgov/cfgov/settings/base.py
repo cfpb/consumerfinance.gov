@@ -252,7 +252,7 @@ STATICFILES_DIRS += REPOSITORY_ROOT.child("static.in").listdir(filter=DIRS)
 
 ALLOWED_HOSTS = ["*"]
 
-EXTERNAL_URL_WHITELIST = (
+EXTERNAL_URL_ALLOWLIST = (
     r"^https:\/\/facebook\.com\/cfpb$",
     r"^https:\/\/twitter\.com\/cfpb$",
     r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa 501
