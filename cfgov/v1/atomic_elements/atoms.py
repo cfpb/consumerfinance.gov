@@ -131,7 +131,7 @@ class ImageBasicStructValue(blocks.StructValue):
             return alt
 
         upload = self.get('upload')
-        if upload:
+        if upload and upload.alt:
             return upload.alt
 
         # Deliberately return the empty string. It's better to have an empty
