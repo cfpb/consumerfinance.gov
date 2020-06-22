@@ -873,7 +873,7 @@ class VideoPlayer(blocks.StructBlock):
         error_messages={
             'invalid': "The YouTube video ID is in the wrong format.",
         },
-        help_text=mark_safe(YOUTUBE_ID_HELP_TEXT)
+        help_text=YOUTUBE_ID_HELP_TEXT
     )
     thumbnail_image = images_blocks.ImageChooserBlock(
         required=False,
