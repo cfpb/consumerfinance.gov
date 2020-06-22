@@ -46,6 +46,7 @@ const appView = {
   _handleDidThisHelpBtns: event => {
     const button = event.target;
     const parent = closest( button, '.m-btn-group' );
+    updateState.byProperty( parent.dataset.impact, event.target.value );
 
     // Handle view of the buttons
     // TODO: These are probably better off being radio buttons

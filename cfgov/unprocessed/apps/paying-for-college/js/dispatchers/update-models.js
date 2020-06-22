@@ -24,6 +24,8 @@ const _urlParamsToModelVars = {
   'depp': 'stateModel.programStudentType',
   'cobs': 'stateModel.stateCosts',
   'regs': 'stateModel.stateRegion',
+  'iqof': 'stateValues.impactOffer',
+  'iqlo': 'stateValues.impactLoans',
 
   'tuit': 'financialModel.dirCost_tuition',
   'hous': 'financialModel.dirCost_housing',

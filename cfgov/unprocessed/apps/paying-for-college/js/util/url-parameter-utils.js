@@ -47,7 +47,9 @@ function buildUrlQueryString() {
     'ratp': stateValues.programRate,
     'depp': stateValues.programStudentType,
     'cobs': stateValues.stateCosts, // TODO: What is this value?
-    'regs': stateValues.stateRegion,
+    'regs': stateValues.expensesRegion,
+    'iqof': stateValues.impactOffer,
+    'iqlo': stateValues.impactLoans,
 
     'tuit': financialValues.dirCost_tuition,
     'hous': financialValues.dirCost_housing,
