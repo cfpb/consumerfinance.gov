@@ -30,42 +30,39 @@
     </div>
     <div class="o-form_group">
         <div class="block block__mid">
-            
-                <div class="o-form_group">
-                    <fieldset class="o-form_fieldset" data-impact="impactOffer">
-                        <legend>
-                            <h3>Did this tool help you understand your financial aid offer?</h3>
-                        </legend>
-                        {{
-                            radio.render({
-                              'name':  "save_did-it-help",
-                              'label': 'No',
-                              'value': 'n',
-                              'id': 'save_did-it-help_no',
-                              'class': 'm-form-field__lg-target'
-                            })
-                        }}
-                        {{
-                            radio.render({
-                              'name':  "save_did-it-help",
-                              'label': 'Somewhat',
-                              'value': 's',
-                              'id': 'save_did-it-help_somewhat',
-                              'class': 'm-form-field__lg-target'
-                            })
-                        }}
-                        {{
-                            radio.render({
-                              'name':  "save_did-it-help",
-                              'label': 'Yes',
-                              'value': 'y',
-                              'id': 'save_did-it-help_yes',
-                              'class': 'm-form-field__lg-target'
-                            })
-                        }}
-                    </fieldset>
-                </div>
-            </div>
+            <fieldset class="o-form_fieldset" data-impact="impactOffer">
+                <legend>
+                    <h3>Did this tool help you understand your financial aid offer?</h3>
+                </legend>
+                {{
+                    radio.render({
+                      'name':  "save_did-it-help",
+                      'label': 'No',
+                      'value': 'n',
+                      'id': 'save_did-it-help_no',
+                      'class': 'm-form-field__lg-target'
+                    })
+                }}
+                {{
+                    radio.render({
+                      'name':  "save_did-it-help",
+                      'label': 'Somewhat',
+                      'value': 's',
+                      'id': 'save_did-it-help_somewhat',
+                      'class': 'm-form-field__lg-target'
+                    })
+                }}
+                {{
+                    radio.render({
+                      'name':  "save_did-it-help",
+                      'label': 'Yes',
+                      'value': 'y',
+                      'id': 'save_did-it-help_yes',
+                      'class': 'm-form-field__lg-target'
+                    })
+                }}
+            </fieldset>
+        </div>
         <div class="block block__mid">
             
             <div class="o-form_group">
