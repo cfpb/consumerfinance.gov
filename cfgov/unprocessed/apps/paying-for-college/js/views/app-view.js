@@ -46,6 +46,9 @@ const appView = {
   _handleDidThisHelpBtns: event => {
     const button = event.target;
     const parent = closest( button, '.m-btn-group' );
+
+    // Handle view of the buttons
+    // TODO: These are probably better off being radio buttons
     button.classList.remove( 'a-btn__disabled' );
     parent.querySelectorAll( 'button:not( [value="' + button.value + '"]' )
       .forEach( elem => {

@@ -5,13 +5,14 @@ import { closest } from '../../../../js/modules/util/dom-traverse';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
 import { stringToNum } from '../util/number-utils.js';
 import { updateAffordingChart, updateCostOfBorrowingChart } from '../dispatchers/update-view.js';
-import { updateExpense } from '../dispatchers/update-models.js';
+import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
 
 const expensesView = {
   _currentInput: null,
   _expensesItems: [],
   _expensesInputs: [],
   _inputChangeTimeout: null,
+  _regionSelect: null,
 
   /**
    * Event handling for expenses-item INPUT changes
@@ -35,6 +36,10 @@ const expensesView = {
     }
   },
 
+  _handleRegionChange: function() {
+    updateRegion( expensesView._regionSelect.value );
+  },
+
   _addInputListeners: function() {
     expensesView._expensesInputs.forEach( elem => {
       const events = {
@@ -43,6 +48,8 @@ const expensesView = {
       };
       bindEvent( elem, events );
     } );
+
+    bindEvent( expensesView._regionSelect, { change: this._handleRegionChange } );
   },
 
   /**
@@ -51,6 +58,8 @@ const expensesView = {
   init: () => {
     expensesView._expensesItems = document.querySelectorAll( '[data-expenses-item]' );
     expensesView._expensesInputs = document.querySelectorAll( 'input[data-expenses-item]' );
+    expensesView._regionSelect = document.querySelector( '#expenses__region' );
+
     expensesView._addInputListeners();
   },
 

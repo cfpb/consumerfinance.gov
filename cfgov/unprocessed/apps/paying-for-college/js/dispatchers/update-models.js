@@ -150,6 +150,14 @@ function recalculateExpenses() {
 }
 
 /**
+ * updateRegion - Update the region of the expenses model 
+ * @param {string} region - A two-character string of the new region
+ */
+ function updateRegion( region ) {
+  expensesModel.setValuesByRegion( region );
+ }
+
+/**
   * updateSchoolData - Fetch API data for school and update the model
   * @param {String} iped - The id of the school
   * @returns {Object} Promise of the XHR request
@@ -220,13 +228,14 @@ function updateModelsFromQueryString( queryObj ) {
 }
 
 export {
-  updateFinancial,
   createFinancial,
   initializeFinancialValues,
-  updateSchoolData,
-  updateExpense,
-  updateFinancialsFromSchool,
-  recalculateFinancials,
   recalculateExpenses,
-  updateModelsFromQueryString
+  recalculateFinancials,
+  updateExpense,
+  updateFinancial,
+  updateFinancialsFromSchool,
+  updateModelsFromQueryString,
+  updateRegion,
+  updateSchoolData,
 };

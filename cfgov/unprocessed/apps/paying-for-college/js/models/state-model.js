@@ -3,8 +3,8 @@
  * which tracks the current app state and allows the views to update based on
  * state.
 */
-
-import { updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
+import { recalculateFinancials } from '../dispatchers/update-models.js';
+import { updateFinancialViewAndFinancialCharts, updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 
 const stateModel = {
@@ -104,6 +104,11 @@ const stateModel = {
       const key = name + 'Text';
       stateModel.values[key] = stateModel.textVersions[name][value];
       updateSchoolItems();
+    }
+    // When program values are updated, recalculate, updateView
+    if ( name.indexOf( 'program' ) === 0 ) {
+      recalculateFinancials();
+      updateFinancialViewAndFinancialCharts();
     }
   },
 

@@ -6,7 +6,7 @@ based on these costs.
 
 import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { initializeFinancialValues, recalculateExpenses } from '../dispatchers/update-models.js';
-import { updateAffordingChart, updateCostOfBorrowingChart, updateFinancialView, updateMakePlanChart, updateMaxDebtChart, updateUrlQueryString } from '../dispatchers/update-view.js';
+import { updateAffordingChart, updateCostOfBorrowingChart, updateFinancialView, updateFinancialViewAndFinancialCharts, updateMakePlanChart, updateMaxDebtChart, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
 import { enforceRange, stringToNum } from '../util/number-utils.js';
@@ -44,6 +44,7 @@ const financialModel = {
    * subfunctions
    */
   recalculate: () => {
+    financialModel._updateRates();
     financialModel._calculateTotals();
     debtCalculator();
     recalculateExpenses();
@@ -67,11 +68,7 @@ const financialModel = {
 
       if ( updateView !== false ) {
         updateUrlQueryString();
-        updateFinancialView();
-        updateCostOfBorrowingChart();
-        updateMakePlanChart();
-        updateMaxDebtChart();
-        updateAffordingChart();
+        updateFinancialViewAndFinancialCharts();
       }
     }
   },
@@ -203,6 +200,17 @@ const financialModel = {
     vals['net_' + loanName] = net;
 
     return net;
+  },
+
+  /**
+   * Set loan rates based on program type
+   */
+  _updateRates: () => {
+    if ( getStateValue( 'programType' ) === 'graduate' ) {
+      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateGrad' );
+    } else {
+      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateUndergrad' );
+    }
   },
 
   /**
