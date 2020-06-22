@@ -6,7 +6,7 @@
     {% if block.block_type == 'text' or block.block_type == 'tip' or block.block_type == 'table' %}
         {{ block.value.content | striptags }}
     {% elif block.block_type == 'faq_schema' %}
-        {{ block.value.description.content }}
+        {{ block.value.description }}
         {% for value in block.value.questions %}
             {{ value.question }} 
             {% for answer_block in value.answer_content %}
@@ -17,7 +17,7 @@
         {% endfor %}
     {% elif block.block_type == 'how_to_schema' %}
         {{ block.value.title }}
-        {{ block.value.description.content }}
+        {{ block.value.description }}
         {% for step in block.value.steps %}
             {{ step.title }} 
             {% for content_block in step.step_content %}
@@ -37,7 +37,7 @@
         {% if block.block_type == 'text' or block.block_type == 'tip' or block.block_type == 'table' %}
             {{ block.value.content | striptags | stripaccents}}
         {% elif block.block_type == 'faq_schema' %}
-            {{ block.value.description.content | stripaccents }}
+            {{ block.value.description | stripaccents }}
             {% for value in block.value.questions %}
                 {{ value.question | stripaccents }} 
                 {% for answer_block in value.answer_content %}
@@ -48,7 +48,7 @@
             {% endfor %}
         {% elif block.block_type == 'how_to_schema' %}
             {{ block.value.title | stripaccents }}
-            {{ block.value.description.content | stripaccents }}
+            {{ block.value.description | stripaccents }}
             {% for step in block.value.steps %}
                 {{ step.title | stripaccents }} 
                 {% for content_block in step.step_content %}
