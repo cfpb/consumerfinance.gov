@@ -50,7 +50,7 @@ const expensesModel = {
     expensesModel.values[name] = stringToNum( value );
     expensesModel.calculateTotals();
 
-    if ( updateView === false ) {
+    if ( updateView !== false ) {
       updateExpensesView();
       updateCostOfBorrowingChart();
       updateAffordingChart();
