@@ -1,6 +1,7 @@
 import re
 
 from django.conf import settings
+from django.utils import translation
 from django.utils.encoding import force_str
 
 from wagtail.core.rich_text import expand_db_html
@@ -80,3 +81,13 @@ class ParseLinksMiddleware(object):
             re.search(regex, request_path)
             for regex in settings.PARSE_LINKS_EXCLUSION_LIST
         )
+
+
+class DeactivateTranslationsMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        translation.deactivate()
+        return response

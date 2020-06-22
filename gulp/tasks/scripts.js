@@ -8,7 +8,6 @@ const config = require( '../config.js' );
 const configScripts = config.scripts;
 const fs = require( 'fs' );
 const gulp = require( 'gulp' );
-const gulpConcat = require( 'gulp-concat' );
 const gulpModernizr = require( 'gulp-modernizr' );
 const gulpNewer = require( 'gulp-newer' );
 const gulpRename = require( 'gulp-rename' );
