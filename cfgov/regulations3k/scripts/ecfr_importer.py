@@ -543,7 +543,7 @@ def ecfr_to_regdown(part_number, file_path=None):
     DIV9 is an appendix
     DIV9 element whose HEAD starts with 'Supplement I' is an interpretation
 
-    To avoid mischief, we make sure the part number is on a allowlist.
+    To avoid mischief, we make sure the part number is on an allowlist.
     """
     PAYLOAD.reset()
     if part_number not in PART_ALLOWLIST:
