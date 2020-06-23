@@ -75,6 +75,7 @@ function Calendar() {
     }
     if (!localStorage.getItem('removeSpotlight')) {
       localStorage.setItem('removeSpotlight', true)
+      eventStore.closeNarrativeModal()
     }
     setShowModal(!showModal);
   };
