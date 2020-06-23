@@ -73,24 +73,6 @@ function Calendar() {
     if (localStorage.getItem('enteredData') === 'initial') {
       localStorage.setItem('enteredData', 'subsequent');
     }
-    setShowModal(!showModal);
-  };
-
-  const handleToggleModal = (event) => {
-    event.preventDefault();
-    localStorage.setItem('visitedPage', true);
-    if (localStorage.getItem('enteredData') === 'initial') {
-      localStorage.setItem('enteredData', 'subsequent');
-    }
-    setShowModal(!showModal);
-  };
-
-  const handleToggleModal = (event) => {
-    event.preventDefault();
-    localStorage.setItem('visitedPage', true);
-    if (localStorage.getItem('enteredData') === 'initial') {
-      localStorage.setItem('enteredData', 'subsequent');
-    }
     if (!localStorage.getItem('removeSpotlight')) {
       localStorage.setItem('removeSpotlight', true)
       eventStore.closeNarrativeModal()
