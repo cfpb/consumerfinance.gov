@@ -106,6 +106,8 @@
         
             <li><a class="toctree-l4" href="#registering-the-template-debug-view">Registering the template debug view</a></li>
         
+            <li><a class="toctree-l4" href="#including-component-javascript">Including component JavaScript</a></li>
+        
         </ul>
     
 
@@ -306,6 +308,16 @@ register_template_debug('myapp', 'link', 'myapp/link.html', link_test_cases)</co
 
 <p>Once logged into the Wagtail admin, the template debug view for this module
 will now be available at the <code>/admin/template_debug/myapp/link/</code> URL.</p>
+<h2 id="including-component-javascript">Including component JavaScript<a class="headerlink" href="#including-component-javascript" title="Permanent link">¶</a></h2>
+<p>Associated JavaScript required by the module can be included in the template
+debug view by listing it in the <code>register_template_debug</code> call:</p>
+<pre class="highlight"><code class="language-py">register_template_debug(
+    'myapp',
+    'link',
+    'myapp/link.html',
+    link_test_cases
+    extra_js=['link.js']
+)</code></pre>
               
             </div>
           </div>
