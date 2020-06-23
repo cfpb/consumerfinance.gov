@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "ccdb5_ui",
     "mptt",
     "teachers_digital_platform",
+    "crtool",
 )
 
 MIDDLEWARE = (

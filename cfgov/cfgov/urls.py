@@ -481,6 +481,11 @@ urlpatterns = [
     ),
 
     re_path(
+        r'^practitioner-resources/youth-financial-education/curriculum-review/',  # noqa: E501
+        include('crtool.urls')
+    ),
+
+    re_path(
         r'^regulations3k-service-worker.js',
         TemplateView.as_view(
             template_name='regulations3k/regulations3k-service-worker.js',
