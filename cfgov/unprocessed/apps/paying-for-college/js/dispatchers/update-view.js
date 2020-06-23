@@ -93,6 +93,14 @@ const updateRepaymentMeterChart = () => {
   chartView.updateRepaymentMeterChart();
 };
 
+const updateFinancialViewAndFinancialCharts = () => {
+  updateFinancialView();
+  updateCostOfBorrowingChart();
+  updateMakePlanChart();
+  updateMaxDebtChart();
+  updateAffordingChart();
+};
+
 export {
   updateAppView,
   updateExpensesView,
@@ -102,6 +110,7 @@ export {
   updateSchoolView,
   updateStateInDom,
   updateCostOfBorrowingChart,
+  updateFinancialViewAndFinancialCharts,
   updateMakePlanChart,
   updateMaxDebtChart,
   updateAffordingChart,

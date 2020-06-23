@@ -32,9 +32,7 @@ const columnChartOpts = {
     }
   },
   title: false,
-  tooltip: {
-    pointFormat: '${point.y:,.0f}'
-  },
+  tooltip: false,
   xAxis: {
     categories: [
       '10 year period',
@@ -96,9 +94,7 @@ const meterOpts = {
     enabled: false
   },
 
-  tooltip: {
-    enabled: false
-  },
+  tooltip: false,
 
   yAxis: [ {
     min: 0,
@@ -211,9 +207,7 @@ const horizontalBarOpts = {
       overflow: 'justify'
     }
   },
-  tooltip: {
-    format: '${total:,.0f}'
-  },
+  tooltip: false,
   plotOptions: {
     bar: {
       dataLabels: {
@@ -474,7 +468,7 @@ const chartView = {
   },
 
   updateMaxDebtChart: () => {
-    const totalDebt = getFinancialValue( 'debt_tenYearTotal' );
+    const totalDebt = getFinancialValue( 'debt_totalAtGrad' );
     const salary = getFinancialValue( 'salary_annual' );
     const max = Math.max( totalDebt * 1.1, salary * 1.1 );
 
