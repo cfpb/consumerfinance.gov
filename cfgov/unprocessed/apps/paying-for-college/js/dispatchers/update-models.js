@@ -26,7 +26,6 @@ const _urlParamsToModelVars = {
   'regs': 'stateModel.expensesRegion',
   'iqof': 'stateModel.impactOffer',
   'iqlo': 'stateModel.impactLoans',
-  'cobs': 'stateModel.costsQuestion',
 
   'tuit': 'financialModel.dirCost_tuition',
   'hous': 'financialModel.dirCost_housing',
@@ -153,12 +152,12 @@ function recalculateExpenses() {
 }
 
 /**
- * updateRegion - Update the region of the expenses model 
+ * updateRegion - Update the region of the expenses model
  * @param {string} region - A two-character string of the new region
  */
- function updateRegion( region ) {
+function updateRegion( region ) {
   expensesModel.setValuesByRegion( region );
- }
+}
 
 /**
   * updateSchoolData - Fetch API data for school and update the model
@@ -218,9 +217,9 @@ function updateModelsFromQueryString( queryObj ) {
   }
   // If we have no cobs, check if there are costs values
   if ( !queryObj.hasOwnProperty( 'cobs' ) ) {
-    const costKeys = ['tuit', 'hous', 'diro', 'book', 'indo', 'nda', 'tran' ];
+    const costKeys = [ 'tuit', 'hous', 'diro', 'book', 'indo', 'nda', 'tran' ];
     let costsFound = false;
-    costKeys.forEach( ( key ) => {
+    costKeys.forEach( key => {
       if ( queryObj.hasOwnProperty( key ) ) {
         costsFound = true;
       }
@@ -260,5 +259,5 @@ export {
   updateFinancialsFromSchool,
   updateModelsFromQueryString,
   updateRegion,
-  updateSchoolData,
+  updateSchoolData
 };
