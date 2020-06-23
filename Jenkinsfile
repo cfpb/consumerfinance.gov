@@ -11,34 +11,35 @@ pipeline {
     }
 
     environment {
-        IMAGE_REPO="cfpb/cfgov-python"
-        IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
+        IMAGE_REPO = "cfpb/cfgov-python"
+        IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
     }
 
     parameters {
         booleanParam(
-            name: 'DEPLOY',
-            defaultValue: false,
-            description: 'Deploy the stack?'
+                name: 'DEPLOY',
+                defaultValue: false,
+                description: 'Deploy the stack?'
         )
         booleanParam(
-            name: 'REFRESH_DB',
-            defaultValue: false,
-            description: 'Refresh the database?'
+                name: 'REFRESH_DB',
+                defaultValue: false,
+                description: 'Refresh the database?'
         )
     }
 
     options {
         ansiColor('xterm')
         parallelsAlwaysFailFast()
+        disableConcurrentBuilds()
         timestamps()
     }
-    
+
     stages {
 
-        stage ('Init') {
+        stage('Init') {
             steps {
                 script {
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
@@ -61,7 +62,7 @@ pipeline {
 
         stage('Build Image') {
             environment {
-                DOCKER_BUILDKIT='1'
+                DOCKER_BUILDKIT = '1'
             }
             steps {
                 script {
@@ -75,11 +76,11 @@ pipeline {
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
             }
         }
-        
+
         stage('Push Image') {
             // Push image only on master branch or deploy is set to true
             when {
-                anyOf { 
+                anyOf {
                     branch 'master'
                     expression { return params.DEPLOY }
                 }
@@ -100,11 +101,11 @@ pipeline {
         stage('Deploy Stack') {
             // Deploys only on master branch or deploy is set to true
             when {
-                anyOf { 
+                anyOf {
                     branch 'master'
                     expression { return params.DEPLOY }
                 }
-            } 
+            }
             steps {
                 script {
                     timeout(time: 15, unit: 'MINUTES') {
