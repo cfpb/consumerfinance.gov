@@ -112,8 +112,21 @@ main.college-costs {
 		}
 	}
 
+	// Save and finish later section visibility
+	&[data-state_save-for-later="active"] {
+		[data-state-based-visibility="save-for-later"] {
+			display: block;
+		}
+	}
+
 	// Costs button content control
 	&:not( [data-state_costsquestion] ) {
+		// Don't show the Next button on Costs page until a costs choice is made
+		&[data-state_activesection="costs"] {
+		      .college-costs_tool-section_buttons {
+		              display: none;
+		      }
+		}
 		#costs_inputs-section {
 			display: none;
 		}

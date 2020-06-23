@@ -11,10 +11,12 @@ import { sendAnalyticsEvent } from '../util/analytics.js';
 
 
 const appView = {
-  _didThisHelpChoices: null,
-  _finishLink: '',
-  _sendLinkBtn: null,
   _actionPlanChoices: null,
+  _didThisHelpChoices: null,
+  _restartBtn: null,
+  _saveForLaterBtn: null,
+  _saveLinks: '',
+  _sendLinkBtn: null,
 
   /**
    * Listeners for buttons
@@ -28,6 +30,8 @@ const appView = {
       bindEvent( elem, { click: this._handleActionPlanClick } );
     } );
 
+    bindEvent( appView._restartBtn, { click: appView._handleRestartBtn } );
+    bindEvent( appView._saveForLaterBtn, { click: appView._handleSaveForLaterBtn } );
     bindEvent( appView._sendLinkBtn, { click: appView._handleSendLinkBtn } );
   },
 
@@ -51,6 +55,24 @@ const appView = {
     updateState.byProperty( parent.dataset.impact, event.target.value );
   },
 
+  /**
+   * Handle clicks of the restart button
+   * @param {Object} event - The event object
+   */
+  _handleRestartBtn: event => {
+    event.preventDefault();
+    sendAnalyticsEvent( 'button click', 'restart' );
+    window.location = '.';
+  },
+
+  /**
+   * Handle clicks of the 'Save for Later' button
+   */
+  _handleSaveForLaterBtn: () => {
+    sendAnalyticsEvent( 'Save and finish later', window.location.search );
+    updateState.byProperty( 'save-for-later', 'active' );
+  },
+
   _handleSendLinkBtn: event => {
     sendAnalyticsEvent( 'Email your link click', window.location.search );
 
@@ -65,7 +87,9 @@ const appView = {
    * Update the link on the save and finish page with the current url
    */
   _updateSaveLink: () => {
-    appView._finishLink.innerText = window.location.href;
+    appView._saveLinks.forEach( elem => {
+      elem.innerText = window.location.href;
+    } );
   },
 
   /**
@@ -87,10 +111,12 @@ const appView = {
    * Initialize the View
    */
   init: () => {
-    appView._didThisHelpChoices = document.querySelectorAll( '[data-impact] .m-form-field input.a-radio' );
-    appView._finishLink = document.querySelector( '#finish_link' );
-    appView._sendLinkBtn = document.querySelector( '#email-your-link' );
     appView._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field input.a-radio' );
+    appView._didThisHelpChoices = document.querySelectorAll( '[data-impact] .m-form-field input.a-radio' );
+    appView._restartBtn = document.querySelector( '[data-app-button="restart"]' );
+    appView._saveForLaterBtn = document.querySelector( '[data-app-button="save-and-finish-later"]' );
+    appView._saveLinks = document.querySelectorAll( '[data-app-save-link]' );
+    appView._sendLinkBtn = document.querySelector( '#email-your-link' );
 
     appView._addButtonListeners();
   }
