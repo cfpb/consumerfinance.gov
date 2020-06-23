@@ -35,8 +35,8 @@ function buildUrlQueryString() {
   const stateValues = stateModel.values;
   let query = '?';
 
-  // TODO: This list of URL variables should be authoritative, and not repeated in the
-  // update-models.js file.
+  /* TODO: This list of URL variables should be authoritative, and not repeated in the
+     update-models.js file. */
   const variables = {
     'iped': schoolValues.schoolID,
     'pid': schoolValues.pid,
@@ -136,7 +136,7 @@ function buildUrlQueryString() {
   Object.assign( variables, expensesVariables );
 
   for ( const key in variables ) {
-    if ( typeof variables[key] !== 'undefined' && variables[key] !== 0 && 
+    if ( typeof variables[key] !== 'undefined' && variables[key] !== 0 &&
                 variables[key] !== null && variables[key] !== false ) {
       if ( query.length > 1 ) query += '&';
       query += key + '=' + variables[key];
