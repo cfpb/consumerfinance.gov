@@ -17,7 +17,6 @@ const financialView = {
   _costsOfferButtons: null,
   _gradProgramContent: null,
   _undergradProgramContent: null,
-  _otherBorrowingButtons: null,
 
   /**
    * Listeners for INPUT fields and radio buttons
@@ -26,13 +25,6 @@ const financialView = {
     financialView._costsOfferButtons.forEach( elem => {
       const events = {
         click: this._handleCostsButtonClick
-      };
-      bindEvent( elem, events );
-    } );
-
-    financialView._otherBorrowingButtons.forEach( elem => {
-      const events = {
-        click: this._handleOtherLoanButtonClick
       };
       bindEvent( elem, events );
     } );
@@ -62,45 +54,16 @@ const financialView = {
     const offerContent = document.querySelector( '[data-offer-costs-info="' + answer + '"]' );
     const costsContent = document.getElementById( 'costs_inputs-section' );
 
-    // When button is first clicked, bring in school data if 'No'
-    if ( getStateValue( 'costsButtonClicked' ) === false ) {
-      updateState.byProperty( 'costsButtonClicked', answer );
+    // When the button is clicked, bring in school data if 'No'
+    if ( getStateValue( 'costsQuestion' ) === false ) {
+      updateState.byProperty( 'costsQuestion', answer );
       // If their offer does not have costs, use the Department of Ed data
-      if ( answer === 'no' ) {
+      if ( answer === 'n' ) {
         updateFinancialsFromSchool();
       } else {
         recalculateFinancials();
       }
     }
-
-    // Show the appropriate content
-    document.querySelectorAll( '[data-offer-costs-info]' ).forEach( elem => {
-      elem.classList.remove( 'active' );
-    } );
-    document.querySelectorAll( '[data-costs_offer-answer]' ).forEach( elem => {
-      elem.classList.add( 'a-btn__disabled' );
-    } );
-    target.classList.remove( 'a-btn__disabled' );
-    offerContent.classList.add( 'active' );
-    costsContent.classList.add( 'active' );
-  },
-
-  /**
-   * Event handling for private and PLUS loans
-   * @param {Object} event - Triggering event
-   */
-  _handleOtherLoanButtonClick: function( event ) {
-    const target = event.target;
-    const value = target.dataset.borrowButton;
-
-    if ( value === 'privateLoan' ) {
-      updateState.byProperty( 'showPrivateLoans', 'yes' );
-    } else if ( value === 'gradPlus' ) {
-      updateState.byProperty( 'showPlusLoan', 'gradPlus' );
-    } else if ( value === 'parentPlus' ) {
-      updateState.byProperty( 'showPlusLoan', 'parentPlus' );
-    }
-
   },
 
   /**
@@ -179,7 +142,6 @@ const financialView = {
     this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
     this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
     this._costsOfferButtons = document.querySelectorAll( '.costs_button-section button' );
-    this._otherBorrowingButtons = document.querySelectorAll( '.other-borrowing-btns button' );
     this._addInputListeners();
     this._addButtonListeners();
   }

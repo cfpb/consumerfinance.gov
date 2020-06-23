@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "ccdb5_ui",
     "mptt",
     "teachers_digital_platform",
+    "crtool",
 )
 
 MIDDLEWARE = (
@@ -117,6 +118,7 @@ MIDDLEWARE = (
     "flags.middleware.FlagConditionsMiddleware",
     "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "core.middleware.DeactivateTranslationsMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -340,11 +342,11 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     "filter": ["haystack_edgengram"],
                 },
                 "synonym_en": {
-                    "tokenizer": "whitespace",
+                    "tokenizer": "standard",
                     "filter": ["synonyms_en"],
                 },
                 "synonym_es": {
-                    "tokenizer": "whitespace",
+                    "tokenizer": "standard",
                     "filter": ["synonyms_es"],
                 },
             },
@@ -358,7 +360,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     "type": "edgeNGram",
                     "min_gram": 3,
                     "max_gram": 15,
-                    "side": "front",
+                    "token_chars": [ "letter", "digit" ]
                 },
             },
             "filter": {
@@ -439,7 +441,7 @@ CFPB_COMMON_PASSWORD_RULES = [
 LOGIN_FAIL_TIME_PERIOD = os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get("LOGIN_FAILS_ALLOWED", 5)
-LOGIN_REDIRECT_URL = "/login/welcome/"
+LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/login/"
 
 # When we generate an full HTML version of the regulation, we want to

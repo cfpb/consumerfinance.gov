@@ -22,8 +22,10 @@ const _urlParamsToModelVars = {
   'lenp': 'stateModel.programLength',
   'ratp': 'stateModel.programRate',
   'depp': 'stateModel.programStudentType',
-  'cobs': 'stateModel.stateCosts',
-  'regs': 'stateModel.stateRegion',
+  'cobs': 'stateModel.costsQuestion',
+  'regs': 'stateModel.expensesRegion',
+  'iqof': 'stateModel.impactOffer',
+  'iqlo': 'stateModel.impactLoans',
 
   'tuit': 'financialModel.dirCost_tuition',
   'hous': 'financialModel.dirCost_housing',
@@ -31,7 +33,8 @@ const _urlParamsToModelVars = {
 
   'book': 'financialModel.indiCost_books',
   'indo': 'financialModel.indiCost_other',
-  'nda': 'financialModel.indiCost_added',
+  'nda':  'financialModel.indiCost_added',
+  'tran': 'financialModel.indiCost_transportation',
 
   'pelg': 'financialModel.grant_pell',
   'seog': 'financialModel.grant_seog',
@@ -109,8 +112,9 @@ function initializeFinancialValues() {
   * updateFinancial - Update a property of the financial model
   * @param {String} name - The name of the property to update
   * @param {*} value - The new value of the property
+  * @param {Boolean} updateView - (defaults true) should view be updated?
   */
-function updateFinancial( name, value ) {
+function updateFinancial( name, value, updateView ) {
   financialModel.setValue( name, value );
 }
 
@@ -134,8 +138,9 @@ function recalculateFinancials() {
   * updateExpense - Update a property of the expense model
   * @param {String} name - The name of the property to update
   * @param {*} value - The new value of the property
+  * @param {Boolean} updateView - (defaults true) should view be updated?
   */
-function updateExpense( name, value ) {
+function updateExpense( name, value, updateView ) {
   expensesModel.setValue( name, value );
 }
 
@@ -144,6 +149,14 @@ function updateExpense( name, value ) {
   */
 function recalculateExpenses() {
   expensesModel.calculateTotals();
+}
+
+/**
+ * updateRegion - Update the region of the expenses model
+ * @param {string} region - A two-character string of the new region
+ */
+function updateRegion( region ) {
+  expensesModel.setValuesByRegion( region );
 }
 
 /**
@@ -197,10 +210,30 @@ function updateModelsFromQueryString( queryObj ) {
     schoolModel: schoolModel.setValue,
     stateModel: stateModel.setValue
   };
+
+  // If there's an offerID, set cobs to 'o' (offer)
+  if ( queryObj.hasOwnProperty( 'oid' ) ) {
+    queryObj.cobs = 'o';
+  }
+  // If we have no cobs, check if there are costs values
+  if ( !queryObj.hasOwnProperty( 'cobs' ) ) {
+    const costKeys = [ 'tuit', 'hous', 'diro', 'book', 'indo', 'nda', 'tran' ];
+    let costsFound = false;
+    costKeys.forEach( key => {
+      if ( queryObj.hasOwnProperty( key ) ) {
+        costsFound = true;
+      }
+    } );
+
+    if ( costsFound ) {
+      queryObj.cobs = 'y';
+    }
+  }
+
   for ( const key in queryObj ) {
     if ( _urlParamsToModelVars.hasOwnProperty( key ) ) {
       const match = _urlParamsToModelVars[key].split( '.' );
-      modelMatch[match[0]]( match[1], queryObj[key] );
+      modelMatch[match[0]]( match[1], queryObj[key], false );
 
       // If there's an iped, do a fetch of the schoolData
       if ( key === 'iped' ) {
@@ -209,7 +242,7 @@ function updateModelsFromQueryString( queryObj ) {
 
       // Also put programLength into the financial model
       if ( key === 'lenp' ) {
-        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key] ) );
+        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key], false ) );
       }
     }
   }
@@ -217,13 +250,14 @@ function updateModelsFromQueryString( queryObj ) {
 }
 
 export {
-  updateFinancial,
   createFinancial,
   initializeFinancialValues,
-  updateSchoolData,
-  updateExpense,
-  updateFinancialsFromSchool,
-  recalculateFinancials,
   recalculateExpenses,
-  updateModelsFromQueryString
+  recalculateFinancials,
+  updateExpense,
+  updateFinancial,
+  updateFinancialsFromSchool,
+  updateModelsFromQueryString,
+  updateRegion,
+  updateSchoolData
 };

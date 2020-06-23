@@ -59,10 +59,10 @@ class EventPageTests(TestCase):
     @freeze_time('2011-01-03')
     def test_past_event_with_video_includes_video_js(self):
         page = EventPage(
-            title='Past event with youtube_url',
+            title='Past event with archive_video_id',
             start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
             end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC),
-            youtube_url='https://www.youtube.com/embed/Aa1Bb2Cc3Dc4'
+            archive_video_id='Aa1Bb2Cc3Dc'
         )
         save_new_page(page)
         self.assertEqual('past', page.event_state)
@@ -97,7 +97,7 @@ class EventPageTests(TestCase):
         self.assertNotIn('video-player.js', page.page_js)
 
         page = EventPage(
-            title='Past event with no youtube_url',
+            title='Past event with no archive_video_id',
             start_dt=datetime.datetime(2011, 1, 1, tzinfo=pytz.UTC),
             end_dt=datetime.datetime(2011, 1, 2, tzinfo=pytz.UTC)
         )
