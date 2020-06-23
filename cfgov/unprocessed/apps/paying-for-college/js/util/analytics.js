@@ -12,4 +12,4 @@ function sendAnalyticsEvent( action, label ) {
 
 export {
   sendAnalyticsEvent
-}
+};

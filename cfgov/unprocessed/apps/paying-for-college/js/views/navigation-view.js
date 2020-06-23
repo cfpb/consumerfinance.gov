@@ -94,7 +94,7 @@ const navigationView = {
   _handleNavButtonClick: function( event ) {
     event.preventDefault();
     const target = event.target;
-    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText )
+    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText );
 
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
