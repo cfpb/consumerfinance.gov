@@ -95,6 +95,7 @@ const navigationView = {
     event.preventDefault();
     const target = event.target;
     sendAnalyticsEvent( 'Secondary nav click', event.target.innerText )
+
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
     } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
@@ -108,9 +109,9 @@ const navigationView = {
    * @param {Object} event - click event
    */
   _handleNextButtonClick: function( event ) {
+    sendAnalyticsEvent( 'Next button click', getStateValue( 'activeSection' ) );
     updateState.nextSection();
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
-    sendAnalyticsEvent( 'Next button click', getStateValue( 'activeSection' ) );
   },
 
   /**
