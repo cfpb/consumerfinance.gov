@@ -109,7 +109,8 @@ const navigationView = {
    * @param {Object} event - click event
    */
   _handleNextButtonClick: function( event ) {
-    sendAnalyticsEvent( 'Next button click', getStateValue( 'activeSection' ) );
+    // TODO: Track time between Next button clicks for analytics
+    sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
     updateState.nextSection();
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
   },
