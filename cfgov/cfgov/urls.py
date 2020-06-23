@@ -477,7 +477,7 @@ urlpatterns = [
 
     re_path(
         r'^practitioner-resources/youth-financial-education/',
-        include('teachers_digital_platform.urls')
+        include('youth_activity_search.urls')
     ),
 
     re_path(

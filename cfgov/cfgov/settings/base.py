@@ -90,7 +90,7 @@ INSTALLED_APPS = (
     "hmda",
     "youth_employment",
     "diversity_inclusion",
-    "teachers_digital_platform",
+    "youth_activity_search",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
 
