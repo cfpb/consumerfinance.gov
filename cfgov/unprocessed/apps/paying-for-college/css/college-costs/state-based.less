@@ -7,8 +7,7 @@ main.college-costs {
 	.graduate-content,
 	.private-loan-section,
 	.parentplus-loan-section,
-	.gradplus-loan-section,
-	.costs_content-section {
+	.gradplus-loan-section {
 		display: none;
 	}
 
@@ -21,17 +20,35 @@ main.college-costs {
 		.undergrad-content {
 			display: block;
 		}
+		span.undergrad-content {
+			display: inline;
+		}
+		li.undergrad-content {
+			display: list-item;
+		}
 	}
 
 	&[data-state_programtype="graduate"] {
 		.graduate-content {
 			display: block;
 		}
+		span.graduate-content {
+			display: inline;
+		}
+		li.graduate-content {
+			display: list-item;
+		}
 	}
 
 	&[data-state_programtype="associates"] {
 		.associates-content {
 			display: block;
+		}
+		span.associates-content {
+			display: inline;
+		}
+		li.associates-content {
+			display: list-item;
 		}
 	}
 
@@ -96,49 +113,34 @@ main.college-costs {
 	}
 
 	// Costs button content control
-	&[data-state_costsbuttonclicked] {
+	&:not( [data-state_costsquestion] ) {
+		#costs_inputs-section {
+			display: none;
+		}
+		[data-state-based-visibility="costs-question-hide"] {
+			display: block;
+		}
+	}
+
+	&[data-state_costsquestion] {
 		#costs_inputs-section {
 			display: block;
 		}
-	}
-
-	&[data-state_costsbuttonclicked="yes"] {
-		.costs_content-section[data-offer-costs-info="yes"] {
-			display: block;
-		}
-	}
-
-	&[data-state_costsbuttonclicked="no"] {
-		& .costs_content-section[data-offer-costs-info="no"] {
-			display: block;
-		}
-	}
-
-	// Make a plan - Add loans buttons
-	&[data-state_showprivateloans="yes"] {
-		[data-state-based-visibility="show-privateLoan"] {
-			display: block;
-		}
-		[data-borrow-button="privateLoan"] {
+		[data-state-based-visibility="costs-question-hide"] {
 			display: none;
 		}
 	}
 
-	&[data-state_showplusloan="gradPlus"] {
-		[data-state-based-visibility="show-gradPlus"] {
+	&[data-state_costsquestion="y"],
+	&[data-state_costsquestion="o"] {
+		[data-state-based-visibility="costs-question-yes"] {
 			display: block;
-		}
-		[data-borrow-button="gradPlus"] {
-			display: none;
 		}
 	}
 
-	&[data-state_showplusloan="parentPlus"] {
-		[data-state-based-visibility="show-parentPlus"] {
+	&[data-state_costsquestion="n"] {
+		[data-state-based-visibility="costs-question-no"] {
 			display: block;
-		}
-		[data-borrow-button="parentPlus"] {
-			display: none;
 		}
 	}
 
@@ -168,9 +170,18 @@ main.college-costs {
 		}
 	}
 
+	&[data-state_debtruleviolation="false"] {
+		span[data-state-based-visibility="debt-rule-passed"] {
+			display: inline
+		}
+	}
+
 	&[data-state_debtruleviolation="true"] {
 		[data-state-based-visibility="debt-rule-violation"] {
 			display:block;
+		}
+		span[data-state-based-visibility="debt-rule-violation"] {
+			display: inline
 		}
 	}
 
@@ -200,6 +211,12 @@ main.college-costs {
 
 	&[data-state_expenseschoice="monthly"] {
 		[data-state-based-visibility="expenses-monthly-budget"] {
+			display: block;
+		}
+	}
+
+	&:not( [data-state_schoolcontrol="Private"] ) {
+		[data-state-based-visibility="control-nonprivate"] {
 			display: block;
 		}
 	}

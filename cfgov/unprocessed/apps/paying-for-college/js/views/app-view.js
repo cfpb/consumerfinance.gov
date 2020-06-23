@@ -2,15 +2,16 @@
 application, and are otherwise inappropriate for the
 other views. */
 
+import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { closest } from '../../../../js/modules/util/dom-traverse';
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
+import { closest } from '../../../../js/modules/util/dom-traverse';
 import { getAllStateValues } from '../dispatchers/get-model-values.js';
-import { updateState } from '../dispatchers/update-state.js';
+import { sendAnalyticsEvent } from '../util/analytics.js';
 
 
 const appView = {
-  _didThisHelpBtns: null,
+  _didThisHelpChoices: null,
   _finishLink: '',
   _sendLinkBtn: null,
   _actionPlanChoices: null,
@@ -19,8 +20,8 @@ const appView = {
    * Listeners for buttons
    */
   _addButtonListeners: function() {
-    appView._didThisHelpBtns.forEach( elem => {
-      bindEvent( elem, { click: this._handleDidThisHelpBtns } );
+    appView._didThisHelpChoices.forEach( elem => {
+      bindEvent( elem, { click: this._handleDidThisHelpClick } );
     } );
 
     appView._actionPlanChoices.forEach( elem => {
@@ -43,17 +44,16 @@ const appView = {
    * Handle the click of buttons on final page
    * @param {Object} event - Click event object
    */
-  _handleDidThisHelpBtns: event => {
+  _handleDidThisHelpClick: event => {
     const button = event.target;
-    const parent = closest( button, '.m-btn-group' );
-    button.classList.remove( 'a-btn__disabled');
-    parent.querySelectorAll( 'button:not( [value="' + button.value + '"]' )
-      .forEach( elem => {
-        elem.classList.add( 'a-btn__disabled' );
-      } );
+    const parent = closest( button, '.o-form_fieldset' );
+    sendAnalyticsEvent( 'Impact question click: ' + parent.dataset.impact, event.target.value );
+    updateState.byProperty( parent.dataset.impact, event.target.value );
   },
 
   _handleSendLinkBtn: event => {
+    sendAnalyticsEvent( 'Email your link click', window.location.search );
+
     const target = event.target;
     let href = 'mailto:' + document.querySelector( '#finish_email' ).value;
     href += '?subject=Link: Your financial path to graduation&body=';
@@ -79,7 +79,7 @@ const appView = {
    * Replaces current state, adding the formatted querystring as the URL
    */
   setUrlQueryString: () => {
-    window.history.replaceState( getAllStateValues(), null, buildUrlQueryString() );
+    updateState.replaceStateInHistory( buildUrlQueryString() );
     appView._updateSaveLink();
   },
 
@@ -87,7 +87,7 @@ const appView = {
    * Initialize the View
    */
   init: () => {
-    appView._didThisHelpBtns = document.querySelectorAll( '#save_did-it-help button, #save_understand-loans button' );
+    appView._didThisHelpChoices = document.querySelectorAll( '[data-impact] .m-form-field input.a-radio' );
     appView._finishLink = document.querySelector( '#finish_link' );
     appView._sendLinkBtn = document.querySelector( '#email-your-link' );
     appView._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field input.a-radio' );

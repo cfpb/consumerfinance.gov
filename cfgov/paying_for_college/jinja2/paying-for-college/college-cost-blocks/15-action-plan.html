@@ -6,19 +6,29 @@
     <p>Do you want to put this plan into action or consider other options?</p>
 
     <div class="action-plan_choices block block__sub">
-        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-            <input id="action-plan_put-into-action" type="radio" name="action-plan-radio" class="a-radio" value="action">
-            <label class="a-label" for="action-plan_put-into-action">How to put this plan into action</label>
-        </div>
-        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-            <input id="action-plan_consider" type="radio" name="action-plan-radio" class="a-radio" value="consider">
-            <label class="a-label" for="action-plan_consider">Consider other options</label>
-        </div>
+        {{
+            radio.render({
+              'name':  "action-plan-radio",
+              'label': 'How to put this plan into action',
+              'value': 'action',
+              'id': 'action-plan_put-into-action',
+              'class': 'm-form-field__lg-target' 
+            })
+        }}
+         {{
+            radio.render({
+              'name':  "action-plan-radio",
+              'label': 'Consider other options',
+              'value': 'consider',
+              'id': 'action-plan_consider',
+              'class': 'm-form-field__lg-target' 
+            })
+        }}  
     </div>
 
     <div class="block block__sub action-plan_steps" data-state-based-visibility="put-into-action">
         <h3>How to put this plan into action</h3>
-        <div>
+        <div data-state-based-visibility="none">
             <button class="a-btn">Print summary</button>
             <button class="a-btn a-btn__secondary">Save as a link</button>
             <p class="u-mt15"><small>You will also have a chace to print all documents at the end.</small></p>
@@ -90,7 +100,7 @@
         </div>
 
         <div class="block block__sub graduate-content">
-            <h4>Apply for additional loans, including grad PLUS and private options.</h4>
+            <h4>Apply for additional loans, including Grad PLUS and private options.</h4>
             <p>To get the best deal for your situation, read the fine print and shop around for the lowest interest rates and fees. You’ll probably need a cosigner.</p>
         </div>
         

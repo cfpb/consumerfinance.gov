@@ -4,9 +4,11 @@ import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 
 
-/* getQueryVariables - Check the url for queryString and interpret it into an object
-   full of key-value pairs.
-   @returns {Object} key-value pairs of the queryString */
+/**
+ * getQueryVariables - Check the url for queryString and interpret it into an object
+ * full of key-value pairs.
+ * @returns {Object} key-value pairs of the queryString
+ */
 function getQueryVariables() {
   const query = window.location.search.substring( 1 );
   const pairs = query.split( '&' );
@@ -21,10 +23,11 @@ function getQueryVariables() {
   return queryVariables;
 }
 
-/* _buildUrlQueryString - Retreieve values from the models and transform them into a
-   querystring
-   @returns {String} a formatted query string based on model values */
-
+/**
+ * _buildUrlQueryString - Retreieve values from the models and transform them into a
+ * querystring
+ * @returns {String} a formatted query string based on model values
+ */
 function buildUrlQueryString() {
   const expensesValues = expensesModel.values;
   const financialValues = financialModel.values;
@@ -32,6 +35,8 @@ function buildUrlQueryString() {
   const stateValues = stateModel.values;
   let query = '?';
 
+  // TODO: This list of URL variables should be authoritative, and not repeated in the
+  // update-models.js file.
   const variables = {
     'iped': schoolValues.schoolID,
     'pid': schoolValues.pid,
@@ -42,8 +47,10 @@ function buildUrlQueryString() {
     'lenp': stateValues.programLength,
     'ratp': stateValues.programRate,
     'depp': stateValues.programStudentType,
-    'cobs': stateValues.stateCosts, // TODO: What is this value?
-    'regs': stateValues.stateRegion,
+    'cobs': stateValues.costsQuestion,
+    'regs': stateValues.expensesRegion,
+    'iqof': stateValues.impactOffer,
+    'iqlo': stateValues.impactLoans,
 
     'tuit': financialValues.dirCost_tuition,
     'hous': financialValues.dirCost_housing,
@@ -51,6 +58,7 @@ function buildUrlQueryString() {
 
     'book': financialValues.indiCost_books,
     'indo': financialValues.indiCost_other,
+    'tran': financialValues.indiCost_transportation,
     'nda': financialValues.indiCost_added,
 
     'pelg': financialValues.grant_pell,
@@ -125,9 +133,11 @@ function buildUrlQueryString() {
      CHECK IF THE VALUE HAS CHANGED FROM THE DEFAULT
      } */
 
+  Object.assign( variables, expensesVariables );
 
   for ( const key in variables ) {
-    if ( typeof variables[key] !== 'undefined' && variables[key] !== 0 && variables[key] !== null ) {
+    if ( typeof variables[key] !== 'undefined' && variables[key] !== 0 && 
+                variables[key] !== null && variables[key] !== false ) {
       if ( query.length > 1 ) query += '&';
       query += key + '=' + variables[key];
     }
