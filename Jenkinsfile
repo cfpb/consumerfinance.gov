@@ -19,14 +19,14 @@ pipeline {
 
     parameters {
         booleanParam(
-            name: 'DEPLOY',
-            defaultValue: false,
-            description: 'Deploy the stack?'
+                name: 'DEPLOY',
+                defaultValue: false,
+                description: 'Deploy the stack?'
         )
         booleanParam(
-            name: 'REFRESH_DB',
-            defaultValue: false,
-            description: 'Refresh the database?'
+                name: 'REFRESH_DB',
+                defaultValue: false,
+                description: 'Refresh the database?'
         )
     }
 
