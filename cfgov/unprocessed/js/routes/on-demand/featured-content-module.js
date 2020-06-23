@@ -3,11 +3,6 @@
    ========================================================================== */
 
 import FeaturedContentModule from '../../organisms/FeaturedContentModule';
+import { instantiateAll } from '../../modules/util/atomic-helpers';
 
-const featuredContentModuleDom = document.querySelector(
-  `.${ FeaturedContentModule.BASE_CLASS }`
-);
-const featuredContentModule = new FeaturedContentModule(
-  featuredContentModuleDom
-);
-featuredContentModule.init();
+instantiateAll( `.${ FeaturedContentModule.BASE_CLASS }`, FeaturedContentModule );
