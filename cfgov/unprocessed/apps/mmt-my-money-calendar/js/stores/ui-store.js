@@ -21,6 +21,7 @@ export default class UIStore {
   @observable isTouchDevice = false;
   @observable installPromptEvent;
   @observable days = [];
+  @observable hasSpotlight;
 
   constructor(rootStore) {
     this.rootStore = rootStore;
@@ -219,14 +220,14 @@ export default class UIStore {
     window.removeEventListener('beforeinstallprompt', this.setInstallPromptEvent);
   };
 
+  @action toggleSpotlight = (bool) => {
+    this.hasSpotlight = bool;
+  }
+
   async showInstallPrompt() {
     if (!this.installPromptEvent) return false;
     this.installPromptEvent.prompt();
     const { outcome } = await this.installPromptEvent.userChoice;
     return outcome;
-  }
-
-  toggleNav() {
-    this.setNavOpen(!this.navOpen);
   }
 }
