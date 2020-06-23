@@ -120,10 +120,23 @@ function VideoPlayer( element ) {
    * @param {string} imageURL - The URL to load in the image.
    */
   function _imageLoad( imageURL ) {
-    _imageDom.addEventListener( 'load', _imageShow );
+    _imageDom.addEventListener( 'load', _imageLoaded );
     _imageDom.addEventListener( 'error', _imageLoadDefault );
 
     _imageDom.src = imageURL;
+  }
+
+  /**
+   * Event handler for when image src attribute is set.
+   */
+  function _imageLoaded() {
+    /* 120px is the natural width of the default YouTube image.
+     * This condition will be true when there isn't a custom image set. */
+    if ( _imageDom.naturalWidth === 120 ) {
+      _imageLoadDefault();
+    }
+
+    _imageShow();
   }
 
   /**
