@@ -29,7 +29,7 @@ LINK_ICON_TEXT_CLASSES = ['a-link_text']
 TAG_RE = (
     # Match an <tag_name[ attributes]>. If tag_name is not followed by a space
     # and any characters except >, it must be followed by >.
-    r'<{tag_name}(?:\s[^>]+?|)>'
+    r'<{tag_name}(?:\s+[^>]*?|)>'
     # And match everything inside before the closing </tag>
     r'.+?(?=</{tag_name}>)'
     # Then match the closing </tag>
