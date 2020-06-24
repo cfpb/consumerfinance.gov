@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "ccdb5_ui",
     "mptt",
     "teachers_digital_platform",
+    "crtool",
 )
 
 MIDDLEWARE = (
@@ -252,7 +253,7 @@ STATICFILES_DIRS += REPOSITORY_ROOT.child("static.in").listdir(filter=DIRS)
 
 ALLOWED_HOSTS = ["*"]
 
-EXTERNAL_URL_WHITELIST = (
+EXTERNAL_URL_ALLOWLIST = (
     r"^https:\/\/facebook\.com\/cfpb$",
     r"^https:\/\/twitter\.com\/cfpb$",
     r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa 501
@@ -513,6 +514,7 @@ CSP_SCRIPT_SRC = (
     "storage.googleapis.com",
     "api.consumerfinance.gov",
     "files.consumerfinance.gov",
+    "*.qualtrics.com",
 )
 
 # These specify valid sources of CSS code
@@ -588,6 +590,7 @@ CSP_CONNECT_SRC = (
     "public.govdelivery.com",
     "n2.mouseflow.com",
     "api.iperceptions.com",
+    "*.qualtrics.com",
 )
 
 # Feature flags
@@ -709,6 +712,9 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
+    # Controls whether or not to include Qualtrics Web Intercept code for the
+    # Q42020 Ask CFPB customer satisfaction survey.
+    "ASK_SURVEY_INTERCEPT": [],
 }
 
 

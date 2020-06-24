@@ -19,7 +19,7 @@ class LinkScriptTestCase(TestCase):
         test_url = get_url(bad_ref)
         self.assertIs(test_url, None)
 
-    def test_part_number_not_in_whitelist(self):
+    def test_part_number_not_in_allowlist(self):
         bad_ref = '1017.5(d)(1)'
         test_url = get_url(bad_ref)
         self.assertIs(test_url, None)
