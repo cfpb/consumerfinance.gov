@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     "treemodeladmin",
     "housing_counselor",
     "hmda",
+    "youth_activity_search",
     "youth_employment",
     "diversity_inclusion",
     "mega_menu.apps.MegaMenuConfig",
@@ -102,7 +103,6 @@ INSTALLED_APPS = (
     "rest_framework",
     "ccdb5_ui",
     "mptt",
-    "teachers_digital_platform",
     "crtool",
 )
 

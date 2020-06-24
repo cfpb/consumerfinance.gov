@@ -1,0 +1,712 @@
+[
+    {
+        "fields": {
+            "weight": 0,
+            "title": "CTE (Career and Technical Education)"
+        },
+        "model": "youth_activity_search.activityschoolsubject",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Fine arts and performing arts"
+        },
+        "model": "youth_activity_search.activityschoolsubject",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "English or language arts"
+        },
+        "model": "youth_activity_search.activityschoolsubject",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Math"
+        },
+        "model": "youth_activity_search.activityschoolsubject",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Physical education or health"
+        },
+        "model": "youth_activity_search.activityschoolsubject",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Science"
+        },
+        "model": "youth_activity_search.activityschoolsubject",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Social studies or history"
+        },
+        "model": "youth_activity_search.activityschoolsubject",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "World languages"
+        },
+        "model": "youth_activity_search.activityschoolsubject",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "rght": 10,
+            "parent": null,
+            "weight": 0,
+            "title": "Earn",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 1
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "rght": 7,
+            "parent": 1,
+            "weight": 0,
+            "title": "Making Money",
+            "level": 1,
+            "lft": 6,
+            "tree_id": 1
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 1,
+            "weight": 0,
+            "title": "Increasing earnings",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 1
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 1,
+            "weight": 0,
+            "title": "Getting paid",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 1
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "rght": 9,
+            "parent": 1,
+            "weight": 0,
+            "title": "Paying taxes",
+            "level": 1,
+            "lft": 8,
+            "tree_id": 1
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "rght": 14,
+            "parent": null,
+            "weight": 1,
+            "title": "Save and Invest",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 2
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 6,
+            "weight": 0,
+            "title": "Choosing how to save",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 2
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 6,
+            "weight": 0,
+            "title": "Building emergency savings",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 2
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "rght": 9,
+            "parent": 6,
+            "weight": 0,
+            "title": "Saving for college",
+            "level": 1,
+            "lft": 8,
+            "tree_id": 2
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "rght": 11,
+            "parent": 6,
+            "weight": 0,
+            "title": "Saving for long-term goals",
+            "level": 1,
+            "lft": 10,
+            "tree_id": 2
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "rght": 13,
+            "parent": 6,
+            "weight": 0,
+            "title": "Saving for short-term goals",
+            "level": 1,
+            "lft": 12,
+            "tree_id": 2
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "rght": 7,
+            "parent": 6,
+            "weight": 0,
+            "title": "Investing",
+            "level": 1,
+            "lft": 6,
+            "tree_id": 2
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "rght": 6,
+            "parent": null,
+            "weight": 2,
+            "title": "Protect",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 3
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 13,
+            "weight": 0,
+            "title": "Managing risk",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 3
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 13,
+            "weight": 0,
+            "title": "Preventing fraud and identity theft",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 3
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "rght": 10,
+            "parent": null,
+            "weight": 3,
+            "title": "Spend",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 4
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 16,
+            "weight": 0,
+            "title": "Budgeting",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 4
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 16,
+            "weight": 0,
+            "title": "Buying things",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 4
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "rght": 7,
+            "parent": 16,
+            "weight": 0,
+            "title": "Paying bills",
+            "level": 1,
+            "lft": 6,
+            "tree_id": 4
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 19
+    },
+    {
+        "fields": {
+            "rght": 9,
+            "parent": 16,
+            "weight": 0,
+            "title": "Paying for college",
+            "level": 1,
+            "lft": 8,
+            "tree_id": 4
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 20
+    },
+    {
+        "fields": {
+            "rght": 6,
+            "parent": null,
+            "weight": 4,
+            "title": "Borrow",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 5
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 21
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 21,
+            "weight": 0,
+            "title": "Getting loans",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 5
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 22
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 21,
+            "weight": 0,
+            "title": "Managing credit",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 5
+        },
+        "model": "youth_activity_search.activitytopic",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "High school (9-10)"
+        },
+        "model": "youth_activity_search.activitygradelevel",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "High school (11-12)"
+        },
+        "model": "youth_activity_search.activitygradelevel",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "13-15"
+        },
+        "model": "youth_activity_search.activityagerange",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "16-19"
+        },
+        "model": "youth_activity_search.activityagerange",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "English language learners"
+        },
+        "model": "youth_activity_search.activitystudentcharacteristics",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Low income"
+        },
+        "model": "youth_activity_search.activitystudentcharacteristics",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 3,
+            "title": "Rural"
+        },
+        "model": "youth_activity_search.activitystudentcharacteristics",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Special education"
+        },
+        "model": "youth_activity_search.activitystudentcharacteristics",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 4,
+            "title": "Urban"
+        },
+        "model": "youth_activity_search.activitystudentcharacteristics",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Individual"
+        },
+        "model": "youth_activity_search.activitytype",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Small group"
+        },
+        "model": "youth_activity_search.activitytype",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Whole class"
+        },
+        "model": "youth_activity_search.activitytype",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Blended learning"
+        },
+        "model": "youth_activity_search.activityteachingstrategy",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Competency-based learning"
+        },
+        "model": "youth_activity_search.activityteachingstrategy",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Cooperative learning"
+        },
+        "model": "youth_activity_search.activityteachingstrategy",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Direct instruction"
+        },
+        "model": "youth_activity_search.activityteachingstrategy",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Gamification"
+        },
+        "model": "youth_activity_search.activityteachingstrategy",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Personalized instruction"
+        },
+        "model": "youth_activity_search.activityteachingstrategy",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Project-based learning"
+        },
+        "model": "youth_activity_search.activityteachingstrategy",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Simulation"
+        },
+        "model": "youth_activity_search.activityteachingstrategy",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Remember"
+        },
+        "model": "youth_activity_search.activitybloomstaxonomylevel",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Understand"
+        },
+        "model": "youth_activity_search.activitybloomstaxonomylevel",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Apply"
+        },
+        "model": "youth_activity_search.activitybloomstaxonomylevel",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 3,
+            "title": "Analyze"
+        },
+        "model": "youth_activity_search.activitybloomstaxonomylevel",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 4,
+            "title": "Evaluate"
+        },
+        "model": "youth_activity_search.activitybloomstaxonomylevel",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 5,
+            "title": "Create"
+        },
+        "model": "youth_activity_search.activitybloomstaxonomylevel",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "15-20 minutes"
+        },
+        "model": "youth_activity_search.activityduration",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Class period"
+        },
+        "model": "youth_activity_search.activityduration",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Spending and saving"
+        },
+        "model": "youth_activity_search.activityjumpstartcoalition",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Credit and debt"
+        },
+        "model": "youth_activity_search.activityjumpstartcoalition",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Employment and income"
+        },
+        "model": "youth_activity_search.activityjumpstartcoalition",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 3,
+            "title": "Investing"
+        },
+        "model": "youth_activity_search.activityjumpstartcoalition",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 4,
+            "title": "Risk management and insurance"
+        },
+        "model": "youth_activity_search.activityjumpstartcoalition",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 5,
+            "title": "Financial decision-making"
+        },
+        "model": "youth_activity_search.activityjumpstartcoalition",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Standard I. Earning Income"
+        },
+        "model": "youth_activity_search.activitycouncilforeconed",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Standard II. Buying goods and services"
+        },
+        "model": "youth_activity_search.activitycouncilforeconed",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Standard III. Saving"
+        },
+        "model": "youth_activity_search.activitycouncilforeconed",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 3,
+            "title": "Standard IV. Using credit"
+        },
+        "model": "youth_activity_search.activitycouncilforeconed",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 4,
+            "title": "Standard V. Financial investing"
+        },
+        "model": "youth_activity_search.activitycouncilforeconed",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 5,
+            "title": "Standard VI. Protecting and insuring"
+        },
+        "model": "youth_activity_search.activitycouncilforeconed",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Executive function",
+            "svg_icon": "settings"
+        },
+        "model": "youth_activity_search.activitybuildingblock",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Financial habits and norms",
+            "svg_icon": "split"
+        },
+        "model": "youth_activity_search.activitybuildingblock",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Financial knowledge and decision-making skills",
+            "svg_icon": "piggy-bank-check"
+        },
+        "model": "youth_activity_search.activitybuildingblock",
+        "pk": 3
+    }
+]
