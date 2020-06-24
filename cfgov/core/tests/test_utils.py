@@ -90,3 +90,12 @@ class LinkUtilsTests(TestCase):
             get_link_tags('outer <aside>inner <a href="">link</a></aside>'),
             ['<a href="">link</a>', ]
         )
+
+    def test_get_link_tags_spacing(self):
+        """ Handle a case where there's a conditional in a template, i.e.
+        <a {% if some_condition %}class="some-class"{% endif %}>, that renders
+        a space following the tag name, `<a >`"""
+        self.assertEqual(
+            get_link_tags('outer <a  >inner</a>'),
+            ['<a  >inner</a>', ]
+        )
