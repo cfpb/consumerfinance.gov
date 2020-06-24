@@ -78,7 +78,6 @@ const schoolView = {
   _handleProgramRadioClick: function( event ) {
     const container = closest( event.target, '.m-form-field' );
     const input = container.querySelector( 'input' );
-    input.setAttribute( 'checked', true );
 
     // Update the model with program info
     const prop = input.getAttribute( 'name' );
