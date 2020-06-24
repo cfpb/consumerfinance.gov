@@ -685,7 +685,7 @@ rules:
     - 0
     - consistent
 
-  # Blacklist certain identifiers to prevent them being used.
+  # Block certain identifiers to prevent them being used.
   id-blacklist:
     - 1
     - e
