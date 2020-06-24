@@ -7,6 +7,7 @@ class TemplateDebugView(TemplateView):
     template_name = 'v1/template_debug.html'
     debug_template_name = None
     debug_test_cases = None
+    extra_js = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -22,9 +23,16 @@ class TemplateDebugView(TemplateView):
         context.update({
             'debug_template_name': self.debug_template_name,
             'debug_test_cases': {
-                name: template.render({'value': data})
-                for name, data in self.debug_test_cases.items()
+                name: template.render({
+                    'request': self.request,
+                    'value': data,
+                }) for name, data in self.debug_test_cases.items()
             },
         })
+
+        if self.extra_js:
+            context['page'] = {
+                'media': self.extra_js,
+            }
 
         return context

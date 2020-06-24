@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "ccdb5_ui",
     "mptt",
     "teachers_digital_platform",
+    "crtool",
 )
 
 MIDDLEWARE = (
@@ -341,11 +342,11 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     "filter": ["haystack_edgengram"],
                 },
                 "synonym_en": {
-                    "tokenizer": "whitespace",
+                    "tokenizer": "standard",
                     "filter": ["synonyms_en"],
                 },
                 "synonym_es": {
-                    "tokenizer": "whitespace",
+                    "tokenizer": "standard",
                     "filter": ["synonyms_es"],
                 },
             },
@@ -359,7 +360,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     "type": "edgeNGram",
                     "min_gram": 3,
                     "max_gram": 15,
-                    "side": "front",
+                    "token_chars": [ "letter", "digit" ]
                 },
             },
             "filter": {
@@ -513,6 +514,7 @@ CSP_SCRIPT_SRC = (
     "storage.googleapis.com",
     "api.consumerfinance.gov",
     "files.consumerfinance.gov",
+    "*.qualtrics.com",
 )
 
 # These specify valid sources of CSS code
@@ -588,6 +590,7 @@ CSP_CONNECT_SRC = (
     "public.govdelivery.com",
     "n2.mouseflow.com",
     "api.iperceptions.com",
+    "*.qualtrics.com",
 )
 
 # Feature flags
@@ -709,6 +712,9 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
+    # Controls whether or not to include Qualtrics Web Intercept code for the
+    # Q42020 Ask CFPB customer satisfaction survey.
+    "ASK_SURVEY_INTERCEPT": [],
 }
 
 

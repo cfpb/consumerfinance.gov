@@ -9,15 +9,23 @@
         {{
             text_item.render({
                 'label': 'Total money borrowed',
-                'value': '$53,500',
+                'value': '$0',
                 'type': 'text',
                 'data_attribute': 'data-financial-item="total_borrowingAtGrad"'
             })
         }}
         {{
             text_item.render({
-                'label': 'Interest with 10-year repayment plan',
-                'value': '$20,053',
+                'label': 'Interest accrued while in school ',
+                'value': '$0',
+                'type': 'text',
+                'data_attribute': 'data-financial-item="debt_programInterest"'
+            })
+        }}
+        {{
+            text_item.render({
+                'label': 'Interest over 10-year repayment plan',
+                'value': '$0',
                 'type': 'text',
                 'data_attribute': 'data-financial-item="debt_tenYearInterest"'
             })
@@ -25,7 +33,7 @@
         {{
             text_item.render({
                 'label': 'Total cost of borrowing',
-                'value': '$73,553',
+                'value': '$0',
                 'type': 'subtotal',
                 'status': 'warning',
                 'data_attribute': 'data-financial-item="debt_tenYearTotal"'

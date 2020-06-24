@@ -55,7 +55,7 @@ function stylesIE() {
       postcssUnmq( {
         width: '75em'
       } ),
-      autoprefixer( { overrideBrowserslist: ['ie 8', 'ie 9'] } )
+      autoprefixer( { overrideBrowserslist: [ 'ie 8', 'ie 9' ]} )
     ] ) )
     .pipe( gulpRename( {
       suffix:  '.ie',
