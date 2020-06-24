@@ -35,7 +35,7 @@ requests_toolbelt==0.8.0
 sha3==0.2.1
 unipath>=1.1,<=2.0
 urllib3==1.25.2
-wagtail-autocomplete==0.1.1
+wagtail-autocomplete==0.6
 wagtail-flags==4.2.1
 wagtail-inventory==1.1
 wagtail-sharing==2.2
