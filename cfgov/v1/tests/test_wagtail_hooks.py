@@ -5,7 +5,7 @@ from django.test import (
 )
 
 from wagtail.core.models import Site
-from wagtail.core.whitelist import Whitelister
+from wagtail.core.whitelist import Whitelister as Allowlister
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
 
@@ -200,20 +200,20 @@ class TestResourceTagsFilter(TestCase, WagtailTestUtils):
         )
 
 
-class TestWhitelistOverride(SimpleTestCase):
+class TestAllowlistOverride(SimpleTestCase):
     # Borrowed from https://github.com/wagtail/wagtail/blob/master/wagtail
     # /core/tests/test_whitelist.py
 
     def setUp(self):
-        self.whitelister = Whitelister()
+        self.allowlister = Allowlister()
 
-    def test_whitelist_hooks(self):
+    def test_allowlist_hooks(self):
         """
-        Whitelister.clean should remove disallowed tags and attributes from
+        Allowlister.clean should remove disallowed tags and attributes from
         a string
         """
         input_html = '<scan class="id">Consumer <embed>Finance</embed></scan>'
-        output_html = self.whitelister.clean(input_html)
+        output_html = self.allowlister.clean(input_html)
         self.assertHTMLEqual(output_html, 'Consumer Finance')
 
 

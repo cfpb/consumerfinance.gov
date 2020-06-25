@@ -16,10 +16,10 @@ except ImportError:
     from django.core.urlresolvers import RegexURLResolver as URLResolver
 
 
-# Whitelist is a list of *strings* that match the beginning of a regex string.
+# Allowlist is a list of *strings* that match the beginning of a regex string.
 # For example, ''^admin' will match any urlpattern regex that starts with
 # '^admin'.
-ADMIN_URL_WHITELIST = [
+ADMIN_URL_ALLOWLIST = [
     '^admin/',
     '^csp-report/',
     '^d/admin/',
@@ -71,13 +71,13 @@ class AdminURLSTestCase(TestCase):
 
         self.admin_urls = set(with_admin) - set(without_admin)
 
-    def test_admin_url_whitelist(self):
-        """ Test to ensure admin urls match our whitelist """
+    def test_admin_url_allowlist(self):
+        """ Test to ensure admin urls match our allowlist """
         non_matching_urls = [u for u in self.admin_urls
                              if not any(
-                                 u.startswith(w) for w in ADMIN_URL_WHITELIST)]
+                                 u.startswith(w) for w in ADMIN_URL_ALLOWLIST)]
         self.assertEqual(len(non_matching_urls), 0,
-                         msg="Non-whitelisted admin URLs:\n\t{}\n".format(
+                         msg="Non-allowlisted admin URLs:\n\t{}\n".format(
                              ',\n\t'.join(non_matching_urls)))
 
     def tearDown(self):

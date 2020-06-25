@@ -79,7 +79,7 @@ class FipsMeta(object):
         self.msa_fips = {}
         self.non_msa_fips = {}
         self.nation_row = {}  # storage placeholder for CSV downloads
-        self.whitelist = []  # FIPS that meet our threshold for display
+        self.allowlist = []  # FIPS that meet our threshold for display
         self.all_fips = []  # All valid county, MSA and state FIPS
         self.dates = []  # All the sampling dates we're displaying; will grow
         self.short_dates = []  # Shortened date versions for output labels
@@ -172,7 +172,7 @@ def load_county_mappings():
 
 def load_fips_lists():
     from data_research.models import MortgageMetaData
-    for attr in ['whitelist', 'all_fips']:
+    for attr in ['allowlist', 'all_fips']:
         setattr(FIPS, attr, MortgageMetaData.objects.get(name=attr).json_value)
     FIPS.state_fips = MortgageMetaData.objects.get(
         name='state_meta').json_value
