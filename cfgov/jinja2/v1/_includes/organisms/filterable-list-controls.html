@@ -46,6 +46,23 @@
             </div>
         </div>
     {% endif %}
+    {% if value.statuses %}
+        <div class="content-l_col
+                    content-l_col-1-3">
+            <div class="o-form_group">
+                <fieldset class="o-form_fieldset">
+                    <legend class="a-legend">
+                       Status
+                    </legend>
+                    <ul class="m-list m-list__unstyled">
+                    {% for slug, name in form.statuses.field.choices %}
+                        {{ _filter_selectable('checkbox', name, 'statuses_' ~ slug, 'statuses', slug) }}
+                    {% endfor %}
+                    </ul>
+                </fieldset>
+            </div>
+        </div>
+    {% endif %}
     {% if show_topic_filter or value.authors or value.date_range %}
         <div class="content-l_col
                     content-l_col-2-3">

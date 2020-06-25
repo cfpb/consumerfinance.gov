@@ -25,6 +25,7 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
+from v1.util.ref import enforcement_statuses
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -158,11 +159,7 @@ class DocumentDetailPage(AbstractFilterPage):
 
 class EnforcementActionStatus(models.Model):
     institution = models.CharField(max_length=200, blank=True)
-    status = models.CharField(max_length=50, choices=[
-        ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
-        ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
-        ('Pending Litigation', 'Pending Litigation')
-    ])
+    status = models.CharField(max_length=50, choices=enforcement_statuses)
     action = ParentalKey('v1.EnforcementActionPage',
                          on_delete=models.CASCADE,
                          related_name='statuses')

@@ -775,6 +775,9 @@ class FilterableList(BaseExpandable):
         required=True,
         help_text='Whether to include a dropdown in the filter controls '
                   'for "Topics"')
+
+    statuses = blocks.BooleanBlock(default=False, required=False,
+                                   label='Filter Enforcement Statuses')
     authors = blocks.BooleanBlock(default=True, required=False,
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,

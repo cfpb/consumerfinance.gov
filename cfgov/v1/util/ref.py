@@ -151,6 +151,12 @@ supported_languagues = [
     ('ht', 'Haitian Creole'),
 ]
 
+enforcement_statuses = [
+    ('post-order-post-judgment', 'Post Order/Post Judgment'),
+    ('expired-terminated-dismissed', 'Expired/Terminated/Dismissed'),
+    ('pending-litigation', 'Pending Litigation')
+]
+
 
 def get_appropriate_categories(specific_categories, page_type):
     """ An array of specific categories is provided from whatever
