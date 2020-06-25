@@ -162,7 +162,10 @@ const financialModel = {
     }
 
     // unsubCap is actually the 'unsubCap' minus any subsidized loans.
-    const unsubCap = getConstantsValue( unsubCapKey ) - financialModel.values.fedLoan_directSub;
+    const unsubCap = Math.max( 
+      getConstantsValue( unsubCapKey ) - financialModel.values.fedLoan_directSub,
+      0 );
+
     // Set limits based on the constants model
     const limits = {
       grant_pell: [ 0, getConstantsValue( 'pellCap' ) ],
