@@ -77,7 +77,7 @@ class ReportSection(ClusterableModel):
         FieldPanel('body'),
         InlinePanel('report_subsections', label='Subsection'),
     ]
-    action = ParentalKey('Report',
+    report = ParentalKey('Report',
                          on_delete=models.CASCADE,
                          related_name='report_sections')
 
@@ -85,14 +85,14 @@ class ReportSection(ClusterableModel):
 class ReportSubSection(models.Model):
     sub_header = models.CharField(max_length=200)
     sub_body = models.TextField(blank=True)
-    action = ParentalKey('ReportSection',
+    section = ParentalKey('ReportSection',
                          on_delete=models.CASCADE,
                          related_name='report_subsections')
 
 
 class AuthorNames(models.Model):
     name = models.CharField(max_length=50)
-    action = ParentalKey('Report',
+    report = ParentalKey('Report',
                          on_delete=models.CASCADE,
                          related_name='report_author_names')
 
