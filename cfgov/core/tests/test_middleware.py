@@ -228,6 +228,7 @@ class TestParseLinks(TestCase):
 
 class DeactivateTranslationsMiddlewareTests(SimpleTestCase):
     def test_deactivates_translations(self):
+        translation.activate('en-us')
         self.assertEqual(translation.get_language(), 'en-us')
 
         translation.activate('es')
