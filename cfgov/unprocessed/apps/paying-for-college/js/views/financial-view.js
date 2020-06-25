@@ -37,7 +37,8 @@ const financialView = {
     financialView._financialInputs.forEach( elem => {
       const events = {
         keyup: this._handleInputChange,
-        focusout: this._handleInputChange
+        focusout: this._handleInputChange,
+        click: this._handleInputClick
       };
       bindEvent( elem, events );
     } );
@@ -46,7 +47,7 @@ const financialView = {
 
   /**
    * Event handling for button choice - "Does your offer include costs?"
-   * @param {Object} event - Triggering event
+   * @param {object} event - Triggering event
    */
   _handleCostsButtonClick: function( event ) {
     const target = event.target;
@@ -68,7 +69,7 @@ const financialView = {
 
   /**
    * Event handling for financial-item INPUT changes
-   * @param {Object} event - Triggering event
+   * @param {object} event - Triggering event
    */
   _handleInputChange: function( event ) {
     clearTimeout( financialView._inputChangeTimeout );
@@ -95,8 +96,19 @@ const financialView = {
   },
 
   /**
+   * Event handling for input clicks
+   * @param {object} event - the triggering event
+   */
+  _handleInputClick: function( event ) {
+    const target = event.target;
+    if ( target.value === '$0' ) {
+      target.value = '';
+    }
+  },
+
+  /**
    * Event handling for "see steps" action plan button
-   * @param {Object} event - Triggering event
+   * @param {object} event - Triggering event
    */
   _handleSeeStepsClick: function( event ) {
     // TODO - This could all be written better.
