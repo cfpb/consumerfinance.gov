@@ -10,7 +10,6 @@ from v1.models import Contact, PortalCategory, PortalTopic
 
 admin.site.register(Contact)
 admin.site.unregister(User)
-admin.site.unregister(Page)
 
 
 @admin.register(User)
