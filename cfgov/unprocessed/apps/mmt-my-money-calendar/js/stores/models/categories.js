@@ -194,7 +194,7 @@ export const Categories = new CategoryTree({
         hasBill: true,
       },
       propertyTaxes: {
-        name: 'Property Taxes',
+        name: 'Property Tax',
         icon: icons.propertyTaxes,
         recurrenceTypes: ['monthly'],
         hasBill: true,
@@ -389,7 +389,7 @@ export const Categories = new CategoryTree({
         },
       },
       groceries: {
-        name: 'Groceries',
+        name: 'Grocery',
         icon: icons.groceries,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
@@ -423,7 +423,7 @@ export const Categories = new CategoryTree({
         hasBill: false,
       },
       subscriptions: {
-        name: 'Subscriptions',
+        name: 'Subscription',
         icon: icons.subscriptions,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: true,
@@ -493,7 +493,7 @@ export const Categories = new CategoryTree({
         hasBill: false,
       },
       pets: {
-        name: 'Pets',
+        name: 'Pet',
         icon: icons.pets,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
@@ -543,7 +543,7 @@ export const Categories = new CategoryTree({
         },
       },
       courtOrderedExpenses: {
-        name: 'Court-Ordered Expenses',
+        name: 'Court-Ordered Fee',
         icon: icons.courtOrderedExpenses,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: true,
