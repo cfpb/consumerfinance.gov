@@ -180,11 +180,6 @@ function Form() {
             formValues.current = values;
             return showRecurrenceUpdateModal(true);
           }
-          if (!localStorage.getItem('enteredData')) {
-            localStorage.setItem('enteredData', 'initial');
-          } else {
-            localStorage.setItem('enteredData', 'subsequent')
-          }
 
           if (!localStorage.getItem('enteredData')) {
             localStorage.setItem('enteredData', 'initial');
