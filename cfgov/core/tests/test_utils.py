@@ -92,9 +92,13 @@ class LinkUtilsTests(TestCase):
         )
 
     def test_get_link_tags_spacing(self):
-        """ Handle a case where there's a conditional in a template, i.e.
-        <a {% if some_condition %}class="some-class"{% endif %}>, that renders
-        a space following the tag name, `<a >`"""
+        """Test for case where tag renders with only whitespace after tag name
+
+        Template conditions within a tag, e.g.,
+        `<a {% if some_condition %}class="some-class"{% endif %}>`
+        can result in output with only whitespace following the tag name
+        if the condition is false, like: `<a >`.
+        """
         self.assertEqual(
             get_link_tags('outer <a  >inner</a>'),
             ['<a  >inner</a>', ]
