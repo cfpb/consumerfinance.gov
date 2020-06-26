@@ -100,16 +100,16 @@ function Details() {
         <div className="calendar-details__header-text">
           <h3>{uiStore.weekRangeText}</h3>
           <div className="calendar-details__starting-balance">
-            Weekly Start Balance: {uiStore.weekStartingBalanceText}
+            Weekly Starting Balance: {uiStore.weekStartingBalanceText}
           </div>
           {!uiStore.weekHasNegativeBalance && !eventStore.hasSnapEvents && (
-            <div className={endBalanceClasses}>Weekly End Balance: {uiStore.weekEndingBalanceText}</div>
+            <div className={endBalanceClasses}>Weekly Ending Balance: {uiStore.weekEndingBalanceText}</div>
           )}
           {!uiStore.weekHasNegativeBalance && eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>
-              Weekly End Balance: {uiStore.weekEndingBalanceText}
+              Weekly Ending Balance: {uiStore.weekEndingBalanceText}
               <br />
-              Weekly End SNAP Balance: {uiStore.weekEndingSnapBalanceText}
+              Weekly Ending SNAP Balance: {uiStore.weekEndingSnapBalanceText}
             </div>
           )}
         </div>
@@ -134,7 +134,7 @@ function Details() {
             }
           >
             <p className="m-notification_explanation">
-              Weekly End Balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span>
+              Weekly Ending Balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span>
             </p>
           </Notification>
         </div>
