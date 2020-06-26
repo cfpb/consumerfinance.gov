@@ -107,9 +107,8 @@ function Details() {
           )}
           {!uiStore.weekHasNegativeBalance && eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>
-              Weekly Ending Balance: <span className='balance-amount'>{uiStore.weekEndingBalanceText}</span>
-              <br />
-              Weekly Ending SNAP Balance: <span className='balance-amount'>{uiStore.weekEndingSnapBalanceText}</span>
+              <p>Weekly Ending Balance: <span className='balance-amount'>{uiStore.weekEndingBalanceText}</span></p>
+              <p>Weekly Ending SNAP Balance: <span className='balance-amount'>{uiStore.weekEndingSnapBalanceText}</span></p>
             </div>
           )}
         </div>

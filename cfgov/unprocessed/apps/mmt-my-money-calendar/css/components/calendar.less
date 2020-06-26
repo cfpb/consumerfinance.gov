@@ -3,7 +3,7 @@
 @inactiveMonthColor: #a4a4a4;
 @positiveColor: #cbf0b6;
 @negativeColor: #f0b6b6;
-@breakpointSm: 400px;
+@breakpointSm: 450px;
 @breakpointMed: 500px;
 @breakpointLg: 900px;
 @breakpointHiDPI: 1.5dppx;
@@ -202,7 +202,6 @@
     align-items: center;
     margin-bottom: 1rem;
     text-align: center;
-    color: aquamarine;
   }
 
   .m-notification {
@@ -259,6 +258,10 @@
     .neg-ending-balance {
       color: darken(@gold, 10%);
       font-weight: bold;
+    }
+
+    p {
+      margin: 0;
     }
   }
 
@@ -327,13 +330,9 @@
     }
   }
 
-  .balance-amount {
-    color: seagreen
-  }
   @media screen and (max-width: @breakpointSm) {
     .balance-amount {
       display: block;
-      color: red;
     }
   }
 }
