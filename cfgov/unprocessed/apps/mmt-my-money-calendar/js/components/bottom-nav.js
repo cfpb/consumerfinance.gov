@@ -49,16 +49,16 @@ function BottomNav() {
     <footer className={classes}>
       <nav className="bottom-nav__nav">
         <ul className="bottom-nav__items">
-          <NavItem href="/calendar" icon={calendar} exact label="Calendar" disabled={!hasStartingBalance} />
-          <NavItem href="/calendar/add/income" icon={add} label="Add" disabled={!hasStartingBalance} canSpotlight={uiStore.hasSpotlight} spotlight={addSpotlight}/>
+          <NavItem href="/calendar" icon={calendar} exact label="Calendar" disabled={!hasStartingBalance || uiStore.hasSpotlight} />
+          <NavItem href="/calendar/add/income" icon={add} label="Add" disabled={!hasStartingBalance || uiStore.hasSpotlight}  canSpotlight={uiStore.hasSpotlight} spotlight={addSpotlight}/>
           <NavItem
             href="/strategies"
             icon={idea}
             label="Strategies"
             badge={strategiesStore.strategyResults.length}
-            disabled={!hasStartingBalance || !strategiesStore.strategyResults.length}
+            disabled={!hasStartingBalance || !strategiesStore.strategyResults.length || uiStore.hasSpotlight}
           />
-          <NavItem href="/more" icon={menu} label="More" disabled={!hasStartingBalance} />
+          <NavItem href="/more" icon={menu} label="More" disabled={!hasStartingBalance || uiStore.hasSpotlight} />
         </ul>
       </nav>
     </footer>

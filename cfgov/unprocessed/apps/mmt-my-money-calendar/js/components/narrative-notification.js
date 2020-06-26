@@ -3,7 +3,6 @@ import { useBEM } from '../lib/hooks';
 
 export default function NarrativeModal({showModal, handleOkClick, copy, ...props}) {
     const bem = useBEM('modal-dialog');
-<<<<<<< HEAD
     
     return (
         <Modal isOpen={showModal}
@@ -20,21 +19,6 @@ export default function NarrativeModal({showModal, handleOkClick, copy, ...props
                     }
                   }
                }
-=======
-
-    return (
-        <Modal  isOpen={showModal}
-                className={bem()}
-                overlayClassName="modal-overlay"
-                appElement={document.querySelector('#mmt-my-money-calendar')}
-                style={
-                    { content: {
-                       textAlign: 'center',
-                       padding: '15px'
-                      }
-                    }
-                 }
->>>>>>> a4ca3d877... wip...modals
       >
         <div className='narrative-modal'>
           <h4>{copy.headline}</h4>
