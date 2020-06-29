@@ -3,8 +3,6 @@ import { compact } from '../lib/array-helpers';
 import logger from '../lib/logger';
 import { Categories } from './models/categories';
 
-// const isPlural = (word) => word.endsWith('s');
-
 class StrategiesStore {
   negativeStrategies = {
     'expense.personal.coronavirus': {
