@@ -74,6 +74,6 @@ export XDATA="oid='f38283b5b7c939a058889f997949efa566c616c5'&errors='INVALID: te
 export BPI="https://sissecureservices.bpiedu.com/routingmanager/api/cfpb"
 export EDMC="https://exml.dcedh.org/cfpb"
 
-curl -v -X POST --data "$XDATA" --url "$BPI"
-curl -v -X POST --data "$XDATA" --url "$EDMC"
+curl -v --data "$XDATA" --url "$BPI"
+curl -v --data "$XDATA" --url "$EDMC"
 """
