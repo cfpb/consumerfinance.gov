@@ -23,10 +23,8 @@ export default function NarrativeModal({showModal, handleOkClick, copy, ...props
         <div className='narrative-modal'>
           <h4>{copy.headline}</h4>
           <p>{copy.body}</p>
-          {/* <div style={{height: '20px'}} dangerouslySetInnerHTML={{__html: downArrow}}></div> */}
           <button style={{float: 'right'}} onClick={(e) => handleOkClick(e)}>OK</button>
         </div>
-        <div className='arrow-down'></div>
       </Modal>
     )
 }
