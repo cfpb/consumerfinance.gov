@@ -146,20 +146,21 @@ class StrategiesStore {
 
   @computed get strategyResults() {
     const strategyIDs = new Set();
-    const results = this.eventStore.eventCategories.map((catPath) => {
+    const list = this.eventStore.eventCategories.map((catPath) => {
       const { strategy } = Categories.get(catPath) || {};
       return strategy;
     });
-
     for (const [catPath, strategy] of Object.entries(this.negativeStrategies)) {
       if (!this.eventStore.eventCategories.includes(catPath)) {
-        results.push(strategy);
+        list.push(strategy);
       }
     }
 
-    return compact(results).filter((result) => {
-      if (strategyIDs.has(result.id)) return false;
-      strategyIDs.add(result.id);
+    let reversedList = [...list].reverse();
+
+    return compact(reversedList).filter((item) => {
+      if (strategyIDs.has(item.id)) return false;
+      strategyIDs.add(item.id);
       this.logger.debug('Strategy IDs set: %O', strategyIDs);
       return true;
     });
@@ -176,15 +177,19 @@ class StrategiesStore {
 
         if (event.categoryDetails.hasBill) {
           if (!event.category.includes('expense.housing')) {
-            if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
-              results.largestBillableExpense = event;
+            if (this.fixItStrategies['largestBillableExpense'].find((sgy) => sgy.categories.includes(event.category))) {
+              if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
+                results.largestBillableExpense = event;
+              }
             }
           }
         }
 
         if (event.totalCents < 0 && !event.categoryDetails.hasBill) {
-          if (!results.largestAdHocExpense || results.largestAdHocExpense.isLessThan(event)) {
-            results.largestAdHocExpense = event;
+          if (this.fixItStrategies['largestAdHocExpense'].find((sgy) => sgy.categories.includes(event.category))) {
+            if (!results.largestAdHocExpense || results.largestAdHocExpense.isLessThan(event)) {
+              results.largestAdHocExpense = event;
+            }
           }
         }
         return results;
