@@ -23,7 +23,7 @@ REPORT = ('URL is {}\nOK is {}\nReason is {}\n'
 
 def send_test_notifications(url=None, oid=OID, errors=ERRORS):
     """
-    Send fake notifiations to school endpoints to help troubleshoot.
+    Send fake notifications to school endpoints to help troubleshoot.
 
     You can send test notifications to school endpoints to confirm
     reception, or send to httpbin to check the outbound IP (origin),
