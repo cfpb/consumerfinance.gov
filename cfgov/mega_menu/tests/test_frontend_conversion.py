@@ -1,9 +1,9 @@
 import json
-import wagtail
 
 from django.test import RequestFactory, TestCase
 from django.utils.text import slugify
 
+import wagtail
 from wagtail.core.models import Page, Site
 
 from mega_menu.frontend_conversion import FrontendConverter
