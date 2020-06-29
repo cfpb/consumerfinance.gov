@@ -70,7 +70,7 @@ def send_test_notifications(url=None, oid=OID, errors=ERRORS):
 curl -v https://httpbin.org/get
 curl -v -X POST https://httpbin.org/post
 
-export XDATA="oid='f38283b5b7c939a058889f997949efa566c616c5'&errors='INVALID: test notification via curl'&time='2020-06-24T18:36:09.922690+00:00'". # noqa
+export XDATA="oid='f38283b5b7c939a058889f997949efa566c616c5'&errors='INVALID: test notification via curl'&time='2020-06-24T18:36:09.922690+00:00'"  # noqa
 export BPI="https://sissecureservices.bpiedu.com/routingmanager/api/cfpb"
 export EDMC="https://exml.dcedh.org/cfpb"
 
