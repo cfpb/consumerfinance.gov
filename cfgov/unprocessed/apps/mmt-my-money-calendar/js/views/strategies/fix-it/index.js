@@ -45,7 +45,7 @@ const StrategyCards = ({ results }) => (
         <Card title={result.title} icon={ideaRound} key={`strategy-${index}`}>
           <p>{result.text}</p>
           <div className="m-card_footer">
-            <FixItButton result={result} />
+            {!result.title === 'Explore Your General Strategies' && <FixItButton result={result} />}
           </div>
         </Card>
       ))}

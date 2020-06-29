@@ -130,11 +130,7 @@ class StrategiesStore {
       {
         title: 'Explore Your General Strategies',
         text:
-          'While you have gone into the red, we could not recommend any "Fix It" Strategies based upon your budget. However, there are plenty of solutions you can implement to balance your budget from the general strategies tab.',
-        link: {
-          href: '/strategies',
-          text: 'View General Strategies',
-        },
+          "Based upon your weekly transactions we can't recommend any Fix-It Strategies. Make sure that you've entered in all of your expenses and income for the week then check back here later.  Otherwise, review the generic strategies below.",
       },
     ];
   }
