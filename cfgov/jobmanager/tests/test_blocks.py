@@ -2,6 +2,7 @@ from datetime import date
 
 from django.test import RequestFactory, TestCase
 
+import wagtail
 from wagtail.core.models import Site
 
 from jobmanager.blocks import JobListingList, JobListingTable
@@ -116,7 +117,7 @@ class JobListingTableTestCase(JobListingBlockTestUtils, TestCase):
         for i in range(5):
             self.make_job(f'live{i}')
 
-        # We expect 13 database queries:
+        # We expect 14 database queries:
         #
         # 1. Wagtail has to look up the site root paths, which get cached on
         #    the request object.
@@ -130,5 +131,10 @@ class JobListingTableTestCase(JobListingBlockTestUtils, TestCase):
         # support to ParentalManyToManyField:
         #
         # https://github.com/wagtail/django-modelcluster/issues/101
-        with self.assertNumQueries(13):
+        if wagtail.VERSION > (2, 6):
+            num_queries = 14
+        else:
+            num_queries = 13
+
+        with self.assertNumQueries(num_queries):
             self.render_block()
