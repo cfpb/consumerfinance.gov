@@ -6,18 +6,26 @@
             'header': 'Projected total debt',
             'data_attribute': 'data-financial-item="debt_totalAtGrad"',
             'additional_classes': 'number-callout__large',
-            'value': '$4,016.67'
+            'value': '$0'
         }) 
     }}
 
     <p>Assuming similar borrowing each year</p>
-    <p class="max-debt-guideline_uncovered-costs-note" data-state-based-visibility="uncovered-costs">Since you have <span data-financial-item="total_gap">$Xxxx</span> in uncovered costs, this projection may underestimate your debt.</p>
+
+    <div data-state-based-visibility="uncovered-costs">
+    {{ notification.render(
+        'caution',
+        true,
+        '',
+        'Since you have <span data-financial-item="total_gap">$Xxxx</span> in uncovered costs, this projection may underestimate your debt.' | safe
+    ) }}
+    </div>
 
     {{ number_callout.render({
             'header': 'Median salary of this school’s recent students',
             'data_attribute': 'data-financial-item="salary_annual"',
             'additional_classes': 'number-callout__large',
-            'value': '$48,200'
+            'value': '$0'
         }) 
     }}
     
@@ -32,7 +40,7 @@
             'caution',
             true,
             'Your projected total debt is more than the median first-year salary of this school’s graduates. Consider whether this plan is right for you.' | safe,
-            'Your projected total debt is <span data-financial-item="total_debtRuleGap">$XXXX</span> higher than the median first-year salary of this school&apos;s graduates. Your actual salary will depend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a>' | safe
+            'Your projected total debt is <span data-financial-item="other_debtGuideDifference">$XXXX</span> higher than the median first-year salary of this school&apos;s graduates. Your actual salary will depend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a>' | safe
         ) }}
     </div>
 

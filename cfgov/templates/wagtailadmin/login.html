@@ -25,7 +25,7 @@
             {% block login_form %}
             {% csrf_token %}
 
-            {% url 'user_welcome' as home_url %}
+            {% url 'wagtailadmin_home' as home_url %}
             <input type="hidden" name="next" value="{{ next|default:home_url }}" />
 
 

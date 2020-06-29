@@ -9,7 +9,7 @@
   family: cfgov-video-player
   patterns:
       notes:
-        - "For the markup please see macros/video-player.html."
+        - "For the markup please see organisms/video-player.html."
   tags:
     - cfgov-video-player
 */
@@ -31,13 +31,13 @@
 .o-video-player.video-playing {
     overflow: visible;
 
-    .hide-on_video-playing {
+    .u-hide-on-video-playing {
         opacity: 0;
         height: 0;
         pointer-events: none;
     }
 
-    .show-on_video-playing {
+    .u-show-on-video-playing {
         opacity: 1;
         height: 100%;
         width: 100%;
@@ -62,7 +62,8 @@
     transition: opacity .25s;
 
     .no-js &,
-    &-loaded {
+    &-loaded,
+    &__thumbnail {
         opacity: 1;
     }
 }

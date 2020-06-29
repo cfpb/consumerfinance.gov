@@ -32,9 +32,12 @@ COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)
 class ProgamDataTest(django.test.TestCase):
     """Test the program data checks and creation."""
 
-    fixtures = ['fake_school.json']
+    fixtures = ['fake_school.json', 'test_fixture.json']
 
     def setUp(self):
+        stdout_patch = mock.patch('sys.stdout')
+        stdout_patch.start()
+        self.addCleanup(stdout_patch.stop)
         self.mock_program_data = {
             'earnings': {
                 'median_earnings': 3000
@@ -97,6 +100,16 @@ class ProgamDataTest(django.test.TestCase):
         self.assertTrue(Program.objects.filter(
             institution=self.school,
             program_code='5101-5').exists())
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_store_programs(self, mock_get_data):
+        api_data = {'latest.programs.cip_4_digit': [self.mock_program_data]}
+        mock_get_data.return_value = api_data
+        test_pk = 100636
+        program_count = Program.objects.count()
+        (NO_DATA, endmsg) = update_colleges.update(
+            single_school=test_pk, store_programs=True)
+        self.assertEqual(Program.objects.count(), program_count + 1)
 
 
 class TaggingTests(django.test.TestCase):
@@ -201,17 +214,42 @@ class TestScripts(django.test.TestCase):
             patcher.start()
             self.addCleanup(patcher.stop)
 
-    def test_process_cohorts(self):
+    def test_get_grad_level(self):
+        """Make sure higher-degree schools join the grad-degree '4' cohort."""
+        level_2_school = School.objects.get(pk=100636)
+        level_4_school = School.objects.get(pk=243197)
+        level_5_school = School.objects.get(pk=243197)
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_2_school), '2'
+        )
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_4_school), '4'
+        )
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_5_school), '4'
+        )
+
+    def test_school_with_no_degrees_highest(self):
+        """A school with no degrees_highest value should not be in a cohort."""
+        school_pk = 155555
+        self.assertEqual(School.objects.get(pk=school_pk).degrees_highest, '')
+        process_cohorts.run(single_school=school_pk)
+        self.assertIs(
+            School.objects.get(pk=school_pk).cohort_ranking_by_highest_degree,
+            None
+        )
+
+    def test_build_base_cohorts(self):
         school = School.objects.get(pk=100654)
-        base_query = process_cohorts.build_cohorts()
-        cohort = process_cohorts.STATE.get(school.state)
+        base_query = process_cohorts.build_base_cohorts()
+        cohort = process_cohorts.DEGREE_COHORTS.get(school.degrees_highest)
         metric = 'grad_rate'
         self.assertEqual(
             base_query.count(), 6)
         self.assertEqual(
             process_cohorts.rank_by_metric(school, cohort, metric).get(
                 'percentile_rank'),
-            100
+            80
         )
 
     def test_percentile_rank_blank_array(self):
@@ -658,6 +696,11 @@ class TestScripts(django.test.TestCase):
              len(api_utils.YEAR_FIELDS) +
              len(api_utils.PROGRAM_FIELDS))
         )
+
+    def test_school_has_no_control_value(self):
+        process_cohorts.run(single_school=100830)
+        school = School.objects.get(pk=100830)
+        self.assertEqual(school.cohort_ranking_by_control, {'repay_3yr': None})
 
     def test_get_prepped_stats(self):
         stats = nat_stats.get_prepped_stats()

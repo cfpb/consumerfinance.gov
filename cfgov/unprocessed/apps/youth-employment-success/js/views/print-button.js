@@ -23,7 +23,7 @@ const CLASSES = {
  * _print method as an argument.
  * @returns {Object} The view's public methods
  */
-function printButton( element, { btnClass = CLASSES.BUTTON, onBeforePrint, onClick } ) {
+function printButton( element, { btnClass = CLASSES.BUTTON, onBeforePrint, onClick } = {} ) {
   const _dom = checkDom( element, btnClass );
 
   /**

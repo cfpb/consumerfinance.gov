@@ -35,7 +35,7 @@ from regulations3k.views import redirect_eregs
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
     change_password, check_permissions, login_with_lockout,
-    password_reset_confirm, welcome
+    password_reset_confirm
 )
 from v1.views.documents import DocumentServeView
 
@@ -494,6 +494,11 @@ urlpatterns = [
     ),
 
     re_path(
+        r'^practitioner-resources/youth-financial-education/curriculum-review/',  # noqa: E501
+        include('crtool.urls')
+    ),
+
+    re_path(
         r'^regulations3k-service-worker.js',
         TemplateView.as_view(
             template_name='regulations3k/regulations3k-service-worker.js',
@@ -675,7 +680,6 @@ if settings.ALLOW_ADMIN_URL:
             check_permissions,
             name='check_permissions'
         ),
-        re_path(r'^login/welcome/$', welcome, name='welcome'),
         re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
         re_path(
             r'^admin/login/$',

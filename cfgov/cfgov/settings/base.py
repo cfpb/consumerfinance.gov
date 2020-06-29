@@ -103,10 +103,13 @@ INSTALLED_APPS = (
     "ccdb5_ui",
     "mptt",
     "teachers_digital_platform",
+    "crtool",
 )
 
 MIDDLEWARE = (
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -117,6 +120,7 @@ MIDDLEWARE = (
     "flags.middleware.FlagConditionsMiddleware",
     "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "core.middleware.DeactivateTranslationsMiddleware",
 )
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
@@ -251,7 +255,7 @@ STATICFILES_DIRS += REPOSITORY_ROOT.child("static.in").listdir(filter=DIRS)
 
 ALLOWED_HOSTS = ["*"]
 
-EXTERNAL_URL_WHITELIST = (
+EXTERNAL_URL_ALLOWLIST = (
     r"^https:\/\/facebook\.com\/cfpb$",
     r"^https:\/\/twitter\.com\/cfpb$",
     r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa 501
@@ -340,11 +344,11 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     "filter": ["haystack_edgengram"],
                 },
                 "synonym_en": {
-                    "tokenizer": "whitespace",
+                    "tokenizer": "standard",
                     "filter": ["synonyms_en"],
                 },
                 "synonym_es": {
-                    "tokenizer": "whitespace",
+                    "tokenizer": "standard",
                     "filter": ["synonyms_es"],
                 },
             },
@@ -358,7 +362,7 @@ ELASTICSEARCH_INDEX_SETTINGS = {
                     "type": "edgeNGram",
                     "min_gram": 3,
                     "max_gram": 15,
-                    "side": "front",
+                    "token_chars": [ "letter", "digit" ]
                 },
             },
             "filter": {
@@ -439,7 +443,7 @@ CFPB_COMMON_PASSWORD_RULES = [
 LOGIN_FAIL_TIME_PERIOD = os.environ.get("LOGIN_FAIL_TIME_PERIOD", 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get("LOGIN_FAILS_ALLOWED", 5)
-LOGIN_REDIRECT_URL = "/login/welcome/"
+LOGIN_REDIRECT_URL = "/admin/"
 LOGIN_URL = "/login/"
 
 # When we generate an full HTML version of the regulation, we want to
@@ -512,6 +516,7 @@ CSP_SCRIPT_SRC = (
     "storage.googleapis.com",
     "api.consumerfinance.gov",
     "files.consumerfinance.gov",
+    "*.qualtrics.com",
 )
 
 # These specify valid sources of CSS code
@@ -587,6 +592,7 @@ CSP_CONNECT_SRC = (
     "public.govdelivery.com",
     "n2.mouseflow.com",
     "api.iperceptions.com",
+    "*.qualtrics.com",
 )
 
 # Feature flags

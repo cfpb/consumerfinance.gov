@@ -17,7 +17,7 @@
    post.specific.venue_city:      A string with the event venue city.
    post.specific.venue_state:     A string with the event venue state.
    post.specific.venue_name:      A string with the event venue name.
-   post.specific.live_stream_url: URL for the live stream.
+   post.specific.live_video_id:   YouTube video ID for the event live stream.
 
    post.date_published:           A date timestamp to format.
    post.categories:               An array with the categories for the post.
@@ -167,7 +167,7 @@
                         {{ event.venue_city }}, {{ event.venue_state }}
                     {% endif %}
                             {{ event.venue_name if event.venue_name else '' }}
-                    {{ 'Livecast' if event.live_stream_url else '' }}
+                    {{ 'Livecast' if event.live_video_id else '' }}
                      -
                     {{ time.render(event.start_dt) }}
                     </div>

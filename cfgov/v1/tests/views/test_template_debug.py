@@ -49,3 +49,15 @@ class TemplateDebugViewTests(SimpleTestCase):
                 response,
                 f'href="{test_case["url"]}"'
             )
+
+    def test_renders_extra_js(self):
+        debug_template_name = '_includes/atoms/hyperlink.html'
+
+        view = TemplateDebugView.as_view(
+            debug_template_name=debug_template_name,
+            debug_test_cases={},
+            extra_js=['template-debug-extra.js']
+        )
+        response = view(self.request)
+
+        self.assertContains(response, 'template-debug-extra.js')
