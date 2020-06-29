@@ -1,4 +1,7 @@
-FROM centos:6
+FROM centos:7
+
+# Ensure that the environment uses UTF-8 encoding by default
+ENV LANG en_US.UTF-8
 
 # Disables pip cache, which reduces build time, and suppresses warnings when
 # run as non-root.

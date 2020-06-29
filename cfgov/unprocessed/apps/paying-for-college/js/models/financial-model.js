@@ -6,7 +6,7 @@ based on these costs.
 
 import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { initializeFinancialValues, recalculateExpenses } from '../dispatchers/update-models.js';
-import { updateFinancialView, updateCostOfBorrowingChart, updateAffordingChart, updateMaxDebtChart, updateMakePlanChart, updateUrlQueryString } from '../dispatchers/update-view.js';
+import { updateAffordingChart, updateCostOfBorrowingChart, updateFinancialView, updateFinancialViewAndFinancialCharts, updateMakePlanChart, updateMaxDebtChart, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
 import { enforceRange, stringToNum } from '../util/number-utils.js';
@@ -44,32 +44,32 @@ const financialModel = {
    * subfunctions
    */
   recalculate: () => {
+    financialModel._updateRates();
     financialModel._calculateTotals();
     debtCalculator();
     recalculateExpenses();
     financialModel._updateStateWithFinancials();
 
     // Debt Guide Difference
-    financialModel.values.other_debtGuideDifference = financialModel.values.salary_annual
-        - financialModel.values.debt_tenYearInterest;
-
+    financialModel.values.other_debtGuideDifference =
+        financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual;
   },
 
   /**
    * setValue - Used to set a value
    * @param {String} name - Property name
    * @param {Number} value - New value of property
+   * @param {Boolean} updateView - (defaults true) should view be updated?
    */
-  setValue: ( name, value ) => {
+  setValue: ( name, value, updateView ) => {
     if ( financialModel.values.hasOwnProperty( name ) ) {
       financialModel.values[name] = stringToNum( value );
       financialModel.recalculate();
-      updateUrlQueryString();
-      updateFinancialView();
-      updateCostOfBorrowingChart();
-      updateMakePlanChart();
-      updateMaxDebtChart();
-      updateAffordingChart();
+
+      if ( updateView !== false ) {
+        updateUrlQueryString();
+        updateFinancialViewAndFinancialCharts();
+      }
     }
   },
 
@@ -107,7 +107,7 @@ const financialModel = {
       if ( totals.hasOwnProperty( prefix ) ) {
         // For loans, get net amount after fees
         let val = vals[prop];
-        if ( prop.indexOf( 'Loan') > 0 ) {
+        if ( prop.indexOf( 'Loan' ) > 0 ) {
           val = financialModel._amountAfterFee( prop );
         }
 
@@ -118,11 +118,12 @@ const financialModel = {
     // Calculate more totals
     vals.total_borrowing = vals.total_fedLoans + vals.total_publicLoans + vals.total_privateLoans +
         vals.total_plusLoans;
-    vals.total_contributions = vals.total_grants + vals.total_scholarships + vals.total_savings +
-        vals.total_workStudy + vals.total_income;
-    vals.total_costs = vals.total_directCosts + vals.total_indirectCosts + vals.otherCost_additional;
     vals.total_grantsScholarships = vals.total_grants + vals.total_scholarships;
     vals.total_otherResources = vals.total_savings + vals.total_income;
+    vals.total_workStudyFellowAssist = vals.total_workStudy + vals.total_fellowAssist;
+    vals.total_contributions = vals.total_grantsScholarships + vals.total_otherResources +
+        vals.total_workStudyFellowAssist;
+    vals.total_costs = vals.total_directCosts + vals.total_indirectCosts + vals.otherCost_additional;
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = vals.total_costs - vals.total_funding;
     vals.total_excessFunding = vals.total_funding - vals.total_costs;
@@ -130,7 +131,6 @@ const financialModel = {
     /* Borrowing total
        TODO - Update this once year-by-year DIRECT borrowing is in place */
     vals.total_borrowingAtGrad = vals.total_borrowing * vals.other_programLength;
-
 
     if ( vals.total_gap < 0 ) {
       vals.total_gap = 0;
@@ -152,8 +152,11 @@ const financialModel = {
       financialModel.values.fedLoan_directSub = 0;
       financialModel.values.plusLoan_parentPlus = 0;
     } else {
-      // if undergraduate, zero out gradPlus loans, set unsubsidized cap
+      // if undergraduate, zero out gradPlus loans, fellowships, set unsubsidized cap
       financialModel.values.plusLoan_gradPlus = 0;
+      financialModel.values.fellowAssist_fellowship = 0;
+      financialModel.values.fellowAssist_assistantship = 0;
+
       if ( getStateValue( 'programDependency' ) === 'independent' ) {
         unsubCapKey = 'unsubsidizedCapIndepYearOne';
       }
@@ -198,6 +201,17 @@ const financialModel = {
     vals['net_' + loanName] = net;
 
     return net;
+  },
+
+  /**
+   * Set loan rates based on program type
+   */
+  _updateRates: () => {
+    if ( getStateValue( 'programType' ) === 'graduate' ) {
+      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateGrad' );
+    } else {
+      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateUndergrad' );
+    }
   },
 
   /**

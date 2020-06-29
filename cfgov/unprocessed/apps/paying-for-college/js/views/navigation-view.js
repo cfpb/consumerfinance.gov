@@ -1,9 +1,10 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
 import { closest } from '../../../../js/modules/util/dom-traverse';
-import { updateState } from '../dispatchers/update-state.js';
+import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { getAllStateValues, getStateValue } from '../dispatchers/get-model-values.js';
+import { sendAnalyticsEvent } from '../util/analytics.js';
 
 const navigationView = {
   _contentSidebar: null,
@@ -79,11 +80,11 @@ const navigationView = {
    */
   _handlePopState: function( event ) {
     if ( event.state ) {
-      window.history.replaceState( getAllStateValues(), null, '' );
-
-      updateState.activeSection( event.state.activeSection );
+      const values = getAllStateValues();
+      values.activeSection = event.state.activeSection;
+      updateState.replaceStateInHistory( window.location.search );
+      updateState.activeSection( values.activeSection, true );
     }
-    navigationView.updateView();
   },
 
   /**
@@ -93,6 +94,8 @@ const navigationView = {
   _handleNavButtonClick: function( event ) {
     event.preventDefault();
     const target = event.target;
+    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText );
+
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
     } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
@@ -106,6 +109,8 @@ const navigationView = {
    * @param {Object} event - click event
    */
   _handleNextButtonClick: function( event ) {
+    // TODO: Track time between Next button clicks for analytics
+    sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
     updateState.nextSection();
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
   },
@@ -205,7 +210,7 @@ const navigationView = {
     this._addButtonListeners();
     this.updateView();
 
-    window.history.replaceState( getAllStateValues(), null, '' );
+    updateState.replaceStateInHistory( window.location.search );
     this._addPopStateListener();
   }
 

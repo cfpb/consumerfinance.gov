@@ -204,22 +204,5 @@ def custom_password_reset_confirm(
     return TemplateResponse(request, template_name, context)
 
 
-@never_cache
-@login_required
-def welcome(request):
-    valid_destinations = all_valid_destinations_for_request(request)
-
-    if len(valid_destinations) == 1:
-        redirect_to = valid_destinations[0][1]
-        return HttpResponseRedirect(redirect_to)
-
-    else:
-        return render(
-            request,
-            'welcome.html',
-            {'destinations': valid_destinations}
-        )
-
-
 password_reset_confirm = _wrap_password_reset_view(
     custom_password_reset_confirm)

@@ -3,6 +3,8 @@
 
     <p>Your state, this school, or a nonprofit may offer you loans directly or through a bank. Before taking on this debt, do your research to make sure they are the best option for you. If you think you may want to use this funding, enter it below.</p>
 
+    <p>Interest rates are set by the school and/or the financial institutions they are working with. Loan fees are deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.</p>
+
     {{ notification.render(
         'caution',
         true,
@@ -90,7 +92,7 @@
     </div>
     {{
         text_item.render({
-            'label': 'Total other loans',
+            'label': 'Total funding from other loans (minus loan fees)',
             'value': '$99, 999',
             'type': 'total',
             'data_attribute': 'data-financial-item="total_publicLoans"'
