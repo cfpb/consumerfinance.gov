@@ -354,6 +354,7 @@ class School(models.Model):
             'otherOffCampus': jdata['OTHEROFFCAMPUS'],
             'otherOnCampus': jdata['OTHERONCAMPUS'],
             'otherWFamily': jdata['OTHERWFAMILY'],
+            'programCodes': self.program_codes,
             'programCount': self.program_count,
             'programsPopular': self.program_most_popular,
             'predominantDegree': self.get_predominant_degree(),
@@ -388,6 +389,22 @@ class School(models.Model):
 
     def __str__(self):
         return self.primary_alias + " ({})".format(self.school_id)
+
+    @property
+    def program_codes(self):
+        live_programs = self.program_set.filter(test=False).exclude(level='')
+        graduate = [p for p in live_programs if int(p.level) > 3]
+        # We're initially providing only graduate program details
+        undergrad = []  # [p for p in live_programs if p not in graduate]
+        return {
+            'graduate': [{
+                'code': p.program_code,
+                'name': p.program_name.strip('.'),
+                'level': PROGRAM_LEVELS.get(p.level)}
+                for p in graduate
+            ],
+            'undergrad': undergrad,
+        }
 
     def get_predominant_degree(self):
         predominant = ''
