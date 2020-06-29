@@ -34,6 +34,40 @@
   background-color: #fff;
   border-radius: 6px;
   outline: none;
+
+  // &:after {
+  //   content: "";
+  //   position: absolute;
+  //   bottom: -30px;
+  //   left: 80px;
+  //   z-index: 1;
+  //   border: solid 15px transparent;
+  //   border-top-color: #ECECEC;
+  // }
+}
+
+.narrative-step1 {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  max-width: 500px;
+  padding: @modal-padding 0;
+  padding-bottom: 0;
+  background-color: #fff;
+  border-radius: 6px;
+  outline: none;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    left: calc(50% - 60px);
+    z-index: 1;
+    border: solid 15px transparent;
+    border-top-color: #FFF;
+  }
 }
 
 .modal-dialog {

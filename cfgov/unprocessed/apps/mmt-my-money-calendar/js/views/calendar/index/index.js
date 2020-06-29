@@ -87,18 +87,17 @@ function Calendar() {
   return (
     <section className="calendar">
       {showModal && narrativeStep === 'step1' &&
-        <div>
-          <NarrativeModal showModal={showModal}
-                          handleOkClick={handleToggleModal}
-                          copy={narrativeCopy.step1}
-          />
-          <div className='arrow-down'></div>
-        </div>
+        <NarrativeModal showModal={showModal}
+                        handleOkClick={handleToggleModal}
+                        copy={narrativeCopy.step1}
+                        step={narrativeStep}
+        />
       }
       { showModal && narrativeStep === 'step2' &&
         <NarrativeModal showModal={showModal}
                         handleOkClick={handleToggleModal}
                         copy={narrativeCopy.step2}
+                        step={narrativeStep}
         />
       }
       <header className="calendar__header">
