@@ -81,8 +81,8 @@ categories = [
         ('gaming', 'Gaming'),
     )),
     ('Enforcement Action', (
+        ('administrative-proceeding', 'Administrative Proceeding'),
         ('civil-action', 'Civil Action'),
-        ('administrative-proceeding', 'Administrative Proceeding')
     )),
     ('Final rule', (
         ('interim-final-rule', 'Interim final rule'),
@@ -152,9 +152,9 @@ supported_languagues = [
 ]
 
 enforcement_statuses = [
-    ('post-order-post-judgment', 'Post Order/Post Judgment'),
     ('expired-terminated-dismissed', 'Expired/Terminated/Dismissed'),
-    ('pending-litigation', 'Pending Litigation')
+    ('pending-litigation', 'Pending Litigation'),
+    ('post-order-post-judgment', 'Post Order/Post Judgment'),
 ]
 
 
