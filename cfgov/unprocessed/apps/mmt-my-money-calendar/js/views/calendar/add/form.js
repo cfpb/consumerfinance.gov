@@ -40,6 +40,7 @@ function Form() {
       }),
     []
   );
+  const handleCatName = (category) => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
 
   // Toggle bottom nav bar when inputs are focused, to prevent it from obscuring text on mobile screens:
   const focusHandler = useCallback(
@@ -71,7 +72,6 @@ function Form() {
   let pathSegments = categoryPath.split('.');
   let category = Categories.get(categoryPath);
   let eventType = pathSegments[0];
-
   // Should eventually return a loading spinner here:
   if (id && !eventStore.eventsLoaded) return null;
 
@@ -84,7 +84,7 @@ function Form() {
         dateTime: uiStore.selectedDate,
       });
 
-  if (id && event) {
+      if (id && event) {
     categoryPath = event.category;
     category = Categories.get(categoryPath);
     pathSegments = categoryPath.split('.');
@@ -103,7 +103,7 @@ function Form() {
       </BackButton>
 
       <h2 className="add-event__title">{category.name}</h2>
-      <p className="add-event__intro">Enter your {category.name.toLowerCase()} details.</p>
+      <p className="add-event__intro">Enter the details of your {handleCatName(category.name)} {eventType}.</p>
       {!!category.description && <p className="add-event__description">{category.description}</p>}
 
       <Formik

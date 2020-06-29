@@ -3,8 +3,6 @@ import { compact } from '../lib/array-helpers';
 import logger from '../lib/logger';
 import { Categories } from './models/categories';
 
-const isPlural = (word) => word.endsWith('s');
-
 class StrategiesStore {
   negativeStrategies = {
     'expense.personal.coronavirus': {
@@ -84,10 +82,7 @@ class StrategiesStore {
           'expense.personal.funMoney',
         ],
         title: 'Adjust Spending this Week',
-        template: (categoryName) =>
-          `${categoryName} ${
-            isPlural(categoryName) ? 'were' : 'was'
-          } your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
+        template: (categoryName) => `Your ${categoryName.toLowerCase()} expense was your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
       },
     ],
   };
