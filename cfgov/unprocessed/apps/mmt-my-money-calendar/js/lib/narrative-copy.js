@@ -1,6 +1,6 @@
 export const narrativeCopy = {
     step1: {
-        headline: 'Welcome to your calendar',
+        headline: 'Welcome to your Calendar',
         body: 'Start adding your weekly income and expenses.'
     },
     step2: {
