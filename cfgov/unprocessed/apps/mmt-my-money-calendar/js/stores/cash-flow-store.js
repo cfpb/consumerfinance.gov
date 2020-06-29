@@ -168,7 +168,7 @@ export default class CashFlowStore {
    * @returns {Number} the balance in dollars
    */
   getBalanceForDate = computedFn(function getBalanceForDate(stopDate) {
-    return this.getNonSnapBalanceForDate(stopDate) + this.getSnapBalanceForDate(stopDate);
+    return this.getNonSnapBalanceForDate(stopDate);
   });
 
   /**

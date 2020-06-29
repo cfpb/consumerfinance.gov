@@ -3,6 +3,7 @@
 @inactiveMonthColor: #a4a4a4;
 @positiveColor: #cbf0b6;
 @negativeColor: #f0b6b6;
+@breakpointSm: 450px;
 @breakpointMed: 500px;
 @breakpointLg: 900px;
 @breakpointHiDPI: 1.5dppx;
@@ -258,6 +259,10 @@
       color: darken(@gold, 10%);
       font-weight: bold;
     }
+
+    p {
+      margin: 0;
+    }
   }
 
   &__events-section {
@@ -324,4 +329,11 @@
       fill: @inactiveMonthColor;
     }
   }
+
+  @media screen and (max-width: @breakpointSm) {
+    .balance-amount {
+      display: block;
+    }
+  }
 }
+
