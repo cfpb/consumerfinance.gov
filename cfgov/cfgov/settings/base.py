@@ -102,8 +102,7 @@ INSTALLED_APPS = (
     "rest_framework",
     "ccdb5_ui",
     "mptt",
-    "teachers_digital_platform",
-    "crtool",
+    "teachers_digital_platform"
 )
 
 MIDDLEWARE = (
