@@ -119,6 +119,7 @@ const stateModel = {
    */
   setActiveSection: function( value, popState ) {
     updateStateInDom( 'activeSection', value );
+    stateModel.setValue( 'save-for-later', false );
     stateModel.values.activeSection = value;
     if ( popState !== true ) {
       stateModel.pushStateToHistory();
