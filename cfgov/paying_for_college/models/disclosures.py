@@ -392,7 +392,9 @@ class School(models.Model):
 
     @property
     def program_codes(self):
-        live_programs = self.program_set.filter(test=False).exclude(level='')
+        # We're only insterested in program data with salary and level info
+        live_programs = self.program_set.filter(
+            test=False).exclude(level='').exclude(salary=None)
         graduate = [p for p in live_programs if int(p.level) > 3]
         # We're initially providing only graduate program details
         undergrad = []  # [p for p in live_programs if p not in graduate]
@@ -400,7 +402,8 @@ class School(models.Model):
             'graduate': [{
                 'code': p.program_code,
                 'name': p.program_name.strip('.'),
-                'level': PROGRAM_LEVELS.get(p.level)}
+                'level': PROGRAM_LEVELS.get(p.level),
+                'salary': p.salary}
                 for p in graduate
             ],
             'undergrad': undergrad,
