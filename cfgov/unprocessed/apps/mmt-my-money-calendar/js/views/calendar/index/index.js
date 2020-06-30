@@ -80,20 +80,6 @@ function Calendar() {
     setShowModal(!showModal);
   };
 
-  const handleToggleModal = (event) => {
-    event.preventDefault();
-    localStorage.setItem('visitedPage', true);
-    if (localStorage.getItem('enteredData') === 'initial') {
-      localStorage.setItem('enteredData', 'subsequent');
-    }
-    if (!localStorage.getItem('removeSpotlight')) {
-      localStorage.setItem('removeSpotlight', true)
-      eventStore.closeNarrativeModal()
-    }
-
-    setShowModal(!showModal);
-  };
-
   useScrollToTop();
 
   if (eventStore.eventsLoaded && !eventStore.hasStartingBalance) return <Redirect to="/money-on-hand" />;
