@@ -15,7 +15,7 @@ export default function NarrativeModal({showModal, handleOkClick, copy, step, ..
                     padding: '15px'
                   },
                   overlay: {
-                    backgroundColor: localStorage.getItem('enteredData') ? '' : 'rgba(0,0,0,0)'
+                    backgroundColor: localStorage.getItem('removeSpotlight') ? '' : 'rgba(0,0,0,0)'
                   }
                 }
               }
