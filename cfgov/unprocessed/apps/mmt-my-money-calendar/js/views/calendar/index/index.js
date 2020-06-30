@@ -11,7 +11,7 @@ import { useScrollToTop } from '../../../components/scroll-to-top';
 import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
 import { narrativeCopy } from '../../../lib/narrative-copy';
 
-import { arrowLeft, arrowRight, downArrow } from '../../../lib/icons';
+import { arrowLeft, arrowRight } from '../../../lib/icons';
 
 const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
