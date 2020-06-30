@@ -135,7 +135,6 @@ const financialModel = {
     if ( vals.total_gap < 0 ) {
       vals.total_gap = 0;
     }
-
   },
 
   /**
@@ -162,12 +161,17 @@ const financialModel = {
       }
     }
 
-    // Get limits from the constants model
+    // unsubCap is actually the 'unsubCap' minus any subsidized loans.
+    const unsubCap = Math.max( 
+      getConstantsValue( unsubCapKey ) - financialModel.values.fedLoan_directSub,
+      0 );
+
+    // Set limits based on the constants model
     const limits = {
       grant_pell: [ 0, getConstantsValue( 'pellCap' ) ],
       grant_mta: [ 0, getConstantsValue( 'militaryAssistanceCap' ) ],
       fedLoan_directSub: [ 0, getConstantsValue( 'subsidizedCapYearOne' ) ],
-      fedLoan_directUnsub: [ 0, getConstantsValue( unsubCapKey ) ]
+      fedLoan_directUnsub: [ 0, unsubCap ]
     };
     const errors = {};
 
@@ -262,7 +266,13 @@ const financialModel = {
     } else {
       tuitionProp += 'Under';
     }
-    tuitionProp += rateProperties[rate];
+
+    // If no rate, assume in-state
+    if ( rateProperties.hasOwnProperty( rate ) ) {
+      tuitionProp += rateProperties[rate];
+    } else {
+      tuitionProp += 'InS';
+    }
 
     // Get correct tuition based on property name
     financialModel.values.dirCost_tuition = stringToNum( getSchoolValue( tuitionProp ) );
@@ -282,7 +292,6 @@ const financialModel = {
     financialModel.values.indiCost_books = stringToNum( getSchoolValue( 'books' ) );
 
     financialModel.recalculate();
-
   },
 
   /**
@@ -296,7 +305,6 @@ const financialModel = {
     // These are test values used only for development purposes.
 
     financialModel._calculateTotals();
-
   }
 };
 

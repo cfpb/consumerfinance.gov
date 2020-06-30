@@ -183,7 +183,7 @@ const navigationView = {
    */
   updateStateInDom: function( property, value ) {
     if ( value === false || value === null ) {
-      navigationView._stateDomElem.removeAttribute( property );
+      navigationView._stateDomElem.removeAttribute( 'data-state_' + property );
     } else {
       navigationView._stateDomElem.setAttribute( 'data-state_' + property, value );
     }
