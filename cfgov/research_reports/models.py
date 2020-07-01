@@ -18,30 +18,42 @@ from v1.models import SublandingFilterablePage
 from v1.models.base import CFGOVPage
 
 
-def get_toc_sections(request, page):
-    return [{
-        'expanded': False,
-        'title': section.header,
-        'url': '#' + section.html_id,
-        'children': [{
-            'title': subsection.sub_header, 'url': '#' + subsection.sub_id
-        } for subsection in section.report_subsections.all().order_by('pk')]
-    } for section in
-        page.report_sections.all().order_by('pk')
-        if not section.is_appendix]
+alpha_map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 
-def get_toc_appendices(request, page):
-    return [{
-        'expanded': False,
-        'title': section.header,
-        'url': '#' + section.html_id,
-        'children': [{
-            'title': subsection.sub_header, 'url': '#' + subsection.sub_id
-        } for subsection in section.report_subsections.all().order_by('pk')]
-    } for section in
-        page.report_sections.all().order_by('pk')
-        if section.is_appendix]
+def get_report_parts(is_appendix=False):
+    def format(s, *args):
+        if(is_appendix):
+            return s.format(*[alpha_map[arg] for arg in args])
+        else:
+            return s.format(*[arg + 1 for arg in args])
+
+    def sec(request, page):
+        sections = [section for section in
+                    page.report_sections.all().order_by('pk')
+                    if section.is_appendix == is_appendix]
+
+        return [{
+            'expanded': False,
+            'title': section.header,
+            'body': section.body,
+            'url': format('#section-{}', i),
+            'numbering': format('{}. ', i),
+            'children': [{
+                'title': subsection.sub_header,
+                'body': subsection.sub_body,
+                'url': format('#section-{}.{}', i, j),
+                'numbering': format('{}.{}. ', i, j)
+            } for j, subsection in enumerate(
+                section.report_subsections.all().order_by('pk')
+            )]
+        } for i, section in enumerate(sections)]
+
+    return sec
+
+
+get_report_sections = get_report_parts()
+get_report_appendices = get_report_parts(True)
 
 
 def get_researchers():
@@ -57,12 +69,10 @@ def _get_deploy_environment():
 
 class ReportSection(ClusterableModel):
     header = models.CharField(max_length=200, blank=True)
-    html_id = models.CharField(max_length=50, blank=True)
     is_appendix = models.BooleanField(default=False)
     body = models.TextField(blank=True)
     panels = [
         FieldPanel('header'),
-        FieldPanel('html_id'),
         FieldPanel('is_appendix'),
         FieldPanel('body'),
         InlinePanel('report_subsections', label='Subsection'),
@@ -74,7 +84,6 @@ class ReportSection(ClusterableModel):
 
 class ReportSubSection(models.Model):
     sub_header = models.CharField(max_length=200)
-    sub_id = models.CharField(max_length=50, blank=True)
     sub_body = models.TextField(blank=True)
     action = ParentalKey('ReportSection',
                          on_delete=models.CASCADE,
@@ -107,16 +116,20 @@ class Report(CFGOVPage):
         on_delete=models.SET_NULL,
         related_name='+',
     )
-    process_report = models.BooleanField(default=False,
-            help_text=mark_safe(
-                'If this is checked, when you press "save", the system will '
-                'read in the report document and use its contents to overwrite '
-                'the fields in the "Report Content" tab.'
-                '<ul class="help">'
-                '    <li>&bull; If you uploaded a new report file for processing, check this box.</li>'
-                '    <li>&bull; If you manually edited fields in the "Report Content" tab, do not check this box</li>'
-                '</ul>')
-            )
+    process_report = models.BooleanField(
+        default=False,
+        help_text=mark_safe(
+            'If this is checked, when you press "save", the system will '
+            'read in the report document and use its contents to overwrite '
+            'the fields in the "Report Content" tab.'
+            '<ul class="help">'
+            '    <li>&bull; If you uploaded a new report file for '
+            'processing, check this box.</li>'
+            '    <li>&bull; If you manually edited fields in the '
+            '"Report Content" tab, do not check this box</li>'
+            '</ul>'
+        )
+    )
 
     # Report Upload Tabs
     upload_panels = [
@@ -192,8 +205,8 @@ class Report(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(Report, self).get_context(request, *args, **kwargs)
         context.update({
-            'get_toc_sections': get_toc_sections,
-            'get_toc_appendices': get_toc_appendices,
+            'get_report_sections': get_report_sections,
+            'get_report_appendices': get_report_appendices,
             'get_researchers': get_researchers
         })
         return context

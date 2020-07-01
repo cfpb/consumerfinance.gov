@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
-from research_reports.models import Report
+
 import pypandoc
+from research_reports.models import Report
 
 
 def run(report_page):
