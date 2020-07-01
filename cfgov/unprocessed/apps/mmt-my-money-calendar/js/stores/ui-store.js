@@ -38,7 +38,6 @@ export default class UIStore {
     window.addEventListener('beforeinstallprompt', this.setInstallPromptEvent);
   }
 
-
   @computed get monthCalendarRows() {
     return getWeekRows(this.currentMonth);
   }

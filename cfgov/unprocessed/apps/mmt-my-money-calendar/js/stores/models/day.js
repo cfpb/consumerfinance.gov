@@ -16,8 +16,8 @@ export default class Day {
     this.logger = logger.addGroup('day');
 
     if (previousDay) {
-     this.snapBalance = previousDay.snapBalance + this.snapTotal;
-     this.nonSnapBalance = previousDay.nonSnapBalance + this.nonSnapTotal;
+      this.snapBalance = previousDay.snapBalance + this.snapTotal;
+      this.nonSnapBalance = previousDay.nonSnapBalance + this.nonSnapTotal;
     }
 
     // SNAP can't go below 0

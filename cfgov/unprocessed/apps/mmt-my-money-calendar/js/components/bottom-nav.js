@@ -46,7 +46,7 @@ function BottomNav() {
       <nav className="bottom-nav__nav">
         <ul className="bottom-nav__items">
           <NavItem href="/calendar" icon={calendar} exact label="Calendar" disabled={!hasStartingBalance} />
-          <NavItem href="/calendar/add/income" icon={add} label="Add" disabled={!hasStartingBalance} />
+          <NavItem href="/calendar/add/income" icon={add} label="Income/Expense" disabled={!hasStartingBalance} />
           <NavItem
             href="/strategies"
             icon={idea}

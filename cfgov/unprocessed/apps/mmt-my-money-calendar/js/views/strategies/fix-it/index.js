@@ -45,7 +45,7 @@ const StrategyCards = ({ results }) => (
         <Card title={result.title} icon={ideaRound} key={`strategy-${index}`}>
           <p>{result.text}</p>
           <div className="m-card_footer">
-            {!result.title === 'Explore Your General Strategies' && <FixItButton result={result} />}
+            {result.title === 'Explore Your General Strategies' ? null : <FixItButton result={result} />}
           </div>
         </Card>
       ))}
@@ -81,40 +81,35 @@ function FixItStrategies() {
         <h2 className="strategies-header__title">Fix-It Strategies</h2>
         {strategies.fixItResults.length ? (
           <div className="strategy-cards">
-            <h3 className="strategies-header__week-range">{uiStore.weekRangeText}</h3>
+            <h3 className="strategies-header__week-range">Week of {uiStore.weekRangeText}</h3>
             <CardGroup columns={2}>
               <div className="fixit-header">
                 <div className="fixit-header__line-first">
-                  <div>
-                    Amount that puts you in{' '}
-                    <strong>
-                      <em>RED</em>
-                    </strong>
-                    :
-                  </div>
+                  <div>Amount that you went over: </div>
                   <div className="fixit-header__amount">{uiStore.weekEndingBalanceText}</div>
                 </div>
 
                 <div className="fixit-header__line">
-                  The amount that puts you in{' '}
-                  <strong>
-                    <em>RED</em>
-                  </strong>{' '}
-                  is what you should try to reduce.
+                  The amount you went over is what you should try to reduce. The strategies below can help.
                 </div>
               </div>
               <div className="fixit-header">
                 <div className="fixit-header__comment">
-                  <div>Weekly Starting Balance:</div>
+                  <div>Starting Balance:</div>
                   <div className="fixit-header__comment-value">{uiStore.weekStartingBalanceText}</div>
                 </div>
                 <div className="fixit-header__comment">
-                  <div>Total Weekly Income: </div>
+                  <div>Weekly Income: </div>
                   <div className="fixit-header__comment-value">{formatCurrency(weekIncome)}</div>
                 </div>
                 <div className="fixit-header__comment">
-                  <div>Total Weekly Expense:</div>
+                  <div>Weekly Expense:</div>
                   <div className="fixit-header__comment-value">{formatCurrency(weekExpenses)}</div>
+                </div>
+              </div>
+              <div className="fixit-header">
+                <div className="fixit-header__comment">
+                  <div>You currently have a SNAP balance of {uiStore.weekEndingSnapBalanceText}.</div>
                 </div>
               </div>
             </CardGroup>

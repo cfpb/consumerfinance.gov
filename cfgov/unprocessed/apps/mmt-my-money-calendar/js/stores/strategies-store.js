@@ -82,7 +82,8 @@ class StrategiesStore {
           'expense.personal.funMoney',
         ],
         title: 'Adjust Spending this Week',
-        template: (categoryName) => `Your ${categoryName.toLowerCase()} expense was your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
+        template: (categoryName) =>
+          `Your ${categoryName.toLowerCase()} expense was your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
       },
     ],
   };
@@ -160,9 +161,11 @@ class StrategiesStore {
   analyzeFixItEvents(events) {
     return events.reduce(
       (results, event) => {
-        if (/^expense\.housing/.test(event.category)) {
-          if (!results.largestHousingExpense || results.largestHousingExpense.isLessThan(event)) {
-            results.largestHousingExpense = event;
+        if (event.totalCents < 0 && !event.categoryDetails.hasBill) {
+          if (this.fixItStrategies['largestAdHocExpense'].find((sgy) => sgy.categories.includes(event.category))) {
+            if (!results.largestAdHocExpense || results.largestAdHocExpense.isLessThan(event)) {
+              results.largestAdHocExpense = event;
+            }
           }
         }
 
@@ -176,19 +179,18 @@ class StrategiesStore {
           }
         }
 
-        if (event.totalCents < 0 && !event.categoryDetails.hasBill) {
-          if (this.fixItStrategies['largestAdHocExpense'].find((sgy) => sgy.categories.includes(event.category))) {
-            if (!results.largestAdHocExpense || results.largestAdHocExpense.isLessThan(event)) {
-              results.largestAdHocExpense = event;
-            }
+        if (/^expense\.housing/.test(event.category)) {
+          if (!results.largestHousingExpense || results.largestHousingExpense.isLessThan(event)) {
+            results.largestHousingExpense = event;
           }
         }
+
         return results;
       },
       {
-        largestHousingExpense: undefined,
-        largestBillableExpense: undefined,
         largestAdHocExpense: undefined,
+        largestBillableExpense: undefined,
+        largestHousingExpense: undefined,
       }
     );
   }
