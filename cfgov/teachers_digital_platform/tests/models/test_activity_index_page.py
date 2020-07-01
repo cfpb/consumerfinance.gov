@@ -88,14 +88,16 @@ class TestActivityIndexPageSearch(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_activity_index_page_renders_with_query_parameters(self):
+        print("LISTEN HERE")
         # Arrange
         my_request = self.search_page.dummy_request()
-        my_request.environ["QUERY_STRING"] = "q=&building_block=1"
+        my_request.environ["QUERY_STRING"] = "q=&building_block=1&building_block=2"
         # Act
         response = self.search_page.serve(my_request)
         response.render()
         # Assert
         self.assertEqual(response.status_code, 200)
+        print("DONE")
 
     def test_search_page_get_template(self):
         # Act
