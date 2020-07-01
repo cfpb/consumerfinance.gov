@@ -13,7 +13,45 @@
     {{ super() }} content__flush-bottom research-report
 {%- endblock %}
 
+{% if report_sections is not defined  %}
+    {% set report_sections = get_report_sections(request, page) %}
+{% endif %}
+
+{% if report_appendices is not defined  %}
+    {% set report_appendices = get_report_appendices(request, page) %}
+{% endif %}
+
 {% set researchers = get_researchers() %}
+
+
+{% macro report_part(sections) %}
+  {% for section in sections -%}
+    <h3 class="report-header">
+      <a
+        style="color:black;"
+        id="{{section.url[1:]}}"
+        href="{{section.url}}">
+          {{section.numbering + section.title}}
+      </a>
+    </h3>
+
+    {{ section.body | safe }}
+
+    {% for subsection in section.children -%}
+      <h4 class="report-header">
+        <a
+          style="color:black;"
+          id="{{subsection.url[1:]}}"
+          href="{{subsection.url}}">
+            {{subsection.numbering + subsection.title}}
+        </a>
+      </h4>
+
+      {{ subsection.body | safe}}
+    {%- endfor %}
+  {%- endfor %}
+{% endmacro %}
+
 
 {% block content_main %}
     <div class="block block__flush-top">
@@ -33,31 +71,10 @@
       {{ pdf_download.render({'pdf_url': page.pdf_location }) }}
     </div>
 
-    {% for section in page.report_sections.all().order_by('pk') -%}
-      <h3 class="report-header">
-        <a
-          style="color:black;"
-          id="{{section.html_id}}"
-          href="#{{section.html_id}}">
-            {{section.header}}
-        </a>
-      </h3>
+    {{report_part(report_sections)}}
 
-      {{ section.body | safe }}
-
-      {% for subsection in section.report_subsections.all().order_by('pk') -%}
-        <h4 class="report-header">
-          <a
-            style="color:black;"
-            id="{{subsection.sub_id}}"
-            href="#{{subsection.sub_id}}">
-              {{subsection.sub_header}}
-          </a>
-        </h4>
-
-        {{ subsection.sub_body | safe}}
-      {%- endfor %}
-    {%- endfor %}
+    <h2>Appendices</h2>
+    {{report_part(report_appendices)}}
 
     <div class="block block__flush-top">
       {{ page.footnotes | safe }}
