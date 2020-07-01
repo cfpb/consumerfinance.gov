@@ -413,12 +413,59 @@ class NonSettlementNotification(TestCase):
         self.assertTrue('No notification required' in non_msg)
 
 
-class ProgramExport(TestCase):
+class ProgramExportTest(TestCase):
     fixtures = ['test_program.json']
 
-    def test_program_as_csv(self):
+    def test_program_as_csv_is_called(self):
         p = Program.objects.get(pk=1)
         m = mock_open()
         with patch("builtins.open", m, create=True):
             p.as_csv('/tmp.csv')
         self.assertEqual(m.call_count, 1)
+
+
+class ProgramCodesTest(TestCase):
+    """
+    Make sure the Program.program_codes property delivers the right data.
+
+    Programs should be excluded if any of these are true:
+    - Program.test is True
+    - Program.level is blank
+    - Program.salary is None
+    - Program is undergrad (< level 4)
+    The fixture has 4 grad and 1 undergrad programs linked to school 408039.
+    """
+
+    fixtures = ['test_program.json']
+
+    def setUp(self):
+        self.school = School.objects.get(pk=408039)
+
+    def test_program_codes_deliver_no_undergrad(self):
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('undergrad')), 0)
+
+    def test_grad_program_codes(self):
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('graduate')), 4)
+
+    def test_program_codes_exclude_test_programs(self):
+        p1 = Program.objects.get(pk=1)
+        p1.test = True
+        p1.save()
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('graduate')), 3)
+
+    def test_program_codes_exclude_blank_level(self):
+        p2 = Program.objects.get(pk=2)
+        p2.level = ''
+        p2.save()
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('graduate')), 3)
+
+    def test_program_codes_exclude_null_salary(self):
+        p3 = Program.objects.get(pk=3)
+        p3.salary = None
+        p3.save()
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('graduate')), 3)
