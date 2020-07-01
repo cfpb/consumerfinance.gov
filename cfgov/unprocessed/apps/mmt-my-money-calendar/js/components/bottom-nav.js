@@ -6,10 +6,11 @@ import { useStore } from '../stores';
 
 import { calendar, add, idea, menu } from '../lib/icons';
 
-const NavItem = ({ href, icon, label, badge, disabled = false, ...params }) => {
+const NavItem = ({ href, icon, label, badge, disabled = false, canSpotlight, spotlight, ...params }) => {
   const classes = clsx('bottom-nav__link', disabled && 'disabled');
   const iconClasses = clsx('bottom-nav__link-icon');
   const labelClasses = clsx('bottom-nav__link-label');
+  
   const clickHandler = useCallback(
     (event) => {
       if (!disabled) return true;
@@ -21,7 +22,7 @@ const NavItem = ({ href, icon, label, badge, disabled = false, ...params }) => {
   );
 
   return (
-    <li className="bottom-nav__item">
+    <li className={`bottom-nav__item ${canSpotlight ? spotlight : ''}`}>
       <NavLink onClick={clickHandler} id="nav-link" className={classes} disabled={disabled} to={href} {...params}>
         <div className={iconClasses} dangerouslySetInnerHTML={{ __html: icon }} />
         <div className={labelClasses}>{label}</div>
@@ -31,30 +32,41 @@ const NavItem = ({ href, icon, label, badge, disabled = false, ...params }) => {
   );
 };
 
+
 function BottomNav() {
   const {
     uiStore,
     strategiesStore,
-    eventStore: { hasStartingBalance },
+    eventStore: { hasStartingBalance, modalOpen },
   } = useStore();
+  uiStore.toggleSpotlight(modalOpen)
+  const addSpotlight =  uiStore.hasSpotlight ? 'has-spotlight' : '';
   const classes = clsx('bottom-nav', uiStore.showBottomNav && 'bottom-nav--visible');
-
+  
   if (!hasStartingBalance) return null;
-
+  
   return (
     <footer className={classes}>
       <nav className="bottom-nav__nav">
         <ul className="bottom-nav__items">
-          <NavItem href="/calendar" icon={calendar} exact label="Calendar" disabled={!hasStartingBalance} />
-          <NavItem href="/calendar/add/income" icon={add} label="Income/Expense" disabled={!hasStartingBalance} />
+          <NavItem href="/calendar" icon={calendar} exact label="Calendar" disabled={!hasStartingBalance || uiStore.hasSpotlight} />
+          <NavItem 
+            id='add'
+            href="/calendar/add/income" 
+            icon={add} 
+            label="Income/Expense" 
+            disabled={!hasStartingBalance || uiStore.hasSpotlight} 
+            canSpotlight={uiStore.hasSpotlight} 
+            spotlight={addSpotlight}
+          />
           <NavItem
             href="/strategies"
             icon={idea}
             label="Strategies"
             badge={strategiesStore.strategyResults.length}
-            disabled={!hasStartingBalance || !strategiesStore.strategyResults.length}
+            disabled={!hasStartingBalance || !strategiesStore.strategyResults.length || uiStore.hasSpotlight}
           />
-          <NavItem href="/more" icon={menu} label="More" disabled={!hasStartingBalance} />
+          <NavItem href="/more" icon={menu} label="More" disabled={!hasStartingBalance || uiStore.hasSpotlight} />
         </ul>
       </nav>
     </footer>

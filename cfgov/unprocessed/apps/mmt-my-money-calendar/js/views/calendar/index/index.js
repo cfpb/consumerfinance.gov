@@ -1,13 +1,15 @@
 import clsx from 'clsx';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useParams, Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
 import { useClickHandler, useClickConfirm } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
+import NarrativeModal from '../../../components/narrative-notification';
 import { useScrollToTop } from '../../../components/scroll-to-top';
 import { DAY_LABELS, dayjs } from '../../../lib/calendar-helpers';
+import { narrativeCopy } from '../../../lib/narrative-copy';
 
 import { arrowLeft, arrowRight } from '../../../lib/icons';
 
@@ -29,10 +31,27 @@ function Calendar() {
   const { uiStore, eventStore } = useStore();
   const location = useLocation();
   const params = useParams();
+  const [showModal, setShowModal] = useState();
+  const [narrativeStep, setNarrativeStep] = useState();
+
+  const handleModalSession = () => {
+    let visited = localStorage.getItem('visitedPage'),
+        enteredData = localStorage.getItem('enteredData');
+
+    if (visited && enteredData === 'subsequent') {
+      setShowModal(false);
+    } else {
+      let currentStep = (visited && enteredData === 'initial') ? 'step2' : 'step1';
+
+      setNarrativeStep(currentStep)
+      setShowModal(true);
+    }
+  }
 
   useEffect(() => {
     uiStore.setPageTitle('myMoney Calendar');
     uiStore.setSubtitle(uiStore.currentMonth.format('MMMM YYYY'));
+    handleModalSession()
   }, [location, params, uiStore.currentMonth]);
 
   const dayLabels = useMemo(
@@ -48,12 +67,39 @@ function Calendar() {
     []
   );
 
+  const handleToggleModal = (event) => {
+    event.preventDefault();
+    localStorage.setItem('visitedPage', true);
+    if (localStorage.getItem('enteredData') === 'initial') {
+      localStorage.setItem('enteredData', 'subsequent');
+    }
+    if (!localStorage.getItem('removeSpotlight')) {
+      localStorage.setItem('removeSpotlight', true)
+      eventStore.closeNarrativeModal()
+    }
+    setShowModal(!showModal);
+  };
+
   useScrollToTop();
 
   if (eventStore.eventsLoaded && !eventStore.hasStartingBalance) return <Redirect to="/money-on-hand" />;
 
   return (
     <section className="calendar">
+      {showModal && narrativeStep === 'step1' &&
+        <NarrativeModal showModal={showModal}
+                        handleOkClick={handleToggleModal}
+                        copy={narrativeCopy.step1}
+                        step={narrativeStep}
+        />
+      }
+      { showModal && narrativeStep === 'step2' &&
+        <NarrativeModal showModal={showModal}
+                        handleOkClick={handleToggleModal}
+                        copy={narrativeCopy.step2}
+                        step={narrativeStep}
+        />
+      }
       <header className="calendar__header">
         <IconButton
           className="calendar__nav-button"
