@@ -5,7 +5,7 @@ from core.utils import sign_url
 
 
 @override_settings(
-    EXTERNAL_URL_WHITELIST=(r'^https:\/\/facebook\.com\/cfpb$',)
+    EXTERNAL_URL_ALLOWLIST=(r'^https:\/\/facebook\.com\/cfpb$',)
 )
 class TestExternalURLForm(TestCase):
     def test_valid_signature(self):
@@ -27,13 +27,13 @@ class TestExternalURLForm(TestCase):
 
         self.assertFalse(form.is_valid())
 
-    def test_whitelisted_url(self):
+    def test_allowlisted_url(self):
         data = {'ext_url': 'https://facebook.com/cfpb'}
         form = ExternalURLForm(data)
 
         self.assertTrue(form.is_valid())
 
-    def test_url_not_in_whitelist(self):
+    def test_url_not_in_allowlist(self):
         data = {'ext_url': 'https://google.com'}
         form = ExternalURLForm(data)
 
@@ -45,7 +45,7 @@ class TestExternalURLForm(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_no_signature_fails_validation(self):
-        data = {'ext_url': 'https://not.whitelisted.gov'}
+        data = {'ext_url': 'https://not.allowlisted.gov'}
         form = ExternalURLForm(data)
         self.assertFalse(form.is_valid())
 
@@ -54,6 +54,6 @@ class TestExternalURLForm(TestCase):
         _, signature = sign_url(url)
         data = {'ext_url': url, 'signature': signature}
 
-        with override_settings(EXTERNAL_URL_WHITELIST=(url,)):
+        with override_settings(EXTERNAL_URL_ALLOWLIST=(url,)):
             form = ExternalURLForm(data)
             self.assertTrue(form.is_valid())

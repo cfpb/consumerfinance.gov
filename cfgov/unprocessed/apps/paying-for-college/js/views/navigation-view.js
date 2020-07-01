@@ -94,7 +94,8 @@ const navigationView = {
   _handleNavButtonClick: function( event ) {
     event.preventDefault();
     const target = event.target;
-    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText )
+    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText );
+
     if ( typeof target.dataset.nav_item !== 'undefined' ) {
       updateState.activeSection( target.dataset.nav_item );
     } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
@@ -108,9 +109,10 @@ const navigationView = {
    * @param {Object} event - click event
    */
   _handleNextButtonClick: function( event ) {
+    // TODO: Track time between Next button clicks for analytics
+    sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
     updateState.nextSection();
     window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
-    sendAnalyticsEvent( 'Next button click', getStateValue( 'activeSection' ) );
   },
 
   /**
@@ -181,7 +183,7 @@ const navigationView = {
    */
   updateStateInDom: function( property, value ) {
     if ( value === false || value === null ) {
-      navigationView._stateDomElem.removeAttribute( property );
+      navigationView._stateDomElem.removeAttribute( 'data-state_' + property );
     } else {
       navigationView._stateDomElem.setAttribute( 'data-state_' + property, value );
     }

@@ -103,6 +103,7 @@ INSTALLED_APPS = (
     "ccdb5_ui",
     "mptt",
     "teachers_digital_platform",
+    "crtool",
 )
 
 MIDDLEWARE = (
@@ -252,7 +253,7 @@ STATICFILES_DIRS += REPOSITORY_ROOT.child("static.in").listdir(filter=DIRS)
 
 ALLOWED_HOSTS = ["*"]
 
-EXTERNAL_URL_WHITELIST = (
+EXTERNAL_URL_ALLOWLIST = (
     r"^https:\/\/facebook\.com\/cfpb$",
     r"^https:\/\/twitter\.com\/cfpb$",
     r"^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$",  # noqa 501
@@ -488,6 +489,7 @@ CSP_SCRIPT_SRC = (
     "'self'",
     "'unsafe-inline'",
     "'unsafe-eval'",
+    "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "tagmanager.google.com",
@@ -511,14 +513,14 @@ CSP_SCRIPT_SRC = (
     "connect.facebook.net",
     "www.federalregister.gov",
     "storage.googleapis.com",
-    "api.consumerfinance.gov",
-    "files.consumerfinance.gov",
+    "*.qualtrics.com",
 )
 
 # These specify valid sources of CSS code
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
+    "*.consumerfinance.gov",
     "fast.fonts.net",
     "tagmanager.google.com",
     "optimize.google.com",
@@ -529,12 +531,12 @@ CSP_STYLE_SRC = (
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
+    "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
     "www.gstatic.com",
     "ssl.gstatic.com",
     "stats.g.doubleclick.net",
-    "files.consumerfinance.gov",
     "img.youtube.com",
     "*.google-analytics.com",
     "trk.cetrk.com",
@@ -551,11 +553,13 @@ CSP_IMG_SRC = (
     "data:",
     "www.facebook.com",
     "www.gravatar.com",
+    "*.qualtrics.com",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
     "'self'",
+    "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
     "optimize.google.com",
@@ -565,29 +569,31 @@ CSP_FRAME_SRC = (
     "www.facebook.com",
     "staticxx.facebook.com",
     "mediasite.yorkcast.com",
+    "*.qualtrics.com",
 )
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = (
     "'self'",
     "data:",
+    "*.consumerfinance.gov",
     "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
-    "files.consumerfinance.gov",
 )
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (
     "'self'",
+    "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
     "bam.nr-data.net",
-    "files.consumerfinance.gov",
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
     "api.iperceptions.com",
+    "*.qualtrics.com",
 )
 
 # Feature flags
@@ -709,6 +715,9 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
+    # Controls whether or not to include Qualtrics Web Intercept code for the
+    # Q42020 Ask CFPB customer satisfaction survey.
+    "ASK_SURVEY_INTERCEPT": [],
 }
 
 

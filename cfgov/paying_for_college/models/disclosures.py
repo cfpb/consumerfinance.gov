@@ -354,6 +354,7 @@ class School(models.Model):
             'otherOffCampus': jdata['OTHEROFFCAMPUS'],
             'otherOnCampus': jdata['OTHERONCAMPUS'],
             'otherWFamily': jdata['OTHERWFAMILY'],
+            'programCodes': self.program_codes,
             'programCount': self.program_count,
             'programsPopular': self.program_most_popular,
             'predominantDegree': self.get_predominant_degree(),
@@ -388,6 +389,25 @@ class School(models.Model):
 
     def __str__(self):
         return self.primary_alias + " ({})".format(self.school_id)
+
+    @property
+    def program_codes(self):
+        # We're only insterested in program data with salary and level info
+        live_programs = self.program_set.filter(
+            test=False).exclude(level='').exclude(salary=None)
+        graduate = [p for p in live_programs if int(p.level) > 3]
+        # We're initially providing only graduate program details
+        undergrad = []  # [p for p in live_programs if p not in graduate]
+        return {
+            'graduate': [{
+                'code': p.program_code,
+                'name': p.program_name.strip('.'),
+                'level': PROGRAM_LEVELS.get(p.level),
+                'salary': p.salary}
+                for p in graduate
+            ],
+            'undergrad': undergrad,
+        }
 
     def get_predominant_degree(self):
         predominant = ''
@@ -706,25 +726,25 @@ class Program(models.Model):
             'books': self.books,
             'campus': self.campus,
             'cipCode': self.cip_code,
-            'completionRate': "{0}".format(self.completion_rate),
+            'completionRate': format_for_null(self.completion_rate),
             'completionCohort': self.completion_cohort,
             'completers': self.completers,
-            'defaultRate': "{0}".format(self.default_rate),
+            'defaultRate': format_for_null(self.default_rate),
             'fees': self.fees,
             'housing': self.housing,
             'institution': self.institution.primary_alias,
             'institutionalDebt': self.institutional_debt,
             'jobNote': self.job_note,
-            'jobRate': "{0}".format(self.job_rate),
+            'jobRate': format_for_null(self.job_rate),
             'level': self.level,
-            'levelName': self.level_name,
+            'levelName': PROGRAM_LEVELS.get(self.level),
             'meanStudentLoanCompleters': self.mean_student_loan_completers,
             'medianMonthlyDebt': self.median_monthly_debt,
             'medianStudentLoanCompleters': self.median_student_loan_completers,
             'privateDebt': self.private_debt,
             'programCode': self.program_code,
             'programLength': make_divisible_by_6(self.program_length),
-            'programName': self.program_name,
+            'programName': self.program_name.strip('.'),
             'programSalary': self.salary,
             'schoolID': self.institution.school_id,
             'socCodes': self.soc_codes,

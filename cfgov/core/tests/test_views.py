@@ -325,7 +325,7 @@ class TestExternalURLNoticeView(TestCase):
         self.factory = RequestFactory()
 
         patched_whitelist = patch(
-            "core.forms.EXTERNAL_URL_WHITELIST",
+            "core.forms.EXTERNAL_URL_ALLOWLIST",
             (re.compile(r"^https:\/\/foo\.com$"),),
         )
         patched_whitelist.start()
