@@ -83,10 +83,10 @@ class TestActivityIndexPageSearch(TestCase):
         # Arrange
         if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
+            response = self.search_page.serve(my_request)
         else:
-            my_request = self.search_page.make_preview_request()
+            response = self.search_page.make_preview_request()
         # Act
-        response = self.search_page.serve(my_request)
         response.render()
         # Assert
         self.assertEqual(response.status_code, 200)
@@ -95,11 +95,11 @@ class TestActivityIndexPageSearch(TestCase):
         # Arrange
         if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
+            my_request.environ["QUERY_STRING"] = "q=&building_block=1"
+            response = self.search_page.serve(my_request)
         else:
-            my_request = self.search_page.make_preview_request()
-        my_request.environ["QUERY_STRING"] = "q=&building_block=1"
+            response = self.search_page.make_preview_request()
         # Act
-        response = self.search_page.serve(my_request)
         response.render()
         # Assert
         self.assertEqual(response.status_code, 200)
@@ -129,11 +129,11 @@ class TestActivityIndexPageSearch(TestCase):
         # Arrange
         if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
+            my_request.environ["QUERY_STRING"] = "q=voldemort"
+            response = self.search_page.serve(my_request)
         else:
-            my_request = self.search_page.make_preview_request()
-        my_request.environ["QUERY_STRING"] = "q=voldemort"
+            response = self.search_page.make_preview_request()
         # Act
-        response = self.search_page.serve(my_request)
         response.render()
         # Assert
         self.assertTrue(b'<h3>No results match your search.</h3>' in response.content)  # noqa: E501
@@ -182,9 +182,9 @@ class TestActivityIndexPageSearch(TestCase):
         # Arrange
         if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
+            my_request.environ["QUERY_STRING"] = "q=voldemort"
         else:
             my_request = self.search_page.make_preview_request()
-        my_request.environ["QUERY_STRING"] = "q=voldemort"
         activity_page = self.create_activity_detail_page(title='Planning for future savings', slug='planning-future-savings')  # noqa: E501
         # Act
         actual_topics_list = activity_page.get_topics_list(self.search_page)
@@ -195,9 +195,9 @@ class TestActivityIndexPageSearch(TestCase):
         # Arrange
         if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
+            my_request.environ["QUERY_STRING"] = "q=voldemort"
         else:
             my_request = self.search_page.make_preview_request()
-        my_request.environ["QUERY_STRING"] = "q=voldemort"
         activity_page = self.create_activity_detail_page(title='Planning for future savings', slug='planning-future-savings')  # noqa: E501
         # Act
         actual_topics_list = activity_page.get_topics_list(None)
