@@ -5,7 +5,7 @@ export const narrativeCopy = {
     },
     step2: {
         headline: 'Congratulations!',
-        body: 'You’ve just entered your first transaction. Add more To see a more complete picture of your weekly money and strategies to help you make decisions!'
+        body: 'You’ve just entered your first transaction. Add more to see a more complete picture of your weekly money and strategies to help you make decisions!'
     },
     step3: {
         headline: 'Have you entered all of your income and expenses?',
