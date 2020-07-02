@@ -3,6 +3,7 @@ import json
 from django.test import RequestFactory, TestCase
 from django.utils.text import slugify
 
+import wagtail
 from wagtail.core.models import Page, Site
 
 from mega_menu.frontend_conversion import FrontendConverter
@@ -109,11 +110,16 @@ class FrontendConverterTests(TestCase):
     def test_conversion_database_queries(self):
         self.menu.refresh_from_db()
 
-        # We expect to see two queries here:
+        # We expect to see three queries here:
         #
         # 1. Wagtail's site root lookup.
         # 2. Single query to retrieve all pages at once.
-        with self.assertNumQueries(2):
+        if wagtail.VERSION > (2, 6):
+            num_queries = 3
+        else:
+            num_queries = 2
+
+        with self.assertNumQueries(num_queries):
             self.do_conversion(self.menu)
 
     def test_conversion_output(self):

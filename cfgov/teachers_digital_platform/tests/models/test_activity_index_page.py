@@ -1,5 +1,6 @@
 from django.test import RequestFactory, TestCase
 
+import wagtail
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 from wagtail.documents.models import Document
@@ -80,24 +81,28 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_activity_index_page_renders(self):
         # Arrange
-        my_request = self.search_page.dummy_request()
+        if wagtail.VERSION < (2, 7):
+            my_request = self.search_page.dummy_request()
+            response = self.search_page.serve(my_request)
+        else:
+            response = self.search_page.make_preview_request()
         # Act
-        response = self.search_page.serve(my_request)
         response.render()
         # Assert
         self.assertEqual(response.status_code, 200)
 
     def test_activity_index_page_renders_with_query_parameters(self):
-        print("LISTEN HERE")
         # Arrange
-        my_request = self.search_page.dummy_request()
-        my_request.environ["QUERY_STRING"] = "q=&building_block=1&building_block=2"
+        my_request = self.factory.get('/search?q=building_block=1&building_block=2')
+        my_request.site = self.site
+        if wagtail.VERSION < (2, 7):
+            response = self.search_page.serve(my_request)
+        else:
+            response = self.search_page.make_preview_request(my_request)
         # Act
-        response = self.search_page.serve(my_request)
         response.render()
         # Assert
         self.assertEqual(response.status_code, 200)
-        print("DONE")
 
     def test_search_page_get_template(self):
         # Act
@@ -122,10 +127,13 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_search_index_page_handles_bad_query(self):
         # Arrange
-        my_request = self.search_page.dummy_request()
-        my_request.environ["QUERY_STRING"] = "q=voldemort"
+        if wagtail.VERSION < (2, 7):
+            my_request = self.search_page.dummy_request()
+            my_request.environ["QUERY_STRING"] = "q=voldemort"
+            response = self.search_page.serve(my_request)
+        else:
+            response = self.search_page.make_preview_request()
         # Act
-        response = self.search_page.serve(my_request)
         response.render()
         # Assert
         self.assertTrue(b'<h3>No results match your search.</h3>' in response.content)  # noqa: E501
@@ -172,8 +180,11 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_get_topics_list_returns_correct_topic_list_for_parent(self):
         # Arrange
-        my_request = self.search_page.dummy_request()
-        my_request.environ["QUERY_STRING"] = "q=voldemort"
+        if wagtail.VERSION < (2, 7):
+            my_request = self.search_page.dummy_request()
+            my_request.environ["QUERY_STRING"] = "q=voldemort"
+        else:
+            my_request = self.search_page.make_preview_request()
         activity_page = self.create_activity_detail_page(title='Planning for future savings', slug='planning-future-savings')  # noqa: E501
         # Act
         actual_topics_list = activity_page.get_topics_list(self.search_page)
@@ -182,8 +193,11 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_get_topics_list_returns_correct_topic_list_no_parent(self):
         # Arrange
-        my_request = self.search_page.dummy_request()
-        my_request.environ["QUERY_STRING"] = "q=voldemort"
+        if wagtail.VERSION < (2, 7):
+            my_request = self.search_page.dummy_request()
+            my_request.environ["QUERY_STRING"] = "q=voldemort"
+        else:
+            my_request = self.search_page.make_preview_request()
         activity_page = self.create_activity_detail_page(title='Planning for future savings', slug='planning-future-savings')  # noqa: E501
         # Act
         actual_topics_list = activity_page.get_topics_list(None)

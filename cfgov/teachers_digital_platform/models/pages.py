@@ -85,8 +85,7 @@ class ActivityIndexPage(CFGOVPage):
             ('jump_start_coalition', (ActivityJumpStartCoalition, False, 25)),
             ('council_for_economic_education', (ActivityCouncilForEconEd, False, 25)),  # noqa: E501
         )
-        exists = 'building_block' in request.GET
-        print(exists)
+
         search_query = request.GET.get('q', '')  # haystack cleans this string
         sqs = SearchQuerySet().models(ActivityPage).filter(live=True)
         total_activities = sqs.count()
