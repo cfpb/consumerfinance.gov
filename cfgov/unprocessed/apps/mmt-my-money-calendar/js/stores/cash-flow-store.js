@@ -13,7 +13,7 @@ export default class CashFlowStore {
   @observable eventsLoaded = false;
   @observable events = [];
   @observable modalOpen = localStorage.getItem('removeSpotlight') ? false : true;
-
+  
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.logger = logger.addGroup('cashFlowStore');
@@ -514,10 +514,12 @@ export default class CashFlowStore {
    */
   clearAllData = flow(function* () {
     yield CashFlowEvent.destroyAll();
+    localStorage.clear();
+    this.modalOpen = true;
     this.setEvents([]);
   });
 
   @action closeNarrativeModal() {
     this.modalOpen = !this.modalOpen;
-  } 
+  }
 }
