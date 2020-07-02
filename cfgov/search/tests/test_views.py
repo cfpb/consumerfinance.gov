@@ -1,5 +1,6 @@
 import json
 
+from django.core.management import call_command
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
@@ -26,8 +27,14 @@ class SearchViewsTestCase(TestCase):
 
 
 class ExternalLinksSearchViewTestCase(TestCase):
+
+    # fixtures = ['activities_page.json']
+
     def setUp(self):
         self.client.login(username="admin", password="admin")
+        # stdout_patch = mock.patch('sys.stdout')
+        # stdout_patch.start()
+        # self.addCleanup(stdout_patch.stop)
 
     def test_get(self):
         response = self.client.get("/admin/external-links/")
@@ -71,11 +78,14 @@ class ExternalLinksSearchViewTestCase(TestCase):
             ),
         )
         publish_page(page)
+        call_command("wagtail_update_index")
         response = self.client.post(
             "/admin/external-links/", {"url": "www.foobar.com"}
-        )
+        )   
+        import pdb; pdb.set_trace()
         self.assertContains(
-            response, "There is 1 matching page and 0 matching snippets"
+            response,
+            "There is 1 matching page and 0 matching snippets"
         )
 
     def test_single_result_per_page(self):
@@ -107,11 +117,13 @@ class ExternalLinksSearchViewTestCase(TestCase):
             ),
         )
         publish_page(page)
+        call_command("wagtail_update_index")
         response = self.client.post(
             "/admin/external-links/", {"url": "www.foobar.com"}
         )
         self.assertContains(
-            response, "There is 1 matching page and 0 matching snippets"
+            response,
+            "There is 1 matching page and 0 matching snippets"
         )
 
     def test_no_duplicates(self):

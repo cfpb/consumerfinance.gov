@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     "wagtail.contrib.routable_page",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.table_block",
+    "wagtail.contrib.postgres_search",
     "localflavor",
     "modelcluster",
     "taggit",
@@ -75,6 +76,7 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "wagtail.search",
     "storages",
     "data_research",
     "v1",
@@ -107,6 +109,12 @@ INSTALLED_APPS = (
     "mptt",
     "crtool",
 )
+
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.contrib.postgres_search.backend',
+    },
+}
 
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
