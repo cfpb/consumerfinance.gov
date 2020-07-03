@@ -13,6 +13,6 @@ export const narrativeCopy = {
     },
     step4: {
         headline: 'SNAP Benefits',
-        body: 'Your SNAP benefits can only be applied to a Grocery expense. Any Grocery expense that you add will come out of your SNAP benefit first.'
+        body: 'Any Grocery expense entered will come out of your SNAP benefit first.'
     }
 }
