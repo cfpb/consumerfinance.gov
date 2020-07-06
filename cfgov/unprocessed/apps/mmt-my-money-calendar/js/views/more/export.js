@@ -15,11 +15,13 @@ function Export() {
   return (
     <section className={bem()}>
       <header className={bem('header')}>
-        <h1 className={bem('app-title')}>MyMoney Calendar</h1>
+        <h1 className={bem('app-title')}>myMoney Calendar</h1>
         <h2 className={bem('section-title')}>Save {dataType}</h2>
       </header>
 
-      <ButtonLink to="/more" variant="secondary">Back</ButtonLink>
+      <ButtonLink to="/more" variant="secondary">
+        Back
+      </ButtonLink>
     </section>
   );
 }

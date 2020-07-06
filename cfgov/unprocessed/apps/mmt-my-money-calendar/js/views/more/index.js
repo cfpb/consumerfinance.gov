@@ -25,36 +25,24 @@ function More() {
   return (
     <section className={bem()}>
       <header className={bem('header')}>
-        <h1 className={bem('app-title')}>MyMoney Calendar</h1>
+        <h1 className={bem('app-title')}>myMoney Calendar</h1>
         <h2 className={bem('section-title')}>More Options</h2>
       </header>
 
       <main className={bem('main')}>
         <ul className={bem('actions')}>
           <li className={bem('actions-item')}>
-            <ButtonLink
-              fullWidth
-              variant="primary"
-              to="/more/export/strategies"
-            >
+            <ButtonLink fullWidth variant="primary" to="/more/export/strategies">
               Save Strategies
             </ButtonLink>
           </li>
           <li className={bem('actions-item')}>
-            <ButtonLink
-              fullWidth
-              variant="primary"
-              to="/more/export/calendar"
-            >
+            <ButtonLink fullWidth variant="primary" to="/more/export/calendar">
               Save Calendar
             </ButtonLink>
           </li>
           <li className={bem('actions-item')}>
-            <Button
-              fullWidth
-              variant="warning"
-              onClick={() => toggleClearDataModal(true)}
-            >
+            <Button fullWidth variant="warning" onClick={() => toggleClearDataModal(true)}>
               Clear My Data
             </Button>
           </li>

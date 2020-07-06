@@ -85,6 +85,10 @@ function Details() {
   useLockBodyScroll(modalOpen);
 
   const events = eventStore.getEventsForWeek(uiStore.currentWeek) || [];
+  const startBal = events
+    .filter((x) => x.category === 'income.startingBalance')
+    .map((e) => formatCurrency(e.totalCents / 100));
+
   const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative');
 
   return (
@@ -98,17 +102,26 @@ function Details() {
         />
 
         <div className="calendar-details__header-text">
-          <h3>{uiStore.weekRangeText}</h3>
+          <h3>Week of {uiStore.weekRangeText}</h3>
           <div className="calendar-details__starting-balance">
-            Weekly Starting Balance: <span className='balance-amount'>{uiStore.weekStartingBalanceText}</span>
+            Starting Balance:
+            <span className="balance-amount">
+              {events.find((x) => x.category === 'income.startingBalance') ? startBal : uiStore.weekStartingBalanceText}
+            </span>
           </div>
           {!uiStore.weekHasNegativeBalance && !eventStore.hasSnapEvents && (
-            <div className={endBalanceClasses}>Weekly Ending Balance: <span className='balance-amount'>{uiStore.weekEndingBalanceText}</span></div>
+            <div className={endBalanceClasses}>
+              Ending Balance: <span className="balance-amount">{uiStore.weekEndingBalanceText}</span>
+            </div>
           )}
           {!uiStore.weekHasNegativeBalance && eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>
-              <p>Weekly Ending Balance: <span className='balance-amount'>{uiStore.weekEndingBalanceText}</span></p>
-              <p>Weekly Ending SNAP Balance: <span className='balance-amount'>{uiStore.weekEndingSnapBalanceText}</span></p>
+              <p>
+                Ending Balance: <span className="balance-amount">{uiStore.weekEndingBalanceText}</span>
+              </p>
+              <p>
+                Ending SNAP Balance: <span className="balance-amount">{uiStore.weekEndingSnapBalanceText}</span>
+              </p>
             </div>
           )}
         </div>
@@ -133,14 +146,14 @@ function Details() {
             }
           >
             <p className="m-notification_explanation">
-              Weekly Ending Balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span>
+              Ending Balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span>
             </p>
           </Notification>
         </div>
       )}
 
       <div className="calendar-details__events-section">
-        <h3 className="calendar-details__events-section-title">Weekly Transactions</h3>
+        <h3 className="calendar-details__events-section-title">Transactions</h3>
 
         <ul className="calendar-details__events-list">
           {events.map((e) => (

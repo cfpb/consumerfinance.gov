@@ -58,7 +58,7 @@ function Summary() {
 
             return (
               <li key={`funding-src-${idx}`} className="funding-source">
-                <span className="funding-source__name">{name}:</span>{' '}
+                <span className="funding-source__name">{name}:</span>
                 <span className="funding-source__balance">{formatCurrency(balance / 100)}</span>
               </li>
             );

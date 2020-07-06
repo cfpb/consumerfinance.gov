@@ -35,7 +35,7 @@ class StrategiesStore {
       },
       {
         categories: ['expense.housing.rent'],
-        title: 'Split Rent Payments',
+        title: 'Split Rent Payment',
         text: 'Contact your landlord to find out if you could split your payment into two payments per month',
       },
     ],

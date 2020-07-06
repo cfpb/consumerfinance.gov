@@ -97,12 +97,11 @@ function FixItStrategies() {
   var weekExpenses = negativeFilter.reduce((acc, event) => acc + event.total, 0);
   return (
     <section className="strategies">
-      { showModal && 
+      {showModal && (
         <NarrativeModal showModal={showModal}
                         handleOkClick={handleToggleModal}
-                        copy={narrativeCopy.step3}
-        />
-      }
+                        copy={narrativeCopy.step3} />
+      )}
       <header className="strategies-header">
         <h2 className="strategies-header__title">Fix-It Strategies</h2>
         {strategies.fixItResults.length ? (
@@ -125,11 +124,11 @@ function FixItStrategies() {
                   <div className="fixit-header__comment-value">{uiStore.weekStartingBalanceText}</div>
                 </div>
                 <div className="fixit-header__comment">
-                  <div>Weekly Income: </div>
+                  <div>Income: </div>
                   <div className="fixit-header__comment-value">{formatCurrency(weekIncome)}</div>
                 </div>
                 <div className="fixit-header__comment">
-                  <div>Weekly Expense:</div>
+                  <div>Expense:</div>
                   <div className="fixit-header__comment-value">{formatCurrency(weekExpenses)}</div>
                 </div>
               </div>
@@ -141,10 +140,10 @@ function FixItStrategies() {
             </CardGroup>
           </div>
         ) : (
-          <p>
-            <em>There are no strategy recommendations for this week</em>
-          </p>
-        )}
+            <p>
+              <em>There are no strategy recommendations for this week</em>
+            </p>
+          )}
       </header>
       <div>{strategies.fixItResults.length > 0 && <StrategyCards results={strategies.fixItResults} />}</div>
       <div>
