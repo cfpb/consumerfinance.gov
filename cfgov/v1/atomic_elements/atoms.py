@@ -1,5 +1,3 @@
-import re
-
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -7,52 +5,8 @@ from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
 
-def number_validator(value, search=re.compile(r'[^0-9]').search):
-    if value:
-        return bool(search(value))
-    else:
-        return False
-
-
 def is_required(field_name):
     return [str(field_name) + ' is required.']
-
-
-class NumberBlock(blocks.StructBlock):
-    text = blocks.CharBlock(max_length=100, required=False)
-
-    def __init__(self, required=True):
-        self.is_required = required
-        super(NumberBlock, self).__init__()
-
-    @property
-    def required(self):
-        return self.is_required
-
-    def clean(self, data):
-        error_dict = {}
-
-        try:
-            data = super(NumberBlock, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
-
-        if self.required:
-            if not data['text']:
-                error_dict.update({'text': is_required('Text')})
-
-        if number_validator(data['text']):
-            error_dict.update({'text': ['Must be a numerical value']})
-
-        if error_dict:
-            raise ValidationError("NumberBlock validation errors",
-                                  params=error_dict)
-        else:
-            return data
-
-    class Meta:
-        icon = 'order'
-        template = '_includes/atoms/number.html'
 
 
 class IntegerBlock(blocks.FieldBlock):
