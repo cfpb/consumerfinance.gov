@@ -490,6 +490,7 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
+    "files.consumerfinance.gov",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "tagmanager.google.com",
@@ -532,6 +533,7 @@ CSP_STYLE_SRC = (
 CSP_IMG_SRC = (
     "'self'",
     "*.consumerfinance.gov",
+    "files.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
     "www.gstatic.com",
@@ -577,6 +579,7 @@ CSP_FONT_SRC = (
     "'self'",
     "data:",
     "*.consumerfinance.gov",
+    "files.consumerfinance.gov",
     "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
@@ -586,6 +589,7 @@ CSP_FONT_SRC = (
 CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
+    "files.consumerfinance.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
     "bam.nr-data.net",
