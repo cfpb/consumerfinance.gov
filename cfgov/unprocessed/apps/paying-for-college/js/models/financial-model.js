@@ -47,6 +47,10 @@ const financialModel = {
     financialModel._updateRates();
     financialModel._calculateTotals();
     debtCalculator();
+
+    // set monthly salary value
+    financialModel.values.salary_monthly = financialModel.values.salary_annual / 12;
+
     recalculateExpenses();
     financialModel._updateStateWithFinancials();
 

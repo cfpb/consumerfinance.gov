@@ -39,9 +39,9 @@ function buildUrlQueryString() {
      update-models.js file. */
   const variables = {
     'iped': schoolValues.schoolID,
-    'pid': schoolValues.pid,
     'oid': schoolValues.oid,
 
+    'pid': stateValues.pid,
     'houp': stateValues.programHousing,
     'typp': stateValues.programType,
     'lenp': stateValues.programLength,

@@ -3,9 +3,9 @@
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { schoolSearch } from '../dispatchers/get-api-values';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { updateSchoolData } from '../dispatchers/update-models.js';
+import { updateFinancial, updateSchoolData } from '../dispatchers/update-models.js';
 import { updateState } from '../dispatchers/update-state.js';
-import { getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { getSchoolValue, getStateValue, getProgramList } from '../dispatchers/get-model-values.js';
 import { updateFinancialView, updateGradMeterChart, updateRepaymentMeterChart } from '../dispatchers/update-view.js';
 
 
@@ -18,9 +18,38 @@ const schoolView = {
   _schoolInfo: null,
   _schoolItems: [],
   _stateItems: [],
+  _programSelect: null,
 
-  /* _checkRadioButtonCount: if all radio buttons are clicked, enable the next button */
+  /**
+   * Add all event listeners for school search view
+   */
+  _addListeners: () => {
+    const searchEvents = {
+      keyup: schoolView._handleInputChange
+    };
+    bindEvent( schoolView._searchBox, searchEvents );
 
+    const searchResultsEvent = {
+      click: schoolView._handleResultButtonClick
+    };
+    bindEvent( schoolView._searchResults, searchResultsEvent );
+
+    const radioEvents = {
+      click: schoolView._handleProgramRadioClick
+    };
+    schoolView._programRadios.forEach( elem => {
+      bindEvent( elem, radioEvents );
+    } );
+
+    const programSelectEvents = {
+      change: schoolView._handleProgramSelectChange
+    }
+    bindEvent( schoolView._programSelect, programSelectEvents );
+  },
+
+  /**
+   * _checkRadioButtonCount: if all radio buttons are clicked, enable the next button
+   */
   _checkRadioButtonCount: function( ) {
     const checkedCount = schoolView._schoolInfo
       .querySelectorAll( 'input[checked="true"]' ).length;
@@ -56,6 +85,12 @@ const schoolView = {
     }, 500 );
   },
 
+  _handleProgramSelectChange: function( event ) {
+    const salary = event.target.options[event.target.selectedIndex].dataset.programSalary;
+    updateState.byProperty( 'pid', event.target.value );
+    updateFinancial( 'salary_annual', salary );
+  },
+
   _handleResultButtonClick: function( event ) {
     const target = event.target;
     let button;
@@ -65,6 +100,9 @@ const schoolView = {
     } else {
       button = closest( target, 'BUTTON' );
     }
+
+    // Clear pid from state
+    updateState.byProperty( 'pid', false );
 
     // If there's a school_id, then proceed with schoolInfo
     if ( typeof button.dataset.school_id !== 'undefined' ) {
@@ -85,28 +123,7 @@ const schoolView = {
     updateState.byProperty( prop, value );
 
     schoolView._checkRadioButtonCount();
-
-  },
-
-  /* Add all event listeners for school search view  */
-  _addListeners: () => {
-    const searchEvents = {
-      keyup: schoolView._handleInputChange
-    };
-    bindEvent( schoolView._searchBox, searchEvents );
-
-    const searchResultsEvent = {
-      click: schoolView._handleResultButtonClick
-    };
-    bindEvent( schoolView._searchResults, searchResultsEvent );
-
-    const radioEvents = {
-      click: schoolView._handleProgramRadioClick
-    };
-    schoolView._programRadios.forEach( elem => {
-      bindEvent( elem, radioEvents );
-    } );
-
+    schoolView.updateSchoolView();
   },
 
   updateSchoolView: () => {
@@ -115,6 +132,7 @@ const schoolView = {
     updateRepaymentMeterChart();
     schoolView._updateSchoolRadioButtons();
     schoolView.updateSchoolItems();
+    schoolView._updateProgramList();
   },
 
   updateSchoolItems: function() {
@@ -139,6 +157,36 @@ const schoolView = {
 
   },
 
+  _updateProgramList: () => {
+    let level = 'undergrad';
+    if ( getStateValue( 'programType' ) === 'graduate' ) {
+      level = 'graduate';
+    }
+    const list = getProgramList( level );
+    if ( list.length > 0 ) {
+      updateState.byProperty( 'schoolHasPrograms', 'yes' );
+    } else {
+      updateState.byProperty( 'schoolHasPrograms', 'no' );
+    }
+
+    if ( list.length > 0 ) {
+      let html = '<option selected="selected" value="null">Select...</option>';
+      list.forEach( ( elem ) => {
+        html += '\n<option data-program-salary="' + elem.salary + '"';
+        html += ' value="' + elem.code + '">';
+        html += elem.level + ' - ' + elem.name;
+        html += '</option>'; 
+      } );
+      html += '<option value="null">My program is not listed here.</option>';
+      schoolView._programSelect.innerHTML = html;
+
+      // If there's a program id in the state, select that program
+      if ( getStateValue( 'pid' ) ) {
+
+      }
+    }
+  },
+
   _updateSchoolRadioButtons: () => {
     const campus = getSchoolValue( 'onCampusAvail' );
     const control = getSchoolValue( 'Public' );
@@ -161,7 +209,7 @@ const schoolView = {
   },
 
   clickRadioButton: ( name, value ) => {
-    if ( value !== null ) {
+    if ( value !== null && value !== false ) {
       const input = document.querySelector( 'INPUT[name="' + name + '"][value="' + value + '"]' );
       const label = closest( input, '.m-form-field__radio' ).querySelector( 'LABEL' );
       label.click();
@@ -176,6 +224,7 @@ const schoolView = {
     schoolView._searchBox = body.querySelector( '#search__school-input' );
     schoolView._searchResults = body.querySelector( '#search-results' );
     schoolView._programRadios = body.querySelectorAll( '.school-search_additional-info label' );
+    schoolView._programSelect = body.querySelector( '#program-select' );
     schoolView._schoolInfo = body.querySelector( '.school-search_additional-info' );
     schoolView._schoolItems = document.querySelectorAll( '[data-school-item]' );
     schoolView._stateItems = document.querySelectorAll( '[data-state-item]' );

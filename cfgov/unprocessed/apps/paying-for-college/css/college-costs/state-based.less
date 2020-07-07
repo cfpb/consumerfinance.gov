@@ -135,6 +135,41 @@ main.college-costs {
 		}
 	}
 
+	// Program selection visibility
+	&[data-state_schoolhasprograms="yes"][data-state_programtype="graduate"] {
+		[data-state-based-visibility="school-has-programs"] {
+			display: block;
+		}
+		span[data-state-based-visibility="school-has-programs"] {
+			display: inline;
+		}
+	}
+	&[data-state_schoolhasprograms="no"][data-state_programtype="graduate"] {
+		[data-state-based-visibility="school-no-programs"] {
+			display: block;
+		}
+		span[data-state-based-visibility="school-no-programs"] {
+			display: inline;
+		}
+	}
+
+	&[data-state_pid] {
+		[data-state-based-visibility="program-is-selected"] {
+			display: block;
+		}
+		span[data-state-based-visibility="program-is-selected"] {
+			display: inline;
+		}
+	}
+	&:not( [data-state_pid] ) {
+		[data-state-based-visibility="no-program-selected"] {
+			display: block;
+		}
+		span[data-state-based-visibility="no-program-selected"] {
+			display: inline;
+		}	
+	}
+
 	&[data-state_costsquestion] {
 		#costs_inputs-section {
 			display: block;

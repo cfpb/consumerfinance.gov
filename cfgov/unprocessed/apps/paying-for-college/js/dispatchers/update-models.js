@@ -14,9 +14,9 @@ import { updateGradMeterChart, updateRepaymentMeterChart, updateSchoolView } fro
 
 const _urlParamsToModelVars = {
   'iped': 'schoolModel.schoolID',
-  'pid': 'schoolModel.PID',
   'oid': 'schoolModel.oid',
 
+  'pid': 'stateModel.pid',
   'houp': 'stateModel.programHousing',
   'typp': 'stateModel.programType',
   'lenp': 'stateModel.programLength',
@@ -115,7 +115,7 @@ function initializeFinancialValues() {
   * @param {Boolean} updateView - (defaults true) should view be updated?
   */
 function updateFinancial( name, value, updateView ) {
-  financialModel.setValue( name, value );
+  financialModel.setValue( name, value, updateView );
 }
 
 /**
@@ -176,7 +176,6 @@ const updateSchoolData = function( iped ) {
 
         // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
-        financialModel.setValue( 'salary_monthly', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) / 12 );
 
         updateSchoolView();
 
@@ -235,18 +234,17 @@ function updateModelsFromQueryString( queryObj ) {
       const match = _urlParamsToModelVars[key].split( '.' );
       modelMatch[match[0]]( match[1], queryObj[key], false );
 
-      // If there's an iped, do a fetch of the schoolData
-      if ( key === 'iped' ) {
-        updateSchoolData( queryObj[key] );
-      }
-
-      // Also put programLength into the financial model
+      // Copy programLength into the financial model
       if ( key === 'lenp' ) {
         financialModel.setValue( 'other_programLength', stringToNum( queryObj[key], false ) );
       }
     }
   }
 
+  // If there's an iped, do a fetch of the schoolData
+  if ( getSchoolValue( 'schoolID' ) ) {
+    updateSchoolData( getSchoolValue( 'schoolID' ) );
+  }
 }
 
 export {

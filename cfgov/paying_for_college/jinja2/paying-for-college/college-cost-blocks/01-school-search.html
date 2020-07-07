@@ -60,6 +60,23 @@
                 })
             }}
         </div>
+        <div data-state-based-visibility="school-no-programs">
+            {{ notification.render(
+                'default',
+                true,
+                '',
+                'Salary data is not available for any <span class="undergrad-content">under</span>graduate programs at your school. Please ask the school to provide you with earnings figures for recent graduates.' | safe
+            ) }}
+        </div>
+
+        <div class="block block__sub" data-state-based-visibility="school-has-programs">
+          <h3 class="h4">Select your graduate program</h3>
+          <div>
+            <select id="program-select">
+              
+            </select>
+          </div>
+        </div>
         <div class="block block__sub program-question">
             <h3 class="h4">How long do you expect your program to take?</h3>
             <div class="undergrad-content">
