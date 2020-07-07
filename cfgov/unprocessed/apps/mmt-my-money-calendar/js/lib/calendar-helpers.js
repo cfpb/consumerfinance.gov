@@ -3,6 +3,7 @@ import yearDay from 'dayjs/plugin/dayOfYear';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isBetween from 'dayjs/plugin/isBetween';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { RRule, RRuleSet } from 'rrule';
 
@@ -11,18 +12,11 @@ dayjs.extend(weekOfYear);
 dayjs.extend(customParseFormat);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
+dayjs.extend(isBetween);
 
-export { dayjs as dayjs };
+export { dayjs };
 
-export const DAY_NAMES = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-];
+export const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 export const DAY_LABELS = DAY_NAMES.map((name) => name.charAt(0));
 export const MONTH_NAMES = [
   'January',
@@ -131,12 +125,17 @@ export function getWeekRows(date) {
 
   let currentWeekStart = date.startOf('week');
 
-  while (currentWeekStart.startOf('week').isSame(date, 'month') || currentWeekStart.endOf('week').isSame(date, 'month')) {
+  while (
+    currentWeekStart.startOf('week').isSame(date, 'month') ||
+    currentWeekStart.endOf('week').isSame(date, 'month')
+  ) {
     const weekNumber = currentWeekStart.week();
 
     rows.push({
       weekNumber,
-      days: Array(7).fill(0).map((n, idx) => currentWeekStart.add(n + idx, 'days')),
+      days: Array(7)
+        .fill(0)
+        .map((n, idx) => currentWeekStart.add(n + idx, 'days')),
     });
 
     currentWeekStart = currentWeekStart.add(1, 'week');
@@ -160,8 +159,7 @@ export const DAY_OPTIONS = {
 export const recurrenceRules = {
   weekly: {
     label: 'Weekly',
-    handler: (dtstart, options = {}) =>
-      new RRule({ freq: RRule.WEEKLY, dtstart, ...options }),
+    handler: (dtstart, options = {}) => new RRule({ freq: RRule.WEEKLY, dtstart, ...options }),
   },
   biweekly: {
     label: 'Every 2 weeks',

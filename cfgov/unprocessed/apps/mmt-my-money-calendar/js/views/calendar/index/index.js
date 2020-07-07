@@ -36,22 +36,21 @@ function Calendar() {
 
   const handleModalSession = () => {
     let visited = localStorage.getItem('visitedPage'),
-        enteredData = localStorage.getItem('enteredData');
+      enteredData = localStorage.getItem('enteredData');
 
     if (visited && enteredData === 'subsequent') {
       setShowModal(false);
     } else {
       let currentStep = (visited && enteredData === 'initial') ? 'step2' : 'step1';
-
-      setNarrativeStep(currentStep)
+      setNarrativeStep(currentStep);
       setShowModal(true);
     }
-  }
+  };
 
   useEffect(() => {
     uiStore.setPageTitle('myMoney Calendar');
     uiStore.setSubtitle(uiStore.currentMonth.format('MMMM YYYY'));
-    handleModalSession()
+    handleModalSession();
   }, [location, params, uiStore.currentMonth]);
 
   const dayLabels = useMemo(
@@ -75,7 +74,7 @@ function Calendar() {
     }
     if (!localStorage.getItem('removeSpotlight')) {
       localStorage.setItem('removeSpotlight', true)
-      eventStore.closeNarrativeModal()
+      eventStore.closeNarrativeModal();
     }
     setShowModal(!showModal);
   };
@@ -87,13 +86,14 @@ function Calendar() {
   return (
     <section className="calendar">
       {showModal && narrativeStep === 'step1' &&
-        <NarrativeModal showModal={showModal}
-                        handleOkClick={handleToggleModal}
-                        copy={narrativeCopy.step1}
-                        step={narrativeStep}
+        <NarrativeModal
+          showModal={showModal}
+          handleOkClick={handleToggleModal}
+          copy={narrativeCopy.step1}
+          step={narrativeStep}
         />
       }
-      { showModal && narrativeStep === 'step2' &&
+      {showModal && narrativeStep === 'step2' && 
         <NarrativeModal showModal={showModal}
                         handleOkClick={handleToggleModal}
                         copy={narrativeCopy.step2}
