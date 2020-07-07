@@ -28,7 +28,7 @@ function FeaturedContentModule( element ) {
    *   or undefined if it was already initialized.
    */
   function init() {
-    if (!setInitFlag( _dom ) ) {
+    if ( !setInitFlag( _dom ) ) {
       let UNDEFINED;
       return UNDEFINED;
     }

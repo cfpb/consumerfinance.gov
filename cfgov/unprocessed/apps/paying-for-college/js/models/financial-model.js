@@ -162,7 +162,7 @@ const financialModel = {
     }
 
     // unsubCap is actually the 'unsubCap' minus any subsidized loans.
-    const unsubCap = Math.max( 
+    const unsubCap = Math.max(
       getConstantsValue( unsubCapKey ) - financialModel.values.fedLoan_directSub,
       0 );
 

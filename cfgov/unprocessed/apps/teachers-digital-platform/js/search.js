@@ -4,7 +4,7 @@ const closest = require( './util/dom-traverse' ).closest;
 const find = require( './util/dom-traverse' ).queryOne;
 const expandableFacets = require( './expandable-facets' );
 const cfExpandables = require( 'cf-expandables/src/Expandable' );
-const analytics = require( './analytics' );
+const analytics = require( './tdp-analytics' );
 const fetch = require( './utils' ).fetch;
 const ClearableInput = require( './util/ClearableInput' ).ClearableInput;
 
@@ -31,8 +31,8 @@ function attachHandlers() {
   behavior.attach( 'clear-search', 'clear', clearSearch );
   cfExpandables.init();
   expandableFacets.init();
-  const inputContainsLabel = document.querySelector( '.activity-search .input-contains-label' );
-  if (inputContainsLabel) {
+  const inputContainsLabel = document.querySelector( '.tdp-activity-search .input-contains-label' );
+  if ( inputContainsLabel ) {
     const clearableInput = new ClearableInput( inputContainsLabel );
     clearableInput.init();
   }
@@ -146,7 +146,7 @@ function handleSubmit( event ) {
  * @returns {String} New page URL with search terms
  */
 function fetchSearchResults( filters = [] ) {
-  const searchContainer = find( '#search-facets-and-results' );
+  const searchContainer = find( '#tdp-search-facets-and-results' );
   const baseUrl = window.location.href.split( '?' )[0];
   const searchField = find( 'input[name=q]' );
   const searchTerms = utils.getSearchValues( searchField, filters );

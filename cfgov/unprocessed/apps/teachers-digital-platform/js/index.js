@@ -8,7 +8,7 @@ const search = require( './search' );
 const sticky = require( './sticky' );
 const closest = require( './util/dom-traverse' ).closest;
 const expandableFacets = require( './expandable-facets' );
-const analytics = require( './analytics' );
+const analytics = require( './tdp-analytics' );
 
 const app = {
   init: () => {
