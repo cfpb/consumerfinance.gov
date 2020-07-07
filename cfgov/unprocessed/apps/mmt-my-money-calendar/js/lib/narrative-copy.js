@@ -1,11 +1,11 @@
 export const narrativeCopy = {
     step1: {
         headline: 'Great job! You made it to the Calendar.',
-        body: 'Now, enter income, government benefits, and expenses you have by clicking on the plus (+) icon below.'
+        body: 'Now enter income, government benefits, and expenses you have by clicking on the plus (+) icon below.'
     },
     step2: {
         headline: 'Congratulations!',
-        body: 'You’ve just entered your first transaction. Add more to see a more complete picture of your weekly money and strategies to help you make decisions!'
+        body: 'You’ve just entered your first transaction. Add more to see where you are this week and get strategies to help you make decisions!'
     },
     step3: {
         headline: 'Have you entered all of your income and expenses?',
