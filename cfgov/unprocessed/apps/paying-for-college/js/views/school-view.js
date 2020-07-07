@@ -5,7 +5,7 @@ import { schoolSearch } from '../dispatchers/get-api-values';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { updateFinancial, updateSchoolData } from '../dispatchers/update-models.js';
 import { updateState } from '../dispatchers/update-state.js';
-import { getSchoolValue, getStateValue, getProgramList } from '../dispatchers/get-model-values.js';
+import { getProgramList, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { updateFinancialView, updateGradMeterChart, updateRepaymentMeterChart } from '../dispatchers/update-view.js';
 
 
@@ -43,7 +43,7 @@ const schoolView = {
 
     const programSelectEvents = {
       change: schoolView._handleProgramSelectChange
-    }
+    };
     bindEvent( schoolView._programSelect, programSelectEvents );
   },
 
@@ -171,19 +171,19 @@ const schoolView = {
 
     if ( list.length > 0 ) {
       let html = '<option selected="selected" value="null">Select...</option>';
-      list.forEach( ( elem ) => {
+      list.forEach( elem => {
         html += '\n<option data-program-salary="' + elem.salary + '"';
         html += ' value="' + elem.code + '">';
         html += elem.level + ' - ' + elem.name;
-        html += '</option>'; 
+        html += '</option>';
       } );
       html += '<option value="null">My program is not listed here.</option>';
       schoolView._programSelect.innerHTML = html;
 
-      // If there's a program id in the state, select that program
-      if ( getStateValue( 'pid' ) ) {
+      /* If there's a program id in the state, select that program
+         if ( getStateValue( 'pid' ) ) { */
 
-      }
+      // }
     }
   },
 

@@ -16,8 +16,8 @@ const getApi = function( url ) {
         reject( new Error( error ) );
         console.log( 'An error occurred!', error );
       } );
-  } );  
-}
+  } );
+};
 
 /**
  * schoolSearch - search for schools based on searchTerm
@@ -61,7 +61,6 @@ const getSchoolData = function( iped ) {
 
   return getApi( url );
 };
-
 
 
 export {

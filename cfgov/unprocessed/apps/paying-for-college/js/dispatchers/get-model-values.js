@@ -23,14 +23,14 @@ function getAllStateValues() {
  * @returns {(number|string|boolean)} value of the property, false if undefined
  */
 function getConstantsValue( name ) {
-  if ( constantsModel.values.hasOwnProperty( name) ) {
+  if ( constantsModel.values.hasOwnProperty( name ) ) {
     return constantsModel.values[name];
-  } else {
-    return false;
   }
+  return false;
+
 }
 
-/**3
+/** 3
  * getExpensesValue - get the value of 'name' from the expensesModel
  * @param {string} name - Name of the property to retrieve
  * @returns {number} value of the property
@@ -46,10 +46,10 @@ function getExpensesValue( name ) {
  */
 function getFinancialValue( name ) {
   if ( financialModel.values.hasOwnProperty( name ) ) {
-    return financialModel.values[name];    
-  } else {
-    return false;
+    return financialModel.values[name];
   }
+  return false;
+
 }
 
 /**
@@ -70,9 +70,9 @@ function getProgramList( level ) {
 function getSchoolValue( name ) {
   if ( schoolModel.values.hasOwnProperty( name ) ) {
     return schoolModel.values[name];
-  } else {
-    return false;
   }
+  return false;
+
 }
 
 /**
@@ -83,10 +83,10 @@ function getSchoolValue( name ) {
  */
 function getStateValue( prop ) {
   if ( stateModel.values.hasOwnProperty( prop ) ) {
-    return stateModel.values[prop];    
-  } else {
-    return false;
+    return stateModel.values[prop];
   }
+  return false;
+
 }
 
 export {

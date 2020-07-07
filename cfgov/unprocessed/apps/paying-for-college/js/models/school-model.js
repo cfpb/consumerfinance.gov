@@ -37,14 +37,12 @@ const schoolModel = {
     if ( !schoolModel.values.programCodes.hasOwnProperty( level ) ) return list;
 
     list = schoolModel.values.programCodes[level].sort( ( a, b ) => {
-      if ( a.name < b.name ) return -1;
-      else if ( a.name > b.name ) return 1;
-      else if ( b.name === a.name ) {
+      if ( a.name < b.name ) { return -1; } else if ( a.name > b.name ) { return 1; } else if ( b.name === a.name ) {
         if ( a.level < b.level ) return -1;
         else if ( a.level > b.level ) return 1;
       }
-      else return 0;
-    } ); 
+      return 0;
+    } );
 
     return list;
   }
