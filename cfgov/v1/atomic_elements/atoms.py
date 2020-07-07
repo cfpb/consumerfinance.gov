@@ -132,38 +132,3 @@ class ImageBasic(blocks.StructBlock):
     class Meta:
         icon = 'image'
         value_class = ImageBasicStructValue
-
-
-class ImageBasicUrl(ImageBasic):
-    url = blocks.CharBlock(required=False)
-
-    def clean(self, data):
-        error_dict = {}
-
-        try:
-            data = super(ImageBasicUrl, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
-
-        if not self.required and not data['upload'] and not data['url']:
-            return data
-
-        if not data['upload'] and not data['url']:
-            img_err = ['Please upload or enter an image path']
-            error_dict.update({
-                'upload': img_err,
-                'url': img_err,
-                'alt': is_required('Image alt')
-            })
-
-        if data['upload'] and data['url']:
-            img_err = ['Please select one method of image rendering']
-            error_dict.update({
-                'upload': img_err,
-                'url': img_err})
-
-        if error_dict:
-            raise ValidationError("ImageBasicUrlAlt validation errors",
-                                  params=error_dict)
-        else:
-            return data
