@@ -40,39 +40,51 @@ TIMEOUT = 30
 ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = 'https://www.consumerfinance.gov'
-S3_URI = 'http://files.consumerfinance.gov.s3.amazonaws.com/build/smoketests/smoketest_urls.json'  # noqa
+S3_URI = 'https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json'  # noqa: E501
 
-# Fall-back list of top 25 URLs, as of Jan.2, 2020, from hubcap/wiki
+# Fall-back list of top 25 URLs, as of July 2, 2020, from hubcap/wiki
 TOP = [
     '/',  # home page
-    '/learnmore/',
-    '/complaint/',
+    '/about-us/blog/guide-covid-19-economic-stimulus-checks/',
+    '/about-us/blog/guide-coronavirus-mortgage-relief-options/',
     '/find-a-housing-counselor/',
-    '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',  # noqa
-    '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
-    '/complaint/getting-started/',
-    '/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/',  # noqa
-    '/policy-compliance/rulemaking/regulations/',
-    '/consumer-tools/debt-collection/',
-    '/policy-compliance/guidance/tila-respa-disclosure-rule/',
-    '/ask-cfpb/how-do-i-stop-automatic-payments-from-my-bank-account-en-2023/',
-    '/policy-compliance/rulemaking/regulations/1026/',
-    '/data-research/consumer-complaints',
-    '/data-research/consumer-complaints/search/?from=0&searchfield=all&searchtext=&size=25&sort=created_date_desc',  # noqa
-    '/policy-compliance/guidance/',
+    '/complaint/',
+    '/learnmore/',
+    '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',  # noqa: E501
+    '/coronavirus/',
+    '/about-us/blog/guide-covid-19-economic-stimulus-checks/#qualify/',
     '/consumer-tools/prepaid-cards/',
-    '/ask-cfpb/how-do-i-get-a-copy-of-my-credit-reports-en-5/',
+    '/coronavirus/cares-act-mortgage-forbearance-what-you-need-know/',
+    '/about-us/blog/economic-impact-payment-prepaid-card/',
+    '/about-us/blog/what-you-need-to-know-about-student-loans-and-coronavirus-pandemic/',  # noqa: E501
+    '/complaint/getting-started/',
+    '/coronavirus/mortgage-and-housing-assistance/',
+    '/ask-cfpb/what-is-forbearance-en-289/',
+    '/about-us/blog/guide-covid-19-economic-stimulus-checks/#when/',
+    '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
+    '/about-us/blog/protect-yourself-financially-from-impact-of-coronavirus/',
     '/about-us/contact-us/',
-    '/ask-cfpb/',
-    '/complaint/process/',
-    '/about-us/careers/current-openings/',
-    '/about-us/the-bureau/',
-    '/consumer-tools/credit-reports-and-scores/',
-    '/owning-a-home/',
+    '/about-us/blog/guide-coronavirus-mortgage-relief-options/#relief-options/',  # noqa: E501
+    '/coronavirus/managing-your-finances/economic-impact-payment-prepaid-debit-cards/',  # noqa: E501
+    '/ask-cfpb/how-can-i-tell-who-owns-my-mortgage-en-214/',
+    '/policy-compliance/rulemaking/regulations/',
+    '/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/',  # noqa: E501
 ]
 
-# Fall-back URLs for cfgov sub-apps that are expected to be present
+# URLs for cfgov sub-apps that are expected to be present
 APPS = [
+    '/about-us/budget-strategy/',
+    '/about-us/payments-harmed-consumers/',
+    '/about-us/blog/',
+    '/about-us/newsroom/',
+    '/about-us/events/',
+    '/about-us/careers/',
+    '/about-us/careers/current-openings/',
+    '/about-us/doing-business-with-us/',
+    '/about-us/innovation/',
+    '/activity-log/',
+    '/ask-cfpb/'
+    '/your-story/',
     '/es/',
     '/es/obtener-respuestas/',
     '/students/',
@@ -80,7 +92,7 @@ APPS = [
     '/know-before-you-owe/',
     '/fair-lending/',
     '/paying-for-college/',
-    '/paying-for-college2/understanding-your-financial-aid-offer/about-this-tool/',  # noqa
+    '/paying-for-college2/understanding-your-financial-aid-offer/about-this-tool/',  # noqa: E501
     '/retirement/before-you-claim/',
     '/retirement/before-you-claim/es/',
     '/consumer-tools/auto-loans/',
@@ -97,6 +109,7 @@ APPS = [
     '/consumer-tools/money-as-you-grow/',
     '/empowerment/',
     '/practitioner-resources/resources-for-older-adults/',
+    '/practitioner-resources/youth-financial-education/',  # TDP
     '/data-research/',
     '/data-research/research-reports/',
     '/data-research/cfpb-research-conference/',
@@ -117,17 +130,6 @@ APPS = [
     '/policy-compliance/guidance/implementation-guidance/hmda-implementation/',
     '/policy-compliance/guidance/implementation-guidance/mortserv/',
     '/policy-compliance/guidance/implementation-guidance/tila-respa-disclosure-rule/',  # noqa: E501
-    '/about-us/budget-strategy/',
-    '/about-us/payments-harmed-consumers/',
-    '/about-us/blog/',
-    '/about-us/newsroom/',
-    '/about-us/events/',
-    '/about-us/careers/',
-    '/about-us/careers/current-openings/',
-    '/about-us/doing-business-with-us/',
-    '/about-us/innovation/',
-    '/activity-log/',
-    '/your-story/',
 ]
 
 # call `set` on the combined list to weed out dupes
@@ -161,10 +163,10 @@ def check_urls(base, url_list=None):
     ./cfgov/scripts/http_smoke_test.py -v
 
     You can test a custom set of URLs by passing relative URL strings
-    (relative to the provided base) as the `url_list` value. 
+    (relative to the provided base) as the `url_list` value.
     This example tests two URLs against a local cfgov instance:
 
-    ./cfgov/scripts/http_smoke_test.py -v --base 'http://localhost:8000' --url_list '/' '/retirement/before-you-claim/'  # noqa
+    ./cfgov/scripts/http_smoke_test.py -v --base 'http://localhost:8000' --url_list '/' '/retirement/before-you-claim/'  # noqa: E501
     """
     count = 0
     timeouts = []
@@ -182,8 +184,7 @@ def check_urls(base, url_list=None):
             if code == 200:
                 pass
             else:
-                logger.info("{} failed with status code "
-                            "'{}'".format(url, code))
+                logger.info("{} failed with status code {}".format(url, code))
                 failures.append((url, code))
         except requests.exceptions.Timeout:
             logger.info('{} timed out'.format(url))
