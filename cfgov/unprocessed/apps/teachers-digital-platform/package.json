@@ -17,18 +17,6 @@
   },
   "devDependencies": {
     "aos": "3.0.0-beta.6",
-    "cf-atomic-component": "8.0.1",
-    "cf-buttons": "8.0.1",
-    "cf-core": "8.0.1",
-    "cf-expandables": "8.0.1",
-    "cf-forms": "8.0.2",
-    "cf-grid": "8.0.1",
-    "cf-icons": "8.0.1",
-    "cf-layout": "8.0.1",
-    "cf-notifications": "8.0.1",
-    "cf-pagination": "8.0.1",
-    "cf-tables": "8.0.1",
-    "cf-typography": "8.0.1",
     "classlist-polyfill": "1.2.0",
     "smoothscroll-polyfill": "0.4.4",
     "stickyfilljs": "2.1.0"
