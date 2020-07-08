@@ -20,7 +20,7 @@ pipeline {
     parameters {
         booleanParam(
             name: 'DEPLOY',
-            defaultValue: false,
+            defaultValue: true,
             description: 'Deploy the stack?'
         )
         booleanParam(
