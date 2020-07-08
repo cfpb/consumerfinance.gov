@@ -1,6 +1,6 @@
 // External modules
 const AOS = require( 'aos/dist/aos' );
-const cfExpandables = require( 'cf-expandables/src/Expandable' );
+const cfExpandables = require( '@cfpb/cfpb-expandables/src/Expandable' );
 
 // Internal modules
 const scroll = require( './scroll' );

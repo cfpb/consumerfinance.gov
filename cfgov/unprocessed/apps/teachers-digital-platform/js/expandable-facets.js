@@ -5,10 +5,10 @@
 // polyfill for ie9 compatibility
 require( 'classlist-polyfill' );
 
-const closest = require( 'cf-atomic-component/src/utilities/dom-closest' ).closest;
+const closest = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-closest' ).closest;
 
-const Events = require( 'cf-atomic-component/src/mixins/Events.js' );
-const Organism = require( 'cf-atomic-component/src/components/Organism' );
+const Events = require( '@cfpb/cfpb-atomic-component/src/mixins/Events.js' );
+const Organism = require( '@cfpb/cfpb-atomic-component/src/components/Organism' );
 const ExpandableFacetTransition = require( './ExpandableFacetTransition' );
 
 const ExpandableFacets = Organism.extend( {

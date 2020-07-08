@@ -1,6 +1,6 @@
 // Required modules.
-const Events = require( 'cf-atomic-component/src/mixins/Events.js' );
-const BaseTransition = require( 'cf-atomic-component/src/utilities/transition/BaseTransition' );
+const Events = require( '@cfpb/cfpb-atomic-component/src/mixins/Events.js' );
+const BaseTransition = require( '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition' );
 
 // Exported constants.
 const CLASSES = {
