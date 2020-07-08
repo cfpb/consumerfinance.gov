@@ -75,10 +75,9 @@ class JobListingListTestCase(JobListingBlockTestUtils, TestCase):
         for i in range(5):
             self.make_job(f'live{i}')
 
-        # We expect four database queries here. First, Wagtail has to look up
-        # the site root paths. These get cached on the request object. Then,
-        # all of the JobListingPages are retrieved in a single query. Finally,
-        # another query retrieves the URL for the "more jobs page" link.
+        # We expect four database queries. Wagtail looks up site root paths
+        # which get cached on the request object. All JobListingPages are
+        # retrieved, another query retrieves URL for "more jobs page" link.
         if wagtail.VERSION > (2, 6):
             num_queries = 4
         else:
