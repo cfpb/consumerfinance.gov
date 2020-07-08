@@ -87,7 +87,13 @@ const schoolView = {
 
   _handleProgramSelectChange: function( event ) {
     const salary = event.target.options[event.target.selectedIndex].dataset.programSalary;
-    updateState.byProperty( 'pid', event.target.value );
+    const programName = event.target.options[event.target.selectedIndex].innerText;
+    let pid = event.target.value;
+    if ( pid === 'null' ) {
+      pid = false;
+    }
+    updateState.byProperty( 'pid', pid );
+    updateState.byProperty( 'programName', programName );
     updateFinancial( 'salary_annual', salary );
   },
 
@@ -121,9 +127,9 @@ const schoolView = {
     const prop = input.getAttribute( 'name' );
     const value = input.value;
     updateState.byProperty( prop, value );
+    schoolView._updateProgramList();
 
-    schoolView._checkRadioButtonCount();
-    schoolView.updateSchoolView();
+    // schoolView._checkRadioButtonCount();
   },
 
   updateSchoolView: () => {
@@ -180,10 +186,10 @@ const schoolView = {
       html += '<option value="null">My program is not listed here.</option>';
       schoolView._programSelect.innerHTML = html;
 
-      /* If there's a program id in the state, select that program
-         if ( getStateValue( 'pid' ) ) { */
-
-      // }
+      // If there's a program id in the state, select that program
+      if ( getStateValue( 'pid' ) ) {
+        document.querySelector( '#program-select' ).value = getStateValue( 'pid' );
+      }
     }
   },
 

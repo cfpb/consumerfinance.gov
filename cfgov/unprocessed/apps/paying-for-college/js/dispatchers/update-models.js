@@ -9,7 +9,7 @@ import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { stringToNum } from '../util/number-utils.js';
-import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { getConstantsValue, getProgramInfo, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { updateGradMeterChart, updateRepaymentMeterChart, updateSchoolView } from './update-view.js';
 
 const _urlParamsToModelVars = {
@@ -172,6 +172,18 @@ const updateSchoolData = function( iped ) {
 
         for ( const key in data ) {
           schoolModel.setValue( key, data[key] );
+        }
+
+        // Create objects of programs keyed by program ID
+        schoolModel.createProgramLists();
+
+        // If we have a pid, validate it
+        const pid = getStateValue( 'pid' );
+        if ( pid !== false && pid !== null ) {
+          const programInfo = getProgramInfo( pid );
+          if ( programInfo === false ) {
+            stateModel.setValue( 'pid', false );
+          }
         }
 
         // Some values must migrate to the financial model

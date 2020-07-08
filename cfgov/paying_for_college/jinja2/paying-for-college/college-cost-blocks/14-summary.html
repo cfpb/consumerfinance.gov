@@ -29,6 +29,14 @@
         }}
         {{
             text_item.render({
+                'label': 'Program name',
+                'value': '[program name]',
+                'type': 'text',
+                'data_attribute': 'data-state-item="programName"'
+            })
+        }}
+        {{
+            text_item.render({
                 'label': 'Number of years',
                 'value': '[program length]',
                 'type': 'text',
@@ -212,9 +220,9 @@
         <h3 class="summary_header">Affording your loans</h3>
         <div class="o-expandable-group">
             {% set expandable_settings = {
-                'label': 'Could this be too much debt? How does the projected total debt compare to the median first-year salary?',
+                'label': 'Could this be too much debt? How does the projected total debt compare to the median salary?',
                 'value': '',
-                'note': 'The projected total debt is <span class="inline" data-financial-item="other_debtGuideDifference">$0</span> <span data-state-based-visibility="debt-rule-violation">more</span><span data-state-based-visibility="debt-rule-passed">less</span> than the median first-year salary. ',
+                'note': 'The projected total debt is <span class="inline" data-financial-item="other_debtGuideDifference">$0</span> <span data-state-based-visibility="debt-rule-violation">more</span><span data-state-based-visibility="debt-rule-passed">less</span> than the median salary. ',
                 'data_attribute': ''
             } %}
             {% call() expandable(expandable_settings) %}
@@ -235,14 +243,36 @@
                         'data_attribute': 'data-state-item="repayParentPlus"'
                     })
                 }}
-                {{
-                    text_item.render({
-                        'label': 'Median first-year salary of this school\'s graduates',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="salary_annual"'
-                    })
-                }}   
+                <div data-state-based-visibility="program-is-selected">
+                    {{
+                        text_item.render({
+                            'label': 'Median first-year salary of this program\'s graduates',
+                            'value': '$0',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="salary_annual"'
+                        })
+                    }}
+                </div>
+                <div class="undergrad">
+                    {{
+                        text_item.render({
+                            'label': 'Median salary of this school\'s recent students',
+                            'value': '$0',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="salary_annual"'
+                        })
+                    }}
+                </div>
+                <div data-state-based-visibility="school-no-programs no-program-selected">
+                    {{
+                        text_item.render({
+                            'label': 'Median first-year salary of this program\'s graduates',
+                            'value': 'Ask the school for salary data',
+                            'type': 'text',
+                            'data_attribute': ''
+                        })
+                    }}
+                </div>
             {% endcall %}
 
             {% set expandable_settings = {
@@ -293,14 +323,36 @@
                         'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
                     })
                 }}
-                {{
-                    text_item.render({
-                        'label': 'Monthly median first-year salary for this school\'s graduates',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="salary_monthly"'
-                    })
-                }}
+                <div data-state-based-visibility="program-is-selected">
+                    {{
+                        text_item.render({
+                            'label': 'Median monthly first-year salary of this program\'s graduates',
+                            'value': '$0',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="salary_monthly"'
+                        })
+                    }}
+                </div>
+                <div class="undergrad">
+                    {{
+                        text_item.render({
+                            'label': 'Median monthly salary of this school\'s recent students',
+                            'value': '$0',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="salary_monthly"'
+                        })
+                    }}
+                </div>
+                <div data-state-based-visibility="school-no-programs no-program-selected">
+                    {{
+                        text_item.render({
+                            'label': 'Median monthly first-year salary of this program\'s graduates',
+                            'value': 'Ask the school for salary data',
+                            'type': 'text',
+                            'data_attribute': ''
+                        })
+                    }}
+                </div>
                 {{
                     text_item.render({
                         'label': 'Average (or estimated) monthly expenses',
@@ -361,6 +413,47 @@
                         'value': '',
                         'type': 'text',
                         'data_attribute': 'data-school-item="rateRepay3yrText"'
+                    })
+                }}
+            {% endcall %}
+        </div>
+    </div>
+    <div class="block block__mid graduate-content">
+         <div class="o-expandable-group">
+            {% set expandable_settings = {
+                'label': 'Worth your investment?',
+                'value': '',
+                'data_attribute': 'data-state-item="what_goes_here"'
+            } %}
+            {% call() expandable(expandable_settings) %}
+                {{
+                    text_item.render({
+                        'label': 'Graduation rate',
+                        'value': 'Ask the school.',
+                        'type': 'text'
+                    })
+                }}
+                <div class="community-college-content">
+                    {{
+                        text_item.render({
+                            'label': 'Transfer to graduation rate',
+                            'value': 'Ask the school.',
+                            'type': 'text'
+                        })
+                    }}
+                </div>
+                {{
+                    text_item.render({
+                        'label': 'Default rate',
+                        'value': 'Ask the school.',
+                        'type': 'text'
+                    })
+                }}
+                {{
+                    text_item.render({
+                        'label': 'Repayment rate',
+                        'value': 'Ask the school.',
+                        'type': 'text'
                     })
                 }}
             {% endcall %}

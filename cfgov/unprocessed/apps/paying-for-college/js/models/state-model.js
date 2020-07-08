@@ -3,6 +3,7 @@
  * which tracks the current app state and allows the views to update based on
  * state.
 */
+import { getProgramInfo } from '../dispatchers/get-model-values.js';
 import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { updateFinancialViewAndFinancialCharts, updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
@@ -10,14 +11,15 @@ import { bindEvent } from '../../../../js/modules/util/dom-events';
 const stateModel = {
   stateDomElem: null,
   values: {
-    activeSection: null,
-    schoolSelected: null,
+    activeSection: false,
+    schoolSelected: false,
     gotStarted: false,
     costsQuestion: false,
-    programType: null,
-    programLength: null,
-    programRate: null,
-    programHousing: null
+    programType: false,
+    programLength: false,
+    programLevel: false,
+    programRate: false,
+    programHousing: false
   },
   textVersions: {
     programType: {
@@ -105,8 +107,15 @@ const stateModel = {
       stateModel.values[key] = stateModel.textVersions[name][value];
       updateSchoolItems();
     }
+
     // When program values are updated, recalculate, updateView
     if ( name.indexOf( 'program' ) === 0 ) {
+      if ( name === 'programType' && value === 'graduate' ) {
+        stateModel.values.programLevel = 'graduate';
+      } else if ( name === 'programType' ) {
+        stateModel.values.programLevel = 'undergrad';
+      }
+
       recalculateFinancials();
       updateFinancialViewAndFinancialCharts();
     }

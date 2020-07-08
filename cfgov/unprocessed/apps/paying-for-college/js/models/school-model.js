@@ -1,5 +1,6 @@
 // This model contains school information
 import { decimalToPercentString } from '../util/number-utils.js';
+import { getStateValue } from '../dispatchers/get-model-values.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 
@@ -26,6 +27,28 @@ const schoolModel = {
   },
 
   /**
+   * Reformats the programCodes array into an Object keyed by program ID
+   */
+  createProgramLists: function() {
+    schoolModel.values.programList = {};
+    if ( schoolModel.values.hasOwnProperty( 'programCodes' ) ) {
+      const programCodes = schoolModel.values.programCodes;
+      for ( const key in programCodes ) {
+        schoolModel.values.programList[key] = {};
+        if ( programCodes[key].length > 0 ) {
+          programCodes[key].forEach( elem => {
+            schoolModel.values.programList[key][elem.code] = {
+              name: elem.name,
+              level: elem.level,
+              salary: elem.salary
+            };
+          } );
+        }
+      }
+    }
+  },
+
+  /**
    * Returns an array of Objects which is alphabetized
    * by program name
    * @param {string} level - program level - 'undergrad' or 'graduate'
@@ -45,6 +68,23 @@ const schoolModel = {
     } );
 
     return list;
+  },
+
+  /**
+   * getProgramInfo - retrieve info based on program id
+   * @param {string} pid - Program ID
+   * @returns {object|boolean} Values of the program, or false if undefined
+   */
+  getProgramInfo: function( pid ) {
+    const level = getStateValue( 'programLevel' );
+    if ( level === null || level === false ) {
+      return false;
+    }
+    if ( !schoolModel.values.programList[level].hasOwnProperty( pid ) ) {
+      return false;
+    }
+
+    return schoolModel.values.programList[level][pid];
   }
 
 };

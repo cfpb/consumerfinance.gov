@@ -472,7 +472,7 @@ const chartView = {
     const salary = getFinancialValue( 'salary_annual' );
     const max = Math.max( totalDebt * 1.1, salary * 1.1 );
 
-    const text = 'Median salary of<br>this school\'s recent<br>' + numberToMoney( { amount: salary, decimalPlaces: 0 } );
+    const text = 'Median salary<br>' + numberToMoney( { amount: salary, decimalPlaces: 0 } );
 
     chartView.maxDebtChart.yAxis[0].update( {
       min: 0,

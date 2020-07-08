@@ -56,7 +56,7 @@ const financialModel = {
 
     // Debt Guide Difference
     financialModel.values.other_debtGuideDifference =
-        financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual;
+        Math.abs( financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual );
   },
 
   /**

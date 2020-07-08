@@ -63,6 +63,15 @@ function getProgramList( level ) {
 }
 
 /**
+ * getProgramInfo - retrieve info based on pid
+ * @param {string} pid - Program ID
+ * @returns {object} Values of the program
+ */
+function getProgramInfo( pid ) {
+  return schoolModel.getProgramInfo( pid );
+}
+
+/**
  * getSchoolValue - get the value of 'name' from the schoolModel
  * @param {string} name - Name of the property to retrieve
  * @returns {(number|string|boolean)} value of the property, or false if undefined
@@ -94,6 +103,7 @@ export {
   getConstantsValue,
   getExpensesValue,
   getFinancialValue,
+  getProgramInfo,
   getProgramList,
   getSchoolValue,
   getStateValue
