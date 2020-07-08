@@ -5,11 +5,11 @@ from django.test import TestCase
 
 import requests
 from mock import Mock, patch
-from scripts import unpublish_closed_jobs
 
 from jobmanager.models.django import ApplicantType, JobCategory
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import USAJobsApplicationLink
+from scripts import unpublish_closed_jobs
 from v1.tests.wagtail_pages import helpers
 
 
