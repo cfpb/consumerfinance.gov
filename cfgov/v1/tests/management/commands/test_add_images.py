@@ -49,4 +49,3 @@ class TestAddImages(TestCase):
         }
         response = self.client.post("/", post_data, follow=True)
         self.assertEqual(response.status_code, 400)
- 

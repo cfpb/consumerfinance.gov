@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Teachers Digital Platform
+   ========================================================================== */
+
+// Import Capital Framework by reference so that variables and mixins are
+// available, but the whole output doesn't duplicate what we're already getting
+// from cfgov-refresh.
+@import (reference) 'cf-core.less';
+@import (reference) 'cf-icons.less';
+@import (reference) 'cf-buttons.less';
+@import (reference) 'cf-forms.less';
+@import (reference) 'cf-grid.less';
+@import (reference) 'cf-layout.less';
+@import (reference) 'cf-typography.less';
+@import (reference) 'cf-notifications.less';
+@import (reference) 'cf-pagination.less';
+@import (reference) 'cf-expandables.less';
+@import (reference) 'cf-tables.less';
+
+// TODO: Add (reference) back in for notifications/icons and remove temp/button-links.less once this PR is merged:
+// https://github.com/cfpb/cfgov-refresh/pull/3887/
+// @import 'temp/button-links.less';
+
+// Project specific Less goes here or you can break it up into discrete files.
+@import 'atoms/icon.less';
+@import 'molecules/form-fields.less';
+@import 'molecules/search-hero.less';
+@import 'organisms/expandable-facets.less';
+@import 'organisms/tour.less';
+@import 'pages/activity-search.less';
+@import 'utilities/hide-on.less';
