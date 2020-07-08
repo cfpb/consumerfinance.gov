@@ -952,8 +952,8 @@ class FeaturedContentStructValue(blocks.StructValue):
 
 
 class FeaturedContent(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    heading = blocks.CharBlock()
+    body = blocks.RichTextBlock()
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,
