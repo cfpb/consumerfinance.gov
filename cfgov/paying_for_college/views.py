@@ -35,8 +35,10 @@ def get_json_file(filename):
 
 def validate_oid(oid):
     """
-    make sure an oid contains only hex values 0-9 a-f A-F and is 40 characters
-    return True if the oid is valid
+    Make sure an offer ID is valid according to our specifications.
+
+    An offer ID can contain only case-insensitive hex values 0-9 and a-f
+    and must be between 40 and 128 characters long.
     """
     find_illegal = re.search('[^0-9a-fA-F]+', oid)
     if find_illegal:

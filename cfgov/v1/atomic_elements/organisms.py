@@ -849,33 +849,114 @@ class FilterableList(BaseExpandable):
         return context
 
 
+class VideoPlayerStructValue(blocks.StructValue):
+    @property
+    def thumbnail_url(self):
+        thumbnail_image = self.get('thumbnail_image')
+
+        if thumbnail_image:
+            return thumbnail_image.get_rendition('original').url
+
+
 class VideoPlayer(blocks.StructBlock):
-    video_url = blocks.RegexBlock(
-        label='YouTube Embed URL',
-        default='https://www.youtube.com/embed/',
-        required=True,
-        regex=r'^https:\/\/www\.youtube\.com\/embed\/.+$',
-        error_messages={
-            'required': 'The YouTube URL field is required for video players.',
-            'invalid': "The YouTube URL is in the wrong format. "
-                       "You must use the embed URL "
-                       "(https://www.youtube.com/embed/video_id), "
-                       "which can be obtained by clicking Share > Embed "
-                       "on the YouTube video page.",
-        }
+    YOUTUBE_ID_HELP_TEXT = (
+        'Enter the YouTube video ID, which is located at the end of the video '
+        'URL, after "v=". For example, the video ID for '
+        'https://www.youtube.com/watch?v=1V0Ax9OIc84 is 1V0Ax9OIc84.'
     )
+
+    video_id = blocks.RegexBlock(
+        label='YouTube video ID',
+        # Set required=False to allow for non-required VideoPlayers.
+        # See https://github.com/wagtail/wagtail/issues/2665.
+        required=False,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        regex=r'^[\w-]{11}$',
+        error_messages={
+            'invalid': "The YouTube video ID is in the wrong format.",
+        },
+        help_text=YOUTUBE_ID_HELP_TEXT
+    )
+    thumbnail_image = images_blocks.ImageChooserBlock(
+        required=False,
+        help_text=mark_safe(
+            'Optional thumbnail image to show before and after the video '
+            'plays. If the thumbnail image is not set here, the video player '
+            'will default to showing the thumbnail that was set in (or '
+            'automatically chosen by) YouTube.'
+        )
+    )
+
+    def clean(self, value):
+        cleaned = super().clean(value)
+
+        errors = {}
+
+        if not cleaned['video_id']:
+            if getattr(self.meta, 'required', True):
+                errors['video_id'] = ErrorList([
+                    ValidationError('This field is required.'),
+                ])
+            elif cleaned['thumbnail_image']:
+                errors['thumbnail_image'] = ErrorList([
+                    ValidationError(
+                        'This field should not be used if YouTube video ID is '
+                        'not set.'
+                    )
+                ])
+
+        if errors:
+            raise ValidationError(
+                'Validation error in VideoPlayer',
+                params=errors
+            )
+
+        return cleaned
 
     class Meta:
         icon = 'media'
         template = '_includes/organisms/video-player.html'
+        value_class = VideoPlayerStructValue
 
     class Media:
         js = ['video-player.js']
 
 
+class FeaturedContentStructValue(blocks.StructValue):
+    @property
+    def links(self):
+        # We want to pass a single list of links to the template when the
+        # FeaturedContent organism is rendered. So we consolidate any links
+        # that have been specified: the post link and any other links. We
+        # also normalize them each to have URL and text attributes.
+        links = []
+
+        # We want to pass the post URL into the template so that it can be
+        # rendered without needing to call back to any Wagtail template tags.
+        post = self.get('post')
+        if post and self.get('show_post_link'):
+            links.append({
+                # Unfortunately, we don't have access to the request context
+                # here, so we can't do post.get_url(request).
+                'url': post.url,
+                'text': self.get('post_link_text') or post.title,
+            })
+
+        # Normalize any child Hyperlink atoms and filter empty links.
+        for hyperlink in self.get('links') or []:
+            url = hyperlink.get('url')
+            text = hyperlink.get('text')
+
+            if url and text:
+                links.append({'url': url, 'text': text})
+
+        return links
+
+
 class FeaturedContent(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    heading = blocks.CharBlock()
+    body = blocks.RichTextBlock()
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,
@@ -887,27 +968,14 @@ class FeaturedContent(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink(required=False),
                              label='Additional Links')
 
-    video = blocks.StructBlock([
-        ('id', blocks.CharBlock(
-            required=False,
-            label='ID',
-            help_text='E.g., in "https://www.youtube.com/watch?v=en0Iq8II4fA",'
-                      ' the ID is everything after the "?v=".')),
-        ('url', blocks.CharBlock(
-            required=False,
-            label='URL',
-            help_text='You must use the embed URL, e.g., '
-                      'https://www.youtube.com/embed/'
-                      'JPTg8ZB3j5c?autoplay=1&enablejsapi=1')),
-        ('height', blocks.CharBlock(default='320', required=False)),
-        ('width', blocks.CharBlock(default='568', required=False)),
-    ])
+    video = VideoPlayer(required=False)
 
     class Meta:
         template = '_includes/organisms/featured-content.html'
         icon = 'doc-full-inverse'
         label = 'Featured Content'
         classname = 'block__flush'
+        value_class = FeaturedContentStructValue
 
     class Media:
         js = ['featured-content-module.js']

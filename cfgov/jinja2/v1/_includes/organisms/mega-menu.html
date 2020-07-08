@@ -53,13 +53,13 @@
 
             {% if group.title %}
             {% set aria_group_title = group.title ~ ' continued' if group.title_hidden else group.title %}
-            <h4 class="h5
+            <h3 class="h5
                     {{ base_class ~ '_group-heading' }}
                     {{ base_class ~ '_group-heading__hidden' if group.title_hidden else ''}}"
                 id="{{ aria_group_title | slugify ~ '-menu' }}"
                 aria-label="{{ aria_group_title }}">
                 {{ group.title }}
-            </h4>
+            </h3>
             {% endif %}
             <ul
                 {% if aria_group_title %}
@@ -121,7 +121,7 @@
     {# Create "back" button in mobile menu. #}
     {% if nav_depth > 1 %}
     <button class="{{- _content_classes( nav_depth, '-alt-trigger' ) -}}"
-            data-js-hook="behavior_flyout-menu_alt-trigger">
+            data-js-hook="behavior_flyout-menu_trigger">
         {{ svg_icon('left') }}
         Back
     </button>
@@ -130,14 +130,14 @@
     <div class="{{- _content_classes( nav_depth, '-wrapper' ) -}}">
 
         {% if overview_link and overview_link.url %}
-        <h3 class="{{ _content_classes( nav_depth, '-overview' ) }}
+        <div class="{{ _content_classes( nav_depth, '-overview' ) }}
                     {{ _content_classes( nav_depth, '-overview-heading' ) }}">
             <a class="{{ _content_classes( nav_depth, '-overview-link' ) }}
                         {{ _content_classes( nav_depth, '-overview-link__current' ) if overview_link.selected else '' }}"
                href="{{ overview_link.url }}">
                 {{ overview_link.text ~ ' Overview' }}
             </a>
-        </h3>
+        </div>
         {% endif %}
 
         {# TODO: Make the following menu markup use the _nav_item macro. #}
@@ -156,9 +156,9 @@
                 {% if nav_item.featured_items %}
                 <div class="{{ _content_classes( nav_depth, '-list' ) }}
                             {{ _content_classes( nav_depth, '-list__featured' ) }}">
-                    <h4 class="h5 {{ base_class ~ '_group-heading' }}">
+                    <h3 class="h5 {{ base_class ~ '_group-heading' }}">
                         Featured
-                    </h4>
+                    </h3>
                     <ul aria-label="Featured">
                         {% for link in nav_item.featured_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
@@ -176,9 +176,9 @@
 
                 {% if nav_item.other_items %}
                 <div class="{{ _content_classes( nav_depth, '-list' ) }}">
-                    <h4 class="h5 {{ base_class ~ '_group-heading' }}">
+                    <h3 class="h5 {{ base_class ~ '_group-heading' }}">
                         Additional Resources
-                    </h4>
+                    </h3>
                     <ul aria-label="Additional Resources">
                         {% for link in nav_item.other_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
@@ -233,6 +233,7 @@
 <li class="{{ _content_classes( nav_depth, '-item' ) }}
            {{- _content_classes( nav_depth, '-item__has-icon' ) if link.icon_pre else '' -}}"
     {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
+
     <a class="{{- _content_classes( nav_depth, '-link' ) -}}
               {{- _content_classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
               {{- _content_classes( nav_depth, '-link__current' ) if nav_item.selected else '' -}}"
@@ -242,18 +243,27 @@
           aria-haspopup=menu'
          if has_children else ''
        }}>
-          {% if link.icon_pre %}
-          <span class="{{- _content_classes( nav_depth, '-link-icon-pre' ) -}}">{{ svg_icon( link.icon_pre ) }}</span>
-          {% endif %}
+        {% if nav_depth == 1 %}
+        <h2>
+        {% endif %}
 
-          {{ link.text }}
+        {% if link.icon_pre %}
+        <span class="{{- _content_classes( nav_depth, '-link-icon-pre' ) -}}">{{ svg_icon( link.icon_pre ) }}</span>
+        {% endif %}
 
-          {% if has_children %}
-          <span class="{{- _content_classes( nav_depth, '-link-icon-post' ) -}}">{{ svg_icon('right') }}</span>
-          <span class="{{- _content_classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
-          <span class="{{- _content_classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
-          {% endif %}
+        {{ link.text }}
+
+        {% if has_children %}
+        <span class="{{- _content_classes( nav_depth, '-link-icon-post' ) -}}">{{ svg_icon('right') }}</span>
+        <span class="{{- _content_classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
+        <span class="{{- _content_classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
+        {% endif %}
+
+        {% if nav_depth == 1 %}
+        </h2>
+        {% endif %}
     </a>
+
     {% if has_children %}
         {{ _nav_level( nav_depth + 1, nav_item, link, language ) }}
     {% endif %}
@@ -279,21 +289,19 @@
             u-hidden"
      data-js-hook="behavior_flyout-menu"
      aria-label="main menu">
-    <h2 class="{{ base_class ~ '_heading' }}">
-        <button class="{{ base_class ~ '_trigger' }}"
-                data-js-hook="behavior_flyout-menu_trigger"
-                aria-haspopup="menu">
-            <span class="{{ base_class ~ '_trigger-open' }}">
-                {{ svg_icon('menu') }}
-            </span>
-            <span class="{{ base_class ~ '_trigger-close' }}">
-                {{ svg_icon('close') }}
-            </span>
-            <span class="u-visually-hidden">
-                Main menu
-            </span>
-        </button>
-    </h2>
+    <button class="{{ base_class ~ '_trigger' }}"
+            data-js-hook="behavior_flyout-menu_trigger"
+            aria-haspopup="menu">
+        <span class="{{ base_class ~ '_trigger-open' }}">
+            {{ svg_icon('menu') }}
+        </span>
+        <span class="{{ base_class ~ '_trigger-close' }}">
+            {{ svg_icon('close') }}
+        </span>
+        <span class="u-visually-hidden">
+            Main menu
+        </span>
+    </button>
    {# Create a root menu at depth one.
       This is the 1st level of a 3-level menu. #}
     {{ _nav_level( 1, {'nav_groups': [{'nav_items': menu_items}]}, language=language ) }}

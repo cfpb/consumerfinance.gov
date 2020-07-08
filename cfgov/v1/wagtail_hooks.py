@@ -9,7 +9,9 @@ from django.urls import reverse
 from django.utils.html import format_html_join
 
 from wagtail.admin.menu import MenuItem
-from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
+from wagtail.admin.rich_text.converters.editor_html import (
+    WhitelistRule as AllowlistRule
+)
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
@@ -24,7 +26,10 @@ from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
-from v1.template_debug import notification_test_cases, register_template_debug
+from v1.template_debug import (
+    featured_content_test_cases, notification_test_cases,
+    register_template_debug, video_player_test_cases
+)
 from v1.util import util
 
 
@@ -385,9 +390,9 @@ def register_span_feature(features):
     })
 
     # register a feature 'span'
-    # which whitelists the <span> element
+    # which allowlists the <span> element
     features.register_converter_rule('editorhtml', 'span', [
-        WhitelistRule('span', allow_html_class),
+        AllowlistRule('span', allow_html_class),
     ])
 
     # add 'span' to the default feature set
@@ -409,7 +414,25 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
 
 register_template_debug(
     'v1',
+    'featured_content',
+    '_includes/organisms/featured-content.html',
+    featured_content_test_cases,
+    extra_js=['featured-content-module.js']
+)
+
+
+register_template_debug(
+    'v1',
     'notification',
     '_includes/molecules/notification.html',
     notification_test_cases
+)
+
+
+register_template_debug(
+    'v1',
+    'video_player',
+    '_includes/organisms/video-player.html',
+    video_player_test_cases,
+    extra_js=['video-player.js']
 )

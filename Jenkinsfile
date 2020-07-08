@@ -11,8 +11,8 @@ pipeline {
     }
 
     environment {
-        IMAGE_REPO="cfpb/cfgov-python"
-        IMAGE_TAG="${JOB_BASE_NAME}-${BUILD_NUMBER}"
+        IMAGE_REPO = "cfpb/cfgov-python"
+        IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
     }
@@ -33,12 +33,13 @@ pipeline {
     options {
         ansiColor('xterm')
         parallelsAlwaysFailFast()
+        disableConcurrentBuilds()
         timestamps()
     }
-    
+
     stages {
 
-        stage ('Init') {
+        stage('Init') {
             steps {
                 script {
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
@@ -61,7 +62,7 @@ pipeline {
 
         stage('Build Image') {
             environment {
-                DOCKER_BUILDKIT='1'
+                DOCKER_BUILDKIT = '1'
             }
             steps {
                 script {
@@ -75,11 +76,11 @@ pipeline {
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
             }
         }
-        
+
         stage('Push Image') {
             // Push image only on master branch or deploy is set to true
             when {
-                anyOf { 
+                anyOf {
                     branch 'master'
                     expression { return params.DEPLOY }
                 }
@@ -100,14 +101,16 @@ pipeline {
         stage('Deploy Stack') {
             // Deploys only on master branch or deploy is set to true
             when {
-                anyOf { 
+                anyOf {
                     branch 'master'
                     expression { return params.DEPLOY }
                 }
-            } 
+            }
             steps {
                 script {
-                    dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
+                    timeout(time: 15, unit: 'MINUTES') {
+                        dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
+                    }
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
                 notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR ${env.CHANGE_URL} deployed by ${env.CHANGE_AUTHOR} via ${env.BUILD_URL} and available at https://${CFGOV_HOSTNAME}.")

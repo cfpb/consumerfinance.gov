@@ -1,11 +1,12 @@
 import re
 
 from django.conf import settings
+from django.utils import translation
 from django.utils.encoding import force_str
 
 from wagtail.core.rich_text import expand_db_html
 
-from core.utils import add_link_markup, get_link_tags
+from core.utils import add_link_markup, get_body_html, get_link_tags
 
 
 class DownstreamCacheControlMiddleware(object):
@@ -35,7 +36,12 @@ def parse_links(html, request_path=None, encoding=None):
     # Wagtail pages, documents, and images to their proper link URLs.
     expanded_html = expand_db_html(html_as_text)
 
-    link_tags = get_link_tags(expanded_html)
+    # Parse links only in the <body> of the HTML
+    body_html = get_body_html(expanded_html)
+    if body_html is None:
+        return expanded_html
+
+    link_tags = get_link_tags(body_html)
     for tag in link_tags:
         tag_with_markup = add_link_markup(tag, request_path)
         if tag_with_markup:
@@ -80,3 +86,13 @@ class ParseLinksMiddleware(object):
             re.search(regex, request_path)
             for regex in settings.PARSE_LINKS_EXCLUSION_LIST
         )
+
+
+class DeactivateTranslationsMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        translation.deactivate()
+        return response
