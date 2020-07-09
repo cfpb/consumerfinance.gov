@@ -161,14 +161,23 @@ main.college-costs {
 			display: inline;
 		}
 	}
-	&:not( [data-state_pid] ) {
+	&[data-state_programtype="graduate"]:not( [data-state_pid] ) {
 		[data-state-based-visibility="no-program-selected"] {
 			display: block;
 		}
 		span[data-state-based-visibility="no-program-selected"] {
 			display: inline;
-		}	
+		}
+
+		.college-costs_tool-section.college-costs_tool-section__affording .affording-loans-choices {
+			display: none;
+		}
+
+		[data-state-based-visibility="expenses-hourly-wages"] {
+			display: block;
+		}
 	}
+
 
 	&[data-state_costsquestion] {
 		#costs_inputs-section {

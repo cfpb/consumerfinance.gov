@@ -81,7 +81,6 @@ function getSchoolValue( name ) {
     return schoolModel.values[name];
   }
   return false;
-
 }
 
 /**

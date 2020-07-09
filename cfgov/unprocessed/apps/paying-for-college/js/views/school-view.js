@@ -127,7 +127,6 @@ const schoolView = {
     const prop = input.getAttribute( 'name' );
     const value = input.value;
     updateState.byProperty( prop, value );
-    schoolView._updateProgramList();
 
     // schoolView._checkRadioButtonCount();
   },
@@ -146,7 +145,10 @@ const schoolView = {
 
       const prop = elem.dataset.schoolItem;
       let val = getSchoolValue( prop );
-      if ( typeof val === 'undefined' ) val = '';
+      // Prevent improper values from being displayed on the page
+      if ( typeof val === 'undefined' || val === false || val === null ) {
+        val = '';
+      }
 
       elem.innerText = val;
 
@@ -155,7 +157,8 @@ const schoolView = {
     this._stateItems.forEach( elem => {
       const prop = elem.dataset.stateItem;
       let val = getStateValue( prop );
-      if ( typeof val === 'undefined' ) {
+      // Prevent improper values from being displayed on the page
+      if ( typeof val === 'undefined' || val === false || val === null ) {
         val = '';
       }
       elem.innerText = val;

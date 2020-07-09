@@ -129,6 +129,9 @@ const financialView = {
         const isFee = prop.substr( 0, 4 ) === 'fee_';
         const isNumber = elem.dataset.isNumber === 'true';
         let val = getFinancialValue( prop );
+
+        // Prevent improper property values from presenting on the page 
+        if  ( val === false || val === null || isNaN( val ) ) val = 0;
         if ( isFee ) {
           val = decimalToPercentString( val, 3 );
         } else if ( isRate ) {

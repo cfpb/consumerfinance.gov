@@ -111,9 +111,9 @@ const stateModel = {
     // When program values are updated, recalculate, updateView
     if ( name.indexOf( 'program' ) === 0 ) {
       if ( name === 'programType' && value === 'graduate' ) {
-        stateModel.values.programLevel = 'graduate';
+        stateModel.setValue( 'programLevel', 'graduate' );
       } else if ( name === 'programType' ) {
-        stateModel.values.programLevel = 'undergrad';
+        stateModel.setValue( 'programLevel', 'undergrad' );
       }
 
       recalculateFinancials();

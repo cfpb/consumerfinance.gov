@@ -253,7 +253,7 @@
                         })
                     }}
                 </div>
-                <div class="undergrad">
+                <div class="undergrad-content">
                     {{
                         text_item.render({
                             'label': 'Median salary of this school\'s recent students',
@@ -263,7 +263,7 @@
                         })
                     }}
                 </div>
-                <div data-state-based-visibility="school-no-programs no-program-selected">
+                <div data-state-based-visibility="no-program-selected">
                     {{
                         text_item.render({
                             'label': 'Median first-year salary of this program\'s graduates',
@@ -333,7 +333,7 @@
                         })
                     }}
                 </div>
-                <div class="undergrad">
+                <div class="undergrad-content">
                     {{
                         text_item.render({
                             'label': 'Median monthly salary of this school\'s recent students',
@@ -343,7 +343,7 @@
                         })
                     }}
                 </div>
-                <div data-state-based-visibility="school-no-programs no-program-selected">
+                <div data-state-based-visibility="no-program-selected">
                     {{
                         text_item.render({
                             'label': 'Median monthly first-year salary of this program\'s graduates',
@@ -368,94 +368,73 @@
                         'type': 'text',
                         'data_attribute': 'data-expenses-item="total_remainder"'
                     })
-                }} 
+                }}
                    
             {% endcall %}
-        </div>
-    </div>
-    <div class="block block__mid undergrad-content">
-         <div class="o-expandable-group">
             {% set expandable_settings = {
                 'label': 'Worth your investment?',
-                'value': '',
-                'data_attribute': 'data-state-item="what_goes_here"'
+                'value': ''
             } %}
             {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Graduation rate',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="rateGraduationText"'
-                    })
-                }}
-                <div class="community-college-content">
+                <div class="undergrad-content">
                     {{
                         text_item.render({
-                            'label': 'Transfer to graduation rate',
+                            'label': 'Graduation rate',
                             'value': '',
                             'type': 'text',
-                            'data_attribute': 'data-school-item="???"'
+                            'data_attribute': 'data-school-item="rateGraduationText"'
+                        })
+                    }}
+                    <div class="community-college-content">
+                        {{
+                            text_item.render({
+                                'label': 'Transfer to graduation rate',
+                                'value': '',
+                                'type': 'text',
+                                'data_attribute': 'data-school-item="???"'
+                            })
+                        }}
+                    </div>
+                    {{
+                        text_item.render({
+                            'label': 'Default rate',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-school-item="defaultRateText"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Repayment rate',
+                            'value': '',
+                            'type': 'text',
+                            'data_attribute': 'data-school-item="rateRepay3yrText"'
                         })
                     }}
                 </div>
-                {{
-                    text_item.render({
-                        'label': 'Default rate',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="defaultRateText"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Repayment rate',
-                        'value': '',
-                        'type': 'text',
-                        'data_attribute': 'data-school-item="rateRepay3yrText"'
-                    })
-                }}
-            {% endcall %}
-        </div>
-    </div>
-    <div class="block block__mid graduate-content">
-         <div class="o-expandable-group">
-            {% set expandable_settings = {
-                'label': 'Worth your investment?',
-                'value': '',
-                'data_attribute': 'data-state-item="what_goes_here"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Graduation rate',
-                        'value': 'Ask the school.',
-                        'type': 'text'
-                    })
-                }}
-                <div class="community-college-content">
+                <div class="graduate-content">
                     {{
                         text_item.render({
-                            'label': 'Transfer to graduation rate',
+                            'label': 'Graduation rate',
+                            'value': 'Ask the school.',
+                            'type': 'text'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Default rate',
+                            'value': 'Ask the school.',
+                            'type': 'text'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Repayment rate',
                             'value': 'Ask the school.',
                             'type': 'text'
                         })
                     }}
                 </div>
-                {{
-                    text_item.render({
-                        'label': 'Default rate',
-                        'value': 'Ask the school.',
-                        'type': 'text'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Repayment rate',
-                        'value': 'Ask the school.',
-                        'type': 'text'
-                    })
-                }}
             {% endcall %}
         </div>
     </div>
