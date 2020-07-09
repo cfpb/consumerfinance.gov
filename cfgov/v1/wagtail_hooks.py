@@ -18,9 +18,8 @@ from wagtail.contrib.modeladmin.options import (
 from wagtail.core import hooks
 from wagtail.core.whitelist import attribute_rule
 
-from scripts import export_enforcement_actions
-
 from ask_cfpb.models.snippets import GlossaryTerm
+from scripts import export_enforcement_actions
 from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic

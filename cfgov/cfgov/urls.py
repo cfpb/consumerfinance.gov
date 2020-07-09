@@ -40,11 +40,13 @@ from v1.views.documents import DocumentServeView
 
 
 try:
-    from flags.urls import flagged_re_path
     from django.urls import include, re_path
+
+    from flags.urls import flagged_re_path
 except ImportError:
-    from flags.urls import flagged_url as flagged_re_path
     from django.conf.urls import include, url as re_path
+
+    from flags.urls import flagged_url as flagged_re_path
 
 
 def flagged_wagtail_template_view(flag_name, template_name):

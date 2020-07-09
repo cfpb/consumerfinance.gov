@@ -28,7 +28,7 @@ def get_unique_id(prefix='', suffix=''):
 
 
 def instanceOfBrowseOrFilterablePages(page):
-    from ..models import BrowsePage, BrowseFilterablePage
+    from ..models import BrowseFilterablePage, BrowsePage
     pages = (BrowsePage, BrowseFilterablePage)
     return isinstance(page, pages)
 

@@ -5,8 +5,8 @@ from django.test import Client, TestCase, override_settings
 from wagtail.core.blocks import StreamValue
 
 from mock import patch
-from scripts import _atomic_helpers as atomic
 
+from scripts import _atomic_helpers as atomic
 from v1.models.blog_page import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.tests.wagtail_pages.helpers import publish_page
