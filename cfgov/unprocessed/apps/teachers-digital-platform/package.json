@@ -1,7 +1,7 @@
 {
   "name": "teachers-digital-platform",
   "description": "Youth financial education activity search and building blocks journey tool",
-  "homepage": "http://localhost:8000/practitioner-resources/youth-financial-education/",
+  "homepage": "https://www.consumerfinance.gov/practitioner-resources/youth-financial-education/",
   "author": {
     "name": "Consumer Financial Protection Bureau",
     "email": "tech@cfpb.gov",
