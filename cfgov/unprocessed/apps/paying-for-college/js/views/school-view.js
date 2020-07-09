@@ -117,6 +117,9 @@ const schoolView = {
     const prop = input.getAttribute( 'name' );
     const value = input.value;
     updateState.byProperty( prop, value );
+    if ( prop === 'programType' ) {
+      schoolView._updateProgramList();
+    }
   },
 
   updateSchoolView: () => {
