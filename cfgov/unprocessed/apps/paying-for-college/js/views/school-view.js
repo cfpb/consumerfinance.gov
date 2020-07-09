@@ -47,19 +47,6 @@ const schoolView = {
     bindEvent( schoolView._programSelect, programSelectEvents );
   },
 
-  /**
-   * _checkRadioButtonCount: if all radio buttons are clicked, enable the next button
-   */
-  _checkRadioButtonCount: function( ) {
-    const checkedCount = schoolView._schoolInfo
-      .querySelectorAll( 'input[checked="true"]' ).length;
-    const questionCount = schoolView._schoolInfo
-      .querySelectorAll( '.program-question' ).length;
-    if ( checkedCount === questionCount ) {
-      document.querySelector( 'button.btn__next-step' ).removeAttribute( 'disabled' );
-    }
-  },
-
   _formatSearchResults: function( responseText ) {
     const obj = JSON.parse( responseText );
     let html = '<ul>';
@@ -86,9 +73,10 @@ const schoolView = {
   },
 
   _handleProgramSelectChange: function( event ) {
-    const salary = event.target.options[event.target.selectedIndex].dataset.programSalary;
-    const programName = event.target.options[event.target.selectedIndex].innerText;
-    let pid = event.target.value;
+    const target = event.target; 
+    const salary = target.options[target.selectedIndex].dataset.programSalary;
+    const programName = target.options[target.selectedIndex].innerText;
+    let pid = target.value;
     if ( pid === 'null' ) {
       pid = false;
     }
@@ -127,8 +115,6 @@ const schoolView = {
     const prop = input.getAttribute( 'name' );
     const value = input.value;
     updateState.byProperty( prop, value );
-
-    // schoolView._checkRadioButtonCount();
   },
 
   updateSchoolView: () => {
@@ -181,12 +167,12 @@ const schoolView = {
     if ( list.length > 0 ) {
       let html = '<option selected="selected" value="null">Select...</option>';
       list.forEach( elem => {
-        html += '\n<option data-program-salary="' + elem.salary + '"';
-        html += ' value="' + elem.code + '">';
-        html += elem.level + ' - ' + elem.name;
-        html += '</option>';
+        html += `
+          <option data-program-salary="${elem.salary}" value="${elem.code}">
+                ${elem.level} - ${elem.name}
+          </option>`;
       } );
-      html += '<option value="null">My program is not listed here.</option>';
+      html += '\n<option value="null">My program is not listed here.</option>';
       schoolView._programSelect.innerHTML = html;
 
       // If there's a program id in the state, select that program
@@ -213,8 +199,6 @@ const schoolView = {
       }
     } );
 
-    schoolView._checkRadioButtonCount();
-
   },
 
   clickRadioButton: ( name, value ) => {
@@ -223,8 +207,6 @@ const schoolView = {
       const label = closest( input, '.m-form-field__radio' ).querySelector( 'LABEL' );
       label.click();
     }
-
-    schoolView._checkRadioButtonCount();
   },
 
   init: body => {
