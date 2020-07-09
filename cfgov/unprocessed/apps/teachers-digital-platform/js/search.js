@@ -1,12 +1,12 @@
-const behavior = require( './util/behavior' );
+const behavior = require( '../../../js/modules/util/behavior' );
 const utils = require( './search-utils' );
-const closest = require( './util/dom-traverse' ).closest;
-const find = require( './util/dom-traverse' ).queryOne;
+const closest = require( '../../../js/modules/util/dom-traverse' ).closest;
+const find = require( '../../../js/modules/util/dom-traverse' ).queryOne;
 const expandableFacets = require( './expandable-facets' );
 const cfExpandables = require( '@cfpb/cfpb-expandables/src/Expandable' );
 const analytics = require( './tdp-analytics' );
 const fetch = require( './utils' ).fetch;
-const ClearableInput = require( './util/ClearableInput' ).ClearableInput;
+const ClearableInput = require( './ClearableInput' ).ClearableInput;
 
 // Keep track of the most recent XHR request so that we can cancel it if need be
 let searchRequest = {};

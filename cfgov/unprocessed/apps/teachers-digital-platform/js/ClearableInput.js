@@ -1,5 +1,11 @@
+/**
+ * Used instead of the existing /cfgov/unprocessed/js/modules/ClearableInput
+ * in order to listen for the Clear button to be clicked and asynchronously
+ * refresh the results on the page.
+ */
+
 // Required modules.
-const checkDom = require( './atomic-helpers' ).checkDom;
+const checkDom = require( '../../../js/modules/util/atomic-helpers' ).checkDom;
 
 /**
  * ClearableInput

@@ -1,4 +1,4 @@
-const xhr = require( './util/ajax-request' ).ajaxRequest;
+const xhr = require( '../../../js/modules/util/ajax-request' ).ajaxRequest;
 
 /**
  * fetch - Wrapper for our ajax request method with callback support

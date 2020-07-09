@@ -1,7 +1,6 @@
-const Analytics = require( './Analytics' );
-const closest = require( './util/dom-traverse' ).closest;
-const bindEvent = require( './util/dom-events' ).bindEvent;
-const find = require( './util/dom-traverse' ).queryOne;
+import Analytics from '../../../js/modules/Analytics';
+import { closest, queryOne } from '../../../js/modules/util/dom-traverse';
+import { bindEvent } from '../../../js/modules/util/dom-events';
 
 /* eslint-disable consistent-return */
 
@@ -72,8 +71,8 @@ const handleExpandableClick = ( event, sendEventMethod ) => {
     return;
   }
   const action = `${ getExpandableState( expandable ) } filter`;
-  let label = find( 'span.o-expandable_label', expandable );
-  label = label ? label : find( 'span[aria-hidden=true]', expandable );
+  let label = queryOne( 'span.o-expandable_label', expandable );
+  label = label ? label : queryOne( 'span[aria-hidden=true]', expandable );
   if ( !label ) {
     return;
   }
@@ -256,7 +255,7 @@ const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
   }
 
   // Send the keywords that return 0 results to Analytics.
-  const resultsCountBlock = find( '#tdp-search-facets-and-results .results_count' );
+  const resultsCountBlock = queryOne( '#tdp-search-facets-and-results .results_count' );
   if ( resultsCountBlock ) {
     const resultsCount = resultsCountBlock.getAttribute( 'data-results-count' );
 
@@ -288,7 +287,7 @@ const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
  * @param {method} sendEventMethod method
  */
 const bindAnalytics = sendEventMethod => {
-  const searchContent = find( '#tdp-search-facets-and-results' );
+  const searchContent = queryOne( '#tdp-search-facets-and-results' );
   if ( searchContent ) {
     bindEvent( searchContent, {
       click: event => handleExpandableClick( event, sendEventMethod )
@@ -308,7 +307,7 @@ const bindAnalytics = sendEventMethod => {
   }
 };
 
-module.exports = {
+export {
   getExpandable,
   getPaginator,
   getClearBtn,

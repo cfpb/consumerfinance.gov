@@ -1,5 +1,5 @@
 const smoothscroll = require( 'smoothscroll-polyfill' );
-const scrollIntoView = require( './util/scroll' ).scrollIntoView;
+const scrollIntoView = require( '../../../js/modules/util/scroll' ).scrollIntoView;
 
 const scroll = {
   init: () => {

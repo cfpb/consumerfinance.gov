@@ -2,6 +2,7 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
+const envvars = require( '../../../../config/environment' ).envvars;
 const TerserPlugin = require( 'terser-webpack-plugin' );
 
 /* Set warnings to true to show linter-style warnings.
@@ -70,5 +71,19 @@ const conf = {
   },
   stats: STATS_CONFIG.stats
 };
+
+const devConf = {
+  devtool: 'inline-source-map',
+  mode: 'development',
+  module: COMMON_MODULE_CONFIG,
+  plugins: [],
+  resolve: {
+    symlinks: false
+  }
+};
+
+if ( envvars.NODE_ENV === 'development' ) {
+  Object.assign( conf, devConf );
+}
 
 module.exports = { conf };
