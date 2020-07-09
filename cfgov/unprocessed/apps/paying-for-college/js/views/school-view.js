@@ -68,12 +68,14 @@ const schoolView = {
       schoolSearch( searchTerm )
         .then( resp => {
           schoolView._formatSearchResults( resp.responseText );
+        }, error => {
+          console.log( error );
         } );
     }, 500 );
   },
 
   _handleProgramSelectChange: function( event ) {
-    const target = event.target; 
+    const target = event.target;
     const salary = target.options[target.selectedIndex].dataset.programSalary;
     const programName = target.options[target.selectedIndex].innerText;
     let pid = target.value;
@@ -168,8 +170,8 @@ const schoolView = {
       let html = '<option selected="selected" value="null">Select...</option>';
       list.forEach( elem => {
         html += `
-          <option data-program-salary="${elem.salary}" value="${elem.code}">
-                ${elem.level} - ${elem.name}
+          <option data-program-salary="${ elem.salary }" value="${ elem.code }">
+                ${ elem.level } - ${ elem.name }
           </option>`;
       } );
       html += '\n<option value="null">My program is not listed here.</option>';

@@ -25,9 +25,14 @@ const getApi = function( url ) {
  * @returns {Object} Promise
  */
 const schoolSearch = function( searchTerm ) {
-  const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
-    '/api/search-schools.json?q=' + searchTerm;
-  return getApi( url );
+  searchTerm = searchTerm.trim();
+  if ( searchTerm.length > 2 ) {
+    const url = '/paying-for-college2/understanding-your-financial-aid-offer' +
+      '/api/search-schools.json?q=' + searchTerm;
+    return getApi( url );
+  }
+  return Promise.reject( new Error( 'Failure - search term too short' ) );
+
 };
 
 /**
