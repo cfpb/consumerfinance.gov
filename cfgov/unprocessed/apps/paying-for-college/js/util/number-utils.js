@@ -8,9 +8,7 @@
 function stringToNum( numberString ) {
   if ( typeof numberString === 'number' ) {
     return numberString;
-  } else if ( typeof numberString === 'undefined' ) {
-    return 0;
-  } else if ( typeof numberString === 'object' ) {
+  } else if ( typeof numberString !== 'string' ) {
     return 0;
   }
   let signMaker = 1;

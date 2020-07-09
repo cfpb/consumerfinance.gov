@@ -47,12 +47,16 @@ const financialModel = {
     financialModel._updateRates();
     financialModel._calculateTotals();
     debtCalculator();
+
+    // set monthly salary value
+    financialModel.values.salary_monthly = financialModel.values.salary_annual / 12;
+
     recalculateExpenses();
     financialModel._updateStateWithFinancials();
 
     // Debt Guide Difference
     financialModel.values.other_debtGuideDifference =
-        financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual;
+        Math.abs( financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual );
   },
 
   /**
@@ -162,7 +166,7 @@ const financialModel = {
     }
 
     // unsubCap is actually the 'unsubCap' minus any subsidized loans.
-    const unsubCap = Math.max( 
+    const unsubCap = Math.max(
       getConstantsValue( unsubCapKey ) - financialModel.values.fedLoan_directSub,
       0 );
 

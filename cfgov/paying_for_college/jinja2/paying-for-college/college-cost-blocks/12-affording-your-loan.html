@@ -61,13 +61,25 @@
         }}
         <p>Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years; other plans with lower monthly payments (and higher total costs of borrowing) are available.</p>
 
-        {{ number_callout.render({
-                'header': 'Monthly median first year salary for this school\'s graduates',
-                'data_attribute': 'data-financial-item="salary_monthly"',
-                'additional_classes': 'number-callout__large number-callout__border-top',
-                'value': '$0.00'
-            })
-        }}
+        <div data-state-based-visibility="no-program-selected">
+            {{ number_callout.render({
+                    'header': 'Monthly median salary for this school\'s recent students',
+                    'data_attribute': 'data-financial-item="salary_monthly"',
+                    'additional_classes': 'number-callout__large number-callout__border-top',
+                    'value': '$0.00'
+                })
+            }}
+        </div>
+        <div data-state-based-visibility="program-is-selected">
+            {{ number_callout.render({
+                    'header': 'Monthly median first-year salary for this program\'s graduates',
+                    'data_attribute': 'data-financial-item="salary_monthly"',
+                    'additional_classes': 'number-callout__large number-callout__border-top',
+                    'value': '$0.00'
+                })
+            }}
+        </div>
+
 
         <p>Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://dev2.demo.cfpb.gov/paying-for-college-beta/college-costs/" class="link-external">BLS Wage Data website</a>.</p>
 
