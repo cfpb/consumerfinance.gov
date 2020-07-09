@@ -1,5 +1,4 @@
 # -*- coding: utf8 -*-
-
 import datetime
 import smtplib
 import unittest

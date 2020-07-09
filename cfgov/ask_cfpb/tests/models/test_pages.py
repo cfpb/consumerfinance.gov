@@ -782,8 +782,8 @@ class AnswerPageTestCase(TestCase):
         self.assertTrue(get_answer_preview(page).endswith("word word ..."))
 
     def test_english_page_context(self):
-        from v1.models.snippets import ReusableText
         from ask_cfpb.models.pages import get_reusable_text_snippet
+        from v1.models.snippets import ReusableText
 
         rt = ReusableText(title="About us (For consumers)")
         rt.save()
