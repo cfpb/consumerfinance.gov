@@ -313,6 +313,8 @@ You can select specific environments using <code>-e</code>.</p>
 <ul>
 <li><code>lint</code>, which runs our <a href="#linting">linting</a> tools. We require this
   environment to pass in CI.</li>
+<li><code>validate-migrations</code>, which checks for any missing Django migrations. 
+  We require this environment to pass in CI.</li>
 <li><code>unittest</code>, which runs unit tests against the current production
   versions of Python, Django, and Wagtail. We require this environment to
   pass in CI.</li>
