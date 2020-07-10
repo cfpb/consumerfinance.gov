@@ -15,7 +15,7 @@ const appView = {
   _didThisHelpChoices: null,
   _restartBtn: null,
   _saveForLaterBtn: null,
-  _saveLinks: '',
+  _saveLinks: null,
   _sendLinkBtn: null,
 
   /**

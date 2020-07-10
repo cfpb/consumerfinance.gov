@@ -46,7 +46,7 @@ const constantsModel = {
         } )
         .catch( function( error ) {
           reject( error );
-            console.log( 'An error occurred when accessing the constants API', error );
+          console.log( 'An error occurred when accessing the constants API', error );
         } );
     } );
   }

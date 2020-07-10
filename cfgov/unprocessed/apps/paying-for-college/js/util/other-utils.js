@@ -1,4 +1,3 @@
-
 const statesByCode = {
   AZ: 'Arizona',
   AL: 'Alabama',
@@ -50,7 +49,7 @@ const statesByCode = {
   WA: 'Washington',
   WV: 'West Virginia',
   WI: 'Wisconsin',
-  WY: 'Wyoming',
+  WY: 'Wyoming'
 };
 
 function getStateByCode( code ) {
@@ -59,4 +58,4 @@ function getStateByCode( code ) {
 
 export {
   getStateByCode
-}
+};

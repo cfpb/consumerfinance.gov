@@ -72,8 +72,10 @@ function getProgramInfo( pid ) {
 }
 
 /**
- *
- *
+ * Retrieves the cohort values for meter graphs
+ * @param {string} cohort - The cohort property to search
+ * @param {string} property - The property inside the cohort data to retrieve
+ * @returns {object} An object with the data for the cohort and property
  */
 function getSchoolCohortValue( cohort, property ) {
   const smv = schoolModel.values;

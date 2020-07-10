@@ -395,8 +395,8 @@ const chartView = {
     chartView._addRadioListeners();
 
     // Set initial buttons
-    document.querySelector('#graduation-rate_us').click();
-    document.querySelector('#repayment-rate_us').click();
+    document.querySelector( '#graduation-rate_us' ).checked = true;
+    document.querySelector( '#repayment-rate_us' ).checked = true;
 
     accessibility( Highcharts );
 
@@ -456,32 +456,32 @@ const chartView = {
     } );
   },
 
-  _handleRadioClicks: ( event ) => {
+  _handleRadioClicks: event => {
     const target = event.target;
     const cohort = target.value;
     const graph = target.getAttribute( 'name' ).replace( /-/g, '' );
     const handlers = {
       repaymentratemeterselector: {
-        function: chartView.updateRepaymentMeterChart,
-        stateProp: 'repayMeterCohort',
-        cohortName: 'repayMeterCohortName'
+        'function': chartView.updateRepaymentMeterChart,
+        'stateProp': 'repayMeterCohort',
+        'cohortName': 'repayMeterCohortName'
       },
       graduationratemeterselector: {
-        function: chartView.updateGradMeterChart,
-        stateProp: 'gradMeterCohort',
-        cohortName: 'gradMeterCohortName'
-      } 
+        'function': chartView.updateGradMeterChart,
+        'stateProp': 'gradMeterCohort',
+        'cohortName': 'gradMeterCohortName'
+      }
     };
     const names = {
       cohortRankByHighestDegree: 'U.S.',
       cohortRankByState: getSchoolValue( 'stateName' ),
       cohortRankByControl: getSchoolValue( 'control' )
-    }
+    };
 
     updateState.byProperty( handlers[graph].cohortName, names[cohort] );
     updateState.byProperty( handlers[graph].stateProp, cohort );
     handlers[graph].function();
-    
+
     console.log( handlers[graph].cohortName, names[cohort], handlers[graph].stateProp, cohort );
   },
 
@@ -608,7 +608,7 @@ const chartView = {
     if ( !cohort ) {
       cohort = 'cohortRankByHighestDegree';
     }
-    let percentile = getSchoolCohortValue( cohort, 'repay_3yr' ).percentile_rank;
+    const percentile = getSchoolCohortValue( cohort, 'repay_3yr' ).percentile_rank;
 
     if ( percentile <= 33 ) {
       updateState.byProperty( 'repayMeterThird', 'bottom third' );

@@ -3,7 +3,7 @@
  */
 
 import studentDebtCalculator from 'student-debt-calc';
-import { calcDebtAtGrad, calcMonthlyPayment } from './debt-utils.js';
+import { calcInterestAtGrad, calcMonthlyPayment } from './debt-utils.js';
 import { getConstantsValue, getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { constantsModel } from '../models/constants-model.js';
 import { financialModel } from '../models/financial-model.js';
@@ -31,71 +31,79 @@ function debtCalculator() {
     twentyFiveYearMonthly: 0,
     twentyFiveYearInterest: 0
   };
+  const interest = {
+    totalAtGrad: 0
+  };
 
   // Find federal debts at graduation
   fedLoans.forEach( key => {
     // DIRECT Subsidized loans are special
-    let val = 0;
+    let int = 0;
+    const principal = fin['fedLoan_' + key] * fin.other_programLength;
     if ( key === 'directSub' ) {
-      val = fin['fedLoan_' + key] * fin.other_programLength;
+      int = 0;
     } else {
-      val = calcDebtAtGrad( fin['fedLoan_' + key],
-        fin['rate_' + key], fin.other_programLength, 6 );
+      int = calcInterestAtGrad( fin['fedLoan_' + key],
+        fin['rate_' + key], fin.other_programLength );
     }
 
-    if ( isNaN( val ) ) {
-      val = 0;
+    if ( isNaN( int ) ) {
+      int = 0;
     }
-    debts[key] = val;
+    debts[key] = int + principal;
+    interest[key] = int;
   } );
 
   plusLoans.forEach( key => {
-    let val = calcDebtAtGrad(
+    const principal = fin['plusLoan_' + key] * fin.other_programLength;
+    let int = calcInterestAtGrad(
       fin['plusLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength,
-      6 );
+      fin.other_programLength );
 
-    if ( isNaN( val ) ) {
-      val = 0;
+    if ( isNaN( int ) ) {
+      int = 0;
     }
-    debts[key] = val;
+
+    debts[key] = int + principal;
+    interest[key] = int;
   } );
 
   // calculate debts of other loans
 
   publicLoans.forEach( key => {
-    let val = calcDebtAtGrad(
+    const principal = fin['publicLoan_' + key] * fin.other_programLength;
+    let int = calcInterestAtGrad(
       fin['publicLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength,
-      0
-    );
+      fin.other_programLength );
 
-    if ( isNaN( val ) ) {
-      val = 0;
+    if ( isNaN( int ) ) {
+      int = 0;
     }
-    debts[key] = val;
 
+    debts[key] = int + principal;
+    interest[key] = int;
   } );
 
   privateLoans.forEach( key => {
-    let val = calcDebtAtGrad(
+    const principal = fin['privLoan_' + key] * fin.other_programLength;
+    let int = calcInterestAtGrad(
       fin['privLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength,
-      0
-    );
+      fin.other_programLength );
 
-    if ( isNaN( val ) ) {
-      val = 0;
+    if ( isNaN( int ) ) {
+      int = 0;
     }
-    debts[key] = val;
 
+    debts[key] = int + principal;
+    interest[key] = int;
   } );
 
   // 10 year term calculations.
   allLoans.forEach( key => {
+    interest.totalAtGrad += interest[key];
     debts.totalAtGrad += debts[key];
     let tenYearMonthly = calcMonthlyPayment(
       debts[key],
@@ -132,11 +140,11 @@ function debtCalculator() {
 
   } );
 
+  debts.programInterest = interest.totalAtGrad;
   debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad;
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;
   debts.repayWorkWeeks = debts.repayHours / 40;
-  debts.programInterest = debts.totalAtGrad - fin.total_borrowingAtGrad;
 
   // TODO: Differentiate grads versus undergrads
 
@@ -147,7 +155,6 @@ function debtCalculator() {
   for ( const key in debts ) {
     fin['debt_' + key] = debts[key];
   }
-
 }
 
 

@@ -193,7 +193,7 @@ const updateSchoolData = function( iped ) {
 
         // add the full state name to the schoolModel
         schoolModel.values.stateName = getStateByCode( schoolModel.values.state );
-        
+
         // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
 

@@ -142,7 +142,7 @@ const schoolView = {
         val = '';
       }
 
-      if ( elem.dataset.numberDisplay === "percentage" ) {
+      if ( elem.dataset.numberDisplay === 'percentage' ) {
         val = decimalToPercentString( val, 0 );
       }
 
@@ -214,7 +214,7 @@ const schoolView = {
   clickRadioButton: ( name, value ) => {
     if ( name !== null && value !== false ) {
       const input = document.querySelector( 'INPUT[name="' + name + '"][value="' + value + '"]' );
-      if ( input != null ) {
+      if ( input !== null ) {
         const label = closest( input, '.m-form-field__radio' ).querySelector( 'LABEL' );
         label.click();
       }
