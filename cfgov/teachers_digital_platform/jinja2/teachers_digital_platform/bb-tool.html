@@ -8,8 +8,7 @@
 {% block css -%}
     {{ super() }}
 
-    <link rel="stylesheet" href="{{ static('tdp/css/tdp.css') }}">
-    <link rel="stylesheet" href="{{ static('tdp/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
 {%- endblock css %}
 
 {% block pre_content scoped -%}
@@ -326,6 +325,6 @@
 
     {# Conditional comment used to block IE8 and under from receiving JS #}
     <!--[if gt IE 8]><!-->
-        <script src="{{ static('tdp/js/tdp.js') }}"></script>
+        <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
     <!--<![endif]-->
 {% endblock javascript %}

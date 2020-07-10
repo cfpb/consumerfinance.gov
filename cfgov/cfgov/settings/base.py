@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     "diversity_inclusion",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
+    "teachers_digital_platform",
 
     # Satellites
     "comparisontool",
@@ -102,7 +103,6 @@ INSTALLED_APPS = (
     "rest_framework",
     "ccdb5_ui",
     "mptt",
-    "teachers_digital_platform",
     "crtool",
 )
 
