@@ -1,8 +1,10 @@
 import accessibility from 'highcharts/modules/accessibility';
+import { bindEvent } from '../../../../js/modules/util/dom-events';
 import Highcharts from 'highcharts/highstock';
 import more from 'highcharts/highcharts-more';
 import numberToMoney from 'format-usd';
-import { getExpensesValue, getFinancialValue, getSchoolValue } from '../dispatchers/get-model-values.js';
+import { getExpensesValue, getFinancialValue, getSchoolCohortValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 // curlies in strings is a way of formatting Highcharts labels
 /* eslint-disable no-template-curly-in-string */
@@ -10,6 +12,8 @@ import { getExpensesValue, getFinancialValue, getSchoolValue } from '../dispatch
 more( Highcharts );
 
 const columnChartOpts = {
+  _meterChartBtns: null,
+
   chart: {
     type: 'column',
     marginRight: 250
@@ -73,6 +77,7 @@ const columnChartOpts = {
 const meterOpts = {
   chart: {
     type: 'gauge',
+    plotBorderWidth: 0,
     plotBackgroundColor: 'none',
     plotBackgroundImage: null,
     height: 300,
@@ -87,7 +92,8 @@ const meterOpts = {
     startAngle: -90,
     endAngle: 90,
     background: null,
-    center: [ '50%', '90%' ]
+    center: [ '50%', '90%' ],
+    size: 275
   } ],
 
   exporting: {
@@ -377,6 +383,7 @@ const chartView = {
   repaymentMeterChart: null,
 
   init: body => {
+    chartView._meterChartBtns = body.querySelectorAll( '.school-results_cohort-buttons input.a-radio' );
     chartView.costOfBorrowingElem = body.querySelector( '#cost-of-borrowing_chart' );
     chartView.compareCostElem = body.querySelector( '#compare-cost-of-borrowing_chart' );
     chartView.makePlanElem = body.querySelector( '#make-a-plan_chart' );
@@ -384,6 +391,12 @@ const chartView = {
     chartView.affordingElem = body.querySelector( '#affording-your-loans_chart' );
     chartView.gradMeterElem = body.querySelector( '#school-results_grad-meter' );
     chartView.repaymentMeterElem = body.querySelector( '#school-results_repayment-meter' );
+
+    chartView._addRadioListeners();
+
+    // Set initial buttons
+    document.querySelector('#graduation-rate_us').click();
+    document.querySelector('#repayment-rate_us').click();
 
     accessibility( Highcharts );
 
@@ -429,6 +442,47 @@ const chartView = {
       { ...meterOpts, ...repaymentMeterOpts }
     );
 
+  },
+
+  /**
+   * Listen for radio button clicks
+   */
+  _addRadioListeners: () => {
+    const radioEvents = {
+      click: chartView._handleRadioClicks
+    };
+    chartView._meterChartBtns.forEach( elem => {
+      bindEvent( elem, radioEvents );
+    } );
+  },
+
+  _handleRadioClicks: ( event ) => {
+    const target = event.target;
+    const cohort = target.value;
+    const graph = target.getAttribute( 'name' ).replace( /-/g, '' );
+    const handlers = {
+      repaymentratemeterselector: {
+        function: chartView.updateRepaymentMeterChart,
+        stateProp: 'repayMeterCohort',
+        cohortName: 'repayMeterCohortName'
+      },
+      graduationratemeterselector: {
+        function: chartView.updateGradMeterChart,
+        stateProp: 'gradMeterCohort',
+        cohortName: 'gradMeterCohortName'
+      } 
+    };
+    const names = {
+      cohortRankByHighestDegree: 'U.S.',
+      cohortRankByState: getSchoolValue( 'stateName' ),
+      cohortRankByControl: getSchoolValue( 'control' )
+    }
+
+    updateState.byProperty( handlers[graph].cohortName, names[cohort] );
+    updateState.byProperty( handlers[graph].stateProp, cohort );
+    handlers[graph].function();
+    
+    console.log( handlers[graph].cohortName, names[cohort], handlers[graph].stateProp, cohort );
   },
 
   updateCostOfBorrowingChart: () => {
@@ -530,11 +584,18 @@ const chartView = {
   },
 
   updateGradMeterChart: () => {
-    const cohort = getSchoolValue( 'cohortRankByControl' );
-    let percentile = 0;
+    let cohort = getStateValue( 'gradMeterCohort' );
+    if ( !cohort ) {
+      cohort = 'cohortRankByHighestDegree';
+    }
+    let percentile = getSchoolCohortValue( cohort, 'grad_rate' ).percentile_rank;
 
-    if ( typeof cohort !== 'undefined' ) {
-      percentile = cohort.grad_rate.percentile_rank;
+    if ( percentile <= 33 ) {
+      updateState.byProperty( 'gradMeterThird', 'bottom third' );
+    } else if ( percentile <= 66 ) {
+      updateState.byProperty( 'gradMeterThird', 'middle third' );
+    } else {
+      updateState.byProperty( 'gradMeterThird', 'top third' );
     }
 
     // Percentile works along a 180-degree axis:
@@ -543,18 +604,24 @@ const chartView = {
   },
 
   updateRepaymentMeterChart: () => {
-    const cohort = getSchoolValue( 'cohortRankByControl' );
-    let percentile = 0;
+    let cohort = getStateValue( 'repayMeterCohort' );
+    if ( !cohort ) {
+      cohort = 'cohortRankByHighestDegree';
+    }
+    let percentile = getSchoolCohortValue( cohort, 'repay_3yr' ).percentile_rank;
 
-    if ( typeof cohort !== 'undefined' ) {
-      percentile = cohort.repay_3yr.percentile_rank;
+    if ( percentile <= 33 ) {
+      updateState.byProperty( 'repayMeterThird', 'bottom third' );
+    } else if ( percentile <= 66 ) {
+      updateState.byProperty( 'repayMeterThird', 'middle third' );
+    } else {
+      updateState.byProperty( 'repayMeterThird', 'top third' );
     }
 
     // Percentile works along a 180-degree axis:
-    percentile = percentile / 100 * 180;
-    chartView.repaymentMeterChart.series[0].setData( [ percentile ] );
+    const arc = percentile / 100 * 180;
+    chartView.repaymentMeterChart.series[0].setData( [ arc ] );
   }
-
 
 };
 

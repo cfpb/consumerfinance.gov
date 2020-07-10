@@ -72,6 +72,18 @@ function getProgramInfo( pid ) {
 }
 
 /**
+ *
+ *
+ */
+function getSchoolCohortValue( cohort, property ) {
+  const smv = schoolModel.values;
+  if ( smv.hasOwnProperty( cohort ) && smv[cohort].hasOwnProperty( property ) ) {
+    return smv[cohort][property];
+  }
+  return { percentile_rank: 0, error: 'no property found' };
+}
+
+/**
  * getSchoolValue - get the value of 'name' from the schoolModel
  * @param {string} name - Name of the property to retrieve
  * @returns {(number|string|boolean)} value of the property, or false if undefined
@@ -104,6 +116,7 @@ export {
   getFinancialValue,
   getProgramInfo,
   getProgramList,
+  getSchoolCohortValue,
   getSchoolValue,
   getStateValue
 };

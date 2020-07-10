@@ -14,12 +14,16 @@ const stateModel = {
     activeSection: false,
     schoolSelected: false,
     gotStarted: false,
+    gradMeterCohort: 'cohortRankByHighestDegree',
+    gradMeterCohortName: 'U.S.',
     costsQuestion: false,
     programType: false,
     programLength: false,
     programLevel: false,
     programRate: false,
-    programHousing: false
+    programHousing: false,
+    repayMeterCohort: 'cohortRankByHighestDegree',
+    repayMeterCohortName: 'U.S.'
   },
   textVersions: {
     programType: {
@@ -105,6 +109,11 @@ const stateModel = {
     if ( stateModel.textVersions.hasOwnProperty( name ) ) {
       const key = name + 'Text';
       stateModel.values[key] = stateModel.textVersions[name][value];
+      updateSchoolItems();
+    }
+
+    // When the meter buttons are clicked, updateSchoolItems
+    if ( name.indexOf( 'MeterThird' ) > 0 ) {
       updateSchoolItems();
     }
 

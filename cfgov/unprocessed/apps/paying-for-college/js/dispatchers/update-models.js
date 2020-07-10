@@ -5,6 +5,7 @@
 import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
+import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
@@ -186,6 +187,13 @@ const updateSchoolData = function( iped ) {
           }
         }
 
+        // Take only the top 3 programs
+        const topThreeArr = schoolModel.values.programsPopular.slice( 0, 3 );
+        schoolModel.values.programsTopThree = topThreeArr.join( ', ' );
+
+        // add the full state name to the schoolModel
+        schoolModel.values.stateName = getStateByCode( schoolModel.values.state );
+        
         // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
 
@@ -196,7 +204,7 @@ const updateSchoolData = function( iped ) {
       } )
       .catch( function( error ) {
         reject( error );
-        // console.log( 'An error occurred!', error );
+        console.log( 'An error occurred when accessing school data for ' + iped, error );
       } );
   } );
 };
