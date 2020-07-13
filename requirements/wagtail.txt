@@ -1,1 +1,1 @@
-wagtail==2.9
+wagtail==2.5.2
