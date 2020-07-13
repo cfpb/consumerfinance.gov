@@ -72,12 +72,12 @@ const _urlParamsToModelVars = {
 
   'pers': 'financialModel.savings_personal',
   'fams': 'financialModel.savings_family',
-  '529p': 'financialModel.savings_529',
+  '529p': 'financialModel.savings_collegeSavings',
 
   'offj': 'financialModel.income_jobOffCampus',
   'onj': 'financialModel.income_jobOnCampus',
   'eta': 'financialModel.income_employerAssist',
-  'othf': 'financialModel.income_other',
+  'othf': 'financialModel.income_otherFunding',
 
   'pvl1': 'financialModel.privLoan_privLoan1',
   'pvr1': 'financialModel.privloan_privLoanRate1',

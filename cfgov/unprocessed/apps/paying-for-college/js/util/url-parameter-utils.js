@@ -96,7 +96,7 @@ function buildUrlQueryString() {
 
     'pers': financialValues.savings_personal,
     'fams': financialValues.savings_family,
-    '529p': financialValues.savings_529,
+    '529p': financialValues.savings_collegeSavings,
 
     'offj': financialValues.income_jobOffCampus,
     'onj': financialValues.income_jobOnCampus,
