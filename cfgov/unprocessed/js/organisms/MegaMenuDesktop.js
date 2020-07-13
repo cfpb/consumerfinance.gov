@@ -75,7 +75,7 @@ function MegaMenuDesktop( baseClass, menus ) {
     this.dispatchEvent( 'triggerClick', { target: this } );
     const menu = event.target;
     if ( menu.isAnimating() ) { return; }
-    _updateMenuState( menu, event.type );
+    _updateMenuState( menu );
   }
 
   /**
@@ -112,21 +112,24 @@ function MegaMenuDesktop( baseClass, menus ) {
     // If we've clicked outside the parent of the current menu, close it.
     if ( !_firstLevelDom.contains( event.target ) ||
          event.target.parentNode.classList.contains( `${ baseClass }_content-1-list` ) ) {
-      _updateMenuState( null, event.type );
+      _updateMenuState( null );
     }
   }
 
   /**
    * Cleanup state and set the currently active menu.
    * @param {FlyoutMenu} menu - The menu currently being activated.
-   * @param {string} type - The event type that is calling this method.
    */
-  function _updateMenuState( menu, type ) {
+  function _updateMenuState( menu ) {
     if ( menu === null || _activeMenu === menu ) {
-      // A menu is closed.
-      _activeMenu.getTransition().animateOn();
-      _activeMenu.collapse();
-      _activeMenu = null;
+      // A menu is closed or the menu is suspended.
+
+      // If we've ever opened the menu, _activeMenu has to be cleared.
+      if ( _activeMenu ) {
+        _activeMenu.getTransition().animateOn();
+        _activeMenu.collapse();
+        _activeMenu = null;
+      }
 
       // Clean up listeners
       _bodyDom.removeEventListener( 'click', _handleBodyClick );

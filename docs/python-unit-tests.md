@@ -65,6 +65,8 @@ These default environments are:
 
 - `lint`, which runs our [linting](#linting) tools. We require this
   environment to pass in CI.
+- `validate-migrations`, which checks for any missing Django migrations. 
+  We require this environment to pass in CI.
 - `unittest`, which runs unit tests against the current production
   versions of Python, Django, and Wagtail. We require this environment to
   pass in CI.
