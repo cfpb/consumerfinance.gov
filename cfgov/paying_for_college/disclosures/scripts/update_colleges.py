@@ -32,6 +32,19 @@ ID_BASE = "{}?api_key={}".format(api_utils.SCHOOLS_ROOT, api_utils.API_KEY)
 FIELDS = sorted(MODEL_MAP.keys())
 FIELDSTRING = api_utils.build_field_string()
 
+SETTLEMENT_IDS = [
+    101116, 117113, 117928, 121983, 126030, 126702, 131469, 132338, 133465,
+    134811, 137148, 138813, 139579, 145770, 148177, 154022, 167321, 173887,
+    173984, 182111, 197832, 204316, 205647, 208239, 210906, 210942, 210960,
+    222938, 224776, 234492, 251312, 365055, 366748, 367936, 373085, 410502,
+    419457, 420866, 421513, 428268, 428286, 428444, 432533, 436094, 436438,
+    439057, 440341, 441308, 441973, 442222, 444927, 446668, 447272, 448345,
+    448576, 448734, 449010, 449898, 450049, 450085, 450094, 450526, 450535,
+    450544, 451662, 451796, 451820, 452018, 452027, 452090, 456010, 456348,
+    458496, 458982, 459259, 459268, 468024, 470092, 475121, 480073, 480082,
+    481720, 482398
+]
+
 
 def test_for_program_data(program_data):
     if (
@@ -47,10 +60,13 @@ def update_programs(api_data, school):
     """Create or update a school's program-level records."""
     create_count = 0
     program_data = api_data.get('latest.programs.cip_4_digit')
+    if not program_data:
+        return create_count
     for entry in program_data:
-        if not test_for_program_data(entry):
-            continue
         level = entry['credential']['level']
+        # For now only harvest graduate-level programs
+        if not test_for_program_data(entry) or level in ['', '1', '2', '3']:
+            continue
         cip_code = entry['code']
         program_code = "{}-{}".format(cip_code, level)
         program, _created = Program.objects.update_or_create(
@@ -160,7 +176,8 @@ def compile_net_prices(school, api_data):
     return school
 
 
-def update(exclude_ids=[], single_school=None, store_programs=False):
+# temporarily exclude GWU (131469) in signature
+def update(exclude_ids=[131469], single_school=None, store_programs=False):
     """
     Update college-level data for the latest year.
 
@@ -168,7 +185,7 @@ def update(exclude_ids=[], single_school=None, store_programs=False):
     """
     programs_created = 0
 
-    excluded_ids = OFFICE_IDS + [FAKE_SCHOOL_PK] + exclude_ids
+    excluded_ids = SETTLEMENT_IDS + OFFICE_IDS + [FAKE_SCHOOL_PK] + exclude_ids
     no_data = []  # API failed to respond or provided no data
     closed = []  # schools that have closed since our last scrape
     job_msg = (
@@ -179,7 +196,8 @@ def update(exclude_ids=[], single_school=None, store_programs=False):
     processed = 0
     update_count = 0
     id_url = "{}&id={}&fields={}"
-    base_query = School.objects.exclude(pk__in=excluded_ids)
+    base_query = School.objects.exclude(
+        pk__in=excluded_ids).filter(operating=True)
     if single_school:
         if not base_query.filter(pk=single_school).exists():
             no_school_msg = "Could not find school with ID {}".format(
