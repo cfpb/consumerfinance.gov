@@ -275,7 +275,7 @@ const financialModel = {
 
     const rateProperties = {
       inState: 'InS',
-      outOfState: 'Oss',
+      outOfState: 'Ooss',
       inDistrict: 'InDis'
     };
     const housingProperties = {
