@@ -481,8 +481,6 @@ const chartView = {
     updateState.byProperty( handlers[graph].cohortName, names[cohort] );
     updateState.byProperty( handlers[graph].stateProp, cohort );
     handlers[graph].function();
-
-    console.log( handlers[graph].cohortName, names[cohort], handlers[graph].stateProp, cohort );
   },
 
   updateCostOfBorrowingChart: () => {

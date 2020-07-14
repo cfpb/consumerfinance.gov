@@ -12,6 +12,7 @@ const stateModel = {
   stateDomElem: null,
   values: {
     activeSection: false,
+    constantsLoaded: false,
     schoolSelected: false,
     gotStarted: false,
     gradMeterCohort: 'cohortRankByHighestDegree',

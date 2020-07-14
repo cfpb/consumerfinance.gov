@@ -53,7 +53,7 @@ const schoolView = {
     let html = '<ul>';
     for ( const key in obj ) {
       const school = obj[key];
-      html += '\n<li><button data-school_id="' + school.id + '"><strong>' + school.schoolname + '</strong>';
+      html += '\n<li><button role="button" data-school_id="' + school.id + '"><strong>' + school.schoolname + '</strong>';
       html += '<p><em>' + school.city + ', ' + school.state + '</em></p></button></li>';
     }
     html += '</li>';

@@ -13,6 +13,71 @@ import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/upda
 /* eslint camelcase: ["error", {properties: "never"}] */
 
 /**
+ * Calculate direct unsubsidized federal loan total. This involves calculating a different
+ * amount borrowed each year.
+ * @param {number} directSub - The amount of DIRECT subsidized borrowed the first year
+ * @param {number} directUnsub - The amount of DIRECT unsubsidized borrowed the first year
+ * @param {number} rateUnsub - The interest rate as a decimal
+ * @param {number} programLength - Length of the program in years
+ * @returns {object} An object containing the calculated debt values
+ */
+function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLength ) {
+  const level = getStateValue( 'programLevel' );
+  const dependency = getStateValue( 'programStudentType' );
+  let percentSub = 1;
+  let percentUnsub = 1;
+  let subPrincipal = 0;
+  let unsubPrincipal = 0;
+  let unsubInterest = 0;
+  const subCaps = getConstantsValue( 'subCaps' );
+  let totalCaps = {};
+
+  if ( level === 'undergrad' && dependency === 'dependent' ) {
+    totalCaps = getConstantsValue( 'totalCaps' );
+  } else if ( level === 'undergrad' && dependency === 'independent' ) {
+    totalCaps = getConstantsValue( 'totalIndepCaps' );
+  } else if ( level === 'graduate' ) {
+    const gradCap = getConstantsValue( 'unsubsidizedCapGrad' );
+    totalCaps = {
+      yearOne: gradCap,
+      yearTwo: gradCap,
+      yearThree: gradCap
+    };
+  }
+
+  // Determine percent of borrowing versus caps
+  percentSub = directSub / subCaps.yearOne;
+  percentUnsub = directUnsub / ( totalCaps.yearOne - directSub );
+
+  // Iterate through each year of the program
+  for ( let x = 0; x < programLength; x++ ) {
+    if ( x === 0 ) {
+      subPrincipal += directSub * programLength;
+      unsubPrincipal += directUnsub * programLength;
+      unsubInterest += directUnsub * rateUnsub * programLength;
+    } else if ( x === 1 ) {
+      const subAmount = percentSub * subCaps.yearTwo;
+      const unsubAmount = percentUnsub * ( totalCaps.yearTwo - subAmount );
+      subPrincipal += subAmount * ( programLength - x );
+      unsubPrincipal += unsubAmount * ( programLength - x );
+      unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
+    } else {
+      const subAmount = percentSub * subCaps.yearThree;
+      const unsubAmount = percentUnsub * ( totalCaps.yearThree - subAmount );
+      subPrincipal += subAmount * ( programLength - x );
+      unsubPrincipal += unsubAmount * ( programLength - x );
+      unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
+    }
+  }
+
+  return {
+    subPrincipal: subPrincipal,
+    unsubPrincipal: unsubPrincipal,
+    unsubInterest: unsubInterest
+  };
+}
+
+/**
  * Calculate debts based on financial values
  */
 function debtCalculator() {
@@ -35,25 +100,19 @@ function debtCalculator() {
     totalAtGrad: 0
   };
 
-  // Find federal debts at graduation
-  fedLoans.forEach( key => {
-    // DIRECT Subsidized loans are special
-    let int = 0;
-    const principal = fin['fedLoan_' + key] * fin.other_programLength;
-    if ( key === 'directSub' ) {
-      int = 0;
-    } else {
-      int = calcInterestAtGrad( fin['fedLoan_' + key],
-        fin['rate_' + key], fin.other_programLength );
-    }
+  // Find federal DIRECT debts at graduation
+  const fedLoanTotals = calculateDirectLoanDebt(
+    fin.fedLoan_directSub,
+    fin.fedLoan_directUnsub,
+    fin.rate_directUnsub,
+    fin.other_programLength
+  );
 
-    if ( isNaN( int ) ) {
-      int = 0;
-    }
-    debts[key] = int + principal;
-    interest[key] = int;
-  } );
+  debts.directSub = fedLoanTotals.subPrincipal;
+  debts.directUnsub = fedLoanTotals.unsubPrincipal + fedLoanTotals.unsubInterest;
+  interest.directUnsub = fedLoanTotals.unsubInterest;
 
+  // Calculate Plus loan debts
   plusLoans.forEach( key => {
     const principal = fin['plusLoan_' + key] * fin.other_programLength;
     let int = calcInterestAtGrad(
