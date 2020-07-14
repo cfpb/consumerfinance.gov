@@ -296,4 +296,59 @@ main.college-costs {
 		}
 	}
 
+
+	&[data-state_rategraduationrange="high"] {
+		.school-results_comparison-section__grad-rate .big-percentile {
+			border-color: @college-costs-chart-max;
+		}
+	}
+
+	&[data-state_rategraduationrange="medium"] {
+		.school-results_comparison-section__grad-rate .big-percentile {
+			border-color: @college-costs-chart-median;
+		}
+	}
+
+	&[data-state_rategraduationrange="low"] {
+		.school-results_comparison-section__grad-rate .big-percentile {
+			border-color: @college-costs-chart-min;
+		}
+	}
+
+	&[data-state_raterepay3yrrange="high"] {
+		.school-results_comparison-section__repayment-rate .big-percentile {
+			border-color: @college-costs-chart-max;
+		}
+	}
+
+	&[data-state_raterepay3yrrange="medium"] {
+		.school-results_comparison-section__repayment-rate .big-percentile {
+			border-color: @college-costs-chart-median;
+		}
+	}
+
+	&[data-state_raterepay3yrrange="low"] {
+		.school-results_comparison-section__repayment-rate .big-percentile {
+			border-color: @college-costs-chart-min;
+		}
+	}
+
+	&[data-state_defaultraterange="high"] {
+		.school-results_comparison-section__default-rate .big-percentile {
+			border-color: @college-costs-chart-min;
+		}
+	}
+
+	&[data-state_defaultraterange="medium"] {
+		.school-results_comparison-section__default-rate .big-percentile {
+			border-color: @college-costs-chart-median;
+		}
+	}
+
+	&[data-state_defaultraterange="low"] {
+		.school-results_comparison-section__default-rate .big-percentile {
+			border-color: @college-costs-chart-max;
+		}
+	}
+
 }
