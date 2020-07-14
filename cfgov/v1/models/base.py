@@ -15,7 +15,9 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import hooks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable, Page, PageManager, PageQuerySet, Site
+from wagtail.core.models import (
+    Orderable, Page, PageManager, PageQuerySet, Site
+)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
