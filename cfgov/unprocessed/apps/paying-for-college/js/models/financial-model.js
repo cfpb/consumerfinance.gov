@@ -134,7 +134,6 @@ const financialModel = {
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = Math.round( vals.total_costs - vals.total_funding );
     vals.total_excessFunding = Math.round( vals.total_funding - vals.total_costs );
-    console.log( vals.total_funding, vals.total_costs, vals.total_excessFunding );
 
     /* Borrowing total
        TODO - Update this once year-by-year DIRECT borrowing is in place */
@@ -317,7 +316,12 @@ const financialModel = {
 
     // Get housing costs
     housingProp += housingProperties[housing];
-    financialModel.values.dirCost_housing = stringToNum( getSchoolValue( housingProp ) );
+    if ( housing === 'withFamily' ) {
+      financialModel.values.dirCost_housing = 0;
+    } else {
+      financialModel.values.dirCost_housing = stringToNum( getSchoolValue( housingProp ) );
+    }
+
 
     // Get Other costs
     otherProp += otherProperties[housing];
