@@ -8,6 +8,7 @@ import { closest } from '../../../../js/modules/util/dom-traverse';
 import { getAllStateValues } from '../dispatchers/get-model-values.js';
 import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
+import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 
 
 const appView = {
@@ -64,6 +65,7 @@ const appView = {
     const target = event.target;
     updateState.byProperty( 'includeParentPlus', target.checked );
     recalculateFinancials();
+    updateFinancialViewAndFinancialCharts();
   },
 
   /**

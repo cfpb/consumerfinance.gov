@@ -254,9 +254,13 @@ function updateModelsFromQueryString( queryObj ) {
       const match = _urlParamsToModelVars[key].split( '.' );
       modelMatch[match[0]]( match[1], queryObj[key], false );
 
+      // plus can mean either type of loan (they are mutually exclusive)
+      if ( key === 'plus' ) {
+        financialModel.setValue( 'plusLoan_gradPlus', stringToNum( queryObj[key] ), false );
+      }
       // Copy programLength into the financial model
       if ( key === 'lenp' ) {
-        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key], false ) );
+        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key] ), false );
       }
     }
   }

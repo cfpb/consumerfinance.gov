@@ -107,7 +107,7 @@ function buildUrlQueryString() {
     'pvr1': financialValues.privloan_privLoanRate1,
     'pvf1': financialValues.privloan_privLoanFee1,
 
-    'plus': financialValues.plusLoan_gradPlus
+    'plus': financialValues.plusLoan_parentPlus
   };
 
   const expensesVariables = {
@@ -124,7 +124,7 @@ function buildUrlQueryString() {
     dbtx: expensesValues.item_currentDebt
   };
 
-  if ( stateValues.program_type === 'graduate' ) {
+  if ( stateValues.programLevel === 'graduate' ) {
     variables.plus = financialValues.plusLoan_gradPlus;
   }
 
