@@ -1,7 +1,7 @@
 {% import "atoms/checkbox.html" as checkbox with context %}
 
 <section class="college-costs_tool-section college-costs_tool-section__make-a-plan" data-tool-section="make-a-plan">
-    <h2>Make a plan to cover this year's cost of attendance</h2>
+    <h2>Make a plan to cover this year's costs</h2>
 
     <p>Thank you for entering all that info! This page will help you determine whether you have enough funding to cover the cost of attending this particular school. If you have a gap, it will help you come up with a plan.</p>
 
@@ -25,7 +25,7 @@
         ) }}
     </div>
 
-    <h3 class="h4 header_border-bottom">Cost of attendance vs. funding</h3>
+    <h3 class="h4 header_border-bottom">Costs vs. funding</h3>
 
     <div id="make-a-plan_chart"></div>
 
@@ -210,7 +210,7 @@
                 }}
             {% endcall %}
             {% set expandable_settings = {
-                'label': 'Work-study, fellowships, and assistantships',
+                'label': 'Work-study<span class="graduate-content">, fellowships, and assistantships</span>' | safe,
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_workStudyFellowAssist"',
@@ -225,6 +225,7 @@
                         'data_attribute': 'data-financial-item="workStudy_workStudy"'
                     })
                 }}
+                <div class="graduate-content">
                 {{
                     input.render({
                         'label': 'Fellowship funding',
@@ -241,6 +242,7 @@
                         'data_attribute': 'data-financial-item="fellowAssist_assistantship"'
                     })
                 }}
+                </div>
             {% endcall %}
 
             {% set expandable_settings = {
@@ -328,18 +330,18 @@
                         })
                     }}
                     {{
-                        input.render({
+                        text_item.render({
                             'label': 'Interest rate (%)',
-                            'id': 'plan__directSubRate',
-                            'value': '0',
+                            'value': '4.53%',
+                            'type': 'text',
                             'data_attribute': 'data-financial-item="rate_directSub"'
                         })
-                    }}    
-                   {{
-                        input.render({
+                    }}
+                    {{
+                        text_item.render({
                             'label': 'Loan fee (%)',
-                            'id': 'plan__directSubFee',
-                            'value': '0',
+                            'value': '1.062%',
+                            'type': 'text',
                             'data_attribute': 'data-financial-item="fee_directSub"'
                         })
                     }}
@@ -569,7 +571,7 @@
                                 {{
                                     checkbox.render({
                                         'id': 'plan__parentPlusFeeRepay',
-                                        'label': 'Although parent PLUS loans are made to parents only—not students—some students take responsibility for repaying parent PLUS loans. Click here if you plan to repay your parent’s PLUS loans, and this loan amount to your projected debt total.',
+                                        'label': 'Although parent PLUS loans are made to parents only—not students—some students take responsibility for repaying parent PLUS loans. Click here if you plan to repay your parent’s PLUS loans, and this loan amount will be added to your projected debt total.',
                                   })
                                 }}
                                 
@@ -585,7 +587,7 @@
                 </div>
                  <div class="private-loan-expandable">
                     {% set expandable_settings = {
-                        'label': 'Private Loans',
+                        'label': 'Private loans',
                         'value': '$0',
                         'is_editable': 'True',
                         'data_attribute': 'data-financial-item="total_privateLoans"',
