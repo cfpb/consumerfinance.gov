@@ -1,0 +1,16 @@
+version: "3.4"
+
+volumes: 
+  cypress:
+
+services:
+  e2e:
+    image: cypress/included:4.10.0
+    environment:
+      - CYPRESS_baseUrl=https://cfgov-adhoc-wag29.demo.cfpb.gov
+      - CI=1
+    command: npx cypress run -b chrome --headless
+    working_dir: /app
+    volumes:
+      - ./cypress:/app/cypress
+      - ./cypress.json:/app/cypress.json
