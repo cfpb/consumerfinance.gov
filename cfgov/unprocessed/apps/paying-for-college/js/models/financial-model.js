@@ -52,11 +52,12 @@ const financialModel = {
     financialModel.values.salary_monthly = financialModel.values.salary_annual / 12;
 
     recalculateExpenses();
-    financialModel._updateStateWithFinancials();
 
     // Debt Guide Difference
     financialModel.values.other_debtGuideDifference =
         Math.abs( financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual );
+
+    financialModel._updateStateWithFinancials();
   },
 
   /**
@@ -133,6 +134,7 @@ const financialModel = {
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = Math.round( vals.total_costs - vals.total_funding );
     vals.total_excessFunding = Math.round( vals.total_funding - vals.total_costs );
+    console.log( vals.total_funding, vals.total_costs, vals.total_excessFunding );
 
     /* Borrowing total
        TODO - Update this once year-by-year DIRECT borrowing is in place */
@@ -258,7 +260,8 @@ const financialModel = {
       ( financialModel.values.total_gap > 0 ).toString() );
 
     updateState.byProperty( 'excessFunding',
-      ( financialModel.values.excessFunding > 0 ).toString() );
+      ( financialModel.values.total_excessFunding > 0 ).toString() );
+    console.log( 'ex', financialModel.values.total_excessFunding, ( financialModel.values.total_excessFunding > 0 ).toString() );
 
     updateState.byProperty( 'debtRuleViolation',
       ( financialModel.values.debt_totalAtGrad > financialModel.values.salary_annual ).toString() );
