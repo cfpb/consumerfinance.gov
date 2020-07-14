@@ -3,7 +3,6 @@ import json
 from django.test import RequestFactory, TestCase
 from django.utils.text import slugify
 
-import wagtail
 from wagtail.core.models import Page, Site
 
 from mega_menu.frontend_conversion import FrontendConverter
@@ -14,6 +13,8 @@ class FrontendConverterTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.root_page = Site.objects.get(is_default_site=True).root_page
+        cls.request = RequestFactory().get('/consumer-tools/')
+        Site.find_for_request(cls.request)
 
         consumer_tools_page = cls.make_test_page('Consumer Tools')
         about_us_page = cls.make_test_page('About Us')
@@ -95,8 +96,7 @@ class FrontendConverterTests(TestCase):
         return page
 
     def do_conversion(self, menu):
-        request = RequestFactory().get('/consumer-tools/')
-        converter = FrontendConverter(menu, request=request)
+        converter = FrontendConverter(menu, request=self.request)
         return converter.get_menu_items()
 
     def test_converted_format_uses_basic_python_types(self):
@@ -110,16 +110,11 @@ class FrontendConverterTests(TestCase):
     def test_conversion_database_queries(self):
         self.menu.refresh_from_db()
 
-        # We expect to see three queries here:
+        # We expect to see two queries here:
         #
         # 1. Wagtail's site root lookup.
         # 2. Single query to retrieve all pages at once.
-        if wagtail.VERSION > (2, 6):
-            num_queries = 3
-        else:
-            num_queries = 2
-
-        with self.assertNumQueries(num_queries):
+        with self.assertNumQueries(2):
             self.do_conversion(self.menu)
 
     def test_conversion_output(self):
