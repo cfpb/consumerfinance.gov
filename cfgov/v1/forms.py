@@ -248,6 +248,13 @@ class FilterableListForm(forms.Form):
 
 
 class EnforcementActionsFilterForm(FilterableListForm):
+
+    statuses = forms.MultipleChoiceField(
+        required=False,
+        choices=ref.enforcement_statuses,
+        widget=widgets.CheckboxSelectMultiple()
+    )
+
     def get_page_set(self):
         query = self.generate_query()
         return self.filterable_pages.filter(query).distinct().order_by(
@@ -262,6 +269,7 @@ class EnforcementActionsFilterForm(FilterableListForm):
             'categories__name__in',  # categories
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors
+            'statuses__status__in',  # statuses
         ]
 
 
