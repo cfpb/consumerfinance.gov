@@ -269,7 +269,27 @@ urlpatterns = [
         'transcripts'),
         namespace='transcripts')),
 
-    re_path(r'^paying-for-college/', include('comparisontool.urls')),
+    re_path(
+        r'^paying-for-college/choose-a-student-loan/$',
+        TemplateView.as_view(
+            template_name='comparisontool/choose_a_loan.html'
+        ),
+        name='pfc-choose'
+    ),
+    re_path(
+        r'^paying-for-college/manage-your-college-money/$',
+        TemplateView.as_view(
+            template_name='comparisontool/manage_your_money.html'
+        ),
+        name='pfc-manage'
+    ),
+    re_path(
+        r'^paying-for-college/repay-student-debt/$',
+        TemplateView.as_view(
+            template_name='comparisontool/repay_student_debt.html'
+        ),
+        name='pfc-repay'
+    ),
 
     re_path(
         r'^paying-for-college2/',
