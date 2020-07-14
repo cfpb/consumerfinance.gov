@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 from unittest import mock
 
@@ -1002,7 +1001,6 @@ class AnswerPageTestCase(TestCase):
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
         mock_request = HttpRequest()
-        mock_request.site = mock_site
         landing_page = self.english_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 0)
@@ -1015,7 +1013,6 @@ class AnswerPageTestCase(TestCase):
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
         mock_request = HttpRequest()
-        mock_request.site = mock_site
         landing_page = self.english_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 1)
@@ -1031,7 +1028,6 @@ class AnswerPageTestCase(TestCase):
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
         mock_request = HttpRequest()
-        mock_request.site = mock_site
         landing_page = self.spanish_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 1)
@@ -1048,7 +1044,6 @@ class AnswerPageTestCase(TestCase):
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
         mock_request = HttpRequest()
-        mock_request.site = mock_site
         landing_page = self.english_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 0)
