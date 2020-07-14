@@ -1,12 +1,12 @@
 /* This file handles view items which apply only to the "state" of the
 application, and are otherwise inappropriate for the
 other views. */
-
 import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { getAllStateValues } from '../dispatchers/get-model-values.js';
+import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 
 
@@ -33,6 +33,7 @@ const appView = {
     bindEvent( appView._restartBtn, { click: appView._handleRestartBtn } );
     bindEvent( appView._saveForLaterBtn, { click: appView._handleSaveForLaterBtn } );
     bindEvent( appView._sendLinkBtn, { click: appView._handleSendLinkBtn } );
+    bindEvent( appView._includeParentPlusBtn, { click: appView._handleIncludeParentPlusBtn } );
   },
 
   /**
@@ -53,6 +54,16 @@ const appView = {
     const parent = closest( button, '.o-form_fieldset' );
     sendAnalyticsEvent( 'Impact question click: ' + parent.dataset.impact, event.target.value );
     updateState.byProperty( parent.dataset.impact, event.target.value );
+  },
+
+  /**
+   * Handle the click of the Include Parent Plus checkbox
+   * @param {Object} event - Click event object
+   */
+  _handleIncludeParentPlusBtn: event => {
+    const target = event.target;
+    updateState.byProperty( 'includeParentPlus', target.checked );
+    recalculateFinancials();
   },
 
   /**
@@ -117,6 +128,7 @@ const appView = {
     appView._saveForLaterBtn = document.querySelector( '[data-app-button="save-and-finish-later"]' );
     appView._saveLinks = document.querySelectorAll( '[data-app-save-link]' );
     appView._sendLinkBtn = document.querySelector( '#email-your-link' );
+    appView._includeParentPlusBtn = document.querySelector( '#plan__parentPlusFeeRepay' );
 
     appView._addButtonListeners();
   }

@@ -52,21 +52,21 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
   // Iterate through each year of the program
   for ( let x = 0; x < programLength; x++ ) {
     if ( x === 0 ) {
-      subPrincipal += directSub * programLength;
-      unsubPrincipal += directUnsub * programLength;
-      unsubInterest += directUnsub * rateUnsub * programLength;
+      subPrincipal += directSub;
+      unsubPrincipal += directUnsub;
+      unsubInterest += directUnsub * rateUnsub;
     } else if ( x === 1 ) {
       const subAmount = percentSub * subCaps.yearTwo;
       const unsubAmount = percentUnsub * ( totalCaps.yearTwo - subAmount );
-      subPrincipal += subAmount * ( programLength - x );
-      unsubPrincipal += unsubAmount * ( programLength - x );
-      unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
+      subPrincipal += subAmount;
+      unsubPrincipal += unsubAmount;
+      unsubInterest += unsubAmount * rateUnsub;
     } else {
       const subAmount = percentSub * subCaps.yearThree;
       const unsubAmount = percentUnsub * ( totalCaps.yearThree - subAmount );
-      subPrincipal += subAmount * ( programLength - x );
-      unsubPrincipal += unsubAmount * ( programLength - x );
-      unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
+      subPrincipal += subAmount;
+      unsubPrincipal += unsubAmount;
+      unsubInterest += unsubAmount * rateUnsub;
     }
   }
 
@@ -99,6 +99,7 @@ function debtCalculator() {
   const interest = {
     totalAtGrad: 0
   };
+  let totalBorrowing = 0;
 
   // Find federal DIRECT debts at graduation
   const fedLoanTotals = calculateDirectLoanDebt(
@@ -110,11 +111,13 @@ function debtCalculator() {
 
   debts.directSub = fedLoanTotals.subPrincipal;
   debts.directUnsub = fedLoanTotals.unsubPrincipal + fedLoanTotals.unsubInterest;
+  interest.directSub = 0;
   interest.directUnsub = fedLoanTotals.unsubInterest;
+  totalBorrowing += fedLoanTotals.subPrincipal + fedLoanTotals.unsubPrincipal;
 
   // Calculate Plus loan debts
   plusLoans.forEach( key => {
-    const principal = fin['plusLoan_' + key] * fin.other_programLength;
+    let  principal = fin['plusLoan_' + key] * fin.other_programLength;
     let int = calcInterestAtGrad(
       fin['plusLoan_' + key],
       fin['rate_' + key],
@@ -124,6 +127,13 @@ function debtCalculator() {
       int = 0;
     }
 
+    // if parentPlus loan, check if debt should be included
+    if ( key == 'parentPlus' && !getStateValue( 'includeParentPlus' ) ) {
+      principal = 0;
+      int = 0;
+    }
+
+    totalBorrowing += principal;
     debts[key] = int + principal;
     interest[key] = int;
   } );
@@ -141,6 +151,7 @@ function debtCalculator() {
       int = 0;
     }
 
+    totalBorrowing += principal;
     debts[key] = int + principal;
     interest[key] = int;
   } );
@@ -156,14 +167,16 @@ function debtCalculator() {
       int = 0;
     }
 
+    totalBorrowing += principal;
     debts[key] = int + principal;
     interest[key] = int;
   } );
 
-  // 10 year term calculations.
   allLoans.forEach( key => {
     interest.totalAtGrad += interest[key];
     debts.totalAtGrad += debts[key];
+
+    // 10 year term calculations
     let tenYearMonthly = calcMonthlyPayment(
       debts[key],
       fin['rate_' + key],
@@ -205,12 +218,7 @@ function debtCalculator() {
   debts.repayHours = debts.tenYearMonthly / 15;
   debts.repayWorkWeeks = debts.repayHours / 40;
 
-  // TODO: Differentiate grads versus undergrads
-
-  // TODO: Apply the changing-over-time DIRECT maxes to DIRECT borrowing
-
-  // TODO: Toggle for parentPlus debt
-
+  fin.total_borrowingAtGrad = totalBorrowing;
   for ( const key in debts ) {
     fin['debt_' + key] = debts[key];
   }

@@ -31,7 +31,7 @@
     </div>
     <div class="debt-guideline_salary-info">
     {{ number_callout.render({
-                'header': 'Median salary of this <span data-state-based-visibility="undergrad-content">school\'s recent students</span><span data-state-based-visibility="graduate-content">program\'s graduates</span>' | safe,
+                'header': 'Median salary of this <span class="undergrad-content">school\'s recent students</span><span class="graduate-content">program\'s graduates</span>' | safe,
                 'data_attribute': 'data-financial-item="salary_annual"',
                 'additional_classes': 'number-callout__large',
                 'value': '$0'
@@ -42,7 +42,7 @@
         <p data-state-based-visibility="undergrad-content">Median earnings of federally-aided students working and not enrolled 6 years after starting at this school—includes students who did not graduate</p>
         <p data-state-based-visibility="program-is-selected">Median first-year earnings of federally-aided program graduates who were working and not enrolled during the first year following graduation</p>
 
-        <h4>Your projected debt vs. the median <span data-state-based-visibility="undergrad-content">salary of recent students</span><span data-state-based-visibility="program-is-selected">first-year salary of program graduates</span></h4>
+        <h4>Your projected debt vs. the median <span class="undergrad-content">salary of recent students</span><span class="program-is-selected">first-year salary of program graduates</span></h4>
         
         <div id="max-debt-guideline_chart"></div>
 

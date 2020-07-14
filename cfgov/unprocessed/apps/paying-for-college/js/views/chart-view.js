@@ -119,8 +119,8 @@ const meterOpts = {
       label: {
         text: '<strong>MIN</strong>',
         align: 'left',
-        x: 120,
-        y: 65
+        x: 80,
+        y: 75
       }
     }, {
       from: 60,
@@ -131,7 +131,7 @@ const meterOpts = {
       label: {
         text: '<strong>MEDIAN</strong>',
         align: 'center',
-        x: 140,
+        x: 135,
         y: -15
       }
     }, {
@@ -143,8 +143,8 @@ const meterOpts = {
       label: {
         text: '<strong>MAX</strong>',
         align: 'right',
-        x: -100,
-        y: 65
+        x: -60,
+        y: 75
       }
     } ],
     pane: 0,
