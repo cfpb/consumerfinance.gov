@@ -18,7 +18,7 @@ const schoolModel = {
       schoolModel.values[key] = decimalToPercentString( value, 1 );
 
       const percentage = value * 100;
-      if ( percentage  <= 33 ) {
+      if ( percentage <= 33 ) {
         updateState.byProperty( name + 'range', 'low' );
       } else if ( percentage <= 66 ) {
         updateState.byProperty( name + 'range', 'medium' );

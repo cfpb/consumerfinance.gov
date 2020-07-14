@@ -117,7 +117,7 @@ function debtCalculator() {
 
   // Calculate Plus loan debts
   plusLoans.forEach( key => {
-    let  principal = fin['plusLoan_' + key] * fin.other_programLength;
+    let principal = fin['plusLoan_' + key] * fin.other_programLength;
     let int = calcInterestAtGrad(
       fin['plusLoan_' + key],
       fin['rate_' + key],
@@ -128,7 +128,7 @@ function debtCalculator() {
     }
 
     // if parentPlus loan, check if debt should be included
-    if ( key == 'parentPlus' && !getStateValue( 'includeParentPlus' ) ) {
+    if ( key === 'parentPlus' && !getStateValue( 'includeParentPlus' ) ) {
       principal = 0;
       int = 0;
     }
