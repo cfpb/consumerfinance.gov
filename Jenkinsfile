@@ -127,7 +127,7 @@ pipeline {
                 script {
                     timeout(time: 15, unit: 'MINUTES') {
                         // sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
-                        sh """
+                        sh label: "Run Cypress Tests" script: """
                             docker run -v cypress:/app/cypress \ 
                             -v cypress.json:/app/cypress -w /app \
                             -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} 
