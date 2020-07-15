@@ -12,6 +12,5 @@ describe('Consumer Tools', () => {
         // Assert
         page.successNotification().should('exist');
         page.successNotification().contains('Your submission was successfully received.')
-        expect(true).to.equal(false); //Fail to check if pipeline fails
     });
 });
