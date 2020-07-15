@@ -3,7 +3,7 @@
  */
 
 import studentDebtCalculator from 'student-debt-calc';
-import { calcDebtAtGrad, calcMonthlyPayment } from './debt-utils.js';
+import { calcInterestAtGrad, calcMonthlyPayment } from './debt-utils.js';
 import { getConstantsValue, getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { constantsModel } from '../models/constants-model.js';
 import { financialModel } from '../models/financial-model.js';
@@ -11,6 +11,71 @@ import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/upda
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
+
+/**
+ * Calculate direct unsubsidized federal loan total. This involves calculating a different
+ * amount borrowed each year.
+ * @param {number} directSub - The amount of DIRECT subsidized borrowed the first year
+ * @param {number} directUnsub - The amount of DIRECT unsubsidized borrowed the first year
+ * @param {number} rateUnsub - The interest rate as a decimal
+ * @param {number} programLength - Length of the program in years
+ * @returns {object} An object containing the calculated debt values
+ */
+function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLength ) {
+  const level = getStateValue( 'programLevel' );
+  const dependency = getStateValue( 'programStudentType' );
+  let percentSub = 1;
+  let percentUnsub = 1;
+  let subPrincipal = 0;
+  let unsubPrincipal = 0;
+  let unsubInterest = 0;
+  const subCaps = getConstantsValue( 'subCaps' );
+  let totalCaps = {};
+
+  if ( level === 'undergrad' && dependency === 'dependent' ) {
+    totalCaps = getConstantsValue( 'totalCaps' );
+  } else if ( level === 'undergrad' && dependency === 'independent' ) {
+    totalCaps = getConstantsValue( 'totalIndepCaps' );
+  } else if ( level === 'graduate' ) {
+    const gradCap = getConstantsValue( 'unsubsidizedCapGrad' );
+    totalCaps = {
+      yearOne: gradCap,
+      yearTwo: gradCap,
+      yearThree: gradCap
+    };
+  }
+
+  // Determine percent of borrowing versus caps
+  percentSub = directSub / subCaps.yearOne;
+  percentUnsub = directUnsub / ( totalCaps.yearOne - directSub );
+
+  // Iterate through each year of the program
+  for ( let x = 0; x < programLength; x++ ) {
+    if ( x === 0 ) {
+      subPrincipal += directSub;
+      unsubPrincipal += directUnsub;
+      unsubInterest += directUnsub * rateUnsub;
+    } else if ( x === 1 ) {
+      const subAmount = percentSub * subCaps.yearTwo;
+      const unsubAmount = percentUnsub * ( totalCaps.yearTwo - subAmount );
+      subPrincipal += subAmount;
+      unsubPrincipal += unsubAmount;
+      unsubInterest += unsubAmount * rateUnsub;
+    } else {
+      const subAmount = percentSub * subCaps.yearThree;
+      const unsubAmount = percentUnsub * ( totalCaps.yearThree - subAmount );
+      subPrincipal += subAmount;
+      unsubPrincipal += unsubAmount;
+      unsubInterest += unsubAmount * rateUnsub;
+    }
+  }
+
+  return {
+    subPrincipal: subPrincipal,
+    unsubPrincipal: unsubPrincipal,
+    unsubInterest: unsubInterest
+  };
+}
 
 /**
  * Calculate debts based on financial values
@@ -31,72 +96,87 @@ function debtCalculator() {
     twentyFiveYearMonthly: 0,
     twentyFiveYearInterest: 0
   };
+  const interest = {
+    totalAtGrad: 0
+  };
+  let totalBorrowing = 0;
 
-  // Find federal debts at graduation
-  fedLoans.forEach( key => {
-    // DIRECT Subsidized loans are special
-    let val = 0;
-    if ( key === 'directSub' ) {
-      val = fin['fedLoan_' + key] * fin.other_programLength;
-    } else {
-      val = calcDebtAtGrad( fin['fedLoan_' + key],
-        fin['rate_' + key], fin.other_programLength, 6 );
-    }
+  // Find federal DIRECT debts at graduation
+  const fedLoanTotals = calculateDirectLoanDebt(
+    fin.fedLoan_directSub,
+    fin.fedLoan_directUnsub,
+    fin.rate_directUnsub,
+    fin.other_programLength
+  );
 
-    if ( isNaN( val ) ) {
-      val = 0;
-    }
-    debts[key] = val;
-  } );
+  debts.directSub = fedLoanTotals.subPrincipal;
+  debts.directUnsub = fedLoanTotals.unsubPrincipal + fedLoanTotals.unsubInterest;
+  interest.directSub = 0;
+  interest.directUnsub = fedLoanTotals.unsubInterest;
+  totalBorrowing += fedLoanTotals.subPrincipal + fedLoanTotals.unsubPrincipal;
 
+  // Calculate Plus loan debts
   plusLoans.forEach( key => {
-    let val = calcDebtAtGrad(
+    let principal = fin['plusLoan_' + key] * fin.other_programLength;
+    let int = calcInterestAtGrad(
       fin['plusLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength,
-      6 );
+      fin.other_programLength );
 
-    if ( isNaN( val ) ) {
-      val = 0;
+    if ( isNaN( int ) ) {
+      int = 0;
     }
-    debts[key] = val;
+
+    // if parentPlus loan, check if debt should be included
+    if ( key === 'parentPlus' && !getStateValue( 'includeParentPlus' ) ) {
+      principal = 0;
+      int = 0;
+    }
+
+    totalBorrowing += principal;
+    debts[key] = int + principal;
+    interest[key] = int;
   } );
 
   // calculate debts of other loans
 
   publicLoans.forEach( key => {
-    let val = calcDebtAtGrad(
+    const principal = fin['publicLoan_' + key] * fin.other_programLength;
+    let int = calcInterestAtGrad(
       fin['publicLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength,
-      0
-    );
+      fin.other_programLength );
 
-    if ( isNaN( val ) ) {
-      val = 0;
+    if ( isNaN( int ) ) {
+      int = 0;
     }
-    debts[key] = val;
 
+    totalBorrowing += principal;
+    debts[key] = int + principal;
+    interest[key] = int;
   } );
 
   privateLoans.forEach( key => {
-    let val = calcDebtAtGrad(
+    const principal = fin['privLoan_' + key] * fin.other_programLength;
+    let int = calcInterestAtGrad(
       fin['privLoan_' + key],
       fin['rate_' + key],
-      fin.other_programLength,
-      0
-    );
+      fin.other_programLength );
 
-    if ( isNaN( val ) ) {
-      val = 0;
+    if ( isNaN( int ) ) {
+      int = 0;
     }
-    debts[key] = val;
 
+    totalBorrowing += principal;
+    debts[key] = int + principal;
+    interest[key] = int;
   } );
 
-  // 10 year term calculations.
   allLoans.forEach( key => {
+    interest.totalAtGrad += interest[key];
     debts.totalAtGrad += debts[key];
+
+    // 10 year term calculations
     let tenYearMonthly = calcMonthlyPayment(
       debts[key],
       fin['rate_' + key],
@@ -132,22 +212,16 @@ function debtCalculator() {
 
   } );
 
+  debts.programInterest = interest.totalAtGrad;
   debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad;
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;
   debts.repayWorkWeeks = debts.repayHours / 40;
-  debts.programInterest = debts.totalAtGrad - fin.total_borrowingAtGrad;
 
-  // TODO: Differentiate grads versus undergrads
-
-  // TODO: Apply the changing-over-time DIRECT maxes to DIRECT borrowing
-
-  // TODO: Toggle for parentPlus debt
-
+  fin.total_borrowingAtGrad = totalBorrowing;
   for ( const key in debts ) {
     fin['debt_' + key] = debts[key];
   }
-
 }
 
 

@@ -5,6 +5,7 @@
 import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
+import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
@@ -71,12 +72,12 @@ const _urlParamsToModelVars = {
 
   'pers': 'financialModel.savings_personal',
   'fams': 'financialModel.savings_family',
-  '529p': 'financialModel.savings_529',
+  '529p': 'financialModel.savings_collegeSavings',
 
   'offj': 'financialModel.income_jobOffCampus',
   'onj': 'financialModel.income_jobOnCampus',
   'eta': 'financialModel.income_employerAssist',
-  'othf': 'financialModel.income_other',
+  'othf': 'financialModel.income_otherFunding',
 
   'pvl1': 'financialModel.privLoan_privLoan1',
   'pvr1': 'financialModel.privloan_privLoanRate1',
@@ -186,6 +187,13 @@ const updateSchoolData = function( iped ) {
           }
         }
 
+        // Take only the top 3 programs
+        const topThreeArr = schoolModel.values.programsPopular.slice( 0, 3 );
+        schoolModel.values.programsTopThree = topThreeArr.join( ', ' );
+
+        // add the full state name to the schoolModel
+        schoolModel.values.stateName = getStateByCode( schoolModel.values.state );
+
         // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
 
@@ -196,7 +204,7 @@ const updateSchoolData = function( iped ) {
       } )
       .catch( function( error ) {
         reject( error );
-        // console.log( 'An error occurred!', error );
+        console.log( 'An error occurred when accessing school data for ' + iped, error );
       } );
   } );
 };
@@ -246,9 +254,13 @@ function updateModelsFromQueryString( queryObj ) {
       const match = _urlParamsToModelVars[key].split( '.' );
       modelMatch[match[0]]( match[1], queryObj[key], false );
 
+      // plus can mean either type of loan (they are mutually exclusive)
+      if ( key === 'plus' ) {
+        financialModel.setValue( 'plusLoan_gradPlus', stringToNum( queryObj[key] ), false );
+      }
       // Copy programLength into the financial model
       if ( key === 'lenp' ) {
-        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key], false ) );
+        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key] ), false );
       }
     }
   }

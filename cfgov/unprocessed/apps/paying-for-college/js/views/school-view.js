@@ -1,6 +1,7 @@
 /* schoolView specifically covers the school search and associated fields, such as
    program length and living situation. */
 import { closest } from '../../../../js/modules/util/dom-traverse';
+import { decimalToPercentString } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { updateFinancial, updateSchoolData } from '../dispatchers/update-models.js';
@@ -52,7 +53,7 @@ const schoolView = {
     let html = '<ul>';
     for ( const key in obj ) {
       const school = obj[key];
-      html += '\n<li><button data-school_id="' + school.id + '"><strong>' + school.schoolname + '</strong>';
+      html += '\n<li><button role="button" data-school_id="' + school.id + '"><strong>' + school.schoolname + '</strong>';
       html += '<p><em>' + school.city + ', ' + school.state + '</em></p></button></li>';
     }
     html += '</li>';
@@ -141,6 +142,10 @@ const schoolView = {
         val = '';
       }
 
+      if ( elem.dataset.numberDisplay === 'percentage' ) {
+        val = decimalToPercentString( val, 0 );
+      }
+
       elem.innerText = val;
 
     } );
@@ -207,10 +212,12 @@ const schoolView = {
   },
 
   clickRadioButton: ( name, value ) => {
-    if ( value !== null && value !== false ) {
+    if ( name !== null && value !== false ) {
       const input = document.querySelector( 'INPUT[name="' + name + '"][value="' + value + '"]' );
-      const label = closest( input, '.m-form-field__radio' ).querySelector( 'LABEL' );
-      label.click();
+      if ( input !== null ) {
+        const label = closest( input, '.m-form-field__radio' ).querySelector( 'LABEL' );
+        label.click();
+      }
     }
   },
 
