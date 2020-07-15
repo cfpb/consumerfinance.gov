@@ -13,8 +13,8 @@ const getApi = function( url ) {
         resolve( resp );
       } )
       .catch( function( error ) {
+        console.log( 'An error occurred accessing ' + url, error );
         reject( new Error( error ) );
-        console.log( 'An error occurred!', error );
       } );
   } );
 };
@@ -32,7 +32,6 @@ const schoolSearch = function( searchTerm ) {
     return getApi( url );
   }
   return Promise.reject( new Error( 'Failure - search term too short' ) );
-
 };
 
 /**
