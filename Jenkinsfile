@@ -113,7 +113,6 @@ pipeline {
                     }
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
-                notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR ${env.CHANGE_URL} deployed by ${env.CHANGE_AUTHOR} via ${env.BUILD_URL} and available at https://${CFGOV_HOSTNAME}.")
             }
         }
         stage('Run Functional Tests') {
@@ -126,7 +125,6 @@ pipeline {
             steps {
                 script {
                     timeout(time: 15, unit: 'MINUTES') {
-                        // sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
                         sh "docker run -v ${WORKSPACE}/cypress:/app/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:4.10.0 npx cypress run -b chrome --headless"
                     }
                 }
@@ -135,6 +133,9 @@ pipeline {
     }
 
     post {
+        success {
+            notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR ${env.CHANGE_URL} deployed by ${env.CHANGE_AUTHOR} via ${env.BUILD_URL} and available at https://${CFGOV_HOSTNAME}.")
+        }
         unsuccessful {
             notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
         }
