@@ -28,6 +28,10 @@ const _urlParamsToModelVars = {
   'iqof': 'stateModel.impactOffer',
   'iqlo': 'stateModel.impactLoans',
 
+  'utm_source': 'stateModel.utmSource',
+  'utm_medium': 'stateModel.utm_medium',
+  'utm_campaign': 'stateModel.utm_campaign',
+
   'tuit': 'financialModel.dirCost_tuition',
   'hous': 'financialModel.dirCost_housing',
   'diro': 'financialModel.dirCost_other',
