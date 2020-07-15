@@ -29,38 +29,39 @@
     {{ page.what_students_will_do|richtext }}
     <div class="o-well u-mt45">
         <h2>Download activity</h2>
-            <h3 class="h5">Teacher guide</h3>
+        <h3 class="h5">Teacher guide</h3>
+        <p>
+            <a class="a-link a-link__icon" target="_blank" rel="noopener noreferrer" href="{{ page.activity_file.url }}">
+                <span class="a-link_text">{{ page.activity_file.title | striptags | safe }}</span>
+                <span class="a-icon">{{ svg_icon('download') }}</span>
+            </a>
+        </p>
+        {% if page.handout_file %}
+            <h3 class="h5">Student materials</h3>
             <p>
-                <a class="a-link a-link__icon" target="_blank" rel="noopener noreferrer" href="{{ page.activity_file.url }}">
-                    <span class="a-link_text">{{ page.activity_file.title | striptags | safe }}</span>
+                <a class="a-link a-link__icon" target="_blank" rel="noopener noreferrer" href="{{ page.handout_file.url }}">
+                    <span class="a-link_text">{{ page.handout_file.title | striptags | safe }}</span>
                     <span class="a-icon">{{ svg_icon('download') }}</span>
                 </a>
             </p>
-            {% if page.handout_file %}
-                <h3 class="h5">Student materials</h3>
-                <p>
-                    <a class="a-link a-link__icon" target="_blank" rel="noopener noreferrer" href="{{ page.handout_file.url }}">
-                        <span class="a-link_text">{{ page.handout_file.title | striptags | safe }}</span>
-                        <span class="a-icon">{{ svg_icon('download') }}</span>
-                    </a>
-                </p>
-            {% endif %}
-            {% if page.handout_file_2 %}
-                <p>
-                    <a class="a-link a-link__icon" target="_blank" rel="noopener noreferrer" href="{{ page.handout_file_2.url }}">
-                        <span class="a-link_text">{{ page.handout_file_2.title | striptags | safe }}</span>
-                        <span class="a-icon">{{ svg_icon('download') }}</span>
-                    </a>
-                </p>
-            {% endif %}
-            {% if page.handout_file_3 %}
-                <p>
-                    <a class="a-link a-link__icon" target="_blank" rel="noopener noreferrer" href="{{ page.handout_file_3.url }}">
-                        <span class="a-link_text">{{ page.handout_file_3.title | striptags | safe }}</span>
-                        <span class="a-icon">{{ svg_icon('download') }}</span>
-                    </a>
-                </p>
-            {% endif %}
+        {% endif %}
+        {% if page.handout_file_2 %}
+            <p>
+                <a class="a-link a-link__icon" target="_blank" rel="noopener noreferrer" href="{{ page.handout_file_2.url }}">
+                    <span class="a-link_text">{{ page.handout_file_2.title | striptags | safe }}</span>
+                    <span class="a-icon">{{ svg_icon('download') }}</span>
+                </a>
+            </p>
+        {% endif %}
+        {% if page.handout_file_3 %}
+            <p>
+                <a class="a-link a-link__icon" target="_blank" rel="noopener noreferrer" href="{{ page.handout_file_3.url }}">
+                    <span class="a-link_text">{{ page.handout_file_3.title | striptags | safe }}</span>
+                    <span class="a-icon">{{ svg_icon('download') }}</span>
+                </a>
+            </p>
+        {% endif %}
+        <p>Note: please remember to consider your students’ accommodations and special needs to ensure that all students are able to participate in a meaningful way.</p>
     </div>
     <div>
         <h2 class="u-mt45">Explore related resources</h2>
