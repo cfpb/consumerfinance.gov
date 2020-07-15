@@ -80,7 +80,7 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_activity_index_page_renders(self):
         # Arrange
-        if wagtail.VERSION < (2, 7):  # pragma: no cover
+        if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
             response = self.search_page.serve(my_request)
         else:
@@ -92,7 +92,7 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_activity_index_page_renders_with_query_parameters(self):
         # Arrange
-        if wagtail.VERSION < (2, 7):  # pragma: no cover
+        if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
             my_request.environ["QUERY_STRING"] = "q=&building_block=1"
             response = self.search_page.serve(my_request)
@@ -126,7 +126,7 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_search_index_page_handles_bad_query(self):
         # Arrange
-        if wagtail.VERSION < (2, 7):  # pragma: no cover
+        if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
             my_request.environ["QUERY_STRING"] = "q=voldemort"
             response = self.search_page.serve(my_request)
@@ -179,7 +179,7 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_get_topics_list_returns_correct_topic_list_for_parent(self):
         # Arrange
-        if wagtail.VERSION < (2, 7):  # pragma: no cover
+        if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
             my_request.environ["QUERY_STRING"] = "q=voldemort"
         else:
@@ -192,7 +192,7 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_get_topics_list_returns_correct_topic_list_no_parent(self):
         # Arrange
-        if wagtail.VERSION < (2, 7):  # pragma: no cover
+        if wagtail.VERSION < (2, 7):
             my_request = self.search_page.dummy_request()
             my_request.environ["QUERY_STRING"] = "q=voldemort"
         else:

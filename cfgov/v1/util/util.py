@@ -66,9 +66,9 @@ def get_secondary_nav_items(request, current_page):
             page.get_appropriate_siblings()
         )
 
-    if wagtail.VERSION < (2, 9):  # pragma: no cover
+    if wagtail.VERSION < (2, 9):
         site = request.site
-    else:
+    else:  # pragma: no cover
         site = Site.find_for_request(request)
 
     nav_items = []

@@ -118,7 +118,7 @@ class ExportFeedbackView(PermissionRequiredMixin, FormView):
     def form_valid(self, form):
         # TODO: In Django 2.1, use as_attachment=True and pass the filename
         # as an argument instead of manually specifying the content headers.
-        if django.VERSION > (2, 1):  # pragma: no cover
+        if django.VERSION > (2, 1):
             response = FileResponse(
                 form.generate_zipfile(),
                 as_attachment=True,

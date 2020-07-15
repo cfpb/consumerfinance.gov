@@ -8,7 +8,7 @@ from v1.email import send_password_reset_email
 from v1.models import Contact, PortalCategory, PortalTopic
 
 
-if wagtail.VERSION < (2, 8):  # pragma: no cover
+if wagtail.VERSION < (2, 8):
     from wagtail.core.models import Page
     admin.site.unregister(Page)
 
