@@ -38,7 +38,7 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=''):
     regexes = []
     for p in urlpatterns:
         if isinstance(p, URLPattern) or hasattr(p, '_get_callback'):
-            if django.VERSION < (2, 0):
+            if django.VERSION < (2, 0):  # pragma: no cover
                 regexes.append(base + p.regex.pattern)
             else:
                 regexes.append(base + p.pattern.regex.pattern)
@@ -46,7 +46,7 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=''):
               hasattr(p, 'url_patterns') or
               hasattr(p, '_get_url_patterns')):
             patterns = p.url_patterns
-            if django.VERSION < (2, 0):
+            if django.VERSION < (2, 0):  # pragma: no cover
                 regexes.extend(extract_regexes_from_urlpatterns(
                     patterns, base + p.regex.pattern))
             else:

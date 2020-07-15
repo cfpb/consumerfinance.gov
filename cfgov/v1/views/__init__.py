@@ -85,7 +85,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
 
         if form.is_valid():
             # Ensure the user-originating redirection url is safe.
-            if django.VERSION > (2, 0):
+            if django.VERSION > (2, 0):  # pragma: no cover
                 if not is_safe_url(
                     url=redirect_to, allowed_hosts=request.get_host()
                 ):

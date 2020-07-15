@@ -122,7 +122,7 @@ MIDDLEWARE = (
     "core.middleware.DeactivateTranslationsMiddleware",
 )
 
-if wagtail.VERSION < (2, 9):
+if wagtail.VERSION < (2, 9):  # pragma: no cover
     MIDDLEWARE += ("wagtail.core.middleware.SiteMiddleware",)
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)

@@ -56,7 +56,7 @@ class TestMetaImage(TestCase):
     def test_template_meta_image_no_images(self):
         """Template meta tags should fallback to standard social networks."""
         page = LearnPage(social_sharing_image=None)
-        if wagtail.VERSION < (2, 7):
+        if wagtail.VERSION < (2, 7):  # pragma: no cover
             response = page.serve(page.dummy_request())
         else:
             response = page.make_preview_request()
@@ -85,7 +85,7 @@ class TestMetaImage(TestCase):
         image_file = get_test_image_file(filename='foo.png')
         image = baker.make(CFGOVImage, file=image_file)
         page = LearnPage(social_sharing_image=image)
-        if wagtail.VERSION < (2, 7):
+        if wagtail.VERSION < (2, 7):  # pragma: no cover
             response = page.serve(page.dummy_request())
         else:
             response = page.make_preview_request()
