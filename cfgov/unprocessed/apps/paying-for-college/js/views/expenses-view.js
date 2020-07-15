@@ -38,6 +38,7 @@ const expensesView = {
 
   _handleRegionChange: function() {
     updateRegion( expensesView._regionSelect.value );
+    updateAffordingChart();
   },
 
   _addInputListeners: function() {
