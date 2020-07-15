@@ -130,7 +130,7 @@ pipeline {
                         sh label: "Run Cypress Tests" script: """
                             docker run -v cypress:/app/cypress \ 
                             -v cypress.json:/app/cypress -w /app \
-                            -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} 
+                            -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} \
                             -e CI=1 \
                             cypress/included:4.10.0 \
                             npx cypress run -b chrome --headless
