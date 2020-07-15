@@ -260,7 +260,6 @@ const financialModel = {
 
     updateState.byProperty( 'excessFunding',
       ( financialModel.values.total_excessFunding > 0 ).toString() );
-    console.log( 'ex', financialModel.values.total_excessFunding, ( financialModel.values.total_excessFunding > 0 ).toString() );
 
     updateState.byProperty( 'debtRuleViolation',
       ( financialModel.values.debt_totalAtGrad > financialModel.values.salary_annual ).toString() );
