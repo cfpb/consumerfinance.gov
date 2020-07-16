@@ -6,7 +6,10 @@ const chaiAsPromised = require( 'chai-as-promised' );
 chai.use( chaiAsPromised );
 
 Then( 'the page url should contain {string}',
-  urlComponent => expect( browser.getCurrentUrl() )
-    .to.eventually
-    .contain( urlComponent )
+  async function( urlComponent ) {
+    await browser.sleep( 500 );
+    return expect( browser.getCurrentUrl() )
+      .to.eventually
+      .contain( urlComponent )
+  }
 );
