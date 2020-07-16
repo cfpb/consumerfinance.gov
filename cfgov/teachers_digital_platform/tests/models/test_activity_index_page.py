@@ -76,7 +76,6 @@ class TestActivityIndexPageSearch(TestCase):
 
     def get_request(self, path='', data={}):
         request = self.factory.get(path, data=data)
-        request.site = self.site
         return request
 
     def test_activity_index_page_renders(self):
