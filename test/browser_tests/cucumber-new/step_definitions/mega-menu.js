@@ -27,62 +27,29 @@ Before( function() {
   };
 } );
 
-When( 'mouse moves from one link to another after a delay',
+When( 'mouse moves from one link to another',
   async function() {
     await browser.actions()
       .mouseMove( _dom.triggerFourthMenuItem ).perform();
-    await browser.sleep( 500 );
 
     return browser.actions()
       .mouseMove( _dom.triggerFifthMenuItem ).perform();
   }
 );
 
-Then( 'the mega-menu organism shouldn\'t show content',
-  function() {
+Then( 'the mega-menu organism should not show content', function() {
 
-    return expect( _dom.contentFifthMenuItem.isDisplayed() )
-      .to.eventually.equal( false );
-  }
-);
-
-Then( 'the mega-menu organism shouldn\'t show the first link immediately',
-  async function() {
-    function _modifyTransitionDuration( duration ) {
-      duration = duration || 'inherit';
-      var style = document.createElement( 'style' ); // eslint-disable-line no-var
-      style.type = 'text/css';
-      style.innerHTML = '* { transition-delay: ' + duration + ' !important; }';
-      document.body.appendChild( style );
-    }
-
-    await browser.executeScript( _modifyTransitionDuration, '750ms' );
-    await browser.actions().mouseMove( _dom.triggerFourthMenuItem ).perform();
-    await expect( _dom.contentFourthMenuItem.isDisplayed() )
-      .to.eventually.equal( false );
-
-    return browser.executeScript( _modifyTransitionDuration );
-  }
-);
-
-Then( /the mega-menu organism should show the first link after a delay/,
-  async function() {
-    await browser.actions().mouseMove( _dom.triggerFourthMenuItem ).perform();
-    await browser.sleep( 500 );
-
-    return expect( _dom.contentFourthMenuItem.isDisplayed() )
-      .to.eventually.equal( true );
-  }
-);
+  return expect( _dom.contentFifthMenuItem.isDisplayed() )
+    .to.eventually.equal( false );
+} );
 
 Then( 'should only show second link content', async function() {
   await EC.not( EC.elementToBeClickable( _dom.contentFourthMenuItem ) );
   await browser.sleep( 500 );
 
-  /* TODO: Investigate inconsistent test failure.
-     await expect( _dom.contentFourthMenuItem.isDisplayed() )
-     .to.eventually
-     .equal( false ); */
+
+  await expect( _dom.contentFourthMenuItem.isDisplayed() )
+    .to.eventually.equal( false );
 
   return expect( _dom.contentFourthMenuItem.isDisplayed() )
     .to.eventually.equal( false );
