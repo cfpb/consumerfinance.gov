@@ -51,6 +51,9 @@ function buildUrlQueryString() {
     'regs': stateValues.expensesRegion,
     'iqof': stateValues.impactOffer,
     'iqlo': stateValues.impactLoans,
+    'utm_source': stateValues.utmSource,
+    'utm_medium': stateValues.utm_medium,
+    'utm_campaign': stateValues.utm_campaign,
 
     'tuit': financialValues.dirCost_tuition,
     'hous': financialValues.dirCost_housing,
