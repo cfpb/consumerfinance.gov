@@ -12,7 +12,7 @@ services:
     command: npx cypress run -b chrome --headless
     working_dir: /app
     volumes:
-      - ./cypress:/app/cypress
+      - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
 networks:
   default:
