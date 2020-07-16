@@ -4,6 +4,8 @@ import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import wagtail
+
 import dj_database_url
 from unipath import DIRS, Path
 
@@ -116,10 +118,12 @@ MIDDLEWARE = (
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "flags.middleware.FlagConditionsMiddleware",
-    "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
 )
+
+if wagtail.VERSION < (2, 9):
+    MIDDLEWARE += ("wagtail.core.middleware.SiteMiddleware",)
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
 
