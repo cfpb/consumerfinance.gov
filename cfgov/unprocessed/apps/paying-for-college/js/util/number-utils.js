@@ -69,12 +69,12 @@ function enforceRange( n, min, max ) {
     return false;
   }
 
-  if ( n > max && max !== false ) {
+  if ( max !== false && n > max ) {
     n = max;
     error = 'max';
   }
 
-  if ( n < min && min !== false ) {
+  if ( min !== false && n < min ) {
     n = min;
     error = 'min';
   }
