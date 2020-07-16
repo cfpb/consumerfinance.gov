@@ -1,20 +1,22 @@
 /**
- * calcDebtAtGrad - Calculate debt at end of program length (graduation)
+ * calcInterestAtGrad - Calculate interest at end of program length (graduation)
  * @param {Number} amount - Amount of loan per year
  * @param {Number} rate - Interest rate (as decimal)
  * @param {Number} programLength - Program length in years
- * @param {Number} deferPeriod - Deferral period, in months
  * @returns {Number} total debt at end of programLength
  */
-function calcDebtAtGrad( amount, rate, programLength, deferPeriod ) {
+function calcInterestAtGrad( amount, rate, programLength ) {
+  let interest = 0;
 
-  const total = amount * rate / 12 *
-    ( ( programLength * ( programLength + 1 ) / 2 *
-    12 + programLength * deferPeriod ) ) +
-    amount * programLength;
+  if ( rate === 0 ) {
+    return 0;
+  }
+  for ( let x = programLength; x > 0; x-- ) {
+    interest += amount * rate * x;
+  }
 
-  return total;
 
+  return interest;
 }
 
 /**
@@ -38,6 +40,6 @@ function calcMonthlyPayment( debt, rate, term ) {
 }
 
 export {
-  calcDebtAtGrad,
+  calcInterestAtGrad,
   calcMonthlyPayment
 };

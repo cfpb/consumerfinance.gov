@@ -51,6 +51,9 @@ function buildUrlQueryString() {
     'regs': stateValues.expensesRegion,
     'iqof': stateValues.impactOffer,
     'iqlo': stateValues.impactLoans,
+    'utm_source': stateValues.utmSource,
+    'utm_medium': stateValues.utm_medium,
+    'utm_campaign': stateValues.utm_campaign,
 
     'tuit': financialValues.dirCost_tuition,
     'hous': financialValues.dirCost_housing,
@@ -96,7 +99,7 @@ function buildUrlQueryString() {
 
     'pers': financialValues.savings_personal,
     'fams': financialValues.savings_family,
-    '529p': financialValues.savings_529,
+    '529p': financialValues.savings_collegeSavings,
 
     'offj': financialValues.income_jobOffCampus,
     'onj': financialValues.income_jobOnCampus,
@@ -107,7 +110,7 @@ function buildUrlQueryString() {
     'pvr1': financialValues.privloan_privLoanRate1,
     'pvf1': financialValues.privloan_privLoanFee1,
 
-    'plus': financialValues.plusLoan_gradPlus
+    'plus': financialValues.plusLoan_parentPlus
   };
 
   const expensesVariables = {
@@ -124,7 +127,7 @@ function buildUrlQueryString() {
     dbtx: expensesValues.item_currentDebt
   };
 
-  if ( stateValues.program_type === 'graduate' ) {
+  if ( stateValues.programLevel === 'graduate' ) {
     variables.plus = financialValues.plusLoan_gradPlus;
   }
 
