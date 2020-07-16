@@ -15,7 +15,9 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import hooks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable, Page, PageManager, PageQuerySet
+from wagtail.core.models import (
+    Orderable, Page, PageManager, PageQuerySet, Site
+)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
@@ -200,8 +202,9 @@ class CFGOVPage(Page):
 
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors().specific()
+        site = Site.find_for_request(request)
         for i, ancestor in enumerate(ancestors):
-            if ancestor.is_child_of(request.site.root_page):
+            if ancestor.is_child_of(site.root_page):
                 if ancestor.specific.force_breadcrumbs:
                     return ancestors[i:]
                 return ancestors[i + 1:]

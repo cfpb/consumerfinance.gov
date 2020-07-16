@@ -11,7 +11,6 @@ class BlogPageTests(TestCase):
         page = BlogPage(title='test', slug='test')
 
         request = RequestFactory().get('/')
-        request.site = Site.objects.first()
         response = page.serve(request)
 
         self.assertNotContains(response, 'RSS feed')
