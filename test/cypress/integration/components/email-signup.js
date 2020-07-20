@@ -1,4 +1,4 @@
-import EmailSignup from '../../components/email_signup';
+import EmailSignup from '../../components/email-signup';
 
 const page = new EmailSignup();
 
