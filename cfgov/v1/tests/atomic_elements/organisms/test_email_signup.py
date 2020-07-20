@@ -1,7 +1,6 @@
 from django.test import TestCase
 
 from scripts import _atomic_helpers as atomic
-
 from v1.models import BlogPage, LearnPage, NewsroomPage, SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_changes, publish_page
 from v1.util.migrations import set_stream_data

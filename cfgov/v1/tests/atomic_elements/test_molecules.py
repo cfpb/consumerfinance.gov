@@ -4,7 +4,6 @@ from django.test import SimpleTestCase, TestCase
 from wagtail.core.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
-
 from v1.atomic_elements.molecules import (
     ContactEmail, ContactHyperlink, RSSFeed, TextIntroduction
 )
@@ -33,25 +32,6 @@ class MoleculesTestCase(TestCase):
         publish_page(child=bfp)
         response = self.client.get('/browse-filterable-page/')
         self.assertContains(response, 'this is an intro')
-
-    def test_featured_content(self):
-        """Featured content value correctly displays on a Browse Page"""
-        bp = BrowsePage(
-            title='Browse Page',
-            slug='browse-page',
-        )
-        bp.header = StreamValue(bp.header.stream_block,
-        [
-            atomic.featured_content
-        ], True)
-        bp.content = StreamValue(bp.content.stream_block,
-        [
-            atomic.expandable,
-            atomic.expandable_group
-        ], True)
-        publish_page(child=bp)
-        response = self.client.get('/browse-page/')
-        self.assertContains(response, 'this is a featured content body')
 
     def test_content_with_anchor(self):
         """Content with anchor value correctly displays on a Learn Page"""

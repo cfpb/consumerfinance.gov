@@ -1,4 +1,4 @@
-from imp import reload
+from importlib import reload
 
 import django
 from django.test import RequestFactory, TestCase, override_settings
@@ -9,17 +9,18 @@ from cfgov import urls
 
 
 try:
-    from django.urls import re_path, URLPattern, URLResolver
+    from django.urls import URLPattern, URLResolver, re_path
 except ImportError:
     from django.conf.urls import url as re_path
-    from django.core.urlresolvers import RegexURLPattern as URLPattern
-    from django.core.urlresolvers import RegexURLResolver as URLResolver
+    from django.core.urlresolvers import (
+        RegexURLPattern as URLPattern, RegexURLResolver as URLResolver
+    )
 
 
-# Whitelist is a list of *strings* that match the beginning of a regex string.
+# Allowlist is a list of *strings* that match the beginning of a regex string.
 # For example, ''^admin' will match any urlpattern regex that starts with
 # '^admin'.
-ADMIN_URL_WHITELIST = [
+ADMIN_URL_ALLOWLIST = [
     '^admin/',
     '^csp-report/',
     '^d/admin/',
@@ -71,13 +72,13 @@ class AdminURLSTestCase(TestCase):
 
         self.admin_urls = set(with_admin) - set(without_admin)
 
-    def test_admin_url_whitelist(self):
-        """ Test to ensure admin urls match our whitelist """
+    def test_admin_url_allowlist(self):
+        """ Test to ensure admin urls match our allowlist """
         non_matching_urls = [u for u in self.admin_urls
                              if not any(
-                                 u.startswith(w) for w in ADMIN_URL_WHITELIST)]
+                                 u.startswith(w) for w in ADMIN_URL_ALLOWLIST)]
         self.assertEqual(len(non_matching_urls), 0,
-                         msg="Non-whitelisted admin URLs:\n\t{}\n".format(
+                         msg="Non-allowlisted admin URLs:\n\t{}\n".format(
                              ',\n\t'.join(non_matching_urls)))
 
     def tearDown(self):
@@ -90,7 +91,7 @@ def dummy_external_site_view(request):
 
 
 urlpatterns = [
-    # Needed for rendering of base template that calls reverse('external-site')
+    # Needed for rendering of base template that calls reverse("external-site")
     re_path(r'^external-site/$', dummy_external_site_view,
             name='external-site'),
 
@@ -133,10 +134,76 @@ class HandleErrorTestCase(TestCase):
 
     @mock.patch('cfgov.urls.render')
     def test_handle_error(self, mock_render):
-        request = self.factory.get('/test')
+        request = self.factory.get('/Test')
         urls.handle_error(404, request)
         mock_render.assert_called_with(
             request, '404.html', context={'request': request}, status=404
+        )
+
+    @mock.patch('cfgov.urls.render')
+    def test_handle_404_error(self, mock_render):
+        request = self.factory.get('/test')
+        urls.handle_404_error(404, request)
+        mock_render.assert_called_with(
+            request, '404.html', context={'request': request}, status=404
+        )
+
+    def test_handle_404_error_does_not_redirect_good_urls(self):
+        # good = already all lowercase with no extraneous characters
+        request = self.factory.get('/test')
+        response = urls.handle_404_error(404, request)
+        self.assertEqual(response.status_code, 404)
+
+    def test_handle_404_error_lowercases_mixed_case_urls(self):
+        request = self.factory.get('/TEst')
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
+    def test_handle_404_error_strips_one_extraneous_char(self):
+        request = self.factory.get('/test)')
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
+    def test_handle_404_error_strips_two_extraneous_chars(self):
+        request = self.factory.get('/test )')
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
+    def test_handle_404_error_strips_all_extraneous_chars(self):
+        request = self.factory.get(
+            '/test ~!@#$%^&*()-_–—=+[]{}\\|;:\'‘’"“”,.…<>?'
+        )
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
+    def test_handle_404_error_lowercases_and_strips_extraneous_chars(self):
+        request = self.factory.get('/TEst )')
+        response = urls.handle_404_error(404, request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
         )
 
 

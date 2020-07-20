@@ -72,7 +72,6 @@ class NewRelicAlertViolations(object):
             'View incidents: {link}'
         ).format(
             product=violation['entity']['product'],
-            type=violation['entity']['type'],
             label=violation['label'],
             name=violation['entity']['name'],
             id=violation['id'],

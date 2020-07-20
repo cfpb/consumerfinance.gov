@@ -3,16 +3,11 @@ from urllib.parse import parse_qs, urlencode, urlparse
 
 from django.core.signing import Signer
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 from bs4 import BeautifulSoup
 
 from core.templatetags.svg_icon import svg_icon
-
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 
 NON_GOV_LINKS = re.compile(
@@ -29,17 +24,25 @@ LINK_ICON_CLASSES = ['a-link', 'a-link__icon']
 
 LINK_ICON_TEXT_CLASSES = ['a-link_text']
 
-# Regular expression to match <a> links in HTML strings
-A_TAG = re.compile(
-    # Match an <a containing any attributes
-    r'<a [^>]*?>'
-    # And match everything inside before the closing </a>
-    r'.+?(?=</a>)'
-    # Then match the closing </a>
-    r'</a>'
+# Regular expression format string that will match any tag <tag_name> (that is
+# not self-closing) and group its contents.
+TAG_RE = (
+    # Match an <tag_name[ attributes]>. If tag_name is not followed by a space
+    # and any characters except >, it must be followed by >.
+    r'<{tag_name}(?:\s+[^>]*?|)>'
+    # And match everything inside before the closing </tag>
+    r'.+?(?=</{tag_name}>)'
+    # Then match the closing </tag>
+    r'</{tag_name}>'
     # Make '.' match new lines, ignore case
     r'(?s)(?i)'
 )
+
+# Match <body…>…</body>
+BODY_TAG_RE = re.compile(TAG_RE.format(tag_name="body"))
+
+# Match <a…>…</a>
+A_TAG_RE = re.compile(TAG_RE.format(tag_name="a"))
 
 # If a link contains these elements, it should *not* get an icon
 ICONLESS_LINK_CHILD_ELEMENTS = [
@@ -66,12 +69,12 @@ def signed_redirect(url):
     query_args = {'ext_url': url,
                   'signature': signature}
 
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def unsigned_redirect(url):
     query_args = {'ext_url': url}
-    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+    return ("{0}?{1}".format(reverse("external-site"), urlencode(query_args)))
 
 
 def extract_answers_from_request(request):
@@ -89,8 +92,14 @@ def format_file_size(bytecount, suffix='B'):
     return "{:.0f} {}{}".format(bytecount, 'T', suffix)
 
 
+def get_body_html(html):
+    body_match = BODY_TAG_RE.search(html)
+    if body_match is not None:
+        return body_match.group(0)
+
+
 def get_link_tags(html):
-    return A_TAG.findall(html)
+    return A_TAG_RE.findall(html)
 
 
 def add_link_markup(tag, request_path):

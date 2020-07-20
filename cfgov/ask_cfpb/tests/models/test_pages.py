@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 import datetime
-from html.parser import HTMLParser
 from unittest import mock
 
 from django.apps import apps
@@ -8,6 +6,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from django.utils import timezone, translation
 from haystack.models import SearchResult
 from haystack.query import SearchQuerySet
@@ -38,13 +37,6 @@ from v1.util.migrations import (
 )
 
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-
-
-html_parser = HTMLParser()
 now = timezone.now()
 
 
@@ -140,7 +132,8 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         with mock.patch("builtins.open", m, create=True):
             export_questions()
         self.assertEqual(mock_output.call_count, 1)
-        m.assert_called_once_with("/tmp/{}".format(slug), "w")
+        m.assert_called_once_with(
+            "/tmp/{}".format(slug), "w", encoding='windows-1252')
 
     @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
     def test_export_from_admin_post(self, mock_output):
@@ -788,8 +781,8 @@ class AnswerPageTestCase(TestCase):
         self.assertTrue(get_answer_preview(page).endswith("word word ..."))
 
     def test_english_page_context(self):
-        from v1.models.snippets import ReusableText
         from ask_cfpb.models.pages import get_reusable_text_snippet
+        from v1.models.snippets import ReusableText
 
         rt = ReusableText(title="About us (For consumers)")
         rt.save()
@@ -1008,7 +1001,6 @@ class AnswerPageTestCase(TestCase):
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
         mock_request = HttpRequest()
-        mock_request.site = mock_site
         landing_page = self.english_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 0)
@@ -1021,7 +1013,6 @@ class AnswerPageTestCase(TestCase):
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
         mock_request = HttpRequest()
-        mock_request.site = mock_site
         landing_page = self.english_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 1)
@@ -1037,7 +1028,6 @@ class AnswerPageTestCase(TestCase):
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
         mock_request = HttpRequest()
-        mock_request.site = mock_site
         landing_page = self.spanish_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 1)
@@ -1054,7 +1044,6 @@ class AnswerPageTestCase(TestCase):
         mock_site = mock.Mock()
         mock_site.hostname = "localhost"
         mock_request = HttpRequest()
-        mock_request.site = mock_site
         landing_page = self.english_parent_page
         test_context = landing_page.get_context(mock_request)
         self.assertEqual(len(test_context["portal_cards"]), 0)
@@ -1135,15 +1124,3 @@ class AnswerPageTestCase(TestCase):
         request = HttpRequest()
         request.GET.update({"page": "<script>Boo</script>"})
         self.assertEqual(validate_page_number(request, paginator), 1)
-
-    def test_schema_html_does_not_appear_when_flag_is_off(self):
-        with override_settings(FLAGS={"HOW_TO_SCHEMA": [("boolean", False)]}):
-            response = self.client.get(self.page1.url)
-            self.assertNotContains(
-                response, 'itemtype="http://schema.org/HowTo"'
-            )
-
-    def test_schema_html_appears_when_flag_is_on(self):
-        with override_settings(FLAGS={"HOW_TO_SCHEMA": [("boolean", True)]}):
-            response = self.client.get(self.page1.url)
-            self.assertContains(response, 'itemtype="http://schema.org/HowTo"')

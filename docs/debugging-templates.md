@@ -57,3 +57,18 @@ register_template_debug('myapp', 'link', 'myapp/link.html', link_test_cases)
 
 Once logged into the Wagtail admin, the template debug view for this module
 will now be available at the `/admin/template_debug/myapp/link/` URL.
+
+## Including component JavaScript
+
+Associated JavaScript required by the module can be included in the template
+debug view by listing it in the `register_template_debug` call:
+
+```py
+register_template_debug(
+    'myapp',
+    'link',
+    'myapp/link.html',
+    link_test_cases
+    extra_js=['link.js']
+)
+```

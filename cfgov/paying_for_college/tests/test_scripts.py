@@ -1,7 +1,6 @@
 import copy
 import datetime
 import json
-import os
 import unittest
 from decimal import Decimal
 from unittest import mock
@@ -20,7 +19,7 @@ from paying_for_college.disclosures.scripts import (
     tag_settlement_schools, update_colleges, update_ipeds
 )
 from paying_for_college.disclosures.scripts.notification_tester import (
-    BPI_PROD, EDMC_DEV, ERRORS, OID, send_test_notification
+    send_test_notifications
 )
 from paying_for_college.models import (
     FAKE_SCHOOL_PK, Alias, Notification, Program, School
@@ -28,22 +27,17 @@ from paying_for_college.models import (
 
 
 COLLEGE_ROOT = "{}/paying_for_college".format(settings.PROJECT_ROOT)
-os.path.join(os.path.dirname(__file__), '../..')
-MOCK_YAML = """\
-completion_rate:\n\
-  min: 0\n\
-  max: 1\n\
-  median: 0.4379\n\
-  average_range: [.3180, .5236]\n
-"""
 
 
 class ProgamDataTest(django.test.TestCase):
     """Test the program data checks and creation."""
 
-    fixtures = ['fake_school.json']
+    fixtures = ['fake_school.json', 'test_fixture.json']
 
     def setUp(self):
+        stdout_patch = mock.patch('sys.stdout')
+        stdout_patch.start()
+        self.addCleanup(stdout_patch.stop)
         self.mock_program_data = {
             'earnings': {
                 'median_earnings': 3000
@@ -106,6 +100,16 @@ class ProgamDataTest(django.test.TestCase):
         self.assertTrue(Program.objects.filter(
             institution=self.school,
             program_code='5101-5').exists())
+
+    @patch('paying_for_college.disclosures.scripts.update_colleges.get_scorecard_data')  # noqa
+    def test_store_programs(self, mock_get_data):
+        api_data = {'latest.programs.cip_4_digit': [self.mock_program_data]}
+        mock_get_data.return_value = api_data
+        test_pk = 100636
+        program_count = Program.objects.count()
+        (NO_DATA, endmsg) = update_colleges.update(
+            single_school=test_pk, store_programs=True)
+        self.assertEqual(Program.objects.count(), program_count + 1)
 
 
 class TaggingTests(django.test.TestCase):
@@ -210,17 +214,42 @@ class TestScripts(django.test.TestCase):
             patcher.start()
             self.addCleanup(patcher.stop)
 
-    def test_process_cohorts(self):
+    def test_get_grad_level(self):
+        """Make sure higher-degree schools join the grad-degree '4' cohort."""
+        level_2_school = School.objects.get(pk=100636)
+        level_4_school = School.objects.get(pk=243197)
+        level_5_school = School.objects.get(pk=243197)
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_2_school), '2'
+        )
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_4_school), '4'
+        )
+        self.assertEqual(
+            process_cohorts.get_grad_level(level_5_school), '4'
+        )
+
+    def test_school_with_no_degrees_highest(self):
+        """A school with no degrees_highest value should not be in a cohort."""
+        school_pk = 155555
+        self.assertEqual(School.objects.get(pk=school_pk).degrees_highest, '')
+        process_cohorts.run(single_school=school_pk)
+        self.assertIs(
+            School.objects.get(pk=school_pk).cohort_ranking_by_highest_degree,
+            None
+        )
+
+    def test_build_base_cohorts(self):
         school = School.objects.get(pk=100654)
-        base_query = process_cohorts.build_cohorts()
-        cohort = process_cohorts.STATE.get(school.state)
+        base_query = process_cohorts.build_base_cohorts()
+        cohort = process_cohorts.DEGREE_COHORTS.get(school.degrees_highest)
         metric = 'grad_rate'
         self.assertEqual(
             base_query.count(), 6)
         self.assertEqual(
             process_cohorts.rank_by_metric(school, cohort, metric).get(
                 'percentile_rank'),
-            100
+            80
         )
 
     def test_percentile_rank_blank_array(self):
@@ -624,25 +653,13 @@ class TestScripts(django.test.TestCase):
         mock_return.status_code = 200
         mock_return.content = 'mock content'
         mock_post.return_value = mock_return
-        resp1 = send_test_notification(EDMC_DEV, OID, ERRORS)
+        resp1 = send_test_notifications()
         self.assertTrue('OK' in resp1)
-        self.assertTrue(mock_post.call_count == 1)
-        mock_post.side_effect = requests.exceptions.ConnectTimeout
-        resp2 = send_test_notification(EDMC_DEV, OID, ERRORS)
-        self.assertTrue('timed' in resp2)
         self.assertTrue(mock_post.call_count == 2)
-
-    @patch(
-        'paying_for_college.disclosures.scripts.'
-        'notification_tester.requests.post')
-    def test_blank_notification_response(self, mock_post):
-        mock_return = mock.Mock()
-        mock_return.ok = True
-        mock_return.content = b''
-        mock_post.return_value = mock_return
-        result = send_test_notification(BPI_PROD, OID, ERRORS)
-        self.assertIs(result, None)
-        self.assertTrue(mock_post.call_count == 1)
+        mock_post.side_effect = requests.exceptions.ConnectTimeout
+        resp2 = send_test_notifications(url='example.com')
+        self.assertTrue('timed out' in resp2)
+        self.assertTrue(mock_post.call_count == 3)
 
     def test_calculate_percent(self):
         percent = api_utils.calculate_group_percent(100, 900)
@@ -668,55 +685,10 @@ class TestScripts(django.test.TestCase):
              len(api_utils.PROGRAM_FIELDS))
         )
 
-    @patch('paying_for_college.disclosures.scripts.nat_stats.requests.get')
-    def test_bad_nat_stats_request(self, mock_requests):
-        mock_requests.side_effect = requests.exceptions.ConnectionError
-        self.assertEqual(nat_stats.get_stats_yaml(), {})
-
-    @patch('paying_for_college.disclosures.scripts.nat_stats.yaml.safe_load')
-    @patch('paying_for_college.disclosures.scripts.nat_stats.requests.get')
-    def test_nat_stats_request_returns_none(self, mock_requests, mock_yaml):
-        mock_yaml.side_effect = AttributeError
-        self.assertEqual(nat_stats.get_stats_yaml(), {})
-
-    @patch('paying_for_college.disclosures.scripts.nat_stats.requests.get')
-    def test_get_stats_yaml(self, mock_requests):
-        mock_response = mock.Mock()
-        mock_response.text = MOCK_YAML
-        mock_response.ok = True
-        mock_requests.return_value = mock_response
-        data = nat_stats.get_stats_yaml()
-        self.assertTrue(mock_requests.call_count == 1)
-        self.assertTrue(data['completion_rate']['max'] == 1)
-        mock_response.ok = False
-        mock_requests.return_value = mock_response
-        data = nat_stats.get_stats_yaml()
-        self.assertTrue(mock_requests.call_count == 2)
-        self.assertTrue(data == {})
-        mock_requests.side_effect = requests.exceptions.ConnectTimeout
-        data = nat_stats.get_stats_yaml()
-        self.assertTrue(data == {})
-
-    @patch('paying_for_college.disclosures.scripts.nat_stats.get_stats_yaml')
-    def test_update_national_stats_file(self, mock_get_yaml):
-        mock_get_yaml.return_value = {}
-        update_try = nat_stats.update_national_stats_file()
-        self.assertTrue('Could not' in update_try)
-
-    @patch(
-        'paying_for_college.disclosures.scripts.nat_stats'
-        '.update_national_stats_file')
-    def test_get_national_stats(self, mock_update):
-        mock_update.return_value = 'OK'
-        data = nat_stats.get_national_stats()
-        self.assertTrue(mock_update.call_count == 0)
-        self.assertTrue(data['completion_rate']['max'] == 1)
-        data2 = nat_stats.get_national_stats(update=True)
-        self.assertTrue(mock_update.call_count == 1)
-        self.assertTrue(data2['completion_rate']['max'] == 1)
-        mock_update.return_value = 'Could not'
-        data = nat_stats.get_national_stats(update=True)
-        self.assertTrue("retention_rate_4" in data)
+    def test_school_has_no_control_value(self):
+        process_cohorts.run(single_school=100830)
+        school = School.objects.get(pk=100830)
+        self.assertEqual(school.cohort_ranking_by_control, {'repay_3yr': None})
 
     def test_get_prepped_stats(self):
         stats = nat_stats.get_prepped_stats()

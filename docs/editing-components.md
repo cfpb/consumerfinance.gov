@@ -3,7 +3,7 @@
 cfgov-refresh implements a number of components
 that editors can choose from when building a page,
 for example: Heroes, Expandable Groups, or Info Unit Groups. The
-[CFPB Design Manual](https://cfpb.github.io/design-manual/page-components/page-components.html)
+[CFPB Design System](https://cfpb.github.io/design-system/components/)
 describes the design and intended usage of many of these components.
 
 In Wagtail parlance, these are called

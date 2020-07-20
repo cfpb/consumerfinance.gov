@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 
 from django.test import TestCase
 
@@ -24,7 +23,9 @@ class TestMattermostAlert(TestCase):
         MattermostAlert(credentials, icon_url=icon).post(text)
         mock.assert_called_once_with(
             webhook_url,
-            data=json.dumps({'text': text,
-                             'username': username,
-                             'icon_url': icon})
+            json={
+                'text': text,
+                'username': username,
+                'icon_url': icon
+            }
         )

@@ -34,7 +34,7 @@
 {%- set name = value.name if value.name else id -%}
 {%- set checked = 'checked' if value.selected else '' -%}
 
-<{{ el }} class="m-form-field m-form-field__radio {{ value.class }}">
+<{{ el }} class="m-form-field m-form-field__radio {{ value.class if value.class else '' }}">
     <input class="a-radio"
            type="radio"
            value="{{ val }}"

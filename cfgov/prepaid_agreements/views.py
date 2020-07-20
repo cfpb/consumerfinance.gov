@@ -154,7 +154,7 @@ def get_detail_page_breadcrumb(request):
     """
     http_referer = request.META.get('HTTP_REFERER', '')
     referrer = urlparse(http_referer)
-    search_page_path = reverse('prepaid_agreements:index')
+    search_page_path = reverse("prepaid_agreements:index")
     if referrer.query and referrer.path == search_page_path:
         return http_referer
     else:

@@ -213,8 +213,10 @@ export function clickHandler( isPerCapita, t ) {
   capText += isPerCapita ? 'Per%201000%20pop.' : 'None';
   const stateUrl = 'search/?dateRange=3y&' + capText +
     '&state=' + stateAbbr;
-  const loc = location.protocol + '//' + location.host + location.pathname;
-  location.assign( loc + stateUrl );
+  const loc = window.location.protocol + '//' +
+              window.location.host +
+              window.location.pathname;
+  window.location.assign( loc + stateUrl );
 }
 
 /**

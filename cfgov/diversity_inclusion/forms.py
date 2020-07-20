@@ -7,7 +7,7 @@ from django.http import HttpResponse
 # Form input attributes for Design System compatibility.
 # Technique copied from data_research/forms.py
 #
-# See https://cfpb.github.io/capital-framework/components/cf-forms/
+# See https://cfpb.github.io/design-system/components/text-inputs
 # for documentation on the styles that are being duplicated here.
 text_input_attrs = {
     'class': 'a-text-input a-text-input__full',

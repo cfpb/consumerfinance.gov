@@ -16,6 +16,7 @@ limited_categories = [
 related_posts_categories = [
     ('Blog', (
         ('At the CFPB', 'At the CFPB'),
+        ("Director's notebook", "Director's notebook"),
         ('Policy &amp; Compliance', 'Policy and compliance'),
         ('Data, Research &amp; Reports', 'Data, research, and reports'),
         ('Info for Consumers', 'Info for consumers'),
@@ -25,7 +26,6 @@ related_posts_categories = [
         ('Press Release', 'Press release'),
         ('Speech', 'Speech'),
         ('Testimony', 'Testimony'),
-        ("Director's notebook", "Director's notebook"),
     )),
 ]
 
@@ -62,6 +62,7 @@ categories = [
     )),
     ('Blog', (
         ('at-the-cfpb', 'At the CFPB'),
+        ('directors-notebook', "Director's notebook"),
         ('policy_compliance', 'Policy and compliance'),
         ('data-research-reports', 'Data, research, and reports'),
         ('info-for-consumers', 'Info for consumers'),
@@ -80,8 +81,8 @@ categories = [
         ('gaming', 'Gaming'),
     )),
     ('Enforcement Action', (
+        ('administrative-proceeding', 'Administrative Proceeding'),
         ('civil-action', 'Civil Action'),
-        ('administrative-proceeding', 'Administrative Proceeding')
     )),
     ('Final rule', (
         ('interim-final-rule', 'Interim final rule'),
@@ -97,7 +98,6 @@ categories = [
         ('official-guidance', 'Official guidance'),
     )),
     ('Newsroom', (
-        ('directors-notebook', "Director's notebook"),
         ('op-ed', 'Op-ed'),
         ('press-release', 'Press release'),
         ('speech', 'Speech'),
@@ -151,6 +151,12 @@ supported_languagues = [
     ('ht', 'Haitian Creole'),
 ]
 
+enforcement_statuses = [
+    ('expired-terminated-dismissed', 'Expired/Terminated/Dismissed'),
+    ('pending-litigation', 'Pending Litigation'),
+    ('post-order-post-judgment', 'Post Order/Post Judgment'),
+]
+
 
 def get_appropriate_categories(specific_categories, page_type):
     """ An array of specific categories is provided from whatever
@@ -186,7 +192,6 @@ def page_type_choices():
     new_choices = [
         ('Recent updates', (
             ('blog', 'Blog'),
-            ('directors-notebook', "Director's notebook"),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
             ('research-reports', 'Report'),
@@ -209,7 +214,6 @@ def page_type_choices():
         ('Newsroom', (
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
-            ('directors-notebook', "Director's notebook"),
             ('speech', 'Speech'),
             ('testimony', 'Testimony'))),
     ]

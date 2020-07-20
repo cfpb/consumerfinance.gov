@@ -1,5 +1,10 @@
 FROM centos:7 AS cfgov-dev
 
+# Ensure that the environment uses UTF-8 encoding by default
+ENV LANG en_US.UTF-8
+
+LABEL maintainer="tech@cfpb.gov"
+
 # Specify SCL-based Python version
 # Currently used option: rh-python36
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
@@ -25,6 +30,7 @@ RUN yum -y install \
     yum -y update && \
     yum -y install \
         gcc \
+        git \
         mailcap \
         postgresql10 \
         which \
@@ -32,7 +38,7 @@ RUN yum -y install \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \
     source /etc/profile && \
-    pip install --no-cache-dir --upgrade pip setuptools
+    pip install --no-cache-dir --upgrade pip setuptools wheel
 
 # Disables pip cache. Reduces build time, and suppresses warnings when run as non-root.
 # NOTE: MUST be after pip upgrade. Build fails otherwise due to bug in old pip.
@@ -46,7 +52,6 @@ EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
-
 
 # Production-like Apache-based image
 FROM cfgov-dev as cfgov-prod
