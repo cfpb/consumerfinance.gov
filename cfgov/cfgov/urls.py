@@ -360,11 +360,6 @@ urlpatterns = [
         template_name='jobmanager/technology-innovation-fellows.html'),
         name='technology_innovation_fellows'),
 
-    # credit cards KBYO
-
-    re_path(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(
-        template_name='knowbeforeyouowe/creditcards/tool.html'),
-        name='cckbyo'),
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
