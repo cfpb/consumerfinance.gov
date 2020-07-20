@@ -11,15 +11,6 @@ export default class EmailSignup {
     } );
   }
 
-  stubSubscriptionResponse() {
-    cy.server(); // enable response stubbing
-    cy.route( {
-      method: 'POST',
-      url: '/subscriptions/new/',
-      response: 'fixtures:subscription.json'
-    } );
-  }
-
   successNotification() {
     return cy.get( '.m-notification_message' );
   }
