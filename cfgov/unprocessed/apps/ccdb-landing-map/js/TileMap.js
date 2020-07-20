@@ -13,10 +13,10 @@ const MILLION = 1000000;
 const WHITE = '#ffffff';
 
 /**
- * helper function to get date interval for legend
+ * helper function to get date range for legend
  * @returns {string} formatted string
  */
-export function calculateDateInterval() {
+export function calculateDateRange() {
   let today = new Date();
   today = today.toLocaleDateString( 'en-US' );
   let past = new Date( moment().subtract( 3, 'years' ).calendar() );
@@ -211,7 +211,7 @@ export function clickHandler( isPerCapita, t ) {
 
   let capText = 'dataNormalization=';
   capText += isPerCapita ? 'Per%201000%20pop.' : 'None';
-  const stateUrl = 'search/?dateInterval=3y&' + capText +
+  const stateUrl = 'search/?dateRange=3y&' + capText +
     '&state=' + stateAbbr;
   const loc = location.protocol + '//' + location.host + location.pathname;
   location.assign( loc + stateUrl );
@@ -333,7 +333,7 @@ export function _drawLegend( chart ) {
       'legend-description' )
     .add( legendText );
 
-  const labelDates = `Dates: <span class="type">${ calculateDateInterval() }` +
+  const labelDates = `Dates: <span class="type">${ calculateDateRange() }` +
     '</span>';
   chart.renderer
     .label( labelDates, 0, 44, null, null, null, true, false, 'legend-dates' )

@@ -29,11 +29,11 @@ describe( 'Tile map', () => {
     delete window.SVGElement.prototype.getBBox;
   } );
 
-  it( 'Calculates date interval', () => {
+  it( 'Calculates date range', () => {
     // set the date so result is always the same in the test
     const DATE_TO_USE = new Date( 'December 31, 2015 20:00:00' );
     global.Date = jest.fn( () => DATE_TO_USE );
-    const result = sut.calculateDateInterval();
+    const result = sut.calculateDateRange();
     expect( result ).toContain( '12/31/2012 - 12/31/2015' );
   } );
 
@@ -84,7 +84,7 @@ describe( 'Tile map', () => {
       }
     };
     sut.clickHandler( false, evt );
-    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=None&state=TX' );
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateRange=3y&dataNormalization=None&state=TX' );
     expect( Analytics.getDataLayerOptions )
       .toHaveBeenCalledWith( 'State Event: click', 'TX', 'Consumer Complaint Search' );
     expect( Analytics.sendEvent ).toHaveBeenCalled();
@@ -99,7 +99,7 @@ describe( 'Tile map', () => {
       }
     };
     sut.clickHandler( true, evt );
-    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=Per%201000%20pop.&state=TX' );
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateRange=3y&dataNormalization=Per%201000%20pop.&state=TX' );
   } );
 
   it( 'formats a map tile', () => {
