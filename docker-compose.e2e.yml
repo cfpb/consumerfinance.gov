@@ -1,0 +1,20 @@
+version: "3.4"
+
+volumes: 
+  cypress:
+
+services:
+  e2e:
+    image: cypress/included:4.10.0
+    environment:
+      - CI=1
+      - CYPRESS_baseUrl=http://python:8000
+    command: npx cypress run -b chrome --headless
+    working_dir: /app
+    volumes:
+      - ./test/cypress:/app/test/cypress
+      - ./cypress.json:/app/cypress.json
+networks:
+  default:
+    external:
+      name: cfgov
