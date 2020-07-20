@@ -11,6 +11,7 @@ We have included Cypress as a dependency of this project, and so the only steps 
 We support both a headless docker container to execute our cypress tests as well as the already installed desktop application that comes packaged with cypress. 
 
 * To run the docker container execute `docker-compose -f docker-compose.e2e.yml run e2e`
+  - If you have not previously set up a local Docker network, you will need to stop any running cfgov-refresh Docker containers, run `docker network create cfgov`, start the containers again, and then run the above command.
 
 * To run the desktop cypress aplication execute `yarn run cypress open` and select your test file to execute.
 
