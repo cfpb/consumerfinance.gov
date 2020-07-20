@@ -292,7 +292,8 @@ for more about the format and use of this file.</p>
 <li>View this documentation: <a href="http://localhost:8888/">http://localhost:8888/</a></li>
 </ul>
 <p>To build and run the containers for the first time, run:</p>
-<pre class="highlight"><code class="language-bash">docker-compose up</code></pre>
+<pre class="highlight"><code class="language-bash">docker network create cfgov
+docker-compose up</code></pre>
 
 <h2 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h2>
 <p>Environment variables from your <code>.env</code> file are sourced
