@@ -99,10 +99,10 @@ describe( 'Tile map', () => {
       }
     };
     sut.clickHandler( false, evt );
-    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateRange=3y&dataNormalization=None&state=TX' );
     expect( Analytics.getDataLayerOptions )
       .toHaveBeenCalledWith( 'State Event: click', 'TX', 'Consumer Complaint Search' );
     expect( Analytics.sendEvent ).toHaveBeenCalled();
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateRange=3y&dataNormalization=None&state=TX' );
   } );
 
   it( 'navigates the url to per capita when clicked', () => {
