@@ -1,4 +1,4 @@
-import { ExploreRates } from '../../pages/owning_a_home/explore_rates';
+import { ExploreRates } from '../../pages/owning-a-home/explore-rates';
 
 const exploreRates = new ExploreRates();
 
