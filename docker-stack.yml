@@ -45,6 +45,7 @@ services:
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
+      GOVDELIVERY_ACCOUNT_CODE: USCFPB
       MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
       REFRESH_DB: ${REFRESH_DB}
     ports:
@@ -55,7 +56,6 @@ services:
     secrets:
       - CFGOV_PROD_DB_LOCATION
       - DJANGO_ADMIN_PASSWORD
-      - GOVDELIVERY_ACCOUNT_CODE
       - GOVDELIVERY_USER
       - GOVDELIVERY_PASSWORD
       - PGPASSWORD
@@ -101,9 +101,6 @@ secrets:
     external: True
   SECRET_KEY:
     name: cfgov_django_secret_key
-    external: True
-  GOVDELIVERY_ACCOUNT_CODE:
-    name: staging_govdelivery_account_code
     external: True
   GOVDELIVERY_USER:
     name: staging_govdelivery_user
