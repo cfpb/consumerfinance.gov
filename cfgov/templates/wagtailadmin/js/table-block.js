@@ -480,7 +480,7 @@
      *  showModal
      *
      *  Code copied from
-     *  https://github.com/torchbox/wagtail/blob/master/wagtail/wagtailadmin/
+     *  https://github.com/wagtail/wagtail/blob/master/wagtail/admin/
      *  static_src/wagtailadmin/js/hallo-bootstrap.js
      *
      *  Create a Wagtail modal using Javascript.
@@ -538,7 +538,7 @@
      *  createRichTextEditor
      *
      *  Code copied from
-     *  https://github.com/torchbox/wagtail/blob/master/wagtail/wagtailadmin/
+     *  https://github.com/wagtail/wagtail/blob/master/wagtail/admin/
      *  static_src/wagtailadmin/js/hallo-bootstrap.js
      *
      *  Modifications were made to add new form fields to the TableBlock in Wagtail admin.
