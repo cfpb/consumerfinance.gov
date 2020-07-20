@@ -25,7 +25,7 @@ pipeline {
         )
         booleanParam(
             name: 'REFRESH_DB',
-            defaultValue: true,
+            defaultValue: false,
             description: 'Refresh the database?'
         )
     }
