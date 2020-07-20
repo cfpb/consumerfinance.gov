@@ -25,6 +25,7 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
+from v1.util.ref import enforcement_statuses
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -158,11 +159,7 @@ class DocumentDetailPage(AbstractFilterPage):
 
 class EnforcementActionStatus(models.Model):
     institution = models.CharField(max_length=200, blank=True)
-    status = models.CharField(max_length=50, choices=[
-        ('Post Order/Post Judgment', 'Post Order/Post Judgment'),
-        ('Expired/Terminated/Dismissed', 'Expired/Terminated/Dismissed'),
-        ('Pending Litigation', 'Pending Litigation')
-    ])
+    status = models.CharField(max_length=50, choices=enforcement_statuses)
     action = ParentalKey('v1.EnforcementActionPage',
                          on_delete=models.CASCADE,
                          related_name='statuses')
@@ -322,15 +319,15 @@ class EventPage(AbstractFilterPage):
         related_name='+'
     )
     flickr_url = models.URLField("Flickr URL", blank=True)
-    youtube_url = models.URLField(
-        "YouTube URL",
+    archive_video_id = models.CharField(
+        'YouTube video ID (archive)',
+        null=True,
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id. "
-                  "It can be obtained by clicking on Share > "
-                  "Embed on YouTube.",
-        validators=[
-            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
-        ]
+        max_length=11,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        validators=[RegexValidator(regex=r'^[\w-]{11}$')],
+        help_text=organisms.VideoPlayer.YOUTUBE_ID_HELP_TEXT
     )
     live_stream_availability = models.BooleanField(
         "Streaming?",
@@ -339,15 +336,15 @@ class EventPage(AbstractFilterPage):
         help_text='Check if this event will be streamed live. This causes the '
                   'event page to show the parts necessary for live streaming.'
     )
-    live_stream_url = models.URLField(
-        "URL",
+    live_video_id = models.CharField(
+        'YouTube video ID (live)',
+        null=True,
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id. "
-                  "It can be obtained by clicking on Share > "
-                  "Embed on YouTube.",
-        validators=[
-            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
-        ]
+        max_length=11,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        validators=[RegexValidator(regex=r'^[\w-]{11}$')],
+        help_text=organisms.VideoPlayer.YOUTUBE_ID_HELP_TEXT
     )
     live_stream_date = models.DateTimeField(
         "Go Live Date",
@@ -393,10 +390,10 @@ class EventPage(AbstractFilterPage):
         default='placeholder',
         verbose_name='Post-event image type',
         help_text='Choose what to display after an event concludes. This will '
-                  'be overridden by embedded video if the "YouTube URL" field '
-                  'on the previous tab is populated. If "Unique image" is '
-                  'chosen here, you must select the image you want below. It '
-                  'should be sized to 1416x796.',
+                  'be overridden by embedded video if the "YouTube video ID '
+                  '(archive)" field on the previous tab is populated. If '
+                  '"Unique image" is chosen here, you must select the image '
+                  'you want below. It should be sized to 1416x796.',
     )
     post_event_image = models.ForeignKey(
         'v1.CFGOVImage',
@@ -414,9 +411,9 @@ class EventPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('body'),
         index.SearchField('archive_body'),
-        index.SearchField('live_stream_url'),
+        index.SearchField('live_video_id'),
         index.SearchField('flickr_url'),
-        index.SearchField('youtube_url'),
+        index.SearchField('archive_video_id'),
         index.SearchField('future_body'),
         index.SearchField('agenda_items')
     ]
@@ -434,14 +431,14 @@ class EventPage(AbstractFilterPage):
             DocumentChooserPanel('video_transcript'),
             DocumentChooserPanel('speech_transcript'),
             FieldPanel('flickr_url'),
-            FieldPanel('youtube_url'),
+            FieldPanel('archive_video_id'),
         ], heading='Archive Information'),
         FieldPanel('live_body'),
         FieldPanel('future_body'),
         StreamFieldPanel('persistent_body'),
         MultiFieldPanel([
             FieldPanel('live_stream_availability'),
-            FieldPanel('live_stream_url'),
+            FieldPanel('live_video_id'),
             FieldPanel('live_stream_date'),
         ], heading='Live Stream Information'),
     ]
@@ -510,7 +507,7 @@ class EventPage(AbstractFilterPage):
     def page_js(self):
         if (
             (self.live_stream_date and self.event_state == 'present')
-            or (self.youtube_url and self.event_state == 'past')
+            or (self.archive_video_id and self.event_state == 'past')
         ):
             return super(EventPage, self).page_js + ['video-player.js']
 

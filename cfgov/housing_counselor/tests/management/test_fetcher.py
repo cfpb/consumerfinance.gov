@@ -15,7 +15,7 @@ class TestHousingCounselorFetcher(TestCase):
     def test_get_json_from_url_calls_requests_get(self):
         responses.add(responses.GET, 'http://test.url', json={'foo': 'bar'})
         response = get_json_from_url('http://test.url')
-        self.assertEquals(response, {'foo': 'bar'})
+        self.assertEqual(response, {'foo': 'bar'})
 
     @responses.activate
     def test_get_json_from_url_raises_on_requests_failure(self):
@@ -80,7 +80,7 @@ class TestHousingCounselorFetcher(TestCase):
             ]
         )
 
-        self.assertEquals(fetch_counselors(), [
+        self.assertEqual(fetch_counselors(), [
             {
                 'foo': 'bar',
                 'languages': ['apple', 'banana'],

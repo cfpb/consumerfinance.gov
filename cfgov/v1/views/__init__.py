@@ -1,3 +1,4 @@
+import django
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import (
@@ -10,6 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url
 from django.template.response import TemplateResponse
+from django.urls import resolve
 from django.utils.encoding import force_str
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.utils.translation import ugettext as _
@@ -24,12 +26,6 @@ from v1.auth_forms import (
 )
 from v1.util.util import all_valid_destinations_for_request
 from v1.util.wrap_password_reset import _wrap_password_reset_view
-
-
-try:
-    from django.urls import resolve
-except ImportError:
-    from django.core.urlresolvers import resolve
 
 
 # Overrided Wagtail Views
@@ -89,8 +85,14 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
 
         if form.is_valid():
             # Ensure the user-originating redirection url is safe.
-            if not is_safe_url(url=redirect_to, host=request.get_host()):
-                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+            if django.VERSION > (2, 0):
+                if not is_safe_url(
+                    url=redirect_to, allowed_hosts=request.get_host()
+                ):
+                    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+            else:
+                if not is_safe_url(url=redirect_to, host=request.get_host()):
+                    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
             user = form.get_user()
             try:
@@ -200,23 +202,6 @@ def custom_password_reset_confirm(
     }
 
     return TemplateResponse(request, template_name, context)
-
-
-@never_cache
-@login_required
-def welcome(request):
-    valid_destinations = all_valid_destinations_for_request(request)
-
-    if len(valid_destinations) == 1:
-        redirect_to = valid_destinations[0][1]
-        return HttpResponseRedirect(redirect_to)
-
-    else:
-        return render(
-            request,
-            'welcome.html',
-            {'destinations': valid_destinations}
-        )
 
 
 password_reset_confirm = _wrap_password_reset_view(

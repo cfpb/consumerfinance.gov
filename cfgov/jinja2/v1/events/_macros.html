@@ -105,7 +105,7 @@
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
-                {% if event_state == 'past' and event.live_stream_availability and not event.youtube_url %}
+                {% if event_state == 'past' and event.live_stream_availability and not event.archive_video_id %}
                     Video replay will be<br> available shortly
                 {% else %}
                     {% import 'macros/time.html' as time %}
@@ -117,44 +117,25 @@
           </div>
         </div>
     {% if event.venue_image != 'none'
-       or (event_state == 'past' and event.youtube_url)
-       or (event_state == 'present' and event.live_stream_url) %}
+       or (event_state == 'past' and event.archive_video_id)
+       or (event_state == 'present' and event.live_video_id) %}
         <footer>
             <figure class="event-media_container">
-                {% if event_state == 'present' and event.live_stream_url %}
+                {% if event_state == 'present' and event.live_video_id %}
                     {# DISPLAY LIVESTREAM #}
-                    {% import 'macros/video-player.html' as video_player with context %}
-                    {# TODO: Extract the video_id from the URL. #}
-                    {% set video_id = event.video_id | default( '' ) %}
-                    {{ video_player.render({
-                        'button_pos': 'bottomRight',
-                        'image': {
-                            'url': '',
-                        },
-                        'video': {
-                            'id': video_id,
-                            'url': event.live_stream_url
-                        }
-                    }) }}
+                    {% import 'organisms/video-player.html' as video_player with context %}
+                    {{ video_player.render(
+                        video_id=event.live_video_id,
+                        button_pos='bottomRight'
+                    ) }}
                 {% elif event_state == 'past' %}
-                    {% if event.youtube_url %}
+                    {% if event.archive_video_id %}
                         {# DISPLAY VIDEO RECORDING #}
-                        {% import 'macros/video-player.html' as video_player with context %}
-                        {# TODO: Figure out what's happening with this image_url, if anything. #}
-                        {% set image_url  = event.flickr_url %}
-                        {# TODO: Extract the video_id from the URL. #}
-                        {% set video_id   = event.video_id | default( '' ) %}
-                        {{ video_player.render({
-                              'button_pos': 'bottomRight',
-                              'image': {
-                                  'url': image_url,
-                              },
-                              'video': {
-                                  'id': video_id,
-                                  'url': event.youtube_url
-                              }
-                           })
-                        }}
+                        {% import 'organisms/video-player.html' as video_player with context %}
+                        {{ video_player.render(
+                            video_id=event.archive_video_id,
+                            button_pos='bottomRight'
+                        ) }}
                     {% elif event.post_event_image_type == 'image' %}
                         {# DISPLAY SPECIFICALLY-CHOSEN POST-EVENT IMAGE #}
                         {% set img = image(event.post_event_image, 'width-1416') %}

@@ -4,6 +4,7 @@ import unittest
 from django.apps import apps
 from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
+from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
 
 from wagtail.core.models import Site
@@ -21,12 +22,6 @@ from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
 
 
-try:
-    from django.urls import NoReverseMatch, reverse
-except ImportError:
-    from django.core.urlresolvers import NoReverseMatch, reverse
-
-
 now = timezone.now()
 
 
@@ -40,8 +35,8 @@ class AskSearchSafetyCase(unittest.TestCase):
 
 class AnswerPagePreviewCase(TestCase):
     def setUp(self):
-        from v1.models import HomePage
         from ask_cfpb.models import Answer
+        from v1.models import HomePage
 
         self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
         self.english_parent_page = get_or_create_page(

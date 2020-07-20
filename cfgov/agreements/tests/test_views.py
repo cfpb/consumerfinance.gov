@@ -1,14 +1,9 @@
 from django.http import Http404
 from django.test import RequestFactory, TestCase
+from django.urls import reverse
 
 from agreements.models import Agreement, Issuer
 from agreements.views import issuer_search
-
-
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
 
 
 class TestIssuerSearch(TestCase):

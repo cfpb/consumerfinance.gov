@@ -15,8 +15,19 @@ import requests
 
 # Our database has a fake school for demo purposes
 # It should be discoverable via search and API calls, but should be excluded
-# from cohort calculations and from periodic college scorecard API updates.
+# from cohort calculations and from College Scorecard API updates.
 FAKE_SCHOOL_PK = 999999
+# Our database also has 49 entries for school or school system home offices,
+# which should be excluded from school processing and comparisons.
+OFFICE_IDS = [
+    100733, 105136, 108056, 110501, 112376, 112817, 117681, 117900, 121178,
+    122320, 122782, 124557, 125019, 125222, 126100, 128300, 130882, 141963,
+    144500, 144777, 149240, 151485, 159638, 161280, 166665, 178439, 181747,
+    182519, 183327, 190035, 195827, 199175, 214661, 222497, 228732, 229090,
+    231156, 242671, 403399, 438665, 443368, 446978, 448336, 448381, 454218,
+    461087, 481191, 483090, 485467,
+]
+DEFAULT_EXCLUSIONS = OFFICE_IDS + [FAKE_SCHOOL_PK]
 REGION_MAP = {'MW': ['IL', 'IN', 'IA', 'KS', 'MI', 'MN',
                      'MO', 'NE', 'ND', 'OH', 'SD', 'WI'],
               'NE': ['CT', 'ME', 'MA', 'NH', 'NJ',
@@ -36,7 +47,9 @@ REGION_NAMES = {'MW': 'Midwest',
                 'SO': 'South',
                 'WE': 'West'}
 
-HIGHEST_DEGREES = {  # highest-awarded values from Ed API and our CSV spec
+# Highest-awarded values from the DOE and our CSV spec
+# For our API, we treat anything above bachelor's as graduate-degree-granting
+HIGHEST_DEGREES = {
     '0': "Non-degree-granting",
     '1': 'Certificate',
     '2': "Associate degree",
@@ -44,11 +57,11 @@ HIGHEST_DEGREES = {  # highest-awarded values from Ed API and our CSV spec
     '4': "Graduate degree"
 }
 
-# Legacy Dept. of Ed classifications of post-secondary degree levels
+# Legacy DOE classifications of post-secondary degree levels
 LEVELS = {
     '1': "Program of less than 1 academic year",
     '2': "Program of at least 1 but less than 2 academic years",
-    '3': "Associate's degree",
+    '3': "Associate degree",
     '4': "Program of at least 2 but less than 4 academic years",
     '5': "Bachelor's degree",
     '6': "Post-baccalaureate certificate",
@@ -61,14 +74,14 @@ LEVELS = {
 
 # Dept. of Ed program degree levels specific to new program data in 2019
 PROGRAM_LEVELS = {
-    1: "Certificate",
-    2: "Associate's degree",
-    3: "Bachelor's degree",
-    4: "Post-baccalaureate certificate",
-    5: "Master's degree",
-    6: "Doctoral degree",
-    7: "First professional degree",
-    8: "Graduate/professional certificate",
+    '1': "Certificate",
+    '2': "Associate degree",
+    '3': "Bachelor's degree",
+    '4': "Post-baccalaureate certificate",
+    '5': "Master's degree",
+    '6': "Doctoral degree",
+    '7': "First professional degree",
+    '8': "Graduate/professional certificate",
 }
 
 NOTIFICATION_TEMPLATE = Template("""Disclosure notification for offer ID $oid\n\
@@ -341,6 +354,7 @@ class School(models.Model):
             'otherOffCampus': jdata['OTHEROFFCAMPUS'],
             'otherOnCampus': jdata['OTHERONCAMPUS'],
             'otherWFamily': jdata['OTHERWFAMILY'],
+            'programCodes': self.program_codes,
             'programCount': self.program_count,
             'programsPopular': self.program_most_popular,
             'predominantDegree': self.get_predominant_degree(),
@@ -375,6 +389,25 @@ class School(models.Model):
 
     def __str__(self):
         return self.primary_alias + " ({})".format(self.school_id)
+
+    @property
+    def program_codes(self):
+        # We're only insterested in program data with salary and level info
+        live_programs = self.program_set.filter(
+            test=False).exclude(level='').exclude(salary=None)
+        graduate = [p for p in live_programs if int(p.level) > 3]
+        # We're initially providing only graduate program details
+        undergrad = []  # [p for p in live_programs if p not in graduate]
+        return {
+            'graduate': [{
+                'code': p.program_code,
+                'name': p.program_name.strip('.'),
+                'level': PROGRAM_LEVELS.get(p.level),
+                'salary': p.salary}
+                for p in graduate
+            ],
+            'undergrad': undergrad,
+        }
 
     def get_predominant_degree(self):
         predominant = ''
@@ -630,7 +663,7 @@ class Program(models.Model):
     program_name = models.CharField(max_length=255)
     program_code = models.CharField(max_length=255, blank=True)
     level = models.CharField(max_length=255, blank=True)
-    level_code = models.CharField(max_length=255, blank=True)
+    level_name = models.CharField(max_length=255, blank=True, null=True)
     campus = models.CharField(max_length=255, blank=True)
     cip_code = models.CharField(max_length=255, blank=True)
     soc_codes = models.CharField(max_length=255, blank=True)
@@ -693,25 +726,25 @@ class Program(models.Model):
             'books': self.books,
             'campus': self.campus,
             'cipCode': self.cip_code,
-            'completionRate': "{0}".format(self.completion_rate),
+            'completionRate': format_for_null(self.completion_rate),
             'completionCohort': self.completion_cohort,
             'completers': self.completers,
-            'defaultRate': "{0}".format(self.default_rate),
+            'defaultRate': format_for_null(self.default_rate),
             'fees': self.fees,
             'housing': self.housing,
             'institution': self.institution.primary_alias,
             'institutionalDebt': self.institutional_debt,
             'jobNote': self.job_note,
-            'jobRate': "{0}".format(self.job_rate),
+            'jobRate': format_for_null(self.job_rate),
             'level': self.level,
-            'levelCode': self.level_code,
+            'levelName': PROGRAM_LEVELS.get(self.level),
             'meanStudentLoanCompleters': self.mean_student_loan_completers,
             'medianMonthlyDebt': self.median_monthly_debt,
             'medianStudentLoanCompleters': self.median_student_loan_completers,
             'privateDebt': self.private_debt,
             'programCode': self.program_code,
             'programLength': make_divisible_by_6(self.program_length),
-            'programName': self.program_name,
+            'programName': self.program_name.strip('.'),
             'programSalary': self.salary,
             'schoolID': self.institution.school_id,
             'socCodes': self.soc_codes,

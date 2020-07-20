@@ -1,0 +1,67 @@
+{# ==========================================================================
+
+   secondary_navigation.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for secondary navigation.
+
+   nav_items:     The secondary navigation item structure.
+
+   ========================================================================== #}
+
+{% macro render( nav_items ) %}
+<nav class="o-secondary-navigation"
+     aria-label="Section navigation">
+    {% set sec_nav_settings = {
+        'label': _('In this section'),
+        'is_midtone': true,
+        'is_bordered': false,
+        'is_expanded': false
+    } %}
+    {% from 'organisms/expandable.html' import expandable with context %}
+    {% call() expandable(sec_nav_settings) %}
+        <ul class="m-list
+                   m-list__unstyled
+                   o-secondary-navigation_list
+                   o-secondary-navigation_list__parents" role="tablist">
+        {%- for item in nav_items %}
+            <li class="m-list_item m-list_item__parent"
+                data-nav-is-active="{{item.current if item.current else 'False'}}"
+                data-nav-is-open="False"
+                role="tab">
+                <a class="m-nav-link 
+                          m-nav-link__parent"
+                    href="#"
+                    data-gtm_ignore="true"
+                    data-nav_section="{{ item.data }}">
+                    {{ item.title }}
+                </a>
+            {%- if item.children -%}
+                <ul class="m-list
+                           m-list__unstyled
+                           o-secondary-navigation_list
+                           o-secondary-navigation_list__children"
+                    role="tablist">
+                {%- for child in item.children -%}
+                    <li class="m-list_item"
+                        role="tab">
+                        <a class="m-nav-link"
+                           href="#"
+                           data-gtm_ignore="true"
+                           data-nav_item="{{ child.data }}">
+                          {{ child.title }}
+                        </a>
+                    </li>
+                {%- endfor %}
+                </ul>
+            {%- endif -%}
+            </li>
+
+        {%- endfor %}
+        </ul>
+    {% endcall %}
+</nav>
+{% endmacro %}

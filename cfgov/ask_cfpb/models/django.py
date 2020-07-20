@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import html.parser as HTMLParser
-
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -8,8 +6,6 @@ from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import RichTextField
 from wagtail.images.edit_handlers import ImageChooserPanel
 
-
-html_parser = HTMLParser.HTMLParser()
 
 ENGLISH_PARENT_SLUG = 'ask-cfpb'
 SPANISH_PARENT_SLUG = 'obtener-respuestas'

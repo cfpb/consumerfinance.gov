@@ -13,11 +13,12 @@ from v1.util.categories import clean_categories
 
 
 class TestFilterableListForm(TestCase):
-
     def setUpFilterableForm(self, data=None):
         filterable_pages = AbstractFilterPage.objects.live()
-        form = FilterableListForm(filterable_pages=filterable_pages,
-                wagtail_block=None)
+        form = FilterableListForm(
+            filterable_pages=filterable_pages,
+            wagtail_block=None
+        )
         form.is_bound = True
         form.cleaned_data = data
         return form
@@ -32,13 +33,13 @@ class TestFilterableListForm(TestCase):
         publish_page(page2)
         form = self.setUpFilterableForm(data={'categories': ['foo']})
         page_set = form.get_page_set()
-        self.assertEquals(len(page_set), 1)
-        self.assertEquals(page_set[0].specific, page1)
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, page1)
 
     def test_filter_by_nonexisting_category(self):
-        form = self.setUpFilterableForm(data={'categories': ['made up filter']})
+        form = self.setUpFilterableForm(data={'categories': ['test filter']})
         page_set = form.get_page_set()
-        self.assertEquals(len(page_set), 0)
+        self.assertEqual(len(page_set), 0)
 
     def test_filter_by_tags(self):
         page1 = BlogPage(title='test page 1')
@@ -55,7 +56,7 @@ class TestFilterableListForm(TestCase):
         publish_page(page3)
         form = self.setUpFilterableForm(data={'topics': ['foo', 'bar']})
         page_set_pks = form.get_page_set().values_list('pk', flat=True)
-        self.assertEquals(len(page_set_pks), 2)
+        self.assertEqual(len(page_set_pks), 2)
         self.assertIn(page1.pk, page_set_pks)
         self.assertIn(page2.pk, page_set_pks)
 
@@ -67,8 +68,8 @@ class TestFilterableListForm(TestCase):
         publish_page(page1)  # Only publish one of the pages
         form = self.setUpFilterableForm(data={'topics': ['foo']})
         page_set = form.get_page_set()
-        self.assertEquals(len(page_set), 1)
-        self.assertEquals(page_set[0].specific, page1)
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, page1)
 
     def test_filter_by_author_names(self):
         page1 = BlogPage(title='test page 1')
@@ -80,8 +81,8 @@ class TestFilterableListForm(TestCase):
         publish_page(page2)
         form = self.setUpFilterableForm(data={'authors': ['sarah-simpson']})
         page_set = form.get_page_set()
-        self.assertEquals(len(page_set), 1)
-        self.assertEquals(page_set[0].specific, page1)
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, page1)
 
     def test_filter_by_title(self):
         page1 = EventPage(
@@ -96,8 +97,8 @@ class TestFilterableListForm(TestCase):
         publish_page(page2)
         form = self.setUpFilterableForm(data={'title': 'Cool'})
         page_set = form.get_page_set()
-        self.assertEquals(len(page_set), 1)
-        self.assertEquals(page_set[0].specific, page1)
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, page1)
 
     def test_validate_date_after_1900_can_pass(self):
         form = self.setUpFilterableForm()
@@ -114,10 +115,31 @@ class TestFilterableListForm(TestCase):
         form = self.setUpFilterableForm()
         form.data = {'categories': ['blog']}
         clean_categories(selected_categories=form.data.get('categories'))
-        self.assertEquals(form.data['categories'], ['blog', 'at-the-cfpb', 'policy_compliance', 'data-research-reports', 'info-for-consumers'])
+        self.assertEqual(
+            form.data['categories'],
+            [
+                'blog',
+                'at-the-cfpb',
+                'directors-notebook',
+                'policy_compliance',
+                'data-research-reports',
+                'info-for-consumers'
+            ]
+        )
 
     def test_clean_categories_converts_reports_subcategories_correctly(self):
         form = self.setUpFilterableForm()
         form.data = {'categories': ['research-reports']}
         clean_categories(selected_categories=form.data.get('categories'))
-        self.assertEquals(form.data['categories'], ['research-reports', 'consumer-complaint', 'super-highlight', 'data-point', 'industry-markets', 'consumer-edu-empower', 'to-congress'])
+        self.assertEqual(
+            form.data['categories'],
+            [
+                'research-reports',
+                'consumer-complaint',
+                'super-highlight',
+                'data-point',
+                'industry-markets',
+                'consumer-edu-empower',
+                'to-congress',
+            ]
+        )

@@ -49,12 +49,6 @@ related_links = {
         ]
     }
 }
-featured_content = {
-    'type': 'featured_content',
-    'value': {
-        'body': "this is a featured content body"
-    }
-}
 expandable = {
     'type': 'expandable',
     'value': {
