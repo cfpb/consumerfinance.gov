@@ -53,3 +53,7 @@ services:
         working_dir: /src/cfgov-refresh
         stdin_open: true
         tty: true
+networks:
+    default:
+        external:
+            name: cfgov
