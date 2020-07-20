@@ -1,4 +1,4 @@
-export default class ConsumerTools {
+export default class EmailSignup {
 
   open() {
     cy.visit( '/consumer-tools/' );
