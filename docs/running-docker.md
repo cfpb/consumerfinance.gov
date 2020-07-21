@@ -23,6 +23,7 @@ The following URLs are mapped to your host from the containers:
 To build and run the containers for the first time, run:
 
 ```bash
+docker network create cfgov
 docker-compose up
 ```
 
