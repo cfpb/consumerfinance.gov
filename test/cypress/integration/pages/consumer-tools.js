@@ -14,7 +14,7 @@ describe( 'Consumer Tools', () => {
     it( 'should have a spanish view', () => {
       planningSocialSecurity.open();
       planningSocialSecurity.setLanguageToSpanish();
-      cy.url().should('include', 'es')
+      cy.url().should( 'include', 'es' );
     } );
   } );
 } );
