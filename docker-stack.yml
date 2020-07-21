@@ -78,6 +78,7 @@ services:
                 django_tables_exist=$$?
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
+                    ./cfgov/manage.py update_index
                     ./refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND
                 else
                     httpd -d cfgov/apache -D FOREGROUND
