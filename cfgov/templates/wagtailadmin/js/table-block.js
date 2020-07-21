@@ -554,28 +554,14 @@
             document.currentScript
         );
 
-        // input.hide();
-
         return richText;
-    }
-
-    function setupLinkTooltips( element ) {
-        element.tooltip( {
-            animation: false,
-            title: function() {
-                return $( this ).attr( 'href' );
-            },
-            trigger: 'hover',
-            placement: 'bottom',
-            selector: 'a'
-        } );
     }
 
     function insertRichTextDeleteControl( element ) {
         var link = $( '<a class="icon icon-cross text-replace halloembed__delete">Delete</a>' );
         $ ( element ).addClass( 'halloembed' ).prepend( link );
         link.on( 'click', function() {
-            var widget = $( element ).parent( '[data-draftail-editor-wrapper]' ).data( 'IKS-hallo' );
+            var widget = $( element ).parent( '[data-hallo-editor]' ).data( 'IKS-hallo' );
             $( element ).fadeOut( function() {
                 $( element ).remove();
                 if ( widget != undefined && widget.options.editable ) {
@@ -586,7 +572,7 @@
     }
 
     $( function() {
-        $( '[data-draftail-editor-wrapper] [contenteditable="false"]' ).each( function() {
+        $( '[data-hallo-editor] [contenteditable="false"]' ).each( function() {
             insertRichTextDeleteControl( this );
         } );
     } );
