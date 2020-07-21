@@ -36,17 +36,24 @@ const COMMON_MODULE_CONFIG = {
     /* The below regex will capture all node modules
        that start with `cf-` or `cfpb-`.
        Regex test: https://regex101.com/r/zizz3V/5 */
-    exclude: /node_modules\/(?:cf\-.+|cfpb\-.+)/,
+    exclude : [
+        /node_modules\/(?:cf\-.+|cfpb\-.+)/,
+        /\bcore-js\b/,
+        /\bwebpack\/buildin\b/
+      ],
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ '@babel/preset-env', {
+          corejs: 3,
           configPath: __dirname,
           /* Use useBuiltIns: 'usage' and set `debug: true` to see what
              scripts require polyfilling. */
-          useBuiltIns: false,
-          debug: false
-        } ] ]
+          useBuiltIns: 'usage',
+          debug: false,
+        } ] ],
+        sourceType: 'unambiguous'
+
       }
     }
   }, {

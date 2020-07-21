@@ -56,6 +56,19 @@ function getStateByCode( code ) {
   return statesByCode[code];
 }
 
+function _getMatchesMethod( el ) {
+  return el.matches ||
+         el.webkitMatchesSelector ||
+         el.mozMatchesSelector ||
+         el.msMatchesSelector;
+}
+
+function selectorMatches( el, selector ) {
+  const matchesMethod = _getMatchesMethod( el );
+  return matchesMethod.call( el, selector );
+}
+
 export {
-  getStateByCode
+  getStateByCode,
+  selectorMatches
 };

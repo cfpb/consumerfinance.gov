@@ -1,5 +1,4 @@
-// This file controls the college costs application
-import Expandable from '../../../../../node_modules/@cfpb/cfpb-expandables/src/Expandable.js';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import { appView } from './views/app-view.js';
 import { chartView } from './views/chart-view.js';
 import { constantsModel } from './models/constants-model.js';
