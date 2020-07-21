@@ -130,15 +130,19 @@ def ask_autocomplete(request, language='en'):
         'term', '').strip().replace('<', '')
     if not term:
         return JsonResponse([], safe=False)
-    sqs = SearchQuerySet().models(AnswerPage)
-    sqs = sqs.autocomplete(
-        autocomplete=term,
-        language=language
-    )
-    results = [{'question': result.autocomplete,
-                'url': result.url}
-               for result in sqs[:20]]
-    return JsonResponse(results, safe=False)
+
+    try:
+        sqs = SearchQuerySet().models(AnswerPage)
+        sqs = sqs.autocomplete(
+            autocomplete=term,
+            language=language
+        )
+        results = [{'question': result.autocomplete,
+                    'url': result.url}
+                   for result in sqs[:20]]
+        return JsonResponse(results, safe=False)
+    except IndexError:
+        return JsonResponse([], safe=False)
 
 
 def redirect_ask_search(request, language='en'):
