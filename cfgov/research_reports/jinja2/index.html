@@ -58,7 +58,7 @@
       <div class="eyebrow">{{ page.report_type }}</div>
       <h1>{{ page.header }}</h1>
       <div class="lead-paragraph">{{ page.subheader }}</div>
-      <p class="author-names">{% for author in page.report_author_names.all().order_by('pk') %}
+      <p class="author-names">{% for author in page.report_authors.all().order_by('pk') %}
         {% if loop.index == 1 %}By {% endif %}
         {% set link_url = researchers.get(author.name) %}
         {%- if link_url -%}<a href={{ link_url }}>{{ author.name }}</a>
