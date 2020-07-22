@@ -49,6 +49,7 @@
     "yup": "0.28.0"
   },
   "devDependencies": {
+    "cypress": "4.10.0",
     "progress-bar-webpack-plugin": "2.1.0",
     "webpack-bundle-analyzer": "3.6.0"
   }
