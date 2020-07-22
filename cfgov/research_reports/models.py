@@ -77,7 +77,7 @@ class ReportSection(ClusterableModel):
         FieldPanel('body'),
         InlinePanel('report_subsections', label='Subsection'),
     ]
-    report = ParentalKey('Report',
+    report = ParentalKey('ResearchReportPage',
                          on_delete=models.CASCADE,
                          related_name='report_sections')
 
@@ -90,11 +90,11 @@ class ReportSubSection(models.Model):
                          related_name='report_subsections')
 
 
-class AuthorNames(models.Model):
+class ReportAuthor(models.Model):
     name = models.CharField(max_length=50)
-    report = ParentalKey('Report',
+    report = ParentalKey('ResearchReportPage',
                          on_delete=models.CASCADE,
-                         related_name='report_author_names')
+                         related_name='report_authors')
 
 
 class ReportMetaclass(WagtailAdminModelFormMetaclass):
@@ -107,7 +107,7 @@ class ReportForm(WagtailAdminPageForm, metaclass=ReportMetaclass):
     pass
 
 
-class Report(CFGOVPage):
+class ResearchReportPage(CFGOVPage):
     # Report Upload Fields
     report_file = models.ForeignKey(
         'wagtaildocs.Document',
@@ -157,7 +157,7 @@ class Report(CFGOVPage):
             FieldPanel('header'),
             FieldPanel('subheader'),
             InlinePanel(
-                'report_author_names',
+                'report_authors',
                 label='Author Name',
                 min_num=0
             ),
@@ -203,7 +203,8 @@ class Report(CFGOVPage):
                 pass
 
     def get_context(self, request, *args, **kwargs):
-        context = super(Report, self).get_context(request, *args, **kwargs)
+        context = super(ResearchReportPage, self) \
+            .get_context(request, *args, **kwargs)
         context.update({
             'get_report_sections': get_report_sections,
             'get_report_appendices': get_report_appendices,
