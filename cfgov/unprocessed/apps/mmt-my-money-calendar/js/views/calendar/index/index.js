@@ -36,12 +36,13 @@ function Calendar() {
 
   const handleModalSession = () => {
     let visited = localStorage.getItem('visitedPage'),
-      enteredData = localStorage.getItem('enteredData');
+        enteredData = localStorage.getItem('enteredData');
 
-    if (visited && enteredData === 'subsequent') {
+    if (visited && (enteredData === 'subsequent' || !enteredData)) {
       setShowModal(false);
     } else {
       let currentStep = (visited && enteredData === 'initial') ? 'step2' : 'step1';
+      
       setNarrativeStep(currentStep);
       setShowModal(true);
     }
