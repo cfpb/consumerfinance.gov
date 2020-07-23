@@ -26,6 +26,7 @@ nav:
     - Browser/Acceptance Testing: browser-acceptance-tests.md
     - JavaScript Unit Testing: javascript-unit-tests.md
     - Python Unit Testing: python-unit-tests.md
+    - Functional Browser Testing: functional-browser-testing.md
 - Contributing:
     - Branching and Merging: branching-merging.md
     - Contributing to the Docs: contributing-docs.md
