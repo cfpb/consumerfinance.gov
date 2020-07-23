@@ -8,7 +8,7 @@ describe( 'Policy Compliance', () => {
 
     it( 'should return results based on search term', () => {
       regulationsSearch.open();
-      regulationsSearch.searchTerm( 'complaint' );
+      regulationsSearch.searchTerm( 'mortgage' );
       regulationsSearch.searchResults().should( 'be.visible' );
     } );
 
