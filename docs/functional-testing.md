@@ -1,4 +1,4 @@
-# Functional Browser Testing with Cypress
+# Functional Testing with Cypress
 
 In order to ensure that as we upgrade our wagtail/django dependencies our backend python code is still functional from a frontend perspective we are integrating a new browser testing tool [Cypress](https://www.cypress.io). The goal is to implement and maintain a testing suite that enables confidence in dependency upgrades. 
 
