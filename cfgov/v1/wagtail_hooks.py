@@ -89,7 +89,6 @@ def log_page_deletion(request, page):
 @hooks.register('insert_editor_js')
 def editor_js():
     js_files = ['js/table-block.js']
-    js_files.insert(0, 'wagtailadmin/app/draftail.entry.js')
 
     # Temporarily adding Hallo-related JavaScript files to all admin pages
     # to support the continued use of Hallo in our RichTextTableInput
