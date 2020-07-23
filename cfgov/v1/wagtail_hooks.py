@@ -131,7 +131,6 @@ def editor_css():
         'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
-        'css/hero.css',
         'css/table-block.css',
     ]
 
