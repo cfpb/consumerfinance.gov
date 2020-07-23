@@ -829,5 +829,4 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
             ]
         },
     },
-    "legacy": {"WIDGET": "wagtail.admin.rich_text.HalloRichTextArea"},
 }
