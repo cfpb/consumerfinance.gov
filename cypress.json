@@ -7,5 +7,6 @@
     "screenshotsFolder": "test/cypress/screenshots",
     "pluginsFile": "test/cypress/plugins",
     "supportFile": "test/cypress/support",
-    "componentFolder": "test/cypress/component"
+    "componentFolder": "test/cypress/component",
+    "defaultCommandTimeout": 15000
 }
