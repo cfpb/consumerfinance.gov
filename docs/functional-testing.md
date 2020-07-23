@@ -1,6 +1,6 @@
 # Functional Testing with Cypress
 
-In order to ensure that as we upgrade our wagtail/django dependencies our backend python code is still functional from a frontend perspective we are integrating a new browser testing tool [Cypress](https://www.cypress.io).
+In order to ensure that as we upgrade our wagtail/django dependencies our backend python code is still functional from a frontend perspective we are integrating a new browser testing tool [Cypress](https://www.cypress.io). The goal is to implement and maintain a testing suite that enables confidence in dependency upgrades. 
 
 ## Installing Cypress
 
@@ -8,12 +8,14 @@ We have included Cypress as a dependency of this project, and so the only steps 
 
 ## Running Cypress
 
-We support both a headless docker container to execute our cypress tests as well as the already installed desktop application that comes packaged with cypress. 
+We support both a headless docker container to execute our cypress tests as well as the already installed desktop application that comes packaged with cypress. The test files are located in the `test/cypress/integration/` directory.
 
 * To run the docker container execute `docker-compose -f docker-compose.e2e.yml run e2e`
   - If you have not previously set up a local Docker network, you will need to stop any running cfgov-refresh Docker containers, run `docker network create cfgov`, start the containers again, and then run the above command.
 
 * To run the desktop cypress aplication execute `yarn run cypress open` and select your test file to execute.
+
+* To run the tests from the commandline you can also invoke them via `yarn run cypress run`. You can read more about different command line arguments in the [Command-Line Documentation](https://docs.cypress.io/guides/guides/command-line.html#Options) provided by Cypress.
 
 ## Writing Cypress Tests
 
@@ -55,7 +57,7 @@ describe('Consumer Tools', () => {
     it('Should have an email sign up', () => {
         // Arrange
         page.open();
-        //Act
+        // Act
         page.signUp('testing@cfpb.gov');
         // Assert
         page.successNotification().should('exist');
