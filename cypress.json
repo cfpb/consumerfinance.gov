@@ -1,6 +1,5 @@
 {
-    
-    "baseUrl": "https://cfgov-pr-5864.demo.cfpb.gov",
+    "baseUrl": "http://localhost:8000",
     "video": false,
     "fixturesFolder": "test/cypress/fixtures",
     "integrationFolder": "test/cypress/integration",
