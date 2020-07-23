@@ -16,6 +16,7 @@ from v1.models.campaign_page import CampaignPage
 from v1.models.feedback import Feedback
 from v1.models.home_page import HomePage
 from v1.models.images import CFGOVImage, CFGOVRendition
+from v1.models.indexed_page_revision import IndexedPageRevision
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import (
     AbstractFilterPage, AgendaItemBlock, DocumentDetailPage, EventPage,
