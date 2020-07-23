@@ -1,5 +1,6 @@
 {
-    "baseUrl": "http://localhost:8000",
+    
+    "baseUrl": "https://cfgov-pr-5864.demo.cfpb.gov",
     "video": false,
     "fixturesFolder": "test/cypress/fixtures",
     "integrationFolder": "test/cypress/integration",
@@ -8,5 +9,5 @@
     "pluginsFile": "test/cypress/plugins",
     "supportFile": "test/cypress/support",
     "componentFolder": "test/cypress/component",
-    "defaultCommandTimeout": 10000
+    "defaultCommandTimeout": 15000
 }
