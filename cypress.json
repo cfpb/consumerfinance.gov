@@ -8,5 +8,5 @@
     "pluginsFile": "test/cypress/plugins",
     "supportFile": "test/cypress/support",
     "componentFolder": "test/cypress/component",
-    "defaultCommandTimeout": 15000
+    "defaultCommandTimeout": 25000
 }
