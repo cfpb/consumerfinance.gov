@@ -3,7 +3,7 @@ from django.http import Http404, StreamingHttpResponse
 from django.test import RequestFactory, TestCase, override_settings
 from django.urls import resolve, reverse
 
-from wagtail.documents.models import get_document_model
+from wagtail.documents import get_document_model
 
 from v1.views.documents import DocumentServeView
 
