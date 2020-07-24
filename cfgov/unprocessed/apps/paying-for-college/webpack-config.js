@@ -38,21 +38,18 @@ const COMMON_MODULE_CONFIG = {
        Regex test: https://regex101.com/r/zizz3V/5 */
     exclude : [
         /node_modules\/(?:cf\-.+|cfpb\-.+)/,
-        /\bcore-js\b/,
-        /\bwebpack\/buildin\b/
+        /\bcore-js\b/
       ],
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ '@babel/preset-env', {
-          corejs: 3,
           configPath: __dirname,
           /* Use useBuiltIns: 'usage' and set `debug: true` to see what
              scripts require polyfilling. */
-          useBuiltIns: 'usage',
+          useBuiltIns: false,
           debug: false,
         } ] ],
-        sourceType: 'unambiguous'
 
       }
     }
