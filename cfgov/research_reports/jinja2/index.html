@@ -24,14 +24,14 @@
 {% set researchers = get_researchers() %}
 
 
-{% macro report_part(sections) %}
+{% macro report_part(sections, is_appendix) %}
   {% for section in sections -%}
     <h3 class="report-header">
       <a
         style="color:black;"
         id="{{section.url[1:]}}"
         href="{{section.url}}">
-          {{section.numbering + section.title}}
+          {{('Appendix ' if is_appendix else '') + section.numbering + section.title}}
       </a>
     </h3>
 
@@ -74,7 +74,7 @@
     {{report_part(report_sections)}}
 
     <h2>Appendices</h2>
-    {{report_part(report_appendices)}}
+    {{report_part(report_appendices, True)}}
 
     <div class="block block__flush-top">
       {{ page.footnotes | safe }}
