@@ -86,8 +86,8 @@ class ReportSubSection(models.Model):
     sub_header = models.CharField(max_length=200)
     sub_body = models.TextField(blank=True)
     section = ParentalKey('ReportSection',
-                         on_delete=models.CASCADE,
-                         related_name='report_subsections')
+                          on_delete=models.CASCADE,
+                          related_name='report_subsections')
 
 
 class ReportAuthor(models.Model):
