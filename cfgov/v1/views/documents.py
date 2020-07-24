@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View
 
-from wagtail.documents.models import get_document_model
+from wagtail.documents import get_document_model
 from wagtail.documents.views.serve import serve as wagtail_serve
 
 
