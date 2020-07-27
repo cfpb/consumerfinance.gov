@@ -1,0 +1,39 @@
+
+{# ==========================================================================
+
+   FAQ Expandable Group
+
+   ==========================================================================
+
+   Description:
+
+   Wraps an expandable group with Google's recommended FAQ schema markup.
+   Passes value with below properties to expandable group template in context:
+
+   value: Object defined from a Streamfield block.
+
+   value.heading:              Heading text.
+
+   value.body:                 Body introduction text.
+
+   value.is_accordion:         Whether this group is an accordion or not.
+                               Default is false.
+
+   value.has_top_rule_line:    Whether there is a top gray rule.
+                               Default is false.
+                               Used in 'render_block.html' to modify classes
+                               on wrapping 'div.block'.
+
+   value.expandables: 	       List of questions
+
+   value.expandable.question:  Text of question   
+
+   value.expandable.answer:    Output of streamblock
+
+   ========================================================================== #}
+
+
+
+<div itemscope="" itemtype="http://schema.org/FAQPage">
+	{% include 'organisms/expandable-group.html' with context %}
+</div>

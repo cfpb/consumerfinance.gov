@@ -710,6 +710,30 @@ class ContactExpandableGroup(BaseExpandableGroup):
         return [blocks.StructValue(self, value) for value in values]
 
 
+class FAQExpandable(blocks.StructBlock):
+    question = blocks.CharBlock(max_length=500)
+    answer = blocks.StreamBlock(
+        [
+            ('paragraph', blocks.RichTextBlock(required=False)),
+            ('well', Well()),
+            ('links', atoms.Hyperlink()),
+            ('email', molecules.ContactEmail()),
+            ('phone', molecules.ContactPhone()),
+            ('address', molecules.ContactAddress()),
+        ], blank=True
+    )
+
+    class Meta:
+        template = '_includes/organisms/faq-expandable.html'
+
+
+class FAQExpandableGroup(ExpandableGroup):
+    expandables = blocks.ListBlock(FAQExpandable())
+
+    class Meta:
+        template = '_includes/organisms/faq-expandable-group.html'
+
+
 class ItemIntroduction(blocks.StructBlock):
     show_category = blocks.BooleanBlock(
         required=False,

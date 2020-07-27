@@ -29,6 +29,8 @@
    value.hide_cue_label:  Whether the Expandable's cue label is hidden or not.
                           Default is false. The plus/minus icon is always shown.
 
+   value.attributes:      Additional atributes for expandable element.
+
    ========================================================================== #}
 
 {% macro expandable(value, expandable_cue_additional_text='') %}
@@ -37,7 +39,8 @@
      class="o-expandable
             o-expandable__padded
             {{ 'o-expandable__background' if value.is_midtone else '' }}
-            {{ 'o-expandable__border' if value.is_bordered else '' }}">
+            {{ 'o-expandable__border' if value.is_bordered else '' }}"
+     {{ value.attributes if value.attributes else ''}}>
 
     <button class="o-expandable_header o-expandable_target" type="button">
         <span class="h4 o-expandable_header-left o-expandable_label">

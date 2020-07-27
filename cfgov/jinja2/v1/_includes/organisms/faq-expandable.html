@@ -1,0 +1,33 @@
+
+{# ==========================================================================
+
+   FAQ expandable
+
+   ==========================================================================
+
+   Description:
+
+   Adds Google's recommended FAQ schema markup to an expandable when given:
+
+   value:            Object defined from a Wagtail block.
+
+   value.question:   Text of question   
+
+   value.answer:     Answer to question. Output of answer streamblock
+
+   ========================================================================== #}
+{% from 'expandable.html' import expandable with context %}
+
+{% set expandable_settings = {
+    'label': '<span itemprop="name">' + value.question + '</span>' | safe,
+    'attributes': 'itemscope="" itemprop="mainEntity" itemtype="http://schema.org/Question"'
+} %}
+{% call() expandable(expandable_settings) %}
+    <div itemprop="acceptedAnswer" 
+         itemscope=""
+         itemtype="http://schema.org/Answer">
+        <div itemprop="text">
+          {% include_block value.answer %}
+        </div>
+    </div>
+{% endcall %}

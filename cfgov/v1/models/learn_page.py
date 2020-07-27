@@ -113,6 +113,7 @@ class LearnPage(AbstractFilterPage):
         ('expandable_group', organisms.ExpandableGroup()),
         ('contact_expandable_group', organisms.ContactExpandableGroup()),
         ('expandable', organisms.Expandable()),
+        ('faq_expandable_group', organisms.FAQExpandableGroup()),
         ('well', organisms.Well()),
         ('call_to_action', molecules.CallToAction()),
         ('email_signup', organisms.EmailSignUp()),
