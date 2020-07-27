@@ -38,12 +38,12 @@ def get_report_parts(is_appendix=False):
             'title': section.header,
             'body': section.body,
             'url': format('#section-{}', i),
-            'numbering': format('{}. ', i),
+            'numbering': format('{}: ' if is_appendix else '{}. ', i),
             'children': [{
                 'title': subsection.sub_header,
                 'body': subsection.sub_body,
                 'url': format('#section-{}.{}', i, j),
-                'numbering': format('{}.{}. ', i, j)
+                'numbering': '' if is_appendix else format('{}.{} ', i, j)
             } for j, subsection in enumerate(
                 section.report_subsections.all().order_by('pk')
             )]
