@@ -558,10 +558,10 @@
     }
 
     function insertRichTextDeleteControl( element ) {
-        var link = $( '<a class="icon icon-cross text-replace halloembed__delete">Delete</a>' );
-        $ ( element ).addClass( 'halloembed' ).prepend( link );
+        var link = $( '<a class="icon icon-cross text-replace delete-control">Delete</a>' );
+        $ ( element ).addClass( 'rich-text-deletable' ).prepend( link );
         link.on( 'click', function() {
-            var widget = $( element ).parent( '[data-hallo-editor]' ).data( 'IKS-hallo' );
+            var widget = $( element ).parent( '.richtext' ).data( 'IKS-hallo' );
             $( element ).fadeOut( function() {
                 $( element ).remove();
                 if ( widget != undefined && widget.options.editable ) {
@@ -572,7 +572,7 @@
     }
 
     $( function() {
-        $( '[data-hallo-editor] [contenteditable="false"]' ).each( function() {
+        $( '.richtext [contenteditable="false"]' ).each( function() {
             insertRichTextDeleteControl( this );
         } );
     } );
