@@ -1,10 +1,11 @@
 import re
 
-from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand
 
 import pypandoc
-from research_reports.models import AuthorNames, Report
+from bs4 import BeautifulSoup
+from research_reports.models import ReportAuthor, ResearchReportPage
+
 
 report_type_target = 'Report [Tt]ype: '
 title_target = 'Title: '
@@ -30,15 +31,15 @@ def targeted_string(target, soup):
     else:
         return ''
 
+
 def authors(soup):
     authors_string = targeted_string(authors_target, soup)
     authors_list = re.split(', ', authors_string)
-    return [AuthorNames(name=name) for name in authors_list]
+    return [ReportAuthor(name=name) for name in authors_list]
+
 
 def footnotes(soup):
     return soup.find('section', class_='footnotes')
-
-# def main_content(soup):
 
 
 def run(report_page):
@@ -49,7 +50,7 @@ def run(report_page):
     report_page.report_type = targeted_string(report_type_target, soup)
     report_page.header = targeted_string(title_target, soup)
     report_page.subheader = targeted_string(subtitle_target, soup)
-    report_page.report_author_names = authors(soup)
+    report_page.report_authors = authors(soup)
 
     # Main Content
 
@@ -75,5 +76,5 @@ class Command(BaseCommand):
         print('received id as argument: ', id)
 
         print(" *** finding report page... ***")
-        report_page = Report.objects.get(id=report_id)
+        report_page = ResearchReportPage.objects.get(id=report_id)
         run(report_page)

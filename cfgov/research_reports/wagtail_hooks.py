@@ -1,10 +1,10 @@
 from wagtail.core import hooks
 
-from research_reports.models import Report
+from research_reports.models import ResearchReportPage
 
 
 def process_research_report(request, page):
-    if page.specific_class == Report:
+    if page.specific_class == ResearchReportPage:
         page.parse_report_file()
 
 
