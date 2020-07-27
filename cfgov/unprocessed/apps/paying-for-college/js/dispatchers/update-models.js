@@ -9,9 +9,11 @@ import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
-import { stringToNum } from '../util/number-utils.js';
+import { isNumeric, stringToNum } from '../util/number-utils.js';
 import { getConstantsValue, getProgramInfo, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { updateGradMeterChart, updateRepaymentMeterChart, updateSchoolView } from './update-view.js';
+import { updateUrlQueryString } from '../dispatchers/update-view.js';
+
 
 const _urlParamsToModelVars = {
   'iped': 'schoolModel.schoolID',
@@ -174,9 +176,14 @@ const updateSchoolData = function( iped ) {
     getSchoolData( iped )
       .then( resp => {
         const data = JSON.parse( resp.responseText );
-
         for ( const key in data ) {
-          schoolModel.setValue( key, data[key] );
+          const val = data[key];
+          schoolModel.setValue( key, val, false );
+
+          // Update state to reflect any missing rate values
+          if ( [ 'repay3yr', 'gradRate', 'defaultRate' ].indexOf( key ) > -1 && !isNumeric( val ) ) {
+            stateModel.setValue( key + 'missing', true );
+          }
         }
 
         // Create objects of programs keyed by program ID
@@ -202,6 +209,7 @@ const updateSchoolData = function( iped ) {
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
 
         updateSchoolView();
+        updateUrlQueryString();
 
         resolve( true );
 
