@@ -189,7 +189,7 @@ const financialModel = {
     // enforce unsub range
     const unsubResult = enforceRange( financialModel.values.fedLoan_directUnsub,
       0,
-      getConstantsValue( 'subsidizedCapYearOne' ) );
+      unsubCap );
     if ( unsubResult !== false ) {
       financialModel.values.fedLoan_directUnsub = unsubResult.value;
       if ( unsubResult.error !== false ) {

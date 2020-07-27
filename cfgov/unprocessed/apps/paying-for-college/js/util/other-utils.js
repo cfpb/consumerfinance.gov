@@ -56,6 +56,33 @@ function getStateByCode( code ) {
   return statesByCode[code];
 }
 
+/**
+ * Search for support of the matches() method by looking at
+ * browser prefixes.
+ * @param {HTMLNode} el
+ *   The element to check for support of matches() method.
+ * @returns {Function} The appropriate matches() method of elem.
+ */
+function _getMatchesMethod( el ) {
+  return el.matches ||
+         el.webkitMatchesSelector ||
+         el.mozMatchesSelector ||
+         el.msMatchesSelector;
+}
+
+/**
+ * Determine whether element matches a selector.
+ *
+ * @param {HTMLNode} el - DOM element to check.
+ * @param {string} selector - a selector string.
+ * @returns {boolean} True if element matches selector, false otherwise.
+ */
+function selectorMatches( el, selector ) {
+  const matchesMethod = _getMatchesMethod( el );
+  return matchesMethod.call( el, selector );
+}
+
 export {
-  getStateByCode
+  getStateByCode,
+  selectorMatches
 };
