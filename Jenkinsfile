@@ -135,6 +135,16 @@ pipeline {
     }
 
     post {
+        success{
+          script{
+            if (env.GIT_BRANCH != 'main') {
+                    notify("delivery-huddle", ":white_check_mark: Branch $env.GIT_BRANCH PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at $env.SITE_URL.")
+                }
+            else {
+                    notify("delivery-huddle", ":white_check_mark: Branch $env.GIT_BRANCH deployed via $env.BUILD_URL and available at $env.SITE_URL.")
+                }
+
+        }
         unsuccessful {
             notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
         }
