@@ -144,6 +144,7 @@ pipeline {
                     notify("delivery-huddle", ":white_check_mark: Branch $env.GIT_BRANCH deployed via $env.BUILD_URL and available at $env.SITE_URL.")
                 }
 
+            }
         }
         unsuccessful {
             notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
