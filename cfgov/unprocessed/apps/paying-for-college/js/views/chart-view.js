@@ -586,19 +586,24 @@ const chartView = {
     if ( !cohort ) {
       cohort = 'cohortRankByHighestDegree';
     }
-    let percentile = getSchoolCohortValue( cohort, 'grad_rate' ).percentile_rank;
+    const cohortGradRate = getSchoolCohortValue( cohort, 'grad_rate' );
+    if ( cohortGradRate ) {
+      let percentile = cohortGradRate.percentile_rank;
 
-    if ( percentile <= 33 ) {
-      updateState.byProperty( 'gradMeterThird', 'bottom third' );
-    } else if ( percentile <= 66 ) {
-      updateState.byProperty( 'gradMeterThird', 'middle third' );
+      if ( percentile <= 33 ) {
+        updateState.byProperty( 'gradMeterThird', 'bottom third' );
+      } else if ( percentile <= 66 ) {
+        updateState.byProperty( 'gradMeterThird', 'middle third' );
+      } else {
+        updateState.byProperty( 'gradMeterThird', 'top third' );
+      }
+
+      // Percentile works along a 180-degree axis:
+      percentile = percentile / 100 * 180;
+      chartView.gradMeterChart.series[0].setData( [ percentile ] );
     } else {
-      updateState.byProperty( 'gradMeterThird', 'top third' );
+      updateState.byProperty( 'gradMeterThird', '' );
     }
-
-    // Percentile works along a 180-degree axis:
-    percentile = percentile / 100 * 180;
-    chartView.gradMeterChart.series[0].setData( [ percentile ] );
   },
 
   updateRepaymentMeterChart: () => {
@@ -606,19 +611,22 @@ const chartView = {
     if ( !cohort ) {
       cohort = 'cohortRankByHighestDegree';
     }
-    const percentile = getSchoolCohortValue( cohort, 'repay_3yr' ).percentile_rank;
+    const cohortRepayRate = getSchoolCohortValue( cohort, 'repay_3yr' );
+    if ( cohortRepayRate ) {
+      const percentile = cohortRepayRate.percentile_rank;
 
-    if ( percentile <= 33 ) {
-      updateState.byProperty( 'repayMeterThird', 'bottom third' );
-    } else if ( percentile <= 66 ) {
-      updateState.byProperty( 'repayMeterThird', 'middle third' );
-    } else {
-      updateState.byProperty( 'repayMeterThird', 'top third' );
+      if ( percentile <= 33 ) {
+        updateState.byProperty( 'repayMeterThird', 'bottom third' );
+      } else if ( percentile <= 66 ) {
+        updateState.byProperty( 'repayMeterThird', 'middle third' );
+      } else {
+        updateState.byProperty( 'repayMeterThird', 'top third' );
+      }
+
+      // Percentile works along a 180-degree axis:
+      const arc = percentile / 100 * 180;
+      chartView.repaymentMeterChart.series[0].setData( [ arc ] );
     }
-
-    // Percentile works along a 180-degree axis:
-    const arc = percentile / 100 * 180;
-    chartView.repaymentMeterChart.series[0].setData( [ arc ] );
   }
 
 };

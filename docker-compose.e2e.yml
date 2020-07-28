@@ -9,6 +9,7 @@ services:
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
+      - NO_COLOR=1
     command: npx cypress run -b chrome --headless
     working_dir: /app
     volumes:
