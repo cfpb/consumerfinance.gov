@@ -63,6 +63,7 @@
 {% set linkedin_title = ( value.linkedin_title or blurb ) | urlencode %}
 {% set linkedin_text = ( value.linkedin_text or '' ) | urlencode %}
 {% set twitter_text = ( value.twitter_text or blurb ) | urlencode %}
+{% set language = language | default( 'en' ) %}
 
 <div class="m-social-media
             m-social-media__{{ 'share' if is_share_view else 'follow' }}">
@@ -88,16 +89,18 @@
                m-list__horizontal
                m-social-media_icons">
 
+        {% set facebook_account = 'CFPBespanol' if language == 'es' else 'cfpb' %}
         {% set facebook_info = {
             'name': 'Facebook',
-            'homepage': unsigned_redirect('https://facebook.com/cfpb'),
+            'homepage': unsigned_redirect('https://facebook.com/' ~ facebook_account),
             'share_url': signed_redirect('https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url),
             'icon': 'facebook'
         } %}
 
+        {% set twitter_account = 'CFPBespanol' if language == 'es' else 'cfpb' %}
         {% set twitter_info = {
             'name': 'Twitter',
-            'homepage': unsigned_redirect('https://twitter.com/cfpb'),
+            'homepage': unsigned_redirect('https://twitter.com/' ~ twitter_account),
             'share_url': signed_redirect(_share_twitter_url(parsed_url, twitter_text, value)|trim),
             'icon': 'twitter'
         } %}
