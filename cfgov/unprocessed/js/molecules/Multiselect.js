@@ -149,12 +149,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements
     } );
 
     _searchDom = create( 'input', {
-      className:      BASE_CLASS + '_search ' + TEXT_INPUT_CLASS,
-      type:           'text',
-      placeholder:    _placeholder || 'Choose up to five',
-      inside:         _headerDom,
-      id:             _name,
-      'autocomplete': 'off'
+      className:    BASE_CLASS + '_search ' + TEXT_INPUT_CLASS,
+      type:         'text',
+      placeholder:  _placeholder || 'Choose up to five',
+      inside:       _headerDom,
+      id:           _name,
+      autocomplete: 'off'
     } );
 
     _fieldsetDom = create( 'fieldset', {
