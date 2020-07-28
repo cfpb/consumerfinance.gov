@@ -17,7 +17,7 @@
         widget = this;
 
         button = $('<span></span>');
-        button.hallobutton({
+        button.draftailButton({
           uuid: this.options.uuid,
           editable: this.options.editable,
           label: 'Edit HTML',
