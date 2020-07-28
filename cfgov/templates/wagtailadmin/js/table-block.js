@@ -88,7 +88,7 @@
 
                 RichTextEditor.prototype.beginEditing = function( event, tableCellIndex, tableCell ) {
                     var initialCellValue = this.instance.getValue();
-                    var blocksFromHTML = window.DraftJS.convertFromHTML(initialCellValue);
+                    var blocksFromHTML = window.DraftJS.convertFromHTML( initialCellValue );
                     var contentState = window.DraftJS.ContentState.createFromBlockArray(
                         blocksFromHTML.contentBlocks,
                         blocksFromHTML.entityMap,
@@ -97,14 +97,16 @@
                     var cellProperties = this.cellProperties;
                     var modalDom;
                     var richTextEditor;
+                    var blocksToHTML;
                     var instance = this.instance;
                     
                     instance.deselectCell();
                     modalDom = showModal();
                     richTextEditor = _createRichTextEditor( cellValue );
+                    blocksToHTML = windows.draftail.convertToHTML( contentState.getCurrentContent() )
 
                     modalDom.on( 'save-btn:clicked', function() {
-                        instance.setDataAtCell( cellProperties.row, cellProperties.col, richTextEditor.html() );
+                        instance.setDataAtCell( cellProperties.row, cellProperties.col, blocksToHTML );
                         instance.render();
                         $( win ).resize();
                     } );
