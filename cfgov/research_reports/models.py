@@ -1,3 +1,5 @@
+import os
+
 from django.conf import settings
 from django.core import management
 from django.db import models
@@ -188,14 +190,9 @@ class ResearchReportPage(CFGOVPage):
     def parse_report_file(self):
         if self.report_file and self.process_report:
             deploy_env = _get_deploy_environment()
-            if deploy_env == "build":
-                # TODO: trigger the jenkins job on Zusa
-                pass
-            elif deploy_env == "production":
-                # TODO: trigger the jenkins job on EXT Jenkins
-                pass
-            elif deploy_env == 'local' or deploy_env.find('dev') >= 0:
-                # if running locally or on a DEV server, run command locally
+            if os.environ.get("JENKINS_API_ENABLED"):
+                management.call_command('trigger_jenkins_build', self.id)
+            elif deploy_env == 'local':
                 management.call_command('parse_research_report', self.id)
             else:
                 # deployed to another environment where s3 isn't configured
