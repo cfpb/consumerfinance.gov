@@ -1,5 +1,6 @@
 import re
 
+from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
 import pypandoc
@@ -22,6 +23,17 @@ def document_as_beautifulsoup(report_page):
     print(" *** converting the report to html... ***")
     output = pypandoc.convert_text(raw_report, format='docx', to='html')
     return BeautifulSoup(output, 'html.parser')
+
+
+def save_page(report_page):
+    print(" *** saving the page... ***")
+    report_page.process_report = False
+    try:
+        bot_user = User.objects.get(username='bot.user')
+    except User.DoesNotExist:
+        bot_user = None
+    report_page.save_revision(user=bot_user)
+    report_page.save()
 
 
 def targeted_string(target, soup):
@@ -59,10 +71,7 @@ def run(report_page):
     # Footnotes
     report_page.footnotes = footnotes(soup)
 
-    print(" *** saving the page... ***")
-    report_page.process_report = False
-    report_page.save_revision()  # future: add user= keyword
-    report_page.save()
+    save_page(report_page)
 
 
 # To invoke this command from the cfgov-refresh root:
