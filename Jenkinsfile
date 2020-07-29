@@ -111,7 +111,6 @@ pipeline {
                     }
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
-                notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR ${env.CHANGE_URL} deployed by ${env.CHANGE_AUTHOR} via ${env.BUILD_URL} and available at https://${CFGOV_HOSTNAME}.")
             }
         }
         stage('Run Functional Tests') {
