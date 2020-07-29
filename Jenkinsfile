@@ -136,10 +136,10 @@ pipeline {
         success {
             script {
                 if (env.GIT_BRANCH != 'master') {
-                    notify('delivery-huddle', ":white_check_mark: Branch $env.GIT_BRANCH PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
                 }
                 else {
-                    notify('delivery-huddle', ":white_check_mark: Branch $env.GIT_BRANCH deployed via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH deployed via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
                  }
             }
         }
