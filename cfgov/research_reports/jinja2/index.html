@@ -26,26 +26,26 @@
 
 {% macro report_part(sections, is_appendix) %}
   {% for section in sections -%}
-    <h3 class="report-header">
+    <h2 class="report-header">
       <a
         style="color:black;"
         id="{{section.url[1:]}}"
         href="{{section.url}}">
           {{('Appendix ' if is_appendix else '') + section.numbering + section.title}}
       </a>
-    </h3>
+    </h2>
 
     {{ section.body | safe }}
 
     {% for subsection in section.children -%}
-      <h4 class="report-header">
+      <h3 class="report-header">
         <a
           style="color:black;"
           id="{{subsection.url[1:]}}"
           href="{{subsection.url}}">
             {{subsection.numbering + subsection.title}}
         </a>
-      </h4>
+      </h3>
 
       {{ subsection.body | safe}}
     {%- endfor %}
@@ -73,7 +73,7 @@
 
     {{report_part(report_sections)}}
 
-    <h2>Appendices</h2>
+    <h2 class="appendix-header">Appendices</h2>
     {{report_part(report_appendices, True)}}
 
     <div class="block block__flush-top">
