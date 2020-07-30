@@ -247,10 +247,10 @@ const financialModel = {
    * Set loan rates based on program type
    */
   _updateRates: () => {
-    if ( getStateValue( 'programType' ) === 'graduate' ) {
-      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateGrad' );
+    if ( getStateValue( 'programLevel' ) === 'graduate' ) {
+      financialModel.values.rate_directUnsub = getConstantsValue( 'unsubsidizedRateGrad' );
     } else {
-      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateUndergrad' );
+      financialModel.values.rate_directUnsub = getConstantsValue( 'unsubsidizedRateUndergrad' );
     }
   },
 
