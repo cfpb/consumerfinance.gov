@@ -12,6 +12,7 @@ jobs:
         toxenv:
           - lint-current
           - validate-migrations
+          - validate-assets
           - unittest-current
           - unittest-future
 
