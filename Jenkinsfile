@@ -1,17 +1,16 @@
 // Jenkins multibranch pipeline geared towards building
 // and deploying cf.gov production-like Docker stack.
-// 
+//
 // This pipeline uses Jenkins Shared Libraries for several
 // pipeline steps. For details on how those work, see
 // GHE repo: app-ops/app-ops-jenkins-shared-libraries
 pipeline {
-
     agent {
         label 'docker-agent'
     }
 
     environment {
-        IMAGE_REPO = "cfpb/cfgov-python"
+        IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
@@ -38,7 +37,6 @@ pipeline {
     }
 
     stages {
-
         stage('Init') {
             steps {
                 script {
@@ -66,7 +64,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.build(env.IMAGE_NAME_LOCAL, "--build-arg scl_python_version=rh-python36 --target cfgov-prod .")
+                    docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                 }
             }
         }
@@ -113,7 +111,6 @@ pipeline {
                     }
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
-                notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR ${env.CHANGE_URL} deployed by ${env.CHANGE_AUTHOR} via ${env.BUILD_URL} and available at https://${CFGOV_HOSTNAME}.")
             }
         }
         stage('Run Functional Tests') {
@@ -135,6 +132,16 @@ pipeline {
     }
 
     post {
+        success {
+            script {
+                if (env.GIT_BRANCH != 'master') {
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                }
+                else {
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH deployed via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                 }
+            }
+        }
         unsuccessful {
             notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
         }
