@@ -154,12 +154,15 @@ const financialModel = {
     let unsubCap = 0;
     const errors = {};
 
+    // get the caps from the constants model
+
     // First, enforce subsidized cap
     const subResult = enforceRange( financialModel.values.fedLoan_directSub,
       0,
-      getConstantsValue( 'subsidizedCapYearOne' ) );
+      getConstantsValue( 'subCaps' ).yearOne );
     if ( subResult !== false ) {
       financialModel.values.fedLoan_directSub = subResult.value;
+      // Reserve for later error handling
       if ( subResult.error !== false ) {
         errors.fedLoan_directSub = subResult.error;
       }
