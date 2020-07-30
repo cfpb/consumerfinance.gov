@@ -1,6 +1,6 @@
 import re
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
 import pypandoc
@@ -28,6 +28,7 @@ def document_as_beautifulsoup(report_page):
 def save_page(report_page):
     print(" *** saving the page... ***")
     report_page.process_report = False
+    User = get_user_model()
     try:
         bot_user = User.objects.get(username='bot.user')
     except User.DoesNotExist:
