@@ -143,7 +143,13 @@ pipeline {
             }
         }
         unsuccessful {
-            notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
+            if (env.GIT_BRANCH != 'master') {
+                    notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
+                }
+                else {
+                    notify("${NOTIFICATION_CHANNEL}", ":x: Branch $env.GIT_BRANCH failed. See: ${env.BUILD_URL}.")
+                 }
+            
         }
     }
 }
