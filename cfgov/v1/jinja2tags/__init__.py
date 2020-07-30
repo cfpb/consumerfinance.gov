@@ -1,5 +1,6 @@
 import html
 
+from django.utils.html import escape
 from django.utils.module_loading import import_string
 
 from jinja2 import Markup, contextfunction
@@ -36,7 +37,7 @@ def image_alt_value(image):
 
     # Check to see if the passed value is a CFGOVRendition
     if isinstance(image, CFGOVRendition):
-        return image.alt
+        return escape(image.alt)
 
     # Otherwise, if it is a block
     if image:
@@ -44,9 +45,9 @@ def image_alt_value(image):
         upload = image.get('upload')
 
         if block_alt:
-            return block_alt
+            return escape(block_alt)
         elif upload and upload.alt:
-            return upload.alt
+            return escape(upload.alt)
 
     return ''
 
