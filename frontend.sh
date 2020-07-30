@@ -89,7 +89,7 @@ fake_fonts() {
 
     # 1. Use grep to find all .woff and .woff2 files referenced in CSS files.
     # 2. Reduce these to a list of unique webfont filenames.
-    # 3. Touch each filename in static.in/0/fonts, causing it to be created as
+    # 3. Touch each filename in static.in/fake-fonts/fonts, causing it to be created as
     # an empty file if it doesn't exist already.
     grep -Eho \
         '[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}.woff2?' \
