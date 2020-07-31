@@ -9,14 +9,14 @@ const top = sidenav.offsetTop;
 const headerOffset = 224
 const headers = document.querySelectorAll( '.content_main .report-header' )
 let offsets = [];
-let offsetIsH3 = [];
+let primaryOffsets = [];
 let set = 0;
 let lastTargetIndex;
 
 (function(){
   for(let i=0; i<headers.length; i++){
     offsets.push(headers[i].offsetTop + headerOffset)
-    offsetIsH3.push(headers[i].tagName === 'H3')
+    primaryOffsets.push(headers[i].tagName === 'H2')
   }
 })();
 
@@ -38,7 +38,7 @@ function stickIfNeeded() {
 
 function getParentHeader(index){
   for(let i=index; i>=0; i--){
-    if(offsetIsH3[i]) return tocHeaders[i].parentNode
+    if(primaryOffsets[i]) return tocHeaders[i].parentNode
   }
 }
 
