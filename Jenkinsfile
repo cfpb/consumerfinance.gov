@@ -135,21 +135,22 @@ pipeline {
         success {
             script {
                 if (env.GIT_BRANCH != 'master') {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
                 }
                 else {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH deployed via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark:  $env.GIT_BRANCH deployed via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
                  }
             }
         }
         unsuccessful {
-            if (env.GIT_BRANCH != 'master') {
+            script{
+                if (env.GIT_BRANCH != 'master') {
                     notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
                 }
                 else {
-                    notify("${NOTIFICATION_CHANNEL}", ":x: Branch $env.GIT_BRANCH failed. See: ${env.BUILD_URL}.")
+                    notify("${NOTIFICATION_CHANNEL}", ":x: ${env.GIT_BRANCH} failed. See: ${env.BUILD_URL}.")
                  }
-            
+            }
         }
     }
 }
