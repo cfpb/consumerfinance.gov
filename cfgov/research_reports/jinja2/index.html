@@ -48,6 +48,19 @@
       </h3>
 
       {{ subsection.body | safe}}
+
+      {% for section3 in subsection.children -%}
+        <h4 class="report-header">
+          <a
+            style="color:black;"
+            id="{{section3.url[1:]}}"
+            href="{{section3.url}}">
+              {{section3.numbering + section3.title}}
+          </a>
+        </h4>
+
+        {{ section3.body | safe}}
+    {%- endfor %}
     {%- endfor %}
   {%- endfor %}
 {% endmacro %}

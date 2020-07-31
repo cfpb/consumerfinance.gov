@@ -40,10 +40,19 @@ def get_report_parts(is_appendix=False):
             'url': format('#section-{}', i),
             'numbering': format('{}: ' if is_appendix else '{}. ', i),
             'children': [{
-                'title': subsection.sub_header,
-                'body': subsection.sub_body,
+                'title': subsection.header,
+                'body': subsection.body,
                 'url': format('#section-{}.{}', i, j),
-                'numbering': '' if is_appendix else format('{}.{} ', i, j)
+                'numbering': '' if is_appendix else format('{}.{} ', i, j),
+                'children': [{
+                    'title': section3.header,
+                    'body': section3.body,
+                    'url': format('#section-{}.{}.{}', i, j, k),
+                    'numbering': '' if is_appendix else
+                                 format('{}.{}.{} ', i, j, k),
+                } for k, section3 in enumerate(
+                    subsection.report_sections_level_three.all().order_by('pk')
+                )]
             } for j, subsection in enumerate(
                 section.report_subsections.all().order_by('pk')
             )]
@@ -82,12 +91,28 @@ class ReportSection(ClusterableModel):
                          related_name='report_sections')
 
 
-class ReportSubSection(models.Model):
-    sub_header = models.CharField(max_length=200)
-    sub_body = models.TextField(blank=True)
+class ReportSubSection(ClusterableModel):
+    header = models.CharField(max_length=200)
+    body = models.TextField(blank=True)
+    panels = [
+        FieldPanel('header'),
+        FieldPanel('body'),
+        InlinePanel(
+            'report_sections_level_three',
+            label='Section Level Three'
+        ),
+    ]
     section = ParentalKey('ReportSection',
                           on_delete=models.CASCADE,
                           related_name='report_subsections')
+
+
+class ReportSectionLevelThree(models.Model):
+    header = models.CharField(max_length=200)
+    body = models.TextField(blank=True)
+    section = ParentalKey('ReportSubSection',
+                          on_delete=models.CASCADE,
+                          related_name='report_sections_level_three')
 
 
 class ReportAuthor(models.Model):
