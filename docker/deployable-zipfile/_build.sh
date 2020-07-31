@@ -40,3 +40,4 @@ fi
 # Copy build artifact to source directory.
 cp "$build_artifact" "$cfgov_refresh_volume"
 echo "Generated $build_artifact in $cfgov_refresh_volume."
+exit 0
