@@ -134,7 +134,7 @@ pipeline {
     post {
         success {
             script {
-                if (env.GIT_BRANCH != 'master') {
+                if (env.GIT_BRANCH != 'master' or env.GIT_BRANCH != 'main') {
                     notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
                 }
                 else {
@@ -144,7 +144,7 @@ pipeline {
         }
         unsuccessful {
             script{
-                if (env.GIT_BRANCH != 'master') {
+                if (env.GIT_BRANCH != 'master' or env.GIT_BRANCH != 'main') {
                     notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
                 }
                 else {
