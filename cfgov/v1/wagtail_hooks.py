@@ -109,6 +109,10 @@ def editor_css():
         'css/table-block.css',
     ]
 
+    # Adding Draftail CSS to all admin pages
+    # to support the use of Draftail in our RichTextTableInput
+    css_files.insert(0, 'wagtailadmin/css/panels/draftail.css')
+
     css_includes = format_html_join(
         '\n',
         '<link rel="stylesheet" href="{0}{1}">',
