@@ -13,6 +13,23 @@ INSTALLED_APPS += (
 WAGTAILADMIN_RICH_TEXT_EDITORS = {
     'default': {
         'WIDGET': 'wagtail.admin.rich_text.DraftailRichTextArea',
+        "OPTIONS": {
+            "features": [
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "blockquote",
+                "hr",
+                "ol",
+                "ul",
+                "bold",
+                "italic",
+                "link",
+                "document-link",
+                "image",
+            ]
+        },
     },
     'custom': {
         'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
