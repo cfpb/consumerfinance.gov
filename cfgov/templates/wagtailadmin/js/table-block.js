@@ -506,7 +506,7 @@
                                         '</div>',
                                     '</header>',
                                     '<div class="row active nice-padding struct-block object">',
-                                        '<input id="table-block-editor" maxlength="255" name="title" type="text" value="" data-draftail-input>',
+                                        '<input id="table-block-editor" maxlength="255" name="title" type="text" value="" class="data-draftail-input">',
                                     '</div><br>',
                                     '<div class="row active nice-padding m-t-10">',
                                         '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save</button>',
