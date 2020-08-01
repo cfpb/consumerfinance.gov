@@ -52,11 +52,11 @@ function hightlightTOC() {
       let hl = i ? i - 1 : i;
       if ( hl === lastTargetIndex ) return;
       if ( lastTargetIndex !== undefined ){
-        tocHeaders[lastTargetIndex].classList.remove( 'current-section' );
+        tocHeaders[lastTargetIndex].classList.remove( 'm-nav-link__current' );
         getParentHeader(lastTargetIndex).classList.remove('parent-header')
       }
 
-      tocHeaders[hl].classList.add( 'current-section' );
+      tocHeaders[hl].classList.add( 'm-nav-link__current' );
       getParentHeader(hl).classList.add( 'parent-header' );
       lastTargetIndex = hl;
       return;
