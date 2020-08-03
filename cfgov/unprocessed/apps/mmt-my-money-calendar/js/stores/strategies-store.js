@@ -76,7 +76,7 @@ class StrategiesStore {
           'expense.transportation.publicTransportation',
           'expense.transportation.gas',
           'expense.food.eatingOut',
-          'expense.food.groceries',
+          /* 'expense.food.groceries', */
           'expense.personal.clothing',
           'expense.personal.personalCare',
           'expense.personal.funMoney',

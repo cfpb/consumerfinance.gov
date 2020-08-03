@@ -393,12 +393,12 @@ export const Categories = new CategoryTree({
         icon: icons.groceries,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
-        strategy: {
+        /* strategy: {
           id: 'reduceGroceryExpenses',
           title: 'Reduce your Grocery Expenses',
           body:
             'Using coupons and buying groceries and supplies in bulk with other family or friends can help reduce your grocery costs and put more money in your budget.',
-        },
+        }, */
       },
     },
     emergencySavings: {
