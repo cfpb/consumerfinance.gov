@@ -49,10 +49,6 @@ function Form() {
     handleModalSession();
   }, [])
 
-  useEffect(() => {
-    handleModalSession();
-  }, [])
-
   // Toggle bottom nav bar when inputs are focused, to prevent it from obscuring text on mobile screens:
   const focusHandler = useCallback(
     (evt) => {

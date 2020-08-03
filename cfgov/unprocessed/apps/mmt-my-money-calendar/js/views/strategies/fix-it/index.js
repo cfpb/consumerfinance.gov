@@ -92,7 +92,9 @@ function FixItStrategies() {
 
   const events = eventStore.getPositiveEventsForWeek(uiStore.currentWeek) || [];
   var positiveFilter = events.filter((event) => event.total > 0);
-  var weekIncome = positiveFilter.reduce((acc, event) => acc + event.total, 0);
+  var initialBalance = positiveFilter.find((event) => event.category === 'income.startingBalance');
+  var positiveEvents = positiveFilter.filter((event) => (event.category !== 'income.startingBalance' && event.category !== 'income.benefits.snap'));
+  var weekIncome = positiveEvents.reduce((acc, event) => acc + event.total, 0);
   var negativeFilter = events.filter((event) => event.total < 0);
   var weekExpenses = negativeFilter.reduce((acc, event) => acc + event.total, 0);
   return (
@@ -121,7 +123,7 @@ function FixItStrategies() {
               <div className="fixit-header">
                 <div className="fixit-header__comment">
                   <div>Starting Balance:</div>
-                  <div className="fixit-header__comment-value">{uiStore.weekStartingBalanceText}</div>
+                  <div className="fixit-header__comment-value">{initialBalance ? formatCurrency(initialBalance.total) : uiStore.weekStartingBalanceText}</div>
                 </div>
                 <div className="fixit-header__comment">
                   <div>Income: </div>

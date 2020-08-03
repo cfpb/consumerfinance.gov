@@ -301,7 +301,6 @@ export default class CashFlowStore {
   getPositiveEventsForWeek(date) {
     date = toDayJS(date).startOf('week');
     const positiveEvents = this.eventsByWeek.get(date.valueOf());
-
     return positiveEvents;
   }
 
