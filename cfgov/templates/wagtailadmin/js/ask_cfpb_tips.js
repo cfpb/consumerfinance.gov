@@ -15,7 +15,7 @@
         buttonset = jQuery("<span class=\"" + this.widgetName + "\"></span>");
         var buttonElement;
         buttonElement = jQuery('<span></span>');
-        buttonElement.draftailButton({
+        buttonElement.Draftail-ToolbarButton({
           uuid: _this.options.uuid,
           editable: _this.options.editable,
           label: "Apply Ask CFPB tip style to selection",
@@ -113,7 +113,7 @@
 
         });
         
-        buttonset.draftailButtonset();
+        buttonset.Draftail-ToolbarButtonset();
         return toolbar.append(buttonset);
       }
     });

@@ -17,7 +17,7 @@
         widget = this;
 
         button = $('<span></span>');
-        button.draftailButton({
+        button.Draftail-ToolbarButton({
           uuid: this.options.uuid,
           editable: this.options.editable,
           label: 'Edit HTML',
