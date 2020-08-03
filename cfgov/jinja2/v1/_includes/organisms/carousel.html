@@ -38,7 +38,7 @@
                     {% set rendition = image( item.image, 'original' ) %}
                     <img class="o-carousel_item-img"
                         src="{{ rendition.url }}"
-                        alt="{{ item.image.alt }}">
+                        alt="{{ item.image.alt | escape }}">
             </div>
         </a>
     </div>
@@ -52,7 +52,7 @@
             {% set rendition = image( item.image, 'fill-48x48' ) %}
             <img class="o-carousel_thumbnail-img"
                  src="{{ rendition.url }}"
-                 alt="{{ item.image.alt }}">
+                 alt="{{ item.image.alt | escape }}">
         </span>
         <span class="o-carousel_thumbnail-text">
             {{ item.title }}
@@ -73,7 +73,7 @@
                 {% set rendition = image( item.image, 'fill-48x48' ) %}
                 <img class="o-carousel_thumbnail-img"
                         src="{{ rendition.url }}"
-                        alt="{{ item.title }}"
+                        alt="{{ item.title | escape }}"
                         aria-hidden="true">
             </span>
             <span class="o-carousel_thumbnail-text">

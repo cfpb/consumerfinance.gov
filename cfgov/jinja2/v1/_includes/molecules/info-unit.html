@@ -68,7 +68,7 @@
         </div>
         {% else %}
         <img src="{{ value.image.url }}"
-             alt="{{ value.image.alt if value.image.alt else '' }}"
+             alt="{{ image_alt_value(value.image) | escape }}"
              class="m-info-unit_image
                     {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">
         {% endif %}

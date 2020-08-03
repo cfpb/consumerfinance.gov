@@ -96,7 +96,7 @@
                     {% if snippet.thumbnail %}
                         {% set tmp_thumb = image(snippet.thumbnail, 'width-300') %}
                         <img src="{{ tmp_thumb.url }}"
-                             alt="{{ tmp_thumb.alt }}">
+                             alt="{{ tmp_thumb.alt | escape }}">
                     {% endif %}
                     </div>
                 {% endif %}

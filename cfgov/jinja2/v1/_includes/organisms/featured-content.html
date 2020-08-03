@@ -55,7 +55,7 @@
         <div class="o-featured-content-module_visual">
             <img class="o-featured-content-module_img"
                  src="{{ value.image.url }}"
-                 alt="{{ value.image.alt_text }}">
+                 alt="{{ value.image.alt_text | escape }}">
         </div>
     {% endif %}
 </section>
