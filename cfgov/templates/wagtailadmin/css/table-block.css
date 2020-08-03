@@ -1,3 +1,7 @@
+.draftailtoolbar {
+    z-index: 10000 !important;
+}
+
 .heading-text-block,
 .heading-level-block,
 .heading-icon-block {
