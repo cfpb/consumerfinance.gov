@@ -1,3 +1,5 @@
+@import (reference) '../../../css/main.less';
+
 .research-report {
   max-width: unit( (670 + 30) / 16, em);
 
@@ -22,12 +24,15 @@
   height: 100%;
   & > ul {
     a {
-      padding-left: 1.85em;
-      text-indent: -1.1em;
+      padding-left: unit( 30px / @base-font-size-px, em );
+      text-indent: unit( -18px / @base-font-size-px, em );
     }
   }
-  h3, h4 {
-    padding-left: 19px;
+  h3 {
+    padding-left: unit( 19px / @size-iii, em );
+  }
+  h4 {
+    padding-left: unit( 19px / @size-iv, em );
   }
   .o-secondary-navigation_list__children {
     display: none;
