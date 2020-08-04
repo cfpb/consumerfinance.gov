@@ -193,7 +193,7 @@ export class AdminPage {
 
   getPageMetadataReports() {
     this.openNavigationTab( 'Reports' );
-    this.selectSubMenu( 'Page metadata' );
+    this.selectSubMenu( 'Page Metadata' );
     return cy.get( '.listing' ).find( 'tr' );
   }
 
