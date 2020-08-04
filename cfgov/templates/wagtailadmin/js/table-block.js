@@ -26,7 +26,7 @@
                     }
                 }
 
-                return target
+                return target;
             },
 
             DIMENSIONS: {
@@ -95,14 +95,12 @@
                     );
                     var cellValue = window.DraftJS.convertToRaw( contentState );
                     var cellProperties = this.cellProperties;
-                    var modalDom;
-                    var blocksToHTML;
                     var instance = this.instance;
                     
                     instance.deselectCell();
-                    modalDom = showModal();
+                    var modalDom = showModal();
                     var editorState = _createRichTextEditor( cellValue );
-                    blocksToHTML = windows.draftail.convertToHTML( editorState.getCurrentContent() )
+                    var blocksToHTML = windows.draftail.convertToHTML( editorState.getCurrentContent() );
 
                     modalDom.on( 'save-btn:clicked', function() {
                         instance.setDataAtCell( cellProperties.row, cellProperties.col, blocksToHTML );
@@ -119,7 +117,7 @@
 
             onTableChange: function onTableChange( index, change ) {
                 if ( change === 'loadData' ) {
-                    return
+                    return;
                 }
 
                 this.$element.trigger( 'table:change', [this.instance.getData()] );
@@ -548,7 +546,7 @@
      *  TODO: Refactor this code and submit PR to Wagtail repo.
      */
     function _createRichTextEditor( initialValue ) {
-        var id = 'table-block-editor'
+        var id = 'table-block-editor';
         $( '#' + id ).attr('value', JSON.stringify(initialValue));
 
         var richText = window.draftail.initEditor(
