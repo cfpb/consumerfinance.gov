@@ -96,14 +96,13 @@
                     var cellValue = window.DraftJS.convertToRaw( contentState );
                     var cellProperties = this.cellProperties;
                     var modalDom;
-                    var richTextEditor;
                     var blocksToHTML;
                     var instance = this.instance;
                     
                     instance.deselectCell();
                     modalDom = showModal();
-                    richTextEditor = _createRichTextEditor( cellValue );
-                    blocksToHTML = windows.draftail.convertToHTML( contentState.getCurrentContent() )
+                    var editorState = _createRichTextEditor( cellValue );
+                    blocksToHTML = windows.draftail.convertToHTML( editorState.getCurrentContent() )
 
                     modalDom.on( 'save-btn:clicked', function() {
                         instance.setDataAtCell( cellProperties.row, cellProperties.col, blocksToHTML );
