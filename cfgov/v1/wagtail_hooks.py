@@ -90,6 +90,22 @@ def log_page_deletion(request, page):
 def editor_js():
     js_files = ['js/table-block.js']
 
+    js_files.insert(
+        0, 'wagtailadmin/js/task-chooser-modal.js'
+    )
+    js_files.insert(
+        0, 'wagtailadmin/js/page-chooser-modal.js'
+    )
+    js_files.insert(
+        0, 'wagtaildocs/js/document-chooser-modal.js'
+    )
+    js_files.insert(
+        0, 'wagtailembeds/js/embed-chooser-modal.js'
+    )
+    js_files.insert(
+        0, 'wagtailimages/js/image-chooser-modal.js'
+    )
+
     js_includes = format_html_join(
         '\n',
         '<script src="{0}{1}"></script>',
