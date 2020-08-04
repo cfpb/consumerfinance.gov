@@ -22,17 +22,19 @@
   display: block;
   overflow-y: scroll;
   height: 100%;
-  & > ul {
-    a {
-      padding-left: unit( 30px / @base-font-size-px, em );
-      text-indent: unit( -18px / @base-font-size-px, em );
-    }
+  .o-secondary-navigation_list__parents > li > a {
+    padding-left: unit( 30px / @base-font-size-px, em );
+    text-indent: unit( -18px / @base-font-size-px, em );
   }
   h3 {
     padding-left: unit( 19px / @size-iii, em );
   }
   h4 {
     padding-left: unit( 19px / @size-iv, em );
+  }
+
+  .o-report-sidenav__appendix > li > a {
+    text-indent: unit( -20px / @base-font-size-px, em );
   }
   .o-secondary-navigation_list__children {
     display: none;
