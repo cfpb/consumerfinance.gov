@@ -551,7 +551,32 @@
 
         var richText = window.draftail.initEditor(
             '#' + id,
-            {},
+            {"entityTypes": [
+                {"type": "EMBED", "icon": "media", "description": "Embed"},
+                {"type": "LINK", "icon": "link", "description": "Link",
+                "attributes": ["url", "id", "parentId"],
+                "whitelist": {"href": "^(http:|https:|undefined$)"}},
+                {"type": "DOCUMENT", "icon": "doc-full",
+                "description": "Document"},
+                {"type": "IMAGE", "icon": "image", "description": "Image",
+                "attributes": ["id", "src", "alt", "format"],
+                "whitelist": {"id": true}}],
+                "enableHorizontalRule": true, "inlineStyles": [
+                {"type": "BOLD", "icon": "bold",
+                "description": "Bold"},
+                {"type": "ITALIC", "icon": "italic",
+                "description": "Italic"}], "blockTypes": [
+                {"label": "H2", "type": "header-two",
+                "description": "Heading 2"},
+                {"label": "H3", "type": "header-three",
+                "description": "Heading 3"},
+                {"label": "H4", "type": "header-four",
+                "description": "Heading 4"},
+                {"type": "ordered-list-item", "icon": "list-ol",
+                "description": "Numbered list"},
+                {"type": "unordered-list-item", "icon": "list-ul",
+                "description": "Bulleted list"}]
+            },
             document.currentScript
         );
 
