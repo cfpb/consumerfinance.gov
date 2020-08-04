@@ -1626,3 +1626,14 @@ msgstr "Jubilado"
 
 #~ msgid "(required)"
 #~ msgstr "(se requiere)"
+
+#: jinja2/v1/_includes/molecules/social-media.html:94
+#: jinja2/v1/blog/blog_page.html:15
+#: jinja2/v1/blog/blog_page.html:32
+msgid "https://www.facebook.com/CFPB"
+msgstr "https://www.facebook.com/CFPBespanol"
+
+#: jinja2/v1/_includes/molecules/social-media.html:101
+#: jinja2/v1/blog/blog_page.html:27
+msgid "https://twitter.com/CFPB"
+msgstr "https://twitter.com/CFPBespanol"
