@@ -105,4 +105,8 @@ describe( 'Admin', () => {
     cy.url().should( 'contain', 'django-admin' );
   } );
 
+  it( 'should include the page metadata report', () => {
+    admin.getPageMetadataReports().its( 'length' ).should( 'be.gt', 2 );
+  } );
+
 } );
