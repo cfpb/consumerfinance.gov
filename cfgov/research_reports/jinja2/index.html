@@ -28,7 +28,6 @@
   {% for section in sections -%}
     <h2 class="report-header">
       <a
-        style="color:black;"
         id="{{section.url[1:]}}"
         href="{{section.url}}">
           {{('Appendix ' if is_appendix else '') + section.numbering + section.title}}
@@ -40,7 +39,6 @@
     {% for subsection in section.children -%}
       <h3 class="report-header">
         <a
-          style="color:black;"
           id="{{subsection.url[1:]}}"
           href="{{subsection.url}}">
             {{subsection.numbering + subsection.title}}
@@ -48,6 +46,18 @@
       </h3>
 
       {{ subsection.body | safe}}
+
+      {% for section3 in subsection.children -%}
+        <h4 class="report-header">
+          <a
+            id="{{section3.url[1:]}}"
+            href="{{section3.url}}">
+              {{section3.numbering + section3.title}}
+          </a>
+        </h4>
+
+        {{ section3.body | safe}}
+    {%- endfor %}
     {%- endfor %}
   {%- endfor %}
 {% endmacro %}
