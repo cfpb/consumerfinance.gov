@@ -110,7 +110,7 @@ class ReportSubSection(ClusterableModel):
 class ReportSectionLevelThree(models.Model):
     header = models.CharField(max_length=200)
     body = models.TextField(blank=True)
-    section = ParentalKey('ReportSubSection',
+    subsection = ParentalKey('ReportSubSection',
                           on_delete=models.CASCADE,
                           related_name='report_sections_level_three')
 
