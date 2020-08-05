@@ -1,3 +1,5 @@
+from django.forms.utils import flatatt
+from django.utils.html import format_html, format_html_join
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
@@ -6,6 +8,7 @@ from wagtail.core import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from bs4 import BeautifulSoup
+from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1.util.util import get_unique_id
 
@@ -163,6 +166,30 @@ class HeadingBlock(blocks.StructBlock):
         )
 
 
+class AudioPlayer(AbstractMediaChooserBlock):
+    def render_basic(self, value, context=None):
+        if not value:
+            return ''
+
+        if value.type == 'audio':
+            player_code = '''
+            <div>
+                <audio controls preload="media">
+                    {0}
+                    Your browser does not support this audio player.
+                </audio>
+            </div>
+            '''
+        else:
+            return ''
+
+        return format_html(player_code, format_html_join(
+            '\n', "<source{0}>",
+            [[flatatt(s)] for s in value.sources]
+        ))
+
+class Meta:
+        icon = 'media'
 class PlaceholderFieldBlock(blocks.FieldBlock):
     def __init__(self, *args, **kwargs):
         super(PlaceholderFieldBlock, self).__init__(*args, **kwargs)
