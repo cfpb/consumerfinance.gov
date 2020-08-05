@@ -30,8 +30,15 @@ describe( 'Tile map', () => {
     'rgba(37, 116, 115, 0.5)'
   ];
 
+  let origMaxDate;
+  beforeAll( () => {
+    origMaxDate = global.MAX_DATE;
+  } );
+
   // shim this so highcharts test doesn't die
   beforeEach( () => {
+    delete global.MAX_DATE;
+    delete global.complaint_public_metadata;
     window.SVGElement.prototype.getBBox = () => ( {
       x: 0,
       y: 0
@@ -41,6 +48,52 @@ describe( 'Tile map', () => {
 
   afterEach( () => {
     delete window.SVGElement.prototype.getBBox;
+  } );
+
+  afterAll( () => {
+    global.MAX_DATE = origMaxDate;
+  } );
+
+  describe( 'startOfToday', () => {
+    it( 'handles MAX_DATE that is already set', () => {
+      global.MAX_DATE = Date.UTC( 2016, 4, 1, 4 );
+      const actual = sut.startOfToday();
+      expect( actual.getFullYear() ).toEqual( 2016 );
+      expect( actual.getMonth() ).toEqual( 4 );
+      expect( actual.getDate() ).toEqual( 1 );
+      expect( actual.getHours() ).toEqual( 0 );
+      expect( actual.getMinutes() ).toEqual( 0 );
+    } );
+
+    it( 'sets MAX_DATE from the metadata', () => {
+      /* eslint-disable camelcase */
+      global.complaint_public_metadata = {
+        metadata_timestamp: '2020-05-09 02:39:23',
+        qas_timestamp: '2020-05-08 23:48:52',
+        total_count: 2611545
+      };
+      /* eslint-enable camelcase */
+
+      const actual = sut.startOfToday();
+      expect( actual.getFullYear() ).toEqual( 2020 );
+      expect( actual.getMonth() ).toEqual( 4 );
+      expect( actual.getDate() ).toEqual( 9 );
+      expect( actual.getHours() ).toEqual( 0 );
+      expect( actual.getMinutes() ).toEqual( 0 );
+    } );
+
+    it( 'defaults MAX_DATE if the metadata is missing', () => {
+      jest.spyOn( global.Date, 'now' )
+        // eslint-disable-next-line no-unused-vars
+        .mockImplementationOnce( _ => Date.UTC( 2018, 4, 1, 4 ) );
+
+      const actual = sut.startOfToday();
+      expect( actual.getFullYear() ).toEqual( 2018 );
+      expect( actual.getMonth() ).toEqual( 4 );
+      expect( actual.getDate() ).toEqual( 1 );
+      expect( actual.getHours() ).toEqual( 0 );
+      expect( actual.getMinutes() ).toEqual( 0 );
+    } );
   } );
 
   it( 'Calculates date range', () => {
