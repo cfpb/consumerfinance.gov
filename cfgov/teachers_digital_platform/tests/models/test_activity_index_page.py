@@ -164,7 +164,6 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_get_topics_list_returns_correct_topic_list_for_parent(self):
         # Arrange
-        my_request = self.search_page.make_preview_request()
         activity_page = self.create_activity_detail_page(title='Planning for future savings', slug='planning-future-savings')  # noqa: E501
         # Act
         actual_topics_list = activity_page.get_topics_list(self.search_page)
@@ -173,7 +172,6 @@ class TestActivityIndexPageSearch(TestCase):
 
     def test_get_topics_list_returns_correct_topic_list_no_parent(self):
         # Arrange
-        my_request = self.search_page.make_preview_request()
         activity_page = self.create_activity_detail_page(title='Planning for future savings', slug='planning-future-savings')  # noqa: E501
         # Act
         actual_topics_list = activity_page.get_topics_list(None)
