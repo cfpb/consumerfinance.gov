@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 
 import pypandoc
 from bs4 import BeautifulSoup
+
 from research_reports.models import ReportAuthor, ResearchReportPage
 
 
@@ -83,7 +84,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         report_id = options['report_page_id']
-        print('received id as argument: ', id)
+        print('received id as argument: ', report_id)
 
         print(" *** finding report page... ***")
         report_page = ResearchReportPage.objects.get(id=report_id)
