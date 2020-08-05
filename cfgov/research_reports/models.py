@@ -113,8 +113,8 @@ class ReportSectionLevelThree(models.Model):
     header = models.CharField(max_length=200)
     body = models.TextField(blank=True)
     subsection = ParentalKey('ReportSubSection',
-                          on_delete=models.CASCADE,
-                          related_name='report_sections_level_three')
+                             on_delete=models.CASCADE,
+                             related_name='report_sections_level_three')
 
 
 class ReportAuthor(models.Model):
