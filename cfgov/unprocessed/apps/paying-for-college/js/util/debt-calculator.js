@@ -54,19 +54,19 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
     if ( x === 0 ) {
       subPrincipal += directSub;
       unsubPrincipal += directUnsub;
-      unsubInterest += directUnsub * rateUnsub;
+      unsubInterest += directUnsub * rateUnsub * programLength;
     } else if ( x === 1 ) {
       const subAmount = percentSub * subCaps.yearTwo;
       const unsubAmount = percentUnsub * ( totalCaps.yearTwo - subAmount );
       subPrincipal += subAmount;
       unsubPrincipal += unsubAmount;
-      unsubInterest += unsubAmount * rateUnsub;
+      unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
     } else {
       const subAmount = percentSub * subCaps.yearThree;
       const unsubAmount = percentUnsub * ( totalCaps.yearThree - subAmount );
       subPrincipal += subAmount;
       unsubPrincipal += unsubAmount;
-      unsubInterest += unsubAmount * rateUnsub;
+      unsubInterest += unsubAmount * rateUnsub * ( programLength - x );
     }
   }
 
