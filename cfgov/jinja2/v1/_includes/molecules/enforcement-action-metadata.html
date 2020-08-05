@@ -54,7 +54,7 @@
         {% for action_status in page.statuses.all() %}
             <div>
                 <h6>{{_text(action_status.institution)}}</h6>
-                {{_text(action_status.status)}}
+                {{_text(action_status.get_status_display())}}
             </div>
         {% endfor %}
         <a

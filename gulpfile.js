@@ -95,8 +95,7 @@ function requireAllDefaultTasks() {
         gulp.parallel(
           'lint',
           'test:unit'
-        ),
-        'test:acceptance'
+        )
       )
     );
   }

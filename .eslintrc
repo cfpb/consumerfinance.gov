@@ -39,8 +39,8 @@ env:
   webextensions: false
   greasemonkey: false
 
-# globals:
-# No globals outside of env settings.
+globals:
+  cy: true
 
 # Linting rules for ESLint.
 # 0's ignore a rule, 1's produce a warning, and 2's throw an error.
@@ -685,7 +685,7 @@ rules:
     - 0
     - consistent
 
-  # Blacklist certain identifiers to prevent them being used.
+  # Block certain identifiers to prevent them being used.
   id-blacklist:
     - 1
     - e

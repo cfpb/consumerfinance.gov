@@ -1,20 +1,23 @@
 /* This file handles view items which apply only to the "state" of the
 application, and are otherwise inappropriate for the
 other views. */
-
 import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { getAllStateValues } from '../dispatchers/get-model-values.js';
+import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
+import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 
 
 const appView = {
-  _didThisHelpChoices: null,
-  _finishLink: '',
-  _sendLinkBtn: null,
   _actionPlanChoices: null,
+  _didThisHelpChoices: null,
+  _restartBtn: null,
+  _saveForLaterBtn: null,
+  _saveLinks: null,
+  _sendLinkBtn: null,
 
   /**
    * Listeners for buttons
@@ -28,7 +31,10 @@ const appView = {
       bindEvent( elem, { click: this._handleActionPlanClick } );
     } );
 
+    bindEvent( appView._restartBtn, { click: appView._handleRestartBtn } );
+    bindEvent( appView._saveForLaterBtn, { click: appView._handleSaveForLaterBtn } );
     bindEvent( appView._sendLinkBtn, { click: appView._handleSendLinkBtn } );
+    bindEvent( appView._includeParentPlusBtn, { click: appView._handleIncludeParentPlusBtn } );
   },
 
   /**
@@ -51,6 +57,35 @@ const appView = {
     updateState.byProperty( parent.dataset.impact, event.target.value );
   },
 
+  /**
+   * Handle the click of the Include Parent Plus checkbox
+   * @param {Object} event - Click event object
+   */
+  _handleIncludeParentPlusBtn: event => {
+    const target = event.target;
+    updateState.byProperty( 'includeParentPlus', target.checked );
+    recalculateFinancials();
+    updateFinancialViewAndFinancialCharts();
+  },
+
+  /**
+   * Handle clicks of the restart button
+   * @param {Object} event - The event object
+   */
+  _handleRestartBtn: event => {
+    event.preventDefault();
+    sendAnalyticsEvent( 'button click', 'restart' );
+    window.location = '.';
+  },
+
+  /**
+   * Handle clicks of the 'Save for Later' button
+   */
+  _handleSaveForLaterBtn: () => {
+    sendAnalyticsEvent( 'Save and finish later', window.location.search );
+    updateState.byProperty( 'save-for-later', 'active' );
+  },
+
   _handleSendLinkBtn: event => {
     sendAnalyticsEvent( 'Email your link click', window.location.search );
 
@@ -65,7 +100,9 @@ const appView = {
    * Update the link on the save and finish page with the current url
    */
   _updateSaveLink: () => {
-    appView._finishLink.innerText = window.location.href;
+    appView._saveLinks.forEach( elem => {
+      elem.innerText = window.location.href;
+    } );
   },
 
   /**
@@ -87,10 +124,13 @@ const appView = {
    * Initialize the View
    */
   init: () => {
-    appView._didThisHelpChoices = document.querySelectorAll( '[data-impact] .m-form-field input.a-radio' );
-    appView._finishLink = document.querySelector( '#finish_link' );
-    appView._sendLinkBtn = document.querySelector( '#email-your-link' );
     appView._actionPlanChoices = document.querySelectorAll( '.action-plan_choices .m-form-field input.a-radio' );
+    appView._didThisHelpChoices = document.querySelectorAll( '[data-impact] .m-form-field input.a-radio' );
+    appView._restartBtn = document.querySelector( '[data-app-button="restart"]' );
+    appView._saveForLaterBtn = document.querySelector( '[data-app-button="save-and-finish-later"]' );
+    appView._saveLinks = document.querySelectorAll( '[data-app-save-link]' );
+    appView._sendLinkBtn = document.querySelector( '#email-your-link' );
+    appView._includeParentPlusBtn = document.querySelector( '#plan__parentPlusFeeRepay' );
 
     appView._addButtonListeners();
   }

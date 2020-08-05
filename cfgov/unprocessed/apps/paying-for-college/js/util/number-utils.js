@@ -8,9 +8,7 @@
 function stringToNum( numberString ) {
   if ( typeof numberString === 'number' ) {
     return numberString;
-  } else if ( typeof numberString === 'undefined' ) {
-    return 0;
-  } else if ( typeof numberString === 'object' ) {
+  } else if ( typeof numberString !== 'string' ) {
     return 0;
   }
   let signMaker = 1;
@@ -71,12 +69,12 @@ function enforceRange( n, min, max ) {
     return false;
   }
 
-  if ( n > max && max !== false ) {
+  if ( max !== false && n > max ) {
     n = max;
     error = 'max';
   }
 
-  if ( n < min && min !== false ) {
+  if ( min !== false && n < min ) {
     n = min;
     error = 'min';
   }
@@ -87,8 +85,19 @@ function enforceRange( n, min, max ) {
   };
 }
 
+
+/**
+ * isNumeric - Verify that a value contains only number or decimal characters
+ * @param {*} value Value to be checked
+ * @returns {Boolean} True if value only contains numeric characters, false otherwise
+ */
+function isNumeric( value ) {
+  return ( /^[\d.]+$/ ).test( value );
+}
+
 export {
   enforceRange,
   stringToNum,
-  decimalToPercentString
+  decimalToPercentString,
+  isNumeric
 };

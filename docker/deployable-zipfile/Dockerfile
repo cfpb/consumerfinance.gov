@@ -1,4 +1,7 @@
-FROM centos:6
+FROM centos:7
+
+# Ensure that the environment uses UTF-8 encoding by default
+ENV LANG en_US.UTF-8
 
 # Disables pip cache, which reduces build time, and suppresses warnings when
 # run as non-root.
@@ -19,7 +22,8 @@ RUN mkdir -p ${HOME} && chmod 777 ${HOME}
 # Install all build requirements including Python 3 and the latest
 # versions of the Python packages pip, setuptools, and wheel. Configure
 # Python 3 to be enabled at login.
-RUN yum install -y centos-release-scl && \
+RUN yum -y update && \
+    yum install -y centos-release-scl && \
     curl -sL https://rpm.nodesource.com/setup_12.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum install -y rh-python36 gcc git nodejs yarn && \

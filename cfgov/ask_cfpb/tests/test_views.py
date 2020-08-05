@@ -35,8 +35,8 @@ class AskSearchSafetyCase(unittest.TestCase):
 
 class AnswerPagePreviewCase(TestCase):
     def setUp(self):
-        from v1.models import HomePage
         from ask_cfpb.models import Answer
+        from v1.models import HomePage
 
         self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
         self.english_parent_page = get_or_create_page(

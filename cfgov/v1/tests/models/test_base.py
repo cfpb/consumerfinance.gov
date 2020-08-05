@@ -408,7 +408,6 @@ class TestCFGOVPageBreadcrumbs(TestCase):
 
     def test_get_breadcrumbs_forced_homepage_descendant(self):
         request = self.factory.get('/top/second')
-        request.site = self.site
         self.top_level_page.force_breadcrumbs = True
         self.top_level_page.save()
         self.assertIn(
@@ -418,7 +417,6 @@ class TestCFGOVPageBreadcrumbs(TestCase):
 
     def test_get_breadcrumbs_no_homepage_descendant(self):
         request = self.factory.get('/top/second')
-        request.site = self.site
         self.assertNotIn(
             'top',
             [p.slug for p in self.second_level_page.get_breadcrumbs(request)]
@@ -426,8 +424,6 @@ class TestCFGOVPageBreadcrumbs(TestCase):
 
     def test_get_breadcrumbs_two_levels_deep(self):
         request = self.factory.get('/top/second/third')
-        request.site = self.site
-
         self.assertNotIn(
             'top',
             [p.slug for p in self.third_level_page.get_breadcrumbs(request)]

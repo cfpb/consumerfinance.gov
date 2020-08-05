@@ -6,7 +6,6 @@ from wagtail.core.models import Site
 from wagtail.images.tests.utils import get_test_image_file
 
 from scripts import _atomic_helpers as atomic
-
 from v1.atomic_elements.organisms import (
     FeaturedContent, InfoUnitGroup, TableBlock, VideoPlayer
 )

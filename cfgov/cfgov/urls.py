@@ -40,11 +40,13 @@ from v1.views.documents import DocumentServeView
 
 
 try:
-    from flags.urls import flagged_re_path
     from django.urls import include, re_path
+
+    from flags.urls import flagged_re_path
 except ImportError:
-    from flags.urls import flagged_url as flagged_re_path
     from django.conf.urls import include, url as re_path
+
+    from flags.urls import flagged_url as flagged_re_path
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -267,7 +269,27 @@ urlpatterns = [
         'transcripts'),
         namespace='transcripts')),
 
-    re_path(r'^paying-for-college/', include('comparisontool.urls')),
+    re_path(
+        r'^paying-for-college/choose-a-student-loan/$',
+        TemplateView.as_view(
+            template_name='comparisontool/choose_a_loan.html'
+        ),
+        name='pfc-choose'
+    ),
+    re_path(
+        r'^paying-for-college/manage-your-college-money/$',
+        TemplateView.as_view(
+            template_name='comparisontool/manage_your_money.html'
+        ),
+        name='pfc-manage'
+    ),
+    re_path(
+        r'^paying-for-college/repay-student-debt/$',
+        TemplateView.as_view(
+            template_name='comparisontool/repay_student_debt.html'
+        ),
+        name='pfc-repay'
+    ),
 
     re_path(
         r'^paying-for-college2/',
@@ -338,11 +360,6 @@ urlpatterns = [
         template_name='jobmanager/technology-innovation-fellows.html'),
         name='technology_innovation_fellows'),
 
-    # credit cards KBYO
-
-    re_path(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(
-        template_name='knowbeforeyouowe/creditcards/tool.html'),
-        name='cckbyo'),
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 

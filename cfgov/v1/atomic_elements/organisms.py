@@ -740,8 +740,8 @@ class FilterableList(BaseExpandable):
         required=False,
         help_text=mark_safe(
             'Message for the <a href="https://cfpb.github.io/'
-            'capital-framework/components/cf-notifications/'
-            '#recommended-notification-patterns">notification</a> '
+            'design-system/components/notifications'
+            '#default-base-notification">notification</a> '
             'that will be displayed instead of filter controls '
             'if there are no posts to filter.'))
     no_posts_explanation = blocks.CharBlock(
@@ -775,6 +775,9 @@ class FilterableList(BaseExpandable):
         required=True,
         help_text='Whether to include a dropdown in the filter controls '
                   'for "Topics"')
+
+    statuses = blocks.BooleanBlock(default=False, required=False,
+                                   label='Filter Enforcement Statuses')
     authors = blocks.BooleanBlock(default=True, required=False,
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
@@ -952,8 +955,8 @@ class FeaturedContentStructValue(blocks.StructValue):
 
 
 class FeaturedContent(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    heading = blocks.CharBlock()
+    body = blocks.RichTextBlock()
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,

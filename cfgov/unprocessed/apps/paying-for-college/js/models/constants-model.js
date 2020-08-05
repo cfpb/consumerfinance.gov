@@ -1,4 +1,5 @@
-import { financialModel } from './financial-model.js';
+import { updateFinancial } from '../dispatchers/update-models.js';
+import { updateState } from '../dispatchers/update-state.js';
 import { getConstants } from '../dispatchers/get-api-values.js';
 import { updateFinancialView } from '../dispatchers/update-view.js';
 
@@ -6,7 +7,23 @@ import { updateFinancialView } from '../dispatchers/update-view.js';
 /* eslint camelcase: ["error", {properties: "never"}] */
 
 const constantsModel = {
-  values: {},
+  values: {
+    subCaps: {
+      yearOne: 0,
+      yearTwo: 0,
+      yearThree: 0
+    },
+    totalCaps: {
+      yearOne: 0,
+      yearTwo: 0,
+      yearThree: 0
+    },
+    totalIndepCaps: {
+      yearOne: 0,
+      yearTwo: 0,
+      yearThree: 0
+    }
+  },
   nonNumeric: [ 'constantsYear' ],
   financialValues: {
     rate_directSub: 'subsidizedRate',
@@ -38,15 +55,34 @@ const constantsModel = {
           for ( const key in constantsModel.financialValues ) {
             if ( constantsModel.financialValues.hasOwnProperty( key ) ) {
               const rosetta = constantsModel.financialValues[key];
-              financialModel.values[key] = constantsModel.values[rosetta];
+              updateFinancial( key, constantsModel.values[rosetta], false );
             }
           }
+
+          // add useful properties
+          constantsModel.values.subCaps = {
+            yearOne: constantsModel.values.subsidizedCapYearOne,
+            yearTwo: constantsModel.values.subsidizedCapYearTwo,
+            yearThree: constantsModel.values.subsidizedCapYearThree
+          };
+          constantsModel.values.totalCaps = {
+            yearOne: constantsModel.values.unsubsidizedCapYearOne,
+            yearTwo: constantsModel.values.unsubsidizedCapYearTwo,
+            yearThree: constantsModel.values.unsubsidizedCapYearThree
+          };
+          constantsModel.values.totalIndepCaps = {
+            yearOne: constantsModel.values.unsubsidizedCapIndepYearOne,
+            yearTwo: constantsModel.values.unsubsidizedCapIndepYearTwo,
+            yearThree: constantsModel.values.unsubsidizedCapIndepYearThree
+          };
+
+          updateState.byProperty( 'constantsLoaded', true );
 
           resolve( true );
         } )
         .catch( function( error ) {
           reject( error );
-          // console.log( 'An error occurred!', error );
+          console.log( 'An error occurred when accessing the constants API', error );
         } );
     } );
   }

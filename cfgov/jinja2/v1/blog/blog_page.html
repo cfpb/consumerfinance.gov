@@ -11,7 +11,8 @@
 {%- endblock %}
 
 {% block og_article_author -%}
-    <meta property="article:author" content="https://www.facebook.com/CFPB">
+    <meta property="article:author"
+          content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
 {%- endblock %}
 
 {% block content_main %}
@@ -22,12 +23,12 @@
             Join the conversation. Follow CFPB on
             <a class="a-link
                       a-link__icon"
-               href="{{ unsigned_redirect('https://twitter.com/CFPB') }}">
+               href="{{ _( "https://twitter.com/CFPB" ) }}">
                 <span class="a-link_text">Twitter</span>
             </a> and
             <a class="a-link
                       a-link__icon"
-               href="{{ unsigned_redirect('https://www.facebook.com/CFPB') }}">
+               href="{{ _( "https://www.facebook.com/CFPB" ) }}">
                 <span class="a-link_text">Facebook</span></a>.
         </p>
     </div>

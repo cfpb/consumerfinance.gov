@@ -106,9 +106,13 @@
 			color: @red;
 		}
 	}
-}
 
-.o-expandable
+	&__full-width {
+		div + div {
+			margin-top: unit( 5px / @base-font-size-px, em );
+		}
+	}
+}
 
 .financial-item-group {
 	.financial-item {
