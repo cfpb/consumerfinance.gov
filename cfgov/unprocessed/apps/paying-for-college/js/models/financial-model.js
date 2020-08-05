@@ -154,12 +154,15 @@ const financialModel = {
     let unsubCap = 0;
     const errors = {};
 
+    // get the caps from the constants model
+
     // First, enforce subsidized cap
     const subResult = enforceRange( financialModel.values.fedLoan_directSub,
       0,
-      getConstantsValue( 'subsidizedCapYearOne' ) );
+      getConstantsValue( 'subCaps' ).yearOne );
     if ( subResult !== false ) {
       financialModel.values.fedLoan_directSub = subResult.value;
+      // Reserve for later error handling
       if ( subResult.error !== false ) {
         errors.fedLoan_directSub = subResult.error;
       }
@@ -244,10 +247,10 @@ const financialModel = {
    * Set loan rates based on program type
    */
   _updateRates: () => {
-    if ( getStateValue( 'programType' ) === 'graduate' ) {
-      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateGrad' );
+    if ( getStateValue( 'programLevel' ) === 'graduate' ) {
+      financialModel.values.rate_directUnsub = getConstantsValue( 'unsubsidizedRateGrad' );
     } else {
-      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateUndergrad' );
+      financialModel.values.rate_directUnsub = getConstantsValue( 'unsubsidizedRateUndergrad' );
     }
   },
 
