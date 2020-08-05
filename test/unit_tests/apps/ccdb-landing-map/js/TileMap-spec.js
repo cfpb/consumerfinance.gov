@@ -56,13 +56,13 @@ describe( 'Tile map', () => {
 
   describe( 'startOfToday', () => {
     it( 'handles MAX_DATE that is already set', () => {
-      global.MAX_DATE = Date.UTC( 2016, 4, 1, 4 );
+      global.MAX_DATE = new Date( '2016-05-09 02:39:23' );
       const actual = sut.startOfToday();
       expect( actual.getFullYear() ).toEqual( 2016 );
       expect( actual.getMonth() ).toEqual( 4 );
-      expect( actual.getDate() ).toEqual( 1 );
-      expect( actual.getHours() ).toEqual( 0 );
-      expect( actual.getMinutes() ).toEqual( 0 );
+      expect( actual.getDate() ).toEqual( 9 );
+      expect( actual.getHours() ).toEqual( 2 );
+      expect( actual.getMinutes() ).toEqual( 39 );
     } );
 
     it( 'sets MAX_DATE from the metadata', () => {
