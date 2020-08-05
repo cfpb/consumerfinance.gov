@@ -1,3 +1,5 @@
+@import (reference) '../../../css/main.less';
+
 .research-report {
   max-width: unit( (670 + 30) / 16, em);
 
@@ -23,14 +25,19 @@
   display: block;
   overflow-y: scroll;
   height: 100%;
-  & > ul {
-    a {
-      padding-left: 0.75em;
-    }
+  .o-secondary-navigation_list__parents > li > a {
+    padding-left: unit( 30px / @base-font-size-px, em );
+    text-indent: unit( -18px / @base-font-size-px, em );
   }
-  .m-nav-link.current-section {
-    color: #101820;
-    border-color: #20aa3f;
+  h3 {
+    padding-left: unit( 19px / @size-iii, em );
+  }
+  h4 {
+    padding-left: unit( 19px / @size-iv, em );
+  }
+
+  .o-report-sidenav__appendix > li > a {
+    text-indent: unit( -20px / @base-font-size-px, em );
   }
   .o-secondary-navigation_list__children {
     display: none;
@@ -38,6 +45,12 @@
   .parent-header {
     .o-secondary-navigation_list__children  {
       display: block;
+      margin-top: 0;
+      margin-bottom:0.5em;
+      .m-nav-link {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+      }
     }
   }
 }
