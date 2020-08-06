@@ -6,7 +6,7 @@
 // GHE repo: app-ops/app-ops-jenkins-shared-libraries
 pipeline {
     agent {
-        label 'docker-agent'
+        label 'docker'
     }
 
     environment {
