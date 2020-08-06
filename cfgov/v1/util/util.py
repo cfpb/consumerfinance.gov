@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponseRedirect
 from django.urls import resolve
 
-import wagtail
 from wagtail.core.blocks.stream_block import StreamValue
 from wagtail.core.models import Site
 
@@ -66,10 +65,7 @@ def get_secondary_nav_items(request, current_page):
             page.get_appropriate_siblings()
         )
 
-    if wagtail.VERSION < (2, 9):
-        site = request.site
-    else:  # pragma: no cover
-        site = Site.find_for_request(request)
+    site = Site.find_for_request(request)
 
     nav_items = []
     for sibling in pages:
