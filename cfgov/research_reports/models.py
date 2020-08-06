@@ -146,9 +146,9 @@ class ResearchReportPage(CFGOVPage):
     process_report = models.BooleanField(
         default=False,
         help_text=mark_safe(
-            'If this is checked, when you press "save", the system will '
-            'read in the report document and use its contents to overwrite '
-            'the fields in the "Report Content" tab.'
+            'If this is checked, when you save or publish this page, the '
+            'system will read in the report document and use its contents to '
+            'overwrite the fields in the "Report Content" tab.'
             '<ul class="help">'
             '    <li>&bull; If you uploaded a new report file for '
             'processing, check this box.</li>'
