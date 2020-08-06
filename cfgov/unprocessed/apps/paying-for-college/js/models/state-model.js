@@ -4,7 +4,7 @@
  * state.
 */
 import { getProgramInfo } from '../dispatchers/get-model-values.js';
-import { recalculateFinancials } from '../dispatchers/update-models.js';
+import { recalculateFinancials, updateFinancial } from '../dispatchers/update-models.js';
 import { updateFinancialViewAndFinancialCharts, updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 
@@ -133,6 +133,10 @@ const stateModel = {
         stateModel.setValue( 'programLevel', 'graduate' );
       } else if ( name === 'programType' ) {
         stateModel.setValue( 'programLevel', 'undergrad' );
+      }
+
+      if ( name === 'programLength' ) {
+        updateFinancial( 'other_programLength', value );
       }
 
       recalculateFinancials();
