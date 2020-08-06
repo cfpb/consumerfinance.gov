@@ -68,10 +68,10 @@ ENV ALLOWED_HOSTS '["*"]'
 COPY . .
 
 RUN yum -y install nodejs yarn
-    # ./frontend.sh production && \
-    # cfgov/manage.py collectstatic && \
-    # yarn cache clean && \
-    # rm -rf node_modules npm-packages-offline-cache
+    ./frontend.sh production && \
+    cfgov/manage.py collectstatic && \
+    yarn cache clean && \
+    rm -rf node_modules npm-packages-offline-cache
 
 
 # Production-like Apache-based image
