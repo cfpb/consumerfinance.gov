@@ -53,8 +53,20 @@ EXPOSE 8000
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 
+# Build Frontend Assets
+FROM cfgov-dev as cfgov-build
+
+COPY . .
+
+RUN yum -y install nodejs yarn && \
+    ./frontend.sh production && \
+    cfgov/manage.py collectstatic && \
+    yarn cache clean && \
+    rm -rf node_modules npm-packages-offline-cache
+
+
 # Production-like Apache-based image
-FROM cfgov-dev as cfgov-prod
+FROM cfgov-build as cfgov-prod
 
 ENV SCL_HTTPD_VERSION httpd24
 ENV SCL_HTTPD_ROOT /opt/rh/${SCL_HTTPD_VERSION}/root
@@ -86,8 +98,7 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
 # See .dockerignore for details on which files are included
 COPY --chown=apache:apache . .
 
-RUN yum -y install nodejs yarn  && \
-    yum clean all && rm -rf /var/cache/yum && \
+RUN yum clean all && rm -rf /var/cache/yum && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
 
 # Remove files flagged by image vulnerability scanner
@@ -99,12 +110,9 @@ USER apache
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
 # - /tmp/eregs_cache/ - Django file-based cache
-RUN ./frontend.sh production && \
-    cfgov/manage.py collectstatic && \
-    yarn cache clean && \
-    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
+RUN ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
-    rm -rf cfgov/apache/www cfgov/unprocessed node_modules && \
+    rm -rf cfgov/apache/www cfgov/unprocessed && \
     mkdir -p cfgov/f /tmp/eregs_cache
 
 # Healthcheck retry set high since database loads take a while
