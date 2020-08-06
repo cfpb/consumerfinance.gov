@@ -1,6 +1,5 @@
 from django.test import TestCase, override_settings
 
-import wagtail
 from wagtail.images.tests.utils import get_test_image_file
 
 import boto3
@@ -56,10 +55,7 @@ class TestMetaImage(TestCase):
     def test_template_meta_image_no_images(self):
         """Template meta tags should fallback to standard social networks."""
         page = LearnPage(social_sharing_image=None)
-        if wagtail.VERSION < (2, 7):
-            response = page.serve(page.dummy_request())
-        else:
-            response = page.make_preview_request()
+        response = page.make_preview_request()
         response.render()
 
         self.assertContains(
@@ -85,10 +81,7 @@ class TestMetaImage(TestCase):
         image_file = get_test_image_file(filename='foo.png')
         image = baker.make(CFGOVImage, file=image_file)
         page = LearnPage(social_sharing_image=image)
-        if wagtail.VERSION < (2, 7):
-            response = page.serve(page.dummy_request())
-        else:
-            response = page.make_preview_request()
+        response = page.make_preview_request()
         response.render()
 
         rendition_url = image.get_rendition('original').url
