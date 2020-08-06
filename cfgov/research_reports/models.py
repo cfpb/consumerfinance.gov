@@ -153,12 +153,20 @@ class ResearchReportPage(CFGOVPage):
             '    <li>&bull; If you uploaded a new report file for '
             'processing, check this box.</li>'
             '    <li>&bull; If you manually edited fields in the '
-            '"Report Content" tab, do not check this box</li>'
+            '"Report Content" tab, do not check this box.</li>'
             '</ul>'
         )
     )
 
-    # Report Upload Tabs
+    # Report Content Fields
+    base_form_class = ReportForm
+    report_type = models.CharField(max_length=100, blank=True)
+    header = models.CharField(max_length=200, blank=True)
+    subheader = models.TextField(blank=True)
+    pdf_location = models.CharField(max_length=150, blank=True)
+    footnotes = models.TextField(blank=True)
+
+    # Report upload tab
     upload_panels = [
         MultiFieldPanel([
             FieldPanel('title'),
@@ -168,14 +176,6 @@ class ResearchReportPage(CFGOVPage):
             FieldPanel('process_report'),
         ], heading='Report Document'),
     ]
-
-    # Report Content Fields
-    base_form_class = ReportForm
-    report_type = models.CharField(max_length=100, blank=True)
-    header = models.CharField(max_length=200, blank=True)
-    subheader = models.TextField(blank=True)
-    pdf_location = models.CharField(max_length=150, blank=True)
-    footnotes = models.TextField(blank=True)
 
     # Report content tab
     content_panels = [
