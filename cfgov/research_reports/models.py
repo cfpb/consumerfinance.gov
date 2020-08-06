@@ -198,13 +198,10 @@ class ResearchReportPage(CFGOVPage):
         FieldPanel('footnotes')
     ]
 
-    sidefoot_panels = CFGOVPage.sidefoot_panels
-
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(upload_panels, heading='Report Upload'),
         ObjectList(content_panels, heading='Report Content'),
-        ObjectList(sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
