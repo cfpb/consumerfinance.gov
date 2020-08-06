@@ -105,7 +105,7 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
 # Copy the cfgov directory form the build image
-COPY --from=cfgov-build --chown=apache:apache cfgov cfgov
+COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
 
 
 RUN yum clean all && rm -rf /var/cache/yum && \
