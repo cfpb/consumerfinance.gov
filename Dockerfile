@@ -56,17 +56,26 @@ CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
 # Build Frontend Assets
 FROM cfgov-dev as cfgov-build
 
+ENV STATIC_PATH ${APP_HOME}/cfgov/static/
+ENV PYTHONPATH ${APP_HOME}/cfgov
+
+# Django Settings
+ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
+ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
+ENV ALLOWED_HOSTS '["*"]'
+
+# See .dockerignore for details on which files are included
 COPY . .
 
-RUN yum -y install nodejs yarn && \
-    ./frontend.sh production && \
-    cfgov/manage.py collectstatic && \
-    yarn cache clean && \
-    rm -rf node_modules npm-packages-offline-cache
+RUN yum -y install nodejs yarn
+    # ./frontend.sh production && \
+    # cfgov/manage.py collectstatic && \
+    # yarn cache clean && \
+    # rm -rf node_modules npm-packages-offline-cache
 
 
 # Production-like Apache-based image
-FROM cfgov-build as cfgov-prod
+FROM cfgov-dev as cfgov-prod
 
 ENV SCL_HTTPD_VERSION httpd24
 ENV SCL_HTTPD_ROOT /opt/rh/${SCL_HTTPD_VERSION}/root
@@ -95,8 +104,9 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
-# See .dockerignore for details on which files are included
-COPY --chown=apache:apache . .
+# Copy the cfgov directory form the build image
+COPY --from=cfgov-build --chown=apache:apache cfgov cfgov
+
 
 RUN yum clean all && rm -rf /var/cache/yum && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
