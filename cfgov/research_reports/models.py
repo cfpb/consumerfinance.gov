@@ -222,8 +222,7 @@ class ResearchReportPage(CFGOVPage):
                 pass
 
     def get_context(self, request, *args, **kwargs):
-        context = super(ResearchReportPage, self) \
-            .get_context(request, *args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
         context.update({
             'get_report_sections': get_report_sections,
             'get_report_appendices': get_report_appendices,
