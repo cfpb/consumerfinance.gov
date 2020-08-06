@@ -13,11 +13,32 @@ const MILLION = 1000000;
 const WHITE = '#ffffff';
 
 /**
+ * Gets the UTC time for the beginning of the day in the local time zone
+ *
+ * @returns {Date} midnight today, local
+ */
+export function startOfToday() {
+  if ( !window.hasOwnProperty( 'MAX_DATE' ) ) {
+    if ( window.hasOwnProperty( 'complaint_public_metadata' ) ) {
+      const { metadata_timestamp: stamp } = window.complaint_public_metadata;
+      window.MAX_DATE = new Date( moment( stamp ).startOf( 'day' ).toString() );
+    } else {
+      // eslint-disable-next-line no-console
+      console.error( 'complaint_public_metadata is missing' );
+      window.MAX_DATE = new Date( moment().startOf( 'day' ).toString() );
+    }
+  }
+
+  // Always return a clone so the global is not exposed or changed
+  return new Date( window.MAX_DATE.valueOf() );
+}
+
+/**
  * helper function to get date range for legend
  * @returns {string} formatted string
  */
 export function calculateDateRange() {
-  let today = new Date();
+  let today = startOfToday();
   today = today.toLocaleDateString( 'en-US' );
   let past = new Date( moment().subtract( 3, 'years' ).calendar() );
   past = past.toLocaleDateString( 'en-US' );
