@@ -75,7 +75,7 @@ def get_researchers():
 
 
 def _get_deploy_environment():
-    return getattr(settings, 'DEPLOY_ENVIRONMENT', 'local')
+    return getattr(settings, 'DEPLOY_ENVIRONMENT')
 
 
 class ReportSection(ClusterableModel):

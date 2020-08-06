@@ -29,6 +29,8 @@ STATIC_ROOT = REPOSITORY_ROOT.child("collectstatic")
 
 ALLOW_ADMIN_URL = DEBUG or os.environ.get("ALLOW_ADMIN_URL", False)
 
+DEPLOY_ENVIRONMENT =  DEPLOY_ENVIRONMENT or 'local'
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
