@@ -4,8 +4,6 @@ import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
-import wagtail
-
 import dj_database_url
 from unipath import DIRS, Path
 
@@ -55,6 +53,7 @@ INSTALLED_APPS = (
     "wagtail.contrib.routable_page",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.table_block",
+    "wagtail.contrib.postgres_search",
     "localflavor",
     "modelcluster",
     "taggit",
@@ -75,6 +74,7 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "wagtail.search",
     "storages",
     "data_research",
     "v1",
@@ -108,6 +108,32 @@ INSTALLED_APPS = (
     "crtool",
 )
 
+WAGTAILSEARCH_BACKENDS = {
+    # The default search backend for Wagtail is the db backend, which does not
+    # support the custom search_fields defined on Page model descendents when
+    # using `Page.objects.search()`.
+    #
+    # Other backends *do* support those custom search_fields, so for now to
+    # preserve the current behavior of /admin/pages/search (which calls
+    # `Page.objects.search()`), the default backend will remain `db`.
+    #
+    # This also preserves the current behavior of our external link search,
+    # /admin/external-links/, which calls each page model's `objects.search()`
+    # explicitly to get results, but which returns fewer results with the
+    # Postgres full text backend.
+    #
+    # An upcoming effort to overhaul search within consumerfinance.gov and
+    # Wagtail should address these issues. In the meantime, Postgres full text
+    # search with the custom search_fields defined on our models is available
+    # with the "fulltext" backend defined below.
+    'default': {
+        'BACKEND': 'wagtail.search.backends.db',
+    },
+    'fulltext': {
+        'BACKEND': 'wagtail.contrib.postgres_search.backend',
+    },
+}
+
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
@@ -121,9 +147,6 @@ MIDDLEWARE = (
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
 )
-
-if wagtail.VERSION < (2, 9):
-    MIDDLEWARE += ("wagtail.core.middleware.SiteMiddleware",)
 
 CSP_MIDDLEWARE = ("csp.middleware.CSPMiddleware",)
 
