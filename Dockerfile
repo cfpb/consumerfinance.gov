@@ -106,6 +106,7 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
 
 # Copy the cfgov directory form the build image
 COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
+COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/docker-entrypoint.sh
 
 
 RUN yum clean all && rm -rf /var/cache/yum && \
