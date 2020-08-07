@@ -36,7 +36,6 @@ from v1.views import (
     change_password, check_permissions, login_with_lockout,
     password_reset_confirm
 )
-from v1.views.documents import DocumentServeView
 
 
 try:
@@ -85,12 +84,6 @@ urlpatterns = [
     re_path(r'^rural-or-underserved-tool/$', TemplateView.as_view(
         template_name='rural-or-underserved/index.html'),
         name='rural-or-underserved'),
-
-    re_path(
-        r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
-        DocumentServeView.as_view(),
-        name='wagtaildocs_serve'
-    ),
 
     re_path(
         r'^home/(?P<path>.*)$',
