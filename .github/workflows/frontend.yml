@@ -50,8 +50,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v1
