@@ -39,17 +39,17 @@ def get_report_parts(is_appendix=False):
             'expanded': False,
             'title': section.header,
             'body': section.body,
-            'url': format('#section-{}', i),
+            'id': format('section-{}', i),
             'numbering': format('{}: ' if is_appendix else '{}. ', i),
             'children': [{
                 'title': subsection.header,
                 'body': subsection.body,
-                'url': format('#section-{}.{}', i, j),
+                'id': format('section-{}.{}', i, j),
                 'numbering': '' if is_appendix else format('{}.{} ', i, j),
                 'children': [{
                     'title': section3.header,
                     'body': section3.body,
-                    'url': format('#section-{}.{}.{}', i, j, k),
+                    'id': format('section-{}.{}.{}', i, j, k),
                     'numbering': '' if is_appendix else
                                  format('{}.{}.{} ', i, j, k),
                 } for k, section3 in enumerate(
@@ -205,7 +205,7 @@ class ResearchReportPage(CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    template = 'index.html'
+    template = 'research_reports/index.html'
 
     objects = PageManager()
 
@@ -224,8 +224,8 @@ class ResearchReportPage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context.update({
-            'get_report_sections': get_report_sections,
-            'get_report_appendices': get_report_appendices,
-            'get_researchers': get_researchers
+            'report_sections': get_report_sections(request, self),
+            'report_appendices': get_report_appendices(request, self),
+            'researchers': get_researchers()
         })
         return context
