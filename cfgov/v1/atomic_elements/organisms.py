@@ -23,6 +23,7 @@ from wagtail.utils.widgets import WidgetWithScript
 
 from jinja2 import Markup
 from taggit.models import Tag
+from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
@@ -921,6 +922,32 @@ class VideoPlayer(blocks.StructBlock):
 
     class Media:
         js = ['video-player.js']
+
+
+class AudioPlayer(blocks.StructBlock):
+    heading = v1_blocks.HeadingBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    audio_file = AbstractMediaChooserBlock(
+        help_text=mark_safe(
+            'Spoken word audio files should be in MP3 format with a 44.1 kHz '
+            'sample rate, 96 kbps (CBR) bitrate, in mono. See '
+            '<a href="https://help.libsynsupport.com/hc/en-us/articles/'
+            '360040796152-Recommended-Audio-File-Formats-Encoding">Libsyn’s '
+            'guidance</a> for details. Note that the thumbnail and tag fields '
+            'will not be used for audio files.'
+        )
+    )
+    additional_details = blocks.RichTextBlock(
+        required=False,
+        help_text=(
+            'If you have anything you want to appear below the audio player, '
+            'such as a download link, put it in this field.'
+        )
+    )
+
+    class Meta:
+        icon = 'media'
+        template = '_includes/organisms/audio-player.html'
 
 
 class FeaturedContentStructValue(blocks.StructValue):
