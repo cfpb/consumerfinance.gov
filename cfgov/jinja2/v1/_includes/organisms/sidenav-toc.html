@@ -20,13 +20,6 @@
 
    ========================================================================== #}
 {% macro _render_secondary_navigation() %}
-{% if report_sections is not defined  %}
-    {% set report_sections = get_report_sections(request, page) %}
-{% endif %}
-
-{% if report_appendices is not defined  %}
-    {% set report_appendices = get_report_appendices(request, page) %}
-{% endif %}
 
 <nav class="o-report-sidenav o-secondary-navigation o-secondary-navigation__no-children"
      aria-label="Section navigation">
@@ -38,7 +31,7 @@
                  o-secondary-navigation_list__parents">
        {%- for item in report_sections %}
           <li class="m-list_item">
-            {{ nav_link.render(item.numbering + item.title, item.url, true) }}
+            {{ nav_link.render(item.numbering + item.title, "#" + item.id, true) }}
           {% if item.children %}
               <ul class="m-list
                          m-list__unstyled
@@ -46,7 +39,7 @@
                          o-secondary-navigation_list__children">
               {%- for child in item.children -%}
                   <li class="m-list_item">
-                      {{ nav_link.render(child.title, child.url, false) }}
+                      {{ nav_link.render(child.title, "#" + child.id, false) }}
                   </li>
               {%- endfor %}
               </ul>
@@ -64,7 +57,7 @@
                  o-report-sidenav__appendix">
        {%- for item in report_appendices %}
           <li class="m-list_item">
-            {{ nav_link.render(item.numbering + item.title, item.url, true) }}
+            {{ nav_link.render(item.numbering + item.title, "#" + item.id, true) }}
           {%- if item.children -%}
               <ul class="m-list
                          m-list__unstyled
@@ -72,7 +65,7 @@
                          o-secondary-navigation_list__children">
               {%- for child in item.children -%}
                   <li class="m-list_item">
-                      {{ nav_link.render(child.title, child.url, false) }}
+                      {{ nav_link.render(child.title, "#" + child.id, false) }}
                   </li>
               {%- endfor %}
               </ul>
