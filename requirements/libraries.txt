@@ -28,7 +28,7 @@ jsonfield==2.0.2
 lxml==4.2.5
 Markdown==3.2.1
 ntplib==0.3.4
-openpyxl==2.5.8
+openpyxl==3.0.3
 psycopg2==2.7.3.2
 pyelasticsearch==0.6.1
 python-dateutil==2.7.3
@@ -39,12 +39,16 @@ sha3==0.2.1
 unipath>=1.1,<=2.0
 urllib3==1.25.2
 wagtail-autocomplete==0.6
-wagtail-flags==4.2.1
-wagtail-inventory==1.1
-wagtail-sharing==2.2
-wagtail-treemodeladmin==1.2.0
+#wagtail-flags==4.2.1
+#wagtail-inventory==1.1
+#wagtail-sharing==2.2
+#wagtail-treemodeladmin==1.2.0
 
 # These packages are installed from GitHub.
+git+https://github.com/cfpb/wagtail-flags.git@wag210-test
+git+https://github.com/cfpb/wagtail-inventory.git@wag210-test
+git+https://github.com/cfpb/wagtail-sharing.git@wag210-test
+git+https://github.com/cfpb/wagtail-treemodeladmin.git@wag210-test
 https://github.com/cfpb/owning-a-home-api/releases/download/0.16.0/owning_a_home_api-0.16.0-py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.13.0/retirement-0.13.0-py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.5.1/ccdb5_api-1.5.1-py3-none-any.whl
