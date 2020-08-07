@@ -15,19 +15,28 @@ class AskBlocksTestCase(TestCase):
             'type': 'tip',
             'value': self.tip_content
         }
-        self.expected_tip_html = (
-            '<aside class="m-inset m-inset__bordered">'
-            '<h4>Tip</h4>'
-            '<div class="rich-text">Tip content</div>'
-            '</aside>'
-        )
+        if wagtail.VERSION < (2, 10):
+            self.expected_tip_html = (
+                '<aside class="m-inset m-inset__bordered">'
+                '<h4>Tip</h4>'
+                '<div class="rich-text">Tip content</div>'
+                '</aside>'
+            )
+            self.expected_text_html = '<div class="rich-text">text</div>'
+        else:
+            self.expected_tip_html = (
+                '<aside class="m-inset m-inset__bordered">'
+                '	<h4>Tip</h4>'
+                '	Tip content'
+                '</aside>'
+            )
+            self.expected_text_html = 'text'
         self.text_data = {
             'type': 'text',
             'value': {
                 'content': 'text'
             }
         }
-        self.expected_text_html = '<div class="rich-text">text</div>'
 
     def test_tip_block_renders_html(self):
         block = Tip()
