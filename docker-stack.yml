@@ -57,7 +57,7 @@ services:
     secrets:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
-      - AWS_S3_STORAGE_BUCKET_NAME
+      - AWS_STORAGE_BUCKET_NAME
       - AWS_S3_URL
       - CFGOV_PROD_DB_LOCATION
       - DJANGO_ADMIN_PASSWORD
@@ -103,7 +103,7 @@ secrets:
   AWS_SECRET_ACCESS_KEY:
     name: aws_secret_key
     external: True
-  AWS_S3_STORAGE_BUCKET_NAME:
+  AWS_STORAGE_BUCKET_NAME:
     name: aws_s3_storage_bucket_name
     external: True
   AWS_S3_URL:
