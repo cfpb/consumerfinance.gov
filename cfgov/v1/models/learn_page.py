@@ -117,7 +117,7 @@ class LearnPage(AbstractFilterPage):
         ('call_to_action', molecules.CallToAction()),
         ('email_signup', organisms.EmailSignUp()),
         ('video_player', organisms.VideoPlayer()),
-        ('audio_player', v1_blocks.AudioPlayer()),
+        ('audio_player', organisms.AudioPlayer()),
         ('table_block', organisms.AtomicTableBlock(
             table_options={'renderer': 'html'}
         )),
