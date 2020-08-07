@@ -13,24 +13,14 @@
     {{ super() }} content__flush-bottom research-report
 {%- endblock %}
 
-{% if report_sections is not defined  %}
-    {% set report_sections = get_report_sections(request, page) %}
-{% endif %}
-
-{% if report_appendices is not defined  %}
-    {% set report_appendices = get_report_appendices(request, page) %}
-{% endif %}
-
-{% set researchers = get_researchers() %}
-
 
 {% macro report_part(sections, is_appendix) %}
   {% for section in sections -%}
     <h2 class="report-header">
       <a
-        id="{{section.url[1:]}}"
-        href="{{section.url}}">
-          {{('Appendix ' if is_appendix else '') + section.numbering + section.title}}
+        id="{{ section.id }}"
+        href="#{{ section.id }}">
+          {{ ( 'Appendix ' if is_appendix else '' ) + section.numbering + section.title }}
       </a>
     </h2>
 
@@ -39,24 +29,24 @@
     {% for subsection in section.children -%}
       <h3 class="report-header">
         <a
-          id="{{subsection.url[1:]}}"
-          href="{{subsection.url}}">
-            {{subsection.numbering + subsection.title}}
+          id="{{ subsection.id }}"
+          href="#{{ subsection.id }}">
+            {{ subsection.numbering + subsection.title }}
         </a>
       </h3>
 
-      {{ subsection.body | safe}}
+      {{ subsection.body | safe }}
 
       {% for section3 in subsection.children -%}
         <h4 class="report-header">
           <a
-            id="{{section3.url[1:]}}"
-            href="{{section3.url}}">
-              {{section3.numbering + section3.title}}
+            id="{{ section3.id }}"
+            href="#{{ section3.id }}">
+              {{ section3.numbering + section3.title }}
           </a>
         </h4>
 
-        {{ section3.body | safe}}
+        {{ section3.body | safe }}
     {%- endfor %}
     {%- endfor %}
   {%- endfor %}
@@ -81,10 +71,10 @@
       {{ pdf_download.render({'pdf_url': page.pdf_location }) }}
     </div>
 
-    {{report_part(report_sections)}}
+    {{ report_part(report_sections) }}
 
     <h2 class="appendix-header">Appendices</h2>
-    {{report_part(report_appendices, True)}}
+    {{ report_part(report_appendices, True) }}
 
     <div class="block block__flush-top">
       {{ page.footnotes | safe }}
