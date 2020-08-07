@@ -11,6 +11,7 @@ from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
+from wagtail.documents import urls as wagtaildocs_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
@@ -725,6 +726,7 @@ if settings.ALLOW_ADMIN_URL:
         ),
         re_path(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         re_path(r'^admin/', include(wagtailadmin_urls)),
+        re_path(r'^documents/', include(wagtaildocs_urls))
 
     ]
 
