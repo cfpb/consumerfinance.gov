@@ -5,7 +5,7 @@ from django.db import models
 from wagtail.core.models import PageManager
 
 from dateutil import parser
-from jsonfield import JSONField
+from django.contrib.postgres.fields import JSONField
 
 from v1.models import BrowsePage
 
