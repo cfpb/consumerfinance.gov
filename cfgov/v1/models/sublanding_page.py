@@ -1,12 +1,15 @@
-from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList, StreamFieldPanel, TabbedInterface
-)
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailimages.blocks import ImageChooserBlock
+from django.db import models
 
-from jobmanager.models import JobListingList
+from wagtail.admin.edit_handlers import (
+    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+)
+from wagtail.core import blocks
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.search import index
+
+from jobmanager.blocks import JobListingList
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.forms import FilterableListForm
@@ -15,28 +18,31 @@ from v1.models.learn_page import AbstractFilterPage
 
 
 class SublandingPage(CFGOVPage):
+    portal_topic = models.ForeignKey(
+        'v1.PortalTopic',
+        blank=True,
+        null=True,
+        related_name='portal_pages',
+        on_delete=models.SET_NULL,
+        help_text='Select a topic if this is a MONEY TOPICS portal page.')
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
-        ('featured_content', molecules.FeaturedContent()),
-        ('info_unit_group', organisms.InfoUnitGroup()),
-        ('image_text_25_75_group', organisms.ImageText2575Group()),
-        ('image_text_50_50_group', organisms.ImageText5050Group()),
+        ('notification', molecules.Notification()),
+        ('featured_content', organisms.FeaturedContent()),
         ('full_width_text', organisms.FullWidthText()),
-        ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
-        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
-        ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
+        ('info_unit_group', organisms.InfoUnitGroup()),
         ('well', organisms.Well()),
-        ('table', organisms.Table(editable=False)),
-        ('table_block', organisms.AtomicTableBlock(
-            table_options={'renderer': 'html'})),
+        ('snippet_list', organisms.ResourceList()),
+        ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('contact', organisms.MainContactInfo()),
-        ('formfield_with_button', molecules.FormFieldWithButton()),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'}
+        )),
         ('reg_comment', organisms.RegComment()),
         ('feedback', v1_blocks.Feedback()),
-        ('snippet_list', organisms.SnippetList()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),
@@ -61,6 +67,7 @@ class SublandingPage(CFGOVPage):
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('content'),
+        FieldPanel('portal_topic'),
     ]
 
     sidebar_panels = [
@@ -78,6 +85,11 @@ class SublandingPage(CFGOVPage):
 
     objects = PageManager()
 
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('content'),
+        index.SearchField('header')
+    ]
+
     def get_browsefilterable_posts(self, limit):
         filter_pages = [p.specific
                         for p in self.get_appropriate_descendants()
@@ -89,7 +101,8 @@ class SublandingPage(CFGOVPage):
                 CFGOVPage.objects.child_of_q(page)
             )
 
-            form = FilterableListForm(filterable_pages=eligible_children)
+            form = FilterableListForm(filterable_pages=eligible_children,
+                                      wagtail_block=None)
             for post in form.get_page_set():
                 posts_list.append(post)
         return sorted(posts_list,

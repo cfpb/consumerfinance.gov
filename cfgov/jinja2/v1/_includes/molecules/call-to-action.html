@@ -33,7 +33,7 @@
 
     {% if value.paragraph_text %}
     <div class="m-call-to-action_text">
-        {{ parse_links(value.paragraph_text) | safe }}
+        {{ value.paragraph_text | safe }}
     </div>
     {% endif %}
 

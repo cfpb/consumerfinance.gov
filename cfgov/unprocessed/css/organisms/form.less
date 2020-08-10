@@ -26,29 +26,40 @@
 */
 
 .o-form-description {
-    margin-top: unit( @grid_gutter-width / @base-font-size-px, em);
-    margin-bottom: unit( @grid_gutter-width * 2 / @base-font-size-px, em);
+    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    margin-bottom: unit( @grid_gutter-width * 2 / @base-font-size-px, em );
 }
 
 .o-form-section {
-    margin: unit( @grid_gutter-width / @base-font-size-px, em)
-            unit( @grid_gutter-width / -2 / @base-font-size-px, em)
-            unit( @grid_gutter-width * 2 / @base-font-size-px, em)
-            unit( @grid_gutter-width / -2 / @base-font-size-px, em);
-    padding: unit( @grid_gutter-width / @base-font-size-px, em)
-             unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+    margin: unit( @grid_gutter-width / @base-font-size-px, em )
+            unit( @grid_gutter-width / -2 / @base-font-size-px, em )
+            unit( @grid_gutter-width * 2 / @base-font-size-px, em )
+            unit( @grid_gutter-width / -2 / @base-font-size-px, em );
+    padding: unit( @grid_gutter-width / @base-font-size-px, em )
+             unit( @grid_gutter-width/ @base-font-size-px, em );
     background: @gray-5;
     border: 1px solid @gray-40;
 
     .respond-to-min(@bp-med-min, {
-        margin-left: unit( -@grid_gutter-width / @base-font-size-px, em);
-        margin-right: unit( -@grid_gutter-width / @base-font-size-px, em);
+        margin-left: unit( -@grid_gutter-width / @base-font-size-px, em );
+        margin-right: unit( -@grid_gutter-width / @base-font-size-px, em );
     });
 }
 
+.o-form_fieldset {
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        margin-right: 4px;
+    }
+}
+
 .o-form-actions {
-    margin-top: unit( @grid_gutter-width / -2 / @base-font-size-px, em);
-    margin-bottom: unit( @grid_gutter-width * 2 / @base-font-size-px, em);
+    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
 
     .respond-to-max(@bp-sm-max, {
         .a-btn {

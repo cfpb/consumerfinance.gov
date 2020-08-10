@@ -72,7 +72,9 @@ function trackSpecificLocation( bottomPos, percent ) {
   }
 }
 
-// Check the location and track user
+/**
+ * Check the location and track user.
+ */
 function trackLocation() {
   const bottomPos = viewableHeight + document.documentElement.scrollTop;
 

@@ -1,5 +1,5 @@
-const utils = require( '../utils' );
-const defaultActionCreators = require( './default' );
+import defaultActionCreators from './default';
+import utils from '../utils';
 
 const chartActionCreators = defaultActionCreators();
 
@@ -10,39 +10,38 @@ const chartActionCreators = defaultActionCreators();
  *
  * @returns {Function} Thunk called with metro states.
  */
-chartActionCreators.fetchMetroStates = metroState => dispatch =>
-  utils.getMetroData( states => {
-    let metroStates = [];
-    let reuseState = false;
-    Object.keys( states ).forEach( state => {
-      const isValid = states[state].metros.reduce( ( prev, curr ) => {
-        if ( curr.fips.indexOf( '-non' ) > -1 ) {
-          return prev;
-        }
-        return prev || curr.valid || false;
-      }, false );
-      if ( isValid ) {
-        reuseState = reuseState || metroState === state;
-        metroStates.push( {
-          abbr: state,
-          fips: states[state].state_fips,
-          name: states[state].state_name,
-          selected: metroState === state
-        } );
+chartActionCreators.fetchMetroStates = metroState => dispatch => utils.getMetroData( states => {
+  let metroStates = [];
+  let reuseState = false;
+  Object.keys( states ).forEach( state => {
+    const isValid = states[state].metros.reduce( ( prev, curr ) => {
+      if ( curr.fips.indexOf( '-non' ) > -1 ) {
+        return prev;
       }
-    } );
-    // Alphabetical order
-    metroStates = metroStates.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
-
-    /* If the provided state isn't valid for this location type,
-       use the first state in the list. */
-    if ( !reuseState ) {
-      metroState = metroStates[0].abbr;
+      return prev || curr.valid || false;
+    }, false );
+    if ( isValid ) {
+      reuseState = reuseState || metroState === state;
+      metroStates.push( {
+        abbr: state,
+        fips: states[state].state_fips,
+        name: states[state].state_name,
+        selected: metroState === state
+      } );
     }
-    dispatch( chartActionCreators.setStates( metroStates ) );
-    dispatch( chartActionCreators.fetchMetros( metroState ) );
-    return metroStates;
   } );
+  // Alphabetical order
+  metroStates = metroStates.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+
+  /* If the provided state isn't valid for this location type,
+       use the first state in the list. */
+  if ( !reuseState ) {
+    metroState = metroStates[0].abbr;
+  }
+  dispatch( chartActionCreators.setStates( metroStates ) );
+  dispatch( chartActionCreators.fetchMetros( metroState ) );
+  return metroStates;
+} );
 
 /**
  * fetchNonMetroStates -
@@ -52,28 +51,27 @@ chartActionCreators.fetchMetroStates = metroState => dispatch =>
  *
  * @returns {Function} Thunk called with metro states.
  */
-chartActionCreators.fetchNonMetroStates = nonMetroState => dispatch =>
-  utils.getNonMetroData( states => {
-    let nonMetroStates = [];
-    states.forEach( state => {
-      if ( state.valid ) {
-        nonMetroStates.push( {
-          abbr: state.abbr,
-          fips: state.fips,
-          name: state.state_name,
-          text: state.name,
-          selected: nonMetroState === state.abbr
-        } );
-      }
-    } );
-    // Alphabetical order
-    nonMetroStates = nonMetroStates.sort(
-      ( a, b ) => ( a.name < b.name ? -1 : 1 )
-    );
-    dispatch( chartActionCreators.setStates( nonMetroStates ) );
-    dispatch( chartActionCreators.fetchNonMetros( nonMetroState ) );
-    return nonMetroStates;
+chartActionCreators.fetchNonMetroStates = nonMetroState => dispatch => utils.getNonMetroData( states => {
+  let nonMetroStates = [];
+  states.forEach( state => {
+    if ( state.valid ) {
+      nonMetroStates.push( {
+        abbr: state.abbr,
+        fips: state.fips,
+        name: state.state_name,
+        text: state.name,
+        selected: nonMetroState === state.abbr
+      } );
+    }
   } );
+  // Alphabetical order
+  nonMetroStates = nonMetroStates.sort(
+    ( a, b ) => ( a.name < b.name ? -1 : 1 )
+  );
+  dispatch( chartActionCreators.setStates( nonMetroStates ) );
+  dispatch( chartActionCreators.fetchNonMetros( nonMetroState ) );
+  return nonMetroStates;
+} );
 
 /**
  * fetchCountyStates -
@@ -83,38 +81,38 @@ chartActionCreators.fetchNonMetroStates = nonMetroState => dispatch =>
  *
  * @returns {Function} Thunk called with county states.
  */
-chartActionCreators.fetchCountyStates = countyState => dispatch =>
-  utils.getCountyData( states => {
-    let countyStates = [];
-    let reuseState = false;
-    Object.keys( states ).forEach( state => {
-      const isValid = states[state].counties.reduce( ( prev, curr ) =>
-        prev || curr.valid || false
-        , false );
-      if ( isValid ) {
-        reuseState = reuseState || countyState === state;
-        countyStates.push( {
-          abbr: state,
-          fips: states[state].state_fips,
-          name: states[state].state_name,
-          selected: countyState === state
-        } );
-      }
-    } );
-    // Alphabetical order
-    countyStates = countyStates.sort(
-      ( a, b ) => ( a.name < b.name ? -1 : 1 )
+chartActionCreators.fetchCountyStates = countyState => dispatch => utils.getCountyData( states => {
+  let countyStates = [];
+  let reuseState = false;
+  Object.keys( states ).forEach( state => {
+    const isValid = states[state].counties.reduce(
+      ( prev, curr ) => prev || curr.valid || false,
+      false
     );
-
-    /* If the provided state isn't valid for this location type,
-       use the first state in the list. */
-    if ( !reuseState ) {
-      countyState = countyStates[0].abbr;
+    if ( isValid ) {
+      reuseState = reuseState || countyState === state;
+      countyStates.push( {
+        abbr: state,
+        fips: states[state].state_fips,
+        name: states[state].state_name,
+        selected: countyState === state
+      } );
     }
-    dispatch( chartActionCreators.setStates( countyStates ) );
-    dispatch( chartActionCreators.fetchCounties( countyState ) );
-    return countyStates;
   } );
+  // Alphabetical order
+  countyStates = countyStates.sort(
+    ( a, b ) => ( a.name < b.name ? -1 : 1 )
+  );
+
+  /* If the provided state isn't valid for this location type,
+       use the first state in the list. */
+  if ( !reuseState ) {
+    countyState = countyStates[0].abbr;
+  }
+  dispatch( chartActionCreators.setStates( countyStates ) );
+  dispatch( chartActionCreators.fetchCounties( countyState ) );
+  return countyStates;
+} );
 
 /**
  * fetchStates - Creates async action to fetch list of valid states.
@@ -124,32 +122,31 @@ chartActionCreators.fetchCountyStates = countyState => dispatch =>
  *
  * @returns {Function} Thunk called with valid states.
  */
-chartActionCreators.fetchStates = ( selectedState, includeComparison ) => dispatch =>
-  utils.getStateData( states => {
-    states = Object.keys( states ).map( fips => {
-      const state = {
-        abbr: states[fips].abbr,
-        fips: fips,
-        name: states[fips].name,
-        text: states[fips].name
-      };
-      if ( selectedState === states[fips].abbr ) {
-        selectedState = state;
-        state.selected = true;
-      }
-      return state;
-    } );
-    // Alphabetical order
-    states = states.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
-    dispatch( chartActionCreators.setStates( states ) );
-    dispatch( chartActionCreators.setGeo(
-      selectedState.fips, selectedState.name, 'state'
-    ) );
-    dispatch( chartActionCreators.updateChart(
-      selectedState.fips, selectedState.name, 'state', includeComparison
-    ) );
-    return states;
+chartActionCreators.fetchStates = ( selectedState, includeComparison ) => dispatch => utils.getStateData( states => {
+  states = Object.keys( states ).map( fips => {
+    const state = {
+      abbr: states[fips].abbr,
+      fips: fips,
+      name: states[fips].name,
+      text: states[fips].name
+    };
+    if ( selectedState === states[fips].abbr ) {
+      selectedState = state;
+      state.selected = true;
+    }
+    return state;
   } );
+  // Alphabetical order
+  states = states.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+  dispatch( chartActionCreators.setStates( states ) );
+  dispatch( chartActionCreators.setGeo(
+    selectedState.fips, selectedState.name, 'state'
+  ) );
+  dispatch( chartActionCreators.updateChart(
+    selectedState.fips, selectedState.name, 'state', includeComparison
+  ) );
+  return states;
+} );
 
 /**
  * setStates - New U.S. states.
@@ -174,7 +171,9 @@ chartActionCreators.fetchMetros = ( metroState, includeComparison ) => dispatch 
   dispatch( chartActionCreators.requestMetros( metroState ) );
   return utils.getMetroData( data => {
     // Alphabetical order
-    let newMetros = data[metroState].metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+    let newMetros = data[metroState].metros.sort(
+      ( a, b ) => ( a.name < b.name ? -1 : 1 )
+    );
     newMetros = newMetros.filter( metro => metro.valid );
     if ( !newMetros.length ) {
       newMetros = [ {
@@ -220,4 +219,4 @@ chartActionCreators.fetchCounties = ( countyState, includeComparison ) => dispat
   } );
 };
 
-module.exports = chartActionCreators;
+export default chartActionCreators;

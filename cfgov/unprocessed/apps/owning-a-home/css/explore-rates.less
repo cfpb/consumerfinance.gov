@@ -46,7 +46,6 @@
         .grid_push( 8 );
 
         background: @gray-5;
-        .u-webfont-regular();
 
         p:last-child,
         section p:last-child {
@@ -54,7 +53,7 @@
         }
 
         label {
-            .u-webfont-medium();
+            font-weight: 500;
 
             display: block;
             margin-bottom: unit( 4px / @base-font-size-px, em );
@@ -97,12 +96,6 @@
             border-top: none;
         }
 
-        .form-sub {
-            color: @dark-gray;
-            font-size: 0.714285714em;
-            .u-webfont-regular();
-        }
-
         #arm-warning {
             padding-top: 0;
             border-top: 0;
@@ -123,7 +116,7 @@
         span {
             display: block;
             margin-top: unit( 10px / @base-font-size-px, em );
-            .u-webfont-medium();
+            font-weight: 500;
         }
     }
 
@@ -162,6 +155,7 @@
 
     // this is shameful, but this is needed to force
     // highcharts to display overflowing tooltips
+    .chart-area,
     .highcharts-container {
         overflow: visible !important;
     }
@@ -268,7 +262,7 @@
         z-index: 9999;
 
         .lenders {
-            .u-webfont-demi();
+            font-weight: 600;
 
             display: inline-block;
             max-width: 30%;
@@ -287,8 +281,6 @@
         Compare interest rate costs
         --------------------------- */
     .compare {
-        .u-webfont-regular();
-
         margin-top: unit( 30px / @base-font-size-px, em );
         label {
             .u-visually-hidden;
@@ -384,8 +376,6 @@
     }
 
     .arm-info-comparison {
-        .u-webfont-regular();
-
         position: absolute;
         display: block;
         width: 200%;
@@ -413,7 +403,6 @@
     .next-steps-heading {
         margin-bottom: 1em;
         font-size: 1.125em;
-        .u-webfont-regular();
     }
 
 
@@ -447,7 +436,7 @@
         font-size: 12px;
         line-height: 20px;
         text-align: center;
-        .u-webfont-demi();
+        font-weight: 600;
     }
 
     /*
@@ -459,11 +448,6 @@
         top: 30%;
         padding: 1em 2em 1em 3em;
         background: @white;
-        .u-webfont-regular();
-
-        .point-right {
-            font-size: 1.5em;
-        }
     }
 
     .chart-menu {
@@ -485,7 +469,7 @@
                      unit( 5px / @base-font-size-px, em )
                      unit( 15px / @base-font-size-px, em );
             border: none;
-            background-color: inherit;
+            background-color: @white;
             color: @pacific;
             font-weight: 500;
             outline: none;
@@ -497,7 +481,7 @@
             padding: 0;
             margin: 0;
             overflow: hidden;
-            transition: height 300ms;
+            transition: border 300ms 301ms, height 300ms 100ms;
             cursor: pointer;
 
             li {
@@ -509,8 +493,8 @@
                 margin: 0;
 
                 &:hover {
-                    background-color: @pacific;
-                    color: @white;
+                    background-color: @gray-5;
+                    color: @pacific;
                 }
             }
         }
@@ -522,38 +506,11 @@
                 height: 110px;
 
             }
-
-            .chart-menu_btn:after {
-                transform: scaleY( -1 );
-            }
         }
     }
 
     .credit-alert {
-        padding: 0.714em 0.714em 0.714em 2.142em;
-        margin: 2.5em 0 1em;
-        background: @gray-5;
-        color: @dark-gray;
-        font-size: 0.75em;
-    }
-
-    .form-sub.warning {
-        padding-top: 0;
-        border-top: 0;
-        margin-top: -20px;
-    }
-
-    .warning-text {
-        padding-left: 1.2em;
-    }
-
-    .warning-text:before {
-        .cf-icon;
-
-        margin-right: 0.2em;
-        color:  @gold;
-        content: '\e103';
-        text-indent: -1.2em;
+        margin-top: 2em;
     }
 
     .about-data {
@@ -564,22 +521,15 @@
         margin-top: @grid_gutter-width;
     }
 
-    .note-ctr {
+    .credit-note-ctr {
         border-top: 1px solid @gray-10;
     }
 
-    .note {
-        .grid_column( 8 );
-        margin: 0;
-        padding: 0 0 0 25px;
-
-        .alert:before {
-            color: @gold;
-        }
-
-        p {
-            width: 100%;
-        }
+    .m-notification__borderless {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: none;
+        background: none;
     }
 
     .oah-ratings-form {
@@ -639,12 +589,16 @@
 
         .interest-cost {
             margin-bottom: .5em;
-            .u-webfont-demi();
+            font-weight: 600;
             color: @gray-60;
         }
     } );
 
     .respond-to-min( @bp-sm-max, {
+
+        .m-notification__borderless {
+            .grid_column( 8 );
+        }
 
         .page-intro_cols {
             display: table;

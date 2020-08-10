@@ -1,4 +1,4 @@
-const Store = require( './store' );
+import Store from './store';
 
 const updateGeo = ( geo, action ) => {
   switch ( action.type ) {
@@ -133,4 +133,4 @@ class MapStore extends Store {
   }
 }
 
-module.exports = MapStore;
+export default MapStore;

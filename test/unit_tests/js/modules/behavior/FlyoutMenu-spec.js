@@ -1,18 +1,16 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const FlyoutMenu = require( BASE_JS_PATH + 'modules/behavior/FlyoutMenu' );
-const MoveTransition =
-  require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
+import FlyoutMenu from '../../../../../cfgov/unprocessed/js/modules/behavior/FlyoutMenu';
+import MoveTransition from '../../../../../cfgov/unprocessed/js/modules/transition/MoveTransition';
 
 const HTML_SNIPPET = `
-  <div data-js-hook="behavior_flyout-menu">
+<div data-js-hook="behavior_flyout-menu">
+    <button data-js-hook="behavior_flyout-menu_trigger"
+            aria-haspopup="menu"
+            aria-expanded="false"></button>
+    <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
       <button data-js-hook="behavior_flyout-menu_trigger"
-              aria-pressed="false"
               aria-expanded="false"></button>
-      <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
-        <button data-js-hook="behavior_flyout-menu_alt-trigger"
-                aria-expanded="false"></button>
-      </div>
-  </div>
+    </div>
+</div>
 `;
 
 describe( 'FlyoutMenu', () => {
@@ -38,10 +36,11 @@ describe( 'FlyoutMenu', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     containerDom = document.querySelector( SEL_PREFIX + ']' );
-    triggerDom = document.querySelector( SEL_PREFIX + '_trigger]' );
+    const triggersDom = document.querySelectorAll( SEL_PREFIX + '_trigger]' );
+    triggerDom = triggersDom[0];
     contentDom = document.querySelector( SEL_PREFIX + '_content]' );
     // TODO: check for cases where alt trigger is absent.
-    altTriggerDom = document.querySelector( SEL_PREFIX + '_alt-trigger]' );
+    altTriggerDom = triggersDom[1];
 
     flyoutMenu = new FlyoutMenu( containerDom );
   } );
@@ -54,10 +53,8 @@ describe( 'FlyoutMenu', () => {
     } );
 
     it( 'should have correct state before initializing', () => {
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
       expect(
         altTriggerDom.getAttribute( 'aria-expanded' )
       ).toBe( 'false' );
@@ -108,10 +105,7 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    xit( 'should dispatch events when called by alt trigger click', () => {
-
-      /* TODO: alt trigger doesn't dispatch mouseover events,
-         but it probably should to match the trigger API. */
+    it( 'should dispatch events when called by alt trigger click', () => {
       const mouseEvent = document.createEvent( 'MouseEvents' );
       mouseEvent.initEvent( 'mouseover', true, true );
       altTriggerDom.dispatchEvent( mouseEvent );
@@ -143,10 +137,8 @@ describe( 'FlyoutMenu', () => {
       );
 
       // Check expected aria attributes state.
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'true' );
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
       expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
     } );
 
@@ -191,10 +183,8 @@ describe( 'FlyoutMenu', () => {
       );
 
       // Check expected aria attribute states.
-      expect( triggerDom.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-      expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).toBeNull();
       expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
     } );
 
@@ -229,6 +219,13 @@ describe( 'FlyoutMenu', () => {
         }
       } );
       triggerDom.click();
+
+      /* The transitionend event should fire on its own,
+         but for some reason the transitionend event is not firing within JSDom.
+         In a future JSDom update this should be revisited.
+         See https://github.com/jsdom/jsdom/issues/1781
+      */
+      contentDom.dispatchEvent( new Event( 'transitionend' ) );
     } );
   } );
 
@@ -248,6 +245,13 @@ describe( 'FlyoutMenu', () => {
         }
       } );
       triggerDom.click();
+
+      /* The transitionend event should fire on its own,
+         but for some reason the transitionend event is not firing within JSDom.
+         In a future JSDom update this should be revisited.
+         See https://github.com/jsdom/jsdom/issues/1781
+      */
+      contentDom.dispatchEvent( new Event( 'transitionend' ) );
     } );
   } );
 
@@ -258,9 +262,9 @@ describe( 'FlyoutMenu', () => {
       const transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
-      expect( flyoutMenu.getTransition() ).toEqual( transition );
+      expect( flyoutMenu.getTransition() ).toStrictEqual( transition );
       expect( flyoutMenu.getTransition( FlyoutMenu.COLLAPSE_TYPE ) )
-        .toEqual( transition );
+        .toStrictEqual( transition );
     } );
   } );
 
@@ -283,10 +287,10 @@ describe( 'FlyoutMenu', () => {
     it( 'should return references to full dom', () => {
       flyoutMenu.init();
       const dom = flyoutMenu.getDom();
-      expect( dom.container ).toEqual( containerDom );
-      expect( dom.trigger ).toEqual( triggerDom );
-      expect( dom.content ).toEqual( contentDom );
-      expect( dom.altTrigger ).toEqual( altTriggerDom );
+      expect( dom.container ).toStrictEqual( containerDom );
+      expect( dom.trigger[0] ).toStrictEqual( triggerDom );
+      expect( dom.content ).toStrictEqual( contentDom );
+      expect( dom.trigger[1] ).toStrictEqual( altTriggerDom );
     } );
   } );
 

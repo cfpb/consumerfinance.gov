@@ -1,0 +1,39 @@
+
+[
+{
+    "pk": 1,
+    "model": "wagtailcore.page",
+    "fields": {
+        "title": "Root",
+        "draft_title": "Root",
+        "numchild": 2,
+        "show_in_menus": false,
+        "live": true,
+        "depth": 1,
+        "content_type": [
+            "wagtailcore",
+            "page"
+        ],
+        "path": "0001",
+        "url_path": "/",
+        "slug": "root"
+    }
+},
+{
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+        "username": "shiva",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": true,
+        "is_staff": true,
+        "groups": [
+        ],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$kg1bzBACH8oB$NWmlLD/ZnJr6Djk1ugMEd6LOwOBoVgQw8Uq8IxC8vQU=",
+        "email": "shiva@example.com"
+    }
+}
+]

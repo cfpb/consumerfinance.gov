@@ -2,18 +2,17 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-const envVars = require( '../../../../config/environment' ).envvars;
 const paths = require( '../../../../config/environment' ).paths;
-const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
+const TerserPlugin = require( 'terser-webpack-plugin' );
 const fs = require( 'fs' );
 const path = require( 'path' );
 const fancyLog = require( 'fancy-log' );
-const swPrecache = require( 'sw-precache' );
+const workboxBuild = require( 'workbox-build' );
 
 // Constants
 const APP_NAME = 'regulations3k';
 // This'll need to be changed if the app doesn't live at cf.gov/regulations
-const APP_PATH = 'regulations';
+const APP_PATH = 'policy-compliance/rulemaking/regulations';
 const SERVICE_WORKER_FILENAME = `${ APP_NAME }-service-worker.js`;
 const SERVICE_WORKER_DEST = `cfgov/${ APP_NAME }/jinja2/${ APP_NAME }/${ SERVICE_WORKER_FILENAME }`;
 const MANIFEST_FILENAME = `${ APP_NAME }-manifest.json`;
@@ -22,10 +21,11 @@ const MANIFEST_DEST = `${ paths.processed }/apps/${ APP_NAME }/${ MANIFEST_FILEN
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
-const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
-  uglifyOptions: {
+  extractComments: false,
+  terserOptions: {
     ie8: false,
     ecma: 5,
     warnings: false,
@@ -42,14 +42,14 @@ const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
-
-    /* The below regex will capture all node modules that start with `cf`
-      or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/. */
-    exclude: /node_modules\/(?:cf.+|atomic-component)/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
-        presets: [ [ 'babel-preset-env', {
+        presets: [ [ '@babel/preset-env', {
+          configPath: __dirname,
+          /* Use useBuiltIns: 'usage' and set `debug: true` to see what
+             scripts require polyfilling. */
+          useBuiltIns: false,
           debug: false
         } ] ]
       }
@@ -64,42 +64,42 @@ const STATS_CONFIG = {
 };
 
 const SERVICE_WORKER_CONFIG = {
-  staticFileGlobs: [
-    `${ paths.processed }/apps/${ APP_NAME }/css/main.css`,
-    `${ paths.processed }/apps/${ APP_NAME }/js/index.js`
+  swDest: SERVICE_WORKER_DEST,
+  globDirectory: paths.processed,
+  globPatterns: [
+    `apps/${ APP_NAME }/css/main.css`,
+    `apps/${ APP_NAME }/js/index.js`
   ],
-  stripPrefix: `${ paths.processed }/`,
-  replacePrefix: /static/,
+  modifyUrlPrefix: {
+    'apps/': '/static/apps/'
+  },
   runtimeCaching: [
     {
-      urlPattern: new RegExp( `/${ APP_PATH }` ),
-      handler: 'fastest',
+      urlPattern: new RegExp( `/${ APP_PATH }/` ),
+      handler: 'staleWhileRevalidate',
       options: {
-        cache: {
-          name: `${ APP_NAME }-content`,
-          // Delete entries older than three hours
+        cacheName: `${ APP_NAME }-content`,
+        expiration: {
           maxAgeSeconds: 60 * 60 * 3
         }
       }
     },
     {
       urlPattern: new RegExp( `/static/apps/${ APP_NAME }` ),
-      handler: 'fastest',
+      handler: 'staleWhileRevalidate',
       options: {
-        cache: {
-          name: `${ APP_NAME }-assets`,
-          // Delete entries older than three hours
+        cacheName: `${ APP_NAME }-assets`,
+        expiration: {
           maxAgeSeconds: 60 * 60 * 3
         }
       }
     },
     {
       urlPattern: new RegExp( '/static/(css|js|fonts|img)' ),
-      handler: 'fastest',
+      handler: 'staleWhileRevalidate',
       options: {
-        cache: {
-          name: 'cfpb-assets',
-          // Delete entries older than three hours
+        cacheName: 'cfpb-assets',
+        expiration: {
           maxAgeSeconds: 60 * 60 * 3
         }
       }
@@ -115,9 +115,15 @@ const conf = {
     filename: '[name]',
     jsonpFunction: 'apps'
   },
-  plugins: [
-    COMMON_UGLIFY_CONFIG
-  ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      COMMON_MINIFICATION_CONFIG
+    ]
+  },
+  resolve: {
+    symlinks: false
+  },
   stats: STATS_CONFIG.stats
 };
 
@@ -132,11 +138,10 @@ const ensureDirectoryExistence = filePath => {
 
 fancyLog( 'Started generating service worker file...' );
 ensureDirectoryExistence( SERVICE_WORKER_DEST );
-swPrecache.write( SERVICE_WORKER_DEST, SERVICE_WORKER_CONFIG, err => {
-  if ( err ) {
-    return fancyLog( `Error generating service worker file: ${ err }` );
-  }
-  return fancyLog( `Service worker file successfully generated to ${ SERVICE_WORKER_DEST }` );
+workboxBuild.generateSW( SERVICE_WORKER_CONFIG ).then( ( { count, size } ) => {
+  fancyLog( `Generated ${ SERVICE_WORKER_DEST }, which will precache ${ count } files, totaling ${ size } bytes.` );
+} ).catch( err => {
+  fancyLog( `Error generating service worker file: ${ err }` );
 } );
 
 fancyLog( 'Copying eRegs\' manifest...' );
@@ -145,7 +150,7 @@ fs.copyFile( MANIFEST_SRC, MANIFEST_DEST, err => {
   if ( err ) {
     return fancyLog( `Error copying eRegs' manifest: ${ err }` );
   }
-  return fancyLog( `Successfully copied eRegs' manifest to ${ SERVICE_WORKER_DEST }` );
+  return fancyLog( `Successfully copied eRegs' manifest to ${ MANIFEST_DEST }` );
 } );
 
 module.exports = { conf };

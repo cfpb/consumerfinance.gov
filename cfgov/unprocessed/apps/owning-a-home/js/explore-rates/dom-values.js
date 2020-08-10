@@ -33,6 +33,6 @@ function getSelection( param ) {
   return val;
 }
 
-module.exports = {
-  getSelection: getSelection
+export {
+  getSelection
 };

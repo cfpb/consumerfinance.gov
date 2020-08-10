@@ -1,7 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'form_block.html' as form_block with context %}
-{% import 'organisms/featured-content.html' as featured_content %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -23,27 +22,24 @@
 
 {% block content_main %}
     {% for block in page.content -%}
-        {% if 'featured_content' in block.block_type %}
+        {% if block.block_type == 'notification' %}
             <div class="block
-                        block__flush-sides
-                        block__border">
-                {{ featured_content.render(block.value) }}
+                        block__flush-top
+                        block__flush-bottom
+                        block__padded-bottom">
+                {% include_block block %}
+            </div>
+        {% elif 'featured_content' in block.block_type %}
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                {% include_block block %}
             </div>
         {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
         {% elif 'post_preview_snapshot' in block.block_type %}
-            <div class="block
-                        {{ block.block.meta.classname if block.block.meta.classname else '' }}">
-                {% set limit = block.value.limit | int %}
-                {% set posts = page.get_browsefilterable_posts(limit) %}
-                {% for post in posts %}
-                    {{ post_preview.render(post, controls=none, url=get_protected_url(post.parent()), post_date_description=block.value.post_date_description) }}
-                {% endfor %}
-             </div>
+            {% include_block block %}
         {% elif 'filter_controls' in block.block_type %}
             <div class="block block__flush-top">
-                {% import 'organisms/filterable-list-controls.html' as flc with context %}
-                {{ flc.render(block.value) }}
+                {% include_block block %}
             </div>
         {% elif 'text_introduction' not in block.block_type %}
             {% import 'templates/render_block.html' as render_block with context %}

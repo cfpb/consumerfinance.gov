@@ -1,4 +1,4 @@
-As a work of the United States Government, this package (excluding any
+As a work of the United States government, this package (excluding any
 exceptions listed below) is in the public domain within the United States.
 Additionally, we waive copyright and related rights in the work worldwide
 through the [CC0 1.0 Universal public domain dedication][CC0].
@@ -55,3 +55,5 @@ author or the affirmer.
   is licensed under MIT License.
 - [Normalize](https://necolas.github.io/normalize.css/) by Nicolas Gallagher,
   co-created with Jonathan Neal, is licensed under the MIT License.
+- Build depedencies packaged in `npm-packages-offline-cache` are individually licensed.
+  Once installed, specific licenses can be viewed in the `node_modules` folder.

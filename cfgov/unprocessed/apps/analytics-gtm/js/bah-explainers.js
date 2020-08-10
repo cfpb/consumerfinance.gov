@@ -4,8 +4,8 @@ import {
 } from './util/analytics-util';
 
 /*
-Owning a Home /owning-a-home/loan-estimate/
-Owning a Home /owning-a-home/closing-disclosure/
+Buying a House /owning-a-home/loan-estimate/
+Buying a House /owning-a-home/closing-disclosure/
 */
 
 export default function( label ) {
@@ -91,7 +91,7 @@ export default function( label ) {
     const tabText = tab.querySelector( '.tab-label' ).textContent.trim();
     let action = 'Expandable collapsed - ' + tabText;
     const label = elem.querySelector( '.o-expandable_label' );
-    let text = label.textContent.trim();
+    const text = label.textContent.trim();
     if ( expandableStates[expandableID] === true ) {
       action = 'Expandable expanded - ' + tabText;
     }

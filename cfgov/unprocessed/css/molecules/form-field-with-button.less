@@ -30,11 +30,38 @@
   tags:
     - cfgov-molecules
 */
+
 // TODO: Look into merging email-signup and form-field-with-button styles
 // Form field with button isn't used anywhere else
 .m-form-field-with-button {
     .m-form-field {
-        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        margin-bottom: 0;
+    }
+
+    &_info,
+    .a-btn {
+        margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    }
+
+    &__inline-info {
+        .respond-to-min( 321px, {
+            .m-form-field-with-button_wrapper {
+                width: 100%;
+                display: flex;
+                align-items: flex-start;
+                flex-wrap: wrap-reverse;
+                justify-content: space-between;
+            }
+
+            .m-form-field-with-button_info {
+                order: 1;
+            }
+
+            .a-btn {
+                width: auto;
+                margin-right: unit( ( @grid_gutter-width / 3 ) / @base-font-size-px, em );
+            }
+        } );
     }
 }
 

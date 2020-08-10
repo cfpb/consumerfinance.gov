@@ -1,7 +1,4 @@
-const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/js/';
-const Store = require(
-  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/stores/chart.js'
-);
+import Store from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/stores/chart.js';
 let store;
 
 describe( 'Mortgage Performance line chart store', () => {
@@ -29,7 +26,7 @@ describe( 'Mortgage Performance line chart store', () => {
       states: {}
     };
 
-    expect( store.getState() ).toEqual( mockData );
+    expect( store.getState() ).toStrictEqual( mockData );
   } );
 
   it( 'should be able to add subscribers', () => {
@@ -44,7 +41,7 @@ describe( 'Mortgage Performance line chart store', () => {
   } );
 
   it( 'should default to having an empty previous state', () => {
-    expect( store.prevState ).toEqual( {} );
+    expect( store.prevState ).toStrictEqual( {} );
   } );
 
   it( 'should default to comparing national data', () => {
@@ -61,9 +58,9 @@ describe( 'Mortgage Performance line chart store', () => {
       }
     };
     store.dispatch( action );
-    expect( store.getState().geo.type ).toEqual( 'county' );
-    expect( store.getState().geo.id ).toEqual( 12345 );
-    expect( store.getState().geo.name ).toEqual( 'Acme County' );
+    expect( store.getState().geo.type ).toStrictEqual( 'county' );
+    expect( store.getState().geo.id ).toStrictEqual( 12345 );
+    expect( store.getState().geo.name ).toStrictEqual( 'Acme County' );
   } );
 
   it( 'should properly clear geos', () => {
@@ -146,7 +143,7 @@ describe( 'Mortgage Performance line chart store', () => {
       metros: { 12345: 'Akron, OH' }
     };
     store.dispatch( action );
-    expect( store.getState().metros ).toEqual( { 12345: 'Akron, OH' } );
+    expect( store.getState().metros ).toStrictEqual( { 12345: 'Akron, OH' } );
   } );
 
   it( 'should properly reduce non-metros', () => {
@@ -155,7 +152,7 @@ describe( 'Mortgage Performance line chart store', () => {
       nonMetros: { 67890: 'Boston, MA' }
     };
     store.dispatch( action );
-    expect( store.getState().nonMetros ).toEqual( { 67890: 'Boston, MA' } );
+    expect( store.getState().nonMetros ).toStrictEqual( { 67890: 'Boston, MA' } );
   } );
 
   it( 'should properly reduce counties', () => {
@@ -164,7 +161,7 @@ describe( 'Mortgage Performance line chart store', () => {
       counties: { 12345: 'Acme County' }
     };
     store.dispatch( action );
-    expect( store.getState().counties ).toEqual( { 12345: 'Acme County' } );
+    expect( store.getState().counties ).toStrictEqual( { 12345: 'Acme County' } );
   } );
 
   it( 'should properly reduce u.s. states', () => {
@@ -173,19 +170,19 @@ describe( 'Mortgage Performance line chart store', () => {
       states: { AL: 'Alabama' }
     };
     store.dispatch( action );
-    expect( store.getState().states ).toEqual( { AL: 'Alabama' } );
+    expect( store.getState().states ).toStrictEqual( { AL: 'Alabama' } );
     action = {
       type: 'FETCH_STATES',
       states: { CA: 'California' }
     };
     store.dispatch( action );
-    expect( store.getState().states ).toEqual( { AL: 'Alabama' } );
+    expect( store.getState().states ).toStrictEqual( { AL: 'Alabama' } );
     action = {
       type: 'SET_STATES',
       states: { CA: 'California' }
     };
     store.dispatch( action );
-    expect( store.getState().states ).toEqual( { CA: 'California' } );
+    expect( store.getState().states ).toStrictEqual( { CA: 'California' } );
   } );
 
   it( 'should properly reduce national comparison', () => {

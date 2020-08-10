@@ -73,4 +73,4 @@ function applyThemeTo( highcharts ) {
   highcharts.setOptions( highcharts.theme );
 }
 
-module.exports = { applyThemeTo: applyThemeTo };
+export { applyThemeTo };

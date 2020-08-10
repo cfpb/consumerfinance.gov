@@ -1,6 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -8,6 +7,5 @@ from django.views.decorators.csrf import csrf_exempt
 def token_provider(request):
     request.session.modified = True
     if request.method == 'POST':
-        context = RequestContext(request)
-        return render_to_response('common/csrf.html', context)
+        return render(request, 'common/csrf.html')
     return HttpResponse()

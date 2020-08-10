@@ -47,7 +47,7 @@
     <div class="o-main-contact-info">
         <h2>{{ value.contact.heading }}</h2>
 
-        {{ parse_links(value.contact.body) | safe }}
+        {{ value.contact.body | safe }}
 
         {% if value.contact.contact_info %}
 

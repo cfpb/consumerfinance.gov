@@ -2,15 +2,7 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 const emailPopupsHelpers = require(
   BASE_JS_PATH + 'modules/util/email-popup-helpers'
 );
-const storageMock = require( '../../../../util/mock-web-storage' );
-
 describe( 'email-popup-helpers', () => {
-  beforeEach( () => {
-    // Mock the window's web storage APIs.
-    window.localStorage = storageMock( {} );
-    window.sessionStorage = storageMock( {} );
-  } );
-
   describe( 'showEmailPopup()', () => {
     it( 'should return true if no date is in storage', () => {
       expect( emailPopupsHelpers.showEmailPopup( 'testPopup' ) ).toBe( true );
@@ -29,9 +21,9 @@ describe( 'email-popup-helpers', () => {
   describe( 'recordEmailPopupView()', () => {
     it( 'should record number of times popup has been shown', () => {
       emailPopupsHelpers.recordEmailPopupView( 'testPopup' );
-      expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( 1 );
+      expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( '1' );
       emailPopupsHelpers.recordEmailPopupView( 'testPopup' );
-      expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( 2 );
+      expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( '2' );
     } );
   } );
 
@@ -59,11 +51,12 @@ describe( 'email-popup-helpers', () => {
       const testDate = date.setTime(
         date.getTime() + ( 60 * 24 * 60 * 60 * 1000 )
       );
-      expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( 2 );
+      expect( localStorage.getItem( 'testPopupPopupCount' ) ).toBe( '2' );
 
       /* To avoid being off by a millisecond, we need to convert to a decimal
          and check using toBeCloseTo matcher instead of toBe. */
-      expect( localStorage.getItem( 'testPopupPopupShowNext' ) / 10000 )
+      const valueStore = localStorage.getItem( 'testPopupPopupShowNext' );
+      expect( Number.parseInt( valueStore, 10 ) / 10000 )
         .toBeCloseTo( testDate / 10000 );
     } );
   } );

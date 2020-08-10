@@ -78,3 +78,11 @@ li.sequence-member .sequence-member-inner .sequence-type-list .sequence-member-i
 .sequence-member:first-child > .sequence-member-inner > .field > .field-content {
     padding-top: 1em;
 }
+
+/* Fix alignment of multiple choice field labels used for TDP Activity search child page Topic field */
+.tree_node_multiple_choice_field .input li label {
+    display: block;
+    width: auto;
+    float: none;
+    padding-top: 0;
+}

@@ -1,0 +1,125 @@
+// The code is borrowed, with some modifications, from 
+// ccdb5-ui's App.less, SearchBar.less, and select.less
+
+.layout-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.layout-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-fixed {
+    flex: none;
+}
+
+.flex-all {
+    flex: 1 0 auto;
+}
+
+button.a-btn.flex-fixed {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.lt-ie10 {
+    button.a-btn.flex-fixed {
+        border-radius: .25em;
+    }
+
+    .a-select {
+        margin-bottom: unit( @grid_gutter-width * 2/3 / @base-font-size-px, em );;
+    }
+
+    .flex-all {
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );;
+    }
+    .respond-to-min( @bp-med-min, {
+        .a-select,
+        .flex-all {
+            margin-bottom: 0;
+        }
+        .layout-row {
+            display: table;
+            width: 100%;
+
+            .a-select{
+                display: table-cell;
+                width: 25%;
+            }
+
+            .flex-all {
+                width: 100%;
+                display: table-cell;
+            }
+
+            .a-btn {
+                display:table-cell;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    });
+}
+
+.respond-to-max( @bp-sm-max, {
+    .a-select {
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        width: 100%;        
+    }
+});
+
+ // select
+@select-height: @size-ii;
+
+.a-select {
+    border: 1px solid @gray-40;
+    display: flex;
+    box-sizing: border-box;
+    background-color: @gray;
+    flex-direction: column;
+    justify-content: center;
+
+    select {
+        padding: unit( 4px / @base-font-size-px, em )
+                 unit( 6px / @base-font-size-px, em );
+
+        // Save room for the drop-arrow
+        padding-right: unit( @select-height * 1.1 / @base-font-size-px, em );
+        background-color: @gray;
+        color: @white;
+
+        &:hover,
+        &.hover,
+        &:active,
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    select::-ms-expand {
+        display: none;
+    }
+
+    &:after {
+        height: 100%;        
+        content: "\25BE";
+        width: unit( @select-height / @base-font-size-px, em );
+        line-height: unit( @select-height / @base-font-size-px, em );
+        text-align: center;
+        vertical-align: middle;
+        background-image: none;
+        background-color: @gray;
+        color: @white;
+        border-width: 0;
+    }  
+}
+
+// Hide the drop arrow in IE9
+.lt-ie10 .a-select select {
+    padding-right: unit( 6px / @base-font-size-px, em );
+}

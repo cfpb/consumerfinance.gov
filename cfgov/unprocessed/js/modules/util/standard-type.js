@@ -54,12 +54,9 @@ function noopFunct() {
   // Placeholder function meant to be overridden.
 }
 
-let UNDEFINED;
-
-module.exports = {
-  BEHAVIOR_PREFIX: BEHAVIOR_PREFIX,
-  JS_HOOK:         JS_HOOK,
-  noopFunct:       noopFunct,
-  STATE_PREFIX:    STATE_PREFIX,
-  UNDEFINED:       UNDEFINED
+export {
+  BEHAVIOR_PREFIX,
+  JS_HOOK,
+  noopFunct,
+  STATE_PREFIX
 };

@@ -1,0 +1,13 @@
+{# ==========================================================================
+
+   Render the site footer.
+
+   See v1.templatetags.base_elements. This template allows for inclusion of the
+   Jinja2 site footer in templates written using the Django template language.
+
+   ========================================================================== #}
+
+{% import 'organisms/footer.html' as footer with context %}
+{{ footer.render() }}
+
+{% include '_includes/snippets/search_gov.html' %}

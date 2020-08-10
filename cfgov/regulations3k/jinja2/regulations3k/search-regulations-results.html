@@ -1,0 +1,55 @@
+{% import 'atoms/tag.html' as tag %}
+{% import 'regulations3k/regulations3k-search-result-item.html' as search_item %}
+{% import 'molecules/pagination.html' as pagination with context %}
+
+<div class="results_header">
+    {% if current_count and current_count > 0 %}
+    <div class="results_count">
+        <h2 class="h3">
+            Showing {{ current_count }}
+            match{% if current_count > 1 %}es{% endif %}
+            {% if total_count > current_count %}
+                out of {{ total_count }} total results
+            {% endif %}
+        </h2>
+    </div>
+    {% else %}
+    <div class="results_count no-results">
+        <h2 class="h3">No results match your filters.</h2>
+        <p>Try adjusting your filters or searching for different terms.</p>
+    </div>
+    {% endif %}
+    {% if show_filters %}
+    <div class="filters_applied">
+        <span class="filters_applied-label">
+            Filters applied:
+        </span>
+        <div class="filters_tags">
+            {% for reg in page.results.all_regs %}
+                {% if reg.selected %}
+                    {%- set reg_name = '(' ~ reg.short_name | regs_hide_on_mobile ~ ')' -%}
+                    {{ tag.render({
+                        'label': reg.id ~ ' ' ~ reg_name | safe,
+                        'value': reg.id,
+                        'behavior': 'clear-filter'
+                    }) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <button class="a-btn a-btn__link a-btn__warning a-micro-copy filters_clear"
+                data-js-hook="behavior_clear-all">
+            Clear all filters
+        </button>
+    </div>
+    {% endif %}
+</div>
+{% if current_count %}
+<div class="results_list">
+    {% for result in results %}
+        {{ search_item.render( result ) }}
+    {% endfor %}
+</div>
+<div class="results_paginator">
+    {{ pagination.render( paginator.num_pages, current_page, '', '', 'Previous', 'Next' ) }}
+</div>
+{% endif %}

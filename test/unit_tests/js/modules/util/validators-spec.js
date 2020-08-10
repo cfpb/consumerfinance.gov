@@ -1,8 +1,13 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
-const validators = require( BASE_JS_PATH + 'modules/util/validators.js' );
+import * as validators from '../../../../../cfgov/unprocessed/js/modules/util/validators.js';
+import ERROR_MESSAGES from '../../../../../cfgov/unprocessed/js/config/error-messages-config';
+
 let testField;
 let returnedObject;
+const validDates = [ '1/22/2017', '11/4/09', '3-31-20', '1-1-1900',
+  '5/2018', '12/18', '05-2010', '1/17', '2016' ];
+
+const invalidDates = [ '305-20-2018', '8//2018', '90', '4/20000' ];
+
 
 describe( 'Validators', () => {
   describe( 'date field', () => {
@@ -14,15 +19,32 @@ describe( 'Validators', () => {
       testField.value = '11/12/2007';
       returnedObject = validators.date( testField );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
 
     it( 'should return an error object for a malformed date', () => {
-      testField.value = '11-12-07';
+      testField.value = '11.12.2007';
       returnedObject = validators.date( testField );
 
       expect( returnedObject['date'] ).toBe( false );
       expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.DATE.INVALID );
+    } );
+
+    it( 'should allow correctly formatted dates', () => {
+      for ( let i = 0, len = validDates.length; i < len; i++ ) {
+        testField.value = validDates[i];
+        returnedObject = validators.date( testField );
+        expect( returnedObject ).toStrictEqual( {} );
+      }
+    } );
+
+    it( 'should reject incorrectly formatted dates', () => {
+      for ( let i = 0, len = invalidDates.length; i < len; i++ ) {
+        testField.value = invalidDates[i];
+        returnedObject = validators.date( testField );
+        expect( returnedObject['date'] ).toBe( false );
+        expect( returnedObject['msg'] ).toBe( ERROR_MESSAGES.DATE.INVALID );
+      }
     } );
 
     it( 'should return an error object for a UTC date', () => {
@@ -43,7 +65,7 @@ describe( 'Validators', () => {
       testField.value = 'test@demo.com';
       returnedObject = validators.email( testField );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
 
     it( 'should return an error object for a missing domain', () => {
@@ -73,7 +95,7 @@ describe( 'Validators', () => {
       testField.value = 'testing';
       returnedObject = validators.empty( testField );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
 
     it( 'should return an error object for am empty field', () => {
@@ -100,7 +122,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.checkbox( testField, null, fieldset );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
 
     it( 'should return an empty object ' +
@@ -112,7 +134,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.checkbox( testField, null, fieldset );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
 
     it( 'should return an error object ' +
@@ -135,7 +157,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.checkbox( testField, null, fieldset );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
   } );
 
@@ -153,7 +175,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.radio( testField, null, fieldset );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
 
     it( 'should return an empty object ' +
@@ -164,7 +186,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.radio( testField, null, fieldset );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
 
     it( 'should return an error object ' +
@@ -185,7 +207,7 @@ describe( 'Validators', () => {
       ];
       returnedObject = validators.radio( testField, null, fieldset );
 
-      expect( returnedObject ).toEqual( {} );
+      expect( returnedObject ).toStrictEqual( {} );
     } );
   } );
 } );

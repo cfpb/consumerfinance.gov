@@ -1,5 +1,5 @@
-const isArray = require( './util/type-checkers' ).isArray;
-const EventObserver = require( '../modules/util/EventObserver' );
+import EventObserver from '../modules/util/EventObserver';
+import { isArray } from './util/type-checkers';
 
 const eventObserver = new EventObserver();
 const Analytics = {
@@ -95,4 +95,4 @@ const Analytics = {
 
 Analytics.init();
 
-module.exports = Analytics;
+export default Analytics;

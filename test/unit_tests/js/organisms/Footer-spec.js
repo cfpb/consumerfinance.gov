@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const Footer = require( BASE_JS_PATH + 'organisms/Footer' );
+import Footer from '../../../../cfgov/unprocessed/js/organisms/Footer';
 
 let footer;
 
@@ -14,9 +13,10 @@ describe( 'Footer', () => {
   } );
 
   describe( 'init()', () => {
-    it( 'should return undefined if already initialized', () => {
-      footer.init();
-      expect( footer.init() ).toBeUndefined();
+    it( 'should return the instance when initialized', () => {
+      expect( footer.init() ).toBeInstanceOf( Footer );
+      // Check that an instance is returned on the second call.
+      expect( footer.init() ).toBeInstanceOf( Footer );
     } );
   } );
 } );

@@ -49,20 +49,20 @@
 
 {% if value.has_data is not defined or value.has_data %}
 {% macro _render_cell(cell) %}
-    {{ parse_links(cell or '&nbsp;') | safe | trim | linebreaksbr }}
+    {{ (cell or '&nbsp;') | richtext | linebreaksbr | trim | safe }}
 {% endmacro %}
 {% if value.heading_text %}
-    <{{ value.heading_level -}}
-        {%- if value.heading_icon -%}
-            {{- ' class="cf-icon cf-icon-' ~ value.heading_icon ~ '"' -}}
-        {%- endif -%}>
-        {{ value.heading_text }}
+    <{{ value.heading_level -}}>
+        {%- if value.heading_icon %}
+            {{ svg_icon(value.heading_icon) }}
+        {% endif -%}
+        {{ value.heading_text | safe }}
     </{{ value.heading_level}}>
 {% endif %}
 <table class="o-table
               {{- ' o-table__row-links' if value.row_links else '' -}}
               {{- ' o-table__stack-on-small' if value.is_stacked else '' -}}
-              {{- ' table__striped' if value.is_striped else '' -}}
+              {{- ' o-table__striped' if value.is_striped else '' -}}
               {{- ' u-w100pct' if value.is_full_width else '' -}}
               {{- ' o-table__sortable' if value.is_sortable else '' -}}">
     {% set row_index = 0 %}

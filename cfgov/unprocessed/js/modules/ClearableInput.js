@@ -1,5 +1,5 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
+import { checkDom } from '../modules/util/atomic-helpers';
 
 /**
  * ClearableInput
@@ -14,7 +14,7 @@ const atomicHelpers = require( '../modules/util/atomic-helpers' );
 function ClearableInput( element ) {
   const BASE_CLASS = 'input-contains-label';
 
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
   const _inputDom = _dom.querySelector( 'input' );
   const _clearBtnDom = _dom.querySelector( '.' + BASE_CLASS + '_after__clear' );
 
@@ -87,4 +87,4 @@ function ClearableInput( element ) {
   return this;
 }
 
-module.exports = ClearableInput;
+export default ClearableInput;

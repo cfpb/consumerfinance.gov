@@ -1,12 +1,16 @@
 // Required modules.
-const arrayHelpers = require( '../modules/util/array-helpers' );
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const bindEvent = require( '../modules/util/dom-events' ).bindEvent;
-const domCreate = require( '../modules/util/dom-manipulators' ).create;
-const queryOne = require( '../modules/util/dom-traverse' ).queryOne;
-const standardType = require( '../modules/util/standard-type' );
-const strings = require( '../modules/util/strings' );
-const EventObserver = require( '../modules/util/EventObserver' );
+import * as arrayHelpers from '../modules/util/array-helpers';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import EventObserver from '../modules/util/EventObserver';
+import MultiselectModel from './MultiselectModel';
+import { bindEvent } from '../modules/util/dom-events';
+import { create } from '../modules/util/dom-manipulators';
+
+const closeIcon = require(
+  'svg-inline-loader!../../../../node_modules/@cfpb/cfpb-icons/src/icons/close.svg'
+);
+
+const BASE_CLASS = 'o-multiselect';
 
 /**
  * Multiselect
@@ -18,9 +22,8 @@ const EventObserver = require( '../modules/util/EventObserver' );
  *   The DOM element within which to search for the molecule.
  * @returns {Multiselect} An instance.
  */
-function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
+function Multiselect( element ) { // eslint-disable-line max-statements
 
-  const BASE_CLASS = 'cf-multi-select';
   const LIST_CLASS = 'm-list';
   const CHECKBOX_INPUT_CLASS = 'a-checkbox';
   const TEXT_INPUT_CLASS = 'a-text-input';
@@ -42,20 +45,14 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   const KEY_DOWN = 40;
   const KEY_TAB = 9;
 
-  // Search settings.
-  const MIN_CHARS = 3;
-  const MAX_SELECTIONS = 5;
-
   // Internal vars.
-  let _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  let _index = -1;
+  let _dom = checkDom( element, BASE_CLASS );
   let _isBlurSkipped = false;
-  let _selectionsCount = 0;
   let _name;
+  let _placeholder;
+  let _model;
   let _options;
   let _optionsData;
-  let _filteredData;
-  let _placeholder;
 
   // Markup elems, conver this to templating engine in the future.
   let _containerDom;
@@ -64,25 +61,26 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   let _searchDom;
   let _fieldsetDom;
   let _optionsDom;
+  const _optionItemDoms = [];
   let _instance;
 
   /**
-   * Set up and create the multi-select.
-   * @returns {Multiselect|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * Set up and create the multiselect.
+   * @returns {Multiselect} An instance.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     _instance = this;
     _name = _dom.name;
-    _options = _dom.options || [];
     _placeholder = _dom.getAttribute( 'placeholder' );
-    _filteredData = _optionsData = _sanitizeOptions( _options );
+    _options = _dom.options || [];
 
-    if ( _optionsData.length > 0 ) {
+    if ( _options.length > 0 ) {
+      _model = new MultiselectModel( _options ).init();
+      _optionsData = _model.getOptions();
       const newDom = _populateMarkup();
 
       /* Removes <select> element,
@@ -92,7 +90,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
       /* We need to set init flag again since we've created a new <div>
          to replace the <select> element. */
-      atomicHelpers.setInitFlag( _dom );
+      setInitFlag( _dom );
 
       _bindEvents();
     }
@@ -101,11 +99,11 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Expand the multi-select drop down.
+   * Expand the multiselect drop down.
    * @returns {Multiselect} An instance.
    */
   function expand() {
-    _containerDom.classList.add( 'active' );
+    _containerDom.classList.add( 'u-active' );
     _fieldsetDom.classList.remove( 'u-invisible' );
     _fieldsetDom.setAttribute( 'aria-hidden', false );
     _instance.dispatchEvent( 'expandBegin', { target: _instance } );
@@ -114,88 +112,57 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Collapse the multi-select drop down.
+   * Collapse the multiselect drop down.
    * @returns {Multiselect} An instance.
    */
   function collapse() {
-    _containerDom.classList.remove( 'active' );
+    _containerDom.classList.remove( 'u-active' );
     _fieldsetDom.classList.add( 'u-invisible' );
     _fieldsetDom.setAttribute( 'aria-hidden', true );
-    _index = -1;
+    _model.resetIndex();
     _instance.dispatchEvent( 'expandEnd', { target: _instance } );
 
     return _instance;
   }
 
   /**
-   * Cleans up a list of options for saving to memory.
-   * @param   {Array} list The options from the parent select elem.
-   * @returns {Array}      An array of option objects.
-   */
-  function _sanitizeOptions( list ) {
-    let item;
-    const cleaned = [];
-
-    for ( let i = 0, len = list.length; i < len; i++ ) {
-      item = list[i];
-
-      // If the value isn't valid kill the script and prompt the developer.
-      if ( !strings.stringValid( item.value ) ) {
-        // TODO: Update to throw an error and handle the error vs logging.
-        console.log( '\'' + item.value + '\' is not a valid value' );
-        // TODO: Remove this line if the class is added via markup.
-        element.classList.remove( BASE_CLASS );
-
-        return false;
-      }
-
-      cleaned.push( {
-        value:   item.value,
-        text:    item.text,
-        checked: item.defaultSelected
-      } );
-    }
-
-    return cleaned;
-  }
-
-  /**
-   * Populates and injects the markup for the custom multi-select.
+   * Populates and injects the markup for the custom multiselect.
    * @returns {HTMLNode} Newly created <div> element to hold the multiselect.
    */
   function _populateMarkup() {
     // Add a container for our markup
-    _containerDom = domCreate( 'div', {
+    _containerDom = create( 'div', {
       className: BASE_CLASS,
       around:    _dom
     } );
 
     // Create all our markup but wait to manipulate the DOM just once
-    _selectionsDom = domCreate( 'ul', {
+    _selectionsDom = create( 'ul', {
       className: LIST_CLASS + ' ' +
                  LIST_CLASS + '__unstyled ' +
                  BASE_CLASS + '_choices',
       inside:    _containerDom
     } );
 
-    _headerDom = domCreate( 'header', {
+    _headerDom = create( 'header', {
       className: BASE_CLASS + '_header'
     } );
 
-    _searchDom = domCreate( 'input', {
-      className:   BASE_CLASS + '_search ' + TEXT_INPUT_CLASS,
-      type:        'text',
-      placeholder: _placeholder || 'Choose up to five',
-      inside:      _headerDom,
-      id:          _name
+    _searchDom = create( 'input', {
+      className:    BASE_CLASS + '_search ' + TEXT_INPUT_CLASS,
+      type:         'text',
+      placeholder:  _placeholder || 'Choose up to five',
+      inside:       _headerDom,
+      id:           _name,
+      autocomplete: 'off'
     } );
 
-    _fieldsetDom = domCreate( 'fieldset', {
+    _fieldsetDom = create( 'fieldset', {
       'className':   BASE_CLASS + '_fieldset u-invisible',
       'aria-hidden': 'true'
     } );
 
-    _optionsDom = domCreate( 'ul', {
+    _optionsDom = create( 'ul', {
       className: LIST_CLASS + ' ' +
                  LIST_CLASS + '__unstyled ' +
                  BASE_CLASS + '_options',
@@ -203,12 +170,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     } );
 
     _optionsData.forEach( function( option ) {
-      const _optionsItemDom = domCreate( 'li', {
+      const _optionsItemDom = create( 'li', {
         'data-option': option.value,
         'class': 'm-form-field m-form-field__checkbox'
       } );
 
-      domCreate( 'input', {
+      create( 'input', {
         'id':     option.value,
         // Type must come before value or IE fails
         'type':    'checkbox',
@@ -219,30 +186,30 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         'checked': option.checked
       } );
 
-      domCreate( 'label', {
+      create( 'label', {
         'for':         option.value,
         'textContent': option.text,
         'className':   BASE_CLASS + '_label a-label',
         'inside':      _optionsItemDom
       } );
 
+      _optionItemDoms.push( _optionsItemDom );
       _optionsDom.appendChild( _optionsItemDom );
 
       if ( option.checked ) {
-        const selectionsItemDom = domCreate( 'li', {
+        const selectionsItemDom = create( 'li', {
           'data-option': option.value,
           'class': 'm-form-field m-form-field__checkbox'
         } );
 
-        domCreate( 'label', {
-          'for':         option.value,
-          'textContent': option.text,
-          'className':   BASE_CLASS + '_label',
-          'inside':      selectionsItemDom
+        create( 'label', {
+          'for':       option.value,
+          'innerHTML': option.text + closeIcon,
+          'className': BASE_CLASS + '_label',
+          'inside':    selectionsItemDom
         } );
 
         _selectionsDom.appendChild( selectionsItemDom );
-        _selectionsCount += 1;
       }
     } );
 
@@ -259,16 +226,21 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    *                           current focus.
    */
   function _highlight( direction ) {
-    const count = _filteredData.length;
-
-    if ( direction === DIR_NEXT && _index < count - 1 ) {
-      _index += 1;
-    } else if ( direction === DIR_PREV && _index > -1 ) {
-      _index -= 1;
+    if ( direction === DIR_NEXT ) {
+      _model.setIndex( _model.getIndex() + 1 );
+    } else if ( direction === DIR_PREV ) {
+      _model.setIndex( _model.getIndex() - 1 );
     }
 
-    if ( _index > -1 ) {
-      const value = _filteredData[_index].value;
+    const index = _model.getIndex();
+    if ( index > -1 ) {
+      let filteredIndex = index;
+      const filterIndices = _model.getFilterIndices();
+      if ( filterIndices.length > 0 ) {
+        filteredIndex = filterIndices[index];
+      }
+      const option = _model.getOption( filteredIndex );
+      const value = option.value;
       const item = _optionsDom.querySelector( '[data-option="' + value + '"]' );
       const input = item.querySelector( 'input' );
 
@@ -282,19 +254,22 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Tracks a user's selections and updates the list in the dom.
-   * @param   {string} value The value of the option the user has chosen.
+   * @param {string} value The value of the option the user has chosen.
    */
   function _updateSelections( value ) {
-    const optionIndex =
-      arrayHelpers.indexOfObject( _optionsData, 'value', value );
-    const option = _optionsData[optionIndex] || _optionsData[_index];
+    const optionIndex = arrayHelpers.indexOfObject(
+      _optionsData,
+      'value',
+      value
+    );
+    const option = _optionsData[optionIndex] || _optionsData[_model.getIndex()];
 
     if ( option ) {
       let _selectionsItemDom;
 
       if ( option.checked ) {
-        if ( _optionsDom.classList.contains( 'max-selections' ) ) {
-          _optionsDom.classList.remove( 'max-selections' );
+        if ( _optionsDom.classList.contains( 'u-max-selections' ) ) {
+          _optionsDom.classList.remove( 'u-max-selections' );
         }
 
         const dataOptionSel = '[data-option="' + option.value + '"]';
@@ -303,36 +278,30 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         if ( _selectionsItemDom ) {
           _selectionsDom.removeChild( _selectionsItemDom );
         }
-        option.checked = false;
-        _selectionsCount -= 1;
       } else {
-        _selectionsItemDom = domCreate( 'li', {
+        _selectionsItemDom = create( 'li', {
           'data-option': option.value
         } );
 
-        const _selectionsItemLabelDom = domCreate( 'label', {
+        const _selectionsItemLabelDom = create( 'label', {
+          'innerHTML': option.text + closeIcon,
           'for':       option.value,
           'inside':    _selectionsItemDom
         } );
 
-        domCreate( 'span', {
-          innerHTML: option.text,
-          inside:    _selectionsItemLabelDom
-        } );
-
         _selectionsDom.appendChild( _selectionsItemDom );
         _selectionsItemDom.appendChild( _selectionsItemLabelDom );
-
-        option.checked = true;
-        _selectionsCount += 1;
-
-        if ( _selectionsCount >= MAX_SELECTIONS ) {
-          _optionsDom.classList.add( 'max-selections' );
-        }
       }
+      _model.toggleOption( optionIndex );
+
+      if ( _model.isAtMaxSelections() ) {
+        _optionsDom.classList.add( 'u-max-selections' );
+      }
+
+      _instance.dispatchEvent( 'selectionsUpdated', { target: _instance } );
     }
 
-    _index = -1;
+    _model.resetIndex();
     _isBlurSkipped = false;
 
     if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'false' ) {
@@ -343,20 +312,13 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   /**
    * Evaluates the list of options based on the user's query in the
    * search input.
-   * @param  {string} value Text the user has entered in the search query.
+   * @param {string} value Text the user has entered in the search query.
    */
   function _evaluate( value ) {
     _resetFilter();
-
-    if ( value.length >= MIN_CHARS && _optionsData.length > 0 ) {
-      _index = -1;
-
-      _filteredData = _optionsData.filter( function( item ) {
-        return strings.stringMatch( item.text, value );
-      } );
-
-      _filterResults();
-    }
+    _model.resetIndex();
+    const matchedIndices = _model.filterIndices( value );
+    _filterList( matchedIndices );
   }
 
   /**
@@ -368,44 +330,61 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Resets the filtered option list.
+   * Filter the options list.
+   * Every time we filter we have two lists of indices:
+   * - The matching options (filterIndices).
+   * - The matching options of the last filter (_lastFilterIndices).
+   * We need to turn off the filter for any of the last filter matches
+   * that are not in the new set, and turn on the filter for the matches
+   * that are not in the last set.
+   * @param {Array} filterIndices - List of indices to filter from the options.
+   * @returns {boolean} True if options are filtered, false otherwise.
    */
-  function _resetFilter() {
-    _optionsDom.classList.remove( 'filtered', 'no-results' );
-
-    for ( let i = 0, len = _optionsDom.children.length; i < len; i++ ) {
-      _optionsDom.children[i].classList.remove( 'filter-match' );
+  function _filterList( filterIndices = [] ) {
+    if ( filterIndices.length > 0 ) {
+      _filterMatches( filterIndices );
+      return true;
     }
 
-    _filteredData = _optionsData;
+    _filterNoMatches();
+    return false;
   }
 
   /**
-   * Filters the list of options based on the results of the evaluate function.
+   * Resets the filtered option list.
    */
-  function _filterResults() {
-    _optionsDom.classList.add( 'filtered' );
-    let _optionsItemDom;
+  function _resetFilter() {
+    _optionsDom.classList.remove( 'u-filtered', 'u-no-results' );
 
-    if ( _filteredData.length > 0 ) {
-      _filteredData.forEach( function( option ) {
-        _optionsItemDom =
-          _optionsDom.querySelector( '[data-option="' + option.value + '"]' );
-
-        _optionsItemDom.classList.add( 'filter-match' );
-      } );
-    } else {
-      _noResults();
+    for ( let i = 0, len = _optionsDom.children.length; i < len; i++ ) {
+      _optionsDom.children[i].classList.remove( 'u-filter-match' );
     }
+
+    _model.clearFilter();
+  }
+
+  /**
+   * Set the filtered matched state.
+   * @param {Array} filterIndices - List of indices to filter from the options.
+   */
+  function _filterMatches( filterIndices ) {
+    _optionsDom.classList.remove( 'u-no-results' );
+    _optionsDom.classList.add( 'u-filtered' );
+    _model.getLastFilterIndices().forEach( index => {
+      _optionItemDoms[index].classList.remove( 'u-filter-match' );
+    } );
+    _model.getFilterIndices().forEach( index => {
+      _optionItemDoms[index].classList.add( 'u-filter-match' );
+    } );
   }
 
   /**
    * Updates the list of options to show the user there
    * are no matching results.
    */
-  function _noResults() {
-    _optionsDom.classList.add( 'no-results' );
-    _optionsDom.classList.remove( 'filtered' );
+  function _filterNoMatches() {
+    _optionsDom.classList.add( 'u-no-results' );
+    _optionsDom.classList.remove( 'u-filtered' );
   }
 
   /**
@@ -419,17 +398,14 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         _evaluate( this.value );
       },
       focus: function() {
-        expand();
+        if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' ) {
+          expand();
+        }
       },
       blur: function() {
         if ( !_isBlurSkipped &&
               _fieldsetDom.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
-        }
-      },
-      mousedown: function() {
-        if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' ) {
-          expand();
         }
       },
       keydown: function( event ) {
@@ -462,13 +438,19 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       },
       keydown: function( event ) {
         const key = event.keyCode;
-        const checked = event.target.checked;
+        const target = event.target;
+        const checked = target.checked;
 
         if ( key === KEY_RETURN ) {
           event.preventDefault();
-          event.target.checked = !checked;
 
-          queryOne( event.target ).dispatchEvent( 'change' );
+          /* Programmatically checking a checkbox does not fire a change event
+          so we need to manually create an event and dispatch it from the input.
+          */
+          target.checked = !checked;
+          const evt = document.createEvent( 'HTMLEvents' );
+          evt.initEvent( 'change', false, true );
+          target.dispatchEvent( evt );
         } else if ( key === KEY_ESCAPE ) {
           _searchDom.focus();
           collapse();
@@ -515,4 +497,6 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   return this;
 }
 
-module.exports = Multiselect;
+Multiselect.BASE_CLASS = BASE_CLASS;
+
+export default Multiselect;

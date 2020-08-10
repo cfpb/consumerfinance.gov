@@ -30,9 +30,11 @@ function ajaxRequest( type, url, opts ) {
   xhr.onreadystatechange = function() {
     if ( xhr.readyState === DONE_CODE ) {
       if ( xhr.status in SUCCESS_CODES ) {
-        if ( typeof opts.success === 'function' ) opts.success();
+        if ( typeof opts.success === 'function' ) {
+          opts.success( xhr.responseText );
+        }
       } else if ( typeof opts.fail === 'function' ) {
-        opts.fail();
+        opts.fail( xhr.status );
       }
       if ( typeof opts.done === 'function' ) opts.done();
     }
@@ -41,6 +43,6 @@ function ajaxRequest( type, url, opts ) {
   return xhr;
 }
 
-module.exports = {
-  ajaxRequest: ajaxRequest
+export {
+  ajaxRequest
 };

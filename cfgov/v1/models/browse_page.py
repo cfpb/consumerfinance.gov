@@ -1,16 +1,19 @@
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
+from wagtail.core import blocks
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.search import index
+
+from youth_employment.blocks import YESChecklist
 
 from data_research.blocks import (
     ConferenceRegistrationForm, MortgageDataDownloads
 )
-from jobmanager.models import JobListingTable
+from jobmanager.blocks import JobListingTable
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
@@ -20,35 +23,33 @@ from v1.util.util import get_secondary_nav_items
 class BrowsePage(CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
-        ('featured_content', molecules.FeaturedContent()),
+        ('featured_content', organisms.FeaturedContent()),
     ], blank=True)
 
     content = StreamField([
-        ('bureau_structure', organisms.BureauStructure()),
-        ('info_unit_group', organisms.InfoUnitGroup()),
-        ('image_text_25_75_group', organisms.ImageText2575Group()),
-        ('image_text_50_50_group', organisms.ImageText5050Group()),
-        ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
-        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
-        ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
-        ('expandable', organisms.Expandable()),
+        ('info_unit_group', organisms.InfoUnitGroup()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table(editable=False)),
+        ('expandable', organisms.Expandable()),
+        ('well', organisms.Well()),
+        ('video_player', organisms.VideoPlayer()),
+        ('snippet_list', organisms.ResourceList()),
         ('table_block', organisms.AtomicTableBlock(
-            table_options={'renderer': 'html'})),
-        ('job_listing_table', JobListingTable()),
+            table_options={'renderer': 'html'}
+        )),
         ('feedback', v1_blocks.Feedback()),
-        ('conference_registration_form', ConferenceRegistrationForm()),
         ('raw_html_block', blocks.RawHTMLBlock(
-            label='Raw HTML block')),
-        ('html_block', organisms.HTMLBlock()),
+            label='Raw HTML block'
+        )),
+        ('conference_registration_form', ConferenceRegistrationForm()),
         ('chart_block', organisms.ChartBlock()),
         ('mortgage_chart_block', organisms.MortgageChartBlock()),
         ('mortgage_map_block', organisms.MortgageMapBlock()),
         ('mortgage_downloads_block', MortgageDataDownloads()),
-        ('snippet_list', organisms.SnippetList()),
         ('data_snapshot', organisms.DataSnapshot()),
+        ('job_listing_table', JobListingTable()),
+        ('bureau_structure', organisms.BureauStructure()),
+        ('yes_checklist', YESChecklist()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
@@ -74,6 +75,11 @@ class BrowsePage(CFGOVPage):
 
     objects = PageManager()
 
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('content'),
+        index.SearchField('header')
+    ]
+
     @property
     def page_js(self):
         return (
@@ -82,5 +88,7 @@ class BrowsePage(CFGOVPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)
-        context.update({'get_secondary_nav_items': get_secondary_nav_items})
+        context.update({
+            'get_secondary_nav_items': get_secondary_nav_items
+        })
         return context

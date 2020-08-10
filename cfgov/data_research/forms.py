@@ -1,12 +1,24 @@
-from __future__ import absolute_import, unicode_literals
-
 from django import forms
+from django.utils.functional import cached_property
 
 from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
-from data_research.widgets import (
-    CheckboxSelectMultiple, EmailInput, Textarea, TextInput
-)
+
+
+# Form input attributes for Design System compatibility.
+#
+# See https://cfpb.github.io/design-system/components/text-inputs
+# for documentation on the styles that are being duplicated here.
+text_input_attrs = {
+    'class': 'a-text-input a-text-input__full',
+}
+
+# This is needed to disable Django's default Textarea sizing.
+textarea_attrs = {
+    'rows': None,
+    'cols': None,
+}
+textarea_attrs.update(text_input_attrs)
 
 
 class ConferenceRegistrationForm(forms.Form):
@@ -19,6 +31,13 @@ class ConferenceRegistrationForm(forms.Form):
     If save(commit=False) is used, a model instance is created but not
     persisted to the database, and GovDelivery subscription is skipped.
     """
+    ATTENDEE_IN_PERSON = ConferenceRegistration.IN_PERSON
+    ATTENDEE_VIRTUALLY = ConferenceRegistration.VIRTUAL
+    ATTENDEE_TYPES = tuple((t, t) for t in (
+        ATTENDEE_IN_PERSON,
+        ATTENDEE_VIRTUALLY,
+    ))
+
     SESSIONS = tuple((s, s) for s in (
         'Thursday morning',
         'Thursday lunch',
@@ -40,31 +59,48 @@ class ConferenceRegistrationForm(forms.Form):
         'Nursing Space',
     ))
 
-    name = forms.CharField(max_length=250, widget=TextInput(required=True))
-    organization = forms.CharField(max_length=250, required=False,
-                                   widget=TextInput)
-    email = forms.EmailField(max_length=250, widget=EmailInput(required=True))
-    sessions = forms.MultipleChoiceField(
-        widget=CheckboxSelectMultiple,
-        choices=SESSIONS,
-        label="Which sessions will you be attending?",
-        error_messages={
-            'required': "You must select at least one session to attend.",
-        }
+    attendee_type = forms.ChoiceField(
+        widget=forms.RadioSelect,
+        choices=ATTENDEE_TYPES,
+        required=True,
+        label='Do you plan to attend in person or virtually?',
     )
+    name = forms.CharField(
+        max_length=250,
+        required=True,
+        widget=forms.TextInput(attrs=text_input_attrs)
+    )
+    organization = forms.CharField(
+        max_length=250,
+        required=False,
+        widget=forms.TextInput(attrs=text_input_attrs)
+    )
+    email = forms.EmailField(
+        max_length=250,
+        required=True,
+        widget=forms.EmailInput(attrs=text_input_attrs)
+    )
+    # sessions = forms.MultipleChoiceField(
+    #     widget=CheckboxSelectMultiple,
+    #     choices=SESSIONS,
+    #     label="Which sessions will you be attending?",
+    #     error_messages={
+    #         'required': "You must select at least one session to attend.",
+    #     }
+    # )
     dietary_restrictions = forms.MultipleChoiceField(
-        widget=CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple,
         choices=DIETARY_RESTRICTIONS,
         required=False,
         label="Please let us know about any food allergies or restrictions."
     )
     other_dietary_restrictions = forms.CharField(
-        widget=Textarea,
+        widget=forms.Textarea(attrs=textarea_attrs),
         required=False,
         label="Any other food allergies or restrictions?"
     )
     accommodations = forms.MultipleChoiceField(
-        widget=CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple,
         choices=ACCOMMODATIONS,
         required=False,
         label=(
@@ -73,14 +109,34 @@ class ConferenceRegistrationForm(forms.Form):
         )
     )
     other_accommodations = forms.CharField(
-        widget=Textarea,
+        widget=forms.Textarea(attrs=textarea_attrs),
         required=False,
         label="Any other accommodations needed to attend?"
     )
 
     def __init__(self, *args, **kwargs):
+        self.capacity = kwargs.pop('capacity')
         self.govdelivery_code = kwargs.pop('govdelivery_code')
+        self.govdelivery_question_id = kwargs.pop('govdelivery_question_id')
+        self.govdelivery_answer_id = kwargs.pop('govdelivery_answer_id')
         super(ConferenceRegistrationForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(ConferenceRegistrationForm, self).clean()
+
+        if (
+            cleaned_data.get('attendee_type') == self.ATTENDEE_IN_PERSON and
+            self.at_capacity
+        ):
+            raise forms.ValidationError('at capacity')
+
+    @property
+    def at_capacity(self):
+        attendees = ConferenceRegistration.objects.filter(
+            govdelivery_code=self.govdelivery_code
+        )
+
+        return len(list(attendees.in_person())) >= self.capacity
 
     def save(self, commit=True):
         registration = ConferenceRegistration(
@@ -96,17 +152,39 @@ class ConferenceRegistrationForm(forms.Form):
             # Subscribe this registrant to GovDelivery.
             self.govdelivery_subscribe(code=self.govdelivery_code, email=email)
 
+            # Update their question response, if appropriate.
+            if self.govdelivery_question_id and self.govdelivery_answer_id:
+                self.govdelivery_question_response(
+                    email=email,
+                    question_id=self.govdelivery_question_id,
+                    answer_id=self.govdelivery_answer_id
+                )
+
             # Persist the registration to the database.
             registration.save()
 
         return registration
 
+    @cached_property
+    def govdelivery_api(self):
+        return get_govdelivery_api()
+
     def govdelivery_subscribe(self, email, code):
-        govdelivery = get_govdelivery_api()
-        subscription_response = govdelivery.set_subscriber_topics(
+        subscription_response = self.govdelivery_api.set_subscriber_topics(
             contact_details=email,
             topic_codes=[code],
             send_notifications=True
         )
 
         subscription_response.raise_for_status()
+
+    def govdelivery_question_response(self, email, question_id, answer_id):
+        question_response = (
+            self.govdelivery_api.set_subscriber_answer_to_select_question(
+                contact_details=email,
+                question_id=question_id,
+                answer_id=answer_id
+            )
+        )
+
+        question_response.raise_for_status()

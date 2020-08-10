@@ -1,0 +1,22 @@
+{# ==========================================================================
+
+   Render the site header without the banner.
+
+   See v1.templatetags.base_elements. This template allows for inclusion of the
+   Jinja2 site header in templates written using the Django template language.
+
+   ========================================================================== #}
+
+{# Overlay for the page. Used for the mobile mega menu. #}
+<div class="a-overlay u-hidden"></div>
+
+{# Skip Link to skip to main content #}
+{# TODO: When projects standardize on #main,
+   remove this and empty after-header div #}
+<div class="skip-nav">
+    <a href="#after-nav" class="skip-nav_link">Skip to main content</a>
+</div>
+
+{% import 'organisms/header.html' as header with context %}
+{{ header.render( show_banner=false ) }}
+<div id="after-nav"></div>

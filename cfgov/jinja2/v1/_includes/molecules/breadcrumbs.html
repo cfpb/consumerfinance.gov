@@ -15,10 +15,15 @@
 
 {% macro render(breadcrumbs) %}
     <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        {{ svg_icon('left') }}
         {% for crumb in breadcrumbs %}
-        <a class="breadcrumbs_link" href="{{ crumb.href if crumb.href else get_protected_url(crumb) }}">
-            {{ crumb.title | e }}
-        </a>
+            {% if crumb.href or crumb.live %}
+                <a class="breadcrumbs_link" href="{{ crumb.href if crumb.href else pageurl(crumb) }}">
+                    {{ crumb.title | e }}
+                </a>
+            {% else %}
+                <span class="breadcrumbs_text">{{ crumb.title | e }}</span>
+            {% endif %}
         {% endfor %}
     </nav>
 {% endmacro %}

@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const jsLoader = require( BASE_JS_PATH + 'modules/util/js-loader' );
+import jsLoader from '../../../../../cfgov/unprocessed/js/modules/util/js-loader';
 
 describe( 'loadScript method', () => {
 
@@ -17,7 +16,7 @@ describe( 'loadScript method', () => {
     } );
 
     return loaderPromise.then( result => {
-      expect( result ).toEqual( 'Callback called' );
+      expect( result ).toStrictEqual( 'Callback called' );
     } );
   } );
 

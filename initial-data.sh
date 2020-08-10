@@ -11,9 +11,11 @@ set -e
 
 # Import Data
 import_data(){
-    echo 'Creating DB Tables...'
+    echo 'Running Django migrations...'
     ./cfgov/manage.py migrate
-    echo 'Loading Initial Data...'
+    echo 'Creating any necessary Django database cache tables...'
+    ./cfgov/manage.py createcachetable
+    echo 'Running initial_data script to configure Wagtail admin...'
     ./cfgov/manage.py runscript initial_data
 }
 

@@ -30,7 +30,8 @@ module.exports = {
       `${ paths.unprocessed }/apps/**/js/**/*.js`,
       `!${ paths.unprocessed }/apps/**/node_modules/**`
     ],
-    test:  [
+    test: [
+      paths.test + '/cypress/**/*.js',
       paths.test + '/util/**/*.js',
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
@@ -47,6 +48,7 @@ module.exports = {
     src: paths.unprocessed + '/js/**/*.js',
     otherBuildTriggerFiles: [
       paths.unprocessed + '/js/**/*.js',
+      paths.unprocessed + '/apps/**/js/**/*.js',
       paths.modules,
       './config/**/*.js',
       './gulp/**/*.js'
@@ -58,7 +60,7 @@ module.exports = {
     dest:     paths.processed + '/css',
     settings: {
       paths:  globAll.sync( [
-        paths.modules + '/cf-*/src',
+        paths.modules + '/@cfpb/cfpb-*/src',
         paths.modules + '/cfpb-chart-builder/src/**',
         paths.modules + '/highcharts/css'
       ] ),
@@ -69,53 +71,6 @@ module.exports = {
       paths.modules,
       './config/**/*.js',
       './gulp/**/*.js'
-    ],
-    otherBuildTriggerFilesKBSpanish: [
-      paths.legacy + '/knowledgebase/**/*.css',
-      paths.legacy + '/knowledgebase/**/*.less'
-    ],
-    otherBuildTriggerFilesNemo: [
-      paths.legacy + '/nemo/**/*.css',
-      paths.legacy + '/nemo/**/*.less'
     ]
-  },
-  legacy: {
-    cwd: paths.legacy,
-    dest: paths.processed,
-    scripts: [
-      paths.legacy + '/nemo/_/js/jquery-1.5.1.min.js',
-      paths.legacy + '/nemo/_/js/jquery.easing.1.3.js',
-      paths.legacy + '/nemo/_/js/jquery.fitvids.min.js',
-      paths.legacy + '/nemo/_/js/appendAround.js',
-      paths.legacy + '/nemo/_/js/plugins.js',
-      paths.legacy + '/nemo/_/js/main.js',
-      paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
-    ]
-  },
-  copy: {
-    jsonCode: {
-      src:  'code.json',
-      dest: paths.processed
-    },
-    jsonKBYO: {
-      src:  `${ paths.unprocessed }/apps/know-before-you-owe/js/kbyo-timeline.json`,
-      dest: `${ paths.processed }/apps/know-before-you-owe/js`
-    },
-    icons: {
-      src:  paths.modules + '/cf-icons/src/fonts/*',
-      dest: paths.processed + '/fonts/'
-    },
-    timelinejs: {
-      src: [
-        paths.modules + '/timelinejs/build/**/*'
-      ],
-      dest: paths.processed + '/apps/timelinejs'
-    },
-    lightbox2: {
-      src: [
-        paths.modules + '/lightbox2/dist/**/*'
-      ],
-      dest: paths.processed + '/lightbox2'
-    }
   }
 };

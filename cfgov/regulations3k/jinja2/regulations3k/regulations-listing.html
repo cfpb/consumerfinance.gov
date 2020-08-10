@@ -1,0 +1,48 @@
+{# ==========================================================================
+
+   Regulation listing
+
+   ==========================================================================
+
+   Description:
+
+   Creates a table of regulations when given:
+
+   regulations:    List of regulation part objects
+
+   heading:        The heading of the regulations list.
+
+   more_regs_page: A Wagtail page to link to in the more regulations link.
+
+   more_regs_text: A string for the text of the more regulations link.
+
+   ========================================================================== #}
+{% if regulations.exists() %}
+<div id="regulations-listing">
+    <h4>{{ value.heading or 'Table of contents' }}</h4>
+    <ul>
+        {% for regulation in regulations %}
+        <li class="h4">
+            <a href="{{ regulation.url }}">
+                <span class="title-num">{{ regulation.title }}</span>
+            </a>
+            {% if regulation.regulation.future_versions %}
+            <ul>
+            {% for version in regulation.regulation.future_versions %}
+                <li class="new-version">New amendments effective 
+                    <a href="{{ regulation.url }}{{ version.effective_date|string }}/">
+                    {{ ap_date(version.effective_date) }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <p>
+        <a class="" href="{{ pageurl(value.more_regs_page) }}">{{ value.more_regs_text or 'View more CFPB regulations' }}</a>
+    </p>
+</div>

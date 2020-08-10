@@ -1,6 +1,30 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const standardType = require( '../modules/util/standard-type' );
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+const SUCCESS_ICON = require(
+  'svg-inline-loader!../../../../node_modules/@cfpb/cfpb-icons/src/icons/check-round.svg'
+);
+const WARNING_ICON = require(
+  'svg-inline-loader!../../../../node_modules/@cfpb/cfpb-icons/src/icons/warning-round.svg'
+);
+const ERROR_ICON = require(
+  'svg-inline-loader!../../../../node_modules/@cfpb/cfpb-icons/src/icons/error-round.svg'
+);
+
+/**
+ * Constants for the state of this Notification.
+ */
+const SUCCESS = 'success';
+const WARNING = 'warning';
+const ERROR = 'error';
+
+const ICON = {};
+ICON[SUCCESS] = SUCCESS_ICON;
+ICON[WARNING] = WARNING_ICON;
+ICON[ERROR] = ERROR_ICON;
+
+const BASE_CLASS = 'm-notification';
+// Constants for the Notification modifiers.
+const MODIFIER_VISIBLE = `${ BASE_CLASS }__visible`;
 
 /**
  * Notification
@@ -12,39 +36,27 @@ const standardType = require( '../modules/util/standard-type' );
  *   The DOM element within which to search for the molecule.
  * @returns {Notification} An instance.
  */
-function Notification( element ) { // eslint-disable-line max-statements, inline-comments, max-len
-
-  const BASE_CLASS = 'm-notification';
-
-  // Constants for the state of this Notification.
-  const SUCCESS = 'success';
-  const WARNING = 'warning';
-  const ERROR = 'error';
-
-  // Constants for the Notification modifiers.
-  const MODIFIER_VISIBLE = BASE_CLASS + '__visible';
-
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+function Notification( element ) {
+  const _dom = checkDom( element, BASE_CLASS );
   const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
 
   let _currentType;
 
   /**
-   * @returns {Notification|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Notification} An instance.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     // Check and set default type of notification.
     const classList = _dom.classList;
-    if ( classList.contains( BASE_CLASS + '__' + SUCCESS ) ) {
+    if ( classList.contains( `${ BASE_CLASS }__${ SUCCESS }` ) ) {
       _currentType = SUCCESS;
-    } else if ( classList.contains( BASE_CLASS + '__' + WARNING ) ) {
+    } else if ( classList.contains( `${ BASE_CLASS }__${ WARNING }` ) ) {
       _currentType = WARNING;
-    } else if ( classList.contains( BASE_CLASS + '__' + ERROR ) ) {
+    } else if ( classList.contains( `${ BASE_CLASS }__${ ERROR }` ) ) {
       _currentType = ERROR;
     }
 
@@ -52,33 +64,35 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   }
 
   /**
-   * @param {number} type The notification type.
-   * @param {string} messageText The content of the notification message.
-   * @param {string|HTMLNode} explanationText
+   * @param {number} type - The notification type.
+   * @param {string} messageText - The content of the notification message.
+   * @param {string} [explanationText] -
    *   The content of the notification explanation.
    * @returns {Notification} An instance.
    */
-  function setTypeAndContent( type, messageText, explanationText ) {
+  function update( type, messageText, explanationText ) {
     _setType( type );
-    setContent( messageText, explanationText );
+    _setContent( messageText, explanationText );
 
     return this;
   }
 
   /**
-   * @param {string} messageText The content of the notification message.
-   * @param {string|HTMLNode} explanationText
+   * @param {string} messageText - The content of the notification message.
+   * @param {string} [explanationText] -
    *   The content of the notification explanation.
    * @returns {Notification} An instance.
    */
-  function setContent( messageText, explanationText ) {
-    let content = '<p class="h4 m-notification_message">' +
-                    messageText +
-                    '</p>';
+  function _setContent( messageText, explanationText ) {
+    let content = `
+      <div class="h4 m-notification_message">
+        ${ messageText }
+      </div>`;
     if ( typeof explanationText !== 'undefined' ) {
-      content += '<p class="h4 m-notification_explanation">' +
-                 explanationText +
-                 '</p>';
+      content += `
+        <p class="m-notification_explanation">
+          ${ explanationText }
+        </p>`;
     }
     _contentDom.innerHTML = content;
 
@@ -95,17 +109,23 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
       return this;
     }
 
+    // If this is an unsupported notification type, throw an error.
+    if ( type !== SUCCESS && type !== WARNING && type !== ERROR ) {
+      throw new Error( `${ type } is not a supported notification type!` );
+    }
+
     const classList = _dom.classList;
     classList.remove( BASE_CLASS + '__' + _currentType );
+    classList.add( `${ BASE_CLASS }__${ type }` );
+    _currentType = type;
 
-    if ( type === SUCCESS ||
-         type === WARNING ||
-         type === ERROR ) {
-      classList.add( BASE_CLASS + '__' + type );
-      _currentType = type;
-    } else {
-      throw new Error( type + ' is not a supported notification type!' );
-    }
+    // Replace <svg> element with contents of type_ICON.
+    const currentIcon = _dom.querySelector( '.cf-icon-svg' );
+    const newIconSetup = document.createElement( 'div' );
+    newIconSetup.innerHTML = ICON[type];
+    const newIcon = newIconSetup.firstChild;
+
+    _dom.replaceChild( newIcon, currentIcon );
 
     return this;
   }
@@ -131,17 +151,17 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
     return this;
   }
 
-  this.SUCCESS = SUCCESS;
-  this.WARNING = WARNING;
-  this.ERROR = ERROR;
-
   this.init = init;
-  this.setContent = setContent;
-  this.setTypeAndContent = setTypeAndContent;
   this.show = show;
   this.hide = hide;
+  this.update = update;
 
   return this;
 }
 
-module.exports = Notification;
+Notification.BASE_CLASS = BASE_CLASS;
+Notification.SUCCESS = SUCCESS;
+Notification.WARNING = WARNING;
+Notification.ERROR = ERROR;
+
+export default Notification;

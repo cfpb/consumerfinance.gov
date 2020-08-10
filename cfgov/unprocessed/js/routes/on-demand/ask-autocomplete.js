@@ -2,7 +2,7 @@
    Scripts for Ask Autocomplete.
    ========================================================================== */
 
-const Autocomplete = require( '../../molecules/Autocomplete' );
+import Autocomplete from '../../molecules/Autocomplete';
 
 const URLS = {
   en: '/ask-cfpb/api/autocomplete/?term=',

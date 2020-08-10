@@ -1,9 +1,10 @@
 <form method="post"
-      class="o-form
-             oah-ratings-form
+      class="oah-ratings-form
+             o-form
              block
              block__bg
-             block__border">
+             block__border
+             u-mb15">
     <fieldset class="o-form_fieldset u-reset">
         <legend class="a-legend">
             <span class="h4">Was this page helpful to you?</span>
@@ -42,7 +43,7 @@
                 </li>
                 <li class="content-l_col content-l_col-1-3">
                     <div class="rating-message message-column">
-                        <span class="cf-icon cf-icon-approved-round rating-message_icon"></span>
+                        {{ svg_icon('check-round') }}
                         <span class="rating-message_text">Thank you for your feedback!</span>
                     </div>
                 </li>

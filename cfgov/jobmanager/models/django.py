@@ -1,9 +1,7 @@
-from __future__ import absolute_import, unicode_literals
-
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
-from wagtail.wagtailcore.fields import RichTextField
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
+from wagtail.core.fields import RichTextField
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
@@ -17,11 +15,17 @@ class ApplicantType(models.Model):
         null=True)
     description = models.TextField()
 
-    def __unicode__(self):
-        return self.applicant_type
+    def __str__(self):
+        return self.display_title or self.applicant_type
 
     class Meta:
         ordering = ['applicant_type']
+
+    def __lt__(self, other):
+        return self.applicant_type < other.applicant_type
+
+    def __gt__(self, other):
+        return self.applicant_type > other.applicant_type
 
 
 class Grade(models.Model):
@@ -29,18 +33,24 @@ class Grade(models.Model):
     salary_min = models.IntegerField()
     salary_max = models.IntegerField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.grade
 
     class Meta:
         ordering = ['grade']
+
+    def __lt__(self, other):
+        return self.grade < other.grade
+
+    def __gt__(self, other):
+        return self.grade > other.grade
 
 
 class JobCategory(models.Model):
     job_category = models.CharField(max_length=255)
     blurb = RichTextField(null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.job_category
 
     class Meta:
@@ -50,7 +60,7 @@ class JobCategory(models.Model):
 class ServiceType(models.Model):
     service_type = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.service_type
 
     class Meta:
@@ -60,78 +70,75 @@ class ServiceType(models.Model):
 class JobLength(models.Model):
     job_length = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.job_length
 
     class Meta:
         ordering = ['job_length']
 
 
-class JobLocation(ClusterableModel):
-    abbreviation = models.CharField(
-        max_length=2,
-        primary_key=True)
+class Region(ClusterableModel):
     name = models.CharField(max_length=255)
+    abbreviation = models.CharField(max_length=2, primary_key=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
         ordering = ('abbreviation',)
 
-
-class Region(JobLocation):
     panels = [
-        FieldPanel('abbreviation'),
         FieldPanel('name'),
+        FieldPanel('abbreviation'),
         InlinePanel('states', label="States"),
-        InlinePanel('cities', label="Cities"),
-    ]
-
-
-class Office(JobLocation):
-    panels = [
-        FieldPanel('abbreviation'),
-        FieldPanel('name'),
-        InlinePanel('cities', label="Office location", max_num=1),
+        InlinePanel('major_cities', label="Major cities"),
     ]
 
 
 class State(models.Model):
-    name = models.CharField(
-        max_length=255,
-        verbose_name="State name")
-    abbreviation = models.CharField(
-        max_length=2,
-        primary_key=True)
+    name = models.CharField(max_length=255)
+    abbreviation = models.CharField(max_length=2, primary_key=True)
     region = ParentalKey(
-        'Region',
-        related_name="states")
+        Region,
+        related_name='states',
+        on_delete=models.PROTECT
+    )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
         ordering = ('abbreviation',)
 
+    def __lt__(self, other):
+        return self.abbreviation < other.abbreviation
 
-class City(models.Model):
-    name = models.CharField(
-        max_length=255,
-        verbose_name="City name")
-    state = models.ForeignKey(
-        State,
-        null=False,
-        blank=False,
-        default=None,
-        related_name='cities')
-    location = ParentalKey(
-        'JobLocation',
-        related_name='cities'
-    )
+    def __gt__(self, other):
+        return self.abbreviation > other.abbreviation
+
+
+class AbstractCity(models.Model):
+    name = models.CharField(max_length=255)
+    state = models.ForeignKey(State, on_delete=models.PROTECT)
 
     class Meta:
-        ordering = ('state_id', 'name')
+        abstract = True
+        ordering = ('state', 'name')
 
-    def __unicode__(self):
-        return '{}, {}'.format(self.name, self.state.abbreviation)
+    def __str__(self):
+        return ', '.join((self.name, self.state_id))
+
+
+class Office(AbstractCity):
+    abbreviation = models.CharField(max_length=2, primary_key=True)
+
+    class Meta:
+        ordering = ('abbreviation',)
+
+
+class MajorCity(AbstractCity):
+    region = ParentalKey(
+        Region,
+        on_delete=models.PROTECT,
+        related_name='major_cities'
+    )

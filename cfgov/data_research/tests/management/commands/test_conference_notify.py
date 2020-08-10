@@ -1,6 +1,4 @@
-from __future__ import unicode_literals
-
-from six import StringIO
+from io import StringIO
 
 from django.core import mail
 from django.core.management import call_command
@@ -24,7 +22,7 @@ class ConferenceNotifyTests(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(
             mail.outbox[0].subject,
-            '[2018 CFPB Research Conference] Attendance Update'
+            '[2018 CFPB FinEx Conference] Attendance Update'
         )
         self.assertEqual(mail.outbox[0].from_email, 'donotreply@cfpb.gov')
         self.assertEqual(mail.outbox[0].to, ['to@unit.test'])

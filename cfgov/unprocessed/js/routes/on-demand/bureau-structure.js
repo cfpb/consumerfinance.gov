@@ -3,6 +3,5 @@
    Scripts for `/the-bureau/bureau-structure/`.
    ========================================================================== */
 
-
-const BureauStructure = require( '../../organisms/BureauStructure' );
+import BureauStructure from '../../organisms/BureauStructure';
 BureauStructure.initialize();

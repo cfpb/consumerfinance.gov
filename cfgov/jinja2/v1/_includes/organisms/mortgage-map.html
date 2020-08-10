@@ -152,17 +152,19 @@
                     </div>
                 </div>
             </fieldset>
+            {# TODO: Look into using the default notification macro #}
             <div class="m-notification
-                        m-notification__visible
-                        m-notification__warning u-mt30"
-                  id="mp-map-notification"
-                  style="display:none">
-                <span class="m-notification_icon cf-icon"></span>
+                        m-notification__warning
+                        u-mt30"
+                  id="mp-map-notification">
+                {{ svg_icon('warning-round') }}
                 <div class="m-notification_content">
-                    <div class="h4 m-notification_message">Invalid date</div>
-                    <p class="h4 m-notification_explanation">
-                      We only have data available through {{ thru_month_formatted }}.
-                      Please select a valid date.
+                    <div class="h4 m-notification_message">
+                        Invalid date
+                    </div>
+                    <p class="m-notification_explanation">
+                        We only have data available through {{ thru_month_formatted }}.
+                        Please select a valid date.
                     </p>
                 </div>
             </div>

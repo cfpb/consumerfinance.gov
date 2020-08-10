@@ -1,0 +1,73 @@
+{
+    "date_published": "2018-10-02",
+    "markets": [
+        {
+            "data_month": "2018-07-01",
+            "inquiry_month": "2018-06-01",
+            "inquiry_yoy_change": "2.6% increase",
+            "market_key": "CRC",
+            "num_originations": "5.7 million",
+            "tightness_month": "2018-02-01",
+            "tightness_yoy_change": "3.4% increase",
+            "value_originations": "$33.6 billion",
+            "year_over_year_change": "9.0% decrease"
+        },
+        {
+            "data_month": "2018-07-01",
+            "market_key": "RET",
+            "num_originations": "3.5 million",
+            "value_originations": "$9.3 billion",
+            "year_over_year_change": "0.1% increase"
+        },
+        {
+            "data_month": "2018-07-01",
+            "market_key": "STU",
+            "num_originations": "917,007",
+            "value_originations": "$16.6 billion",
+            "year_over_year_change": "48.0% increase"
+        },
+        {
+            "data_month": "2018-07-01",
+            "market_key": "PER",
+            "num_originations": "1.5 million",
+            "value_originations": "$11.3 billion",
+            "year_over_year_change": "2.0% increase"
+        },
+        {
+            "data_month": "2018-07-01",
+            "inquiry_month": "2018-06-01",
+            "inquiry_yoy_change": "7.9% increase",
+            "market_key": "AUT",
+            "num_originations": "2.5 million",
+            "tightness_month": "2018-02-01",
+            "tightness_yoy_change": "2.8% increase",
+            "value_originations": "$54.6 billion",
+            "year_over_year_change": "7.3% increase"
+        },
+        {
+            "data_month": "2018-07-01",
+            "market_key": "HCE",
+            "num_originations": "52,425",
+            "value_originations": "$2.0 billion",
+            "year_over_year_change": "2.2% decrease"
+        },
+        {
+            "data_month": "2018-07-01",
+            "market_key": "HLC",
+            "num_originations": "114,558",
+            "value_originations": "$12.0 billion",
+            "year_over_year_change": "3.9% decrease"
+        },
+        {
+            "data_month": "2018-07-01",
+            "inquiry_month": "2018-06-01",
+            "inquiry_yoy_change": "11.4% decrease",
+            "market_key": "MTG",
+            "num_originations": "738,388",
+            "tightness_month": "2017-09-01",
+            "tightness_yoy_change": "0.9% decrease",
+            "value_originations": "$200.7 billion",
+            "year_over_year_change": "14.2% increase"
+        }
+    ]
+}

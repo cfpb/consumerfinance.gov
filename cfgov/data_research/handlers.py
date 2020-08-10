@@ -1,11 +1,8 @@
-from __future__ import absolute_import, unicode_literals
-
 import logging
 
 from django.http import HttpResponseRedirect
 
 from data_research.forms import ConferenceRegistrationForm
-from data_research.models import ConferenceRegistration
 from v1.handlers import Handler
 
 
@@ -23,26 +20,30 @@ class ConferenceRegistrationHandler(Handler):
     def __init__(self, page, request, block_value, form_cls=None):
         super(ConferenceRegistrationHandler, self).__init__(page, request)
         self.govdelivery_code = block_value['govdelivery_code']
+        self.govdelivery_question_id = block_value['govdelivery_question_id']
+        self.govdelivery_answer_id = block_value['govdelivery_answer_id']
         self.capacity = block_value['capacity']
         self.failure_message = block_value['failure_message']
         self.form_cls = form_cls or ConferenceRegistrationForm
 
     def process(self, is_submitted):
-        is_at_capacity = self._is_at_capacity()
         is_successful_submission = self._is_successful_submission()
+
+        form_kwargs = {
+            'capacity': self.capacity,
+            'govdelivery_code': self.govdelivery_code,
+            'govdelivery_question_id': self.govdelivery_question_id,
+            'govdelivery_answer_id': self.govdelivery_answer_id
+        }
 
         # If the form was submitted, and there's still room in the conference,
         # and this isn't being processed as part of the response after a
         # successful submission, go ahead with the registration flow.
         if (
             is_submitted and
-            not is_at_capacity and
             not is_successful_submission
         ):
-            form = self.form_cls(
-                govdelivery_code=self.govdelivery_code,
-                data=self.request.POST
-            )
+            form = self.form_cls(data=self.request.POST, **form_kwargs)
 
             try:
                 if form.is_valid():
@@ -56,19 +57,13 @@ class ConferenceRegistrationHandler(Handler):
                 logger.exception("conference registration form error")
                 form.add_error(None, self.failure_message)
         else:
-            form = self.form_cls(govdelivery_code=self.govdelivery_code)
+            form = self.form_cls(**form_kwargs)
 
         return {
             'form': form,
-            'is_at_capacity': is_at_capacity,
+            'is_at_capacity': form.at_capacity,
             'is_successful_submission': is_successful_submission,
         }
-
-    def _is_at_capacity(self):
-        attendees = ConferenceRegistration.objects.filter(
-            govdelivery_code=self.govdelivery_code
-        )
-        return attendees.count() >= self.capacity
 
     def _is_successful_submission(self):
         return self.SUCCESS_QUERY_STRING_PARAMETER in self.request.GET

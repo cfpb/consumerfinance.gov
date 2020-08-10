@@ -1,0 +1,23 @@
+{% macro render(result) %}
+
+{%- set reg_name = result.part ~ ' (' ~ result.reg ~ ')' -%}
+
+<article class="results_item">
+    <h4>
+      <a href="{{ result.url }}">{{ result.label }}</a>
+    </h4>
+    <p>{{ result.snippet }}</p>
+    <div class="tags tags__hide-heading">
+        <span class="u-visually-hidden">Topics:</span>
+        <ul class="tags_list">
+            <li class="tags_tag">
+                <span class="tags_link">
+                    <span class="tags_bullet" aria-hidden="true">•</span>
+                    {{ reg_name }}
+                </span>
+            </li>
+        </ul>
+    </div>
+</article>
+
+{% endmacro %}

@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from six.moves import urllib
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 
 from v1.forms import FeedbackForm, ReferredFeedbackForm, SuggestionFeedbackForm
-
-from .. import Handler
+from v1.handlers import Handler
 
 
 FEEDBACK_TYPES = {
@@ -44,21 +40,12 @@ class FeedbackHandler(Handler):
         self.block_value = block_value
 
     def sanitize_referrer(self):
-        known_miscodings = {
-            '\xc3\xb3': '\xf3',
-            '\xc3\xa9': '\xe9',
-            '\xc3\xad': '\xed',
-        }
+        """Skip referrer URLs that fail to encode or decode."""
         referrer = self.request.META.get('HTTP_REFERER', '')
         try:
-            referrer.encode('ascii')
-        except (UnicodeEncodeError):
-            for char in known_miscodings:
-                referrer = referrer.replace(char, known_miscodings[char])
-            parsed_referrer = urllib.parse.urlparse(referrer)
-            referrer = "{}{}".format(
-                parsed_referrer.netloc,
-                urllib.parse.quote(parsed_referrer.path.encode('utf8')))
+            referrer.encode('utf8')
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            referrer = ''
         return referrer
 
     def process(self, is_submitted):
@@ -80,7 +67,20 @@ class FeedbackHandler(Handler):
                 )
             except (ValueError, TypeError):
                 pass
-            feedback.referrer = self.request.POST.get('referrer', '')
+
+            # The referrer is set manually here instead of being set on the
+            # ModelForm. Whereas MySQL silently truncates varchar fields that
+            # exceed the column length, Postgres does not and will raise a
+            # "value too long for type character varying" error if an
+            # excessively long referrer is saved.
+            #
+            # This code grabs the referrer from the request and truncates it
+            # to at most the length of the feedback model referrer field.
+            referrer = self.request.POST.get('referrer', '')
+            referrer_field = feedback._meta.get_field('referrer')
+            referrer_max_length = referrer_field.max_length
+            feedback.referrer = referrer[:referrer_max_length]
+
             feedback.page = self.page
             feedback.save()
             return self.success()
@@ -96,7 +96,7 @@ class FeedbackHandler(Handler):
                      'message': "Be sure to also sign up for our email list "
                      "to get our blog posts and other tips about homebuying "
                      "and mortgages in your inbox. We'll also let you know "
-                     "when we make updates to Owning a Home."}
+                     "when we make updates to Buying a House."}
                 )
             else:
                 return JsonResponse(

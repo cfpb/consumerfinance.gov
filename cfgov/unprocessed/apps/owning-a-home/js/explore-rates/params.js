@@ -59,18 +59,21 @@ function update() {
   _params.prevLocation = _params.location;
 
   let val;
-  for ( const param in _params ) {
-    val = domValues.getSelection( param );
-    if ( param !== 'prevLoanType' &&
-         param !== 'prevLocation' &&
-         val !== UNDEFINED &&
-         val !== null ) {
-      _params[param] = domValues.getSelection( param );
+  let param;
+  for ( param in _params ) {
+    if ( Object.prototype.hasOwnProperty.call( _params, param ) ) {
+      val = domValues.getSelection( param );
+      if ( param !== 'prevLoanType' &&
+           param !== 'prevLocation' &&
+           val !== UNDEFINED &&
+           val !== null ) {
+        _params[param] = domValues.getSelection( param );
+      }
     }
   }
 }
 
-module.exports = {
+export {
   getAllParams,
   getVal,
   setVal,

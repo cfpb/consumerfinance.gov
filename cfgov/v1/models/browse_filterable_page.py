@@ -1,16 +1,34 @@
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
+from wagtail.core.blocks import StreamBlock
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.search import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
+from v1.models.learn_page import EnforcementActionPage, EventPage
 from v1.util.filterable_list import FilterableListMixin
+
+
+class BrowseFilterableContent(StreamBlock):
+    """Defines the StreamField blocks for BrowseFilterablePage content.
+
+    Pages can have at most one filterable list.
+    """
+    full_width_text = organisms.FullWidthText()
+    filter_controls = organisms.FilterableList()
+    feedback = v1_blocks.Feedback()
+
+    class Meta:
+        block_counts = {
+            'filter_controls': {'max_num': 1},
+        }
 
 
 class BrowseFilterablePage(FilterableFeedPageMixin,
@@ -18,13 +36,9 @@ class BrowseFilterablePage(FilterableFeedPageMixin,
                            CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
-        ('featured_content', molecules.FeaturedContent()),
+        ('featured_content', organisms.FeaturedContent()),
     ])
-    content = StreamField([
-        ('full_width_text', organisms.FullWidthText()),
-        ('filter_controls', organisms.FilterControls()),
-        ('feedback', v1_blocks.Feedback()),
-    ])
+    content = StreamField(BrowseFilterableContent)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
 
@@ -49,6 +63,11 @@ class BrowseFilterablePage(FilterableFeedPageMixin,
 
     objects = PageManager()
 
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('content'),
+        index.SearchField('header')
+    ]
+
     @property
     def page_js(self):
         return (
@@ -57,10 +76,28 @@ class BrowseFilterablePage(FilterableFeedPageMixin,
         )
 
 
+class EnforcementActionsFilterPage(BrowseFilterablePage):
+    template = 'browse-filterable/index.html'
+    objects = PageManager()
+
+    @staticmethod
+    def get_form_class():
+        from .. import forms
+        return forms.EnforcementActionsFilterForm
+
+    @staticmethod
+    def get_model_class():
+        return EnforcementActionPage
+
+
 class EventArchivePage(BrowseFilterablePage):
     template = 'browse-filterable/index.html'
 
     objects = PageManager()
+
+    @staticmethod
+    def get_model_class():
+        return EventPage
 
     @staticmethod
     def get_form_class():
@@ -70,7 +107,7 @@ class EventArchivePage(BrowseFilterablePage):
 
 class NewsroomLandingPage(BrowseFilterablePage):
     template = 'newsroom/index.html'
-    filterable_categories = ('Blog', 'Newsroom')
+    filterable_categories = ['Newsroom']
     filterable_children_only = False
 
     objects = PageManager()

@@ -1,7 +1,7 @@
-const ccb = require( 'cfpb-chart-builder' );
-const actions = require( '../actions/map' );
-const Store = require( '../stores/map' );
-const utils = require( '../utils' );
+import * as ccb from 'cfpb-chart-builder';
+import MapStore from '../stores/map';
+import actions from '../actions/map';
+import utils from '../utils';
 
 const _plurals = {
   state: 'states',
@@ -31,7 +31,7 @@ class MortgagePerformanceMap {
     this.endMonth = utils.getMonth( this.endDate );
     this.endYear = utils.getYear( this.endDate );
     const date = `${ this.endYear }-${ this.endMonth }`;
-    this.store = new Store( {
+    this.store = new MapStore( {
       date,
       middleware: [ utils.thunkMiddleware, utils.loggerMiddleware ]
     } );
@@ -67,10 +67,13 @@ MortgagePerformanceMap.prototype.onClick = function( event ) {
 };
 
 MortgagePerformanceMap.prototype.onChange = function( event ) {
-  let abbr, action, geoType, geoId, geoName, date;
+  let action;
+  let geoId;
+  let geoName;
+  let date;
 
-  abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
-  geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
+  const abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
+  const geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
 
   switch ( event.target.id ) {
     case 'mp-map_geo-state':
@@ -146,10 +149,10 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   const currId = state.geo.id;
   let zoomLevel;
   if ( !utils.isDateValid( state.date, this.endDate ) ) {
-    utils.showEl( this.$notification );
+    this.$notification.classList.add( 'm-notification__visible' );
     return;
   }
-  utils.hideEl( this.$notification );
+  this.$notification.classList.remove( 'm-notification__visible' );
   if ( prevId && prevId !== currId ) {
     this.chart.highchart.chart.get( prevId ).select( false );
   }
@@ -358,4 +361,4 @@ MortgagePerformanceMap.prototype.renderTooltip = function() {
   };
 };
 
-module.exports = MortgagePerformanceMap;
+export default MortgagePerformanceMap;

@@ -6,10 +6,9 @@
     overflow-x: auto;
     white-space: nowrap;
 
-    &:before {
-      color: @pacific;
-      content: @cf-icon-left;
-      font-family: 'CFPB Minicons';
+    .cf-icon-svg {
+        fill: @pacific;
+        margin-right: 0.25em;
     }
 
     .respond-to-max( @bp-sm-max, {
@@ -17,7 +16,7 @@
         padding-bottom: unit( @grid_gutter-width / 2 / 14px, em );
     } );
 
-    &_link {
+    &_link, &_text {
         padding-left: 4px;
 
         &:not( :last-child ):after {

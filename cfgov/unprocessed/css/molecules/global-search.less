@@ -30,10 +30,13 @@
           <div class="m-global-search">
               <button class="m-global-search_trigger">
                   <span class="m-global-search_trigger-label">
-                      <span class="u-visually-hidden">Search</span>
+                      {{ svg_icon('search') }}
+                      <span class="u-hide-on-mobile">Search</span>
                   </span>
               </button>
-              <div class="m-global-search_content" aria-expanded="false">
+              <div class="m-global-search_content"
+                   aria-expanded="false"
+                   role="search">
                   <form class="m-global-search_content-form">
                       <div class="input-with-btn">
                           <div class="input-with-btn_input
@@ -41,11 +44,15 @@
                               <label for="search-input"
                                      class="input-contains-label_before
                                             input-contains-label_before__search">
+                                  {{ svg_icon('search') }}
+                                  <span class="u-visually-hidden">Search</span>
                               </label>
                               <label for="search-input"
                                      class="input-contains-label_after
                                             input-contains-label_after__clear
                                             u-hidden">
+                                  {{ svg_icon('delete') }}
+                                  <span class="u-visually-hidden">Close</span>
                               </label>
                               <input type="text"
                                      class="a-text-input"
@@ -104,6 +111,8 @@
     }
 
     &_trigger {
+        font-weight: 500;
+
         // Resets for default button styles.
         background-color: transparent;
         border: none;
@@ -112,19 +121,30 @@
         box-sizing: border-box;
         border-left: 1px solid transparent;
 
+        .respond-to-max( @bp-xs-max, {
+            font-size: 18px;
+        } );
+
         &:focus {
             outline: 1px dotted @black;
         }
 
-        &:before {
-            .cf-icon();
+        &-open-label {
+            vertical-align: text-top;
+        }
 
-            content: @cf-icon-search;
+        &-close-label {
+            display: none;
         }
 
         // Only show trigger if we have JS.
         .js & {
             display: block;
+        }
+
+        // Hover state for desktop.
+        &:hover {
+            color: @gray-80;
         }
     }
 
@@ -165,23 +185,30 @@
     // Up to desktops.
     .respond-to-max( @bp-sm-max, {
         &_trigger{
-            padding-top: unit( @grid_gutter-width / 2 / 16px, em );
-            padding-bottom: unit( @grid_gutter-width / 2 / 16px, em );
-            height: unit( @mobile_trigger_ht__px / @base-font-size-px, em );
-            min-width: unit( @mobile_trigger_ht__px / @base-font-size-px, em );
-
-            &:before {
-                font-size: unit( 20px / 16px, em );
-            }
+            padding-top: 5px;
+            height: @mobile_trigger_ht__px;
+            min-width: @mobile_trigger_ht__px;
 
             &[aria-expanded="true"] {
                 background: @gray-10;
                 border-left: 1px solid @gray-40;
 
-                // Show "X" icon when flyout is open.
-                &:before {
-                    content: @cf-icon-delete;
+                .m-global-search_trigger-open-label {
+                    display: none;
                 }
+
+                .m-global-search_trigger-close-label {
+                    display: block;
+                }
+            }
+
+            // Hover state for (x) close button.
+            &:hover {
+                color: @black;
+                border-left: 1px solid @gray-40;
+
+                // Important needed to override background color in expanded state.
+                background: @gray-20 !important;
             }
         }
 
@@ -204,15 +231,6 @@
                 border-top: 1px solid @gray-40;
                 border-bottom: 1px solid @gray-40;
             }
-        }
-    } );
-
-    // Tablet and above.
-    .respond-to-min( @bp-sm-min, {
-        // Add "Search" text in trigger.
-        &_trigger-label:before {
-            content: 'Search';
-            font-weight: 500;
         }
     } );
 
@@ -245,7 +263,7 @@
         display: block;
         // Center on the call to action (CTA) divider to right of search.
         padding-top: 6px;
-        padding-bottom: 6px;
+        padding-bottom: 5px;
         // Match CTA offset from divider.
         padding-right: @margin_half__em;
 
@@ -253,7 +271,7 @@
 
         &_trigger {
             // Match height of input with button.
-            padding: 7px 0;
+            padding: 8px 0;
 
             &[aria-expanded="true"] {
                 .u-invisible();
@@ -270,6 +288,9 @@
             &_content {
                 right: @margin_half__em;
                 width: auto;
+                // Add margin so that the focus rectangle isn't cropped by
+                // the hidden overflow of the search container element.
+                margin-left: 3px;
             }
         }
     } );

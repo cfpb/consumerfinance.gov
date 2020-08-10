@@ -5,16 +5,20 @@ function init() {
   const tabGroups = document.querySelectorAll( '.tabs-layout' );
   let tabContents;
 
-  tabGroups.forEach( tabGroup => {
+  let tabGroup;
+  // forEach could be used here, but it's not supported in IE11.
+  for ( let i = 0, len = tabGroups.length; i < len; i++ ) {
+    tabGroup = tabGroups[i];
     tabContents = tabGroup.querySelectorAll( '.tab-content' );
+    tabGroup.querySelectorAll( '.tab-content' );
 
     _bindTabLink( tabGroup, tabContents );
 
     // Hide all but the first tab.
-    for ( let i = 1; i < tabContents.length; i++ ) {
-      tabContents[i].classList.add( 'u-hidden' );
+    for ( let j = 1; j < tabContents.length; j++ ) {
+      tabContents[j].classList.add( 'u-hidden' );
     }
-  } );
+  }
 }
 
 /**
@@ -40,11 +44,18 @@ function _bindTabLink( tabGroup, tabContents ) {
     const tabLi = target.parentNode;
     const current = tabGroup.querySelector( target.getAttribute( 'href' ) );
 
-    tabs.forEach( tab => tab.classList.remove( 'active-tab' ) );
+    // forEach could be used here, but it's not supported in IE11.
+    for ( let i = 0, len = tabs.length; i < len; i++ ) {
+      tabs[i].classList.remove( 'active-tab' );
+    }
     tabLi.classList.add( 'active-tab' );
-    tabContents.forEach( tabContent => tabContent.classList.add( 'u-hidden' ) );
+
+    // forEach could be used here, but it's not supported in IE11.
+    for ( let j = 0, len = tabContents.length; j < len; j++ ) {
+      tabContents[j].classList.add( 'u-hidden' );
+    }
     current.classList.remove( 'u-hidden' );
   }
 }
 
-module.exports = { init };
+export { init };

@@ -1,4 +1,4 @@
-const typeCheckers = require( './type-checkers' );
+import * as typeCheckers from './type-checkers';
 
 /**
  * Queries for the first match unless an HTMLNode is passed
@@ -69,14 +69,18 @@ function closest( elem, selector ) {
   const matchesSelector = _getMatchesMethod( elem );
   let match;
 
-  while ( elem ) {
-    if ( matchesSelector.bind( elem )( selector ) ) {
-      match = elem;
-    } else {
-      elem = elem.parentElement;
-    }
+  try {
+    while ( elem ) {
+      if ( matchesSelector.bind( elem )( selector ) ) {
+        match = elem;
+      } else {
+        elem = elem.parentNode;
+      }
 
-    if ( match ) { return elem; }
+      if ( match ) { return elem; }
+    }
+  } catch ( err ) {
+    return null;
   }
 
   return null;
@@ -96,9 +100,9 @@ function _getMatchesMethod( elem ) {
          elem.msMatchesSelector;
 }
 
-module.exports = {
-  queryOne:    queryOne,
-  closest:     closest,
-  getSiblings: getSiblings,
-  not:         not
+export {
+  queryOne,
+  closest,
+  getSiblings,
+  not
 };

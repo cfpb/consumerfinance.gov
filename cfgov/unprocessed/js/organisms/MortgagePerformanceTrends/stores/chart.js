@@ -1,4 +1,4 @@
-const Store = require( './store' );
+import Store from './store';
 
 const updateGeo = ( geo, action ) => {
   switch ( action.type ) {
@@ -171,4 +171,4 @@ class LineChartStore extends Store {
   }
 }
 
-module.exports = LineChartStore;
+export default LineChartStore;

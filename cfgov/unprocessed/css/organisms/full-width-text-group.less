@@ -24,32 +24,50 @@
 .o-full-width-text-group {
     overflow: auto;
 
+    /**
+     * Fix for Wagtail's default img markup that includes height attribute
+     * and for loss of margin on extant Media block images.
+     * TODO: Remove once data migration from Media to ContentImage is complete
+     */
+
+    > img {
+        height: auto;
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
+
       .m-inset {
-          margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
           margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
 
-          .respond-to-min( @bp-lg-min, {
-              margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
-          } );
+          &:not(:first-child) {
+              margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+          }
+      }
+
+      .m-full-width-media {
+          margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
+          &:not(:first-child) {
+              margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+          }
+      }
+
+      .m-full-width-text + .m-call-to-action {
+          margin-top: unit( 30px / @base-font-size-px, em );
       }
 
       .respond-to-min( @bp-sm-min, {
           .m-inset {
               margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
-          }
-
-          .m-inset__image {
-              margin-top: 0;
-              // Use this if you want full text wrapping
-              // when the image is floated right:
-              // calc(~"100% - 41.875rem");
-              margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
 
               & + .m-full-width-text ul,
               & + .m-full-width-text ol {
-
-                  //Fix for IE11 rendering bullets issue.
+                  // Fix for IE11 rendering bullets issue
                   overflow: hidden;
+              }
+
+              &:not(:first-child) {
+                  margin-top: 0;
               }
           }
 
@@ -59,25 +77,19 @@
               margin-left: 0;
           }
 
-          .m-full-width-text + .m-inset__image,
-          .m-full-width-text +
-          .m-inset__image +
-          .m-full-width-text {
+          .m-full-width-text + .m-inset__image {
+              // 19px value optically aligns top of image
+              // with adjacent Avenir Next cap height
+              margin-top: unit( 19px / @base-font-size-px, em );
+          }
+
+          .m-full-width-text + .m-inset__image + .m-full-width-text {
               margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
           }
 
           .m-full-width-text + .m-inset__test,
-          .m-full-width-text +
-          .m-inset__test +
-          .m-full-width-text {
+          .m-full-width-text + .m-inset__test + .m-full-width-text {
               margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-          }
-      } );
-
-      .respond-to-max( @bp-xs-max, {
-          .m-inset__image {
-              margin-left: 0;
-              margin-right: 0;
           }
       } );
 }

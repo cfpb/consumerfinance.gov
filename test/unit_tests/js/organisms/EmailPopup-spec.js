@@ -1,59 +1,59 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const EmailPopup = require( BASE_JS_PATH + 'organisms/EmailPopup' );
-const storageMock = require( '../../../util/mock-web-storage' );
+import EmailPopup from '../../../../cfgov/unprocessed/js/organisms/EmailPopup';
 
 let emailPopup;
 
 const HTML_SNIPPET = `
-<div class="o-email-popup" lang="en" data-popup-label="testPopup">
-    <div class="o-email-popup_header">
+<div class="o-email-popup o-email-signup" lang="en" data-popup-label="testPopup">
+    <div class="o-email-popup_header u-clearfix">
         <div class="close">
-            <a>Close <span class="cf-icon cf-icon-delete-round"></span></a>
+            <button class="a-btn a-btn__link">Close</button>
         </div>
     </div>
     <div class="o-email-popup_body">
-        <div class="o-email-signup">
-            <h2>Buying a home?</h2>
-            <form class="o-form o-form__email-signup">
-                <p>Sign up for email tips and info to help you through the process.</p>
-                <div class="m-form-field-with-button">
-                    <div class="form-group">
-                        <input id="form_18" type="email" placeholder="Enter your email address" name="email" class="m-form-field-with-button_field a-text-input" required="">
-                    </div>
-                    <p>
-                        <a href="/owning-a-home-privacy-act-statement/" target="_blank" rel="noopener noreferrer">Privacy Act statement</a>
-                        <br>
-                    </p>
-                    <input class="a-btn a-btn__full-on-xs" type="submit" value="Sign up">
-                </div>
-                <div class="form-group">
-                    <input type="hidden" name="code" value="USCFPB_128">
-                </div>
-            </form>
-            <div class="o-email-signup_footer">
-                <div class="m-notification
-                            m-notification__success
-                            ">
-                    <span class="m-notification_icon
-                                 cf-icon"></span>
-                    <div class="m-notification_content">
-                        <div class="h4 m-notification_message"></div>
+        <h2>Buying a home?</h2>
+        <p>Sign up for email tips and info to help you through the process.</p>
+        <form class="o-form o-form__email-signup u-clearfix"
+              id="'o-email-signup_47"
+              method="POST"
+              action="#"
+              enctype="application/x-www-form-urlencoded"
+              novalidate>
+              <div class="m-form-field">
+                  <label class="u-visually-hidden" for="email_47">
+                      Email address
+                  </label>
+                  <input class="a-text-input a-text-input__full"
+                         id="email_47"
+                         name="email"
+                         type="email"
+                         placeholder="Enter your email address"
+                         required>
+              </div>
 
-                    </div>
-                </div>
+              <div class="m-btn-group">
+                  <button class="a-btn a-btn__full-on-xs">Sign up</button>
+                  <a class="a-btn a-btn__link a-btn__secondary"
+                     href="/owning-a-home/privacy-act-statement"
+                     target="_blank"
+                     rel="noopener noreferrer">
+                      See Privacy Act statement
+                  </a>
+              </div>
+
+              <input type="hidden" name="code" value="USCFPB_999">
+        </form>
+    </div>
+    <div class="o-email-popup_footer">
+        <div class="m-notification m-notification__success">
+            <div class="m-notification_content">
+                <div class="h4 m-notification_message">Success!</div>
             </div>
         </div>
     </div>
-    <div class="o-email-popup_footer"></div>
 </div>
 `;
 
 describe( 'EmailPopup', () => {
-  beforeAll( () => {
-    // Mock the window's web storage APIs.
-    window.localStorage = storageMock( {} );
-    window.sessionStorage = storageMock( {} );
-  } );
 
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
@@ -62,15 +62,15 @@ describe( 'EmailPopup', () => {
   } );
 
   describe( 'init()', () => {
-    it( 'should return undefined if already initialized', () => {
-      expect( emailPopup.init() ).toBeUndefined();
+    it( 'should return the instance when initialized', () => {
+      expect( emailPopup.init() ).toBeInstanceOf( EmailPopup );
     } );
   } );
 
   describe( 'getDom()', () => {
     it( 'should return the base element', () => {
       const baseElement = document.querySelector( '.o-email-popup' );
-      expect( baseElement ).toEqual( emailPopup.getDom() );
+      expect( baseElement ).toStrictEqual( emailPopup.getDom() );
     } );
   } );
 

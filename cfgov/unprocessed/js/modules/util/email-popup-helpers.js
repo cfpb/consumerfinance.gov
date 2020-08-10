@@ -1,5 +1,5 @@
-const _assign = require( './assign' ).assign;
-const throttle = require( 'lodash.throttle' );
+import { assign } from './assign';
+import throttle from 'lodash.throttle';
 
 /**
  * Stores/retrieves email signup data in localStorage
@@ -108,19 +108,26 @@ function showOnScroll( elToShow, opts ) {
     }
   };
 
-  opts = _assign( defaults, opts || {} );
+  opts = assign( defaults, opts || {} );
 
+  /**
+   * @returns {number} Scroll target vertical position in pixels from top.
+   */
   function _getScrollTargetPosition() {
     const elHeight = elToShow.offsetHeight;
     if ( opts.targetElement && opts.targetElement.length ) {
       const top = opts.targetElement.offset().top;
       return top + elHeight;
     }
-    const percentageTarget = document.body.offsetHeight * ( opts.scrollPercent / 100 );
+    const percentageTarget = document.body.offsetHeight *
+                             ( opts.scrollPercent / 100 );
     return percentageTarget + elHeight;
-
   }
 
+  /**
+   * @returns {boolean}
+   *   True if the scroll position has been reached, false otherwise.
+   */
   function _scrollTargetPositionReached() {
     const windowHeight = window.innerHeight;
     const windowTop = window.pageYOffset;
@@ -141,7 +148,7 @@ function showOnScroll( elToShow, opts ) {
   window.addEventListener( 'scroll', handler );
 }
 
-module.exports = {
+export {
   showEmailPopup,
   recordEmailPopupView,
   recordEmailRegistration,

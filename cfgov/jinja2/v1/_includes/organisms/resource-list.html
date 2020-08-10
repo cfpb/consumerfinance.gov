@@ -1,0 +1,134 @@
+{# ==========================================================================
+
+   resource_list.render(value)
+
+   ==========================================================================
+
+   Description:
+
+   Outputs a resource list when given:
+
+   value:                           Object defined from a StreamField block.
+
+   valure.has_top_rule_line:        Boolean for whether or not to add top
+                                    border to resource-list. Used in
+                                    'render_block.html' to modify classes on
+                                    wrapping 'div.block'.
+
+   value.heading:                   The heading for the resource list intro.
+
+   value.body:                      A description for the resource list intro.
+
+   value.image:                     An image for the resource list intro.
+                                    If set, the resource list intro will
+                                    format as a 25/75 Image and Text module.
+
+   value.snippet_type:              The type of snippet being listed.
+                                    Options defined in ref.py.
+
+   value.show_thumbnails:           A boolean for whether the template should
+                                    render a thumbnail image for each
+                                    snippet in the list.
+
+   value.actions:                   A list of actions with two fields each:
+                                    link_label and snippet_field
+
+   value.actions[i].link_label:     A string for the text of the action link.
+
+   value.actions[i].snippet_field:  The snippet field to which the action
+                                    will link. Options defined in ref.py.
+
+   value.tags:                      A list of tag names by which the snippet
+                                    list will be filtered. Returned resources
+                                    must match all tag names in this list.
+
+   ========================================================================== #}
+
+{% from 'molecules/info-unit.html' import info_unit with context %}
+
+<div class="o-resource-list"{{ ' id="' ~ value.heading|slugify ~ '"' if value.heading else '' }}>
+    {% set img = image(value.image.upload, 'original')
+       if value.image.upload
+       else '/' %}
+    {% set info_unit_image = {
+         'url': img.url,
+         'alt': image_alt_value(value.image),
+         'is_square': true,
+         'is_decorative': image_alt_value(value.image) == ''
+       }
+       if value.image.upload
+       else null %}
+    {% set modifier = 'inline' if value.image.upload else '' %}
+    {% set heading = '<h3>' ~ value.heading ~ '</h3>'
+       if value.heading
+       else '' %}
+    {{ info_unit( {
+        'modifier': modifier,
+        'image': info_unit_image,
+        'heading': heading,
+        'body': value.body | safe
+    } ) }}
+
+    {% set resources = get_model('v1.models.resources.Resource') %}
+    {% set filtered_resources = resources.objects.filter_by_tags(value.tags)
+       if resources.objects.filter_by_tags
+       else resources.objects.all() %}
+    {% if filtered_resources.exists() %}
+        <div class="o-table__stack-on-small o-resource-list_list" data-display-table="table">
+            <header data-display-table="thead">
+                <div class="o-resource-list_list-heading" data-display-table="cell">
+                    Description
+                 </div>
+            {% if value.show_thumbnails %}
+                <div class="o-resource-list_list-heading" data-display-table="cell"></div>
+            {% endif %}
+                <div class="o-resource-list_list-heading
+                           {{- ' u-w' ~ value.actions_column_width ~ 'pct' if value.actions_column_width else '' -}}"
+                     data-display-table="cell">
+                    Actions
+                </div>
+            </header>
+            <ul data-display-table="row-group">
+            {% for snippet in filtered_resources %}
+                <li data-display-table="row">
+                {% if value.show_thumbnails %}
+                    <div class="o-resource-list_list-thumbnail" data-display-table="cell">
+                    {% if snippet.thumbnail %}
+                        {% set tmp_thumb = image(snippet.thumbnail, 'width-300') %}
+                        <img src="{{ tmp_thumb.url }}"
+                             alt="{{ tmp_thumb.alt }}">
+                    {% endif %}
+                    </div>
+                {% endif %}
+                    <div data-display-table="cell">
+                        <div class="o-resource-list_list-item-title">{{ snippet }}</div>
+                        {{ snippet.desc if snippet.desc else '' }}
+                    </div>
+                    <div data-display-table="cell">
+                        <ul class="o-resource-list_list-action-list
+                                   m-list
+                                   m-list__horizontal">
+                    {% for action in value.actions %}
+                        {% if snippet[action.snippet_field] %}
+                            {%- set href = snippet[action.snippet_field].url
+                                if snippet[action.snippet_field].url is defined
+                                else snippet[action.snippet_field] -%}
+                            {% set link = '<a href="' ~ href ~ '">' ~ action.link_label ~ '</a>' %}
+                            <li class="m-list_item">
+                               {{ link | safe }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        {% import 'molecules/notification.html' as notification %}
+        <div class="u-mt30">
+            {{ notification.render('warning', true, 'No items found.') }}
+        </div>
+    {% endif %}
+</div>

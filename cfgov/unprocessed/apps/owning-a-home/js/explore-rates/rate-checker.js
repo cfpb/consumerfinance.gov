@@ -1,8 +1,6 @@
-import $ from 'jquery';
-import {
-  getCounties,
-  getData
-} from './data-loader';
+import * as params from './params';
+import * as tab from './tab';
+import * as template from './template-loader';
 import {
   calcLoanAmount,
   checkIfZero,
@@ -15,19 +13,23 @@ import {
   renderLoanAmount,
   setSelections
 } from './util';
-import * as params from './params';
-import * as template from './template-loader';
-import RateCheckerChart from './RateCheckerChart';
-import Slider from './Slider';
+import {
+  getCounties,
+  getData
+} from './data-loader';
+import { getSelection } from './dom-values';
+import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
 import amortize from 'amortize';
 import dropdown from '../dropdown-utils';
 import formatUSD from 'format-usd';
 import jumbo from 'jumbo-mortgage';
 import median from 'median';
-import tab from './tab';
+import RateCheckerChart from './RateCheckerChart';
+import Slider from './Slider';
 import unFormatUSD from 'unformat-usd';
-import { getSelection } from './dom-values';
-import { uniquePrimitives } from '../../../../js/modules/util/array-helpers';
+
+// TODO: remove jquery.
+import $ from 'jquery';
 
 // References to alert HTML.
 let creditAlertDom;
@@ -128,9 +130,6 @@ function updateView() {
       const sortedKeys = [];
       const sortedResults = {};
       let key;
-      let x;
-      let len;
-
       for ( key in results ) {
         if ( results.hasOwnProperty( key ) ) {
           sortedKeys.push( key );
@@ -138,9 +137,9 @@ function updateView() {
       }
 
       sortedKeys.sort();
-      len = sortedKeys.length;
 
-      for ( x = 0; x < len; x++ ) {
+      const len = sortedKeys.length;
+      for ( let x = 0; x < len; x++ ) {
         sortedResults[sortedKeys[x]] = results[sortedKeys[x]];
       }
 
@@ -195,17 +194,18 @@ function updateView() {
       chart.render( data );
 
       // Update timestamp
-      let _timestamp = results.timestamp;
+      let _timestamp = rawResults.data.timestamp;
+
       try {
         /* Safari 8 seems to have a bug with date conversion:
            The following: new Date("2015-01-07T05:00:00Z")
            Incorrectly returns: Tue Jan 06 2015 21:00:00 GMT-0800 (PST)
            The following will detect it and will offset the timezone enough
            to get the correct date (but not time) */
-        if ( ( new Date( results.timestamp ) ).getDate() !== parseInt( results.timestamp.split( 'T' )[0].split( '-' )[2], 10 ) ) {
+        if ( new Date( results.timestamp ).getDate() !== parseInt( results.timestamp.split( 'T' )[0].split( '-' )[2], 10 ) ) {
           _timestamp = _timestamp.split( 'T' )[0] + 'T15:00:00Z';
         }
-      } catch ( evt ) {
+      } catch ( err ) {
         // An error occurred.
       }
 
@@ -213,35 +213,38 @@ function updateView() {
 
       updateComparisons( data );
       renderInterestAmounts();
-      tab.init();
     } );
   }
 }
 
 /**
- * Updates the sentence above the chart
+ * Updates the sentence above the chart.
  * @param {Array} totalVals - List of interest rates.
  */
 function updateLanguage( totalVals ) {
+
+  /**
+   * Set the state text in the sentence above the chart to be the same as
+   * the state drop-down selected.
+   */
   function renderLocation() {
     const stateDropDown = document.querySelector( '#location' );
-    const state = stateDropDown.options[stateDropDown.selectedIndex].textContent;
+    const selectedDropDown = stateDropDown.options[stateDropDown.selectedIndex];
+    const state = selectedDropDown.textContent;
     const locations = document.querySelectorAll( '.location' );
-    locations.forEach( item => {
-      item.innerText = state;
-    } );
+    // forEach could be used here, but it's not supported in IE11.
+    for ( let i = 0, len = locations.length; i < len; i++ ) {
+      locations[i].innerText = state;
+    }
   }
 
-  function renderMedian( totalVals ) {
-    const loansMedian = median( totalVals ).toFixed( 3 );
-    const medianRate = document.querySelector( '#median-rate' );
-    medianRate.innerText = loansMedian + '%';
-  }
-
+  /**
+   * Set the loan length text in the summary below the chart.
+   */
   function updateTerm() {
     const termVal = getSelection( 'loan-term' );
     $( '.rc-comparison-long .loan-years' ).text( termVal ).fadeIn();
-    // change from 5 years to x if an ARM
+    // Change from 5 years to x if an ARM.
     if ( getSelection( 'rate-structure' ) === 'arm' ) {
       const armVal = getSelection( 'arm-type' );
       const term = armVal.match( /[^-]*/i )[0];
@@ -254,6 +257,16 @@ function updateLanguage( totalVals ) {
   renderLocation();
   renderMedian( totalVals );
   updateTerm();
+}
+
+/**
+ * Render the median percentage.
+ * @param {Array} totalVals - List of interest rates.
+ */
+function renderMedian( totalVals ) {
+  const loansMedian = median( totalVals ).toFixed( 3 );
+  const medianRate = document.querySelector( '#median-rate' );
+  medianRate.innerText = loansMedian + '%';
 }
 
 /**
@@ -273,6 +286,9 @@ function loadCounties() {
       // Inject each county into the DOM.
       const parseCountyData = resp.data.data;
       $.each( parseCountyData, function( i, countyData ) {
+        if ( countyData.county ) {
+          countyData.county = countyData.county.replace( ' County', '' );
+        }
         const countyOption = template.county( countyData );
         $( '#county' ).append( countyOption );
       } );
@@ -308,7 +324,6 @@ function loadCounties() {
  * Check the loan amount and initiate the jumbo loan interactions if need be.
  */
 function checkForJumbo() {
-  let loan;
   const jumbos = [ 'jumbo', 'agency', 'fha-hb', 'va-hb' ];
   const norms = [ 'conf', 'fha', 'va' ];
   const warnings = {
@@ -317,9 +332,8 @@ function checkForJumbo() {
     va:   template.countyVAWarning
   };
   const bounces = { 'fha-hb': 'fha', 'va-hb': 'va' };
-  let request;
 
-  loan = jumbo( {
+  const loan = jumbo( {
     loanType:   params.getVal( 'loan-type' ),
     loanAmount: params.getVal( 'loan-amount' )
   } );
@@ -362,9 +376,9 @@ function checkForJumbo() {
   // Hide any existing message, then show a message if appropriate.
   document.querySelector( '#county-warning' ).classList.add( 'u-hidden' );
   if ( warnings.hasOwnProperty( params.getVal( 'loan-type' ) ) ) {
-    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'p' ).text( warnings[params.getVal( 'loan-type' )].call() );
+    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( warnings[params.getVal( 'loan-type' )].call() );
   } else {
-    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'p' ).text( template.countyGenWarning() );
+    $( '#county-warning' ).removeClass( 'u-hidden' ).find( 'span' ).text( template.countyGenWarning() );
   }
 
   // If the state hasn't changed, we also cool. No need to load new counties.
@@ -433,7 +447,7 @@ function processCounty() {
     // Add links to loan messages.
     loan.msg = loan.msg.replace( 'jumbo (non-conforming)', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">jumbo (non-conforming)</a>' );
     loan.msg = loan.msg.replace( 'conforming jumbo', '<a href="/owning-a-home/loan-options/conventional-loans/" target="_blank" rel="noopener noreferrer">conforming jumbo</a>' );
-    $( '#hb-warning' ).removeClass( 'u-hidden' ).find( 'p' ).html( loan.msg );
+    $( '#hb-warning' ).removeClass( 'u-hidden' ).find( 'span' ).html( loan.msg );
 
   } else {
     params.setVal( 'isJumbo', false );
@@ -459,7 +473,8 @@ function processCounty() {
 }
 
 /**
- * Store the loan amount and down payment, process the county data, check if it's a jumbo loan.
+ * Store the loan amount and down payment, process the county data,
+ * check if it's a jumbo loan.
  * @param {HTMLNode} element - TODO: Add description.
  */
 function processLoanAmount( element ) {
@@ -566,11 +581,16 @@ function renderInterestAmounts() {
     }
 
     const length = parseInt( $( item ).parents( '.rc-comparison-section' ).find( '.loan-years' ).text(), 10 ) * 12;
-    const amortizedVal = amortize( { amount: params.getVal( 'loan-amount' ), rate: rate, totalTerm: fullTerm, amortizeTerm: length } );
+    const amortizedVal = amortize( {
+      amount: params.getVal( 'loan-amount' ),
+      rate: rate,
+      totalTerm: fullTerm,
+      amortizeTerm: length
+    } );
     const totalInterest = amortizedVal.interest;
     const roundedInterest = Math.round( unFormatUSD( totalInterest ) );
     const $el = $( item ).find( '.new-cost' );
-    $el.text( formatUSD( roundedInterest, { decimalPlaces: 0 } ) );
+    $el.text( formatUSD( { amount: roundedInterest, decimalPlaces: 0 } ) );
     // Add short term rates, interest, and term to the shortTermVal array.
     if ( length < 180 ) {
       shortTermVal.push( {
@@ -596,15 +616,15 @@ function renderInterestAmounts() {
  * @param {number} term - The term used in the HTML element's ID.
  */
 function renderInterestSummary( intVals, term ) {
-
-  let sortedRates;
   const id = '#rc-comparison-summary-' + term;
 
-  sortedRates = intVals.sort( function( a, b ) {
+  const sortedRates = intVals.sort( function( a, b ) {
     return a.rate - b.rate;
   } );
 
-  const diff = formatUSD( sortedRates[sortedRates.length - 1].interest - sortedRates[0].interest, { decimalPlaces: 0 } );
+  const rawDiff = sortedRates[sortedRates.length - 1].interest -
+                  sortedRates[0].interest;
+  const diff = formatUSD( { amount: rawDiff, decimalPlaces: 0 } );
   $( id + ' .comparison-term' ).text( sortedRates[0].term );
   $( id + ' .rate-diff' ).text( diff );
   $( id + ' .higher-rate' ).text( sortedRates[sortedRates.length - 1].rate + '%' );
@@ -816,19 +836,10 @@ function finishLoading() {
  * Register event handlers.
  */
 function registerEvents() {
-
-  // Have the reset button clear selections.
-  $( '.defaults-link' ).click( function( evt ) {
-    evt.preventDefault();
-    setSelections( params.getAllParams() );
-    updateView();
-    removeCreditScoreAlert();
-  } );
-
   // ARM highlighting handler.
   const rateStructureDom = document.querySelector( '#rate-structure' );
-  rateStructureDom.addEventListener( 'change', evt => {
-    if ( evt.target.value !== params.getVal( 'rate-structure' ) ) {
+  rateStructureDom.addEventListener( 'change', event => {
+    if ( event.target.value !== params.getVal( 'rate-structure' ) ) {
       dropdown( 'arm-type' ).showHighlight();
     }
   } );
@@ -861,16 +872,17 @@ function registerEvents() {
       96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 188, 190
     ];
 
-    /* If it's not an allowed key OR the shift key is held down (and they're not tabbing)
-       stop everything. */
-    if ( allowedKeys.indexOf( key ) === -1 || ( event.shiftKey && key !== 9 ) ) {
+    /* If it's not an allowed key OR the shift key is held down
+       (and they're not tabbing) stop everything. */
+    if ( allowedKeys.indexOf( key ) === -1 ||
+         ( event.shiftKey && key !== 9 ) ) {
       event.preventDefault();
     }
   } );
 
   /* Check if input value is a number.
      If not, replace the character with an empty string. */
-  $( '.calc-loan-amt .recalc' ).on( 'keyup', function( evt ) {
+  $( '.calc-loan-amt .recalc' ).on( 'keyup', function( event ) {
     const key = event.which;
     // on keyup (not tab or arrows), immediately gray chart
     if ( isKeyAllowed( key ) ) {
@@ -888,11 +900,11 @@ function registerEvents() {
   creditScoreDom.addEventListener( 'keyup', NoCalcOnForbiddenKeys );
 
   /**
-   * @param  {KeyboardEvent} evt Event object.
+   * @param  {KeyboardEvent} event Event object.
    */
-  function NoCalcOnForbiddenKeys( evt ) {
-    const element = evt.target;
-    const key = evt.keyCode;
+  function NoCalcOnForbiddenKeys( event ) {
+    const element = event.target;
+    const key = event.keyCode;
 
     // Don't recalculate on TAB or arrow keys.
     if ( isKeyAllowed( key ) || element.classList.contains( 'a-range' ) ) {
@@ -907,10 +919,10 @@ function registerEvents() {
   downPaymentDom.addEventListener( 'focusout', priceFocusOutHandler );
 
   /**
-   * @param  {FocusEvent} evt Event object.
+   * @param  {FocusEvent} event Event object.
    */
-  function priceFocusOutHandler( evt ) {
-    evt.target.value = removeDollarAddCommas( evt.target.value );
+  function priceFocusOutHandler( event ) {
+    event.target.value = removeDollarAddCommas( event.target.value );
   }
 
 
@@ -931,4 +943,4 @@ function registerEvents() {
   rateSelectsDom.addEventListener( 'change', renderInterestAmounts );
 }
 
-module.exports = { init };
+export { init };

@@ -1,27 +1,27 @@
 /* topdoc
-  name: Expandable read more modifier
+  name: Expandable read more mobile modifier
   family: cf-organisms
   notes:
     - "Styles a one-way Expandable organism that previews content on mobile."
   patterns:
   - name: Expandable organism
     markup: |
-      <div class="o-expandable o-expandable__read-more" data-read-more="true">
+      <div class="o-expandable o-expandable__read-more-mobile" data-read-more="true">
           <div class="o-expandable_content" aria-expanded="false">
-              <div class="o-expandable_content-animated"></div>
           </div>
-          <a class="o-expandable_target a-link a-link__jump o-expandable_link" title="Expand content">
-              <span class="a-link_text">
+          <button class="o-expandable_header o-expandable_target"
+                  title="Expand content">
+              <span class="o-expandable_link">
                   <span class="o-expandable_cue o-expandable_cue-open">
                       Read full answer
-                      <span class="cf-icon cf-icon-plus-round"></span>
+                      {{ svg_icon('plus-round') }}
                   </span>
                   <span class="o-expandable_cue o-expandable_cue-close">
                       Hide full answer
-                      <span class="cf-icon cf-icon-minus-round"></span>
+                      {{ svg_icon('minus-round') }}
                   </span>
               </span>
-          </a>
+          </button>
       </div>
     codenotes:
       - |
@@ -29,67 +29,130 @@
         -----------------
         .o-expandable
           .o-expandable_content
-            .o-expandable_content-animated
-          .o-expandable_target.o-expandable_link
-            .o-expandable_cue.o-expandable_cue-open
-            .o-expandable_cue.o-expandable_cue-close
+          .o-expandable_header.o-expandable_target
+            .o-expandable_link
+              .o-expandable_cue.o-expandable_cue-open
+              .o-expandable_cue.o-expandable_cue-close
 
     notes:
       - "One-way expandable. Displays an approximately 4-line
          preview of content on mobile screen sizes only. "
-  - name: .o-expandable__read-more (modifier)
+  - name: .o-expandable__read-more-mobile (modifier)
   tags:
   - cf-organisms
 */
-.o-expandable__read-more {
+
+.o-expandable__read-more-mobile {
+    .o-expandable_target__collapsed,
+    .o-expandable_content__collapsed:after {
+        display: none;
+    }
+
     .o-expandable_content {
-        border-bottom: 0;
+        // These two !important values override basic expandable styling,
+        // because these don't function like expandables on sm+ screens.
+        display: block !important;
+        max-height: 100% !important;
+    }
+
+    @media only screen and (max-width: @bp-xs-max) {
+        .o-expandable_target__collapsed {
+            display: block;
+
+            .o-expandable_link {
+                display: block;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                border: dotted @link-text;
+                border-width: 1px 0;
+                text-align: center;
+            }
+        }
+
+        .o-expandable_target__expanded {
+            display: none;
+        }
+
+        .o-expandable_content__collapsed {
+            // shows approx. 4 lines of content
+            // !important needed to override the default o-expandable_content__collapsed
+            // max-height
+            max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
+            overflow: hidden;
+            position: relative;
+
+            &:after {
+                // fades content out over approx. 2 lines
+                display: block;
+                height: unit( @base-line-height-px * 2 / @base-font-size-px, em );
+                margin: 0;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100% );
+                content: '';
+            }
+        }
+    }
+}
+
+/* topdoc
+  name: Expandable read more toggle modifier
+  family: cf-organisms
+  notes:
+    - "Styles a two-way Expandable organism that previews content across screen sizes."
+  patterns:
+  - name: Expandable organism
+    markup: |
+      <div class="o-expandable o-expandable__read-more-toggle" data-read-more="true">
+          <div class="o-expandable_content" aria-expanded="false">
+          </div>
+          <button class="o-expandable_header o-expandable_target"
+                  title="Expand content">
+              <span class="o-expandable_link">
+                  <span class="o-expandable_cue o-expandable_cue-open">
+                      Read full answer
+                      {{ svg_icon('plus-round') }}
+                  </span>
+                  <span class="o-expandable_cue o-expandable_cue-close">
+                      Hide full answer
+                      {{ svg_icon('minus-round') }}
+                  </span>
+              </span>
+          </button>
+      </div>
+    codenotes:
+      - |
+        Pattern structure
+        -----------------
+        .o-expandable
+          .o-expandable_content
+          .o-expandable_header.o-expandable_target
+            .o-expandable_link
+              .o-expandable_cue.o-expandable_cue-open
+              .o-expandable_cue.o-expandable_cue-close
+
+    notes:
+      - "Displays an approximately 4-line preview of content. "
+  - name: .o-expandable__read-more-toggle (modifier)
+  tags:
+  - cf-organisms
+*/
+
+.o-expandable__read-more-toggle {
+    .o-expandable_content__collapsed {
+        // shows approx. 4 lines of content
+        // !important needed to override the default o-expandable_content__collapsed
+        // max-height
+        max-height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
+        overflow: hidden;
         position: relative;
     }
 
     .o-expandable_target {
-        display: none;
+        font-weight: 500;
+        margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+        width: auto;
     }
-
-    .o-expandable_content,
-    .o-expandable_content-animated {
-        height: auto;
-        padding: 0;
-        border-width: 0;
-    }
-}
-
-.js .o-expandable__read-more[data-js-hook]:not(.o-expandable__expanded) {
-    .respond-to-max( @bp-xs-max, {
-        .o-expandable_content {
-            // shows approx. 4 lines of content
-            height:  unit( @base-line-height-px * 4 / @base-font-size-px, em );
-            overflow: hidden;
-        }
-
-        .o-expandable_content:after {
-            // fades content out over approx. 2 lines
-            width: 100%;
-            height: unit( @base-line-height-px * 2 / @base-font-size-px, em );
-            margin: 0;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100% );
-            content: '';
-            text-align: center;
-        }
-
-        .o-expandable_target {
-            display: block;
-            width: auto;
-            border: dotted @link-text;
-            border-width: 1px 0;
-            margin-top: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-            margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-            font-size: @base-font-size-px;
-            text-align: center;
-            .u-link__colors();
-        }
-    });
 }

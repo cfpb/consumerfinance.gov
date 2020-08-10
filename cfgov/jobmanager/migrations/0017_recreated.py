@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 from django.db import migrations, models
-import wagtail.wagtailcore.fields
+
+from wagtail.core import fields as core_fields
 
 
 class Migration(migrations.Migration):
@@ -93,7 +93,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('job_category', models.CharField(max_length=255)),
-                ('blurb', wagtail.wagtailcore.fields.RichTextField(null=True, blank=True)),
+                ('blurb', core_fields.RichTextField(null=True, blank=True)),
             ],
             options={
                 'ordering': ['job_category'],

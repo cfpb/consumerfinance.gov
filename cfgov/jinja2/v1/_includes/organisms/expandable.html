@@ -8,74 +8,77 @@
 
    Create an Expandable molecule when given:
 
-   value:             Object defined from a StreamField block.
+   value:                 Object defined from a StreamField block.
 
-   value.label:       Label you want on the Expandable.
-                      Default is an empty string.
+   value.label:           Label you want on the Expandable.
+                          Default is an empty string.
 
-   value.paragraph:   Intro paragraph text.
+   value.paragraph:       Intro paragraph text.
 
-   value.content:     Main content of the expandable.
+   value.content:         Main content of the expandable.
 
-   value.is_bordered: Whether the Expandable has a bottom border or not.
-                      Default is true.
+   value.is_bordered:     Whether the Expandable has a bottom border or not.
+                          Default is false.
 
-   value.is_midtone:  Whether the Expandable is gray or not.
-                      Default is false.
+   value.is_midtone:      Whether the Expandable is gray or not.
+                          Default is false.
 
-   value.is_expanded: Whether the Expandable is expanded or not.
-                      Default is false.
+   value.is_expanded:     Whether the Expandable is expanded or not.
+                          Default is false.
+
+   value.hide_cue_label:  Whether the Expandable's cue label is hidden or not.
+                          Default is false. The plus/minus icon is always shown.
 
    ========================================================================== #}
 
 {% macro expandable(value, expandable_cue_additional_text='') %}
 
-<div data-qa-hook="expandable" class="o-expandable
-            o-expandable__expanded
-            {{ 'o-expandable__borders' if value.is_bordered else '' }}
-            {{ 'o-expandable__midtone' if value.is_midtone else '' }}"
-            {{ 'data-state=expanded' if value.is_expanded else '' }}>
+<div data-qa-hook="expandable"
+     class="o-expandable
+            o-expandable__padded
+            {{ 'o-expandable__background' if value.is_midtone else '' }}
+            {{ 'o-expandable__border' if value.is_bordered else '' }}">
 
-    <button class="o-expandable_target">
-        <div class="o-expandable_header">
-            <span class="o-expandable_header-left
-                         o-expandable_label">
-                {{ value.label }}
-            </span>
-            <span class="o-expandable_header-right
-                         o-expandable_link
-                         u-hidden">
-                <span class="o-expandable_cue
-                             o-expandable_cue-open">
-                    <span class="o-expandable_cue-label">Show {{expandable_cue_additional_text}}</span>
-                    <span class="o-expandable_cue-label o-expandable_cue-label__es">Mostrar</span>
-                    <span class="cf-icon cf-icon-plus-round"></span>
+    <button class="o-expandable_header o-expandable_target" type="button">
+        <span class="h4 o-expandable_header-left o-expandable_label">
+            {{ value.label }}
+        </span>
+        <span class="o-expandable_header-right o-expandable_link">
+            <span class="o-expandable_cue o-expandable_cue-open">
+                <span class="u-visually-hidden-on-mobile
+                            {{ 'u-visually-hidden' if value.hide_cue_label else '' }}">
+                    {{ _('Show') }}
+                    {{ expandable_cue_additional_text }}
                 </span>
-                <span class="o-expandable_cue
-                             o-expandable_cue-close">
-                    <span class="o-expandable_cue-label">Hide {{expandable_cue_additional_text}}</span>
-                    <span class="o-expandable_cue-label o-expandable_cue-label__es">Ocultar</span>
-                    <span class="cf-icon cf-icon-minus-round"></span>
-                </span>
+                {{ svg_icon('plus-round') }}
             </span>
-        </div>
+            <span class="o-expandable_cue o-expandable_cue-close">
+                <span class="u-visually-hidden-on-mobile
+                             {{ 'u-visually-hidden' if value.hide_cue_label else '' }}">
+                    {{ _('Hide') }}
+                    {{ expandable_cue_additional_text }}
+                </span>
+                {{ svg_icon('minus-round') }}
+            </span>
+        </span>
     </button>
-    <div class="o-expandable_content"
-            {{ 'aria-expanded=true' if value.is_expanded else '' }}>
-        <div class="o-expandable_content-animated">
-            {% if caller is defined %}
-                {{ caller() }}
-            {% else %}
-                {% for block in value.content %}
-                    {% if 'paragraph' in block.block_type %}
-                        {{ parse_links(block.value) |safe}}
-                    {% else %}
-                        {{ render_stream_child(block) }}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        </div>
+
+    <div class="o-expandable_content
+                {{ 'o-expandable_content__onload-open'
+                    if value.is_expanded else '' }}">
+        {% if caller is defined %}
+            {{ caller() }}
+        {% else %}
+            {% for block in value.content %}
+                {% if 'paragraph' in block.block_type %}
+                    {{ block.value | safe }}
+                {% else %}
+                    {{ render_stream_child(block) }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
+
 </div>
 {% endmacro %}
 

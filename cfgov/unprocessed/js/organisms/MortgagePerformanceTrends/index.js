@@ -1,7 +1,7 @@
-const Chart = require( './apps/chart' );
-const Map = require( './apps/map' );
+import Chart from './apps/chart';
+import Map from './apps/map';
 
-module.exports = {
+export {
   Chart,
   Map
 };

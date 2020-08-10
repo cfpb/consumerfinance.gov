@@ -9,9 +9,8 @@
    - Atom
    ========================================================================= */
 
-
-const dataHook = require( './data-hook' );
-const standardType = require( './standard-type' );
+import * as dataHook from './data-hook';
+import { STATE_PREFIX } from './standard-type';
 
 /**
  * @constant
@@ -22,7 +21,7 @@ const standardType = require( './standard-type' );
  * component won't get initialized a second time after it
  * has already been initialized.
  */
-const INIT_FLAG = standardType.STATE_PREFIX + 'atomic_init';
+const INIT_FLAG = STATE_PREFIX + 'atomic_init';
 
 /**
  * Check that a particular element passed into the constructor of
@@ -131,7 +130,7 @@ function instantiateAll( selector, Constructor ) {
 }
 
 // Expose public methods.
-module.exports = {
+export {
   checkDom,
   destroyInitFlag,
   instantiateAll,

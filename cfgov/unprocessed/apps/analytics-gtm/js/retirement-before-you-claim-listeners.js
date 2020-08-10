@@ -1,7 +1,10 @@
 // TODO: Remove jquery.
 import $ from 'jquery';
 
-import { track } from './util/analytics-util';
+import {
+  analyticsLog,
+  track
+} from './util/analytics-util';
 
 // Retirement - Before You Claim custom analytics file
 
@@ -12,11 +15,14 @@ const BYCAnalytics = ( function() {
   let sliderIsActive = false;
   let stepOneSubmitted = false;
 
-  function calculateAge( month, day, year, currentDate ) {
-    let now = currentDate;
-    if ( currentDate instanceof Date !== true ) {
-      now = new Date();
-    }
+  /**
+   * @param {number} month - Month of birth.
+   * @param {number} day - Day of birth.
+   * @param {number} year - Year of birth.
+   * @returns {number} The age, in years, based on current date.
+   */
+  function calculateAge( month, day, year ) {
+    const now = new Date();
     const birthdate = new Date( year, Number( month ) - 1, day );
     let age = now.getFullYear() - birthdate.getFullYear();
     const m = now.getMonth() - birthdate.getMonth();
@@ -31,30 +37,44 @@ const BYCAnalytics = ( function() {
 
   $( document ).ready( function() {
 
-    $( '#step-one-form' ).submit( function( e ) {
-      e.preventDefault();
+    const stepOneForm = document.querySelector( '#step-one-form' );
+    stepOneForm.addEventListener( 'submit', formSubmitted );
+
+    /**
+     * Handle submission of the form.
+     * @param {Event} evt - Form submit event object.
+     */
+    function formSubmitted( evt ) {
+      evt.preventDefault();
       stepOneSubmitted = true;
-      let month = $( '#bd-month' ).val(),
-          day = $( '#bd-day' ).val();
+
+      // Track birthdate.
+      const month = document.querySelector( '#bd-month' ).value;
+      const day = document.querySelector( '#bd-day' ).value;
       track(
         'Before You Claim Interaction',
         'Get Your Estimates submit birthdate',
         'Birthdate Month and Day - ' + month + '/' + day
       );
-    } );
 
-    $( '#step-one-form' ).submit( function( e ) {
-      e.preventDefault();
-      let month = $( '#bd-month' ).val(),
-          day = $( '#bd-day' ).val(),
-          year = $( '#bd-year' ).val(),
-          age = calculateAge( month, day, year );
+      // Track age.
+      const year = document.querySelector( '#bd-year' ).value;
+      const age = calculateAge( month, day, year );
       track(
         'Before You Claim Interaction',
         'Get Your Estimates submit age',
         'Age ' + age
       );
-    } );
+
+      // Start mouseflow heatmap capture.
+      if ( window.mouseflow ) {
+        // Stop any in-progress heatmap capturing.
+        window.mouseflow.stop();
+        // Start a new heatmap recording.
+        window.mouseflow.start();
+        analyticsLog( 'Mouseflow capture started!' );
+      }
+    }
 
     $( '#claim-canvas' ).on( 'mousedown', 'rect', function() {
       const age = $( this ).attr( 'data-age' );
@@ -97,9 +117,9 @@ const BYCAnalytics = ( function() {
     } );
 
     $( 'button.lifestyle-btn' ).click( function() {
-      let $container = $( this ).closest( '.lifestyle-question_container' ),
-          question = $container.find( 'h3' ).text().trim(),
-          value = $( this ).val();
+      const $container = $( this ).closest( '.lifestyle-question_container' );
+      const question = $container.find( 'h3' ).text().trim();
+      const value = $( this ).val();
       if ( questionsAnswered.indexOf( question ) === -1 ) {
         questionsAnswered.push( question );
       }

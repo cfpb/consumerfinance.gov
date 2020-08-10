@@ -1,15 +1,13 @@
 from time import time
 
+from django.apps import apps
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.core.urlresolvers import resolve
+from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponseRedirect
+from django.urls import resolve
 
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
-
-
-def get_unique_id(prefix='', suffix=''):
-    index = hex(int(time() * 10000000))[2:]
-    return prefix + str(index) + suffix
+from wagtail.core.blocks.stream_block import StreamValue
+from wagtail.core.models import Site
 
 
 # These messages are manually mirrored on the
@@ -25,8 +23,13 @@ ERROR_MESSAGES = {
 }
 
 
+def get_unique_id(prefix='', suffix=''):
+    index = hex(int(time() * 10000000))[2:]
+    return prefix + str(index) + suffix
+
+
 def instanceOfBrowseOrFilterablePages(page):
-    from ..models import BrowsePage, BrowseFilterablePage
+    from ..models import BrowseFilterablePage, BrowsePage
     pages = (BrowsePage, BrowseFilterablePage)
     return isinstance(page, pages)
 
@@ -54,27 +57,6 @@ def get_secondary_nav_items(request, current_page):
     # children
     has_children = False
 
-    # Handle the Newsroom page specially.
-    # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
-    if page.slug == 'newsroom':
-        return [
-            {
-                'title': page.title,
-                'slug': page.slug,
-                'url': page.relative_url(request.site),
-                'children': [
-                    {
-                        'title': 'Press Resources',
-                        'slug': 'press-resources',
-                        'url': '/newsroom/press-resources/',
-                    }
-                ],
-                'active': True,
-                'expanded': True,
-            }
-        ], True
-    # END TODO
-
     if page.secondary_nav_exclude_sibling_pages:
         pages = [page]
     else:
@@ -82,6 +64,8 @@ def get_secondary_nav_items(request, current_page):
             lambda p: instanceOfBrowseOrFilterablePages(p.specific),
             page.get_appropriate_siblings()
         )
+
+    site = Site.find_for_request(request)
 
     nav_items = []
     for sibling in pages:
@@ -95,20 +79,20 @@ def get_secondary_nav_items(request, current_page):
         item = {
             'title': sibling.title,
             'slug': sibling.slug,
-            'url': sibling.relative_url(request.site),
+            'url': sibling.relative_url(site),
             'children': [],
             'active': item_selected,
             'expanded': item_selected,
         }
 
         if page.id == sibling.id:
-            visible_children = filter(
+            visible_children = list(filter(
                 lambda c: (
                     instanceOfBrowseOrFilterablePages(c) and
                     (c.live)
                 ),
                 sibling.get_children().specific()
-            )
+            ))
             if len(visible_children):
                 has_children = True
                 for child in visible_children:
@@ -120,13 +104,13 @@ def get_secondary_nav_items(request, current_page):
                     item['children'].append({
                         'title': child.title,
                         'slug': child.slug,
-                        'url': child.relative_url(request.site),
+                        'url': child.relative_url(site),
                         'active': child_selected,
                     })
 
         nav_items.append(item)
 
-    # Add `/process/` segment to OAH journey page nav urls.
+    # Add `/process/` segment to BAH journey page nav urls.
     # TODO: Remove this when redirects for `/process/` urls
     # are added after 2018 homebuying campaign.
     journey_urls = (
@@ -136,7 +120,7 @@ def get_secondary_nav_items(request, current_page):
         '/owning-a-home/close',
         '/owning-a-home/sources',
     )
-    if current_page.relative_url(request.site).startswith(journey_urls):
+    if current_page.relative_url(site).startswith(journey_urls):
         for item in nav_items:
             item['url'] = item['url'].replace(
                 'owning-a-home', 'owning-a-home/process')
@@ -201,3 +185,36 @@ def extended_strftime(dt, format):
     format = format.replace('%_d', dt.strftime('%d').lstrip('0'))
     format = format.replace('%_m', _MONTH_ABBREVIATIONS[dt.month])
     return dt.strftime(format)
+
+
+def validate_social_sharing_image(image):
+    """Raises a validation error if the image is too large or too small."""
+    if image and (image.width > 4096 or image.height > 4096):
+        raise ValidationError(
+            'Social sharing image must be less than 4096w x 4096h'
+        )
+
+
+def get_page_from_path(path, root=None):
+    """ Given a string path, return the corresponding page object.
+
+    If `root` is not passed, it is assumed you want to search from the root
+    page of the default site.
+
+    If `root` is passed, it will start the search from that page.
+
+    If a page cannot be found at that path, returns `None`.
+    """
+    if root is None:
+        site_model = apps.get_model('wagtailcore', 'Site')
+        site = site_model.objects.get(is_default_site=True)
+        root = site.root_page
+
+    path_components = [component for component in path.split('/') if component]
+
+    try:
+        route = root.route(None, path_components)
+    except Http404:
+        return None
+
+    return route.page

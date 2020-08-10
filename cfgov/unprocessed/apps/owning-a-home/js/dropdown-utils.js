@@ -1,4 +1,4 @@
-const $ = require( 'jquery' );
+import $ from 'jquery';
 
 /**
  * Some dropdown utility methods.
@@ -78,19 +78,17 @@ const utils = function( id ) {
 
 
   function addOption( values ) {
-    let opts = values || {},
-        label = opts.label || '',
-        value = opts.value || '';
+    const opts = values || {};
+    const label = opts.label || '';
+    const value = opts.value || '';
 
     $el.each( function() {
-      let option;
-
       // If the option already exists, abort.
-      if ( $el.children( 'option[value=' + value + ']' ).length > 0 ) {
+      if ( $el.children( "option[value='" + value + "']" ).length > 0 ) {
         return;
       }
 
-      option = document.createElement( 'option' );
+      const option = document.createElement( 'option' );
       option.value = value;
       option.innerHTML = label;
       $( this ).append( option );
@@ -235,4 +233,4 @@ const utils = function( id ) {
 
 };
 
-module.exports = utils;
+export default utils;

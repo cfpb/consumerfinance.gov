@@ -3,7 +3,6 @@
    Utilities for checking arrays.
    ========================================================================== */
 
-
 /**
  * Searches an array for the first object with the matching key:value pair.
  * @param   {Array}  array - List to query through for the expected value.
@@ -37,7 +36,7 @@ function uniquePrimitives( array ) {
   return array.filter( ( val, i, self ) => self.indexOf( val ) === i );
 }
 
-module.exports = {
+export {
   indexOfObject,
   uniquePrimitives
 };

@@ -1,5 +1,5 @@
 // Required modules.
-const EventObserver = require( '../../modules/util/EventObserver' );
+import EventObserver from '../../modules/util/EventObserver';
 
 // eslint-disable-next-line max-statements
 /**
@@ -111,6 +111,7 @@ function BaseTransition( element, classes ) {
    * complete handler immediately if transition not supported.
    */
   function _addEventListener() {
+    _dom.classList.add( BaseTransition.ANIMATING_CLASS );
     _isAnimating = true;
     // If transition is not supported, call handler directly (IE9/OperaMini).
     if ( _transitionEndEvent ) {
@@ -137,6 +138,7 @@ function BaseTransition( element, classes ) {
    */
   function _transitionComplete() {
     _removeEventListener();
+    _dom.classList.remove( BaseTransition.ANIMATING_CLASS );
     this.dispatchEvent( BaseTransition.END_EVENT, { target: this } );
     _isAnimating = false;
   }
@@ -146,7 +148,8 @@ function BaseTransition( element, classes ) {
    * already been applied to this BaseTransition's target element.
    */
   function _flush() {
-    for ( const prop in _classes ) {
+    let prop;
+    for ( prop in _classes ) {
       if ( _classes.hasOwnProperty( prop ) &&
            _classes[prop] !== _classes.BASE_CLASS &&
            _dom.classList.contains( _classes[prop] ) ) {
@@ -217,7 +220,8 @@ function BaseTransition( element, classes ) {
       transition:       'transitionend'
     };
 
-    for ( const t in transitions ) {
+    let t;
+    for ( t in transitions ) {
       if ( transitions.hasOwnProperty( t ) &&
            typeof elem.style[t] !== 'undefined' ) {
         transition = transitions[t];
@@ -249,5 +253,6 @@ function BaseTransition( element, classes ) {
 BaseTransition.BEGIN_EVENT = 'transitionBegin';
 BaseTransition.END_EVENT = 'transitionEnd';
 BaseTransition.NO_ANIMATION_CLASS = 'u-no-animation';
+BaseTransition.ANIMATING_CLASS = 'u-is-animating';
 
-module.exports = BaseTransition;
+export default BaseTransition;

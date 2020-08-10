@@ -3,16 +3,28 @@ from django.http import HttpResponseRedirect
 from django.test import RequestFactory, TestCase
 
 from data_research.handlers import ConferenceRegistrationHandler
-from data_research.models import ConferenceRegistration
 
 
 class MockConferenceRegistrationForm(forms.Form):
     def __init__(self, *args, **kwargs):
+        kwargs.pop('capacity')
         kwargs.pop('govdelivery_code')
+        kwargs.pop('govdelivery_question_id')
+        kwargs.pop('govdelivery_answer_id')
         super(MockConferenceRegistrationForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=False):
         pass
+
+    @property
+    def at_capacity(self):
+        return False
+
+
+class AtCapacityConferenceRegistrationForm(MockConferenceRegistrationForm):
+    @property
+    def at_capacity(self):
+        return True
 
 
 class ExceptionThrowingConferenceRegistrationForm(
@@ -28,17 +40,17 @@ class TestConferenceRegistrationHandler(TestCase):
         self.path = '/path/to/form'
         self.page = object()
 
-        self.govdelivery_code = 'ABC123'
-        self.capacity = 100
         self.block_value = {
-            'capacity': self.capacity,
-            'govdelivery_code': self.govdelivery_code,
+            'capacity': '100',
+            'govdelivery_code': 'ABC123',
+            'govdelivery_question_id': '12345',
+            'govdelivery_answer_id': '67890',
             'failure_message': "Something went wrong in a test.",
         }
 
-    def get_handler(self, post_data=None, request=None, form_cls=None):
+    def get_handler(self, request=None, form_cls=None):
         if request is None:
-            request = self.factory.post(self.path, post_data)
+            request = self.factory.post(self.path)
 
         if form_cls is None:
             form_cls = MockConferenceRegistrationForm
@@ -58,21 +70,12 @@ class TestConferenceRegistrationHandler(TestCase):
         response = self.get_handler().process(is_submitted=False)
         self.assertFalse(response['is_at_capacity'])
 
-    def make_capacity_registrants(self, govdelivery_code):
-        registrant = ConferenceRegistration(govdelivery_code=govdelivery_code)
-        ConferenceRegistration.objects.bulk_create(
-            [registrant] * self.capacity
-        )
-
     def test_process_at_capacity(self):
-        self.make_capacity_registrants(self.govdelivery_code)
-        response = self.get_handler().process(is_submitted=False)
+        handler = self.get_handler(
+            form_cls=AtCapacityConferenceRegistrationForm
+        )
+        response = handler.process(is_submitted=False)
         self.assertTrue(response['is_at_capacity'])
-
-    def test_process_at_capacity_for_some_other_code(self):
-        self.make_capacity_registrants('some-other-code')
-        response = self.get_handler().process(is_submitted=False)
-        self.assertFalse(response['is_at_capacity'])
 
     def test_process_not_submitted_not_successful_submission(self):
         response = self.get_handler().process(is_submitted=False)

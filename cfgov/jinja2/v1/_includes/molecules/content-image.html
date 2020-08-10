@@ -1,0 +1,75 @@
+{# ==========================================================================
+
+    Content Image
+
+    ==========================================================================
+
+    Description:
+
+    Creates image inset markup when given:
+
+    value:                Object defined from a StreamField block.
+
+    value.image_width:    String representing the image width.
+                          Possible values: (170, 270, 470).
+                          Defaults to 270.
+
+    value.image_position: String indicating how to float the image.
+                          Possible values: (left, right).
+                          Defaults to right.
+
+    value.text:           (Optional) String of caption text to be displayed
+                          below image.
+
+    value.image:          An ImageBasic atom object containing:
+
+    value.image.upload:   A CFGOVImage object.
+
+    value.is_bottom_rule: Boolean indicating whether the inset has a
+                          bottom rule.
+
+   ========================================================================== #}
+
+{# Image sizes are doubled for retina displays. Images created via Wagtail
+   are never stretched or upscaled and maintain their aspect ratio. #}
+{%- set image_inset = image(value.image.upload, 'original') -%}
+{%- set image_mobile = image(value.image.upload, 'width-1200') -%}
+
+{%- if value.image_width == 'full' -%}
+
+<figure class="m-full-width-media
+               {{- ' m-inset__bottom-rule' if value.is_bottom_rule else '' }}">
+    <img class="m-full-width-media_image"
+         src="{{ image_inset.url }}"
+         alt="{{ image_alt_value(value.image) }}">
+{%- if value.text %}
+    <figcaption class="m-inset_caption">
+        {{ value.text | safe }}
+    </figcaption>
+{%- endif %}
+</figure>
+
+{%- else -%}
+
+<figure class="m-inset
+               m-inset__image
+               m-inset__{{ value.image_width }}
+               m-inset__{{ value.image_position }}
+               m-inset__{{ image_inset.orientation }}
+               {{- ' m-inset__bottom-rule' if value.is_bottom_rule else '' }}">
+    <div class="m-inset_image-container">
+        <img class="m-inset_image"
+             src="{{ image_inset.url }}"
+             srcset="{{ image_inset.url }} {{ image_inset.width }}w,
+                     {{ image_mobile.url }} {{ image_mobile.width }}w"
+             sizes="(max-width: 600px) {{ image_mobile.width }}px, {{ image_inset.width }}px"
+             alt="{{ image_alt_value(value.image) }}">
+    </div>
+{% if value.text %}
+    <figcaption class="m-inset_caption">
+        {{ value.text | safe }}
+    </figcaption>
+{% endif %}
+</figure>
+
+{%- endif -%}

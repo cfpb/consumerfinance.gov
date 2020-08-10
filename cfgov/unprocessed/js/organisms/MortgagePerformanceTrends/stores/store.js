@@ -53,4 +53,4 @@ Store.prototype.notifySubscribers = function() {
   }.bind( this ) );
 };
 
-module.exports = Store;
+export default Store;

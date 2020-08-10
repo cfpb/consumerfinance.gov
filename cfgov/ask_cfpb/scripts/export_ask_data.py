@@ -1,112 +1,151 @@
-from __future__ import unicode_literals
-
+import csv
 import datetime
-from six.moves import html_parser as HTMLParser
+import html
 
-from django.utils import html
+from django.http import HttpResponse
+from django.utils import html as html_util
 
-import unicodecsv
+from ask_cfpb.models.pages import AnswerPage
 
-from ask_cfpb.models import Answer
-
-
-html_parser = HTMLParser.HTMLParser()
 
 HEADINGS = [
     'ASK_ID',
+    'PAGE_ID',
     'Question',
     'ShortAnswer',
     'Answer',
     'URL',
     'Live',
+    'LastEdited',
     'Redirect',
-    'SpanishQuestion',
-    'SpanishAnswer',
-    'SpanishURL',
-    'SpanishLive',
-    'SpanishRedirect',
-    'Topic',
-    'SubCategories',
-    'Audiences',
+    'PortalTopics',
+    'PortalCategories',
     'RelatedQuestions',
-    'RelatedResources',
+    'RelatedResource',
+    'Language'
 ]
 
 
 def clean_and_strip(data):
-    unescaped = html_parser.unescape(data)
-    return html.strip_tags(unescaped).strip()
+    unescaped = html.unescape(data)
+    return html_util.strip_tags(unescaped).strip()
 
 
 def assemble_output():
-    answers = Answer.objects.all()
+
+    prefetch_fields = (
+        'related_questions',
+        'portal_topic__heading',
+        'portal_category__heading')
+    answer_pages = list(AnswerPage.objects.prefetch_related(
+        *prefetch_fields
+    ).order_by('language', '-answer_base__id').values(
+        'id', 'answer_base__id', 'question', 'short_answer',
+        'answer_content', 'url_path', 'live', 'last_edited',
+        'redirect_to_page_id', 'related_resource__title', 'language',
+        *prefetch_fields
+    ))
     output_rows = []
-    for answer in answers:
+    seen = []
+
+    for page in answer_pages:
+        # There are duplicate pages in here
+        # because of the ManyToMany fields prefetched:
+        if page['id'] in seen:
+            continue
+        seen.append(page['id'])
+
         output = {heading: '' for heading in HEADINGS}
-        output['ASK_ID'] = answer.id
-        output['Question'] = answer.question
-        output['ShortAnswer'] = clean_and_strip(
-            answer.snippet)
-        output['Answer'] = clean_and_strip(
-            answer.answer)
+        output['ASK_ID'] = page['answer_base__id']
+        output['PAGE_ID'] = page['id']
+        output['Language'] = page['language']
+        output['RelatedResource'] = page['related_resource__title']
+        output['Question'] = page['question'].replace('\x81', '')
+        answer_streamfield = page['answer_content'].stream_data
+        answer_text = list(filter(
+            lambda item: item['type'] == 'text', answer_streamfield))
+        if answer_text:
+            answer = answer_text[0].get('value').get('content')
+        else:
+            # If no text block is found,
+            # there is either a HowTo or FAQ schema block.
+            # Both define a description field, so we'll use that here.
+            answer_schema = list(
+                filter(
+                    lambda item: item['type'] == 'how_to_schema' or
+                    item['type'] == 'faq_schema', answer_streamfield
+                )
+            )
+            if answer_schema:
+                answer = answer_schema[0].get('value').get('description')
+            else:
+                # This is a question with no answer, possibly a new draft.
+                answer = ''
 
-        if answer.english_page:
-            output['URL'] = answer.english_page.url_path.replace(
-                '/cfgov', '')
-            output['Live'] = answer.english_page.live
-            output['Redirect'] = answer.english_page.redirect_to_id
-        output['SpanishQuestion'] = answer.question_es.replace('\x81', '')
-        output['SpanishAnswer'] = clean_and_strip(
-            answer.answer_es).replace('\x81', '')
+        output['Answer'] = clean_and_strip(answer).replace('\x81', '')
+        output['ShortAnswer'] = clean_and_strip(page['short_answer'])
+        output['URL'] = page['url_path'].replace('/cfgov', '')
+        output['Live'] = page['live']
+        output['LastEdited'] = page['last_edited']
+        output['Redirect'] = page['redirect_to_page_id']
 
-        if answer.spanish_page:
-            output['SpanishURL'] = answer.spanish_page.url_path.replace(
-                '/cfgov', '')
-            output['SpanishLive'] = answer.spanish_page.live
-            output['SpanishRedirect'] = answer.spanish_page.redirect_to_id
+        # Group the ManyToMany fields together:
+        related_questions = []
+        portal_topics = []
+        portal_categories = []
+        for p in answer_pages:
+            if p['id'] == page['id']:
+                if p['related_questions']:
+                    related_questions.append(str(p['related_questions']))
+                if p['portal_topic__heading']:
+                    portal_topics.append(p['portal_topic__heading'])
+                if p['portal_category__heading']:
+                    portal_categories.append(p['portal_category__heading'])
 
-        output['Topic'] = (answer.category.first().name
-                           if answer.category.all() else '')
-        output['SubCategories'] = " | ".join(
-            [subcat.name for subcat in answer.subcategory.all()])
-        output['Audiences'] = " | ".join(
-            aud.name for aud in answer.audiences.all())
-        output['RelatedQuestions'] = " | ".join(
-            ['{}'.format(a.id) for a in answer.related_questions.all()])
-        output['RelatedResources'] = (
-            answer.next_step.title
-            if answer.next_step
-            else '')
+        # Remove duplicates
+        related_questions = list(set(related_questions))
+        portal_topics = list(set(portal_topics))
+        portal_categories = list(set(portal_categories))
+
+        output['RelatedQuestions'] = " | ".join(related_questions)
+        output['PortalTopics'] = " | ".join(portal_topics)
+        output['PortalCategories'] = " | ".join(portal_categories)
+
         output_rows.append(output)
+
     return output_rows
 
 
-def export_questions(path='/tmp'):
+def export_questions(path='/tmp', http_response=False):
     """
-    A script for exporting Ask CFPB Answer content
-    to a CSV that can be opened easily in Excel.
+    A script for exporting Ask CFPB Answer content to an Excel-friendly CSV.
 
     Run from within cfgov-refresh with:
     `python cfgov/manage.py runscript export_ask_data`
 
-    CEE staffers use a version of Excel that can't easily import UTF-8
-    non-ascii encodings. So we throw in the towel and encode the CSV
-    with windows-1252.
-
-    The script will dump the file to `/tmp/` unless a path argument
-    is supplied. A command that passes in path would look like this:
+    By default, the script will dump the file to `/tmp/`,
+    unless a path argument is supplied,
+    or http_response is set to True (for downloads via the Wagtail admin).
+    A command that passes in path would look like this:
     `python cfgov/manage.py runscript export_ask_data --script-args [PATH]`
     """
-
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     slug = 'ask-cfpb-{}.csv'.format(timestamp)
+    if http_response:
+        response = HttpResponse(content_type='text/csv; charset=utf-8')
+        response['Content-Disposition'] = 'attachment;filename={}'.format(slug)
+        write_questions_to_csv(response)
+        return response
     file_path = '{}/{}'.format(path, slug).replace('//', '/')
-    with open(file_path, 'w') as f:
-        writer = unicodecsv.writer(f, encoding='windows-1252')
-        writer.writerow(HEADINGS)
-        for row in assemble_output():
-            writer.writerow(
-                [row.get(key) for key in HEADINGS])
+    with open(file_path, 'w', encoding='windows-1252') as f:
+        write_questions_to_csv(f)
+
+
+def write_questions_to_csv(csvfile):
+    writer = csv.writer(csvfile)
+    writer.writerow(HEADINGS)
+    for row in assemble_output():
+        writer.writerow([row.get(key) for key in HEADINGS])
 
 
 def run(*args):

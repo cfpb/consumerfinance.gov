@@ -10,14 +10,11 @@
                         m-inset__bottom-rule
                         m-inset__left
                         m-inset__portrait
-                        m-inset__170">
+                        m-inset__270">
                 <div class="m-inset_image-container">
-                    <div class="m-inset_image
-                                m-inset_image__cover
-                                m-inset_image__decorative"></div>
                     <img class="m-inset_image" />
                 </div>
-                <div class="m-inset_text"></div>
+                <div class="m-inset_caption"></div>
                 <div class="m-quote"></div>
                 <div class="m-related-links"></div>
                 <div class="m-call-to-action"></div>
@@ -34,13 +31,10 @@
             .m-inset__bottom-rule
             .m-inset__left
             .m-inset__portrait
-            .m-inset__170
+            .m-inset__270
                 .m-inset_image-container
-                    div.m-inset_image
-                    div.m-inset_image__cover
-                    div.m-inset_image__decorative
                     img.m-inset_image
-                .m-inset_text
+                .m-inset_caption
                 .m-quote
                 .m-related-links
                 .m-call-to-action
@@ -57,59 +51,32 @@
     clear: right;
 
     &__bottom-rule {
-        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         border-bottom: 1px solid @horizontal-rule;
     }
 
-    .m-inset_image__decorative {
-        background-size: contain;
-        background-repeat: no-repeat;
+    &_caption {
+        margin-top: unit( 15px / @base-font-size-px, em );
     }
 
-    .m-inset_text {
-        margin-top: unit( 5px / @base-font-size-px, em );
+    &__bordered { // Styling for "Tip" insets, most commonly used in Ask CFPB
+        border-top: 4px solid @teal-60;
+        border-bottom: 2px solid @teal-40;
+        padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
+        margin-bottom: unit( @grid_gutter-width /2 / @base-font-size-px, em );
+
+        .respond-to-min(@bp-sm-min, {
+            margin: unit( 3px / @base-font-size-px, em )
+                    0
+                    unit( @grid_gutter-width / @base-font-size-px, em )
+                    unit( @grid_gutter-width / @base-font-size-px, em );
+            padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+        } );
     }
 
     .respond-to-min( @bp-sm-min, {
         float: right;
         width: unit( 270px / @base-font-size-px, em );
-    } );
-
-    .respond-to-max( @bp-xs-max, {
-
-        .m-inset_image {
-            .u-flexible-container_inner();
-            height: auto;
-            width: auto;
-        }
-
-        .m-inset_image__cover {
-            background-size: cover;
-        }
-
-        .m-inset_image__decorative {
-
-            // Important is necessary to override the inline height value;
-            height: 100% !important;
-            width: 100%;
-        }
-
-        .m-inset_image-container {
-            overflow: hidden;
-            .u-flexible-container();
-        }
-
-        &__portrait {
-            .m-inset_image-container {
-                padding-bottom: 75%;
-            }
-        }
-
-        &__square {
-            .m-inset_image-container {
-                padding-bottom: 100%;
-            }
-        }
     } );
 
     .respond-to-min( @bp-sm-min, {
@@ -123,11 +90,17 @@
         }
 
         &__170 {
-            width: 170px;
+            width: unit( 170px / @base-font-size-px, em );
         }
 
         .m-call-to-action {
             width: 100%;
+        }
+    } );
+
+    .respond-to-min( @bp-xl-min, {
+        &__470 {
+            width: unit( 470px / @base-font-size-px, em );
         }
     } );
 
@@ -145,7 +118,41 @@
         border-bottom: 1px solid @horizontal-rule;
         margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
+
+    &__email {
+        .respond-to-min(@bp-sm-min, {
+            box-sizing: border-box;
+            width: 50%;
+            padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
+            float: right;
+        });
+
+        .o-email-signup {
+            padding: unit( @grid_gutter-width / @base-font-size-px, em );
+            border: 1px solid @block__border-top;
+            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+            background-color: @block__bg;
+
+            .respond-to-range(@bp-sm-min, @bp-sm-max, {
+                width: 100%;
+            });
+
+            .respond-to-max(320px, {
+                padding: unit( @grid_gutter-width / @base-font-size-px, em )
+                         unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+            });
+        }
+    }
 }
+
+// in .content__1-3 pages, inset should be 4 of 9 columns
+// except in the 600-650px range, where it becomes unusably narrow
+.content__1-3 .m-inset__email {
+    .respond-to-min(650px, {
+        width: percentage( 4 / 9 );
+    });
+}
+
 
 /* topdoc
     name: EOF

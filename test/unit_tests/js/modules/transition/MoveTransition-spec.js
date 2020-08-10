@@ -1,6 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const MoveTransition =
-  require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
+import MoveTransition from '../../../../../cfgov/unprocessed/js/modules/transition/MoveTransition';
 
 let transition;
 
@@ -27,8 +25,13 @@ describe( 'MoveTransition', () => {
 
     it( 'should apply u-move-to-origin class', () => {
       transition.moveToOrigin();
-      const classes = 'content-1 u-move-transition u-move-to-origin';
-      expect( contentDom.className ).toEqual( classes );
+      const classes = 'content-1 u-move-transition ' +
+                      'u-is-animating u-move-to-origin';
+      expect( contentDom.className ).toStrictEqual( classes );
+      transition.addEventListener( 'transitionend', () => {
+        const classes = 'content-1 u-move-transition u-move-to-origin';
+        expect( contentDom.className ).toStrictEqual( classes );
+      } );
     } );
   } );
 
@@ -39,8 +42,12 @@ describe( 'MoveTransition', () => {
 
     it( 'should apply u-move-to-origin class', () => {
       transition.moveRight();
-      const classes = 'content-1 u-move-transition u-move-right';
-      expect( contentDom.className ).toEqual( classes );
+      let classes = 'content-1 u-move-transition u-is-animating u-move-right';
+      expect( contentDom.className ).toStrictEqual( classes );
+      transition.addEventListener( 'transitionend', () => {
+        classes = 'content-1 u-move-transition u-move-right';
+        expect( contentDom.className ).toStrictEqual( classes );
+      } );
     } );
   } );
 
@@ -51,8 +58,12 @@ describe( 'MoveTransition', () => {
 
     it( 'should apply u-move-to-origin class', () => {
       transition.moveUp();
-      const classes = 'content-1 u-move-transition u-move-up';
-      expect( contentDom.className ).toEqual( classes );
+      let classes = 'content-1 u-move-transition u-is-animating u-move-up';
+      expect( contentDom.className ).toStrictEqual( classes );
+      transition.addEventListener( 'transitionend', () => {
+        classes = 'content-1 u-move-transition u-move-up';
+        expect( contentDom.className ).toStrictEqual( classes );
+      } );
     } );
   } );
 
@@ -63,20 +74,32 @@ describe( 'MoveTransition', () => {
 
     it( 'should apply u-move-left class', () => {
       transition.moveLeft();
-      const classes = 'content-1 u-move-transition u-move-left';
-      expect( contentDom.className ).toEqual( classes );
+      let classes = 'content-1 u-move-transition u-is-animating u-move-left';
+      expect( contentDom.className ).toStrictEqual( classes );
+      transition.addEventListener( 'transitionend', () => {
+        classes = 'content-1 u-move-transition u-move-left';
+        expect( contentDom.className ).toStrictEqual( classes );
+      } );
     } );
 
     it( 'should apply u-move-left-2x class', () => {
       transition.moveLeft( 2 );
-      const classes = 'content-1 u-move-transition u-move-left-2x';
-      expect( contentDom.className ).toEqual( classes );
+      let classes = 'content-1 u-move-transition u-is-animating u-move-left-2x';
+      expect( contentDom.className ).toStrictEqual( classes );
+      transition.addEventListener( 'transitionend', () => {
+        classes = 'content-1 u-move-transition u-move-left-2x';
+        expect( contentDom.className ).toStrictEqual( classes );
+      } );
     } );
 
     it( 'should apply u-move-left-3x class', () => {
       transition.moveLeft( 3 );
-      const classes = 'content-1 u-move-transition u-move-left-3x';
-      expect( contentDom.className ).toEqual( classes );
+      let classes = 'content-1 u-move-transition u-is-animating u-move-left-3x';
+      expect( contentDom.className ).toStrictEqual( classes );
+      transition.addEventListener( 'transitionend', () => {
+        classes = 'content-1 u-move-transition u-move-left-3x';
+        expect( contentDom.className ).toStrictEqual( classes );
+      } );
     } );
 
     it( 'should throw error when move left range is out-of-range', () => {

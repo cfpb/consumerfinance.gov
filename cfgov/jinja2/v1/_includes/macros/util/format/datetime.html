@@ -18,13 +18,13 @@
 
    ========================================================================== #}
 
-{% macro format_time(datetime, show_timezone=false) %}
+{% macro format_time(datetime, show_timezone=false) -%}
     {% if show_timezone %}
         {{- datetime | date('%I:%M %p %Z', timezone) -}}
     {% else %}
         {{- datetime | date('%I:%M %p') -}}
     {% endif %}
-{% endmacro %}
+{%- endmacro %}
 
 
 {# ==========================================================================
@@ -45,13 +45,13 @@
 
    ========================================================================== #}
 
-{% macro format_date(datetime, text_format=False) %}
+{% macro format_date(datetime, text_format=False) -%}
     {% if text_format %}
         {{- date_formatter(datetime, text_format) -}}
     {% else %}
         {{- date_formatter(datetime) | upper -}}
     {% endif %}
-{% endmacro %}
+{%- endmacro %}
 
 
 {# ==========================================================================
@@ -64,7 +64,7 @@
 
    Format a date for datetime metadata in the format of:
 
-       YYYY-MM-DDTHH:MM:SS.MMMM
+       YYYY-MM-DDTHH:MM:SS-Z
 
    When given:
 
@@ -73,5 +73,5 @@
    ========================================================================== #}
 
 {% macro format_datetime(datetime) %}
-    {{- datetime | date('%Y-%m-%dT%H:%M:%S.%f%z') -}}
+    {{- datetime | date('%Y-%m-%dT%H:%M:%S%z') -}}
 {% endmacro %}

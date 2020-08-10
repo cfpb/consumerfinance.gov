@@ -1,0 +1,63 @@
+
+{# ==========================================================================
+
+   Guided Quiz block
+
+   ==========================================================================
+
+   Description:
+
+   Framework for a guided-quiz section, including a situation setup.
+
+   value: Object defined from a Streamfield block.
+
+   value.situation:            The setup (use-case) for this set of questions
+
+   value.questions:            The block of question, choices and answers
+
+   value.summary:              Wrap-up of the question topic
+
+   ========================================================================== #}
+
+<div class="quiz__container">
+
+  <div class="quiz__situation" id="{{ value.situation_id }}">
+    <h3> {{ value.situation }} </h3> 
+  </div>
+  {% for question_block in value.questions %}
+  {% set questionNumber = loop.index -%}
+  <div class="quiz__question">
+    <h2>
+      {% include_block question_block.subtitle %}
+    </h2>
+    <div class="quiz__question-content">
+      {% include_block question_block.question | richtext %}
+      <div class="quiz__answers m-form-field m-form-field__radio">
+      {% for answer_block in question_block.answers %}
+        <div class="quiz__answer-choice">
+          <input type="radio" value="some value" id="answerChoice{{ questionNumber }}-{{ loop.index }}" class="a-radio" name="test">
+          <label for="answerChoice{{ questionNumber }}-{{ loop.index }}" class="a-label">
+            {% include_block answer_block.answer_choice %}
+          </label>
+        </div>
+      </div>
+      <div class="quiz__answer-response" style="display: none;">
+        {% include_block answer_block.answer_response | richtext %}
+      </div>
+      {% endfor %}
+    </div>
+    <button class="quiz__response-button a-btn">Check my answer</button>
+    <div class="quiz__response-target">
+      <div class="quiz__answer-response" style="display: block; position: static; visibility: visible; transition: max-height 0.5s ease-in-out 0s;">
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <hr>
+  <div class="quiz__summary">
+    <h3>{{ value.summary }}</h3>
+  </div>
+
+</div>
+  

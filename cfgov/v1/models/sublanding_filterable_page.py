@@ -1,8 +1,10 @@
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
+from wagtail.core.blocks import StreamBlock
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.search import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
@@ -11,19 +13,30 @@ from v1.models.base import CFGOVPage
 from v1.util.filterable_list import FilterableListMixin
 
 
+class SublandingFilterableContent(StreamBlock):
+    """Defines the StreamField blocks for SublandingFilterablePage content.
+
+    Pages can have at most one filterable list.
+    """
+    text_introduction = molecules.TextIntroduction()
+    full_width_text = organisms.FullWidthText()
+    filter_controls = organisms.FilterableList()
+    featured_content = organisms.FeaturedContent()
+    feedback = v1_blocks.Feedback()
+
+    class Meta:
+        block_counts = {
+            'filter_controls': {'max_num': 1},
+        }
+
+
 class SublandingFilterablePage(FilterableFeedPageMixin,
                                FilterableListMixin,
                                CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
-    content = StreamField([
-        ('text_introduction', molecules.TextIntroduction()),
-        ('full_width_text', organisms.FullWidthText()),
-        ('filter_controls', organisms.FilterControls()),
-        ('featured_content', molecules.FeaturedContent()),
-        ('feedback', v1_blocks.Feedback()),
-    ])
+    content = StreamField(SublandingFilterableContent)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -41,6 +54,11 @@ class SublandingFilterablePage(FilterableFeedPageMixin,
     template = 'sublanding-page/index.html'
 
     objects = PageManager()
+
+    search_fields = CFGOVPage.search_fields + [
+        index.SearchField('content'),
+        index.SearchField('header')
+    ]
 
 
 class ActivityLogPage(SublandingFilterablePage):

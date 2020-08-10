@@ -75,4 +75,4 @@ function EventObserver() {
   return this;
 }
 
-module.exports = EventObserver;
+export default EventObserver;

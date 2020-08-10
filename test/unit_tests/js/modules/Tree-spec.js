@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const Tree = require( BASE_JS_PATH + 'modules/Tree' );
+import Tree from '../../../../cfgov/unprocessed/js/modules/Tree';
 
 describe( 'Tree', () => {
   let tree;
@@ -13,7 +12,7 @@ describe( 'Tree', () => {
       expect( tree instanceof Tree ).toBe( true );
       expect( tree.getRoot() ).toBeNull();
       expect( tree.getAllAtLevel( 0 ) instanceof Array ).toBe( true );
-      expect( tree.getAllAtLevel( 0 ).length ).toEqual( 0 );
+      expect( tree.getAllAtLevel( 0 ).length ).toStrictEqual( 0 );
     } );
 
     it( 'should have a proper state after initialization', () => {
@@ -28,11 +27,11 @@ describe( 'Tree', () => {
       tree.init( 'R' );
       expect( tree.getRoot() ).not.toBeNull();
       expect( tree.getRoot().constructor.name === 'TreeNode' ).toBe( true );
-      expect( tree.getRoot().tree ).toEqual( tree );
-      expect( tree.getRoot().data ).toEqual( 'R' );
+      expect( tree.getRoot().tree ).toStrictEqual( tree );
+      expect( tree.getRoot().data ).toStrictEqual( 'R' );
       expect( tree.getRoot().parent ).toBeUndefined();
-      expect( tree.getRoot().children.length ).toEqual( 0 );
-      expect( tree.getRoot().level ).toEqual( 0 );
+      expect( tree.getRoot().children.length ).toStrictEqual( 0 );
+      expect( tree.getRoot().level ).toStrictEqual( 0 );
     } );
   } );
 
@@ -40,7 +39,7 @@ describe( 'Tree', () => {
     it( 'should return the root level', () => {
       tree.init( 'R' );
       const nodeR = tree.getRoot();
-      expect( tree.getAllAtLevel( 0 )[0] ).toEqual( nodeR );
+      expect( tree.getAllAtLevel( 0 )[0] ).toStrictEqual( nodeR );
     } );
 
     /**
@@ -54,9 +53,9 @@ describe( 'Tree', () => {
       const nodeR = tree.getRoot();
       const nodeA = tree.add( 'A', nodeR );
       const nodeB = tree.add( 'B', nodeR );
-      expect( tree.getAllAtLevel( 0 )[0] ).toEqual( nodeR );
-      expect( tree.getAllAtLevel( 1 )[0] ).toEqual( nodeA );
-      expect( tree.getAllAtLevel( 1 )[1] ).toEqual( nodeB );
+      expect( tree.getAllAtLevel( 0 )[0] ).toStrictEqual( nodeR );
+      expect( tree.getAllAtLevel( 1 )[0] ).toStrictEqual( nodeA );
+      expect( tree.getAllAtLevel( 1 )[1] ).toStrictEqual( nodeB );
     } );
 
     /**
@@ -73,10 +72,10 @@ describe( 'Tree', () => {
       const nodeA = tree.add( 'A', nodeR );
       const nodeB = tree.add( 'B', nodeR );
       const nodeC = tree.add( 'C', nodeA );
-      expect( tree.getAllAtLevel( 0 )[0] ).toEqual( nodeR );
-      expect( tree.getAllAtLevel( 1 )[0] ).toEqual( nodeA );
-      expect( tree.getAllAtLevel( 1 )[1] ).toEqual( nodeB );
-      expect( tree.getAllAtLevel( 2 )[0] ).toEqual( nodeC );
+      expect( tree.getAllAtLevel( 0 )[0] ).toStrictEqual( nodeR );
+      expect( tree.getAllAtLevel( 1 )[0] ).toStrictEqual( nodeA );
+      expect( tree.getAllAtLevel( 1 )[1] ).toStrictEqual( nodeB );
+      expect( tree.getAllAtLevel( 2 )[0] ).toStrictEqual( nodeC );
     } );
   } );
 
@@ -87,14 +86,14 @@ describe( 'Tree', () => {
       const nodeA = tree.add( 'A', nodeR );
       expect( nodeA ).not.toBeNull();
       expect( nodeA.constructor.name === 'TreeNode' ).toBe( true );
-      expect( nodeA.tree ).toEqual( tree );
-      expect( nodeA.data ).toEqual( 'A' );
-      expect( nodeA.parent ).toEqual( nodeR );
-      expect( nodeA.children.length ).toEqual( 0 );
-      expect( nodeA.level ).toEqual( 1 );
-      expect( nodeR.children[0] ).toEqual( nodeA );
-      expect( tree.getAllAtLevel( 0 ).length ).toEqual( 1 );
-      expect( tree.getAllAtLevel( 1 ).length ).toEqual( 1 );
+      expect( nodeA.tree ).toStrictEqual( tree );
+      expect( nodeA.data ).toStrictEqual( 'A' );
+      expect( nodeA.parent ).toStrictEqual( nodeR );
+      expect( nodeA.children.length ).toStrictEqual( 0 );
+      expect( nodeA.level ).toStrictEqual( 1 );
+      expect( nodeR.children[0] ).toStrictEqual( nodeA );
+      expect( tree.getAllAtLevel( 0 ).length ).toStrictEqual( 1 );
+      expect( tree.getAllAtLevel( 1 ).length ).toStrictEqual( 1 );
     } );
   } );
 } );

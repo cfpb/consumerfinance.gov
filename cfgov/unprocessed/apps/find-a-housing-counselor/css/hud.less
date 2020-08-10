@@ -1,0 +1,80 @@
+.hud-search-container {
+    background: @gray-5;
+}
+
+.hud-search-container_text {
+    padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+}
+
+#hud_hca_api_map_canvas {
+    height: 320px;
+}
+
+.respond-to-min( @bp-med-min, {
+    .hud-search-container {
+        display: flex;
+    }
+
+    .hud-search-container_text {
+        flex: 1;
+        // Magic number of 270px below keeps full input placeholder in view.
+        min-width: unit( 270px / @base-font-size-px, em );
+        padding: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
+    .hud-search-container_map {
+        flex: 2;
+    }
+
+    #hud_hca_api_map_canvas {
+        height: 440px;
+    }
+} );
+
+
+#hud_hca_api_map_container {
+    /* Prevent map controls from appearing on top of mega menu. */
+    z-index: 0;
+}
+
+
+#hud_hca_api_map_canvas img {
+    max-width: none;
+}
+
+.hud_hca_api_results_actions {
+    .respond-to-min( @bp-xs-max, {
+        & {
+            // Margin makes a gap between result header links and result text.
+            margin-left: 20px;
+            float: right;
+        }
+    } );
+
+    // Remove underline from PDF abbreviation and icons in links.
+    & abbr,
+    & svg {
+      border-bottom: none;
+      text-decoration: none;
+    }
+}
+
+// Top-align entries in the table.
+.o-table tr {
+    vertical-align: top;
+}
+
+.no-js {
+    &.o-featured-content-module {
+        min-height: auto;
+
+        .o-featured-content-module_text {
+            width: auto;
+        }
+    }
+
+    #hud_hca_api_map_container,
+    #hud_print-page-link {
+        display: none;
+    }
+}

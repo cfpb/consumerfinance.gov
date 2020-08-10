@@ -1,6 +1,6 @@
 import logging
 
-from wagtail.wagtailcore.signals import page_published
+from wagtail.core.signals import page_published
 
 import requests
 from flags.state import flag_enabled
@@ -29,4 +29,5 @@ def request_site_recrawl(sender, **kwargs):
         )
 
 
-page_published.connect(request_site_recrawl, sender=JobListingPage)
+def register_signal_handlers():
+    page_published.connect(request_site_recrawl, sender=JobListingPage)

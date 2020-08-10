@@ -1,6 +1,5 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const Tree = require( BASE_JS_PATH + 'modules/Tree' );
-const treeTraversal = require( BASE_JS_PATH + 'modules/util/tree-traversal' );
+import * as treeTraversal from '../../../../../cfgov/unprocessed/js/modules/util/tree-traversal';
+import Tree from '../../../../../cfgov/unprocessed/js/modules/Tree';
 
 describe( 'Tree traversal', () => {
 
@@ -40,10 +39,10 @@ describe( 'Tree traversal', () => {
         nodes.push( node );
       } );
 
-      expect( that ).toEqual( treeTraversal );
-      expect( nodes[0] ).toEqual( nodeC );
-      expect( nodes[1] ).toEqual( nodeA );
-      expect( nodes[2] ).toEqual( nodeR );
+      expect( that ).toStrictEqual( treeTraversal );
+      expect( nodes[0] ).toStrictEqual( nodeC );
+      expect( nodes[1] ).toStrictEqual( nodeA );
+      expect( nodes[2] ).toStrictEqual( nodeR );
     } );
   } );
 
@@ -56,13 +55,13 @@ describe( 'Tree traversal', () => {
         nodes.push( node );
       } );
 
-      expect( that ).toEqual( treeTraversal );
-      expect( nodes[0] ).toEqual( nodeR );
-      expect( nodes[1] ).toEqual( nodeA );
-      expect( nodes[2] ).toEqual( nodeB );
-      expect( nodes[3] ).toEqual( nodeC );
-      expect( nodes[4] ).toEqual( nodeD );
-      expect( nodes[5] ).toEqual( nodeE );
+      expect( that ).toStrictEqual( treeTraversal );
+      expect( nodes[0] ).toStrictEqual( nodeR );
+      expect( nodes[1] ).toStrictEqual( nodeA );
+      expect( nodes[2] ).toStrictEqual( nodeB );
+      expect( nodes[3] ).toStrictEqual( nodeC );
+      expect( nodes[4] ).toStrictEqual( nodeD );
+      expect( nodes[5] ).toStrictEqual( nodeE );
     } );
   } );
 
@@ -75,13 +74,13 @@ describe( 'Tree traversal', () => {
         nodes.push( node );
       } );
 
-      expect( that ).toEqual( treeTraversal );
-      expect( nodes[0] ).toEqual( nodeR );
-      expect( nodes[1] ).toEqual( nodeA );
-      expect( nodes[2] ).toEqual( nodeC );
-      expect( nodes[3] ).toEqual( nodeD );
-      expect( nodes[4] ).toEqual( nodeE );
-      expect( nodes[5] ).toEqual( nodeB );
+      expect( that ).toStrictEqual( treeTraversal );
+      expect( nodes[0] ).toStrictEqual( nodeR );
+      expect( nodes[1] ).toStrictEqual( nodeA );
+      expect( nodes[2] ).toStrictEqual( nodeC );
+      expect( nodes[3] ).toStrictEqual( nodeD );
+      expect( nodes[4] ).toStrictEqual( nodeE );
+      expect( nodes[5] ).toStrictEqual( nodeB );
     } );
   } );
 

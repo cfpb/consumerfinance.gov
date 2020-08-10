@@ -14,40 +14,13 @@
     color:  @gray-40;
 }
 
-.alert {
-    &:before,
-    li&:before {
-        .cf-icon;
-
-        left: -21px;
-        color:  @red;
-        content: '\e103';
-        font-size: 17px;
-    }
-    li&.list_item__spaced:before {
-        top: 3px;
-    }
-    p&:before {
-        text-indent: -1.4em;
-    }
-    li& {
-        position: relative;
-        list-style: none;
-    }
-}
-
-.alert-alt:before {
-    .cf-icon;
-
-    color:  @gold;
-    content: '\e103';
-    text-indent: -1.4em;
+.a-form-alert {
+    color: @dark-gray;
+    font-size: 0.75em;
 }
 
 // alert containers have a background color but no border
 .alert-container {
-     .u-webfont-regular();
-
     padding: unit( 20px / @base-font-size-px, em );
     background: @gray-5;
 
@@ -76,10 +49,8 @@
     margin-top: 2em;
 }
 
-/* lead paragrapgs are typically the first paragraph in a content area */
+/* lead paragraphs are typically the first paragraph in a content area */
 .lead {
-    .u-webfont-regular();
-
     margin-bottom: unit( 30px / @base-font-size-px, em );
     font-size: 1.125em;
 }
@@ -101,8 +72,6 @@
 
 /* notes are subtle call out boxes with top and bottom borders */
 .note {
-    .u-webfont-regular();
-
     color: @black;
     padding: 20px 10px;
     margin: 1em 0;
@@ -119,13 +88,6 @@
     }
 }
 
-.point-right:after {
-    .cf-icon;
-
-    margin-left: unit( 10px / @base-font-size-px, em );
-    content: '\e011';
-}
-
 .placeholder {
     min-height: 200px;
     background: @gray-10;
@@ -135,10 +97,8 @@
 
 /* use sans-serif typeface */
 .sans {
-    .u-webfont-regular();
-
     strong {
-        .u-webfont-demi();
+        font-weight: 600;
     }
 }
 

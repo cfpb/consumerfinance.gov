@@ -18,7 +18,8 @@
 
    ========================================================================== #}
 
-<aside class="m-pull-quote{{ ' m-pull-quote__large' if value.is_large else '' }}">
+<aside class="m-pull-quote{{ ' m-pull-quote__large' if value.is_large else '' }}"
+       aria-hidden="true">
     <p class="m-pull-quote_body">
         {{ value.body }}
     </p>

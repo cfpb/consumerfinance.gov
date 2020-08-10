@@ -26,12 +26,10 @@
     margin-bottom: 0;
 }
 
-.js .vacancy-announcement_description .o-expandable__read-more[data-js-hook]:not(.o-expandable__expanded) {
+.vacancy-announcement_description .o-expandable_content__collapsed {
     .respond-to-max( @bp-xs-max, {
-        .o-expandable_content {
-            // shows approx. 10 lines of content
-            height:  unit( @base-line-height-px * 10 / @base-font-size-px, em );
-        }
+        // shows approx. 10 lines of content
+        max-height:  unit( @base-line-height-px * 10 / @base-font-size-px, em );
     } );
 }
 

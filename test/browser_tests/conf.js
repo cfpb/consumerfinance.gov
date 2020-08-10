@@ -46,7 +46,7 @@ function _chooseSuite( params ) {
     const windowSize = `--window-size=${ windowWidthPx }x${ windowHeightPx }`;
     capabilities[0].chromeOptions.args.push( windowSize );
 
-    if ( envvars.TRAVIS ) {
+    if ( envvars.CI ) {
       capabilities[0].chromeOptions.args.push( '--no-sandbox' );
     }
   } else if ( paramsAreNotSet && _useSauceLabs() ) {
@@ -165,7 +165,8 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 
   for ( let i = 0, len = capabilities.length; i < len; i++ ) {
     capability = capabilities[i];
-    for ( const p in injectParams ) {
+    let p;
+    for ( p in injectParams ) {
       if ( injectParams.hasOwnProperty( p ) ) {
         capability[p] = injectParams[p];
       }

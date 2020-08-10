@@ -6,7 +6,6 @@
    Copyright (c) 2010-2015 Google, Inc. https://angularjs.org
    ========================================================================== */
 
-
 const _toString = Object.prototype.toString;
 
 /**
@@ -156,16 +155,15 @@ function isEmpty( value ) {
          ( /^\s*$/ ).test( value );
 }
 
-
 // Expose public methods.
-module.exports = {
-  isUndefined: isUndefined,
-  isDefined:   isDefined,
-  isObject:    isObject,
-  isString:    isString,
-  isNumber:    isNumber,
-  isDate:      isDate,
-  isArray:     isArray,
-  isFunction:  isFunction,
-  isEmpty:     isEmpty
+export {
+  isUndefined,
+  isDefined,
+  isObject,
+  isString,
+  isNumber,
+  isDate,
+  isArray,
+  isFunction,
+  isEmpty
 };

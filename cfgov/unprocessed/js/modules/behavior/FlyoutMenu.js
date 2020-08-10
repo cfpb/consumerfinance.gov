@@ -1,9 +1,12 @@
 // Required modules.
-const BaseTransition = require( '../../modules/transition/BaseTransition' );
-const behavior = require( '../../modules/util/behavior' );
-const breakpointState = require( '../../modules/util/breakpoint-state' );
-const EventObserver = require( '../../modules/util/EventObserver' );
-const standardType = require( '../../modules/util/standard-type' );
+import {
+  BEHAVIOR_PREFIX,
+  JS_HOOK,
+  noopFunct
+} from '../../modules/util/standard-type';
+import BaseTransition from '../../modules/transition/BaseTransition';
+import EventObserver from '../../modules/util/EventObserver';
+import { checkBehaviorDom } from '../../modules/util/behavior';
 
 /**
  * FlyoutMenu
@@ -19,29 +22,24 @@ const standardType = require( '../../modules/util/standard-type' );
  * behavior_flyout-menu
  *   behavior_flyout-menu_trigger
  *   behavior_flyout-menu_content
- *     behavior_flyout-menu_alt-trigger
+ *     behavior_flyout-menu_trigger
  *
- * The alt-trigger is for a back button, which may obscure the first trigger.
- * The flyout can be triggered three ways: through a click of the trigger or
- * through the click of an alt-trigger.
+ * The second trigger is for a back button on mobile,
+ * which may obscure the first trigger.
+ * The flyout can be triggered through a click of either trigger.
  *
  * @param {HTMLNode} element - The DOM element to attach FlyoutMenu behavior.
  * @returns {FlyoutMenu} An instance.
  */
 function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
-  const BASE_CLASS = standardType.BEHAVIOR_PREFIX + 'flyout-menu';
-  const SEL_PREFIX = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
-  const BASE_SEL = SEL_PREFIX + ']';
+  const BASE_CLASS = BEHAVIOR_PREFIX + 'flyout-menu';
+  const SEL_PREFIX = '[' + JS_HOOK + '=' + BASE_CLASS;
 
   // Verify that the expected dom attributes are present.
-  const _dom = behavior.checkBehaviorDom( element, BASE_CLASS );
-  const _triggerDom =
-    behavior.checkBehaviorDom( element, BASE_CLASS + '_trigger' );
-  const _contentDom =
-    behavior.checkBehaviorDom( element, BASE_CLASS + '_content' );
-
-  let _altTriggerDom = _dom.querySelector( SEL_PREFIX + '_alt-trigger]' );
+  const _dom = checkBehaviorDom( element, BASE_CLASS );
+  const _triggerDoms = _findTriggers( element );
+  const _contentDom = checkBehaviorDom( element, BASE_CLASS + '_content' );
 
   let _isExpanded = false;
   let _isAnimating = false;
@@ -69,7 +67,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   /* Set this function to a queued collapse function,
      which is called if collapse is called while
      expand is animating. */
-  let _deferFunct = standardType.noopFunct;
+  let _deferFunct = noopFunct;
 
   // Whether this instance's behaviors are suspended or not.
   let _suspended = true;
@@ -79,57 +77,64 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
      to avoid a mouseover and click immediately after each other. */
   let _touchTriggered = false;
 
+  /**
+   * Iterate over dom tree and find FlyoutMenu triggers.
+   * We need to exclude the ones that are nested FlyoutMenus, since those
+   * will be managed by their own instance of this class.
+   * @param {HTMLNode} element - The DOM element to search for triggers within.
+   * @returns {Array} List of trigger DOM references within this FlyoutMenu.
+   */
+  function _findTriggers( element ) {
+    const triggersList = [];
+    const triggers = element.querySelectorAll( `${ SEL_PREFIX }_trigger]` );
+
+    let trigger;
+    let triggerParent;
+    let isSubTrigger;
+    // Iterate backwards ensuring that length is an UInt32.
+    for ( let i = triggers.length >>> 0; i--; ) {
+      isSubTrigger = false;
+      trigger = triggers[i];
+      triggerParent = trigger.parentElement;
+      while ( triggerParent !== element ) {
+        if ( triggerParent.getAttribute( JS_HOOK ) &&
+             triggerParent.getAttribute( JS_HOOK ).split( ' ' )
+               .indexOf( BASE_CLASS ) !== -1 ) {
+          isSubTrigger = true;
+          triggerParent = element;
+        } else {
+          triggerParent = triggerParent.parentElement;
+        }
+      }
+
+      if ( !isSubTrigger ) {
+        triggersList.unshift( triggers[i] );
+      }
+    }
+
+    return triggersList;
+  }
+
   // TODO: Add param to set the FlyoutMenu open at initialization-time.
   /**
    * @returns {FlyoutMenu} An instance.
    */
   function init() {
-
-    /* Ignore Google Analytics on the trigger if it is a link,
-       since we're preventing the default link behavior. */
-    if ( _triggerDom.tagName === 'A' && _isInMobile() ) {
-      _triggerDom.setAttribute( 'data-gtm_ignore', 'true' );
-    }
-
     const handleTriggerClickedBinded = _handleTriggerClicked.bind( this );
     const handleTriggerOverBinded = _handleTriggerOver.bind( this );
     const handleTriggerOutBinded = _handleTriggerOut.bind( this );
 
-    // Set initial aria attributes to false.
-    _setAriaAttr( 'expanded', _triggerDom, 'false' );
-    _setAriaAttr( 'pressed', _triggerDom, 'false' );
+    let triggerDom;
+    for ( let i = 0, len = _triggerDoms.length; i < len; i++ ) {
+      triggerDom = _triggerDoms[i];
 
-    _triggerDom.addEventListener( 'click', handleTriggerClickedBinded );
-    _triggerDom.addEventListener( 'touchstart', _handleTouchStart );
-    _triggerDom.addEventListener( 'mouseover', handleTriggerOverBinded );
-    _triggerDom.addEventListener( 'mouseout', handleTriggerOutBinded );
+      // Set initial aria attributes to false.
+      _setAriaAttr( 'expanded', triggerDom, 'false' );
 
-    if ( _altTriggerDom ) {
-
-      /* If menu contains a submenu but doesn't have
-         its own alternative trigger (such as a Back button),
-         then the altTriggerDom may be in the submenu and we
-         need to remove the reference. */
-      const subMenu = _dom.querySelector( BASE_SEL );
-      if ( subMenu && subMenu.contains( _altTriggerDom ) ) {
-        _altTriggerDom = null;
-      } else {
-
-        /* TODO: Investigate just having multiple triggers,
-           instead of a primary and alternative.
-           Ignore Google Analytics on the trigger if it is a link,
-           since we're preventing the default link behavior. */
-        if ( _altTriggerDom.tagName === 'A' && _isInMobile() ) {
-          _altTriggerDom.setAttribute( 'data-gtm_ignore', 'true' );
-        }
-
-        // Set initial aria attributes to false.
-        _setAriaAttr( 'expanded', _altTriggerDom, 'false' );
-
-        /* TODO: alt trigger should probably listen
-           for a mouseover/mouseout event too. */
-        _altTriggerDom.addEventListener( 'click', handleTriggerClickedBinded );
-      }
+      triggerDom.addEventListener( 'click', handleTriggerClickedBinded );
+      triggerDom.addEventListener( 'touchstart', _handleTouchStart );
+      triggerDom.addEventListener( 'mouseover', handleTriggerOverBinded );
+      triggerDom.addEventListener( 'mouseout', handleTriggerOutBinded );
     }
 
     resume();
@@ -204,20 +209,6 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     }
   }
 
-  // TODO: Move this to breakpoint-state.js.
-  /**
-   * Whether currently in the desktop view.
-   * @returns {boolean} True if in the desktop view, otherwise false.
-   */
-  function _isInMobile() {
-    let isInMobile = false;
-    const currentBreakpoint = breakpointState.get();
-    if ( currentBreakpoint.isBpXS ) {
-      isInMobile = true;
-    }
-    return isInMobile;
-  }
-
   /**
    * Open the search box.
    * @returns {FlyoutMenu} An instance.
@@ -225,12 +216,12 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   function expand() {
     if ( !_isExpanded && !_isAnimating ) {
       _isAnimating = true;
-      _deferFunct = standardType.noopFunct;
+      _deferFunct = noopFunct;
       this.dispatchEvent(
         'expandBegin',
         { target: this, type: 'expandBegin' }
       );
-      _setAriaAttr( 'pressed', _triggerDom, true );
+
       if ( _expandTransitionMethod ) {
         const hasTransition = _expandTransition &&
                               _expandTransition.isAnimated();
@@ -264,7 +255,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    */
   function collapse() {
     if ( _isExpanded && !_isAnimating ) {
-      _deferFunct = standardType.noopFunct;
+      _deferFunct = noopFunct;
       _isAnimating = true;
       _isExpanded = false;
       this.dispatchEvent(
@@ -291,16 +282,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         _collapseEndBinded();
       }
 
-      if ( _altTriggerDom ) {
-        _setAriaAttr( 'expanded', _altTriggerDom, false );
+      for ( let i = 0, len = _triggerDoms.length; i < len; i++ ) {
+        _setAriaAttr( 'expanded', _triggerDoms[i], false );
       }
 
-      _setAriaAttr( 'expanded', _triggerDom, false );
-      _setAriaAttr( 'pressed', _triggerDom, false );
       _setAriaAttr( 'expanded', _contentDom, false );
-
-      /* TODO: Remove or uncomment when keyboard navigation is in.
-         _triggerDom.focus(); */
     } else {
       _deferFunct = _collapseBinded;
     }
@@ -323,10 +309,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       );
     }
     this.dispatchEvent( 'expandEnd', { target: this, type: 'expandEnd' } );
-    if ( _altTriggerDom ) {
-      _setAriaAttr( 'expanded', _altTriggerDom, true );
+
+    for ( let i = 0, len = _triggerDoms.length; i < len; i++ ) {
+      _setAriaAttr( 'expanded', _triggerDoms[i], true );
     }
-    _setAriaAttr( 'expanded', _triggerDom, true );
+
     _setAriaAttr( 'expanded', _contentDom, true );
     // Call collapse, if it was called while expand was animating.
     _deferFunct();
@@ -352,7 +339,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * @param {Function} method
    *   The transition method to call on expand.
    * @param {Array} [args]
-   *   List of arguments to apply to collapse method.
+   *   List of arguments to apply to expand method.
    */
   function setExpandTransition( transition, method, args ) {
     _expandTransition = transition;
@@ -383,12 +370,14 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     transition = getTransition( FlyoutMenu.COLLAPSE_TYPE );
     if ( transition ) { transition.remove(); }
 
-    _expandTransition = standardType.UNDEFINED;
-    _expandTransitionMethod = standardType.UNDEFINED;
+    let UNDEFINED;
+
+    _expandTransition = UNDEFINED;
+    _expandTransitionMethod = UNDEFINED;
     _expandTransitionMethodArgs = [];
 
-    _collapseTransition = standardType.UNDEFINED;
-    _collapseTransitionMethod = standardType.UNDEFINED;
+    _collapseTransition = UNDEFINED;
+    _collapseTransitionMethod = UNDEFINED;
     _collapseTransitionMethodArgs = [];
   }
 
@@ -412,14 +401,13 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
   /**
    * @returns {Object}
-   *   Hash of trigger, alternative trigger, and content DOM references.
+   *   Hash of container, content DOM references, and a list of trigger DOMs.
    */
   function getDom() {
     return {
-      altTrigger: _altTriggerDom,
       container:  _dom,
       content:    _contentDom,
-      trigger:    _triggerDom
+      trigger:    _triggerDoms
     };
   }
 
@@ -512,4 +500,4 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   return this;
 }
 
-module.exports = FlyoutMenu;
+export default FlyoutMenu;

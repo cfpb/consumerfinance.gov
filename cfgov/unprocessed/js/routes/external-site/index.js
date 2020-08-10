@@ -2,7 +2,9 @@
    Scripts for `/external-site/`.
    ========================================================================== */
 
-
-const ExternalSite = require( '../../modules/ExternalSite.js' );
-const externalSite = new ExternalSite( document.querySelector( '.external-site_container' ) );
+import ExternalSite from '../../modules/ExternalSite';
+const externalSiteDom = document.querySelector(
+  `.${ ExternalSite.BASE_CLASS }`
+);
+const externalSite = new ExternalSite( externalSiteDom );
 externalSite.init();

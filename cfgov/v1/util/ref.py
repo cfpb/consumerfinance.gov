@@ -5,6 +5,7 @@ limited_categories = [
     ('speech-bubble', 'Blog'),
     ('newspaper', 'Newsroom'),
     ('document', 'Report'),
+    ('pencil', "Director's notebook"),
     ('date', 'Events'),
     ('microphone', 'Speech'),
     ('bullhorn', 'Press release'),
@@ -15,6 +16,7 @@ limited_categories = [
 related_posts_categories = [
     ('Blog', (
         ('At the CFPB', 'At the CFPB'),
+        ("Director's notebook", "Director's notebook"),
         ('Policy &amp; Compliance', 'Policy and compliance'),
         ('Data, Research &amp; Reports', 'Data, research, and reports'),
         ('Info for Consumers', 'Info for consumers'),
@@ -32,6 +34,7 @@ page_types = [
     ('administrative-adjudication', 'Administrative adjudication'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
+    ('consumer-reporting', 'Consumer Reporting Companies'),
     ('enforcement', 'Enforcement Action'),
     ('final-rule', 'Final rule'),
     ('foia-freq-req-record', 'FOIA Frequently Requested Record'),
@@ -43,15 +46,7 @@ page_types = [
     ('rule-under-dev', 'Rule Under Development'),
     ('story', 'Story'),
     ('ask', 'Ask CFPB'),
-]
-
-fcm_types = [
-    ('featured-event', 'Featured event'),
-    ('featured-blog', 'Featured blog'),
-    ('featured-video', 'Featured video'),
-    ('featured-tool', 'Featured tool'),
-    ('featured-news', 'Featured news'),
-    ('featured', 'Featured'),
+    ('cfpb-researchers', 'CFPB Researchers'),
 ]
 
 categories = [
@@ -67,14 +62,27 @@ categories = [
     )),
     ('Blog', (
         ('at-the-cfpb', 'At the CFPB'),
+        ('directors-notebook', "Director's notebook"),
         ('policy_compliance', 'Policy and compliance'),
         ('data-research-reports', 'Data, research, and reports'),
         ('info-for-consumers', 'Info for consumers'),
     )),
+    ('Consumer Reporting Companies', (
+        ('nationwide', 'Nationwide'),
+        ('employment-screening', 'Employment screening'),
+        ('tenant-screening', 'Tenant screening'),
+        ('check-bank-screening', 'Check and bank screening'),
+        ('personal-property-insurance', 'Personal property insurance'),
+        ('medical', 'Medical'),
+        ('low-income-and-subprime', 'Low-income and subprime'),
+        ('supplementary-reports', 'Supplementary reports'),
+        ('utilities', 'Utilities'),
+        ('retail', 'Retail'),
+        ('gaming', 'Gaming'),
+    )),
     ('Enforcement Action', (
-        ('fed-district-case', 'Federal district court case'),
-        ('administrative-adjudication-2', 'Administrative adjudication'),
-        ('stipulation-and-consent-order-2', 'Stipulation and consent order'),
+        ('administrative-proceeding', 'Administrative Proceeding'),
+        ('civil-action', 'Civil Action'),
     )),
     ('Final rule', (
         ('interim-final-rule', 'Interim final rule'),
@@ -113,7 +121,7 @@ categories = [
         ('consumer-edu-empower', 'Consumer education and empowerment'),
         ('to-congress', 'To Congress'),
     )),
-    ('Rule under development', (
+    ('Rule Under Development', (
         ('notice-proposed-rule-2', 'Advance notice of proposed rulemaking'),
         ('proposed-rule-2', 'Proposed rule'),
     )),
@@ -141,6 +149,12 @@ supported_languagues = [
     ('ru', 'Russian'),
     ('ar', 'Arabic'),
     ('ht', 'Haitian Creole'),
+]
+
+enforcement_statuses = [
+    ('expired-terminated-dismissed', 'Expired/Terminated/Dismissed'),
+    ('pending-litigation', 'Pending Litigation'),
+    ('post-order-post-judgment', 'Post Order/Post Judgment'),
 ]
 
 
@@ -198,7 +212,6 @@ def page_type_choices():
             ('raj-date', 'Raj Date'),
             ('elizabeth-warren', 'Elizabeth Warren'))),
         ('Newsroom', (
-            ('blog', 'Blog'),
             ('op-ed', 'Op-ed'),
             ('press-release', 'Press release'),
             ('speech', 'Speech'),
@@ -228,18 +241,17 @@ def category_label(category):
                 return name
 
 
-def fcm_label(category):
-    for slug, name in fcm_types:
-        if slug == category:
-            return name
-
-
 def is_blog(page):
     for category in page.categories.all():
         for choice in choices_for_page_type('blog'):
             if category.name == choice[0]:
                 return True
     if 'Blog' in page.specific_class.__name__:
+        return True
+
+
+def is_event(page):
+    if 'Event' in page.specific_class.__name__:
         return True
 
 

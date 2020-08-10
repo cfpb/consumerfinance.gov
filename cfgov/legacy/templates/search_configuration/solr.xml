@@ -97,7 +97,7 @@
       </analyzer>
     </fieldType>
 
-    <fieldType name="ngram" class="solr.TextField" >
+    <fieldType name="ngram" class="solr.TextField">
       <analyzer type="index">
         <tokenizer class="solr.KeywordTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>

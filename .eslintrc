@@ -1,7 +1,7 @@
 # Environments.
 
 parserOptions:
-  ecmaVersion: 6
+  ecmaVersion: 2018
   sourceType: module
 
   # Enable ecmascript 6 features.
@@ -9,7 +9,6 @@ parserOptions:
     globalReturn: false
     impliedStrict: true
     jsx: true
-    experimentalObjectRestSpread: true
 
 parser: espree
 
@@ -40,8 +39,8 @@ env:
   webextensions: false
   greasemonkey: false
 
-# globals:
-# No globals outside of env settings.
+globals:
+  cy: true
 
 # Linting rules for ESLint.
 # 0's ignore a rule, 1's produce a warning, and 2's throw an error.
@@ -188,7 +187,10 @@ rules:
       getWithoutSet: false
 
   # Enforces return statements in callbacks of array's methods.
-  array-callback-return: 2
+  array-callback-return:
+    - 2
+    -
+      allowImplicit: false
 
   # Enforces treating var statements as if they were block scoped.
   block-scoped-var: 1
@@ -235,6 +237,11 @@ rules:
 
   # Enforces necessary if statements in for-in loops.
   guard-for-in: 1
+
+  # Enforce a maximum number of classes per file.
+  max-classes-per-file:
+    - 2
+    - 1
 
   # Disallows use of alert, confirm, and prompt.
   no-alert: 2
@@ -357,7 +364,10 @@ rules:
   no-proto: 2
 
   # Disallows declaring the same variable more then once.
-  no-redeclare: 2
+  no-redeclare:
+    - 2
+    -
+      builtinGlobals: true
 
   # Disallow certain properties on certain objects.
   no-restricted-properties:
@@ -675,7 +685,7 @@ rules:
     - 0
     - consistent
 
-  # Blacklist certain identifiers to prevent them being used.
+  # Block certain identifiers to prevent them being used.
   id-blacklist:
     - 1
     - e
@@ -696,6 +706,11 @@ rules:
     - '^[a-z]+([A-Z][a-z]+)*$'
     -
       properties: false
+
+  # Enforce the location of arrow function bodies.
+  implicit-arrow-linebreak:
+    - 2
+    - beside
 
   # Set a specific tab width for your code.
   indent:
@@ -722,6 +737,7 @@ rules:
       ImportDeclaration: 1
       flatTernaryExpressions: false
       ignoredNodes: []
+      ignoreComments: false
 
   # Enforce whether double or single quotes should be used in JSX attributes.
   jsx-quotes:
@@ -796,6 +812,15 @@ rules:
       skipBlankLines: true
       skipComments: true
 
+  # Enforce a maximum number of line of code in a function.
+  max-lines-per-function:
+    - 1
+    -
+      max: 50
+      skipBlankLines: true
+      skipComments: true
+      IIFEs: true
+
   # Specify the maximum depth callbacks can be nested.
   max-nested-callbacks:
     - 2
@@ -837,7 +862,9 @@ rules:
       capIsNewExceptions: []
 
   # Disallows omission of parentheses when invoking a constructor with no arguments.
-  new-parens: 2
+  new-parens:
+    - 2
+    - always
 
   # Require a newline after each call in a method chain.
   newline-per-chained-call:
@@ -983,6 +1010,9 @@ rules:
       prev: "*"
       next: return
 
+  # Prefer the use of object spread when using Object.assign.
+  prefer-object-spread: 2
+
   # Requires quotes around object literal property names.
   quote-props:
     - 1
@@ -1034,6 +1064,7 @@ rules:
     - asc
     -
       caseSensitive: true
+      minKeys: 2
       natural: false
 
   # Enforces sorting variables within the same declaration block.

@@ -1,4 +1,2 @@
 -r base.txt
--r mysql.txt
--r postgres.txt
-newrelic==2.96.0.80
+newrelic==4.18.0.118

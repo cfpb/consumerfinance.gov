@@ -13,10 +13,10 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.x"
   },
   "dependencies": {
     "babel-polyfill": "^7.0.0-beta.3",
-    "jquery": "^3.3.1"
+    "jquery": "3.5.1"
   }
 }

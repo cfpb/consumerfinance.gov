@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import tempfile
 
 from django.core.management import call_command
@@ -17,5 +15,5 @@ class ConferenceExportTests(TestCase):
             call_command('conference_export', 'TEST-GOVDELIVERY-CODE', f.name)
 
             workbook = load_workbook(f.name)
-            self.assertEqual(workbook.active['B2'].value, 'My Name')
-            self.assertEqual(workbook.active['B3'].value, 'Name with Unicodë')
+            self.assertEqual(workbook.active['C2'].value, 'My Name')
+            self.assertEqual(workbook.active['C3'].value, 'Name with Unicodë')

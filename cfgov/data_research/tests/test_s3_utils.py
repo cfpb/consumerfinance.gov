@@ -1,60 +1,57 @@
-from __future__ import unicode_literals
+import csv
+from io import BytesIO, StringIO
 
-import json
-import unittest
-from cStringIO import StringIO
+from django.test import TestCase, override_settings
 
-import mock
-import unicodecsv
+import boto3
+import moto
+import responses
 
 from data_research.mortgage_utilities.s3_utils import (
-    bake_csv_to_s3, bake_json_to_s3, read_in_s3_csv, read_in_s3_json
+    bake_csv_to_s3, read_in_s3_csv
 )
 
 
-class S3UtilsTests(unittest.TestCase):
-
-    def setUp(self):
-
-        self.sample_entry = '\{"12081": \{"county": "Manatee County"\}\}'
-        self.bucket = mock.Mock(
-            name='files.consumerfinance.gov',
-            acls={'files.consumerfinance.gov': 'mock_acl_name'})
-
-    @mock.patch('data_research.mortgage_utilities.s3_utils.requests.get')
-    def test_read_in_s3_csv(self, mock_requests):
-        mock_requests.return_value.content = 'a,b,c\nd,e,f'
-        reader = read_in_s3_csv('fake-s3-url.com')
-        self.assertEqual(mock_requests.call_count, 1)
+class S3UtilsTests(TestCase):
+    @responses.activate
+    def test_read_in_s3_csv(self):
+        url = 'https://test.url/foo.csv'
+        responses.add(responses.GET, url, body='a,b,c\nd,e,f')
+        reader = read_in_s3_csv(url)
         self.assertEqual(reader.fieldnames, ['a', 'b', 'c'])
-        self.assertEqual(sorted(reader.next().values()), ['d', 'e', 'f'])
+        self.assertEqual(sorted(next(reader).values()), ['d', 'e', 'f'])
 
-    @mock.patch('data_research.mortgage_utilities.s3_utils.requests.get')
-    def test_read_in_s3_json(self, mock_requests):
-        mock_return = mock.Mock()
-        mock_return.json.return_value = {'test': 'test'}
-        mock_requests.return_value = mock_return
-        returned_json = read_in_s3_json('fake_s3_url.com')
-        self.assertEqual(mock_requests.call_count, 1)
-        self.assertEqual(returned_json, {'test': 'test'})
+    @moto.mock_s3
+    @override_settings(AWS_STORAGE_BUCKET_NAME='test.bucket')
+    def test_bake_csv_to_s3(self):
+        s3 = boto3.resource('s3')
+        bucket = s3.Bucket('test.bucket')
+        bucket.create(ACL='private')
 
-    @mock.patch('data_research.mortgage_utilities.s3_utils.boto.connect_s3')
-    def test_bake_json_to_s3(self, mock_connect):
-        mock_get_bucket = mock.Mock()
-        mock_connect.get_bucket.return_value = mock_get_bucket
-        json_string = json.dumps({'test_json': 'test_payload'})
-        slug = 'test.json'
-        bake_json_to_s3(slug, json_string)
-        self.assertEqual(mock_connect.call_count, 1)
-
-    @mock.patch('data_research.mortgage_utilities.s3_utils.boto.connect_s3')
-    def test_bake_csv_to_s3(self, mock_connect):
-        mock_get_bucket = mock.Mock()
-        mock_connect.get_bucket.return_value = mock_get_bucket
+        # In Python 3, csv.writer expects a file opened in text mode, which is
+        # a StringIO.
         csvfile = StringIO()
-        writer = unicodecsv.writer(csvfile)
+        writer = csv.writer(csvfile)
         writer.writerow(['a', 'b', 'c'])
         writer.writerow(['1', '2', '3'])
-        slug = 'test.csv'
-        bake_csv_to_s3(slug, csvfile)
-        self.assertEqual(mock_connect.call_count, 1)
+
+        # But boto3 expects a regular file object, so we need to convert to
+        # BytesIO.
+        bake_csv_to_s3('foo', BytesIO(csvfile.getvalue().encode('utf-8')))
+
+        key = bucket.Object('data/foo.csv')
+        response = key.get()
+        self.assertEqual(response['Body'].read(), b'a,b,c\r\n1,2,3\r\n')
+
+        # bake_csv_to_s3 sets 'public-read' on the item.
+        acl = key.Acl()
+        self.assertIn(
+            {
+                'Permission': 'READ',
+                'Grantee': {
+                    'Type': 'Group',
+                    'URI': 'http://acs.amazonaws.com/groups/global/AllUsers',
+                },
+            },
+            acl.grants
+        )

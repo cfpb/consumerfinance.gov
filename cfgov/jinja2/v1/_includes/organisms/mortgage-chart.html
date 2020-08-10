@@ -8,7 +8,7 @@
 
    Create a mortgage chart organism with data.
    See [GHE]/flapjack/Modules-V1/wiki/Mortgage-Chart
-   
+
    value.has_top_rule_line:        Boolean for whether or not to add top
                                    border to mortgage-chart. Used in
                                    'render_block.html' to modify classes on
@@ -160,9 +160,13 @@
         <h3 id="mp-line-chart-title">Percentage of mortgages {{ time_frame_styled }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
             <span id="mp-line-chart-title-status">
                 <strong><span id="mp-line-chart-title-status-geo">national average</span></strong><span id="mp-line-chart-title-status-comparison"> versus <strong>national average</strong></span></span>, {{ from_month_formatted|safe }}&ndash;{{ thru_month_formatted|safe }}
-        </h2>
+        </h3>
     </div>
-    <div class="cfpb-chart" data-chart-ignore="true" data-chart-color="{{ data_vis_color }}" data-chart-type="line-comparison" id="mp-line-chart">
+    <div class="cfpb-chart"
+         data-chart-ignore="true"
+         data-chart-color="{{ data_vis_color }}"
+         data-chart-type="line-comparison"
+         id="mp-line-chart">
         {{ value.description }}
     </div>
     <p class="m-chart-footnote block__sub block__border-top block short-desc">

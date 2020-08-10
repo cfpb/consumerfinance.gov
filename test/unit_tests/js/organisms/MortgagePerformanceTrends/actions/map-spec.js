@@ -1,6 +1,6 @@
 /* Disable the AJAX library used by the action creator
    Unfortunately, we can't place path variables into import statements. */
-import * as actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/map.js';
+import actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/map.js';
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
 jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
@@ -38,7 +38,7 @@ describe( 'Mortgage Performance map action creators', () => {
 
   it( 'should create an action to update the chart', () => {
     const action = actions.updateChart( 123, 'Alabama', 'state' );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'UPDATE_CHART',
       geo: {
         id: 123,
@@ -50,7 +50,7 @@ describe( 'Mortgage Performance map action creators', () => {
 
   it( 'should create an action without a geo type', () => {
     const action = actions.updateChart( 123, 'Alabama' );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'UPDATE_CHART',
       geo: {
         id: 123,
@@ -61,7 +61,7 @@ describe( 'Mortgage Performance map action creators', () => {
 
   it( 'should create an action without a geoId', () => {
     const action = actions.updateChart( null, null );
-    expect( action ).toEqual( {
+    expect( action ).toStrictEqual( {
       type: 'UPDATE_CHART',
       geo: {
         id: null,

@@ -1,12 +1,11 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
-const dropDownUtils = require( BASE_JS_PATH + 'owning-a-home/js/dropdown-utils.js' );
+import dropDownUtils from '../../../../../cfgov/unprocessed/apps/owning-a-home/js/dropdown-utils.js';
 
 const HTML_SNIPPET = `
-  <div class="foo">
-    <select id="foo">
-      <option value="baz"></option>
-    </select>
-  </div>
+<div class="foo">
+  <select id="foo">
+    <option value="baz"></option>
+  </select>
+</div>
 `;
 
 let dropDownDom;

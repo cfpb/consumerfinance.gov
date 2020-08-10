@@ -1,1 +1,0 @@
-{{ object.english_page.url }}

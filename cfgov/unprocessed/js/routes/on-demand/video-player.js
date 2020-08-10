@@ -2,5 +2,7 @@
    Scripts for Video Player module.
    ========================================================================== */
 
+import VideoPlayer from '../../organisms/VideoPlayer';
+import { instantiateAll } from '../../modules/util/atomic-helpers';
 
-require( '../../modules/YoutubePlayer' ).init( '.video-player__youtube' );
+instantiateAll( `.${ VideoPlayer.BASE_CLASS }`, VideoPlayer );

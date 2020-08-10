@@ -1,9 +1,11 @@
-const ccb = require( 'cfpb-chart-builder' );
-const actions = require( '../actions/chart' );
-const Store = require( '../stores/chart' );
-const utils = require( '../utils' );
+import * as ccb from 'cfpb-chart-builder';
+import LineChartStore from '../stores/chart';
+import actions from '../actions/chart';
+import utils from '../utils';
 
-const store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
+const store = new LineChartStore(
+  [ utils.thunkMiddleware, utils.loggerMiddleware ]
+);
 
 class MortgagePerformanceLineChart {
   constructor( { container } ) {
@@ -53,7 +55,10 @@ MortgagePerformanceLineChart.prototype.onClick = function( event ) {
 
 MortgagePerformanceLineChart.prototype.onChange = function( event ) {
 
-  let action, geoEl, geoType, geoId, geoName;
+  let action;
+  let geoType;
+  let geoId;
+  let geoName;
   const includeComparison = this.$compare.checked;
   const abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
 
@@ -131,7 +136,8 @@ MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state 
   let source;
   const baseSource = `time-series/${ this.timespan }/national`;
   // If the geo hasn't changed, don't re-render the chart.
-  if ( prevState.geo.id === state.geo.id && prevState.includeComparison === state.includeComparison ) {
+  if ( prevState.geo.id === state.geo.id &&
+       prevState.includeComparison === state.includeComparison ) {
     return;
   }
 
@@ -273,4 +279,4 @@ MortgagePerformanceLineChart.prototype.renderStates = function( prevState, state
   this.$state.appendChild( fragment );
 };
 
-module.exports = MortgagePerformanceLineChart;
+export default MortgagePerformanceLineChart;

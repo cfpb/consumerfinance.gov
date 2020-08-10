@@ -1,8 +1,8 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const GlobalSearch = require( '../molecules/GlobalSearch.js' );
-const MegaMenu = require( '../organisms/MegaMenu.js' );
-const standardType = require( '../modules/util/standard-type' );
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import GlobalSearch from '../molecules/GlobalSearch';
+import MegaMenu from '../organisms/MegaMenu';
+
 
 /**
  * Header
@@ -18,7 +18,7 @@ function Header( element ) {
 
   const BASE_CLASS = 'o-header';
 
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
 
   let _globalSearch;
   let _megaMenu;
@@ -27,36 +27,33 @@ function Header( element ) {
   /**
    * @param {HTMLNode} overlay
    *   Overlay to show/hide when mobile mega menu is shown.
-   * @returns {Header|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Header} An instance.
    */
   function init( overlay ) {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     // Semi-opaque overlay that shows over the content when the menu flies out.
     _overlay = overlay;
 
     _globalSearch = new GlobalSearch( _dom );
-    _globalSearch.addEventListener( 'expandBegin', _searchExpandBegin );
-    _globalSearch.init();
 
-    _megaMenu = new MegaMenu( _dom );
-    _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
-    _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
-    _megaMenu.init();
+    // Don't initialize the mega menu if it isn't on the page.
+    if ( _dom.classList.contains( `${ BASE_CLASS }__mega-menu` ) ) {
+      _megaMenu = new MegaMenu( _dom );
+      _megaMenu.addEventListener( 'rootExpandBegin', _megaMenuExpandBegin );
+      _megaMenu.addEventListener( 'rootCollapseEnd', _megaMenuCollapseEnd );
+      _megaMenu.init();
+
+      // If we have a mega menu, it needs to be collapsed when search is expanded.
+      _globalSearch.addEventListener( 'expandBegin', _megaMenu.collapse );
+    }
+
+    _globalSearch.init();
 
     return this;
   }
-
-  /**
-   * Handler for opening the search.
-   */
-  function _searchExpandBegin() {
-    _megaMenu.collapse();
-  }
-
 
   /**
    * Handler for when the mega menu begins expansion.
@@ -80,4 +77,4 @@ function Header( element ) {
   return this;
 }
 
-module.exports = Header;
+export default Header;

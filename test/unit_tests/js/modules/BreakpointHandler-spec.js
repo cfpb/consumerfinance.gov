@@ -1,5 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-let BreakpointHandler;
+import BreakpointHandler from '../../../../cfgov/unprocessed/js/modules/BreakpointHandler';
 let args;
 
 /**
@@ -23,8 +22,6 @@ describe( 'BreakpointHandler', () => {
       leave:      jest.fn(),
       breakpoint: 600
     };
-
-    BreakpointHandler = require( BASE_JS_PATH + 'modules/BreakpointHandler' );
   } );
 
   it( 'should throw an error if passed incomplete arguments', () => {
@@ -49,14 +46,14 @@ describe( 'BreakpointHandler', () => {
   it( 'should allow responsive breakpoints as arguments', () => {
     args.breakpoint = 'bpXS';
     let breakpointHandler = new BreakpointHandler( args );
-    expect( breakpointHandler.breakpoint ).toEqual( 600 );
+    expect( breakpointHandler.breakpoint ).toStrictEqual( 600 );
     expect( breakpointHandler.type === 'max' ).toBe( true );
     expect( breakpointHandler.testBreakpoint( 300 ) ).toBe( true );
 
     args.breakpoint = 'bpSM';
     args.type = 'min';
     breakpointHandler = new BreakpointHandler( args );
-    expect( breakpointHandler.breakpoint ).toEqual( 601 );
+    expect( breakpointHandler.breakpoint ).toStrictEqual( 601 );
     expect( breakpointHandler.type === 'min' ).toBe( true );
     expect( breakpointHandler.testBreakpoint( 601 ) ).toBe( true );
   } );
@@ -81,24 +78,24 @@ describe( 'BreakpointHandler', () => {
     let enterSpy = jest.spyOn( breakpointHandler, 'enter' );
     let leaveSpy = jest.spyOn( breakpointHandler, 'leave' );
     const mockDate = {
-      isBpLG: false,
-      isBpMED: false,
-      isBpSM: false,
-      isBpXL: false,
-      isBpXS: false
+      bpLG: false,
+      bpMED: false,
+      bpSM: false,
+      bpXL: false,
+      bpXS: false
     };
 
     windowResizeTo( 598, 800 );
     expect( enterSpy ).toHaveBeenCalled();
-    mockDate.isBpXS = true;
+    mockDate.bpXS = true;
     expect( enterSpy ).toHaveBeenCalledWith( mockDate );
-    mockDate.isBpXS = false;
+    mockDate.bpXS = false;
 
     windowResizeTo( 601, 800 );
     expect( leaveSpy ).toHaveBeenCalled();
-    mockDate.isBpSM = true;
+    mockDate.bpSM = true;
     expect( leaveSpy ).toHaveBeenCalledWith( mockDate );
-    mockDate.isBpSM = false;
+    mockDate.bpSM = false;
 
     args.type = 'min';
     args.breakpoint = 901;
@@ -106,9 +103,9 @@ describe( 'BreakpointHandler', () => {
     enterSpy = jest.spyOn( breakpointHandler, 'enter' );
     windowResizeTo( 1000, 800 );
     expect( enterSpy ).toHaveBeenCalled();
-    mockDate.isBpMED = true;
+    mockDate.bpMED = true;
     expect( enterSpy ).toHaveBeenCalledWith( mockDate );
-    mockDate.isBpMED = false;
+    mockDate.bpMED = false;
 
     args.type = 'max';
     args.breakpoint = 1020;
@@ -116,9 +113,9 @@ describe( 'BreakpointHandler', () => {
     leaveSpy = jest.spyOn( breakpointHandler, 'leave' );
     windowResizeTo( 1021, 800 );
     expect( leaveSpy ).toHaveBeenCalled();
-    mockDate.isBpLG = true;
+    mockDate.bpLG = true;
     expect( leaveSpy ).toHaveBeenCalledWith( mockDate );
-    mockDate.isBpLG = false;
+    mockDate.bpLG = false;
   } );
 
   it( 'should watch for window resize events', () => {

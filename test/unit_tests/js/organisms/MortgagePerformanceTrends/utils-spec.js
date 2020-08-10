@@ -1,11 +1,7 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-
 // Disable the AJAX library used by the action creator.
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
 
-const utils = require(
-  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/utils.js'
-);
+import utils from '../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils.js';
 
 let el;
 
@@ -51,22 +47,22 @@ describe( 'Mortgage Performance utilities', () => {
 
   it( 'should get metro data', () => {
     const cb = jest.fn();
-    expect( utils.getMetroData( cb ) ).toEqual( { mock: 'data' } );
+    expect( utils.getMetroData( cb ) ).toStrictEqual( { mock: 'data' } );
   } );
 
   it( 'should get non-metro data', () => {
     const cb = jest.fn();
-    expect( utils.getNonMetroData( cb ) ).toEqual( { mock: 'data' } );
+    expect( utils.getNonMetroData( cb ) ).toStrictEqual( { mock: 'data' } );
   } );
 
   it( 'should get county data', () => {
     const cb = jest.fn();
-    expect( utils.getCountyData( cb ) ).toEqual( { mock: 'data' } );
+    expect( utils.getCountyData( cb ) ).toStrictEqual( { mock: 'data' } );
   } );
 
   it( 'should get state data', () => {
     const cb = jest.fn();
-    expect( utils.getStateData( cb ) ).toEqual( { mock: 'data' } );
+    expect( utils.getStateData( cb ) ).toStrictEqual( { mock: 'data' } );
   } );
 
   it( 'should be able to calculate zoom levels', () => {

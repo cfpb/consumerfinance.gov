@@ -1,14 +1,14 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const breakpointState = require( '../modules/util/breakpoint-state' );
-const dataHook = require( '../modules/util/data-hook' );
-const EventObserver = require( '../modules/util/EventObserver' );
-const FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
-const MegaMenuDesktop = require( '../organisms/MegaMenuDesktop' );
-const MegaMenuMobile = require( '../organisms/MegaMenuMobile' );
-const MoveTransition = require( '../modules/transition/MoveTransition' );
-const Tree = require( '../modules/Tree' );
-const standardType = require( '../modules/util/standard-type' );
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import EventObserver from '../modules/util/EventObserver';
+import FlyoutMenu from '../modules/behavior/FlyoutMenu';
+import MegaMenuDesktop from '../organisms/MegaMenuDesktop';
+import MegaMenuMobile from '../organisms/MegaMenuMobile';
+import MoveTransition from '../modules/transition/MoveTransition';
+import TabTrigger from '../modules/TabTrigger';
+import Tree from '../modules/Tree';
+import { contains } from '../modules/util/data-hook';
+import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state';
 
 /**
  * MegaMenu
@@ -23,7 +23,7 @@ const standardType = require( '../modules/util/standard-type' );
 function MegaMenu( element ) {
   const BASE_CLASS = 'o-mega-menu';
 
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
 
   // Tree data model.
   let _menus;
@@ -32,18 +32,18 @@ function MegaMenu( element ) {
   let _desktopNav;
   let _mobileNav;
 
-  // TODO: Move tab trigger to its own class.
-  const _tabTriggerDom = _dom.querySelector( '.' + BASE_CLASS + '_tab-trigger' );
-
-  const KEY_TAB = 9;
+  /* The tab trigger adds an element to the end of the element that handles
+     cleanup after tabbing out of the element. */
+  const _tabTrigger = new TabTrigger( _dom );
 
   /**
    * @returns {MegaMenu|undefined} An instance,
    *   or undefined if it was already initialized.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      let UNDEFINED;
+      return UNDEFINED;
     }
 
     // DOM selectors.
@@ -67,7 +67,7 @@ function MegaMenu( element ) {
     _populateTreeFromDom( rootMenuDom, rootNode, _addMenu );
 
     // Initialize screen-size specific behaviors.
-    _desktopNav = new MegaMenuDesktop( _menus ).init();
+    _desktopNav = new MegaMenuDesktop( BASE_CLASS, _menus ).init();
     _mobileNav = new MegaMenuMobile( _menus ).init();
     _mobileNav.addEventListener(
       'rootExpandBegin',
@@ -84,15 +84,16 @@ function MegaMenu( element ) {
       window.addEventListener( 'orientationchange', _resizeHandler );
     }
 
-    if ( breakpointState.isInDesktop() ) {
+    if ( viewportIsIn( DESKTOP ) ) {
       _desktopNav.resume();
     } else {
       _mobileNav.resume();
     }
 
-    _dom.classList.remove( 'u-hide-on-mobile' );
+    _dom.classList.remove( 'u-hidden' );
 
-    _tabTriggerDom.addEventListener( 'keyup', _handleTabPress );
+    _tabTrigger.init();
+    _tabTrigger.addEventListener( 'tabPressed', _handleTabPress );
 
     return this;
   }
@@ -108,6 +109,9 @@ function MegaMenu( element ) {
    */
   function _populateTreeFromDom( dom, parentNode, callback ) {
     const children = dom.children;
+    if ( !children ) {
+      return;
+    }
     let child;
     for ( let i = 0, len = children.length; i < len; i++ ) {
       let newParentNode = parentNode;
@@ -128,7 +132,7 @@ function MegaMenu( element ) {
   function _addMenu( dom, parentNode ) {
     let newParentNode = parentNode;
     let transition;
-    if ( dataHook.contains( dom, FlyoutMenu.BASE_CLASS ) ) {
+    if ( contains( dom, FlyoutMenu.BASE_CLASS ) ) {
       const menu = new FlyoutMenu( dom ).init();
       transition = new MoveTransition( menu.getDom().content ).init();
       menu.setExpandTransition( transition, transition.moveToOrigin );
@@ -146,8 +150,6 @@ function MegaMenu( element ) {
    */
   function _addEvents( menu ) {
     menu.addEventListener( 'triggerClick', _handleEvent );
-    menu.addEventListener( 'triggerOver', _handleEvent );
-    menu.addEventListener( 'triggerOut', _handleEvent );
     menu.addEventListener( 'expandBegin', _handleEvent );
     menu.addEventListener( 'expandEnd', _handleEvent );
     menu.addEventListener( 'collapseBegin', _handleEvent );
@@ -160,7 +162,7 @@ function MegaMenu( element ) {
    * @param {Object} event - A FlyoutMenu event object.
    */
   function _handleEvent( event ) {
-    const activeNav = breakpointState.isInDesktop() ? _desktopNav : _mobileNav;
+    const activeNav = viewportIsIn( DESKTOP ) ? _desktopNav : _mobileNav;
     activeNav.handleEvent( event );
   }
 
@@ -169,7 +171,7 @@ function MegaMenu( element ) {
    * suspends or resumes the mobile or desktop menu behaviors.
    */
   function _resizeHandler() {
-    if ( breakpointState.isInDesktop() ) {
+    if ( viewportIsIn( DESKTOP ) ) {
       _mobileNav.suspend();
       _desktopNav.resume();
     } else {
@@ -180,13 +182,9 @@ function MegaMenu( element ) {
 
   /**
    * Event handler for when the tab key is pressed.
-   * @param {KeyboardEvent} event
-   *   The event object for the keyboard key press.
    */
-  function _handleTabPress( event ) {
-    if ( event.keyCode === KEY_TAB ) {
-      collapse();
-    }
+  function _handleTabPress() {
+    collapse();
   }
 
   /**
@@ -194,7 +192,7 @@ function MegaMenu( element ) {
    * @returns {MegaMenu} An instance.
    */
   function collapse() {
-    if ( !breakpointState.isInDesktop() ) {
+    if ( !viewportIsIn( DESKTOP ) ) {
       _mobileNav.collapse();
     }
 
@@ -227,4 +225,4 @@ function MegaMenu( element ) {
   return this;
 }
 
-module.exports = MegaMenu;
+export default MegaMenu;

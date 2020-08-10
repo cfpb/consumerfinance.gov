@@ -1,6 +1,6 @@
 # Feature flags
 
-Feature flags are implemented using our [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) app. The [README](https://github.com/cfpb/wagtail-flags/blob/master/README.md) contains an overview and examples of how to use feature flags in Wagtail.
+Feature flags are implemented using our [Django-Flags](https://github.com/cfpb/django-flags) and [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) apps. The [Django-Flags documentation](https://cfpb.github.io/django-flags) contains an overview of feature flags and how to use them and the [Wagtail-Flags README](https://github.com/cfpb/wagtail-flags/blob/master/README.md) describes how to add feature flag conditions in the Wagtail admin.
 
 This document covers how to add and use feature flags with cfgov-refresh and the conventions we have around their use.
 
@@ -19,14 +19,14 @@ This document covers how to add and use feature flags with cfgov-refresh and the
 
 ## Adding a flag
 
-Feature flags are defined in code in the [`cfgov/settings/base.py`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/cfgov/settings/base.py#L562) file as part of the `FLAGS` setting. Each flag consists of a single string and a Python dictionary (`{}`) of its hard-coded conditions (see [Enabling a flag](#enabling-a-flag) below).
+Feature flags are defined in code in the [`cfgov/settings/base.py`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/cfgov/settings/base.py#L562) file as part of the `FLAGS` setting. Each flag consists of a single string and a Python list of its hard-coded conditions (see [Enabling a flag](#enabling-a-flag) below).
 
 ```python
 FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
-    'BETA_NOTICE': {},
+    'BETA_NOTICE': [],
 }
 ```
 
@@ -42,16 +42,16 @@ Flags can be checked either in Python code or in Django or Jinja2 template files
 
 Most of cfgov-refresh's templates are Jinja2. In these templates, two template functions are provided, `flag_enabled` and `flag_disabled`. Each takes a flag name as its first argument and request` object as the second.
 
-`flag_enabled('MY_FLAG', request)` will return `True` if the conditions under which `MY_FLAG` is enabled **are** met.
+`flag_enabled('MY_FLAG')` will return `True` if the conditions under which `MY_FLAG` is enabled **are** met.
 
-`flag_disabled('MY_FLAG', request)` will return `True` if the conditions under which `MY_FLAG` is enabled **are not** met.
+`flag_disabled('MY_FLAG')` will return `True` if the conditions under which `MY_FLAG` is enabled **are not** met.
 
 See [Enabling a flag](#enabling-a-flag) below for more on flag conditions.
 
 An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56):
 
 ```jinja
-{% if flag_enabled('BETA_NOTICE', request) and show_banner %}
+{% if flag_enabled('BETA_NOTICE') and show_banner %}
 <div class="m-global-banner">
     <div class="wrapper
                 wrapper__match-content
@@ -107,9 +107,9 @@ The `BETA_NOTICE` [Jinja2](#jinja2) example above when implemented with Django t
 
 In Python code three functions are available for checking feature flags, `flag_state`, `flag_enabled`, and `flag_disabled`. The Python API is slightly different from the [Jinja2](#jinja2) or [Django template](#django) API, in that flag conditions can take more potential arguments than requests, and thus flags are more flexible when checked in Python (in and outside a request cycle).
 
-See the [Wagtail Flags flag state API documentation for more](https://github.com/cfpb/wagtail-flags/blob/master/README.md#flag-state).
+See the [Django-Flags flag state API documentation for more](https://cfpb.github.io/django-flags/api/state/).
 
-Additionally two decorators, `flag_check` and `flag_required`, are provided for wrapping views (and another functions) in a feature flag check.  See the [Wagtail Flags flag decorators API documentation for more](https://github.com/cfpb/wagtail-flags/blob/master/README.md#flag-decorators).
+Additionally two decorators, `flag_check` and `flag_required`, are provided for wrapping views (and another functions) in a feature flag check.  See the [Django-Flags flag decorators API documentation for more](https://cfpb.github.io/django-flags/api/decorators/).
 
 ### In URLs
 
@@ -119,7 +119,7 @@ There are two ways to flag Django URL patterns in `urls.py`: with `flagged_url()
 
 An example is [our `WAGTAIL_ABOUT_US` flag](https://github.com/cfpb/cfgov-refresh/blob/4c3521e967abc5a35fc42566ae409d6ba008f81e/cfgov/cfgov/urls.py#L204-L210):
 
-```python    
+```python
 flagged_url('WAGTAIL_ABOUT_US',
             r'^about-us/$',
             lambda req: ServeView.as_view()(req, req.path),
@@ -162,20 +162,20 @@ Wagtail views in `flagged_url` with a Django view as fallback (or vice-versa) ca
 lambda req: ServeView.as_view()(req, req.path)
 ```
 
-This lambda takes the request and calls the [Wagtail-Sharing](https://github.com/cfpb/wagtail-sharing) `ServeView` (which we're using in place of `wagtail.wagtailcore.views.serve`).
+This lambda takes the request and calls the [Wagtail-Sharing](https://github.com/cfpb/wagtail-sharing) `ServeView` (which we're using in place of `wagtail.core.views.serve`).
 
 ## Enabling a flag
 
 Feature flags are enabled based on a set of conditions that are given either in the Django settings files (in `cfgov/cfgov/settings/`) or in the Django or Wagtail admin. Multiple conditions can be given, both in settings and in the admin, and if any condition is satisfied a flag is enabled.
 
-[A list of available conditions and how to use them is available in the Wagtail-Flags documentation](https://github.com/cfpb/wagtail-flags/blob/master/README.md#built-in-conditions).
+[A list of available conditions and how to use them is available in the Django-Flags documentation](https://cfpb.github.io/django-flags/conditions/).
 
 
 ### Hard-coded conditions
 
 Conditions that are defined in the Django settings are hard-coded, and require a change to files in cfgov-refresh, a new tagged release, and new deployment to change. These conditions should be used for flags that are relatively long-lasting and that can require a round-trip through the release and deployment process to change.
 
-When [adding a flag](#adding-a-flag) to the Django settings the flag's dictionary of conditions can contain a condition name and value that must be satisfied for the flag to be enabled. The nature of that value changes depending on the condition type. [See the Wagtail-Flags conditions documentation](https://github.com/cfpb/wagtail-flags/blob/master/README.md#built-in-conditions) for more on individual conditions.
+When [adding a flag](#adding-a-flag) to the Django settings the flag's dictionary of conditions can contain a condition name and value that must be satisfied for the flag to be enabled. The nature of that value changes depending on the condition type. [See the Django-Flags conditions documentation](https://cfpb.github.io/django-flags/conditions/) for more on individual conditions.
 
 There is a simple `boolean` condition that is either `True` or `False`, and if it is `True` the flag is enabled and if it is `False` the flag is disabled. If we want to always turn the `BETA_NOTICE` flag on in settings with a `boolean` condition, that would look like this:
 
@@ -184,9 +184,12 @@ FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
-    'BETA_NOTICE': {
-        'boolean': True,
-    },
+    'BETA_NOTICE': [
+        {
+            'condition': 'boolean',
+            'value': True,
+        },
+    ],
 }
 ```
 

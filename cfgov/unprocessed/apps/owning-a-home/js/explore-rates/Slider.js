@@ -1,9 +1,8 @@
 // Required modules.
-import { checkDom, setInitFlag }
-  from '../../../../js/modules/util/atomic-helpers';
-import { UNDEFINED }
-  from '../../../../js/modules/util/standard-type';
-import { getSelection } from './dom-values';
+import {
+  checkDom,
+  setInitFlag
+} from '../../../../js/modules/util/atomic-helpers';
 import rangesliderJs from 'rangeslider-js';
 
 /**
@@ -20,8 +19,6 @@ function Slider( element ) {
   const BASE_CLASS = 'a-range';
   const _dom = checkDom( element, BASE_CLASS );
   const _inputDom = _dom.querySelector( `.${ BASE_CLASS }_input` );
-  const _labelMinDom = _dom.querySelector( `.${ BASE_CLASS }_labels-min` );
-  const _labelMaxDom = _dom.querySelector( `.${ BASE_CLASS }_labels-max` );
   const _labelDom = _dom.querySelector( `.${ BASE_CLASS }_text` );
 
   let _rangeSliderHandleDom;
@@ -40,12 +37,11 @@ function Slider( element ) {
   /**
    * @param {Object} options - Options to pass to rangeslider-js
    *   (see https://github.com/stbaer/rangeslider-js#options).
-   * @returns {Slider|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Slider} An instance.
    */
   function init( options ) {
     if ( !setInitFlag( _dom ) ) {
-      return UNDEFINED;
+      return this;
     }
 
     _options = options;
@@ -66,10 +62,11 @@ function Slider( element ) {
    * Initialize the range slider. https://github.com/stbaer/rangeslider-js
    */
   function _render() {
-    const options = Object.assign( _options, {
-      onInit: () => _update(),
-      onSlide: ( position, value ) => _update()
-    } );
+    // This could use Object.assign, but it's not supported in IE11.
+    const options = _options;
+    options.onInit = () => _update();
+    options.onSlide = ( position, value ) => _update();
+
     rangesliderJs.create( _inputDom, options );
     _rangeSliderHandleDom = _dom.querySelector( '.rangeslider__handle' );
   }
@@ -79,7 +76,8 @@ function Slider( element ) {
    */
   function _updateValues() {
     const currentVal = Number( _inputDom.value );
-    const currentStep = Math.round( ( ( currentVal - _min ) + _lastValue ) / _options.step );
+    const numerator = ( currentVal - _min ) + _lastValue;
+    const currentStep = Math.round( numerator / _options.step );
 
     _valMin = _min + ( currentStep * UNITS_PER_STEP );
     _valMax = _valMin + UNITS_PER_STEP - 1;
@@ -134,4 +132,4 @@ function Slider( element ) {
 Slider.STATUS_OKAY = 0;
 Slider.STATUS_WARNING = 1;
 
-module.exports = Slider;
+export default Slider;

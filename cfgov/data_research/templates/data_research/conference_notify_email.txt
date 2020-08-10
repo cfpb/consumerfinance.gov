@@ -1,9 +1,17 @@
 {% if at_capacity %}
-The {{ conference_name }} has reached capacity with {{ count }} submissions. Signups are now closed.
+The {{ conference_name }} has reached capacity with {{ count_in_person }} in-person attendees. In-person registration is now closed.
 
 The capacity for this event was set to {{ capacity }} at the time of this email.
+
+Total registrations for the {{ conference_name }}: {{ count }}
+
+In-person attendees: {{ count_in_person }}
+Virtual attendees: {{ count_virtual }}
 {% elif count %}
-The {{ conference_name }} is at {{ count }} of {{ capacity }} capacity for signups.
+Total registrations for the {{ conference_name }}: {{ count }}
+
+In-person attendees: {{ count_in_person }} (these count against the physical capacity of {{ capacity }})
+Virtual attendees: {{ count_virtual }}
 {% else %}
 The {{ conference_name }} has no registrations yet.
 {% endif %}

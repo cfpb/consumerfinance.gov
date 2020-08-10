@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 from unittest import TestCase
 
 from django.test import SimpleTestCase, override_settings

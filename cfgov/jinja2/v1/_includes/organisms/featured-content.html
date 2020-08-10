@@ -1,111 +1,61 @@
 {# ==========================================================================
 
-   featured_content.render()
+   Template for v1.atomic_elements.organisms.FeaturedContent
 
    ==========================================================================
 
    Description:
 
-   Create a featured content molecule.
-   See [GHE]/flapjack/Modules-V1/wiki/Featured-Content-Module
+   See https://cfpb.github.io/design-system/patterns/featured-content-module
 
-   value:                 Object defined from a StreamField block.
+   Create a featured content molecule when given:
 
-   value.heading:         Heading text.
+   value.heading:   Heading text.
 
-   value.body:            Body text.
+   value.body:      Body text (rich text).
 
-   value.show_post_link:  Boolean flag for whether to render the post link.
+   value.links:     List of links to render with:
 
-   value.post:            (Optional) Page being featured.
+        link.url:       Link URL.
 
-   value.post_link_text:  String for the link text of the displayed post.
+        link.text:      (Optional) Link text.
 
-   value.macro_link:      (Optional) Object used if the FCM is
-                          rendered outside of wagtail,
-                          this is a simpler way of adding a link.
+   value.image:     (Optional) An ImageBasic atom.
 
-   value.macro_link.url:  String for URL of the link.
-
-   value.macro_link.text: String for text of the link.
-
-   value.links:           If the FCM is rendered in wagtail,
-                          this returns the array of links.
-
-   value.links[i].url:    String for URL of the link.
-
-   value.links[i].text:   String for text of the link.
-
-   value.video:           (Optional)
-                          This object gets passed to macros/video-player.html.
-                          By default, the following values should exist:
-                            'is_fcm': true,
-                            'height': '320',
-                            'width':  '568'
-                          Wagtail should set the following values:
-                            'id', 'url'
-
-   value.video.url:       A String used to denote the url of the video.
-
-   value.video.id:        A String used to denote the id of the video.
-
-   value.image:           (Optional) An ImageBasic atom object containing:
-
-   value.image.upload:    A CFGOVImage object.
-
-   value.image.alt:       String for alt text for screenreaders.
+   value.video:     (Optional) A VideoPlayer organism.
 
    ========================================================================== #}
-
-{% macro render(value) %}
-{% import 'macros/category-icon.html' as category_icon %}
 
 <section class="o-featured-content-module
                 o-featured-content-module__center">
     <div class="o-featured-content-module_text">
-        <div class="a-heading a-heading__icon">
-            {{ category_icon.render( fcm_label(value.category) ) | safe }}
-            {{ fcm_label( value.category ) }}
-        </div>
-        <h2>{{ value.heading }}</h2>
-        {{ parse_links(value.body) | safe }}
+        <h2 class="h3">{{ value.heading }}</h2>
+
+        {{ value.body | richtext }}
+
+        {% if value.links %}
         <ul class="m-list m-list__links">
-            {% if value.show_post_link and value.post %}
-                <li class="m-list_item">
-                    <a class="m-list_link" href="{{ get_protected_url(value.post) }}">
-                        {{ value.post_link_text }}
-                    </a>
-                </li>
-            {% endif %}
-            {% if value.macro_link %}
-                <li class="m-list_item">
-                    <a class="m-list_link" href="{{ value.macro_link.url }}">
-                        {{ value.macro_link.text }}
-                    </a>
-                </li>
-            {% endif %}
             {% for link in value.links %}
                 <li class="m-list_item">
                     <a class="m-list_link" href="{{ link.url }}">
-                        {{ link.text }}
+                        {{- link.text | default( link.url ) -}}
                     </a>
                 </li>
             {% endfor %}
         </ul>
+        {% endif %}
     </div>
 
-    {% if value.video and
-          value.video.url and
-          value.video.id %}
-        {% import 'macros/video-player.html' as video_player %}
-        {{ video_player.render(value) }}
-    {% elif value.image %}
+    {% if value.video and value.video.video_id %}
+        {% with value = value.video %}
+            {% do value.update( { 'is_fcm': true } ) %}
+            {% include 'organisms/video-player.html' %}
+        {% endwith %}
+    {% elif value.image and value.image.url %}
         <div class="o-featured-content-module_visual">
-            {% set photo = image(value.image.upload, 'original') %}
             <img class="o-featured-content-module_img"
-                 src="{{ photo.url }}"
-                 alt="{{ image_alt_value(value.image) }}">
+                 src="{{ value.image.url }}"
+                 alt="{{ value.image.alt_text }}">
         </div>
     {% endif %}
 </section>
-{% endmacro %}

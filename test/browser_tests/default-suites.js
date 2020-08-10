@@ -15,7 +15,9 @@ const defaultSuites = {
       browserName:      'chrome',
       extendedDebugging: true,
       maxDuration:      10800,
+      maxInstances:     4,
       platform:         'Windows',
+      shardTestFiles:   true,
       tunnelIdentifier: tunnelIdentifier,
       version:          ''
     }
@@ -61,7 +63,7 @@ const defaultSuites = {
     }
   ],
 
-  // Headless browser to run on Travis.
+  // Headless browser to run on CI.
   headless: [
     {
       browserName:   'chrome',

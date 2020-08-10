@@ -1,5 +1,5 @@
 /**
- * Initialize the ratings form for Owning a Home.
+ * Initialize the ratings form for Buying a House.
  */
 function init() {
   const ratingsForm = document.querySelector( '.oah-ratings-form' );
@@ -33,4 +33,4 @@ function init() {
   }
 }
 
-module.exports = { init: init };
+export { init };

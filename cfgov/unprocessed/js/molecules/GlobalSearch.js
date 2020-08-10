@@ -1,11 +1,11 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const breakpointState = require( '../modules/util/breakpoint-state' );
-const ClearableInput = require( '../modules/ClearableInput' );
-const EventObserver = require( '../modules/util/EventObserver' );
-const FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
-const MoveTransition = require( '../modules/transition/MoveTransition' );
-const standardType = require( '../modules/util/standard-type' );
+import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import ClearableInput from '../modules/ClearableInput';
+import EventObserver from '../modules/util/EventObserver';
+import FlyoutMenu from '../modules/behavior/FlyoutMenu';
+import MoveTransition from '../modules/transition/MoveTransition';
+import TabTrigger from '../modules/TabTrigger';
 
 /**
  * GlobalSearch
@@ -20,26 +20,23 @@ const standardType = require( '../modules/util/standard-type' );
 function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
   const BASE_CLASS = 'm-global-search';
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
   const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   const _flyoutMenu = new FlyoutMenu( _dom );
   let _searchInputDom;
   let _searchBtnDom;
   let _clearBtnDom;
 
-  // TODO: Move tab trigger to its own class.
-  const _tabTriggerDom =
-    _contentDom.querySelector( '.' + BASE_CLASS + '_tab-trigger' );
-
-  const KEY_TAB = 9;
+  /* The tab trigger adds an element to the end of the element that handles
+     cleanup after tabbing out of the element. */
+  const _tabTrigger = new TabTrigger( _dom );
 
   /**
-   * @returns {GlobalSearch|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {GlobalSearch} An instance.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     // Set initial appearance.
@@ -72,7 +69,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
     _flyoutMenu.addEventListener( 'collapseEnd', _handleCollapseEnd );
 
-    _tabTriggerDom.addEventListener( 'keyup', _handleTabPress );
+    _tabTrigger.init();
+    _tabTrigger.addEventListener( 'tabPressed', _handleTabPress );
 
     // Set initial collapse state.
     _handleCollapseEnd();
@@ -88,7 +86,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   function _handleBodyClick( event ) {
     const target = event.target;
 
-    const isInDesktop = breakpointState.isInDesktop();
+    const isInDesktop = viewportIsIn( DESKTOP );
     if ( isInDesktop && !_isDesktopTarget( target ) ||
          !isInDesktop && !_isMobileTarget( target ) ) {
       collapse();
@@ -121,9 +119,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    *   The event object for the keyboard key press.
    */
   function _handleTabPress( event ) {
-    if ( event.keyCode === KEY_TAB ) {
-      collapse();
-    }
+    collapse();
   }
 
   /**
@@ -201,4 +197,4 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   return this;
 }
 
-module.exports = GlobalSearch;
+export default GlobalSearch;

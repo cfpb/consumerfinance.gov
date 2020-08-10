@@ -1,4 +1,4 @@
-const ajax = require( 'xdr' );
+import ajax from 'xdr';
 
 const COUNTIES_URL = '/data-research/mortgages/api/v1/metadata/state_county_meta';
 const METROS_URL = '/data-research/mortgages/api/v1/metadata/state_msa_meta';
@@ -434,4 +434,4 @@ const utils = {
   }
 };
 
-module.exports = utils;
+export default utils;

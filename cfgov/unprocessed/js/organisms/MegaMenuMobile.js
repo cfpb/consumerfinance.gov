@@ -1,7 +1,7 @@
 // Required modules.
-const EventObserver = require( '../modules/util/EventObserver' );
-const MoveTransition = require( '../modules/transition/MoveTransition' );
-const treeTraversal = require( '../modules/util/tree-traversal' );
+import * as treeTraversal from '../modules/util/tree-traversal';
+import EventObserver from '../modules/util/EventObserver';
+import MoveTransition from '../modules/transition/MoveTransition';
 
 /**
  * MegaMenuMobile
@@ -20,6 +20,7 @@ function MegaMenuMobile( menus ) {
   // Binded functions.
   const _handleTriggerClickBinded = _handleTriggerClick.bind( this );
   const _handleExpandBeginBinded = _handleExpandBegin.bind( this );
+  const _handleExpandEndBinded = _handleExpandEnd.bind( this );
   const _handleCollapseBeginBinded = _handleCollapseBegin.bind( this );
   const _handleCollapseEndBinded = _handleCollapseEnd.bind( this );
   const _suspendBinded = suspend.bind( this );
@@ -58,12 +59,12 @@ function MegaMenuMobile( menus ) {
    */
   function _handleBodyClick( event ) {
     const target = event.target;
-    if ( _activeMenu.getDom().trigger === target ) {
+    if ( _activeMenu.getDom().trigger[0] === target ) {
       return;
     }
 
     if ( !_rootMenu.getDom().container.contains( target ) ) {
-      _rootMenu.getDom().trigger.click();
+      _rootMenu.getDom().trigger[0].click();
     }
   }
 
@@ -76,6 +77,7 @@ function MegaMenuMobile( menus ) {
     const eventMap = {
       triggerClick:  _handleTriggerClickBinded,
       expandBegin:   _handleExpandBeginBinded,
+      expandEnd:     _handleExpandEndBinded,
       collapseBegin: _handleCollapseBeginBinded,
       collapseEnd:   _handleCollapseEndBinded
     };
@@ -101,6 +103,9 @@ function MegaMenuMobile( menus ) {
       _activeMenu.getTransition().halt();
     }
 
+    // Scroll to top of page so menu is always at the top.
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+
     if ( menu === rootMenu ) {
       // Root menu clicked.
 
@@ -115,37 +120,27 @@ function MegaMenuMobile( menus ) {
       }
     } else {
       // Submenu clicked.
+      menuNode.data.setExpandTransition(
+        transition,
+        transition.moveLeft,
+        [ level ]
+      );
 
-      // Scroll to top of page so menu is always at the top.
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-      const siblings = _menus.getAllAtLevel( level );
-      let siblingMenu;
-      for ( let i = 0, len = siblings.length; i < len; i++ ) {
-        siblingMenu = siblings[i].data;
-        siblingMenu.setExpandTransition(
+      if ( level === 1 ) {
+        menuNode.data.setCollapseTransition(
           transition,
-          transition.moveLeft,
-          [ level ]
+          transition.moveToOrigin
         );
-
-        /* If on the 2nd level menu, set the back button to moveToOrigin,
-           otherwise we're on the 3rd level menu, so moveLeft is needed. */
-        if ( level === 1 ) {
-          siblingMenu
-            .setCollapseTransition( transition, transition.moveToOrigin );
-        } else {
-          siblingMenu.setCollapseTransition( transition, transition.moveLeft );
-        }
-        // If we're on the current menu, show it & hide all the other siblings.
-        if ( siblings[i] === menuNode ) {
-          siblingMenu.getDom().content.classList.remove( 'u-invisible' );
-        } else {
-          siblingMenu.getDom().content.classList.add( 'u-invisible' );
-        }
+      } else {
+        menuNode.data.setCollapseTransition(
+          transition,
+          transition.moveLeft
+        );
       }
 
-      // TODO: Investigate helper functions to mask these crazy long lookups!
+      /* TODO: Investigate helper functions to mask these crazy long lookups!
+         Do we really want to remove the overflow here? We're also adding it
+         in the collapse end. */
       menuNode.parent.data.getDom()
         .content.classList.remove( 'u-hidden-overflow' );
     }
@@ -172,23 +167,35 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleExpandBegin( event ) {
-    window.scrollTo( 0, 0 );
     const menu = event.target;
+    const menuDom = menu.getDom();
+
     _handleToggle( menu );
+
     if ( menu === _rootMenu ) {
       this.dispatchEvent( 'rootExpandBegin', { target: this } );
       _bodyDom.addEventListener( 'click', _handleBodyClick );
     }
 
-    /* TODO: Enable or remove when keyboard navigation is in.
-       If on a submenu, focus the back button, otherwise focus the first link.
-       var firstMenuLink;
-       if ( _activeMenu === _rootMenu ) {
-       firstMenuLink = _activeMenuDom.querySelector( 'a' );
-       } else {
-       firstMenuLink = _activeMenuDom.querySelector( 'button' );
-       }
-       firstMenuLink.focus(); */
+    menuDom.content.classList.add( 'u-is-animating' );
+  }
+
+  /**
+   * Event handler for when FlyoutMenu expand transition ends.
+   * Use this to perform post-expandEnd actions.
+   * @param {Event} event - A FlyoutMenu event.
+   */
+  function _handleExpandEnd( event ) {
+    const menu = event.target;
+    const menuNode = menu.getData();
+    const menuDom = menu.getDom();
+    const level = menuNode.level;
+
+    if ( level >= 1 ) {
+      menuDom.trigger[1].focus();
+    }
+
+    menuDom.content.classList.remove( 'u-is-animating' );
   }
 
   /**
@@ -198,10 +205,14 @@ function MegaMenuMobile( menus ) {
    */
   function _handleCollapseBegin( event ) {
     const menu = event.target;
+    const menuDom = menu.getDom();
+
     _handleToggle( menu );
     if ( menu === _rootMenu ) {
       _bodyDom.removeEventListener( 'click', _handleBodyClick );
     }
+
+    menuDom.content.classList.add( 'u-is-animating' );
   }
 
   /**
@@ -211,6 +222,10 @@ function MegaMenuMobile( menus ) {
    */
   function _handleCollapseEnd( event ) {
     const menu = event.target;
+    const menuNode = menu.getData();
+    const menuDom = menu.getDom();
+    const level = menuNode.level;
+
     if ( menu === _rootMenu ) {
       _suspendBinded();
       resume();
@@ -221,6 +236,12 @@ function MegaMenuMobile( menus ) {
       const parentNode = menu.getData().parent;
       parentNode.data.getDom().content.classList.add( 'u-hidden-overflow' );
     }
+
+    if ( level >= 1 ) {
+      menuDom.trigger[0].focus();
+    }
+
+    menuDom.content.classList.remove( 'u-is-animating' );
   }
 
   /**
@@ -229,7 +250,7 @@ function MegaMenuMobile( menus ) {
    */
   function collapse() {
     if ( _rootMenu.isExpanded() ) {
-      _rootMenu.getDom().trigger.click();
+      _rootMenu.getDom().trigger[0].click();
     }
 
     return this;
@@ -312,4 +333,4 @@ function MegaMenuMobile( menus ) {
   return this;
 }
 
-module.exports = MegaMenuMobile;
+export default MegaMenuMobile;

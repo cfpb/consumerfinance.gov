@@ -1,15 +1,15 @@
 [run]
 omit = 
     *wsgi.py
-    *admin*
+    */admin/*
     */migrations/*
-    *templatetags/*
     */site-packages*
     */python2.7/*
     *setup.py
     *settings/*
     */ask_cfpb/scripts/*
     */ask_cfpb/search_indexes*
+    */paying_for_college/data_sources/bls_processing.py
 data_file = ../.coverage
 
 [report]

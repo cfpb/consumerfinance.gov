@@ -1,4 +1,4 @@
-const assign = require( './assign' ).assign;
+import { assign } from './assign';
 
 const _requestAnimationFrame = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -130,11 +130,10 @@ function elementInView( elem, strict ) {
   return elementBottom >= windowTop && elementTop <= windowBottom;
 }
 
-
-module.exports = {
-  elementInView: elementInView,
-  scrollIntoView: scrollIntoView,
-  scrollTo: scrollTo
-};
-
 window.scrollToElement = scrollTo;
+
+export {
+  elementInView,
+  scrollIntoView,
+  scrollTo
+};

@@ -3,16 +3,14 @@
    Scripts for `/the-bureau/bureau-structure/`.
    ========================================================================== */
 
+import BreakpointHandler from '../modules/BreakpointHandler';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 
-const BreakpointHandler = require( '../modules/BreakpointHandler' );
-const Expandable = require( '../organisms/Expandable' );
 let BS;
 
 const BureauStructure = BS = {
 
   elements: {},
-
-  expandables: [],
 
   isMobile: false,
 
@@ -41,7 +39,27 @@ const BureauStructure = BS = {
   },
 
   /**
-   * Remove the event listeners and destroy the expandables.
+   * Initialize the expandables and the expand/collapse event listeners.
+   */
+  initializeExpandables: function initializeExpandables() {
+    const expandables = Expandable.init(
+      document.querySelector( '.o-bureau-structure' )
+    );
+
+    let expandable;
+    for ( const index in expandables ) {
+      expandable = expandables[index];
+      expandable.transition.addEventListener(
+        'expandEnd', BS.eventListeners.heightChange
+      );
+      expandable.transition.addEventListener(
+        'collapseEnd', BS.eventListeners.heightChange
+      );
+    }
+  },
+
+  /**
+   * Remove the event listeners and destroy the slider navigation.
    */
   destroy: function destroy() {
     BS.elements.branch.removeAttribute( 'style' );
@@ -84,40 +102,6 @@ const BureauStructure = BS = {
     }
 
     return BS.vendorPrefixes[style] || style;
-  },
-
-  /**
-   * Initialize the expandables and the expand / collapse event listeners.
-   */
-  initializeExpandables: function initializeExpandables() {
-    // Initialize the Expandable.
-    const expandablesDom = document.querySelectorAll( '.o-expandable' );
-    let expandable;
-    for ( let i = 0, len = expandablesDom.length; i < len; i++ ) {
-      expandable = new Expandable( expandablesDom[i] );
-      // Ensure Expandable isn't coming from cloned DOM nodes.
-      expandable.destroy();
-      expandable.addEventListener( 'expandEnd',
-        BS.eventListeners.heightChange );
-      expandable.addEventListener( 'collapseEnd',
-        BS.eventListeners.heightChange );
-      expandable.init();
-      BS.expandables.push( expandable );
-    }
-  },
-
-  /**
-   * Remove the event listeners from the expandables and destroy the
-   * Expandables instances.
-   */
-  destroyExpandables: function destroyExpandables() {
-    for ( let i = 0, len = BS.expandables.length; i < len; i++ ) {
-      BS.expandables[i].removeEventListener( 'expandEnd',
-        BS.eventListeners.heightChange );
-      BS.expandables[i].removeEventListener( 'collapseEnd',
-        BS.eventListeners.heightChange );
-      BS.expandables[i].destroy();
-    }
   },
 
   /**
@@ -190,12 +174,13 @@ const BureauStructure = BS = {
   },
 
   /**
-   * Remove the event listeners from the expandables and the slider navigation.
+   * Remove the event listeners from the slider navigation.
    */
   removeEventListeners: function removeEventListeners() {
     window.removeEventListener( 'resize', BS.eventListeners.resize );
-    BS.elements.branch.removeEventListener( 'click',
-      BS.eventListeners.navClick );
+    BS.elements.branch.removeEventListener(
+      'click', BS.eventListeners.navClick
+    );
   },
 
   eventListeners: {
@@ -247,4 +232,4 @@ const BureauStructure = BS = {
   }
 };
 
-module.exports = BureauStructure;
+export default BureauStructure;

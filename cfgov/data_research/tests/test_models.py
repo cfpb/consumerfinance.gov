@@ -1,12 +1,10 @@
-from __future__ import unicode_literals
-
 import datetime
 import unittest
 
 import django
 from django.http import HttpRequest
 
-from model_mommy import mommy
+from model_bakery import baker
 
 from data_research.models import (
     County, CountyMortgageData, MetroArea, MortgageBase, MortgageDataConstant,
@@ -26,7 +24,7 @@ class GeoValidationTests(django.test.TestCase):
 
     def setUp(self):
 
-        mommy.make(
+        baker.make(
             State,
             fips='12',
             name='Florida',
@@ -36,7 +34,7 @@ class GeoValidationTests(django.test.TestCase):
             non_msa_counties=["12013"],
             msas=["45300", "35840", "45220"])
 
-        mommy.make(
+        baker.make(
             State,
             fips='34',
             name='New Jersey',
@@ -46,7 +44,7 @@ class GeoValidationTests(django.test.TestCase):
             non_msa_counties=[],
             msas=[])
 
-        mommy.make(
+        baker.make(
             MetroArea,
             fips='45220',
             name='Tallahassee, FL',
@@ -54,7 +52,7 @@ class GeoValidationTests(django.test.TestCase):
             states=['12'],
             valid=False)
 
-        mommy.make(
+        baker.make(
             MetroArea,
             fips='35840',
             name='North Port-Sarasota-Bradenton, FL',
@@ -62,28 +60,28 @@ class GeoValidationTests(django.test.TestCase):
             states=['12'],
             valid=True)
 
-        mommy.make(
+        baker.make(
             County,
             fips='12081',
             name='Manatee County',
             state=State.objects.get(fips='12'),
             valid=False)
 
-        mommy.make(
+        baker.make(
             County,
             fips='12039',
             name='Gadsden County',
             state=State.objects.get(fips='12'),
             valid=False)
 
-        mommy.make(
+        baker.make(
             County,
             fips='12013',
             name='Calhoun County',
             state=State.objects.get(fips='12'),
             valid=True)
 
-        mommy.make(
+        baker.make(
             MSAMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='45220',
@@ -95,7 +93,7 @@ class GeoValidationTests(django.test.TestCase):
             other='0',
             msa=MetroArea.objects.get(fips='45220'))
 
-        mommy.make(
+        baker.make(
             MSAMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='35840',
@@ -107,7 +105,7 @@ class GeoValidationTests(django.test.TestCase):
             other='0',
             msa=MetroArea.objects.get(fips='35840'))
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12039',
@@ -119,7 +117,7 @@ class GeoValidationTests(django.test.TestCase):
             other='0',
             county=County.objects.get(fips='12039'))
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12081',
@@ -131,7 +129,7 @@ class GeoValidationTests(django.test.TestCase):
             other='26',
             county=County.objects.get(fips='12081'))
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12013',
@@ -143,7 +141,7 @@ class GeoValidationTests(django.test.TestCase):
             other='26',
             county=County.objects.get(fips='12013'))
 
-        mommy.make(
+        baker.make(
             NonMSAMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12-non',
@@ -155,7 +153,7 @@ class GeoValidationTests(django.test.TestCase):
             other='0',
             state=State.objects.get(fips='12'))
 
-        mommy.make(
+        baker.make(
             NonMSAMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='34-non',
@@ -167,7 +165,7 @@ class GeoValidationTests(django.test.TestCase):
             other=None,
             state=State.objects.get(fips='34'))
 
-        mommy.make(
+        baker.make(
             StateMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12',
@@ -178,7 +176,7 @@ class GeoValidationTests(django.test.TestCase):
             ninety='0',
             other='0')
 
-        mommy.make(
+        baker.make(
             NationalMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='-----',
@@ -327,7 +325,7 @@ class MortgageModelTests(django.test.TestCase):
 
     def setUp(self):
 
-        self.base_data = mommy.make(
+        self.base_data = baker.make(
             CountyMortgageData,
             fips='12081',
             date=datetime.date(2016, 9, 1),
@@ -338,19 +336,19 @@ class MortgageModelTests(django.test.TestCase):
             ninety=0,
             other=3)
 
-        self.msa_data = mommy.make(
+        self.msa_data = baker.make(
             MSAMortgageData,
             total=0,
             fips='45300',
             date=datetime.date(2016, 9, 1))
 
-        self.state_obj = mommy.make(
+        self.state_obj = baker.make(
             StateMortgageData,
             total=0,
             fips='12',
             date=datetime.date(2016, 9, 1))
 
-        self.nation_obj = mommy.make(
+        self.nation_obj = baker.make(
             NationalMortgageData,
             current=2500819,
             date=datetime.date(2016, 9, 1),

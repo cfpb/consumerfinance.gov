@@ -1,7 +1,6 @@
 // Required modules.
-const atomicHelpers = require( '../modules/util/atomic-helpers' );
-const footerButton = require( '../modules/footer-button' );
-const standardType = require( '../modules/util/standard-type' );
+import * as footerButton from '../modules/footer-button';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 
 /**
  * Footer
@@ -17,15 +16,14 @@ function Footer( element ) {
 
   const BASE_CLASS = 'o-footer';
 
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
 
   /**
-   * @returns {Footer|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {Footer} An instance.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      return standardType.UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     footerButton.init();
@@ -38,4 +36,4 @@ function Footer( element ) {
   return this;
 }
 
-module.exports = Footer;
+export default Footer;

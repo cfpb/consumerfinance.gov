@@ -1,12 +1,10 @@
-from __future__ import unicode_literals
-
 import re
 
 from django.core.mail import EmailMessage
 from django.template import loader
 from django.utils.functional import cached_property
 
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
@@ -52,10 +50,13 @@ class ConferenceExporter(object):
     @cached_property
     def fields(self):
         form = ConferenceRegistrationForm(
-            govdelivery_code=self.govdelivery_code
+            govdelivery_code=self.govdelivery_code,
+            govdelivery_question_id=None,
+            govdelivery_answer_id=None,
+            capacity=0
         )
 
-        return ['created'] + form.fields.keys()
+        return ['created'] + list(form.fields.keys())
 
     def save_xlsx(self, filename):
         with open(filename, 'wb') as f:
@@ -88,7 +89,7 @@ class ConferenceNotifier(object):
 
     Looks up conference attendees by GovDelivery code.
     """
-    conference_name = '2018 CFPB Research Conference'
+    conference_name = '2018 CFPB FinEx Conference'
     subject_template_name = 'data_research/conference_notify_subject.txt'
     email_template_name = 'data_research/conference_notify_email.txt'
     attachment_filename = 'conference_registrations.xlsx'
@@ -100,6 +101,8 @@ class ConferenceNotifier(object):
         exporter = ConferenceExporter(govdelivery_code)
 
         self.count = exporter.registrants.count()
+        self.count_in_person = len(list(exporter.registrants.in_person()))
+        self.count_virtual = len(list(exporter.registrants.virtual()))
         self.capacity = capacity
 
         if self.count:
@@ -109,8 +112,10 @@ class ConferenceNotifier(object):
         context = {
             'conference_name': self.conference_name,
             'count': self.count,
+            'count_in_person': self.count_in_person,
+            'count_virtual': self.count_virtual,
             'capacity': self.capacity,
-            'at_capacity': self.count >= self.capacity,
+            'at_capacity': self.count_in_person >= self.capacity,
         }
 
         subject = loader.render_to_string(self.subject_template_name, context)

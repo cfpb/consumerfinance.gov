@@ -1,13 +1,10 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-
-let Analytics;
+import Analytics from '../../../../cfgov/unprocessed/js/modules/Analytics';
 let dataLayerOptions;
 let getDataLayerOptions;
 let UNDEFINED;
 
 describe( 'Analytics', () => {
   beforeAll( () => {
-    Analytics = require( BASE_JS_PATH + 'modules/Analytics' );
     getDataLayerOptions = Analytics.getDataLayerOptions;
   } );
 
@@ -48,7 +45,7 @@ describe( 'Analytics', () => {
       expect( Analytics.tagManagerIsLoaded === false ).toBe( true );
       window['google_tag_manager'] = mockGTMObject;
       expect( Analytics.tagManagerIsLoaded === true ).toBe( true );
-      expect( window.google_tag_manager ).toEqual( mockGTMObject );
+      expect( window.google_tag_manager ).toStrictEqual( mockGTMObject );
     } );
   } );
 
@@ -56,15 +53,15 @@ describe( 'Analytics', () => {
     it( 'should properly add objects to the dataLayer Array', () => {
       const action = 'inbox:clicked';
       const label = 'text:null';
-      const options = Object.assign( {}, dataLayerOptions, {
+      const options = { ...dataLayerOptions,
         action: action,
         label:  label
-      } );
+      };
       window['google_tag_manager'] = {};
       Analytics.init();
       Analytics.sendEvent( getDataLayerOptions( action, label ) );
       expect( window.dataLayer.length === 1 ).toBe( true );
-      expect( window.dataLayer[0] ).toEqual( options );
+      expect( window.dataLayer[0] ).toStrictEqual( options );
     } );
 
     it( 'shouldn\'t add objects to the dataLayer Array if GTM is undefined',
@@ -104,16 +101,16 @@ describe( 'Analytics', () => {
   describe( '.sendEvents()', () => {
     it( 'should properly add objects to the dataLayer Array', () => {
       const options1 = getDataLayerOptions(
-        Object.assign( {}, dataLayerOptions, {
+        { ...dataLayerOptions,
           action: 'inbox:clicked',
           label:  'text:label_1'
-        } )
+        }
       );
       const options2 = getDataLayerOptions(
-        Object.assign( {}, dataLayerOptions, {
+        { ...dataLayerOptions,
           action: 'checbox:clicked',
           label:  'text:label_2'
-        } )
+        }
       );
       window['google_tag_manager'] = {};
       Analytics.init();
@@ -124,16 +121,16 @@ describe( 'Analytics', () => {
     it( 'shouldn\'t add objects to the dataLayer Array if an array isn\'t passed',
       () => {
         const options1 = getDataLayerOptions(
-          Object.assign( {}, dataLayerOptions, {
+          { ...dataLayerOptions,
             action: 'inbox:clicked',
             label:  'text:label_1'
-          } )
+          }
         );
         const options2 = getDataLayerOptions(
-          Object.assign( {}, dataLayerOptions, {
+          { ...dataLayerOptions,
             action: 'checbox:clicked',
             label:  'text:label_2'
-          } )
+          }
         );
         window['google_tag_manager'] = {};
         Analytics.init();

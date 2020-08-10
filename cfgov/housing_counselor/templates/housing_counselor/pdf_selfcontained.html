@@ -1,0 +1,326 @@
+{% load staticfiles %}
+
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Housing counselors near you | Consumer Financial Protection Bureau</title>
+    <meta name="title" content="Housing counselors near you | Consumer Financial Protection Bureau">
+    <meta name="Copyright" content="Public domain">
+    <style>
+    /* Some basics */
+    .page-template-page-hud-generate-pdf-php {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        line-height: 1.4;
+        /* PDF Reactor has a built-in 1/8" left margin */
+        margin: .5in .5in .5in .5in;
+        padding: 0;
+        size: letter;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* Hide from both screenreaders and browsers: h5bp.com/u */
+    .cfpb_hide {
+        display: none !important;
+        visibility: hidden;
+    }
+
+    /* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+    .cfpb_visually_hide {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    /* Extends the .visuallyhidden class to allow the element to be focusable
+    * when navigated to via the keyboard: h5bp.com/p */
+    .cfpb_visually_hide.focusable:active,
+    .cfpb_visually_hide.focusable:focus {
+        clip: auto;
+        height: auto;
+        margin: 0;
+        overflow: visible;
+        position: static;
+        width: auto;
+    }
+
+    .hud_hca_api_print_show {
+        display: block !important;
+        visibility: visible;
+    }
+
+    /* Hide visually and from screenreaders, but maintain layout */
+    .cfpb_invisible {
+        visibility: hidden;
+    }
+
+    a,
+    a:link,
+    a:visited {
+        border: 0;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        text-decoration: underline;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    /* Hide unneeded content */
+    .o-header,
+    .bread,
+    .share,
+    .o-footer,
+    .hud_hca_api_print_hide {
+        display: none !important;
+    }
+
+    /* Some adjustments */
+    .pagetitle > h1 {
+        font-size: 16px;
+    }
+
+    .hud_hca_api_print_logo {
+        float: right;
+        max-width: 20% !important;
+    }
+
+    .hud_hca_api_the_results {
+        font-weight: bold;
+        page-break-after: avoid;
+        text-transform: uppercase;
+    }
+
+    .cfpb_hud_hca_api_print_text {
+        border-bottom: 4px solid #101820;
+        padding-bottom: 1em;
+    }
+
+    /* Results specific styles */
+    .hud_hca_api_results_listing {
+        margin: 0;
+        padding: 0;
+    }
+
+    .hud_hca_api_result {
+        border-bottom: 1px solid #babbbd;
+        padding: 1.5em 1em;
+        position: relative;
+    }
+
+    .hud_hca_api_counselor,
+    .hud_hca_api_results_listing_title {
+        font-weight: 600;
+    }
+
+    .hud_hca_api_results_listing_title span {
+        font-weight: normal;
+    }
+
+    .hud_hca_api_counselor_address {
+        margin-bottom: 1em;
+    }
+
+    .hud_hca_api_results_listing_title,
+    .hud_hca_api_counselor_address {
+        display: block;
+    }
+
+    /* Grid adjustments */
+    /* Grid */
+    .hud_hca_api_grid_three > .col {
+        display: block;
+        width: 82.24%;
+    }
+
+    .hud_hca_api_grid_three > div.col.last {
+        position: absolute;
+        top: 16px;
+        right: 0;
+        width: 12.44%;
+    }
+
+    .hud_hca_api_results_listing_title,
+    .hud_hca_api_services {
+        margin-top: 1em;
+    }
+
+    .hud_hca_api_serv_item {
+        display: inline;
+    }
+
+    .hud_hca_api_serv_item:before {
+        content: " | ";
+    }
+
+    .hud_hca_api_serv_item:first-child:before {
+        content: "";
+    }
+
+    .hud_hca_api_site > .hud_hca_api_results_listing_title,
+    .hud_hca_api_tel > .hud_hca_api_results_listing_title {
+        display: inline;
+    }
+
+    .lt-ie9 .hud_hca_api_services {
+        padding-left: 0.5em;
+    }
+
+    </style>
+</head>
+
+<body class="page page-id-43619 page-template page-template-page-hud-generate-pdf-php logged-in admin-bar no-customize-support page">
+
+    <div id="wrapper">
+        <section id="maincontent">
+            <article class="page">
+                <svg class="hud_hca_api_print_logo hud_hca_api_print_show cfpb_hide"
+                     xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 240 50">
+                    <title>Consumer Financial Protection Bureau</title>
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: #;
+                            }
+                            .cls-2 {
+                                fill: #20aa3f;
+                            }
+                        </style>
+                    </defs>
+                    <path class="cls-1" d="M112.87 13.52h3.36a5 5 0 0 1 1.1.12 2.92 2.92 0 0 1 1 .41 2.23 2.23 0 0 1 .7.76 2.33 2.33 0 0 1 .27 1.17 2 2 0 0 1-.47 1.36 2.39 2.39 0 0 1-1.24.76 2.82 2.82 0 0 1 .87.24 2.26 2.26 0 0 1 .69.49 2.13 2.13 0 0 1 .45.72 2.57 2.57 0 0 1 .16.92 2.42 2.42 0 0 1-1.08 2.09 3.68 3.68 0 0 1-1.16.51 5.68 5.68 0 0 1-1.43.17h-3.21zm1.36 4.12H116a3 3 0 0 0 .74-.09 1.83 1.83 0 0 0 .61-.28 1.35 1.35 0 0 0 .41-.47 1.42 1.42 0 0 0 .15-.68 1.2 1.2 0 0 0-.58-1.12 3.08 3.08 0 0 0-1.56-.34h-1.56zm0 4.48h1.71a5 5 0 0 0 .86-.08 2.51 2.51 0 0 0 .79-.27 1.58 1.58 0 0 0 .57-.52 1.46 1.46 0 0 0 .21-.82 1.39 1.39 0 0 0-.59-1.25 3.14 3.14 0 0 0-1.71-.39h-1.83zM126.18 23.28v-.56-.52a2.14 2.14 0 0 1-.83.89 2.42 2.42 0 0 1-1.3.37 2.67 2.67 0 0 1-1.1-.21 2 2 0 0 1-.76-.57 2.44 2.44 0 0 1-.44-.85 3.59 3.59 0 0 1-.14-1v-4.08h1.3v3.61a4.55 4.55 0 0 0 .06.77 1.83 1.83 0 0 0 .23.64 1.24 1.24 0 0 0 .46.44 1.49 1.49 0 0 0 .74.17 1.56 1.56 0 0 0 1.27-.59 2.39 2.39 0 0 0 .48-1.56v-3.48h1.3V23.29zM129.52 17.48v-.73h1.23v1.1a2.26 2.26 0 0 1 .81-.93 2.11 2.11 0 0 1 1.19-.35 2 2 0 0 1 .51.06l-.06 1.2a2.47 2.47 0 0 0-.59-.07 1.8 1.8 0 0 0-.81.17 1.66 1.66 0 0 0-.57.46 2 2 0 0 0-.34.67 2.82 2.82 0 0 0-.11.79v3.43h-1.3v-5.12c.05-.16.05-.4.04-.68zM140.31 20v.22a1.86 1.86 0 0 1 0 .22h-5.2a1.92 1.92 0 0 0 .19.77 2 2 0 0 0 .46.63 2.14 2.14 0 0 0 .67.42 2.16 2.16 0 0 0 .81.15 2.19 2.19 0 0 0 1.14-.29 2.33 2.33 0 0 0 .76-.7l.91.73a3.25 3.25 0 0 1-1.23 1 4 4 0 0 1-3 .08 3.18 3.18 0 0 1-1.09-.7 3.22 3.22 0 0 1-.72-1.08 3.64 3.64 0 0 1-.26-1.41 3.74 3.74 0 0 1 .26-1.4 3.2 3.2 0 0 1 .71-1.1 3.25 3.25 0 0 1 1.08-.71 3.7 3.7 0 0 1 2.65 0 2.7 2.7 0 0 1 1 .68 3 3 0 0 1 .63 1.07 4.24 4.24 0 0 1 .23 1.42zm-1.31-.56a2.49 2.49 0 0 0-.13-.72 1.66 1.66 0 0 0-.34-.59 1.63 1.63 0 0 0-.57-.39 2 2 0 0 0-.79-.14 2.09 2.09 0 0 0-.78.14 2 2 0 0 0-.63.39 2.06 2.06 0 0 0-.44.59 1.87 1.87 0 0 0-.2.72zM146 19.05a1.3 1.3 0 0 0-.44-1.08 1.83 1.83 0 0 0-1.17-.35 2.57 2.57 0 0 0-1 .21 2.63 2.63 0 0 0-.82.54l-.69-.83a3.48 3.48 0 0 1 1.18-.72 4.22 4.22 0 0 1 1.5-.26 3.37 3.37 0 0 1 1.22.2 2.31 2.31 0 0 1 .85.54 2.24 2.24 0 0 1 .5.81 3 3 0 0 1 .17 1v3.59a3.58 3.58 0 0 0 .08.6h-1.17a4.07 4.07 0 0 1-.11-.94 2.51 2.51 0 0 1-.9.81 2.71 2.71 0 0 1-1.29.29 3.38 3.38 0 0 1-.81-.1 2.33 2.33 0 0 1-.77-.34 1.9 1.9 0 0 1-.57-.62 1.85 1.85 0 0 1-.23-1 1.67 1.67 0 0 1 .4-1.18 2.53 2.53 0 0 1 1-.66 6 6 0 0 1 1.46-.3q.81-.07 1.64-.07zm-.32 1.12h-1a4.65 4.65 0 0 0-.94.17 1.78 1.78 0 0 0-.7.37.85.85 0 0 0-.28.66.92.92 0 0 0 .12.48 1 1 0 0 0 .31.32 1.25 1.25 0 0 0 .43.17 2.38 2.38 0 0 0 .48 0 1.79 1.79 0 0 0 1.4-.54 2 2 0 0 0 .49-1.37v-.34zM154 23.28v-.56-.52a2.14 2.14 0 0 1-.83.89 2.42 2.42 0 0 1-1.3.37 2.67 2.67 0 0 1-1.1-.21 2 2 0 0 1-.76-.57 2.44 2.44 0 0 1-.44-.85 3.59 3.59 0 0 1-.14-1v-4.08h1.3v3.61a4.55 4.55 0 0 0 .06.77 1.83 1.83 0 0 0 .23.64 1.24 1.24 0 0 0 .46.44 1.49 1.49 0 0 0 .74.17 1.56 1.56 0 0 0 1.27-.59 2.39 2.39 0 0 0 .48-1.56v-3.48h1.3V23.29zM166.75 20a3.53 3.53 0 0 1-.27 1.39 3.31 3.31 0 0 1-.74 1.1 3.37 3.37 0 0 1-1.12.72 3.93 3.93 0 0 1-2.78 0 3.28 3.28 0 0 1-1.12-.72 3.36 3.36 0 0 1-.74-1.1 3.53 3.53 0 0 1-.27-1.39 3.48 3.48 0 0 1 .27-1.39 3.3 3.3 0 0 1 .74-1.08 3.34 3.34 0 0 1 1.12-.71 3.92 3.92 0 0 1 2.78 0 3.42 3.42 0 0 1 1.12.71 3.25 3.25 0 0 1 .74 1.08 3.48 3.48 0 0 1 .27 1.39zm-1.35 0a2.76 2.76 0 0 0-.15-.89 2.26 2.26 0 0 0-.42-.75 2 2 0 0 0-.68-.52 2.36 2.36 0 0 0-1.87 0 2 2 0 0 0-.68.52 2.25 2.25 0 0 0-.42.75 2.83 2.83 0 0 0 0 1.79 2.33 2.33 0 0 0 .42.76 2 2 0 0 0 .68.52 2.36 2.36 0 0 0 1.87 0 2 2 0 0 0 .68-.52 2.34 2.34 0 0 0 .42-.76 2.76 2.76 0 0 0 .15-.9zM171.55 17.81H170v5.47h-1.3v-5.47h-1.3v-1.06h1.3v-1.37a4.12 4.12 0 0 1 .13-1.07 2.22 2.22 0 0 1 .43-.85 2.05 2.05 0 0 1 .76-.56 2.75 2.75 0 0 1 1.12-.21 3.05 3.05 0 0 1 .81.1l-.15 1.12-.3-.07a1.92 1.92 0 0 0-.34 0 1.2 1.2 0 0 0-.6.13.93.93 0 0 0-.35.35 1.45 1.45 0 0 0-.17.5 4 4 0 0 0 0 .59v1.36h1.52zM184.82 21.77a4.38 4.38 0 0 1-1.5 1.27 4.68 4.68 0 0 1-2.22.49 5.49 5.49 0 0 1-2.06-.38 4.8 4.8 0 0 1-1.63-1.06 4.88 4.88 0 0 1-1.07-1.63 5.76 5.76 0 0 1 0-4.16 4.73 4.73 0 0 1 1.09-1.61 5 5 0 0 1 1.65-1 5.63 5.63 0 0 1 2.07-.37 5.4 5.4 0 0 1 1 .1 5 5 0 0 1 1 .29 4 4 0 0 1 .85.48 3.07 3.07 0 0 1 .66.65l-1.08.83a2.68 2.68 0 0 0-1-.82 3.14 3.14 0 0 0-1.41-.32 3.67 3.67 0 0 0-1.54.31 3.48 3.48 0 0 0-1.17.85 3.83 3.83 0 0 0-.74 1.25 4.32 4.32 0 0 0-.26 1.51 4.56 4.56 0 0 0 .25 1.54 3.71 3.71 0 0 0 .73 1.25 3.37 3.37 0 0 0 1.16.83 3.71 3.71 0 0 0 1.52.3 3.37 3.37 0 0 0 1.5-.33 2.89 2.89 0 0 0 1.12-1zM192.53 20a3.53 3.53 0 0 1-.27 1.39 3.31 3.31 0 0 1-.74 1.1 3.37 3.37 0 0 1-1.12.72 3.93 3.93 0 0 1-2.78 0 3.28 3.28 0 0 1-1.12-.72 3.36 3.36 0 0 1-.74-1.1 3.53 3.53 0 0 1-.27-1.39 3.48 3.48 0 0 1 .27-1.39 3.3 3.3 0 0 1 .74-1.08 3.34 3.34 0 0 1 1.12-.71 3.92 3.92 0 0 1 2.78 0 3.42 3.42 0 0 1 1.12.71 3.25 3.25 0 0 1 .74 1.08 3.48 3.48 0 0 1 .27 1.39zm-1.35 0a2.76 2.76 0 0 0-.15-.89 2.26 2.26 0 0 0-.42-.75 2 2 0 0 0-.68-.52 2.36 2.36 0 0 0-1.87 0 2 2 0 0 0-.68.52 2.25 2.25 0 0 0-.42.75 2.83 2.83 0 0 0 0 1.79 2.33 2.33 0 0 0 .42.76 2 2 0 0 0 .68.52 2.36 2.36 0 0 0 1.87 0 2 2 0 0 0 .68-.52 2.34 2.34 0 0 0 .42-.76 2.76 2.76 0 0 0 .15-.9zM195.42 16.75v1.08a1.91 1.91 0 0 1 .34-.49 2.43 2.43 0 0 1 .49-.4 2.4 2.4 0 0 1 .61-.27 2.46 2.46 0 0 1 .69-.1 2.54 2.54 0 0 1 1.09.21 2.21 2.21 0 0 1 .76.57 2.32 2.32 0 0 1 .45.84 3.58 3.58 0 0 1 .14 1v4.05h-1.3v-3.58a4.48 4.48 0 0 0-.06-.76 1.83 1.83 0 0 0-.23-.63 1.23 1.23 0 0 0-.46-.44 1.49 1.49 0 0 0-.74-.17 1.57 1.57 0 0 0-1.26.59 2.36 2.36 0 0 0-.49 1.56v3.47h-1.3v-5.12-.68-.73zM205.73 18.4a1.7 1.7 0 0 0-.62-.59 1.78 1.78 0 0 0-.9-.23 2.08 2.08 0 0 0-.44 0 1.32 1.32 0 0 0-.39.15.84.84 0 0 0-.28.26.71.71 0 0 0-.1.39.65.65 0 0 0 .37.61 4.58 4.58 0 0 0 1.12.37 7 7 0 0 1 .87.26 2.72 2.72 0 0 1 .7.38 1.63 1.63 0 0 1 .46.54 1.59 1.59 0 0 1 .17.74 2 2 0 0 1-.22 1 1.91 1.91 0 0 1-.59.65 2.39 2.39 0 0 1-.83.37 4.19 4.19 0 0 1-1 .11 3.82 3.82 0 0 1-1.45-.29 2.84 2.84 0 0 1-1.18-.88l.92-.79a2.11 2.11 0 0 0 .72.65 2 2 0 0 0 1 .26 2.29 2.29 0 0 0 .48 0 1.36 1.36 0 0 0 .41-.16.8.8 0 0 0 .41-.74.72.72 0 0 0-.43-.68 5.85 5.85 0 0 0-1.27-.41q-.33-.08-.67-.2a2.23 2.23 0 0 1-.61-.32 1.62 1.62 0 0 1-.45-.52 1.55 1.55 0 0 1-.17-.77 1.81 1.81 0 0 1 .21-.9 1.86 1.86 0 0 1 .56-.62 2.46 2.46 0 0 1 .79-.36 3.55 3.55 0 0 1 .91-.12 3.47 3.47 0 0 1 1.36.28 2.25 2.25 0 0 1 1 .8zM212.86 23.28v-.56-.52a2.14 2.14 0 0 1-.83.89 2.42 2.42 0 0 1-1.3.37 2.67 2.67 0 0 1-1.1-.21 2 2 0 0 1-.76-.57 2.44 2.44 0 0 1-.44-.85 3.59 3.59 0 0 1-.14-1v-4.08h1.3v3.61a4.55 4.55 0 0 0 .06.77 1.83 1.83 0 0 0 .23.64 1.24 1.24 0 0 0 .46.44 1.49 1.49 0 0 0 .74.17 1.56 1.56 0 0 0 1.27-.59 2.39 2.39 0 0 0 .48-1.56v-3.48H214V23.29zM218.27 16.94a2.26 2.26 0 0 1 1.29-.37 2.36 2.36 0 0 1 1.19.3 2 2 0 0 1 .83 1 2.34 2.34 0 0 1 .92-1 2.57 2.57 0 0 1 1.3-.34 2.54 2.54 0 0 1 1.09.21 2.2 2.2 0 0 1 .76.57 2.31 2.31 0 0 1 .45.84 3.59 3.59 0 0 1 .14 1v4.05h-1.3v-3.54a4 4 0 0 0-.07-.76 1.93 1.93 0 0 0-.23-.63 1.27 1.27 0 0 0-.44-.44 1.36 1.36 0 0 0-.7-.17 1.47 1.47 0 0 0-.76.19 1.57 1.57 0 0 0-.52.48 2 2 0 0 0-.29.67 3.21 3.21 0 0 0-.09.76v3.53h-1.3V19.4a3.32 3.32 0 0 0-.07-.7 1.43 1.43 0 0 0-.23-.54 1.15 1.15 0 0 0-.43-.36 1.44 1.44 0 0 0-.65-.13 1.48 1.48 0 0 0-1.19.59 2.41 2.41 0 0 0-.48 1.56v3.47h-1.3v-5.13-.68-.73h1.23v1.08a2.21 2.21 0 0 1 .85-.89zM234.47 20v.22a1.86 1.86 0 0 1 0 .22h-5.2a1.92 1.92 0 0 0 .19.77 2 2 0 0 0 .46.63 2.14 2.14 0 0 0 .67.42 2.16 2.16 0 0 0 .81.15 2.19 2.19 0 0 0 1.14-.29 2.33 2.33 0 0 0 .76-.7l.91.73a3.25 3.25 0 0 1-1.23 1 4 4 0 0 1-3 .08 3.18 3.18 0 0 1-1.09-.7 3.22 3.22 0 0 1-.72-1.08 3.64 3.64 0 0 1-.26-1.41 3.74 3.74 0 0 1 .26-1.4 3.2 3.2 0 0 1 .71-1.1 3.25 3.25 0 0 1 1.08-.71 3.7 3.7 0 0 1 2.65 0 2.7 2.7 0 0 1 1 .68 3 3 0 0 1 .63 1.07 4.24 4.24 0 0 1 .23 1.42zm-1.32-.52a2.49 2.49 0 0 0-.13-.72 1.66 1.66 0 0 0-.34-.59 1.63 1.63 0 0 0-.57-.39 2 2 0 0 0-.79-.14 2.09 2.09 0 0 0-.78.14 2 2 0 0 0-.63.39 2.06 2.06 0 0 0-.44.59 1.87 1.87 0 0 0-.2.72zM236.18 17.48v-.73h1.23v1.1a2.26 2.26 0 0 1 .81-.93 2.11 2.11 0 0 1 1.19-.35 2 2 0 0 1 .51.06l-.06 1.2a2.47 2.47 0 0 0-.59-.07 1.8 1.8 0 0 0-.81.17 1.66 1.66 0 0 0-.57.46 2 2 0 0 0-.34.67 2.82 2.82 0 0 0-.11.79v3.43h-1.3v-5.12c.06-.16.05-.4.04-.68zM114.2 37.76h-1.36V28h6.09v1.2h-4.73v3h4.42v1.2h-4.42zM121.87 28.87a.77.77 0 0 1-.25.59.86.86 0 0 1-.61.23.83.83 0 0 1-.6-.24.79.79 0 0 1-.25-.59.81.81 0 0 1 .25-.6.83.83 0 0 1 .59-.26.85.85 0 0 1 .61.24.8.8 0 0 1 .26.63zm-.21 8.89h-1.3v-6.54h1.3zM125.09 31.22v1.08a1.91 1.91 0 0 1 .34-.49 2.43 2.43 0 0 1 .49-.4 2.4 2.4 0 0 1 .61-.27 2.46 2.46 0 0 1 .69-.1 2.54 2.54 0 0 1 1.09.21 2.21 2.21 0 0 1 .76.57 2.32 2.32 0 0 1 .45.84 3.58 3.58 0 0 1 .14 1v4.05h-1.3v-3.58a4.48 4.48 0 0 0-.06-.76 1.83 1.83 0 0 0-.23-.63 1.23 1.23 0 0 0-.46-.44 1.49 1.49 0 0 0-.74-.17 1.57 1.57 0 0 0-1.26.59 2.36 2.36 0 0 0-.49 1.56v3.47h-1.3v-5.12-.68-.73zM136 33.53a1.3 1.3 0 0 0-.44-1.08 1.83 1.83 0 0 0-1.17-.35 2.57 2.57 0 0 0-1 .21 2.63 2.63 0 0 0-.82.54l-.69-.83a3.48 3.48 0 0 1 1.18-.72 4.22 4.22 0 0 1 1.5-.26 3.37 3.37 0 0 1 1.22.2 2.31 2.31 0 0 1 .85.54 2.24 2.24 0 0 1 .5.81 3 3 0 0 1 .17 1v3.55a3.58 3.58 0 0 0 .08.6h-1.17a4.07 4.07 0 0 1-.11-.94 2.51 2.51 0 0 1-.9.81 2.71 2.71 0 0 1-1.29.29 3.38 3.38 0 0 1-.81-.1 2.33 2.33 0 0 1-.77-.34 1.9 1.9 0 0 1-.57-.62 1.85 1.85 0 0 1-.23-1 1.67 1.67 0 0 1 .4-1.18 2.53 2.53 0 0 1 1-.66 6 6 0 0 1 1.46-.3q.81-.07 1.64-.07zm-.32 1.12h-1a4.65 4.65 0 0 0-.94.17 1.78 1.78 0 0 0-.7.37.85.85 0 0 0-.28.66.92.92 0 0 0 .12.48 1 1 0 0 0 .31.32 1.25 1.25 0 0 0 .43.17 2.38 2.38 0 0 0 .48 0 1.79 1.79 0 0 0 1.4-.54A2 2 0 0 0 136 35v-.34zM140.59 31.22v1.08a1.91 1.91 0 0 1 .34-.49 2.43 2.43 0 0 1 .49-.4 2.4 2.4 0 0 1 .61-.27 2.46 2.46 0 0 1 .69-.1 2.54 2.54 0 0 1 1.09.21 2.21 2.21 0 0 1 .76.57 2.32 2.32 0 0 1 .45.84 3.58 3.58 0 0 1 .14 1v4.05h-1.3v-3.58a4.48 4.48 0 0 0-.06-.76 1.83 1.83 0 0 0-.23-.63 1.23 1.23 0 0 0-.46-.44 1.49 1.49 0 0 0-.74-.17 1.57 1.57 0 0 0-1.26.59 2.36 2.36 0 0 0-.49 1.56v3.47h-1.3v-5.12-.68-.73zM152 32.88a1.58 1.58 0 0 0-.62-.53 1.9 1.9 0 0 0-.88-.21 2 2 0 0 0-.9.19 2.06 2.06 0 0 0-.67.52 2.26 2.26 0 0 0-.42.75 2.84 2.84 0 0 0 0 1.79 2.26 2.26 0 0 0 .42.75 2 2 0 0 0 .68.52 2.23 2.23 0 0 0 1.81 0 1.86 1.86 0 0 0 .67-.52l.87.79a2.8 2.8 0 0 1-1 .75 3.5 3.5 0 0 1-1.41.27 3.84 3.84 0 0 1-1.4-.25A3.32 3.32 0 0 1 148 37a3.2 3.2 0 0 1-.74-1.08 3.6 3.6 0 0 1-.27-1.42 3.64 3.64 0 0 1 .26-1.41A3.19 3.19 0 0 1 148 32a3.26 3.26 0 0 1 1.11-.7 3.8 3.8 0 0 1 1.39-.3 3.64 3.64 0 0 1 1.37.28 2.51 2.51 0 0 1 1.08.8zM155.76 28.87a.77.77 0 0 1-.25.59.86.86 0 0 1-.61.23.83.83 0 0 1-.6-.24.79.79 0 0 1-.25-.59.81.81 0 0 1 .25-.6.83.83 0 0 1 .6-.24.85.85 0 0 1 .61.24.8.8 0 0 1 .25.61zm-.21 8.89h-1.3v-6.54h1.3zM161.88 33.53a1.3 1.3 0 0 0-.44-1.08 1.83 1.83 0 0 0-1.17-.35 2.57 2.57 0 0 0-1 .21 2.63 2.63 0 0 0-.82.54l-.69-.83a3.48 3.48 0 0 1 1.18-.72 4.22 4.22 0 0 1 1.5-.26 3.37 3.37 0 0 1 1.22.2 2.31 2.31 0 0 1 .85.54 2.24 2.24 0 0 1 .5.81 3 3 0 0 1 .17 1v3.55a3.58 3.58 0 0 0 .08.6H162a4.07 4.07 0 0 1-.11-.94 2.51 2.51 0 0 1-.9.81 2.71 2.71 0 0 1-1.29.29 3.38 3.38 0 0 1-.81-.1 2.33 2.33 0 0 1-.77-.34 1.9 1.9 0 0 1-.57-.62 1.85 1.85 0 0 1-.23-1 1.67 1.67 0 0 1 .4-1.18 2.53 2.53 0 0 1 1-.66 6 6 0 0 1 1.46-.3q.81-.07 1.64-.07zm-.32 1.12h-1a4.65 4.65 0 0 0-.94.17 1.78 1.78 0 0 0-.7.37.85.85 0 0 0-.28.66.92.92 0 0 0 .12.48 1 1 0 0 0 .31.32 1.25 1.25 0 0 0 .43.17 2.38 2.38 0 0 0 .48 0 1.79 1.79 0 0 0 1.4-.54 2 2 0 0 0 .49-1.37v-.34zM166.61 37.76h-1.3V27.34h1.3zM172.39 28h3a6 6 0 0 1 1.43.16 3.12 3.12 0 0 1 1.1.49 2.23 2.23 0 0 1 .7.84 2.78 2.78 0 0 1 .25 1.23 2.72 2.72 0 0 1-.27 1.25 2.3 2.3 0 0 1-.74.85 3.32 3.32 0 0 1-1.13.49 6 6 0 0 1-1.41.16h-1.54v4.29h-1.36zm1.36 4.31h1.45a4.37 4.37 0 0 0 .92-.09 2.29 2.29 0 0 0 .72-.28 1.29 1.29 0 0 0 .47-.49 1.53 1.53 0 0 0 .17-.74 1.45 1.45 0 0 0-.17-.74 1.39 1.39 0 0 0-.47-.48 2 2 0 0 0-.71-.26 5 5 0 0 0-.9-.08h-1.47zM180.23 32v-.73h1.23v1.1a2.26 2.26 0 0 1 .81-.93 2.11 2.11 0 0 1 1.19-.35 2 2 0 0 1 .51.06l.03 1.15a2.47 2.47 0 0 0-.59-.07 1.8 1.8 0 0 0-.81.17 1.66 1.66 0 0 0-.57.46 2 2 0 0 0-.34.67 2.82 2.82 0 0 0-.11.79v3.43h-1.3v-5.12c-.04-.18-.04-.4-.05-.63zM191.6 34.48a3.53 3.53 0 0 1-.27 1.39 3.31 3.31 0 0 1-.74 1.1 3.37 3.37 0 0 1-1.12.72 3.93 3.93 0 0 1-2.78 0 3.28 3.28 0 0 1-1.12-.72 3.36 3.36 0 0 1-.74-1.1 3.53 3.53 0 0 1-.27-1.39 3.48 3.48 0 0 1 .27-1.39 3.3 3.3 0 0 1 .74-1.08 3.34 3.34 0 0 1 1.12-.71 3.92 3.92 0 0 1 2.78 0 3.42 3.42 0 0 1 1.12.71 3.25 3.25 0 0 1 .74 1.08 3.48 3.48 0 0 1 .27 1.39zm-1.35 0a2.76 2.76 0 0 0-.15-.89 2.26 2.26 0 0 0-.42-.75 2 2 0 0 0-.68-.52 2.36 2.36 0 0 0-1.87 0 2 2 0 0 0-.68.52 2.25 2.25 0 0 0-.42.75 2.83 2.83 0 0 0 0 1.79 2.33 2.33 0 0 0 .42.76 2 2 0 0 0 .68.52 2.36 2.36 0 0 0 1.87 0 2 2 0 0 0 .68-.52 2.34 2.34 0 0 0 .42-.76 2.76 2.76 0 0 0 .15-.9zM196.59 32.28h-1.74v3.39a1.29 1.29 0 0 0 .22.85.88.88 0 0 0 .7.25 2.14 2.14 0 0 0 .39 0 1.56 1.56 0 0 0 .37-.11v1.06a3.15 3.15 0 0 1-.52.13 3.47 3.47 0 0 1-.59 0 1.87 1.87 0 0 1-1.41-.51 2.13 2.13 0 0 1-.49-1.53v-3.53h-1.25v-1.06h1.25v-1.87h1.28v1.87h1.74zM204 34.43v.22a1.86 1.86 0 0 1 0 .22h-5.2a1.92 1.92 0 0 0 .19.77 2 2 0 0 0 .46.63 2.14 2.14 0 0 0 .67.42 2.16 2.16 0 0 0 .81.15 2.19 2.19 0 0 0 1.14-.29 2.33 2.33 0 0 0 .76-.7l.91.73a3.25 3.25 0 0 1-1.23 1 4 4 0 0 1-3 .08 3.18 3.18 0 0 1-1.09-.7 3.22 3.22 0 0 1-.72-1.08 3.64 3.64 0 0 1-.26-1.41 3.74 3.74 0 0 1 .26-1.4 3.2 3.2 0 0 1 .71-1.1 3.25 3.25 0 0 1 1.08-.71 3.7 3.7 0 0 1 2.65 0 2.7 2.7 0 0 1 1 .68 3 3 0 0 1 .63 1.07 4.24 4.24 0 0 1 .23 1.42zm-1.32-.52a2.49 2.49 0 0 0-.13-.72 1.66 1.66 0 0 0-.34-.59 1.63 1.63 0 0 0-.57-.39 2 2 0 0 0-.79-.14 2.09 2.09 0 0 0-.78.14 2 2 0 0 0-.63.39 2.06 2.06 0 0 0-.44.59 1.87 1.87 0 0 0-.2.72zM210.4 32.88a1.58 1.58 0 0 0-.62-.53 1.9 1.9 0 0 0-.88-.21 2 2 0 0 0-.9.19 2.06 2.06 0 0 0-.67.52 2.26 2.26 0 0 0-.42.75 2.84 2.84 0 0 0 0 1.79 2.26 2.26 0 0 0 .42.75 2 2 0 0 0 .68.52 2.23 2.23 0 0 0 1.81 0 1.86 1.86 0 0 0 .67-.52l.87.79a2.8 2.8 0 0 1-1 .75 3.5 3.5 0 0 1-1.41.27 3.84 3.84 0 0 1-1.4-.25 3.32 3.32 0 0 1-1.11-.7 3.2 3.2 0 0 1-.74-1.08 3.6 3.6 0 0 1-.27-1.42 3.64 3.64 0 0 1 .26-1.41 3.19 3.19 0 0 1 .73-1.09 3.26 3.26 0 0 1 1.11-.7 3.8 3.8 0 0 1 1.39-.25 3.64 3.64 0 0 1 1.37.28 2.51 2.51 0 0 1 1.08.8zM215.84 32.28h-1.74v3.39a1.29 1.29 0 0 0 .22.85.88.88 0 0 0 .7.25 2.14 2.14 0 0 0 .39 0 1.56 1.56 0 0 0 .37-.11v1.06a3.15 3.15 0 0 1-.52.13 3.47 3.47 0 0 1-.59 0 1.87 1.87 0 0 1-1.41-.51 2.13 2.13 0 0 1-.49-1.53v-3.53h-1.25v-1.06h1.25v-1.87h1.28v1.87h1.74zM218.69 28.87a.77.77 0 0 1-.25.59.86.86 0 0 1-.61.23.83.83 0 0 1-.6-.24.79.79 0 0 1-.25-.59.81.81 0 0 1 .25-.6.83.83 0 0 1 .6-.24.85.85 0 0 1 .61.24.8.8 0 0 1 .25.61zm-.21 8.89h-1.3v-6.54h1.3zM227.36 34.48a3.53 3.53 0 0 1-.27 1.39 3.31 3.31 0 0 1-.74 1.1 3.37 3.37 0 0 1-1.12.72 3.93 3.93 0 0 1-2.78 0 3.28 3.28 0 0 1-1.12-.72 3.36 3.36 0 0 1-.74-1.1 3.53 3.53 0 0 1-.27-1.39 3.48 3.48 0 0 1 .27-1.39 3.3 3.3 0 0 1 .74-1.08 3.34 3.34 0 0 1 1.12-.71 3.92 3.92 0 0 1 2.78 0 3.42 3.42 0 0 1 1.12.71 3.25 3.25 0 0 1 .74 1.08 3.48 3.48 0 0 1 .27 1.39zm-1.35 0a2.76 2.76 0 0 0-.15-.89 2.26 2.26 0 0 0-.42-.75 2 2 0 0 0-.68-.52 2.36 2.36 0 0 0-1.87 0 2 2 0 0 0-.68.52 2.25 2.25 0 0 0-.42.75 2.83 2.83 0 0 0 0 1.79 2.33 2.33 0 0 0 .42.76 2 2 0 0 0 .68.52 2.36 2.36 0 0 0 1.87 0 2 2 0 0 0 .68-.52 2.34 2.34 0 0 0 .42-.76 2.76 2.76 0 0 0 .14-.9zM230.32 31.22v1.08a1.91 1.91 0 0 1 .34-.49 2.43 2.43 0 0 1 .49-.4 2.4 2.4 0 0 1 .61-.27 2.46 2.46 0 0 1 .69-.1 2.54 2.54 0 0 1 1.09.21 2.21 2.21 0 0 1 .76.57 2.32 2.32 0 0 1 .45.84 3.58 3.58 0 0 1 .14 1v4.05h-1.3v-3.58a4.48 4.48 0 0 0-.06-.76 1.83 1.83 0 0 0-.23-.63 1.23 1.23 0 0 0-.46-.44 1.49 1.49 0 0 0-.74-.17 1.57 1.57 0 0 0-1.26.59 2.36 2.36 0 0 0-.49 1.56v3.47h-1.3v-5.12-.68-.73z" />
+                    <path class="cls-2" d="M57 30.52l7.87 1.28v5.81H57zm13.3-17h-5.43v-1.64c0-2.39.45-4.47 3.48-4.47a8.83 8.83 0 0 1 1.95.25V.88a5.56 5.56 0 0 0-1-.2 19.26 19.26 0 0 0-2.99-.22C58.1.46 57 6.11 57 11.63v8.93l13.3-2.16zM74 50h7.87V36.32a10.67 10.67 0 0 0 6.27 1.82 11.36 11.36 0 0 0 6-1.66L74 33.23zm13.92-37.07a10.39 10.39 0 0 0-6.31 2v-1.46H74v4.38l20.19-3.26a12.1 12.1 0 0 0-6.27-1.66zM45.24 28.62A4.86 4.86 0 0 1 41 30.81a5 5 0 0 1-5.14-5.28A5.05 5.05 0 0 1 41 20.26a4.86 4.86 0 0 1 4.24 2.2l8.05-1.3c-1.72-4.95-6.36-8.23-12.29-8.23-7.54 0-13 5.3-13 12.61s5.48 12.61 13 12.61c5.93 0 10.57-3.28 12.29-8.23z" />
+                    <path d="M64.87 20.53v11.26L57 30.52v-10l13.3-2.12v2.13zm29.25 16L74 33.23V17.85l20.19-3.26c3.5 2.09 5.66 6 5.66 11a12.56 12.56 0 0 1-5.72 10.89zM92 25.54a5.14 5.14 0 1 0-10.28 0 5.14 5.14 0 1 0 10.28 0z" fill="#addc91" />
+                    <path class="cls-2" d="M14.15 12.93a10.65 10.65 0 0 0-6.27 1.82V1H0v36.6h7.6v-1.42a10.38 10.38 0 0 0 6.32 2c7 0 11.93-5.18 11.93-12.61 0-7.22-5.03-12.64-11.7-12.64zm-1.32 17.88a5 5 0 0 1-5.14-5.28 5.05 5.05 0 0 1 5.14-5.28A5 5 0 0 1 18 25.54a5 5 0 0 1-5.17 5.27z" />
+                </svg>
+
+                <header class="pagetitle"><h1>Housing counselors near you</h1></header>
+                <p class="hud_hca_api_the_results hud_hca_api_print_show cfpb_hide">
+                    10 closest results to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode }}</span>
+                </p>
+                <p class="cfpb_hud_hca_api_print_text">
+                    The counseling agencies on this list are approved
+                    by the U.S. Department of Housing and Urban Development (HUD),
+                    and they can offer independent advice about whether a particular
+                    set of mortgage loan terms is a good fit based on your objectives and circumstances,
+                    often at little or no cost to you.
+                    This list shows you several approved agencies in your area.
+                    You can find other approved counseling agencies at the
+                    Consumer Financial Protection Bureau’s (CFPB) website:
+                    <a href="consumerfinance.gov/mortgagehelp">
+                        consumerfinance.gov/mortgagehelp
+                    </a>
+                    or by calling 1-855-411-CFPB (2372).
+                    You can also access a list of nationwide
+                    HUD-approved counseling agencies at:
+                    <a href="https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm">
+                        https://apps.hud.gov/offices/hsg/sfh/hcc/hcs.cfm
+                    </a>
+                </p>
+                <div id="hud_hca_api_results_container" class="hud_hca_api_results">
+                    <div id="hud_hca_api_results_meta_container" class="hud_hca_api_results_meta clearfix">
+                        <div id="hud_hca_api_results_info" class="hud_hca_api_results_info two-col hud_hca_api_print_hide">
+                            <div class="hud_hca_api_results_total col">
+                                <p>10 closest results to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode }}</span></p>
+                            </div><!-- end .hud_hca_api_results_total -->
+                            <div class="hud_hca_api_results_actions col">
+                                <p>
+                                    <span class="hud_hca_api_results_print"><span class="hud_hca_api_no_js_print_text">Print with Browser</span></span>
+                                    <span class="hud_hca_api_results_save">
+                                        <a href="/save-hud-counselors-list"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                           Save list as PDF
+                                       </a>
+                                   </span>
+                                </p>
+                            </div><!-- end .hud_hca_api_results_actions -->
+                            <div class="hud_hca_api_grid_three hud_hca_api_titles">
+                                <div class="col">
+                                    <h2>Agency</h2>
+                                </div>
+                                <div class="col">
+                                    <h2>Services</h2>
+                                </div>
+                                <div class="col last">
+                                    <h2>Distance</h2>
+                                </div>
+                            </div>
+                        </div><!-- end .hud_hca_api_results_info -->
+                        <div id="hud_hca_api_results_list_container" class="hud_hca_api_results_list">
+                            <ol class="hud_hca_api_results_listing hud_hca_api_print">
+                                {% for counselor in api_json.counseling_agencies %}
+                                <li class="hud_hca_api_result hud_hca_api_grid_three">
+                                    <div class="col">
+                                        <h2 class="cfpb_visually_hide">Agency</h2>
+                                        <div class="hud_hca_api_counselor">
+                                            <a href="{{ counselor.weburl }}" class="icon-link icon-link__external-link"><span class="icon-link_text">{{ counselor.nme }}</span></a>
+                                        </div>
+                                        <div class="hud_hca_api_counselor_address">
+                                            <span class="hud_hca_api_adr">
+                                                {{ counselor.adr1 }}
+                                                {% if counselor.adr2 and counselor.adr2 != ' ' %}
+                                                <br> {{ counselor.adr2 }}
+                                                {% endif %}
+                                            </span>
+                                            <span class="hud_hca_api_region">{{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}</span>
+                                        </div>
+                                        <div class="hud_hca_api_counselor_meta">
+                                            <span class="hud_hca_api_results_listing_title">Website: <span class="hud_hca_api_site">
+                                                <a href="{{ counselor.weburl }}" class="icon-link icon-link__external-link"><span class="icon-link_text">{{ counselor.weburl }}</span></a>
+                                            </span></span>
+                                            <span class="hud_hca_api_results_listing_title">Phone: <span class="hud_hca_api_tel">{{ counselor.phone1}}</span></span>
+                                            <span class="hud_hca_api_results_listing_title">Email Address: <span class="hud_hca_api_email">
+                                                <a href="mailto:{{counselor.email}}">{{counselor.email}}</a>
+                                            </span></span>
+                                            <div class="show-hide-mod default-hidden">
+                                                <span class="show-hide-icon hud_hca_api_print_hide"></span>
+                                                <button class="a-btn a-btn__link show-hide-link hud_hca_api_print_hide" data-texthide="Hide" data-textshow="View">
+                                                    <span class="show-hide-name">View</span>
+                                                    languages offered at this location
+                                                </button>
+                                                <div class="hud_hca_api_print_show">
+                                                    <span class="hud_hca_api_results_listing_title">Languages:</span> <span class="hud_hca_api_lang">{{ counselor.languages|join:", " }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <h2 class="cfpb_visually_hide">Services</h2>
+                                        <div class="hud_hca_api_services">
+                                            <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span>
+                                            <span class="hud_hca_api_serv">
+                                                <span class="hud_hca_api_serv_item">{% if counselor.services %}{{ counselor.services|join:", " }}{% else %}Not available{% endif %}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col last">
+                                        <h2 class="cfpb_visually_hide">Distance</h2>
+                                        <div class="hud_hca_api_distance">
+                                            <span class="hud_hca_api_the_distance"><span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Distance</span><span class="hud_hca_api_miles">{{ counselor.distance|floatformat }}</span> miles</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section><!--/main_content-->
+    </div><!-- /wrapper -->
+</body>
+</html>

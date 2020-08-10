@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import "_templates/social-media.html" as social_media with context %}
+{% import "molecules/social-media.html" as social_media with context %}
 {% set page={"search_description":"Use this tool throughout your homebuying process to see how your credit score, home price, down payment, and more can affect mortgage interest rates."} %}
 {% set active_page = "explore-rates" %}
 {% set page_js = "explore-rates" %}
@@ -39,15 +39,18 @@ home price, down payment, and more can affect mortgage interest rates.
 <main class="content">
     <div class="content_wrapper">
         <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a href="/owning-a-home/" class="breadcrumbs_link">Owning a Home</a>
+            <a href="/owning-a-home/" class="breadcrumbs_link">Buying a House</a>
         </nav>
     </div>
     <div class="content_wrapper">
-        <div class="rate-checker content_main u-pb0">
-            <div class="result">
+        <div class="content_main u-pb0">
+
+            {% include "_templates/no_js.html" %}
+
+            <div class="rate-checker">
                 <section class="page-intro content-l">
                     <div class="content-l_col content-l_col-2-3">
-                        <h1 class="page-title">Explore interest rates</h1>
+                        <h1>Explore interest rates</h1>
                         <p class="lead">Use this tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.  See how your credit score, loan type, home price, and down payment amount can affect your rate.   Knowing your options and what to expect helps ensure that you get a mortgage that is right for you.  Check back often -- the rates in the tool are updated every Wednesday and Friday.</p>
                         <div class="page-intro_cols">
                             <p class="page-intro_col-left u-mb30">
@@ -98,17 +101,24 @@ home price, down payment, and more can affect mortgage interest rates.
                             {#
                               Credit alert for when low credit score is chosen.
                             #}
-                            <div id="credit-score-alert"
-                                 class="result-alert credit-alert u-hidden"
-                                 role="alert">
-                              <p class="alert">
-                                Many lenders do not accept borrowers with credit scores less than 620.
-                                Even if your score is low, you may still have options.
-                                <a href="https://www.consumerfinance.gov/mortgagehelp/">
-                                  Contact a housing counselor
-                                </a>
-                                to learn more.
-                              </p>
+
+                            <div class="result-alert
+                                        credit-alert
+                                        u-hidden"
+                             id="credit-score-alert"
+                             role="alert">
+                                <div class="a-form-alert a-form-alert__error">
+                                    {{ svg_icon('warning-round') }}
+                                    <span class="a-form-alert_text">
+                                        Many lenders do not accept
+                                        borrowers with credit scores less than 620.
+                                        Even if your score is low, you may still have options.
+                                        <a href="https://www.consumerfinance.gov/mortgagehelp/">
+                                            Contact a housing counselor
+                                        </a>
+                                        to learn more.
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <p class="form-sub">Credit score has a big impact on the rate you’ll receive. <a href="/askcfpb/319/how-does-my-credit-score-affect-my-ability-to-get-a-mortgage-loan.html" id="ask-cfpb-credit" target="_blank" rel="noopener noreferrer">Learn more</a></p>
@@ -225,14 +235,25 @@ home price, down payment, and more can affect mortgage interest rates.
                         {#
                           Alert when down payment is greater than house price.
                         #}
-                        <div id="dp-alert"
-                             class="downpayment-warning alert-alt half-width-gt-1230 u-hidden"
+                        <div class="downpayment-warning
+                                    half-width-gt-1230
+                                    u-hidden"
+                             id="dp-alert"
                              role="alert">
-                          Your down payment cannot be more than your house price.
+                            <div class="a-form-alert a-form-alert__warning">
+                                {{ svg_icon('warning-round') }}
+                                <span class="a-form-alert_text">
+                                    Your down payment cannot be more than your
+                                    house price.
+                                </span>
+                            </div>
                         </div>
                     </section>
                     <section class="form-sub warning u-hidden" id="county-warning">
-                        <p class="warning-text"></p>
+                        <div class="a-form-alert a-form-alert__warning">
+                            {{ svg_icon('warning-round') }}
+                            <span class="a-form-alert_text"></span>
+                        </div>
                     </section>
                     <section class="calc-loan-details wrapper">
                         <div class="upper rate-structure half-width-gt-1230">
@@ -244,7 +265,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                 </select>
                             </div>
                         </div>
-                        <div class="upperloan-term half-width-gt-1230">
+                        <div class="upper loan-term half-width-gt-1230">
                             <label for="loan-term">Loan term</label>
                             <div class="select-content a-select">
                                 <select name="loan-term" class="recalc" id="loan-term">
@@ -276,10 +297,18 @@ home price, down payment, and more can affect mortgage interest rates.
                         </div>
                     </section>
                     <section class="form-sub warning u-hidden" id="arm-warning">
-                        <p class="warning-text">While some lenders may offer FHA, VA, or 15-year adjustable-rate mortgages, they are rare. We don’t have enough data to display results for these combinations. Choose a fixed rate if you’d like to try these options.</p>
+                        <div class="a-form-alert a-form-alert__warning">
+                            {{ svg_icon('warning-round') }}
+                            <span class="a-form-alert_text">
+                                While some lenders may offer FHA, VA, or 15-year adjustable-rate mortgages, they are rare. We don’t have enough data to display results for these combinations. Choose a fixed rate if you’d like to try these options.
+                            </span>
+                        </div>
                     </section>
                     <section class="form-sub warning u-hidden" id="hb-warning">
-                        <p class="warning-text"></p>
+                        <div class="a-form-alert a-form-alert__warning">
+                            {{ svg_icon('warning-round') }}
+                            <span class="a-form-alert_text"></span>
+                        </div>
                     </section>
                     <section class="form-sub calc-subsection">
                         <p><a href="../loan-options/" target="_blank" rel="noopener noreferrer">Learn about loan term, rate type, and loan type</a></p>
@@ -305,17 +334,15 @@ home price, down payment, and more can affect mortgage interest rates.
                     </div>
                     <section id="chart-section" class="chart">
                         <div class="chart-menu">
-                            <button class="chart-menu_btn
-                                           cf-icon
-                                           cf-icon__after
-                                           cf-icon-down">
+                            <button class="chart-menu_btn">
                                 Download chart
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 651.7 1200" class="cf-icon-svg"><path d="M507.1 692.8c-15.6-15.6-40.9-15.6-56.6 0l-85.1 85.1V466.6c0-22.1-17.9-40-40-40s-40 17.9-40 40V778l-85.1-85.1c-15.6-15.6-40.9-15.6-56.6 0-15.6 15.6-15.6 40.9 0 56.6L297 902.9c7.5 7.5 17.7 11.7 28.3 11.7s20.8-4.2 28.3-11.7l153.3-153.4c15.8-15.7 15.8-41 .2-56.7z"></path><path d="M30 161c-16.5 0-30 13.5-30 30v827.8c0 16.5 13.5 30 30 30h591.7c16.5 0 30-13.5 30-30V343.7L469 161H30zm389.6 60v134.8c0 19.9 16.3 36.2 36.2 36.2h135.9V988.8H60V221h359.6z"></path></svg>
                             </button>
                             <ul class="chart-menu_options">
-                                <li data-export-type="0">PNG</li>
-                                <li data-export-type="1">SVG</li>
-                                <li data-export-type="2">JPEG</li>
-                                <li data-export-type="3">Print chart</li>
+                                <li>PNG</li>
+                                <li>SVG</li>
+                                <li>JPEG</li>
+                                <li>Print chart</li>
                             </ul>
                         </div>
                         <figure class="data-enabled loading">
@@ -331,33 +358,40 @@ home price, down payment, and more can affect mortgage interest rates.
                         </figure>
 
                         {# Alert Shown when there are no results. #}
+                        {# TODO: Look into using the default notification macro #}
                         <div id="chart-result-alert"
                              class="result-alert
                                     m-notification
                                     m-notification__error"
                              role="alert">
-                            <span class="m-notification_icon cf-icon"></span>
+                            {{ svg_icon('error-round') }}
                             <div class="m-notification_content">
                                 <div class="h4 m-notification_message">We're sorry!</div>
-                                <div class="h4 m-notification_explanation">
+                                <p class="m-notification_explanation">
                                     Based on the information you entered,
                                     we don't have enough data to display results.
                                     Change your settings or
                                     <a id="reload-link" class="defaults-link" href="">
                                         revert to our default values.
                                     </a>
-                                </div>
+                                </p>
                             </div>
                         </div>
                         {# Alert Shown when there was an API failure. #}
                         <div id="chart-fail-alert"
-                             class="result-alert chart-alert u-hidden"
+                             class="result-alert
+                                    m-notification
+                                    m-notification__error"
                              role="alert">
-                              <p class="alert">
-                                <strong>We're sorry!</strong>
-                                We're having trouble connecting to our data.<br>
-                                Try again another time.
-                              </p>
+                            {{ svg_icon('error-round') }}
+                            <div class="m-notification_content">
+                                <div class="h4 m-notification_message">We're sorry!</div>
+                                <p class="m-notification_explanation">
+                                    <strong>We're sorry!</strong>
+                                    We're having trouble connecting to our data.<br>
+                                    Try again another time.
+                                </p>
+                            </div>
                         </div>
                     </section>
                     <p id="timestamp-p" class="data-enabled timestamp-message clear">These rates are current as of <strong id="timestamp">…</strong>.</p>
@@ -483,14 +517,12 @@ home price, down payment, and more can affect mortgage interest rates.
                                 <p>
                                     <a id="go-ask-credit-score"
                                        class="a-link
-                                              a-link__jump
-                                              cf-icon
-                                              cf-icon__after
-                                              cf-icon-right"
+                                              a-link__jump"
                                         href="/askcfpb/315/what-is-my-credit-score.html"
                                         target="_blank"
                                         rel="noopener noreferrer">
-                                    <span class="a-link_text">Learn more about credit scores</span>
+                                        <span class="a-link_text">Learn more about credit scores</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                     </a>
                                 </p>
                             </li>
@@ -500,14 +532,12 @@ home price, down payment, and more can affect mortgage interest rates.
                                 <p>
                                     <a id="go-ask-good-credit"
                                        class="a-link
-                                              a-link__jump
-                                              cf-icon
-                                              cf-icon__after
-                                              cf-icon-right"
+                                              a-link__jump"
                                        href="/askcfpb/318/how-do-i-get-and-keep-a-good-credit-score.html"
                                        target="_blank"
                                        rel="noopener noreferrer">
                                         <span class="a-link_text">Learn about improving your credit scores</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                     </a>
                                 </p>
                             </li>
@@ -517,14 +547,12 @@ home price, down payment, and more can affect mortgage interest rates.
                                 <p>
                                     <a id="go-ask-down-payment-affect"
                                        class="a-link
-                                              a-link__jump
-                                              cf-icon
-                                              cf-icon__after
-                                              cf-icon-right"
+                                              a-link__jump"
                                         href="/askcfpb/120/what-kind-of-down-payment-do-i-need-how-does-the-amount-of-down-payment-i-make-affect-the-terms-of-my-mortgage-loan.html"
                                         target="_blank"
                                         rel="noopener noreferrer">
                                         <span class="a-link_text">Learn more about down payments</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg"><path d="M65.1 1090.2c-35.9 0-65-29-65.1-64.9 0-17.3 6.8-33.9 19.1-46.1l383.6-383.5L19.1 212.2c-25.1-25.6-24.8-66.8.9-92 25.3-24.8 65.8-24.8 91.1 0l429.5 429.5c25.4 25.4 25.4 66.5 0 91.9L111 1071.2c-12.1 12.2-28.7 19.1-45.9 19z"></path></svg>
                                     </a>
                                 </p>
                             </li>
@@ -536,11 +564,29 @@ home price, down payment, and more can affect mortgage interest rates.
                             block__border-top
                             block__flush-top
                             block__padded-top
-                            note-ctr">
-                    <div class="note">
-                        <p class="alert"><strong>Check your credit report.</strong></p>
-                        If you haven’t checked your credit report recently, <a id="annualcreditreport" class="external-link" href="https://annualcreditreport.com" target="_blank" rel="noopener noreferrer">do so now</a>. If you find errors, <a id="ask-dispute-credit-report" href="/askcfpb/314/how-do-i-dispute-an-error-on-my-credit-report.html" target="_blank" rel="noopener noreferrer">get them corrected</a> <strong>before</strong> you apply for a mortgage.
-                    </div> <!-- /.note -->
+                            credit-note-ctr">
+                    {# TODO: Look into using the default notification macro #}
+                    <div class="m-notification__borderless
+                                m-notification
+                                m-notification__warning
+                                m-notification__visible"
+                         role="alert">
+                        {{ svg_icon('warning-round') }}
+                        <div class="m-notification_content">
+                            <div class="h4 m-notification_message">Check your credit</div>
+                            <p class="m-notification_explanation">
+                                If you haven’t checked your credit report recently,
+                                <a class="external-link"
+                                   href="https://annualcreditreport.com"
+                                   target="_blank"
+                                   rel="noopener noreferrer">do so now</a>. If you find errors,
+                                <a href="/askcfpb/314/how-do-i-dispute-an-error-on-my-credit-report.html"
+                                   target="_blank"
+                                   rel="noopener noreferrer">get them corrected
+                               </a> before you apply for a mortgage.
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <section id="about" class="about wrapper">
                     <div class="content-l">
@@ -560,7 +606,6 @@ home price, down payment, and more can affect mortgage interest rates.
                 <!-- /.about -->
             </div>
             <!-- END .rate-checker -->
-            {% include "_templates/no_js.html" %}
         </div>
         <!-- /.content_main -->
     </div>

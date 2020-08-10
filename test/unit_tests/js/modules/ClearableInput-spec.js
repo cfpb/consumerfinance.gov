@@ -1,6 +1,4 @@
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const ClearableInput = require( BASE_JS_PATH + 'modules/ClearableInput' );
-
+import ClearableInput from '../../../../cfgov/unprocessed/js/modules/ClearableInput';
 import { simulateEvent } from '../../../util/simulate-event';
 
 let baseDom;
@@ -8,22 +6,22 @@ let clearBtnDom;
 let inputDom;
 
 const HTML_SNIPPET = `
-  <div class="o-form__input-w-btn_input-container">
-       <div class="m-btn-inside-input
-                   input-contains-label">
-           <label for="query" class="input-contains-label_before
-                                     input-contains-label_before__search">
-           </label>
-           <label for="query" class="input-contains-label_after
-                                     input-contains-label_after__clear">
-           </label>
-           <input type="text"
-                  title="Search the CFPB"
-                  class="a-text-input"
-                  value=""
-                  placeholder="Search the CFPB">
-       </div>
-  </div>
+<div class="o-form__input-w-btn_input-container">
+     <div class="m-btn-inside-input
+                 input-contains-label">
+         <label for="query" class="input-contains-label_before
+                                   input-contains-label_before__search">
+         </label>
+         <label for="query" class="input-contains-label_after
+                                   input-contains-label_after__clear">
+         </label>
+         <input type="text"
+                title="Search the CFPB"
+                class="a-text-input"
+                value=""
+                placeholder="Search the CFPB">
+     </div>
+</div>
 `;
 
 describe( 'ClearableInput', () => {
@@ -37,13 +35,13 @@ describe( 'ClearableInput', () => {
   describe( 'init function', () => {
     it( 'should hide the clear button when a value is empty', () => {
       new ClearableInput( baseDom ).init();
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( true );
+      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( true );
     } );
 
     it( 'should display the clear button when a value is present', () => {
       inputDom.value = 'testing init function';
       new ClearableInput( baseDom ).init();
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( false );
+      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( false );
     } );
   } );
 
@@ -51,16 +49,16 @@ describe( 'ClearableInput', () => {
     it( 'should hide itself', () => {
       inputDom.value = 'testing clear button';
       new ClearableInput( baseDom ).init();
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( false );
+      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( false );
       simulateEvent( 'mousedown', clearBtnDom );
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( true );
+      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( true );
     } );
 
     it( 'should clear the input value', () => {
       inputDom.value = 'testing clear button';
       new ClearableInput( baseDom ).init();
       simulateEvent( 'mousedown', clearBtnDom );
-      expect( inputDom.value ).toEqual( '' );
+      expect( inputDom.value ).toStrictEqual( '' );
     } );
   } );
 
@@ -70,7 +68,7 @@ describe( 'ClearableInput', () => {
 
       // Event code 65 is the `a` character.
       simulateEvent( 'keyup', inputDom, { keyCode: 65 } );
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( false );
+      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( false );
     } );
 
     it( 'should hide the clear button, if value not present', () => {
@@ -78,9 +76,9 @@ describe( 'ClearableInput', () => {
 
       // Event code 8 is backspace.
       simulateEvent( 'keyup', inputDom, { keyCode: 65 } );
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( false );
+      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( false );
       simulateEvent( 'keyup', inputDom, { keyCode: 8 } );
-      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toEqual( true );
+      expect( clearBtnDom.classList.contains( 'u-hidden' ) ).toStrictEqual( true );
     } );
   } );
 

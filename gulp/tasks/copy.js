@@ -1,8 +1,14 @@
 const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
-const configCopy = require( '../config' ).copy;
 const handleErrors = require( '../utils/handle-errors' );
-const del = require( 'del' );
+const paths = require( '../../config/environment' ).paths;
+
+/*
+  Path to the cf-icons SVG icons folder,
+  which gets copied into the static directory on production
+  so SVG references in CSS get resolved.
+*/
+const iconSrc = `${ paths.modules }/@cfpb/cfpb-icons/src/icons/*.svg`;
 
 /**
  * Generic copy files flow from source to destination.
@@ -17,41 +23,59 @@ function _genericCopy( src, dest ) {
     .pipe( gulp.dest( dest ) );
 }
 
-gulp.task( 'copy:icons', () => {
-  const icons = configCopy.icons;
-  return _genericCopy( icons.src, icons.dest );
+gulp.task( 'copy:root', () => {
+  const stream = _genericCopy(
+    `${ paths.unprocessed }/root/**/*`,
+    paths.processed
+  );
+  return stream;
 } );
 
-gulp.task( 'copy:jsonCode', () => {
-  const jsonCode = configCopy.jsonCode;
-  return _genericCopy( jsonCode.src, jsonCode.dest );
+gulp.task( 'copy:icons:main', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/icons/`
+  );
+  return stream;
 } );
 
-gulp.task( 'copy:jsonKBYO', () => {
-  const jsonKBYO = configCopy.jsonKBYO;
-  return _genericCopy( jsonKBYO.src, jsonKBYO.dest );
+gulp.task( 'copy:icons:oah', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/owning-a-home/icons/`
+  );
+  return stream;
 } );
 
-gulp.task( 'copy:timelinejs', () => {
-  const timelinejs = configCopy.timelinejs;
-  return _genericCopy( timelinejs.src, timelinejs.dest )
-    .on( 'end', () => {
-      del( timelinejs.dest + '/css/themes' );
-    } );
+gulp.task( 'copy:icons:r3k', () => {
+  const stream = _genericCopy(
+    iconSrc,
+    `${ paths.processed }/apps/regulations3k/icons/`
+  );
+  return stream;
 } );
 
 gulp.task( 'copy:lightbox2', () => {
-  const lightbox2 = configCopy.lightbox2;
-  return _genericCopy( lightbox2.src, lightbox2.dest );
+  const stream = _genericCopy(
+    `${ paths.modules }/lightbox2/dist/**/*`,
+    `${ paths.processed }/lightbox2`
+  );
+  return stream;
 } );
 
+
+gulp.task( 'copy:icons',
+  gulp.parallel(
+    'copy:icons:main',
+    'copy:icons:oah',
+    'copy:icons:r3k'
+  )
+);
 
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
-    'copy:jsonCode',
-    'copy:jsonKBYO',
-    'copy:timelinejs',
-    'copy:lightbox2'
+    'copy:lightbox2',
+    'copy:root'
   )
 );

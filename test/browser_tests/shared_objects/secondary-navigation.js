@@ -8,10 +8,10 @@ const secondaryNav = {
     _secondaryNav.element( by.css( '.o-expandable_target' ) ),
 
   showButton:
-    _secondaryNav.element( by.css( '.cf-icon-plus-round' ) ),
+    _secondaryNav.element( by.css( '.cf-icon-svg' ) ),
 
   hideButton:
-    _secondaryNav.element( by.css( '.cf-icon-minus-round' ) )
+    _secondaryNav.element( by.css( '.cf-icon-svg' ) )
 };
 
 module.exports = secondaryNav;

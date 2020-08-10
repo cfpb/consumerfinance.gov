@@ -8,7 +8,6 @@
    to keep the fuctionality of the API, but will not be saved across sessions.
    ========================================================================= */
 
-
 // Default storage type.
 let _storage;
 
@@ -76,7 +75,7 @@ function removeItem( key, storage ) {
 
 /**
  * Set the default session type.
- * @param {object} storage
+ * @param {Object} storage
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
  * @throws {Error} If parameter isn't a object.
@@ -115,9 +114,9 @@ function _getStorageType( storage ) {
 }
 
 // Expose public methods.
-module.exports = {
-  setItem:    setItem,
-  getItem:    getItem,
-  removeItem: removeItem,
-  setStorage: setStorage
+export {
+  setItem,
+  getItem,
+  removeItem,
+  setStorage
 };

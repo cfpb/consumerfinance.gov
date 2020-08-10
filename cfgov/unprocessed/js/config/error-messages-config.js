@@ -3,7 +3,6 @@
    These messages are manually mirrored on the Python side in config.py
    ========================================================================== */
 
-
 const ERROR_MESSAGES = {
   CHECKBOX: {
     REQUIRED: 'Please select at least %s of the options.'
@@ -47,4 +46,4 @@ const ERROR_MESSAGES = {
   }
 };
 
-module.exports = Object.freeze( ERROR_MESSAGES );
+export default Object.freeze( ERROR_MESSAGES );

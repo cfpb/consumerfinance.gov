@@ -6,11 +6,16 @@ import { simulateEvent } from '../../../util/simulate-event';
 let footerBtnDom;
 
 const HTML_SNIPPET = `
-  <a class="a-btn a-btn__secondary o-footer_top-button"
-     data-gtm_ignore="true" data-js-hook="behavior_return-to-top"
-     href="#">
-      Back to top <span class="cf-icon cf-icon-arrow-up"></span>
-  </a>
+<div class="skip-nav">
+    <a class="skip-nav_link" href="#main">
+        Skip to main content
+    </a>
+</div>
+<a class="a-btn a-btn__secondary o-footer_top-button"
+   data-gtm_ignore="true" data-js-hook="behavior_return-to-top"
+   href="#">
+    Back to top
+</a>
 `;
 
 /**
@@ -26,9 +31,6 @@ function scrollTo( xCoord, yCoord ) {
 describe( 'footer-button', () => {
   beforeAll( () => {
     window.scrollTo = scrollTo;
-  } );
-
-  beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     footerBtnDom = document.querySelector( '.o-footer_top-button' );
   } );

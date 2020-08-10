@@ -43,7 +43,7 @@ describe( 'array-helpers', () => {
 
       const newArr = arrayHelpers.uniquePrimitives( testArray );
 
-      expect( newArr ).toEqual( testArrayMatch );
+      expect( newArr ).toStrictEqual( testArrayMatch );
     } );
   } );
 } );

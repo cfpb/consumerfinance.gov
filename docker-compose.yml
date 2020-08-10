@@ -1,17 +1,9 @@
-version: "3.3"
+version: "3.4"
+
+volumes:
+    postgres_data:
 
 services:
-    mysql:
-        image: vsamov/mysql-5.1.73
-        ports:
-            - "3306:3306"
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: v1
-            MYSQL_USER: v1
-            MYSQL_PASSWORD: v1
-        volumes:
-            - "/var/lib/mysql"
     elasticsearch:
         build:
             context: ./
@@ -19,30 +11,49 @@ services:
         ports:
             - "9200:9200"
             - "9300:9300"
+
     postgres:
         image: postgres:10.3
         restart: always
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
         environment:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
-    python:
-        build: .
         ports:
-            - "8000:8000"
-        environment:
-            ES_HOST: elasticsearch
-        volumes:
-            - ./:/src/cfgov-refresh
-            - ./develop-apps:/src/develop-apps
-        entrypoint:
-            - sh
-            - /src/cfgov-refresh/cfgov/entrypoint.sh
+            - "5432:5432"
+
+    python:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                scl_python_version: rh-python36
         depends_on:
             - elasticsearch
-            - mysql
             - postgres
-        working_dir: /src/cfgov-refresh
-        env_file: .python_env
         stdin_open: true
         tty: true
+
+    docs:
+        build:
+            context: ./
+            dockerfile: ./docker/docs/Dockerfile
+        ports:
+            - "8888:8888"
+        environment:
+            LANG: en_US.utf8
+            LC_ALL: en_US.utf8
+        volumes:
+            - ./:/src/cfgov-refresh
+        entrypoint:
+            - sh
+            - /src/cfgov-refresh/docker/docs/entrypoint.sh
+        working_dir: /src/cfgov-refresh
+        stdin_open: true
+        tty: true
+networks:
+    default:
+        external:
+            name: cfgov

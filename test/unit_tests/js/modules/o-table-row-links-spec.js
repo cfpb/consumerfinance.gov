@@ -11,27 +11,42 @@ let nonLinkRowCellDom;
 let locationSpy;
 
 const HTML_SNIPPET = `
-  <table class="o-table__row-links">
-      <tbody>
-          <tr>
-              <th>cell1</th>
-              <th class="nonLinkRowCell">cell2</th>
-              <th>cell3</th>
-              <th>cell4</th>
-          </tr>
-          <tr>
-              <td><a href="https://www.example.com">linkCell5</a></td>
-              <td class="linkRowCell">cell6</td>
-              <td>cell7</td>
-              <td>cell8</td>
-          </tr>
-      </tbody>
-  </table>
+<table class="o-table__row-links">
+    <tbody>
+        <tr>
+            <th>cell1</th>
+            <th class="nonLinkRowCell">cell2</th>
+            <th>cell3</th>
+            <th>cell4</th>
+        </tr>
+        <tr>
+            <td><a href="https://www.example.com">linkCell5</a></td>
+            <td class="linkRowCell">cell6</td>
+            <td>cell7</td>
+            <td>cell8</td>
+        </tr>
+    </tbody>
+</table>
 `;
+
+/**
+ * Create a mock for the window.location object, for testing purposes.
+ */
+function mockWindowLocation() {
+  delete window.location;
+  window.location = {
+    protocol: 'http:',
+    host: 'localhost',
+    pathname: '/',
+    href: 'http://localhost/',
+    assign: jest.fn()
+  };
+}
 
 describe( 'o-table-row-links', () => {
   beforeEach( () => {
-    window.location.assign = jest.fn();
+    mockWindowLocation();
+
     locationSpy = jest.spyOn( window.location, 'assign' );
 
     document.body.innerHTML = HTML_SNIPPET;

@@ -105,7 +105,7 @@
                             else 'Learn More' %}
                         {% set link = '<a class="' ~ link_class ~ '" href="' ~
                             link.url ~ '">' ~ link_text ~ '</a>' %}
-                        {{ parse_links( link ) | safe }}
+                        {{ link | safe }}
                     {% endif %}
                 </li>
             {% endfor %}

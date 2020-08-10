@@ -2,8 +2,9 @@ import re
 
 from django.conf import settings
 
+from regdown import extract_labeled_paragraph
+
 from regulations3k.models import Section
-from regulations3k.regdown import extract_labeled_paragraph
 
 
 DEFAULT_REGULATIONS_REFERENCE_MAPPING = [
@@ -37,13 +38,13 @@ def resolve_reference(reference):
     return (None, None)
 
 
-def get_contents_resolver(page):
+def get_contents_resolver(effective_version):
     """ Return a Regdown contents_resolver function for the RegulationPage
     This constructs a contents_resolver that will resolve references and
     return their contents for all sections that are part of the current
     EffectiveVersion served by the given page. """
     section_query = Section.objects.filter(
-        subpart__version=page.regulation.effective_version
+        subpart__version=effective_version
     )
 
     def contents_resolver(reference):
@@ -62,17 +63,25 @@ def get_contents_resolver(page):
     return contents_resolver
 
 
-def get_url_resolver(page):
+def get_url_resolver(page, date_str=None):
     """ Returns a Regdown url_resolver function for the RegulationPage
     This constructs a url_resolver that will resolve the URL of references to
     any section that is part of the current EffectiveVersion served by the
     given page. """
+
+    section_kwargs = {}
+    if date_str is not None:
+        section_kwargs['date_str'] = date_str
+
     def url_resolver(reference):
         dest_section_label, dest_paragraph_label = resolve_reference(reference)
+        section_kwargs['section_label'] = dest_section_label
         return '{page_url}{section_url}#{paragraph_label}'.format(
             page_url=page.url,
-            section_url=page.reverse_subpage('section',
-                                             args=([dest_section_label])),
+            section_url=page.reverse_subpage(
+                'section',
+                kwargs=section_kwargs
+            ),
             paragraph_label=dest_paragraph_label
         )
 
