@@ -30,7 +30,8 @@ module.exports = {
       `${ paths.unprocessed }/apps/**/js/**/*.js`,
       `!${ paths.unprocessed }/apps/**/node_modules/**`
     ],
-    test:  [
+    test: [
+      paths.test + '/cypress/**/*.js',
       paths.test + '/util/**/*.js',
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'

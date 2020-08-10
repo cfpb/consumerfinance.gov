@@ -3,21 +3,34 @@
  * which tracks the current app state and allows the views to update based on
  * state.
 */
-import { recalculateFinancials } from '../dispatchers/update-models.js';
+import { getProgramInfo } from '../dispatchers/get-model-values.js';
+import { recalculateFinancials, updateFinancial } from '../dispatchers/update-models.js';
 import { updateFinancialViewAndFinancialCharts, updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
+
+const urlVals = [
+  'pid', 'programHousing', 'programType', 'programLength',
+  'programRate', 'programStudentType', 'costsQuestion', 'expensesRegion',
+  'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign'
+];
 
 const stateModel = {
   stateDomElem: null,
   values: {
-    activeSection: null,
-    schoolSelected: null,
+    activeSection: false,
+    constantsLoaded: false,
+    schoolSelected: false,
     gotStarted: false,
+    gradMeterCohort: 'cohortRankByHighestDegree',
+    gradMeterCohortName: 'U.S.',
     costsQuestion: false,
-    programType: null,
-    programLength: null,
-    programRate: null,
-    programHousing: null
+    programType: false,
+    programLength: false,
+    programLevel: false,
+    programRate: false,
+    programHousing: false,
+    repayMeterCohort: 'cohortRankByHighestDegree',
+    repayMeterCohortName: 'U.S.'
   },
   textVersions: {
     programType: {
@@ -90,23 +103,42 @@ const stateModel = {
    * setValue - Public method to update model values
    * @param {String} name - the name of the property to update
    * @param {*} value - the value to be assigned
+   * @param {Boolean} updateURL - whether or not to update the URL
    */
-  setValue: function( name, value ) {
+  setValue: function( name, value, updateURL ) {
     updateStateInDom( name, value );
     if ( name === 'activeSection' ) {
       // In case this method gets used to update activeSection...
       stateModel.setActiveSection( value );
     } else {
       stateModel.values[name] = value;
-      updateUrlQueryString();
+      if ( updateURL !== false && urlVals.indexOf( name ) > -1 ) {
+        updateUrlQueryString();
+      }
     }
     if ( stateModel.textVersions.hasOwnProperty( name ) ) {
       const key = name + 'Text';
       stateModel.values[key] = stateModel.textVersions[name][value];
       updateSchoolItems();
     }
+
+    // When the meter buttons are clicked, updateSchoolItems
+    if ( name.indexOf( 'MeterThird' ) > 0 ) {
+      updateSchoolItems();
+    }
+
     // When program values are updated, recalculate, updateView
     if ( name.indexOf( 'program' ) === 0 ) {
+      if ( name === 'programType' && value === 'graduate' ) {
+        stateModel.setValue( 'programLevel', 'graduate' );
+      } else if ( name === 'programType' ) {
+        stateModel.setValue( 'programLevel', 'undergrad' );
+      }
+
+      if ( name === 'programLength' ) {
+        updateFinancial( 'other_programLength', value );
+      }
+
       recalculateFinancials();
       updateFinancialViewAndFinancialCharts();
     }

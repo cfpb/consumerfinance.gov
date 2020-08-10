@@ -7,6 +7,7 @@ import { closest } from '../../../../js/modules/util/dom-traverse';
 import { createFinancial, recalculateFinancials, updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
 import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { selectorMatches } from '../util/other-utils';
 import { updateState } from '../dispatchers/update-state.js';
 
 const financialView = {
@@ -85,7 +86,7 @@ const financialView = {
       value /= 100;
     }
 
-    if ( elem.matches( ':focus' ) ) {
+    if ( selectorMatches( elem, ':focus' ) ) {
       financialView._inputChangeTimeout = setTimeout(
         function() {
           updateFinancial( name, value );
@@ -122,13 +123,15 @@ const financialView = {
 
   updateFinancialItems: function() {
     this._financialItems.forEach( elem => {
-      if ( !elem.matches( ':focus' ) ) {
-
+      if ( !selectorMatches( elem, ':focus' ) ) {
         const prop = elem.dataset.financialItem;
         const isRate = prop.substr( 0, 5 ) === 'rate_';
         const isFee = prop.substr( 0, 4 ) === 'fee_';
         const isNumber = elem.dataset.isNumber === 'true';
         let val = getFinancialValue( prop );
+
+        // Prevent improper property values from presenting on the page
+        if ( val === false || val === null || isNaN( val ) ) val = 0;
         if ( isFee ) {
           val = decimalToPercentString( val, 3 );
         } else if ( isRate ) {

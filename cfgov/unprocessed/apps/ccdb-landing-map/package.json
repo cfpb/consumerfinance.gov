@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.x"
   },
   "dependencies": {
     "core-js": "3.3.6",

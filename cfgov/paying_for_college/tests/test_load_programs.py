@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from unittest.mock import mock_open, patch
 
 import django

@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html_join
 
-from wagtail.admin.menu import MenuItem
+from wagtail.admin.menu import AdminOnlyMenuItem, MenuItem
 from wagtail.admin.rich_text.converters.editor_html import (
     WhitelistRule as AllowlistRule
 )
@@ -18,9 +18,8 @@ from wagtail.contrib.modeladmin.options import (
 from wagtail.core import hooks
 from wagtail.core.whitelist import attribute_rule
 
-from scripts import export_enforcement_actions
-
 from ask_cfpb.models.snippets import GlossaryTerm
+from scripts import export_enforcement_actions
 from v1.admin_views import ExportFeedbackView, manage_cdn
 from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
@@ -31,6 +30,7 @@ from v1.template_debug import (
     register_template_debug, video_player_test_cases
 )
 from v1.util import util
+from v1.views.reports import PageMetadataReportView
 
 
 try:
@@ -244,6 +244,27 @@ def serve_latest_draft_page(page, request, args, kwargs):
         response = latest_draft.serve(request, *args, **kwargs)
         response['Serving-Wagtail-Draft'] = '1'
         return response
+
+
+@hooks.register('register_reports_menu_item')
+def register_page_metadata_report_menu_item():
+    return AdminOnlyMenuItem(
+        "Page Metadata",
+        reverse('page_metadata_report'),
+        classnames='icon icon-' + PageMetadataReportView.header_icon,
+        order=700
+    )
+
+
+@hooks.register('register_admin_urls')
+def register_page_metadata_report_url():
+    return [
+        re_path(
+            r'^reports/page-metadata/$',
+            PageMetadataReportView.as_view(),
+            name='page_metadata_report'
+        ),
+    ]
 
 
 def get_resource_tags():

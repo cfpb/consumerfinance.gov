@@ -11,6 +11,8 @@ jobs:
       matrix:
         toxenv:
           - lint-current
+          - validate-migrations
+          - validate-assets
           - unittest-current
           - unittest-future
 
@@ -46,7 +48,6 @@ jobs:
           tox -e ${{ matrix.toxenv }}
         env: 
           TEST_RUNNER: cfgov.test.StdoutCapturingTestRunner 
-          CI_CHECK_MIGRATIONS: "./manage.py makemigrations --dry-run --check"
 
       - name: Prepare test coverage
         if: matrix.toxenv == 'unittest-current'
@@ -67,8 +68,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v1

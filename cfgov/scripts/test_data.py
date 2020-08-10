@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from wagtail.core.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
-
 from v1.models import (
     BlogPage, BrowseFilterablePage, BrowsePage, SublandingFilterablePage
 )

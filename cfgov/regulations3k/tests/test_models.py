@@ -192,7 +192,6 @@ class RegModelTests(DjangoTestCase):
 
     def get_request(self, path='', data={}):
         request = self.factory.get(path, data=data)
-        request.site = self.site
         request.user = AnonymousUser()
         return request
 

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import tempfile
 
 from django.core.management import call_command

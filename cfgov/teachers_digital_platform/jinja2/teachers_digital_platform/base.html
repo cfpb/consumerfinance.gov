@@ -27,7 +27,7 @@
 {% block css -%}
     {{ super() }}
 
-    <link rel="stylesheet" href="{{ static('tdp/css/tdp.css') }}">
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
 {%- endblock css %}
 
 
@@ -49,7 +49,7 @@
 {# Conditional comment used to block IE8 and under from receiving JS #}
 <!--[if gt IE 8]><!-->
     {# Include site-wide JavaScript. #}
-    <script src="{{ static('tdp/js/tdp.js') }}"></script>
+    <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
 <!--<![endif]-->
 
     <script>

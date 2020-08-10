@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     "wagtail.contrib.routable_page",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.table_block",
+    "wagtail.contrib.postgres_search",
     "localflavor",
     "modelcluster",
     "taggit",
@@ -73,6 +74,7 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "wagtail.search",
     "storages",
     "data_research",
     "v1",
@@ -92,6 +94,7 @@ INSTALLED_APPS = (
     "diversity_inclusion",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
+    "teachers_digital_platform",
 
     # Satellites
     "comparisontool",
@@ -102,9 +105,34 @@ INSTALLED_APPS = (
     "rest_framework",
     "ccdb5_ui",
     "mptt",
-    "teachers_digital_platform",
     "crtool",
 )
+
+WAGTAILSEARCH_BACKENDS = {
+    # The default search backend for Wagtail is the db backend, which does not
+    # support the custom search_fields defined on Page model descendents when
+    # using `Page.objects.search()`.
+    #
+    # Other backends *do* support those custom search_fields, so for now to
+    # preserve the current behavior of /admin/pages/search (which calls
+    # `Page.objects.search()`), the default backend will remain `db`.
+    #
+    # This also preserves the current behavior of our external link search,
+    # /admin/external-links/, which calls each page model's `objects.search()`
+    # explicitly to get results, but which returns fewer results with the
+    # Postgres full text backend.
+    #
+    # An upcoming effort to overhaul search within consumerfinance.gov and
+    # Wagtail should address these issues. In the meantime, Postgres full text
+    # search with the custom search_fields defined on our models is available
+    # with the "fulltext" backend defined below.
+    'default': {
+        'BACKEND': 'wagtail.search.backends.db',
+    },
+    'fulltext': {
+        'BACKEND': 'wagtail.contrib.postgres_search.backend',
+    },
+}
 
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -116,7 +144,6 @@ MIDDLEWARE = (
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "flags.middleware.FlagConditionsMiddleware",
-    "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
 )

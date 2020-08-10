@@ -14,6 +14,7 @@ class JobListingBlockTestUtils:
         self.root_page = Site.objects.get(is_default_site=True).root_page
         self.division = JobCategory.objects.create(job_category='Test')
         self.request = RequestFactory().get('/')
+        Site.find_for_request(self.request)
 
     def make_job(self, title, live=True, close_date=None):
         page = JobListingPage(
