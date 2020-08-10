@@ -27,13 +27,9 @@ describe( 'explore-rates/Slider', () => {
   } );
 
   describe( 'init()', () => {
-    it( 'should return Slider instance if initialized', () => {
+    it( 'should return instance when initialized', () => {
       expect( slider ).toBeInstanceOf( Slider );
-    } );
-
-    it( 'should return undefined if already initialized', () => {
-      const initAgain = slider.init();
-      expect( initAgain ).toBeUndefined();
+      expect( slider.init() ).toBeInstanceOf( Slider );
     } );
 
     it( 'should initialize rangeslider class', () => {

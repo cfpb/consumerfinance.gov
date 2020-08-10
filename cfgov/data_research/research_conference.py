@@ -1,12 +1,10 @@
-from __future__ import unicode_literals
-
 import re
 
 from django.core.mail import EmailMessage
 from django.template import loader
 from django.utils.functional import cached_property
 
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from openpyxl import Workbook
 from openpyxl.writer.excel import save_virtual_workbook
@@ -58,7 +56,7 @@ class ConferenceExporter(object):
             capacity=0
         )
 
-        return ['created'] + form.fields.keys()
+        return ['created'] + list(form.fields.keys())
 
     def save_xlsx(self, filename):
         with open(filename, 'wb') as f:
@@ -103,8 +101,8 @@ class ConferenceNotifier(object):
         exporter = ConferenceExporter(govdelivery_code)
 
         self.count = exporter.registrants.count()
-        self.count_in_person = len(exporter.registrants.in_person())
-        self.count_virtual = len(exporter.registrants.virtual())
+        self.count_in_person = len(list(exporter.registrants.in_person()))
+        self.count_virtual = len(list(exporter.registrants.virtual()))
         self.capacity = capacity
 
         if self.count:

@@ -1,7 +1,7 @@
-import FormSubmit from './FormSubmit.js';
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import * as validators from '../modules/util/validators';
 import * as emailHelpers from '../modules/util/email-popup-helpers';
+import * as validators from '../modules/util/validators';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import FormSubmit from './FormSubmit.js';
 
 /**
  * EmailPopup
@@ -80,13 +80,11 @@ function EmailPopup( element ) {
 
   /**
    * Function used to instatiate and initialize components.
-   * @returns {EmailPopup|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {EmailPopup} An instance.
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+      return this;
     }
 
     // Ensure EmailPopup is definitely hidden on initialization.

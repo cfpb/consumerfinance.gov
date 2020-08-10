@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 import logging
 import re
 
 from regulations3k.models import Part, Section
-from regulations3k.scripts.ecfr_importer import PART_WHITELIST
+from regulations3k.scripts.ecfr_importer import PART_ALLOWLIST
 
 
 REG_BASE = '/policy-compliance/rulemaking/regulations/{}/'
@@ -22,7 +21,7 @@ def get_url(section_reference):
         return
     parts = PARTS_RE.match(section_reference).groupdict()
     part = parts.get('part')
-    if part not in PART_WHITELIST:
+    if part not in PART_ALLOWLIST:
         return
     part_url = REG_BASE.format(part)
     section_url = "{}{}/".format(part_url, parts.get('section'))

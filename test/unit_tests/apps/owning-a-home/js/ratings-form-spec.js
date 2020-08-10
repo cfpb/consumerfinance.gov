@@ -1,5 +1,5 @@
-import { simulateEvent } from '../../../../util/simulate-event';
 import * as ratingsForm from '../../../../../cfgov/unprocessed/apps/owning-a-home/js/ratings-form';
+import { simulateEvent } from '../../../../util/simulate-event';
 
 let feedBackLinkElement;
 let ratingsInputs;

@@ -111,7 +111,7 @@
     }
 
     &_trigger {
-        .u-webfont-medium();
+        font-weight: 500;
 
         // Resets for default button styles.
         background-color: transparent;
@@ -122,7 +122,7 @@
         border-left: 1px solid transparent;
 
         .respond-to-max( @bp-xs-max, {
-            font-size: unit( @size-iv / @base-font-size-px, em );
+            font-size: 18px;
         } );
 
         &:focus {
@@ -140,6 +140,11 @@
         // Only show trigger if we have JS.
         .js & {
             display: block;
+        }
+
+        // Hover state for desktop.
+        &:hover {
+            color: @gray-80;
         }
     }
 
@@ -180,10 +185,9 @@
     // Up to desktops.
     .respond-to-max( @bp-sm-max, {
         &_trigger{
-            padding-top: unit( @grid_gutter-width / 2 / @size-iv, em );
-            padding-bottom: unit( @grid_gutter-width / 2 / @size-iv, em );
-            height: unit( @mobile_trigger_ht__px / @size-iv, em );
-            min-width: unit( @mobile_trigger_ht__px / @size-iv, em );
+            padding-top: 5px;
+            height: @mobile_trigger_ht__px;
+            min-width: @mobile_trigger_ht__px;
 
             &[aria-expanded="true"] {
                 background: @gray-10;
@@ -196,6 +200,15 @@
                 .m-global-search_trigger-close-label {
                     display: block;
                 }
+            }
+
+            // Hover state for (x) close button.
+            &:hover {
+                color: @black;
+                border-left: 1px solid @gray-40;
+
+                // Important needed to override background color in expanded state.
+                background: @gray-20 !important;
             }
         }
 
@@ -250,7 +263,7 @@
         display: block;
         // Center on the call to action (CTA) divider to right of search.
         padding-top: 6px;
-        padding-bottom: 6px;
+        padding-bottom: 5px;
         // Match CTA offset from divider.
         padding-right: @margin_half__em;
 
@@ -258,7 +271,7 @@
 
         &_trigger {
             // Match height of input with button.
-            padding: 7px 0;
+            padding: 8px 0;
 
             &[aria-expanded="true"] {
                 .u-invisible();
@@ -275,6 +288,9 @@
             &_content {
                 right: @margin_half__em;
                 width: auto;
+                // Add margin so that the focus rectangle isn't cropped by
+                // the hidden overflow of the search container element.
+                margin-left: 3px;
             }
         }
     } );

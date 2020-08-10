@@ -1,6 +1,6 @@
 import * as ccb from 'cfpb-chart-builder';
-import actions from '../actions/map';
 import MapStore from '../stores/map';
+import actions from '../actions/map';
 import utils from '../utils';
 
 const _plurals = {
@@ -67,10 +67,13 @@ MortgagePerformanceMap.prototype.onClick = function( event ) {
 };
 
 MortgagePerformanceMap.prototype.onChange = function( event ) {
-  let abbr, action, geoType, geoId, geoName, date;
+  let action;
+  let geoId;
+  let geoName;
+  let date;
 
-  abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
-  geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
+  const abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
+  const geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
 
   switch ( event.target.id ) {
     case 'mp-map_geo-state':

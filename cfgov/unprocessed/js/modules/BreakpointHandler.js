@@ -1,5 +1,5 @@
-import breakpointsConfig from 'cf-core/src/cf-vars-breakpoints';
-import { get as getBreakpointState } from './util/breakpoint-state';
+import breakpointsConfig from '@cfpb/cfpb-core/src/vars-breakpoints';
+import { getBreakpointState } from './util/breakpoint-state';
 
 /**
  * BreakpointHandler

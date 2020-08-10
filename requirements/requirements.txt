@@ -1,4 +1,0 @@
-# This file's purpose is to be checked for vulnerabilities by Snyk,
-# which requires a file named requirements.txt
-
--r deployment.txt

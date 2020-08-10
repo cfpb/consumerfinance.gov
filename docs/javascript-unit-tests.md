@@ -330,7 +330,7 @@ in our `sample.js` file.
 
 Another example is
 [`breakpoint-state-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/breakpoint-state-spec.js),
-which tests 2 methods, `get` and `isInDesktop`,
+which tests several methods, including `getBreakpointState` and `viewportIsIn`,
 on the module `breakpoint-state`.
 
 When using TDD, you may prefer to add `describe` blocks later,
@@ -576,8 +576,7 @@ that tests this component:
 import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
 const BASE_CLASS = 'm-notification';
 const HTML_SNIPPET = `
-  <div class="m-notification
-              m-notification__default">
+  <div class="m-notification">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"></svg>
     <div class="m-notification_content">
       <div class="h4 m-notification_message">Notification content</div>

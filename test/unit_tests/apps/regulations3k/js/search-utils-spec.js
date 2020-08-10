@@ -2,6 +2,7 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 
 const utils = require( `${ BASE_JS_PATH }/js/search-utils.js` );
 
+/* eslint-disable no-empty-function */
 describe( 'The Regs3K search utils', () => {
 
   it( 'should get values from search form fields', () => {
@@ -35,13 +36,19 @@ describe( 'The Regs3K search utils', () => {
   } );
 
   it( 'should show an element loading', () => {
-    let el = { style: { opacity: 1 }};
+    let el = {
+      style: { opacity: 1 },
+      className: { replace: () => {} }
+    };
     el = utils.showLoading( el );
     expect( el.style.opacity ).toEqual( 0.5 );
   } );
 
   it( 'should stop an element loading', () => {
-    let el = { style: { opacity: 0.5 }};
+    let el = {
+      style: { opacity: 0.5 },
+      className: { replace: () => {} }
+    };
     el = utils.hideLoading( el );
     expect( el.style.opacity ).toEqual( 1 );
   } );

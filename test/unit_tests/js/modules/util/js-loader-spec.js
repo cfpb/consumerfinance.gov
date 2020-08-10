@@ -1,4 +1,4 @@
-import { loadScript } from '../../../../../cfgov/unprocessed/js/modules/util/js-loader';
+import jsLoader from '../../../../../cfgov/unprocessed/js/modules/util/js-loader';
 
 describe( 'loadScript method', () => {
 
@@ -10,7 +10,7 @@ describe( 'loadScript method', () => {
     // eslint-disable-next-line no-unused-vars
     const loaderPromise = new Promise( ( resolve, reject ) => {
       const scriptLocation = 'https://code.jquery.com/jquery-1.5.min.js';
-      loadScript( scriptLocation, () => {
+      jsLoader.loadScript( scriptLocation, () => {
         resolve( 'Callback called' );
       } );
     } );

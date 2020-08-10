@@ -12,7 +12,6 @@
     {% for block in page.header -%}
         {% if 'featured_content' in block.block_type %}
             <div class="block
-                        block__border
                         {{ 'u-mt0' if loop.first }}">
                         {# u-mt0 is used instead of block__flush-top to keep top border #}
                 {% include_block block %}
@@ -25,6 +24,8 @@
     {% for block in page.content -%}
         {% if block.block_type in ['feedback', 'conference_registration_form'] %}
             {{- form_block.render(block, 'content', loop.index0) -}}
+        {% elif block.block_type in ['job_listing_table'] %}
+            {% include_block block %}
         {% else %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
@@ -35,4 +36,5 @@
             {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
         </aside>
     {% endif %}
+
 {% endblock %}

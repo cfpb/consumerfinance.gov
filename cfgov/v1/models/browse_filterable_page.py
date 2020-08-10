@@ -1,17 +1,18 @@
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore.blocks import StreamBlock
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailsearch import index
+from wagtail.core.blocks import StreamBlock
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.search import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
+from v1.models.learn_page import EnforcementActionPage, EventPage
 from v1.util.filterable_list import FilterableListMixin
 
 
@@ -75,10 +76,28 @@ class BrowseFilterablePage(FilterableFeedPageMixin,
         )
 
 
+class EnforcementActionsFilterPage(BrowseFilterablePage):
+    template = 'browse-filterable/index.html'
+    objects = PageManager()
+
+    @staticmethod
+    def get_form_class():
+        from .. import forms
+        return forms.EnforcementActionsFilterForm
+
+    @staticmethod
+    def get_model_class():
+        return EnforcementActionPage
+
+
 class EventArchivePage(BrowseFilterablePage):
     template = 'browse-filterable/index.html'
 
     objects = PageManager()
+
+    @staticmethod
+    def get_model_class():
+        return EventPage
 
     @staticmethod
     def get_form_class():
@@ -88,7 +107,7 @@ class EventArchivePage(BrowseFilterablePage):
 
 class NewsroomLandingPage(BrowseFilterablePage):
     template = 'newsroom/index.html'
-    filterable_categories = ('Blog', 'Newsroom')
+    filterable_categories = ['Newsroom']
     filterable_children_only = False
 
     objects = PageManager()

@@ -1,10 +1,9 @@
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailsearch import index
-from wagtail.wagtailsnippets.models import register_snippet
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.search import index
+from wagtail.snippets.models import register_snippet
 
 from v1.atomic_elements import molecules
 # We import ReusableTextChooserBlock here because this is where it used to
@@ -14,7 +13,6 @@ from v1.atomic_elements import molecules
 from v1.blocks import ReusableTextChooserBlock  # noqa
 
 
-@python_2_unicode_compatible
 @register_snippet
 class ReusableText(index.Indexed, models.Model):
     title = models.CharField(
@@ -41,24 +39,57 @@ class ReusableText(index.Indexed, models.Model):
         return self.title
 
 
-@python_2_unicode_compatible
 @register_snippet
 class Contact(models.Model):
     heading = models.CharField(verbose_name=('Heading'), max_length=255,
                                help_text=("The snippet heading"))
     body = RichTextField(blank=True)
+    body_shown_in_expandables = models.BooleanField(default=False)
 
     contact_info = StreamField([
         ('email', molecules.ContactEmail()),
         ('phone', molecules.ContactPhone()),
         ('address', molecules.ContactAddress()),
+        ('hyperlink', molecules.ContactHyperlink()),
     ], blank=True)
 
     panels = [
         FieldPanel('heading'),
         FieldPanel('body'),
+        FieldPanel('body_shown_in_expandables'),
         StreamFieldPanel('contact_info'),
     ]
 
     def __str__(self):
         return self.heading
+
+    class Meta:
+        ordering = ['heading']
+
+
+@register_snippet
+class RelatedResource(index.Indexed, models.Model):
+    title = models.CharField(max_length=255)
+    title_es = models.CharField(max_length=255, blank=True, null=True)
+    text = RichTextField(blank=True, null=True)
+    text_es = RichTextField(blank=True, null=True)
+
+    search_fields = [
+        index.SearchField('title', partial_match=True),
+        index.SearchField('text', partial_match=True),
+        index.SearchField('title_es', partial_match=True),
+        index.SearchField('text_es', partial_match=True),
+    ]
+
+    def trans_title(self, language='en'):
+        if language == 'es':
+            return self.title_es or ''
+        return self.title or ''
+
+    def trans_text(self, language='en'):
+        if language == 'es':
+            return self.text_es or ''
+        return self.text or ''
+
+    def __str__(self):
+        return self.title

@@ -1,22 +1,22 @@
 from django.test import TestCase, override_settings
 
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+from wagtail.images.tests.utils import get_test_image_file
 
 import boto3
 import moto
-from model_mommy import mommy
+from model_bakery import baker
 
 from v1.models import AbstractFilterPage, CFGOVImage, CFGOVPage, LearnPage
 
 
 class TestMetaImage(TestCase):
     def setUp(self):
-        self.preview_image = mommy.prepare(CFGOVImage)
-        self.social_sharing_image = mommy.prepare(CFGOVImage)
+        self.preview_image = baker.prepare(CFGOVImage)
+        self.social_sharing_image = baker.prepare(CFGOVImage)
 
     def test_meta_image_no_images(self):
         """ Meta image should be undefined if no image provided """
-        page = mommy.prepare(
+        page = baker.prepare(
             CFGOVPage,
             social_sharing_image=None
         )
@@ -24,7 +24,7 @@ class TestMetaImage(TestCase):
 
     def test_meta_image_only_social_sharing(self):
         """ Meta image uses social sharing image if provided """
-        page = mommy.prepare(
+        page = baker.prepare(
             CFGOVPage,
             social_sharing_image=self.social_sharing_image
         )
@@ -34,7 +34,7 @@ class TestMetaImage(TestCase):
         """ AbstractFilterPages use preview image for meta image
         if a social image is not provided
         """
-        page = mommy.prepare(
+        page = baker.prepare(
             AbstractFilterPage,
             social_sharing_image=None,
             preview_image=self.preview_image
@@ -45,7 +45,7 @@ class TestMetaImage(TestCase):
         """ AbstractFilterPages use social image for meta image
         if both preview image and social image are provided
         """
-        page = mommy.prepare(
+        page = baker.prepare(
             AbstractFilterPage,
             social_sharing_image=self.social_sharing_image,
             preview_image=self.preview_image
@@ -55,7 +55,7 @@ class TestMetaImage(TestCase):
     def test_template_meta_image_no_images(self):
         """Template meta tags should fallback to standard social networks."""
         page = LearnPage(social_sharing_image=None)
-        response = page.serve(page.dummy_request())
+        response = page.make_preview_request()
         response.render()
 
         self.assertContains(
@@ -79,9 +79,9 @@ class TestMetaImage(TestCase):
     def check_template_meta_image_url(self, expected_root):
         """Template meta tags should use an absolute image URL."""
         image_file = get_test_image_file(filename='foo.png')
-        image = mommy.make(CFGOVImage, file=image_file)
+        image = baker.make(CFGOVImage, file=image_file)
         page = LearnPage(social_sharing_image=image)
-        response = page.serve(page.dummy_request())
+        response = page.make_preview_request()
         response.render()
 
         rendition_url = image.get_rendition('original').url

@@ -17,7 +17,7 @@ personal fork. This is advised if you are going to be doing development on
 There are two ways to install cfgov-refresh:
 
 - [Stand-alone installation](#stand-alone-installation)
-- [Docker-compose installation](#docker-compose-installation)
+- [Docker-based installation](#docker-based-installation)
 
 
 ## Stand-alone installation
@@ -59,8 +59,8 @@ To finish the installation, source activate.sh in your shell:
 ```
 
 Run that now for your initial setup.
-Any time you run the project you’ll need to run that last line, so
-if you’ll be working with the project consistently,
+Any time you run the project you’ll need to run that last line,
+so if you’ll be working with the project consistently,
 we suggest adding it to your Bash profile by running:
 
 ```bash
@@ -73,7 +73,6 @@ If you need to find this info again later, you can run:
 brew info autoenv
 ```
 
-
 !!! note
     If you use Zsh you’ll need to use
     [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
@@ -81,25 +80,20 @@ brew info autoenv
 
 #### Front-end dependencies
 
-The cfgov-refresh front end currently uses the following frameworks / tools:
+The cfgov-refresh front-end build process currently
+includes the following frameworks / tools:
 
 - [Gulp](https://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
 - [Less](http://lesscss.org): CSS pre-processor.
-- [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
+- [Design System](https://cfpb.github.io/design-system/getting-started/):
   User interface pattern-library produced by the CFPB.
-
-!!! note
-    If you’re new to Capital Framework, we encourage you to
-    [start here](https://cfpb.github.io/capital-framework/getting-started).
-
-1. Install [Node.js](https://nodejs.org) however you’d like.
-   We recommend using [nvm](https://github.com/creationix/nvm), though.
-
-!!! note
-    This project requires Node.js v8.5 or higher, and npm v5.2 or higher.
-2. Install [yarn](https://yarnpkg.com/en/docs/install). We recommend using [Homebrew](https://brew.sh):
-
+- [Node.js](https://nodejs.org). Install however you’d like.
+  We recommend using [nvm](https://github.com/creationix/nvm), though.
+  If your node version is outdated you should receive a console error to upgrade
+  while attempting to build the project.
+- [Yarn](https://yarnpkg.com).
+  We recommend installing using [Homebrew](https://brew.sh):
 
 ```bash
 # Use --ignore-dependencies to use your system installed node version
@@ -157,25 +151,18 @@ Once it's installed, you can configure it to run as a service:
 brew services start postgresql
 ```
 
-Then create the database and associated user:
+Then create the database, associated user, and schema for that user:
 
 ```bash
 dropdb --if-exists cfgov && dropuser --if-exists cfpb
-createuser cfpb && createdb -O cfpb cfgov
+createuser --createdb cfpb && createdb -O cfpb cfgov
+psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
 ```
 
-If you absolutely need to use SQLite, you'll need to update your `.env` file
-to comment out the line that specifies Postgres as the db:
+We don't support using an SQLite database, because we use database fields
+that are specific to Postgres. The `--createdb` flag above allows Django to
+create temporary Postgres databases when running unit tests.
 
-```bash
-# export DATABASE_URL=postgres://cfpb@localhost/cfgov
-```
-
-And then uncomment the line that tells Django to use SQLite:
-
-```bash
-export DATABASE_URL=sqlite:///db.sqlite3
-```
 
 #### Run the setup script
 
@@ -207,33 +194,30 @@ that you may want to perform before continuing.
 Want to know more about what the setup scripts are doing?
 [Read the detailed rundown.](#curious-about-what-the-setup-scripts-are-doing)
 
-**Continue following the [usage instructions](usage).**
+**Continue following the [usage instructions](../running-virtualenv/).**
 
-## Docker-compose installation
+## Docker-based installation
 
 ### Tools we use for developing with Docker
 
 - **Docker**: You may not need to interact directly with Docker, but you
   should know that it's a client/server application for managing _containers_
   (a way of running software in an isolated environment) and _images_ (a
-  snapshot of all of the files neccessary to run a container).
+  snapshot of all of the files necessary to run a container).
 - **Docker Compose**: Compose allows you to configure and run a collection of
   connected containers (like a web application and its database).
-- **Docker Machine**: In environments where Docker Engine is not available,
-  Docker Machine can be used to create and manage Docker hosts on virtual
-  machines. For more information on Docker Machine, see the 'How do I use
-  Docker Machine' section in the [usage guide](usage#usage-docker).
 
 ### 1. Setup your Docker environment
 
 If you have never installed Docker before, follow the instructions
-[here](https://docs.docker.com/engine/installation/) or from your operating
-system vendor. If you are on a mac and are unable to install the official
-"Docker for Mac" package, the quickstart instructions below might help.
+[here](https://docs.docker.com/install/) or from your operating system vendor.
 
-If you are on a machine that is already set up to run Linux docker containers,
-please install [Docker Compose](https://docs.docker.com/compose/install/).
-If `docker-compose ps` runs without error, you can can go to step 2.
+The default Docker installation on some systems includes Docker Compose.
+For systems where this is not the case, Docker Compose will need to be
+[installed manually](https://docs.docker.com/compose/install/).
+
+To verify the installation of Docker Compose, the command
+`docker-compose ps` should run without error if Docker is running locally.
 
 #### Copy the `.env_SAMPLE` file over
 
@@ -245,19 +229,6 @@ this is your first time setting up the project, copy `.env_SAMPLE` to
 ```bash
 cp -a .env_SAMPLE .env
 ```
-
-#### Mac + Homebrew + Docker Machine + VirtualBox quickstart
-
-**Starting assumptions**: You already have Homebrew and VirtualBox installed.
-You can run `brew search docker` without error.
-
-Install Docker, Docker Machine, and Docker Compose:
-`brew install docker docker-compose docker-machine`
-
-Then run `source mac-virtualbox-init.sh` to initialize your Docker Machine
-setup.
-
-At this point, `docker-compose ps` should run without error.
 
 ### 2. Setup your frontend environment
 
@@ -275,15 +246,91 @@ This will install and build the frontend and set up the docker environment.
 `docker-compose up`
 
 This will download and/or build images, and then start the containers, as
-described in the docker-compose.yml file. This will take a few minutes, or
-longer if you are on a slow internet connection.
+described in the `docker-compose.yml` file. This will take a few minutes, or
+longer if you are on a slow Internet connection.
 
 When it's all done, you should be able to load http://localhost:8000 in your
 browser, and see a database error.
 
-### 3. Setup the database
+!!! note
+    Trying to use Docker Compose and finding that it gives you an error?
+    Something like:
 
-Run `./shell.sh`. This opens a bash shell inside your Python container.
+    ```
+    ERROR: In file ./.env: environment variable name
+    `export DJANGO_HTTP_PORT` may not contain whitespace.
+    ```
+
+    You've probably running the latest version of Docker Desktop
+    that's available to us (CFPB developers) in Self Service,
+    which comes with a version of Docker Compose
+    that changes how it handles `.env` files.
+
+    Docker Compose has been updated to fix this,
+    but the fix is still in the Release Candidate stage (as of June 1, 2020),
+    it may be some time before that fix gets packaged
+    with a new version of Docker Desktop,
+    and longer still before that version of Docker Desktop
+    gets packaged up and made available to us in Self Service,
+    so we need a workaround.
+
+    #### 1. Install pipx, if you haven't yet
+
+    If you have not yet set up pipx on your computer, follow our
+    [guide to installing and using pipx](https://github.com/cfpb/development/blob/master/guides/pipx.md)
+    to do so.
+
+    #### 2. Install docker-compose with pipx
+
+    With that all set, we're ready to install the latest Docker Compose.
+
+    ```bash
+    pipx install docker-compose
+    ```
+
+    Confirm that it installed properly by running `which docker-compose`
+    and seeing the pipx path:
+
+    ```bash
+    $ which docker-compose
+    /Users/<username>/.local/bin/docker-compose
+    ```
+
+    Finally, we'll need to inject another Python package, python-dotenv,
+    into pipx's isolated docker-compose environment:
+
+    ```bash
+    pipx inject docker-compose python-dotenv
+    ```
+
+    #### 3. Profit!
+
+    At this point, you should be able to run `docker-compose` commands again.
+
+    **Note:** When running `docker-compose up` in cfgov-refresh
+    with our typical `.env` file, you may see some warnings like the following:
+
+    ```
+    WARNING: Python-dotenv could not parse statement starting at line 236
+    WARNING: Python-dotenv could not parse statement starting at line 239
+    WARNING: Python-dotenv could not parse statement starting at line 236
+    WARNING: Python-dotenv could not parse statement starting at line 239
+    WARNING: Python-dotenv could not parse statement starting at line 236
+    WARNING: Python-dotenv could not parse statement starting at line 239
+    ```
+
+    These are caused by the `if` statement that will override some of the variables
+    when sourcing the `.env` file in a local (non-Docker) environment.
+    They can safely be ignored.
+
+
+### 5. Setup the database
+
+Open a bash shell inside your Python container.
+
+```bash
+docker-compose exec python bash
+```
 
 You can either [load initial data](#load-initial-data-into-database) per the
 instructions below, or load a database dump.
@@ -298,6 +345,11 @@ CFGOV_PROD_DB_LOCATION=http://(rest of the URL)
 You can get that URL at
 [GHE]/CFGOV/platform/wiki/Database-downloads#resources-available-via-s3
 
+The first time you add this value to `.env` (and any time you make a
+change to that file) you will either need to run `source .env` from
+the container or `docker-compose down && docker-compose up` from your
+standard shell to pick up the changes.
+
 With `CFGOV_PROD_DB_LOCATION` in `.env` you should be able to run:
 
 `./refresh-data.sh`
@@ -308,9 +360,9 @@ below should be enough to get you started.
 Once you have a database loaded, you should have a functioning copy of site
 working at [http://localhost:8000](http://localhost:8000)
 
-### 4. Next Steps
+### 6. Next Steps
 
-See the Docker section of the [usage](usage.md) page to continue after that.
+See [Running in Docker](../running-docker/) to continue after that.
 
 ## Optional steps
 
@@ -328,7 +380,7 @@ with a slug of `cfgov`.
 set to 80.
 - If it doesn't already exist, creates a new
 [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with
-a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and
+a hostname and port defined by the `WAGTAIL_SHARING_HOSTNAME` and
 `DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump
@@ -356,6 +408,27 @@ To apply any unapplied migrations to a database created from a dump, run:
 ```bash
 python cfgov/manage.py migrate
 ```
+
+### Sync local image storage
+
+If using a database dump, pages will contain links to images that exist in
+the database but don't exist on your local disk. This will cause broken or
+missing images when browsing the site locally.
+
+For example, in production images are stored on S3, but when running locally
+they are stored on disk.
+
+This project includes a Django management command that can be used to download
+any remote images referenced in the database so that they can be served when
+running locally.
+
+```bash
+cfgov/manage.py sync_image_storage https://files.consumerfinance.gov/f/ ./cfgov/f/
+```
+
+This downloads all remote images (and image renditions) referenced in the
+database, retrieving them from the specified URL and storing them in the
+specified local directory.
 
 ### Set variables for working with the GovDelivery API
 
@@ -436,8 +509,11 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    rebuilding assets that haven't changed since the last build.
 
    If this is the production environment, it also triggers style and script
-   builds for `ondemand` and `nemo`, which aren't part of a standard
-   `gulp build`.
+   builds for `ondemand`, which aren't part of a standard `gulp build`.
+
+!!! note
+    If you are having trouble loading JavaScript edits locally, you may need to turn off service workers for localhost:8000. Learn how to [manage service workers in Firefox and Chrome](https://love2dev.com/blog/how-to-uninstall-a-service-worker/).
+
 
 ### 2. `backend.sh`
 

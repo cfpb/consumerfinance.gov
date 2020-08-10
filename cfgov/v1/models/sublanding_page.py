@@ -1,11 +1,13 @@
-from wagtail.wagtailadmin.edit_handlers import (
-    ObjectList, StreamFieldPanel, TabbedInterface
+from django.db import models
+
+from wagtail.admin.edit_handlers import (
+    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailimages.blocks import ImageChooserBlock
-from wagtail.wagtailsearch import index
+from wagtail.core import blocks
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.search import index
 
 from jobmanager.blocks import JobListingList
 from v1 import blocks as v1_blocks
@@ -16,11 +18,19 @@ from v1.models.learn_page import AbstractFilterPage
 
 
 class SublandingPage(CFGOVPage):
+    portal_topic = models.ForeignKey(
+        'v1.PortalTopic',
+        blank=True,
+        null=True,
+        related_name='portal_pages',
+        on_delete=models.SET_NULL,
+        help_text='Select a topic if this is a MONEY TOPICS portal page.')
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
+        ('notification', molecules.Notification()),
         ('featured_content', organisms.FeaturedContent()),
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
@@ -57,6 +67,7 @@ class SublandingPage(CFGOVPage):
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('content'),
+        FieldPanel('portal_topic'),
     ]
 
     sidebar_panels = [
@@ -90,7 +101,8 @@ class SublandingPage(CFGOVPage):
                 CFGOVPage.objects.child_of_q(page)
             )
 
-            form = FilterableListForm(filterable_pages=eligible_children)
+            form = FilterableListForm(filterable_pages=eligible_children,
+                                      wagtail_block=None)
             for post in form.get_page_set():
                 posts_list.append(post)
         return sorted(posts_list,

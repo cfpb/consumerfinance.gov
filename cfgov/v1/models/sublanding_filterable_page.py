@@ -1,10 +1,10 @@
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore.blocks import StreamBlock
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailsearch import index
+from wagtail.core.blocks import StreamBlock
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.search import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms

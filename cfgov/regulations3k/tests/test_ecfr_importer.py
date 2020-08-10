@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import datetime
 import json
 import unittest
@@ -329,7 +327,7 @@ class ImporterRunTestCase(unittest.TestCase):
             ecfr_importer.run()
 
     def test_run_importer_non_cfpb_part_args(self):
-        """The Part number must be on our whitelist"""
+        """The Part number must be on our allowlist"""
         with self.assertRaises(ValueError):
             ecfr_importer.run('9999')
         with self.assertRaises(ValueError):

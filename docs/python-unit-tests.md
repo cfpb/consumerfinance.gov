@@ -1,4 +1,4 @@
-# Backend testing
+# Python testing
 
 ## Writing tests
 
@@ -6,54 +6,94 @@ We have multiple resources for writing new unit tests for Django, Wagtial, and P
 
 - [CFPB Django and Wagtail unit testing documentation](https://github.com/cfpb/development/blob/master/guides/unittesting-django-wagtail.md)
 - [The Django testing documentation](https://docs.djangoproject.com/en/1.11/topics/testing/overview/)
-- [The Wagtail testing documentation](http://docs.wagtail.io/en/v1.13.4/advanced_topics/testing.html)
+- [The Wagtail testing documentation](http://docs.wagtail.io/en/stable/advanced_topics/testing.html)
 - [Real Python's "Testing in Django"](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/)
+
+## Prerequisites
+
+If you have set up
+[a standalone installation of cfgov-refresh](/installation/#install-system-level-requirements),
+you'll need to
+[activate your virtual environment](/running-virtualenv/#3-launch-site)
+before running the tests:
+
+```sh
+workon cfgov-refresh
+```
+
+If you have not set up the standalone installation of cfgov-refresh,
+you can still run the tests if you install Tox in your
+[local installation of Python](https://github.com/cfpb/development/blob/master/guides/installing-python.md):
+
+```
+pip install tox
+```
+
+If you have set up
+[a Docker-based installation of cfgov-refresh](/installation/#docker-based-installation),
+you can run the tests there by  
+[accessing the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell):
+
+```sh
+docker-compose exec python bash
+```
 
 ## Running tests
 
-To run the the full suite of Python tests using Tox, 
+Our test suite can either be run in a local virtualenv or in Docker.
+Please note, the tests run quite slow in Docker.
+
+To run the the full suite of Python tests using Tox,
 make sure you are in the cfgov-refresh root and then run:
 
 ```sh
 tox
 ```
 
-This will run linting tests and unit tests with migrations. This is the same as running:
+Tox runs different isolated Python environments with different versions of dependencies.
+We use it to lint our Python files, check out import sorting, and run unit tests
+in both Python 3.6 and Python 3.8.
+You can select specific environments using `-e`.
+
+Running `tox` by itself is the same as running:
 
 ```sh
-tox -e lint -e unittest-py27-dj111-wag113-slow
+tox -e lint -e unittest
 ```
+
+These default environments are:
+
+- `lint`, which runs our [linting](#linting) tools. We require this
+  environment to pass in CI.
+- `validate-migrations`, which checks for any missing Django migrations. 
+  We require this environment to pass in CI.
+- `unittest`, which runs unit tests against the current production
+  versions of Python, Django, and Wagtail. We require this environment to
+  pass in CI.
+
+In addition, we also have this environment:
+
+- `unittest-future`, which runs unit tests against upcoming versions of
+  Python, Django, and Wagtail. We do not require this environment to pass in
+  CI.
 
 By default this uses a local SQLite database for tests. To override this, you
-can set the `DATABASE_URL` environment variable to a database connection
-sring as supported by [dj-database-url](https://github.com/kennethreitz/dj-database-url).
+can set the `TEST_DATABASE_URL` environment variable to a database connection
+string as supported by [dj-database-url](https://github.com/kennethreitz/dj-database-url).
 
-If you haven't changed any Python dependencies and you don't need to test 
-all migrations, you can run a much faster Python code test using:
-
-```sh
-tox -e fast
-```
-
-To test against Python 3 without migrations:
-
-```sh
-tox -e unittest-py36-dj111-wag113-fast
-```
-
-If you would like to run only a specific test, or the tests for a specific app, 
+If you would like to run only a specific test, or the tests for a specific app,
 you can provide a dotted path to the test as the final argument to any of the above calls to `tox`:
 
 ```sh
-tox -e unittest-py36-dj111-wag113-fast regulations3k.tests.test_regdown
+tox -e unittest regulations3k.tests.test_regdown
 ```
 
 ### Linting
 
-We use the `flake8` and `isort` tools to ensure compliance with 
+We use the `flake8` and `isort` tools to ensure compliance with
 [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/),
 [Django coding style guidelines](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/),
-and the 
+and the
 [CFPB Python style guide](https://github.com/cfpb/development/blob/master/standards/python.md#linting).
 
 Both `flake8` and `isort` can be run using the Tox `lint` environment:
@@ -62,7 +102,7 @@ Both `flake8` and `isort` can be run using the Tox `lint` environment:
 tox -e lint
 ```
 
-This will run `isort` in check-only mode and it will print diffs for imports 
+This will run `isort` in check-only mode and it will print diffs for imports
 that need to be fixed. To automatically fix import sort issues, run:
 
 ```sh
@@ -79,7 +119,7 @@ To see Python code coverage information, run
 coverage report -m
 ```
 
-To see coverage for a limited number of files, 
+To see coverage for a limited number of files,
 use the `--include` argument to `coverage` and provide a path to the files you wish to see:
 
 ```sh
@@ -95,10 +135,11 @@ runner that fails if anything is written to stdout. This test runner is at
 environment variable:
 
 ```sh
-TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e fast
+TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e unittest
 ```
 
-This test runner is enabled when tests are run automatically on [Travis CI](https://travis-ci.org/),
+This test runner is enabled when tests are run automatically on
+[GitHub Actions](../github-actions/),
 but is not used by default when running tests locally.
 
 

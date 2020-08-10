@@ -5,8 +5,8 @@
 // GLOBAL ATOMIC ELEMENTS.
 
 // Organisms.
-import Header from '../organisms/Header.js';
 import Footer from '../organisms/Footer.js';
+import Header from '../organisms/Header.js';
 
 const header = new Header( document.body );
 // Initialize header by passing it reference to global overlay atom.

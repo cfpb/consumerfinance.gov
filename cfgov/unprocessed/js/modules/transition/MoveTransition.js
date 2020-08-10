@@ -1,6 +1,6 @@
 // Required modules.
-import EventObserver from '../../modules/util/EventObserver';
 import BaseTransition from './BaseTransition';
+import EventObserver from '../../modules/util/EventObserver';
 
 // Exported constants.
 const CLASSES = {

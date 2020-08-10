@@ -1,16 +1,14 @@
-from __future__ import unicode_literals
-
+import csv
 import datetime
-import StringIO
+import tempfile
 import unittest
+from io import StringIO
 
 import django
 
 import mock
-import unicodecsv
 from dateutil import parser
-from mock import mock_open, patch
-from model_mommy import mommy
+from model_bakery import baker
 
 from data_research.models import (
     County, CountyMortgageData, MetroArea, MortgageDataConstant,
@@ -53,13 +51,13 @@ class SourceToTableTest(django.test.TestCase):
                 '1443', '10', '5', '4', '2', '2891']
 
     def setUp(self):
-        AL = mommy.make(
+        AL = baker.make(
             State,
             fips='01',
             abbr='AL',
             name='Alabama')
 
-        Autauga = mommy.make(
+        Autauga = baker.make(
             County,
             id=2891,
             fips='01001',
@@ -67,7 +65,7 @@ class SourceToTableTest(django.test.TestCase):
             state=AL,
             valid=True)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             fips='01001',
             date=self.start_date,
@@ -88,10 +86,12 @@ class SourceToTableTest(django.test.TestCase):
             new_date)
 
     def test_dump_as_csv(self):
-        m = mock_open()
-        with patch('__builtin__.open', m, create=True):
-            dump_as_csv([self.data_row], '/tmp/mp_countydata')
-        self.assertEqual(m.call_count, 1)
+        with tempfile.NamedTemporaryFile(suffix='.csv') as f:
+            # dump_as_csv appends .csv to the destination file.
+            dump_as_csv([self.data_row], f.name[:-4])
+
+            content = open(f.name).read()
+            self.assertEqual(content.strip(), ','.join(self.data_row))
 
     @mock.patch('data_research.scripts.process_mortgage_data.'
                 'read_in_s3_csv')
@@ -161,7 +161,7 @@ class DataLoadIntegrityTest(django.test.TestCase):
 
     def setUp(self):
 
-        FL = mommy.make(
+        FL = baker.make(
             State,
             fips='12',
             abbr='FL',
@@ -173,7 +173,7 @@ class DataLoadIntegrityTest(django.test.TestCase):
             non_msa_valid=True)
         FL.save()
 
-        mommy.make(
+        baker.make(
             County,
             fips='12081',
             name='Manatee County',
@@ -181,7 +181,8 @@ class DataLoadIntegrityTest(django.test.TestCase):
             valid=True)
 
         # real values from a base CSV row
-        self.data_header = 'date,fips,open,current,thirty,sixty,ninety,other\n'
+        self.data_header = ('date,fips,open,current,thirty,sixty,ninety,'
+                            'other\n')
         self.data_row = '09/01/16,12081,1952,1905,21,5,10,11\n'
         self.data_row_dict = {'date': '09/01/16',
                               'fips': '12081',
@@ -193,18 +194,12 @@ class DataLoadIntegrityTest(django.test.TestCase):
                               'other': '11'}
 
     @mock.patch(
-        'data_research.scripts.load_mortgage_performance_csv.'
-        'read_in_s3_csv')
-    def test_data_creation_from_base_row(
-            self, mock_read_csv):
-        """
-        Confirm that loading a single row of real base data creates
-        a CountyMortgageData object with the base row's values,
-        and that the object's calculated API values are correct.
-        """
-
-        f = StringIO.StringIO(self.data_header + self.data_row)
-        reader = unicodecsv.DictReader(f)
+        'data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv'
+    )
+    def test_data_creation_from_base_row(self, mock_read_csv):
+        """Confirm creation of a CountyMortgageData object from a CSV row."""
+        f = StringIO(self.data_header + self.data_row)
+        reader = csv.DictReader(f)
         mock_read_csv.return_value = reader
         load_values()
         self.assertEqual(CountyMortgageData.objects.count(), 1)
@@ -250,7 +245,7 @@ class MergeTheDadesTest(django.test.TestCase):
         self.old_dade_fips = '12025'
         self.new_dade_fips = '12086'
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=100,
             date=datetime.date(2008, 1, 1),
@@ -261,7 +256,7 @@ class MergeTheDadesTest(django.test.TestCase):
             thirty=100,
             total=500)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=100,
             date=datetime.date(2008, 1, 1),
@@ -302,7 +297,7 @@ class DataExportTest(django.test.TestCase):
 
     def setUp(self):
 
-        mommy.make(
+        baker.make(
             State,
             fips='12',
             abbr='FL',
@@ -313,14 +308,14 @@ class DataExportTest(django.test.TestCase):
             non_msa_counties=["12001"],
             non_msa_valid=True)
 
-        mommy.make(
+        baker.make(
             County,
             fips='12081',
             name='Manatee County',
             state=State.objects.get(fips='12'),
             valid=True)
 
-        mommy.make(
+        baker.make(
             MetroArea,
             fips='35840',
             name='North Port-Sarasota-Bradenton, FL',
@@ -328,7 +323,7 @@ class DataExportTest(django.test.TestCase):
             counties=["12081", "12115"],
             valid=True)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=1250,
             date=datetime.date(2008, 1, 1),
@@ -340,7 +335,7 @@ class DataExportTest(django.test.TestCase):
             thirty=100,
             total=1650)
 
-        mommy.make(
+        baker.make(
             MSAMortgageData,
             current=5250,
             date=datetime.date(2008, 1, 1),
@@ -352,7 +347,7 @@ class DataExportTest(django.test.TestCase):
             thirty=3676,
             total=22674)
 
-        mommy.make(
+        baker.make(
             NonMSAMortgageData,
             current=5250,
             date=datetime.date(2008, 1, 1),
@@ -364,7 +359,7 @@ class DataExportTest(django.test.TestCase):
             thirty=3676,
             total=22674)
 
-        mommy.make(
+        baker.make(
             StateMortgageData,
             current=250081,
             date=datetime.date(2008, 1, 1),
@@ -376,7 +371,7 @@ class DataExportTest(django.test.TestCase):
             thirty=6766,
             total=26748)
 
-        mommy.make(
+        baker.make(
             NationalMortgageData,
             current=2500000,
             date=datetime.date(2008, 1, 1),
@@ -469,7 +464,7 @@ class DataLoadTest(django.test.TestCase):
 
     def setUp(self):
 
-        FL = mommy.make(
+        FL = baker.make(
             State,
             fips='12',
             abbr='FL',
@@ -481,7 +476,7 @@ class DataLoadTest(django.test.TestCase):
             non_msa_valid=True)
         FL.save()
 
-        manatee = mommy.make(
+        manatee = baker.make(
             County,
             fips='12081',
             name='Manatee County',
@@ -489,7 +484,7 @@ class DataLoadTest(django.test.TestCase):
             valid=True)
         manatee.save()
 
-        mommy.make(
+        baker.make(
             MetroArea,
             fips='35840',
             name='North Port-Sarasota-Bradenton, FL',
@@ -497,13 +492,13 @@ class DataLoadTest(django.test.TestCase):
             states='["12"]',
             valid=True)
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12081',
             county=manatee)
 
-        mommy.make(
+        baker.make(
             MSAMortgageData,
             current=5250,
             date=datetime.date(2016, 1, 1),
@@ -515,7 +510,7 @@ class DataLoadTest(django.test.TestCase):
             thirty=3676,
             total=22674)
 
-        mommy.make(
+        baker.make(
             NonMSAMortgageData,
             current=250081,
             date=datetime.date(2016, 1, 1),
@@ -527,7 +522,7 @@ class DataLoadTest(django.test.TestCase):
             thirty=6766,
             total=26748)
 
-        mommy.make(
+        baker.make(
             StateMortgageData,
             current=250081,
             date=datetime.date(2016, 1, 1),
@@ -613,7 +608,7 @@ class UpdateSamplingDatesTest(django.test.TestCase):
 
     def setUp(self):
 
-        mommy.make(
+        baker.make(
             CountyMortgageData,
             current=1250,
             date=datetime.date(2008, 1, 1),

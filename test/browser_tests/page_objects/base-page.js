@@ -26,7 +26,7 @@ class BasePage {
       [].forEach.call(
         document.querySelectorAll( 'script, style, link' ),
         function( script ) {
-          var src = script.href || script.src; // eslint-disable-line no-var, inline-comments
+          var src = script.href || script.src; // eslint-disable-line no-var
           if ( src && src.indexOf( 'localhost' ) === -1 ) {
             script.parentNode.removeChild( script );
           }
@@ -44,7 +44,7 @@ class BasePage {
      * @param {Object} browser Protractor browser object.
      */
     function _disableAnimations() {
-      var style = document.createElement( 'style' ); // eslint-disable-line no-var, inline-comments
+      var style = document.createElement( 'style' ); // eslint-disable-line no-var
       style.type = 'text/css';
       style.innerHTML = '* { transition-duration: .1ms !important; }';
       document.body.appendChild( style );

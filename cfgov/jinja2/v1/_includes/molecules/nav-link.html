@@ -27,7 +27,7 @@
           {{ 'm-nav-link__parent' if parent else '' }}
           {{ 'm-nav-link__current' if current else '' }}"
    {{ 'data-turbolinks=true' if turbolinks else '' }}
-   href="{{ href | e }}">
+   {{ 'href=' ~ href | e if not current else '' }}>
     {{ text | e }}
 </a>
 {% endmacro %}

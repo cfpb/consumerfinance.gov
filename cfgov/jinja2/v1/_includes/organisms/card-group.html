@@ -1,0 +1,35 @@
+{# ==========================================================================
+
+   card_group.render( heading, cards )
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for a Card Group organism, which displays a heading
+   and set of cards.
+
+   heading:                     Group heading.
+
+   card.icon:                   Card icon.
+
+   card.text:                   Card body text.
+
+   card.link_text:              Card link text.
+
+   card.link_url:               Card link URL.
+
+   ========================================================================== #}
+
+{% import "molecules/card.html" as card with context %}
+
+{% macro render( heading, cards ) %}
+<div class="o-card-group o-card-group__column-3 o-card-group__bg-green">
+    <h2>{{ heading }}</h2>
+    <div class="o-card-group_cards">
+    {% for _card in cards %}
+        {{ card.render( _card ) }}
+    {% endfor %}
+    </div>
+</div>
+{% endmacro %}

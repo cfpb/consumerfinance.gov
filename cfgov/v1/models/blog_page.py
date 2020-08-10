@@ -1,11 +1,13 @@
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailsearch import index
+from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.core import blocks
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtail.search import index
 
+from ask_cfpb.models import blocks as ask_blocks
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import organisms
+from v1.feeds import get_appropriate_rss_feed_url_for_page
 from v1.models.base import CFGOVPageManager
 from v1.models.learn_page import AbstractFilterPage
 
@@ -16,8 +18,11 @@ class BlogPage(AbstractFilterPage):
         ('info_unit_group', organisms.InfoUnitGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
+        ('video_player', organisms.VideoPlayer()),
         ('email_signup', organisms.EmailSignUp()),
         ('feedback', v1_blocks.Feedback()),
+        ('faq_schema', ask_blocks.FAQ(label='FAQ schema')),
+        ('how_to_schema', ask_blocks.HowTo(label='HowTo schema'))
     ])
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')
@@ -28,6 +33,16 @@ class BlogPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('content')
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(BlogPage, self).get_context(request, *args, **kwargs)
+
+        context['rss_feed'] = get_appropriate_rss_feed_url_for_page(
+            self,
+            request=request
+        )
+
+        return context
 
 
 class LegacyBlogPage(AbstractFilterPage):

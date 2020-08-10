@@ -1,5 +1,5 @@
-import utils from '../utils';
 import defaultActionCreators from './default';
+import utils from '../utils';
 
 const mapActionCreators = defaultActionCreators();
 
@@ -57,7 +57,9 @@ mapActionCreators.fetchMetros = ( metroState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestMetros( metroState ) );
   return utils.getMetroData( data => {
     // Alphabetical order
-    let newMetros = data[metroState].metros.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+    let newMetros = data[metroState].metros.sort(
+      ( a, b ) => ( a.name < b.name ? -1 : 1 )
+    );
     newMetros = newMetros.filter( metro => metro.valid );
     if ( !newMetros.length ) {
       newMetros = [ {
@@ -85,7 +87,9 @@ mapActionCreators.fetchCounties = ( countyState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestCounties( countyState ) );
   return utils.getCountyData( data => {
     // Alphabetical order
-    let newCounties = data[countyState].counties.sort( ( a, b ) => ( a.name < b.name ? -1 : 1 ) );
+    let newCounties = data[countyState].counties.sort(
+      ( a, b ) => ( a.name < b.name ? -1 : 1 )
+    );
     newCounties = newCounties.filter( county => county.valid );
     dispatch( mapActionCreators.setCounties( newCounties ) );
     if ( newCounties.length && shouldZoom ) {

@@ -1,0 +1,204 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    Voluntary Diversity Assessment Onboarding Form
+{%- endblock %}
+
+{% block desc -%}
+    The CFPB’s voluntary diversity assessment onboarding form allows financial institutions to submit diversity and inclusion assessments.
+{%- endblock %}
+
+{% block og_desc -%}
+    The CFPB’s voluntary diversity assessment onboarding form allows financial institutions to submit diversity and inclusion assessments.
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <style>
+
+    </style>
+{%- endblock %}
+
+{% block pre_content %}
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            {{ svg_icon('left') }}
+            <a class="breadcrumbs_link" href="/about-us/diversity-and-inclusion/">
+                Diversity and inclusion at the Bureau
+            </a>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content_main -%}
+    <div class="block block__flush-top">
+        <h1>Voluntary diversity assessment onboarding form</h1>
+        <div class="lead-paragraph">
+            <p>
+                The Consumer Financial Protection Bureau’s voluntary diversity assessment onboarding form is the first step in allowing financial institutions to submit diversity and inclusion assessments online.
+            </p>
+        </div>
+        <p>
+            Please complete and submit this form to gain access to the Inclusivity Portal where you will be able to submit diversity and inclusion assessments to the Bureau. For questions concerning this form, please contact the Office of Minority and Women Inclusion’s Diversity Assessments Support Team at
+            <a href="mailto:OMWI_diversityassessments@cfpb.gov">OMWI_diversityassessments@cfpb.gov</a>.
+        </p>
+    </div>
+    <div class="block">
+        <form id="voluntary-diversity-assessment"
+              action="{{ url('diversity_inclusion:voluntary_assessment_form') }}"
+              method="POST">
+            {#
+                Display any error messages created during form submission.
+                Rendered above the form for styling purposes.
+            #}
+            {% if form.errors %}
+                {% import 'molecules/notification.html' as notification %}
+                <div class="u-mb15">
+                    {% for error in form.non_field_errors() %}
+                        {{- notification.render('error', true, error | richtext ) }}
+                    {% endfor %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {{- notification.render('error', true, error) }}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <h2>Institution information</h2>
+            <p>
+                Please provide your institution’s name, headquarters location, and tax identification number.
+            </p>
+            <div class="o-well u-mb30">
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.institution_name.id_for_label }}">
+                            {{ form.institution_name.label }}
+                        </label>
+                        {{ form.institution_name }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.institution_address.id_for_label }}">
+                            {{ form.institution_address.label }}
+                        </label>
+                        {{ form.institution_address }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="content-l">
+                        <div class="content-l_col content-l_col-1-2">
+                            <div class="m-form-field">
+                                <label class="a-label a-label__heading"
+                                       for="{{ form.institution_city.id_for_label }}">
+                                    {{ form.institution_city.label }}
+                                </label>
+                                {{ form.institution_city }}
+                            </div>
+                        </div>
+                        <div class="content-l_col content-l_col-1-4">
+                            <div class="m-form-field">
+                                <label class="a-label a-label__heading"
+                                       for="{{ form.institution_state.id_for_label }}">
+                                    {{ form.institution_state.label }}
+                                </label>
+                                {{ form.institution_state }}
+                            </div>
+                        </div>
+                        <div class="content-l_col content-l_col-1-4">
+                            <div class="m-form-field">
+                                <label class="a-label a-label__heading"
+                                       for="{{ form.institution_zip.id_for_label }}">
+                                    {{ form.institution_zip.label }}
+                                </label>
+                                {{ form.institution_zip }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.tax_id.id_for_label }}">
+                            {{ form.tax_id.label }}
+                        </label>
+                        {{ form.tax_id }}
+                    </div>
+                </div>
+            </div>
+            <h2>Contact information</h2>
+            <p>
+                Please provide the name and contact information for the individual who will be your institution’s diversity and inclusion point of contact.
+            </p>
+            <div class="o-well u-mb30">
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.contact_name.id_for_label }}">
+                            {{ form.contact_name.label }}
+                        </label>
+                        {{ form.contact_name }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.contact_title.id_for_label }}">
+                            {{ form.contact_title.label }}
+                        </label>
+                        {{ form.contact_title }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.contact_email.id_for_label }}">
+                            {{ form.contact_email.label }}
+                        </label>
+                        {{ form.contact_email }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.contact_phone.id_for_label }}">
+                            {{ form.contact_phone.label }}
+                        </label>
+                        {{ form.contact_phone }}
+                    </div>
+                </div>
+                <div class="o-form_group">
+                    <div class="m-form-field">
+                        <label class="a-label a-label__heading"
+                               for="{{ form.contact_phone_alt.id_for_label }}">
+                            {{ form.contact_phone_alt.label }}
+                            <small class="a-label_helper">(optional)</small>
+                        </label>
+                        {{ form.contact_phone_alt }}
+                    </div>
+                </div>
+            </div>
+            <div class="o-form_group">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <div class="m-btn-group">
+                    <input class="a-btn"
+                           type="submit"
+                           value="Submit">
+                    <a class="a-btn a-btn__link a-btn__secondary"
+                       href="{{ url('diversity_inclusion:privacy') }}"
+                       rel="noopener noreferrer"
+                       target="_blank">
+                       See Privacy Act statement
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+{%- endblock %}
+
+{% block content_sidebar -%}
+    {% include '_sidebar.html' %}
+{%- endblock %}

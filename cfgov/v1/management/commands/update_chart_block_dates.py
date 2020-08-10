@@ -11,6 +11,19 @@ from v1.tests.wagtail_pages.helpers import publish_changes
 logger = logging.getLogger(__name__)
 
 
+def get_inquiry_month(data, data_source):
+    for item in data:
+        month = None
+        if item['market_key'] in data_source:
+            if 'inq_' in data_source:
+                month = item['inquiry_month']
+                break
+            elif 'crt_' in data_source:
+                month = item['tightness_month']
+                break
+    return month
+
+
 class Command(BaseCommand):
     help = 'Monthly updates to data snapshot values'
 
@@ -28,8 +41,9 @@ class Command(BaseCommand):
             help='JSON file containing all markets\' data snapshot values'
         )
 
-    def update_chart_blocks(self, date_published, last_updated):
+    def update_chart_blocks(self, date_published, last_updated, markets):
         """ Update date_published on all chart blocks """
+
         for page in BrowsePage.objects.all():
             chart_blocks = filter(
                 lambda item: item['type'] == 'chart_block',
@@ -38,8 +52,17 @@ class Command(BaseCommand):
             if not chart_blocks:
                 continue
             for chart in chart_blocks:
+                chart_options = chart['value']
                 chart['value']['date_published'] = date_published
-                chart['value']['last_updated_projected_data'] = last_updated
+                if chart_options['chart_type'] == 'line-index':
+                    last_updated_inquiry = get_inquiry_month(
+                        markets, chart_options['data_source']
+                    )
+                    chart['value']['last_updated_projected_data'] = \
+                        last_updated_inquiry
+                else:
+                    chart['value']['last_updated_projected_data'] = \
+                        last_updated
             publish_changes(page.specific)
 
     def handle(self, *args, **options):
@@ -47,9 +70,14 @@ class Command(BaseCommand):
         with open(self.expand_path(options['snapshot_file'])) as json_data:
             data = json.load(json_data)
 
+        markets = data['markets']
         date_published = data['date_published']
         last_updated = max(
-            [item['data_month'] for item in data['markets']]
+            [item['data_month'] for item in markets]
         )
+        inquiry_activity_charts = \
+            [item for item in markets if 'inquiry_month' in item]
 
-        self.update_chart_blocks(date_published, last_updated)
+        self.update_chart_blocks(
+            date_published, last_updated, inquiry_activity_charts
+        )

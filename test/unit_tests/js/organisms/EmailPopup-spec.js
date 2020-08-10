@@ -62,8 +62,8 @@ describe( 'EmailPopup', () => {
   } );
 
   describe( 'init()', () => {
-    it( 'should return undefined if already initialized', () => {
-      expect( emailPopup.init() ).toBeUndefined();
+    it( 'should return the instance when initialized', () => {
+      expect( emailPopup.init() ).toBeInstanceOf( EmailPopup );
     } );
   } );
 

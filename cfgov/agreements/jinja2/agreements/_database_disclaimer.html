@@ -1,0 +1,74 @@
+{% import "molecules/social-media.html" as social_media with context %}
+
+<div class="block block__padded-top block__border-top">
+    <h2 id="find-issuer">
+        Can't find an issuer?
+    </h2>
+    <p>
+        The drop-down list contains credit card issuers that have
+        submitted credit card agreements as required under
+        Section 204 of the Credit Card Accountability
+        Responsibility and Disclosure Act of 2009 (the CARD Act).
+        If you cannot find a card issuer, it may be that:
+    </p>
+    <ul>
+        <li>
+            The issuer has not yet submitted its agreements
+            to the Federal Reserve Board;
+        </li>
+        <li>
+            The issuer has fewer than 10,000 accounts and does not
+            have to submit its agreements; or
+        </li>
+        <li>
+            The name that you are looking for is not the actual
+            issuer's name
+            (for example, "ABC Card" is issued by XYZ Bank).
+        </li>
+    </ul>
+    <p>
+        If none of these reasons apply and you still cannot find
+        an agreement, call them to request a copy of your agreement.
+        Under federal law, your credit card issuer is required to
+        provide a copy of your agreement upon request.
+    </p>
+    <p>
+        Look on the back of the credit card or on your latest
+        monthly statement to find the name of the issuer. The bank,
+        retailer, or other entity whose name appears on the front
+        of the card may not be the actual issuer of the card.
+        You can also check the issuer's website; typically,
+        the bank name is listed at the bottom of the issuer's
+        homepage.
+    </p>
+    <p>
+        <a href="#issuer-select">
+            Go back to issuer selection
+        </a>
+    </p>
+
+    <h2>
+        Database disclaimer
+    </h2>
+    <p>
+        We will display the consumer credit card agreements in this database
+        as the respective issuers submitted them. The CFPB is not responsible
+        for the content of the agreements, including any discrepancies between
+        an agreement as presented in this database and the agreement as offered
+        to the public, or for any omissions or other errors in the agreement
+        as submitted by the issuer.
+    </p>
+    <p>
+        The agreements on file will have general terms and conditions, pricing,
+        and fee information. They are not specific to an individual's account
+        information.
+    </p>
+    <p>
+        If you have questions about the agreements themselves, contact
+        the card issuer directly.
+    </p>
+</div>
+
+<div class="block">
+    {{ social_media.render() }}
+</div>

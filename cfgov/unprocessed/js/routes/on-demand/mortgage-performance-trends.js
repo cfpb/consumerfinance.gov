@@ -12,8 +12,8 @@
 window.CFPB_CHART_DATA_SOURCE_BASE = '/data-research/mortgages/api/v1/';
 
 // Polyfill Promise and Object.assign for IE11
-import 'core-js/es6/promise';
-import 'core-js/es6/object';
+import 'core-js/features/promise';
+import 'core-js/features/object';
 
 import { Chart, Map } from '../../organisms/MortgagePerformanceTrends';
 

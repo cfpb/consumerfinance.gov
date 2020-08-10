@@ -11,33 +11,36 @@
 {%- endblock %}
 
 {% block og_article_author -%}
-    <meta property="article:author" content="https://www.facebook.com/CFPB">
+    <meta property="article:author"
+          content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
 {%- endblock %}
 
 {% block content_main %}
     {% include 'article.html' %}
-    <div class="block">
+    {% block post_article_content %}
+    <div class="block join-the-conversation">
         <p>
             Join the conversation. Follow CFPB on
             <a class="a-link
                       a-link__icon"
-                href="{{ unsigned_redirect('https://twitter.com/cfpb') }}">
-                    <span class="a-link_text">Twitter</span>
-                    {{ svg_icon('external-link') }}
-            </a> and <a class="a-link
-                               a-link__icon"
-                         href="{{ unsigned_redirect('https://facebook.com/cfpb') }}">
-                    <span class="a-link_text">Facebook</span>
-                    {{ svg_icon('external-link') }}
-            </a>.
+               href="{{ _( "https://twitter.com/CFPB" ) }}">
+                <span class="a-link_text">Twitter</span>
+            </a> and
+            <a class="a-link
+                      a-link__icon"
+               href="{{ _( "https://www.facebook.com/CFPB" ) }}">
+                <span class="a-link_text">Facebook</span></a>.
         </p>
     </div>
+    {% endblock %}
 {% endblock %}
 
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
-    <div class="block block__sub" data-qa-hook="rss-subscribe-section">
-        {% import 'rss.html' as rss %}
-        {{ rss.render('/about-us/blog/feed/') }}
+    {% if rss_feed %}
+    <div class="block block__sub">
+        {% import 'molecules/rss-feed.html' as rss %}
+        {{ rss.render(rss_feed) }}
     </div>
+    {% endif %}
 {% endblock %}

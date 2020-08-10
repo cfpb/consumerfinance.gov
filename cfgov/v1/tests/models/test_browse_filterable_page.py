@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Page, Site
+from wagtail.core.models import Page, Site
 
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory
@@ -29,12 +29,7 @@ class TestNewsroomLandingPage(TestCase):
         self.assertEqual(
             get_category_children(NewsroomLandingPage.filterable_categories),
             [
-                'at-the-cfpb',
-                'data-research-reports',
-                'directors-notebook',
-                'info-for-consumers',
                 'op-ed',
-                'policy_compliance',
                 'press-release',
                 'speech',
                 'testimony',
@@ -59,7 +54,7 @@ class TestNewsroomLandingPage(TestCase):
         self.assertFalse(self.newsroom_page.filterable_pages().exists())
 
     def test_page_matches_categories(self):
-        page = self.make_page_with_category('op-ed', parent=self.site_root)
+        self.make_page_with_category('op-ed', parent=self.site_root)
         self.assertTrue(self.newsroom_page.filterable_pages().exists())
 
     def test_page_in_other_site_not_included(self):

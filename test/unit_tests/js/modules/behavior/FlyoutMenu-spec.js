@@ -7,7 +7,7 @@ const HTML_SNIPPET = `
             aria-haspopup="menu"
             aria-expanded="false"></button>
     <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
-      <button data-js-hook="behavior_flyout-menu_alt-trigger"
+      <button data-js-hook="behavior_flyout-menu_trigger"
               aria-expanded="false"></button>
     </div>
 </div>
@@ -36,10 +36,11 @@ describe( 'FlyoutMenu', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     containerDom = document.querySelector( SEL_PREFIX + ']' );
-    triggerDom = document.querySelector( SEL_PREFIX + '_trigger]' );
+    const triggersDom = document.querySelectorAll( SEL_PREFIX + '_trigger]' );
+    triggerDom = triggersDom[0];
     contentDom = document.querySelector( SEL_PREFIX + '_content]' );
     // TODO: check for cases where alt trigger is absent.
-    altTriggerDom = document.querySelector( SEL_PREFIX + '_alt-trigger]' );
+    altTriggerDom = triggersDom[1];
 
     flyoutMenu = new FlyoutMenu( containerDom );
   } );
@@ -104,10 +105,7 @@ describe( 'FlyoutMenu', () => {
       triggerDom.click();
     } );
 
-    xit( 'should dispatch events when called by alt trigger click', () => {
-
-      /* TODO: alt trigger doesn't dispatch mouseover events,
-         but it probably should to match the trigger API. */
+    it( 'should dispatch events when called by alt trigger click', () => {
       const mouseEvent = document.createEvent( 'MouseEvents' );
       mouseEvent.initEvent( 'mouseover', true, true );
       altTriggerDom.dispatchEvent( mouseEvent );
@@ -221,6 +219,13 @@ describe( 'FlyoutMenu', () => {
         }
       } );
       triggerDom.click();
+
+      /* The transitionend event should fire on its own,
+         but for some reason the transitionend event is not firing within JSDom.
+         In a future JSDom update this should be revisited.
+         See https://github.com/jsdom/jsdom/issues/1781
+      */
+      contentDom.dispatchEvent( new Event( 'transitionend' ) );
     } );
   } );
 
@@ -240,6 +245,13 @@ describe( 'FlyoutMenu', () => {
         }
       } );
       triggerDom.click();
+
+      /* The transitionend event should fire on its own,
+         but for some reason the transitionend event is not firing within JSDom.
+         In a future JSDom update this should be revisited.
+         See https://github.com/jsdom/jsdom/issues/1781
+      */
+      contentDom.dispatchEvent( new Event( 'transitionend' ) );
     } );
   } );
 
@@ -276,9 +288,9 @@ describe( 'FlyoutMenu', () => {
       flyoutMenu.init();
       const dom = flyoutMenu.getDom();
       expect( dom.container ).toStrictEqual( containerDom );
-      expect( dom.trigger ).toStrictEqual( triggerDom );
+      expect( dom.trigger[0] ).toStrictEqual( triggerDom );
       expect( dom.content ).toStrictEqual( contentDom );
-      expect( dom.altTrigger ).toStrictEqual( altTriggerDom );
+      expect( dom.trigger[1] ).toStrictEqual( altTriggerDom );
     } );
   } );
 

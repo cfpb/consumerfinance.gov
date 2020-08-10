@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 
-from wagtail.wagtailadmin.forms import PasswordResetForm
-from wagtail.wagtailcore.models import Site
+from wagtail.admin.forms.auth import PasswordResetForm
+from wagtail.core.models import Site
 
 
 def create_request_for_email(method='GET'):

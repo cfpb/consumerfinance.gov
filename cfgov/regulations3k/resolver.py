@@ -2,8 +2,9 @@ import re
 
 from django.conf import settings
 
+from regdown import extract_labeled_paragraph
+
 from regulations3k.models import Section
-from regulations3k.regdown import extract_labeled_paragraph
 
 
 DEFAULT_REGULATIONS_REFERENCE_MAPPING = [

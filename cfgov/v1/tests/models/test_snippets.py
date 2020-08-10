@@ -1,22 +1,52 @@
+# -*- coding: utf-8 -*-
+from unittest import skipIf
+
 from django.test import TestCase
 
+from wagtail.core.models import Site
 from wagtail.tests.testapp.models import SimplePage
-from wagtail.wagtailcore.models import Site
 
 from v1.blocks import ReusableTextChooserBlock
-from v1.models.snippets import Contact, ReusableText
+from v1.models.snippets import Contact, RelatedResource, ReusableText
 
 
 class TestUnicodeCompatibility(TestCase):
-    def test_unicode_contact_heading_str(self):
-        contact = Contact(heading=u'Unicod\xeb')
-        self.assertEqual(str(contact), 'Unicod\xc3\xab')
+    def test_unicode_contact_heading_unicode(self):
+        contact = Contact(heading='Unicod\xeb')
+        self.assertEqual(str(contact), 'Unicod\xeb')
         self.assertIsInstance(str(contact), str)
 
-    def test_unicode_contact_heading_unicode(self):
-        contact = Contact(heading=u'Unicod\xeb')
-        self.assertEqual(unicode(contact), u'Unicod\xeb')
-        self.assertIsInstance(unicode(contact), unicode)
+
+class TestTranslations(TestCase):
+
+    def test_related_resource_translations(self):
+
+        test_resource = RelatedResource(
+            title='English title',
+            title_es='Spanish title',
+            text='English text.',
+            text_es='Spanish text.',
+        )
+        self.assertEqual(
+            str(test_resource), test_resource.title)
+        self.assertEqual(
+            test_resource.trans_title(), test_resource.title)
+        self.assertEqual(
+            test_resource.trans_text(), test_resource.text)
+        self.assertEqual(
+            test_resource.trans_title('es'), test_resource.title_es)
+        self.assertEqual(
+            test_resource.trans_text('es'), test_resource.text_es)
+
+
+class TestModelStrings(TestCase):
+
+    def test_reusable_text_string(self):
+        test_snippet = ReusableText(
+            title='Snippet title',
+            sidefoot_heading='Sidefoot heading',
+            text='Snippet text')
+        self.assertEqual(str(test_snippet), test_snippet.title)
 
 
 class TestReusableTextRendering(TestCase):

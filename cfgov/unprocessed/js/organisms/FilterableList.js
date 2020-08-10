@@ -27,13 +27,11 @@ function FilterableList( element ) {
   let _resultsContainer;
 
   /**
-   * @returns {FilterableListControls|undefined} An instance,
-   *   or undefined if it was already initialized.
+   * @returns {FilterableListControls} An instance.
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+      return this;
     }
 
     _filterableListControls = new FilterableListControls(

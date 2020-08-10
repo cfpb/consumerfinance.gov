@@ -3,7 +3,8 @@ import unittest
 from django.test import TestCase
 
 from core.utils import (
-    NoMigrations, extract_answers_from_request, format_file_size
+    extract_answers_from_request, format_file_size, get_body_html,
+    get_link_tags
 )
 
 
@@ -29,17 +30,6 @@ class ExtractAnswersTest(TestCase):
                           ('first', 'some_answer')]
 
 
-class TestNoMigrations(TestCase):
-    def setUp(self):
-        self.nomigrations = NoMigrations()
-
-    def test_contains(self):
-        self.assertTrue('random-string' in self.nomigrations)
-
-    def test_getitem(self):
-        self.assertIsNone(self.nomigrations['random-string'])
-
-
 class FormatFileSizeTests(unittest.TestCase):
 
     def test_format_file_size_bytes(self):
@@ -59,3 +49,57 @@ class FormatFileSizeTests(unittest.TestCase):
 
     def test_format_file_size_terabytes(self):
         self.assertEqual(format_file_size(1024 * 9000000000), '8 TB')
+
+
+class LinkUtilsTests(TestCase):
+
+    def test_get_body_html_simple(self):
+        self.assertEqual(
+            get_body_html('outer <body>inner</body>'), '<body>inner</body>'
+        )
+
+    def test_get_body_html_full(self):
+        self.assertEqual(
+            get_body_html(
+                '<html><head>outer</head>'
+                '<body><span>inner</span></body>'
+                '</html>'
+            ),
+            '<body><span>inner</span></body>'
+        )
+
+    def test_get_body_html_with_attributes(self):
+        self.assertEqual(
+            get_body_html('outer <body class="test">inner</body>'),
+            '<body class="test">inner</body>'
+        )
+
+    def test_get_body_html_empty(self):
+        self.assertEqual(
+            get_body_html('outer <body></body>'), None
+        )
+
+    def test_get_link_tags(self):
+        self.assertEqual(
+            get_link_tags('outer <a href="">inner</a>'),
+            ['<a href="">inner</a>', ]
+        )
+
+    def test_get_link_tags_does_not_match_aside(self):
+        self.assertEqual(
+            get_link_tags('outer <aside>inner <a href="">link</a></aside>'),
+            ['<a href="">link</a>', ]
+        )
+
+    def test_get_link_tags_spacing(self):
+        """Test for case where tag renders with only whitespace after tag name
+
+        Template conditions within a tag, e.g.,
+        `<a {% if some_condition %}class="some-class"{% endif %}>`
+        can result in output with only whitespace following the tag name
+        if the condition is false, like: `<a >`.
+        """
+        self.assertEqual(
+            get_link_tags('outer <a  >inner</a>'),
+            ['<a  >inner</a>', ]
+        )

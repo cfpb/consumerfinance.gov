@@ -1,0 +1,148 @@
+{% extends "agreements/base_agreements.html" %}
+
+{% block title %}Credit card agreement database search result{% endblock %}
+
+{% block content %}
+
+<main class="content content__2-1 content__bleedbar">
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            <a href="/" class="breadcrumbs_link">Home</a>
+            <a href="/credit-cards/" class="breadcrumbs_link">Credit cards</a>
+            <a href="/credit-cards/agreements" class="breadcrumbs_link">Credit card agreement database</a>
+        </nav>
+    </div>
+    <div class="content_wrapper">
+        <div class="content_main">
+            <div class="block block__flush-top">
+                <h1>Credit card agreement database</h1>
+            </div>
+            <div class="block">
+                <div id="ccagrsearch">
+                    <h2>Agreements by '{{ issuer.name }}'</h2>
+                    <table class="o-table o-table__striped o-table__stack-on-small u-w100pct">
+                        <thead>
+                            <tr>
+                                <th>Issuer</th>
+                                <th>Agreement description</th>
+                                <th class="u-w20pct">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in page.object_list %}
+
+                            <tr>
+                                <td data-label="Issuer">
+                                    {{ result.issuer.name }}
+                                </td>
+                                <td data-label="Agreement description">
+                                    {{ result.description }}
+                                </td>
+                                <td class="u-w20pct" data-label="Download">
+                                    <a href="{{ result.uri }}">
+                                        PDF ({{ result.size | filesizeformat }})
+                                        {{ svg_icon('download') }}
+                                    </a>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if page.has_next() or page.has_previous() %}
+
+                    <nav class="m-pagination"
+                         role="navigation"
+                         aria-label="Pagination">
+
+                        {% if page.has_previous() %}
+                        <a class="a-btn m-pagination_btn-prev"
+                           href="?page={{ page.previous_page_number() }}#ccagrsearch">
+                            <span class="a-btn_icon a-btn_icon__on-left">{{ svg_icon('left') }}</span>
+                            Previous
+                        </a>
+                        {% else %}
+                        <a class="a-btn m-pagination_btn-prev" disabled>
+                            <span class="a-btn_icon a-btn_icon__on-left">{{ svg_icon('left') }}</span>
+                            Previous
+                        </a>
+                        {% endif %}
+
+                        {% if page.has_next() %}
+                        <a class="a-btn m-pagination_btn-next"
+                            href="?page={{ page.next_page_number() }}#ccagrsearch">
+                            Next
+                            <span class="a-btn_icon a-btn_icon__on-right">{{ svg_icon('right') }}</span>
+                        </a>
+                        {% else %}
+                        <a class="a-btn m-pagination_btn-next" disabled>
+                            Next
+                            <span class="a-btn_icon a-btn_icon__on-right">{{ svg_icon('right') }}</span>
+                        </a>
+                        {% endif %}
+
+                        <form class="m-pagination_form"
+                              action="#ccagrsearch">
+                            <label class="m-pagination_label"
+                                   for="m-pagination_current-page">
+                                Page
+                                <span class="u-visually-hidden">
+                                    number {{ page.number }} out
+                                </span>
+                                <input class="m-pagination_current-page"
+                                        id="m-pagination_current-page"
+                                        name="page"
+                                        type="number"
+                                        min="1"
+                                        max="999"
+                                        pattern="[0-9]*"
+                                        inputmode="numeric"
+                                        value="{{ page.number }}">
+                                of {{ page.paginator.num_pages }}
+                            </label>
+                            <button class="a-btn
+                                           a-btn__link
+                                           m-pagination_btn-submit"
+                                    id="m-pagination_btn-submit"
+                                    type="submit">Go</button>
+                        </form>
+                    </nav>
+
+                    {% endif %}
+                </div>
+            </div>
+            {% include '_database_disclaimer.html' %}
+        </div>
+        <!-- /.content_main -->
+
+        <aside class="content_sidebar o-sidebar-content">
+            <div class="block block__flush-top">
+                <div class="m-related-links">
+                    <header class="m-slug-header">
+                        <h2 id="issuer-select" class="a-heading">
+                            Search again
+                        </h2>
+                    </header>
+                    <h3 class="h6">
+                        Show agreements by card issuer
+                    </h3>
+                    {{ agreements_issuer_select(issuer.slug) | safe }}
+                    <p>
+                        <a href="#find-issuer">
+                            Can't find an issuer?
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="block">
+                {% include '_need_help.html' %}
+            </div>
+        </aside>
+    </div>
+    <!-- /.content_wrapper -->
+</main>
+{% endblock %}
+
+{% block page_js %}
+{% endblock %}

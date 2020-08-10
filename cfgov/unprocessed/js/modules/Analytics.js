@@ -1,5 +1,5 @@
-import { isArray } from './util/type-checkers';
 import EventObserver from '../modules/util/EventObserver';
+import { isArray } from './util/type-checkers';
 
 const eventObserver = new EventObserver();
 const Analytics = {

@@ -1,168 +1,135 @@
 from datetime import date
 
 from django.test import RequestFactory, TestCase
-from django.utils import timezone
-from django.utils.encoding import force_text
 
-from wagtail.wagtailcore.models import Page
-
-from mock import Mock
-from model_mommy import mommy
-from scripts._atomic_helpers import job_listing_list
+from wagtail.core.models import Site
 
 from jobmanager.blocks import JobListingList, JobListingTable
-from jobmanager.models.django import Grade, JobCategory, JobLocation
+from jobmanager.models.django import JobCategory
 from jobmanager.models.pages import JobListingPage
-from jobmanager.models.panels import GradePanel
-from v1.models import SublandingPage
-from v1.tests.wagtail_pages.helpers import save_new_page
-from v1.util.migrations import set_stream_data
 
 
-def make_job_listing_page(title, close_date=None, grades=[], **kwargs):
-    page = mommy.prepare(
-        JobListingPage,
-        title=title,
-        close_date=close_date or timezone.now().date(),
-        description='description',
-        division=mommy.make(JobCategory),
-        location=mommy.make(JobLocation, name='Silicon Valley'),
-        **kwargs
-    )
-
-    home = Page.objects.get(slug='cfgov')
-    home.add_child(instance=page)
-
-    for grade in grades:
-        grade_model = mommy.make(Grade, grade=grade)
-        GradePanel.objects.create(grade=grade_model, job_listing=page)
-
-    return page
-
-
-class JobListingListTestCase(TestCase):
+class JobListingBlockTestUtils:
     def setUp(self):
+        self.root_page = Site.objects.get(is_default_site=True).root_page
+        self.division = JobCategory.objects.create(job_category='Test')
         self.request = RequestFactory().get('/')
-        self.more_jobs_page = Page.objects.first()
+        Site.find_for_request(self.request)
 
-    def _render_block_to_html(self):
+    def make_job(self, title, live=True, close_date=None):
+        page = JobListingPage(
+            live=live,
+            title=title,
+            description='Test description',
+            open_date=date(2000, 1, 1),
+            close_date=close_date or date(2099, 12, 1),
+            salary_min=1,
+            salary_max=100,
+            division=self.division
+        )
+
+        self.root_page.add_child(instance=page)
+        return page
+
+
+class JobListingListTestCase(JobListingBlockTestUtils, TestCase):
+    def render_block(self):
         block = JobListingList()
-        return block.render(block.to_python({
-            'more_jobs_page': self.more_jobs_page.pk,
-        }))
+        value = block.to_python({
+            'more_jobs_page': self.root_page.pk,
+        })
+        return block.render(value, context={'request': self.request})
 
-    def test_html_has_aside(self):
-        self.assertInHTML(
-            ('<aside class="m-jobs-list" data-qa-hook="openings-section">'
-             '<h3 class="short-desc">There are no current openings at this '
-             'time.</h3></aside>'),
-            self._render_block_to_html()
-        )
+    def test_no_jobs_message(self):
+        self.assertIn('There are no current openings', self.render_block())
 
-    def test_html_has_job_listings(self):
-        make_job_listing_page(
-            title='Manager',
-            grades=['1', '2', '3'],
-            close_date=date(2099, 8, 5)
-        )
-        make_job_listing_page(
-            title='Assistant',
-            grades=['12'],
-            close_date=date(2099, 4, 21)
-        )
-        content = self._render_block_to_html()
-        self.assertIn('Assistant', content)
-        self.assertIn('Manager', content)
-        self.assertIn('Apr. 21, 2099', content)
-        self.assertIn('Aug. 5, 2099', content)
+    def test_shows_jobs(self):
+        self.make_job('live1')
+        # This job should not show up because it is closed.
+        self.make_job('live_closed', close_date=date(1970, 1, 1)),
+        self.make_job('live2')
+        # This job should not show up because it is not live.
+        self.make_job('draft', live=False)
+        self.make_job('live3')
+        self.make_job('live4')
+        self.make_job('live5')
+        # These jobs should not appear because the list should be limited to 5.
+        self.make_job('live6')
+        self.make_job('live7')
+        self.make_job('live8')
 
-    def test_excludes_draft_jobs(self):
-        make_job_listing_page('Job', live=False)
-        qs = JobListingList().get_queryset({})
-        self.assertFalse(qs.exists())
+        html = self.render_block()
 
-    def test_includes_live_jobs(self):
-        job = make_job_listing_page('Job', live=True)
-        qs = JobListingList().get_queryset({})
-        self.assertTrue(qs.exists())
-        self.assertEqual(job.title, qs[0].title)
+        self.assertIn('live1', html)
+        self.assertNotIn('live_closed', html)
+        self.assertIn('live2', html)
+        self.assertNotIn('draft', html)
+        self.assertIn('live3', html)
+        self.assertIn('live4', html)
+        self.assertIn('live5', html)
+        self.assertNotIn('live6', html)
+        self.assertNotIn('live7', html)
+        self.assertNotIn('live8', html)
 
-    def test_page_renders_block_safely(self):
-        """
-        Test to make sure that a page with a jobs list block renders it
-        in a safe way, meaning as raw HTML vs. as a quoted string.
-        """
-        page = SublandingPage(title='title', slug='slug')
-        save_new_page(page)
-        set_stream_data(page, 'sidebar_breakout', [job_listing_list])
+    def test_database_queries(self):
+        for i in range(5):
+            self.make_job(f'live{i}')
 
-        request = RequestFactory().get('/')
-        request.user = Mock()
-        rendered_html = force_text(page.serve(request).render().content)
-        self.assertInHTML(
-            ('<aside class="m-jobs-list" data-qa-hook="openings-section">'
-             '<h3 class="short-desc">There are no current openings at this '
-             'time.</h3></aside>'),
-            rendered_html
-        )
+        # We expect three database queries here. First, Wagtail has to look up
+        # the site root paths. These get cached on the request object. Then,
+        # all of the JobListingPages are retrieved in a single query. Finally,
+        # another query retrieves the URL for the "more jobs page" link.
+        with self.assertNumQueries(3):
+            self.render_block()
 
 
-class JobListingTableTestCase(TestCase):
-    def test_html_displays_no_data_message(self):
-        table = JobListingTable()
-        html = table.render(table.to_python({'empty_table_msg': 'No Jobs'}))
-        self.assertInHTML('<h3>No Jobs</h3>', html)
+class JobListingTableTestCase(JobListingBlockTestUtils, TestCase):
+    def render_block(self):
+        return JobListingTable().render({}, context={'request': self.request})
 
-    def test_html_displays_table_if_row_flag_false(self):
-        table = JobListingTable()
-        html = table.render(table.to_python(
-            {'first_row_is_table_header': False}
-        ))
-        self.assertNotIn('<thead>', html)
-        self.assertIn('TITLE', html)
-        self.assertIn('GRADE', html)
-        self.assertIn('POSTING CLOSES', html)
-        self.assertIn('LOCATION', html)
+    def test_no_jobs_message(self):
+        self.assertIn('There are no current openings', self.render_block())
 
-    def test_html_has_header(self):
-        make_job_listing_page(
-            title='CEO',
-            close_date=date(2099, 12, 1)
-        )
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
-        self.assertIn('<thead>', html)
+    def test_shows_jobs(self):
+        self.make_job('live1')
+        # This job should not show up because it is closed.
+        self.make_job('live_closed', close_date=date(1970, 1, 1)),
+        self.make_job('live2')
+        # This job should not show up because it is not live.
+        self.make_job('draft', live=False)
+        self.make_job('live3')
+        self.make_job('live4')
+        self.make_job('live5')
+        self.make_job('live6')
 
-    def test_html_has_job_listings(self):
-        make_job_listing_page(
-            title='Manager',
-            grades=['1', '2', '3'],
-            close_date=date(2099, 8, 5)
-        )
-        make_job_listing_page(
-            title='Assistant',
-            grades=['12'],
-            close_date=date(2099, 4, 21)
-        )
+        html = self.render_block()
 
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
+        self.assertIn('live1', html)
+        self.assertNotIn('live_closed', html)
+        self.assertIn('live2', html)
+        self.assertNotIn('draft', html)
+        self.assertIn('live3', html)
+        self.assertIn('live4', html)
+        self.assertIn('live5', html)
+        self.assertIn('live6', html)
 
-        self.assertIn('Manager', html)
-        self.assertIn('Assistant', html)
-        self.assertIn('1, 2, 3', html)
-        self.assertIn('12', html)
-        self.assertIn('Aug. 5, 2099', html)
-        self.assertIn('Apr. 21, 2099', html)
-        self.assertEqual(html.count('Silicon Valley'), 2)
+    def test_database_queries(self):
+        for i in range(5):
+            self.make_job(f'live{i}')
 
-    def test_excludes_draft_jobs(self):
-        make_job_listing_page('Job', live=False)
-        qs = JobListingTable().get_queryset({})
-        self.assertFalse(qs.exists())
-
-    def test_includes_live_jobs(self):
-        job = make_job_listing_page('Job', live=True)
-        qs = JobListingTable().get_queryset({})
-        self.assertTrue(qs.exists())
-        self.assertEqual(job.title, qs[0].title)
+        # We expect 13 database queries:
+        #
+        # 1. Wagtail has to look up the site root paths, which get cached on
+        #    the request object.
+        # 2. One query to retrieve all of the job listing pages.
+        # 3. One query to prefetch all of the job grades.
+        # 5x2. Two additional queries per job to retrieve offices and
+        #      regions.
+        #
+        # This could be greatly optimized (reducing to only 2 additional
+        # location queries total) if django-modelcluster adds prefetch_related
+        # support to ParentalManyToManyField:
+        #
+        # https://github.com/wagtail/django-modelcluster/issues/101
+        with self.assertNumQueries(13):
+            self.render_block()

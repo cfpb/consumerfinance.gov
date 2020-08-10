@@ -1,7 +1,7 @@
+import itertools
 import json
-from functools import partial
-from six import string_types as basestring
-from six.moves.urllib.parse import urlencode
+from collections import Counter
+from urllib.parse import urlencode
 
 from django import forms
 from django.apps import apps
@@ -9,33 +9,56 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
-from django.utils.encoding import smart_text
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 
 from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.core import blocks
+from wagtail.core.models import Page
+from wagtail.core.rich_text import expand_db_html
+from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.images import blocks as images_blocks
+from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.utils.widgets import WidgetWithScript
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
-from wagtail.wagtaildocs.blocks import DocumentChooserBlock
-from wagtail.wagtailimages import blocks as images_blocks
-from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from jinja2 import Markup
+from taggit.models import Tag
 
-import ask_cfpb
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 from v1.util import ref
+
+
+class AskSearch(blocks.StructBlock):
+    show_label = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text='Whether to show form label.'
+    )
+
+    placeholder = blocks.TextBlock(
+        required=False,
+        help_text='Text to show for the input placeholder text.'
+    )
+
+    class Meta:
+        icon = 'search'
+        template = '_includes/organisms/ask-search.html'
+
+    class Media:
+        js = ['ask-autocomplete.js']
 
 
 class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=False, label='Well')
 
     class Meta:
-        icon = 'title'
+        icon = 'placeholder'
         template = '_includes/organisms/well.html'
+
+
+class WellWithAskSearch(Well):
+    ask_search = AskSearch()
 
 
 class InfoUnitGroup(blocks.StructBlock):
@@ -126,20 +149,6 @@ class InfoUnitGroup(blocks.StructBlock):
     class Meta:
         icon = 'list-ul'
         template = '_includes/organisms/info-unit-group-2.html'
-
-
-class InfoUnitGroup2575Only(InfoUnitGroup):
-    format = blocks.ChoiceBlock(
-        choices=[
-            ('25-75', '25/75'),
-        ],
-        default='25-75',
-        label='Format',
-        help_text='25/75 is the only allowed format for this page type.',
-    )
-
-    class Meta:
-        label = 'Info unit group'
 
 
 class PostPreviewSnapshot(blocks.StructBlock):
@@ -329,7 +338,7 @@ class RelatedPosts(blocks.StructBlock):
         specific_categories = value['specific_categories']
         limit = int(value['limit'])
         queryset = AbstractFilterPage.objects.live().exclude(
-            id=page.id).order_by('-date_published').distinct()
+            id=page.id).order_by('-date_published').distinct().specific()
 
         for parent in related_types:  # blog, newsroom or events
             # Include children of this slug that match at least 1 tag
@@ -406,49 +415,31 @@ class SidebarContactInfo(MainContactInfo):
 
 
 class BureauStructurePosition(blocks.StructBlock):
-    office_name = blocks.CharBlock()
-    lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
-    title = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 1")),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder="Title 2"))
-    ])
+    name = blocks.CharBlock()
+    title = blocks.TextBlock(required=False)
 
 
-class BureauStructureDivision(blocks.StructBlock):
-    division = v1_blocks.PlaceholderCharBlock(label='Division')
-    division_lead = v1_blocks.PlaceholderCharBlock(placeholder='Name')
-    title = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 1')),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 2'))
-    ])
-    division_lead_1 = v1_blocks.PlaceholderCharBlock(required=False,
-                                                     placeholder='Name',
-                                                     label='Division Lead')
-    title_1 = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 1')),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
-                                                  placeholder='Title 2'))
-    ], label='Title')
-    link_to_division_page = atoms.Hyperlink(required=False)
-    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+class BureauStructureOffice(blocks.StructBlock):
+    name = blocks.CharBlock()
+    leads = blocks.ListBlock(BureauStructurePosition())
 
 
-class BureauStructureOffice(BureauStructurePosition):
-    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+class BureauStructureOffices(BureauStructureOffice):
+    offices = blocks.ListBlock(BureauStructureOffice())
+
+
+class BureauStructureDivision(BureauStructureOffices):
+    overview_page = blocks.CharBlock()
 
 
 class BureauStructure(blocks.StructBlock):
     last_updated_date = blocks.DateBlock(required=False)
-    download_image = DocumentChooserBlock(icon='image')
+    download_image = DocumentChooserBlock(icon='image', required=False)
     director = blocks.CharBlock()
     divisions = blocks.ListBlock(BureauStructureDivision())
     office_of_the_director = blocks.ListBlock(
-        BureauStructureOffice(), label='Office of the Director'
+        BureauStructureOffices(),
+        label='Office of the Director'
     )
 
     class Meta:
@@ -468,7 +459,7 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
     def render(self, name, value, attrs=None):
         value = self.json_dict_apply(
             value,
-            partial(expand_db_html, for_editor=True)
+            expand_db_html
         )
 
         html = super(RichTextTableInput, self).render(name, value, attrs)
@@ -489,7 +480,10 @@ class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
             data, files, name
         )
 
-        return self.json_dict_apply(value, DbWhitelister.clean)
+        try:
+            return self.json_dict_apply(value, DbWhitelister.clean)
+        except NameError:
+            return value
 
     @staticmethod
     def json_dict_apply(value, callback):
@@ -572,7 +566,7 @@ class ModelBlock(blocks.StructBlock):
 
         ordering = self.get_ordering(value)
         if ordering:
-            if isinstance(ordering, basestring):
+            if isinstance(ordering, str):
                 ordering = (ordering,)
 
             qs = qs.order_by(*ordering)
@@ -593,135 +587,6 @@ class ModelBlock(blocks.StructBlock):
         return self.limit
 
 
-class ModelTable(ModelBlock):
-    """Abstract StructBlock that can generate a table from a Django model.
-
-    Subclasses must override the 'fields' and 'field_headers' class attributes
-    to specify which model fields to include in the generated table.
-
-    By default model instance values will be converted to text for display
-    in table rows. To override this, subclasses may define custom field
-    formatter methods, using the name 'make_FIELD_value'. This may be useful
-    if fields are non-text types, for example when formatting dates.
-
-    For example:
-
-        def make_created_value(self, instance, value):
-            return value.strftime('%b %d, %Y')
-
-    """
-    fields = None
-    field_headers = None
-
-    first_row_is_table_header = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        help_text='Display the first row as a header.'
-    )
-    first_col_is_header = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        help_text='Display the first column as a header.'
-    )
-    is_full_width = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        help_text='Display the table at full width.'
-    )
-    is_striped = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        help_text='Display the table with striped rows.'
-    )
-    is_stacked = blocks.BooleanBlock(
-        required=False,
-        default=True,
-        help_text='Stack the table columns on mobile.'
-    )
-    empty_table_msg = blocks.CharBlock(
-        label='No Table Data Message',
-        required=False,
-        help_text='Message to display if there is no table data.'
-    )
-
-    def render(self, value, context=None):
-        rows = [self.field_headers]
-
-        rows.extend([
-            self.make_row(instance) for instance in self.get_queryset(value)
-        ])
-
-        table_value = {
-            'data': rows,
-        }
-
-        table_value.update((k, value.get(k)) for k in (
-            'first_row_is_table_header',
-            'first_col_is_header',
-            'is_full_width',
-            'is_striped',
-            'is_stacked',
-            'empty_table_msg',
-        ))
-
-        table = AtomicTableBlock()
-        value = table.to_python(table_value)
-        return table.render(value, context=context)
-
-    def make_row(self, instance):
-        return [
-            self.make_value(instance, field)
-            for field in self.fields
-        ]
-
-    def make_value(self, instance, field):
-        value = getattr(instance, field)
-        return self.format_field_value(instance, field, value)
-
-    def format_field_value(self, instance, field, value):
-        custom_formatter_name = 'make_{}_value'.format(field)
-        custom_formatter = getattr(self, custom_formatter_name, None)
-
-        if custom_formatter:
-            return custom_formatter(instance, value)
-        else:
-            return smart_text(value)
-
-    class Meta:
-        icon = 'table'
-
-
-class ModelList(ModelBlock):
-    """Abstract StructBlock that can generate a list from a Django model.
-
-    Subclasses must define a 'render' method that renders the model QuerySet
-    to a string.
-
-    For example:
-
-        def render(self, value, context=None):
-            value['objects'] = self.get_queryset(value)
-            template = 'path/to/template.html'
-            return render_to_string(template, value)
-
-    """
-    limit = atoms.IntegerBlock(
-        default=5,
-        label='Maximum items',
-        min_value=0,
-        help_text='Limit list to this number of items'
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(ModelList, self).__init__(*args, **kwargs)
-
-    def get_limit(self, value):
-        return value.get('limit')
-
-    class Meta:
-        icon = 'list-ul'
-
-
 class FullWidthText(blocks.StreamBlock):
     content = blocks.RichTextBlock(icon='edit')
     content_with_anchor = molecules.ContentWithAnchor()
@@ -733,6 +598,8 @@ class FullWidthText(blocks.StreamBlock):
     related_links = molecules.RelatedLinks()
     reusable_text = v1_blocks.ReusableTextChooserBlock('v1.ReusableText')
     email_signup = EmailSignUp()
+    well = Well()
+    well_with_ask_search = WellWithAskSearch()
 
     class Meta:
         icon = 'edit'
@@ -767,8 +634,27 @@ class Expandable(BaseExpandable):
     )
 
 
-class ExpandableGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
+class BaseExpandableGroup(blocks.StructBlock):
+    heading = blocks.CharBlock(
+        required=False,
+        help_text=mark_safe(
+            'Added as an <code>&lt;h3&gt;</code> at the top of this block. '
+            'Also adds a wrapping <code>&lt;div&gt;</code> whose '
+            '<code>id</code> attribute comes from a slugified version of this '
+            'heading, creating an anchor that can be used when linking to '
+            'this part of the page.'
+        )
+    )
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/organisms/expandable-group.html'
+
+    class Media:
+        js = ["expandable-group.js"]
+
+
+class ExpandableGroup(BaseExpandableGroup):
     body = blocks.RichTextBlock(required=False)
     is_accordion = blocks.BooleanBlock(required=False)
     has_top_rule_line = blocks.BooleanBlock(
@@ -780,12 +666,48 @@ class ExpandableGroup(blocks.StructBlock):
 
     expandables = blocks.ListBlock(Expandable())
 
+
+class ContactExpandable(blocks.StructBlock):
+    contact = SnippetChooserBlock('v1.Contact')
+
     class Meta:
-        icon = 'list-ul'
-        template = '_includes/organisms/expandable-group.html'
+        icon = 'user'
+        template = '_includes/organisms/contact-expandable.html'
 
     class Media:
-        js = ["expandable-group.js"]
+        js = ['expandable.js']
+
+    def bulk_to_python(self, values):
+        """Support bulk retrieval of Contacts to reduce database queries."""
+        contact_model = self.child_blocks['contact'].target_model
+        contacts_by_id = contact_model.objects.in_bulk(
+            value['contact'] for value in values
+        )
+
+        for value in values:
+            value['contact'] = contacts_by_id.get(value['contact'])
+
+        return [blocks.StructValue(self, value) for value in values]
+
+
+class ContactExpandableGroup(BaseExpandableGroup):
+    expandables = blocks.ListBlock(ContactExpandable())
+
+    def bulk_to_python(self, values):
+        contact_expandable_values = list(itertools.chain(*(
+            value['expandables'] for value in values
+        )))
+
+        contacts = self.child_blocks['expandables'].child_block \
+            .bulk_to_python(contact_expandable_values)
+
+        index = 0
+        for value in values:
+            value_count = len(value['expandables'])
+            value['expandables'] = contacts[index:index + value_count]
+            index += value_count
+
+        return [blocks.StructValue(self, value) for value in values]
 
 
 class ItemIntroduction(blocks.StructBlock):
@@ -818,15 +740,20 @@ class FilterableList(BaseExpandable):
         required=False,
         help_text=mark_safe(
             'Message for the <a href="https://cfpb.github.io/'
-            'capital-framework/components/cf-notifications/'
-            '#recommended-notification-patterns">notification</a> '
+            'design-system/components/notifications'
+            '#default-base-notification">notification</a> '
             'that will be displayed instead of filter controls '
             'if there are no posts to filter.'))
     no_posts_explanation = blocks.CharBlock(
         required=False,
         help_text='Additional explanation for the notification that '
                   'will be displayed if there are no posts to filter.')
-    post_date_description = blocks.CharBlock(default='Published')
+    post_date_description = blocks.CharBlock(
+        required=False,
+        label='Date stamp descriptor',
+        help_text='Strongly encouraged to help users understand the '
+                  'action that the date of the post is linked to, '
+                  'i.e. published, issued, released.')
     categories = blocks.StructBlock([
         ('filter_category',
          blocks.BooleanBlock(default=True, required=False)),
@@ -837,8 +764,20 @@ class FilterableList(BaseExpandable):
             required=False
         )),
     ])
-    topics = blocks.BooleanBlock(default=True, required=False,
-                                 label='Filter Topics')
+    topic_filtering = blocks.ChoiceBlock(
+        choices=[
+            ('no_filter', "Don't filter topics"),
+            ('sort_alphabetically',
+                'Filter topics, sort topic list alphabetically'),
+            ('sort_by_frequency',
+                'Filter topics, sort topic list by number of results'),
+        ],
+        required=True,
+        help_text='Whether to include a dropdown in the filter controls '
+                  'for "Topics"')
+
+    statuses = blocks.BooleanBlock(default=False, required=False,
+                                   label='Filter Enforcement Statuses')
     authors = blocks.BooleanBlock(default=True, required=False,
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
@@ -860,18 +799,35 @@ class FilterableList(BaseExpandable):
     class Media:
         js = ['filterable-list.js']
 
+    @staticmethod
+    def get_filterable_topics(filterable_page_ids, value):
+        """Given a set of page IDs, return the list of filterable topics"""
+        tags = Tag.objects.filter(
+            v1_cfgovtaggedpages_items__content_object__id__in=filterable_page_ids  # noqa E501
+        ).values_list('slug', 'name')
+
+        sort_order = value.get('topic_filtering', 'sort_by_frequency')
+        if sort_order == 'sort_alphabetically':
+            return tags.distinct().order_by('name')
+        elif sort_order == 'sort_by_frequency':
+            return [tag for (tag, _) in Counter(tags).most_common()]
+        else:
+            return []
+
     def get_context(self, value, parent_context=None):
         context = super(FilterableList, self).get_context(
             value,
             parent_context=parent_context
         )
-
+        show_topics = value['topic_filtering'] == 'sort_by_frequency' or \
+            value['topic_filtering'] == 'sort_alphabetically'
         # Different instances of FilterableList need to render their post
         # previews differently depending on the page type they live on. By
         # default post dates and tags are always shown.
         context.update({
             'show_post_dates': True,
             'show_post_tags': True,
+            'show_topic_filter': show_topics,
         })
 
         # Pull out the page type selected when the FilterableList was
@@ -893,34 +849,114 @@ class FilterableList(BaseExpandable):
         return context
 
 
+class VideoPlayerStructValue(blocks.StructValue):
+    @property
+    def thumbnail_url(self):
+        thumbnail_image = self.get('thumbnail_image')
+
+        if thumbnail_image:
+            return thumbnail_image.get_rendition('original').url
+
+
 class VideoPlayer(blocks.StructBlock):
-    video_url = blocks.RegexBlock(
-        label='YouTube Embed URL',
-        default='https://www.youtube.com/embed/',
-        required=True,
-        regex=r'^https:\/\/www\.youtube\.com\/embed\/.+$',
-        error_messages={
-            'required': 'The YouTube URL field is required for video players.',
-            'invalid': "The YouTube URL is in the wrong format. "
-                       "You must use the embed URL "
-                       "(https://www.youtube.com/embed/video_id), "
-                       "which can be obtained by clicking Share > Embed "
-                       "on the YouTube video page.",
-        }
+    YOUTUBE_ID_HELP_TEXT = (
+        'Enter the YouTube video ID, which is located at the end of the video '
+        'URL, after "v=". For example, the video ID for '
+        'https://www.youtube.com/watch?v=1V0Ax9OIc84 is 1V0Ax9OIc84.'
     )
+
+    video_id = blocks.RegexBlock(
+        label='YouTube video ID',
+        # Set required=False to allow for non-required VideoPlayers.
+        # See https://github.com/wagtail/wagtail/issues/2665.
+        required=False,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        regex=r'^[\w-]{11}$',
+        error_messages={
+            'invalid': "The YouTube video ID is in the wrong format.",
+        },
+        help_text=YOUTUBE_ID_HELP_TEXT
+    )
+    thumbnail_image = images_blocks.ImageChooserBlock(
+        required=False,
+        help_text=mark_safe(
+            'Optional thumbnail image to show before and after the video '
+            'plays. If the thumbnail image is not set here, the video player '
+            'will default to showing the thumbnail that was set in (or '
+            'automatically chosen by) YouTube.'
+        )
+    )
+
+    def clean(self, value):
+        cleaned = super().clean(value)
+
+        errors = {}
+
+        if not cleaned['video_id']:
+            if getattr(self.meta, 'required', True):
+                errors['video_id'] = ErrorList([
+                    ValidationError('This field is required.'),
+                ])
+            elif cleaned['thumbnail_image']:
+                errors['thumbnail_image'] = ErrorList([
+                    ValidationError(
+                        'This field should not be used if YouTube video ID is '
+                        'not set.'
+                    )
+                ])
+
+        if errors:
+            raise ValidationError(
+                'Validation error in VideoPlayer',
+                params=errors
+            )
+
+        return cleaned
 
     class Meta:
         icon = 'media'
         template = '_includes/organisms/video-player.html'
+        value_class = VideoPlayerStructValue
 
     class Media:
         js = ['video-player.js']
 
 
+class FeaturedContentStructValue(blocks.StructValue):
+    @property
+    def links(self):
+        # We want to pass a single list of links to the template when the
+        # FeaturedContent organism is rendered. So we consolidate any links
+        # that have been specified: the post link and any other links. We
+        # also normalize them each to have URL and text attributes.
+        links = []
+
+        # We want to pass the post URL into the template so that it can be
+        # rendered without needing to call back to any Wagtail template tags.
+        post = self.get('post')
+        if post and self.get('show_post_link'):
+            links.append({
+                # Unfortunately, we don't have access to the request context
+                # here, so we can't do post.get_url(request).
+                'url': post.url,
+                'text': self.get('post_link_text') or post.title,
+            })
+
+        # Normalize any child Hyperlink atoms and filter empty links.
+        for hyperlink in self.get('links') or []:
+            url = hyperlink.get('url')
+            text = hyperlink.get('text')
+
+            if url and text:
+                links.append({'url': url, 'text': text})
+
+        return links
+
+
 class FeaturedContent(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    category = blocks.ChoiceBlock(choices=ref.fcm_types, required=False)
+    heading = blocks.CharBlock()
+    body = blocks.RichTextBlock()
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,
@@ -932,30 +968,17 @@ class FeaturedContent(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink(required=False),
                              label='Additional Links')
 
-    video = blocks.StructBlock([
-        ('id', blocks.CharBlock(
-            required=False,
-            label='ID',
-            help_text='E.g., in "https://www.youtube.com/watch?v=en0Iq8II4fA",'
-                      ' the ID is everything after the "?v=".')),
-        ('url', blocks.CharBlock(
-            required=False,
-            label='URL',
-            help_text='You must use the embed URL, e.g., '
-                      'https://www.youtube.com/embed/'
-                      'JPTg8ZB3j5c?autoplay=1&enablejsapi=1')),
-        ('height', blocks.CharBlock(default='320', required=False)),
-        ('width', blocks.CharBlock(default='568', required=False)),
-    ])
+    video = VideoPlayer(required=False)
 
     class Meta:
         template = '_includes/organisms/featured-content.html'
         icon = 'doc-full-inverse'
         label = 'Featured Content'
         classname = 'block__flush'
+        value_class = FeaturedContentStructValue
 
     class Media:
-        js = ['video-player.js']
+        js = ['featured-content-module.js']
 
 
 class ChartBlock(blocks.StructBlock):
@@ -1122,16 +1145,6 @@ class ResourceList(blocks.StructBlock):
         label = 'Resource List'
         icon = 'table'
         template = '_includes/organisms/resource-list.html'
-
-
-class AskCategoryCard(ModelList):
-
-    def render(self, value, context=None):
-        value['category'] = ask_cfpb.models.Category.objects.first()
-        value.update(context or {})
-
-        template = '_includes/organisms/ask-cfpb-card.html'
-        return render_to_string(template, value)
 
 
 class DataSnapshot(blocks.StructBlock):

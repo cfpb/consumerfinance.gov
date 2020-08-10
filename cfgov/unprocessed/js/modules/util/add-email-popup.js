@@ -1,5 +1,5 @@
-import EmailPopup from '../../organisms/EmailPopup';
 import * as emailHelpers from './email-popup-helpers';
+import EmailPopup from '../../organisms/EmailPopup';
 
 const emailPopup = document.querySelector( '.' + EmailPopup.BASE_CLASS );
 

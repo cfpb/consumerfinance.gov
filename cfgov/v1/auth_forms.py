@@ -9,7 +9,7 @@ from django.contrib.auth.forms import (
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
 
-from wagtail.wagtailusers import forms as wagtailforms
+from wagtail.users import forms as wagtailforms
 
 from .email import send_password_reset_email
 from .models import base

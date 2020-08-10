@@ -94,7 +94,7 @@
             </h2>
         </header>
     {% endif %}
-    {% for post_type, post_type_list in posts.iteritems() %}
+    {% for post_type, post_type_list in posts.items() %}
         {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", category_icon.render('blog')) %}
         <div class="m-related-posts_list-container">
             {% if value.show_heading %}

@@ -30,11 +30,11 @@ function testAcceptanceBrowser( cb ) {
     .once( 'close', function( code ) {
       if ( code ) {
         fancyLog( 'Tox tests exited with code ' + code );
-        cb(); // eslint-disable-line callback-return, inline-comments
+        cb(); // eslint-disable-line callback-return
         process.exit( 1 );
       }
       fancyLog( 'Tox tests done!' );
-      cb(); // eslint-disable-line callback-return, inline-comments
+      cb(); // eslint-disable-line callback-return
     } );
 }
 
@@ -203,7 +203,7 @@ async function spawnProtractor( cb ) {
       await stopSauceTunnel();
     }
 
-    cb(); // eslint-disable-line callback-return, inline-comments
+    cb(); // eslint-disable-line callback-return
     process.exit( 1 );
   }
 
@@ -219,7 +219,7 @@ async function spawnProtractor( cb ) {
     if ( args.sauceTunnel ) {
       await stopSauceTunnel();
     }
-    cb(); // eslint-disable-line callback-return, inline-comments
+    cb(); // eslint-disable-line callback-return
     process.exit( 0 );
   }
 

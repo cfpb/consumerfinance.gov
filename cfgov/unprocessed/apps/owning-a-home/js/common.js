@@ -2,9 +2,9 @@
    Common application-wide scripts for owning-a-home.
    ========================================================================== */
 
-import FormSubmit from '../../../js/organisms/FormSubmit.js';
-import * as validators from '../../../js/modules/util/validators';
 import * as ratingsForm from './ratings-form';
+import * as validators from '../../../js/modules/util/validators';
+import FormSubmit from '../../../js/organisms/FormSubmit.js';
 
 const BASE_CLASS = 'o-email-signup';
 const emailSignup = document.body.querySelector( '.' + BASE_CLASS );

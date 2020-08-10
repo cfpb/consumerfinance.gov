@@ -2,16 +2,15 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-const BROWSER_LIST = require( '../../../../config/browser-list-config' );
-const webpack = require( 'webpack' );
-const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
+const TerserPlugin = require( 'terser-webpack-plugin' );
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
-const COMMON_UGLIFY_CONFIG = new UglifyWebpackPlugin( {
+const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
   cache: true,
   parallel: true,
-  uglifyOptions: {
+  extractComments: false,
+  terserOptions: {
     ie8: false,
     ecma: 5,
     warnings: false,
@@ -62,9 +61,12 @@ const conf = {
     filename: '[name]',
     jsonpFunction: 'findAHousingCounselor'
   },
-  plugins: [
-    COMMON_UGLIFY_CONFIG
-  ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      COMMON_MINIFICATION_CONFIG
+    ]
+  },
   stats: STATS_CONFIG.stats
 };
 

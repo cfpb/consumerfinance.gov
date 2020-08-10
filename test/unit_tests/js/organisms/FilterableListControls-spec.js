@@ -71,6 +71,13 @@ const HTML_SNIPPET = `
                         </li>
 
                         <li class="m-form-field m-form-field__checkbox">
+                            <input class="a-checkbox" type="checkbox" value="directors-notebook" id="filter_categories_directors-notebook" name="categories">
+                            <label class="a-label" for="filter_categories_directors-notebook">
+                                Director's notebook
+                            </label>
+                        </li>
+
+                        <li class="m-form-field m-form-field__checkbox">
                             <input class="a-checkbox" type="checkbox" value="policy_compliance" id="filter_categories_policy_compliance" name="categories">
                             <label class="a-label" for="filter_categories_policy_compliance">
                                 Policy and compliance
@@ -165,7 +172,7 @@ const HTML_SNIPPET = `
 
 </div>
 
-<div class="m-notification m-notification__default">
+<div class="m-notification">
     <div class="m-notification_content">
         <div class="h4 m-notification_message"></div></div>
 </div>
@@ -181,7 +188,9 @@ describe( 'FilterableListControls', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
     filterableListControlsDom = document.querySelector( `.${ BASE_CLASS }` );
-    filterableListControls = new FilterableListControls( filterableListControlsDom );
+    filterableListControls = new FilterableListControls(
+      filterableListControlsDom
+    );
   } );
 
   describe( 'init()', () => {

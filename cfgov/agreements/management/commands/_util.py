@@ -1,20 +1,15 @@
-from __future__ import unicode_literals
-
 import os
-import six
 
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.text import slugify
 
 import boto3
+
 from agreements.models import Issuer
 
 
 def s3_safe_key(path, prefix=''):
-    if six.PY2:
-        key = prefix + force_text(path)
-    else:
-        key = prefix + path
+    key = prefix + path
     key = key.replace(' ', '_')
     key = key.replace('%', '')
     key = key.replace(';', '')
@@ -51,10 +46,7 @@ def save_agreement(agreements_zip, pdf_path, outfile,
 
     zipinfo = agreements_zip.getinfo(pdf_path)
 
-    if six.PY3:  # pragma: no cover
-        path = force_text(pdf_path)
-    else:  # pragma: no cover
-        path = pdf_path.decode('cp1252')
+    path = force_str(pdf_path)
 
     try:
         issuer_name, filename = path.split('/')

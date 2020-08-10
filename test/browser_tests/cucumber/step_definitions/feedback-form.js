@@ -18,11 +18,11 @@ let _dom;
 
 Before( function() {
   _dom = {
-    radioButton1:     element( by.css( RADIO_BUTTON_1 ) ),
-    commentField:     element( by.css( COMMENT_FIELD ) ),
-    submitButton:     element( by.css( SUBMIT_BUTTON ) ),
-    form:             element( by.css( FORM ) ),
-    notification:     element( by.css( NOTIFICATION ) )
+    radioButton1: element( by.css( RADIO_BUTTON_1 ) ),
+    commentField: element( by.css( COMMENT_FIELD ) ),
+    submitButton: element( by.css( SUBMIT_BUTTON ) ),
+    form:         element( by.css( FORM ) ),
+    notification: element( by.css( NOTIFICATION ) )
   };
 } );
 

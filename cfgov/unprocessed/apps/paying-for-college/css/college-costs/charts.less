@@ -1,0 +1,32 @@
+.college-costs {
+	&_tool-section__school-results {
+		& .highcharts-plot-band {
+		    fill-opacity: 1;
+
+			&:first-child {
+				fill: @college-costs-chart-min;
+			}
+			&:nth-child(2) {
+				fill: @college-costs-chart-median;
+			}
+			&:last-child {
+				fill: @college-costs-chart-max;
+			}
+		}
+	}
+
+	#affording-your-loans_chart,
+	#max-debt-guideline_chart {
+		.highcharts-plot-line {
+			stroke: #20aa3f;
+			stroke-width: 3px;
+		}
+	}
+
+	#make-a-plan_chart {
+		.highcharts-plot-line {
+			stroke: #d14124;
+			stroke-width: 3px;
+		}
+	}
+}

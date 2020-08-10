@@ -6,16 +6,19 @@
 
    Description:
 
-   Create a Contact-Email molecule.
-   See [GHE]/flapjack/Modules-V1/wiki/Contact:-Email
+   Create a Contact Email molecule when given:
 
-   value         Object defined from a StreamField block.
+   value:                   ContactEmail block StreamValue.
 
-   value.emails: An array containing the email addresses.
+   value.emails:            An array containing the email addresses.
+
+   email.address:           Email address to link to.
+
+   email.text:              Alternate link text (optional).
 
    ========================================================================== #}
 
-<div class="m-contact m-contact-email" data-qa-hook="contact-email">
+<div class="m-contact m-contact-email">
     <span class="h5">
         {{ svg_icon('email') }}
         Email
@@ -23,7 +26,7 @@
     <p>
         {% for email in value.emails %}
             <a href="mailto:{{ email.url }}">
-                {{ email.url }}
+                {{ email.text | default( email.url, true ) }}
             </a><br>
         {% endfor %}
     </p>

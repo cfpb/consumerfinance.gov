@@ -1,6 +1,6 @@
 // Required modules.
 import { assign } from '../modules/util/assign';
-import * as atomicHelpers from '../modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
 import { ajaxRequest } from '../modules/util/ajax-request';
 import { bindEvent } from '../modules/util/dom-events';
 import * as throttle from 'lodash.throttle';
@@ -40,7 +40,7 @@ function Autocomplete( element, opts ) {
   let _selection;
 
   // Autocomplete elements
-  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _dom = checkDom( element, BASE_CLASS );
   const _input = _dom.querySelector( 'input' );
 
   // Settings
@@ -84,9 +84,8 @@ function Autocomplete( element, opts ) {
    *   or undefined if it was already initialized.
    */
   function init() {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      let UNDEFINED;
-      return UNDEFINED;
+    if ( !setInitFlag( _dom ) ) {
+      return this;
     }
 
     _autocomplete = _addContainer();

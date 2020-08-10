@@ -1,5 +1,5 @@
-import { simulateEvent } from '../../../../util/simulate-event';
 import fwbQuestions from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-questions';
+import { simulateEvent } from '../../../../util/simulate-event';
 
 let formDom;
 let submitBtnDom;

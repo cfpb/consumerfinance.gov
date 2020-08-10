@@ -37,9 +37,13 @@
    ========================================================================== */
 
 .post__event {
+    > footer {
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
     .respond-to-min(@bp-med-min, {
-        padding-right: unit(@grid_gutter-width / @base-font-size-px, em);
-        margin-right: unit(@grid_gutter-width  / @base-font-size-px, em);
+        padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+        margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
     });
 }
 
@@ -174,7 +178,7 @@
 
 /* Event-Footer
    ========================================================================== */
-
+/*
 .event-footer {
     .respond-to-max(@bp-xs-max, {
         a {
@@ -213,3 +217,4 @@
         });
     }
 }
+*/

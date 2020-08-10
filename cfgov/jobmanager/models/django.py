@@ -1,16 +1,12 @@
-from __future__ import absolute_import, unicode_literals
-
 from django.db import models
-from django.utils.six import python_2_unicode_compatible
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel
-from wagtail.wagtailcore.fields import RichTextField
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
+from wagtail.core.fields import RichTextField
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
 
-@python_2_unicode_compatible
 class ApplicantType(models.Model):
     applicant_type = models.CharField(max_length=255)
     display_title = models.CharField(
@@ -20,13 +16,18 @@ class ApplicantType(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.applicant_type
+        return self.display_title or self.applicant_type
 
     class Meta:
         ordering = ['applicant_type']
 
+    def __lt__(self, other):
+        return self.applicant_type < other.applicant_type
 
-@python_2_unicode_compatible
+    def __gt__(self, other):
+        return self.applicant_type > other.applicant_type
+
+
 class Grade(models.Model):
     grade = models.CharField(max_length=32)
     salary_min = models.IntegerField()
@@ -45,7 +46,6 @@ class Grade(models.Model):
         return self.grade > other.grade
 
 
-@python_2_unicode_compatible
 class JobCategory(models.Model):
     job_category = models.CharField(max_length=255)
     blurb = RichTextField(null=True, blank=True)
@@ -57,7 +57,6 @@ class JobCategory(models.Model):
         ordering = ['job_category']
 
 
-@python_2_unicode_compatible
 class ServiceType(models.Model):
     service_type = models.CharField(max_length=255)
 
@@ -68,7 +67,6 @@ class ServiceType(models.Model):
         ordering = ['service_type']
 
 
-@python_2_unicode_compatible
 class JobLength(models.Model):
     job_length = models.CharField(max_length=255)
 
@@ -79,12 +77,9 @@ class JobLength(models.Model):
         ordering = ['job_length']
 
 
-@python_2_unicode_compatible
-class JobLocation(ClusterableModel):
-    abbreviation = models.CharField(
-        max_length=2,
-        primary_key=True)
+class Region(ClusterableModel):
     name = models.CharField(max_length=255)
+    abbreviation = models.CharField(max_length=2, primary_key=True)
 
     def __str__(self):
         return self.name
@@ -92,61 +87,58 @@ class JobLocation(ClusterableModel):
     class Meta:
         ordering = ('abbreviation',)
 
-
-class Region(JobLocation):
     panels = [
-        FieldPanel('abbreviation'),
         FieldPanel('name'),
+        FieldPanel('abbreviation'),
         InlinePanel('states', label="States"),
-        InlinePanel('cities', label="Cities"),
+        InlinePanel('major_cities', label="Major cities"),
     ]
 
 
-class Office(JobLocation):
-    panels = [
-        FieldPanel('abbreviation'),
-        FieldPanel('name'),
-        InlinePanel('cities', label="Office location", max_num=1),
-    ]
-
-
-@python_2_unicode_compatible
 class State(models.Model):
-    name = models.CharField(
-        max_length=255,
-        verbose_name="State name")
-    abbreviation = models.CharField(
-        max_length=2,
-        primary_key=True)
+    name = models.CharField(max_length=255)
+    abbreviation = models.CharField(max_length=2, primary_key=True)
     region = ParentalKey(
-        'Region',
-        related_name="states")
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ('abbreviation',)
-
-
-@python_2_unicode_compatible
-class City(models.Model):
-    name = models.CharField(
-        max_length=255,
-        verbose_name="City name")
-    state = models.ForeignKey(
-        State,
-        null=False,
-        blank=False,
-        default=None,
-        related_name='cities')
-    location = ParentalKey(
-        'JobLocation',
-        related_name='cities'
+        Region,
+        related_name='states',
+        on_delete=models.PROTECT
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
-        ordering = ('state_id', 'name')
+        ordering = ('abbreviation',)
+
+    def __lt__(self, other):
+        return self.abbreviation < other.abbreviation
+
+    def __gt__(self, other):
+        return self.abbreviation > other.abbreviation
+
+
+class AbstractCity(models.Model):
+    name = models.CharField(max_length=255)
+    state = models.ForeignKey(State, on_delete=models.PROTECT)
+
+    class Meta:
+        abstract = True
+        ordering = ('state', 'name')
 
     def __str__(self):
-        return '{}, {}'.format(self.name, self.state.abbreviation)
+        return ', '.join((self.name, self.state_id))
+
+
+class Office(AbstractCity):
+    abbreviation = models.CharField(max_length=2, primary_key=True)
+
+    class Meta:
+        ordering = ('abbreviation',)
+
+
+class MajorCity(AbstractCity):
+    region = ParentalKey(
+        Region,
+        on_delete=models.PROTECT,
+        related_name='major_cities'
+    )

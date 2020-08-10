@@ -6,7 +6,8 @@
     {% for block in streamfield %}
         {% if 'related_posts' in block.block_type %}
             <div class="block{{ ' block__flush-top' if loop.first else '' }}">
-            {% include_block block %}
+                {% include_block block %}
+            </div>
         {% elif 'related_metadata' in block.block_type %}
             <div class="block{{ ' block__flush-top' if loop.first else '' }}">
                 {{ related_metadata.render(block.value) }}
@@ -14,6 +15,10 @@
         {% elif 'social_media' in block.block_type %}
             <div class="block{{ ' block__flush-top' if loop.first else '' }}">
                 {{ social_media.render(block.value) }}
+            </div>
+        {% elif 'rss_feed' in block.block_type %}
+            <div class="block{{ ' block__flush-top' if loop.first else '' }}">
+                {% include_block block %}
             </div>
         {% else %}
             {% import 'templates/render_block.html' as render_block with context %}

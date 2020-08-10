@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 import logging
 import re
@@ -25,7 +23,7 @@ from regulations3k.parser.regtable import RegTable
 logger = logging.getLogger(__name__)
 
 # eCFR globals
-PART_WHITELIST = [
+PART_ALLOWLIST = [
     '1001', '1002', '1003', '1004', '1005', '1006', '1007', '1008', '1009',
     '1010', '1011', '1012', '1013', '1014', '1015', '1016',
     '1022', '1024', '1025', '1026', '1030', '1041',
@@ -545,10 +543,10 @@ def ecfr_to_regdown(part_number, file_path=None):
     DIV9 is an appendix
     DIV9 element whose HEAD starts with 'Supplement I' is an interpretation
 
-    To avoid mischief, we make sure the part number is on a whitelist.
+    To avoid mischief, we make sure the part number is on an allowlist.
     """
     PAYLOAD.reset()
-    if part_number not in PART_WHITELIST:
+    if part_number not in PART_ALLOWLIST:
         raise ValueError('Provided Part number is not a CFPB regulation.')
     starter = datetime.datetime.now()
     if file_path:

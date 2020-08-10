@@ -1,0 +1,33 @@
+{# ==========================================================================
+
+   Number callout
+
+   ==========================================================================
+
+   Description:
+
+   Outputs a header and number when given:
+
+   value:                     Object with the following properties:
+
+   value.header:              Header text
+
+   value.value:               Value
+
+   value.data_attribute:      Data attribute for value container
+
+   value.additional_classes:  Additional classes for callout
+
+   ========================================================================== #}
+
+
+{% macro render( value ) -%}
+<div class="number-callout {{ value.additional_classes if value.additional_classes else '' }}">
+    <div class="number-callout_header">{{ value.header }}</div>
+    <div class="number-callout_value">
+      <span {{ value.data_attribute | safe if value.data_attribute else '' }}>
+          {{ value.value if value.value else '' }}
+      </span>
+    </div>
+</div>
+{%- endmacro %}

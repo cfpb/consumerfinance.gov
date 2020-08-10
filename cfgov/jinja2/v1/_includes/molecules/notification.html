@@ -9,7 +9,8 @@
    Builds notification markup when given:
 
    type:        The type of notification to display.
-                Values may be: 'success', 'error', or 'warning'.
+                Values may be: 'success', 'error', 'warning', 'default',
+                'money-tips', or 'caution'.
 
    is_visible:  Whether the notification is initially shown or not.
                 Default is false.
@@ -18,32 +19,73 @@
 
    explanation: Text to display as an explanation
                 within the notification markup.
+                Defaults to none.
+
+   links:       Array of link objects, which each contain:
+                - text (required): text of link.
+                - url:             link url.
+                Defaults to an empty array.
 
    ========================================================================== #}
 
-{% macro render(type, is_visible, message, explanation=none) %}
+{% macro render(type, is_visible, message, explanation=none, links=[]) %}
 
-  {% set type_lookup  = {
-        'default': 'information-round',
-        'success': 'approved-round',
-        'warning': 'warning-round',
-        'error':   'error-round',
+  {% set type_lookup = {
+        'default':    'information-round',
+        'success':    'approved-round',
+        'warning':    'warning-round',
+        'error':      'error-round',
+        'money-tips': 'dollar-round',
+        'caution':   'information-round'
       }
   %}
-  {% set icon = type_lookup[type]  %}
-  {% set type = (' m-notification__' + type | string) if type else '' %}
+  {% set icon = type_lookup[type | default( 'default' )] %}
+
+  {% if type == 'money-tips' %}
+    {% set type = ' m-notification__success' %}
+  {% elif type == 'caution' %}
+    {% set type = ' m-notification__error' %}
+  {% elif type %}
+    {% set type = ' m-notification__' + type | string %}
+  {% else %}
+    {% set type = '' %}
+  {% endif %}
 
   <div class="m-notification
               {{- type -}}
               {{- ' m-notification__visible' if is_visible else '' -}}">
       {{ svg_icon(icon) }}
       <div class="m-notification_content"
-           {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
+          {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
+          {%- if message %}
           <div class="h4 m-notification_message">{{ message }}</div>
-          {%- if explanation %}
-              <p class="m-notification_explanation">{{ explanation | safe }}</p>
           {% endif -%}
+          {%- if explanation %}
+              <div class="m-notification_explanation">{{ explanation }}</div>
+          {% endif -%}
+          {% for link in links %}
+              {% if link.text %}
+                  {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
+                      <li class="m-list_item">
+                          <a class="m-list_link" href="{{ link.url }}">
+                              {{ link.text }}
+                          </a>
+                      </li>
+                  {% if loop.last %}</ul>{% endif %}
+              {% endif %}
+          {% endfor %}
       </div>
   </div>
 
 {% endmacro %}
+
+{% if value %}
+  {{ render(
+      value.type | default( 'warning' ),
+      value.is_visible | default( true ),
+      value.message,
+      value.explanation | default( '' ),
+      value.links | default( [] )
+    )
+  }}
+{% endif %}

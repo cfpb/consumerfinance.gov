@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from datetime import date
 
 from wagtail.contrib.modeladmin.options import modeladmin_register
@@ -119,7 +117,7 @@ class PartModelAdmin(TreeModelAdmin):
     list_display = (
         'part_number',
         'title',
-        'letter_code'
+        'short_name'
     )
     child_field = 'versions'
     child_model_admin = EffectiveVersionModelAdmin

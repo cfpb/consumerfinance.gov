@@ -1,8 +1,6 @@
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 const hud = require( BASE_JS_PATH + 'find-a-housing-counselor/js/hud-util' );
 
-let UNDEFINED;
-
 describe( 'hud', () => {
 
   describe( 'checkHudData', () => {

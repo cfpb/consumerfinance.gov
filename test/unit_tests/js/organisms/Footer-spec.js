@@ -13,9 +13,10 @@ describe( 'Footer', () => {
   } );
 
   describe( 'init()', () => {
-    it( 'should return undefined if already initialized', () => {
-      footer.init();
-      expect( footer.init() ).toBeUndefined();
+    it( 'should return the instance when initialized', () => {
+      expect( footer.init() ).toBeInstanceOf( Footer );
+      // Check that an instance is returned on the second call.
+      expect( footer.init() ).toBeInstanceOf( Footer );
     } );
   } );
 } );

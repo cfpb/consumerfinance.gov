@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 from django import forms
 from django.utils.functional import cached_property
 
@@ -7,9 +5,9 @@ from core.govdelivery import get_govdelivery_api
 from data_research.models import ConferenceRegistration
 
 
-# Form input attributes for Capital Framework compatibility.
+# Form input attributes for Design System compatibility.
 #
-# See https://cfpb.github.io/capital-framework/components/cf-forms/
+# See https://cfpb.github.io/design-system/components/text-inputs
 # for documentation on the styles that are being duplicated here.
 text_input_attrs = {
     'class': 'a-text-input a-text-input__full',
@@ -138,7 +136,7 @@ class ConferenceRegistrationForm(forms.Form):
             govdelivery_code=self.govdelivery_code
         )
 
-        return len(attendees.in_person()) >= self.capacity
+        return len(list(attendees.in_person())) >= self.capacity
 
     def save(self, commit=True):
         registration = ConferenceRegistration(

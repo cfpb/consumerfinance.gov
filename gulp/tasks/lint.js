@@ -15,7 +15,7 @@ function _genericLint( src ) {
   const options = minimist( process.argv.slice( 2 ) );
   let errorHandler = through2.obj();
 
-  if ( options.travis ) {
+  if ( options.ci ) {
     options.quiet = true;
     errorHandler = gulpEslint.failAfterError();
   }
@@ -47,9 +47,19 @@ gulp.task( 'lint:scripts', () => _genericLint( configLint.src ) );
  * Lints all the js files for errors
  */
 gulp.task( 'lint',
-  gulp.parallel(
-    'lint:build',
-    'lint:tests',
-    'lint:scripts'
-  )
+
+  /* Checks to see if a flag for a specific file is present, if so, use it
+     Else, returns a list of sane default tasks to run */
+  ( () => {
+    let UNDEFINED;
+    const argv = minimist( process.argv.slice( 3 ) );
+    if ( argv.path !== UNDEFINED ) {
+      return gulp.parallel( () => _genericLint( argv.path ) );
+    }
+    return gulp.parallel(
+      'lint:build',
+      'lint:tests',
+      'lint:scripts'
+    );
+  } )()
 );

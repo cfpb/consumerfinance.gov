@@ -1,11 +1,10 @@
 from django.core.validators import URLValidator
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.fields import RichTextField
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
@@ -26,7 +25,6 @@ class TaggableSnippetManager(models.Manager):
         return snippets
 
 
-@python_2_unicode_compatible
 class Resource(ClusterableModel):
     title = models.CharField(max_length=255)
     desc = RichTextField(verbose_name='Description', blank=True)

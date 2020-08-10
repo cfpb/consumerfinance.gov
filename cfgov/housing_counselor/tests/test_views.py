@@ -12,13 +12,13 @@ class HousingCounselorS3URLMixinTestCase(TestCase):
     def test_s3_json_url(self):
         self.assertEqual(
             HousingCounselorS3URLMixin.s3_json_url(20001),
-            'https://files.consumerfinance.gov/a/assets/hud/jsons/20001.json'
+            'https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/hud/jsons/20001.json'  # noqa: E501
         )
 
     def test_s3_pdf_url(self):
         self.assertEqual(
             HousingCounselorS3URLMixin.s3_pdf_url(20009),
-            'https://files.consumerfinance.gov/a/assets/hud/pdfs/20009.pdf'
+            'https://s3.amazonaws.com/files.consumerfinance.gov/a/assets/hud/pdfs/20009.pdf'  # noqa: E501
         )
 
 
@@ -32,8 +32,10 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertNotIn('zipcode_valid', response.context_data)
         self.assertNotIn('api_json', response.context_data)
         self.assertNotIn('pdf_url', response.context_data)
-        self.assertIn(HousingCounselorView.invalid_zip_msg['error_message'],
-                      response.content)
+        self.assertContains(
+            response,
+            HousingCounselorView.invalid_zip_msg['error_message'],
+        )
 
     @mock.patch('housing_counselor.views.HousingCounselorView.get_counselors')
     def test_get_counselors_failed_s3_request(self, mock_get_counselors):
@@ -42,8 +44,10 @@ class HousingCounselorViewTestCase(TestCase):
         self.assertNotIn('zipcode_valid', response.context_data)
         self.assertNotIn('api_json', response.context_data)
         self.assertNotIn('pdf_url', response.context_data)
-        self.assertIn(HousingCounselorView.failed_fetch_msg['error_message'],
-                      response.content)
+        self.assertContains(
+            response,
+            HousingCounselorView.failed_fetch_msg['error_message']
+        )
 
     @mock.patch('housing_counselor.views.HousingCounselorView.get_counselors')
     def test_get_counselors_invalid_zipcode(self, mock_get_counselors):
