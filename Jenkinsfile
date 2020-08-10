@@ -135,7 +135,7 @@ pipeline {
         success {
             script {
                 if (env.GIT_BRANCH != 'master' or env.GIT_BRANCH != 'main') {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
                 }
                 else {
                     notify("${NOTIFICATION_CHANNEL}", ":white_check_mark:  $env.GIT_BRANCH deployed via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
