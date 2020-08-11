@@ -19,13 +19,13 @@ class AskBlocksTestCase(TestCase):
             '<div class="rich-text">Tip content</div>'
             '</aside>'
         )
-        self.expected_text_html = '<div class="rich-text">text</div>'
         self.text_data = {
             'type': 'text',
             'value': {
                 'content': 'text'
             }
         }
+        self.expected_text_html = '<div class="rich-text">text</div>'
 
     def test_tip_block_renders_html(self):
         block = Tip()
