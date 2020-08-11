@@ -1,11 +1,11 @@
 import logging
 
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from wagtail.core.models import PageManager
 
 from dateutil import parser
-from jsonfield import JSONField
 
 from v1.models import BrowsePage
 
@@ -87,7 +87,7 @@ class MortgageMetaData(models.Model):
     Metadata values, stored as json, and made available in the API.
     """
     name = models.CharField(max_length=255)
-    json_value = JSONField(blank=True)
+    json_value = JSONField(blank=True, null=True)
     note = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 

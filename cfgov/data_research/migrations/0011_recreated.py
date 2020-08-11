@@ -6,19 +6,6 @@ import jsonfield.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [
-	('data_research', '0001_initial'),
-        ('data_research', '0002_conf_reg_form_code'),
-        ('data_research', '0003_county_mortgage_data_models'),
-        ('data_research', '0004_add_valid_fields'),
-        ('data_research', '0005_mortgagemetadata'),
-        ('data_research', '0006_mortgageperformancepage'),
-        ('data_research', '0007_add_non_msa_model'),
-        ('data_research', '0008_add_state_and_metro_area_models'),
-        ('data_research', '0009_add_constant_date_field'),
-	('data_research', '0010_2018_research_conference'),
-    ]
-
     dependencies = [
     ]
 
