@@ -16,7 +16,7 @@ from wagtail.documents.edit_handlers import DocumentChooserPanel
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
-from v1.models import SublandingFilterablePage
+from v1.models import DocumentDetailPage
 from v1.models.base import CFGOVPage
 
 
@@ -70,7 +70,7 @@ get_report_appendices = get_report_parts(True)
 def get_researchers():
     return dict([
         (r.title, r.url) for r in
-        SublandingFilterablePage.objects.get(pk=4833).get_children()
+        DocumentDetailPage.objects.all()
     ])
 
 
