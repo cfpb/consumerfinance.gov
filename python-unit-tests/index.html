@@ -364,7 +364,7 @@ To enforce this convention, the tests can be run using a custom Django test
 runner that fails if anything is written to stdout. This test runner is at
 <code>cfgov.test.StdoutCapturingTestRunner</code> and can be enabled with the <code>TEST_RUNNER</code>
 environment variable:</p>
-<pre class="highlight"><code class="language-sh">TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e unittest</code></pre>
+<pre class="highlight"><code class="language-sh">TEST_RUNNER=core.testutils.runners.StdoutCapturingTestRunner tox -e unittest</code></pre>
 
 <p>This test runner is enabled when tests are run automatically on
 <a href="../github-actions/">GitHub Actions</a>,
