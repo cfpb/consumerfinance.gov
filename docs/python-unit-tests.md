@@ -135,7 +135,7 @@ runner that fails if anything is written to stdout. This test runner is at
 environment variable:
 
 ```sh
-TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e unittest
+TEST_RUNNER=core.testutils.runners.StdoutCapturingTestRunner tox -e unittest
 ```
 
 This test runner is enabled when tests are run automatically on

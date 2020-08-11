@@ -1,4 +1,4 @@
 from .test import *
 
 
-TEST_RUNNER = 'cfgov.test.AcceptanceTestRunner'
+TEST_RUNNER = 'core.testutils.runners.AcceptanceTestRunner'
