@@ -39,13 +39,10 @@ USE_X_FORWARDED_PORT = os.environ.get("USE_X_FORWARDED_PORT") == "True"
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
 # Application definition
-if wagtail.VERSION < (2, 10):
-    INSTALLED_APPS = (
-        "permissions_viewer",
-    )
-else:
-    INSTALLED_APPS = (
-        "permissions_viewer",
+INSTALLED_APPS = ("permissions_viewer",)
+
+if wagtail.VERSION >= (2, 10):
+    INSTALLED_APPS += (
         "wagtail.contrib.legacy.richtext",
     )
 
