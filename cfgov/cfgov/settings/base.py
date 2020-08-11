@@ -39,6 +39,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 # Application definition
 INSTALLED_APPS = (
     "permissions_viewer",
+    "wagtail.contrib.legacy.richtext",
     "wagtail.core",
     "wagtail.admin",
     "wagtail.documents",
