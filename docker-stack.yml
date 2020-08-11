@@ -48,12 +48,17 @@ services:
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
       MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
       REFRESH_DB: ${REFRESH_DB}
+      S3_ENABLED: "True"
     ports:
       - 8000
     networks:
       - app
       - lb
     secrets:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_STORAGE_BUCKET_NAME
+      - AWS_S3_URL
       - CFGOV_PROD_DB_LOCATION
       - DJANGO_ADMIN_PASSWORD
       - GOVDELIVERY_USER
@@ -80,10 +85,9 @@ services:
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
                     ./refresh-data.sh 
                     ./cfgov/manage.py update_index
-                    httpd -d cfgov/apache -D FOREGROUND
-                else
-                    httpd -d cfgov/apache -D FOREGROUND
-                fi"
+                fi
+                
+                httpd -d cfgov/apache -D FOREGROUND"
 
 networks:
   app:
@@ -92,6 +96,18 @@ networks:
     external: True
 
 secrets:
+  AWS_ACCESS_KEY_ID:
+    name: aws_access_key
+    external: True
+  AWS_SECRET_ACCESS_KEY:
+    name: aws_secret_key
+    external: True
+  AWS_STORAGE_BUCKET_NAME:
+    name: aws_s3_storage_bucket_name
+    external: True
+  AWS_S3_URL:
+    name: aws_s3_url
+    external: True
   CFGOV_PROD_DB_LOCATION:
     name: cfgov_prod_db_location
     external: True
