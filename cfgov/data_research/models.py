@@ -87,7 +87,7 @@ class MortgageMetaData(models.Model):
     Metadata values, stored as json, and made available in the API.
     """
     name = models.CharField(max_length=255)
-    json_value = JSONField(blank=True)
+    json_value = JSONField(blank=True, null=True)
     note = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 
