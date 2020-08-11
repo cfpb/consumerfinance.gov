@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html_join
 
-from wagtail.admin.menu import AdminOnlyMenuItem, MenuItem
+from wagtail.admin.menu import MenuItem
 from wagtail.admin.rich_text.converters.editor_html import (
     WhitelistRule as AllowlistRule
 )
@@ -248,7 +248,7 @@ def serve_latest_draft_page(page, request, args, kwargs):
 
 @hooks.register('register_reports_menu_item')
 def register_page_metadata_report_menu_item():
-    return AdminOnlyMenuItem(
+    return MenuItem(
         "Page Metadata",
         reverse('page_metadata_report'),
         classnames='icon icon-' + PageMetadataReportView.header_icon,
