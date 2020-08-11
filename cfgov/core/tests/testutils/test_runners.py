@@ -1,7 +1,7 @@
 from io import StringIO
 from unittest import TestCase, TestSuite, defaultTestLoader
 
-from cfgov.test import StdoutCapturingTestRunner
+from core.testutils.runners import StdoutCapturingTestRunner
 
 
 class StderrSuppressingStdoutCapturingTestRunner(StdoutCapturingTestRunner):
