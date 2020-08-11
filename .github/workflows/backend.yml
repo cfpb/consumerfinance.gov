@@ -38,15 +38,18 @@ jobs:
         with:
           python-version: 3.6
 
+      - name: Update pip
+        run: |
+          python -m pip install --upgrade pip
+
       # https://github.com/actions/cache/blob/master/examples.md#using-pip-to-get-cache-location
       - name: Get pip cache dir
         id: pip-cache
         run: |
-          python -m pip install --upgrade pip
           echo "::set-output name=dir::$(pip cache dir)"
 
       # https://docs.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#caching-dependencies
-      - name: Set up pip cache
+      - name: Cache pip dependencies
         uses: actions/cache@v2
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
@@ -54,7 +57,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: Install dependencies
+      - name: Install CI dependencies
         run: |
           pip install -r requirements/ci.txt
 
@@ -91,7 +94,26 @@ jobs:
         with:
           python-version: 3.6
 
-      - name: Install dependencies
+      - name: Update pip
+        run: |
+          python -m pip install --upgrade pip
+
+      # https://github.com/actions/cache/blob/master/examples.md#using-pip-to-get-cache-location
+      - name: Get pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      # https://docs.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#caching-dependencies
+      - name: Cache pip dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements/*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install CI dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements/ci.txt
