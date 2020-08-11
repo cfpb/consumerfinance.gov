@@ -1,6 +1,1 @@
 wagtail==2.9.3
-wagtail-autocomplete==0.6
-wagtail-flags==4.2.1
-wagtail-inventory==1.1
-wagtail-sharing==2.2
-wagtail-treemodeladmin==1.2.0
