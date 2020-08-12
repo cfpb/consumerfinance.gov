@@ -202,34 +202,6 @@ function Form() {
               placeholder={`For example: ${category.name}`}
             />
 
-            <CurrencyField
-              id="totalCents"
-              name="totalCents"
-              label="Pay Amount"
-              onChange={formik.handleChange}
-              onFocus={focusHandler}
-              onBlur={blurHandler(formik.handleBlur)}
-              value={formik.values.totalCents}
-              errors={formik.errors.totalCents}
-              touched={formik.touched.totalCents}
-              tabIndex="0"
-              required
-            />
-
-            <DateField
-              id="dateTime"
-              name="dateTime"
-              label={eventType === 'expense' ? 'Due Date' : 'Pay Date'}
-              onChange={formik.handleChange}
-              onFocus={focusHandler}
-              onBlur={blurHandler(formik.handleBlur)}
-              value={formik.values.dateTime || ''}
-              errors={formik.errors.dateTime}
-              touched={formik.touched.dateTime}
-              tabIndex="0"
-              required
-            />
-
             <Checkbox
               id="recurs"
               name="recurs"
@@ -281,6 +253,36 @@ function Form() {
                 />
               </>
             )}
+
+            <CurrencyField
+              id="totalCents"
+              name="totalCents"
+              label="Pay Amount"
+              onChange={formik.handleChange}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
+              value={formik.values.totalCents}
+              errors={formik.errors.totalCents}
+              touched={formik.touched.totalCents}
+              tabIndex="0"
+              required
+            />
+
+            <DateField
+              id="dateTime"
+              name="dateTime"
+              label={eventType === 'expense' ? 'Due Date' : 'Pay Date'}
+              onChange={formik.handleChange}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
+              value={formik.values.dateTime || ''}
+              errors={formik.errors.dateTime}
+              touched={formik.touched.dateTime}
+              tabIndex="0"
+              required
+            />
+
+            
 
             <Button fullWidth disabled={!formik.dirty && !formik.isValid} type="submit" tabIndex="0">
               Save
