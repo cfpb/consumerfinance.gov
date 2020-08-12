@@ -83,7 +83,7 @@ export const Categories = new CategoryTree({
     salary: {
       name: 'Job',
       icon: icons.job,
-      description: 'Income from employment.',
+      /* description: 'Income from employment.', */
       recurrenceTypes: ['weekly', 'biweekly', 'monthly', 'semimonthly'],
       strategy: {
         id: 'directDeposit',

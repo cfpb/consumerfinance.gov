@@ -132,8 +132,16 @@ function Form() {
       </BackButton>
 
       <h2 className="add-event__title">{category.name}</h2>
-      <p className="add-event__intro">Enter the details of your {handleCatName(category.name)} {eventType}.</p>
-      {!!category.description && <p className="add-event__description">{category.description}</p>}
+      {category.name === 'Job' ? (
+          <p className="add-event__intro"> Enter your paycheck information.</p>
+      ) : (
+        <p className="add-event__intro">Enter the details of your {handleCatName(category.name)} {eventType}.</p>
+       
+      )}
+        
+        {!!category.description && <p className="add-event__description">{category.description}</p>} 
+     
+      
 
       <Formik
         initialValues={event.toFormValues()}
