@@ -4,6 +4,8 @@ import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import wagtail
+
 import dj_database_url
 from unipath import DIRS, Path
 
@@ -37,8 +39,14 @@ USE_X_FORWARDED_PORT = os.environ.get("USE_X_FORWARDED_PORT") == "True"
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
 # Application definition
-INSTALLED_APPS = (
-    "permissions_viewer",
+INSTALLED_APPS = ("permissions_viewer",)
+
+if wagtail.VERSION >= (2, 10):
+    INSTALLED_APPS += (
+        "wagtail.contrib.legacy.richtext",
+    )
+
+INSTALLED_APPS += (
     "wagtail.core",
     "wagtail.admin",
     "wagtail.documents",
