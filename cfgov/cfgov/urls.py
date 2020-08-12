@@ -83,7 +83,7 @@ def empty_200_response(request, *args, **kwargs):
 
 urlpatterns = [
 
-    re_path(r'^documents/', include(wagtaildocs_urls))
+    re_path(r'^documents/', include(wagtaildocs_urls)),
 
     re_path(r'^rural-or-underserved-tool/$', TemplateView.as_view(
         template_name='rural-or-underserved/index.html'),
