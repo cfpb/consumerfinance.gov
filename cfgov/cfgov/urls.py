@@ -82,6 +82,9 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+
+    re_path(r'^documents/', include(wagtaildocs_urls)),
+
     re_path(r'^rural-or-underserved-tool/$', TemplateView.as_view(
         template_name='rural-or-underserved/index.html'),
         name='rural-or-underserved'),
@@ -726,7 +729,6 @@ if settings.ALLOW_ADMIN_URL:
         ),
         re_path(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         re_path(r'^admin/', include(wagtailadmin_urls)),
-        re_path(r'^documents/', include(wagtaildocs_urls))
 
     ]
 
