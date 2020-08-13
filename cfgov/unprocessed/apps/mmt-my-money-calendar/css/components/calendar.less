@@ -210,16 +210,6 @@
     &_explanation {
       font-size: 14px;
     }
-/* ** Missy added ** */
-    /* &_button {
-      background-color: @red;
-      color: #fff;
-      display: block;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 12px;
-      padding: 5px;
-    } */
     &_fix-button {
       background-color: @red;
       color: #fff;
@@ -240,8 +230,12 @@
     }
 
     &__savings {
-      background: @positiveColor;
+      background: lighten(@positiveColor, 10%);
       border-color:@green;
+       
+      .cf-icon-svg {
+        fill:@green;
+      } 
     }
   }
 
@@ -282,6 +276,16 @@
       color: darken(@gold, 10%);
       font-weight: bold;
     }
+
+
+   &.positive {
+    margin: 12px auto;
+  }
+
+  .pos-ending-balance {
+    color: @green;
+    font-weight: bold;
+  }
 
     p {
       margin: 0;

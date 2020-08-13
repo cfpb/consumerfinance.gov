@@ -111,7 +111,7 @@ export default class UIStore {
   @computed get weekHasNegativeBalance() {
     return this.weekEndingBalance < 0;
   }
-  /* ** Missy added ** */
+  
   @computed get weekHasPositiveBalance() {
     return this.weekEndingBalance > 0;
   }
