@@ -6,6 +6,8 @@ export function Notification({ variant, message, icon = informationRound, visibl
 
   return (
     <div className={classes}>
+      <p>variant: {variant}</p>
+      <p>classes: {classes}</p>
       <span className="notification-icon" dangerouslySetInnerHTML={{ __html: icon }} />
       <div className="m-notification_content">
         <div className="h4 m-notification_message">{message}</div>

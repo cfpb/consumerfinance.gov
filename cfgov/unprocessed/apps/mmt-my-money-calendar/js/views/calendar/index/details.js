@@ -134,13 +134,33 @@ function Details() {
         />
       </header>
 
+      {/* ** Missy added ** */}
+      {uiStore.weekHasPositiveBalance && (
+        <div className={endBalanceClasses}>
+          <Notification
+            message="You are going to be in the green!"
+            variant="savings"
+            actionLink={
+              <Link to={`/calendar/add/expense/emergencySavings/new`} className="m-notification_save-button">
+                Save it
+              </Link>
+            }
+          >
+            <p className="m-notification_explanation">
+              Ending Balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span>
+            </p>
+          </Notification>
+        </div>
+      )}
+
       {uiStore.weekHasNegativeBalance && (
         <div className={endBalanceClasses}>
           <Notification
             message="You are going to be in the red!"
             variant="error"
             actionLink={
-              <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className="m-notification_button">
+          /*     ** Missy edited ** */
+              <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className="m-notification_fix-button">
                 Fix it
               </Link>
             }
