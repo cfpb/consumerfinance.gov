@@ -81,7 +81,6 @@
     "jest": "26.2.2",
     "jest-cli": "26.2.2",
     "jsdoc": "3.6.5",
-    "lighthouse": "6.1.1",
     "minimist": "1.2.5",
     "protractor": "7.0.0",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
