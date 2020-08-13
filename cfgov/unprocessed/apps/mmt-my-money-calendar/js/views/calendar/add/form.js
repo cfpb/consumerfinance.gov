@@ -205,7 +205,7 @@ function Form() {
             <CurrencyField
               id="totalCents"
               name="totalCents"
-              label="Pay Amount"
+              label="Amount"
               onChange={formik.handleChange}
               onFocus={focusHandler}
               onBlur={blurHandler(formik.handleBlur)}
@@ -219,7 +219,7 @@ function Form() {
             <DateField
               id="dateTime"
               name="dateTime"
-              label={eventType === 'expense' ? 'Due Date' : 'Pay Date'}
+              label='Date'
               onChange={formik.handleChange}
               onFocus={focusHandler}
               onBlur={blurHandler(formik.handleBlur)}
