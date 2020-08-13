@@ -158,6 +158,7 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
             message="You are going to be in the red!"
             variant="error"
             actionLink={
+
               <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className="m-notification_fix-button">
                 Fix it
               </Link>
