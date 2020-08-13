@@ -60,7 +60,10 @@ class ParseLinksMiddleware(object):
 
     def __call__(self, request):
         response = self.get_response(request)
-        if self.should_parse_links(request.path, response['content-type']):
+        if self.should_parse_links(
+            request.path,
+            response.get('Content-Type', '')
+        ):
             response.content = parse_links(
                 response.content,
                 request.path,
