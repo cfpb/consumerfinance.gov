@@ -47,6 +47,12 @@ class TestShouldParseLinks(TestCase):
             response_content_type='application/json'
         ))
 
+    def test_should_not_parse_links_if_empty(self):
+        self.assertFalse(ParseLinksMiddleware.should_parse_links(
+            request_path='/foo/bar',
+            response_content_type=''
+        ))
+
     def test_should_parse_links_if_html(self):
         self.assertTrue(ParseLinksMiddleware.should_parse_links(
             request_path='/foo/bar',
