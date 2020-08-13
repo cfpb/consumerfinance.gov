@@ -949,6 +949,9 @@ class AudioPlayer(blocks.StructBlock):
         icon = 'media'
         template = '_includes/organisms/audio-player.html'
 
+    class Media:
+        js = ['audio-player.js']
+
 
 class FeaturedContentStructValue(blocks.StructValue):
     @property

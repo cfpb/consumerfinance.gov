@@ -1,6 +1,6 @@
 {% macro render(value) %}
     {% if value.type == 'audio' %}
-        <audio controls preload="metadata">
+        <audio class="o-audio-player" controls preload="metadata" data-title="{{ value.title }}">
         {% for source in value.sources %}
             <source src="{{ source.src }}" type="{{ source.type }}">
             {{ _('Your browser does not support this audio player.') }}

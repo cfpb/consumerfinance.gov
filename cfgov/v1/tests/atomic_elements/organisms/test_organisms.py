@@ -685,7 +685,8 @@ class TestAudioPlayer(TestCase):
 
         self.assertInHTML(
             (
-                '<audio controls preload="metadata">'
+                '<audio class="o-audio-player" controls preload="metadata"'
+                '       data-title="Test audio file">'
                 '    <source src="/f/media/test.mp3" type="audio/mpeg">'
                 '    Your browser does not support this audio player.'
                 '</audio>'
