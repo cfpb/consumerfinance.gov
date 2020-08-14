@@ -13,6 +13,7 @@ jobs:
           - lint-current
           - validate-migrations
           - validate-assets
+          - validate-translations
           - unittest-current
           - unittest-future
 
@@ -32,6 +33,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      # Make sure we have gettext installed for the translation validation
+      - run: |
+          sudo apt-get install gettext
 
       - name: Set up Python
         uses: actions/setup-python@v1
