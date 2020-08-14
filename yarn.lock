@@ -1096,7 +1096,7 @@
     jest-util "^26.3.0"
     slash "^3.0.0"
 
-"@jest/core@^26.3.0", "@jest/core@^26.4.0":
+"@jest/core@^26.4.0":
   version "26.4.0"
   resolved "https://registry.yarnpkg.com/@jest/core/-/core-26.4.0.tgz#8f42ae45640b46b4f8ffee134dcd408c210ab1ef"
   integrity sha512-mpXm4OjWQbz7qbzGIiSqvfNZ1FxX6ywWgLtdSD2luPORt5zKPtqcdDnX7L8RdfMaj1znDBgN2+gB094ZIr7vnA==
@@ -6592,26 +6592,7 @@ jest-changed-files@^26.3.0:
     execa "^4.0.0"
     throat "^5.0.0"
 
-jest-cli@26.3.0:
-  version "26.3.0"
-  resolved "https://registry.yarnpkg.com/jest-cli/-/jest-cli-26.3.0.tgz#046164f0b8194234aaa76bb58e867f5d6e3fcf53"
-  integrity sha512-vrlDluEjnNTJNpmw+lJ1Dvjhc+2o7QG0dG8n+iDu3NaoQ9OzqNeZsZZ0a9KP7SdtD5BXgvGSpCWTlLH5SqtxcA==
-  dependencies:
-    "@jest/core" "^26.3.0"
-    "@jest/test-result" "^26.3.0"
-    "@jest/types" "^26.3.0"
-    chalk "^4.0.0"
-    exit "^0.1.2"
-    graceful-fs "^4.2.4"
-    import-local "^3.0.2"
-    is-ci "^2.0.0"
-    jest-config "^26.3.0"
-    jest-util "^26.3.0"
-    jest-validate "^26.3.0"
-    prompts "^2.0.1"
-    yargs "^15.3.1"
-
-jest-cli@^26.3.0:
+jest-cli@26.4.0, jest-cli@^26.4.0:
   version "26.4.0"
   resolved "https://registry.yarnpkg.com/jest-cli/-/jest-cli-26.4.0.tgz#9cbd6be818cd818d85bafe2cffa1dbf043602b28"
   integrity sha512-kw2Pr3V2x9/WzSDGsbz/MJBNlCoPMxMudrIavft4bqRlv5tASjU51tyO+1Os1LdW2dAnLQZYsxFUZ8oWPyssGQ==
@@ -6630,7 +6611,7 @@ jest-cli@^26.3.0:
     prompts "^2.0.1"
     yargs "^15.3.1"
 
-jest-config@^26.3.0, jest-config@^26.4.0:
+jest-config@^26.4.0:
   version "26.4.0"
   resolved "https://registry.yarnpkg.com/jest-config/-/jest-config-26.4.0.tgz#72ff3d0418b7ee7fdd9e2bcaef4dec10b38b3b02"
   integrity sha512-MxsvrBug8YY+C4QcUBtmgnHyFeW7w3Ouk/w9eplCDN8VJGVyBEZFe8Lxzfp2pSqh0Dqurqv8Oik2YkbekGUlxg==
@@ -6929,7 +6910,7 @@ jest-util@^26.3.0:
     is-ci "^2.0.0"
     micromatch "^4.0.2"
 
-jest-validate@^26.3.0, jest-validate@^26.4.0:
+jest-validate@^26.4.0:
   version "26.4.0"
   resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-26.4.0.tgz#3874a7cc9e27328afac88899ee9e2fae5e3a4293"
   integrity sha512-t56Z/FRMrLP6mpmje7/YgHy0wOzcuc6i3LBXz6kjmsUWYN62OuMdC86Vg9/dX59SvyitSqqegOrx+h7BkNXeaQ==
@@ -6963,14 +6944,14 @@ jest-worker@^26.3.0:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jest@26.3.0:
-  version "26.3.0"
-  resolved "https://registry.yarnpkg.com/jest/-/jest-26.3.0.tgz#366e25827831e65743a324bc476de54f41f2e07b"
-  integrity sha512-LFCry7NS6bTa4BUGUHC+NvZ3B9WG7Jv8F+Lb96dAJFM23LMwSsL5RiJcw9S+nejsh8lS1VxHq+RSH4Xa9tujpA==
+jest@26.4.0:
+  version "26.4.0"
+  resolved "https://registry.yarnpkg.com/jest/-/jest-26.4.0.tgz#495e81dcff40f8a656e567c664af87b29c5c5922"
+  integrity sha512-lNCOS+ckRHE1wFyVtQClBmbsOVuH2GWUTJMDL3vunp9DXcah+V8vfvVVApngClcdoc3rgZpqOfCNKLjxjj2l4g==
   dependencies:
-    "@jest/core" "^26.3.0"
+    "@jest/core" "^26.4.0"
     import-local "^3.0.2"
-    jest-cli "^26.3.0"
+    jest-cli "^26.4.0"
 
 js-base64@^2.1.9:
   version "2.6.4"
@@ -10541,10 +10522,10 @@ snyk-try-require@1.3.1, snyk-try-require@^1.1.1, snyk-try-require@^1.3.1:
     lru-cache "^4.0.0"
     then-fs "^2.0.0"
 
-snyk@1.373.1:
-  version "1.373.1"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.373.1.tgz#1fc2c04e291e6a1915ad08be4c2ec23f0e11fec5"
-  integrity sha512-R8f0IpBPlK5fMytP9X1Nrk//u2NKHQ+kv/PFi0SaCW80ksFP3zrC8oKXYBkvfYTm+56TVw8cZm888DwvEOL5zg==
+snyk@1.374.0:
+  version "1.374.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.374.0.tgz#662614d34a3bbe0be64edb9186e5201dc8731516"
+  integrity sha512-QdFnGNE8wJvJlVPZx9ajGYU+q3z+He0rc9gPG29ajExNyzN+z15TFrRA0wM2jhfSzTvHmP1/9MRgXGFCFn+teQ==
   dependencies:
     "@snyk/cli-interface" "2.8.1"
     "@snyk/dep-graph" "1.18.3"
