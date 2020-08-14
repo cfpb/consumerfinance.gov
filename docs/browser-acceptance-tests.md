@@ -191,7 +191,7 @@ Tests are organized into suites under the `test/browser_tests/cucumber/features`
 To audit if the site complies with performance best practices and guidelines,
 [Google's Lighthouse](https://github.com/GoogleChrome/lighthouse) can be run
 from Google Chrome by opening the developer console and going to the Lighthouse
-tab and run a performance audit.
+tab to run a performance audit.
 
 
 
