@@ -7,9 +7,9 @@ class StrategiesStore {
   negativeStrategies = {
     'expense.personal.coronavirus': {
       id: 'coronaVirus',
-      title: 'Protect Your Finances During the Coronavirus Pandemic',
+      title: 'Protect Your Finances from COVID-19',
       body:
-        'The CFPB is committed to providing consumers with up-to-date information and resources to protect and manage their finances during this difficult time.',
+        'Get information about protecting your financial health.',
       link: {
         href: ' https://www.consumerfinance.gov/coronavirus/',
         text: 'Tools and Resources',
@@ -22,6 +22,15 @@ class StrategiesStore {
       link: {
         href: 'https://www.consumerfinance.gov/about-us/blog/how-save-emergencies-and-future/',
         text: 'How to save for emergencies and the future',
+      },
+    },
+    'expense.personal.tightWeek': {
+      id: 'tightWeek',
+      title: 'Tips for a tight week',
+      body: 'See how to add more money to your cash flow.',
+      link: {
+        href: '',
+        text: 'Increase Income and Benefits',
       },
     },
   };

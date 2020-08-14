@@ -86,11 +86,11 @@ export const Categories = new CategoryTree({
       recurrenceTypes: ['weekly', 'biweekly', 'monthly', 'semimonthly'],
       strategy: {
         id: 'directDeposit',
-        title: 'Sign Up for Direct Deposit',
-        body: 'Direct deposit may help you to avoid fees and interest associated with Check Cashing.',
+        title: 'Direct Deposit',
+        body: 'Sign up for direct deposit as a safer and faster option for your paycheck.',
         link: {
           href: 'https://www.consumerfinance.gov/ask-cfpb/should-i-enroll-in-direct-deposit-en-1027/',
-          text: 'Should I enroll in direct deposit?',
+          text: 'See more',
         },
       },
     },
@@ -103,9 +103,9 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'vetBenefits',
-          title: "Explore CFPB's Military Financial Resources",
+          title: "Explore Military Financial Resources",
           body:
-            'These tools, designed specifically for service members, can help you manage financial challenges at every step of your military career.',
+            'Manage financial challenges at every step of your military career.',
           link: {
             href: 'https://www.consumerfinance.gov/consumer-tools/military-financial-lifecycle/',
             text: 'Navigating the Military Financial Lifecycle',
@@ -118,12 +118,12 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'disabilityBenefits',
-          title: 'Explore the Focus on People with Disabilities Companion Guides',
+          title: 'Tools for people with disabilities',
           body:
-            'These guides contains tips, information, tools, and skill-building resources for people with disabilities and from organizations that serve the disability community.',
+            'Find tips and skill-building resources for people with disabilities',
           link: {
             href: 'https://www.consumerfinance.gov/about-us/blog/new-financial-empowerment-tools-people-disabilities/',
-            text: 'Focus on People with Disabilities Guides',
+            text: 'Focus on People with Disabilities Guide',
           },
         },
       },
@@ -138,10 +138,12 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'jobTraining',
-          title: 'Explore CareerOneStop Job Training Opportunities',
+          title: 'Build your Skills',
+          body:
+            'Find job training opportunities at your local Career One-Stop',
           link: {
             href: 'https://www.careeronestop.org/localhelp/americanjobcenters/find-american-job-centers.aspx',
-            text: 'Find your nearest American Job Center',
+            text: 'Locate an American Job Center',
           },
         },
       },
