@@ -537,13 +537,13 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'medicaidCHIP',
-          title: 'Sign up for Medicaid and CHIP',
+          title: 'Health Care',
           body:
-            'Seek help with paying medical bills, because receiving timely medical care can help you maintain your earning potential.',
+            'Health insurance can drastically reduce the costs of unforeseen medical bills.  Find a plan that fits your budget.',
           link: {
             href:
-              'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/#dealing-with-debt',
-            text: 'Avoiding Medical Debt',
+              'https://www.healthcare.gov',
+            text: 'HealthCare.gov',
           },
         },
       },
@@ -574,7 +574,7 @@ export const Categories = new CategoryTree({
           id: 'studentLoanRepayment',
           title: 'Explore Repayment Options',
           body:
-            'You have choices when it comes to repaying student loans. Make sure you have the repayment plan that works best for you.',
+            'You have choices when repaying student loans. Make sure your plan works for you.',
           link: {
             href: 'https://www.consumerfinance.gov/paying-for-college/repay-student-debt/',
             text: 'Repay student debt',
