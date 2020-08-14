@@ -286,7 +286,7 @@ export const Categories = new CategoryTree({
             'If you qualify for the "Lifeline" program, you could lower the monthly cost of internet service.',
           link: {
             href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
-            text: 'Lifeline Support for Affordable Communications',
+            text: 'Explore Lifeline',
           },
         },
       },
@@ -302,7 +302,7 @@ export const Categories = new CategoryTree({
             'If you qualify for the "Lifeline" program, you could lower the monthly cost of phone service.',
           link: {
             href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
-            text: 'Lifeline Support for Affordable Communications',
+            text: 'Explore Lifeline',
           },
         },
       },
@@ -319,7 +319,7 @@ export const Categories = new CategoryTree({
           id: 'refinanceCarLoan',
           title: 'Refinance your car loan',
           body:
-            'Check with your auto lender to see if you qualify, then enter the new expense into the calendar to see how it affects your cash flow.',
+            'Check with local car loan companies to see if you qualify for a lower interest rate.  Then enter the new expense into the calendar to see how it affects your cash flow.',
           link: {
             href: 'https://www.consumerfinance.gov/consumer-tools/auto-loans/',
             text: 'Car Loans',
@@ -332,9 +332,9 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'carMaintenance',
-          title: 'Regularly maintain your car to cut repair costs',
+          title: 'Maintain your car',
           body:
-            'Preventive measures (e.g., regularly changing your oil, maintaining proper tire pressure) can help you avoid car repair expenses.',
+            'Regularly change your oil and maintain proper tire pressure to avoid some car repair expenses.',
         },
       },
       carInsurance: {
@@ -344,9 +344,9 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'compareInsuranceRates',
-          title: 'Compare the Rates of Other Insurance Companies',
+          title: 'Shop Around for Car Insurance',
           body:
-            'Most car Insurance providers offer quotes over the phone or online. Research other providers and reenter their quotes into the calendar to see how much you could save.',
+            'Get free quotes from other insurance companies to see if you qualify for a lower rate.',
         },
       },
       gas: {
@@ -358,7 +358,7 @@ export const Categories = new CategoryTree({
           id: 'carpoolRideShare',
           title: 'Carpool or Ride Share',
           body:
-            'Carpooling or ridesharing can save a lot on fuel costs as well as allow you access to HOV lanes, freeing up money for your budget and shortening your commute.',
+            'Carpooling or ridesharing can save on fuel costs and allow you access to HOV lanes, freeing up money for your budget and shortening your commute.',
         },
       },
       publicTransportation: {
@@ -368,9 +368,9 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'compareTransportationOptions',
-          title: 'Compare Transportation Options',
+          title: 'Compare Fare Options',
           body:
-            'Evaluate your avaliable modes of transportation to discover cheaper alternatives that can put more money in your budget.',
+            'If you often use public transportation, a monthly pass may be a cheaper option than paying for each ride.',
         },
       },
     },
@@ -384,9 +384,9 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'reduceFoodExpenses',
-          title: 'Reduce your Expenses while eating out',
+          title: 'Reduce eating out costs',
           body:
-            'Preparing your lunch, avoiding fountain drinks and even finding local restaurants with specials, like "kids eat free" nights, can help reduce this expense.',
+            'Making your lunch, avoiding fountain drinks and even finding local restaurants with "Kids Eat Free" specials can help reduce costs.',
         },
       },
       groceries: {
@@ -396,9 +396,9 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'reduceGroceryExpenses',
-          title: 'Reduce your Grocery Expenses',
+          title: 'Reduce Grocery Costs',
           body:
-            'Using coupons and buying groceries and supplies in bulk with other family or friends can help reduce your grocery costs and put more money in your budget.',
+            'Using coupons and buying groceries and supplies in bulk with other family or friends can help reduce your grocery costs.',
         },
       },
     },
@@ -416,6 +416,16 @@ export const Categories = new CategoryTree({
         icon: icons.healthcare,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
+        strategy: {
+          id: 'healthCare',
+          title: 'Health insurance',
+          body:
+            'Choosing an affordable health care plan can drastically reduce the cost of medical bills.',
+          link: {
+            href: 'https://www.healthcare.gov',
+            text: 'HealthCare.gov',
+          },
+        },
       },
       subscriptions: {
         name: 'Subscription',
@@ -424,7 +434,7 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'cancelSubscriptions',
-          title: 'Cancel Unnecessary Subscriptions',
+          title: 'Subscriptions',
           body: 'Remove auto-renew for subscriptions and cancel those you no longer use or need.',
         },
       },
@@ -436,7 +446,7 @@ export const Categories = new CategoryTree({
           id: 'secondHandClothing',
           title: 'Consider Second-hand Shops',
           body:
-            'Buying clothes and accessorits through classifieds ads, thrift shops, and consignment stores are much more cost effective alternatives to retail.',
+            'Thrift shops and consignment stores are much more cost effective alternatives.',
           link: {
             href: 'https://www.consumerfinance.gov/about-us/blog/track-your-spending-with-this-easy-tool/',
             text: 'Track your spending with this easy tool',
@@ -450,9 +460,9 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'trackDonations',
-          title: 'Keep track of Your Donations',
+          title: 'Donations',
           body:
-            'Your charitable donations my be tax deductible. Keep records and receipts of these exchanges to lower the cost of your annual taxes.',
+            'Your charitable donations may be tax deductible. Keep records and receipts to lower the cost of your annual taxes.',
           link: {
             href: 'https://www.irs.gov/charities-non-profits/charitable-contributions',
             text: 'Charitable Donations',
@@ -472,9 +482,9 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'childCareAssistance',
-          title: 'Get Child Care assistance',
+          title: 'Get Childcare Assistance',
           body:
-            'There are a number of financial aid programs designed to help parents struggling with childcare costs. Enrolling in these programs could free more money in your budget.',
+            'See if you qualify for free or reduced rate childcare',
           link: {
             href: 'https://www.childcare.gov/consumer-education/get-help-paying-for-child-care',
             text: 'Get Help Paying for Childcare',
