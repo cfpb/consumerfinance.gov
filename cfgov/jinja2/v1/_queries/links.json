@@ -1,6 +1,0 @@
-{
-  "name": "Links",
-  "query": {
-    "doc_type": "link"
-  }
-}
