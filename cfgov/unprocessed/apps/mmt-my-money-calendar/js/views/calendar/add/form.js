@@ -210,6 +210,34 @@ function Form() {
               placeholder={`For example: ${category.name}`}
             />
 
+            <CurrencyField
+              id="totalCents"
+              name="totalCents"
+              label="Amount"
+              onChange={formik.handleChange}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
+              value={formik.values.totalCents}
+              errors={formik.errors.totalCents}
+              touched={formik.touched.totalCents}
+              tabIndex="0"
+              required
+            />
+
+            <DateField
+              id="dateTime"
+              name="dateTime"
+              label='Date'
+              onChange={formik.handleChange}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
+              value={formik.values.dateTime || ''}
+              errors={formik.errors.dateTime}
+              touched={formik.touched.dateTime}
+              tabIndex="0"
+              required
+            />
+
             <Checkbox
               id="recurs"
               name="recurs"
