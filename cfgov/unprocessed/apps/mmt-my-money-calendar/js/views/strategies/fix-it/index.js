@@ -44,7 +44,7 @@ const StrategyCards = ({ results }) => (
   <main className="strategies-cards">
     <CardGroup columns={2}>
       {results.map((result, index) => (
-        <Card title={result.title} icon={ideaRound} key={`strategy-${index}`}>
+        <Card title={result.title} type="fix-it" icon={ideaRound} key={`strategy-${index}`}>
           <p>{result.text}</p>
           <div className="m-card_footer">
             {result.title === 'Explore Your General Strategies' ? null : <FixItButton result={result} />}

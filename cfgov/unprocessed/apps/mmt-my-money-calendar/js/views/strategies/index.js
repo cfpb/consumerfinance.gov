@@ -8,7 +8,7 @@ const StrategyCards = ({ results }) => (
   <main className="strategy-cards">
     <CardGroup columns={2}>
       {results.map((result, index) => (
-        <Card title={result.title} key={`strategy-${index}`}>
+        <Card title={result.title} type="general" icon={result.icon1} key={`strategy-${index}`}>
           <p>{result.body}</p>
 
           {!!result.link && (
