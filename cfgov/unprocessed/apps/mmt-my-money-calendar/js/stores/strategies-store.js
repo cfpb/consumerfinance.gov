@@ -62,22 +62,28 @@ class StrategiesStore {
           'Ask your insurance company if you could move the due date to a week with more money.',
       },
       {
-        categories: ['expense.debt.medicalBill', 'expense.debt.personalLoan'],
-        title: 'Move Due Date',
+        categories: ['expense.debt.medicalBill'],
+        title: 'Medical Bill',
         text:
-          'Contact your creditor to find out if you could move the due date of this bill to a week where you have more income or fewer expenses.',
+          'Ask your creditor if you could move the due date to a week with more money.',
+      },
+      {
+        categories: ['expense.debt.personalLoan'],
+        title: 'Loan Due Date',
+        text:
+          'Ask your lender if you could move the due date to a week with more money.',
       },
       {
         categories: ['expense.debt.creditCard'],
-        title: 'Move Due Date',
+        title: 'Credit Card Due Date',
         text:
-          'Contact your credit card company to find out if you could move the due date of this bill to a week where you have more income or fewer expenses.',
+          'Contact your credit card company to find out if you could move the due date to a week where you have more money.',
       },
       {
         categories: ['expense.debt.studentLoan'],
-        title: 'Move Due Date',
+        title: 'Student Loan Due Date',
         text:
-          'Contact your student loan company to find out if you could move the due date of this bill to a week where you have more income or fewer expenses.',
+          'Contact your student loan company to find out if you could move the due date of this bill to a week where you have more money.',
       },
     ],
     largestAdHocExpense: [
@@ -86,14 +92,13 @@ class StrategiesStore {
           'expense.transportation.publicTransportation',
           'expense.transportation.gas',
           'expense.food.eatingOut',
-          /* 'expense.food.groceries', */
           'expense.personal.clothing',
           'expense.personal.personalCare',
           'expense.personal.funMoney',
         ],
-        title: 'Adjust Spending this Week',
+        title: (categoryName) =>`Adjust ${categoryName.toLowerCase()} Spending`,
         template: (categoryName) =>
-          `Your ${categoryName.toLowerCase()} expense was your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
+          `You control how much you spend on ${categoryName.toLowerCase()}.  Consider buying less this week until you have more money.`,
       },
     ],
   };

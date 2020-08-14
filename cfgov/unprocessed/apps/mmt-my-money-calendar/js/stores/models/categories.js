@@ -222,7 +222,7 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
-          id: 'utilityPaymentPlans',
+          id: 'utilityPaymentPlansGas',
           title: 'Payment Plans for Utilities',
           body:
             'Check with your gas company to see if you qualify.  Then enter the new bill amount into the calendar to see your cash flow.',
@@ -240,7 +240,7 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
-          id: 'utilityPaymentPlans',
+          id: 'utilityPaymentPlansElectric',
           title: 'Payment Plans for Utilities',
           body:
             'Check with your electric company to see if you qualify.  Then enter the new monthly amount into the calendar.',
@@ -274,7 +274,7 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
-          id: 'lifelinePhoneInternet',
+          id: 'lifelineInternet',
           title: 'Low Cost Internet Services',
           body:
             'If you qualify for the "Lifeline" program, you could lower the monthly cost of internet service.',
@@ -290,7 +290,7 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
-          id: 'lifelinePhoneInternet',
+          id: 'lifelinePhone',
           title: 'Low Cost Phone Service',
           body:
             'If you qualify for the "Lifeline" program, you could lower the monthly cost of phone service.',
@@ -569,5 +569,6 @@ export const Categories = new CategoryTree({
       recurrenceTypes: ['monthly', 'weekly'],
       hasBill: false,
     },
-  },
+    },
+  }
 });
