@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-10 17:00-0400\n"
+"POT-Creation-Date: 2020-08-17 10:20-0400\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,11 +49,11 @@ msgstr "Ver todos los resultados para"
 msgid "Export Ask data"
 msgstr ""
 
-#: cfgov/settings/base.py:240
+#: cfgov/settings/base.py:248
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:241
+#: cfgov/settings/base.py:249
 msgid "Spanish"
 msgstr ""
 
@@ -74,6 +74,10 @@ msgstr "Consejo"
 #: jinja2/v1/_includes/atoms/tagline.html:16
 msgid "An official website of the United States government"
 msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
+
+#: jinja2/v1/_includes/blocks/audio.html:6
+msgid "Your browser does not support this audio player."
+msgstr ""
 
 #: jinja2/v1/_includes/blocks/feedback.html:53
 msgid "Yes"
@@ -158,6 +162,14 @@ msgstr "Ir"
 #: jinja2/v1/_includes/molecules/related-posts.html:112
 msgid "View more"
 msgstr "Ver más"
+
+#: jinja2/v1/_includes/molecules/social-media.html:92
+msgid "https://www.facebook.com/CFPB"
+msgstr "https://www.facebook.com/CFPBespanol"
+
+#: jinja2/v1/_includes/molecules/social-media.html:100
+msgid "https://twitter.com/CFPB"
+msgstr "https://twitter.com/CFPBespanol"
 
 #: jinja2/v1/_includes/organisms/ask-search.html:35
 #: jinja2/v1/ask-cfpb/see-all.html:78
@@ -412,7 +424,7 @@ msgid "en-US"
 msgstr ""
 
 #: legacy/templates/front/base_nonresponsive.html:110
-#: legacy/templates/front/base_update.html:160
+#: legacy/templates/front/base_update.html:159
 msgid "en"
 msgstr ""
 
@@ -554,6 +566,13 @@ msgstr ""
 
 #: v1/tests/management/commands/test_makemessages_data/__init__.py:4
 msgid "Test string from Python file."
+msgstr ""
+
+#: v1/tests/management/commands/test_makemessages_data/jinja2/test.html:1
+msgid ""
+"\n"
+"Test string from Jinja template.\n"
+"This is in a multi-line block.\n"
 msgstr ""
 
 #: v1/tests/management/commands/test_makemessages_data/templates/test.html:2
@@ -885,7 +904,7 @@ msgstr "Lea más sobre cómo protegemos su privacidad."
 msgid "Part 1: How well does this statement describe you or your situation?"
 msgstr "Parte 1: ¿Cuán bien lo describe a usted o su situación lo siguiente?"
 
-#: wellbeing/jinja2/wellbeing/home.html:111
+#: wellbeing/jinja2/wellbeing/home.html:111 wellbeing/views.py:17
 msgid "I could handle a major unexpected expense"
 msgstr "Podría hacer frente a un gasto imprevisto importante"
 
@@ -903,7 +922,9 @@ msgstr "Esto me describe "
 #: wellbeing/jinja2/wellbeing/home.html:271
 #: wellbeing/jinja2/wellbeing/home.html:344
 #: wellbeing/jinja2/wellbeing/home.html:417
-#: wellbeing/jinja2/wellbeing/home.html:490
+#: wellbeing/jinja2/wellbeing/home.html:490 wellbeing/views.py:23
+#: wellbeing/views.py:34 wellbeing/views.py:42 wellbeing/views.py:58
+#: wellbeing/views.py:65 wellbeing/views.py:77
 msgid "Completely"
 msgstr "Totalmente"
 
@@ -912,7 +933,9 @@ msgstr "Totalmente"
 #: wellbeing/jinja2/wellbeing/home.html:284
 #: wellbeing/jinja2/wellbeing/home.html:357
 #: wellbeing/jinja2/wellbeing/home.html:430
-#: wellbeing/jinja2/wellbeing/home.html:503
+#: wellbeing/jinja2/wellbeing/home.html:503 wellbeing/views.py:22
+#: wellbeing/views.py:33 wellbeing/views.py:43 wellbeing/views.py:57
+#: wellbeing/views.py:66 wellbeing/views.py:78
 msgid "Very well"
 msgstr "Muy bien"
 
@@ -921,7 +944,9 @@ msgstr "Muy bien"
 #: wellbeing/jinja2/wellbeing/home.html:297
 #: wellbeing/jinja2/wellbeing/home.html:370
 #: wellbeing/jinja2/wellbeing/home.html:443
-#: wellbeing/jinja2/wellbeing/home.html:516
+#: wellbeing/jinja2/wellbeing/home.html:516 wellbeing/views.py:21
+#: wellbeing/views.py:32 wellbeing/views.py:44 wellbeing/views.py:56
+#: wellbeing/views.py:67 wellbeing/views.py:79
 msgid "Somewhat"
 msgstr "En cierta medida"
 
@@ -930,7 +955,9 @@ msgstr "En cierta medida"
 #: wellbeing/jinja2/wellbeing/home.html:310
 #: wellbeing/jinja2/wellbeing/home.html:383
 #: wellbeing/jinja2/wellbeing/home.html:456
-#: wellbeing/jinja2/wellbeing/home.html:529
+#: wellbeing/jinja2/wellbeing/home.html:529 wellbeing/views.py:20
+#: wellbeing/views.py:31 wellbeing/views.py:45 wellbeing/views.py:55
+#: wellbeing/views.py:68 wellbeing/views.py:80
 msgid "Very little"
 msgstr "Muy poco"
 
@@ -939,15 +966,17 @@ msgstr "Muy poco"
 #: wellbeing/jinja2/wellbeing/home.html:323
 #: wellbeing/jinja2/wellbeing/home.html:396
 #: wellbeing/jinja2/wellbeing/home.html:469
-#: wellbeing/jinja2/wellbeing/home.html:542
+#: wellbeing/jinja2/wellbeing/home.html:542 wellbeing/views.py:19
+#: wellbeing/views.py:30 wellbeing/views.py:46 wellbeing/views.py:54
+#: wellbeing/views.py:69 wellbeing/views.py:81
 msgid "Not at all"
 msgstr "No me describe en lo absoluto"
 
-#: wellbeing/jinja2/wellbeing/home.html:184
+#: wellbeing/jinja2/wellbeing/home.html:184 wellbeing/views.py:28
 msgid "I am securing my financial future"
 msgstr "Estoy asegurando mi futuro financiero"
 
-#: wellbeing/jinja2/wellbeing/home.html:257
+#: wellbeing/jinja2/wellbeing/home.html:257 wellbeing/views.py:39
 msgid ""
 "Because of my money situation, I feel like I will never have the things I "
 "want in life"
@@ -959,7 +988,7 @@ msgstr ""
 msgid "I can enjoy life because of the way I’m managing my money"
 msgstr "Puedo disfrutar la vida debido a la manera en que manejo mi dinero"
 
-#: wellbeing/jinja2/wellbeing/home.html:403
+#: wellbeing/jinja2/wellbeing/home.html:403 wellbeing/views.py:63
 msgid "I am just getting by financially"
 msgstr "Apenas estoy subsistiendo financieramente"
 
@@ -971,7 +1000,7 @@ msgstr "Me preocupa que el dinero que tengo o que ahorre no me dure"
 msgid "Part 2: How often does this statement apply to you?"
 msgstr "Parte 2: ¿Con qué frecuencia le ocurre lo siguiente?"
 
-#: wellbeing/jinja2/wellbeing/home.html:554
+#: wellbeing/jinja2/wellbeing/home.html:554 wellbeing/views.py:86
 msgid ""
 "Giving a gift for a wedding, birthday or other occasion would put a strain "
 "on my finances for the month"
@@ -989,47 +1018,52 @@ msgstr "Esto me ocurre"
 #: wellbeing/jinja2/wellbeing/home.html:568
 #: wellbeing/jinja2/wellbeing/home.html:640
 #: wellbeing/jinja2/wellbeing/home.html:713
-#: wellbeing/jinja2/wellbeing/home.html:786
+#: wellbeing/jinja2/wellbeing/home.html:786 wellbeing/views.py:90
+#: wellbeing/views.py:105 wellbeing/views.py:112 wellbeing/views.py:123
 msgid "Always"
 msgstr "Siempre"
 
 #: wellbeing/jinja2/wellbeing/home.html:581
 #: wellbeing/jinja2/wellbeing/home.html:653
 #: wellbeing/jinja2/wellbeing/home.html:726
-#: wellbeing/jinja2/wellbeing/home.html:799
+#: wellbeing/jinja2/wellbeing/home.html:799 wellbeing/views.py:91
+#: wellbeing/views.py:104 wellbeing/views.py:113 wellbeing/views.py:124
 msgid "Often"
 msgstr "A menudo"
 
 #: wellbeing/jinja2/wellbeing/home.html:594
 #: wellbeing/jinja2/wellbeing/home.html:666
 #: wellbeing/jinja2/wellbeing/home.html:739
-#: wellbeing/jinja2/wellbeing/home.html:812
+#: wellbeing/jinja2/wellbeing/home.html:812 wellbeing/views.py:92
+#: wellbeing/views.py:103 wellbeing/views.py:114 wellbeing/views.py:125
 msgid "Sometimes"
 msgstr "A veces"
 
 #: wellbeing/jinja2/wellbeing/home.html:607
 #: wellbeing/jinja2/wellbeing/home.html:679
 #: wellbeing/jinja2/wellbeing/home.html:752
-#: wellbeing/jinja2/wellbeing/home.html:825
+#: wellbeing/jinja2/wellbeing/home.html:825 wellbeing/views.py:93
+#: wellbeing/views.py:102 wellbeing/views.py:115 wellbeing/views.py:126
 msgid "Rarely"
 msgstr "Casi nunca"
 
 #: wellbeing/jinja2/wellbeing/home.html:620
 #: wellbeing/jinja2/wellbeing/home.html:692
 #: wellbeing/jinja2/wellbeing/home.html:765
-#: wellbeing/jinja2/wellbeing/home.html:838
+#: wellbeing/jinja2/wellbeing/home.html:838 wellbeing/views.py:94
+#: wellbeing/views.py:101 wellbeing/views.py:116 wellbeing/views.py:127
 msgid "Never"
 msgstr "Nunca"
 
-#: wellbeing/jinja2/wellbeing/home.html:627
+#: wellbeing/jinja2/wellbeing/home.html:627 wellbeing/views.py:99
 msgid "I have money left over at the end of the month"
 msgstr "Me sobra dinero al final del mes"
 
-#: wellbeing/jinja2/wellbeing/home.html:699
+#: wellbeing/jinja2/wellbeing/home.html:699 wellbeing/views.py:110
 msgid "I am behind with my finances"
 msgstr "Estoy atrasado en mis finanzas"
 
-#: wellbeing/jinja2/wellbeing/home.html:772
+#: wellbeing/jinja2/wellbeing/home.html:772 wellbeing/views.py:121
 msgid "My finances control my life"
 msgstr "Mis finanzas controlan mi vida"
 
@@ -1364,6 +1398,165 @@ msgstr "Fecha de publicación:"
 msgid "September 26, 2017"
 msgstr "26 de septiembre de 2017"
 
+#: wellbeing/views.py:51
+#, fuzzy
+#| msgid "I can enjoy life because of the way I’m managing my money"
+msgid "I can enjoy life because of the way I'm managing my money"
+msgstr "Puedo disfrutar la vida debido a la manera en que manejo mi dinero"
+
+#: wellbeing/views.py:74
+#, fuzzy
+#| msgid "I am concerned that the money I have or will save won’t last"
+msgid "I am concerned that the money I have or will save won't last"
+msgstr "Me preocupa que el dinero que tengo o que ahorre no me dure"
+
+#: wellbeing/views.py:134 wellbeing/views.py:146
+msgid "18-61"
+msgstr ""
+
+#: wellbeing/views.py:139 wellbeing/views.py:151
+msgid "62-plus"
+msgstr ""
+
+# Manually added translations from within wellbeing/jinja2/wellbeing/views.py
+#: wellbeing/views.py:163
+msgid "18-24 year olds"
+msgstr "18-24 años"
+
+#: wellbeing/views.py:164
+msgid "25-34 year olds"
+msgstr "25-34 años"
+
+#: wellbeing/views.py:165
+msgid "35-44 year olds"
+msgstr "35-44 años"
+
+#: wellbeing/views.py:166
+msgid "45-54 year olds"
+msgstr "45-54 años"
+
+#: wellbeing/views.py:167
+msgid "55-64 year olds"
+msgstr "55-64 años"
+
+#: wellbeing/views.py:168
+msgid "65-74 year olds"
+msgstr "65-74 años"
+
+#: wellbeing/views.py:169
+msgid "75+ year olds"
+msgstr "75+ años"
+
+#: wellbeing/views.py:172
+msgid "Less than $20,000"
+msgstr "Menos de $20,000"
+
+#: wellbeing/views.py:173
+msgid "$20,000 to 29,999"
+msgstr "$20,000 a 29,999"
+
+#: wellbeing/views.py:174
+msgid "$30,000 to 49,999"
+msgstr "$30,000 a 49,999"
+
+#: wellbeing/views.py:175
+msgid "$50,000 to 74,999"
+msgstr "$50,000 a 74,999"
+
+#: wellbeing/views.py:176
+msgid "$75,000 to 99,999"
+msgstr "$75,000 a 99,999"
+
+#: wellbeing/views.py:177
+msgid "$100,000 and higher"
+msgstr "$100,000 o más"
+
+#: wellbeing/views.py:180
+msgid "Self-employed"
+msgstr "Empleado por cuenta propia"
+
+#: wellbeing/views.py:181
+msgid "Full-time or part-time"
+msgstr "Empleado a tiempo completo o parcial"
+
+#: wellbeing/views.py:182
+msgid "Homemaker"
+msgstr "Ama/o de casa"
+
+#: wellbeing/views.py:183
+msgid "Student"
+msgstr "Estudiante"
+
+#: wellbeing/views.py:184
+msgid "Sick or disabled"
+msgstr "Enfermo o discapacitado"
+
+#: wellbeing/views.py:185
+msgid "Unemployed or laid off"
+msgstr "Desempleado o despedido"
+
+#: wellbeing/views.py:186
+msgid "Retired"
+msgstr "Jubilado"
+
+#~ msgid "Get a grip on debt."
+#~ msgstr "Tome control de sus deudas."
+
+#~ msgid "Stay on top of what you owe with our"
+#~ msgstr "Vea nuestro"
+
+#~ msgid "debt log"
+#~ msgstr "recursos"
+
+#~ msgid "and find templates to help you communicate with"
+#~ msgstr "para ayudarle a comunicarse con"
+
+#~ msgid "debt collectors"
+#~ msgstr "un cobrador de deudas"
+
+#~ msgid "Look toward home ownership."
+#~ msgstr "¿Está considerando comprar una casa?"
+
+#~ msgid "Create an action plan to meet your goals."
+#~ msgstr "Desarrolle un plan de acción para alcanzar sus metas."
+
+#~ msgid "Use our"
+#~ msgstr "Use esta"
+
+#~ msgid "worksheet"
+#~ msgstr "hoja de cálculo"
+
+#~ msgid "budgeting tool"
+#~ msgstr "herramienta para hacer un presupuesto"
+
+#~ msgid "Consider the right age for claiming Social Security."
+#~ msgstr "Considere a que edad desea reclamar su beneficio del Seguro Social."
+
+#~ msgid "before you make your decision."
+#~ msgstr "antes de tomar una decisión."
+
+#~ msgid "Build and maintain your credit record."
+#~ msgstr "Mantenga un buen historial de crédito."
+
+#~ msgid "A nonprofit credit counselor"
+#~ msgstr "Un asesor de crédito de una organización sin fines de lucro"
+
+#~ msgid ""
+#~ "can help you set up a reasonable repayment plan for credit cards and "
+#~ "other consumer debt."
+#~ msgstr ""
+#~ "puede ayudarle a hacer un plan de pago para sus tarjetas de crédito y "
+#~ "otras deudas. "
+
+#~ msgid "See"
+#~ msgstr "Estos son algunos"
+
+#~ msgid "tips for choosing a credit counselor"
+#~ msgstr "consejos para escoger un asesor de crédito."
+
+#~ msgid "Financial Well-Being in America report"
+#~ msgstr "Financial Well-Being in America report"
+
 #~ msgid "Take the next step"
 #~ msgstr "Dar el siguiente paso"
 
@@ -1470,18 +1663,3 @@ msgstr "26 de septiembre de 2017"
 
 #~ msgid "(required)"
 #~ msgstr "(se requiere)"
-
-#: jinja2/v1/_includes/molecules/social-media.html:94
-#: jinja2/v1/blog/blog_page.html:15
-#: jinja2/v1/blog/blog_page.html:32
-msgid "https://www.facebook.com/CFPB"
-msgstr "https://www.facebook.com/CFPBespanol"
-
-#: jinja2/v1/_includes/molecules/social-media.html:101
-#: jinja2/v1/blog/blog_page.html:27
-msgid "https://twitter.com/CFPB"
-msgstr "https://twitter.com/CFPBespanol"
-
-#: jinja2/v1/_includes/blocks/audio.html:6
-msgid "Your browser does not support this audio player."
-msgstr "Su navegador no es compatible con este programa de audio."

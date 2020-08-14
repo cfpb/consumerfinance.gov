@@ -37,7 +37,7 @@ class ResultsView(TranslatedTemplateView):
         {
             # Question 3
             'question': _('Because of my money situation, I feel like I will '
-                        'never have the things I want in life'),
+                          'never have the things I want in life'),
             'answers': [
                 _('Completely'),
                 _('Very well'),
@@ -48,8 +48,8 @@ class ResultsView(TranslatedTemplateView):
         },
         {
             # Question 4
-            'question': _('I can enjoy life because of the way I\'m managing my '
-                        'money'),
+            'question': _('I can enjoy life because of the way I\'m managing '
+                          'my money'),
             'answers': [
                 _('Not at all'),
                 _('Very little'),
@@ -72,7 +72,7 @@ class ResultsView(TranslatedTemplateView):
         {
             # Question 6
             'question': _('I am concerned that the money I have or will save '
-                        'won\'t last'),
+                          'won\'t last'),
             'answers': [
                 _('Completely'),
                 _('Very well'),
@@ -84,8 +84,8 @@ class ResultsView(TranslatedTemplateView):
         {
             # Question 7
             'question': _('Giving a gift for a wedding, birthday or other '
-                        'occasion would put a strain on my finances for the '
-                        'month'),
+                          'occasion would put a strain on my finances for '
+                          'the month'),
             'answers': [
                 _('Always'),
                 _('Often'),
