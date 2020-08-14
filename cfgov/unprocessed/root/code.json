@@ -547,7 +547,7 @@
     },
     {
       "name": "find-a-housing-counselor",
-      "description": "*DEPRECATED* Templates live in cfgov-refresh. JS is with the API at https://github.com/cfpb/django-hud",
+      "description": "*DEPRECATED* Templates live in consumerfinance.gov. JS is with the API at https://github.com/cfpb/django-hud",
       "repositoryURL": "https://github.com/cfpb/find-a-housing-counselor",
       "permissions": {
         "licenses": [
@@ -928,9 +928,9 @@
       }
     },
     {
-      "name": "cfgov-refresh",
+      "name": "consumerfinance.gov",
       "description": "Django project protecting American consumers",
-      "repositoryURL": "https://github.com/cfpb/cfgov-refresh",
+      "repositoryURL": "https://github.com/cfpb/consumerfinance.gov",
       "permissions": {
         "licenses": [
           {

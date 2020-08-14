@@ -120,7 +120,7 @@ def export_questions(path='/tmp', http_response=False):
     """
     A script for exporting Ask CFPB Answer content to an Excel-friendly CSV.
 
-    Run from within cfgov-refresh with:
+    Run from within consumerfinance.gov with:
     `python cfgov/manage.py runscript export_ask_data`
 
     By default, the script will dump the file to `/tmp/`,

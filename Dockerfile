@@ -14,7 +14,7 @@ ENV SCL_PYTHON_VERSION ${scl_python_version}
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
 
-ENV APP_HOME /src/cfgov-refresh
+ENV APP_HOME /src/consumerfinance.gov
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
