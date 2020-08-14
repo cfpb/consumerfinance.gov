@@ -233,12 +233,6 @@ export const Categories = new CategoryTree({
         icon: icons.water,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
-        strategy: {
-          id: 'utilityPaymentPlans',
-          title: 'Payment Plans for Utilities',
-          body:
-            'Check with your water provider to see if you qualify.  Then enter the new monthly amount into the calendar.',
-        },
       },
       electricity: {
         name: 'Electricity',
@@ -354,12 +348,6 @@ export const Categories = new CategoryTree({
         icon: icons.gas,
         recurrenceTypes: ['weekly'],
         hasBill: false,
-        strategy: {
-          id: 'carpoolRideShare',
-          title: 'Carpool or Ride Share',
-          body:
-            'Carpooling or ridesharing can save on fuel costs and allow you access to HOV lanes, freeing up money for your budget and shortening your commute.',
-        },
       },
       publicTransportation: {
         name: 'Public Transportation Fare',
@@ -394,13 +382,6 @@ export const Categories = new CategoryTree({
         icon: icons.groceries,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
-        strategy: {
-          id: 'reduceGroceryExpenses',
-          title: 'Reduce Grocery Costs',
-          body:
-            'Using coupons and buying groceries and supplies in bulk with other family or friends can help reduce your grocery costs.',
-        },
-      },
     },
     emergencySavings: {
       name: 'Savings',
