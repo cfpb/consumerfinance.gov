@@ -39,26 +39,27 @@ class StrategiesStore {
     largestHousingExpense: [
       {
         categories: ['expense.housing.mortgage'],
-        title: 'Split Mortgage Payments',
-        text: 'Contact your mortgage company to find out if you could split your payment into two payments per month',
+        title: 'Split Mortgage',
+        text: 'Ask your mortgage company to find out if you could split your payment into smaller amounts.',
       },
       {
         categories: ['expense.housing.rent'],
-        title: 'Split Rent Payment',
-        text: 'Contact your landlord to find out if you could split your payment into two payments per month',
+        title: 'Rent',
+        text: 'If possible, ask your landlord to let you make multiple payments toward rent.  If not, contact a local organization that helps with rental assistance.',
       },
     ],
     largestBillableExpense: [
       {
-        categories: ['expense.utilities.fuel', 'expense.utilities.waterSewage', 'expense.utilities.electricity'],
-        title: 'Budget Utility Billing',
-        text: 'Contact your utility company to find out about budget billing',
+        categories: ['expense.transportation.carPayment'],
+        title: 'Car Payment Date',
+        text:
+          'Ask car loan company if you could move the due date to a week with more money.',
       },
       {
-        categories: ['expense.transportation.carPayment', 'expense.transportation.carInsurance'],
-        title: 'Move Due Date',
+        categories: ['expense.transportation.carInsurance'],
+        title: 'Car Insurance Date',
         text:
-          'Contact your car loan company to find out if you could move the due date of this bill to a week where you have more income or fewer expenses.',
+          'Ask your insurance company if you could move the due date to a week with more money.',
       },
       {
         categories: ['expense.debt.medicalBill', 'expense.debt.personalLoan'],
