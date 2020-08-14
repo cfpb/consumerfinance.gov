@@ -1,6 +1,5 @@
 const envvars = require( '../../config/environment' ).envvars;
 const fancyLog = require( 'fancy-log' );
-const fs = require( 'fs' );
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
 const minimist = require( 'minimist' );
@@ -60,49 +59,6 @@ function _parsePath( urlPath ) {
 }
 
 /**
- * @returns {ChildProcess} Hand the spawned process back to gulp.
- */
-function testPerf() {
-  const childProcess = spawn(
-    fsHelper.getBinary( 'lighthouse', 'lighthouse', '../../.bin' ),
-    _getLighthouseParams(),
-    { stdio: 'inherit' }
-  );
-
-  childProcess.once( 'close', code => {
-    _logTaskCompletion( 'Lighthouse', code );
-  } );
-
-  return childProcess;
-}
-
-/**
- * Command-line flags for lighthouse.
- * @returns {Array} Array of command-line arguments for lighthouse binary.
- */
-function _getLighthouseParams() {
-  const host = envvars.TEST_HTTP_HOST;
-  const port = envvars.TEST_HTTP_PORT;
-
-  // eslint-disable-next-line no-sync
-  if ( !fs.existsSync( './logs' ) ) {
-    // eslint-disable-next-line no-sync
-    fs.mkdirSync( './logs' );
-    // Create log directory if none exists.
-  }
-
-  return [
-    `http://${ host }:${ port }`,
-    '--chrome-flags=--headless',
-    '--output-path=./logs/lighthouse_report.html',
-    '--only-categories=performance',
-    '--only-categories=pwa',
-    '--only-categories=best-practices',
-    '--only-categories=seo'
-  ];
-}
-
-/**
  * @param {string} pkg - A package name.
  * @param {number} code - An executable exit code.
  */
@@ -115,4 +71,3 @@ function _logTaskCompletion( pkg, code ) {
 }
 
 gulp.task( 'audit:a11y', testA11y );
-gulp.task( 'audit:perf', testPerf );

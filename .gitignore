@@ -36,7 +36,6 @@ cfgov/static_built/*
 
 # Logs and databases #
 ######################
-logs/*
 *.sql
 *.sqlite
 *.sqlite3
