@@ -39,11 +39,11 @@ function CategoryBrowser({ match }) {
 
       <nav className="category-browser__tab-nav">
         <ul className="category-browser__tab-items">
-          <li className="category-browser__tab-item">
-            <NavLink className="category-browser__tab-link" to={`/calendar/add/income`}>Income</NavLink>
+          <li className="category-browser__tab-item income-tab">
+            <NavLink className="category-browser__tab-link income-tab" to={`/calendar/add/income`}>Income</NavLink>
           </li>
-          <li className="category-browser__tab-item">
-            <NavLink className="category-browser__tab-link" to={`/calendar/add/expense`}>Expense</NavLink>
+          <li className="category-browser__tab-item expense-tab">
+            <NavLink className="category-browser__tab-link expense-tab" to={`/calendar/add/expense`}>Expense</NavLink>
           </li>
         </ul>
       </nav>

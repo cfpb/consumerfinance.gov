@@ -132,8 +132,16 @@ function Form() {
       </BackButton>
 
       <h2 className="add-event__title">{category.name}</h2>
-      <p className="add-event__intro">Enter the details of your {handleCatName(category.name)} {eventType}.</p>
-      {!!category.description && <p className="add-event__description">{category.description}</p>}
+      {category.name === 'Job' ? (
+          <p className="add-event__intro"> Enter your paycheck information.</p>
+      ) : (
+        <p className="add-event__intro">Enter the details of your {handleCatName(category.name)} {eventType}.</p>
+       
+      )}
+        
+        {!!category.description && <p className="add-event__description">{category.description}</p>} 
+     
+      
 
       <Formik
         initialValues={event.toFormValues()}
@@ -281,6 +289,36 @@ function Form() {
                 />
               </>
             )}
+
+            <CurrencyField
+              id="totalCents"
+              name="totalCents"
+              label="Pay Amount"
+              onChange={formik.handleChange}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
+              value={formik.values.totalCents}
+              errors={formik.errors.totalCents}
+              touched={formik.touched.totalCents}
+              tabIndex="0"
+              required
+            />
+
+            <DateField
+              id="dateTime"
+              name="dateTime"
+              label={eventType === 'expense' ? 'Due Date' : 'Pay Date'}
+              onChange={formik.handleChange}
+              onFocus={focusHandler}
+              onBlur={blurHandler(formik.handleBlur)}
+              value={formik.values.dateTime || ''}
+              errors={formik.errors.dateTime}
+              touched={formik.touched.dateTime}
+              tabIndex="0"
+              required
+            />
+
+            
 
             <Button fullWidth disabled={!formik.dirty && !formik.isValid} type="submit" tabIndex="0">
               Save

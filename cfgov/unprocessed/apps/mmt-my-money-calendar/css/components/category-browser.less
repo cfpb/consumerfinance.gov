@@ -4,6 +4,7 @@
 .category-browser {
   &__tab-nav {
     margin-bottom: 32px;
+    margin-top: 15px;
   }
 
   &__tab-items {
@@ -17,6 +18,15 @@
     flex-basis: 50%;
     width: 50%;
     text-align: center;
+
+    &.income-tab:hover {
+      background-color: @income_color;
+      border-bottom: 0px solid @income_color;
+    }
+    &.expense-tab:hover {
+      background-color: @expense_color;
+      border-bottom: 0px solid @expense_color;
+    }
   }
 
   &__tab-link {
@@ -31,12 +41,34 @@
       color: @text;
       border-color: @text;
     }
+    &:hover {
+      color: @white !important;
+      &.income-tab {
+        border-bottom: 1px solid @income_color;
 
+      }
+      &.expense-tab {
+        border-bottom: 1px solid @expense_color;
+
+      }
+    }
     &.active {
       padding: 16px 20px 14px;
-      border-bottom: 3px solid @text;
+      color: @white;
+      
+      &.income-tab {
+        background-color: @income_color;
+        border-bottom: 3px solid @income_color;
+
+      }
+      &.expense-tab {
+        background-color: @expense_color;
+        border-bottom: 3px solid @expense_color;
+
+      }
     }
   }
+
 }
 
 .category-links {
