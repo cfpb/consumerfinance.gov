@@ -181,10 +181,10 @@ export const Categories = new CategoryTree({
           id: 'refinanceMortgage',
           title: 'Refinance your mortgage',
           body:
-            'Check with your mortgage lender to see if you qualify, then enter the new expense into the calendar to see how it affects your cash flow.',
+            'Check with your mortgage lender to see if you qualify for a lower interest rate.  Then enter the new payment amount into the calendar.',
           link: {
             href: 'https://www.consumerfinance.gov/owning-a-home/',
-            text: 'Tools and resources for homebuyers',
+            text: 'Homeowner tools and resources',
           },
         },
       },
@@ -223,9 +223,9 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'utilityPaymentPlans',
-          title: 'Explore Level Payment Plans for Utilities',
+          title: 'Payment Plans for Utilities',
           body:
-            'Also known as budget billing, these plans average your bills out over the year. Check with your utility providers to see if you qualify, then enter the new monthly average into the calendar to see how it affects your cash flow.',
+            'Check with your gas company to see if you qualify.  Then enter the new bill amount into the calendar to see your cash flow.',
         },
       },
       waterSewage: {
@@ -235,9 +235,9 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'utilityPaymentPlans',
-          title: 'Explore Level Payment Plans for Utilities',
+          title: 'Payment Plans for Utilities',
           body:
-            'Also known as budget billing, these plans average your bills out over the year. Check with your utility providers to see if you qualify, then enter the new monthly average into the calendar to see how it affects your cash flow.',
+            'Check with your water provider to see if you qualify.  Then enter the new monthly amount into the calendar.',
         },
       },
       electricity: {
@@ -247,9 +247,9 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'utilityPaymentPlans',
-          title: 'Explore Level Payment Plans for Utilities',
+          title: 'Payment Plans for Utilities',
           body:
-            'Also known as budget billing, these plans average your bills out over the year. Check with your utility providers to see if you qualify, then enter the new monthly average into the calendar to see how it affects your cash flow.',
+            'Check with your electric company to see if you qualify.  Then enter the new monthly amount into the calendar.',
         },
       },
       trash: {
@@ -265,9 +265,9 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'cablePlans',
-          title: 'Consider Entertainment Alternatives',
+          title: 'Entertainment Options',
           body:
-            'Many cable providers offer multiple options for new and existing customers. Contact your provider and ask about lower-cost plans or consider a cheaper streaming service.',
+            'Contact your cable company to ask about lower-cost plans or consider a cheaper streaming service.',
           link: {
             href: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/',
             text: 'Cutting Expenses (Your Money Your Goals)',
@@ -281,9 +281,9 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'lifelinePhoneInternet',
-          title: 'Explore Low Cost Phone and Internet Services',
+          title: 'Low Cost Internet Services',
           body:
-            'If you qualify for the FCC\'s "Lifeline" phone rate you could lower the monthly cost of phone and internet service.',
+            'If you qualify for the "Lifeline" program, you could lower the monthly cost of internet service.',
           link: {
             href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
             text: 'Lifeline Support for Affordable Communications',
@@ -297,9 +297,9 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'lifelinePhoneInternet',
-          title: 'Explore Low Cost Phone and Internet Services',
+          title: 'Low Cost Phone Service',
           body:
-            'If you qualify for the FCC\'s "Lifeline" phone rate you could lower the monthly cost of phone and internet service.',
+            'If you qualify for the "Lifeline" program, you could lower the monthly cost of phone service.',
           link: {
             href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
             text: 'Lifeline Support for Affordable Communications',
