@@ -89,7 +89,7 @@ function Details() {
     .filter((x) => x.category === 'income.startingBalance')
     .map((e) => formatCurrency(e.totalCents / 100));
 
-  const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative');
+const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative', uiStore.weekHasPositiveBalance && 'positive');
 
   return (
     <section className="calendar-details">
@@ -128,13 +128,32 @@ function Details() {
         />
       </header>
 
+      {uiStore.weekHasPositiveBalance && (
+        <div className={endBalanceClasses}>
+          <Notification
+            message="You are going to be in the green!"
+            variant="savings"
+            actionLink={
+              <Link to={`/calendar/add/expense/emergencySavings/new`} className="m-notification_save-button">
+                Save it
+              </Link>
+            }
+          >
+            <p className="m-notification_explanation">
+              Ending Balance: <span className="pos-ending-balance">{uiStore.weekEndingBalanceText}</span>
+            </p>
+          </Notification>
+        </div>
+      )}
+
       {uiStore.weekHasNegativeBalance && (
         <div className={endBalanceClasses}>
           <Notification
             message="You are going to be in the red!"
             variant="error"
             actionLink={
-              <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className="m-notification_button">
+
+              <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className="m-notification_fix-button">
                 Fix it
               </Link>
             }

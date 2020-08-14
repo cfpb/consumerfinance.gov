@@ -111,6 +111,10 @@ export default class UIStore {
   @computed get weekHasNegativeBalance() {
     return this.weekEndingBalance < 0;
   }
+  
+  @computed get weekHasPositiveBalance() {
+    return this.weekEndingBalance > 0;
+  }
 
   @computed get isRunningAsApp() {
     return navigator.standalone || matchMedia('(display-mode: standalone)').matches;
