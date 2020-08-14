@@ -10,7 +10,7 @@ const schoolModel = {
 
   textPercents: [ 'defaultRate', 'rateGraduation', 'rateRepay3yr' ],
 
-  setValue: function( name, value ) {
+  setValue: function( name, value, updateURL ) {
     schoolModel.values[name] = value;
 
     if ( schoolModel.textPercents.indexOf( name ) !== -1 ) {
@@ -30,8 +30,9 @@ const schoolModel = {
     if ( name === 'control' ) {
       updateState.byProperty( 'schoolControl', value );
     }
-
-    updateUrlQueryString();
+    if ( updateURL !== false ) {
+      updateUrlQueryString();
+    }
   },
 
   /**

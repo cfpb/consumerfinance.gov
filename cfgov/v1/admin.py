@@ -2,15 +2,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-import wagtail
-
 from v1.email import send_password_reset_email
 from v1.models import Contact, PortalCategory, PortalTopic
 
-
-if wagtail.VERSION < (2, 8):
-    from wagtail.core.models import Page
-    admin.site.unregister(Page)
 
 admin.site.register(Contact)
 admin.site.unregister(User)

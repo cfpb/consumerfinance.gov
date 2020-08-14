@@ -3,7 +3,12 @@ from .local import *
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
-TEST_RUNNER = os.environ.get('TEST_RUNNER', 'cfgov.test.TestRunner')
+TEST_RUNNER = os.environ.get(
+    'TEST_RUNNER',
+    'core.testutils.runners.TestRunner'
+)
+
+BAKER_CUSTOM_CLASS = 'core.testutils.baker.ActualContentTypeBaker'
 
 INSTALLED_APPS += (
     'wagtail.contrib.settings',

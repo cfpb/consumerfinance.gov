@@ -13,11 +13,32 @@ const MILLION = 1000000;
 const WHITE = '#ffffff';
 
 /**
- * helper function to get date interval for legend
+ * Gets the UTC time for the beginning of the day in the local time zone
+ *
+ * @returns {Date} midnight today, local
+ */
+export function startOfToday() {
+  if ( !window.hasOwnProperty( 'MAX_DATE' ) ) {
+    if ( window.hasOwnProperty( 'complaint_public_metadata' ) ) {
+      const { metadata_timestamp: stamp } = window.complaint_public_metadata;
+      window.MAX_DATE = new Date( moment( stamp ).startOf( 'day' ).toString() );
+    } else {
+      // eslint-disable-next-line no-console
+      console.error( 'complaint_public_metadata is missing' );
+      window.MAX_DATE = new Date( moment().startOf( 'day' ).toString() );
+    }
+  }
+
+  // Always return a clone so the global is not exposed or changed
+  return new Date( window.MAX_DATE.valueOf() );
+}
+
+/**
+ * helper function to get date range for legend
  * @returns {string} formatted string
  */
-export function calculateDateInterval() {
-  let today = new Date();
+export function calculateDateRange() {
+  let today = startOfToday();
   today = today.toLocaleDateString( 'en-US' );
   let past = new Date( moment().subtract( 3, 'years' ).calendar() );
   past = past.toLocaleDateString( 'en-US' );
@@ -211,7 +232,7 @@ export function clickHandler( isPerCapita, t ) {
 
   let capText = 'dataNormalization=';
   capText += isPerCapita ? 'Per%201000%20pop.' : 'None';
-  const stateUrl = 'search/?dateInterval=3y&' + capText +
+  const stateUrl = 'search/?dateRange=3y&' + capText +
     '&state=' + stateAbbr;
   const loc = window.location.protocol + '//' +
               window.location.host +
@@ -335,7 +356,7 @@ export function _drawLegend( chart ) {
       'legend-description' )
     .add( legendText );
 
-  const labelDates = `Dates: <span class="type">${ calculateDateInterval() }` +
+  const labelDates = `Dates: <span class="type">${ calculateDateRange() }` +
     '</span>';
   chart.renderer
     .label( labelDates, 0, 44, null, null, null, true, false, 'legend-dates' )

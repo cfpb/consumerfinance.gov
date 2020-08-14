@@ -11,6 +11,7 @@ from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
+from wagtail.documents import urls as wagtaildocs_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
@@ -36,7 +37,6 @@ from v1.views import (
     change_password, check_permissions, login_with_lockout,
     password_reset_confirm
 )
-from v1.views.documents import DocumentServeView
 
 
 try:
@@ -82,15 +82,12 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+
+    re_path(r'^documents/', include(wagtaildocs_urls)),
+
     re_path(r'^rural-or-underserved-tool/$', TemplateView.as_view(
         template_name='rural-or-underserved/index.html'),
         name='rural-or-underserved'),
-
-    re_path(
-        r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
-        DocumentServeView.as_view(),
-        name='wagtaildocs_serve'
-    ),
 
     re_path(
         r'^home/(?P<path>.*)$',

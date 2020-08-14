@@ -13,7 +13,7 @@ and several standalone Django apps for specific parts of the site.
 Full installation and usage instructions are available in
 [our documentation](https://cfpb.github.io/cfgov-refresh).
 
-This project requires Python 3.6, Node 8, and Gulp 4.
+This project requires Python 3.6, Node 12, and Gulp 4.
 We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and
 [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 for keeping the project's Python dependencies contained.

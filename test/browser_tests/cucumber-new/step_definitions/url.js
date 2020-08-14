@@ -10,6 +10,6 @@ Then( 'the page url should contain {string}',
     await browser.sleep( 500 );
     return expect( browser.getCurrentUrl() )
       .to.eventually
-      .contain( urlComponent )
+      .contain( urlComponent );
   }
 );
