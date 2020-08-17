@@ -1,0 +1,39 @@
+{# ==========================================================================
+
+   AudioPlayer
+
+   ==========================================================================
+
+   Description:
+
+   Create an AudioPlayer organism when given:
+
+   value:                     AudioPlayer block StreamValue
+
+   value.heading:             (optional) Heading for the organism
+
+   value.body:                (optional) Introductory text for the organism
+
+   value.audio_file:          A wagtailmedia Media object that is presented
+                              in a native HTML audio player
+
+   value.additional_details:  (optional) Additional text that to appear after
+                              the audio player
+
+   ========================================================================== #}
+
+{% import "blocks/audio.html" as media with context %}
+
+{% if value.heading.text %}
+    {% include_block value.heading %}
+{% endif %}
+
+{% if value.body %}
+    {{ value.body | richtext }}
+{% endif %}
+
+{{ media.render(value.audio_file) }}
+
+{% if value.additional_details %}
+    {{ value.additional_details | richtext }}
+{% endif %}
