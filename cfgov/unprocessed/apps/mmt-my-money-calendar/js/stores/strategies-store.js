@@ -8,7 +8,7 @@ class StrategiesStore {
   negativeStrategies = {
     'expense.personal.coronavirus': {
       id: 'coronaVirus',
-      icon1: icons.veteranBenefits1,
+      icon1: icons.coronaVirus1,
       title: 'Protect Your Finances from COVID-19',
       body:
         'Get information about protecting your financial health.',
@@ -20,7 +20,7 @@ class StrategiesStore {
     'expense.personal.emergencySavings': {
       id: 'saveForEmergencies',
       title: 'Save for Emergencies',
-      icon1: icons.veteranBenefits1,
+      icon1: icons.savings1,
       body: 'Saving helps reduce stress when the unexpected happens.',
       link: {
         href: 'https://www.consumerfinance.gov/about-us/blog/how-save-emergencies-and-future/',
@@ -30,7 +30,7 @@ class StrategiesStore {
     'expense.personal.tightWeek': {
       id: 'tightWeek',
       title: 'Tips for a tight week',
-      icon1: icons.veteranBenefits1,
+      icon1: icons.paycheck1,
       body: 'See how to add more money to your cash flow.',
       link: {
         href: '',
@@ -203,7 +203,7 @@ class StrategiesStore {
             results.largestHousingExpense = event;
           }
         }
-
+        console.log('results of analyzeFixitEvents is ', results);
         return results;
       },
       {

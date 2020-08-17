@@ -393,6 +393,12 @@ export const Categories = new CategoryTree({
             'Making your lunch, avoiding fountain drinks and even finding local restaurants with "Kids Eat Free" specials can help reduce costs.',
         },
       },
+      groceries: {
+        name: 'Groceries',
+        icon: icons.groceries,
+        recurrenceTypes: ['weekly', 'monthly'],
+        hasBill: false,
+      },
     },
     emergencySavings: {
       name: 'Savings',
@@ -455,7 +461,7 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'trackDonations',
-          icon1: icons.giving1,
+          icon1: icons.Clothing3,
           title: 'Donations',
           body:
             'Your charitable donations may be tax deductible. Keep records and receipts to lower the cost of your annual taxes.',
