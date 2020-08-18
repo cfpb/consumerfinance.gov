@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 from django.test import TestCase
 
 from paying_for_college.models import School

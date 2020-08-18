@@ -2,10 +2,10 @@
 backports.csv==1.0.7
 beautifulsoup4==4.8.2
 boto3==1.7.80
-# Temporarily pin cryptography here. 
-# edgegrid-python has an open-ended dependency on PyOpenSSL, which in turn 
-# has an open-ended dependency on cryptography. cryptography 3.0 currently 
-# doesn't build in our build environment. This pins the last release that 
+# Temporarily pin cryptography here.
+# edgegrid-python has an open-ended dependency on PyOpenSSL, which in turn
+# has an open-ended dependency on cryptography. cryptography 3.0 currently
+# doesn't build in our build environment. This pins the last release that
 # does until we can solve that problem.
 cryptography==2.9.2
 dj-database-url==0.5.0
@@ -42,6 +42,7 @@ wagtail-flags==4.2.2
 wagtail-inventory==1.1.1
 wagtail-sharing==2.2.1
 wagtail-treemodeladmin==1.2.1
+wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/owning-a-home-api/releases/download/0.16.0/owning_a_home_api-0.16.0-py3-none-any.whl

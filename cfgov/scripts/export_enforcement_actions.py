@@ -73,7 +73,7 @@ def export_actions(path='/tmp', http_response=False):
     A script for exporting Enforcement Actions content
     to a CSV that can be opened easily in Excel.
 
-    Run from within cfgov-refresh with:
+    Run from within consumerfinance.gov with:
     `python cfgov/manage.py runscript export_enforcement_actions`
 
     By default, the script will dump the file to `/tmp/`,

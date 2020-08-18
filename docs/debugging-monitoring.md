@@ -49,7 +49,7 @@ from
 [from PyPI](https://pypi.org/project/newrelic/).
 This package is not part of the standard development requirements but is
 included in
-the [`requirements/deployment.txt`](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/deployment.txt) file.
+the [`requirements/deployment.txt`](https://github.com/cfpb/consumerfinance.gov/blob/master/requirements/deployment.txt) file.
 It can be installed into your Python environment using the following command:
 
 ```shell
@@ -67,7 +67,7 @@ The New Relic Python agent has many
 [configuration settings](https://docs.newrelic.com/docs/agents/python-agent/configuration/python-agent-configuration)
 that control the information that gets recorded about web requests. This
 project includes a default
-[`newrelic.ini`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/newrelic.ini)
+[`newrelic.ini`](https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/newrelic.ini)
 file that enables New Relic's
 [high security mode](https://docs.newrelic.com/docs/agents/manage-apm-agents/configuration/high-security-mode)
 to limit the recording of potentially sensitive information.
@@ -83,7 +83,7 @@ traffic from any other users who may be running against the same New Relic
 account.
 
 This project's
-[`.env_SAMPLE`](https://github.com/cfpb/cfgov-refresh/blob/master/.env_SAMPLE)
+[`.env_SAMPLE`](https://github.com/cfpb/consumerfinance.gov/blob/master/.env_SAMPLE)
 file contains placeholder entries for these two variables.
 
 Once you've set these two variables, start or restart your local web server.
