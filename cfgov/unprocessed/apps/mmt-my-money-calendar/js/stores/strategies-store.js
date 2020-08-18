@@ -13,27 +13,17 @@ class StrategiesStore {
       body:
         'Get information about protecting your financial health.',
       link: {
-        href: ' https://www.consumerfinance.gov/coronavirus/',
+        href: 'https://www.consumerfinance.gov/coronavirus/',
         text: 'Tools and Resources',
-      },
-    },
-    'expense.personal.emergencySavings': {
-      id: 'saveForEmergencies',
-      icon1: icons.savings1,
-      title: 'Save for Emergencies',
-      body: 'Saving helps reduce stress when the unexpected happens.',
-      link: {
-        href: 'https://www.consumerfinance.gov/about-us/blog/how-save-emergencies-and-future/',
-        text: 'How to save for emergencies and the future',
       },
     },
     'expense.personal.tightWeek': {
       id: 'tightWeek',
       icon1: icons.paycheck1,
-      title: 'Tips for a tight week',
+      title: 'Tips for a Tight Week',
       body: 'See how to add more money to your cash flow.',
       link: {
-        href: '',
+        href: 'https://files.consumerfinance.gov/f/documents/cfpb_your-money-your-goals_increase-inc-benefits_tool_2018-11.pdf',
         text: 'Increase Income and Benefits',
       },
     },

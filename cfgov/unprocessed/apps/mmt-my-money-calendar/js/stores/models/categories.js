@@ -104,7 +104,7 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'vetBenefits',
-          icon1: icons.veteranBenefits1,
+          icon1: icons.veteransBenefits1,
           title: "Explore Military Financial Resources",
           body:
             'Manage financial challenges at every step of your military career.',
@@ -121,9 +121,9 @@ export const Categories = new CategoryTree({
         strategy: {
           id: 'disabilityBenefits',
           icon1: icons.disabilityBenefits1,
-          title: 'Tools for people with disabilities',
+          title: 'Tools for People With Disabilities',
           body:
-            'Find tips and skill-building resources for people with disabilities',
+            'Find tips and skill-building resources for people with disabilities.',
           link: {
             href: 'https://www.consumerfinance.gov/about-us/blog/new-financial-empowerment-tools-people-disabilities/',
             text: 'Focus on People with Disabilities Guide',
@@ -143,9 +143,9 @@ export const Categories = new CategoryTree({
         strategy: {
           id: 'jobTraining',
           icon1: icons.unemployment1,
-          title: 'Build your Skills',
+          title: 'Build Your Skills',
           body:
-            'Find job training opportunities at your local Career One-Stop',
+            'Find job training opportunities at your local Career One-Stop.',
           link: {
             href: 'https://www.careeronestop.org/localhelp/americanjobcenters/find-american-job-centers.aspx',
             text: 'Locate an American Job Center',
@@ -184,8 +184,8 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'refinanceMortgage',
-          icon1: icons.housing1,
-          title: 'Refinance your mortgage',
+          icon1: icons.mortgage1,
+          title: 'Answers to Your Mortgage Qustions',
           body:
             'Check with your mortgage lender to see if you qualify for a lower interest rate.  Then enter the new payment amount into the calendar.',
           link: {
@@ -223,7 +223,7 @@ export const Categories = new CategoryTree({
       name: 'Utilities',
       icon: icons.utilities,
       fuel: {
-        name: 'Natural Gas, Oil, Propane',
+        name: 'Natural Gas',
         icon: icons.naturalgas,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
@@ -270,11 +270,7 @@ export const Categories = new CategoryTree({
           icon1: icons.cable1,
           title: 'Entertainment Options',
           body:
-            'Contact your cable company to ask about lower-cost plans or consider a cheaper streaming service.',
-          link: {
-            href: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/',
-            text: 'Cutting Expenses (Your Money Your Goals)',
-          },
+            'Contact your cable company to ask about lower-cost plans or consider a cheaper streaming service.'
         },
       },
       internet: {
@@ -323,7 +319,7 @@ export const Categories = new CategoryTree({
         strategy: {
           id: 'refinanceCarLoan',
           icon1: icons.carPayment1,
-          title: 'Refinance your car loan',
+          title: 'Refinance Your Car Loan',
           body:
             'Check with local car loan companies to see if you qualify for a lower interest rate.  Then enter the new expense into the calendar to see how it affects your cash flow.',
           link: {
@@ -339,7 +335,7 @@ export const Categories = new CategoryTree({
         strategy: {
           id: 'carMaintenance',
           icon1: icons.carMaintenance1,
-          title: 'Maintain your car',
+          title: 'Maintain Your Car',
           body:
             'Regularly change your oil and maintain proper tire pressure to avoid some car repair expenses.',
         },
@@ -388,7 +384,7 @@ export const Categories = new CategoryTree({
         strategy: {
           id: 'reduceFoodExpenses',
           icon1: icons.eatingOut1,
-          title: 'Reduce eating out costs',
+          title: 'Reduce Eating Out Costs',
           body:
             'Making your lunch, avoiding fountain drinks and even finding local restaurants with "Kids Eat Free" specials can help reduce costs.',
         },
@@ -417,7 +413,7 @@ export const Categories = new CategoryTree({
         strategy: {
           id: 'healthCare',
           icon1: icons.healthCare1,
-          title: 'Health insurance',
+          title: 'Health Insurance',
           body:
             'Choosing an affordable health care plan can drastically reduce the cost of medical bills.',
           link: {
@@ -447,11 +443,7 @@ export const Categories = new CategoryTree({
           icon1: icons.clothing1,
           title: 'Consider Second-hand Shops',
           body:
-            'Thrift shops and consignment stores are much more cost effective alternatives.',
-          link: {
-            href: 'https://www.consumerfinance.gov/about-us/blog/track-your-spending-with-this-easy-tool/',
-            text: 'Track your spending with this easy tool',
-          },
+            'Thrift shops and consignment stores are more cost-effective alternatives to retail.',
         },
       },
       giving: {
@@ -461,14 +453,10 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'trackDonations',
-          icon1: icons.Clothing3,
+          icon1: icons.giving1,
           title: 'Donations',
           body:
             'Your charitable donations may be tax deductible. Keep records and receipts to lower the cost of your annual taxes.',
-          link: {
-            href: 'https://www.irs.gov/charities-non-profits/charitable-contributions',
-            text: 'Charitable Donations',
-          },
         },
       },
       education: {
