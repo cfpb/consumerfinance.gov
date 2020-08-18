@@ -31,14 +31,14 @@ function Strategies() {
 
   return (
     <section className="strategies">
-      <header className="strategies-header">
+      {/* <header className="strategies-header">
         <h2 className="strategies-header__title">General Strategies to Improve Cash Flow</h2>
 
         <p className="strategies-header__intro">
           The strategies below are tailored to the specific expenses and income in your budget. Commit to implementing
           one or two of them for the coming month and see if your cash flow improves.
         </p>
-      </header>
+      </header> */}
       {strategiesStore.strategyResults.length > 0 && <StrategyCards results={strategiesStore.strategyResults} />}
     </section>
   );
