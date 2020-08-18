@@ -13,7 +13,7 @@ const StrategyCards = ({ results }) => (
 
           {!!result.link && (
             <div className="m-card_footer">
-              <a href={result.link.href} className="a-btn a-btn__secondary a-btn__full-on-xs" target="_blank">
+              <a href={result.link.href} className="a-btn a-btn__full-on-xs" target="_blank">
                 {result.link.text}
               </a>
             </div>

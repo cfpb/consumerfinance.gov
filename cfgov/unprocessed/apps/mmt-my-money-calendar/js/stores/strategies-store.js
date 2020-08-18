@@ -19,8 +19,8 @@ class StrategiesStore {
     },
     'expense.personal.emergencySavings': {
       id: 'saveForEmergencies',
-      title: 'Save for Emergencies',
       icon1: icons.savings1,
+      title: 'Save for Emergencies',
       body: 'Saving helps reduce stress when the unexpected happens.',
       link: {
         href: 'https://www.consumerfinance.gov/about-us/blog/how-save-emergencies-and-future/',
@@ -29,8 +29,8 @@ class StrategiesStore {
     },
     'expense.personal.tightWeek': {
       id: 'tightWeek',
-      title: 'Tips for a tight week',
       icon1: icons.paycheck1,
+      title: 'Tips for a tight week',
       body: 'See how to add more money to your cash flow.',
       link: {
         href: '',
@@ -43,11 +43,13 @@ class StrategiesStore {
     largestHousingExpense: [
       {
         categories: ['expense.housing.mortgage'],
+        icon1: icons.mortgage1,
         title: 'Split Mortgage',
         text: 'Ask your mortgage company to find out if you could split your payment into smaller amounts.',
       },
       {
         categories: ['expense.housing.rent'],
+        icon1: icons.mortgage1,
         title: 'Rent',
         text: 'If possible, ask your landlord to let you make multiple payments toward rent.  If not, contact a local organization that helps with rental assistance.',
       },
@@ -55,36 +57,42 @@ class StrategiesStore {
     largestBillableExpense: [
       {
         categories: ['expense.transportation.carPayment'],
+        icon1: icons.carPayment1,
         title: 'Car Payment Date',
         text:
           'Ask car loan company if you could move the due date to a week with more money.',
       },
       {
         categories: ['expense.transportation.carInsurance'],
+        icon1: icons.carInsurance1,
         title: 'Car Insurance Date',
         text:
           'Ask your insurance company if you could move the due date to a week with more money.',
       },
       {
         categories: ['expense.debt.medicalBill'],
+        icon1: icons.medicalBill1,
         title: 'Medical Bill',
         text:
           'Ask your creditor if you could move the due date to a week with more money.',
       },
       {
         categories: ['expense.debt.personalLoan'],
+        icon1: icons.personalLoan,
         title: 'Loan Due Date',
         text:
           'Ask your lender if you could move the due date to a week with more money.',
       },
       {
         categories: ['expense.debt.creditCard'],
+        icon1: icons.creditCard,
         title: 'Credit Card Due Date',
         text:
           'Contact your credit card company to find out if you could move the due date to a week where you have more money.',
       },
       {
         categories: ['expense.debt.studentLoan'],
+        icon1: icons.studentLoan1,
         title: 'Student Loan Due Date',
         text:
           'Contact your student loan company to find out if you could move the due date of this bill to a week where you have more money.',
@@ -92,17 +100,46 @@ class StrategiesStore {
     ],
     largestAdHocExpense: [
       {
-        categories: [
-          'expense.transportation.publicTransportation',
-          'expense.transportation.gas',
-          'expense.food.eatingOut',
-          'expense.personal.clothing',
-          'expense.personal.personalCare',
-          'expense.personal.funMoney',
-        ],
-        title: (categoryName) =>`Adjust ${categoryName.toLowerCase()} Spending`,
-        template: (categoryName) =>
-          `You control how much you spend on ${categoryName.toLowerCase()}.  Consider buying less this week until you have more money.`,
+        categories: ['expense.transportation.publicTransportation'],
+        icon1: icons.studentLoan1,
+        title: 'Adjust Spending on Public Transportation',
+        text:
+          'You control how much you spend on public transportation.  Consider spending less this week until you have more money.',
+      },
+      {
+        categories: ['expense.transportation.gas'],
+        icon1: icons.gas1,
+        title: 'Adjust Spending on Gas',
+        text:
+          'You control how much you spend on gas.  Consider buying less this week until you have more money.',
+      },
+      {
+        categories: ['expense.food.eatingOut'],
+        icon1: icons.eatingOut1,
+        title: 'Adjust Spending on Eating Out',
+        text:
+          'You control how much you spend on in this category.  Consider eating out less this week until you have more money.',
+      },
+      {
+        categories: ['expense.personal.clothing'],
+        icon1: icons.clothing1,
+        title: 'Adjust Spending on Clothing',
+        text:
+          'You control how much you spend on clothing.  Consider buying less this week until you have more money.',
+      },
+      {
+        categories: ['expense.personal.personalCare'],
+        icon1: icons.personal,
+        title: 'Adjust Spending on Personal Care items',
+        text:
+          'You control how much you spend on personal care.  Consider buying less this week until you have more money.',
+      },
+      {
+        categories: ['expense.personal.funMoney'],
+        icon1: icons.funMoney,
+        title: 'Adjust Spending with Fun Money',
+        text:
+          'You control how much you use fun money.  Consider buying less this week until you have more money.',
       },
     ],
   };
@@ -143,6 +180,7 @@ class StrategiesStore {
         return strategy;
       })
     );
+    console.log('results is ', results);
 
     if (results.length) return results;
 

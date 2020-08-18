@@ -10,28 +10,15 @@ export function CardGroup({ columns = 1, children }) {
   );
 }
 
-export const Card = ({ href = '#', title, type, icon, children, footer }) => (
+export const Card = ({ href = '#', title, icon, children, footer }) => (
   <article className="m-card">
     <div className="m-card_heading m-card_background">
-        {type !== 'general'? (
-          
-            <a href={href}>
-              <div className="header-alignment">
-                <div className="m-card_icon" dangerouslySetInnerHTML={{ __html: icon }} />
-                <div className="m-card_title">{title}</div>
-            </div>
-            </a>
-         
-          ):(
-            
-               <a href={href}>
-                 <div className="header-alignment">
-                    <div className="m-card_icon general" dangerouslySetInnerHTML={{ __html: icon }} />
-                    <div className="m-card_title">{title}</div>
-               </div>
-               </a>
-            
-          )}
+        <a href={href}>
+          <div className="header-alignment">
+            <div className="m-card_icon general" dangerouslySetInnerHTML={{ __html: icon }} />
+            <div className="m-card_title">{title}</div>
+        </div>
+        </a>
     </div>
 
     {children}
