@@ -1,6 +1,6 @@
 # Translation
 
-As cfgov-refresh is a Django project, the [Django translation documentation is a good place to start](https://docs.djangoproject.com/en/1.11/topics/i18n/translation/). What follows is a brief introduction to translations with the particular tools cfgov-refresh uses (like Jinja2 templates) and the conventions we use.
+As consumerfinance.gov is a Django project, the [Django translation documentation is a good place to start](https://docs.djangoproject.com/en/1.11/topics/i18n/translation/). What follows is a brief introduction to translations with the particular tools consumerfinance.gov uses (like Jinja2 templates) and the conventions we use.
 
 ## Overview
 
@@ -22,11 +22,11 @@ msgstr "Esta es una cadena traducible."
 
 These portable object files are compiled into machine object files (`.mo`) that the translation system uses when looking up the original string.
 
-By convention the `.po` and `.mo` files live inside a `locale/[LANGUAGE]/LC_MESSAGES/` folder structure, for example, `cfgov/locale/es/LC_MESSAGES/django.po` for the Spanish language portable object file for all of our cfgov-refresh messages.
+By convention the `.po` and `.mo` files live inside a `locale/[LANGUAGE]/LC_MESSAGES/` folder structure, for example, `cfgov/locale/es/LC_MESSAGES/django.po` for the Spanish language portable object file for all of our consumerfinance.gov messages.
 
-## How to translate text in cfgov-refresh
+## How to translate text in consumerfinance.gov
 
-This brief howto will guide you through adding translatable text to cfgov-refresh.
+This brief howto will guide you through adding translatable text to consumerfinance.gov.
 
 #### 1. Add the translation function around the string
 

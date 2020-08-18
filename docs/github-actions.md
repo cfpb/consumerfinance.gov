@@ -1,12 +1,12 @@
 # How we use GitHub Actions for continuous integration and automation
 
 ## What GitHub Actions do
-We use [GitHub Actions](https://help.github.com/en/articles/about-github-actions) on cfgov-refresh to perform the following tasks:
+We use [GitHub Actions](https://help.github.com/en/articles/about-github-actions) on consumerfinance.gov to perform the following tasks:
 
 - Run automated lint checkers
 - Run automated unit tests
 - Measure unit test coverage
-- Build and deploy this documentation to GitHub on the [`gh-pages` branch](https://github.com/cfpb/cfgov-refresh/tree/gh-pages).
+- Build and deploy this documentation to GitHub on the [`gh-pages` branch](https://github.com/cfpb/consumerfinance.gov/tree/gh-pages).
 - Clean up stored artifacts
 
 ## How GitHub Actions are configured
@@ -22,7 +22,7 @@ We use a combination of:
 - [Build matrices](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix) to run the same tests on different versions of our dependnecies
 - [Additional services](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idservices) to provide, for example, PostgreSQL for our tests
 
-Our workflows are defined in our [`.github/workflows`](https://github.com/cfpb/cfgov-refresh/tree/master/.github/workflows) directory.
+Our workflows are defined in our [`.github/workflows`](https://github.com/cfpb/consumerfinance.gov/tree/master/.github/workflows) directory.
 
 ## An extra task for satellite repositories
 For our [satellite apps](../related-projects/#satellite-apps), we use GitHub Actions (or Travis, if a repo hasn't been migrated to Actions yet) to build and attach a deployment wheel file to every release.

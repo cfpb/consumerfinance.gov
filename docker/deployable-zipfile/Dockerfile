@@ -7,7 +7,7 @@ ENV LANG en_US.UTF-8
 # run as non-root.
 ENV PIP_NO_CACHE_DIR true
 
-ENV BUILD_DIR /src/cfgov-refresh
+ENV BUILD_DIR /src/consumerfinance.gov
 
 # Must be world writable since alternate uid:gid may be patched in at `docker
 # run` time.
