@@ -33,7 +33,7 @@ This brief howto will guide you through adding translatable text to consumerfina
 In Jinja2 templates:
 
 ```jinja
-{{ _('Hello World!') }}
+{{ _("Hello World!") }}
 ```
 
 In Django templates:
@@ -49,7 +49,7 @@ In Python code:
 ```python
 from django.utils.translation import ugettext as _
 
-mystring = _('Hello World!')
+mystring = _("Hello World!")
 ```
 
 The string in the call to the translation function will be the `msgid` in the portable object file below.
@@ -89,3 +89,39 @@ All of our Wagtail pages include a language-selection dropdown under its Configu
 ![Wagtail page language selection](img/wagtail-language.png)
 
 The selected language will force translation of all translatable strings in templates and code for that page.
+
+## Troubleshooting
+
+To ensure that strings in templates are picked up in message extraction (`django-admin.py makemessages`), it also helps to know that the way `makemessages` works. 
+
+`makemessages` converts all Django `{% translate %}`, `{% blocktranslate %}`, and Jinja2 `{% trans %}` tags into `_(…)` gettext calls and then to have [`xgettext`](https://www.gnu.org/software/gettext/manual/gettext.html) process the files as if they were Python. This process *does not* work the same as general template parsing, and it means that it's best to make the translatable strings as discoverable as possible. 
+
+There are a few things to avoid to make sure the strings are picked up by `makemessages`:
+
+**Do not** include the `_()` call in a larger Jinja2 template data structure:
+
+```diff
++ {% set link_text = _("Visit our website") %}
+  {% set link_data = {
+      "url": "https://consumerfinance.gov",
+-     "text": _("Visit our website"),
++     "text": link_text,
+   } %}
+```
+
+**Do not** include spaces between the parentheses and the string in Jinja2 templates:
+
+```diff
+- {{ _( "Hello World!" ) }}
++ {{ _("Hello World!") }}
+```
+
+**Do not** use f-strings in Python calls to gettext:
+
+```diff
+- _(f"Hello {world_name}")
++ _("Hello %(world_name)s" % {'world_name': world_name})
+```
+
+Django's documentation [has some additional information on the limitations of translatable strings and gettext](https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#standard-translation).
+
