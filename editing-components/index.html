@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Creating and Editing Components - cfgov-refresh</title>
+  <title>Creating and Editing Components - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -238,7 +238,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">cfgov-refresh</a>
+        <a href="..">consumerfinance.gov</a>
       </nav>
 
       
@@ -257,7 +257,7 @@
     <li>Creating and Editing Components</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/editing-components.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/editing-components.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -268,7 +268,7 @@
             <div class="section">
               
                 <h1 id="creating-and-editing-wagtail-components">Creating and Editing Wagtail Components<a class="headerlink" href="#creating-and-editing-wagtail-components" title="Permanent link">¶</a></h1>
-<p>cfgov-refresh implements a number of components
+<p>consumerfinance.gov implements a number of components
 that editors can choose from when building a page,
 for example: Heroes, Expandable Groups, or Info Unit Groups. The
 <a href="https://cfpb.github.io/design-system/components/">CFPB Design System</a>
@@ -331,9 +331,9 @@ but there are two major categories they fall into:</p>
 <ol>
 <li>Files corresponding to a general-purpose, site-wide atomic component.
    These files—<code>atoms.py</code>, <code>molecules.py</code>, and <code>organisms.py</code>—are located in
-   <a href="https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements"><code>cfgov/v1/atomic_elements</code></a>.</li>
+   <a href="https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/v1/atomic_elements"><code>cfgov/v1/atomic_elements</code></a>.</li>
 <li>Files that are specific to a particular sub-app, such as regulations3k's
-   <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/blocks.py">blocks.py</a>.</li>
+   <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/regulations3k/blocks.py">blocks.py</a>.</li>
 </ol>
 <p>There are other places where StreamField block classes are defined
 (particularly blocks that are only ever used as fields within another block),
@@ -397,7 +397,7 @@ that comprise the sub-blocks that are our fields.</p>
 by adding them to one of a page types's StreamFields.
 These are usually the first things in a page's class definition.
 For example, see this snippet from
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/blog_page.py"><code>blog_page.py</code></a>:</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/blog_page.py"><code>blog_page.py</code></a>:</p>
 <pre class="highlight"><code class="language-python">class BlogPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
@@ -416,7 +416,7 @@ we'd add a new entry to this list following the same format:
 <code>('related_content', molecules.RelatedContent()),</code>.</p>
 <p>Most page types have two StreamFields (<code>header</code> and <code>content</code>) in the
 general content area (the first tab on an editing screen), and most also share
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py#L95-L107">a common <code>sidefoot</code> StreamField</a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/base.py#L95-L107">a common <code>sidefoot</code> StreamField</a>
 (so named for the fact that it appears on the right side on some page types,
 but in the footer on others) on the sidebar tab.</p>
 <hr />
@@ -502,7 +502,7 @@ those context variables can also be output with simple Jinja2 expression tags:
 <code>{{ context_var }}</code>.</p>
 <h4 id="adding-css">Adding CSS<a class="headerlink" href="#adding-css" title="Permanent link">¶</a></h4>
 <p>If a component needs any custom styling not already provided
-by the <a href="https://github.com/cfpb/design-system">Design System</a> or cfgov-refresh,
+by the <a href="https://github.com/cfpb/design-system">Design System</a> or consumerfinance.gov,
 you can add it by creating a new
 <a href="http://lesscss.org/">Less</a> file for the component.</p>
 <div class="admonition note">
@@ -510,7 +510,7 @@ you can add it by creating a new
 <p>Please be sure that you actually need new Less before creating it.
 We have a wide array of styles already available in the
 <a href="https://cfpb.github.io/design-system/components/">Design System components</a> and
-<a href="https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/css">here in cfgov-refresh</a>,
+<a href="https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/unprocessed/css">here in consumerfinance.gov</a>,
 some of which could perhaps be combined to achieve your desired result.
 Also be sure that new component designs have gone through
 our internal approval process before adding them to the project.</p>
@@ -524,7 +524,7 @@ it would live at <code>cfgov/unprocessed/css/molecules/related-content.less</cod
 <p>Newly-created Less files need to be imported into the project's master
 <code>main.less</code> file, located at <code>cfgov/unprocessed/css/main.less</code>.
 Please place them in the appropriate section for their atomic rank.</p>
-<p>Because cfgov-refresh uses <code>main.less</code> to build a single CSS file
+<p>Because consumerfinance.gov uses <code>main.less</code> to build a single CSS file
 for almost the entire project, it is not necessary
 to tell the Python model anything about a component-specific stylesheet
 (for general-purpose, site-wide components).
@@ -538,7 +538,7 @@ its Less file should live in <code>cfgov/unprocessed/&lt;app-name&gt;/css/</code
 <p>Each atomic component may optionally be given a <code>Media</code> class that can
 list one or more JavaScript files that should be loaded when using it.
 When a page is requested via the browser,
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L100-L110">code contained in <code>base.html</code></a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/jinja2/v1/_layouts/base.html#L100-L110">code contained in <code>base.html</code></a>
 will loop all atomic components for the requested page and
 load the appropriate atomic JavaScript bundles.</p>
 <p>Here is how one would add the <code>Media</code> class to our <code>RelatedContent</code> example:</p>
@@ -586,8 +586,8 @@ a specific maintenance efficiency will be gained from a new component.</p>
   <a href="https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types">basic Wagtail block types</a>.
   Sometimes we create our own custom blocks that can be used, as well.
   See, for example, the
-  <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/blocks.py#L147-L165"><code>HeadingBlock</code></a>,
-  <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L54">used in <code>InfoUnitGroup</code></a>,
+  <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/blocks.py#L147-L165"><code>HeadingBlock</code></a>,
+  <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/atomic_elements/organisms.py#L54">used in <code>InfoUnitGroup</code></a>,
   among other places.</li>
 </ul>
 </li>
@@ -729,7 +729,7 @@ see <a href="../migrations/">the Wagtail Migrations page</a>.</p>
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../atomic-structure/" style="color: #fcfcfc;">&laquo; Previous</a></span>

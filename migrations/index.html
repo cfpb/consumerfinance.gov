@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Django and Wagtail Migrations - cfgov-refresh</title>
+  <title>Django and Wagtail Migrations - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -244,7 +244,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">cfgov-refresh</a>
+        <a href="..">consumerfinance.gov</a>
       </nav>
 
       
@@ -263,7 +263,7 @@
     <li>Django and Wagtail Migrations</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/migrations.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/migrations.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -343,7 +343,7 @@ that briefly describes the change(s) you're making:</p>
 <pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations -n &lt;description_of_changes&gt;</code></pre>
 
 <p>For examples of good migration names, look through some of
-<a href="https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/migrations">our existing migration files</a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/v1/migrations">our existing migration files</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Some changes will generate multiple migration files.
@@ -414,14 +414,14 @@ that need to happen to a model's data are made.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>While backwards migrations are necessary in external libraries that we create,
-we do not require them in cfgov-refresh
+we do not require them in consumerfinance.gov
 because we prefer not to rollback migrations that have already been applied.</p>
 </div>
 <h3 id="wagtail-specific-considerations">Wagtail-specific considerations<a class="headerlink" href="#wagtail-specific-considerations" title="Permanent link">¶</a></h3>
 <p>Django data migrations with Wagtail can be challenging because
 <a href="https://github.com/wagtail/wagtail/issues/1101">programmatic editing of Wagtail pages is difficult</a>,
 and pages have both revisions and StreamFields.
-This section describes ways we try to address these challenges in cfgov-refresh.</p>
+This section describes ways we try to address these challenges in consumerfinance.gov.</p>
 <p>The data migration needs to modify both the existing Wagtail pages
 that correspond to the changed model and all revisions of that page.
 It also needs to be able to manipulate the contents of StreamFields.</p>
@@ -434,7 +434,7 @@ it's a three-step process to modify a field without losing data:</p>
    from the old field to the new field</li>
 <li>Delete the old field with an automatic schema migration</li>
 </ol>
-<p>We've written some utility functions in cfgov-refresh
+<p>We've written some utility functions in consumerfinance.gov
 that make writing data migrations for StreamFields easier.
 Using these utilities, a Django data migration that modifies a StreamField
 would use the following format:</p>
@@ -620,7 +620,7 @@ the 103 file needs to properly depend on 102.</p>
 
 <p>You'll see that there are no changes to apply,
 as the new files should exactly describe the current model state in the same way that the old migrations did.</p>
-<p>See <a href="https://github.com/cfpb/cfgov-refresh/pull/3770">cfgov-refresh#3770</a> for an example of when this was done.</p>
+<p>See <a href="https://github.com/cfpb/consumerfinance.gov/pull/3770">consumerfinance.gov#3770</a> for an example of when this was done.</p>
               
             </div>
           </div>
@@ -656,7 +656,7 @@ as the new files should exactly describe the current model state in the same way
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../debugging-templates/" style="color: #fcfcfc;">&laquo; Previous</a></span>

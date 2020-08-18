@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Caching - cfgov-refresh</title>
+  <title>Caching - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -236,7 +236,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">cfgov-refresh</a>
+        <a href="..">consumerfinance.gov</a>
       </nav>
 
       
@@ -255,7 +255,7 @@
     <li>Caching</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/caching.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/caching.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -267,7 +267,7 @@
               
                 <h1 id="caching">Caching<a class="headerlink" href="#caching" title="Permanent link">¶</a></h1>
 <h3 id="akamai">Akamai<a class="headerlink" href="#akamai" title="Permanent link">¶</a></h3>
-<p>We use <a href="https://www.akamai.com/">Akamai</a>, a content delivery network, to cache the entirety of <a href="https://www.consumerfinance.gov/">www.consumerfinance.gov</a> (but not our development servers). We invalidate any given page in Wagtail when it is published or unpublished (by hooking up the custom class <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/akamai_backend.py"><code>AkamaiBackend</code></a> to <a href="http://docs.wagtail.io/en/v2.0.1/reference/contrib/frontendcache.html">Wagtail's frontend cache invalidator</a>. By default, we clear the Akamai cache any time we deploy.</p>
+<p>We use <a href="https://www.akamai.com/">Akamai</a>, a content delivery network, to cache the entirety of <a href="https://www.consumerfinance.gov/">www.consumerfinance.gov</a> (but not our development servers). We invalidate any given page in Wagtail when it is published or unpublished (by hooking up the custom class <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/akamai_backend.py"><code>AkamaiBackend</code></a> to <a href="http://docs.wagtail.io/en/v2.0.1/reference/contrib/frontendcache.html">Wagtail's frontend cache invalidator</a>. By default, we clear the Akamai cache any time we deploy.</p>
 <p>There are certain pages that do not live in Wagtail or are impacted by changes on another page (imagine our <a href="https://www.consumerfinance.gov/about-us/newsroom/">newsroom page</a> that lists titles of other pages) or another process (imagine data from Socrata gets updated) and thus will display outdated content until the page's time to live (TTL) has expired, a deploy has happened, or if someone manually invalidates that page. Our default TTL is 24 hours.</p>
 <h4 id="checking-the-cache-state-of-a-url">Checking the cache state of a URL<a class="headerlink" href="#checking-the-cache-state-of-a-url" title="Permanent link">¶</a></h4>
 <p>To get the current cache state of a URL (perhaps to see if that URL has been invalidated), you can use the following <code>curl</code> command to check the <code>X-Cache</code> header:</p>
@@ -290,8 +290,8 @@
 <li><code>TCP_COOKIE_DENY</code>: Denied access on cookie authentication (if centralized or decentralized authorization feature is being used in config).</li>
 </ul>
 <h3 id="django-caching">Django caching<a class="headerlink" href="#django-caching" title="Permanent link">¶</a></h3>
-<p>Starting in December 2017, we use <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/fragment_cache_extension.py">template fragment caching</a> to cache all or part of a template.  It is enabled on our "post previews", snippets of a page that we display on results of filterable pages (e.g. <a href="https://consumerfinance.gov/about-us/blog">our blog page</a> &amp; <a href="https://www.consumerfinance.gov/data-research/research-reports/">research &amp; reports</a>).</p>
-<p>It can easily be enabled on other templates. See <a href="https://github.com/cfpb/cfgov-refresh/pull/3663/files">this PR</a> as an example of the code that would need to be introduced to cache a new fragment.</p>
+<p>Starting in December 2017, we use <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/fragment_cache_extension.py">template fragment caching</a> to cache all or part of a template.  It is enabled on our "post previews", snippets of a page that we display on results of filterable pages (e.g. <a href="https://consumerfinance.gov/about-us/blog">our blog page</a> &amp; <a href="https://www.consumerfinance.gov/data-research/research-reports/">research &amp; reports</a>).</p>
+<p>It can easily be enabled on other templates. See <a href="https://github.com/cfpb/consumerfinance.gov/pull/3663/files">this PR</a> as an example of the code that would need to be introduced to cache a new fragment.</p>
 <p>When a page gets published, it will update the post preview cache for that particular page.  However, if there are code changes that impact the page's content, or the post preview template itself gets updated, the entire post preview cache will need to be manually cleared. Clearing this particular cache could be an option when deploying, as it is with Akamai, but should not be a default since most deploys wouldn't impact the code in question.  Currently, the manual way to do this would be to run the following from a production server's django shell:</p>
 <pre class="highlight"><code>from django.core.cache import caches
 
@@ -335,7 +335,7 @@ Alternatively, add this variable to your <code>.env</code> if you generally want
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../wagtail-pages/" style="color: #fcfcfc;">&laquo; Previous</a></span>

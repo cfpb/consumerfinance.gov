@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Atomic Structure and Design - cfgov-refresh</title>
+  <title>Atomic Structure and Design - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -244,7 +244,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">cfgov-refresh</a>
+        <a href="..">consumerfinance.gov</a>
       </nav>
 
       
@@ -263,7 +263,7 @@
     <li>Atomic Structure and Design</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/atomic-structure.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/atomic-structure.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -408,9 +408,9 @@ atomicHelpers.instantiateAll( '.o-expandable', Expandable );</code></pre>
 <p>Our atomic components are separated and named based on asset type.
 HTML, Less, and JavaScript for each component are in separate directories.</p>
 <h3 id="html_3">HTML<a class="headerlink" href="#html_3" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>cfgov-refresh/cfgov/jinja2/v1/_includes/atoms/
-cfgov-refresh/cfgov/jinja2/v1/_includes/molecules/
-cfgov-refresh/cfgov/jinja2/v1/_includes/organisms/</code></pre>
+<pre class="highlight"><code>consumerfinance.gov/cfgov/jinja2/v1/_includes/atoms/
+consumerfinance.gov/cfgov/jinja2/v1/_includes/molecules/
+consumerfinance.gov/cfgov/jinja2/v1/_includes/organisms/</code></pre>
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -420,17 +420,17 @@ but the HTML for their Wagtail block templates
 is stored in the above folders.</p>
 </div>
 <h3 id="css">CSS<a class="headerlink" href="#css" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>cfgov-refresh/cfgov/unprocessed/css/atoms/
-cfgov-refresh/cfgov/unprocessed/css/molecules/
-cfgov-refresh/cfgov/unprocessed/css/organisms/</code></pre>
+<pre class="highlight"><code>consumerfinance.gov/cfgov/unprocessed/css/atoms/
+consumerfinance.gov/cfgov/unprocessed/css/molecules/
+consumerfinance.gov/cfgov/unprocessed/css/organisms/</code></pre>
 
 <h3 id="javascript_3">JavaScript<a class="headerlink" href="#javascript_3" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>cfgov-refresh/cfgov/unprocessed/js/molecules/
-cfgov-refresh/cfgov/unprocessed/js/organisms/</code></pre>
+<pre class="highlight"><code>consumerfinance.gov/cfgov/unprocessed/js/molecules/
+consumerfinance.gov/cfgov/unprocessed/js/organisms/</code></pre>
 
 <h3 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">¶</a></h3>
-<pre class="highlight"><code>cfgov-refresh/test/unit_tests/js/molecules/
-cfgov-refresh/test/unit_tests/js/organisms/</code></pre>
+<pre class="highlight"><code>consumerfinance.gov/test/unit_tests/js/molecules/
+consumerfinance.gov/test/unit_tests/js/organisms/</code></pre>
 
 <h2 id="javascript-architecture">JavaScript architecture<a class="headerlink" href="#javascript-architecture" title="Permanent link">¶</a></h2>
 <p>JavaScript components are built to be rendered on the server
@@ -461,19 +461,19 @@ You can get more information by reading the following:</p>
 <p>Gulp is used as a task automation tool.
 Tasks include compiling CSS, creating a standard Webpack workflow for bundling
 scripts, minifying code, linting, running unit tests,
-and <a href="https://github.com/cfpb/cfgov-refresh/tree/master/gulp">more</a>.</p>
+and <a href="https://github.com/cfpb/consumerfinance.gov/tree/master/gulp">more</a>.</p>
 <h3 id="webpack">Webpack<a class="headerlink" href="#webpack" title="Permanent link">¶</a></h3>
 <p>Wepback is used as a module bundler, although it's capable of more.
 We create page, global, and component-specific bundles.
 The configuration for the bundles is contained in
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/config/webpack-config.js"><code>config/webpack-config.js</code></a>.
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/config/webpack-config.js"><code>config/webpack-config.js</code></a>.
 An explanation for the usage of each bundle is contained in
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/gulp/tasks/scripts.js"><code>gulp/tasks/scripts.js</code></a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/gulp/tasks/scripts.js"><code>gulp/tasks/scripts.js</code></a>.</p>
 <h3 id="routes">Routes<a class="headerlink" href="#routes" title="Permanent link">¶</a></h3>
 <p>Routes are used to serve JavaScript bundles to the browser based
 on the requested URL or Wagtail page's <code>Media</code> definition.
 This happens via code contained in
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L85-L123"><code>base.html</code></a>. This file serves as the base HTML template for serving Wagtail pages.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/jinja2/v1/_layouts/base.html#L85-L123"><code>base.html</code></a>. This file serves as the base HTML template for serving Wagtail pages.</p>
 <h3 id="wagtail-page-media-class">Wagtail page <code>Media</code> class<a class="headerlink" href="#wagtail-page-media-class" title="Permanent link">¶</a></h3>
 <p>Each atomic component has a <code>Media</code> class that lists the JavaScript files
 that should be loaded via <code>base.html</code>.
@@ -481,7 +481,7 @@ When a page is requested via the browser, code contained in <code>base.html</cod
 loop all atomic components for the requested page and load
 the appropriate atomic JavaScript bundles.</p>
 <p>Here is an example of the <code>Media</code> class on a component,
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L223-L244">the <code>EmailSignUp</code> organism</a>:</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/atomic_elements/organisms.py#L223-L244">the <code>EmailSignUp</code> organism</a>:</p>
 <pre class="highlight"><code class="language-python">class Media:
     js = ['email-signup.js']</code></pre>
 
@@ -522,7 +522,7 @@ that includes the <code>EmailSignUp</code> organism in one of its StreamFields.<
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../deployment/" style="color: #fcfcfc;">&laquo; Previous</a></span>

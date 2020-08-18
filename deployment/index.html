@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Artifacts and Deployment - cfgov-refresh</title>
+  <title>Artifacts and Deployment - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -232,7 +232,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">cfgov-refresh</a>
+        <a href="..">consumerfinance.gov</a>
       </nav>
 
       
@@ -251,7 +251,7 @@
     <li>Artifacts and Deployment</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/deployment.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/deployment.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -267,7 +267,7 @@ archives to deploy the site to a Linux server.</p>
 <h1 id="generating-a-deployment-artifact">Generating a deployment artifact<a class="headerlink" href="#generating-a-deployment-artifact" title="Permanent link">¶</a></h1>
 <p>Running the script at <code>./docker/deployable-zipfile/build.sh</code> will start a CentOS 6
 container, generate the artifact (via
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/docker/deployable-zipfile/_build.sh">this script</a>),
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/docker/deployable-zipfile/_build.sh">this script</a>),
 and save it to <code>./cfgov_current_build.zip</code>.</p>
 <p>We use CentOS 6 here, so that the Python modules that include compiled code, will
 be compiled for the same environment they will be run in.</p>
@@ -289,7 +289,7 @@ bootstrap_wheels/setuptools-41.2.0-py2.py3-none-any.whl
 bootstrap_wheels/pip-19.2.3-py2.py3-none-any.whl
 cfgov/...</code></pre>
 
-<p>The <code>__main__.py</code> file contains <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/deployable_zipfile/extract.py">the code that runs when the zip file is invoked
+<p>The <code>__main__.py</code> file contains <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/deployable_zipfile/extract.py">the code that runs when the zip file is invoked
 as a Python module</a>.</p>
 <p>The <code>wheels/</code> directory contains all of our python dependencies, while
 <code>bootstrap_wheels/</code> contains modules needed at deployment time, to install
@@ -350,7 +350,7 @@ If we ignore some specifics and quirks of our environment, the basic steps look 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../debugging-monitoring/" style="color: #fcfcfc;">&laquo; Previous</a></span>

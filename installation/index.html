@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Installation - cfgov-refresh</title>
+  <title>Installation - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -242,7 +242,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">cfgov-refresh</a>
+        <a href="..">consumerfinance.gov</a>
       </nav>
 
       
@@ -257,7 +257,7 @@
     <li>Installation</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/installation.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/installation.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -267,17 +267,17 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="installation-and-configuration-for-cfgov-refresh">Installation and configuration for cfgov-refresh<a class="headerlink" href="#installation-and-configuration-for-cfgov-refresh" title="Permanent link">¶</a></h1>
+                <h1 id="installation-and-configuration-for-consumerfinancegov">Installation and configuration for consumerfinance.gov<a class="headerlink" href="#installation-and-configuration-for-consumerfinancegov" title="Permanent link">¶</a></h1>
 <h2 id="clone-the-repository">Clone the repository<a class="headerlink" href="#clone-the-repository" title="Permanent link">¶</a></h2>
 <p>Using the console, navigate to the root directory in which your projects
 live and clone this project's repository:</p>
-<pre class="highlight"><code class="language-bash">git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh</code></pre>
+<pre class="highlight"><code class="language-bash">git clone git@github.com:cfpb/consumerfinance.gov.git
+cd consumerfinance.gov</code></pre>
 
 <p>You may also wish to fork the repository on GitHub and clone the resultant
 personal fork. This is advised if you are going to be doing development on
-<code>cfgov-refresh</code> and contributing to the project.</p>
-<p>There are two ways to install cfgov-refresh:</p>
+<code>consumerfinance.gov</code> and contributing to the project.</p>
+<p>There are two ways to install consumerfinance.gov:</p>
 <ul>
 <li><a href="#stand-alone-installation">Stand-alone installation</a></li>
 <li><a href="#docker-based-installation">Docker-based installation</a></li>
@@ -321,7 +321,7 @@ we suggest adding it to your Bash profile by running:</p>
 but we can’t provide support for issues that may arise.</p>
 </div>
 <h4 id="front-end-dependencies">Front-end dependencies<a class="headerlink" href="#front-end-dependencies" title="Permanent link">¶</a></h4>
-<p>The cfgov-refresh front-end build process currently
+<p>The consumerfinance.gov front-end build process currently
 includes the following frameworks / tools:</p>
 <ul>
 <li><a href="https://gulpjs.com">Gulp</a>: task management for pulling in assets,
@@ -343,7 +343,7 @@ brew install yarn --ignore-dependencies</code></pre>
 <p>The site uses a proprietary licensed font, Avenir.
 If you want to pull this from a content delivery network (CDN),
 you can set the
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/css/main.less#L30"><code>@use-font-cdn</code></a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/unprocessed/css/main.less#L30"><code>@use-font-cdn</code></a>
 to <code>true</code> and rebuild the assets with <code>yarn run gulp build</code>.
 If you want to install self-hosted fonts locally, you can place the font files
 in <code>static.in/cfgov-fonts/fonts/</code> and restart the local web server.
@@ -384,7 +384,7 @@ rest of the setup process.</p>
 <p>If you haven't cloned this repo yet, clone it to a local folder.
 Because related projects will need to be installed as siblings to this project,
 we recommend putting them all in their own folder, e.g., <code>~/Projects/cf.gov</code>.</p>
-<p>Once cloned, from the project root (<code>~/Projects/cf.gov/cfgov-refresh/</code>),
+<p>Once cloned, from the project root (<code>~/Projects/cf.gov/consumerfinance.gov/</code>),
 run this command to complete the setup process:</p>
 <pre class="highlight"><code class="language-bash">./setup.sh</code></pre>
 
@@ -475,7 +475,7 @@ into pipx's isolated docker-compose environment:</p>
 
 <h4 id="3-profit">3. Profit!<a class="headerlink" href="#3-profit" title="Permanent link">¶</a></h4>
 <p>At this point, you should be able to run <code>docker-compose</code> commands again.</p>
-<p><strong>Note:</strong> When running <code>docker-compose up</code> in cfgov-refresh
+<p><strong>Note:</strong> When running <code>docker-compose up</code> in consumerfinance.gov
 with our typical <code>.env</code> file, you may see some warnings like the following:</p>
 <pre class="highlight"><code>WARNING: Python-dotenv could not parse statement starting at line 236
 WARNING: Python-dotenv could not parse statement starting at line 239
@@ -675,7 +675,7 @@ solution.</p>
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>

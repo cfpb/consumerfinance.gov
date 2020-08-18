@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Wagtail Pages - cfgov-refresh</title>
+  <title>Wagtail Pages - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -242,7 +242,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">cfgov-refresh</a>
+        <a href="..">consumerfinance.gov</a>
       </nav>
 
       
@@ -261,7 +261,7 @@
     <li>Wagtail Pages</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/wagtail-pages.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/wagtail-pages.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -278,7 +278,7 @@ that are constructed of
 <a href="#fields">fields</a>, <a href="#streamfields">StreamFields</a>, and <a href="#panels">panels</a> 
 that are rendered in a standard way. 
 All CFPB Wagtail pages should inherit from the 
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py"><code>v1.models.base.CFGOVPage</code> class</a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/base.py"><code>v1.models.base.CFGOVPage</code> class</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Before creating a new Wagtail page type 
@@ -296,7 +296,7 @@ and <a href="#panels">editor panels</a> that present these fields to content edi
 <a href="https://docs.djangoproject.com/en/1.11/topics/db/models/#fields">Django models</a>, 
 and Wagtail pages can use any <a href="https://docs.djangoproject.com/en/1.11/ref/models/fields/">Django model field</a>. </p>
 <p>For example, our <code>BrowsePage</code> 
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py">includes a standard Django <code>BooleanField</code></a> 
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/browse_page.py">includes a standard Django <code>BooleanField</code></a> 
 that allows content editors to toggle secondary navigation sibling pages:</p>
 <pre class="highlight"><code class="language-python">from django.db import models
 
@@ -314,7 +314,7 @@ and place them in any order within their StreamField.
 In practice, this provides the flexibility of
 <a href="https://torchbox.com/blog/rich-text-fields-and-faster-horses/">a large rich text field, with the structure of individual components</a>.</p>
 <p>For example, our <code>LandingPage</code> page model 
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py">includes a <code>header</code> StreamField</a> 
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/landing_page.py">includes a <code>header</code> StreamField</a> 
 that can have a hero and/or a text introduction:</p>
 <pre class="highlight"><code class="language-python">from wagtail.core.fields import StreamField
 
@@ -330,11 +330,11 @@ class LandingPage(CFGOVPage):
     ], blank=True)</code></pre>
 
 <p>The specifics of StreamField block components can be found in 
-<a href="https://cfpb.github.io/cfgov-refresh/editing-components/">Creating and Editing Wagtail Components</a>.</p>
+<a href="https://cfpb.github.io/consumerfinance.gov/editing-components/">Creating and Editing Wagtail Components</a>.</p>
 <h2 id="panels">Panels<a class="headerlink" href="#panels" title="Permanent link">¶</a></h2>
 <p>Editor panels define how the page's <a href="#fields">fields</a> and <a href="#streamfields">StreamFields</a> will be organized for content editors;
 they correspond to the tabs that appear across the top of the edit view for a page in the Wagtail admin.</p>
-<p>The base Wagtail <code>Page</code> class and the <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py"><code>CFGOVPage</code> subclass of it</a> 
+<p>The base Wagtail <code>Page</code> class and the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/base.py"><code>CFGOVPage</code> subclass of it</a> 
 define specific sets of panels to which all fields should be added:</p>
 <ul>
 <li><code>content_panels</code>:
@@ -352,7 +352,7 @@ StreamFields will require a <code>StreamFieldPanel</code>.
 See the <a href="https://docs.wagtail.io/en/stable/topics/pages.html#editor-panels">Wagtail documentation for additional, more complex panel options</a>.</p>
 <p>For example, in our <code>BrowsePage</code> (used in the <a href="#fields">database fields example above</a>),
 the <code>secondary_nav_exclude_sibling_pages</code> <code>BooleanField</code> 
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py">is added to the <code>sidefoot_panels</code> as a <code>FieldPanel</code></a>:</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/browse_page.py">is added to the <code>sidefoot_panels</code> as a <code>FieldPanel</code></a>:</p>
 <pre class="highlight"><code class="language-python">from django.db import models
 from wagtail.admin.edit_handlers import FieldPanel
 
@@ -373,7 +373,7 @@ this creates a checkbox on the "Sidebar/Footer" tab when editing a page.
 Checking or unchecking that checkbox will set the value of <code>secondary_nav_exclude_sibling_pages</code> when the page is saved.</p>
 <p>In our <code>LandingPage</code> (used in the <a href="#streamfields">StreamFields example above</a>), 
 the <code>header</code> StreamField 
-<a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py#L31">is added to the <code>content_panels</code> as a <code>StreamFieldPanel</code></a>:</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/models/landing_page.py#L31">is added to the <code>content_panels</code> as a <code>StreamFieldPanel</code></a>:</p>
 <pre class="highlight"><code class="language-python">from wagtail.admin.edit_handlers import StreamFieldPanel
 from wagtail.core.fields import StreamField
 
@@ -402,7 +402,7 @@ a particular page model can have. On any page model:</p>
 <li><code>parent_page_types</code> limits which page types this type can be created under.</li>
 <li><code>subpage_types</code> limits which page types can be created under this type.</li>
 </ul>
-<p>For example, in our <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py#L138">interactive regulations page models</a> 
+<p>For example, in our <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/regulations3k/models/pages.py#L138">interactive regulations page models</a> 
 we have a <code>RegulationLandingPage</code> that can be created anywhere in the page tree. 
 <code>RegulationLandingPage</code>, however, can only have two types of pages created within it: 
 <code>RegulationPage</code> and <code>RegulationSearchPage</code>. 
@@ -434,7 +434,7 @@ by setting <code>subpage_types</code> to an empty list.</p>
 <p>New Wagtail page types will usually need to make customizations to their base template 
 <a href="https://docs.wagtail.io/en/stable/topics/pages.html#template-rendering">when rendering the page</a>.
 This is done by overriding the <code>template</code> attribute on the page model.</p>
-<p>For example, the <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py">interactive regulations landing page</a> 
+<p>For example, the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/regulations3k/models/pages.py">interactive regulations landing page</a> 
 includes a customized list of recently issued notices that gets loaded dynamically from the Federal Register. 
 To do this it provides its own template that inherits from our base templates 
 and overrides the <code>content_sidebar</code> block to include a separate <code>recent_notices</code> template:</p>
@@ -444,7 +444,7 @@ and overrides the <code>content_sidebar</code> block to include a separate <code
 class RegulationLandingPage(CFGOVPage):
     template = 'regulations3k/landing-page.html'</code></pre>
 
-<p>And in <a href="https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/jinja2/regulations3k/landing-page.html"><code>regulations3k/landing-page.html</code></a>:</p>
+<p>And in <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/regulations3k/jinja2/regulations3k/landing-page.html"><code>regulations3k/landing-page.html</code></a>:</p>
 <pre class="highlight"><code class="language-jinja2">{% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'recent-notices.html' as recent_notices with context %}
@@ -487,7 +487,7 @@ class RegulationLandingPage(CFGOVPage):
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../forms-in-wagtail/" style="color: #fcfcfc;">&laquo; Previous</a></span>

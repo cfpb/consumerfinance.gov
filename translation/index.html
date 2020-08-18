@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Translation - cfgov-refresh</title>
+  <title>Translation - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -37,7 +37,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> cfgov-refresh</a>
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -139,7 +139,7 @@
         
             <li><a class="toctree-l4" href="#overview">Overview</a></li>
         
-            <li><a class="toctree-l4" href="#how-to-translate-text-in-cfgov-refresh">How to translate text in cfgov-refresh</a></li>
+            <li><a class="toctree-l4" href="#how-to-translate-text-in-consumerfinancegov">How to translate text in consumerfinance.gov</a></li>
         
             <li><a class="toctree-l4" href="#wagtail-considerations">Wagtail Considerations</a></li>
         
@@ -238,7 +238,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">cfgov-refresh</a>
+        <a href="..">consumerfinance.gov</a>
       </nav>
 
       
@@ -257,7 +257,7 @@
     <li>Translation</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/cfgov-refresh/edit/master/docs/translation.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/translation.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -268,7 +268,7 @@
             <div class="section">
               
                 <h1 id="translation">Translation<a class="headerlink" href="#translation" title="Permanent link">¶</a></h1>
-<p>As cfgov-refresh is a Django project, the <a href="https://docs.djangoproject.com/en/1.11/topics/i18n/translation/">Django translation documentation is a good place to start</a>. What follows is a brief introduction to translations with the particular tools cfgov-refresh uses (like Jinja2 templates) and the conventions we use.</p>
+<p>As consumerfinance.gov is a Django project, the <a href="https://docs.djangoproject.com/en/1.11/topics/i18n/translation/">Django translation documentation is a good place to start</a>. What follows is a brief introduction to translations with the particular tools consumerfinance.gov uses (like Jinja2 templates) and the conventions we use.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <p>Django translations use <a href="https://en.wikipedia.org/wiki/Gettext">GNU gettext</a> (see
 <a href="../installation/#install-gnu-gettext-for-django-translation-support">the installation instructions</a>).</p>
@@ -280,9 +280,9 @@
 msgstr &quot;Esta es una cadena traducible.&quot;</code></pre>
 
 <p>These portable object files are compiled into machine object files (<code>.mo</code>) that the translation system uses when looking up the original string.</p>
-<p>By convention the <code>.po</code> and <code>.mo</code> files live inside a <code>locale/[LANGUAGE]/LC_MESSAGES/</code> folder structure, for example, <code>cfgov/locale/es/LC_MESSAGES/django.po</code> for the Spanish language portable object file for all of our cfgov-refresh messages.</p>
-<h2 id="how-to-translate-text-in-cfgov-refresh">How to translate text in cfgov-refresh<a class="headerlink" href="#how-to-translate-text-in-cfgov-refresh" title="Permanent link">¶</a></h2>
-<p>This brief howto will guide you through adding translatable text to cfgov-refresh.</p>
+<p>By convention the <code>.po</code> and <code>.mo</code> files live inside a <code>locale/[LANGUAGE]/LC_MESSAGES/</code> folder structure, for example, <code>cfgov/locale/es/LC_MESSAGES/django.po</code> for the Spanish language portable object file for all of our consumerfinance.gov messages.</p>
+<h2 id="how-to-translate-text-in-consumerfinancegov">How to translate text in consumerfinance.gov<a class="headerlink" href="#how-to-translate-text-in-consumerfinancegov" title="Permanent link">¶</a></h2>
+<p>This brief howto will guide you through adding translatable text to consumerfinance.gov.</p>
 <h4 id="1-add-the-translation-function-around-the-string">1. Add the translation function around the string<a class="headerlink" href="#1-add-the-translation-function-around-the-string" title="Permanent link">¶</a></h4>
 <p>In Jinja2 templates:</p>
 <pre class="highlight"><code class="language-jinja">{{ _('Hello World!') }}</code></pre>
@@ -352,7 +352,7 @@ django-admin.py compilemessages</code></pre>
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/cfpb/cfgov-refresh/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../split-testing/" style="color: #fcfcfc;">&laquo; Previous</a></span>
