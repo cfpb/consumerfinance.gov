@@ -1,6 +1,6 @@
 /*
 This script handles installing node dependencies for a project that lives
-under cfgov-refresh, but has its own package.json. These projects appear
+under consumerfinance.gov, but has its own package.json. These projects appear
 under the ./cfgov/unprocessed/apps/ path.
  */
 

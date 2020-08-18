@@ -27,7 +27,7 @@
 
 ## Developing on nested satellite apps
 
-Some projects can sit inside cfgov-refresh, but manage their own asset
+Some projects can sit inside consumerfinance.gov, but manage their own asset
 dependencies. These projects have their own `package.json` and base templates.
 
 The structure looks like this:
@@ -59,7 +59,7 @@ The structure looks like this:
 - Apps use a Jinja template that extends the `base.html`
   template used by the rest of the site.
   This template would reside in `cfgov/jinja2/v1/[project namespace]/index.html`
-  or similar (for example, [owning-a-home](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/owning-a-home/explore-rates/index.html)).
+  or similar (for example, [owning-a-home](https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/jinja2/v1/owning-a-home/explore-rates/index.html)).
 
 !!! note
     A template may support a non-standard browser, like an older IE version,

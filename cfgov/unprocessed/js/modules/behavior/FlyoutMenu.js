@@ -436,7 +436,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /* TODO: Use Object.defineProperty to create a getter/setter.
-     See https://github.com/cfpb/cfgov-refresh/pull/1566/
+     See https://github.com/cfpb/consumerfinance.gov/pull/1566/
      files#diff-7a844d22219d7d3db1fa7c1e70d7ba45R35 */
   /**
    * @returns {number|string|Object} A data identifier such as an Array index,
