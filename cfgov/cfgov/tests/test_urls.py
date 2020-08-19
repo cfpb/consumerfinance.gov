@@ -29,7 +29,6 @@ ADMIN_URL_ALLOWLIST = [
     '^logout',
     '^password/',
     '^tasks/',
-    '^documents/',
 ]
 
 
