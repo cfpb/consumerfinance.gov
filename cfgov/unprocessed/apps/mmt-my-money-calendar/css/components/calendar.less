@@ -1,7 +1,8 @@
 @cols: 7;
 @gap: 10px;
 @inactiveMonthColor: #a4a4a4;
-@positiveColor: #cbf0b6;
+/* @positiveColor: #cbf0b6; */
+@positiveColor: #fff;
 @negativeColor: #f0b6b6;
 @breakpointSm: 450px;
 @breakpointMed: 500px;
@@ -79,6 +80,7 @@
       .calendar__day {
         border-top: @currentWeekBorder;
         border-bottom: @currentWeekBorder;
+        background-color:orange;
 
         &:first-of-type {
           border-left: @currentWeekBorder;
