@@ -170,7 +170,6 @@ class StrategiesStore {
         return strategy;
       })
     );
-    console.log('results is ', results);
 
     if (results.length) return results;
 
@@ -231,7 +230,6 @@ class StrategiesStore {
             results.largestHousingExpense = event;
           }
         }
-        console.log('results of analyzeFixitEvents is ', results);
         return results;
       },
       {
