@@ -1,8 +1,12 @@
 @cols: 7;
 @gap: 10px;
 @inactiveMonthColor: #a4a4a4;
+@positiveColorSelected: #cbf0b6;
+@negativeColorSelected: #f0b6b6;
+@positiveCalendarColor: #fff;
+@negativeCalendarColor: #f9e0e0;
 @positiveColor: #cbf0b6;
-@negativeColor: #f0b6b6;
+@negativeColor: #f9e0e0;
 @breakpointSm: 450px;
 @breakpointMed: 500px;
 @breakpointLg: 900px;
@@ -79,6 +83,14 @@
       .calendar__day {
         border-top: @currentWeekBorder;
         border-bottom: @currentWeekBorder;
+        &.pos-balance {
+          background-color: #20aa3f;
+          color: #fff;
+        }
+        &.neg-balance {
+          background-color: #d14124;
+          color: #fff;
+        }
 
         &:first-of-type {
           border-left: @currentWeekBorder;
@@ -122,13 +134,13 @@
     }
 
     &.pos-balance {
-      background-color: @positiveColor;
-      border-color: @positiveColor;
+      background-color: @positiveCalendarColor;
+      border-color: @positiveCalendarColor;
     }
 
     &.neg-balance {
-      background-color: @negativeColor;
-      border-color: @negativeColor;
+      background-color: @negativeCalendarColor;
+      border-color: @negativeCalendarColor;
     }
 
     &.selected {
