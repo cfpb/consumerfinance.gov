@@ -12,13 +12,14 @@ export function CardGroup({ columns = 1, children }) {
 
 export const Card = ({ href = '#', title, icon, children, footer }) => (
   <article className="m-card">
-    <h2 className="m-card_heading m-card_background">
-      <a href={href}>
-        {icon && <div className="m-card_icon" dangerouslySetInnerHTML={{ __html: icon }} />}
-
-        <span className="m-card_title">{title}</span>
-      </a>
-    </h2>
+    <div className="m-card_heading m-card_background">
+        <a href={href}>
+          <div className="header-alignment">
+            <div className="m-card_icon general" dangerouslySetInnerHTML={{ __html: icon }} />
+            <div className="m-card_title">{title}</div>
+        </div>
+        </a>
+    </div>
 
     {children}
 

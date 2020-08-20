@@ -2,26 +2,29 @@ import { computed, action, observable } from 'mobx';
 import { compact } from '../lib/array-helpers';
 import logger from '../lib/logger';
 import { Categories } from './models/categories';
+import icons from '../lib/category-icons';
 
 class StrategiesStore {
   negativeStrategies = {
     'expense.personal.coronavirus': {
       id: 'coronaVirus',
-      title: 'Protect Your Finances During the Coronavirus Pandemic',
+      icon1: icons.coronaVirus1,
+      title: 'Protect Your Finances from COVID-19',
       body:
-        'The CFPB is committed to providing consumers with up-to-date information and resources to protect and manage their finances during this difficult time.',
+        'Get information about protecting your financial health.',
       link: {
-        href: ' https://www.consumerfinance.gov/coronavirus/',
+        href: 'https://www.consumerfinance.gov/coronavirus/',
         text: 'Tools and Resources',
       },
     },
-    'expense.personal.emergencySavings': {
-      id: 'saveForEmergencies',
-      title: 'Save for Emergencies',
-      body: 'Saving helps reduce stress when the unexpected happens.',
+    'expense.personal.tightWeek': {
+      id: 'tightWeek',
+      icon1: icons.paycheck1,
+      title: 'Tips for a Tight Week',
+      body: 'See how to add more money to your cash flow.',
       link: {
-        href: 'https://www.consumerfinance.gov/about-us/blog/how-save-emergencies-and-future/',
-        text: 'How to save for emergencies and the future',
+        href: 'https://files.consumerfinance.gov/f/documents/cfpb_your-money-your-goals_increase-inc-benefits_tool_2018-11.pdf',
+        text: 'Increase Income and Benefits',
       },
     },
   };
@@ -30,60 +33,103 @@ class StrategiesStore {
     largestHousingExpense: [
       {
         categories: ['expense.housing.mortgage'],
-        title: 'Split Mortgage Payments',
-        text: 'Contact your mortgage company to find out if you could split your payment into two payments per month',
+        icon1: icons.mortgage1,
+        title: 'Split Mortgage',
+        text: 'Ask your mortgage company to find out if you could split your payment into smaller amounts.',
       },
       {
         categories: ['expense.housing.rent'],
-        title: 'Split Rent Payment',
-        text: 'Contact your landlord to find out if you could split your payment into two payments per month',
+        icon1: icons.mortgage1,
+        title: 'Rent',
+        text: 'If possible, ask your landlord to let you make multiple payments toward rent.  If not, contact a local organization that helps with rental assistance.',
       },
     ],
     largestBillableExpense: [
       {
-        categories: ['expense.utilities.fuel', 'expense.utilities.waterSewage', 'expense.utilities.electricity'],
-        title: 'Budget Utility Billing',
-        text: 'Contact your utility company to find out about budget billing',
+        categories: ['expense.transportation.carPayment'],
+        icon1: icons.carPayment1,
+        title: 'Car Payment Date',
+        text:
+          'Ask car loan company if you could move the due date to a week with more money.',
       },
       {
-        categories: ['expense.transportation.carPayment', 'expense.transportation.carInsurance'],
-        title: 'Move Due Date',
+        categories: ['expense.transportation.carInsurance'],
+        icon1: icons.carInsurance1,
+        title: 'Car Insurance Date',
         text:
-          'Contact your car loan company to find out if you could move the due date of this bill to a week where you have more income or fewer expenses.',
+          'Ask your insurance company if you could move the due date to a week with more money.',
       },
       {
-        categories: ['expense.debt.medicalBill', 'expense.debt.personalLoan'],
-        title: 'Move Due Date',
+        categories: ['expense.debt.medicalBill'],
+        icon1: icons.medicalBill1,
+        title: 'Medical Bill',
         text:
-          'Contact your creditor to find out if you could move the due date of this bill to a week where you have more income or fewer expenses.',
+          'Ask your creditor if you could move the due date to a week with more money.',
+      },
+      {
+        categories: ['expense.debt.personalLoan'],
+        icon1: icons.personalLoan,
+        title: 'Loan Due Date',
+        text:
+          'Ask your lender if you could move the due date to a week with more money.',
       },
       {
         categories: ['expense.debt.creditCard'],
-        title: 'Move Due Date',
+        icon1: icons.creditCard,
+        title: 'Credit Card Due Date',
         text:
-          'Contact your credit card company to find out if you could move the due date of this bill to a week where you have more income or fewer expenses.',
+          'Contact your credit card company to find out if you could move the due date to a week where you have more money.',
       },
       {
         categories: ['expense.debt.studentLoan'],
-        title: 'Move Due Date',
+        icon1: icons.studentLoan1,
+        title: 'Student Loan Due Date',
         text:
-          'Contact your student loan company to find out if you could move the due date of this bill to a week where you have more income or fewer expenses.',
+          'Contact your student loan company to find out if you could move the due date of this bill to a week where you have more money.',
       },
     ],
     largestAdHocExpense: [
       {
-        categories: [
-          'expense.transportation.publicTransportation',
-          'expense.transportation.gas',
-          'expense.food.eatingOut',
-          /* 'expense.food.groceries', */
-          'expense.personal.clothing',
-          'expense.personal.personalCare',
-          'expense.personal.funMoney',
-        ],
-        title: 'Adjust Spending this Week',
-        template: (categoryName) =>
-          `Your ${categoryName.toLowerCase()} expense was your largest expense this week not tied to a bill you are obligated to pay. Consider spending a little less this week and a little more in weeks where you have fewer expenses or more income.`,
+        categories: ['expense.transportation.publicTransportation'],
+        icon1: icons.studentLoan1,
+        title: 'Adjust Spending on Public Transportation',
+        text:
+          'You control how much you spend on public transportation.  Consider spending less this week until you have more money.',
+      },
+      {
+        categories: ['expense.transportation.gas'],
+        icon1: icons.gas1,
+        title: 'Adjust Spending on Gas',
+        text:
+          'You control how much you spend on gas.  Consider buying less this week until you have more money.',
+      },
+      {
+        categories: ['expense.food.eatingOut'],
+        icon1: icons.eatingOut1,
+        title: 'Adjust Spending on Eating Out',
+        text:
+          'You control how much you spend on in this category.  Consider eating out less this week until you have more money.',
+      },
+      {
+        categories: ['expense.personal.clothing'],
+        icon1: icons.clothing1,
+        title: 'Adjust Spending on Clothing',
+        text:
+          'You control how much you spend on clothing.  Consider buying less this week until you have more money.',
+      },
+      {
+        categories: ['expense.personal.personalCare'],
+        icon1: icons.personal,
+        title: 'Adjust Spending on Personal Care items',
+        text:
+          'You control how much you spend on personal care.  Consider buying less this week until you have more money.',
+      },
+      {
+        categories: ['expense.personal.funMoney'],
+        icon1: icons.funMoney,
+        title: 'Adjust Spending with Fun Money',
+        text:
+          'You control how much you use fun money.  Consider buying less this week until you have more money.',
       },
     ],
   };
@@ -184,7 +230,6 @@ class StrategiesStore {
             results.largestHousingExpense = event;
           }
         }
-
         return results;
       },
       {

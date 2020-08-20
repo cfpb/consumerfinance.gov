@@ -86,11 +86,12 @@ export const Categories = new CategoryTree({
       recurrenceTypes: ['weekly', 'biweekly', 'monthly', 'semimonthly'],
       strategy: {
         id: 'directDeposit',
-        title: 'Sign Up for Direct Deposit',
-        body: 'Direct deposit may help you to avoid fees and interest associated with Check Cashing.',
+        icon1: icons.paycheck1,
+        title: 'Direct Deposit',
+        body: 'Sign up for direct deposit as a safer and faster option for your paycheck.',
         link: {
           href: 'https://www.consumerfinance.gov/ask-cfpb/should-i-enroll-in-direct-deposit-en-1027/',
-          text: 'Should I enroll in direct deposit?',
+          text: 'See more',
         },
       },
     },
@@ -103,9 +104,10 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'vetBenefits',
-          title: "Explore CFPB's Military Financial Resources",
+          icon1: icons.veteransBenefits1,
+          title: "Explore Military Financial Resources",
           body:
-            'These tools, designed specifically for service members, can help you manage financial challenges at every step of your military career.',
+            'Manage financial challenges at every step of your military career.',
           link: {
             href: 'https://www.consumerfinance.gov/consumer-tools/military-financial-lifecycle/',
             text: 'Navigating the Military Financial Lifecycle',
@@ -118,12 +120,13 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'disabilityBenefits',
-          title: 'Explore the Focus on People with Disabilities Companion Guides',
+          icon1: icons.disabilityBenefits1,
+          title: 'Tools for People With Disabilities',
           body:
-            'These guides contains tips, information, tools, and skill-building resources for people with disabilities and from organizations that serve the disability community.',
+            'Find tips and skill-building resources for people with disabilities.',
           link: {
             href: 'https://www.consumerfinance.gov/about-us/blog/new-financial-empowerment-tools-people-disabilities/',
-            text: 'Focus on People with Disabilities Guides',
+            text: 'Focus on People with Disabilities Guide',
           },
         },
       },
@@ -135,13 +138,17 @@ export const Categories = new CategoryTree({
       unemployment: {
         name: 'Unemployment',
         icon: icons.unemployment,
+        
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'jobTraining',
-          title: 'Explore CareerOneStop Job Training Opportunities',
+          icon1: icons.unemployment1,
+          title: 'Build Your Skills',
+          body:
+            'Find job training opportunities at your local Career One-Stop.',
           link: {
             href: 'https://www.careeronestop.org/localhelp/americanjobcenters/find-american-job-centers.aspx',
-            text: 'Find your nearest American Job Center',
+            text: 'Locate an American Job Center',
           },
         },
       },
@@ -177,12 +184,13 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'refinanceMortgage',
-          title: 'Refinance your mortgage',
+          icon1: icons.mortgage1,
+          title: 'Answers to Your Mortgage Qustions',
           body:
-            'Check with your mortgage lender to see if you qualify, then enter the new expense into the calendar to see how it affects your cash flow.',
+            'Check with your mortgage lender to see if you qualify for a lower interest rate.  Then enter the new payment amount into the calendar.',
           link: {
             href: 'https://www.consumerfinance.gov/owning-a-home/',
-            text: 'Tools and resources for homebuyers',
+            text: 'Homeowner tools and resources',
           },
         },
       },
@@ -215,15 +223,16 @@ export const Categories = new CategoryTree({
       name: 'Utilities',
       icon: icons.utilities,
       fuel: {
-        name: 'Natural Gas, Oil, Propane',
+        name: 'Natural Gas',
         icon: icons.naturalgas,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
-          id: 'utilityPaymentPlans',
-          title: 'Explore Level Payment Plans for Utilities',
+          id: 'utilityPaymentPlansGas',
+          icon1: icons.naturalGas1,
+          title: 'Payment Plans for Utilities',
           body:
-            'Also known as budget billing, these plans average your bills out over the year. Check with your utility providers to see if you qualify, then enter the new monthly average into the calendar to see how it affects your cash flow.',
+            'Check with your gas company to see if you qualify.  Then enter the new bill amount into the calendar to see your cash flow.',
         },
       },
       waterSewage: {
@@ -231,12 +240,6 @@ export const Categories = new CategoryTree({
         icon: icons.water,
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
-        strategy: {
-          id: 'utilityPaymentPlans',
-          title: 'Explore Level Payment Plans for Utilities',
-          body:
-            'Also known as budget billing, these plans average your bills out over the year. Check with your utility providers to see if you qualify, then enter the new monthly average into the calendar to see how it affects your cash flow.',
-        },
       },
       electricity: {
         name: 'Electricity',
@@ -244,10 +247,11 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
-          id: 'utilityPaymentPlans',
-          title: 'Explore Level Payment Plans for Utilities',
+          id: 'utilityPaymentPlansElectric',
+          icon1: icons.electricity1,
+          title: 'Payment Plans for Utilities',
           body:
-            'Also known as budget billing, these plans average your bills out over the year. Check with your utility providers to see if you qualify, then enter the new monthly average into the calendar to see how it affects your cash flow.',
+            'Check with your electric company to see if you qualify.  Then enter the new monthly amount into the calendar.',
         },
       },
       trash: {
@@ -263,13 +267,10 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'cablePlans',
-          title: 'Consider Entertainment Alternatives',
+          icon1: icons.cable1,
+          title: 'Entertainment Options',
           body:
-            'Many cable providers offer multiple options for new and existing customers. Contact your provider and ask about lower-cost plans or consider a cheaper streaming service.',
-          link: {
-            href: 'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/',
-            text: 'Cutting Expenses (Your Money Your Goals)',
-          },
+            'Contact your cable company to ask about lower-cost plans or consider a cheaper streaming service.'
         },
       },
       internet: {
@@ -278,13 +279,14 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
-          id: 'lifelinePhoneInternet',
-          title: 'Explore Low Cost Phone and Internet Services',
+          id: 'lifelineInternet',
+          icon1: icons.internet1,
+          title: 'Low Cost Internet Services',
           body:
-            'If you qualify for the FCC\'s "Lifeline" phone rate you could lower the monthly cost of phone and internet service.',
+            'If you qualify for the "Lifeline" program, you could lower the monthly cost of internet service.',
           link: {
             href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
-            text: 'Lifeline Support for Affordable Communications',
+            text: 'Explore Lifeline',
           },
         },
       },
@@ -294,13 +296,14 @@ export const Categories = new CategoryTree({
         recurrenceTypes: ['monthly', 'biweekly'],
         hasBill: true,
         strategy: {
-          id: 'lifelinePhoneInternet',
-          title: 'Explore Low Cost Phone and Internet Services',
+          id: 'lifelinePhone',
+          icon1: icons.phone1,
+          title: 'Low Cost Phone Service',
           body:
-            'If you qualify for the FCC\'s "Lifeline" phone rate you could lower the monthly cost of phone and internet service.',
+            'If you qualify for the "Lifeline" program, you could lower the monthly cost of phone service.',
           link: {
             href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
-            text: 'Lifeline Support for Affordable Communications',
+            text: 'Explore Lifeline',
           },
         },
       },
@@ -315,9 +318,10 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'refinanceCarLoan',
-          title: 'Refinance your car loan',
+          icon1: icons.carPayment1,
+          title: 'Refinance Your Car Loan',
           body:
-            'Check with your auto lender to see if you qualify, then enter the new expense into the calendar to see how it affects your cash flow.',
+            'Check with local car loan companies to see if you qualify for a lower interest rate.  Then enter the new expense into the calendar to see how it affects your cash flow.',
           link: {
             href: 'https://www.consumerfinance.gov/consumer-tools/auto-loans/',
             text: 'Car Loans',
@@ -330,9 +334,10 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'carMaintenance',
-          title: 'Regularly maintain your car to cut repair costs',
+          icon1: icons.carMaintenance1,
+          title: 'Maintain Your Car',
           body:
-            'Preventive measures (e.g., regularly changing your oil, maintaining proper tire pressure) can help you avoid car repair expenses.',
+            'Regularly change your oil and maintain proper tire pressure to avoid some car repair expenses.',
         },
       },
       carInsurance: {
@@ -342,9 +347,10 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'compareInsuranceRates',
-          title: 'Compare the Rates of Other Insurance Companies',
+          icon1: icons.carInsurance1,
+          title: 'Shop Around for Car Insurance',
           body:
-            'Most car Insurance providers offer quotes over the phone or online. Research other providers and reenter their quotes into the calendar to see how much you could save.',
+            'Get free quotes from other insurance companies to see if you qualify for a lower rate.',
         },
       },
       gas: {
@@ -352,12 +358,6 @@ export const Categories = new CategoryTree({
         icon: icons.gas,
         recurrenceTypes: ['weekly'],
         hasBill: false,
-        strategy: {
-          id: 'carpoolRideShare',
-          title: 'Carpool or Ride Share',
-          body:
-            'Carpooling or ridesharing can save a lot on fuel costs as well as allow you access to HOV lanes, freeing up money for your budget and shortening your commute.',
-        },
       },
       publicTransportation: {
         name: 'Public Transportation Fare',
@@ -366,9 +366,10 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'compareTransportationOptions',
-          title: 'Compare Transportation Options',
+          icon1: icons.publicTransportation1,
+          title: 'Compare Fare Options',
           body:
-            'Evaluate your avaliable modes of transportation to discover cheaper alternatives that can put more money in your budget.',
+            'If you often use public transportation, a monthly pass may be a cheaper option than paying for each ride.',
         },
       },
     },
@@ -382,22 +383,17 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'reduceFoodExpenses',
-          title: 'Reduce your Expenses while eating out',
+          icon1: icons.eatingOut1,
+          title: 'Reduce Eating Out Costs',
           body:
-            'Preparing your lunch, avoiding fountain drinks and even finding local restaurants with specials, like "kids eat free" nights, can help reduce this expense.',
+            'Making your lunch, avoiding fountain drinks and even finding local restaurants with "Kids Eat Free" specials can help reduce costs.',
         },
       },
       groceries: {
-        name: 'Grocery',
+        name: 'Groceries',
         icon: icons.groceries,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
-        strategy: {
-          id: 'reduceGroceryExpenses',
-          title: 'Reduce your Grocery Expenses',
-          body:
-            'Using coupons and buying groceries and supplies in bulk with other family or friends can help reduce your grocery costs and put more money in your budget.',
-        },
       },
     },
     emergencySavings: {
@@ -414,6 +410,17 @@ export const Categories = new CategoryTree({
         icon: icons.healthcare,
         recurrenceTypes: ['weekly', 'monthly'],
         hasBill: false,
+        strategy: {
+          id: 'healthCare',
+          icon1: icons.healthCare1,
+          title: 'Health Insurance',
+          body:
+            'Choosing an affordable health care plan can drastically reduce the cost of medical bills.',
+          link: {
+            href: 'https://www.healthcare.gov',
+            text: 'HealthCare.gov',
+          },
+        },
       },
       subscriptions: {
         name: 'Subscription',
@@ -422,7 +429,8 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'cancelSubscriptions',
-          title: 'Cancel Unnecessary Subscriptions',
+          icon1: icons.subscriptions1,
+          title: 'Subscriptions',
           body: 'Remove auto-renew for subscriptions and cancel those you no longer use or need.',
         },
       },
@@ -432,13 +440,10 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'secondHandClothing',
+          icon1: icons.clothing1,
           title: 'Consider Second-hand Shops',
           body:
-            'Buying clothes and accessorits through classifieds ads, thrift shops, and consignment stores are much more cost effective alternatives to retail.',
-          link: {
-            href: 'https://www.consumerfinance.gov/about-us/blog/track-your-spending-with-this-easy-tool/',
-            text: 'Track your spending with this easy tool',
-          },
+            'Thrift shops and consignment stores are more cost-effective alternatives to retail.',
         },
       },
       giving: {
@@ -448,13 +453,10 @@ export const Categories = new CategoryTree({
         hasBill: false,
         strategy: {
           id: 'trackDonations',
-          title: 'Keep track of Your Donations',
+          icon1: icons.giving1,
+          title: 'Donations',
           body:
-            'Your charitable donations my be tax deductible. Keep records and receipts of these exchanges to lower the cost of your annual taxes.',
-          link: {
-            href: 'https://www.irs.gov/charities-non-profits/charitable-contributions',
-            text: 'Charitable Donations',
-          },
+            'Your charitable donations may be tax deductible. Keep records and receipts to lower the cost of your annual taxes.',
         },
       },
       education: {
@@ -470,9 +472,10 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'childCareAssistance',
-          title: 'Get Child Care assistance',
+          icon1: icons.childCare1,
+          title: 'Get Childcare Assistance',
           body:
-            'There are a number of financial aid programs designed to help parents struggling with childcare costs. Enrolling in these programs could free more money in your budget.',
+            'See if you qualify for free or reduced rate childcare',
           link: {
             href: 'https://www.childcare.gov/consumer-education/get-help-paying-for-child-care',
             text: 'Get Help Paying for Childcare',
@@ -509,6 +512,7 @@ export const Categories = new CategoryTree({
       icon: icons.debt,
       strategy: {
         id: 'dealWithDebt',
+        icon1: icons.debt,
         title: "Explore CFPB's Resources for Dealing With Debt",
         body:
           "Whether you're about to receive a medical procedure or are having trouble paying your medical bills, there are things you can do to help keep medical debt in check.",
@@ -525,13 +529,14 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'medicaidCHIP',
-          title: 'Sign up for Medicaid and CHIP',
+          icon1: icons.medicalBill1,
+          title: 'Health Care',
           body:
-            'Seek help with paying medical bills, because receiving timely medical care can help you maintain your earning potential.',
+            'Health insurance can drastically reduce the costs of unforeseen medical bills.  Find a plan that fits your budget.',
           link: {
             href:
-              'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/#dealing-with-debt',
-            text: 'Avoiding Medical Debt',
+              'https://www.healthcare.gov',
+            text: 'HealthCare.gov',
           },
         },
       },
@@ -560,9 +565,10 @@ export const Categories = new CategoryTree({
         hasBill: true,
         strategy: {
           id: 'studentLoanRepayment',
+          icon1: icons.studentLoan1,
           title: 'Explore Repayment Options',
           body:
-            'You have choices when it comes to repaying student loans. Make sure you have the repayment plan that works best for you.',
+            'You have choices when repaying student loans. Make sure your plan works for you.',
           link: {
             href: 'https://www.consumerfinance.gov/paying-for-college/repay-student-debt/',
             text: 'Repay student debt',
@@ -576,5 +582,5 @@ export const Categories = new CategoryTree({
       recurrenceTypes: ['monthly', 'weekly'],
       hasBill: false,
     },
-  },
+  }
 });

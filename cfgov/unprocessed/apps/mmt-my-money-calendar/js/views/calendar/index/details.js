@@ -103,12 +103,12 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
 
         <div className="calendar-details__header-text">
           <h3>Week of {uiStore.weekRangeText}</h3>
-          {!uiStore.weekHasNegativeBalance && !eventStore.hasSnapEvents && (
+          {uiStore.weekHasZeroBalance && !eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>
               Ending Balance: <span className="balance-amount">{uiStore.weekEndingBalanceText}</span>
             </div>
           )}
-          {!uiStore.weekHasNegativeBalance && eventStore.hasSnapEvents && (
+          {uiStore.weekHasZeroBalance && eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>
               <p>
                 Ending Balance: <span className="balance-amount">{uiStore.weekEndingBalanceText}</span>
