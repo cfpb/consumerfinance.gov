@@ -40,11 +40,13 @@ services:
     environment:
       ALLOW_ADMIN_URL: "True"
       APACHE_PORT: 8000
-      APACHE_UPLOADS_F_ALIAS: /src/cfgov-refresh/cfgov/f/
+      APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
-      MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
+      GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
+      GOVDELIVERY_ACCOUNT_CODE: USCFPB
+      MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
       REFRESH_DB: ${REFRESH_DB}
     ports:
       - 8000
@@ -54,6 +56,8 @@ services:
     secrets:
       - CFGOV_PROD_DB_LOCATION
       - DJANGO_ADMIN_PASSWORD
+      - GOVDELIVERY_USER
+      - GOVDELIVERY_PASSWORD
       - PGPASSWORD
       - SECRET_KEY
     deploy:
@@ -74,10 +78,11 @@ services:
                 django_tables_exist=$$?
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
-                    ./refresh-data.sh && httpd -d cfgov/apache -D FOREGROUND
-                else
-                    httpd -d cfgov/apache -D FOREGROUND
-                fi"
+                    ./refresh-data.sh 
+                    ./cfgov/manage.py update_index
+                fi
+                
+                httpd -d cfgov/apache -D FOREGROUND"
 
 networks:
   app:
@@ -97,4 +102,10 @@ secrets:
     external: True
   SECRET_KEY:
     name: cfgov_django_secret_key
+    external: True
+  GOVDELIVERY_USER:
+    name: staging_govdelivery_user
+    external: True
+  GOVDELIVERY_PASSWORD:
+    name: staging_govdelivery_password
     external: True

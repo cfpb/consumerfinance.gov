@@ -1,6 +1,6 @@
-site_name: cfgov-refresh
+site_name: consumerfinance.gov
 
-repo_url: https://github.com/cfpb/cfgov-refresh
+repo_url: https://github.com/cfpb/consumerfinance.gov
 
 nav:
 - Introduction: index.md
@@ -26,6 +26,7 @@ nav:
     - Browser/Acceptance Testing: browser-acceptance-tests.md
     - JavaScript Unit Testing: javascript-unit-tests.md
     - Python Unit Testing: python-unit-tests.md
+    - Functional Testing: functional-testing.md
 - Contributing:
     - Branching and Merging: branching-merging.md
     - Contributing to the Docs: contributing-docs.md

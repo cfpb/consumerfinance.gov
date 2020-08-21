@@ -19,7 +19,7 @@ from paying_for_college.disclosures.scripts import (
     tag_settlement_schools, update_colleges, update_ipeds
 )
 from paying_for_college.disclosures.scripts.notification_tester import (
-    BPI_PROD, EDMC_DEV, ERRORS, OID, send_test_notification
+    send_test_notifications
 )
 from paying_for_college.models import (
     FAKE_SCHOOL_PK, Alias, Notification, Program, School
@@ -653,25 +653,13 @@ class TestScripts(django.test.TestCase):
         mock_return.status_code = 200
         mock_return.content = 'mock content'
         mock_post.return_value = mock_return
-        resp1 = send_test_notification(EDMC_DEV, OID, ERRORS)
+        resp1 = send_test_notifications()
         self.assertTrue('OK' in resp1)
-        self.assertTrue(mock_post.call_count == 1)
-        mock_post.side_effect = requests.exceptions.ConnectTimeout
-        resp2 = send_test_notification(EDMC_DEV, OID, ERRORS)
-        self.assertTrue('timed' in resp2)
         self.assertTrue(mock_post.call_count == 2)
-
-    @patch(
-        'paying_for_college.disclosures.scripts.'
-        'notification_tester.requests.post')
-    def test_blank_notification_response(self, mock_post):
-        mock_return = mock.Mock()
-        mock_return.ok = True
-        mock_return.content = b''
-        mock_post.return_value = mock_return
-        result = send_test_notification(BPI_PROD, OID, ERRORS)
-        self.assertIs(result, None)
-        self.assertTrue(mock_post.call_count == 1)
+        mock_post.side_effect = requests.exceptions.ConnectTimeout
+        resp2 = send_test_notifications(url='example.com')
+        self.assertTrue('timed out' in resp2)
+        self.assertTrue(mock_post.call_count == 3)
 
     def test_calculate_percent(self):
         percent = api_utils.calculate_group_percent(100, 900)

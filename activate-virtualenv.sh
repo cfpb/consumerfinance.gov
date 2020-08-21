@@ -7,7 +7,7 @@
 
 # Confirm that variable VENV_NAME is already set to the name of the virtualenv
 if [ -z $VENV_NAME ]; then
-  export VENV_NAME="cfgov-refresh"
+  export VENV_NAME="consumerfinance.gov"
 fi
 
 echo 'Activating virtualenv, if not already activated...'

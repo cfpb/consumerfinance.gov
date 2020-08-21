@@ -10,19 +10,20 @@ and Django in a Python container.
 There is also a container serving the documentation.
 
 All of these containers are configured in our
-[`docker-compose.yml` file](https://github.com/cfpb/cfgov-refresh/blob/master/docker-compose.yml).
+[`docker-compose.yml` file](https://github.com/cfpb/consumerfinance.gov/blob/master/docker-compose.yml).
 See the [Docker documentation](https://docs.docker.com/compose/compose-file/)
 for more about the format and use of this file.
 
 The following URLs are mapped to your host from the containers:
 
-- Access cfgov-refresh running in the Python container: http://localhost:8000/
+- Access consumerfinance.gov running in the Python container: http://localhost:8000/
 - Access Elasticsearch: http://localhost:9200/
 - View this documentation: http://localhost:8888/
 
 To build and run the containers for the first time, run:
 
 ```bash
+docker network create cfgov
 docker-compose up
 ```
 
@@ -79,7 +80,7 @@ and need to interact with the running Django process when the breakpoint is reac
 you can run [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach/):
 
 ```bash
-docker attach cfgov-refresh_python_1
+docker attach consumerfinance.gov_python_1
 ```
 
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
@@ -110,10 +111,10 @@ container in production.
 
 This includes:
 
-- all relevant `cfgov-refresh` source code
+- all relevant `consumerfinance.gov` source code
 - all OS, Python, and JS dependencies for building and running the cf.gov webapp
 - procedures for executing Django `collectstatic` and `yarn`-based frontend build process
-- an Apache HTTPD webserver with `mod_wsgi`, run with configs in `cfgov-refresh`
+- an Apache HTTPD webserver with `mod_wsgi`, run with configs in `consumerfinance.gov`
 
 ### How do I use it?
 
@@ -161,7 +162,7 @@ change configs locally without having to rebuild the image each time.
     http://localhost:8000
 
 
-1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/apache)
+1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/apache)
    config and reload Apache (optional).
 
     ```bash
@@ -202,5 +203,5 @@ From there, we:
 - Install SCL-based Apache HTTPD, and the `mod_wsgi` version appropriate for our chosen `scl_python_version`.
 - Run frontend.sh, Django's collectstatic command, and then *uninstall* node and yarn.
 - Set the default command on container startup to `httpd -d ./cfgov/apache -D FOREGROUND`, which runs Apache using
-    the [configuration in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/apache), in the
+    the [configuration in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/apache), in the
     foreground (typical when running Apache in a container).

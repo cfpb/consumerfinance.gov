@@ -5,8 +5,8 @@ from django.test import TestCase
 from wagtail.core.blocks import StreamValue
 
 from pytz import timezone
-from scripts._atomic_helpers import filter_controls as controls
 
+from scripts._atomic_helpers import filter_controls as controls
 from v1.atomic_elements.organisms import FilterableList
 from v1.models import BlogPage, BrowseFilterablePage
 from v1.models.learn_page import AbstractFilterPage, EventPage

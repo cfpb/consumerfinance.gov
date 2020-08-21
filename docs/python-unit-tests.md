@@ -12,16 +12,16 @@ We have multiple resources for writing new unit tests for Django, Wagtial, and P
 ## Prerequisites
 
 If you have set up
-[a standalone installation of cfgov-refresh](/installation/#install-system-level-requirements),
+[a standalone installation of consumerfinance.gov](/installation/#install-system-level-requirements),
 you'll need to
 [activate your virtual environment](/running-virtualenv/#3-launch-site)
 before running the tests:
 
 ```sh
-workon cfgov-refresh
+workon consumerfinance.gov
 ```
 
-If you have not set up the standalone installation of cfgov-refresh,
+If you have not set up the standalone installation of consumerfinance.gov,
 you can still run the tests if you install Tox in your
 [local installation of Python](https://github.com/cfpb/development/blob/master/guides/installing-python.md):
 
@@ -30,7 +30,7 @@ pip install tox
 ```
 
 If you have set up
-[a Docker-based installation of cfgov-refresh](/installation/#docker-based-installation),
+[a Docker-based installation of consumerfinance.gov](/installation/#docker-based-installation),
 you can run the tests there by  
 [accessing the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell):
 
@@ -44,7 +44,7 @@ Our test suite can either be run in a local virtualenv or in Docker.
 Please note, the tests run quite slow in Docker.
 
 To run the the full suite of Python tests using Tox,
-make sure you are in the cfgov-refresh root and then run:
+make sure you are in the consumerfinance.gov root and then run:
 
 ```sh
 tox
@@ -65,6 +65,8 @@ These default environments are:
 
 - `lint`, which runs our [linting](#linting) tools. We require this
   environment to pass in CI.
+- `validate-migrations`, which checks for any missing Django migrations. 
+  We require this environment to pass in CI.
 - `unittest`, which runs unit tests against the current production
   versions of Python, Django, and Wagtail. We require this environment to
   pass in CI.
@@ -107,7 +109,7 @@ that need to be fixed. To automatically fix import sort issues, run:
 isort --recursive cfgov/
 ```
 
-From the root of `cfgov-refresh`.
+From the root of `consumerfinance.gov`.
 
 ### Coverage
 
@@ -133,7 +135,7 @@ runner that fails if anything is written to stdout. This test runner is at
 environment variable:
 
 ```sh
-TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e unittest
+TEST_RUNNER=core.testutils.runners.StdoutCapturingTestRunner tox -e unittest
 ```
 
 This test runner is enabled when tests are run automatically on

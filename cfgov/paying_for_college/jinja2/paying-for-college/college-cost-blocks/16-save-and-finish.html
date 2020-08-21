@@ -4,10 +4,8 @@
         <div class="m-info-unit_image m-info-unit_image__square" style="background-image: url( {{ static('apps/paying-for-college/img/finish-page.png') }} );">
         </div>
         <div class="m-info-unit_content">
-            <div class="rich-text">
-              <p>You've made a plan to cover your school costs and graduate with as little debt as possible, and learned about the impact of loans on your future.</p>
-              <p>Copy and save this link so that you can come back and review your plan. You can also email yourself the link by providing your email. We won't store this information.</p>
-            </div>
+            <p>You've made a plan to cover your school costs and graduate with as little debt as possible, and learned about the impact of loans on your future.</p>
+            <p>Copy and save this link so that you can come back and review your plan. You can also email yourself the link by providing your email. We won't store this information.</p>
         </div>
     </div>
 
@@ -16,7 +14,7 @@
             <label class="a-label a-label__heading" for="finish_link">
                 Your link
             </label>
-            <pre id="finish_link" name="finish_link"></pre>
+            <pre id="finish_link" name="finish_link" data-app-save-link="save-and-finish"></pre>
         </div>
     </div>
     <div class="o-form_group">
@@ -103,7 +101,7 @@
     </div>
 
 
-<div class="restart">
+<div class="restart" data-app-button="restart">
     <h3>Do you have another financial aid offer?</h3>
 
     <p>If you have another financial aid offer you can click the button below to start this form over and enter in your data for the other school.</p>

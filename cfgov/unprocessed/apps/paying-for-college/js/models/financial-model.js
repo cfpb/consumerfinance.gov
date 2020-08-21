@@ -47,12 +47,17 @@ const financialModel = {
     financialModel._updateRates();
     financialModel._calculateTotals();
     debtCalculator();
+
+    // set monthly salary value
+    financialModel.values.salary_monthly = financialModel.values.salary_annual / 12;
+
     recalculateExpenses();
-    financialModel._updateStateWithFinancials();
 
     // Debt Guide Difference
     financialModel.values.other_debtGuideDifference =
-        financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual;
+        Math.abs( financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual );
+
+    financialModel._updateStateWithFinancials();
   },
 
   /**
@@ -98,8 +103,10 @@ const financialModel = {
       vals[totals[key]] = 0;
     }
 
-    // Enforce the limits
-    const errors = financialModel._enforceLimits();
+    // Enforce the limits if constants are loaded
+    if ( getStateValue( 'constantsLoaded' ) === true ) {
+      const errors = financialModel._enforceLimits();
+    }
 
     // Calculate totals
     for ( const prop in vals ) {
@@ -125,8 +132,8 @@ const financialModel = {
         vals.total_workStudyFellowAssist;
     vals.total_costs = vals.total_directCosts + vals.total_indirectCosts + vals.otherCost_additional;
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
-    vals.total_gap = vals.total_costs - vals.total_funding;
-    vals.total_excessFunding = vals.total_funding - vals.total_costs;
+    vals.total_gap = Math.round( vals.total_costs - vals.total_funding );
+    vals.total_excessFunding = Math.round( vals.total_funding - vals.total_costs );
 
     /* Borrowing total
        TODO - Update this once year-by-year DIRECT borrowing is in place */
@@ -135,7 +142,6 @@ const financialModel = {
     if ( vals.total_gap < 0 ) {
       vals.total_gap = 0;
     }
-
   },
 
   /**
@@ -145,39 +151,73 @@ const financialModel = {
    * @returns {Object} An object of errors found during enforcement
    */
   _enforceLimits: () => {
-    let unsubCapKey = 'unsubsidizedCapYearOne';
+    let unsubCap = 0;
+    const errors = {};
+
+    // get the caps from the constants model
+
+    // First, enforce subsidized cap
+    const subResult = enforceRange( financialModel.values.fedLoan_directSub,
+      0,
+      getConstantsValue( 'subCaps' ).yearOne );
+    if ( subResult !== false ) {
+      financialModel.values.fedLoan_directSub = subResult.value;
+      // Reserve for later error handling
+      if ( subResult.error !== false ) {
+        errors.fedLoan_directSub = subResult.error;
+      }
+    }
+
+    // Calculate unsubsidized loan cap based on subsidized loan amount
     if ( getStateValue( 'programType' ) === 'graduate' ) {
       // If graduate, zero out subsidized and parentPlus loans, set unsubsidized cap
-      unsubCapKey = 'unsubsidizedCapGrad';
       financialModel.values.fedLoan_directSub = 0;
       financialModel.values.plusLoan_parentPlus = 0;
+      unsubCap = getConstantsValue( 'unsubsidizedCapGrad' );
     } else {
       // if undergraduate, zero out gradPlus loans, fellowships, set unsubsidized cap
       financialModel.values.plusLoan_gradPlus = 0;
       financialModel.values.fellowAssist_fellowship = 0;
       financialModel.values.fellowAssist_assistantship = 0;
 
-      if ( getStateValue( 'programDependency' ) === 'independent' ) {
-        unsubCapKey = 'unsubsidizedCapIndepYearOne';
+      if ( getStateValue( 'programStudentType' ) === 'independent' ) {
+        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' ).yearOne -
+          financialModel.values.fedLoan_directSub );
+
+      } else {
+        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' ).yearOne -
+          financialModel.values.fedLoan_directSub );
+      }
+    }
+    // enforce unsub range
+    const unsubResult = enforceRange( financialModel.values.fedLoan_directUnsub,
+      0,
+      unsubCap );
+    if ( unsubResult !== false ) {
+      financialModel.values.fedLoan_directUnsub = unsubResult.value;
+      if ( unsubResult.error !== false ) {
+        errors.fedLoan_directUnsub = unsubResult.error;
       }
     }
 
-    // Get limits from the constants model
+
+    // Set other limits based on the constants model
     const limits = {
       grant_pell: [ 0, getConstantsValue( 'pellCap' ) ],
-      grant_mta: [ 0, getConstantsValue( 'militaryAssistanceCap' ) ],
-      fedLoan_directSub: [ 0, getConstantsValue( 'subsidizedCapYearOne' ) ],
-      fedLoan_directUnsub: [ 0, getConstantsValue( unsubCapKey ) ]
+      grant_mta: [ 0, getConstantsValue( 'militaryAssistanceCap' ) ]
     };
-    const errors = {};
 
     // Check values for min/max violations, log errors
     for ( const key in limits ) {
+      let value = 0;
       const result = enforceRange( financialModel.values[key], limits[key][0], limits[key][1] );
-      financialModel.values[key] = result.value;
-      if ( result.error !== false ) {
-        errors[key] = result.error;
+      if ( result !== false ) {
+        value = result.value;
+        if ( result.error !== false ) {
+          errors[key] = result.error;
+        }
       }
+      financialModel.values[key] = value;
     }
 
     return errors;
@@ -207,10 +247,10 @@ const financialModel = {
    * Set loan rates based on program type
    */
   _updateRates: () => {
-    if ( getStateValue( 'programType' ) === 'graduate' ) {
-      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateGrad' );
+    if ( getStateValue( 'programLevel' ) === 'graduate' ) {
+      financialModel.values.rate_directUnsub = getConstantsValue( 'unsubsidizedRateGrad' );
     } else {
-      financialModel.values.rate_unsubsidized = getConstantsValue( 'unsubsidizedRateUndergrad' );
+      financialModel.values.rate_directUnsub = getConstantsValue( 'unsubsidizedRateUndergrad' );
     }
   },
 
@@ -222,7 +262,7 @@ const financialModel = {
       ( financialModel.values.total_gap > 0 ).toString() );
 
     updateState.byProperty( 'excessFunding',
-      ( financialModel.values.total_funding > financialModel.values.total_costs ).toString() );
+      ( financialModel.values.total_excessFunding > 0 ).toString() );
 
     updateState.byProperty( 'debtRuleViolation',
       ( financialModel.values.debt_totalAtGrad > financialModel.values.salary_annual ).toString() );
@@ -239,7 +279,7 @@ const financialModel = {
 
     const rateProperties = {
       inState: 'InS',
-      outOfState: 'Oss',
+      outOfState: 'Ooss',
       inDistrict: 'InDis'
     };
     const housingProperties = {
@@ -262,7 +302,13 @@ const financialModel = {
     } else {
       tuitionProp += 'Under';
     }
-    tuitionProp += rateProperties[rate];
+
+    // If no rate, assume in-state
+    if ( rateProperties.hasOwnProperty( rate ) ) {
+      tuitionProp += rateProperties[rate];
+    } else {
+      tuitionProp += 'InS';
+    }
 
     // Get correct tuition based on property name
     financialModel.values.dirCost_tuition = stringToNum( getSchoolValue( tuitionProp ) );
@@ -272,7 +318,12 @@ const financialModel = {
 
     // Get housing costs
     housingProp += housingProperties[housing];
-    financialModel.values.dirCost_housing = stringToNum( getSchoolValue( housingProp ) );
+    if ( housing === 'withFamily' ) {
+      financialModel.values.dirCost_housing = 0;
+    } else {
+      financialModel.values.dirCost_housing = stringToNum( getSchoolValue( housingProp ) );
+    }
+
 
     // Get Other costs
     otherProp += otherProperties[housing];
@@ -282,7 +333,6 @@ const financialModel = {
     financialModel.values.indiCost_books = stringToNum( getSchoolValue( 'books' ) );
 
     financialModel.recalculate();
-
   },
 
   /**
@@ -296,7 +346,6 @@ const financialModel = {
     // These are test values used only for development purposes.
 
     financialModel._calculateTotals();
-
   }
 };
 

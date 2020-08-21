@@ -46,10 +46,14 @@ services:
             LANG: en_US.utf8
             LC_ALL: en_US.utf8
         volumes:
-            - ./:/src/cfgov-refresh
+            - ./:/src/consumerfinance.gov
         entrypoint:
             - sh
-            - /src/cfgov-refresh/docker/docs/entrypoint.sh
-        working_dir: /src/cfgov-refresh
+            - /src/consumerfinance.gov/docker/docs/entrypoint.sh
+        working_dir: /src/consumerfinance.gov
         stdin_open: true
         tty: true
+networks:
+    default:
+        external:
+            name: cfgov

@@ -48,7 +48,16 @@
                             {%- include 'college-cost-blocks/16-save-and-finish.html' with context -%}
                             <div class="college-costs_tool-section_buttons block block__mid">
                                 <button class="a-btn college-costs_buttons__next btn__next-step">Next step</button>
-                                <button class="a-btn a-btn__link btn__save">Save and finish later</button>
+                                <button class="a-btn a-btn__link btn__save" data-app-button="save-and-finish-later">Save and finish later</button>
+                            </div>
+                            <div class="college-costs_save-for-later block block__mid" data-state-based-visibility="save-for-later">
+                                <p>Copy and save this link so that you can come back and review your plan.</p>
+                                <div class="m-form-field">
+                                    <p>
+                                        <strong>Your link</strong>
+                                    </p>
+                                    <pre name="finish_link" data-app-save-link="save-for-later"></pre>
+                                </div>
                             </div>
                         </div>
                         <div class="costs-not-covered costs-not-covered-sticky">

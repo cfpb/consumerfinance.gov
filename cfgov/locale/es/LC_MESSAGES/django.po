@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-30 16:30+0000\n"
+"POT-Creation-Date: 2020-08-17 10:20-0400\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,11 +49,11 @@ msgstr "Ver todos los resultados para"
 msgid "Export Ask data"
 msgstr ""
 
-#: cfgov/settings/base.py:229
+#: cfgov/settings/base.py:248
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:230
+#: cfgov/settings/base.py:249
 msgid "Spanish"
 msgstr ""
 
@@ -63,7 +63,7 @@ msgstr ""
 
 #: core/forms.py:42
 msgid ""
-"URL must either be allowed by settings.EXTERNAL_URL_WHITELIST or have a "
+"URL must either be allowed by settings.EXTERNAL_URL_ALLOWLIST or have a "
 "valid signature"
 msgstr ""
 
@@ -74,6 +74,10 @@ msgstr "Consejo"
 #: jinja2/v1/_includes/atoms/tagline.html:16
 msgid "An official website of the United States government"
 msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
+
+#: jinja2/v1/_includes/blocks/audio.html:6
+msgid "Your browser does not support this audio player."
+msgstr ""
 
 #: jinja2/v1/_includes/blocks/feedback.html:53
 msgid "Yes"
@@ -104,7 +108,7 @@ msgstr "Enviar una queja"
 #: jinja2/v1/_includes/molecules/global-search.html:23
 #: jinja2/v1/_includes/molecules/global-search.html:58
 #: jinja2/v1/_includes/molecules/global-search.html:77
-#: jinja2/v1/_includes/organisms/ask-search.html:56
+#: jinja2/v1/_includes/organisms/ask-search.html:62
 #: jinja2/v1/ask-cfpb/see-all.html:52
 msgid "Search"
 msgstr "Buscar"
@@ -159,12 +163,20 @@ msgstr "Ir"
 msgid "View more"
 msgstr "Ver más"
 
-#: jinja2/v1/_includes/organisms/ask-search.html:31
+#: jinja2/v1/_includes/molecules/social-media.html:92
+msgid "https://www.facebook.com/CFPB"
+msgstr "https://www.facebook.com/CFPBespanol"
+
+#: jinja2/v1/_includes/molecules/social-media.html:100
+msgid "https://twitter.com/CFPB"
+msgstr "https://twitter.com/CFPBespanol"
+
+#: jinja2/v1/_includes/organisms/ask-search.html:35
 #: jinja2/v1/ask-cfpb/see-all.html:78
 msgid "/ask-cfpb/search/"
 msgstr "/es/obtener-respuestas/buscar/"
 
-#: jinja2/v1/_includes/organisms/ask-search.html:34
+#: jinja2/v1/_includes/organisms/ask-search.html:39
 msgid "Search for your question"
 msgstr "Busca su pregunta"
 
@@ -181,16 +193,18 @@ msgid "See Privacy Act statement"
 msgstr "Lea la declaración de privacidad"
 
 #: jinja2/v1/_includes/organisms/expandable.html:50
-#: regulations3k/jinja2/regulations3k/inline_interps.html:15
+#: regulations3k/jinja2/regulations3k/inline_interps.html:18
 #: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:48
-#: wellbeing/jinja2/wellbeing/results.html:333
+#: teachers_digital_platform/jinja2/teachers_digital_platform/activity_search_facets_and_results.html:20
+#: wellbeing/jinja2/wellbeing/results.html:345
 msgid "Show"
 msgstr "Mostrar"
 
 #: jinja2/v1/_includes/organisms/expandable.html:58
-#: regulations3k/jinja2/regulations3k/inline_interps.html:21
+#: regulations3k/jinja2/regulations3k/inline_interps.html:24
 #: regulations3k/jinja2/regulations3k/regulations3k-secondary-navigation.html:55
-#: wellbeing/jinja2/wellbeing/results.html:339
+#: teachers_digital_platform/jinja2/teachers_digital_platform/activity_search_facets_and_results.html:26
+#: wellbeing/jinja2/wellbeing/results.html:351
 msgid "Hide"
 msgstr "Ocultar"
 
@@ -206,36 +220,36 @@ msgstr "https://gobiernousa.gov/"
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
-#: jinja2/v1/_layouts/base.html:52
+#: jinja2/v1/_layouts/base.html:57
+#: jinja2/v1/youth_employment_success/index.html:10
 #: legacy/templates/front/base_nonresponsive.html:32
 #: legacy/templates/front/base_update.html:52 v1/jinja2/v1/home_page.html:7
 #: v1/jinja2/v1/home_page.html:13
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:38
+#: jinja2/v1/ask-cfpb/answer-page.html:34
 msgid "updated"
 msgstr "actualizado"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:65
+#: jinja2/v1/ask-cfpb/answer-page.html:61
 msgid "Read full answer"
 msgstr "Leer más"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:69
+#: jinja2/v1/ask-cfpb/answer-page.html:65
 msgid "Hide full answer"
 msgstr "Esconder la respuesta completa"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:77
-#: jinja2/v1/ask-cfpb/landing-page.html:85 jinja2/v1/ask-cfpb/see-all.html:78
+#: jinja2/v1/ask-cfpb/answer-page.html:73 jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Don't see what you're looking for?"
 msgstr "¿No encuentra lo que busca?"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:80
+#: jinja2/v1/ask-cfpb/answer-page.html:76
 msgid "Browse related questions"
 msgstr "Otras preguntas"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:93
-#: jinja2/v1/ask-cfpb/landing-page.html:72
+#: jinja2/v1/ask-cfpb/answer-page.html:89
+#: jinja2/v1/ask-cfpb/landing-page.html:76
 msgid "Learn more about"
 msgstr "Sepa más sobre"
 
@@ -281,7 +295,7 @@ msgid "/ask-cfpb/"
 msgstr "/es/obtener-respuestas/"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:83
-#: jinja2/v1/ask-cfpb/landing-page.html:21
+#: jinja2/v1/ask-cfpb/landing-page.html:25
 msgid "Browse questions by category"
 msgstr "Examinar las preguntas por categoría"
 
@@ -409,18 +423,18 @@ msgstr ""
 msgid "en-US"
 msgstr ""
 
-#: legacy/templates/front/base_nonresponsive.html:113
-#: legacy/templates/front/base_update.html:163
+#: legacy/templates/front/base_nonresponsive.html:110
+#: legacy/templates/front/base_update.html:159
 msgid "en"
 msgstr ""
 
-#: mega_menu/wagtail_hooks.py:16
+#: mega_menu/wagtail_hooks.py:21
 #, fuzzy
 #| msgid "Previous"
 msgid "Preview"
 msgstr "Anterior"
 
-#: mega_menu/wagtail_hooks.py:21
+#: mega_menu/wagtail_hooks.py:26
 #, python-format
 msgid "Preview this %s"
 msgstr ""
@@ -441,11 +455,11 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: permissions_viewer/wagtail_hooks.py:31
+#: permissions_viewer/wagtail_hooks.py:42
 msgid "View Permissions"
 msgstr ""
 
-#: permissions_viewer/wagtail_hooks.py:33
+#: permissions_viewer/wagtail_hooks.py:44
 msgid "View permissions for this user"
 msgstr ""
 
@@ -522,23 +536,23 @@ msgstr ""
 msgid "homepage"
 msgstr ""
 
-#: v1/models/base.py:35
+#: v1/models/base.py:41
 msgid "Author"
 msgstr ""
 
-#: v1/models/base.py:36
+#: v1/models/base.py:42
 msgid "Authors"
 msgstr ""
 
-#: v1/models/base.py:43
+#: v1/models/base.py:49
 msgid "Tag"
 msgstr ""
 
-#: v1/models/base.py:44
+#: v1/models/base.py:50
 msgid "Tags"
 msgstr ""
 
-#: v1/models/base.py:342
+#: v1/models/base.py:376
 msgid "password"
 msgstr ""
 
@@ -554,24 +568,31 @@ msgstr ""
 msgid "Test string from Python file."
 msgstr ""
 
+#: v1/tests/management/commands/test_makemessages_data/jinja2/test.html:1
+msgid ""
+"\n"
+"Test string from Jinja template.\n"
+"This is in a multi-line block.\n"
+msgstr ""
+
 #: v1/tests/management/commands/test_makemessages_data/templates/test.html:2
 msgid "Test string from Django template."
 msgstr ""
 
-#: v1/views/__init__.py:51
+#: v1/views/__init__.py:52
 msgid "Your password has been changed successfully!"
 msgstr ""
 
-#: v1/views/__init__.py:176
+#: v1/views/__init__.py:183
 msgid "Enter new password"
 msgstr ""
 
-#: v1/views/__init__.py:189
+#: v1/views/__init__.py:196
 msgid "Password reset unsuccessful"
 msgstr ""
 
 #: wellbeing/jinja2/wellbeing/about.html:4
-#: wellbeing/jinja2/wellbeing/about.html:34
+#: wellbeing/jinja2/wellbeing/about.html:44
 msgid "Why financial well-being?"
 msgstr "¿Por qué medimos su bienestar financiero?"
 
@@ -580,31 +601,31 @@ msgstr "¿Por qué medimos su bienestar financiero?"
 msgid "Learn about the financial well-being scale and why we created it."
 msgstr "Lea más sobre cómo creamos este cuestionario."
 
-#: wellbeing/jinja2/wellbeing/about.html:26
+#: wellbeing/jinja2/wellbeing/about.html:27
 #: wellbeing/jinja2/wellbeing/results.html:213
 msgid "Back to the questionnaire"
 msgstr "Regrese al cuestionario"
 
-#: wellbeing/jinja2/wellbeing/about.html:36
+#: wellbeing/jinja2/wellbeing/about.html:46
 msgid ""
 "At the CFPB, we work to help consumers like you take control of your "
 "financial life to reach your own life goals,"
 msgstr ""
-"En el CFPB trabajamos para ayudar a los consumidores como usted tomar control "
-"sobre sus finanzas para que pueda alcanzar sus propias metas,"
+"En el CFPB trabajamos para ayudar a los consumidores como usted tomar "
+"control sobre sus finanzas para que pueda alcanzar sus propias metas,"
 
-#: wellbeing/jinja2/wellbeing/about.html:37
+#: wellbeing/jinja2/wellbeing/about.html:47
 msgid ""
 "achieve financial peace of mind, and avoid pitfalls that can derail you."
 msgstr "y evitar situaciones que le distraigan en el proceso."
 
-#: wellbeing/jinja2/wellbeing/about.html:40
+#: wellbeing/jinja2/wellbeing/about.html:50
 msgid ""
 "The ultimate goal of our work is to help you improve your financial well-"
 "being."
 msgstr "La meta ulterior es ayudarle a mejorar su bienestar financiero."
 
-#: wellbeing/jinja2/wellbeing/about.html:41
+#: wellbeing/jinja2/wellbeing/about.html:51
 msgid ""
 "Financial well-being means how much your financial situation and money "
 "choices provide you with security and freedom of choice."
@@ -612,7 +633,7 @@ msgstr ""
 "El bienestar financiero quiere decir, cómo su situación financiera y "
 "decisiones monetarias le proporcionan seguridad y libertad en sus decisiones."
 
-#: wellbeing/jinja2/wellbeing/about.html:44
+#: wellbeing/jinja2/wellbeing/about.html:54
 msgid ""
 "We developed a questionnaire and a scoring method as a tool that can help "
 "you take stock of your financial well-being."
@@ -620,7 +641,7 @@ msgstr ""
 "Desarrollamos un cuestionario y un método de puntuación para medir su nivel "
 "de bienestar financiero."
 
-#: wellbeing/jinja2/wellbeing/about.html:47
+#: wellbeing/jinja2/wellbeing/about.html:57
 msgid ""
 "Maybe you’re planning to take action to improve your financial life—on your "
 "own or with help from others, maybe through a friend, coach, book, or "
@@ -629,13 +650,13 @@ msgstr ""
 "A lo mejor está pensando en tomar ciertas acciones para mejorar sus finanzas "
 "– ya sea por sí mismo o con la ayuda de otros."
 
-#: wellbeing/jinja2/wellbeing/about.html:48
+#: wellbeing/jinja2/wellbeing/about.html:58
 msgid ""
 "One of the key questions you might ask yourself afterward is, “Am I better "
 "off than before?”"
 msgstr "Una pregunta que usted se hará es – ¿he mejorado?"
 
-#: wellbeing/jinja2/wellbeing/about.html:51
+#: wellbeing/jinja2/wellbeing/about.html:61
 msgid ""
 "To answer that question, you can use our financial well-being questionnaire "
 "and your resulting score."
@@ -643,7 +664,7 @@ msgstr ""
 "Usted puede usar este cuestionario y su puntuación para contestar esta "
 "pregunta."
 
-#: wellbeing/jinja2/wellbeing/about.html:52
+#: wellbeing/jinja2/wellbeing/about.html:62
 msgid ""
 "Together, they let you accurately and consistently measure your financial "
 "well-being before and after taking steps to improve your financial situation."
@@ -651,11 +672,11 @@ msgstr ""
 "La puntuación mide con certeza y consistencia su bienestar financiero antes "
 "y después de tomar un paso para mejorar su situación financiera."
 
-#: wellbeing/jinja2/wellbeing/about.html:55
+#: wellbeing/jinja2/wellbeing/about.html:65
 msgid "Why doesn’t this questionnaire ask about financial details?"
 msgstr "¿Por qué no pregunta por detalles financieros específicos?"
 
-#: wellbeing/jinja2/wellbeing/about.html:57
+#: wellbeing/jinja2/wellbeing/about.html:67
 msgid ""
 "Because each person’s situation is unique and subjective, it is hard to "
 "describe financial well-being using only numbers like income, net worth, or "
@@ -666,19 +687,19 @@ msgstr ""
 "el ingreso, valor neto de todos sus recursos financieros o su puntaje de "
 "crédito."
 
-#: wellbeing/jinja2/wellbeing/about.html:60
+#: wellbeing/jinja2/wellbeing/about.html:70
 msgid "Instead,"
 msgstr "En vez,"
 
-#: wellbeing/jinja2/wellbeing/about.html:62
+#: wellbeing/jinja2/wellbeing/about.html:72
 msgid "we asked people around the country"
 msgstr "le preguntamos a personas a través de todos los Estados Unidos"
 
-#: wellbeing/jinja2/wellbeing/about.html:64
+#: wellbeing/jinja2/wellbeing/about.html:74
 msgid "what financial well-being meant to them, and we listened."
 msgstr "qué significa para ellos tener bienestar financiero."
 
-#: wellbeing/jinja2/wellbeing/about.html:67
+#: wellbeing/jinja2/wellbeing/about.html:77
 msgid ""
 "We learned that financial well-being means having financial security and "
 "financial freedom of choice, in the present and in the future."
@@ -686,30 +707,30 @@ msgstr ""
 "Aprendimos que tener bienestar financiero significa tener seguridad y "
 "libertad financiera en el presente y en el futuro."
 
-#: wellbeing/jinja2/wellbeing/about.html:68
+#: wellbeing/jinja2/wellbeing/about.html:78
 msgid "More specifically, having financial well-being is when you:"
 msgstr "Para tener bienestar financiero hay que:"
 
-#: wellbeing/jinja2/wellbeing/about.html:71
+#: wellbeing/jinja2/wellbeing/about.html:81
 msgid "Have control over day-to-day, month-to-month finances"
 msgstr "Tener control sobre sus finanzas diarias y mensuales"
 
-#: wellbeing/jinja2/wellbeing/about.html:72
+#: wellbeing/jinja2/wellbeing/about.html:82
 msgid "Have the capacity to absorb a financial shock"
 msgstr "Tener la capacidad de pagar por un gasto imprevisto"
 
-#: wellbeing/jinja2/wellbeing/about.html:73
+#: wellbeing/jinja2/wellbeing/about.html:83
 msgid "Are on track to meet your financial goals"
 msgstr "Estar en paso para cumplir sus metas financieras"
 
-#: wellbeing/jinja2/wellbeing/about.html:74
+#: wellbeing/jinja2/wellbeing/about.html:84
 msgid ""
 "Have the financial freedom to make the choices that allow you to enjoy life"
 msgstr ""
 "Tener la libertad financiera para tomar las decisiones que le permiten "
 "disfrutar de su vida"
 
-#: wellbeing/jinja2/wellbeing/about.html:77
+#: wellbeing/jinja2/wellbeing/about.html:87
 msgid ""
 "That’s why people with the same income, financial experiences, or education "
 "can have very different levels of financial well-being."
@@ -717,11 +738,11 @@ msgstr ""
 "Es por eso que dos personas con el mismo ingreso o educación podrían tener "
 "puntuaciones de bienestar financiero diferentes."
 
-#: wellbeing/jinja2/wellbeing/about.html:80
+#: wellbeing/jinja2/wellbeing/about.html:90
 msgid "How does financial well-being look across America?"
 msgstr "¿Cuál es el estado de bienestar financiero en los Estados Unidos?"
 
-#: wellbeing/jinja2/wellbeing/about.html:82
+#: wellbeing/jinja2/wellbeing/about.html:92
 msgid ""
 "The tool allows you to compare your financial well-being score to other "
 "adults in the United States."
@@ -729,7 +750,7 @@ msgstr ""
 "Esta herramienta le permite comparar su puntuación con la de otros adultos "
 "en los Estados Unidos."
 
-#: wellbeing/jinja2/wellbeing/about.html:83
+#: wellbeing/jinja2/wellbeing/about.html:93
 msgid ""
 "The comparison of your score to others’ scores is made possible by our "
 "national survey. In late 2016, we collected responses to our financial well-"
@@ -739,39 +760,39 @@ msgstr ""
 "financiero que hicimos en el 2016 a un grupo representativo de adultos en "
 "los Estados Unidos."
 
-#: wellbeing/jinja2/wellbeing/about.html:87
+#: wellbeing/jinja2/wellbeing/about.html:97
 msgid "See the report"
 msgstr "Lea el informe (en inglés)"
 
-#: wellbeing/jinja2/wellbeing/about.html:146
-#: wellbeing/jinja2/wellbeing/home.html:1027
-#: wellbeing/jinja2/wellbeing/results.html:645
+#: wellbeing/jinja2/wellbeing/about.html:171
+#: wellbeing/jinja2/wellbeing/home.html:1038
+#: wellbeing/jinja2/wellbeing/results.html:717
 msgid "Legal disclaimer"
 msgstr "Declaración legal"
 
-#: wellbeing/jinja2/wellbeing/about.html:149
-#: wellbeing/jinja2/wellbeing/home.html:1030
-#: wellbeing/jinja2/wellbeing/results.html:648
+#: wellbeing/jinja2/wellbeing/about.html:174
+#: wellbeing/jinja2/wellbeing/home.html:1041
+#: wellbeing/jinja2/wellbeing/results.html:720
 msgid "The content on this page provides general consumer information."
 msgstr ""
 "El contenido de esta página ofrece información general para los consumidores."
 
-#: wellbeing/jinja2/wellbeing/about.html:150
-#: wellbeing/jinja2/wellbeing/home.html:1031
-#: wellbeing/jinja2/wellbeing/results.html:649
+#: wellbeing/jinja2/wellbeing/about.html:175
+#: wellbeing/jinja2/wellbeing/home.html:1042
+#: wellbeing/jinja2/wellbeing/results.html:721
 msgid "It is not legal advice or regulatory guidance."
 msgstr ""
 "No pretende dar asesoramiento legal, ni orientación sobre regulaciones."
 
-#: wellbeing/jinja2/wellbeing/about.html:151
-#: wellbeing/jinja2/wellbeing/home.html:1032
-#: wellbeing/jinja2/wellbeing/results.html:650
+#: wellbeing/jinja2/wellbeing/about.html:176
+#: wellbeing/jinja2/wellbeing/home.html:1043
+#: wellbeing/jinja2/wellbeing/results.html:722
 msgid "The CFPB updates this information periodically."
 msgstr "El CFPB actualiza esta información periódicamente."
 
-#: wellbeing/jinja2/wellbeing/about.html:152
-#: wellbeing/jinja2/wellbeing/home.html:1033
-#: wellbeing/jinja2/wellbeing/results.html:651
+#: wellbeing/jinja2/wellbeing/about.html:177
+#: wellbeing/jinja2/wellbeing/home.html:1044
+#: wellbeing/jinja2/wellbeing/results.html:723
 msgid ""
 "This information may include links or references to third-party resources or "
 "content."
@@ -779,9 +800,9 @@ msgstr ""
 "Esta información puede incluir enlaces o referencias a contenidos o recursos "
 "de terceros."
 
-#: wellbeing/jinja2/wellbeing/about.html:153
-#: wellbeing/jinja2/wellbeing/home.html:1034
-#: wellbeing/jinja2/wellbeing/results.html:652
+#: wellbeing/jinja2/wellbeing/about.html:178
+#: wellbeing/jinja2/wellbeing/home.html:1045
+#: wellbeing/jinja2/wellbeing/results.html:724
 msgid ""
 "We do not endorse the third-party or guarantee the accuracy of this third-"
 "party information."
@@ -789,9 +810,9 @@ msgstr ""
 "Nosotros ni respaldamos, ni garantizamos la veracidad de la información de "
 "dichos terceros."
 
-#: wellbeing/jinja2/wellbeing/about.html:154
-#: wellbeing/jinja2/wellbeing/home.html:1035
-#: wellbeing/jinja2/wellbeing/results.html:653
+#: wellbeing/jinja2/wellbeing/about.html:179
+#: wellbeing/jinja2/wellbeing/home.html:1046
+#: wellbeing/jinja2/wellbeing/results.html:725
 msgid "There may be other resources that also serve your needs."
 msgstr "Puede que hayan otros recursos que también atiendan sus necesidades."
 
@@ -804,11 +825,11 @@ msgid "Please go back and retake the questionnaire to receive your score."
 msgstr ""
 "Por favor, conteste nuevamente las preguntas para obtener su puntuación."
 
-#: wellbeing/jinja2/wellbeing/error.html:15
+#: wellbeing/jinja2/wellbeing/error.html:23
 msgid "There was a problem with your submission"
 msgstr "Hubo un problema con la información que sometió."
 
-#: wellbeing/jinja2/wellbeing/error.html:18
+#: wellbeing/jinja2/wellbeing/error.html:26
 msgid ""
 "Please use your browser’s back button to return to the questionnaire and "
 "retake it to receive your score."
@@ -837,116 +858,125 @@ msgstr ""
 "Calcule su puntuación de bienestar financiero y vea pasos sobre cómo "
 "mejorarla."
 
-#: wellbeing/jinja2/wellbeing/home.html:60
+#: wellbeing/jinja2/wellbeing/home.html:69
 msgid "Here’s how it works:"
 msgstr "Funciona así:"
 
-#: wellbeing/jinja2/wellbeing/home.html:63
+#: wellbeing/jinja2/wellbeing/home.html:72
 msgid "Answer the questions and get your score."
 msgstr "Conteste las preguntas y vea su puntuación."
 
-#: wellbeing/jinja2/wellbeing/home.html:64
+#: wellbeing/jinja2/wellbeing/home.html:73
 msgid ""
 "You won’t be asked about any personal financial data—it’s not that kind of "
 "questionnaire."
 msgstr "No le pediremos ningún dato financiero personal o específico."
 
-#: wellbeing/jinja2/wellbeing/home.html:65
+#: wellbeing/jinja2/wellbeing/home.html:74
 msgid "See how and why we developed it."
 msgstr "Lea más sobre cómo desarrollamos este cuestionario."
 
-#: wellbeing/jinja2/wellbeing/home.html:68
+#: wellbeing/jinja2/wellbeing/home.html:77
 msgid "Review steps you can take"
 msgstr "Revise los pasos que pueda tomar"
 
-#: wellbeing/jinja2/wellbeing/home.html:69
+#: wellbeing/jinja2/wellbeing/home.html:78
 msgid "if you want to be able to answer the questions differently."
 msgstr "si desea poder contestar las preguntas de una manera diferente."
 
-#: wellbeing/jinja2/wellbeing/home.html:73
+#: wellbeing/jinja2/wellbeing/home.html:82
 msgid "See how your score compares"
 msgstr "Compare su resultado"
 
-#: wellbeing/jinja2/wellbeing/home.html:74
+#: wellbeing/jinja2/wellbeing/home.html:83
 msgid "to other U.S. adults from our national survey."
 msgstr "con el del resto de la población en los Estados Unidos."
 
-#: wellbeing/jinja2/wellbeing/home.html:83
+#: wellbeing/jinja2/wellbeing/home.html:92
 msgid "We never collect or store the answers you provide."
 msgstr "No guardamos sus respuestas."
 
-#: wellbeing/jinja2/wellbeing/home.html:89
+#: wellbeing/jinja2/wellbeing/home.html:98
 msgid "See how your privacy is protected."
 msgstr "Lea más sobre cómo protegemos su privacidad."
 
-#: wellbeing/jinja2/wellbeing/home.html:98
+#: wellbeing/jinja2/wellbeing/home.html:107
 msgid "Part 1: How well does this statement describe you or your situation?"
 msgstr "Parte 1: ¿Cuán bien lo describe a usted o su situación lo siguiente?"
 
-#: wellbeing/jinja2/wellbeing/home.html:102
-#: wellbeing/views.py:17
+#: wellbeing/jinja2/wellbeing/home.html:111 wellbeing/views.py:17
 msgid "I could handle a major unexpected expense"
 msgstr "Podría hacer frente a un gasto imprevisto importante"
 
-#: wellbeing/jinja2/wellbeing/home.html:104
+#: wellbeing/jinja2/wellbeing/home.html:113
+#: wellbeing/jinja2/wellbeing/home.html:186
+#: wellbeing/jinja2/wellbeing/home.html:259
+#: wellbeing/jinja2/wellbeing/home.html:332
+#: wellbeing/jinja2/wellbeing/home.html:405
+#: wellbeing/jinja2/wellbeing/home.html:478
+msgid "This statement describes me"
+msgstr "Esto me describe "
+
+#: wellbeing/jinja2/wellbeing/home.html:125
+#: wellbeing/jinja2/wellbeing/home.html:198
+#: wellbeing/jinja2/wellbeing/home.html:271
+#: wellbeing/jinja2/wellbeing/home.html:344
+#: wellbeing/jinja2/wellbeing/home.html:417
+#: wellbeing/jinja2/wellbeing/home.html:490 wellbeing/views.py:23
+#: wellbeing/views.py:34 wellbeing/views.py:42 wellbeing/views.py:58
+#: wellbeing/views.py:65 wellbeing/views.py:77
+msgid "Completely"
+msgstr "Totalmente"
+
+#: wellbeing/jinja2/wellbeing/home.html:138
+#: wellbeing/jinja2/wellbeing/home.html:211
+#: wellbeing/jinja2/wellbeing/home.html:284
+#: wellbeing/jinja2/wellbeing/home.html:357
+#: wellbeing/jinja2/wellbeing/home.html:430
+#: wellbeing/jinja2/wellbeing/home.html:503 wellbeing/views.py:22
+#: wellbeing/views.py:33 wellbeing/views.py:43 wellbeing/views.py:57
+#: wellbeing/views.py:66 wellbeing/views.py:78
+msgid "Very well"
+msgstr "Muy bien"
+
+#: wellbeing/jinja2/wellbeing/home.html:151
+#: wellbeing/jinja2/wellbeing/home.html:224
+#: wellbeing/jinja2/wellbeing/home.html:297
+#: wellbeing/jinja2/wellbeing/home.html:370
+#: wellbeing/jinja2/wellbeing/home.html:443
+#: wellbeing/jinja2/wellbeing/home.html:516 wellbeing/views.py:21
+#: wellbeing/views.py:32 wellbeing/views.py:44 wellbeing/views.py:56
+#: wellbeing/views.py:67 wellbeing/views.py:79
+msgid "Somewhat"
+msgstr "En cierta medida"
+
+#: wellbeing/jinja2/wellbeing/home.html:164
+#: wellbeing/jinja2/wellbeing/home.html:237
+#: wellbeing/jinja2/wellbeing/home.html:310
+#: wellbeing/jinja2/wellbeing/home.html:383
+#: wellbeing/jinja2/wellbeing/home.html:456
+#: wellbeing/jinja2/wellbeing/home.html:529 wellbeing/views.py:20
+#: wellbeing/views.py:31 wellbeing/views.py:45 wellbeing/views.py:55
+#: wellbeing/views.py:68 wellbeing/views.py:80
+msgid "Very little"
+msgstr "Muy poco"
+
 #: wellbeing/jinja2/wellbeing/home.html:177
 #: wellbeing/jinja2/wellbeing/home.html:250
 #: wellbeing/jinja2/wellbeing/home.html:323
 #: wellbeing/jinja2/wellbeing/home.html:396
 #: wellbeing/jinja2/wellbeing/home.html:469
-msgid "This statement describes me"
-msgstr "Esto me describe "
-
-#: wellbeing/jinja2/wellbeing/home.html:116
-#: wellbeing/jinja2/wellbeing/home.html:189
-#: wellbeing/jinja2/wellbeing/home.html:262
-#: wellbeing/jinja2/wellbeing/home.html:335
-#: wellbeing/jinja2/wellbeing/home.html:408
-#: wellbeing/jinja2/wellbeing/home.html:481 wellbeing/views.py:23
-msgid "Completely"
-msgstr "Totalmente"
-
-#: wellbeing/jinja2/wellbeing/home.html:129
-#: wellbeing/jinja2/wellbeing/home.html:202
-#: wellbeing/jinja2/wellbeing/home.html:275
-#: wellbeing/jinja2/wellbeing/home.html:348
-#: wellbeing/jinja2/wellbeing/home.html:421
-#: wellbeing/jinja2/wellbeing/home.html:494 wellbeing/views.py:22
-msgid "Very well"
-msgstr "Muy bien"
-
-#: wellbeing/jinja2/wellbeing/home.html:142
-#: wellbeing/jinja2/wellbeing/home.html:215
-#: wellbeing/jinja2/wellbeing/home.html:288
-#: wellbeing/jinja2/wellbeing/home.html:361
-#: wellbeing/jinja2/wellbeing/home.html:434
-#: wellbeing/jinja2/wellbeing/home.html:507 wellbeing/views.py:21
-msgid "Somewhat"
-msgstr "En cierta medida"
-
-#: wellbeing/jinja2/wellbeing/home.html:155
-#: wellbeing/jinja2/wellbeing/home.html:228
-#: wellbeing/jinja2/wellbeing/home.html:301
-#: wellbeing/jinja2/wellbeing/home.html:374
-#: wellbeing/jinja2/wellbeing/home.html:447
-#: wellbeing/jinja2/wellbeing/home.html:520 wellbeing/views.py:20
-msgid "Very little"
-msgstr "Muy poco"
-
-#: wellbeing/jinja2/wellbeing/home.html:168
-#: wellbeing/jinja2/wellbeing/home.html:241
-#: wellbeing/jinja2/wellbeing/home.html:314
-#: wellbeing/jinja2/wellbeing/home.html:387
-#: wellbeing/jinja2/wellbeing/home.html:460
-#: wellbeing/jinja2/wellbeing/home.html:533 wellbeing/views.py:19
+#: wellbeing/jinja2/wellbeing/home.html:542 wellbeing/views.py:19
+#: wellbeing/views.py:30 wellbeing/views.py:46 wellbeing/views.py:54
+#: wellbeing/views.py:69 wellbeing/views.py:81
 msgid "Not at all"
 msgstr "No me describe en lo absoluto"
 
-#: wellbeing/jinja2/wellbeing/home.html:175
+#: wellbeing/jinja2/wellbeing/home.html:184 wellbeing/views.py:28
 msgid "I am securing my financial future"
 msgstr "Estoy asegurando mi futuro financiero"
 
-#: wellbeing/jinja2/wellbeing/home.html:248
+#: wellbeing/jinja2/wellbeing/home.html:257 wellbeing/views.py:39
 msgid ""
 "Because of my money situation, I feel like I will never have the things I "
 "want in life"
@@ -954,23 +984,23 @@ msgstr ""
 "Debido a mi situación financiera, creo que nunca tendré las cosas que quiero "
 "en la vida"
 
-#: wellbeing/jinja2/wellbeing/home.html:321
+#: wellbeing/jinja2/wellbeing/home.html:330
 msgid "I can enjoy life because of the way I’m managing my money"
 msgstr "Puedo disfrutar la vida debido a la manera en que manejo mi dinero"
 
-#: wellbeing/jinja2/wellbeing/home.html:394
+#: wellbeing/jinja2/wellbeing/home.html:403 wellbeing/views.py:63
 msgid "I am just getting by financially"
 msgstr "Apenas estoy subsistiendo financieramente"
 
-#: wellbeing/jinja2/wellbeing/home.html:467
+#: wellbeing/jinja2/wellbeing/home.html:476
 msgid "I am concerned that the money I have or will save won’t last"
 msgstr "Me preocupa que el dinero que tengo o que ahorre no me dure"
 
-#: wellbeing/jinja2/wellbeing/home.html:541
+#: wellbeing/jinja2/wellbeing/home.html:550
 msgid "Part 2: How often does this statement apply to you?"
 msgstr "Parte 2: ¿Con qué frecuencia le ocurre lo siguiente?"
 
-#: wellbeing/jinja2/wellbeing/home.html:545
+#: wellbeing/jinja2/wellbeing/home.html:554 wellbeing/views.py:86
 msgid ""
 "Giving a gift for a wedding, birthday or other occasion would put a strain "
 "on my finances for the month"
@@ -978,69 +1008,74 @@ msgstr ""
 "Hacer un regalo para una boda, un cumpleaños u otra ocasión supondría una "
 "enorme carga para mis finanzas del mes"
 
-#: wellbeing/jinja2/wellbeing/home.html:547
-#: wellbeing/jinja2/wellbeing/home.html:620
-#: wellbeing/jinja2/wellbeing/home.html:692
-#: wellbeing/jinja2/wellbeing/home.html:765
+#: wellbeing/jinja2/wellbeing/home.html:556
+#: wellbeing/jinja2/wellbeing/home.html:629
+#: wellbeing/jinja2/wellbeing/home.html:701
+#: wellbeing/jinja2/wellbeing/home.html:774
 msgid "This statement applies to me"
 msgstr "Esto me ocurre"
 
-#: wellbeing/jinja2/wellbeing/home.html:559
-#: wellbeing/jinja2/wellbeing/home.html:631
-#: wellbeing/jinja2/wellbeing/home.html:704
-#: wellbeing/jinja2/wellbeing/home.html:777
+#: wellbeing/jinja2/wellbeing/home.html:568
+#: wellbeing/jinja2/wellbeing/home.html:640
+#: wellbeing/jinja2/wellbeing/home.html:713
+#: wellbeing/jinja2/wellbeing/home.html:786 wellbeing/views.py:90
+#: wellbeing/views.py:105 wellbeing/views.py:112 wellbeing/views.py:123
 msgid "Always"
 msgstr "Siempre"
 
-#: wellbeing/jinja2/wellbeing/home.html:572
-#: wellbeing/jinja2/wellbeing/home.html:644
-#: wellbeing/jinja2/wellbeing/home.html:717
-#: wellbeing/jinja2/wellbeing/home.html:790
+#: wellbeing/jinja2/wellbeing/home.html:581
+#: wellbeing/jinja2/wellbeing/home.html:653
+#: wellbeing/jinja2/wellbeing/home.html:726
+#: wellbeing/jinja2/wellbeing/home.html:799 wellbeing/views.py:91
+#: wellbeing/views.py:104 wellbeing/views.py:113 wellbeing/views.py:124
 msgid "Often"
 msgstr "A menudo"
 
-#: wellbeing/jinja2/wellbeing/home.html:585
-#: wellbeing/jinja2/wellbeing/home.html:657
-#: wellbeing/jinja2/wellbeing/home.html:730
-#: wellbeing/jinja2/wellbeing/home.html:803
+#: wellbeing/jinja2/wellbeing/home.html:594
+#: wellbeing/jinja2/wellbeing/home.html:666
+#: wellbeing/jinja2/wellbeing/home.html:739
+#: wellbeing/jinja2/wellbeing/home.html:812 wellbeing/views.py:92
+#: wellbeing/views.py:103 wellbeing/views.py:114 wellbeing/views.py:125
 msgid "Sometimes"
 msgstr "A veces"
 
-#: wellbeing/jinja2/wellbeing/home.html:598
-#: wellbeing/jinja2/wellbeing/home.html:670
-#: wellbeing/jinja2/wellbeing/home.html:743
-#: wellbeing/jinja2/wellbeing/home.html:816
+#: wellbeing/jinja2/wellbeing/home.html:607
+#: wellbeing/jinja2/wellbeing/home.html:679
+#: wellbeing/jinja2/wellbeing/home.html:752
+#: wellbeing/jinja2/wellbeing/home.html:825 wellbeing/views.py:93
+#: wellbeing/views.py:102 wellbeing/views.py:115 wellbeing/views.py:126
 msgid "Rarely"
 msgstr "Casi nunca"
 
-#: wellbeing/jinja2/wellbeing/home.html:611
-#: wellbeing/jinja2/wellbeing/home.html:683
-#: wellbeing/jinja2/wellbeing/home.html:756
-#: wellbeing/jinja2/wellbeing/home.html:829
+#: wellbeing/jinja2/wellbeing/home.html:620
+#: wellbeing/jinja2/wellbeing/home.html:692
+#: wellbeing/jinja2/wellbeing/home.html:765
+#: wellbeing/jinja2/wellbeing/home.html:838 wellbeing/views.py:94
+#: wellbeing/views.py:101 wellbeing/views.py:116 wellbeing/views.py:127
 msgid "Never"
 msgstr "Nunca"
 
-#: wellbeing/jinja2/wellbeing/home.html:618
+#: wellbeing/jinja2/wellbeing/home.html:627 wellbeing/views.py:99
 msgid "I have money left over at the end of the month"
 msgstr "Me sobra dinero al final del mes"
 
-#: wellbeing/jinja2/wellbeing/home.html:690
+#: wellbeing/jinja2/wellbeing/home.html:699 wellbeing/views.py:110
 msgid "I am behind with my finances"
 msgstr "Estoy atrasado en mis finanzas"
 
-#: wellbeing/jinja2/wellbeing/home.html:763
+#: wellbeing/jinja2/wellbeing/home.html:772 wellbeing/views.py:121
 msgid "My finances control my life"
 msgstr "Mis finanzas controlan mi vida"
 
-#: wellbeing/jinja2/wellbeing/home.html:837
+#: wellbeing/jinja2/wellbeing/home.html:846
 msgid "About you"
 msgstr "Sobre usted"
 
-#: wellbeing/jinja2/wellbeing/home.html:842
+#: wellbeing/jinja2/wellbeing/home.html:851
 msgid "Select your age group. This changes the scoring calculation."
 msgstr "Seleccione su edad. Esto afecta cómo calculamos su puntuación."
 
-#: wellbeing/jinja2/wellbeing/home.html:881
+#: wellbeing/jinja2/wellbeing/home.html:890
 msgid ""
 "Select how you completed the questionnaire. This changes the scoring "
 "calculation."
@@ -1048,29 +1083,29 @@ msgstr ""
 "Seleccione cómo contestó el cuestionario. Esto afecta cómo calculamos su "
 "puntuación."
 
-#: wellbeing/jinja2/wellbeing/home.html:896
+#: wellbeing/jinja2/wellbeing/home.html:905
 msgid "I read and answered the questions myself"
 msgstr "Yo leí y contesté las preguntas"
 
-#: wellbeing/jinja2/wellbeing/home.html:911
+#: wellbeing/jinja2/wellbeing/home.html:920
 msgid "I read the questions to someone else and recorded their answers"
 msgstr "Yo leí a alguien las preguntas y anoté sus respuestas"
 
-#: wellbeing/jinja2/wellbeing/home.html:927
+#: wellbeing/jinja2/wellbeing/home.html:936
 msgid "Get my score"
 msgstr "Obtenga su puntuación"
 
-#: wellbeing/jinja2/wellbeing/home.html:938
+#: wellbeing/jinja2/wellbeing/home.html:947
 msgid "About us"
 msgstr "Quienes somos"
 
-#: wellbeing/jinja2/wellbeing/home.html:940
+#: wellbeing/jinja2/wellbeing/home.html:949
 msgid "We&#39;re the Consumer Financial Protection Bureau (CFPB),"
 msgstr ""
 "Somos la Oficina para la Protección Financiera del Consumidor (CFPB, por sus "
 "siglas en inglés),"
 
-#: wellbeing/jinja2/wellbeing/home.html:941
+#: wellbeing/jinja2/wellbeing/home.html:950
 msgid ""
 "a U.S. government agency that makes sure banks, lenders, and other financial "
 "companies treat you fairly."
@@ -1078,16 +1113,17 @@ msgstr ""
 "una agencia del gobierno de los Estados Unidos que se asegura de que bancos, "
 "prestamistas y otras compañías financieras le traten de forma justa."
 
-#: wellbeing/jinja2/wellbeing/home.html:944
+#: wellbeing/jinja2/wellbeing/home.html:953
 msgid "Learn how the CFPB can help you"
 msgstr "Descubra cómo el CFPB puede ayudarle"
 
-#: wellbeing/jinja2/wellbeing/home.html:950
-#: wellbeing/jinja2/wellbeing/results.html:630
+#: wellbeing/jinja2/wellbeing/home.html:959
+#: wellbeing/jinja2/wellbeing/results.html:704
 msgid "About this questionnaire"
 msgstr "Sobre este cuestionario"
 
-#: wellbeing/jinja2/wellbeing/home.html:953
+#: wellbeing/jinja2/wellbeing/home.html:962
+#: wellbeing/jinja2/wellbeing/results.html:707
 msgid ""
 "CFPB researchers developed the questionnaire and a way to score it, as a "
 "tool to help measure your current financial well-being—"
@@ -1095,7 +1131,8 @@ msgstr ""
 "Investigadores del CFPB desarrollaron este cuestionario y el método para "
 "obtener su puntuación de bienestar financiero."
 
-#: wellbeing/jinja2/wellbeing/home.html:954
+#: wellbeing/jinja2/wellbeing/home.html:963
+#: wellbeing/jinja2/wellbeing/results.html:708
 msgid ""
 "that is, how well your current money situation is providing you with "
 "financial security and freedom of choice, today and for the future."
@@ -1103,7 +1140,8 @@ msgstr ""
 "Su puntuación mide cuán bien su situación financiera actual le da seguridad "
 "y libertad financiera tanto en el presente como en el futuro."
 
-#: wellbeing/jinja2/wellbeing/home.html:957
+#: wellbeing/jinja2/wellbeing/home.html:966
+#: wellbeing/jinja2/wellbeing/results.html:711
 msgid "See more background"
 msgstr "Más información"
 
@@ -1118,16 +1156,16 @@ msgid ""
 "See your survey results and learn how you may be able to improve your score."
 msgstr "Vea su resultado y aprenda más sobre cómo puede mejorarlo."
 
-#: wellbeing/jinja2/wellbeing/results.html:236
+#: wellbeing/jinja2/wellbeing/results.html:237
 msgid "You’ve taken a good step in understanding your financial picture."
 msgstr "Usted ha tomado un buen paso para entender su situación financiera."
 
-#: wellbeing/jinja2/wellbeing/results.html:251
+#: wellbeing/jinja2/wellbeing/results.html:263
 msgid ""
 "Your financial well-being score is calculated based on the answers you gave."
 msgstr "Su puntuación está basada en las respuestas que proveyó."
 
-#: wellbeing/jinja2/wellbeing/results.html:255
+#: wellbeing/jinja2/wellbeing/results.html:267
 msgid ""
 "Review your score and your answers below and think about whether you want to "
 "take action and make improvements."
@@ -1135,11 +1173,11 @@ msgstr ""
 "Verifique su puntuación y las respuestas que proveyó, y considere si quiere "
 "tomar acción y mejorar su puntuación."
 
-#: wellbeing/jinja2/wellbeing/results.html:256
+#: wellbeing/jinja2/wellbeing/results.html:268
 msgid "Our tools and resources can help."
 msgstr "Tenemos recursos para ayudarlo."
 
-#: wellbeing/jinja2/wellbeing/results.html:257
+#: wellbeing/jinja2/wellbeing/results.html:269
 msgid ""
 "You can return and retake the questionnaire to see if you are able to answer "
 "the questions differently next time."
@@ -1147,68 +1185,68 @@ msgstr ""
 "Puede regresar en otro momento y tomar nuevamente el cuestionario, y ver si "
 "su situación ha cambiado."
 
-#: wellbeing/jinja2/wellbeing/results.html:267
+#: wellbeing/jinja2/wellbeing/results.html:279
 msgid "Print"
 msgstr "Imprima"
 
-#: wellbeing/jinja2/wellbeing/results.html:278
+#: wellbeing/jinja2/wellbeing/results.html:290
 msgid "Save as PDF"
 msgstr "Guarde en formato PDF"
 
-#: wellbeing/jinja2/wellbeing/results.html:283
+#: wellbeing/jinja2/wellbeing/results.html:295
 msgid "Your result"
 msgstr "Su resultado"
 
-#: wellbeing/jinja2/wellbeing/results.html:292
+#: wellbeing/jinja2/wellbeing/results.html:304
 msgid "Your score:"
 msgstr "Su puntuación:"
 
-#: wellbeing/jinja2/wellbeing/results.html:295
+#: wellbeing/jinja2/wellbeing/results.html:307
 msgid "More score comparisons"
 msgstr "Compare su puntuación"
 
-#: wellbeing/jinja2/wellbeing/results.html:302
+#: wellbeing/jinja2/wellbeing/results.html:314
 msgid "U.S. average:"
 msgstr "Promedio en los Estados Unidos:"
 
-#: wellbeing/jinja2/wellbeing/results.html:313
+#: wellbeing/jinja2/wellbeing/results.html:325
 msgid "Financial well-being score"
 msgstr "Puntuación de Bienestar Financiero"
 
-#: wellbeing/jinja2/wellbeing/results.html:319
+#: wellbeing/jinja2/wellbeing/results.html:331
 msgid ""
 "Your score is based on the answers to the financial well-being questionnaire."
 msgstr ""
 "Su puntuación está basada en las respuestas que proveyó en el cuestionario."
 
-#: wellbeing/jinja2/wellbeing/results.html:320
+#: wellbeing/jinja2/wellbeing/results.html:332
 msgid ""
 "If you’d like to be able to answer the questions differently next time, "
 msgstr ""
 "Si desea poder responder a estas preguntas de una manera diferente la "
 "próxima vez que tome el cuestionario, "
 
-#: wellbeing/jinja2/wellbeing/results.html:321
+#: wellbeing/jinja2/wellbeing/results.html:333
 msgid "see our suggestions and next steps."
 msgstr "vea nuestras sugerencias y pasos a seguir."
 
-#: wellbeing/jinja2/wellbeing/results.html:328
+#: wellbeing/jinja2/wellbeing/results.html:340
 msgid "Review your answers"
 msgstr "Revise sus respuestas"
 
-#: wellbeing/jinja2/wellbeing/results.html:349
+#: wellbeing/jinja2/wellbeing/results.html:361
 msgid "Question"
 msgstr "Pregunta"
 
-#: wellbeing/jinja2/wellbeing/results.html:350
+#: wellbeing/jinja2/wellbeing/results.html:362
 msgid "Your answer"
 msgstr "Su respuesta"
 
-#: wellbeing/jinja2/wellbeing/results.html:368
+#: wellbeing/jinja2/wellbeing/results.html:380
 msgid "What would you like to do next?"
 msgstr "¿Cuál es su próximo paso?"
 
-#: wellbeing/jinja2/wellbeing/results.html:370
+#: wellbeing/jinja2/wellbeing/results.html:382
 msgid ""
 "If you have a sense of the top money challenges or goals you’d like to work "
 "on, you can get started on your own."
@@ -1216,309 +1254,308 @@ msgstr ""
 "Si sabe cuáles son sus retos y metas financieras más importantes, puede "
 "comenzar a mejorar su bienestar financiero."
 
-#: wellbeing/jinja2/wellbeing/results.html:375
+#: wellbeing/jinja2/wellbeing/results.html:387
 msgid "Take control of day-to-day money management"
 msgstr "Tome control de su dinero"
 
-#: wellbeing/jinja2/wellbeing/results.html:378
+#: wellbeing/jinja2/wellbeing/results.html:390
 msgid "Track where your money goes."
 msgstr "Lleve un record de sus gastos."
 
-#: wellbeing/jinja2/wellbeing/results.html:379
+#: wellbeing/jinja2/wellbeing/results.html:391
 msgid "Fill out the"
 msgstr "Vea nuestro"
 
-#: wellbeing/jinja2/wellbeing/results.html:383
+#: wellbeing/jinja2/wellbeing/results.html:395
 msgid "bill calendar"
 msgstr "calendario de cuentas"
 
-#: wellbeing/jinja2/wellbeing/results.html:386
+#: wellbeing/jinja2/wellbeing/results.html:398
 msgid "and"
 msgstr "y"
 
-#: wellbeing/jinja2/wellbeing/results.html:390
+#: wellbeing/jinja2/wellbeing/results.html:402
 msgid "spending tracker"
 msgstr "gastos (en inglés)"
 
-#: wellbeing/jinja2/wellbeing/results.html:393
+#: wellbeing/jinja2/wellbeing/results.html:405
 msgid "to see and manage your everyday expenses."
 msgstr "para que vea a dónde va su dinero cada día."
 
-#: wellbeing/jinja2/wellbeing/results.html:396
-msgid "Get a grip on debt."
-msgstr "Tome control de sus deudas."
-
-#: wellbeing/jinja2/wellbeing/results.html:397
-msgid "Stay on top of what you owe with our"
-msgstr "Vea nuestro"
-
-#: wellbeing/jinja2/wellbeing/results.html:401
-msgid "debt log"
-msgstr "recursos"
-
-#: wellbeing/jinja2/wellbeing/results.html:404
-msgid "and find templates to help you communicate with"
-msgstr "para ayudarle a comunicarse con"
-
-#: wellbeing/jinja2/wellbeing/results.html:405
-msgid "debt collectors"
-msgstr "un cobrador de deudas"
-
-#: wellbeing/jinja2/wellbeing/results.html:408
+#: wellbeing/jinja2/wellbeing/results.html:430
 msgid "Repay student loans wisely."
 msgstr "Considere sus opciones para pagar sus préstamos estudiantiles."
 
-#: wellbeing/jinja2/wellbeing/results.html:409
+#: wellbeing/jinja2/wellbeing/results.html:431
 msgid "Use our tool to see your choices about how you"
 msgstr "Vea nuestros recursos para ayudarle a decidir cómo"
 
-#: wellbeing/jinja2/wellbeing/results.html:411
+#: wellbeing/jinja2/wellbeing/results.html:433
 msgid "repay your student debt"
 msgstr "pagar sus préstamos estudiantiles (en inglés)"
 
-#: wellbeing/jinja2/wellbeing/results.html:417
+#: wellbeing/jinja2/wellbeing/results.html:439
 msgid "Get on track for your financial future"
 msgstr "Póngase en ruta para mejorar su futuro financiero"
 
-#: wellbeing/jinja2/wellbeing/results.html:420
-msgid "Look toward home ownership."
-msgstr "¿Está considerando comprar una casa?"
-
-#: wellbeing/jinja2/wellbeing/results.html:426
-msgid "Create an action plan to meet your goals."
-msgstr "Desarrolle un plan de acción para alcanzar sus metas."
-
-#: wellbeing/jinja2/wellbeing/results.html:427
-#: wellbeing/jinja2/wellbeing/results.html:444
-msgid "Use our"
-msgstr "Use esta"
-
-#: wellbeing/jinja2/wellbeing/results.html:431
-msgid "worksheet"
-msgstr "hoja de cálculo"
-
-#: wellbeing/jinja2/wellbeing/results.html:438
-msgid "budgeting tool"
-msgstr "herramienta para hacer un presupuesto"
-
-#: wellbeing/jinja2/wellbeing/results.html:443
-msgid "Consider the right age for claiming Social Security."
-msgstr "Considere a que edad desea reclamar su beneficio del Seguro Social."
-
-#: wellbeing/jinja2/wellbeing/results.html:446
-msgid "before you make your decision."
-msgstr "antes de tomar una decisión."
-
-#: wellbeing/jinja2/wellbeing/results.html:449
-msgid "Build and maintain your credit record."
-msgstr "Mantenga un buen historial de crédito."
-
-#: wellbeing/jinja2/wellbeing/results.html:460
+#: wellbeing/jinja2/wellbeing/results.html:512
 msgid "Get personalized help"
 msgstr "Obtenga ayuda"
 
-#: wellbeing/jinja2/wellbeing/results.html:462
+#: wellbeing/jinja2/wellbeing/results.html:514
 msgid ""
 "If you’re looking for a more thorough financial assessment and personalized "
 "advice,"
-msgstr ""
-"Si está en búsqueda de ayuda más personalizada,"
+msgstr "Si está en búsqueda de ayuda más personalizada,"
 
-#: wellbeing/jinja2/wellbeing/results.html:463
+#: wellbeing/jinja2/wellbeing/results.html:515
 msgid "free and low-cost services may be available."
 msgstr "puede que haya servicios a bajo costo o sin costo alguno para usted."
 
-#: wellbeing/jinja2/wellbeing/results.html:464
+#: wellbeing/jinja2/wellbeing/results.html:516
 msgid "Here are a few ways to get help:"
 msgstr "Estos son algunos de esos servicios:"
 
-#: wellbeing/jinja2/wellbeing/results.html:469
-msgid "A nonprofit credit counselor"
-msgstr "Un asesor de crédito de una organización sin fines de lucro"
-
-#: wellbeing/jinja2/wellbeing/results.html:470
-msgid ""
-"can help you set up a reasonable repayment plan for credit cards and other "
-"consumer debt."
-msgstr ""
-"puede ayudarle a hacer un plan de pago para "
-"sus tarjetas de crédito y otras deudas. "
-
-#: wellbeing/jinja2/wellbeing/results.html:471
-msgid "See"
-msgstr "Estos son algunos"
-
-#: wellbeing/jinja2/wellbeing/results.html:473
-msgid "tips for choosing a credit counselor"
-msgstr "consejos para escoger un asesor de crédito."
-
-#: wellbeing/jinja2/wellbeing/results.html:476
+#: wellbeing/jinja2/wellbeing/results.html:538
 msgid "A HUD-certified housing counselor"
 msgstr "Un consejero de vivienda aprobado por HUD"
 
-#: wellbeing/jinja2/wellbeing/results.html:477
+#: wellbeing/jinja2/wellbeing/results.html:539
 msgid "can give advice if you’re having trouble paying your mortgage"
 msgstr "puede ayudarle si tiene problemas con sus pagos de hipoteca"
 
-#: wellbeing/jinja2/wellbeing/results.html:478
+#: wellbeing/jinja2/wellbeing/results.html:540
 msgid "or help you get ready for homeownership."
 msgstr "o si está considerando comparar una casa. "
 
-#: wellbeing/jinja2/wellbeing/results.html:479
+#: wellbeing/jinja2/wellbeing/results.html:541
 msgid "Find one in your area."
 msgstr "Encuentre a un consejero en su área (en inglés)."
 
-#: wellbeing/jinja2/wellbeing/results.html:482
+#: wellbeing/jinja2/wellbeing/results.html:544
 msgid "A financial coach"
 msgstr "Un entrenador (coach) financiero"
 
-#: wellbeing/jinja2/wellbeing/results.html:483
+#: wellbeing/jinja2/wellbeing/results.html:545
 msgid ""
 "can assess your situation and work with you over time to resolve issues and "
 "get ahead."
 msgstr "puede ayudarle a resolver problemas y a echar hacia adelante."
 
-#: wellbeing/jinja2/wellbeing/results.html:485
+#: wellbeing/jinja2/wellbeing/results.html:547
 msgid "Find out about the CFPB coaching initiative."
 msgstr "Aprenda más sobre la iniciativa de coaching del CFPB (en inglés)."
 
-#: wellbeing/jinja2/wellbeing/results.html:489
+#: wellbeing/jinja2/wellbeing/results.html:551
 msgid "Your local library"
 msgstr "La biblioteca de su comunidad"
 
-#: wellbeing/jinja2/wellbeing/results.html:490
+#: wellbeing/jinja2/wellbeing/results.html:552
 msgid "can often connect you with organizations and people in your area."
 msgstr "le puede conectar con otras organizaciones en su área."
 
-#: wellbeing/jinja2/wellbeing/results.html:498
+#: wellbeing/jinja2/wellbeing/results.html:560
 msgid "See how your score compares to group averages"
 msgstr "Vea como su puntuación compara con el promedio de otros grupos:"
 
-#: wellbeing/jinja2/wellbeing/results.html:513
+#: wellbeing/jinja2/wellbeing/results.html:586
 msgid "Compare by"
 msgstr "Compare basado en su:"
 
-#: wellbeing/jinja2/wellbeing/results.html:521
+#: wellbeing/jinja2/wellbeing/results.html:594
 msgid "Age"
 msgstr "Edad"
 
-#: wellbeing/jinja2/wellbeing/results.html:529
+#: wellbeing/jinja2/wellbeing/results.html:602
 msgid "Household income"
 msgstr "Ingreso"
 
-#: wellbeing/jinja2/wellbeing/results.html:537
+#: wellbeing/jinja2/wellbeing/results.html:610
 msgid "Employment status"
 msgstr "Situación de empleo"
 
-#: wellbeing/jinja2/wellbeing/results.html:547
+#: wellbeing/jinja2/wellbeing/results.html:620
 msgid "Your score"
 msgstr "Su puntuación"
 
-#: wellbeing/jinja2/wellbeing/results.html:555
+#: wellbeing/jinja2/wellbeing/results.html:628
 msgid "U.S. average"
 msgstr "Promedio en los Estados Unidos:"
 
-#: wellbeing/jinja2/wellbeing/results.html:576
+#: wellbeing/jinja2/wellbeing/results.html:649
 msgid "Source:"
 msgstr "Fuente:"
 
-#: wellbeing/jinja2/wellbeing/results.html:578
-msgid "Financial Well-Being in America report"
-msgstr "Financial Well-Being in America report"
-
-#: wellbeing/jinja2/wellbeing/results.html:579
+#: wellbeing/jinja2/wellbeing/results.html:652
 msgid "Download CSV file"
 msgstr "Descargue CSV file"
 
-#: wellbeing/jinja2/wellbeing/results.html:582
+#: wellbeing/jinja2/wellbeing/results.html:655
 msgid "Date published:"
 msgstr "Fecha de publicación:"
 
-#: wellbeing/jinja2/wellbeing/results.html:583
+#: wellbeing/jinja2/wellbeing/results.html:656
 msgid "September 26, 2017"
 msgstr "26 de septiembre de 2017"
 
-# Manually added translations from within wellbeing/jinja2/wellbeing/views.py
+#: wellbeing/views.py:51
+#, fuzzy
+#| msgid "I can enjoy life because of the way I’m managing my money"
+msgid "I can enjoy life because of the way I'm managing my money"
+msgstr "Puedo disfrutar la vida debido a la manera en que manejo mi dinero"
 
-#: wellbeing/jinja2/wellbeing/views.py:163
+#: wellbeing/views.py:74
+#, fuzzy
+#| msgid "I am concerned that the money I have or will save won’t last"
+msgid "I am concerned that the money I have or will save won't last"
+msgstr "Me preocupa que el dinero que tengo o que ahorre no me dure"
+
+#: wellbeing/views.py:134 wellbeing/views.py:146
+msgid "18-61"
+msgstr ""
+
+#: wellbeing/views.py:139 wellbeing/views.py:151
+msgid "62-plus"
+msgstr ""
+
+# Manually added translations from within wellbeing/jinja2/wellbeing/views.py
+#: wellbeing/views.py:163
 msgid "18-24 year olds"
 msgstr "18-24 años"
 
-#: wellbeing/jinja2/wellbeing/views.py:164
+#: wellbeing/views.py:164
 msgid "25-34 year olds"
 msgstr "25-34 años"
 
-#: wellbeing/jinja2/wellbeing/views.py:165
+#: wellbeing/views.py:165
 msgid "35-44 year olds"
 msgstr "35-44 años"
 
-#: wellbeing/jinja2/wellbeing/views.py:166
+#: wellbeing/views.py:166
 msgid "45-54 year olds"
 msgstr "45-54 años"
 
-#: wellbeing/jinja2/wellbeing/views.py:167
+#: wellbeing/views.py:167
 msgid "55-64 year olds"
 msgstr "55-64 años"
 
-#: wellbeing/jinja2/wellbeing/views.py:168
+#: wellbeing/views.py:168
 msgid "65-74 year olds"
 msgstr "65-74 años"
 
-#: wellbeing/jinja2/wellbeing/views.py:169
+#: wellbeing/views.py:169
 msgid "75+ year olds"
 msgstr "75+ años"
 
-#: wellbeing/jinja2/wellbeing/views.py:172
+#: wellbeing/views.py:172
 msgid "Less than $20,000"
 msgstr "Menos de $20,000"
 
-#: wellbeing/jinja2/wellbeing/views.py:173
+#: wellbeing/views.py:173
 msgid "$20,000 to 29,999"
 msgstr "$20,000 a 29,999"
 
-#: wellbeing/jinja2/wellbeing/views.py:174
+#: wellbeing/views.py:174
 msgid "$30,000 to 49,999"
 msgstr "$30,000 a 49,999"
 
-#: wellbeing/jinja2/wellbeing/views.py:175
+#: wellbeing/views.py:175
 msgid "$50,000 to 74,999"
 msgstr "$50,000 a 74,999"
 
-#: wellbeing/jinja2/wellbeing/views.py:176
+#: wellbeing/views.py:176
 msgid "$75,000 to 99,999"
 msgstr "$75,000 a 99,999"
 
-#: wellbeing/jinja2/wellbeing/views.py:177
+#: wellbeing/views.py:177
 msgid "$100,000 and higher"
 msgstr "$100,000 o más"
 
-#: wellbeing/jinja2/wellbeing/views.py:180
+#: wellbeing/views.py:180
 msgid "Self-employed"
 msgstr "Empleado por cuenta propia"
 
-#: wellbeing/jinja2/wellbeing/views.py:181
+#: wellbeing/views.py:181
 msgid "Full-time or part-time"
 msgstr "Empleado a tiempo completo o parcial"
 
-#: wellbeing/jinja2/wellbeing/views.py:182
+#: wellbeing/views.py:182
 msgid "Homemaker"
 msgstr "Ama/o de casa"
 
-#: wellbeing/jinja2/wellbeing/views.py:183
+#: wellbeing/views.py:183
 msgid "Student"
 msgstr "Estudiante"
 
-#: wellbeing/jinja2/wellbeing/views.py:184
+#: wellbeing/views.py:184
 msgid "Sick or disabled"
 msgstr "Enfermo o discapacitado"
 
-#: wellbeing/jinja2/wellbeing/views.py:185
+#: wellbeing/views.py:185
 msgid "Unemployed or laid off"
 msgstr "Desempleado o despedido"
 
-#: wellbeing/jinja2/wellbeing/views.py:186
+#: wellbeing/views.py:186
 msgid "Retired"
 msgstr "Jubilado"
+
+#~ msgid "Get a grip on debt."
+#~ msgstr "Tome control de sus deudas."
+
+#~ msgid "Stay on top of what you owe with our"
+#~ msgstr "Vea nuestro"
+
+#~ msgid "debt log"
+#~ msgstr "recursos"
+
+#~ msgid "and find templates to help you communicate with"
+#~ msgstr "para ayudarle a comunicarse con"
+
+#~ msgid "debt collectors"
+#~ msgstr "un cobrador de deudas"
+
+#~ msgid "Look toward home ownership."
+#~ msgstr "¿Está considerando comprar una casa?"
+
+#~ msgid "Create an action plan to meet your goals."
+#~ msgstr "Desarrolle un plan de acción para alcanzar sus metas."
+
+#~ msgid "Use our"
+#~ msgstr "Use esta"
+
+#~ msgid "worksheet"
+#~ msgstr "hoja de cálculo"
+
+#~ msgid "budgeting tool"
+#~ msgstr "herramienta para hacer un presupuesto"
+
+#~ msgid "Consider the right age for claiming Social Security."
+#~ msgstr "Considere a que edad desea reclamar su beneficio del Seguro Social."
+
+#~ msgid "before you make your decision."
+#~ msgstr "antes de tomar una decisión."
+
+#~ msgid "Build and maintain your credit record."
+#~ msgstr "Mantenga un buen historial de crédito."
+
+#~ msgid "A nonprofit credit counselor"
+#~ msgstr "Un asesor de crédito de una organización sin fines de lucro"
+
+#~ msgid ""
+#~ "can help you set up a reasonable repayment plan for credit cards and "
+#~ "other consumer debt."
+#~ msgstr ""
+#~ "puede ayudarle a hacer un plan de pago para sus tarjetas de crédito y "
+#~ "otras deudas. "
+
+#~ msgid "See"
+#~ msgstr "Estos son algunos"
+
+#~ msgid "tips for choosing a credit counselor"
+#~ msgstr "consejos para escoger un asesor de crédito."
+
+#~ msgid "Financial Well-Being in America report"
+#~ msgstr "Financial Well-Being in America report"
 
 #~ msgid "Take the next step"
 #~ msgstr "Dar el siguiente paso"

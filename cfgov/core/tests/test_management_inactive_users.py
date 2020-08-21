@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from datetime import timedelta
 from io import StringIO
 

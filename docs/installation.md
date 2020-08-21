@@ -1,4 +1,4 @@
-# Installation and configuration for cfgov-refresh
+# Installation and configuration for consumerfinance.gov
 
 ## Clone the repository
 
@@ -6,15 +6,15 @@ Using the console, navigate to the root directory in which your projects
 live and clone this project's repository:
 
 ```bash
-git clone git@github.com:cfpb/cfgov-refresh.git
-cd cfgov-refresh
+git clone git@github.com:cfpb/consumerfinance.gov.git
+cd consumerfinance.gov
 ```
 
 You may also wish to fork the repository on GitHub and clone the resultant
 personal fork. This is advised if you are going to be doing development on
-`cfgov-refresh` and contributing to the project.
+`consumerfinance.gov` and contributing to the project.
 
-There are two ways to install cfgov-refresh:
+There are two ways to install consumerfinance.gov:
 
 - [Stand-alone installation](#stand-alone-installation)
 - [Docker-based installation](#docker-based-installation)
@@ -80,7 +80,7 @@ brew info autoenv
 
 #### Front-end dependencies
 
-The cfgov-refresh front-end build process currently
+The consumerfinance.gov front-end build process currently
 includes the following frameworks / tools:
 
 - [Gulp](https://gulpjs.com): task management for pulling in assets,
@@ -106,7 +106,7 @@ brew install yarn --ignore-dependencies
 The site uses a proprietary licensed font, Avenir.
 If you want to pull this from a content delivery network (CDN),
 you can set the
-[`@use-font-cdn`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/css/main.less#L30)
+[`@use-font-cdn`](https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/unprocessed/css/main.less#L30)
 to `true` and rebuild the assets with `yarn run gulp build`.
 If you want to install self-hosted fonts locally, you can place the font files
 in `static.in/cfgov-fonts/fonts/` and restart the local web server.
@@ -173,7 +173,7 @@ If you haven't cloned this repo yet, clone it to a local folder.
 Because related projects will need to be installed as siblings to this project,
 we recommend putting them all in their own folder, e.g., `~/Projects/cf.gov`.
 
-Once cloned, from the project root (`~/Projects/cf.gov/cfgov-refresh/`),
+Once cloned, from the project root (`~/Projects/cf.gov/consumerfinance.gov/`),
 run this command to complete the setup process:
 
 ```bash
@@ -307,7 +307,7 @@ browser, and see a database error.
 
     At this point, you should be able to run `docker-compose` commands again.
 
-    **Note:** When running `docker-compose up` in cfgov-refresh
+    **Note:** When running `docker-compose up` in consumerfinance.gov
     with our typical `.env` file, you may see some warnings like the following:
 
     ```

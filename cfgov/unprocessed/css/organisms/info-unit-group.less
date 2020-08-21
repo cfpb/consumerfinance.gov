@@ -44,16 +44,6 @@
     - cfgov-organisms
 */
 .o-info-unit-group {
-    // Set correct spacing for consecutive headings in the intro per DM specs:
-    // https://cfpb.github.io/design-manual/brand-guidelines/typography.html#heading-followed-by-a-heading
-    > h2 + .rich-text > h3:first-child {
-        margin-top: unit( @grid_gutter-width / @size-iii, em );
-    }
-
-    > h2 + .rich-text > h4:first-child,
-    > h3 + .rich-text > h4:first-child {
-        margin-top: unit( @grid_gutter-width / @size-iv, em );
-    }
 
     .content-l {
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
