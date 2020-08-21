@@ -125,13 +125,21 @@ USER apache
 # - cfgov/f/ - Wagtail file uploads
 # - /tmp/eregs_cache/ - Django file-based cache
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> Update Dockerfile
 RUN ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
     rm -rf cfgov/apache/www cfgov/unprocessed && \
     mkdir -p cfgov/f /tmp/eregs_cache
+<<<<<<< HEAD
 =======
 RUN ./frontend.sh 
 >>>>>>> dev setup
+=======
+
+>>>>>>> Update Dockerfile
 
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=15s --interval=30s --retries=30 \
