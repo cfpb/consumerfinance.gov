@@ -83,6 +83,7 @@ function changeElHTML( selector, HTML ) {
 /**
  * Code copied from jQuery with minimal modifications.
  * @param {HTMLNode} HTML - An HTML DOM node.
+ * @returns {DocumentFragment} The created document fragment node.
  */
 function createEl( HTML ) {
   if ( isEl( HTML ) ) {
@@ -120,14 +121,15 @@ function removeEl( selector ) {
  */
 function addClass( selector, className ) {
   _mutate( selector, function( element ) {
-    let _classList = element.classList;
-    return _classList.add.apply( _classList, [className] );
+    const _classList = element.classList;
+    return _classList.add( className );
   } );
 }
 
 /**
  * @param {string} selector - A CSS selector.
  * @param {string} className - A CSS class to remove.
+ * @returns {boolean} True if the element has the CSS class, false otherwise.
  */
 function hasClass( selector, className ) {
   let _hasClass = false;
@@ -145,8 +147,8 @@ function hasClass( selector, className ) {
  */
 function removeClass( selector, className ) {
   _mutate( selector, function( element ) {
-    let _classList = element.classList;
-    return _classList.remove.apply( _classList, [className] );
+    const _classList = element.classList;
+    return _classList.remove( className );
   } );
 }
 
@@ -233,7 +235,6 @@ function isEl( element ) {
 /**
  * Check whether something is a NodeList, HTML element, or window.
  * @param {*} selector Something, possibly a list, element or window instance.
- * @returns {Function} Mutate dom function.
  */
 function hide( selector ) {
   _mutate( selector, function( element ) {
@@ -244,7 +245,6 @@ function hide( selector ) {
 /**
  * Check whether something is a NodeList, HTML element, or window.
  * @param {*} selector Something, possibly a list, element or window instance.
- * @returns {Function} Mutate dom function.
  */
 function show( selector ) {
   _mutate( selector, function( element ) {
