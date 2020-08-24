@@ -3,9 +3,6 @@
    ========================================================================== */
 
 import Expandable from '../../../../../node_modules/@cfpb/cfpb-expandables/src/Expandable.js';
-
-Expandable.init();
-
 import addressUtils from './address-utils';
 import axios from 'axios';
 import callCensus from './call-census';
@@ -18,8 +15,33 @@ import ruralCounties from './get-rural-counties';
 import textInputs from './text-inputs';
 import tiger from './call-tiger';
 
-require( 'es6-promise' ).polyfill();
 require( './show-map' );
+// Polyfill ES6 Promise for IE11.
+require( 'es6-promise' ).polyfill();
+
+// Polyfill SVG classList API for IE11.
+if ( !( 'classList' in SVGElement.prototype ) ) {
+  Object.defineProperty( SVGElement.prototype, 'classList', {
+    get() {
+      return {
+        contains: className => {
+          return this.className.baseVal.split( ' ' ).indexOf( className ) !== -1;
+        },
+        add: className => {
+          return this.setAttribute( 'class' , this.getAttribute( 'class' ) + ' ' + className );
+        },
+        remove: className => {
+          var removedClass = this.getAttribute( 'class' ).replace( new RegExp( '(\\s|^)' + className + '(\\s|$)', 'g' ), '$2' );
+          if ( this.classList.contains( className ) ) {
+            this.setAttribute( 'class', removedClass );
+          }
+        }
+      };
+    }
+  } );
+}
+
+Expandable.init();
 
 const MAX_CSV_ROWS = 250;
 
