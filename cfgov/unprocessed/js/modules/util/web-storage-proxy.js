@@ -93,6 +93,7 @@ function setStorage( storage ) {
  * @param {Object} storage
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
+ *   Default is sessionStorage.
  * @returns {Object} A local storage or session storage instance.
  */
 function _getStorageType( storage ) {
@@ -114,7 +115,7 @@ function _getStorageType( storage ) {
 }
 
 // Expose public methods.
-export {
+export default {
   setItem,
   getItem,
   removeItem,

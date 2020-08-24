@@ -1,7 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const webStorageProxy = require(
-  BASE_JS_PATH + 'modules/util/web-storage-proxy.js'
-);
+import webStorageProxy from '../../../../../cfgov/unprocessed/js/modules/util/web-storage-proxy.js';
 
 describe( 'web-storage-proxy', () => {
   beforeEach( () => {
