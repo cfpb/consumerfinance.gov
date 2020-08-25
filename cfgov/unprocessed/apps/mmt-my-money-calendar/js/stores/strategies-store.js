@@ -50,7 +50,7 @@ class StrategiesStore {
         icon1: icons.carPayment1,
         title: 'Car Payment Date',
         text:
-          'Ask car loan company if you could move the due date to a week with more money.',
+          'Ask your car loan company if you could move the due date to a week with more money.',
       },
       {
         categories: ['expense.transportation.carInsurance'],
@@ -92,14 +92,14 @@ class StrategiesStore {
       {
         categories: ['expense.transportation.publicTransportation'],
         icon1: icons.studentLoan1,
-        title: 'Adjust Spending on Public Transportation',
+        title: 'Adjust Transportation Spending',
         text:
           'You control how much you spend on public transportation.  Consider spending less this week until you have more money.',
       },
       {
         categories: ['expense.transportation.gas'],
         icon1: icons.gas1,
-        title: 'Adjust Spending on Gas',
+        title: 'Adjust Gas Spending',
         text:
           'You control how much you spend on gas.  Consider buying less this week until you have more money.',
       },
@@ -172,14 +172,6 @@ class StrategiesStore {
     );
 
     if (results.length) return results;
-
-    return [
-      {
-        title: 'Explore Your General Strategies',
-        text:
-          "Based upon your weekly transactions we can't recommend any Fix-It Strategies. Make sure that you've entered in all of your expenses and income for the week then check back here later.  Otherwise, review the generic strategies below.",
-      },
-    ];
   }
 
   @computed get strategyResults() {

@@ -185,12 +185,12 @@ export const Categories = new CategoryTree({
         strategy: {
           id: 'refinanceMortgage',
           icon1: icons.mortgage1,
-          title: 'Answers to Your Mortgage Qustions',
+          title: 'Refinance Your Mortgage',
           body:
             'Check with your mortgage lender to see if you qualify for a lower interest rate.  Then enter the new payment amount into the calendar.',
           link: {
-            href: 'https://www.consumerfinance.gov/owning-a-home/',
-            text: 'Homeowner tools and resources',
+            href: 'https://www.consumerfinance.gov/mortgage/',
+            text: 'Answers to Your Mortgage Questions',
           },
         },
       },
@@ -415,7 +415,7 @@ export const Categories = new CategoryTree({
           icon1: icons.healthCare1,
           title: 'Health Insurance',
           body:
-            'Choosing an affordable health care plan can drastically reduce the cost of medical bills.',
+            'Health insurance can drastically reduce the costs of unforeseen medical bills.  Find a plan that fits your budget.',
           link: {
             href: 'https://www.healthcare.gov',
             text: 'HealthCare.gov',
@@ -475,7 +475,7 @@ export const Categories = new CategoryTree({
           icon1: icons.childCare1,
           title: 'Get Childcare Assistance',
           body:
-            'See if you qualify for free or reduced rate childcare',
+            'See if you qualify for free or reduced rate childcare.',
           link: {
             href: 'https://www.childcare.gov/consumer-education/get-help-paying-for-child-care',
             text: 'Get Help Paying for Childcare',
