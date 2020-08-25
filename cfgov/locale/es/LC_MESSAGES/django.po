@@ -190,11 +190,15 @@ msgstr "https://www.facebook.com/CFPBespanol"
 msgid "https://twitter.com/CFPB"
 msgstr "https://twitter.com/CFPBespanol"
 
-#: jinja2/v1/_includes/molecules/social-media.html:158
+#: jinja2/v1/_includes/molecules/social-media.html:128
+msgid "Print this page"
+msgstr "Imprima esta página"
+
+#: jinja2/v1/_includes/molecules/social-media.html:159
 msgid "Share on"
 msgstr "Comparta esta información en"
 
-#: jinja2/v1/_includes/molecules/social-media.html:166
+#: jinja2/v1/_includes/molecules/social-media.html:167
 msgid "Visit us on"
 msgstr "Visítenos en"
 
