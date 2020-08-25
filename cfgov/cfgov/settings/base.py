@@ -39,14 +39,8 @@ USE_X_FORWARDED_PORT = os.environ.get("USE_X_FORWARDED_PORT") == "True"
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
 # Application definition
-INSTALLED_APPS = ("permissions_viewer",)
-
-if wagtail.VERSION >= (2, 10):
-    INSTALLED_APPS += (
-        "wagtail.contrib.legacy.richtext",
-    )
-
-INSTALLED_APPS += (
+INSTALLED_APPS = (
+    "permissions_viewer",
     "wagtail.core",
     "wagtail.admin",
     "wagtail.documents",
@@ -103,6 +97,7 @@ INSTALLED_APPS += (
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
+    "wagtailmedia",
 
     # Satellites
     "comparisontool",

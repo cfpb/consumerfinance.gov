@@ -66,15 +66,15 @@ brew services start elasticsearch
 ```
 
 ### 3. Launch Site
-First, move into the `cfgov-refresh` project directory
+First, move into the `consumerfinance.gov` project directory
 and ready your environment:
 
 ```bash
-# Use the cfgov-refresh virtualenv.
-workon cfgov-refresh
+# Use the consumerfinance.gov virtualenv.
+workon consumerfinance.gov
 
 # cd into this directory (if you aren't already there)
-cd cfgov-refresh
+cd consumerfinance.gov
 ```
 
 From the project root, start the Django server:
@@ -136,7 +136,7 @@ yarn run gulp audit           # Run code quality audits.
 ### Reinstalling the virtual environment
 
 To remove an existing virtual environment for 
-[a reinstall of cfgov-refresh](../installation/#stand-alone-installation), 
+[a reinstall of consumerfinance.gov](../installation/#stand-alone-installation), 
 first deactivate the virtual environment if it is active:
 
 ```bash
@@ -146,7 +146,7 @@ deactivate
 Then remove the existing virtual environment:
 
 ```bash
-rmvirtualenv cfgov-refresh
+rmvirtualenv consumerfinance.gov
 ```
 
 After this, you may follow 

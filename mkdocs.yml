@@ -1,6 +1,6 @@
-site_name: cfgov-refresh
+site_name: consumerfinance.gov
 
-repo_url: https://github.com/cfpb/cfgov-refresh
+repo_url: https://github.com/cfpb/consumerfinance.gov
 
 nav:
 - Introduction: index.md

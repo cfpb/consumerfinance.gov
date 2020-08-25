@@ -6,7 +6,7 @@ from wagtail.admin.views import account
 
 
 # This wrapper is used to check our custom password-reset routine, in urls.py:
-# https://github.com/cfpb/cfgov-refresh/blob/6360823ec447cba6527d128edcd55ecae5186c59/cfgov/cfgov/urls.py#L554-L557  # noqa
+# https://github.com/cfpb/consumerfinance.gov/blob/6360823ec447cba6527d128edcd55ecae5186c59/cfgov/cfgov/urls.py#L554-L557  # noqa
 # In Wagtail 2, it was converted to a mixin (PasswordResetEnabledViewMixin)
 # and used to build reset views, as opposed to wrapping them.
 # We may want to follow that pattern in our password routine, or review

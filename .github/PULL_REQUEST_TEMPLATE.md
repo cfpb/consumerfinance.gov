@@ -45,7 +45,7 @@
 - [ ] Code follows the standards laid out in the [CFPB development guidelines](https://github.com/cfpb/development)
 - [ ] Future todos are captured in comments and/or tickets
 - [ ] Project documentation has been updated, potentially one or more of:
-  - [This repo’s docs](https://cfpb.github.io/cfgov-refresh/) (edit the files in the `/docs` folder) – for basic, close-to-the-code docs on working with this repo
+  - [This repo’s docs](https://cfpb.github.io/consumerfinance.gov/) (edit the files in the `/docs` folder) – for basic, close-to-the-code docs on working with this repo
   - CFGOV/platform wiki on GHE – for internal CFPB developer guidance
   - CFPB/hubcap wiki on GHE – for internal CFPB design and content guidance
 

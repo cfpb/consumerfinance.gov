@@ -89,16 +89,18 @@
                m-list__horizontal
                m-social-media_icons">
 
+        {% set facebook_homepage = _('https://www.facebook.com/CFPB') %}
         {% set facebook_info = {
             'name': 'Facebook',
-            'homepage': _( 'https://www.facebook.com/CFPB' ),
+            'homepage': facebook_homepage,
             'share_url': 'https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url,
             'icon': 'facebook'
         } %}
 
+        {% set twitter_homepage = _('https://twitter.com/CFPB') %}
         {% set twitter_info = {
             'name': 'Twitter',
-            'homepage': _( 'https://twitter.com/CFPB' ),
+            'homepage': twitter_homepage,
             'share_url': _share_twitter_url(parsed_url, twitter_text, value) | trim,
             'icon': 'twitter'
         } %}

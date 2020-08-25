@@ -2,7 +2,7 @@
 
 ## Run tests with localhost server
 
-1. Ensure that the following env vars are set (they should already be in your [`.env`](https://github.com/cfpb/cfgov-refresh/blob/master/.env_SAMPLE) file):
+1. Ensure that the following env vars are set (they should already be in your [`.env`](https://github.com/cfpb/consumerfinance.gov/blob/master/.env_SAMPLE) file):
    - `export TEST_HTTP_HOST=localhost`
    - `export DJANGO_HTTP_PORT=8000`
 1. Then reload the virtual environment if needed: `source .env`
@@ -189,10 +189,9 @@ Tests are organized into suites under the `test/browser_tests/cucumber/features`
 ## Performance testing
 
 To audit if the site complies with performance best practices and guidelines,
-run `gulp audit:perf`.
-
-The audit will run against
-[Google's Lighthouse](https://github.com/GoogleChrome/lighthouse).
+[Google's Lighthouse](https://github.com/GoogleChrome/lighthouse) can be run
+from Google Chrome by opening the developer console and going to the Lighthouse
+tab to run a performance audit.
 
 
 
