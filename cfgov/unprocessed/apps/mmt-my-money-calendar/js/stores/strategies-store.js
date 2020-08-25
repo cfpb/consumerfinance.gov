@@ -171,7 +171,7 @@ class StrategiesStore {
       })
     );
 
-    if (results.length) return results;
+    return results;
   }
 
   @computed get strategyResults() {
