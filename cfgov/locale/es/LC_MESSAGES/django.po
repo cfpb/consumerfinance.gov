@@ -164,13 +164,39 @@ msgstr "Ir"
 msgid "View more"
 msgstr "Ver más"
 
-#: jinja2/v1/_includes/molecules/social-media.html:92
+#: jinja2/v1/_includes/molecules/social-media.html:53
+msgid "Look what I found on the CFPB's site!"
+msgstr "¡Encuentre más información en la página del CFPB!"
+
+#: jinja2/v1/_includes/molecules/social-media.html:61
+msgid "Check out this page from the CFPB"
+msgstr "Revise esta página del CFPB"
+
+#: jinja2/v1/_includes/molecules/social-media.html:75
+msgid "Share & print"
+msgstr "Compartir e imprimir"
+
+#: jinja2/v1/_includes/molecules/social-media.html:77
+msgid "Share this"
+msgstr "Compartir"
+
+#: jinja2/v1/_includes/molecules/social-media.html:87
+#: jinja2/v1/blog/blog_page.html:26
 msgid "https://www.facebook.com/CFPB"
 msgstr "https://www.facebook.com/CFPBespanol"
 
-#: jinja2/v1/_includes/molecules/social-media.html:100
+#: jinja2/v1/_includes/molecules/social-media.html:95
+#: jinja2/v1/blog/blog_page.html:23
 msgid "https://twitter.com/CFPB"
 msgstr "https://twitter.com/CFPBespanol"
+
+#: jinja2/v1/_includes/molecules/social-media.html:158
+msgid "Share on"
+msgstr "Comparta esta información en"
+
+#: jinja2/v1/_includes/molecules/social-media.html:166
+msgid "Visit us on"
+msgstr "Visítenos en"
 
 #: jinja2/v1/_includes/organisms/ask-search.html:35
 #: jinja2/v1/ask-cfpb/see-all.html:78
@@ -250,7 +276,7 @@ msgid "Browse related questions"
 msgstr "Otras preguntas"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:89
-#: jinja2/v1/ask-cfpb/landing-page.html:76
+#: jinja2/v1/ask-cfpb/landing-page.html:80
 msgid "Learn more about"
 msgstr "Sepa más sobre"
 
@@ -319,6 +345,13 @@ msgstr "Búsqueda especial"
 #: jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
+
+#: jinja2/v1/blog/blog_page.html:29
+#, python-format
+msgid ""
+"Join the conversation. Follow CFPB on %(twitter_link)s and %(facebook_link)s."
+msgstr ""
+"Únase a la conversación. Síganos en %(twitter_link)s y en %(facebook_link)s."
 
 #: legacy/templates/common/forgot_password.html:24
 msgid "Email"
