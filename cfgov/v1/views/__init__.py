@@ -73,8 +73,8 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
     Displays the login form and handles the login action.
     """
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
-                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
-
+                                   request.GET.get(REDIRECT_FIELD_NAME,
+                                                   '/admin/'))
     # Redirects to https://example.com should not be allowed.
     if redirect_to:
         if '//' in redirect_to:
