@@ -94,7 +94,6 @@ def log_page_deletion(request, page):
 @hooks.register('insert_editor_js')
 def editor_js():
     js_files = ['js/table-block.js']
-    js_files.insert(0, 'wagtailadmin/js/draftail.js')
     js_files.insert(0, 'wagtailadmin/js/vendor/bootstrap-modal.js')
     js_files.insert(0, 'wagtailadmin/js/page-chooser-modal.js')
     js_files.insert(0, 'wagtaildocs/js/document-chooser-modal.js')
