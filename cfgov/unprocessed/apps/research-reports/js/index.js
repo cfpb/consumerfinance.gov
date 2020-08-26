@@ -7,11 +7,14 @@ const sidenav = document.querySelector( '.o-report-sidenav' );
 const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
 const top = sidenav.offsetTop;
 const headerOffset = 224
-const headers = document.querySelectorAll( '.content_main .report-header' )
+const headers = document.querySelectorAll( '.content_main h2.report-header, .content_main h3.report-header' )
+let isMobile
 let offsets = [];
 let primaryOffsets = [];
 let set = 0;
 let lastTargetIndex;
+
+checkMatch();
 
 (function(){
   for(let i=0; i<headers.length; i++){
@@ -24,6 +27,7 @@ document.querySelector('.o-footer').classList.add( 'report-global-footer' );
 
 
 function stickIfNeeded() {
+  if(isMobile) return
   if ( window.scrollY > top ) {
     if ( !set ) {
       sidenav.classList.add( 'sticky' );
@@ -70,5 +74,10 @@ function onScroll() {
   hightlightTOC();
 }
 
+function checkMatch() {
+  isMobile = window.matchMedia('(max-width: 900px)').matches
+}
+
 window.addEventListener( 'scroll', onScroll );
+window.addEventListener('resize', checkMatch);
 onScroll();
