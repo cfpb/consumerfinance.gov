@@ -124,6 +124,10 @@ const expensesModel = {
       expensesModel.values.item_childcare = 0;
     }
 
+    if ( typeof expensesModel.values.item_currentDebts === 'undefined' ) {
+      expensesModel.values.item_currentDebts = 0;
+    }
+
     expensesModel.calculateTotals();
     updateUrlQueryString();
   },
