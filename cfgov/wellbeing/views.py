@@ -1,7 +1,5 @@
-from collections import OrderedDict
-
 from django.shortcuts import render
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop as _
 
 from core.views import TranslatedTemplateView
 from wellbeing.forms import FWBScore, ResultsForm
@@ -159,32 +157,32 @@ class ResultsView(TranslatedTemplateView):
     avg_score = FWBScore.avg()
 
     group_means = {
-        'age': OrderedDict([
-            ('18-24 year olds', FWBScore(51)),
-            ('25-34 year olds', FWBScore(51)),
-            ('35-44 year olds', FWBScore(52)),
-            ('45-54 year olds', FWBScore(54)),
-            ('55-64 year olds', FWBScore(55)),
-            ('65-74 year olds', FWBScore(61)),
-            ('75+ year olds', FWBScore(60)),
-        ]),
-        'income': OrderedDict([
-            ('Less than $20,000', FWBScore(46)),
-            ('$20,000 to 29,999', FWBScore(49)),
-            ('$30,000 to 49,999', FWBScore(51)),
-            ('$50,000 to 74,999', FWBScore(55)),
-            ('$75,000 to 99,999', FWBScore(56)),
-            ('$100,000 and higher', FWBScore(60)),
-        ]),
-        'employment': OrderedDict([
-            ('Self-employed', FWBScore(54)),
-            ('Full-time or part-time', FWBScore(54)),
-            ('Homemaker', FWBScore(54)),
-            ('Student', FWBScore(51)),
-            ('Sick or disabled', FWBScore(44)),
-            ('Unemployed or laid off', FWBScore(45)),
-            ('Retired', FWBScore(60)),
-        ]),
+        'age': [
+            (_('18-24 year olds'), FWBScore(51)),
+            (_('25-34 year olds'), FWBScore(51)),
+            (_('35-44 year olds'), FWBScore(52)),
+            (_('45-54 year olds'), FWBScore(54)),
+            (_('55-64 year olds'), FWBScore(55)),
+            (_('65-74 year olds'), FWBScore(61)),
+            (_('75+ year olds'), FWBScore(60)),
+        ],
+        'income': [
+            (_('Less than $20,000'), FWBScore(46)),
+            (_('$20,000 to 29,999'), FWBScore(49)),
+            (_('$30,000 to 49,999'), FWBScore(51)),
+            (_('$50,000 to 74,999'), FWBScore(55)),
+            (_('$75,000 to 99,999'), FWBScore(56)),
+            (_('$100,000 and higher'), FWBScore(60)),
+        ],
+        'employment': [
+            (_('Self-employed'), FWBScore(54)),
+            (_('Full-time or part-time'), FWBScore(54)),
+            (_('Homemaker'), FWBScore(54)),
+            (_('Student'), FWBScore(51)),
+            (_('Sick or disabled'), FWBScore(44)),
+            (_('Unemployed or laid off'), FWBScore(45)),
+            (_('Retired'), FWBScore(60)),
+        ],
     }
 
     def get_context_data(self, **kwargs):
