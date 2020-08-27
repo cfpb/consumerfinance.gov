@@ -323,23 +323,30 @@ django-admin.py compilemessages</code></pre>
 <p>To ensure that strings in templates are picked up in message extraction (<code>django-admin.py makemessages</code>), it also helps to know that the way <code>makemessages</code> works. </p>
 <p><code>makemessages</code> converts all Django <code>{% translate %}</code>, <code>{% blocktranslate %}</code>, and Jinja2 <code>{% trans %}</code> tags into <code>_(…)</code> gettext calls and then to have <a href="https://www.gnu.org/software/gettext/manual/gettext.html"><code>xgettext</code></a> process the files as if they were Python. This process <em>does not</em> work the same as general template parsing, and it means that it's best to make the translatable strings as discoverable as possible. </p>
 <p>There are a few things to avoid to make sure the strings are picked up by <code>makemessages</code>:</p>
-<p><strong>Do not</strong> include the <code>_()</code> call in a larger Jinja2 template data structure:</p>
+<h4 id="do-not-include-the-_-call-in-a-larger-jinja2-template-data-structure">Do not include the <code>_()</code> call in a larger Jinja2 template data structure:<a class="headerlink" href="#do-not-include-the-_-call-in-a-larger-jinja2-template-data-structure" title="Permanent link">¶</a></h4>
 <pre class="highlight"><code class="language-diff">+ {% set link_text = _(&quot;Visit our website&quot;) %}
-  {% set link_data = {
-      &quot;url&quot;: &quot;https://consumerfinance.gov&quot;,
+{% set link_data = {
+    &quot;url&quot;: &quot;https://consumerfinance.gov&quot;,
 -     &quot;text&quot;: _(&quot;Visit our website&quot;),
 +     &quot;text&quot;: link_text,
-   } %}</code></pre>
+} %}</code></pre>
 
-<p><strong>Do not</strong> include spaces between the parentheses and the string in Jinja2 templates:</p>
+<h4 id="do-not-include-spaces-between-the-parentheses-and-the-string-in-jinja2-templates">Do not include spaces between the parentheses and the string in Jinja2 templates:<a class="headerlink" href="#do-not-include-spaces-between-the-parentheses-and-the-string-in-jinja2-templates" title="Permanent link">¶</a></h4>
 <pre class="highlight"><code class="language-diff">- {{ _( &quot;Hello World!&quot; ) }}
 + {{ _(&quot;Hello World!&quot;) }}</code></pre>
 
-<p><strong>Do not</strong> use f-strings in Python calls to gettext:</p>
+<h4 id="do-not-use-f-strings-in-python-calls-to-gettext">Do not use f-strings in Python calls to gettext:<a class="headerlink" href="#do-not-use-f-strings-in-python-calls-to-gettext" title="Permanent link">¶</a></h4>
 <pre class="highlight"><code class="language-diff">- _(f&quot;Hello {world_name}&quot;)
 + _(&quot;Hello %(world_name)s&quot; % {'world_name': world_name})</code></pre>
 
 <p>Django's documentation <a href="https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#standard-translation">has some additional information on the limitations of translatable strings and gettext</a>.</p>
+<h4 id="do-mark-variable-strings-for-translation-with-gettext_noop">Do mark variable strings for translation with <a href="https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a><a class="headerlink" href="#do-mark-variable-strings-for-translation-with-gettext_noop" title="Permanent link">¶</a></h4>
+<p>If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that <code>makemessages</code> will pick it up, use Django's <a href="https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a>:</p>
+<pre class="highlight"><code class="language-python">from django.utils.translation import gettext_noop
+
+mystring = _(&quot;Hello World!&quot;)</code></pre>
+
+<pre class="highlight"><code class="language-jinja">{{ _(mystring) }}</code></pre>
               
             </div>
           </div>
