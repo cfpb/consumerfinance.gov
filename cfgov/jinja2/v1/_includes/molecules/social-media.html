@@ -50,7 +50,7 @@
 
 {% macro render( value={} ) %}
 
-{% set default_blurb = _("Look what I found on the CFPB's site!") %}
+{% set default_blurb = _('Look what I found on the CFPB\'s site!') %}
 {% set blurb = value.blurb or (page.seo_title if page) or value.title or default_blurb %}
 
 {% set parsed_url = request.build_absolute_uri() | urlencode %}
@@ -72,9 +72,9 @@
     {% if is_share_view %}
         <div class="h5 m-social-media_heading">
             {% if is_printable -%}
-                {{ _("Share & print") }}
+                {{ _('Share & print') }}
             {%- else -%}
-                {{ _("Share this") }}
+                {{ _('Share this') }}
             {%- endif %}
         </div>
     {% endif %}
@@ -84,7 +84,7 @@
                m-list__horizontal
                m-social-media_icons">
 
-        {% set facebook_homepage = _("https://www.facebook.com/CFPB") %}
+        {% set facebook_homepage = _('https://www.facebook.com/CFPB') %}
         {% set facebook_info = {
             'name': 'Facebook',
             'homepage': facebook_homepage,
@@ -92,7 +92,7 @@
             'icon': 'facebook'
         } %}
 
-        {% set twitter_homepage = _("https://twitter.com/CFPB") %}
+        {% set twitter_homepage = _('https://twitter.com/CFPB') %}
         {% set twitter_info = {
             'name': 'Twitter',
             'homepage': twitter_homepage,
@@ -125,7 +125,7 @@
             'icon': 'flickr'
         } %}
 
-        {% set print_this_page = _("Print this page") %}
+        {% set print_this_page = _('Print this page') %}
         {% set print_info = {
             'name': print_this_page,
             'share_url': 'window.print();',
@@ -156,7 +156,7 @@
                     <a class="m-social-media_icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
                        {{ 'target="_blank" rel="noopener noreferrer"' | safe if link.name != 'email' else '' }}
-                       aria-label="{{ _("Share on") }} {{ link.name }}">
+                       aria-label="{{ _('Share on') }} {{ link.name }}">
                         {{ svg_icon(link.icon ~ '-square') }}
                     </a>
                 </li>
@@ -164,7 +164,7 @@
                 <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.homepage | trim }}"
-                       aria-label="{{ _("Visit us on") }} {{ link.name }}">
+                       aria-label="{{ _('Visit us on') }} {{ link.name }}">
                         {{ svg_icon(link.icon ~ '-square') }}
                     </a>
                 </li>
