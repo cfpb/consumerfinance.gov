@@ -116,6 +116,7 @@ class SelfHealingMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
+        # If this request isn't 404ing, just return the existing response.
         if response.status_code != 404:
             return response
 
