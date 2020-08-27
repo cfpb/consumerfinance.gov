@@ -147,8 +147,8 @@ MIDDLEWARE = (
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "flags.middleware.FlagConditionsMiddleware",
-    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.SelfHealingMiddleware",
+    "wagtail.contrib.redirects.middleware.RedirectMiddleware",    
     "core.middleware.DeactivateTranslationsMiddleware",
 )
 
