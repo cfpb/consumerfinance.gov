@@ -23,12 +23,22 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   const _dom = checkDom( element, BASE_CLASS );
   const _contentDom = _dom.querySelector( `.${ BASE_CLASS }_content` );
   const _triggerDom = _dom.querySelector( `.${ BASE_CLASS }_trigger` );
-  const _triggerCloseLabelText = _triggerDom.querySelector(
+
+  // Get the translated search/close text so we can set the aria-label.
+  const _triggerCloseLabelDom = _triggerDom.querySelector(
     `.${ BASE_CLASS }_trigger-close-label`
-  ).innerText.trim();
-  const _triggerOpenLabelText = _triggerDom.querySelector(
+  );
+  // Fallback to textContent is for Firefox 44 and earlier.
+  const _triggerCloseLabelText = ( _triggerCloseLabelDom.innerText ||
+                                   _triggerCloseLabelDom.textContent ).trim();
+
+  const _triggerOpenLabelDom = _triggerDom.querySelector(
     `.${ BASE_CLASS }_trigger-open-label`
-  ).innerText.trim();
+  );
+  // Fallback to textContent is for Firefox 44 and earlier.
+  let _triggerOpenLabelText = ( _triggerOpenLabelDom.innerText ||
+                                _triggerOpenLabelDom.textContent ).trim();
+
   const _flyoutMenu = new FlyoutMenu( _dom );
   let _searchInputDom;
   let _searchBtnDom;
