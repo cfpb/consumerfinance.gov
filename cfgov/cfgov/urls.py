@@ -785,17 +785,17 @@ def handle_404_error(code, request, exception=None):
     """
 
     # Lowercase the path.
-    path = request.path.lower()
+    # path = request.path.lower()
 
-    # Check for and remove extraneous characters at the end of the path.
-    extraneous_char_re = re.compile(
-        r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
-    )
-    path = extraneous_char_re.sub('', path)
+    # # Check for and remove extraneous characters at the end of the path.
+    # extraneous_char_re = re.compile(
+    #     r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
+    # )
+    # path = extraneous_char_re.sub('', path)
 
-    # If the path has changed, redirect to the new path.
-    if path != request.path:
-        return redirect(path, permanent=True)
+    # # If the path has changed, redirect to the new path.
+    # if path != request.path:
+    #     return redirect(path, permanent=True)
 
     return handle_error(code, request, exception)
 

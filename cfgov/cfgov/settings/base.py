@@ -140,7 +140,6 @@ WAGTAILSEARCH_BACKENDS = {
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
-    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -148,6 +147,8 @@ MIDDLEWARE = (
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "flags.middleware.FlagConditionsMiddleware",
+    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "core.middleware.SelfHealingMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
 )
 
