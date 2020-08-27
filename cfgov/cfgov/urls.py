@@ -774,31 +774,5 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-def handle_404_error(code, request, exception=None):
-    """Attempt to self-heal 404-ing URLs.
-
-    Takes a 404ing request and tries to transform it to a successful request
-    by lowercasing the path and stripping extraneous characters from the end.
-    If those result in a modified path, redirect to the modified path.
-    If the path did not change, this is a legitimate 404, so continue handling
-    that as normal.
-    """
-
-    # Lowercase the path.
-    # path = request.path.lower()
-
-    # # Check for and remove extraneous characters at the end of the path.
-    # extraneous_char_re = re.compile(
-    #     r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
-    # )
-    # path = extraneous_char_re.sub('', path)
-
-    # # If the path has changed, redirect to the new path.
-    # if path != request.path:
-    #     return redirect(path, permanent=True)
-
-    return handle_error(code, request, exception)
-
-
-handler404 = partial(handle_404_error, 404)
+handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)
