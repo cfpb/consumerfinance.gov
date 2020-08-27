@@ -1,4 +1,3 @@
-import re
 from functools import partial
 
 from django.conf import settings
@@ -6,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
