@@ -103,12 +103,12 @@ class DeactivateTranslationsMiddleware:
 
 
 class SelfHealingMiddleware:
-    """Attempt to self-heal 404-ing URLs.	
-    Takes a 404ing request and tries to transform it to a successful request	
-    by lowercasing the path and stripping extraneous characters from the end.	
-    If those result in a modified path, redirect to the modified path.	
-    If the path did not change, this is a legitimate 404, so continue handling	
-    that as normal.	
+    """Attempt to self-heal 404-ing URLs.
+    Takes a 404ing request and tries to transform it to a successful request
+    by lowercasing the path and stripping extraneous characters from the end.
+    If those result in a modified path, redirect to the modified path.
+    If the path did not change, this is a legitimate 404, so continue handling
+    that as normal.
     """
     def __init__(self, get_response):
         self.get_response = get_response
