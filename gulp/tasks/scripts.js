@@ -28,6 +28,7 @@ const webpackStream = require( 'webpack-stream' );
  * @param {Object} localWebpackConfig - Settings for Webpack.
  * @param {string} src - Source URL in the unprocessed assets directory.
  * @param {string} dest - Destination URL in the processed assets directory.
+ * @param {string} dest - Destination URL prefix. Defaults to the processed assets directory.
  * @returns {PassThrough} A source stream.
  */
 function _processScript( localWebpackConfig, src, dest, destPathPrefix = paths.processed ) {
