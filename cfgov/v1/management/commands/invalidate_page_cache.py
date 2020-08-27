@@ -4,13 +4,13 @@ from wagtail.contrib.frontend_cache.utils import purge_url_from_cache
 
 
 class Command(BaseCommand):
-    help = 'Invalidates a page by its full URL'
+    help = 'Invalidate the cache of a page by its full URL'
 
     def add_arguments(self, parser):
         parser.add_argument(
             '--url',
             required=True,
-            help='The full URL for the page you wish to invalidate'
+            help='The full URL for the page you wish to invalidate its cache'
         )
 
     def handle(self, *args, **options):
