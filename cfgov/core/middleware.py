@@ -101,6 +101,7 @@ class DeactivateTranslationsMiddleware:
         translation.deactivate()
         return response
 
+
 class SelfHealingMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -123,5 +124,5 @@ class SelfHealingMiddleware:
         # If the path has changed, redirect to the new path.
         if path != request.path:
             return redirect(path, permanent=True)
-        
+
         return response
