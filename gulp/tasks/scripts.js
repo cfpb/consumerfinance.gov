@@ -30,16 +30,16 @@ const webpackStream = require( 'webpack-stream' );
  * @param {string} dest - Destination URL in the processed assets directory.
  * @returns {PassThrough} A source stream.
  */
-function _processScript( localWebpackConfig, src, dest ) {
+function _processScript( localWebpackConfig, src, dest, destPathPrefix = paths.processed ) {
   return gulp.src( paths.unprocessed + src )
     .pipe( gulpNewer( {
-      dest:  paths.processed + dest,
+      dest:  destPathPrefix + dest,
       extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
-    .pipe( gulp.dest( paths.processed + dest ) );
+    .pipe( gulp.dest( destPathPrefix + dest ) );
 }
 
 /**
@@ -81,6 +81,20 @@ function scriptsModern() {
     webpackConfig.modernConf,
     '/js/routes/**/*.js',
     '/js/routes/'
+  );
+}
+
+/**
+ * Bundle scripts in unprocessed/js/routes/
+ * and factor out common modules into common.js.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsAdmin() {
+  return _processScript(
+    webpackConfig.modernConf,
+    '/js/admin/*.js',
+    '/js/',
+    'cfgov/templates/wagtailadmin'
   );
 }
 
@@ -210,6 +224,9 @@ gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
+//
+gulp.task( 'scripts:admin', scriptsAdmin );
+//
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
@@ -228,13 +245,14 @@ gulp.task( 'scripts',
     'scripts:modern',
     'scripts:apps',
     'scripts:external',
-    'scripts:ondemand'
+    'scripts:ondemand',
+    'scripts:admin'
   )
 );
 
 gulp.task( 'scripts:watch', function() {
   gulp.watch(
     configScripts.src,
-    gulp.parallel( 'scripts:modern' )
+    gulp.parallel( 'scripts:modern', 'scripts:admin' )
   );
 } );
