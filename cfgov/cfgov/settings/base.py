@@ -628,7 +628,7 @@ CSP_CONNECT_SRC = (
 )
 
 # These specify valid media sources (e.g., MP3 files)
-CSP_IMG_SRC = (
+CSP_MEDIA_SRC = (
     "'self'",
     "*.consumerfinance.gov",
 )
