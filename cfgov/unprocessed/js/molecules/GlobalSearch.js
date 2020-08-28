@@ -21,7 +21,14 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
 
   const BASE_CLASS = 'm-global-search';
   const _dom = checkDom( element, BASE_CLASS );
-  const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  const _contentDom = _dom.querySelector( `.${ BASE_CLASS }_content` );
+  const _triggerDom = _dom.querySelector( `.${ BASE_CLASS }_trigger` );
+  const _triggerCloseLabelText = _triggerDom.querySelector(
+    `.${ BASE_CLASS }_trigger-close-label`
+  ).innerText.trim();
+  const _triggerOpenLabelText = _triggerDom.querySelector(
+    `.${ BASE_CLASS }_trigger-open-label`
+  ).innerText.trim();
   const _flyoutMenu = new FlyoutMenu( _dom );
   let _searchInputDom;
   let _searchBtnDom;
@@ -140,6 +147,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
 
     _searchInputDom.select();
 
+    _triggerDom.setAttribute( 'aria-label', _triggerCloseLabelText );
+
     document.body.addEventListener( 'mousedown', _handleBodyClick );
   }
 
@@ -148,6 +157,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * Use this to perform post-collapseBegin actions.
    */
   function _handleCollapseBegin() {
+    _triggerDom.setAttribute( 'aria-label', _triggerOpenLabelText );
     document.body.removeEventListener( 'mousedown', _handleBodyClick );
   }
 
