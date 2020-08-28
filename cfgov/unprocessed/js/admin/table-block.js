@@ -35,11 +35,13 @@ import { stateToHTML } from 'draft-js-export-html';
       $sortableSelect: {}
     };
 
+    let HandsonTableWagtailBridge = {};
+
     const HandsonTable = {
 
       initialize: function initialize( element, initializeOptions ) {
         if ( 'Handsontable' in win === false ) {
-          return;
+          return null;
         }
 
         const onTableChange = $.proxy( this.onTableChange, this );
@@ -75,13 +77,13 @@ import { stateToHTML } from 'draft-js-export-html';
       },
 
       create: function create( element, createOptions ) {
-        this.instance = new Handsontable( element, createOptions || {} );
+        this.instance = new window.Handsontable( element, createOptions || {} );
 
         return this.instance;
       },
 
       modify: function modify( modifyOptions ) {
-        const RichTextEditor = Handsontable.editors.BaseEditor.prototype.extend();
+        const RichTextEditor = window.Handsontable.editors.BaseEditor.prototype.extend();
 
         RichTextEditor.prototype.beginEditing = function( event, tableCellIndex, tableCell ) {
           const initialCellValue = this.instance.getValue();
@@ -116,7 +118,7 @@ import { stateToHTML } from 'draft-js-export-html';
 
       onTableChange: function onTableChange( index, change ) {
         if ( change === 'loadData' ) {
-          return;
+          return null;
         }
 
         this.$element.trigger( 'table:change', [ this.instance.getData() ] );
@@ -149,7 +151,7 @@ import { stateToHTML } from 'draft-js-export-html';
       }
     };
 
-    var HandsonTableWagtailBridge = {
+    HandsonTableWagtailBridge = {
 
       initialize: function initialize( id, initializeOptions ) {
         const _this = this;
@@ -342,7 +344,7 @@ import { stateToHTML } from 'draft-js-export-html';
           const widthClass = this.ui.$fixedWidthColInput
             .find( 'tr td:nth-child( ' + i + ' ) select option:selected' )
             .val();
-          if ( widthClass !== '' ) {
+          if ( widthClass ) {
             totalWidth += Number( widthClass.substring( 3, 5 ) );
           } else {
             totalWidth += 1;
@@ -388,6 +390,7 @@ import { stateToHTML } from 'draft-js-export-html';
           return $.parseJSON( this.ui.$hiddenField.val() );
         } catch ( error ) {
           // do nothing
+          return null;
         }
       },
 
@@ -599,7 +602,7 @@ import { stateToHTML } from 'draft-js-export-html';
       const widget = $( element ).parent( '.richtext' ).data( 'IKS-hallo' );
       $( element ).fadeOut( function() {
         $( element ).remove();
-        if ( widget !== undefined && widget.options.editable ) {
+        if ( widget && widget.options.editable ) {
           widget.element.trigger( 'change' );
         }
       } );
