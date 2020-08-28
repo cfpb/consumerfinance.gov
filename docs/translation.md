@@ -98,25 +98,25 @@ To ensure that strings in templates are picked up in message extraction (`django
 
 There are a few things to avoid to make sure the strings are picked up by `makemessages`:
 
-**Do not** include the `_()` call in a larger Jinja2 template data structure:
+#### Do not include the `_()` call in a larger Jinja2 template data structure:
 
 ```diff
 + {% set link_text = _("Visit our website") %}
-  {% set link_data = {
-      "url": "https://consumerfinance.gov",
+{% set link_data = {
+    "url": "https://consumerfinance.gov",
 -     "text": _("Visit our website"),
 +     "text": link_text,
-   } %}
+} %}
 ```
 
-**Do not** include spaces between the parentheses and the string in Jinja2 templates:
+#### Do not include spaces between the parentheses and the string in Jinja2 templates:
 
 ```diff
 - {{ _( "Hello World!" ) }}
 + {{ _("Hello World!") }}
 ```
 
-**Do not** use f-strings in Python calls to gettext:
+#### Do not use f-strings in Python calls to gettext:
 
 ```diff
 - _(f"Hello {world_name}")
@@ -125,3 +125,16 @@ There are a few things to avoid to make sure the strings are picked up by `makem
 
 Django's documentation [has some additional information on the limitations of translatable strings and gettext](https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#standard-translation).
 
+#### Do mark variable strings for translation with [`gettext_noop`](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op)
+
+If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that `makemessages` will pick it up, use Django's [`gettext_noop`](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op):
+
+```python
+from django.utils.translation import gettext_noop
+
+mystring = _("Hello World!")
+```
+
+```jinja
+{{ _(mystring) }}
+```
