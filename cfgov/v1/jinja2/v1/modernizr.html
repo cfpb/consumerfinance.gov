@@ -14,11 +14,19 @@
 <script>
   {% include '/js/modernizr.min.js' %}
 
+  /**
+   * Check for support for element.innerText.
+   */
+  function checkSupportForInnerText() {
+    return 'innerText' in document.createElement( 'a' );
+  }
+
   !function(){
     var modernizr = window.Modernizr;
     if ( !( typeof modernizr !== 'undefined' &&
             modernizr.es5 &&
-            !!( window.Map ) ) ) {
+            !!( window.Map ) &&
+            !!( checkSupportForInnerText() ) ) ) {
       var docElement = document.documentElement;
       docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
     }
