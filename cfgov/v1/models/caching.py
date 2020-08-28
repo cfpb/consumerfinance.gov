@@ -59,25 +59,12 @@ class AkamaiBackend(BaseBackend):
         }
 
     def delete(self, url):
-        action = "delete"
-        resp = requests.post(
-            os.environ['AKAMAI_FAST_PURGE_URL'],
-            headers=self.headers,
-            data=json.dumps(self.get_payload(obj=url, action=action)),
-            auth=self.auth
-        )
-        logger.info(
-            u'Attempted to {action} cache for page {url}, '
-            'got back response {message}'.format(
-                action=action,
-                url=url,
-                message=resp.text
-            )
-        )
-        resp.raise_for_status()
+        self.post(self, url, 'delete')
 
     def delete_all(self):
-        action = "delete"
+        self.post_all(self, 'delete')
+
+    def post_all(self, action):
         obj = os.environ['AKAMAI_OBJECT_ID']
         resp = requests.post(
             os.environ['AKAMAI_PURGE_ALL_URL'],
@@ -90,47 +77,33 @@ class AkamaiBackend(BaseBackend):
             'got back response {message}'.format(
                 action=action,
                 obj=obj,
+                message=resp.text
+            )
+        )
+        resp.raise_for_status()
+
+    def post(self, url, action):
+        resp = requests.post(
+            os.environ['AKAMAI_FAST_PURGE_URL'],
+            headers=self.headers,
+            data=json.dumps(self.get_payload(obj=url, action=action)),
+            auth=self.auth
+        )
+        logger.info(
+            u'Attempted to {action} cache for page {url}, '
+            'got back response {message}'.format(
+                action=action,
+                url=url,
                 message=resp.text
             )
         )
         resp.raise_for_status()
 
     def purge(self, url):
-        action = "invalidate"
-        resp = requests.post(
-            os.environ['AKAMAI_FAST_PURGE_URL'],
-            headers=self.headers,
-            data=json.dumps(self.get_payload(obj=url, action=action)),
-            auth=self.auth
-        )
-        logger.info(
-            u'Attempted to {action} cache for page {url}, '
-            'got back response {message}'.format(
-                action=action,
-                url=url,
-                message=resp.text
-            )
-        )
-        resp.raise_for_status()
+        self.post(self, url, 'invalidate')
 
     def purge_all(self):
-        action = "invalidate"
-        obj = os.environ['AKAMAI_OBJECT_ID']
-        resp = requests.post(
-            os.environ['AKAMAI_PURGE_ALL_URL'],
-            headers=self.headers,
-            data=json.dumps(self.get_payload(obj=obj, action=action)),
-            auth=self.auth
-        )
-        logger.info(
-            u'Attempted to {action} content provider {obj}, '
-            'got back response {message}'.format(
-                action=action,
-                obj=obj,
-                message=resp.text
-            )
-        )
-        resp.raise_for_status()
+        self.post_all(self, 'invalidate')
 
 
 @receiver(post_save, sender=Document)
