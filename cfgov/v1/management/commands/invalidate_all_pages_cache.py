@@ -8,6 +8,4 @@ class Command(BaseCommand):
     help = "Invalidate entire cfgov site cache"
 
     def handle(self, *args, **options):
-        AkamaiBackend(settings.WAGTAILFRONTENDCACHE["akamai"]).purge_all(
-            "invalidate"
-        )
+        AkamaiBackend(settings.WAGTAILFRONTENDCACHE["akamai"]).purge_all()

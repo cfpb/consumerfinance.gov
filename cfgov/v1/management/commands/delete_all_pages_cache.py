@@ -8,6 +8,4 @@ class Command(BaseCommand):
     help = "Delete entire cfgov site cache"
 
     def handle(self, *args, **options):
-        AkamaiBackend(settings.WAGTAILFRONTENDCACHE["akamai"]).purge_all(
-            "delete"
-        )
+        AkamaiBackend(settings.WAGTAILFRONTENDCACHE["akamai"]).delete_all()
