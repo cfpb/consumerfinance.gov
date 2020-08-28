@@ -19,7 +19,7 @@
             <itunes:email>CFPB_Students@cfpb.gov</itunes:email>
         </itunes:owner>
         <itunes:image
-            href="https://files.consumerfinance.gov/f/images/cfrp_financial-intuition-podcast_cover-art_1400.original.png"
+            href="https://files.consumerfinance.gov/f/images/cfpb-financial-intuition-podcast-cover-art.original.png"
         />
         <itunes:category text="Education"></itunes:category>
         <itunes:explicit>false</itunes:explicit>
