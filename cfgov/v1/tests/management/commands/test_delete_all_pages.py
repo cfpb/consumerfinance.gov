@@ -14,8 +14,8 @@ import mock
         }
     }
 )
-class InvalidateAllPagesTestCase(TestCase):
-    @mock.patch("v1.models.caching.AkamaiBackend.purge_all")
-    def test_submission_with_url_akamai(self, mock_purge_all):
-        call_command("invalidate_all_pages_cache")
-        mock_purge_all.assert_any_call()
+class DeleteAllPagesTestCase(TestCase):
+    @mock.patch("v1.models.caching.AkamaiBackend.delete_all")
+    def test_submission_with_url_akamai(self, mock_delete_all):
+        call_command("delete_all_pages_cache")
+        mock_delete_all.assert_any_call()
