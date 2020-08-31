@@ -85,7 +85,7 @@ import { stateToHTML } from 'draft-js-export-html';
       modify: function modify( modifyOptions ) {
         const RichTextEditor = window.Handsontable.editors.BaseEditor.prototype.extend();
 
-        RichTextEditor.prototype.beginEditing = function( event, tableCellIndex, tableCell ) {
+        RichTextEditor.prototype.beginEditing = function() {
           const initialCellValue = this.instance.getValue();
           const blocksFromHTML = window.DraftJS.convertFromHTML( initialCellValue );
           const contentState = window.DraftJS.ContentState.createFromBlockArray(
@@ -126,7 +126,7 @@ import { stateToHTML } from 'draft-js-export-html';
         return this;
       },
 
-      onCreateCol: function onCreateCol( index, change ) {
+      onCreateCol: function onCreateCol( index ) {
         HandsonTableWagtailBridge.ui.$fixedWidthColInput
           .find( 'td' ).eq( index - 1 )
           .after( '<td>' + utilities.$colWidthSelect + '</td>' );
@@ -140,7 +140,7 @@ import { stateToHTML } from 'draft-js-export-html';
         return this;
       },
 
-      onRemoveCol: function onRemoveCol( index, change ) {
+      onRemoveCol: function onRemoveCol( index ) {
         HandsonTableWagtailBridge.ui.$fixedWidthColInput
           .find( 'td' ).eq( index )
           .remove();
@@ -335,9 +335,9 @@ import { stateToHTML } from 'draft-js-export-html';
       },
 
       getColumnWidths: function getColumnWidths() {
-        let colCount = this.ui.$fixedWidthColInput.find( 'tr td' ).length,
-            array = [],
-            totalWidth = 0;
+        const colCount = this.ui.$fixedWidthColInput.find( 'tr td' ).length;
+        const array = [];
+        let totalWidth = 0;
 
         for ( let x = 0; x < colCount; x++ ) {
           const i = x + 1;
