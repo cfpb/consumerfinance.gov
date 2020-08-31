@@ -17,7 +17,7 @@
         <itunes:category text="Education"></itunes:category>
         <itunes:explicit>false</itunes:explicit>
         <item>
-            <title>Managing Your Money Part 3: Understanding and Protecting Your Credit</title>
+            <title>Managing Your Money, Part 3: Understanding and Protecting Your Credit</title>
             <link>https://www.consumerfinance.gov/practitioner-resources/students/financial-intuition/managing-your-money-part-3/</link>
             <itunes:episodeType>full</itunes:episodeType>
             <itunes:episode>3</itunes:episode>
@@ -32,12 +32,11 @@
             <itunes:explicit>false</itunes:explicit>
         </item>
         <item>
-            <title>Managing Your Money Part 2: Managing Money as a Young Adult</title>
+            <title>Managing Your Money, Part 2: Managing Money as a Young Adult</title>
             <link>https://www.consumerfinance.gov/practitioner-resources/students/financial-intuition/managing-your-money-part-2/</link>
             <itunes:episodeType>full</itunes:episodeType>
             <itunes:episode>2</itunes:episode>
-            <description>During part 2 of the “Managing Your Money” podcast series, we met with Ryan Law, AFC®, CFP®, to discuss tips and tools for managing your finances while in school, budgeting, opening a checking and saving account, compound interest, and more.
-            </description>
+            <description>During part two of the “Managing Your Money” podcast series, we met with Ryan Law, AFC®, CFP®, to discuss tips and tools for managing your finances while in school, budgeting, opening a checking and saving account, compound interest, and more.</description>
             <enclosure
                 length="8385655"
                 type="audio/mpeg"
@@ -48,7 +47,7 @@
             <itunes:explicit>false</itunes:explicit>
         </item>
         <item>
-            <title>Managing Your Money Part 1: Financing Your Future and How to Pay for Higher Education</title>
+            <title>Managing Your Money, Part 1: Financing Your Future and How to Pay for Higher Education</title>
             <link>https://www.consumerfinance.gov/practitioner-resources/students/financial-intuition/managing-your-money-part-1/</link>
             <itunes:episodeType>full</itunes:episodeType>
             <itunes:episode>1</itunes:episode>
