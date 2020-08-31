@@ -59,10 +59,10 @@ class AkamaiBackend(BaseBackend):
         }
 
     def delete(self, url):
-        self.post(self, url, 'delete')
+        self.post(url, 'delete')
 
     def delete_all(self):
-        self.post_all(self, 'delete')
+        self.post_all('delete')
 
     def post_all(self, action):
         obj = os.environ['AKAMAI_OBJECT_ID']
@@ -100,10 +100,10 @@ class AkamaiBackend(BaseBackend):
         resp.raise_for_status()
 
     def purge(self, url):
-        self.post(self, url, 'invalidate')
+        self.post(url, 'invalidate')
 
     def purge_all(self):
-        self.post_all(self, 'invalidate')
+        self.post_all('invalidate')
 
 
 @receiver(post_save, sender=Document)
