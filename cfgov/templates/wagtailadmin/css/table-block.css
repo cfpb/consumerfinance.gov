@@ -61,3 +61,7 @@ table[id$=sortable-input] .sortable-type-input {
     border-radius: 0;
     color: #101820;
 }
+
+.hidden-label {
+    display: none;
+}
