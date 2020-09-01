@@ -303,7 +303,7 @@ from
 <a href="https://pypi.org/project/newrelic/">from PyPI</a>.
 This package is not part of the standard development requirements but is
 included in
-the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/requirements/deployment.txt"><code>requirements/deployment.txt</code></a> file.
+the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/deployment.txt"><code>requirements/deployment.txt</code></a> file.
 It can be installed into your Python environment using the following command:</p>
 <pre class="highlight"><code class="language-shell">$ pip install newrelic</code></pre>
 
@@ -317,7 +317,7 @@ in the web browser.</p>
 <a href="https://docs.newrelic.com/docs/agents/python-agent/configuration/python-agent-configuration">configuration settings</a>
 that control the information that gets recorded about web requests. This
 project includes a default
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/newrelic.ini"><code>newrelic.ini</code></a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/newrelic.ini"><code>newrelic.ini</code></a>
 file that enables New Relic's
 <a href="https://docs.newrelic.com/docs/agents/manage-apm-agents/configuration/high-security-mode">high security mode</a>
 to limit the recording of potentially sensitive information.</p>
@@ -331,7 +331,7 @@ two environment variables:</p>
 traffic from any other users who may be running against the same New Relic
 account.</p>
 <p>This project's
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/.env_SAMPLE"><code>.env_SAMPLE</code></a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/.env_SAMPLE"><code>.env_SAMPLE</code></a>
 file contains placeholder entries for these two variables.</p>
 <p>Once you've set these two variables, start or restart your local web server.</p>
 <p>When you make your first web request, you'll see messages in the console

@@ -343,7 +343,7 @@ that briefly describes the change(s) you're making:</p>
 <pre class="highlight"><code class="language-bash">./cfgov/manage.py makemigrations -n &lt;description_of_changes&gt;</code></pre>
 
 <p>For examples of good migration names, look through some of
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/v1/migrations">our existing migration files</a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/migrations">our existing migration files</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Some changes will generate multiple migration files.
@@ -358,7 +358,7 @@ a regular source of conflicts between pull requests
 that are in flight at the same time.
 If a PR with a migration gets merged between the time you create your migration
 and the time that your PR is ready for merging,
-you will have to update your branch as normal to be current with master
+you will have to update your branch as normal to be current with main
 and then re-create your migration.
 Also note that our
 <a href="../github-actions/">back-end tests that run in GitHub Actions</a>

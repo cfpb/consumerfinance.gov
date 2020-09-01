@@ -272,7 +272,7 @@
             <div class="section">
               
                 <h1 id="feature-flags">Feature flags<a class="headerlink" href="#feature-flags" title="Permanent link">¶</a></h1>
-<p>Feature flags are implemented using our <a href="https://github.com/cfpb/django-flags">Django-Flags</a> and <a href="https://github.com/cfpb/wagtail-flags">Wagtail-Flags</a> apps. The <a href="https://cfpb.github.io/django-flags">Django-Flags documentation</a> contains an overview of feature flags and how to use them and the <a href="https://github.com/cfpb/wagtail-flags/blob/master/README.md">Wagtail-Flags README</a> describes how to add feature flag conditions in the Wagtail admin.</p>
+<p>Feature flags are implemented using our <a href="https://github.com/cfpb/django-flags">Django-Flags</a> and <a href="https://github.com/cfpb/wagtail-flags">Wagtail-Flags</a> apps. The <a href="https://cfpb.github.io/django-flags">Django-Flags documentation</a> contains an overview of feature flags and how to use them and the <a href="https://github.com/cfpb/wagtail-flags/blob/main/README.md">Wagtail-Flags README</a> describes how to add feature flag conditions in the Wagtail admin.</p>
 <p>This document covers how to add and use feature flags with consumerfinance.gov and the conventions we have around their use.</p>
 <ul>
 <li><a href="#adding-a-flag">Adding a flag</a></li>
@@ -295,7 +295,7 @@
 <li><a href="#hygiene">Hygiene</a></li>
 </ul>
 <h2 id="adding-a-flag">Adding a flag<a class="headerlink" href="#adding-a-flag" title="Permanent link">¶</a></h2>
-<p>Feature flags are defined in code in the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/cfgov/settings/base.py#L562"><code>cfgov/settings/base.py</code></a> file as part of the <code>FLAGS</code> setting. Each flag consists of a single string and a Python list of its hard-coded conditions (see <a href="#enabling-a-flag">Enabling a flag</a> below).</p>
+<p>Feature flags are defined in code in the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/cfgov/settings/base.py#L562"><code>cfgov/settings/base.py</code></a> file as part of the <code>FLAGS</code> setting. Each flag consists of a single string and a Python list of its hard-coded conditions (see <a href="#enabling-a-flag">Enabling a flag</a> below).</p>
 <pre class="highlight"><code class="language-python">FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -305,14 +305,14 @@
 
 <p>By convention our flag names are all uppercase, with underscores instead of whitespace. A comment is expected above each flag with a short description fo what happens when it is enabled.</p>
 <h2 id="checking-a-flag">Checking a flag<a class="headerlink" href="#checking-a-flag" title="Permanent link">¶</a></h2>
-<p>Flags can be checked either in Python code or in Django or Jinja2 template files. See the full <a href="https://github.com/cfpb/wagtail-flags/blob/master/README.md#api">Wagtail Flags API is documented </a> for more information.</p>
+<p>Flags can be checked either in Python code or in Django or Jinja2 template files. See the full <a href="https://github.com/cfpb/wagtail-flags/blob/main/README.md#api">Wagtail Flags API is documented </a> for more information.</p>
 <h3 id="in-templates">In templates<a class="headerlink" href="#in-templates" title="Permanent link">¶</a></h3>
 <h4 id="jinja2">Jinja2<a class="headerlink" href="#jinja2" title="Permanent link">¶</a></h4>
 <p>Most of consumerfinance.gov's templates are Jinja2. In these templates, two template functions are provided, <code>flag_enabled</code> and <code>flag_disabled</code>. Each takes a flag name as its first argument and request` object as the second.</p>
 <p><code>flag_enabled('MY_FLAG')</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are</strong> met.</p>
 <p><code>flag_disabled('MY_FLAG')</code> will return <code>True</code> if the conditions under which <code>MY_FLAG</code> is enabled <strong>are not</strong> met.</p>
 <p>See <a href="#enabling-a-flag">Enabling a flag</a> below for more on flag conditions.</p>
-<p>An example is <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56">the <code>BETA_NOTICE flag</code> as implemented in <code>header.html</code></a>:</p>
+<p>An example is <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56">the <code>BETA_NOTICE flag</code> as implemented in <code>header.html</code></a>:</p>
 <pre class="highlight"><code class="language-jinja">{% if flag_enabled('BETA_NOTICE') and show_banner %}
 &lt;div class=&quot;m-global-banner&quot;&gt;
     &lt;div class=&quot;wrapper

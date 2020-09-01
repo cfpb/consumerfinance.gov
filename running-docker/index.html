@@ -286,7 +286,7 @@ to run an Elasticsearch container, a PostgreSQL container,
 and Django in a Python container.
 There is also a container serving the documentation.</p>
 <p>All of these containers are configured in our
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/docker-compose.yml"><code>docker-compose.yml</code> file</a>.
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/docker-compose.yml"><code>docker-compose.yml</code> file</a>.
 See the <a href="https://docs.docker.com/compose/compose-file/">Docker documentation</a>
 for more about the format and use of this file.</p>
 <p>The following URLs are mapped to your host from the containers:</p>
@@ -396,7 +396,7 @@ export CFGOV_PROD_DB_LOCATION=&lt;database-dump-url&gt;
 <p><a href="http://localhost:8000">http://localhost:8000</a></p>
 </li>
 <li>
-<p>Adjust an Apache <a href="https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/apache"><code>cfgov/apache</code></a>
+<p>Adjust an Apache <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache"><code>cfgov/apache</code></a>
    config and reload Apache (optional).</p>
 <pre class="highlight"><code class="language-bash">docker-compose exec python bash
 
@@ -428,7 +428,7 @@ optionally deploying to our Docker Swarm cluster.</p>
 <li>Install SCL-based Apache HTTPD, and the <code>mod_wsgi</code> version appropriate for our chosen <code>scl_python_version</code>.</li>
 <li>Run frontend.sh, Django's collectstatic command, and then <em>uninstall</em> node and yarn.</li>
 <li>Set the default command on container startup to <code>httpd -d ./cfgov/apache -D FOREGROUND</code>, which runs Apache using
-    the <a href="https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/apache">configuration in consumerfinance.gov</a>, in the
+    the <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache">configuration in consumerfinance.gov</a>, in the
     foreground (typical when running Apache in a container).</li>
 </ul>
               

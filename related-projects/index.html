@@ -284,7 +284,7 @@ set up the full website.</p>
 <li><a href="https://github.com/cfpb/teachers-digital-platform">teachers-digital-platform</a></li>
 </ul>
 <p>These satellite apps are imported into consumerfinance.gov as part of the project
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/requirements/libraries.txt">requirements files</a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt">requirements files</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Thinking about making a new satellite app?</p>
 <p>Satellite apps were originally built to be imported into the
@@ -312,7 +312,7 @@ contains the CFPB development guidelines used on these projects.</p>
 want or need to test their work as part of the larger consumerfinance.gov project.</p>
 <p>The standard <a href="../installation/">installation</a> process for consumerfinance.gov
 includes whatever versions of these packages are specified in project 
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/requirements/libraries.txt">requirements files</a>.
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt">requirements files</a>.
 Developers may want to temporarily or permanently replace those with a local
 copy of package source code.</p>
 <h3 id="using-a-local-virtual-environment">Using a local virtual environment<a class="headerlink" href="#using-a-local-virtual-environment" title="Permanent link">¶</a></h3>
@@ -360,7 +360,7 @@ This is because while your local <code>consumerfinance.gov</code> directory is e
 container, sibling directories or other locations where you might clone
 other repositories are not.</p>
 <p>For this reason, the Docker setup provides the ability to use the local
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/master/develop-apps"><code>consumerfinance.gov/develop-apps</code></a>
+<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/develop-apps"><code>consumerfinance.gov/develop-apps</code></a>
 subdirectory as place to put local copies of Python packages.</p>
 <p>Any packages put there (e.g. via a <code>git clone</code> of a satellite apps' repo)
 will be automatically added to the
@@ -382,7 +382,7 @@ cd retirement
 ./frontendbuild.sh</code></pre>
 
 <p>If the satellite app needs any Python requirements that are not specified in 
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/master/requirements/">the consumerfinance.gov requirements</a>, 
+<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/">the consumerfinance.gov requirements</a>, 
 they will need to be installed seperately by accessing the Python container shell
 and using <code>pip</code>:</p>
 <pre class="highlight"><code class="language-bash">docker-compose exec python bash

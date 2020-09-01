@@ -324,11 +324,11 @@ it would be a good idea to peruse their docs before diving in here.</p>
 <p>The following links list out the main directories containing tests
 (as of January 2019, this page’s initial publication date).</p>
 <ul>
-<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/master/test/unit_tests">All unit tests</a></li>
-<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/master/test/unit_tests/apps">Tests for individual apps</a></li>
-<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/master/test/unit_tests/js/modules">Tests for regular modules</a></li>
-<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/master/test/unit_tests/js/molecules">Tests for molecules</a></li>
-<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/master/test/unit_tests/js/organisms">Tests for organisms</a></li>
+<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests">All unit tests</a></li>
+<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/apps">Tests for individual apps</a></li>
+<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/js/modules">Tests for regular modules</a></li>
+<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/js/molecules">Tests for molecules</a></li>
+<li><a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/js/organisms">Tests for organisms</a></li>
 </ul>
 <h2 id="test-driven-development">Test-driven development<a class="headerlink" href="#test-driven-development" title="Permanent link">¶</a></h2>
 <p>We recommend using test-driven development (TDD) when coding new JavaScript.
@@ -377,11 +377,11 @@ then we will make it pass, following the principles of TDD.</p>
 with the addition of a <code>-spec</code> suffix.</p>
 <h3 id="folder-structure-where-to-put-your-javascript-and-tests">Folder structure (where to put your JavaScript and tests)<a class="headerlink" href="#folder-structure-where-to-put-your-javascript-and-tests" title="Permanent link">¶</a></h3>
 <p>JavaScript unit test files belong in the
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/master/test/unit_tests"><code>test/unit_tests/</code></a>
+<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests"><code>test/unit_tests/</code></a>
 directory.</p>
 <p>The folder structure of the test files mirrors
 the structure of the project JavaScript in
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/unprocessed/js"><code>cfgov/unprocessed/js/</code></a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/js"><code>cfgov/unprocessed/js/</code></a>.</p>
 <p>When considering exactly where to place JavaScript in these directories,
 it might be helpful to review the documentation about
 <a href="../atomic-structure">atomic components in consumerfinance.gov</a>.
@@ -426,7 +426,7 @@ then write the corresponding JavaScript that will make the test pass.</p>
 </li>
 <li>
 <p>Make the test pass by changing your script’s line 7
-   (<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/unprocessed/js/modules/sample.js">see <code>sample.js</code></a>)
+   (<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/sample.js">see <code>sample.js</code></a>)
    to the following:</p>
 <pre class="highlight"><code class="language-js">return 'Shredder';</code></pre>
 
@@ -528,7 +528,7 @@ we could start by writing these tests in <code>sample-spec.js</code>:</p>
 <p>And then we would create the <code>gimmeString</code> and <code>gimmeObject</code> methods
 in our <code>sample.js</code> file.</p>
 <p>Another example is
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/test/unit_tests/js/modules/util/breakpoint-state-spec.js"><code>breakpoint-state-spec.js</code></a>,
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/breakpoint-state-spec.js"><code>breakpoint-state-spec.js</code></a>,
 which tests several methods, including <code>getBreakpointState</code> and <code>viewportIsIn</code>,
 on the module <code>breakpoint-state</code>.</p>
 <p>When using TDD, you may prefer to add <code>describe</code> blocks later,
@@ -587,7 +587,7 @@ use the minimum needed to test the code.</p>
 <h4 id="direct-definition-of-test-data">Direct definition of test data<a class="headerlink" href="#direct-definition-of-test-data" title="Permanent link">¶</a></h4>
 <p>The simplest way to set up test data is to
 declare it as variables within each test, e.g., the tests in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/test/unit_tests/js/modules/util/strings-spec.js">strings-spec.js</a>.
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/strings-spec.js">strings-spec.js</a>.
 This can include HTML markup for DOM manipulation tests,
 if each test requires different markup.</p>
 <h4 id="setup-and-teardown-methods">Setup and teardown methods<a class="headerlink" href="#setup-and-teardown-methods" title="Permanent link">¶</a></h4>
@@ -597,7 +597,7 @@ Jest has setup and teardown methods, such as
 which can be used to performing actions
 that are needed before and after running all tests or each test in a suite.
 For example, the tests in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/test/unit_tests/js/modules/Analytics-spec.js#L7-L32"><code>Analytics-spec.js</code></a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/Analytics-spec.js#L7-L32"><code>Analytics-spec.js</code></a>
 use both <code>beforeAll</code> and <code>beforeEach</code> inside the root <code>describe</code> block to
 do a variable definition for all tests at the beginning of the suite
 and reset the <code>dataLayer</code> before each test, respectively.</p>
@@ -609,9 +609,9 @@ then – in a <code>beforeEach</code> or <code>beforeAll</code>
 set <code>document.body.innerHTML</code> to that snippet.</p>
 <p>Use <code>beforeAll</code> to attach HTML markup that is unaffected by the tests,
 e.g., the tests in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/test/unit_tests/js/modules/footer-button-spec.js"><code>footer-button-spec.js</code></a>.
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/footer-button-spec.js"><code>footer-button-spec.js</code></a>.
 Use <code>beforeEach</code> to reset manipulated markup between tests, e.g., the tests in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/test/unit_tests/js/molecules/Notification-spec.js"><code>Notification-spec.js</code></a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/molecules/Notification-spec.js"><code>Notification-spec.js</code></a>.</p>
 <p><a href="#testing-dom-manipulation">See “Testing DOM manipulation”</a>
 in the “Common test patterns” section of this page
 for a more in-depth discussion of this scenario.</p>
@@ -626,7 +626,7 @@ Inside each <code>it</code>, invoke the function
 with the input described in the <code>it</code> statement
 and use <code>expect</code> to check that you receive the desired result.</p>
 <p>Here is a simple example from our
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/unprocessed/js/modules/util/array-helpers.js">array helpers module</a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/util/array-helpers.js">array helpers module</a>
 (<code>cfgov/unprocessed/js/modules/util/array-helpers.js</code>):</p>
 <pre class="highlight"><code class="language-js">function indexOfObject( array, key, val ) {
   let match = -1;
@@ -645,7 +645,7 @@ and use <code>expect</code> to check that you receive the desired result.</p>
 }</code></pre>
 
 <p>Tests for that function, from
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/test/unit_tests/js/modules/util/array-helpers-spec.js">test/unit_tests/js/modules/util/array-helpers-spec.js</a>:</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/array-helpers-spec.js">test/unit_tests/js/modules/util/array-helpers-spec.js</a>:</p>
 <pre class="highlight"><code class="language-js">describe( 'indexOfObject()', () =&gt; {
   it( 'should return -1 if the array is empty', () =&gt; {
     array = [];
@@ -688,7 +688,7 @@ in the module code itself, which acts on the browser’s DOM.</p>
 The Notification component uses a common set of markup
 with different classes and SVG icon code to style it
 as a particular kind of notification (success, warning, etc.). In
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/unprocessed/js/molecules/Notification.js">the component JS</a>,
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/molecules/Notification.js">the component JS</a>,
 we have this function that sets the type of a notification before displaying it:</p>
 <pre class="highlight"><code class="language-js">function _setType( type ) {
   // If type hasn't changed, return.
@@ -726,7 +726,7 @@ As you can see from the code comments above,
 it has a few different steps that modify the DOM node.</p>
 <p>Now let’s look at the tests.
 Here are the first 22 lines of
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/test/unit_tests/js/molecules/Notification-spec.js">the spec file</a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/molecules/Notification-spec.js">the spec file</a>
 that tests this component:</p>
 <pre class="highlight"><code class="language-js">import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
 const BASE_CLASS = 'm-notification';
@@ -818,9 +818,9 @@ the window object; session storage; page history; etc.</p>
 that watches for browser API calls to be made
 a certain number of times or with a specific payload.
 One example is found in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/test/unit_tests/js/modules/o-table-row-links-spec.js">the tests for our full-table-row-linking code</a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/o-table-row-links-spec.js">the tests for our full-table-row-linking code</a>.</p>
 <p>In
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/unprocessed/js/modules/o-table-row-links.js">the module code</a>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/o-table-row-links.js">the module code</a>
 (<code>o-table-row-links.js</code>),
 if an event listener detects a click anywhere on
 one of these special table rows,

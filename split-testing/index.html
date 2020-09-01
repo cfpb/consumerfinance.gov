@@ -293,7 +293,7 @@ def in_split_testing_cluster(cluster_group, page, clusters=CLUSTERS, **kwargs):
 - <code>page</code>: An instance of a Wagtail page that we want to look for in the
   cluster group
 - <code>clusters</code>: A dictionary containing one or more named <code>cluster_group</code>s –
-  by default, this points to a dictionary defined in our master cluster
+  by default, this points to a dictionary defined in our main cluster
   definition file (see <a href="#defining-clusters">"Defining clusters"</a> below)</p>
 <p>If the <code>page</code>'s <code>id</code> property is found in the <code>cluster_group</code>,
 the condition returns <code>True</code>.
@@ -302,7 +302,7 @@ instead of <code>page.id</code>. (More on that later.)</p>
 <p>You do not need to modify anything in this file to set up a new experiment.</p>
 <h3 id="defining-clusters">Defining clusters<a class="headerlink" href="#defining-clusters" title="Permanent link">¶</a></h3>
 <p>To run a split test we first have to know what pages we're testing.
-Split testing clusters are typically defined in our master cluster definition
+Split testing clusters are typically defined in our main cluster definition
 file at <code>cfgov/core/split_testing_clusters.py</code>.</p>
 <p>Create a new dictionary with a meaningful name
 and add the page IDs for the pages in your cluster(s) to it.

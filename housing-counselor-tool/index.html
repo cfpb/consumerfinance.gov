@@ -267,8 +267,8 @@
 <p>The <a href="https://www.consumerfinance.gov/find-a-housing-counselor/">Find a Housing Counselor tool</a> allows users to search for HUD-approved housing counselors.
 Users enter a U.S. ZIP code, and the tool returns a list of the ten housing counselors nearest to that ZIP code location.
 The page also displays a map of the results using Mapbox.</p>
-<p>When the user enters a ZIP code in the page's search box, the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/views.py#L84">Django view</a> fetches a JSON file of the results from our Amazon S3 bucket.
-The results are inserted into the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/jinja2/housing_counselor/index.html">page template</a> and the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/unprocessed/apps/find-a-housing-counselor/js/common.js">Mapbox map</a>.
+<p>When the user enters a ZIP code in the page's search box, the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/views.py#L84">Django view</a> fetches a JSON file of the results from our Amazon S3 bucket.
+The results are inserted into the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/jinja2/housing_counselor/index.html">page template</a> and the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/apps/find-a-housing-counselor/js/common.js">Mapbox map</a>.
 The page also contains a link to a PDF version of the results, which is also stored in S3.
 The files are publicly accessible, so the tool can run on localhost or in a container without any change in behavior.</p>
 <p>This page documents the process we use to generate the JSON and PDF files the Find a Housing Counselor tool relies on.</p>
@@ -290,8 +290,8 @@ and configured using parameters before starting the job.</p>
 <p>The <code>GEOCODE_ZIPCODES</code> step generates a file of all ZIP codes in the United States and their location latitude and longitude and saves it in the Jenkins workspace.
 By default, this step is not enabled.
 Since ZIP code geographical information rarely changes, we run this step rarely by manually enabling the option in the Jenkins job.</p>
-<p>If enabled, this step calls the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/management/commands/hud_geocode_zipcodes.py"><code>hud_geocode_zipcodes</code></a> management command.
-The management command in turn calls the <code>BulkZipCodeGeocoder</code> in <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/geocoder.py"><code>geocoder.py</code></a>.
+<p>If enabled, this step calls the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/management/commands/hud_geocode_zipcodes.py"><code>hud_geocode_zipcodes</code></a> management command.
+The management command in turn calls the <code>BulkZipCodeGeocoder</code> in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/geocoder.py"><code>geocoder.py</code></a>.
 <code>BulkZipCodeGeocoder</code> uses the <a href="https://www.mapbox.com/">Mapbox</a> geocoding API to determine which 5-digit number sequences are ZIP codes and fetch their latitude and longitude values.
 The management command inserts this data into a CSV and saves it to <code>./zipcodes.csv</code> on the Jenkins job workspace.</p>
 <p>The generated file looks like this:</p>
@@ -307,7 +307,7 @@ The management command inserts this data into a CSV and saves it to <code>./zipc
 <p>When enabled, the <code>MAKE_JSON</code> step generates a JSON file of housing counselor data for each ZIP code in the U.S.
 Each file contains the ten results geographically nearest to the ZIP code's latitude and longitude.
 This step is enabled by default.</p>
-<p>This step calls the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/management/commands/hud_generate_json.py"><code>hud_generate_json</code></a> management command,
+<p>This step calls the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/management/commands/hud_generate_json.py"><code>hud_generate_json</code></a> management command,
 which performs the following steps:</p>
 <ol>
 <li>fetch agency listings from HUD</li>
@@ -317,7 +317,7 @@ which performs the following steps:</p>
 <li>create files of the 10 nearest results for each U.S. ZIP code</li>
 </ol>
 <h4 id="fetch-agency-listings">Fetch agency listings<a class="headerlink" href="#fetch-agency-listings" title="Permanent link">¶</a></h4>
-<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/fetcher.py"><code>fetcher.py</code></a></em>)</p>
+<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/fetcher.py"><code>fetcher.py</code></a></em>)</p>
 <p>Request every housing counselor in HUD's database
 with a request to <code>https://data.hud.gov/Housing_Counselor/searchByLocation?Lat=38.8951&amp;Long=-77.0367&amp;Distance=5000</code>.</p>
 <p>It returns thousands of results like this:</p>
@@ -359,24 +359,24 @@ with a request to <code>https://data.hud.gov/Housing_Counselor/searchByLocation?
 We replace the <code>services</code> value with fully spelled out service descriptions.
 Both of these mappings come from the HUD API.</p>
 <h4 id="save-the-results">Save the results<a class="headerlink" href="#save-the-results" title="Permanent link">¶</a></h4>
-<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/results_archiver.py"><code>results_archiver.py</code></a></em>)</p>
+<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/results_archiver.py"><code>results_archiver.py</code></a></em>)</p>
 <p>Save a copy of the full set of results as a zip file in the home directory.
 The Jenkins job then transfers the zip file to S3 as part of the <code>MAKE JSON</code> step.
 The file is saved in S3 at <code>/archive/{date}.zip</code>.
 This copy can be used as the canonical set of HUD data that day in case of an enforcement action.</p>
 <h4 id="clean-the-results">Clean the results<a class="headerlink" href="#clean-the-results" title="Permanent link">¶</a></h4>
-<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/cleaner.py"><code>cleaner.py</code></a></em>)</p>
+<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/cleaner.py"><code>cleaner.py</code></a></em>)</p>
 <p>Clean the data: Convert latitude and longitude values to float values.
 Convert the the city and organization name to title case.
 Ensure email appears to be an email (otherwise leave it blank).
 If a URL value is present, ensure it begins with <code>http://</code>.</p>
 <h4 id="backfill-missing-latitude-and-longitude-values">Backfill missing latitude and longitude values<a class="headerlink" href="#backfill-missing-latitude-and-longitude-values" title="Permanent link">¶</a></h4>
-<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/geocoder.py"><code>geocoder.py</code></a></em>)</p>
+<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/geocoder.py"><code>geocoder.py</code></a></em>)</p>
 <p>If any counselor records are missing their latitude or longitude data,
 we fill in those values with the lat/long location of the agency's ZIP code.
 This uses the data file created in the Geocode ZIP Codes stage of the Jenkins job (<a href="#geocode-zip-codes">above</a>).</p>
 <h4 id="create-collections-of-results-by-zip-code">Create collections of results by ZIP code<a class="headerlink" href="#create-collections-of-results-by-zip-code" title="Permanent link">¶</a></h4>
-<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/generator.py"><code>generator.py</code></a></em>)</p>
+<p>(<em>in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/generator.py"><code>generator.py</code></a></em>)</p>
 <p>Create an in-memory SQLite database and define a <code>distance_in_miles</code> function in it.
 Fill the database with a three-column table:
 For each counselor in the list, include its latitude and longitude (both in radians) and
@@ -431,9 +431,9 @@ Put the information in a JSON structure like this (but with ten results instead 
 for each file created in the previous step.
 It saves them in an <code>htmls</code> directory on the Jenkins job workspace.
 This step is enabled by default.</p>
-<p>This step calls the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/management/commands/hud_generate_html.py"><code>hud_generate_html</code></a> management command,
-which calls HTML generation code in <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/generator.py"><code>generator.py</code></a>.
-Django renders the <a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/housing_counselor/templates/housing_counselor/pdf_selfcontained.html"><code>housing_counselor/pdf_selfcontained.html</code></a> template with the housing counselor data from each JSON file.
+<p>This step calls the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/management/commands/hud_generate_html.py"><code>hud_generate_html</code></a> management command,
+which calls HTML generation code in <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/generator.py"><code>generator.py</code></a>.
+Django renders the <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/housing_counselor/templates/housing_counselor/pdf_selfcontained.html"><code>housing_counselor/pdf_selfcontained.html</code></a> template with the housing counselor data from each JSON file.
 We save the resulting HTML files on the Jenkins job workspace, in a <code>htmls</code> directory, e.g. <code>htmls/12345.html</code>.</p>
 <h3 id="generate-pdfs">Generate PDFs<a class="headerlink" href="#generate-pdfs" title="Permanent link">¶</a></h3>
 <p>When enabled, the <code>MAKE_PDF</code> step generates a PDF of each file created in the previous step.

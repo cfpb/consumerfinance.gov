@@ -461,19 +461,19 @@ You can get more information by reading the following:</p>
 <p>Gulp is used as a task automation tool.
 Tasks include compiling CSS, creating a standard Webpack workflow for bundling
 scripts, minifying code, linting, running unit tests,
-and <a href="https://github.com/cfpb/consumerfinance.gov/tree/master/gulp">more</a>.</p>
+and <a href="https://github.com/cfpb/consumerfinance.gov/tree/main/gulp">more</a>.</p>
 <h3 id="webpack">Webpack<a class="headerlink" href="#webpack" title="Permanent link">¶</a></h3>
 <p>Wepback is used as a module bundler, although it's capable of more.
 We create page, global, and component-specific bundles.
 The configuration for the bundles is contained in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/config/webpack-config.js"><code>config/webpack-config.js</code></a>.
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/config/webpack-config.js"><code>config/webpack-config.js</code></a>.
 An explanation for the usage of each bundle is contained in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/gulp/tasks/scripts.js"><code>gulp/tasks/scripts.js</code></a>.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/gulp/tasks/scripts.js"><code>gulp/tasks/scripts.js</code></a>.</p>
 <h3 id="routes">Routes<a class="headerlink" href="#routes" title="Permanent link">¶</a></h3>
 <p>Routes are used to serve JavaScript bundles to the browser based
 on the requested URL or Wagtail page's <code>Media</code> definition.
 This happens via code contained in
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/jinja2/v1/_layouts/base.html#L85-L123"><code>base.html</code></a>. This file serves as the base HTML template for serving Wagtail pages.</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_layouts/base.html#L85-L123"><code>base.html</code></a>. This file serves as the base HTML template for serving Wagtail pages.</p>
 <h3 id="wagtail-page-media-class">Wagtail page <code>Media</code> class<a class="headerlink" href="#wagtail-page-media-class" title="Permanent link">¶</a></h3>
 <p>Each atomic component has a <code>Media</code> class that lists the JavaScript files
 that should be loaded via <code>base.html</code>.
@@ -481,7 +481,7 @@ When a page is requested via the browser, code contained in <code>base.html</cod
 loop all atomic components for the requested page and load
 the appropriate atomic JavaScript bundles.</p>
 <p>Here is an example of the <code>Media</code> class on a component,
-<a href="https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/atomic_elements/organisms.py#L223-L244">the <code>EmailSignUp</code> organism</a>:</p>
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L223-L244">the <code>EmailSignUp</code> organism</a>:</p>
 <pre class="highlight"><code class="language-python">class Media:
     js = ['email-signup.js']</code></pre>
 
