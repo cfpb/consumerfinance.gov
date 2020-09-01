@@ -36,7 +36,7 @@ class FilterableDateField(forms.DateField):
 
     default_widget_attrs = {
         'class': 'a-text-input a-text-input__full',
-        'type': 'text',
+        'type': 'date',
         'placeholder': 'mm/dd/yyyy',
         'data-type': 'date'
     }
