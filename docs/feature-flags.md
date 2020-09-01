@@ -1,6 +1,6 @@
 # Feature flags
 
-Feature flags are implemented using our [Django-Flags](https://github.com/cfpb/django-flags) and [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) apps. The [Django-Flags documentation](https://cfpb.github.io/django-flags) contains an overview of feature flags and how to use them and the [Wagtail-Flags README](https://github.com/cfpb/wagtail-flags/blob/master/README.md) describes how to add feature flag conditions in the Wagtail admin.
+Feature flags are implemented using our [Django-Flags](https://github.com/cfpb/django-flags) and [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) apps. The [Django-Flags documentation](https://cfpb.github.io/django-flags) contains an overview of feature flags and how to use them and the [Wagtail-Flags README](https://github.com/cfpb/wagtail-flags/blob/main/README.md) describes how to add feature flag conditions in the Wagtail admin.
 
 This document covers how to add and use feature flags with consumerfinance.gov and the conventions we have around their use.
 
@@ -19,7 +19,7 @@ This document covers how to add and use feature flags with consumerfinance.gov a
 
 ## Adding a flag
 
-Feature flags are defined in code in the [`cfgov/settings/base.py`](https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/cfgov/settings/base.py#L562) file as part of the `FLAGS` setting. Each flag consists of a single string and a Python list of its hard-coded conditions (see [Enabling a flag](#enabling-a-flag) below).
+Feature flags are defined in code in the [`cfgov/settings/base.py`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/cfgov/settings/base.py#L562) file as part of the `FLAGS` setting. Each flag consists of a single string and a Python list of its hard-coded conditions (see [Enabling a flag](#enabling-a-flag) below).
 
 ```python
 FLAGS = {
@@ -34,7 +34,7 @@ By convention our flag names are all uppercase, with underscores instead of whit
 
 ## Checking a flag
 
-Flags can be checked either in Python code or in Django or Jinja2 template files. See the full [Wagtail Flags API is documented ](https://github.com/cfpb/wagtail-flags/blob/master/README.md#api) for more information.
+Flags can be checked either in Python code or in Django or Jinja2 template files. See the full [Wagtail Flags API is documented ](https://github.com/cfpb/wagtail-flags/blob/main/README.md#api) for more information.
 
 ### In templates
 
@@ -48,7 +48,7 @@ Most of consumerfinance.gov's templates are Jinja2. In these templates, two temp
 
 See [Enabling a flag](#enabling-a-flag) below for more on flag conditions.
 
-An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56):
+An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56):
 
 ```jinja
 {% if flag_enabled('BETA_NOTICE') and show_banner %}
