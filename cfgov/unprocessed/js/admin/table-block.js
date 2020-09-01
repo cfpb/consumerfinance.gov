@@ -88,10 +88,12 @@ import { stateToHTML } from 'draft-js-export-html';
         RichTextEditor.prototype.beginEditing = function() {
           const initialCellValue = this.instance.getValue();
           const blocksFromHTML = window.DraftJS.convertFromHTML( initialCellValue );
-          const contentState = window.DraftJS.ContentState.createFromBlockArray(
-            blocksFromHTML.contentBlocks,
-            blocksFromHTML.entityMap
-          );
+          const contentState = initialCellValue ?
+            window.DraftJS.ContentState.createFromBlockArray(
+              blocksFromHTML.contentBlocks,
+              blocksFromHTML.entityMap
+            ) :
+            window.DraftJS.ContentState.createFromText( '' );
           const cellValue = window.DraftJS.convertToRaw( contentState );
           const cellProperties = this.cellProperties;
           const instance = this.instance;
