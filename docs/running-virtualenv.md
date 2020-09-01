@@ -10,7 +10,7 @@ which will be used for:
 
  1. **Git operations**.
     Perform Git operations and general development in the repository,
-    such as `git checkout master`.
+    such as `git checkout main`.
  2. **Elasticsearch**.
     Run an Elasticsearch (ES) instance.
     See instructions [below](#2-run-elasticsearch-optional).
@@ -23,10 +23,10 @@ What follows are the specific steps for each of these tabs.
 ### 1. Git operations
 
 From this tab you can do Git operations,
-such as checking out our master branch:
+such as checking out our main branch:
 
 ```bash
-git checkout master
+git checkout main
 ```
 
 #### Updating all dependencies

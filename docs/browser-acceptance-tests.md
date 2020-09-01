@@ -2,7 +2,7 @@
 
 ## Run tests with localhost server
 
-1. Ensure that the following env vars are set (they should already be in your [`.env`](https://github.com/cfpb/consumerfinance.gov/blob/master/.env_SAMPLE) file):
+1. Ensure that the following env vars are set (they should already be in your [`.env`](https://github.com/cfpb/consumerfinance.gov/blob/main/.env_SAMPLE) file):
    - `export TEST_HTTP_HOST=localhost`
    - `export DJANGO_HTTP_PORT=8000`
 1. Then reload the virtual environment if needed: `source .env`
