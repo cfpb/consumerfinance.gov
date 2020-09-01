@@ -87,18 +87,18 @@ import { stateToHTML } from 'draft-js-export-html';
 
         RichTextEditor.prototype.beginEditing = function() {
           const initialCellValue = this.instance.getValue();
-          let contentState
-          if(initialCellValue){
+          let contentState;
+          if ( initialCellValue ) {
             const blocksFromHTML = window.DraftJS.convertFromHTML( initialCellValue );
             const contentState =
             window.DraftJS.ContentState.createFromBlockArray(
               blocksFromHTML.contentBlocks,
               blocksFromHTML.entityMap
-            )
+            );
           } else {
             contentState = window.DraftJS.ContentState.createFromText( '' );
           }
-          
+
           const cellValue = window.DraftJS.convertToRaw( contentState );
           const cellProperties = this.cellProperties;
           const instance = this.instance;
@@ -507,7 +507,7 @@ import { stateToHTML } from 'draft-js-export-html';
       '</div>',
       '</div>',
       '</header>',
-      '<div class="row active nice-padding struct-block object">',      
+      '<div class="row active nice-padding struct-block object">',
       '<label class="hidden-label" for="table-block-editor">Table Cell Input</label>',
       '<input id="table-block-editor" maxlength="255" name="title" type="text" value="" class="data-draftail-input">',
       '</div><br>',
