@@ -102,8 +102,8 @@ if not os.environ.get("GOVDELIVERY_BASE_URL"):
 
 # Use a placeholder image service to replace images that are uploaded to S3
 WAGTAIL_PLACEHOLDERIMAGES_DUMMY = True
-WAGTAIL_PLACEHOLDERIMAGES_SOURCE = "//placedog.net/{width}/{height}/"
+WAGTAIL_PLACEHOLDERIMAGES_SOURCE = "//placekitten.com/{width}/{height}"
 
 CSP_IMG_SRC += (
-    "placedog.net",
+    "placekitten.com",
 )
