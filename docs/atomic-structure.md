@@ -256,23 +256,23 @@ You can get more information by reading the following:
 Gulp is used as a task automation tool.
 Tasks include compiling CSS, creating a standard Webpack workflow for bundling
 scripts, minifying code, linting, running unit tests,
-and [more](https://github.com/cfpb/consumerfinance.gov/tree/master/gulp).
+and [more](https://github.com/cfpb/consumerfinance.gov/tree/main/gulp).
 
 ### Webpack
 
 Wepback is used as a module bundler, although it's capable of more.
 We create page, global, and component-specific bundles.
 The configuration for the bundles is contained in
-[`config/webpack-config.js`](https://github.com/cfpb/consumerfinance.gov/blob/master/config/webpack-config.js).
+[`config/webpack-config.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/config/webpack-config.js).
 An explanation for the usage of each bundle is contained in
-[`gulp/tasks/scripts.js`](https://github.com/cfpb/consumerfinance.gov/blob/master/gulp/tasks/scripts.js).
+[`gulp/tasks/scripts.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/gulp/tasks/scripts.js).
 
 ### Routes
 
 Routes are used to serve JavaScript bundles to the browser based
 on the requested URL or Wagtail page's `Media` definition.
 This happens via code contained in
-[`base.html`](https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/jinja2/v1/_layouts/base.html#L85-L123). This file serves as the base HTML template for serving Wagtail pages.
+[`base.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_layouts/base.html#L85-L123). This file serves as the base HTML template for serving Wagtail pages.
 
 ### Wagtail page `Media` class
 
@@ -283,7 +283,7 @@ loop all atomic components for the requested page and load
 the appropriate atomic JavaScript bundles.
 
 Here is an example of the `Media` class on a component,
-[the `EmailSignUp` organism](https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/v1/atomic_elements/organisms.py#L223-L244):
+[the `EmailSignUp` organism](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L223-L244):
 
 ```python
 class Media:

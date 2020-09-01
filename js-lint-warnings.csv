@@ -1,0 +1,595 @@
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+sort-imports,Expected 'all' syntax before 'single' syntax
+max-lines-per-function,Function 'Autocomplete' has too many lines (202). Maximum allowed is 50
+max-statements,Function 'Autocomplete' has too many statements (37). Maximum allowed is 25
+no-warning-comments,Unexpected 'todo' comment
+complexity,Method 'keydown' has a complexity of 7. Maximum allowed is 4
+max-lines-per-function,Function 'GlobalSearch' has too many lines (92). Maximum allowed is 50
+complexity,Function '_handleBodyClick' has a complexity of 5. Maximum allowed is 4
+no-mixed-operators,Unexpected mix of '&&' and '||'
+no-mixed-operators,Unexpected mix of '&&' and '||'
+no-mixed-operators,Unexpected mix of '||' and '&&'
+no-mixed-operators,Unexpected mix of '||' and '&&'
+no-unused-vars,'event' is defined but never used
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+max-lines-per-function,Function 'Multiselect' has too many lines (323). Maximum allowed is 50
+no-warning-comments,Unexpected 'todo' comment
+max-lines-per-function,Function '_populateMarkup' has too many lines (71). Maximum allowed is 50
+complexity,Function '_highlight' has a complexity of 5. Maximum allowed is 4
+complexity,Function '_updateSelections' has a complexity of 8. Maximum allowed is 4
+no-unused-vars,'filterIndices' is defined but never used
+max-lines-per-function,Function '_bindEvents' has too many lines (73). Maximum allowed is 50
+complexity,Method 'keydown' has a complexity of 9. Maximum allowed is 4
+complexity,Method 'keydown' has a complexity of 5. Maximum allowed is 4
+max-lines-per-function,Function 'MultiselectModel' has too many lines (101). Maximum allowed is 50
+max-statements,Function 'MultiselectModel' has too many statements (29). Maximum allowed is 25
+max-lines-per-function,Function 'Notification' has too many lines (74). Maximum allowed is 50
+complexity,Function 'init' has a complexity of 5. Maximum allowed is 4
+complexity,Function '_setType' has a complexity of 5. Maximum allowed is 4
+complexity,Function 'BreakpointHandler' has a complexity of 8. Maximum allowed is 4
+no-mixed-operators,Unexpected mix of '&&' and '||'
+no-mixed-operators,Unexpected mix of '&&' and '||'
+complexity,Function 'handleViewportChange' has a complexity of 5. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+no-new,Do not use 'new' for side effects
+guard-for-in,The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype
+complexity,Method 'getVendorPrefix' has a complexity of 6. Maximum allowed is 4
+no-mixed-operators,Unexpected mix of '*' and '+'
+no-mixed-operators,Unexpected mix of '*' and '+'
+max-len,This line has a length of 81. Maximum allowed is 80
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '+' and '*'
+complexity,Function 'init' has a complexity of 5. Maximum allowed is 4
+max-lines-per-function,Function 'EmailPopup' has too many lines (54). Maximum allowed is 50
+space-in-parens,There must be a space after this paren
+max-lines-per-function,Function 'FilterableListControls' has too many lines (144). Maximum allowed is 50
+no-warning-comments,Unexpected 'todo' comment
+complexity,Function '_validateField' has a complexity of 5. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+max-lines-per-function,Function 'FormSubmit' has too many lines (157). Maximum allowed is 50
+complexity,Function has a complexity of 12. Maximum allowed is 4
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+complexity,Function '_cacheFields' has a complexity of 9. Maximum allowed is 4
+max-len,This line has a length of 90. Maximum allowed is 80
+complexity,Function has a complexity of 8. Maximum allowed is 4
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+max-lines-per-function,Function 'MegaMenu' has too many lines (117). Maximum allowed is 50
+max-statements,Function 'init' has too many statements (28). Maximum allowed is 25
+max-lines-per-function,Function 'MegaMenuDesktop' has too many lines (134). Maximum allowed is 50
+max-statements,Function 'MegaMenuDesktop' has too many statements (29). Maximum allowed is 25
+no-warning-comments,Unexpected 'todo' comment
+no-unused-vars,'type' is defined but never used
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+max-lines-per-function,Function 'MegaMenuMobile' has too many lines (186). Maximum allowed is 50
+max-statements,Function 'MegaMenuMobile' has too many statements (36). Maximum allowed is 25
+no-unused-vars,'_activeMenuDom' is assigned a value but never used
+complexity,Function '_handleTriggerClick' has a complexity of 5. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+max-lines-per-function,Function 'VideoPlayer' has too many lines (88). Maximum allowed is 50
+max-statements,Function 'VideoPlayer' has too many statements (30). Maximum allowed is 25
+max-lines-per-function,Function 'FlyoutMenu' has too many lines (263). Maximum allowed is 50
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+complexity,Function 'expand' has a complexity of 7. Maximum allowed is 4
+complexity,Function 'collapse' has a complexity of 8. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+max-lines-per-function,Function 'BaseTransition' has too many lines (148). Maximum allowed is 50
+max-statements,Function 'BaseTransition' has too many statements (34). Maximum allowed is 25
+complexity,Function '_flush' has a complexity of 5. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+complexity,Function '_getTransitionEndEvent' has a complexity of 5. Maximum allowed is 4
+max-lines-per-function,Function 'MoveTransition' has too many lines (56). Maximum allowed is 50
+max-lines-per-function,Function 'FormModel' has too many lines (98). Maximum allowed is 50
+complexity,Function '_cacheFields' has a complexity of 12. Maximum allowed is 4
+max-statements,Function '_cacheFields' has too many statements (32). Maximum allowed is 25
+no-unused-vars,'shouldValidate' is defined but never used
+no-shadow,'shouldValidate' is already declared in the upper scope
+complexity,Function has a complexity of 6. Maximum allowed is 4
+complexity,Function 'assign' has a complexity of 7. Maximum allowed is 4
+complexity,Function '_findElements' has a complexity of 5. Maximum allowed is 4
+complexity,Function 'attach' has a complexity of 5. Maximum allowed is 4
+complexity,Function '_inBreakpointRange' has a complexity of 6. Maximum allowed is 4
+complexity,Function 'viewportIsIn' has a complexity of 9. Maximum allowed is 4
+complexity,Function 'create' has a complexity of 6. Maximum allowed is 4
+complexity,Function 'closest' has a complexity of 5. Maximum allowed is 4
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-unused-vars,'event' is defined but never used
+no-mixed-operators,Unexpected mix of '*' and '-'
+no-mixed-operators,Unexpected mix of '*' and '-'
+complexity,Function 'scrollTo' has a complexity of 6. Maximum allowed is 4
+complexity,Function 'isEmpty' has a complexity of 5. Maximum allowed is 4
+no-mixed-operators,Unexpected mix of '||' and '&&'
+no-mixed-operators,Unexpected mix of '||' and '&&'
+no-warning-comments,Unexpected 'todo' comment
+complexity,Function 'date' has a complexity of 7. Maximum allowed is 4
+no-useless-escape,Unnecessary escape character: \-
+no-useless-escape,Unnecessary escape character: \-
+no-useless-escape,Unnecessary escape character: \-
+complexity,Function 'email' has a complexity of 10. Maximum allowed is 4
+no-useless-escape,Unnecessary escape character: \/
+no-useless-escape,Unnecessary escape character: \/
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+complexity,Function 'empty' has a complexity of 5. Maximum allowed is 4
+max-lines-per-function,Arrow function 'getCountyState' has too many lines (63). Maximum allowed is 50
+complexity,Arrow function 'isDateValid' has a complexity of 6. Maximum allowed is 4
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+no-console,Unexpected console statement
+complexity,Function 'validateFeedback' has a complexity of 7. Maximum allowed is 4
+no-unused-vars,'chart' is assigned a value but never used
+no-unused-vars,'map' is assigned a value but never used
+max-len,This line has a length of 96. Maximum allowed is 80
+max-len,This line has a length of 105. Maximum allowed is 80
+max-len,This line has a length of 99. Maximum allowed is 80
+max-len,This line has a length of 117. Maximum allowed is 80
+max-len,This line has a length of 84. Maximum allowed is 80
+max-len,This line has a length of 87. Maximum allowed is 80
+max-lines-per-function,Arrow function has too many lines (90). Maximum allowed is 50
+no-warning-comments,Unexpected 'todo' comment
+max-lines-per-function,Function has too many lines (72). Maximum allowed is 50
+complexity,Function has a complexity of 14. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+max-len,This line has a length of 83. Maximum allowed is 80
+complexity,Function has a complexity of 6. Maximum allowed is 4
+max-len,This line has a length of 87. Maximum allowed is 80
+complexity,Function has a complexity of 8. Maximum allowed is 4
+max-statements,Function has too many statements (26). Maximum allowed is 25
+max-len,This line has a length of 88. Maximum allowed is 80
+complexity,Function has a complexity of 5. Maximum allowed is 4
+max-len,This line has a length of 86. Maximum allowed is 80
+max-len,This line has a length of 84. Maximum allowed is 80
+max-len,This line has a length of 84. Maximum allowed is 80
+max-len,This line has a length of 84. Maximum allowed is 80
+max-lines-per-function,Function has too many lines (68). Maximum allowed is 50
+complexity,Function has a complexity of 18. Maximum allowed is 4
+complexity,Function has a complexity of 14. Maximum allowed is 4
+max-statements,Function has too many statements (30). Maximum allowed is 25
+max-len,This line has a length of 81. Maximum allowed is 80
+complexity,Function has a complexity of 7. Maximum allowed is 4
+max-len,This line has a length of 82. Maximum allowed is 80
+complexity,Function has a complexity of 5. Maximum allowed is 4
+complexity,Function has a complexity of 6. Maximum allowed is 4
+complexity,Arrow function has a complexity of 6. Maximum allowed is 4
+complexity,Arrow function has a complexity of 5. Maximum allowed is 4
+complexity,Arrow function has a complexity of 6. Maximum allowed is 4
+complexity,Arrow function has a complexity of 6. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+require-jsdoc,Missing JSDoc comment
+id-blacklist,Identifier 'e' is blacklisted
+id-blacklist,Identifier 'e' is blacklisted
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+max-len,This line has a length of 109. Maximum allowed is 80
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+no-shadow,'rows' is already declared in the upper scope
+require-jsdoc,Missing JSDoc comment
+no-unused-vars,'AccessibleInteractionsListeners' is assigned a value but never used
+no-unused-vars,'OAHRCAnalytics' is assigned a value but never used
+max-lines-per-function,Function has too many lines (97). Maximum allowed is 50
+max-statements,Function has too many statements (36). Maximum allowed is 25
+no-unused-vars,'OAHCDAnalytics' is assigned a value but never used
+max-lines-per-function,Function has too many lines (88). Maximum allowed is 50
+require-jsdoc,Missing JSDoc comment
+no-shadow,'label' is already declared in the upper scope
+no-unused-vars,'OAHLEAnalytics' is assigned a value but never used
+no-unused-vars,'HashURLListener' is assigned a value but never used
+no-unused-vars,'HMDAAnalytics' is assigned a value but never used
+max-lines-per-function,Function has too many lines (59). Maximum allowed is 50
+no-warning-comments,Unexpected 'todo' comment
+no-unused-vars,'PFCAnalytics' is assigned a value but never used
+max-lines-per-function,Function has too many lines (161). Maximum allowed is 50
+max-statements,Function has too many statements (26). Maximum allowed is 25
+line-comment-position,Expected comment to be above code
+no-inline-comments,Unexpected comment inline with code
+no-unused-vars,'schoolsZeroed' is assigned a value but never used
+no-unused-vars,'schoolID' is assigned a value but never used
+no-unused-vars,'ev' is defined but never used
+no-unused-vars,'event' is defined but never used
+complexity,Function 'newSchoolEvent' has a complexity of 8. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'BYCAnalytics' is assigned a value but never used
+max-lines-per-function,Function has too many lines (136). Maximum allowed is 50
+complexity,Function 'calculateAge' has a complexity of 5. Maximum allowed is 4
+max-lines-per-function,Function has too many lines (117). Maximum allowed is 50
+no-unused-vars,'TabNavigationTracking' is assigned a value but never used
+complexity,Function 'getBackForwardNavigation' has a complexity of 5. Maximum allowed is 4
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '&' and '|'
+no-mixed-operators,Unexpected mix of '&' and '|'
+no-console,Unexpected console statement
+camelcase,Identifier 'marker_array' is not in camel case
+camelcase,Identifier 'zip_marker' is not in camel case
+max-lines-per-function,Function 'updateMap' has too many lines (59). Maximum allowed is 50
+camelcase,Identifier 'marker_array' is not in camel case
+camelcase,Identifier 'marker_array' is not in camel case
+camelcase,Identifier 'marker_array' is not in camel case
+camelcase,Identifier 'zip_marker' is not in camel case
+no-unused-vars,'bounds' is assigned a value but never used
+camelcase,Identifier 'zip_marker' is not in camel case
+complexity,Arrow function has a complexity of 6. Maximum allowed is 4
+no-shadow,'lat' is already declared in the upper scope
+no-shadow,'lng' is already declared in the upper scope
+camelcase,Identifier 'marker_array' is not in camel case
+complexity,Function 'checkHudData' has a complexity of 7. Maximum allowed is 4
+no-unused-vars,'scrollTo' is defined but never used
+complexity,Method 'updateImageUI' has a complexity of 5. Maximum allowed is 4
+complexity,Method 'updateAttention' has a complexity of 5. Maximum allowed is 4
+complexity,Method 'resizeImage' has a complexity of 9. Maximum allowed is 4
+complexity,Method 'paginate' has a complexity of 6. Maximum allowed is 4
+max-lines-per-function,Method 'initializeEvents' has too many lines (75). Maximum allowed is 50
+no-unused-vars,'delay' is assigned a value but never used
+func-style,Expected a function declaration
+max-lines-per-function,Function has too many lines (131). Maximum allowed is 50
+require-jsdoc,Missing JSDoc comment
+complexity,Function 'addOption' has a complexity of 5. Maximum allowed is 4
+require-jsdoc,Missing JSDoc comment
+no-unused-vars,'schoolModel' is defined but never used
+no-unused-vars,'stateModel' is defined but never used
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'updateSchoolData' is defined but never used
+no-unused-vars,'updateState' is defined but never used
+func-style,Expected a function declaration
+no-console,Unexpected console statement
+no-useless-escape,Unnecessary escape character: \-
+max-len,This line has a length of 98. Maximum allowed is 80
+complexity,Arrow function has a complexity of 6. Maximum allowed is 4
+complexity,Arrow function has a complexity of 5. Maximum allowed is 4
+max-len,This line has a length of 88. Maximum allowed is 80
+func-style,Expected a function declaration
+complexity,Function has a complexity of 8. Maximum allowed is 4
+max-statements,Function has too many statements (27). Maximum allowed is 25
+max-len,This line has a length of 100. Maximum allowed is 80
+max-len,This line has a length of 85. Maximum allowed is 80
+camelcase,Identifier 'html_url' is not in camel case
+no-console,Unexpected console statement
+no-shadow,'field' is already declared in the upper scope
+guard-for-in,The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype
+no-warning-comments,Unexpected 'todo' comment
+no-console,Unexpected console statement
+complexity,Function 'render' has a complexity of 9. Maximum allowed is 4
+no-unused-vars,'cb' is defined but never used
+sort-imports,Imports should be sorted alphabetically
+max-len,This line has a length of 90. Maximum allowed is 80
+no-console,Unexpected console statement
+require-jsdoc,Missing JSDoc comment
+no-unused-vars,'index' is defined but never used
+id-blacklist,Identifier 'e' is blacklisted
+id-blacklist,Identifier 'e' is blacklisted
+max-lines-per-function,Function has too many lines (59). Maximum allowed is 50
+no-unused-vars,'evt' is defined but never used
+no-console,Unexpected console statement
+no-unused-vars,'results' is defined but never used
+no-unused-vars,'file' is defined but never used
+max-lines-per-function,Function has too many lines (75). Maximum allowed is 50
+complexity,Function has a complexity of 5. Maximum allowed is 4
+complexity,Method 'complete' has a complexity of 5. Maximum allowed is 4
+no-unused-vars,'results' is defined but never used
+no-unused-vars,'file' is defined but never used
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+line-comment-position,Expected comment to be above code
+no-inline-comments,Unexpected comment inline with code
+func-style,Expected a function declaration
+require-jsdoc,Missing JSDoc comment
+no-useless-escape,Unnecessary escape character: \/
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+complexity,Function 'createEl' has a complexity of 5. Maximum allowed is 4
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+no-unused-vars,'className' is defined but never used
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+no-unused-vars,'className' is defined but never used
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+complexity,Function 'filter' has a complexity of 6. Maximum allowed is 4
+no-shadow,'filter' is already declared in the upper scope
+no-unused-vars,'_propName' is assigned a value but never used
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+no-shadow,'filter' is already declared in the upper scope
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+require-jsdoc,Missing JSDoc comment
+no-unused-vars,'map' is defined but never used
+camelcase,Identifier 'marker_array' is not in camel case
+no-unused-vars,'marker_array' is assigned a value but never used
+camelcase,Identifier 'zip_marker' is not in camel case
+no-unused-vars,'zip_marker' is assigned a value but never used
+no-unused-vars,'markerDomCache' is assigned a value but never used
+complexity,Function has a complexity of 5. Maximum allowed is 4
+no-unused-vars,'mapTDs' is assigned a value but never used
+no-shadow,'map' is already declared in the upper scope
+no-unused-vars,'marker' is assigned a value but never used
+line-comment-position,Expected comment to be above code
+no-inline-comments,Unexpected comment inline with code
+no-unused-vars,'index' is defined but never used
+require-jsdoc,Missing JSDoc comment
+max-len,This line has a length of 84. Maximum allowed is 80
+max-len,This line has a length of 90. Maximum allowed is 80
+max-len,This line has a length of 86. Maximum allowed is 80
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+sort-imports,Imports should be sorted alphabetically
+require-jsdoc,Missing JSDoc comment
+complexity,Function 'isNumber' has a complexity of 5. Maximum allowed is 4
+complexity,Function 'toggleCFNotification' has a complexity of 6. Maximum allowed is 4
+complexity,Function 'toPrecision' has a complexity of 5. Maximum allowed is 4
+max-len,This line has a length of 103. Maximum allowed is 80
+require-jsdoc,Missing JSDoc comment
+complexity,Function 'formatNegative' has a complexity of 5. Maximum allowed is 4
+no-console,Unexpected console statement
+complexity,Function 'getQueryParameter' has a complexity of 5. Maximum allowed is 4
+no-useless-escape,Unnecessary escape character: \[
+max-lines-per-function,Function 'RateCheckerChart' has too many lines (158). Maximum allowed is 50
+max-lines-per-function,Function '_createHighcharts' has too many lines (85). Maximum allowed is 50
+max-lines-per-function,Function 'Slider' has too many lines (74). Maximum allowed is 50
+max-statements,Function 'Slider' has too many statements (26). Maximum allowed is 25
+no-unused-vars,'position' is defined but never used
+no-unused-vars,'value' is defined but never used
+complexity,Function 'getSelection' has a complexity of 8. Maximum allowed is 4
+complexity,Function 'update' has a complexity of 7. Maximum allowed is 4
+sort-imports,Imports should be sorted alphabetically
+sort-imports,Imports should be sorted alphabetically
+no-warning-comments,Unexpected 'todo' comment
+sort-imports,Imports should be sorted alphabetically
+max-lines-per-function,Function 'updateView' has too many lines (108). Maximum allowed is 50
+camelcase,Identifier 'loan_amount' is not in camel case
+camelcase,Identifier 'rate_structure' is not in camel case
+camelcase,Identifier 'loan_term' is not in camel case
+camelcase,Identifier 'loan_type' is not in camel case
+camelcase,Identifier 'arm_type' is not in camel case
+max-lines-per-function,Arrow function has too many lines (65). Maximum allowed is 50
+complexity,Arrow function has a complexity of 10. Maximum allowed is 4
+max-statements,Arrow function has too many statements (39). Maximum allowed is 25
+no-shadow,'key' is already declared in the upper scope
+max-lines-per-function,Function 'checkForJumbo' has too many lines (51). Maximum allowed is 50
+complexity,Function 'checkForJumbo' has a complexity of 9. Maximum allowed is 4
+max-statements,Function 'checkForJumbo' has too many statements (34). Maximum allowed is 25
+max-lines-per-function,Function 'processCounty' has too many lines (61). Maximum allowed is 50
+complexity,Function 'processCounty' has a complexity of 10. Maximum allowed is 4
+max-statements,Function 'processCounty' has too many statements (35). Maximum allowed is 25
+complexity,Function 'renderDownPayment' has a complexity of 8. Maximum allowed is 4
+complexity,Function 'checkARM' has a complexity of 5. Maximum allowed is 4
+max-statements,Function 'init' has too many statements (28). Maximum allowed is 25
+max-lines-per-function,Function 'registerEvents' has too many lines (67). Maximum allowed is 50
+no-unused-vars,'i' is defined but never used
+no-unused-vars,'val' is defined but never used
+complexity,Method 'updateImageUI' has a complexity of 5. Maximum allowed is 4
+complexity,Method 'updateAttention' has a complexity of 5. Maximum allowed is 4
+complexity,Method 'resizeImage' has a complexity of 9. Maximum allowed is 4
+complexity,Method 'paginate' has a complexity of 6. Maximum allowed is 4
+max-lines-per-function,Method 'initializeEvents' has too many lines (87). Maximum allowed is 50
+no-unused-vars,'delay' is assigned a value but never used
+func-style,Expected a function declaration
+no-console,Unexpected console statement
+func-style,Expected a function declaration
+func-style,Expected a function declaration
+func-style,Expected a function declaration
+no-unused-vars,'xhr' is assigned a value but never used
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'getConstantsValue' is defined but never used
+no-unused-vars,'getStateValue' is defined but never used
+no-unused-vars,'updateGradMeterChart' is defined but never used
+no-unused-vars,'updateRepaymentMeterChart' is defined but never used
+no-unused-vars,'updateView' is defined but never used
+no-unused-vars,'updateView' is defined but never used
+func-style,Expected a function declaration
+guard-for-in,The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype
+func-style,Expected a function declaration
+complexity,Function 'updateModelsFromQueryString' has a complexity of 8. Maximum allowed is 4
+no-unused-vars,'navigationView' is defined but never used
+max-len,This line has a length of 81. Maximum allowed is 80
+no-unused-vars,'updateFinancialView' is defined but never used
+complexity,Arrow function has a complexity of 6. Maximum allowed is 4
+no-unused-vars,'updateFinancialView' is defined but never used
+complexity,Arrow function 'calculateTotals' has a complexity of 5. Maximum allowed is 4
+no-unused-vars,'remaining' is assigned a value but never used
+complexity,Method '_getSalaryRange' has a complexity of 5. Maximum allowed is 4
+complexity,Method 'setValuesByRegion' has a complexity of 5. Maximum allowed is 4
+no-unused-vars,'updateAffordingChart' is defined but never used
+no-unused-vars,'updateCostOfBorrowingChart' is defined but never used
+no-unused-vars,'updateFinancialView' is defined but never used
+no-unused-vars,'updateMakePlanChart' is defined but never used
+no-unused-vars,'updateMaxDebtChart' is defined but never used
+sort-imports,Imports should be sorted alphabetically
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+max-len,This line has a length of 85. Maximum allowed is 80
+complexity,Arrow function '_calculateTotals' has a complexity of 6. Maximum allowed is 4
+guard-for-in,The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype
+no-unused-vars,'errors' is assigned a value but never used
+guard-for-in,The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype
+max-len,This line has a length of 99. Maximum allowed is 80
+max-len,This line has a length of 86. Maximum allowed is 80
+max-len,This line has a length of 90. Maximum allowed is 80
+max-len,This line has a length of 101. Maximum allowed is 80
+max-len,This line has a length of 81. Maximum allowed is 80
+complexity,Arrow function '_enforceLimits' has a complexity of 5. Maximum allowed is 4
+guard-for-in,The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype
+max-len,This line has a length of 96. Maximum allowed is 80
+max-len,This line has a length of 95. Maximum allowed is 80
+max-len,This line has a length of 100. Maximum allowed is 80
+max-len,This line has a length of 89. Maximum allowed is 80
+max-len,This line has a length of 89. Maximum allowed is 80
+max-len,This line has a length of 85. Maximum allowed is 80
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'bindEvent' is defined but never used
+no-unused-vars,'studentDebtCalculator' is defined but never used
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'getConstantsValue' is defined but never used
+no-unused-vars,'getFinancialValue' is defined but never used
+no-unused-vars,'getStateValue' is defined but never used
+no-unused-vars,'constantsModel' is defined but never used
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'updateFinancial' is defined but never used
+no-unused-vars,'updateFinancialsFromSchool' is defined but never used
+max-lines-per-function,Function 'debtCalculator' has too many lines (96). Maximum allowed is 50
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+guard-for-in,The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype
+no-mixed-operators,Unexpected mix of '*' and '+'
+no-mixed-operators,Unexpected mix of '*' and '+'
+no-mixed-operators,Unexpected mix of '*' and '+'
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '*' and '+'
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '+' and '*'
+no-mixed-operators,Unexpected mix of '+' and '/'
+no-mixed-operators,Unexpected mix of '+' and '/'
+complexity,Function 'stringToNum' has a complexity of 6. Maximum allowed is 4
+no-useless-escape,Unnecessary escape character: \.
+require-jsdoc,Missing JSDoc comment
+complexity,Function 'enforceRange' has a complexity of 9. Maximum allowed is 4
+func-style,Expected a function declaration
+max-lines-per-function,Function 'buildUrlQueryString' has too many lines (91). Maximum allowed is 50
+complexity,Function 'buildUrlQueryString' has a complexity of 9. Maximum allowed is 4
+no-warning-comments,Unexpected 'todo' comment
+no-warning-comments,Unexpected 'todo' comment
+no-unused-vars,'replaceStateInHistory' is defined but never used
+no-unused-vars,'getAllStateValues' is defined but never used
+sort-imports,Imports should be sorted alphabetically
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+max-len,This line has a length of 81. Maximum allowed is 80
+max-len,This line has a length of 92. Maximum allowed is 80
+sort-imports,Imports should be sorted alphabetically
+no-unused-vars,'closest' is defined but never used
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'updateAffordingChart' is defined but never used
+no-unused-vars,'updateCostOfBorrowingChart' is defined but never used
+max-len,This line has a length of 82. Maximum allowed is 80
+no-unused-vars,'isRate' is assigned a value but never used
+no-unused-vars,'isFee' is assigned a value but never used
+no-unused-vars,'updateAffordingChart' is defined but never used
+no-unused-vars,'updateCostOfBorrowingChart' is defined but never used
+no-unused-vars,'updateExpensesView' is defined but never used
+no-unused-vars,'updateMakePlanChart' is defined but never used
+no-unused-vars,'updateMaxDebtChart' is defined but never used
+sort-imports,Imports should be sorted alphabetically
+no-unused-vars,'closest' is defined but never used
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'createFinancial' is defined but never used
+no-unused-vars,'offerContent' is assigned a value but never used
+no-unused-vars,'costsContent' is assigned a value but never used
+no-unused-vars,'event' is defined but never used
+no-warning-comments,Unexpected 'todo' comment
+complexity,Arrow function has a complexity of 6. Maximum allowed is 4
+no-unused-vars,'body' is defined but never used
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+no-unused-vars,'replaceStateInHistory' is defined but never used
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+max-len,This line has a length of 84. Maximum allowed is 80
+max-len,This line has a length of 90. Maximum allowed is 80
+no-unused-vars,'event' is defined but never used
+no-unused-vars,'event' is defined but never used
+no-warning-comments,Unexpected 'todo' comment
+sort-imports,Imports should be sorted alphabetically
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+guard-for-in,The body of a for-in should be wrapped in an if statement to filter unwanted properties from the prototype
+no-unused-vars,'event' is defined but never used
+no-warning-comments,Unexpected 'todo' comment
+no-unused-vars,'campus' is assigned a value but never used
+no-unused-vars,'control' is assigned a value but never used
+complexity,Function 'getBitmask' has a complexity of 5. Maximum allowed is 4
+require-jsdoc,Missing JSDoc comment
+max-lines-per-function,Function 'routeOptionReducer' has too many lines (154). Maximum allowed is 50
+complexity,Function 'routeOptionReducer' has a complexity of 20. Maximum allowed is 4
+max-statements,Function 'routeOptionReducer' has too many statements (27). Maximum allowed is 25
+no-useless-escape,Unnecessary escape character: \.
+max-len,This line has a length of 82. Maximum allowed is 80
+max-len,This line has a length of 83. Maximum allowed is 80
+sort-imports,Imports should be sorted alphabetically
+max-len,This line has a length of 93. Maximum allowed is 80
+complexity,Function 'isValidAverageCost' has a complexity of 5. Maximum allowed is 4
+sort-imports,Imports should be sorted alphabetically
+max-lines-per-function,Function 'inputView' has too many lines (53). Maximum allowed is 50
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+sort-imports,Imports should be sorted alphabetically
+max-len,This line has a length of 93. Maximum allowed is 80
+require-jsdoc,Missing JSDoc comment
+max-lines-per-function,Function 'TodoNotification' has too many lines (65). Maximum allowed is 50
+complexity,Function '_init' has a complexity of 5. Maximum allowed is 4
+sort-imports,Imports should be sorted alphabetically
+max-lines-per-function,Function 'BudgetFormView' has too many lines (55). Maximum allowed is 50
+no-unused-vars,'_' is defined but never used
+sort-imports,Imports should be sorted alphabetically
+max-lines-per-function,Function 'reviewChoiceView' has too many lines (89). Maximum allowed is 50
+complexity,Function '_handleStateUpdate' has a complexity of 5. Maximum allowed is 4
+sort-imports,Imports should be sorted alphabetically
+max-lines-per-function,Function 'reviewDetailsView' has too many lines (57). Maximum allowed is 50
+complexity,Function '_shouldUpdate' has a complexity of 6. Maximum allowed is 4
+complexity,Function '_handleStateUpdate' has a complexity of 5. Maximum allowed is 4
+require-jsdoc,Missing JSDoc comment
+max-len,This line has a length of 87. Maximum allowed is 80
+max-len,This line has a length of 95. Maximum allowed is 80
+max-lines-per-function,Function 'routeDetailsView' has too many lines (76). Maximum allowed is 50
+complexity,Method 'render' has a complexity of 7. Maximum allowed is 4
+sort-imports,Imports should be sorted alphabetically
+max-lines-per-function,Function 'RouteOptionFormView' has too many lines (84). Maximum allowed is 50
+sort-imports,Expected 'multiple' syntax before 'single' syntax
+max-lines-per-function,Function 'averageCostView' has too many lines (83). Maximum allowed is 50
+no-unused-vars,'event' is defined but never used
+require-jsdoc,Missing JSDoc comment
+sort-imports,Imports should be sorted alphabetically
+no-mixed-operators,Unexpected mix of '||' and '&&'
+no-mixed-operators,Unexpected mix of '||' and '&&'
+max-lines-per-function,Function 'daysPerWeekView' has too many lines (61). Maximum allowed is 50
+no-unused-vars,'event' is defined but never used
+max-lines-per-function,Function 'milesView' has too many lines (64). Maximum allowed is 50
+no-unused-vars,'event' is defined but never used
+max-lines-per-function,Function 'transitTimeView' has too many lines (61). Maximum allowed is 50
+complexity,Function '_setResponse' has a complexity of 5. Maximum allowed is 4

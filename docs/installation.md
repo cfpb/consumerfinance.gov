@@ -106,7 +106,7 @@ brew install yarn --ignore-dependencies
 The site uses a proprietary licensed font, Avenir.
 If you want to pull this from a content delivery network (CDN),
 you can set the
-[`@use-font-cdn`](https://github.com/cfpb/consumerfinance.gov/blob/master/cfgov/unprocessed/css/main.less#L30)
+[`@use-font-cdn`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/css/main.less#L30)
 to `true` and rebuild the assets with `yarn run gulp build`.
 If you want to install self-hosted fonts locally, you can place the font files
 in `static.in/cfgov-fonts/fonts/` and restart the local web server.
@@ -277,7 +277,7 @@ browser, and see a database error.
     #### 1. Install pipx, if you haven't yet
 
     If you have not yet set up pipx on your computer, follow our
-    [guide to installing and using pipx](https://github.com/cfpb/development/blob/master/guides/pipx.md)
+    [guide to installing and using pipx](https://github.com/cfpb/development/blob/main/guides/pipx.md)
     to do so.
 
     #### 2. Install docker-compose with pipx

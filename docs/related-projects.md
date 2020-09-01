@@ -18,7 +18,7 @@ We have six satellite apps that are maintained outside of the consumerfinance.go
 - [teachers-digital-platform](https://github.com/cfpb/teachers-digital-platform)
 
 These satellite apps are imported into consumerfinance.gov as part of the project
-[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/master/requirements/libraries.txt).
+[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt).
 
 !!! note "Thinking about making a new satellite app?"
     Satellite apps were originally built to be imported into the
@@ -51,7 +51,7 @@ want or need to test their work as part of the larger consumerfinance.gov projec
 
 The standard [installation](../installation/) process for consumerfinance.gov
 includes whatever versions of these packages are specified in project 
-[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/master/requirements/libraries.txt).
+[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt).
 Developers may want to temporarily or permanently replace those with a local
 copy of package source code.
 
@@ -112,7 +112,7 @@ container, sibling directories or other locations where you might clone
 other repositories are not.
 
 For this reason, the Docker setup provides the ability to use the local
-[`consumerfinance.gov/develop-apps`](https://github.com/cfpb/consumerfinance.gov/tree/master/develop-apps)
+[`consumerfinance.gov/develop-apps`](https://github.com/cfpb/consumerfinance.gov/tree/main/develop-apps)
 subdirectory as place to put local copies of Python packages.
 
 Any packages put there (e.g. via a `git clone` of a satellite apps' repo)
@@ -140,7 +140,7 @@ cd retirement
 ```
 
 If the satellite app needs any Python requirements that are not specified in 
-[the consumerfinance.gov requirements](https://github.com/cfpb/consumerfinance.gov/tree/master/requirements/), 
+[the consumerfinance.gov requirements](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/), 
 they will need to be installed seperately by accessing the Python container shell
 and using `pip`:
 

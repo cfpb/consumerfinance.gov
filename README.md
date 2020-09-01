@@ -1,8 +1,6 @@
 # consumerfinance.gov
 
-[![Build Status](https://github.com/cfpb/consumerfinance.gov/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/consumerfinance.gov/actions)
-
-The master repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
+The primary repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
 This Django project includes the front-end assets and build tools,
 [Jinja templates](https://jinja.palletsprojects.com/) for front-end rendering,
 code to configure our CMS, [Wagtail](https://wagtail.io/),

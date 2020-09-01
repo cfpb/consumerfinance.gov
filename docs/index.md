@@ -13,10 +13,10 @@ The standard technology stack for development of consumerfinance.gov within the 
 - macOS
 - [Homebrew](https://brew.sh) - package manager for installing system software on OSX
 - [Python 3.6](https://docs.python.org/3.6/) and [pip (Python package manager)](https://pip.pypa.io/en/stable/user_guide/)
-- [Jinja2 templates](https://jinja.palletsprojects.com/) for front-end rendering. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/master/requirements/libraries.txt) for version.
-- [Wagtail CMS](https://wagtail.io) for content administration. See [`requirements/wagtail.txt`](https://github.com/cfpb/consumerfinance.gov/tree/master/requirements/wagtail.txt) for version.
+- [Jinja2 templates](https://jinja.palletsprojects.com/) for front-end rendering. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/libraries.txt) for version.
+- [Wagtail CMS](https://wagtail.io) for content administration. See [`requirements/wagtail.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/wagtail.txt) for version.
 - [PostgreSQL 10.5](https://www.postgresql.org/) is the database we use in production and locally.
-- [Psycopg](http://initd.org/psycopg/) is the Python library that lets Python talk to Postgres. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/master/requirements/libraries.txt) for current version.
+- [Psycopg](http://initd.org/psycopg/) is the Python library that lets Python talk to Postgres. See [`requirements/libraries.txt`](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/libraries.txt) for current version.
 - Additional dependencies, listed below.
 
 ## Additional dependencies
@@ -24,17 +24,17 @@ The standard technology stack for development of consumerfinance.gov within the 
 - [Elasticsearch](https://www.elastic.co):
   Used for full-text search capabilities and content indexing.
 - [Node 12](http://nodejs.org) and [yarn](https://yarnpkg.com/):
-  Used for downloading and managing front-end dependencies and assets. Front-end dependencies are listed in the project's [package.json](https://github.com/cfpb/consumerfinance.gov/blob/master/package.json) file.
+  Used for downloading and managing front-end dependencies and assets. Front-end dependencies are listed in the project's [package.json](https://github.com/cfpb/consumerfinance.gov/blob/main/package.json) file.
 - [Gulp 4](https://gulpjs.com/) for running tasks, including compiling front-end assets and running acceptance and unit tests.
 - [virtualenv](https://virtualenv.pypa.io/en/stable/)
 - [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 
 ## Versions
 
-Versions for most front-end packages are kept updated in the project's [package.json](https://github.com/cfpb/consumerfinance.gov/blob/master/package.json) file.
+Versions for most front-end packages are kept updated in the project's [package.json](https://github.com/cfpb/consumerfinance.gov/blob/main/package.json) file.
 
 Versions for back-end software including Django, Wagtail, Jinja, etc. are kept in the project's requirements files:
-https://github.com/cfpb/consumerfinance.gov/tree/master/requirements
+https://github.com/cfpb/consumerfinance.gov/tree/main/requirements
 
 - `base.txt`: shortcut for `django.txt` + `wagtail.txt` + `libraries.txt`
 - `ci.txt`: specific requirements for the continuous integration environment. Should/could be moved to CI configuration files?
