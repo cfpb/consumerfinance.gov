@@ -3,4 +3,3 @@ django-debug-toolbar==1.11
 django-sslserver==0.20
 tox-pip-extensions==1.6.0
 tox==3.19.0
-wagtail-placeholder-images==0.1.1
