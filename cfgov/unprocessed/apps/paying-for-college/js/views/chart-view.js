@@ -240,7 +240,7 @@ const horizontalBarOpts = {
     enabled: false
   },
   series: [ {
-    data: [ 10000 ],
+    data: [ 10000 ]
   } ]
 };
 
