@@ -208,6 +208,9 @@ const updateSchoolData = function( iped ) {
         // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
 
+        // Update expenses by region
+        document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
+
         updateSchoolView();
         updateUrlQueryString();
 

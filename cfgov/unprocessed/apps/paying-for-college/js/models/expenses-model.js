@@ -55,6 +55,7 @@ const expensesModel = {
       updateExpensesView();
       updateCostOfBorrowingChart();
       updateAffordingChart();
+      updateUrlQueryString();
     }
   },
 
