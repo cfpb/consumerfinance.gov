@@ -90,7 +90,7 @@ that briefly describes the change(s) you're making:
 ```
 
 For examples of good migration names, look through some of
-[our existing migration files](https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/v1/migrations).
+[our existing migration files](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/migrations).
 
 !!! note
     Some changes will generate multiple migration files.
@@ -106,7 +106,7 @@ a regular source of conflicts between pull requests
 that are in flight at the same time.
 If a PR with a migration gets merged between the time you create your migration
 and the time that your PR is ready for merging,
-you will have to update your branch as normal to be current with master
+you will have to update your branch as normal to be current with main
 and then re-create your migration.
 Also note that our
 [back-end tests that run in GitHub Actions](../github-actions/)
