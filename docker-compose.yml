@@ -11,7 +11,13 @@ services:
         ports:
             - "9200:9200"
             - "9300:9300"
-
+    elasticsearch7:
+        image: elasticsearch:7.4.2
+        ports: 
+            - "9000:9200"
+            - "9100:9300"
+        environment:
+            discovery.type: single-node
     postgres:
         image: postgres:10.3
         restart: always
