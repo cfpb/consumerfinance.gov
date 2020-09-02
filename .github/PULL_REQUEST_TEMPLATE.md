@@ -69,7 +69,7 @@ Visually tested in the following supported browsers:
 
 <!--
 Further guidance on browser support can be found at:
-https://github.com/cfpb/development/blob/master/guides/browser-support.md
+https://github.com/cfpb/development/blob/main/guides/browser-support.md
 -->
 
 #### Accessibility
