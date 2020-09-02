@@ -21,24 +21,30 @@
    ========================================================================== #}
 {% macro _render_secondary_navigation() %}
 
-<nav class="o-report-sidenav o-secondary-navigation o-secondary-navigation__no-children"
+<nav class="o-report-sidenav o-secondary-navigation"
      aria-label="Section navigation">
       {% import 'molecules/nav-link.html' as nav_link %}
-      <h3>Table of contents</h3>
-      <ul class="m-list
-                 m-list__unstyled
-                 o-secondary-navigation_list
+
+      {% set sec_nav_settings = {
+        'label': _('Table of contents'),
+        'is_midtone': true,
+        'is_bordered': false,
+        'is_expanded': false
+      } %}
+      {% from 'organisms/expandable.html' import expandable with context %}
+      {% call() expandable(sec_nav_settings) %}
+        {% import 'molecules/nav-link.html' as nav_link %}
+
+      <ul class="o-secondary-navigation_list
                  o-secondary-navigation_list__parents">
-       {%- for item in report_sections %}
-          <li class="m-list_item">
+      {%- for item in report_sections %}
+          <li>
             {{ nav_link.render(item.numbering + item.title, "#" + item.id, true) }}
           {% if item.children %}
-              <ul class="m-list
-                         m-list__unstyled
-                         o-secondary-navigation_list
+              <ul class="o-secondary-navigation_list
                          o-secondary-navigation_list__children">
               {%- for child in item.children -%}
-                  <li class="m-list_item">
+                  <li>
                       {{ nav_link.render(child.title, "#" + child.id, false) }}
                   </li>
               {%- endfor %}
@@ -50,21 +56,17 @@
       {% if report_appendices %}
         <h4>Appendices</h4>
       {% endif %}
-      <ul class="m-list
-                 m-list__unstyled
-                 o-secondary-navigation_list
+      <ul class="o-secondary-navigation_list
                  o-secondary-navigation_list__parents
                  o-report-sidenav__appendix">
        {%- for item in report_appendices %}
           <li class="m-list_item">
             {{ nav_link.render(item.numbering + item.title, "#" + item.id, true) }}
           {%- if item.children -%}
-              <ul class="m-list
-                         m-list__unstyled
-                         o-secondary-navigation_list
+              <ul class="o-secondary-navigation_list
                          o-secondary-navigation_list__children">
               {%- for child in item.children -%}
-                  <li class="m-list_item">
+                  <li>
                       {{ nav_link.render(child.title, "#" + child.id, false) }}
                   </li>
               {%- endfor %}
@@ -73,5 +75,6 @@
           </li>
       {%- endfor %}
       </ul>
+      {% endcall %}
 </nav>
 {% endmacro %}

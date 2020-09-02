@@ -2,6 +2,8 @@
 /* ==========================================================================
    Scripts for Report Sidenav organism
    ========================================================================== */
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
+Expandable.init();
 
 const sidenav = document.querySelector( '.o-report-sidenav' );
 const tocHeaders = document.querySelectorAll( '.o-report-sidenav .m-nav-link' );
