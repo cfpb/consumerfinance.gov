@@ -90,11 +90,7 @@ import { stateToHTML } from 'draft-js-export-html';
           let contentState;
           if ( initialCellValue ) {
             const blocksFromHTML = window.DraftJS.convertFromHTML( initialCellValue );
-            const contentState =
-            window.DraftJS.ContentState.createFromBlockArray(
-              blocksFromHTML.contentBlocks,
-              blocksFromHTML.entityMap
-            );
+            contentState = window.DraftJS.ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
           } else {
             contentState = window.DraftJS.ContentState.createFromText( '' );
           }
