@@ -113,7 +113,7 @@ const conf = {
   mode: 'production',
   output: {
     filename: '[name]',
-    jsonpFunction: 'apps'
+    jsonpFunction: 'regs3k'
   },
   optimization: {
     minimize: true,

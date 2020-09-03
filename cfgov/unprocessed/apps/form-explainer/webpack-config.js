@@ -59,7 +59,7 @@ const conf = {
   mode: 'production',
   output: {
     filename: '[name]',
-    jsonpFunction: 'analyticsGtm'
+    jsonpFunction: 'oahFormExplainer'
   },
   optimization: {
     minimize: true,
