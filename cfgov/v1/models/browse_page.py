@@ -54,9 +54,15 @@ class BrowsePage(CFGOVPage):
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
 
+    share_and_print = models.BooleanField(
+        default=False,
+        help_text="Include share and print buttons above page content."
+    )
+
     # General content tab
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
+        FieldPanel('share_and_print'),
         StreamFieldPanel('content'),
     ]
 
