@@ -186,9 +186,7 @@ class StrategiesStore {
       }
     }
 
-    let reversedList = [...list].reverse();
-
-    return compact(reversedList).filter((item) => {
+    return compact(list).filter((item) => {
       if (strategyIDs.has(item.id)) return false;
       strategyIDs.add(item.id);
       this.logger.debug('Strategy IDs set: %O', strategyIDs);

@@ -2,7 +2,6 @@ import { observer } from 'mobx-react';
 import { useStore } from '../../stores';
 import { useScrollToTop } from '../../components/scroll-to-top';
 import { CardGroup, Card } from '../../components/card';
-import { ButtonLink } from '../../components/button';
 
 const StrategyCards = ({ results }) => (
   <main className="strategy-cards">
