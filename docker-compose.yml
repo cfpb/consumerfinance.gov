@@ -18,6 +18,8 @@ services:
             - "9100:9300"
         environment:
             discovery.type: single-node
+        volumes:
+            - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
     kibana:
         image: kibana:7.4.2
         depends_on:
@@ -26,6 +28,18 @@ services:
             - "5601:5601"
         environment:
             ELASTICSEARCH_HOSTS: http://elasticsearch7:9200
+    kibana2:
+        image: kibana:4.5
+        depends_on:
+            - elasticsearch
+        ports:
+            - "5602:5601"
+        environment:
+            ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    pgadmin:
+        image: thajeztah/pgadmin4
+        ports:
+            - "5050:5050"
     postgres:
         image: postgres:10.3
         restart: always

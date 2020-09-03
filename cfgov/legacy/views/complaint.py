@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from django.views.generic import TemplateView
 
-from complaint_search import views
+# from complaint_search import views
 from flags.state import flag_enabled
 from rest_framework.test import APIRequestFactory
 
@@ -44,7 +44,7 @@ class ComplaintLandingView(TemplateView):
             args = {'field': 'all', 'size': '1', 'no_aggs': 'true'}
             factory = APIRequestFactory()
             request = factory.get('/search/', args, format='json')
-            response = views.search(request)
+            # response = views.search(request)
 
             if response.status == 200:
                 res_json = response.data

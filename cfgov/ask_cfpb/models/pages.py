@@ -481,6 +481,31 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             context)
 
 
+def truncatissimo(text):
+    """Limit preview text to 40 words AND to 255 characters."""
+    word_limit = 40
+    while word_limit:
+        test = Truncator(text).words(word_limit, truncate=' ...')
+        if len(test) <= 255:
+            return test
+        else:
+            word_limit -= 1
+
+def extract_raw_text(stream_data):
+    # Extract text from stream_data, starting with the answer text.
+    text_chunks = [
+        block.get('value').get('content')
+        for block in stream_data
+        if block.get('type') == 'text'
+    ]
+    extra_chunks = [
+        block.get('value').get('content')
+        for block in stream_data
+        if block.get('type') in ['tip', 'table']
+    ]
+    chunks = text_chunks + extra_chunks
+    return " ".join(chunks)
+
 class AnswerPage(CFGOVPage):
     """Page type for Ask CFPB answers."""
     from ask_cfpb.models import Answer
@@ -663,6 +688,22 @@ class AnswerPage(CFGOVPage):
         context['disclaimer'] = get_standard_text(self.language, 'disclaimer')
         context['sibling_url'] = self.get_sibling_url()
         return context
+
+    def answer_content_text(self):
+        raw_text = extract_raw_text(self.answer_content.stream_data)
+        return strip_tags(" ".join([self.short_answer, raw_text]))
+
+    def answer_content_data(self):
+        return truncatissimo(self.answer_content_text())
+
+    def short_answer_data(self):
+        return ''.join(RichTextField.get_searchable_content(self, self.short_answer))
+
+    def text(self):
+        short_answer = self.short_answer_data()
+        answer_text = self.answer_content_text()
+        full_text = short_answer + "\n\n" + answer_text + "\n\n" + self.question
+        return full_text
 
     def __str__(self):
         if self.answer_base:

@@ -104,7 +104,7 @@ INSTALLED_APPS = (
     "retirement_api",
     "ratechecker",
     "countylimits",
-    "complaint_search",
+    # "complaint_search",
     "rest_framework",
     "ccdb5_ui",
     "mptt",

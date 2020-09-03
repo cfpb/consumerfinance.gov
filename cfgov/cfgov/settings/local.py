@@ -23,7 +23,15 @@ SECRET_KEY = "not-secret-key-for-testing"
 INSTALLED_APPS += (
     "sslserver",
     "wagtail.contrib.styleguide",
+    "django_elasticsearch_dsl",
 )
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'http://elasticsearch7:9200'
+    },
+}
+
 
 STATIC_ROOT = REPOSITORY_ROOT.child("collectstatic")
 
