@@ -356,11 +356,16 @@ export default class CashFlowStore {
    */
   saveEvent = flow(function* (params, updateRecurrences = false) {
     let event;
+
     let recurrenceTypeChanged = false;
 
     if (params.id) {
       this.logger.debug('updating existing event %O', params);
       event = this.getEvent(params.id);
+
+      if (event && event.category.includes('housing')) {
+        event.setHideFixItStrategy(true);
+      }
 
       if (event.recurrenceType !== params.recurrenceType) {
         recurrenceTypeChanged = true;

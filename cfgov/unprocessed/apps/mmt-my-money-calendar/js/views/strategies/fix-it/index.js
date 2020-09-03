@@ -20,13 +20,8 @@ const FixItButton = ({ result }) => {
   const history = useHistory();
   const buttonAction = useCallback(
     async (evt) => {
-      evt.preventDefault();
 
-      // Hide "Split Payment" fix-it strategies for this event once the user clicks Fix It once
-      if (result.event && result.event.category.includes('housing')) {
-        result.event.setHideFixItStrategy(true);
-        await eventStore.saveEvent(result.event, true);
-      }
+      evt.preventDefault();
 
       history.push(href);
     },

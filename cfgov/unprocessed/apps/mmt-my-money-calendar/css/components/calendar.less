@@ -1,18 +1,21 @@
 @cols: 7;
 @gap: 10px;
-@inactiveMonthColor: #a4a4a4;
-@positiveColorSelected: #cbf0b6;
-@negativeColorSelected: #f0b6b6;
+@inactiveMonthColor: #e7e8e9;
+@selectedMonthColor: #101820;
+@positiveColorSelected: #e2efd8;
+@negativeColorSelected: #d14124;
 @positiveCalendarColor: #fff;
 @negativeCalendarColor: #f9e0e0;
-@positiveColor: #cbf0b6;
-@negativeColor: #f9e0e0;
+@positiveColor: #20aa3f;
+@positiveNotificationColor: #f0f8eb;
+@negativeColor: #fbefec;
 @breakpointSm: 450px;
 @breakpointMed: 500px;
 @breakpointLg: 900px;
 @breakpointHiDPI: 1.5dppx;
 @symbolSize: 24px;
 @currentWeekBorder: 2px solid @inactiveMonthColor;
+@selectedWeekBorder: 3px solid @selectedMonthColor;
 
 .calendar {
   display: flex;
@@ -81,23 +84,23 @@
 
     &.selected {
       .calendar__day {
-        border-top: @currentWeekBorder;
-        border-bottom: @currentWeekBorder;
-        &.pos-balance {
-          background-color: #20aa3f;
-          color: #fff;
-        }
+        border-top: @selectedWeekBorder;
+        border-bottom: @selectedWeekBorder;
+       /*  &.pos-balance {
+          font-style:italic;
+        } */
         &.neg-balance {
           background-color: #d14124;
           color: #fff;
+          font-weight:600;
         }
 
         &:first-of-type {
-          border-left: @currentWeekBorder;
+          border-left: @selectedWeekBorder;
         }
 
         &:last-of-type {
-          border-right: @currentWeekBorder;
+          border-right: @selectedWeekBorder;
         }
       }
     }
@@ -141,6 +144,7 @@
     &.neg-balance {
       background-color: @negativeCalendarColor;
       border-color: @negativeCalendarColor;
+      font-weight: 675;
     }
 
     &.selected {
@@ -232,7 +236,7 @@
       padding: 5px;
     }
     &_save-button {
-      background-color: @green;
+      background-color: @positiveColor;
       color: #fff;
       display: block;
       font-weight: bold;
@@ -242,7 +246,7 @@
     }
 
     &__savings {
-      background: lighten(@positiveColor, 10%);
+      background: @positiveNotificationColor;
       border-color:@green;
        
       .cf-icon-svg {
@@ -325,6 +329,7 @@
 
     &.-negative-balance {
       border: 1px solid @red;
+      font-weight:600;
     }
   }
 

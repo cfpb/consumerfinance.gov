@@ -9,7 +9,7 @@ class StrategiesStore {
     'expense.personal.coronavirus': {
       id: 'coronaVirus',
       icon1: icons.coronaVirus1,
-      title: 'Protect Your Finances from COVID-19',
+      title: 'COVID-19',
       body:
         'Get information about protecting your financial health.',
       link: {
