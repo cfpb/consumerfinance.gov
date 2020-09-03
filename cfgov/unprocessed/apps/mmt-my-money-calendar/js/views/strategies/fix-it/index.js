@@ -100,8 +100,7 @@ function FixItStrategies() {
                         copy={narrativeCopy.step3} />
       )}
       <header className="strategies-header">
-       
-        {strategies.fixItResults.length ? (
+    
           <div className="strategy-cards">
             <h2 className="strategies-header__week-range">Week of {uiStore.weekRangeText}</h2>
             <CardGroup columns={2}>
@@ -136,11 +135,6 @@ function FixItStrategies() {
               </div>
             </CardGroup>
           </div>
-        ) : (
-            <p>
-              <em>There are no strategy recommendations for this week</em>
-            </p>
-          )}
       </header>
       <h2 className="strategies-header__title">Fix-It Strategies</h2>
       <div>{strategies.fixItResults.length > 0 && <StrategyCards results={strategies.fixItResults} />}</div>
