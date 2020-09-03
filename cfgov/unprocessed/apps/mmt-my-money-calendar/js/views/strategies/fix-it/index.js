@@ -23,15 +23,6 @@ const FixItButton = ({ result }) => {
 
       evt.preventDefault();
 
-      // Hide "Split Payment" fix-it strategies for this event once the user clicks Fix It once
-      // missy commented this out
-      //if (result.event && result.event.category.includes('housing')) {
-       /*  result.event.setHideFixItStrategy(true);
-        await eventStore.saveEvent(result.event, true); */
-      //}
-
-      //console.log('Index.js: FixItButton', result.event);
-
       history.push(href);
     },
     [result.event, href]
