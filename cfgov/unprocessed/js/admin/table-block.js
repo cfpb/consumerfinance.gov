@@ -106,7 +106,26 @@ import { stateToHTML } from 'draft-js-export-html';
           modalDom.on( 'save-btn:clicked', function() {
             const raw = JSON.parse( editorHtml.value );
             const state = window.DraftJS.convertFromRaw( raw );
-            const html = stateToHTML( state );
+            let options = {
+              entityStyleFn: (entity) => {
+                const entityType = entity.get('type').toLowerCase();
+                if (entityType === 'document') {
+                  const data = entity.getData();
+                  console.log(data)
+                  return {
+                    element: 'a',
+                    attributes: {
+                      'href': data.url,
+                      'data-linktype': 'document',
+                      'data-id': data.id,
+                    },
+                    style: {
+                    },
+                  };
+                }
+              },
+            };
+            const html = stateToHTML( state, options );
             instance.setDataAtCell( cellProperties.row, cellProperties.col, html );
             instance.render();
             $( win ).resize();
@@ -552,7 +571,6 @@ import { stateToHTML } from 'draft-js-export-html';
     window.draftail.initEditor(
       '#' + id,
       { entityTypes: [
-        { type: 'EMBED', icon: 'media', description: 'Embed' },
         { type: 'LINK',
           icon: 'link',
           description: 'Link',
@@ -561,29 +579,27 @@ import { stateToHTML } from 'draft-js-export-html';
         { type: 'DOCUMENT',
           icon: 'doc-full',
           description: 'Document' },
-        { type: 'IMAGE',
-          icon: 'image',
-          description: 'Image',
-          attributes: [ 'id', 'src', 'alt', 'format' ],
-          whitelist: { id: true }} ],
-      enableHorizontalRule: true,
+        ],
+      enableHorizontalRule: false,
+      enableLineBreak: false,
       inlineStyles: [
         { type: 'BOLD',
           icon: 'bold',
           description: 'Bold' },
         { type: 'ITALIC',
           icon: 'italic',
-          description: 'Italic' } ],
+          description: 'Italic' }
+        ],
       blockTypes: [
+        { label: 'H1',
+        type: 'header-one',
+        description: 'Heading 1' },
         { label: 'H2',
           type: 'header-two',
           description: 'Heading 2' },
         { label: 'H3',
           type: 'header-three',
           description: 'Heading 3' },
-        { label: 'H4',
-          type: 'header-four',
-          description: 'Heading 4' },
         { type: 'ordered-list-item',
           icon: 'list-ol',
           description: 'Numbered list' },
