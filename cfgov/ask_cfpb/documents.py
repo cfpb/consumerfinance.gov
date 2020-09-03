@@ -32,6 +32,7 @@ class AnswerPageDocument(Document):
     portal_topics = fields.TextField()
     portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
+    url = fields.TextField()
     suggestions = fields.TextField(attr="text")
 
     def prepare_autocomplete(self, instance):
@@ -45,6 +46,9 @@ class AnswerPageDocument(Document):
 
     def prepare_search_tags(self, instance):
         return instance.clean_search_tags
+
+    def prepare_url(self, instance):
+        return instance.url
 
     class Index:
         name = 'ask-cfpb'
