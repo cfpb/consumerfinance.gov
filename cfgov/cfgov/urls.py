@@ -19,7 +19,7 @@ from wagtailautocomplete.urls.admin import (
 )
 
 from ask_cfpb.views import (
-    ask_autocomplete, ask_search, redirect_ask_search, view_answer
+    ask_autocomplete_es7, ask_search, redirect_ask_search, view_answer
 )
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
@@ -467,11 +467,11 @@ urlpatterns = [
      ),
     re_path(
         r'^ask-cfpb/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-en'
+        ask_autocomplete_es7, name='ask-autocomplete-en'
     ),
     re_path(
         r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-es'
+        ask_autocomplete_es7, name='ask-autocomplete-es'
     ),
 
     re_path(r'^_status/', include('watchman.urls')),

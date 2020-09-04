@@ -28,7 +28,7 @@ synonym_analyzer = analyzer(
 @registry.register_document
 class AnswerPageDocument(Document):
 
-    autocomplete = fields.CompletionField(analyzer=label_autocomplete)
+    autocomplete = fields.TextField(analyzer=label_autocomplete)
     portal_topics = fields.TextField()
     portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)

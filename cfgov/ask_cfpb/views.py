@@ -13,7 +13,7 @@ from wagtailsharing.views import ServeView
 from bs4 import BeautifulSoup as bs
 
 from ask_cfpb.models import AnswerPage, AnswerResultsPage, AskSearch
-
+from ask_cfpb.documents import AnswerPageDocument
 
 def annotate_links(answer_text):
     """
@@ -140,6 +140,20 @@ def ask_autocomplete(request, language='en'):
         results = [{'question': result.autocomplete,
                     'url': result.url}
                    for result in sqs[:20]]
+        return JsonResponse(results, safe=False)
+    except IndexError:
+        return JsonResponse([], safe=False)
+
+def ask_autocomplete_es7(request, language='en'):
+    term = request.GET.get(
+        'term', '').strip().replace('<', '')
+    if not term:
+        return JsonResponse([], safe=False)
+    try:
+        s = AnswerPageDocument.search().query('match', autocomplete=term)
+        qs = s.to_queryset()
+        print(qs[0])
+        results = [{'question': result.question, 'url': result.url } for result in qs[:20]]
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)
