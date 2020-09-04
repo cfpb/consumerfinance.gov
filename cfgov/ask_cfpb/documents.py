@@ -22,7 +22,8 @@ synonym_analyzer = analyzer(
     type='custom',
     tokenizer='standard',
     filter=[
-        synonynm_filter
+        synonynm_filter,
+        'lowercase'
     ])
 
 @registry.register_document
