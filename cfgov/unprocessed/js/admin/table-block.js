@@ -116,8 +116,9 @@ import { stateToHTML } from 'draft-js-export-html';
                     element: 'a',
                     attributes: {
                       'href': data.url,
-                      'data-linktype': 'document',
+                      'data-linktype': 'DOCUMENT',
                       'data-id': data.id,
+                      'type': 'DOCUMENT'
                     },
                     style: {
                     },
@@ -523,8 +524,8 @@ import { stateToHTML } from 'draft-js-export-html';
       '</div>',
       '</header>',
       '<div class="row active nice-padding struct-block object">',
-      '<label class="hidden-label" for="table-block-editor">Table Cell Input</label>',
-      '<input id="table-block-editor" maxlength="255" name="title" type="text" value="" class="data-draftail-input">',
+      '<label class="hidden" for="table-block-editor">Table Cell Input</label>',
+      '<input class="hidden" id="table-block-editor" maxlength="255" name="title" type="text" value="" class="data-draftail-input">',
       '</div><br>',
       '<div class="row active nice-padding m-t-10">',
       '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save</button>',

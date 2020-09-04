@@ -62,6 +62,6 @@ table[id$=sortable-input] .sortable-type-input {
     color: #101820;
 }
 
-.hidden-label {
+.hidden {
     display: none;
 }
