@@ -149,7 +149,7 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
       {uiStore.weekHasNegativeBalance && (
         <div className={endBalanceClasses}>
           <Notification
-            message="You're in the red this week'!"
+            message="You're in the red this week!"
             variant="error"
             actionLink={
 
