@@ -70,4 +70,4 @@ jobs:
 
       - name: Check frontend test coverage
         run: |
-          diff-cover frontend_coverage/clover.xml --fail-under=100
+          diff-cover frontend_coverage/clover.xml --compare-branch=origin/main --fail-under=100
