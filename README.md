@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 [![Build Status](https://github.com/cfpb/consumerfinance.gov/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/consumerfinance.gov/actions)
 =======
 This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the Researc, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki)
@@ -23,12 +24,40 @@ This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh
 
 [![Build Status](https://github.com/cfpb/consumerfinance.gov/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/consumerfinance.gov/actions)
 >>>>>>> Update README.md
+=======
+This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the User Research, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki). The ReactJS codebase is integrated into Wagtail Django CMS as a satellite application.
+>>>>>>> c3666edae03fca89cbe1a6d87d5fb92eda58f43b
 
 The master repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
+=======
+The primary repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
+>>>>>>> dd7058e62b45d2d82162efac4d4c811c966977b9
 This Django project includes the front-end assets and build tools,
 [Jinja templates](https://jinja.palletsprojects.com/) for front-end rendering,
 code to configure our CMS, [Wagtail](https://wagtail.io/),
 and several standalone Django apps for specific parts of the site.
+=======
+This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the User Research, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki). The ReactJS codebase is integrated into Wagtail Django CMS as a satellite application.
+
+[![Build Status](https://github.com/cfpb/consumerfinance.gov/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/consumerfinance.gov/actions)
+>>>>>>> 2f304e78fb3c427c5ea45c707de5e97f1e93bfd7
+
+## Backlog
+
+The backlog for this project is being maintained in the CFPB Enterprise GitHub whereas the bugs are captured in this fork. 
+
+## Pull request process
+
+We follow the following steps for developing and creating end-of-sprint pull-request reviews:
+
+1. Raft developers create PR's from their branches into `my-money-calendar`
+2. The PR is reviewed and issues are resolved as new commits to the same branch
+3. The PR is merged after the manual review and the tests via CircleCI pass
+4. A new PR is open from `my-money-calendar` to `cfgov-refres/my-money-calendar`
+5. The PR follows the [pull request template](https://github.com/raft-tech/cfgov-refresh/blob/master/.github/PULL_REQUEST_TEMPLATE.md)
+6. The PR is reviewed/merged and deployed to CFPB dev servers 
+7. When functionality is ensured, a PR is opened from `cfgov-refres/my-money-calendar` to `cfgov-refres/master`
+
 
 ## Backlog
 

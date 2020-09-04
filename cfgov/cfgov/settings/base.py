@@ -149,6 +149,7 @@ MIDDLEWARE = (
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "flags.middleware.FlagConditionsMiddleware",
+    "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
 )
@@ -514,7 +515,7 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
         },
     }
 
-# CSP Whitelists
+# CSP Allowlists
 
 # These specify what is allowed in <script> tags
 CSP_SCRIPT_SRC = (
@@ -522,7 +523,6 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "tagmanager.google.com",
@@ -565,7 +565,6 @@ CSP_STYLE_SRC = (
 CSP_IMG_SRC = (
     "'self'",
     "*.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
     "www.gstatic.com",
@@ -611,7 +610,6 @@ CSP_FONT_SRC = (
     "'self'",
     "data:",
     "*.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
@@ -621,7 +619,6 @@ CSP_FONT_SRC = (
 CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
     "bam.nr-data.net",
@@ -630,6 +627,12 @@ CSP_CONNECT_SRC = (
     "n2.mouseflow.com",
     "api.iperceptions.com",
     "*.qualtrics.com",
+)
+
+# These specify valid media sources (e.g., MP3 files)
+CSP_MEDIA_SRC = (
+    "'self'",
+    "*.consumerfinance.gov",
 )
 
 # Feature flags

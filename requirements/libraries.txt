@@ -37,17 +37,19 @@ requests_toolbelt==0.8.0
 sha3==0.2.1
 unipath>=1.1,<=2.0
 urllib3==1.25.2
-wagtail-autocomplete==0.6
+# wagtail-autocomplete==0.6 TODO: Restore when wagtail-autocomplete #77 is merged
 wagtail-flags==4.2.2
 wagtail-inventory==1.1.1
+wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.2.1
 wagtail-treemodeladmin==1.2.1
 wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
+https://github.com/cfpb/wagtail-autocomplete/releases/download/0.7/wagtail_autocomplete-0.6-py3-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.16.0/owning_a_home_api-0.16.0-py3-none-any.whl
-https://github.com/cfpb/retirement/releases/download/0.14.0/retirement-0.14.0-py3-none-any.whl
+https://github.com/cfpb/retirement/releases/download/0.15.0/retirement-0.15.0-py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.5.1/ccdb5_api-1.5.1-py3-none-any.whl
-https://github.com/cfpb/ccdb5-ui/releases/download/2.3.0/ccdb5_ui-2.3.0-py3-none-any.whl
+https://github.com/cfpb/ccdb5-ui/releases/download/2.3.1/ccdb5_ui-2.3.1-py3-none-any.whl
 https://github.com/cfpb/django-college-costs-comparison/releases/download/1.15.1/comparisontool-1.15.1-py3-none-any.whl
 https://github.com/cfpb/curriculum-review-tool/releases/download/2.0.3/crtool-2.0.3-py3-none-any.whl

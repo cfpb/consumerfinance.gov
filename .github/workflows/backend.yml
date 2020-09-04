@@ -51,8 +51,8 @@ jobs:
       - name: Run tox -e ${{ matrix.toxenv }}
         run: |
           tox -e ${{ matrix.toxenv }}
-        env: 
-          TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner 
+        env:
+          TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
 
       - name: Prepare test coverage
         if: matrix.toxenv == 'unittest-current'
@@ -93,4 +93,4 @@ jobs:
 
       - name: Check backend test coverage
         run: |
-          diff-cover backend_coverage/coverage.xml --fail-under=100
+          diff-cover backend_coverage/coverage.xml --compare-branch=origin/main --fail-under=100

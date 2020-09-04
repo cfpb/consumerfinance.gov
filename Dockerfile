@@ -34,6 +34,7 @@ RUN yum -y install \
         mailcap \
         postgresql10 \
         which \
+        gettext \
         ${SCL_PYTHON_VERSION} && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \
