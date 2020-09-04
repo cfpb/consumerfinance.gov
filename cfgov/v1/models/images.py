@@ -8,8 +8,10 @@ from wagtail.images.models import (
     AbstractImage, AbstractRendition, Filter, Image
 )
 
+from wagtail_placeholder_images.mixins import PlaceholderRenditionMixin
 
-class CFGOVImage(AbstractImage):
+
+class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
     alt = models.CharField(max_length=100, blank=True)
     file_hash = models.CharField(max_length=40, blank=True, editable=False)
     admin_form_fields = Image.admin_form_fields + (

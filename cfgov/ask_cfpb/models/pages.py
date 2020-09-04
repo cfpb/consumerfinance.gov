@@ -566,7 +566,7 @@ class AnswerPage(CFGOVPage):
 
     share_and_print = models.BooleanField(
         default=False,
-        help_text="Include share and print buttons above page content."
+        help_text="Include share and print buttons above answer."
     )
 
     content_panels = CFGOVPage.content_panels + [
