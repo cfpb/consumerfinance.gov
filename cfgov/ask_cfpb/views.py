@@ -156,7 +156,7 @@ def handle_search(search_term, language):
         print(results)
         return {
             'search_term': suggested_term,
-            'suggestion': suggested_term,
+            'suggestion': search_term,
             'results': results
         }
     else:
