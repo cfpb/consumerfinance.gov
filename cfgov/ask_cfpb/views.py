@@ -156,7 +156,7 @@ def ask_search_es7(request, language='en', as_json=False):
         results_page.result_query = ''
         return results_page.serve(request)
     
-    search = AnswerPageDocument.search().query("match", text=search_term).filter("term", live=True).filter("term", language=language)
+    search = AnswerPageDocument.search().query("match", text=search_term).filter("term", language=language)
     total = search.count()
     search.execute()
     results = [{
