@@ -28,7 +28,7 @@ from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
 from legacy.views import token_provider
-# from legacy.views.complaint import ComplaintLandingView
+from legacy.views.complaint import ComplaintLandingView
 from regulations3k.views import redirect_eregs
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
@@ -314,18 +314,18 @@ urlpatterns = [
         include('retirement_api.urls', namespace='retirement_api')
     ),
 
-    # re_path(
-    #     r'^data-research/consumer-complaints/$',
-    #     ComplaintLandingView.as_view(),
-    #     name='complaint-landing'
-    # ),
+    re_path(
+        r'^data-research/consumer-complaints/$',
+        ComplaintLandingView.as_view(),
+        name='complaint-landing'
+    ),
 
     # CCDB5-API
-    # flagged_re_path(
-    #     'CCDB5_RELEASE',
-    #     r'^data-research/consumer-complaints/search/api/v1/',
-    #     include('complaint_search.urls')
-    # ),
+    flagged_re_path(
+        'CCDB5_RELEASE',
+        r'^data-research/consumer-complaints/search/api/v1/',
+        include('complaint_search.urls')
+    ),
 
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
     flagged_re_path(
