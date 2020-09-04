@@ -126,6 +126,7 @@ const navigationView = {
     // clear active-sections
     navigationView._navItems.forEach( elem => {
       elem.classList.remove( 'active-section' );
+      elem.setAttribute( 'aria-selected', false );
     } );
 
     const navItem = document.querySelector( '[data-nav_item="' + activeName + '"]' );
@@ -138,8 +139,10 @@ const navigationView = {
     } );
 
     activeElem.setAttribute( 'data-nav-is-active', 'True' );
+    activeElem.setAttribute( 'aria-selected', true );
     activeParent.setAttribute( 'data-nav-is-open', 'True' );
     activeParent.setAttribute( 'data-nav-is-active', 'True' );
+    activeElem.setAttribute( 'aria-selected', true );
     activeParent.querySelectorAll( '.m-list_item' ).forEach( elem => {
       elem.setAttribute( 'data-nav-is-active', 'True' );
     } );
@@ -183,7 +186,7 @@ const navigationView = {
    */
   updateStateInDom: function( property, value ) {
     if ( value === false || value === null ) {
-      navigationView._stateDomElem.removeAttribute( property );
+      navigationView._stateDomElem.removeAttribute( 'data-state_' + property );
     } else {
       navigationView._stateDomElem.setAttribute( 'data-state_' + property, value );
     }

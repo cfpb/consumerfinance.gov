@@ -4,6 +4,8 @@ import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import wagtail
+
 import dj_database_url
 from unipath import DIRS, Path
 
@@ -53,6 +55,7 @@ INSTALLED_APPS = (
     "wagtail.contrib.routable_page",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.table_block",
+    "wagtail.contrib.postgres_search",
     "localflavor",
     "modelcluster",
     "taggit",
@@ -73,6 +76,7 @@ INSTALLED_APPS = (
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "wagtail.search",
     "storages",
     "data_research",
     "v1",
@@ -92,6 +96,8 @@ INSTALLED_APPS = (
     "diversity_inclusion",
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
+    "teachers_digital_platform",
+    "wagtailmedia",
 
     # Satellites
     "comparisontool",
@@ -102,8 +108,34 @@ INSTALLED_APPS = (
     "rest_framework",
     "ccdb5_ui",
     "mptt",
-    "teachers_digital_platform"
+    "crtool",
 )
+
+WAGTAILSEARCH_BACKENDS = {
+    # The default search backend for Wagtail is the db backend, which does not
+    # support the custom search_fields defined on Page model descendents when
+    # using `Page.objects.search()`.
+    #
+    # Other backends *do* support those custom search_fields, so for now to
+    # preserve the current behavior of /admin/pages/search (which calls
+    # `Page.objects.search()`), the default backend will remain `db`.
+    #
+    # This also preserves the current behavior of our external link search,
+    # /admin/external-links/, which calls each page model's `objects.search()`
+    # explicitly to get results, but which returns fewer results with the
+    # Postgres full text backend.
+    #
+    # An upcoming effort to overhaul search within consumerfinance.gov and
+    # Wagtail should address these issues. In the meantime, Postgres full text
+    # search with the custom search_fields defined on our models is available
+    # with the "fulltext" backend defined below.
+    'default': {
+        'BACKEND': 'wagtail.search.backends.db',
+    },
+    'fulltext': {
+        'BACKEND': 'wagtail.contrib.postgres_search.backend',
+    },
+}
 
 MIDDLEWARE = (
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -117,7 +149,7 @@ MIDDLEWARE = (
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "flags.middleware.FlagConditionsMiddleware",
-    "wagtail.core.middleware.SiteMiddleware",
+    "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
 )
@@ -483,13 +515,14 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
         },
     }
 
-# CSP Whitelists
+# CSP Allowlists
 
 # These specify what is allowed in <script> tags
 CSP_SCRIPT_SRC = (
     "'self'",
     "'unsafe-inline'",
     "'unsafe-eval'",
+    "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "tagmanager.google.com",
@@ -513,8 +546,6 @@ CSP_SCRIPT_SRC = (
     "connect.facebook.net",
     "www.federalregister.gov",
     "storage.googleapis.com",
-    "api.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "*.qualtrics.com",
 )
 
@@ -522,6 +553,7 @@ CSP_SCRIPT_SRC = (
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
+    "*.consumerfinance.gov",
     "fast.fonts.net",
     "tagmanager.google.com",
     "optimize.google.com",
@@ -532,12 +564,12 @@ CSP_STYLE_SRC = (
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
+    "*.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
     "www.gstatic.com",
     "ssl.gstatic.com",
     "stats.g.doubleclick.net",
-    "files.consumerfinance.gov",
     "img.youtube.com",
     "*.google-analytics.com",
     "trk.cetrk.com",
@@ -554,11 +586,13 @@ CSP_IMG_SRC = (
     "data:",
     "www.facebook.com",
     "www.gravatar.com",
+    "*.qualtrics.com",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
     "'self'",
+    "*.consumerfinance.gov",
     "*.googletagmanager.com",
     "*.google-analytics.com",
     "optimize.google.com",
@@ -568,30 +602,37 @@ CSP_FRAME_SRC = (
     "www.facebook.com",
     "staticxx.facebook.com",
     "mediasite.yorkcast.com",
+    "*.qualtrics.com",
 )
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = (
     "'self'",
     "data:",
+    "*.consumerfinance.gov",
     "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
-    "files.consumerfinance.gov",
 )
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to
 CSP_CONNECT_SRC = (
     "'self'",
+    "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
     "bam.nr-data.net",
-    "files.consumerfinance.gov",
     "s3.amazonaws.com",
     "public.govdelivery.com",
     "n2.mouseflow.com",
     "api.iperceptions.com",
     "*.qualtrics.com",
+)
+
+# These specify valid media sources (e.g., MP3 files)
+CSP_MEDIA_SRC = (
+    "'self'",
+    "*.consumerfinance.gov",
 )
 
 # Feature flags

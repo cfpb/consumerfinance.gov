@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         gulp_cmd:
-          - lint
+          - lint --ci
           - test:unit --ci --headless
 
     steps:
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v1
         with:
-            node-version: '10.x'
+            node-version: '12.x'
 
       - name: Set up Python
         uses: actions/setup-python@v1
@@ -45,13 +45,13 @@ jobs:
 
   coverage:
     runs-on: ubuntu-latest
-    needs: 
+    needs:
       - frontend
 
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v1
@@ -70,4 +70,4 @@ jobs:
 
       - name: Check frontend test coverage
         run: |
-          diff-cover frontend_coverage/clover.xml --fail-under=100
+          diff-cover frontend_coverage/clover.xml --compare-branch=origin/main --fail-under=100

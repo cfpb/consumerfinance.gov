@@ -16,8 +16,8 @@ const MEGA_MENU_CONTENT_SEL = BASE_SEL + ' .o-mega-menu_content';
 const GLOBAL_SEARCH_SEL = BASE_SEL + ' .m-global-search';
 const GLOBAL_SEARCH_TRIGGER_SEL = BASE_SEL + ' .m-global-search_trigger';
 const GLOBAL_SEARCH_CONTENT_SEL = BASE_SEL + ' .m-global-search_content';
-const GLOBAL_CTA_LG_SEL = BASE_SEL + ' .m-global-header-cta__horizontal';
-const GLOBAL_CTA_SM_SEL = BASE_SEL + ' .m-global-header-cta__list';
+const GLOBAL_CTA_LG_SEL = BASE_SEL + ' .m-global-header-cta';
+const GLOBAL_CTA_SM_SEL = BASE_SEL + ' .o-mega-menu_content-1-item:first-child .o-mega-menu_content-1-link';
 const GLOBAL_EYEBROW_LG_SEL = BASE_SEL + ' .m-global-eyebrow__horizontal';
 const GLOBAL_EYEBROW_SM_SEL = MEGA_MENU_SEL + ' .m-global-eyebrow__list';
 

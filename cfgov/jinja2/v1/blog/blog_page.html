@@ -11,7 +11,8 @@
 {%- endblock %}
 
 {% block og_article_author -%}
-    <meta property="article:author" content="https://www.facebook.com/CFPB">
+    <meta property="article:author"
+          content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
 {%- endblock %}
 
 {% block content_main %}
@@ -19,16 +20,16 @@
     {% block post_article_content %}
     <div class="block join-the-conversation">
         <p>
-            Join the conversation. Follow CFPB on
-            <a class="a-link
-                      a-link__icon"
-               href="{{ unsigned_redirect('https://twitter.com/CFPB') }}">
-                <span class="a-link_text">Twitter</span>
-            </a> and
-            <a class="a-link
-                      a-link__icon"
-               href="{{ unsigned_redirect('https://www.facebook.com/CFPB') }}">
-                <span class="a-link_text">Facebook</span></a>.
+            {% set twitter_url = _("https://twitter.com/CFPB") %}
+            {%- set twitter_link = ( '<a href="%s">Twitter</a>' % twitter_url ) | safe %}
+
+            {%- set facebook_url = _("https://www.facebook.com/CFPB") %}
+            {%- set facebook_link = ( '<a href="%s">Facebook</a>' % facebook_url ) | safe %}
+
+            {% trans trimmed %}
+                Join the conversation.
+                Follow CFPB on {{ twitter_link }} and {{ facebook_link }}.
+            {% endtrans %}
         </p>
     </div>
     {% endblock %}

@@ -1,0 +1,377 @@
+// Tour
+
+.o-tour {
+    position: relative;
+}
+
+.o-tour_screen {
+    border-top: 1px solid @gray-20;
+    position: relative;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::before {
+        .respond-to-min(@bp-med-min, {
+            bottom: 0;
+            content: '';
+            left: 50%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: -1;
+        });
+    }
+}
+
+.o-tour_content {
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: unit( 30px / @base-font-size-px, em ) 0;
+    position: relative;
+    z-index: 1;
+
+    .respond-to-min(@bp-sm-min, {
+        padding: unit( 45px / @base-font-size-px, em ) unit( 15px / @base-font-size-px, em );
+    });
+
+    .respond-to-min(@bp-med-min, {
+        display: flex;
+        justify-content: space-between;
+        padding: unit( 45px / @base-font-size-px, em ) unit( 0px / @base-font-size-px, em );
+
+        // Fix for extra div caused by stickyfilljs fix for IE 11.
+        > div {
+            order: 3;
+        }
+    });
+
+    .a-link {
+        font-weight: 500;
+    }
+}
+
+.o-tour_content-intro {
+    display: flex;
+    margin: 0 unit( 15px / @base-font-size-px, em );
+}
+
+.o-tour_content-text,
+.o-tour_content-image {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 unit( 15px / @base-font-size-px, em );
+
+    .respond-to-min(@bp-med-min, {
+        flex-basis: 48%;
+    });
+}
+
+.o-tour_content-text {
+    max-width: unit( 670px / @base-font-size-px, em );
+
+    .respond-to-min(@bp-med-min, {
+        align-items: center;
+        display: flex;
+        order: 1 !important; // !important needed for IE 11 fix.
+    });
+
+    &__intro {
+        .respond-to-min(@bp-med-min, {
+            display: block;
+        });
+    }
+}
+
+.o-tour_content-holder {
+    .respond-to-min(@bp-med-min, {
+        flex: 0 1 auto; // Fix for IE 10.
+    });
+}
+
+.o-tour_content-page {
+    min-height: 100vh;
+    min-height: calc(100vh - unit( 60px / @base-font-size-px, em ));
+    outline: 0;
+
+    .respond-to-min(@bp-sm-min, {
+        min-height: calc(100vh - unit( 90px / @base-font-size-px, em ));
+    });
+
+    .respond-to-min(@bp-med-min, {
+        align-items: center;
+
+        // Wrap with @supports() to fix for IE 11.
+        @supports ( display: flex ) {
+            display: flex;
+        }
+    });
+}
+
+.o-tour_content-page__building-block-overview {
+    min-height: 100vh;
+    min-height: calc(85vh - unit( 90px / @base-font-size-px, em ));
+
+    .respond-to-min(@bp-med-min, {
+        min-height: calc(100vh - unit( 60px / @base-font-size-px, em ));
+        padding-bottom: unit( 30px / @base-font-size-px, em );
+        padding-top: unit( 30px / @base-font-size-px, em );
+    });
+}
+
+.o-tour_content-page__building-block {
+    min-height: 100vh;
+    min-height: calc(85vh - unit( 90px / @base-font-size-px, em ));
+    padding-top: calc(15vh + unit( 90px / @base-font-size-px, em ));
+
+    .respond-to-min(@bp-med-min, {
+        min-height: calc(100vh - unit( 60px / @base-font-size-px, em ));
+        padding-bottom: unit( 30px / @base-font-size-px, em );
+        padding-top: unit( 30px / @base-font-size-px, em );
+    });
+}
+
+.o-tour_content-page-holder {
+    .respond-to-min(@bp-med-min, {
+        flex: 0 1 auto; // Fix for IE 10.
+    });
+}
+
+.o-tour_content-image {
+    margin-bottom: unit( 30px / @base-font-size-px, em );
+    margin-top: unit( -30px / @base-font-size-px, em );
+    padding-bottom: unit( 30px / @base-font-size-px, em );
+    padding-top: unit( 30px / @base-font-size-px, em );
+    position: relative;
+
+    .respond-to-min(@bp-sm-min, {
+        margin-bottom: unit( 45px / @base-font-size-px, em );
+        margin-top: unit( -45px / @base-font-size-px, em );
+        padding-bottom: unit( 45px / @base-font-size-px, em );
+        padding-top: unit( 45px / @base-font-size-px, em );
+    });
+
+    .respond-to-min(@bp-med-min, {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        margin-bottom: unit( -45px / @base-font-size-px, em );
+        order: 2 !important; // !important needed for IE 11 fix.
+        overflow: hidden;
+        padding-bottom: 0;
+        padding-top: 0;
+        top: 0;
+    });
+
+    &::before {
+        bottom: 0;
+        content: '';
+        left: unit( -15px / @base-font-size-px, em );
+        position: absolute;
+        right: unit( -15px / @base-font-size-px, em );
+        top: 0;
+        z-index: -1;
+
+        .respond-to-min(@bp-sm-min, {
+            left: unit( -30px / @base-font-size-px, em );
+            right: unit( -30px / @base-font-size-px, em );
+        });
+
+        .respond-to-min(@bp-med-min, {
+            display: none;
+        });
+    }
+
+    &__intro {
+        display: none;
+
+        .respond-to-min(@bp-med-min, {
+            display: flex;
+            height: initial;
+            position: initial;
+        });
+    }
+}
+
+.o-tour_illustration {
+    max-height: 15vh;
+    width: 100%;
+
+    .respond-to-min(@bp-med-min, {
+        max-height: 100%;
+        max-width: unit( 370px / @base-font-size-px, em );
+    });
+
+    #block-executive-function,
+    #block-financial-habits,
+    #block-financial-knowledge {
+        transform: perspective(100rem);
+        transition-duration: 1000ms;
+        transition-property: opacity, transform;
+    }
+
+    .is-on-executive-function.aos-animate {
+        #block-executive-function {
+            opacity: 1;
+            transform: scale(1.1) translate3d(-1.4rem, 0, 0.1rem);
+        }
+        #block-financial-habits,
+        #block-financial-knowledge {
+            opacity: 0.25;
+            transform: scale(1) translate3d(0, 0, 0);
+        }
+    }
+
+    .is-on-financial-habits.aos-animate {
+        #block-financial-habits {
+            opacity: 1;
+            transform: scale(1.1) translate3d(-2.4rem, -2.4rem, 0.1rem);
+        }
+        #block-executive-function,
+        #block-financial-knowledge {
+            opacity: 0.25;
+            transform: scale(1) translate3d(0, 0, 0);
+        }
+    }
+
+    .is-on-financial-knowledge.aos-animate {
+        #block-financial-knowledge {
+            opacity: 1;
+            transform: scale(1.1) translate3d(0, -2.4rem, 0.1rem);
+        }
+        #block-executive-function,
+        #block-financial-habits {
+            opacity: 0.25;
+            transform: scale(1) translate3d(0, 0, 0);
+        }
+    }
+
+    .is-on-building-block-final.aos-animate {
+        #block-financial-habits,
+        #block-financial-knowledge,
+        #block-executive-function {
+            opacity: 1;
+            transform: scale(1) translate3d(0, 0, 0);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .o-tour_illustration {
+        #block-executive-function,
+        #block-financial-habits,
+        #block-financial-knowledge {
+            transition-duration: 1ms;
+        }
+    }
+}
+
+.o-tour_illustration__intro {
+    fill: #96c4ed;
+    position: relative;
+    top: unit( -70px / @base-font-size-px, em );
+}
+
+
+.building-block-initial() {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+}
+
+.building-block-inactive() {
+    opacity: 0.25;
+    transform: scale(1) translate3d(0, 0, 0);
+}
+
+.building-block-active() {
+    opacity: 1;
+    transform: scale(1.1) translate3d(0, 0, 0);
+}
+
+.o-tour_building-blocks {
+    transform-style: preserve-3d;
+}
+
+.o-tour_expandable-list {
+    border-top: 1px solid @gray-40;
+    list-style-type: none;
+    margin: unit( 30px / @base-font-size-px, em ) 0;
+    padding-left: 0;
+
+    li {
+        border-bottom: 1px solid @gray-40;
+        list-style-type: none;
+        margin: 0;
+    }
+}
+
+.o-tour_screen-target {
+    position: absolute;
+}
+
+.o-tour_building-blocks-menu {
+    list-style: none;
+    padding: 0;
+
+    li {
+        margin: 0;
+    }
+
+    .a-link__icon {
+        display: inline-block;
+        margin-bottom: unit( 10px / @base-font-size-px, em );
+        padding-top: 2px;
+    }
+
+    .a-icon {
+        display: block;
+        float: left;
+        height: unit( 28px / @base-font-size-px, em );
+        margin: -2px 0.5em 0 0;
+    }
+}
+
+.o-tour_screen__intro {
+    background: #dbebfa;
+    border-top: 0;
+
+    .o-tour_content {
+        min-height: ~'calc( 100vh - 108px )';
+
+        .respond-to-min(@bp-med-min, {
+            min-height: ~'calc( 100vh - 226px )';
+        });
+    }
+}
+
+.o-tour_screen__one::before,
+.o-tour_screen__one .o-tour_content-image::before {
+    background: #ffc372;
+}
+
+.o-tour_screen__two::before,
+.o-tour_screen__two .o-tour_content-image::before {
+    background: #96c4ed;
+}
+
+.o-tour_screen__three::before,
+.o-tour_screen__three .o-tour_content-image::before {
+    background: #70a6a5;
+}
+
+.o-tour_screen__three {
+    .o-tour_content-image {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    /* Fix for IE11 due to sticky polyfill markup */
+}
+
+.o-tour_screen__four::before,
+.o-tour_screen__four .o-tour_content-image::before {
+    background: #e79e8e;
+}

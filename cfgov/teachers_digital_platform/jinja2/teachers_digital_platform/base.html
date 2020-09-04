@@ -1,0 +1,65 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+
+{# HEAD items #}
+
+{% block title -%}
+    Page Title | Consumer Financial Protection Bureau
+{%- endblock title %}
+
+{% block desc -%}
+    Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.
+{%- endblock desc %}
+
+{% block og_image -%}
+    <meta property="og:image" content="{{ meta_image_url }}">
+    <meta property="twitter:image" content="{{ meta_image_url }}">
+    {# Optional property if you want to use Twitter's large card format
+       https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary-card-with-large-image
+    <meta name="twitter:card" content="summary_large_image">
+    #}
+{%- endblock og_image %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
+{% block css -%}
+    {{ super() }}
+
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
+{%- endblock css %}
+
+
+{# BODY items #}
+
+{% block content_main scoped %}
+    <div class="block block__flush-top">
+        Title and content go here.
+    </div>
+{% endblock content_main %}
+
+{% block content_sidebar scoped %}
+    <div class="block block__flush-top">
+        Sidebar content goes here.
+    </div>
+{% endblock content_sidebar %}
+
+{% block javascript scoped -%}
+{# Conditional comment used to block IE8 and under from receiving JS #}
+<!--[if gt IE 8]><!-->
+    {# Include site-wide JavaScript. #}
+    <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
+<!--<![endif]-->
+
+    <script>
+    //<![CDATA[
+        var usasearch_config = { siteHandle: 'cfpb' };
+
+        var script = document.createElement( 'script' );
+        script.type = 'text/javascript';
+        script.src = 'https://search.usa.gov/javascripts/remote.loader.js';
+        document.getElementsByTagName( 'head' )[0].appendChild( script );
+    //]]>
+    </script>
+{%- endblock javascript %}

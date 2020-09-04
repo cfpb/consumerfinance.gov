@@ -112,7 +112,7 @@ class AbstractHero(blocks.StructBlock):
         required=False,
         help_text=mark_safe(
             'Specify a hex value (including the # sign) from our '
-            '<a href="https://cfpb.github.io/design-manual/brand-guidelines/color-principles.html">'  # noqa: E501
+            '<a href="https://cfpb.github.io/design-system/foundation/color">'
             'official color palette</a>.')
     )
     is_white_text = blocks.BooleanBlock(

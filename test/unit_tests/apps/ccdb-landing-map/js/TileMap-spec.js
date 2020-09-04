@@ -1,7 +1,10 @@
 import * as complaints from '../../../mocks/complaints';
 import * as sut from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap.js';
+import Analytics from '../../../../../cfgov/unprocessed/js/modules/Analytics';
 import TileMap from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap';
 import chartMock from '../../../mocks/chartMock';
+
+jest.mock( '../../../../../cfgov/unprocessed/js/modules/Analytics' );
 
 /**
  * Create a mock for the window.location object, for testing purposes.
@@ -27,8 +30,15 @@ describe( 'Tile map', () => {
     'rgba(37, 116, 115, 0.5)'
   ];
 
+  let origMaxDate;
+  beforeAll( () => {
+    origMaxDate = global.MAX_DATE;
+  } );
+
   // shim this so highcharts test doesn't die
   beforeEach( () => {
+    delete global.MAX_DATE;
+    delete global.complaint_public_metadata;
     window.SVGElement.prototype.getBBox = () => ( {
       x: 0,
       y: 0
@@ -40,11 +50,57 @@ describe( 'Tile map', () => {
     delete window.SVGElement.prototype.getBBox;
   } );
 
-  it( 'Calculates date interval', () => {
+  afterAll( () => {
+    global.MAX_DATE = origMaxDate;
+  } );
+
+  describe( 'startOfToday', () => {
+    it( 'handles MAX_DATE that is already set', () => {
+      global.MAX_DATE = new Date( '2016-05-09 02:39:23' );
+      const actual = sut.startOfToday();
+      expect( actual.getFullYear() ).toEqual( 2016 );
+      expect( actual.getMonth() ).toEqual( 4 );
+      expect( actual.getDate() ).toEqual( 9 );
+      expect( actual.getHours() ).toEqual( 2 );
+      expect( actual.getMinutes() ).toEqual( 39 );
+    } );
+
+    it( 'sets MAX_DATE from the metadata', () => {
+      /* eslint-disable camelcase */
+      global.complaint_public_metadata = {
+        metadata_timestamp: '2020-05-09 02:39:23',
+        qas_timestamp: '2020-05-08 23:48:52',
+        total_count: 2611545
+      };
+      /* eslint-enable camelcase */
+
+      const actual = sut.startOfToday();
+      expect( actual.getFullYear() ).toEqual( 2020 );
+      expect( actual.getMonth() ).toEqual( 4 );
+      expect( actual.getDate() ).toEqual( 9 );
+      expect( actual.getHours() ).toEqual( 0 );
+      expect( actual.getMinutes() ).toEqual( 0 );
+    } );
+
+    it( 'defaults MAX_DATE if the metadata is missing', () => {
+      jest.spyOn( global.Date, 'now' )
+        // eslint-disable-next-line no-unused-vars
+        .mockImplementationOnce( _ => Date.UTC( 2018, 4, 1, 4 ) );
+
+      const actual = sut.startOfToday();
+      expect( actual.getFullYear() ).toEqual( 2018 );
+      expect( actual.getMonth() ).toEqual( 4 );
+      expect( actual.getDate() ).toEqual( 1 );
+      expect( actual.getHours() ).toEqual( 0 );
+      expect( actual.getMinutes() ).toEqual( 0 );
+    } );
+  } );
+
+  it( 'Calculates date range', () => {
     // set the date so result is always the same in the test
     const DATE_TO_USE = new Date( 'December 31, 2015 20:00:00' );
     global.Date = jest.fn( () => DATE_TO_USE );
-    const result = sut.calculateDateInterval();
+    const result = sut.calculateDateRange();
     expect( result ).toContain( '12/31/2012 - 12/31/2015' );
   } );
 
@@ -88,13 +144,18 @@ describe( 'Tile map', () => {
     mockWindowLocation();
 
     expect( window.location.href ).toEqual( 'http://localhost/' );
+    Analytics.getDataLayerOptions = jest.fn();
+    Analytics.sendEvent = jest.fn();
     const evt = {
       point: {
         name: 'TX'
       }
     };
     sut.clickHandler( false, evt );
-    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=None&state=TX' );
+    expect( Analytics.getDataLayerOptions )
+      .toHaveBeenCalledWith( 'State Event: click', 'TX', 'Consumer Complaint Search' );
+    expect( Analytics.sendEvent ).toHaveBeenCalled();
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateRange=3y&dataNormalization=None&state=TX' );
   } );
 
   it( 'navigates the url to per capita when clicked', () => {
@@ -107,7 +168,7 @@ describe( 'Tile map', () => {
       }
     };
     sut.clickHandler( true, evt );
-    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateInterval=3y&dataNormalization=Per%201000%20pop.&state=TX' );
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateRange=3y&dataNormalization=Per%201000%20pop.&state=TX' );
   } );
 
   it( 'formats a map tile', () => {

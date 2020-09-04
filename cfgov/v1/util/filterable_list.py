@@ -120,7 +120,7 @@ class FilterableListMixin(object):
         form_data = {}
         has_active_filters = False
         for field in self.get_form_class().declared_fields:
-            if field in ['categories', 'topics', 'authors']:
+            if field in ['categories', 'topics', 'authors', 'statuses']:
                 value = request_dict.getlist(field, [])
             else:
                 value = request_dict.get(field, '')

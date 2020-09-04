@@ -1,5 +1,7 @@
-// This file controls the college costs application
-import Expandable from '../../../../../node_modules/@cfpb/cfpb-expandables/src/Expandable.js';
+import 'core-js/features/promise';
+import 'core-js/features/object';
+import 'core-js/features/dom-collections';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import { appView } from './views/app-view.js';
 import { chartView } from './views/chart-view.js';
 import { constantsModel } from './models/constants-model.js';
@@ -14,6 +16,7 @@ import { schoolView } from './views/school-view.js';
 import { stateModel } from './models/state-model.js';
 import { updateModelsFromQueryString, updateSchoolData } from './dispatchers/update-models.js';
 import { updateState } from './dispatchers/update-state.js';
+
 
 /**
  * Initialize the app

@@ -1,4 +1,3 @@
-import re
 from functools import partial
 
 from django.conf import settings
@@ -6,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -41,11 +40,13 @@ from v1.views.documents import DocumentServeView
 
 
 try:
-    from flags.urls import flagged_re_path
     from django.urls import include, re_path
+
+    from flags.urls import flagged_re_path
 except ImportError:
-    from flags.urls import flagged_url as flagged_re_path
     from django.conf.urls import include, url as re_path
+
+    from flags.urls import flagged_url as flagged_re_path
 
 
 def flagged_wagtail_template_view(flag_name, template_name):
@@ -81,6 +82,7 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+
     re_path(r'^rural-or-underserved-tool/$', TemplateView.as_view(
         template_name='rural-or-underserved/index.html'),
         name='rural-or-underserved'),
@@ -280,7 +282,27 @@ urlpatterns = [
         'transcripts'),
         namespace='transcripts')),
 
-    re_path(r'^paying-for-college/', include('comparisontool.urls')),
+    re_path(
+        r'^paying-for-college/choose-a-student-loan/$',
+        TemplateView.as_view(
+            template_name='comparisontool/choose_a_loan.html'
+        ),
+        name='pfc-choose'
+    ),
+    re_path(
+        r'^paying-for-college/manage-your-college-money/$',
+        TemplateView.as_view(
+            template_name='comparisontool/manage_your_money.html'
+        ),
+        name='pfc-manage'
+    ),
+    re_path(
+        r'^paying-for-college/repay-student-debt/$',
+        TemplateView.as_view(
+            template_name='comparisontool/repay_student_debt.html'
+        ),
+        name='pfc-repay'
+    ),
 
     re_path(
         r'^paying-for-college2/',
@@ -351,11 +373,6 @@ urlpatterns = [
         template_name='jobmanager/technology-innovation-fellows.html'),
         name='technology_innovation_fellows'),
 
-    # credit cards KBYO
-
-    re_path(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(
-        template_name='knowbeforeyouowe/creditcards/tool.html'),
-        name='cckbyo'),
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
@@ -769,31 +786,5 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-def handle_404_error(code, request, exception=None):
-    """Attempt to self-heal 404-ing URLs.
-
-    Takes a 404ing request and tries to transform it to a successful request
-    by lowercasing the path and stripping extraneous characters from the end.
-    If those result in a modified path, redirect to the modified path.
-    If the path did not change, this is a legitimate 404, so continue handling
-    that as normal.
-    """
-
-    # Lowercase the path.
-    path = request.path.lower()
-
-    # Check for and remove extraneous characters at the end of the path.
-    extraneous_char_re = re.compile(
-        r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
-    )
-    path = extraneous_char_re.sub('', path)
-
-    # If the path has changed, redirect to the new path.
-    if path != request.path:
-        return redirect(path, permanent=True)
-
-    return handle_error(code, request, exception)
-
-
-handler404 = partial(handle_404_error, 404)
+handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)

@@ -1,12 +1,22 @@
-# cfgov-refresh
+# consumerfinance.gov
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the User Research, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki). The ReactJS codebase is integrated into Wagtail Django CMS as a satellite application.
 
 The master repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
+=======
+The primary repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
+>>>>>>> dd7058e62b45d2d82162efac4d4c811c966977b9
 This Django project includes the front-end assets and build tools,
 [Jinja templates](https://jinja.palletsprojects.com/) for front-end rendering,
 code to configure our CMS, [Wagtail](https://wagtail.io/),
 and several standalone Django apps for specific parts of the site.
+=======
+This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the User Research, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki). The ReactJS codebase is integrated into Wagtail Django CMS as a satellite application.
+
+[![Build Status](https://github.com/cfpb/consumerfinance.gov/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/consumerfinance.gov/actions)
+>>>>>>> 2f304e78fb3c427c5ea45c707de5e97f1e93bfd7
 
 ## Backlog
 
@@ -28,9 +38,9 @@ We follow the following steps for developing and creating end-of-sprint pull-req
 ## Quickstart
 
 Full installation and usage instructions are available in
-[our documentation](https://cfpb.github.io/cfgov-refresh).
+[our documentation](https://cfpb.github.io/consumerfinance.gov).
 
-This project requires Python 3.6, Node 8, and Gulp 4.
+This project requires Python 3.6, Node 12, and Gulp 4.
 We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and
 [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 for keeping the project's Python dependencies contained.
@@ -38,14 +48,14 @@ for keeping the project's Python dependencies contained.
 Clone the repository:
 
 ```sh
-git clone git@github.com:cfpb/cfgov-refresh.git
+git clone git@github.com:cfpb/consumerfinance.gov.git
 ```
 
 Create a virtual environment for Python dependencies:
 
 ```sh
-cd cfgov-refresh
-mkvirtualenv --python=python3.6 cfgov-refresh
+cd consumerfinance.gov
+mkvirtualenv --python=python3.6 consumerfinance.gov
 ```
 
 Create and load initial environment settings:
@@ -82,7 +92,7 @@ which you can log into with the credentials `admin`/`admin`.
 ## Documentation
 
 Full documentation for this project is available in the [docs/](docs/) directory
-and [online](https://cfpb.github.io/cfgov-refresh/).
+and [online](https://cfpb.github.io/consumerfinance.gov/).
 
 If you would like to browse the documentation locally, you can do so
 with [`mkdocs`](https://www.mkdocs.org/):
@@ -98,10 +108,10 @@ Documentation will be available locally at
 
 ## Getting help
 
-Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues)
+Use the [issue tracker](https://github.com/cfpb/consumerfinance.gov/issues)
 to follow the development conversation.
 If you find a bug not listed in the issue tracker,
-please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new).
+please [file a bug report](https://github.com/cfpb/consumerfinance.gov/issues/new).
 
 
 ## Getting involved
