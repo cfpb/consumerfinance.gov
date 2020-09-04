@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.http import HttpResponse
 from django.test import (
     RequestFactory, SimpleTestCase, TestCase, override_settings
 )
@@ -9,7 +10,8 @@ import mock
 from bs4 import BeautifulSoup
 
 from core.middleware import (
-    DeactivateTranslationsMiddleware, ParseLinksMiddleware, parse_links
+    DeactivateTranslationsMiddleware, ParseLinksMiddleware,
+    SelfHealingMiddleware, parse_links
 )
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import publish_page
@@ -45,6 +47,12 @@ class TestShouldParseLinks(TestCase):
         self.assertFalse(ParseLinksMiddleware.should_parse_links(
             request_path='/foo/bar',
             response_content_type='application/json'
+        ))
+
+    def test_should_not_parse_links_if_empty(self):
+        self.assertFalse(ParseLinksMiddleware.should_parse_links(
+            request_path='/foo/bar',
+            response_content_type=''
         ))
 
     def test_should_parse_links_if_html(self):
@@ -295,3 +303,86 @@ class DeactivateTranslationsMiddlewareTests(SimpleTestCase):
         middleware(request)
 
         self.assertEqual(translation.get_language(), 'en-us')
+
+
+class SelfHealingMiddlewareTests(SimpleTestCase):
+    def test_selfhealing_middleware_does_not_redirect_good_urls(self):
+        def get_response(request):
+            return HttpResponse(status=404)
+
+        middleware = SelfHealingMiddleware(get_response)
+        request = RequestFactory().get('/test')
+        response = middleware(request)
+        self.assertEqual(response.status_code, 404)
+
+    def test_selfhealing_middleware_lowercases_mixed_case_urls(self):
+        def get_response(request):
+            return HttpResponse(status=404)
+
+        middleware = SelfHealingMiddleware(get_response)
+        request = RequestFactory().get('/TEst')
+        response = middleware(request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
+    def test_selfhealing_middleware_strips_one_extraneous_char(self):
+        def get_response(request):
+            return HttpResponse(status=404)
+
+        middleware = SelfHealingMiddleware(get_response)
+        request = RequestFactory().get('/test)')
+        response = middleware(request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
+    def test_selfhealing_middleware_strips_two_extraneous_chars(self):
+        def get_response(request):
+            return HttpResponse(status=404)
+
+        middleware = SelfHealingMiddleware(get_response)
+        request = RequestFactory().get('/test )')
+        response = middleware(request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
+    def test_selfhealing_middleware_strips_all_extraneous_chars(self):
+        def get_response(request):
+            return HttpResponse(status=404)
+
+        middleware = SelfHealingMiddleware(get_response)
+        request = RequestFactory().get(
+            '/test ~!@#$%^&*()-_–—=+[]{}\\|;:\'‘’"“”,.…<>?'
+        )
+        response = middleware(request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )
+
+    def test_selfhealing_middleware_lowercase_and_strip_extraneous_chars(self):
+        def get_response(request):
+            return HttpResponse(status=404)
+
+        middleware = SelfHealingMiddleware(get_response)
+        request = RequestFactory().get('/TEst )')
+        response = middleware(request)
+        self.assertRedirects(
+            response,
+            '/test',
+            status_code=301,
+            fetch_redirect_response=False
+        )

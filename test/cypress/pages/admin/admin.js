@@ -190,4 +190,11 @@ export class AdminPage {
   getFirstTableRow() {
     return cy.get( '.listing' ).find( 'tr' ).eq( 1 );
   }
+
+  getPageMetadataReports() {
+    this.openNavigationTab( 'Reports' );
+    this.selectSubMenu( 'Page Metadata' );
+    return cy.get( '.listing' ).find( 'tr' );
+  }
+
 }

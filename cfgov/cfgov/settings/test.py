@@ -1,9 +1,38 @@
-from .local import *
+from .base import *
 
+
+SECRET_KEY = "not-secret-key-for-testing"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {"level": "DEBUG", "class": "logging.StreamHandler",}
+    },
+    "loggers": {
+        "": {"handlers": ["console"], "level": "INFO", "propagate": True,}
+    },
+}
+
+# Disable caching for testing
+CACHES = {
+    k: {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        "TIMEOUT": 0,
+    }
+    for k in ("default", "post_preview")
+}
+
+ALLOW_ADMIN_URL = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
-TEST_RUNNER = os.environ.get('TEST_RUNNER', 'cfgov.test.TestRunner')
+TEST_RUNNER = os.environ.get(
+    'TEST_RUNNER',
+    'core.testutils.runners.TestRunner'
+)
+
+BAKER_CUSTOM_CLASS = 'core.testutils.baker.ActualContentTypeBaker'
 
 INSTALLED_APPS += (
     'wagtail.contrib.settings',

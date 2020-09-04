@@ -36,7 +36,6 @@ cfgov/static_built/*
 
 # Logs and databases #
 ######################
-logs/*
 *.sql
 *.sqlite
 *.sqlite3
@@ -132,6 +131,7 @@ cfgov/paying_for_college/fixtures/national_stats_backup.json
 # IDE Specifc #
 ###############
 *.idea
+.vscode
 local-storage.json
 
 # Auto-generated service workers #

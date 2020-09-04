@@ -1,5 +1,7 @@
 from django.test import TestCase, override_settings
 
+import wagtail
+
 from ask_cfpb.models.blocks import FAQ, AskAnswerContent, HowTo, Tip
 
 
@@ -13,19 +15,28 @@ class AskBlocksTestCase(TestCase):
             'type': 'tip',
             'value': self.tip_content
         }
-        self.expected_tip_html = (
-            '<aside class="m-inset m-inset__bordered">'
-            '<h4>Tip</h4>'
-            '<div class="rich-text">Tip content</div>'
-            '</aside>'
-        )
+        if wagtail.VERSION < (2, 10):
+            self.expected_tip_html = (
+                '<aside class="m-inset m-inset__bordered">'
+                '<h4>Tip</h4>'
+                '<div class="rich-text">Tip content</div>'
+                '</aside>'
+            )
+            self.expected_text_html = '<div class="rich-text">text</div>'
+        else:
+            self.expected_tip_html = (
+                '<aside class="m-inset m-inset__bordered">'
+                '<h4>Tip</h4>'
+                'Tip content'
+                '</aside>'
+            )
+            self.expected_text_html = 'text'
         self.text_data = {
             'type': 'text',
             'value': {
                 'content': 'text'
             }
         }
-        self.expected_text_html = '<div class="rich-text">text</div>'
 
     def test_tip_block_renders_html(self):
         block = Tip()
@@ -72,25 +83,46 @@ class SchemaBlocksTestCase(TestCase):
                 'step_content': 'Step content'
             }]
         }
-        expected_html = (
-            '<div itemscope'
-            '     itemtype="http://schema.org/HowTo"'
-            '     class="schema-block schema-block__how-to">'
-            '<h2 itemprop="name" class="schema-block_title">test title</h2>'
-            '<div itemprop="description" class="schema-block_description">'
-            '<div class="rich-text">test description</div>'
-            '</div>'
-            '<ol>'
-            '<li itemprop="step"'
-            '     itemscope'
-            '     itemtype="http://schema.org/HowToStep"'
-            '     class="schema-block_item">'
-            '<h3 itemprop="name" class="h4">Step one</h3>'
-            '<div itemprop="text">Step content</div>'
-            '</li>'
-            '</ol>'
-            '</div>'
-        )
+        if wagtail.VERSION < (2, 10):
+            expected_html = (
+                '<div itemscope'
+                '     itemtype="http://schema.org/HowTo"'
+                '     class="schema-block schema-block__how-to">'
+                '<h2 itemprop="name" class="schema-block_title">test title</h2>'  # noqa
+                '<div itemprop="description" class="schema-block_description">'
+                '<div class="rich-text">test description</div>'
+                '</div>'
+                '<ol>'
+                '<li itemprop="step"'
+                '     itemscope'
+                '     itemtype="http://schema.org/HowToStep"'
+                '     class="schema-block_item">'
+                '<h3 itemprop="name" class="h4">Step one</h3>'
+                '<div itemprop="text">Step content</div>'
+                '</li>'
+                '</ol>'
+                '</div>'
+            )
+        else:
+            expected_html = (
+                '<div itemscope'
+                '     itemtype="http://schema.org/HowTo"'
+                '     class="schema-block schema-block__how-to">'
+                '<h2 itemprop="name" class="schema-block_title">test title</h2>'  # noqa
+                '<div itemprop="description" class="schema-block_description">'
+                'test description'
+                '</div>'
+                '<ol>'
+                '<li itemprop="step"'
+                '     itemscope'
+                '     itemtype="http://schema.org/HowToStep"'
+                '     class="schema-block_item">'
+                '<h3 itemprop="name" class="h4">Step one</h3>'
+                '<div itemprop="text">Step content</div>'
+                '</li>'
+                '</ol>'
+                '</div>'
+            )
         html = block.render(data)
         self.assertHTMLEqual(html, expected_html)
 
@@ -103,21 +135,39 @@ class SchemaBlocksTestCase(TestCase):
                 'answer_content': 'Answer content'
             }]
         }
-        expected_html = (
-            '<div itemscope="" itemtype="http://schema.org/FAQPage" '
-            'class="schema-block schema-block__faq">'
-            '<div itemprop="description" class="schema-block_description">'
-            '<div class="rich-text">test description</div>'
-            '</div>'
-            '<div itemscope="" itemprop="mainEntity" '
-            'itemtype="http://schema.org/Question" class="schema-block_item">'
-            '<h2 itemprop="name">Question one</h2>'
-            '<div itemprop="acceptedAnswer" itemscope="" '
-            'itemtype="http://schema.org/Answer">'
-            '<div itemprop="text">Answer content</div>'
-            '</div>'
-            '</div>'
-            '</div>'
-        )
+        if wagtail.VERSION < (2, 10):
+            expected_html = (
+                '<div itemscope="" itemtype="http://schema.org/FAQPage" '
+                'class="schema-block schema-block__faq">'
+                '<div itemprop="description" class="schema-block_description">'
+                '<div class="rich-text">test description</div>'
+                '</div>'
+                '<div itemscope="" itemprop="mainEntity" '
+                'itemtype="http://schema.org/Question" class="schema-block_item">'  # noqa
+                '<h2 itemprop="name">Question one</h2>'
+                '<div itemprop="acceptedAnswer" itemscope="" '
+                'itemtype="http://schema.org/Answer">'
+                '<div itemprop="text">Answer content</div>'
+                '</div>'
+                '</div>'
+                '</div>'
+            )
+        else:
+            expected_html = (
+                '<div itemscope="" itemtype="http://schema.org/FAQPage" '
+                'class="schema-block schema-block__faq">'
+                '<div itemprop="description" class="schema-block_description">'
+                'test description'
+                '</div>'
+                '<div itemscope="" itemprop="mainEntity" '
+                'itemtype="http://schema.org/Question" class="schema-block_item">'  # noqa
+                '<h2 itemprop="name">Question one</h2>'
+                '<div itemprop="acceptedAnswer" itemscope="" '
+                'itemtype="http://schema.org/Answer">'
+                '<div itemprop="text">Answer content</div>'
+                '</div>'
+                '</div>'
+                '</div>'
+            )
         html = block.render(data)
         self.assertHTMLEqual(html, expected_html)

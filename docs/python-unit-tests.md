@@ -4,7 +4,7 @@
 
 We have multiple resources for writing new unit tests for Django, Wagtial, and Python code:
 
-- [CFPB Django and Wagtail unit testing documentation](https://github.com/cfpb/development/blob/master/guides/unittesting-django-wagtail.md)
+- [CFPB Django and Wagtail unit testing documentation](https://github.com/cfpb/development/blob/main/guides/unittesting-django-wagtail.md)
 - [The Django testing documentation](https://docs.djangoproject.com/en/1.11/topics/testing/overview/)
 - [The Wagtail testing documentation](http://docs.wagtail.io/en/stable/advanced_topics/testing.html)
 - [Real Python's "Testing in Django"](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/)
@@ -12,25 +12,25 @@ We have multiple resources for writing new unit tests for Django, Wagtial, and P
 ## Prerequisites
 
 If you have set up
-[a standalone installation of cfgov-refresh](/installation/#install-system-level-requirements),
+[a standalone installation of consumerfinance.gov](/installation/#install-system-level-requirements),
 you'll need to
 [activate your virtual environment](/running-virtualenv/#3-launch-site)
 before running the tests:
 
 ```sh
-workon cfgov-refresh
+workon consumerfinance.gov
 ```
 
-If you have not set up the standalone installation of cfgov-refresh,
+If you have not set up the standalone installation of consumerfinance.gov,
 you can still run the tests if you install Tox in your
-[local installation of Python](https://github.com/cfpb/development/blob/master/guides/installing-python.md):
+[local installation of Python](https://github.com/cfpb/development/blob/main/guides/installing-python.md):
 
 ```
 pip install tox
 ```
 
 If you have set up
-[a Docker-based installation of cfgov-refresh](/installation/#docker-based-installation),
+[a Docker-based installation of consumerfinance.gov](/installation/#docker-based-installation),
 you can run the tests there by  
 [accessing the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell):
 
@@ -44,7 +44,7 @@ Our test suite can either be run in a local virtualenv or in Docker.
 Please note, the tests run quite slow in Docker.
 
 To run the the full suite of Python tests using Tox,
-make sure you are in the cfgov-refresh root and then run:
+make sure you are in the consumerfinance.gov root and then run:
 
 ```sh
 tox
@@ -94,7 +94,7 @@ We use the `flake8` and `isort` tools to ensure compliance with
 [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/),
 [Django coding style guidelines](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/),
 and the
-[CFPB Python style guide](https://github.com/cfpb/development/blob/master/standards/python.md#linting).
+[CFPB Python style guide](https://github.com/cfpb/development/blob/main/standards/python.md#linting).
 
 Both `flake8` and `isort` can be run using the Tox `lint` environment:
 
@@ -109,7 +109,7 @@ that need to be fixed. To automatically fix import sort issues, run:
 isort --recursive cfgov/
 ```
 
-From the root of `cfgov-refresh`.
+From the root of `consumerfinance.gov`.
 
 ### Coverage
 
@@ -135,7 +135,7 @@ runner that fails if anything is written to stdout. This test runner is at
 environment variable:
 
 ```sh
-TEST_RUNNER=cfgov.test.StdoutCapturingTestRunner tox -e unittest
+TEST_RUNNER=core.testutils.runners.StdoutCapturingTestRunner tox -e unittest
 ```
 
 This test runner is enabled when tests are run automatically on

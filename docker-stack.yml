@@ -40,13 +40,13 @@ services:
     environment:
       ALLOW_ADMIN_URL: "True"
       APACHE_PORT: 8000
-      APACHE_UPLOADS_F_ALIAS: /src/cfgov-refresh/cfgov/f/
+      APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
-      MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
+      MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
       REFRESH_DB: ${REFRESH_DB}
     ports:
       - 8000
@@ -80,10 +80,9 @@ services:
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
                     ./refresh-data.sh 
                     ./cfgov/manage.py update_index
-                    httpd -d cfgov/apache -D FOREGROUND
-                else
-                    httpd -d cfgov/apache -D FOREGROUND
-                fi"
+                fi
+                
+                httpd -d cfgov/apache -D FOREGROUND"
 
 networks:
   app:

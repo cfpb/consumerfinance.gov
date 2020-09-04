@@ -6,7 +6,7 @@
 // GHE repo: app-ops/app-ops-jenkins-shared-libraries
 pipeline {
     agent {
-        label 'docker-agent'
+        label 'docker'
     }
 
     environment {
@@ -76,10 +76,10 @@ pipeline {
         }
 
         stage('Push Image') {
-            // Push image only on master branch or deploy is set to true
+            // Push image only on main branch or deploy is set to true
             when {
                 anyOf {
-                    branch 'master'
+                    branch 'main'
                     expression { return params.DEPLOY }
                 }
             }
@@ -97,10 +97,10 @@ pipeline {
         }
 
         stage('Deploy Stack') {
-            // Deploys only on master branch or deploy is set to true
+            // Deploys only on main branch or deploy is set to true
             when {
                 anyOf {
-                    branch 'master'
+                    branch 'main'
                     expression { return params.DEPLOY }
                 }
             }
@@ -116,7 +116,7 @@ pipeline {
         stage('Run Functional Tests') {
             when {
                 anyOf {
-                    branch 'master'
+                    branch 'main'
                     expression { return params.DEPLOY }
                 }
             }
@@ -134,7 +134,7 @@ pipeline {
     post {
         success {
             script {
-                if (env.GIT_BRANCH != 'master' or env.GIT_BRANCH != 'main') {
+                if (env.GIT_BRANCH != 'main') {
                     notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
                 }
                 else {
@@ -144,7 +144,7 @@ pipeline {
         }
         unsuccessful {
             script{
-                if (env.GIT_BRANCH != 'master' or env.GIT_BRANCH != 'main') {
+                if (env.GIT_BRANCH != 'main') {
                     notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
                 }
                 else {

@@ -11,7 +11,21 @@ services:
         ports:
             - "9200:9200"
             - "9300:9300"
-
+    elasticsearch7:
+        image: elasticsearch:7.4.2
+        ports: 
+            - "9000:9200"
+            - "9100:9300"
+        environment:
+            discovery.type: single-node
+    kibana:
+        image: kibana:7.4.2
+        depends_on:
+            - elasticsearch7
+        ports:
+            - "5601:5601"
+        environment:
+            ELASTICSEARCH_HOSTS: http://elasticsearch7:9200
     postgres:
         image: postgres:10.3
         restart: always
@@ -32,6 +46,7 @@ services:
                 scl_python_version: rh-python36
         depends_on:
             - elasticsearch
+            - elasticsearch7
             - postgres
         stdin_open: true
         tty: true
@@ -46,11 +61,11 @@ services:
             LANG: en_US.utf8
             LC_ALL: en_US.utf8
         volumes:
-            - ./:/src/cfgov-refresh
+            - ./:/src/consumerfinance.gov
         entrypoint:
             - sh
-            - /src/cfgov-refresh/docker/docs/entrypoint.sh
-        working_dir: /src/cfgov-refresh
+            - /src/consumerfinance.gov/docker/docs/entrypoint.sh
+        working_dir: /src/consumerfinance.gov
         stdin_open: true
         tty: true
 networks:

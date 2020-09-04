@@ -55,7 +55,10 @@ class SourceToTableTest(django.test.TestCase):
             State,
             fips='01',
             abbr='AL',
-            name='Alabama')
+            name='Alabama',
+            counties=[],
+            non_msa_counties=[],
+            msas=[])
 
         Autauga = baker.make(
             County,
