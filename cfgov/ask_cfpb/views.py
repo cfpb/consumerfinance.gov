@@ -151,9 +151,7 @@ def ask_autocomplete_es7(request, language='en'):
         return JsonResponse([], safe=False)
     try:
         s = AnswerPageDocument.search().query('match', autocomplete=term)
-        qs = s.to_queryset()
-        print(qs[0])
-        results = [{'question': result.question, 'url': result.url } for result in qs[:20]]
+        results = [{'question': result.autocomplete, 'url': result.url } for result in s[:20]]
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)
