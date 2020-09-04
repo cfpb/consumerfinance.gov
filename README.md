@@ -1,6 +1,7 @@
 # consumerfinance.gov
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the User Research, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki). The ReactJS codebase is integrated into Wagtail Django CMS as a satellite application.
 
 The master repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
@@ -11,6 +12,11 @@ This Django project includes the front-end assets and build tools,
 [Jinja templates](https://jinja.palletsprojects.com/) for front-end rendering,
 code to configure our CMS, [Wagtail](https://wagtail.io/),
 and several standalone Django apps for specific parts of the site.
+=======
+This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the User Research, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki). The ReactJS codebase is integrated into Wagtail Django CMS as a satellite application.
+
+[![Build Status](https://github.com/cfpb/consumerfinance.gov/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/consumerfinance.gov/actions)
+>>>>>>> 2f304e78fb3c427c5ea45c707de5e97f1e93bfd7
 
 ## Backlog
 
