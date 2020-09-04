@@ -53,13 +53,15 @@
 
             {% if group.title %}
             {% set aria_group_title = group.title ~ ' continued' if group.title_hidden else group.title %}
-            <h3 class="h5
+            <div role="heading"
+                 aria-level="3"
+                 aria-label="{{ aria_group_title }}"
+                 class="h5
                     {{ base_class ~ '_group-heading' }}
                     {{ base_class ~ '_group-heading__hidden' if group.title_hidden else ''}}"
-                id="{{ aria_group_title | slugify ~ '-menu' }}"
-                aria-label="{{ aria_group_title }}">
-                {{ group.title }}
-            </h3>
+                 id="{{ aria_group_title | slugify ~ '-menu' }}">
+                 {{ group.title }}
+            </div>
             {% endif %}
             <ul
                 {% if aria_group_title %}
@@ -114,9 +116,10 @@
    ========================================================================== #}
 
 {% macro _nav_level( nav_depth, nav_item, overview_link=none, language='en' ) %}
-<section class="{{- _content_classes( nav_depth ) -}}"
-         aria-expanded="false"
-         data-js-hook="behavior_flyout-menu_content">
+<div class="{{- _content_classes( nav_depth ) -}}"
+     aria-expanded="false"
+     role="navigation"
+     data-js-hook="behavior_flyout-menu_content">
 
     {# Create "back" button in mobile menu. #}
     {% if nav_depth > 1 %}
@@ -156,9 +159,11 @@
                 {% if nav_item.featured_items %}
                 <div class="{{ _content_classes( nav_depth, '-list' ) }}
                             {{ _content_classes( nav_depth, '-list__featured' ) }}">
-                    <h3 class="h5 {{ base_class ~ '_group-heading' }}">
+                    <div role="heading"
+                         aria-level="3"
+                         class="h5 {{ base_class ~ '_group-heading' }}">
                         Featured
-                    </h3>
+                    </div>
                     <ul aria-label="Featured">
                         {% for link in nav_item.featured_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
@@ -176,9 +181,11 @@
 
                 {% if nav_item.other_items %}
                 <div class="{{ _content_classes( nav_depth, '-list' ) }}">
-                    <h3 class="h5 {{ base_class ~ '_group-heading' }}">
+                    <div role="heading"
+                         aria-level="3"
+                         class="h5 {{ base_class ~ '_group-heading' }}">
                         Additional Resources
-                    </h3>
+                    </div>
                     <ul aria-label="Additional Resources">
                         {% for link in nav_item.other_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
@@ -206,7 +213,7 @@
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render( language=language ) }}
     {% endif %}
-</section>
+</div>
 {% endmacro %}
 
 {# =============================================================================
@@ -244,7 +251,7 @@
          if has_children else ''
        }}>
         {% if nav_depth == 1 %}
-        <h2>
+        <div role="heading" aria-level="2">
         {% endif %}
 
         {% if link.icon_pre %}
@@ -260,7 +267,7 @@
         {% endif %}
 
         {% if nav_depth == 1 %}
-        </h2>
+        </div>
         {% endif %}
     </a>
 

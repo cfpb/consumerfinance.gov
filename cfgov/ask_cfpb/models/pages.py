@@ -564,6 +564,11 @@ class AnswerPage(CFGOVPage):
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
 
+    share_and_print = models.BooleanField(
+        default=False,
+        help_text="Include share and print buttons above answer."
+    )
+
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('last_edited'),
@@ -572,6 +577,7 @@ class AnswerPage(CFGOVPage):
             FieldPanel('short_answer')],
             heading="Page content",
             classname="collapsible"),
+        FieldPanel('share_and_print'),
         StreamFieldPanel('answer_content'),
         MultiFieldPanel([
             SnippetChooserPanel('related_resource'),
