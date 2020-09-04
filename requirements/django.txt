@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-django==2.2.13
+
+django==2.2.16
 gunicorn
 whitenoise==3.3.1
-<<<<<<< HEAD
-=======
-=======
-django==2.2.16
->>>>>>> dd7058e62b45d2d82162efac4d4c811c966977b9
->>>>>>> c3666edae03fca89cbe1a6d87d5fb92eda58f43b
+

@@ -61,33 +61,10 @@ class ParseLinksMiddleware(object):
 
     def __call__(self, request):
         response = self.get_response(request)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Update middleware.py
-=======
-        if 'content-type' in response and self.should_parse_links(request.path, response['content-type']):
-=======
-=======
->>>>>>> 2f304e78fb3c427c5ea45c707de5e97f1e93bfd7
->>>>>>> c3666edae03fca89cbe1a6d87d5fb92eda58f43b
         if self.should_parse_links(
             request.path,
             response.get('Content-Type', '')
         ):
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        if 'content-type' in response and self.should_parse_links(request.path, response['content-type']):
->>>>>>> dev setup
-=======
->>>>>>> Update middleware.py
-=======
->>>>>>> dd7058e62b45d2d82162efac4d4c811c966977b9
-=======
->>>>>>> 2f304e78fb3c427c5ea45c707de5e97f1e93bfd7
->>>>>>> c3666edae03fca89cbe1a6d87d5fb92eda58f43b
             response.content = parse_links(
                 response.content,
                 request.path,
@@ -95,17 +72,12 @@ class ParseLinksMiddleware(object):
             )
         return response
 
-
-
     @classmethod
     def should_parse_links(cls, request_path, response_content_type):
         """Determine if links should be parsed for a given request/response.
-
         Returns True if
-
         1. The response has the settings.DEFAULT_CONTENT_TYPE (HTML) AND
         2. The request path does not match settings.PARSE_LINKS_EXCLUSION_LIST
-
         Otherwise returns False.
         """
         if "html" not in response_content_type:
