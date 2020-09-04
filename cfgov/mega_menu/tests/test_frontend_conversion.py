@@ -13,6 +13,8 @@ class FrontendConverterTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.root_page = Site.objects.get(is_default_site=True).root_page
+        cls.request = RequestFactory().get('/consumer-tools/')
+        Site.find_for_request(cls.request)
 
         consumer_tools_page = cls.make_test_page('Consumer Tools')
         about_us_page = cls.make_test_page('About Us')
@@ -94,8 +96,7 @@ class FrontendConverterTests(TestCase):
         return page
 
     def do_conversion(self, menu):
-        request = RequestFactory().get('/consumer-tools/')
-        converter = FrontendConverter(menu, request=request)
+        converter = FrontendConverter(menu, request=self.request)
         return converter.get_menu_items()
 
     def test_converted_format_uses_basic_python_types(self):

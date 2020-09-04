@@ -9,11 +9,12 @@ from cfgov import urls
 
 
 try:
-    from django.urls import re_path, URLPattern, URLResolver
+    from django.urls import URLPattern, URLResolver, re_path
 except ImportError:
     from django.conf.urls import url as re_path
-    from django.core.urlresolvers import RegexURLPattern as URLPattern
-    from django.core.urlresolvers import RegexURLResolver as URLResolver
+    from django.core.urlresolvers import (
+        RegexURLPattern as URLPattern, RegexURLResolver as URLResolver
+    )
 
 
 # Allowlist is a list of *strings* that match the beginning of a regex string.
@@ -137,72 +138,6 @@ class HandleErrorTestCase(TestCase):
         urls.handle_error(404, request)
         mock_render.assert_called_with(
             request, '404.html', context={'request': request}, status=404
-        )
-
-    @mock.patch('cfgov.urls.render')
-    def test_handle_404_error(self, mock_render):
-        request = self.factory.get('/test')
-        urls.handle_404_error(404, request)
-        mock_render.assert_called_with(
-            request, '404.html', context={'request': request}, status=404
-        )
-
-    def test_handle_404_error_does_not_redirect_good_urls(self):
-        # good = already all lowercase with no extraneous characters
-        request = self.factory.get('/test')
-        response = urls.handle_404_error(404, request)
-        self.assertEqual(response.status_code, 404)
-
-    def test_handle_404_error_lowercases_mixed_case_urls(self):
-        request = self.factory.get('/TEst')
-        response = urls.handle_404_error(404, request)
-        self.assertRedirects(
-            response,
-            '/test',
-            status_code=301,
-            fetch_redirect_response=False
-        )
-
-    def test_handle_404_error_strips_one_extraneous_char(self):
-        request = self.factory.get('/test)')
-        response = urls.handle_404_error(404, request)
-        self.assertRedirects(
-            response,
-            '/test',
-            status_code=301,
-            fetch_redirect_response=False
-        )
-
-    def test_handle_404_error_strips_two_extraneous_chars(self):
-        request = self.factory.get('/test )')
-        response = urls.handle_404_error(404, request)
-        self.assertRedirects(
-            response,
-            '/test',
-            status_code=301,
-            fetch_redirect_response=False
-        )
-
-    def test_handle_404_error_strips_all_extraneous_chars(self):
-        request = self.factory.get(
-            '/test ~!@#$%^&*()-_–—=+[]{}\\|;:\'‘’"“”,.…<>?'
-        )
-        response = urls.handle_404_error(404, request)
-        self.assertRedirects(
-            response,
-            '/test',
-            status_code=301,
-            fetch_redirect_response=False
-        )
-
-    def test_handle_404_error_lowercases_and_strips_extraneous_chars(self):
-        request = self.factory.get('/TEst )')
-        response = urls.handle_404_error(404, request)
-        self.assertRedirects(
-            response,
-            '/test',
-            status_code=301,
-            fetch_redirect_response=False
         )
 
 

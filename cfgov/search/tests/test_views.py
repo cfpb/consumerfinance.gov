@@ -1,9 +1,8 @@
 import json
+from unittest import mock
 
 from django.test import TestCase, override_settings
 from django.urls import reverse
-
-import mock
 
 from v1.models.blog_page import BlogPage
 from v1.models.browse_page import BrowsePage
@@ -26,6 +25,7 @@ class SearchViewsTestCase(TestCase):
 
 
 class ExternalLinksSearchViewTestCase(TestCase):
+
     def setUp(self):
         self.client.login(username="admin", password="admin")
 
@@ -71,11 +71,13 @@ class ExternalLinksSearchViewTestCase(TestCase):
             ),
         )
         publish_page(page)
+
         response = self.client.post(
             "/admin/external-links/", {"url": "www.foobar.com"}
         )
         self.assertContains(
-            response, "There is 1 matching page and 0 matching snippets"
+            response,
+            "There is 1 matching page and 0 matching snippets"
         )
 
     def test_single_result_per_page(self):
@@ -107,11 +109,13 @@ class ExternalLinksSearchViewTestCase(TestCase):
             ),
         )
         publish_page(page)
+
         response = self.client.post(
             "/admin/external-links/", {"url": "www.foobar.com"}
         )
         self.assertContains(
-            response, "There is 1 matching page and 0 matching snippets"
+            response,
+            "There is 1 matching page and 0 matching snippets"
         )
 
     def test_no_duplicates(self):

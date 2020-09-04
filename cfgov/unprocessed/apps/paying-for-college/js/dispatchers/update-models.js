@@ -5,18 +5,21 @@
 import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
+import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
-import { stringToNum } from '../util/number-utils.js';
-import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
+import { isNumeric, stringToNum } from '../util/number-utils.js';
+import { getConstantsValue, getProgramInfo, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { updateGradMeterChart, updateRepaymentMeterChart, updateSchoolView } from './update-view.js';
+import { updateUrlQueryString } from '../dispatchers/update-view.js';
+
 
 const _urlParamsToModelVars = {
   'iped': 'schoolModel.schoolID',
-  'pid': 'schoolModel.PID',
   'oid': 'schoolModel.oid',
 
+  'pid': 'stateModel.pid',
   'houp': 'stateModel.programHousing',
   'typp': 'stateModel.programType',
   'lenp': 'stateModel.programLength',
@@ -26,6 +29,10 @@ const _urlParamsToModelVars = {
   'regs': 'stateModel.expensesRegion',
   'iqof': 'stateModel.impactOffer',
   'iqlo': 'stateModel.impactLoans',
+
+  'utm_source': 'stateModel.utmSource',
+  'utm_medium': 'stateModel.utm_medium',
+  'utm_campaign': 'stateModel.utm_campaign',
 
   'tuit': 'financialModel.dirCost_tuition',
   'hous': 'financialModel.dirCost_housing',
@@ -71,12 +78,12 @@ const _urlParamsToModelVars = {
 
   'pers': 'financialModel.savings_personal',
   'fams': 'financialModel.savings_family',
-  '529p': 'financialModel.savings_529',
+  '529p': 'financialModel.savings_collegeSavings',
 
   'offj': 'financialModel.income_jobOffCampus',
   'onj': 'financialModel.income_jobOnCampus',
   'eta': 'financialModel.income_employerAssist',
-  'othf': 'financialModel.income_other',
+  'othf': 'financialModel.income_otherFunding',
 
   'pvl1': 'financialModel.privLoan_privLoan1',
   'pvr1': 'financialModel.privloan_privLoanRate1',
@@ -115,7 +122,7 @@ function initializeFinancialValues() {
   * @param {Boolean} updateView - (defaults true) should view be updated?
   */
 function updateFinancial( name, value, updateView ) {
-  financialModel.setValue( name, value );
+  financialModel.setValue( name, value, updateView );
 }
 
 /**
@@ -169,23 +176,47 @@ const updateSchoolData = function( iped ) {
     getSchoolData( iped )
       .then( resp => {
         const data = JSON.parse( resp.responseText );
-
         for ( const key in data ) {
-          schoolModel.setValue( key, data[key] );
+          const val = data[key];
+          schoolModel.setValue( key, val, false );
+
+          // Update state to reflect any missing rate values
+          if ( [ 'repay3yr', 'gradRate', 'defaultRate' ].indexOf( key ) > -1 && !isNumeric( val ) ) {
+            stateModel.setValue( key + 'missing', true );
+          }
         }
+
+        // Create objects of programs keyed by program ID
+        schoolModel.createProgramLists();
+
+        // If we have a pid, validate it
+        const pid = getStateValue( 'pid' );
+        if ( pid !== false && pid !== null ) {
+          const programInfo = getProgramInfo( pid );
+          if ( programInfo === false ) {
+            stateModel.setValue( 'pid', false );
+          }
+        }
+
+        // Take only the top 3 programs
+        const topThreeArr = schoolModel.values.programsPopular.slice( 0, 3 );
+        schoolModel.values.programsTopThree = topThreeArr.join( ', ' );
+
+        // add the full state name to the schoolModel
+        schoolModel.values.stateName = getStateByCode( schoolModel.values.state );
 
         // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
-        financialModel.setValue( 'salary_monthly', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) / 12 );
 
         updateSchoolView();
+        updateUrlQueryString();
 
         resolve( true );
 
       } )
       .catch( function( error ) {
         reject( error );
-        // console.log( 'An error occurred!', error );
+        console.log( 'An error occurred when accessing school data for ' + iped, error );
       } );
   } );
 };
@@ -235,18 +266,21 @@ function updateModelsFromQueryString( queryObj ) {
       const match = _urlParamsToModelVars[key].split( '.' );
       modelMatch[match[0]]( match[1], queryObj[key], false );
 
-      // If there's an iped, do a fetch of the schoolData
-      if ( key === 'iped' ) {
-        updateSchoolData( queryObj[key] );
+      // plus can mean either type of loan (they are mutually exclusive)
+      if ( key === 'plus' ) {
+        financialModel.setValue( 'plusLoan_gradPlus', stringToNum( queryObj[key] ), false );
       }
-
-      // Also put programLength into the financial model
+      // Copy programLength into the financial model
       if ( key === 'lenp' ) {
-        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key], false ) );
+        financialModel.setValue( 'other_programLength', stringToNum( queryObj[key] ), false );
       }
     }
   }
 
+  // If there's an iped, do a fetch of the schoolData
+  if ( getSchoolValue( 'schoolID' ) ) {
+    updateSchoolData( getSchoolValue( 'schoolID' ) );
+  }
 }
 
 export {

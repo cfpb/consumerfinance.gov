@@ -23,6 +23,7 @@ from wagtail.utils.widgets import WidgetWithScript
 
 from jinja2 import Markup
 from taggit.models import Tag
+from wagtailmedia.blocks import AbstractMediaChooserBlock
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
@@ -740,8 +741,8 @@ class FilterableList(BaseExpandable):
         required=False,
         help_text=mark_safe(
             'Message for the <a href="https://cfpb.github.io/'
-            'capital-framework/components/cf-notifications/'
-            '#recommended-notification-patterns">notification</a> '
+            'design-system/components/notifications'
+            '#default-base-notification">notification</a> '
             'that will be displayed instead of filter controls '
             'if there are no posts to filter.'))
     no_posts_explanation = blocks.CharBlock(
@@ -775,6 +776,9 @@ class FilterableList(BaseExpandable):
         required=True,
         help_text='Whether to include a dropdown in the filter controls '
                   'for "Topics"')
+
+    statuses = blocks.BooleanBlock(default=False, required=False,
+                                   label='Filter Enforcement Statuses')
     authors = blocks.BooleanBlock(default=True, required=False,
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
@@ -920,6 +924,35 @@ class VideoPlayer(blocks.StructBlock):
         js = ['video-player.js']
 
 
+class AudioPlayer(blocks.StructBlock):
+    heading = v1_blocks.HeadingBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    audio_file = AbstractMediaChooserBlock(
+        help_text=mark_safe(
+            'Spoken word audio files should be in MP3 format with a 44.1 kHz '
+            'sample rate, 96 kbps (CBR) bitrate, in mono. See '
+            '<a href="https://help.libsynsupport.com/hc/en-us/articles/'
+            '360040796152-Recommended-Audio-File-Formats-Encoding">Libsyn’s '
+            'guidance</a> for details. Note that the thumbnail and tag fields '
+            'will not be used for audio files.'
+        )
+    )
+    additional_details = blocks.RichTextBlock(
+        required=False,
+        help_text=(
+            'If you have anything you want to appear below the audio player, '
+            'such as a download link, put it in this field.'
+        )
+    )
+
+    class Meta:
+        icon = 'media'
+        template = '_includes/organisms/audio-player.html'
+
+    class Media:
+        js = ['audio-player.js']
+
+
 class FeaturedContentStructValue(blocks.StructValue):
     @property
     def links(self):
@@ -952,8 +985,8 @@ class FeaturedContentStructValue(blocks.StructValue):
 
 
 class FeaturedContent(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    heading = blocks.CharBlock()
+    body = blocks.RichTextBlock()
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,

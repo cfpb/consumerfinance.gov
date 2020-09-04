@@ -77,7 +77,7 @@
       </div>
 
       <div class="block block__flush-top">
-        <h2 class="h3">New! Map complaints by state</h3>
+        <h2 class="h3">Map complaints by state</h3>
         <p>
           Our interactive map shows complaints submitted during the last three years. You can switch between the total complaints submitted or complaints submitted per 1,000 population (the total number of complaints in the geographic area per 1,000 persons living in that area, based on the 2017 American Community Survey (ACS) data).</p>
 
@@ -285,5 +285,6 @@
 {% endblock %}
 
 {% block page_js %}
-<script src="/static/apps/ccdb-landing-map/js/index.js" type="text/javascript"></script>
+  <script src="https://files.consumerfinance.gov/ccdb/metadata.js" type="text/javascript"></script>
+  <script src="/static/apps/ccdb-landing-map/js/index.js" type="text/javascript"></script>
 {% endblock page_js %}

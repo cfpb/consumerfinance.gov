@@ -2,7 +2,7 @@
 {
     "fields": {
         "govdelivery_code": "TEST-GOVDELIVERY-CODE",
-        "details": "{\"other_dietary_restrictions\":\"\",\"name\":\"My Name\",\"other_accommodations\":\"\",\"sessions\":[\"Thursday morning\",\"Friday morning\"],\"accommodations\":[],\"dietary_restrictions\":[],\"organization\":\"My Organization\",\"email\":\"name@example.com\",\"attendee_type\":\"In person\"}",
+        "details": {"other_dietary_restrictions":"","name":"My Name","other_accommodations":"","sessions":["Thursday morning","Friday morning"],"accommodations":[],"dietary_restrictions":[],"organization":"My Organization","email":"name@example.com","attendee_type":"In person"},
         "created": "2018-01-01T12:00:00Z"
     },
     "model": "data_research.conferenceregistration",
@@ -11,7 +11,7 @@
 {
     "fields": {
         "govdelivery_code": "TEST-GOVDELIVERY-CODE",
-        "details": "{\"other_dietary_restrictions\":\"Only green foods.\",\"name\":\"Name with Unicod\\u00eb\",\"other_accommodations\":\"Great music.\",\"sessions\":[\"Thursday lunch\"],\"accommodations\":[\"Nursing Space\"],\"dietary_restrictions\":[\"Vegan\"],\"organization\":\"Another Organization\",\"email\":\"name2@example.com\",\"attendee_type\":\"Virtually\"}",
+        "details": {"other_dietary_restrictions":"Only green foods.","name":"Name with Unicod\u00eb","other_accommodations":"Great music.","sessions":["Thursday lunch"],"accommodations":["Nursing Space"],"dietary_restrictions":["Vegan"],"organization":"Another Organization","email":"name2@example.com","attendee_type":"Virtually"},
         "created": "2018-02-01T12:00:00Z"
     },
     "model": "data_research.conferenceregistration",

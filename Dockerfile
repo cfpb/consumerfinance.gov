@@ -14,7 +14,7 @@ ENV SCL_PYTHON_VERSION ${scl_python_version}
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
 
-ENV APP_HOME /src/cfgov-refresh
+ENV APP_HOME /src/consumerfinance.gov
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
@@ -25,7 +25,7 @@ RUN yum -y install \
         centos-release-scl \
         epel-release && \
     rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
-    curl -sL https://rpm.nodesource.com/setup_10.x | bash - && \
+    curl -sL https://rpm.nodesource.com/setup_12.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum -y update && \
     yum -y install \
@@ -34,6 +34,7 @@ RUN yum -y install \
         mailcap \
         postgresql10 \
         which \
+        gettext \
         ${SCL_PYTHON_VERSION} && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \
@@ -52,6 +53,27 @@ EXPOSE 8000
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["python", "./cfgov/manage.py", "runserver", "0.0.0.0:8000"]
+
+# Build Frontend Assets
+FROM cfgov-dev as cfgov-build
+
+ENV STATIC_PATH ${APP_HOME}/cfgov/static/
+ENV PYTHONPATH ${APP_HOME}/cfgov
+
+# Django Settings
+ENV DJANGO_SETTINGS_MODULE cfgov.settings.production
+ENV DJANGO_STATIC_ROOT ${STATIC_PATH}
+ENV ALLOWED_HOSTS '["*"]'
+
+# See .dockerignore for details on which files are included
+COPY . .
+
+RUN yum -y install nodejs yarn && \
+    ./frontend.sh production && \
+    cfgov/manage.py collectstatic && \
+    yarn cache clean && \
+    rm -rf node_modules npm-packages-offline-cache
+
 
 # Production-like Apache-based image
 FROM cfgov-dev as cfgov-prod
@@ -83,12 +105,16 @@ RUN yum -y install ${SCL_HTTPD_VERSION} ${SCL_PYTHON_VERSION}-mod_wsgi && \
     echo "source scl_source enable ${SCL_HTTPD_VERSION}" > /etc/profile.d/enable_scl_httpd.sh && \
     echo '[ -d /var/run/secrets ] && cd /var/run/secrets && for s in *; do export $s=$(cat $s); done && cd -' > /etc/profile.d/secrets_env.sh
 
-# See .dockerignore for details on which files are included
-COPY --chown=apache:apache . .
+# Copy the cfgov directory form the build image
+COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/cfgov ${CFGOV_PATH}/cfgov
+COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/docker-entrypoint.sh ${CFGOV_PATH}/refresh-data.sh ${CFGOV_PATH}/
+COPY --from=cfgov-build --chown=apache:apache ${CFGOV_PATH}/static.in ${CFGOV_PATH}/static.in
 
-RUN yum -y install nodejs yarn  && \
-    yum clean all && rm -rf /var/cache/yum && \
+
+RUN yum clean all && rm -rf /var/cache/yum && \
     chown -R apache:apache ${APP_HOME} ${SCL_HTTPD_ROOT}/usr/share/httpd ${SCL_HTTPD_ROOT}/var/run
+
+ENV PATH="/opt/rh/${SCL_PYTHON_VERSION}/root/usr/bin:${PATH}"
 
 # Remove files flagged by image vulnerability scanner
 RUN cd /opt/rh/rh-python36/root/usr/lib/python3.6/site-packages/ && \
@@ -99,7 +125,10 @@ USER apache
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
 # - /tmp/eregs_cache/ - Django file-based cache
-RUN ./frontend.sh 
+RUN ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
+    ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
+    rm -rf cfgov/apache/www cfgov/unprocessed && \
+    mkdir -p cfgov/f /tmp/eregs_cache
 
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=15s --interval=30s --retries=30 \

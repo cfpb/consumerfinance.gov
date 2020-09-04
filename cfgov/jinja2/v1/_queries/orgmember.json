@@ -1,8 +1,0 @@
-{
-  "name": "Organization Members",
-  "query": {
-    "doc_type": "orgmember",
-    "size": 500,
-    "sort": "order:asc"
-  }
-}
