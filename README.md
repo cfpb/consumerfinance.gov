@@ -6,10 +6,14 @@
 =======
 This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the Researc, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki)
 
+<<<<<<< HEAD
 This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the Researc, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki)
 
 [![Build Status](https://github.com/cfpb/cfgov-refresh/workflows/test/badge.svg?branch=master)](https://github.com/cfpb/cfgov-refresh/actions)
 >>>>>>> update readme
+=======
+This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the User Research, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki). The ReactJS codebase is integrated into Wagtail Django CMS as a satellite application.
+>>>>>>> update the readme
 =======
 This is a fork of the [main cfgov-refresh](https://github.com/cfpb/cfgov-refresh) for [Raft's](https://goraft.tech/) work on the Digital Money Toolkit project. Some of the User Research, Design, and Technical artifacts can be found [in the Wiki](https://github.com/raft-tech/cfgov-refresh/wiki). The ReactJS codebase is integrated into Wagtail Django CMS as a satellite application.
 >>>>>>> update the readme
@@ -37,6 +41,14 @@ We follow the following steps for developing and creating end-of-sprint pull-req
 7. When functionality is ensured, a PR is opened from `cfgov-refres/my-money-calendar` to `cfgov-refres/master`
 
 
+<<<<<<< HEAD
+=======
+## Technical Overview
+
+....
+
+
+>>>>>>> update the readme
 ## Quickstart
 
 Full installation and usage instructions are available in
