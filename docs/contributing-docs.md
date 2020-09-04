@@ -32,7 +32,7 @@ In addition to standard Markdown, our documentation supports the following exten
     adds support for tables to standard Markdown.
 
 When creating new documents, they should be added to the
-[mkdocs.yml file](https://github.com/cfpb/consumerfinance.gov/blob/master/mkdocs.yml)
+[mkdocs.yml file](https://github.com/cfpb/consumerfinance.gov/blob/main/mkdocs.yml)
 in the appropriate place under `nav:` to get them to appear in the sidebar navigation.
 For example:
 
@@ -65,7 +65,7 @@ Once running, they are accessible at http://localhost:8888.
 
 ## Deploying the docs to GitHub Pages
 
-Every time a PR is merged to master,
+Every time a PR is merged to main,
 GitHub Actions will build and deploy the documentation to
 https://cfpb.github.io/consumerfinance.gov/.
 See [How we use GitHub Actions](../github-actions/) for more info.
