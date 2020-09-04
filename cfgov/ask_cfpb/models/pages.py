@@ -697,7 +697,7 @@ class AnswerPage(CFGOVPage):
         return truncatissimo(self.answer_content_text())
 
     def short_answer_data(self):
-        return ''.join(RichTextField.get_searchable_content(self, self.short_answer))
+        return ' '.join(RichTextField.get_searchable_content(self, self.short_answer))
 
     def text(self):
         short_answer = self.short_answer_data()

@@ -457,7 +457,7 @@ urlpatterns = [
     ),
     re_path(
         r'^ask-cfpb/search/$',
-        ask_search,
+        ask_search_es7,
         name='ask-search-en'
     ),
     re_path
