@@ -10,7 +10,7 @@ and Django in a Python container.
 There is also a container serving the documentation.
 
 All of these containers are configured in our
-[`docker-compose.yml` file](https://github.com/cfpb/consumerfinance.gov/blob/master/docker-compose.yml).
+[`docker-compose.yml` file](https://github.com/cfpb/consumerfinance.gov/blob/main/docker-compose.yml).
 See the [Docker documentation](https://docs.docker.com/compose/compose-file/)
 for more about the format and use of this file.
 
@@ -162,7 +162,7 @@ change configs locally without having to rebuild the image each time.
     http://localhost:8000
 
 
-1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/apache)
+1. Adjust an Apache [`cfgov/apache`](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache)
    config and reload Apache (optional).
 
     ```bash
@@ -203,5 +203,5 @@ From there, we:
 - Install SCL-based Apache HTTPD, and the `mod_wsgi` version appropriate for our chosen `scl_python_version`.
 - Run frontend.sh, Django's collectstatic command, and then *uninstall* node and yarn.
 - Set the default command on container startup to `httpd -d ./cfgov/apache -D FOREGROUND`, which runs Apache using
-    the [configuration in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/master/cfgov/apache), in the
+    the [configuration in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/apache), in the
     foreground (typical when running Apache in a container).
