@@ -19,7 +19,7 @@ from wagtailautocomplete.urls.admin import (
 )
 
 from ask_cfpb.views import (
-    ask_autocomplete_es7, ask_search, redirect_ask_search, view_answer
+    ask_autocomplete_es7, ask_search, ask_search_es7, redirect_ask_search, view_answer
 )
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
@@ -432,12 +432,12 @@ urlpatterns = [
     ),
     re_path(
         r'^(?P<language>es)/obtener-respuestas/buscar/$',
-        ask_search,
+        ask_search_es7,
         name='ask-search-es'
     ),
     re_path(
         r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-        ask_search,
+        ask_search_es7,
         name='ask-search-es-json'
     ),
     re_path(
@@ -457,12 +457,12 @@ urlpatterns = [
     ),
     re_path(
         r'^ask-cfpb/search/$',
-        ask_search,
+        ask_search_es7,
         name='ask-search-en'
     ),
     re_path
     (r'^ask-cfpb/search/(?P<as_json>json)/$',
-     ask_search,
+     ask_search_es7,
      name='ask-search-en-json'
      ),
     re_path(

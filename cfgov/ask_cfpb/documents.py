@@ -34,15 +34,24 @@ class AnswerPageDocument(Document):
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
     url = fields.TextField()
     suggestions = fields.TextField(attr="text")
+    preview = fields.TextField(attr="answer_content_data")
+    live = fields.BooleanField()
+    redirect_to_page = fields.BooleanField()
 
     def prepare_autocomplete(self, instance):
         return instance.question
+
+    def prepare_live(self, instance):
+        return instance.live
 
     def prepare_portal_categories(self, instance):
         return [topic.heading for topic in instance.portal_category.all()]
 
     def prepare_portal_topics(self, instance):
         return [topic.heading for topic in instance.portal_topic.all()]
+
+    def prepare_redirect_to_page(self, instance):
+        return self.redirect_to_page is not None
 
     def prepare_search_tags(self, instance):
         return instance.clean_search_tags

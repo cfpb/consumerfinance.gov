@@ -125,6 +125,65 @@ def ask_search(request, language='en', as_json=False):
     return results_page.serve(request)
 
 
+UNSAFE_CHARACTERS = [
+    '#', '%', ';', '^', '~', '`', '|',
+    '<', '>', '[', ']', '{', '}', '\\'
+]
+
+
+def make_safe(term):
+    for char in UNSAFE_CHARACTERS:
+        term = term.replace(char, '')
+    return term
+
+def ask_search_es7(request, language='en', as_json=False):
+    if 'selected_facets' in request.GET:
+        return redirect_ask_search(request, language=language)
+    language_map = {
+        'en': 'ask-cfpb-search-results',
+        'es': 'respuestas'
+    }
+    results_page = get_object_or_404(
+        AnswerResultsPage,
+        language=language,
+        slug=language_map[language]
+    )
+
+    # If there's no query string, don't search
+    search_term = request.GET.get('q', '')
+    if not search_term:
+        results_page.query = ''
+        results_page.result_query = ''
+        return results_page.serve(request)
+    
+    search = AnswerPageDocument.search().query("match", text=search_term).filter("term", live=True).filter("term", language=language)
+    total = search.count()
+    search.execute()
+    results = [{
+                    'question': result.autocomplete,
+                    'url': result.url,
+                    'text': result.text,
+                    'preview': result.preview,
+                } for result in search[0:total]]
+    if as_json:
+        results = {
+            'query': search_term,
+            'result_query': make_safe(search_term).strip(),
+            'suggestion': search.suggestion,
+            'results': results
+        }
+        json_results = json.dumps(results)
+        return HttpResponse(json_results, content_type='application/json')
+    
+    results_page.query = search_term
+    results_page.result_query = search_term
+    results_page.suggestion = None
+    results_page.answers = [
+        (result.url, result.autocomplete, result.preview)
+        for result in search[0:total]
+    ]
+    return results_page.serve(request)
+
 def ask_autocomplete(request, language='en'):
     term = request.GET.get(
         'term', '').strip().replace('<', '')
