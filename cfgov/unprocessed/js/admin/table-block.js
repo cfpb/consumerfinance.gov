@@ -90,7 +90,7 @@ import { stateToHTML } from 'draft-js-export-html';
           let contentState;
           if ( initialCellValue ) {
             const blocksFromHTML = window.DraftJS.convertFromHTML( initialCellValue );
-            contentState = window.DraftJS.ContentState.createFromBlockArray(blocksFromHTML.contentBlocks, blocksFromHTML.entityMap);
+            contentState = window.DraftJS.ContentState.createFromBlockArray( blocksFromHTML.contentBlocks, blocksFromHTML.entityMap );
           } else {
             contentState = window.DraftJS.ContentState.createFromText( '' );
           }
@@ -106,12 +106,11 @@ import { stateToHTML } from 'draft-js-export-html';
           modalDom.on( 'save-btn:clicked', function() {
             const raw = JSON.parse( editorHtml.value );
             const state = window.DraftJS.convertFromRaw( raw );
-            let options = {
-              entityStyleFn: (entity) => {
-                const entityType = entity.get('type').toLowerCase();
-                if (entityType === 'document') {
+            const options = {
+              entityStyleFn: entity => {
+                const entityType = entity.get( 'type' ).toLowerCase();
+                if ( entityType === 'document' ) {
                   const data = entity.getData();
-                  console.log(data)
                   return {
                     element: 'a',
                     attributes: {
@@ -121,10 +120,11 @@ import { stateToHTML } from 'draft-js-export-html';
                       'type': 'DOCUMENT'
                     },
                     style: {
-                    },
+                    }
                   };
                 }
-              },
+                return null;
+              }
             };
             const html = stateToHTML( state, options );
             instance.setDataAtCell( cellProperties.row, cellProperties.col, html );
@@ -579,8 +579,8 @@ import { stateToHTML } from 'draft-js-export-html';
           whitelist: { href: '^(http:|https:|undefined$)' }},
         { type: 'DOCUMENT',
           icon: 'doc-full',
-          description: 'Document' },
-        ],
+          description: 'Document' }
+      ],
       enableHorizontalRule: false,
       enableLineBreak: false,
       inlineStyles: [
@@ -590,11 +590,11 @@ import { stateToHTML } from 'draft-js-export-html';
         { type: 'ITALIC',
           icon: 'italic',
           description: 'Italic' }
-        ],
+      ],
       blockTypes: [
         { label: 'H1',
-        type: 'header-one',
-        description: 'Heading 1' },
+          type: 'header-one',
+          description: 'Heading 1' },
         { label: 'H2',
           type: 'header-two',
           description: 'Heading 2' },
