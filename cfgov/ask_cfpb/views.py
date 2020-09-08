@@ -140,34 +140,36 @@ def make_safe(term):
 def get_suggestion_for_search(search_term):
     s = AnswerPageDocument.search().suggest('text_suggestion', search_term, term={'field': 'text'})
     response = s.execute()
-    suggested_term = response.suggest.text_suggestion[0].options[0].text
-    return suggested_term
+    try:
+        suggested_term = response.suggest.text_suggestion[0].options[0].text
+        return suggested_term
+    except IndexError:
+        return search_term
 
 def handle_search(search_term, language, suggest):
     search = AnswerPageDocument.search().query("match", text=search_term).filter("term", language=language)
     total = search.count()
     if total == 0 and suggest:
         suggested_term = get_suggestion_for_search(search_term)
-        suggested_results = AnswerPageDocument.search().query("match", text=suggested_term).filter("term", language=language)
-        total = suggested_results.count()
-        suggested_results = suggested_results[0:total]
-        suggested_response = suggested_results.execute()
-        results = suggested_response[0:total]
-        print(results)
-        return {
-            'search_term': suggested_term,
-            'suggestion': search_term,
-            'results': results
-        }
-    else:
-        search = search[0:total]
-        search_response = search.execute()
-        results = search_response[0:total]
-        return {
-            'search_term': search_term,
-            'suggestion': None,
-            'results': results
-        }
+        if suggested_term != search_term:
+            suggested_results = AnswerPageDocument.search().query("match", text=suggested_term).filter("term", language=language)
+            total = suggested_results.count()
+            suggested_results = suggested_results[0:total]
+            suggested_response = suggested_results.execute()
+            results = suggested_response[0:total]
+            return {
+                'search_term': suggested_term,
+                'suggestion': search_term,
+                'results': results
+            }
+    search = search[0:total]
+    search_response = search.execute()
+    results = search_response[0:total]
+    return {
+        'search_term': search_term,
+        'suggestion': None,
+        'results': results
+    }
 
 def ask_search_es7(request, language='en', as_json=False):
     if 'selected_facets' in request.GET:
