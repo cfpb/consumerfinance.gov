@@ -5,7 +5,7 @@ from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
-from django.test import TestCase, override_settings
+from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 from haystack.models import SearchResult
@@ -21,7 +21,7 @@ from ask_cfpb.models.django import (
 )
 from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
-    PortalSearchPage, get_answer_preview, get_standard_text,
+    PortalSearchPage, get_answer_preview, get_standard_text, strip_html,
     validate_page_number
 )
 from ask_cfpb.models.snippets import GlossaryTerm
@@ -38,6 +38,21 @@ from v1.util.migrations import (
 
 
 now = timezone.now()
+
+
+class TestStripHTML(SimpleTestCase):
+
+    def test_strip_html_headline_separation(self):
+        """Make sure stripped markup doesn't jam headlines into text."""
+        markup = (
+            "<h2><span>"
+            "What to know about consolidating debt with a reverse mortgage"
+            "</span></h2>"
+            "<p></p><ul><li><span>"
+            "A reverse mortgage is not free money."
+            "</span></li></ul>"
+        )
+        self.assertNotIn("mortgageA", strip_html(markup))
 
 
 class MockSearchResult(SearchResult):

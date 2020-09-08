@@ -12,8 +12,9 @@ from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
-from ask_cfpb.models import AnswerPage, AnswerResultsPage, AskSearch
 from ask_cfpb.documents import AnswerPageDocument
+from ask_cfpb.models import AnswerPage, AnswerResultsPage, make_safe
+
 
 def annotate_links(answer_text):
     """
@@ -93,83 +94,47 @@ def ask_search(request, language='en', as_json=False):
         results_page.result_query = ''
         return results_page.serve(request)
 
-    search = AskSearch(search_term=search_term, language=language)
-    if search.queryset.count() == 0:
-        search.suggest(request=request)
-
-    if as_json:
-        results = {
-            'query': search_term,
-            'result_query': search.search_term,
-            'suggestion': search.suggestion,
-            'results': [
-                {
-                    'question': result.autocomplete,
-                    'url': result.url,
-                    'text': result.text,
-                    'preview': result.preview,
-                }
-                for result in search.queryset
-            ]
-        }
-        json_results = json.dumps(results)
-        return HttpResponse(json_results, content_type='application/json')
-
-    results_page.query = search_term
-    results_page.result_query = search.search_term
-    results_page.suggestion = search.suggestion
-    results_page.answers = [
-        (result.url, result.autocomplete, result.preview)
-        for result in search.queryset
-    ]
-    return results_page.serve(request)
-
-
-UNSAFE_CHARACTERS = [
-    '#', '%', ';', '^', '~', '`', '|',
-    '<', '>', '[', ']', '{', '}', '\\'
-]
-
-
-def make_safe(term):
-    for char in UNSAFE_CHARACTERS:
-        term = term.replace(char, '')
-    return term  
+    # otherwise, call the es7 search
+    return ask_search_es7(request, language=language, as_json=as_json)
 
 
 def get_suggestion_for_search(search_term):
-    s = AnswerPageDocument.search().suggest('text_suggestion', search_term, term={'field': 'text'})
+    s = AnswerPageDocument.search().suggest(
+        'text_suggestion', search_term, term={'field': 'text'}
+    )
     response = s.execute()
-    try:
-        suggested_term = response.suggest.text_suggestion[0].options[0].text
-        return suggested_term
-    except IndexError:
-        return search_term
+    suggested_term = response.suggest.text_suggestion[0].options[0].text
+    return suggested_term
 
-def handle_search(search_term, language, suggest):
-    search = AnswerPageDocument.search().query("match", text=search_term).filter("term", language=language)
+
+def handle_search(search_term, language):
+    search = AnswerPageDocument.search().query(
+        "match", text=search_term).filter("term", language=language)
     total = search.count()
-    if total == 0 and suggest:
+    if total == 0:
         suggested_term = get_suggestion_for_search(search_term)
-        if suggested_term != search_term:
-            suggested_results = AnswerPageDocument.search().query("match", text=suggested_term).filter("term", language=language)
-            total = suggested_results.count()
-            suggested_results = suggested_results[0:total]
-            suggested_response = suggested_results.execute()
-            results = suggested_response[0:total]
-            return {
-                'search_term': suggested_term,
-                'suggestion': search_term,
-                'results': results
-            }
-    search = search[0:total]
-    search_response = search.execute()
-    results = search_response[0:total]
-    return {
-        'search_term': search_term,
-        'suggestion': None,
-        'results': results
-    }
+        suggested_results = AnswerPageDocument.search().query(
+            "match", text=suggested_term).filter("term", language=language)
+        total = suggested_results.count()
+        suggested_results = suggested_results[0:total]
+        suggested_response = suggested_results.execute()
+        results = suggested_response[0:total]
+        # print(results)
+        return {
+            'search_term': suggested_term,
+            'suggestion': search_term,
+            'results': results
+        }
+    else:
+        search = search[0:total]
+        search_response = search.execute()
+        results = search_response[0:total]
+        return {
+            'search_term': search_term,
+            'suggestion': None,
+            'results': results
+        }
+
 
 def ask_search_es7(request, language='en', as_json=False):
     if 'selected_facets' in request.GET:
@@ -183,34 +148,31 @@ def ask_search_es7(request, language='en', as_json=False):
         language=language,
         slug=language_map[language]
     )
-
     # If there's no query string, don't search
     search_term = request.GET.get('q', '')
-    # Check if we want to use the suggestion or not
-    suggest = request.GET.get('correct', '1') == '1'
     if not search_term:
         results_page.query = ''
         results_page.result_query = ''
         return results_page.serve(request)
-    
-    response = handle_search(search_term, language, suggest)
+
+    response = handle_search(search_term, language)
     if as_json:
         result_list = [{
-                    'question': result.autocomplete,
-                    'url': result.url,
-                    'text': result.text,
-                    'preview': result.preview,
-                } for result in response['results']]
-
+            'question': result.autocomplete,
+            'url': result.url,
+            'text': result.text,
+            'preview': result.preview,
+        } for result in response['results']
+        ]
         results = {
             'query': search_term,
             'result_query': make_safe(search_term).strip(),
-            'suggestion': search.suggestion,
+            'suggestion': response.get("suggestion"),
             'results': result_list
         }
         json_results = json.dumps(results)
         return HttpResponse(json_results, content_type='application/json')
-    
+
     results_page.query = search_term
     results_page.result_query = response['search_term']
     results_page.suggestion = response['suggestion']
@@ -220,12 +182,13 @@ def ask_search_es7(request, language='en', as_json=False):
     ]
     return results_page.serve(request)
 
+
 def ask_autocomplete(request, language='en'):
-    term = request.GET.get(
-        'term', '').strip().replace('<', '')
+    term = request.GET.get('term', '').strip()
     if not term:
         return JsonResponse([], safe=False)
-
+    else:
+        term = make_safe(term)
     try:
         sqs = SearchQuerySet().models(AnswerPage)
         sqs = sqs.autocomplete(
@@ -239,14 +202,19 @@ def ask_autocomplete(request, language='en'):
     except IndexError:
         return JsonResponse([], safe=False)
 
+
 def ask_autocomplete_es7(request, language='en'):
-    term = request.GET.get(
-        'term', '').strip().replace('<', '')
+    term = request.GET.get('term', '')
     if not term:
         return JsonResponse([], safe=False)
+    else:
+        term = make_safe(term)
     try:
         s = AnswerPageDocument.search().query('match', autocomplete=term)
-        results = [{'question': result.autocomplete, 'url': result.url } for result in s[:20]]
+        results = [
+            {'question': result.autocomplete, 'url': result.url}
+            for result in s[:20]
+        ]
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)

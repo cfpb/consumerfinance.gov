@@ -19,7 +19,7 @@ from wagtailautocomplete.urls.admin import (
 )
 
 from ask_cfpb.views import (
-    ask_autocomplete_es7, ask_search, ask_search_es7, redirect_ask_search, view_answer
+    ask_autocomplete_es7, ask_search_es7, redirect_ask_search, view_answer
 )
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment

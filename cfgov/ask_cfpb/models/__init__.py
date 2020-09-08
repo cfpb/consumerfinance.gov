@@ -7,5 +7,5 @@ from ask_cfpb.models.pages import (
     SecondaryNavigationJSMixin, TagResultsPage, get_ask_breadcrumbs,
     get_reusable_text_snippet, get_standard_text, validate_page_number
 )
-from ask_cfpb.models.search import AskSearch
+from ask_cfpb.models.search import AskSearch, make_safe
 from ask_cfpb.models.snippets import GlossaryTerm

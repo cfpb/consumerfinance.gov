@@ -1,20 +1,25 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-
-from elasticsearch_dsl import analyzer, tokenizer, token_filter
+from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 from .models import AnswerPage
 
+
 label_autocomplete = analyzer(
     'label_autocomplete',
-    tokenizer=tokenizer('trigram', 'edge_ngram', min_gram=2, max_gram=25, token_chars=["letter", "digit"]),
+    tokenizer=tokenizer(
+        'trigram',
+        'edge_ngram',
+        min_gram=2,
+        max_gram=25,
+        token_chars=["letter", "digit"]),
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
 
 synonynm_filter = token_filter(
     'synonym_filter_en',
     'synonym',
-    synonyms_path = '/usr/share/elasticsearch/config/synonyms/synonyms_en.txt'
+    synonyms_path='/usr/share/elasticsearch/config/synonyms/synonyms_en.txt'
 )
 
 synonym_analyzer = analyzer(
@@ -26,6 +31,7 @@ synonym_analyzer = analyzer(
         'lowercase'
     ])
 
+
 @registry.register_document
 class AnswerPageDocument(Document):
 
@@ -36,7 +42,6 @@ class AnswerPageDocument(Document):
     url = fields.TextField()
     suggestions = fields.TextField(attr="text")
     preview = fields.TextField(attr="answer_content_data")
-
 
     def get_queryset(self):
         query_set = super().get_queryset()
@@ -61,7 +66,7 @@ class AnswerPageDocument(Document):
         name = 'ask-cfpb'
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
-        
+
     class Django:
         model = AnswerPage
 

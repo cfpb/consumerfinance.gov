@@ -1,3 +1,4 @@
+import re
 from collections import OrderedDict
 from urllib.parse import unquote
 
@@ -27,7 +28,6 @@ from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from ask_cfpb.models import blocks as ask_blocks
 from ask_cfpb.models.search import AskSearch
-from ask_cfpb.search_indexes import extract_raw_text, truncatissimo as truncate
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
@@ -48,13 +48,6 @@ REUSABLE_TEXT_TITLES = {
     }
 }
 
-
-def get_standard_text(language, text_type):
-    return get_reusable_text_snippet(
-        REUSABLE_TEXT_TITLES[text_type][language]
-    )
-
-
 JOURNEY_PATHS = (
     '/owning-a-home/prepare',
     '/owning-a-home/explore',
@@ -62,6 +55,45 @@ JOURNEY_PATHS = (
     '/owning-a-home/close',
     '/owning-a-home/process',
 )
+
+
+def strip_html(markup):
+    """Make sure stripping doesn't mash headings into text."""
+    markup = re.sub("</h[1-6]>", " ", markup)
+    return strip_tags(markup)
+
+
+def get_standard_text(language, text_type):
+    return get_reusable_text_snippet(
+        REUSABLE_TEXT_TITLES[text_type][language]
+    )
+
+
+def truncate(text):
+    """Limit preview text to 40 words AND to 255 characters."""
+    word_limit = 40
+    while word_limit:
+        test = Truncator(text).words(word_limit, truncate=' ...')
+        if len(test) <= 255:
+            return test
+        else:
+            word_limit -= 1
+
+
+def extract_raw_text(stream_data):
+    """Extract text from stream_data, starting with the answer text."""
+    text_chunks = [
+        block.get('value').get('content')
+        for block in stream_data
+        if block.get('type') == 'text'
+    ]
+    extra_chunks = [
+        block.get('value').get('content')
+        for block in stream_data
+        if block.get('type') in ['tip', 'table']
+    ]
+    chunks = text_chunks + extra_chunks
+    return " ".join(chunks)
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -75,7 +107,7 @@ def get_reusable_text_snippet(snippet_title):
 def get_answer_preview(page):
     """Extract an answer summary for use in search result previews."""
     raw_text = extract_raw_text(page.answer_content.stream_data)
-    full_text = strip_tags(" ".join([page.short_answer, raw_text]))
+    full_text = strip_html(" ".join([page.short_answer, raw_text]))
     return truncate(full_text)
 
 
@@ -93,7 +125,7 @@ def get_portal_or_portal_search_page(portal_topic, language='en'):
 
 
 def get_ask_breadcrumbs(language='en', portal_topic=None):
-    DEFAULT_CRUMBS = {
+    default_crumbs = {
         'es': [{
             'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/',
         }],
@@ -109,13 +141,14 @@ def get_ask_breadcrumbs(language='en', portal_topic=None):
             'href': page.url
         }]
         return crumbs
-    return DEFAULT_CRUMBS[language]
+    return default_crumbs[language]
 
 
 def validate_page_number(request, paginator):
     """
-    A utility for parsing a pagination request,
-    catching invalid page numbers and always returning
+    A utility for parsing a pagination request.
+
+    This catches invalid page numbers and always returns
     a valid page number, defaulting to 1.
     """
     raw_page = request.GET.get('page', 1)
@@ -131,9 +164,8 @@ def validate_page_number(request, paginator):
 
 
 class AnswerLandingPage(LandingPage):
-    """
-    Page type for Ask CFPB's landing page.
-    """
+    """Page type for Ask CFPB's landing page."""
+
     content_panels = [
         StreamFieldPanel('header')
     ]
@@ -189,6 +221,7 @@ class AnswerLandingPage(LandingPage):
 
 class SecondaryNavigationJSMixin(object):
     """A page mixin that adds navigation JS for English pages."""
+
     @property
     def page_js(self):
         js = super(SecondaryNavigationJSMixin, self).page_js
@@ -199,9 +232,7 @@ class SecondaryNavigationJSMixin(object):
 
 class PortalSearchPage(
         RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
-    """
-    A routable page type for Ask CFPB portal search ("see-all") pages.
-    """
+    """A routable page type for Ask CFPB portal search ("see-all") pages."""
 
     objects = CFGOVPageManager()
     portal_topic = models.ForeignKey(
@@ -430,7 +461,7 @@ class AnswerResultsPage(CFGOVPage):
 
 
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
-    """A routable page for serving Answers by tag"""
+    """A routable page for serving Answers by tag."""
 
     template = 'ask-cfpb/answer-search-results.html'
 
@@ -481,33 +512,9 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             context)
 
 
-def truncatissimo(text):
-    """Limit preview text to 40 words AND to 255 characters."""
-    word_limit = 40
-    while word_limit:
-        test = Truncator(text).words(word_limit, truncate=' ...')
-        if len(test) <= 255:
-            return test
-        else:
-            word_limit -= 1
-
-def extract_raw_text(stream_data):
-    # Extract text from stream_data, starting with the answer text.
-    text_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') == 'text'
-    ]
-    extra_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') in ['tip', 'table']
-    ]
-    chunks = text_chunks + extra_chunks
-    return " ".join(chunks)
-
 class AnswerPage(CFGOVPage):
     """Page type for Ask CFPB answers."""
+
     from ask_cfpb.models import Answer
     last_edited = models.DateField(
         blank=True,
@@ -691,18 +698,19 @@ class AnswerPage(CFGOVPage):
 
     def answer_content_text(self):
         raw_text = extract_raw_text(self.answer_content.stream_data)
-        return strip_tags(" ".join([self.short_answer, raw_text]))
+        return strip_html(" ".join([self.short_answer, raw_text]))
 
     def answer_content_data(self):
-        return truncatissimo(self.answer_content_text())
+        return truncate(self.answer_content_text())
 
     def short_answer_data(self):
-        return ' '.join(RichTextField.get_searchable_content(self, self.short_answer))
+        return ' '.join(
+            RichTextField.get_searchable_content(self, self.short_answer))
 
     def text(self):
         short_answer = self.short_answer_data()
         answer_text = self.answer_content_text()
-        full_text = short_answer + "\n\n" + answer_text + "\n\n" + self.question
+        full_text = f"{short_answer}\n\n{answer_text}\n\n{self.question}"
         return full_text
 
     def __str__(self):
