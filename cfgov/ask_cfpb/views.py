@@ -143,10 +143,10 @@ def get_suggestion_for_search(search_term):
     suggested_term = response.suggest.text_suggestion[0].options[0].text
     return suggested_term
 
-def handle_search(search_term, language):
+def handle_search(search_term, language, suggest):
     search = AnswerPageDocument.search().query("match", text=search_term).filter("term", language=language)
     total = search.count()
-    if total == 0:
+    if total == 0 and suggest:
         suggested_term = get_suggestion_for_search(search_term)
         suggested_results = AnswerPageDocument.search().query("match", text=suggested_term).filter("term", language=language)
         total = suggested_results.count()
@@ -184,12 +184,14 @@ def ask_search_es7(request, language='en', as_json=False):
 
     # If there's no query string, don't search
     search_term = request.GET.get('q', '')
+    # Check if we want to use the suggestion or not
+    suggest = request.GET.get('correct', '1') == '1'
     if not search_term:
         results_page.query = ''
         results_page.result_query = ''
         return results_page.serve(request)
     
-    response = handle_search(search_term, language)
+    response = handle_search(search_term, language, suggest)
     if as_json:
         result_list = [{
                     'question': result.autocomplete,
