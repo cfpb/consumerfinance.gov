@@ -1,5 +1,6 @@
 from django import forms
 from django.db import models
+from django.utils.html import strip_tags
 
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
@@ -19,6 +20,7 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from ask_cfpb.models import blocks as ask_blocks
+from ask_cfpb.search_indexes import extract_raw_text, truncatissimo as truncate
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
@@ -288,7 +290,7 @@ class AnswerPage(CFGOVPage):
         return strip_tags(" ".join([self.short_answer, raw_text]))
 
     def answer_content_data(self):
-        return truncatissimo(self.answer_content_text())
+        return truncate(self.answer_content_text())
 
     def short_answer_data(self):
         return ' '.join(RichTextField.get_searchable_content(self, self.short_answer))
