@@ -46,6 +46,60 @@ synonym_analyzer = analyzer(
         'lowercase'
     ])
 
+def get_ask_breadcrumbs(language='en', portal_topic=None):
+    DEFAULT_CRUMBS = {
+        'es': [{
+            'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/',
+        }],
+        'en': [{
+            'title': 'Ask CFPB', 'href': '/ask-cfpb/',
+        }],
+    }
+    if portal_topic:
+        page = get_portal_or_portal_search_page(
+            portal_topic=portal_topic, language=language)
+        crumbs = [{
+            'title': page.title,
+            'href': page.url
+        }]
+        return crumbs
+    return DEFAULT_CRUMBS[language]
+
+def get_portal_or_portal_search_page(portal_topic, language='en'):
+    if portal_topic:
+        portal_page = portal_topic.portal_pages.filter(
+            language=language, live=True).first()
+        if portal_page:
+            return portal_page
+        else:
+            portal_search_page = portal_topic.portal_search_pages.filter(
+                language=language, live=True).first()
+            return portal_search_page
+    return None
+
+REUSABLE_TEXT_TITLES = {
+    'about_us': {
+        'en': 'About us (For consumers)',
+        'es': 'About us (for consumers) (in Spanish)'
+    },
+    'disclaimer': {
+        'en': 'Legal disclaimer for consumer materials',
+        'es': 'Legal disclaimer for consumer materials (in Spanish)'
+    }
+}
+
+def get_reusable_text_snippet(snippet_title):
+    try:
+        return ReusableText.objects.get(
+            title=snippet_title)
+    except ReusableText.DoesNotExist:
+        pass
+
+def get_standard_text(language, text_type):
+    return get_reusable_text_snippet(
+        REUSABLE_TEXT_TITLES[text_type][language]
+    )
+
 class AnswerPage(CFGOVPage):
     """Page type for Ask CFPB answers."""
     from ask_cfpb.models import Answer

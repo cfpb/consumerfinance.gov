@@ -402,7 +402,7 @@ class PortalSearchPage(
         #     portal_topics=self.portal_topic.heading,
         #     language=self.language)
         self.portal_category = None
-        self.query_base = AnswerPageDocument.search().filter("term", portal_topics=self.portal_topic.heading)
+        self.query_base = AnswerPageDocument.search().filter("match", portal_topics=self.portal_topic.heading)
         return self.get_results_es7(request)
 
     @route(r'^(?P<category>[^/]+)/$')
