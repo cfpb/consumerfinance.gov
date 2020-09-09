@@ -345,8 +345,8 @@ class AnswerPage(CFGOVPage):
 class AnswerPageDocument(Document):
 
     autocomplete = fields.TextField(analyzer=label_autocomplete)
-    portal_topics = fields.TextField()
-    portal_categories = fields.TextField()
+    portal_topics = fields.KeywordField()
+    portal_categories = fields.KeywordField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
     url = fields.TextField()
     suggestions = fields.TextField(attr="text")
@@ -418,10 +418,12 @@ class AnswerPageSearch:
 
     def search(self):
         if not self.base_query:
-            search = AnswerPageDocument.search()
+            search = AnswerPageDocument.search().filter("match", language=self.language)
         else:
-            search = self.base_query
-        search.query("match", text=self.search_term).filter("term", language=self.language)
+            search = self.base_query.filter("match", language=self.language)
+        
+        if self.search_term != '':
+            search.query("match", text=self.search_term)
         total_results = search.count()
         search = search[0:total_results]
         response = search.execute()
