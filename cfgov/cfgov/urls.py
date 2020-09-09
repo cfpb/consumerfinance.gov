@@ -167,8 +167,8 @@ urlpatterns = [
     re_path(r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
             template_name='students/knowbeforeyouowe/index.html'),
-        name='students-knowbeforeyouowe'
-    ),
+        name='students-knowbeforeyouowe'),
+
     re_path(
         r'^practitioner-resources/students/'
         'helping-borrowers-find-ways-to-stay-afloat/$',
