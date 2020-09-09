@@ -1,15 +1,13 @@
+import re
 from collections import OrderedDict
-from urllib.parse import unquote
 
-from django import forms
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
 from django.utils.html import format_html, strip_tags
-from django.utils.text import Truncator, slugify
+from django.utils.text import slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
-from haystack.query import SearchQuerySet
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
@@ -17,26 +15,23 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable, Page
 from wagtail.search import index
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from wagtailautocomplete.edit_handlers import AutocompletePanel
+from modelcluster.fields import ParentalKey
 
-from ask_cfpb.models import blocks as ask_blocks
-from ask_cfpb.models.search import AskSearch
-from ask_cfpb.search_indexes import extract_raw_text, truncatissimo as truncate
+from ask_cfpb.documents import (
+    AnswerPage, AnswerPageDocument, AnswerPageSearch, extract_raw_text,
+    truncate_preview
+)
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
     CFGOVPage, CFGOVPageManager, LandingPage, PortalCategory, PortalTopic,
     SublandingPage
 )
-from v1.models.snippets import RelatedResource, ReusableText
-
-from ask_cfpb.documents import AnswerPageSearch, AnswerPage, AnswerPageDocument
+from v1.models.snippets import ReusableText
 
 
 REUSABLE_TEXT_TITLES = {
@@ -50,13 +45,6 @@ REUSABLE_TEXT_TITLES = {
     }
 }
 
-
-def get_standard_text(language, text_type):
-    return get_reusable_text_snippet(
-        REUSABLE_TEXT_TITLES[text_type][language]
-    )
-
-
 JOURNEY_PATHS = (
     '/owning-a-home/prepare',
     '/owning-a-home/explore',
@@ -64,6 +52,18 @@ JOURNEY_PATHS = (
     '/owning-a-home/close',
     '/owning-a-home/process',
 )
+
+
+def strip_html(markup):
+    """Make sure stripping doesn't mash headings into text."""
+    markup = re.sub("</h[1-6]>", " ", markup)
+    return strip_tags(markup)
+
+
+def get_standard_text(language, text_type):
+    return get_reusable_text_snippet(
+        REUSABLE_TEXT_TITLES[text_type][language]
+    )
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -78,7 +78,7 @@ def get_answer_preview(page):
     """Extract an answer summary for use in search result previews."""
     raw_text = extract_raw_text(page.answer_content.stream_data)
     full_text = strip_tags(" ".join([page.short_answer, raw_text]))
-    return truncate(full_text)
+    return truncate_preview(full_text)
 
 
 def get_portal_or_portal_search_page(portal_topic, language='en'):
@@ -95,7 +95,7 @@ def get_portal_or_portal_search_page(portal_topic, language='en'):
 
 
 def get_ask_breadcrumbs(language='en', portal_topic=None):
-    DEFAULT_CRUMBS = {
+    default_crumbs = {
         'es': [{
             'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/',
         }],
@@ -111,13 +111,14 @@ def get_ask_breadcrumbs(language='en', portal_topic=None):
             'href': page.url
         }]
         return crumbs
-    return DEFAULT_CRUMBS[language]
+    return default_crumbs[language]
 
 
 def validate_page_number(request, paginator):
     """
-    A utility for parsing a pagination request,
-    catching invalid page numbers and always returning
+    A utility for parsing a pagination request.
+
+    This catches invalid page numbers and always returns
     a valid page number, defaulting to 1.
     """
     raw_page = request.GET.get('page', 1)
@@ -133,9 +134,8 @@ def validate_page_number(request, paginator):
 
 
 class AnswerLandingPage(LandingPage):
-    """
-    Page type for Ask CFPB's landing page.
-    """
+    """Page type for Ask CFPB's landing page."""
+
     content_panels = [
         StreamFieldPanel('header')
     ]
@@ -191,6 +191,7 @@ class AnswerLandingPage(LandingPage):
 
 class SecondaryNavigationJSMixin(object):
     """A page mixin that adds navigation JS for English pages."""
+
     @property
     def page_js(self):
         js = super(SecondaryNavigationJSMixin, self).page_js
@@ -201,9 +202,7 @@ class SecondaryNavigationJSMixin(object):
 
 class PortalSearchPage(
         RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
-    """
-    A routable page type for Ask CFPB portal search ("see-all") pages.
-    """
+    """A routable page type for Ask CFPB portal search ("see-all") pages."""
 
     objects = CFGOVPageManager()
     portal_topic = models.ForeignKey(
@@ -325,44 +324,45 @@ class PortalSearchPage(
             'children': sorted_categories
         }], True
 
-    def get_results(self, request):
-        context = self.get_context(request)
-        search_term = request.GET.get('search_term', '').strip()
-        if not search_term or len(unquote(search_term)) == 1:
-            results = self.query_base
-        else:
-            search = AskSearch(
-                search_term=search_term,
-                query_base=self.query_base)
-            results = search.queryset
-            if results.count() == 0:
-                # No results, so let's try to suggest a better query
-                search.suggest(request=request)
-                results = search.queryset
-                search_term = search.search_term
-        search_message = self.results_message(
-            results.count(),
-            self.get_heading(),
-            search_term)
-        paginator = Paginator(results, 10)
-        page_number = validate_page_number(request, paginator)
-        context.update({
-            'search_term': search_term,
-            'results_message': search_message,
-            'pages': paginator.page(page_number),
-            'paginator': paginator,
-            'current_page': page_number,
-            'get_secondary_nav_items': self.get_nav_items,
-        })
-        return TemplateResponse(
-            request,
-            'ask-cfpb/see-all.html',
-            context)
+    # def get_results(self, request):
+    #     context = self.get_context(request)
+    #     search_term = request.GET.get('search_term', '').strip()
+    #     if not search_term or len(unquote(search_term)) == 1:
+    #         results = self.query_base
+    #     else:
+    #         search = AskSearch(
+    #             search_term=search_term,
+    #             query_base=self.query_base)
+    #         results = search.queryset
+    #         if results.count() == 0:
+    #             # No results, so let's try to suggest a better query
+    #             search.suggest(request=request)
+    #             results = search.queryset
+    #             search_term = search.search_term
+    #     search_message = self.results_message(
+    #         results.count(),
+    #         self.get_heading(),
+    #         search_term)
+    #     paginator = Paginator(results, 10)
+    #     page_number = validate_page_number(request, paginator)
+    #     context.update({
+    #         'search_term': search_term,
+    #         'results_message': search_message,
+    #         'pages': paginator.page(page_number),
+    #         'paginator': paginator,
+    #         'current_page': page_number,
+    #         'get_secondary_nav_items': self.get_nav_items,
+    #     })
+    #     return TemplateResponse(
+    #         request,
+    #         'ask-cfpb/see-all.html',
+    #         context)
 
     def get_results_es7(self, request):
         context = self.get_context(request)
         search_term = request.GET.get('search_term', '').strip()
-        search = AnswerPageSearch(search_term=search_term, base_query=self.query_base)
+        search = AnswerPageSearch(
+            search_term=search_term, base_query=self.query_base)
         response = search.search()
         if not response['results']:
             response = search.suggest()
@@ -386,7 +386,6 @@ class PortalSearchPage(
             'ask-cfpb/see-all.html',
             context)
 
-
     def get_glossary_terms(self):
         if self.language == 'es':
             terms = self.portal_topic.glossary_terms.order_by('name_es')
@@ -398,11 +397,9 @@ class PortalSearchPage(
 
     @route(r'^$')
     def portal_topic_page(self, request):
-        # self.query_base = SearchQuerySet().filter(
-        #     portal_topics=self.portal_topic.heading,
-        #     language=self.language)
         self.portal_category = None
-        self.query_base = AnswerPageDocument.search().filter("match", portal_topics=self.portal_topic.heading)
+        self.query_base = AnswerPageDocument.search().filter(
+            "match", portal_topics=self.portal_topic.heading)
         return self.get_results_es7(request)
 
     @route(r'^(?P<category>[^/]+)/$')
@@ -423,11 +420,9 @@ class PortalSearchPage(
                 request,
                 'ask-cfpb/see-all.html',
                 context)
-        # self.query_base = SearchQuerySet().filter(
-        #     portal_topics=self.portal_topic.heading,
-        #     language=self.language,
-        #     portal_categories=self.portal_category.heading)
-        self.query_base = AnswerPageDocument.search().filter('match', portal_topics=self.portal_topic.heading).filter('match', portal_categories=self.portal_category.heading)
+        self.query_base = AnswerPageDocument.search().filter(
+            'match', portal_topics=self.portal_topic.heading).filter(
+            'match', portal_categories=self.portal_category.heading)
         return self.get_results_es7(request)
 
 
@@ -462,7 +457,7 @@ class AnswerResultsPage(CFGOVPage):
 
 
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
-    """A routable page for serving Answers by tag"""
+    """A routable page for serving Answers by tag."""
 
     template = 'ask-cfpb/answer-search-results.html'
 
@@ -513,32 +508,6 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             context)
 
 
-def truncatissimo(text):
-    """Limit preview text to 40 words AND to 255 characters."""
-    word_limit = 40
-    while word_limit:
-        test = Truncator(text).words(word_limit, truncate=' ...')
-        if len(test) <= 255:
-            return test
-        else:
-            word_limit -= 1
-
-def extract_raw_text(stream_data):
-    # Extract text from stream_data, starting with the answer text.
-    text_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') == 'text'
-    ]
-    extra_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') in ['tip', 'table']
-    ]
-    chunks = text_chunks + extra_chunks
-    return " ".join(chunks)
-
-
 class ArticleLink(Orderable, models.Model):
     text = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
@@ -555,9 +524,8 @@ class ArticleLink(Orderable, models.Model):
 
 
 class ArticlePage(CFGOVPage):
-    """
-    General article page type.
-    """
+    """General article page type."""
+
     category = models.CharField(
         choices=[
             ('basics', 'Basics'),
