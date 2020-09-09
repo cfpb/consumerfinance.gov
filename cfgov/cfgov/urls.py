@@ -152,19 +152,22 @@ urlpatterns = [
         name='fair-lending'),
 
     # My Money Tools
-    re_path(r'^mmt-my-money-calendar/service-worker\.js$',
+    re_path(
+        r'^mmt-my-money-calendar/service-worker\.js$',
         ServiceWorkerView.as_view(
             template_name='mmt-my-money-calendar/service-worker.js',
             scope='/mmt-my-money-calendar'),
         name='mmt-my-money-calendar-service-worker'),
 
-    re_path(r'^mmt-my-money-calendar/.*',
+    re_path(
+        r'^mmt-my-money-calendar/.*',
         FlaggedTemplateView.as_view(
             template_name='mmt-my-money-calendar/index.html',
             flag_name='MMT_MY_MONEY_CALENDAR'),
         name='mmt-my-money-calendar'),
 
-    re_path(r'^practitioner-resources/students/knowbeforeyouowe/$',
+    re_path(
+        r'^practitioner-resources/students/knowbeforeyouowe/$',
         TemplateView.as_view(
             template_name='students/knowbeforeyouowe/index.html'),
         name='students-knowbeforeyouowe'),
