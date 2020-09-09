@@ -131,4 +131,3 @@ class SelfHealingMiddleware:
             return redirect(path, permanent=True)
 
         return response
-        
