@@ -937,14 +937,6 @@
     "@cfpb/cfpb-core" "^0.1.0"
     "@cfpb/cfpb-icons" "^0.1.0"
 
-"@cfpb/cfpb-core@0.0.8", "@cfpb/cfpb-core@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.0.8.tgz#9d739b909f0ad3680879f8832e878936a5c37ba5"
-  integrity sha512-NyApxTEq6DA4Ofm8bwElw7YT1jhFYrsBlCyR0oMOmNVtLdk4NB00DHdRMoTy0azJm7yX8jqNOrT5/5CwUAUOKg==
-  dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
-
 "@cfpb/cfpb-core@0.1.0", "@cfpb/cfpb-core@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.1.0.tgz#2b77ea7a4dce6fdd1866b214611f08c38bfc0638"
@@ -980,31 +972,10 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-grid@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-grid/-/cfpb-grid-0.0.8.tgz#2d8d386c93bef03f983d4140da180def60ee13b2"
-  integrity sha512-PpfeSAXdNYgQtCChP/EhidUP1LDMEkuSi5jjRBwjB3vFKh4CMsPOuL+2IuPWZB5dmxLnFZHLrH10VIkx8ubdZw==
-  dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
-
 "@cfpb/cfpb-icons@0.1.0", "@cfpb/cfpb-icons@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.1.0.tgz#a386086f52d5d3168b8da538d86f38f8384fb3f9"
   integrity sha512-REaMuFEyjB8TbXBhUNd1cn69SuTozOB8NOFoeVyGzZFG2PY15rnGGgT26AEjylAGWOjX5Dchk+0jwBygQ+pZBA==
-
-"@cfpb/cfpb-icons@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-icons/-/cfpb-icons-0.0.8.tgz#f4dcf8771e3dc26d61fc5137042df849df96e521"
-  integrity sha512-7yIOGeXaMqEE0tw2w05iE1dbV8knMerTsSLvPZs4EB7wqNtyLnuNCr3ybGDcVwKXMe+rxxzKRFz1Wyf12WlaIg==
-
-"@cfpb/cfpb-layout@0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.0.8.tgz#2bc06dfab92439a5d03e3c67b775b0bc2dc8bca4"
-  integrity sha512-+cEoRGNyA+PKrKoIKXDu4jiszXiFyJSs7I51p9+ch1OV8e1gNFLORXyIA2pGeVsFnNThaE8Xbw64DCpUxF2w2A==
-  dependencies:
-    "@cfpb/cfpb-core" "^0.0.8"
-    "@cfpb/cfpb-grid" "^0.0.8"
 
 "@cfpb/cfpb-layout@0.1.1":
   version "0.1.1"
@@ -1038,14 +1009,6 @@
   dependencies:
     "@cfpb/cfpb-atomic-component" "^0.1.0"
     "@cfpb/cfpb-core" "^0.1.0"
-
-"@cfpb/cfpb-typography@0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.0.8.tgz#ba559e532899d1aef99bfa53f1b9d72570992fcd"
-  integrity sha512-LnVNWH78hlNj1Idj3r60TJQOOEHB8b6z71SzjsyFk631wUCR8lrtxPLqOily6yndxEa109TCLN8zIX8KeRI76g==
-  dependencies:
-    "@cfpb/cfpb-core" "^0.0.8"
-    "@cfpb/cfpb-icons" "^0.0.8"
 
 "@cfpb/cfpb-typography@0.1.0":
   version "0.1.0"
@@ -3204,16 +3167,16 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-cfpb-chart-builder@6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-6.4.0.tgz#0087b8df296a0d17fd8be4ac9ba11813f8a94273"
-  integrity sha512-Bz4vLwS1vj8jApg6XAW+h7Jsu+2YX2n/UyxHqZzrtpyx5pXoeF6fZ6B4wGpV0U6h8WvVs7r7IJVHRaPpjmzDmg==
+cfpb-chart-builder@6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/cfpb-chart-builder/-/cfpb-chart-builder-6.4.1.tgz#2d3b156a289ee1d03a96e7b94a2e2df8a6d5153b"
+  integrity sha512-VpW0B7BWd8mb6z7HdcSnYT5yKx4z922v+j/BvZ0pjJ8Uk+PKu84AzY2v/zG+0a2ziXa1qcCdWB4iFwRhI6tkiQ==
   dependencies:
-    "@cfpb/cfpb-core" "0.0.8"
-    "@cfpb/cfpb-layout" "0.0.8"
-    "@cfpb/cfpb-typography" "0.0.8"
-    core-js "3.3.6"
-    highcharts "7.2.1"
+    "@cfpb/cfpb-core" "0.1.0"
+    "@cfpb/cfpb-layout" "0.1.1"
+    "@cfpb/cfpb-typography" "0.1.0"
+    core-js "3.6.5"
+    highcharts "7.2.2"
     xdr "0.5.3"
 
 chai-as-promised@5.x:
@@ -3750,11 +3713,6 @@ core-js-pure@^3.0.0:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.5.tgz#c79e75f5e38dbc85a662d91eea52b8256d53b813"
   integrity sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
-
-core-js@3.3.6:
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.3.6.tgz#6ad1650323c441f45379e176ed175c0d021eac92"
-  integrity sha512-u4oM8SHwmDuh5mWZdDg9UwNVq5s1uqq6ZDLLIs07VY+VJU91i3h4f3K/pgFvtUQPGdeStrZ+odKyfyt4EnKHfA==
 
 core-js@3.6.5:
   version "3.6.5"
@@ -5886,10 +5844,10 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-highcharts@7.2.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-7.2.1.tgz#313c434bbfd4525a72b76c6bfbd9c39dfe2d1993"
-  integrity sha512-/fSUZiONmM+x49IQJNf8XwZGiNGOPRmxEOcd0xdJP9Xc3OlG46ZiUWgSLfhYQ9Oyhmzc3V3SKYCLud8+rKLi+w==
+highcharts@7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-7.2.2.tgz#94d6bae545d7f0fbf49615b28640f5fdbf99d11e"
+  integrity sha512-jRKujQuPKHLgGQd2sByBI9K5m56CInm2augVZnBYqdmyoU88hcI62uuAXHvxC3FW8YY0FJ74A1uw6sxrcmcmvg==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
