@@ -1,42 +1,84 @@
 from django import forms
 from django.db import models
 from django.utils.html import strip_tags
+from django.utils.text import Truncator
+
+from wagtail.admin.edit_handlers import (
+    FieldPanel, MultiFieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+)
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page
+from wagtail.search import index
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-
-from elasticsearch_dsl import analyzer, tokenizer, token_filter
-
+from elasticsearch_dsl import analyzer, token_filter, tokenizer
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import (
-    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
-    TabbedInterface
-)
-from wagtail.core.models import Orderable, Page
-from wagtail.search import index
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from ask_cfpb.models import blocks as ask_blocks
-from ask_cfpb.search_indexes import extract_raw_text, truncatissimo as truncate
-
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager, PortalCategory, PortalTopic
 from v1.models.snippets import RelatedResource, ReusableText
 
+
+UNSAFE_CHARACTERS = [
+    '#', '%', ';', '^', '~', '`', '|',
+    '<', '>', '[', ']', '{', '}', '\\'
+]
+
+
+def make_safe(term):
+    for char in UNSAFE_CHARACTERS:
+        term = term.replace(char, '')
+    return term
+
+
+def truncate_preview(text):
+    """Limit preview text to 40 words AND to 255 characters."""
+    word_limit = 40
+    while word_limit:
+        test = Truncator(text).words(word_limit, truncate=' ...')
+        if len(test) <= 255:
+            return test
+        else:
+            word_limit -= 1
+
+
+def extract_raw_text(stream_data):
+    # Extract text from stream_data, starting with the answer text.
+    text_chunks = [
+        block.get('value').get('content')
+        for block in stream_data
+        if block.get('type') == 'text'
+    ]
+    extra_chunks = [
+        block.get('value').get('content')
+        for block in stream_data
+        if block.get('type') in ['tip', 'table']
+    ]
+    chunks = text_chunks + extra_chunks
+    return " ".join(chunks)
+
+
 label_autocomplete = analyzer(
     'label_autocomplete',
-    tokenizer=tokenizer('trigram', 'edge_ngram', min_gram=2, max_gram=25, token_chars=["letter", "digit"]),
+    tokenizer=tokenizer(
+        'trigram',
+        'edge_ngram',
+        min_gram=2,
+        max_gram=25,
+        token_chars=["letter", "digit"]
+    ),
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
 
 synonynm_filter = token_filter(
     'synonym_filter_en',
     'synonym',
-    synonyms_path = '/usr/share/elasticsearch/config/synonyms/synonyms_en.txt'
+    synonyms_path='/usr/share/elasticsearch/config/synonyms/synonyms_en.txt'
 )
 
 synonym_analyzer = analyzer(
@@ -48,8 +90,9 @@ synonym_analyzer = analyzer(
         'lowercase'
     ])
 
+
 def get_ask_breadcrumbs(language='en', portal_topic=None):
-    DEFAULT_CRUMBS = {
+    default_crumbs = {
         'es': [{
             'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/',
         }],
@@ -65,7 +108,8 @@ def get_ask_breadcrumbs(language='en', portal_topic=None):
             'href': page.url
         }]
         return crumbs
-    return DEFAULT_CRUMBS[language]
+    return default_crumbs[language]
+
 
 def get_portal_or_portal_search_page(portal_topic, language='en'):
     if portal_topic:
@@ -79,6 +123,7 @@ def get_portal_or_portal_search_page(portal_topic, language='en'):
             return portal_search_page
     return None
 
+
 REUSABLE_TEXT_TITLES = {
     'about_us': {
         'en': 'About us (For consumers)',
@@ -90,6 +135,7 @@ REUSABLE_TEXT_TITLES = {
     }
 }
 
+
 def get_reusable_text_snippet(snippet_title):
     try:
         return ReusableText.objects.get(
@@ -97,14 +143,17 @@ def get_reusable_text_snippet(snippet_title):
     except ReusableText.DoesNotExist:
         pass
 
+
 def get_standard_text(language, text_type):
     return get_reusable_text_snippet(
         REUSABLE_TEXT_TITLES[text_type][language]
     )
 
+
 class AnswerPage(CFGOVPage):
     """Page type for Ask CFPB answers."""
-    from ask_cfpb.models import Answer
+
+    from ask_cfpb.models.django import Answer
     last_edited = models.DateField(
         blank=True,
         null=True,
@@ -272,7 +321,7 @@ class AnswerPage(CFGOVPage):
         context['related_questions'] = self.related_questions.all()
         context['description'] = (
             self.short_answer if self.short_answer
-            else Truncator(self.answer_content).words(40, truncate=' ...'))
+            else truncate_preview(self.answer_content))
         context['last_edited'] = self.last_edited
         context['portal_page'] = get_portal_or_portal_search_page(
             portal_topic, language=self.language)
@@ -290,20 +339,21 @@ class AnswerPage(CFGOVPage):
         return strip_tags(" ".join([self.short_answer, raw_text]))
 
     def answer_content_data(self):
-        return truncate(self.answer_content_text())
+        return truncate_preview(self.answer_content_text())
 
     def short_answer_data(self):
-        return ' '.join(RichTextField.get_searchable_content(self, self.short_answer))
+        return ' '.join(
+            RichTextField.get_searchable_content(self, self.short_answer))
 
     def text(self):
         short_answer = self.short_answer_data()
         answer_text = self.answer_content_text()
-        full_text = short_answer + "\n\n" + answer_text + "\n\n" + self.question
+        full_text = f"{short_answer}\n\n{answer_text}\n\n{self.question}"
         return full_text
 
     def __str__(self):
         if self.answer_base:
-            return '{}: {}'.format(self.answer_base.id, self.title)
+            return f"{self.answer_base.id}: {self.title}"
         else:
             return self.title
 
@@ -311,7 +361,7 @@ class AnswerPage(CFGOVPage):
     def clean_search_tags(self):
         return [
             tag.strip()
-            for tag in self.search_tags.split(',')
+            for tag in self.search_tags.split(",")
         ]
 
     @property
@@ -341,6 +391,7 @@ class AnswerPage(CFGOVPage):
     def split_test_id(self):
         return self.answer_base.id
 
+
 @registry.register_document
 class AnswerPageDocument(Document):
 
@@ -351,7 +402,6 @@ class AnswerPageDocument(Document):
     url = fields.TextField()
     suggestions = fields.TextField(attr="text")
     preview = fields.TextField(attr="answer_content_data")
-
 
     def get_queryset(self):
         query_set = super().get_queryset()
@@ -376,7 +426,7 @@ class AnswerPageDocument(Document):
         name = 'ask-cfpb'
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
-        
+
     class Django:
         model = AnswerPage
 
@@ -385,25 +435,17 @@ class AnswerPageDocument(Document):
             'language',
         ]
 
-UNSAFE_CHARACTERS = [
-    '#', '%', ';', '^', '~', '`', '|',
-    '<', '>', '[', ']', '{', '}', '\\'
-]
-
-
-def make_safe(term):
-    for char in UNSAFE_CHARACTERS:
-        term = term.replace(char, '')
-    return term  
 
 def get_suggestion_for_search(search_term):
-    s = AnswerPageDocument.search().suggest('text_suggestion', search_term, term={'field': 'text'})
+    s = AnswerPageDocument.search().suggest(
+        'text_suggestion', search_term, term={'field': 'text'})
     response = s.execute()
     try:
         suggested_term = response.suggest.text_suggestion[0].options[0].text
         return suggested_term
     except IndexError:
         return search_term
+
 
 class AnswerPageSearch:
     def __init__(self, search_term, language='en', base_query=None):
@@ -412,16 +454,21 @@ class AnswerPageSearch:
         self.base_query = base_query
 
     def autocomplete(self):
-        s = AnswerPageDocument.search().query('match', autocomplete=self.search_term)
-        results = [{'question': result.autocomplete, 'url': result.url } for result in s[:20]]
+        s = AnswerPageDocument.search().query(
+            'match', autocomplete=self.search_term)
+        results = [
+            {'question': result.autocomplete, 'url': result.url}
+            for result in s[:20]
+        ]
         return results
 
     def search(self):
         if not self.base_query:
-            search = AnswerPageDocument.search().filter("term", language=self.language)
+            search = AnswerPageDocument.search().filter(
+                "term", language=self.language)
         else:
             search = self.base_query.filter("term", language=self.language)
-        
+
         if self.search_term != '':
             search.query("term", text=self.search_term)
         total_results = search.count()
@@ -441,7 +488,9 @@ class AnswerPageSearch:
                 search = AnswerPageDocument.search()
             else:
                 search = self.base_query
-            suggested_results = search.query("term", text=suggested_term).filter("term", language=self.language)
+            suggested_results = search.query(
+                "term", text=suggested_term).filter(
+                "term", language=self.language)
             total = suggested_results.count()
             suggested_results = suggested_results[0:total]
             suggested_response = suggested_results.execute()
@@ -452,7 +501,8 @@ class AnswerPageSearch:
                 'results': results
             }
         else:
-            # We know there are no results for the original term, so return an empty results list with no suggestion.
+            # We know there are no results for the original term,
+            # so return an empty results list with no suggestion.
             return {
                 'search_term': self.search_term,
                 'suggestion': None,

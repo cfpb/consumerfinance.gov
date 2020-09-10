@@ -4,7 +4,6 @@ from urllib.parse import urljoin
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
-from haystack.query import SearchQuerySet
 
 from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
@@ -12,8 +11,11 @@ from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
-from ask_cfpb.models import AnswerPage, AnswerResultsPage, AskSearch
-from ask_cfpb.documents import AnswerPageDocument, AnswerPageSearch
+from ask_cfpb.documents import (  # noqa
+    AnswerPage, AnswerPageDocument, AnswerPageSearch, make_safe
+)
+from ask_cfpb.models import AnswerResultsPage
+
 
 def annotate_links(answer_text):
     """
@@ -93,12 +95,12 @@ def ask_search(request, language='en', as_json=False):
         results_page.result_query = ''
         return results_page.serve(request)
 
-    search = AskSearch(search_term=search_term, language=language)
-    if search.queryset.count() == 0:
+    search = AnswerPageSearch(search_term, language=language)
+    if len(search.get('results')) == 0:
         search.suggest(request=request)
 
     if as_json:
-        results = {
+        payload = {
             'query': search_term,
             'result_query': search.search_term,
             'suggestion': search.suggestion,
@@ -109,10 +111,10 @@ def ask_search(request, language='en', as_json=False):
                     'text': result.text,
                     'preview': result.preview,
                 }
-                for result in search.queryset
+                for result in search.get('results', [])
             ]
         }
-        json_results = json.dumps(results)
+        json_results = json.dumps(payload)
         return HttpResponse(json_results, content_type='application/json')
 
     results_page.query = search_term
@@ -120,9 +122,10 @@ def ask_search(request, language='en', as_json=False):
     results_page.suggestion = search.suggestion
     results_page.answers = [
         (result.url, result.autocomplete, result.preview)
-        for result in search.queryset
+        for result in search.get("results")
     ]
     return results_page.serve(request)
+
 
 def ask_search_es7(request, language='en', as_json=False):
     if 'selected_facets' in request.GET:
@@ -145,63 +148,63 @@ def ask_search_es7(request, language='en', as_json=False):
         results_page.query = ''
         results_page.result_query = ''
         return results_page.serve(request)
-    
-    search = AnswerPageSearch(search_term=search_term, language=language)
-    response = search.search()
-    if not response['results'] and suggest:
-        response = search.suggest()
+    search_obj = AnswerPageSearch(search_term, language=language)
+    response = search_obj.search()
+    if not response.get('results') and suggest:
+        response = search_obj.suggest()
     if as_json:
         result_list = [{
-                    'question': result.autocomplete,
-                    'url': result.url,
-                    'text': result.text,
-                    'preview': result.preview,
-                } for result in response['results']]
-
-        results = {
+            'question': result.autocomplete,
+            'url': result.url,
+            'text': result.text,
+            'preview': result.preview}
+            for result in response.get('results')
+        ]
+        payload = {
             'query': search_term,
             'result_query': make_safe(search_term).strip(),
-            'suggestion': search.suggestion,
+            'suggestion': search_obj.suggest().get("suggestion"),
             'results': result_list
         }
-        json_results = json.dumps(results)
+        json_results = json.dumps(payload)
         return HttpResponse(json_results, content_type='application/json')
-    
     results_page.query = search_term
-    results_page.result_query = response['search_term']
-    results_page.suggestion = response['suggestion']
+    results_page.result_query = response.get('search_term')
+    results_page.suggestion = response.get('suggestion')
     results_page.answers = [
         (result.url, result.autocomplete, result.preview)
         for result in response['results']
     ]
     return results_page.serve(request)
 
-def ask_autocomplete(request, language='en'):
-    term = request.GET.get(
-        'term', '').strip().replace('<', '')
-    if not term:
-        return JsonResponse([], safe=False)
 
-    try:
-        sqs = SearchQuerySet().models(AnswerPage)
-        sqs = sqs.autocomplete(
-            autocomplete=term,
-            language=language
-        )
-        results = [{'question': result.autocomplete,
-                    'url': result.url}
-                   for result in sqs[:20]]
-        return JsonResponse(results, safe=False)
-    except IndexError:
-        return JsonResponse([], safe=False)
+# def ask_autocomplete(request, language='en'):
+#     term = request.GET.get(
+#         'term', '').strip().replace('<', '')
+#     if not term:
+#         return JsonResponse([], safe=False)
+
+#     try:
+#         sqs = SearchQuerySet().models(AnswerPage)
+#         sqs = sqs.autocomplete(
+#             autocomplete=term,
+#             language=language
+#         )
+#         results = [{'question': result.autocomplete,
+#                     'url': result.url}
+#                    for result in sqs[:20]]
+#         return JsonResponse(results, safe=False)
+#     except IndexError:
+#         return JsonResponse([], safe=False)
+
 
 def ask_autocomplete_es7(request, language='en'):
-    term = request.GET.get(
-        'term', '').strip().replace('<', '')
-    if not term:
+    term = request.GET.get("term", "")
+    safe_term = make_safe(term)
+    if not safe_term:
         return JsonResponse([], safe=False)
     try:
-        results = AnswerPageSearch(search_term=term).autocomplete()
+        results = AnswerPageSearch(search_term=safe_term).autocomplete()
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)
