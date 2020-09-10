@@ -1,5 +1,6 @@
 import logging
 
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 from v1.models.browse_filterable_page import (
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 def run():
-    logger.info('Searching for events to archive...')
+    logger.info('Searching for events to archive…')
     event_page_exists = BrowseFilterablePage.objects.filter(
         title='Events').exists()
     archive_event_page_exists = EventArchivePage.objects.filter(
@@ -23,21 +24,26 @@ def run():
         archived_events = EventArchivePage.objects.get(
             title__icontains='Archive')
 
-        if len(events.get_children()) > 1:
-            for child in events.get_children():
-                event = child.specific
-                if isinstance(event, EventPage):
-                    if event.end_dt:
-                        if event.end_dt < timezone.now():
-                            if event.can_move_to(archived_events):
+        live_event_pages = events.get_children().live().exact_type(EventPage)
+
+        if len(live_event_pages) > 1:
+            for event in live_event_pages:
+                event = event.specific
+                if event.end_dt:
+                    if event.end_dt < timezone.now():
+                        if event.can_move_to(archived_events):
+                            try:
                                 event.move(archived_events, pos='last-child')
-                                logger.info(event.title + ' archived')
+                            except ValidationError:
+                                iso_date = event.start_dt.date().isoformat()
+                                event.slug = event.slug + '-' + iso_date
+                                event.save()
+                                event.move(archived_events, pos='last-child')
+                            # No longer logging here because event.move has
+                            # its own log statement.
         else:
-            logger.info('No events to archive found...')
+            logger.info('No past events to be archived were found.')
     elif not event_page_exists:
-        logger.info('Events browse filterable page has not been created...')
+        logger.info('BrowseFilterablePage titled "Events" does not exist.')
     elif not archive_event_page_exists:
-        logger.info('No Archived events Browse filterable page named '
-                    '\'Archive\' exist...')
-    else:
-        logger.info('No events exist in the database...')
+        logger.info('EventArchivePage with "Archive" in title does not exist.')
