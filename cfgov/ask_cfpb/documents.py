@@ -346,7 +346,7 @@ class AnswerPageDocument(Document):
 
     autocomplete = fields.TextField(analyzer=label_autocomplete)
     portal_topics = fields.KeywordField()
-    portal_categories = fields.KeywordField()
+    portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
     url = fields.TextField()
     suggestions = fields.TextField(attr="text")
@@ -418,12 +418,12 @@ class AnswerPageSearch:
 
     def search(self):
         if not self.base_query:
-            search = AnswerPageDocument.search().filter("match", language=self.language)
+            search = AnswerPageDocument.search().filter("term", language=self.language)
         else:
-            search = self.base_query.filter("match", language=self.language)
+            search = self.base_query.filter("term", language=self.language)
         
         if self.search_term != '':
-            search.query("match", text=self.search_term)
+            search.query("term", text=self.search_term)
         total_results = search.count()
         search = search[0:total_results]
         response = search.execute()
@@ -441,7 +441,7 @@ class AnswerPageSearch:
                 search = AnswerPageDocument.search()
             else:
                 search = self.base_query
-            suggested_results = search.query("match", text=suggested_term).filter("term", language=self.language)
+            suggested_results = search.query("term", text=suggested_term).filter("term", language=self.language)
             total = suggested_results.count()
             suggested_results = suggested_results[0:total]
             suggested_response = suggested_results.execute()
