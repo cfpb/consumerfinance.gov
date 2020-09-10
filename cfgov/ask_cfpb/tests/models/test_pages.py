@@ -5,24 +5,24 @@ from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
-from django.test import TestCase, override_settings
+from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone, translation
 from haystack.models import SearchResult
-from haystack.query import SearchQuerySet
 
 from wagtail.core.blocks import StreamValue
+from wagtail.core.models import Site
 from wagtail.tests.utils import WagtailTestUtils
 
 from model_bakery import baker
 
+from ask_cfpb.documents import AnswerPage, AnswerPageSearch
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
 )
 from ask_cfpb.models.pages import (
-    REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
-    PortalSearchPage, get_answer_preview, get_standard_text,
-    validate_page_number
+    REUSABLE_TEXT_TITLES, AnswerLandingPage, ArticlePage, PortalSearchPage,
+    get_answer_preview, get_standard_text, strip_html, validate_page_number
 )
 from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
@@ -40,6 +40,21 @@ from v1.util.migrations import (
 now = timezone.now()
 
 
+class TestStripHTML(SimpleTestCase):
+
+    def test_strip_html_headline_separation(self):
+        """Make sure stripped markup doesn't jam headlines into text."""
+        markup = (
+            "<h2><span>"
+            "What to know about consolidating debt with a reverse mortgage"
+            "</span></h2>"
+            "<p></p><ul><li><span>"
+            "A reverse mortgage is not free money."
+            "</span></li></ul>"
+        )
+        self.assertNotIn("mortgageA", strip_html(markup))
+
+
 class MockSearchResult(SearchResult):
     def __init__(self, app_label, model_name, pk, score, **kwargs):
         self.autocomplete = "What is mock question {}?".format(pk)
@@ -50,8 +65,8 @@ class MockSearchResult(SearchResult):
         )
 
 
-def mock_queryset(count=0):
-    class MockSearchQuerySet(SearchQuerySet):
+def mock_e_search(search_term, count=0):
+    class MockSearchQuery(AnswerPageSearch):
         def __iter__(self):
             if count:
                 return iter(
@@ -66,13 +81,10 @@ def mock_queryset(count=0):
         def count(self):
             return count
 
-        def filter(self, *args, **kwargs):
+        def search(self, *args, **kwargs):
             return self
 
-        def models(self, *models):
-            return self
-
-    return MockSearchQuerySet()
+    return MockSearchQuery()
 
 
 class AnswerStringTestCase(TestCase):
@@ -170,9 +182,9 @@ class ArticlePageTestCase(TestCase):
             return new_page
 
         self.test_user = User.objects.last()
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
+        self.root_page = HomePage.objects.get(slug="cfgov")
         self.tools_parent = create_page(
-            SublandingPage, "Consumer Tools", "consumer-tools", self.ROOT_PAGE
+            SublandingPage, "Consumer Tools", "consumer-tools", self.root_page
         )
         self.article_page = create_page(
             ArticlePage,
@@ -222,15 +234,16 @@ class PortalSearchPageTestCase(TestCase):
             new_page.save_revision(user=self.test_user).publish()
             return new_page
 
+        self.site = Site.objects.get(is_default_site=True)
+        self.root_page = self.site.root_page
         self.portal_topic = PortalTopic.objects.get(pk=1)
         self.portal_topic2 = PortalTopic.objects.get(pk=2)
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
         self.test_user = User.objects.last()
         self.english_ask_parent = create_page(
-            AnswerLandingPage, "Ask CFPB", "ask-cfpb", self.ROOT_PAGE
+            AnswerLandingPage, "Ask CFPB", "ask-cfpb", self.root_page
         )
         self.english_portal_parent = create_page(
-            SublandingPage, "Consumer Tools", "consumer-tools", self.ROOT_PAGE
+            SublandingPage, "Consumer Tools", "consumer-tools", self.root_page
         )
         self.english_portal = create_page(
             SublandingPage,
@@ -264,7 +277,7 @@ class PortalSearchPageTestCase(TestCase):
             SublandingPage,
             "Obtener respuestas",
             "obtener-respuestas",
-            self.ROOT_PAGE,
+            self.root_page,
             language="es",
         )
         self.spanish_portal = create_page(
@@ -366,17 +379,20 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(str(test_page), test_page.title)
         self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
 
-    def test_english_category_title(self):
+    @mock.patch("ask_cfpb.models.pages.AnswerPageSearch")
+    def test_english_category_title(self, mock_search):
         page = self.english_search_page
         url = page.url + page.reverse_subpage(
             "portal_category_page", kwargs={"category": "how-to-guides"}
         )
         response = self.client.get(url)
         self.assertEqual(
-            response.context_data.get("page").title, "Auto loans how-to guides"
+            response.context_data.get("page").title,
+            "Auto loans how-to guides"
         )
 
-    def test_spanish_category_title(self):
+    @mock.patch("ask_cfpb.models.pages.AnswerPageDocument.search")
+    def test_spanish_category_title(self, mock_search):
         page = self.spanish_search_page
         url = page.url + page.reverse_subpage(
             "portal_category_page", kwargs={"category": "paso-a-paso"}
@@ -433,121 +449,81 @@ class PortalSearchPageTestCase(TestCase):
             "See all results within auto loans</a></span>",
         )
 
-    def test_portal_topic_page_200(self):
+    @mock.patch("ask_cfpb.models.pages.AnswerPageDocument.search")
+    def test_portal_topic_page_200(self, mock_search):
         page = self.english_search_page
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    def test_portal_category_page_200(self, mock_filter):
-        mock_filter.return_value = mock_queryset(count=2)
+    @mock.patch("ask_cfpb.models.pages.AnswerPageDocument.search")
+    def test_portal_category_page_calls_search(self, mock_search):
         page = self.english_search_page
-        url = page.url + page.reverse_subpage(
-            "portal_category_page", kwargs={"category": "how-to-guides"}
+        portal_search_url = page.url + page.reverse_subpage(
+            'portal_category_page', kwargs={"category": "basics"}
         )
-        response = self.client.get(url)
+        mock_search.filter.return_value = {
+            'search_term': "hipotatoes",
+            'suggestion': "potatoes",
+            'results': []
+        }
+        response = self.client.get(portal_search_url)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.PortalSearchPage.get_nav_items")
-    def test_spanish_portal_search_page_200(self, mock_nav):
-        mock_nav.return_value = (
-            [
-                {
-                    "title": "Spanish topic heading",
-                    "url": "mock-url",
-                    "active": False,
-                    "expanded": True,
-                    "children": [],
-                }
-            ],
-            True,
-        )
+    @mock.patch("ask_cfpb.models.pages.AnswerPageDocument.search")
+    def test_spanish_portal_search_page_renders(self, mock_search):
         page = self.spanish_search_page
-        response = self.client.get(page.url)
+        portal_search_url = page.url + page.reverse_subpage(
+            'portal_category_page', kwargs={"category": "paso-a-paso"}
+        )
+        mock_search.filter.return_value = {
+            'search_term': "hipotacos",
+            'suggestion': "hipotecas",
+            'results': []
+        }
+        response = self.client.get(portal_search_url)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    # @mock.patch('ask_cfpb.models.pages.SearchQuerySet.count')
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
-    def test_portal_topic_page_with_no_hits_same_suggestion(
-        self, mock_suggestion, mock_filter
-    ):
-        mock_suggestion.return_value = "hoodoo"
-        mock_filter.return_value = mock_queryset()
+    @mock.patch("ask_cfpb.models.pages.AnswerPageSearch")
+    def test_portal_topic_page_with_no_hits_same_suggestion(self, mock_search):
+        term = "hipotatoes"
+        mock_search.suggest.return_value = {
+            'search_term': term,
+            'suggestion': None,
+            'results': []
+        }
+        mock_search.search.return_value = {
+            'search_term': term,
+            'suggestion': None,
+            'results': []
+        }
         page = self.english_search_page
         base_url = page.url
-        url = "{}?search_term=hoodoo".format(base_url)
+        url = f"{base_url}?search_term={term}"
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
-    def test_portal_topic_page_with_no_hits_with_suggestion(
-        self, mock_suggestion, mock_count, mock_filter
-    ):
-        mock_suggestion.return_value = "hoodunit"
-        mock_count.return_value = 0
-        mock_filter.return_value = mock_queryset()
+    @mock.patch("ask_cfpb.models.pages.AnswerPageSearch")
+    def test_portal_topic_page_with_no_hits_with_suggestion(self, mock_search):
+        term = "hipotatoes"
+        mock_search.suggest.return_value = {
+            'search_term': term,
+            'suggestion': "potatoes",
+            'results': ["hit1", "hit2"]
+        }
+        mock_search.search.return_value = {
+            'search_term': term,
+            'suggestion': "potatoes",
+            'results': ["hit1", "hit2"]
+        }
         page = self.english_search_page
         base_url = page.url
-        url = "{}?search_term=hoodoo".format(base_url)
-        with override_settings(
-            FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]}
-        ):
-            response = self.client.get(url)
-            self.assertEqual(response.context_data["search_term"], "hoodunit")
-            self.assertEqual(response.status_code, 200)
-
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
-    def test_portal_category_page_with_no_hits_with_suggestion(
-        self, mock_suggestion, mock_count, mock_filter
-    ):
-        mock_count.return_value = 0
-        mock_suggestion.return_value = "hoodunit"
-        mock_filter.return_value = mock_queryset()
-        page = self.english_search_page
-        base_url = page.url + page.reverse_subpage(
-            "portal_category_page", kwargs={"category": "how-to-guides"}
-        )
-        url = "{}?search_term=hoodoo".format(base_url)
-        with override_settings(
-            FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]}
-        ):
-            response = self.client.get(url)
-            self.assertEqual(response.context_data["search_term"], "hoodunit")
-            self.assertEqual(response.status_code, 200)
-
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
-    def test_portal_category_page_same_suggestion(
-        self, mock_suggestion, mock_count, mock_filter
-    ):
-        mock_filter.return_value = mock_queryset()
-        mock_count.return_value = 0
-        mock_suggestion.return_value = "hoodoo"
-        page = self.english_search_page
-        base_url = page.url + page.reverse_subpage(
-            "portal_category_page", kwargs={"category": "how-to-guides"}
-        )
-        url = "{}?search_term=hoodoo".format(base_url)
-        response = self.client.get(url)
-        self.assertEqual(response.context_data["search_term"], "hoodoo")
-        self.assertEqual(response.status_code, 200)
-
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.models")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    def test_portal_topic_page_suggestion(self, mock_filter, mock_models):
-        mock_models.spelling_suggestion.return_value = "hoodunit"
-        mock_filter.return_value = mock_queryset()
-        page = self.english_search_page
-        url = "{}?search_term=hoodoo".format(page.url)
+        url = f"{base_url}?search_term={term}"
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context_data["search_term"], "hoodoo")
+        self.assertEqual(mock_search.call_count, 1)
 
     def test_get_glossary_terms(self):
         page = self.english_search_page
@@ -628,7 +604,7 @@ class AnswerPageTestCase(TestCase):
 
     def setUp(self):
         self.test_user = User.objects.get(pk=1)
-        ROOT_PAGE = HomePage.objects.get(slug="cfgov")
+        root_page = HomePage.objects.get(slug="cfgov")
         self.category = baker.make(
             Category, name="stub_cat", name_es="que", slug="stub-cat"
         )
@@ -648,7 +624,7 @@ class AnswerPageTestCase(TestCase):
             portal_topic=self.portal_topic,
             language="en",
         )
-        ROOT_PAGE.add_child(instance=self.portal_page)
+        root_page.add_child(instance=self.portal_page)
         self.portal_page.save()
         self.portal_page.save_revision().publish()
         self.portal_page_es = SublandingPage(
@@ -657,7 +633,7 @@ class AnswerPageTestCase(TestCase):
             portal_topic=self.portal_topic,
             language="es",
         )
-        ROOT_PAGE.add_child(instance=self.portal_page_es)
+        root_page.add_child(instance=self.portal_page_es)
         self.portal_page_es.save()
         self.portal_page_es.save_revision().publish()
         self.english_parent_page = get_or_create_page(
@@ -666,7 +642,7 @@ class AnswerPageTestCase(TestCase):
             "AnswerLandingPage",
             "Ask CFPB",
             ENGLISH_PARENT_SLUG,
-            ROOT_PAGE,
+            root_page,
             language="en",
             live=True,
         )
@@ -676,7 +652,7 @@ class AnswerPageTestCase(TestCase):
             "AnswerLandingPage",
             "Obtener respuestas",
             SPANISH_PARENT_SLUG,
-            ROOT_PAGE,
+            root_page,
             language="es",
             live=True,
         )
@@ -686,7 +662,7 @@ class AnswerPageTestCase(TestCase):
             "TagResultsPage",
             "Tag results page",
             "search-by-tag",
-            ROOT_PAGE,
+            root_page,
             language="en",
             live=True,
         )
@@ -696,7 +672,7 @@ class AnswerPageTestCase(TestCase):
             "TagResultsPage",
             "Tag results page",
             "buscar-por-etiqueta",
-            ROOT_PAGE,
+            root_page,
             language="es",
             live=True,
         )
@@ -909,7 +885,7 @@ class AnswerPageTestCase(TestCase):
         )
 
     def test_search_tags(self):
-        """Test the list produced by page.clean_search_tags()"""
+        """Test the list produced by page.clean_search_tags()."""
         page = self.page1
         page.search_tags = "Chutes, Ladders"
         page.save_revision().publish()
