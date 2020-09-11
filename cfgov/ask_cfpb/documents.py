@@ -400,7 +400,6 @@ class AnswerPageDocument(Document):
     portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
     url = fields.TextField()
-    suggestions = fields.TextField(attr="text")
     preview = fields.TextField(attr="answer_content_data")
 
     def get_queryset(self):
@@ -468,9 +467,8 @@ class AnswerPageSearch:
                 "term", language=self.language)
         else:
             search = self.base_query.filter("term", language=self.language)
-
         if self.search_term != '':
-            search.query("term", text=self.search_term)
+            search = search.query("match", text=self.search_term)
         total_results = search.count()
         search = search[0:total_results]
         response = search.execute()
@@ -489,7 +487,7 @@ class AnswerPageSearch:
             else:
                 search = self.base_query
             suggested_results = search.query(
-                "term", text=suggested_term).filter(
+                "match", text=suggested_term).filter(
                 "term", language=self.language)
             total = suggested_results.count()
             suggested_results = suggested_results[0:total]
