@@ -119,7 +119,7 @@ const COMMON_MODULE_CONFIG = {
     // Enable import and usage of images in bundle code
     {
       test: /\.(jpe?g|png|gif)$/,
-      use: ['file-loader'],
+      loader: require.resolve("file-loader") + "?name=../[path][name].[ext]"
     },
 
     // Allow SVGs to load inline
@@ -152,7 +152,7 @@ const COMMON_MODULE_CONFIG = {
     // Allow font imports
     {
       test: /\.(woff2?|eot|ttf|otf)$/,
-      use: ['file-loader'],
+      loader: require.resolve("file-loader") + "?name=../[path][name].[ext]"
     },
   ],
 };
