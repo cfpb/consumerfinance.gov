@@ -219,10 +219,13 @@ function scriptsMoneyTools( done ) {
     let appWebpackConfig = webpackConfig.appsConf;
     const appWebpackConfigPath = path.join( appsPath, 'webpack-config.js' );
 
+    // eslint-disable-next-line no-sync
     if ( fs.existsSync( appWebpackConfigPath ) ) {
+      // eslint-disable-next-line global-require
       appWebpackConfig = require( path.resolve( appWebpackConfigPath ) ).conf;
     }
 
+    // eslint-disable-next-line no-sync
     if ( !fs.existsSync( path.join( appsPath, 'node_modules' ) ) ) {
       // eslint-disable-next-line no-console
       console.log(
@@ -242,6 +245,8 @@ function scriptsMoneyTools( done ) {
         `/apps/${ app }/js`
       )
     );
+
+    return done();
   } );
 
   let singleStream;
