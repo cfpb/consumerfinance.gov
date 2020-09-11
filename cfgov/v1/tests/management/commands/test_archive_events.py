@@ -130,3 +130,37 @@ class TestArchiveEvents(TestCase):
 
         self.assertEqual(single_day_event_page.parent(), archive_page)
         self.assertEqual(multi_day_event_page.parent(), archive_page)
+
+    @freeze_time('2020-02-02')
+    def test_append_date_to_duplicate_slug(self):
+        events_page = BrowseFilterablePage(
+            title='Events',
+            slug='events',
+            content='Events',
+            live=True
+        )
+        self.root_page.add_child(instance=events_page)
+        archive_page = EventArchivePage(
+            title='Archive',
+            slug='archive',
+            content='archive',
+            live=True
+        )
+        events_page.add_child(instance=archive_page)
+        already_archived_event_page = EventPage(
+            title='Already archived event page',
+            slug='event',
+            start_dt=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC)
+        )
+        archive_page.add_child(instance=already_archived_event_page)
+        same_slug_event_page = EventPage(
+            title='To-be-archived event page',
+            slug='event',
+            start_dt=datetime.datetime(2020, 1, 2, tzinfo=pytz.UTC)
+        )
+        events_page.add_child(instance=same_slug_event_page)
+
+        self.call_command()
+        same_slug_event_page.refresh_from_db()
+
+        self.assertEqual(same_slug_event_page.slug, 'event-2020-01-02')
