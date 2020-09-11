@@ -143,3 +143,7 @@ cfgov/jinja2/v1/mmt-my-money-calendar/service-worker.js
 ##########
 cfgov/apache/logs
 cfgov/apache/modules
+
+# Readme #
+##########
+README.md
