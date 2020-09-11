@@ -138,7 +138,6 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 MIDDLEWARE = (
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
