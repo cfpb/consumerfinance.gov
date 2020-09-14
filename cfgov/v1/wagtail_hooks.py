@@ -94,11 +94,6 @@ def log_page_deletion(request, page):
 @hooks.register('insert_editor_js')
 def editor_js():
     js_files = ['js/table-block.js']
-    js_files.insert(0, 'wagtailadmin/js/vendor/bootstrap-modal.js')
-    js_files.insert(0, 'wagtailadmin/js/page-chooser-modal.js')
-    js_files.insert(0, 'wagtaildocs/js/document-chooser-modal.js')
-    js_files.insert(0, 'wagtailembeds/js/embed-chooser-modal.js')
-    js_files.insert(0, 'wagtailimages/js/image-chooser-modal.js')
 
     js_includes = format_html_join(
         '\n',
@@ -118,10 +113,6 @@ def editor_css():
         'css/heading-block.css',
         'css/table-block.css',
     ]
-
-    # Adding Draftail CSS to all admin pages
-    # to support the use of Draftail in our RichTextTableInput
-    css_files.insert(0, 'wagtailadmin/css/panels/draftail.css')
 
     css_includes = format_html_join(
         '\n',
@@ -379,44 +370,6 @@ modeladmin_register(SnippetModelAdminGroup)
 def hide_snippets_menu_item(request, menu_items):
     menu_items[:] = [item for item in menu_items
                      if item.url != reverse("wagtailsnippets:index")]
-
-
-@hooks.register("register_rich_text_features")
-def register_centertext_feature(features):
-    """Creates centered text in our richtext editor and page."""
-    feature_name = "center"
-    type_ = "CENTERTEXT"
-    tag = "div"
-
-    control = {
-        "type": type_,
-        "label": "Center",
-        "description": "Center Text",
-        "style": {
-            "display": "block",
-            "text-align": "center",
-        },
-    }
-    features.register_editor_plugin(
-        "draftail", feature_name, draftail_features.InlineStyleFeature(control)
-    )
-    db_conversion = {
-        "from_database_format": {tag: InlineStyleElementHandler(type_)},
-        "to_database_format": {
-            "style_map": {
-                type_: {
-                    "element": tag,
-                    "props": {
-                        "class": "d-block text-center"
-                    }
-                }
-            }
-        }
-    }
-    features.register_converter_rule(
-        "contentstate", feature_name, db_conversion
-    )
-    features.default_features.append(feature_name)
 
 
 # The construct_whitelister_element_rules was depricated in Wagtail 2,
