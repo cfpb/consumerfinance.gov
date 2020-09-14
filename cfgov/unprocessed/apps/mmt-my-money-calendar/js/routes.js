@@ -10,34 +10,34 @@ import More from './views/more';
 import Export from './views/more/export';
 
 const Routes = () => (
-  <Router basename="/mmt-my-money-calendar">
-    <div className="app">
+  <Router basename='/mmt-my-money-calendar'>
+    <div className='app'>
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Home />
         </Route>
 
-        <Route path="/money-on-hand">
+        <Route path='/money-on-hand'>
           <MoneyOnHand />
         </Route>
 
-        <Route exact path="/calendar">
+        <Route exact path='/calendar'>
           <Calendar />
         </Route>
 
-        <Route path="/calendar/add">
+        <Route path='/calendar/add'>
           <AddEvent />
         </Route>
 
-        <Route path="/fix-it-strategies/:week">
+        <Route path='/fix-it-strategies/:week'>
           <FixItStrategies />
         </Route>
 
-        <Route path="/fix-it-strategies">
+        <Route path='/fix-it-strategies'>
           <FixItStrategies />
         </Route>
 
-        <Route path="/strategies">
+        <Route path='/strategies'>
           <Strategies />
         </Route>
 
