@@ -31,7 +31,7 @@ function seedCashFlowEvents() {
       name: 'Starting Balance',
       date: now.toDate(),
       totalCents: 50000,
-      category: 'income.startingBalance',
+      category: 'income.startingBalance'
     },
     {
       name: 'Paycheck',
