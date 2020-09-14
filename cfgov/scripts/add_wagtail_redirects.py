@@ -1,0 +1,51 @@
+import csv
+import logging
+
+from wagtail.contrib.redirects.models import Redirect
+from wagtail.core.models import Page
+
+
+logger = logging.getLogger(__name__)
+
+
+# If the pages haven't been migrated yet, 'url' parameter should be the "from"
+# url. If the pages have migrated, 'url' parameter should be the "to" url.
+def existing_page_for_url(url):
+    url_path = f"/cfgov{url}"
+    return Page.objects.get(url_path=url_path)
+
+
+# Run this from the command line with this:
+#   cfgov/manage.py runscript add_wagtail_redirects --script-args [PATH]
+def run(*args):
+    if not args:
+        logger.error("error. Use --script-args [PATH] to specify the " +
+                     "location of the redirects csv.")
+    else:
+        redirects_file = args[0]
+
+        dupes = []
+        successes = 0
+        deletes = 0
+
+        with open(redirects_file, "r") as csv_file:
+            redirect_list = csv.reader(csv_file, delimiter=',')
+            next(redirect_list)  # skip the header row
+            for [from_url, to_url] in redirect_list:
+                # If conflicting redirects exist for this from_url, delete them
+                existing_redirects = Redirect.objects.filter(
+                        old_path__iexact=Redirect.normalise_path(from_url))
+                if len(existing_redirects) > 0:
+                    dupes.append(from_url)
+                    num, _ = existing_redirects.delete()
+                    deletes += num
+
+                # Add the desired redirect
+                page = existing_page_for_url(from_url)
+                Redirect.add_redirect(from_url, redirect_to=page, is_permanent=True)
+                successes += 1
+
+        logger.info(f"Done! Added {successes} redirects")
+        if len(dupes) > 0:
+            logger.debug(f"Redirects already existed for the following urls: {dupes}")
+            logger.info(f"Deleted {deletes} redirects and replaced with updated ones.")
