@@ -54,7 +54,8 @@ import { stateToHTML } from 'draft-js-export-html';
         initializeOptions.afterCreateRow = onTableChange;
         initializeOptions.afterRemoveCol = onRemoveCol;
         initializeOptions.afterRemoveRow = onTableChange;
-        initializeOptions.contextMenu = [ 'row_above',
+        initializeOptions.contextMenu = [
+          'row_above',
           'row_below',
           '---------',
           'col_left',
@@ -292,7 +293,8 @@ import { stateToHTML } from 'draft-js-export-html';
         let value;
 
         if ( hiddenFieldData !== null ) {
-          uiMap = { heading_text:                ui.$headingText,
+          uiMap = {
+            heading_text:                ui.$headingText,
             heading_level:               ui.$headingLevel,
             heading_icon:                ui.$headingIcon,
             first_row_is_table_header:   ui.$hasRowHeaderCheckbox,
@@ -383,7 +385,6 @@ import { stateToHTML } from 'draft-js-export-html';
       },
 
       getWidth: function getWidth() {
-
         return $( '.widget-table_input' ).closest( '.sequence-member-inner' ).width();
       },
 
@@ -515,7 +516,8 @@ import { stateToHTML } from 'draft-js-export-html';
     let saveBtnDom;
 
     // Set header template.
-    const MODAL_BODY_TEMPLATE = [ '<header class="nice-padding hasform">',
+    const MODAL_BODY_TEMPLATE = [
+      '<header class="nice-padding hasform">',
       '<div class="row">',
       '<div class="left">',
       '<div class="col">',
@@ -530,10 +532,12 @@ import { stateToHTML } from 'draft-js-export-html';
       '</div><br>',
       '<div class="row active nice-padding m-t-10">',
       '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save</button>',
-      '</div>' ].join( '' );
+      '</div>'
+    ].join( '' );
 
     // Set body template.
-    const MODAL_TEMPLATE = [ '<div class="table-block-modal fade"',
+    const MODAL_TEMPLATE = [
+      '<div class="table-block-modal fade"',
       'tabindex="-1" role="dialog" aria-hidden="true">',
       '<div class="modal-dialog">',
       '<div class="modal-content">',
@@ -541,7 +545,8 @@ import { stateToHTML } from 'draft-js-export-html';
       'data-dismiss="modal" aria-hidden="true">×</button>',
       '<div class="modal-body"></div>',
       '</div>',
-      '</div>' ].join( '' );
+      '</div>'
+    ].join( '' );
 
     modalDom = $( MODAL_TEMPLATE );
     modalBodyDom = modalDom.find( '.modal-body' );
@@ -564,7 +569,7 @@ import { stateToHTML } from 'draft-js-export-html';
       https://github.com/wagtail/wagtail/blob/master/wagtail/admin/
       static_src/wagtailadmin/js/hallo-bootstrap.js
 
-      Modifications were made to add new form fields to the TableBlock in Wagtail admin.
+      Modifications were made to add new form fields to the TableBlock in Wagtail admin and support the rich text editor within table cells.
       TODO: Refactor this code and submit PR to Wagtail repo. */
   function _createRichTextEditor( initialValue ) {
     const id = 'table-block-editor';
@@ -572,42 +577,62 @@ import { stateToHTML } from 'draft-js-export-html';
 
     window.draftail.initEditor(
       '#' + id,
-      { entityTypes: [
-        { type: 'LINK',
-          icon: 'link',
-          description: 'Link',
-          attributes: [ 'url', 'id', 'parentId' ],
-          whitelist: { href: '^(http:|https:|undefined$)' }},
-        { type: 'DOCUMENT',
-          icon: 'doc-full',
-          description: 'Document' }
-      ],
-      enableHorizontalRule: false,
-      enableLineBreak: false,
-      inlineStyles: [
-        { type: 'BOLD',
-          icon: 'bold',
-          description: 'Bold' },
-        { type: 'ITALIC',
-          icon: 'italic',
-          description: 'Italic' }
-      ],
-      blockTypes: [
-        { label: 'H3',
-          type: 'header-three',
-          description: 'Heading 3' },
-        { label: 'H4',
-          type: 'header-four',
-          description: 'Heading 4' },
-        { label: 'H5',
-          type: 'header-five',
-          description: 'Heading 5' },
-        { type: 'ordered-list-item',
-          icon: 'list-ol',
-          description: 'Numbered list' },
-        { type: 'unordered-list-item',
-          icon: 'list-ul',
-          description: 'Bulleted list' } ]
+      {
+        entityTypes: [
+          {
+            type: 'LINK',
+            icon: 'link',
+            description: 'Link',
+            attributes: [ 'url', 'id', 'parentId' ],
+            whitelist: { href: '^(http:|https:|undefined$)' }
+          },
+          {
+            type: 'DOCUMENT',
+            icon: 'doc-full',
+            description: 'Document'
+          }
+        ],
+        enableHorizontalRule: false,
+        enableLineBreak: false,
+        inlineStyles: [
+          {
+            type: 'BOLD',
+            icon: 'bold',
+            description: 'Bold'
+          },
+          {
+            type: 'ITALIC',
+            icon: 'italic',
+            description: 'Italic'
+          }
+        ],
+        blockTypes: [
+          {
+            label: 'H3',
+            type: 'header-three',
+            description: 'Heading 3'
+          },
+          {
+            label: 'H4',
+            type: 'header-four',
+            description: 'Heading 4'
+          },
+          {
+            label: 'H5',
+            type: 'header-five',
+            description: 'Heading 5'
+          },
+          {
+            type: 'ordered-list-item',
+            icon: 'list-ol',
+            description: 'Numbered list'
+          },
+          {
+            type: 'unordered-list-item',
+            icon: 'list-ul',
+            description: 'Bulleted list'
+          }
+        ]
       },
       document.currentScript
     );
