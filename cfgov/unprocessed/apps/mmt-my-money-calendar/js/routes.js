@@ -42,7 +42,7 @@ const Routes = () => (
         </Route>
 
         <Route exact path='/more/export'>
-          <Redirect to="/more" />
+          <Redirect to='/more' />
         </Route>
 
         <Route exact path='/more/export/:dataType'>
