@@ -420,9 +420,11 @@ urlpatterns += ask_patterns</code></pre>
 <p>Conditions that are managed via the Wagtail or Django admin are stored in the database. These conditions can be changed in real-time and do not require any code changes or release and deployment to change (presuming the code that uses the feature flag is in place).</p>
 <p>To view, delete, and add database conditions, navigate to "Settings &gt; Flags" in the Wagtail admin.</p>
 <p><img alt="settings, flags" src="../img/settings_flags.gif" /></p>
-<p>Once in the flag settings, you'll have a list of all flags and their conditions..</p>
+<p>Once in the flag settings, you'll have a list of all flags and their statuses.</p>
 <p><img alt="flag list" src="../img/flags_list.png" /></p>
-<p>Database conditions can be deleted with the trash can button on the right.</p>
+<p>Select a flag to see its conditions.</p>
+<p><img alt="flag details" src="../img/flag_details.png" /></p>
+<p>Existing database conditions can be edited or deleted here.</p>
 <p>To create a new database condition, select "Add a condition". As with <a href="#hard-coded-conditions">hard-coded conditions</a>, to create a database condition you must select which condition type you would like to use and give it a value that must be satisfied for the flag to be enabled.</p>
 <p><img alt="creating a condition" src="../img/flag_conditions.gif" /></p>
 <p>Database conditions can only be set for flags that exist in the Django settings.</p>
