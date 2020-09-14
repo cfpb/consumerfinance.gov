@@ -8,7 +8,7 @@
 
 {% block content_main %}
     <h1>
-      {{ page.title }} -- {{ page.category_slug }}
+      {{ page.title }}
     </h1>
     {% if page.glossary_terms %}
         <dl class="terms" itemscope itemtype="http://schema.org/DefinedTermSet">
@@ -19,7 +19,7 @@
                  itemtype="http://schema.org/DefinedTerm">
                 <dt class="term_name" itemprop="name">
                     {{ term.name(page.language) }}
-                    <link itemprop="url" href="{{ page.full_url }}key-terms/#{{ term.anchor(page.language) }}">
+                    <link itemprop="url" href="{{ page.full_url }}{{ page.category_slug }}/#{{ term.anchor(page.language) }}">
                 </dt>
                 <dd class="term_definition" itemprop="description">
                     {{ term.definition(page.language) | richtext }}
