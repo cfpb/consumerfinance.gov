@@ -11,17 +11,17 @@ export default function Start() {
   return (
     <>
       <Hero
-        title="myMoney Calendar"
-        subtitle="See how your money flows from week to week and learn how to avoid coming up short."
+        title='myMoney Calendar'
+        subtitle='See how your money flows from week to week and learn how to avoid coming up short.'
         image={hero}
-        alt="myMoney Calendar"
+        alt='myMoney Calendar'
       />
       <br />
-      <div className="m-hero_subhead">
+      <div className='m-hero_subhead'>
         <p>Enter your income, expenses, and cash-on-hand to build your calendar.</p>
         <p>It's okay to estimate.</p>
 
-        <ButtonLink icon={arrowRight} iconSide="right" to="/money-on-hand/sources">
+        <ButtonLink icon={arrowRight} iconSide='right' to='/money-on-hand/sources'>
           Get Started
         </ButtonLink>
       </div>

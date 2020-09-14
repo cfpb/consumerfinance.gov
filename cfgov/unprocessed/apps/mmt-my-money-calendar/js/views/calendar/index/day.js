@@ -15,7 +15,7 @@ function Day({ day, dateFormat = 'D' }) {
   const classes = ['calendar__day', isToday && 'today', isSelected && 'selected', isCurrentMonth && 'current-month'];
 
   const handleClick = useCallback(
-    (evt) => {
+    evt => {
       evt.preventDefault();
 
       uiStore.selectedDate && day.isSame(uiStore.selectedDate)
@@ -26,10 +26,10 @@ function Day({ day, dateFormat = 'D' }) {
   );
 
   const emptyTile = useCallback(
-    (klass) => (
-      <div className={clsx(klass)} role="button" onClick={handleClick}>
-        <div className="calendar__day-number">{dateString}</div>
-        <div className="calendar__day-symbols" />
+    klass => (
+      <div className={clsx(klass)} role='button' onClick={handleClick}>
+        <div className='calendar__day-number'>{dateString}</div>
+        <div className='calendar__day-symbols' />
       </div>
     ),
     [dateString]
@@ -48,12 +48,12 @@ function Day({ day, dateFormat = 'D' }) {
       (dayjs(day).startOf('week') || dayjs(day).isBetween(dayjs(day).startOf('week'), dayjs(day).endOf('week'))),
   });
 
-  const symbol = eventStore.dateHasEvents(day) ? <div className="calendar__day-symbols">&bull;</div> : null;
+  const symbol = eventStore.dateHasEvents(day) ? <div className='calendar__day-symbols'>&bull;</div> : null;
 
   return (
-    <div className={clsx(classes)} role="button" onClick={handleClick}>
-      <div className="calendar__day-number">
-        <time dateTime={day.format('YYYY-MM-DD')} className="calendar__day-datetime">
+    <div className={clsx(classes)} role='button' onClick={handleClick}>
+      <div className='calendar__day-number'>
+        <time dateTime={day.format('YYYY-MM-DD')} className='calendar__day-datetime'>
           {day.format(dateFormat)}
         </time>
       </div>

@@ -19,7 +19,7 @@ function Export() {
         <h2 className={bem('section-title')}>Save {dataType}</h2>
       </header>
 
-      <ButtonLink to="/more" variant="secondary">
+      <ButtonLink to='/more' variant='secondary'>
         Back
       </ButtonLink>
     </section>

@@ -21,7 +21,7 @@ export default function ModalDialog({ prompt, showCancel, actions = [], ...props
     <Modal
       {...props}
       className={bem()}
-      overlayClassName="modal-overlay"
+      overlayClassName='modal-overlay'
       appElement={document.querySelector('#mmt-my-money-calendar')}
       closeTimeoutMS={150}
     >
@@ -30,7 +30,7 @@ export default function ModalDialog({ prompt, showCancel, actions = [], ...props
         {[
           ...actionButtons,
           showCancel && (
-            <li className={bem('action')} key="cancel-button">
+            <li className={bem('action')} key='cancel-button'>
               <button tabIndex={actionButtons.length} className={clsx(bem('action-button'), bem('action-button', 'cancel'))} onClick={props.onRequestClose}>
                 Cancel
               </button>
@@ -39,5 +39,5 @@ export default function ModalDialog({ prompt, showCancel, actions = [], ...props
         ]}
       </ul>
     </Modal>
-  )
+  );
 }

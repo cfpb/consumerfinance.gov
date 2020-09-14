@@ -10,10 +10,10 @@ function MoneyOnHand({ match }) {
   const { eventStore } = useStore();
   const bem = useBEM('wizard');
 
-  if (eventStore.eventsLoaded && eventStore.events.length) return <Redirect to="/calendar" />;
+  if (eventStore.eventsLoaded && eventStore.events.length) return <Redirect to='/calendar' />;
 
   return (
-    <section className="wizard">
+    <section className='wizard'>
       <Switch>
         <Route path={`${match.path}/sources`}>
           <Sources />

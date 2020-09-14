@@ -34,7 +34,7 @@ function Summary() {
 
   useScrollToTop();
 
-  if (!wizardStore.fundingSources.length && !wizardStore.noStartingFunds) return <Redirect to="/money-on-hand" />;
+  if (!wizardStore.fundingSources.length && !wizardStore.noStartingFunds) return <Redirect to='/money-on-hand' />;
 
   return (
     <>
@@ -44,7 +44,7 @@ function Summary() {
 
       <main className={bem('main')}>
         <figure className={bem('step-image')}>
-          <SvgImage src={categoryIcons.moneyOnHand} alt="Money on Hand icon" />
+          <SvgImage src={categoryIcons.moneyOnHand} alt='Money on Hand icon' />
         </figure>
 
         <h3>Starting Balance Summary</h3>
@@ -57,15 +57,15 @@ function Summary() {
             const balance = wizardStore.fundingSourceBalances[source];
 
             return (
-              <li key={`funding-src-${idx}`} className="funding-source">
-                <span className="funding-source__name">{name}:</span>
-                <span className="funding-source__balance">{formatCurrency(balance / 100)}</span>
+              <li key={`funding-src-${idx}`} className='funding-source'>
+                <span className='funding-source__name'>{name}:</span>
+                <span className='funding-source__balance'>{formatCurrency(balance / 100)}</span>
               </li>
             );
           })}
 
           {wizardStore.noStartingFunds && (
-            <li className="funding-source">
+            <li className='funding-source'>
               <em>No starting funds</em>
             </li>
           )}

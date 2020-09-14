@@ -3,7 +3,7 @@ const DEFAULT_FORMATTER = new Intl.NumberFormat('en-US', { style: 'currency', cu
 export function formatCurrency(num, options = {}) {
   const {
     symbol = true,
-    formatter = DEFAULT_FORMATTER,
+    formatter = DEFAULT_FORMATTER
   } = options;
   const result = formatter.format(num);
 

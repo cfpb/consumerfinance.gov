@@ -23,11 +23,11 @@ export function SlideListItem({
   const isOpen = useRef(false);
   const slideWidth = useRef(0);
   const [{ x }, set] = useSpring(() => ({ x: 0 }), { immediate: false });
-  const transform = interpolate([x], (x) => {
+  const transform = interpolate([x], x => {
     const limited = clamp(x, -slideWidth.current * (1 + threshold), 0);
     return `translateX(${limited}px)`;
   });
-  const opacity = interpolate([x], (x) => {
+  const opacity = interpolate([x], x => {
     const mapped = mapRange(Math.abs(x), 0, slideWidth.current, 0.3, 1);
     return clamp(mapped, 0, 1) || 0.3;
   });

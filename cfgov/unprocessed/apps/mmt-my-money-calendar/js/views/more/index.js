@@ -32,17 +32,17 @@ function More() {
       <main className={bem('main')}>
         <ul className={bem('actions')}>
           <li className={bem('actions-item')}>
-            <ButtonLink fullWidth variant="primary" to="/more/export/strategies">
+            <ButtonLink fullWidth variant='primary' to='/more/export/strategies'>
               Save Strategies
             </ButtonLink>
           </li>
           <li className={bem('actions-item')}>
-            <ButtonLink fullWidth variant="primary" to="/more/export/calendar">
+            <ButtonLink fullWidth variant='primary' to='/more/export/calendar'>
               Save Calendar
             </ButtonLink>
           </li>
           <li className={bem('actions-item')}>
-            <Button fullWidth variant="warning" onClick={() => toggleClearDataModal(true)}>
+            <Button fullWidth variant='warning' onClick={() => toggleClearDataModal(true)}>
               Clear My Data
             </Button>
           </li>
@@ -50,11 +50,11 @@ function More() {
       </main>
 
       <ModalDialog
-        contentLabel="Clear all user data confirmation dialog"
+        contentLabel='Clear all user data confirmation dialog'
         isOpen={clearDataModalOpen}
         onRequestClose={() => toggleClearDataModal(false)}
-        id="clear-data-modal"
-        prompt="Really delete all of your data and reset the app?"
+        id='clear-data-modal'
+        prompt='Really delete all of your data and reset the app?'
         showCancel
         actions={[
           {

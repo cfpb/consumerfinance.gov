@@ -7,8 +7,7 @@ import { closeRound } from '../lib/icons';
 
 export const Checkbox = ({ id, name, onChange, checked, label, value = '1', castToBoolean = true, largeTarget = false, ...props }) => {
   const changeHandler = useCallback(
-    (evt) => {
-
+    evt => {
       if (castToBoolean)
         evt.target.value = evt.target.checked;
 
@@ -24,8 +23,8 @@ export const Checkbox = ({ id, name, onChange, checked, label, value = '1', cast
   return (
     <div className={classes}>
       <input
-        className="a-checkbox"
-        type="checkbox"
+        className='a-checkbox'
+        type='checkbox'
         name={name}
         id={id}
         onChange={changeHandler}
@@ -33,7 +32,7 @@ export const Checkbox = ({ id, name, onChange, checked, label, value = '1', cast
         value={value}
         {...props}
       />
-      <label className="a-label" htmlFor={id}>
+      <label className='a-label' htmlFor={id}>
         {label}
       </label>
     </div>
@@ -58,8 +57,8 @@ export const TextField = ({
 
   return (
     <div className={fieldClasses}>
-      <label className="a-label a-label__heading" htmlFor={id}>
-        {label} {!required && <small className="a-label_helper">(optional)</small>}
+      <label className='a-label a-label__heading' htmlFor={id}>
+        {label} {!required && <small className='a-label_helper'>(optional)</small>}
       </label>
       <input
         type={type}
@@ -71,9 +70,9 @@ export const TextField = ({
         {...props}
       />
       {errors && touched && (
-        <div className="a-form-alert a-form-alert__error" role="alert">
-          <span dangerouslySetInnerHTML={{ __html: closeRound }} className="error-icon" />
-          <span className="a-form-alert_text">{errors}</span>
+        <div className='a-form-alert a-form-alert__error' role='alert'>
+          <span dangerouslySetInnerHTML={{ __html: closeRound }} className='error-icon' />
+          <span className='a-form-alert_text'>{errors}</span>
         </div>
       )}
     </div>
@@ -81,7 +80,7 @@ export const TextField = ({
 };
 
 export const DateField = ({ onChange, value, ...props }) => (
-  <TextField type="date" onChange={onChange} value={value} {...props} />
+  <TextField type='date' onChange={onChange} value={value} {...props} />
 );
 
 export const CurrencyField = ({ id, name, onChange, onBlur, label, value, ...props }) => {
@@ -100,7 +99,7 @@ export const CurrencyField = ({ id, name, onChange, onBlur, label, value, ...pro
       onChange={handleChange}
       onBlur={onBlur}
       label={label}
-      inputMode="decimal"
+      inputMode='decimal'
       value={formatCurrency(value / 100, { symbol: false })}
       {...props}
     />
@@ -125,8 +124,8 @@ export const RadioButton = ({
   return (
     <div className={classes}>
       <input
-        className="a-radio"
-        type="radio"
+        className='a-radio'
+        type='radio'
         id={id}
         name={name}
         value={value}
@@ -134,9 +133,9 @@ export const RadioButton = ({
         onChange={onChange}
         {...props}
       />
-      <label className="a-label" htmlFor={id}>
+      <label className='a-label' htmlFor={id}>
         {label}
-        {hint && <small className="a-label_helper">{hint}</small>}
+        {hint && <small className='a-label_helper'>{hint}</small>}
       </label>
     </div>
   );
@@ -159,7 +158,7 @@ export const SelectField = ({
   const inputClasses = clsx('a-select', errors && touched && 'a-select__error');
 
   const opts = [
-    <option value={null} key="empty">
+    <option value={null} key='empty'>
       {placeholder}
     </option>,
     ...options.map(({ label: optLabel, value: optVal }) => (
@@ -171,7 +170,7 @@ export const SelectField = ({
 
   return (
     <div className={fieldClasses}>
-      <label className="a-label a-label__heading" htmlFor={id}>
+      <label className='a-label a-label__heading' htmlFor={id}>
         {label}
       </label>
       <div className={inputClasses}>
@@ -180,9 +179,9 @@ export const SelectField = ({
         </select>
       </div>
       {errors && touched && (
-        <div className="a-form-alert a-form-alert__error" role="alert">
-          <span dangerouslySetInnerHTML={{ __html: closeRound }} className="error-icon" />
-          <span className="a-form-alert_text">{errors}</span>
+        <div className='a-form-alert a-form-alert__error' role='alert'>
+          <span dangerouslySetInnerHTML={{ __html: closeRound }} className='error-icon' />
+          <span className='a-form-alert_text'>{errors}</span>
         </div>
       )}
     </div>

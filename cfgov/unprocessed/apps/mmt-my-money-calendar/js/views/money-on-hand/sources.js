@@ -32,15 +32,15 @@ function Sources() {
 
       <main className={bem('main')}>
         <figure className={bem('step-image')}>
-          <SvgImage src={moneyOnHand} alt="placeholder" className={bem('step-image-asset')} />
+          <SvgImage src={moneyOnHand} alt='placeholder' className={bem('step-image-asset')} />
         </figure>
 
         <Formik
           initialValues={{
             fundingSources: [],
-            noFunds: false,
+            noFunds: false
           }}
-          onSubmit={(values) => {
+          onSubmit={ values => {
             if (values.noFunds) {
               wizardStore.setNoStartingFunds();
               history.push('/money-on-hand/summary');
@@ -53,19 +53,19 @@ function Sources() {
         >
           {(formik) => (
             <form onSubmit={formik.handleSubmit}>
-              <p className="checkbox-group-label">Where do you have money?</p>
+              <p className='checkbox-group-label'>Where do you have money?</p>
 
               <div className={bem('field')}>
                 <FieldArray
-                  name="fundingSources"
-                  render={(arrayHelpers) => (
+                  name='fundingSources'
+                  render={ arrayHelpers => (
                     <div>
                       {Object.entries(wizardStore.fundingSourceOptions).map(([key, { name }], idx) => (
                         <Checkbox
                           largeTarget
                           disabled={formik.values.noFunds}
                           key={`funding-source-opt-${idx}`}
-                          name="fundingSources"
+                          name='fundingSources'
                           id={`fundingSources-opt-${idx}`}
                           value={key}
                           checked={formik.values.fundingSources.includes(key)}
@@ -89,19 +89,19 @@ function Sources() {
               <div className={clsx(bem('field'), 'last')}>
                 <Checkbox
                   largeTarget
-                  id="funding-source-none"
-                  name="noFunds"
+                  id='funding-source-none'
+                  name='noFunds'
                   checked={Boolean(formik.values.noFunds)}
-                  onChange={(e) => {
+                  onChange={ e => {
                     formik.setFieldValue('fundingSources', []);
                     formik.handleChange(e);
                   }}
-                  label="None"
+                  label='None'
                 />
               </div>
 
               <div className={bem('buttons')} style={{ justifyContent: 'flex-end' }}>
-                <NextButton type="submit" disabled={!formik.values.fundingSources.length && !formik.values.noFunds}>
+                <NextButton type='submit' disabled={!formik.values.fundingSources.length && !formik.values.noFunds}>
                   Next
                 </NextButton>
               </div>

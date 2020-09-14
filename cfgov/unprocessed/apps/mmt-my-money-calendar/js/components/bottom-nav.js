@@ -10,9 +10,8 @@ const NavItem = ({ href, icon, label, badge, disabled = false, canSpotlight, spo
   const classes = clsx('bottom-nav__link', disabled && 'disabled');
   const iconClasses = clsx('bottom-nav__link-icon');
   const labelClasses = clsx('bottom-nav__link-label');
-  
   const clickHandler = useCallback(
-    (event) => {
+    event => {
       if (!disabled) return true;
 
       event.preventDefault();
@@ -40,19 +39,17 @@ function BottomNav() {
     eventStore: { hasStartingBalance, modalOpen },
   } = useStore();
   uiStore.toggleSpotlight(modalOpen)
-  const addSpotlight =  uiStore.hasSpotlight ? 'has-spotlight' : '';
+  const addSpotlight = uiStore.hasSpotlight ? 'has-spotlight' : '';
   const classes = clsx('bottom-nav', uiStore.showBottomNav && 'bottom-nav--visible');
-  
   if (!hasStartingBalance) return null;
-  
   return (
     <footer className={classes}>
       <nav className="bottom-nav__nav">
         <ul className="bottom-nav__items">
-          <NavItem href="/calendar" icon={calendar} exact label="Calendar" disabled={!hasStartingBalance || uiStore.hasSpotlight} />
+          <NavItem href='/calendar' icon={calendar} exact label="Calendar" disabled={!hasStartingBalance || uiStore.hasSpotlight} />
           <NavItem 
             id='add'
-            href="/calendar/add/income" 
+            href='/calendar/add/income' 
             icon={add} 
             label="Income/Expense" 
             disabled={!hasStartingBalance || uiStore.hasSpotlight} 
@@ -60,13 +57,13 @@ function BottomNav() {
             spotlight={addSpotlight}
           />
           <NavItem
-            href="/strategies"
+            href='/strategies'
             icon={idea}
-            label="Strategies"
+            label='Strategies'
             badge={strategiesStore.strategyResults.length}
             disabled={!hasStartingBalance || !strategiesStore.strategyResults.length || uiStore.hasSpotlight}
           />
-          <NavItem href="/more" icon={menu} label="More" disabled={!hasStartingBalance || uiStore.hasSpotlight} />
+          <NavItem href='/more' icon={menu} label='More' disabled={!hasStartingBalance || uiStore.hasSpotlight} />
         </ul>
       </nav>
     </footer>

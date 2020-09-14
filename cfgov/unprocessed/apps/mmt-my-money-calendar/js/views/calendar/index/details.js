@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import { useCallback, useState } from 'react';
-import { useLockBodyScroll, useKeyPressEvent } from 'react-use';
+import { useLockBodyScroll, useKeyPressEvent, useToggle } from 'react-use';
 import { observer } from 'mobx-react';
 import { useHistory, Link } from 'react-router-dom';
-import { useToggle } from 'react-use';
 import { useStore } from '../../../stores';
 import { formatCurrency } from '../../../lib/currency-helpers';
 import { Notification } from '../../../components/notification';
@@ -22,23 +21,23 @@ const DetailRow = ({ event, onRequestEdit, onRequestDelete, balanceIsNegative = 
         label: 'Edit',
         icon: pencil,
         className: 'slide-list-item__button--edit',
-        onClick: onRequestEdit,
+        onClick: onRequestEdit
       },
       {
         label: 'Delete',
         icon: deleteIcon,
         className: 'slide-list-item__button--delete',
         onClick: onRequestDelete,
-        disabled: event.category === 'income.startingBalance',
+        disabled: event.category === 'income.startingBalance'
       },
     ]}
     {...props}
   >
-    <div className="calendar-details__event-date">{event.dateTime.format('M/D/YYYY')}</div>
-    <div className="calendar-details__event-name">{event.name}</div>
-    <div className="calendar-details__event-total">{formatCurrency(event.total)}</div>
-    <div className="calendar-details__drag-handle">
-      <span className="calendar-details__drag-icon" dangerouslySetInnerHTML={{ __html: dragHandle }} />
+    <div className='calendar-details__event-date'>{event.dateTime.format('M/D/YYYY')}</div>
+    <div className='calendar-details__event-name'>{event.name}</div>
+    <div className='calendar-details__event-total'>{formatCurrency(event.total)}</div>
+    <div className='calendar-details__drag-handle'>
+      <span className='calendar-details__drag-icon' dangerouslySetInnerHTML={{ __html: dragHandle }} />
     </div>
   </SlideListItem>
 );
@@ -50,7 +49,7 @@ function Details() {
   const [modalOpen, toggleModal] = useToggle(false);
 
   const confirmDelete = useCallback(
-    (event) => (e) => {
+    (event) => e => {
       e.preventDefault();
       e.stopPropagation();
       setSelectedEvent(event);
@@ -60,7 +59,7 @@ function Details() {
   );
 
   const eventDeleteHandler = useCallback(
-    (andRecurrences = false) => async (evt) => {
+    (andRecurrences = false) => async evt => {
       evt.preventDefault();
       await eventStore.deleteEvent(selectedEvent.id, andRecurrences);
       setSelectedEvent(null);
@@ -72,7 +71,7 @@ function Details() {
   const eventRecurs = selectedEvent && selectedEvent.recurs;
 
   const editEvent = useCallback(
-    (e) => (evt) => {
+    (e) => evt => {
       evt.preventDefault();
       history.push(`/calendar/add/${e.id}/edit`);
     },
@@ -87,42 +86,41 @@ function Details() {
   const events = eventStore.getEventsForWeek(uiStore.currentWeek) || [];
   const startBal = events
     .filter((x) => x.category === 'income.startingBalance')
-    .map((e) => formatCurrency(e.totalCents / 100));
+    .map( e => formatCurrency(e.totalCents / 100));
 
 const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative', uiStore.weekHasPositiveBalance && 'positive');
-
   return (
-    <section className="calendar-details">
-      <header className="calendar-details__header">
+    <section className='calendar-details'>
+      <header className='calendar-details__header'>
         <IconButton
-          className="calendar-details__nav-button"
-          aria-label="Previous Week"
+          className='calendar-details__nav-button'
+          aria-label='Previous Week'
           onClick={() => uiStore.prevWeek()}
           icon={arrowLeft}
         />
 
-        <div className="calendar-details__header-text">
+        <div className='calendar-details__header-text'>
           <h3>Week of {uiStore.weekRangeText}</h3>
           {uiStore.weekHasZeroBalance && !eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>
-              Ending Balance: <span className="balance-amount">{uiStore.weekEndingBalanceText}</span>
+              Ending Balance: <span className='balance-amount'>{uiStore.weekEndingBalanceText}</span>
             </div>
           )}
           {uiStore.weekHasZeroBalance && eventStore.hasSnapEvents && (
             <div className={endBalanceClasses}>
               <p>
-                Ending Balance: <span className="balance-amount">{uiStore.weekEndingBalanceText}</span>
+                Ending Balance: <span className='balance-amount'>{uiStore.weekEndingBalanceText}</span>
               </p>
               <p>
-                Ending SNAP Balance: <span className="balance-amount">{uiStore.weekEndingSnapBalanceText}</span>
+                Ending SNAP Balance: <span className='balance-amount'>{uiStore.weekEndingSnapBalanceText}</span>
               </p>
             </div>
           )}
         </div>
 
         <IconButton
-          className="calendar-details__nav-button"
-          aria-label="Next Week"
+          className='calendar-details__nav-button'
+          aria-label='Next Week'
           onClick={() => uiStore.nextWeek()}
           icon={arrowRight}
         />
@@ -132,15 +130,15 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
         <div className={endBalanceClasses}>
           <Notification
             message="You're in the green this week!"
-            variant="savings"
+            variant='savings'
             actionLink={
-              <Link to={`/calendar/add/expense/emergencySavings/new`} className="m-notification_save-button">
+              <Link to={`/calendar/add/expense/emergencySavings/new`} className='m-notification_save-button'>
                 Save it
               </Link>
             }
           >
-            <p className="m-notification_explanation">
-              Ending Balance: <span className="pos-ending-balance">{uiStore.weekEndingBalanceText}</span>
+            <p className='m-notification_explanation'>
+              Ending Balance: <span className='pos-ending-balance'>{uiStore.weekEndingBalanceText}</span>
             </p>
           </Notification>
         </div>
@@ -150,25 +148,25 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
         <div className={endBalanceClasses}>
           <Notification
             message="You're in the red this week!"
-            variant="error"
+            variant='error'
             actionLink={
 
-              <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className="m-notification_fix-button">
+              <Link to={`/fix-it-strategies/${uiStore.currentWeek.valueOf()}`} className='m-notification_fix-button'>
                 Fix it
               </Link>
             }
           >
-            <p className="m-notification_explanation">
-              Ending Balance: <span className="neg-ending-balance">{uiStore.weekEndingBalanceText}</span>
+            <p className='m-notification_explanation'>
+              Ending Balance: <span className='neg-ending-balance'>{uiStore.weekEndingBalanceText}</span>
             </p>
           </Notification>
         </div>
       )}
 
-      <div className="calendar-details__events-section">
-        <h3 className="calendar-details__events-section-title">Transactions</h3>
+      <div className='calendar-details__events-section'>
+        <h3 className='calendar-details__events-section-title'>Transactions</h3>
 
-        <ul className="calendar-details__events-list">
+        <ul className='calendar-details__events-list'>
           {events.map((e) => (
             <DetailRow
               event={e}
@@ -182,20 +180,20 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
       </div>
 
       <ModalDialog
-        contentLabel="Event deletion options"
+        contentLabel='Event deletion options'
         isOpen={modalOpen}
         onRequestClose={() => toggleModal(false)}
-        id="delete-dialog"
-        prompt="Delete this event?"
+        id='delete-dialog'
+        prompt='Delete this event?'
         actions={[
           {
             label: eventRecurs ? 'Just this event' : 'Delete',
-            onClick: eventDeleteHandler(false),
+            onClick: eventDeleteHandler(false)
           },
           {
             label: 'This event and future recurrences',
             onClick: eventDeleteHandler(true),
-            condition: eventRecurs,
+            condition: eventRecurs
           },
         ]}
         showCancel

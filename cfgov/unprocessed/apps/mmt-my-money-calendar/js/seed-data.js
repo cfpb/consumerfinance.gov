@@ -111,7 +111,7 @@ function seedCashFlowEvents() {
         dtstart: currentDate,
         count: 3
       })
-    },
+    }
   ];
 
   return Promise.all(events.map((event) => {

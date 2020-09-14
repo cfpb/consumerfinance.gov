@@ -8,7 +8,7 @@ const ButtonIcon = ({ side = 'left', icon }) => (
   <span className={`a-btn_icon a-btn_icon__on-${side}`} dangerouslySetInnerHTML={{ __html: icon }}></span>
 );
 
-export const ButtonGroup = ({ children }) => <div className="m-btn-group">{children}</div>;
+export const ButtonGroup = ({ children }) => <div className='m-btn-group'>{children}</div>;
 
 export function Button({
   as = 'button',
@@ -30,7 +30,7 @@ export function Button({
     'a-btn__disabled': disabled,
     'a-btn__super': variant === 'super',
     'a-btn__full-on-xs': fullWidth,
-    'a-btn__link': link,
+    'a-btn__link': link
   });
 
   const btnIcon = icon ? <ButtonIcon icon={icon} side={iconSide} /> : null;
@@ -47,7 +47,7 @@ export function Button({
 export function ButtonLink({ to, ...props }) {
   const history = useHistory();
   const onClick = useCallback(
-    (evt) => {
+    evt => {
       evt.preventDefault();
       history.push(to);
     },
@@ -58,12 +58,12 @@ export function ButtonLink({ to, ...props }) {
 }
 
 export const BackButton = ({ children, ...props }) => (
-  <Button {...props} icon={arrowLeft} iconSide="left">
+  <Button {...props} icon={arrowLeft} iconSide='left'>
     {children}
   </Button>
 );
 export const NextButton = ({ children, ...props }) => (
-  <Button {...props} icon={arrowRight} iconSide="right">
+  <Button {...props} icon={arrowRight} iconSide='right'>
     {children}
   </Button>
 );

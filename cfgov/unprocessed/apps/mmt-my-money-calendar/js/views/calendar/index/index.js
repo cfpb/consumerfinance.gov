@@ -20,7 +20,7 @@ const CalendarWeekRow = ({ days, selected }) => {
 
   return (
     <div className={classes}>
-      {days.map((day) => (
+      {days.map( day => (
         <Day day={day} key={`day-${day.dayOfYear()}`} />
       ))}
     </div>
@@ -42,7 +42,6 @@ function Calendar() {
       setShowModal(false);
     } else {
       let currentStep = (visited && enteredData === 'initial') ? 'step2' : 'step1';
-      
       setNarrativeStep(currentStep);
       setShowModal(true);
     }
@@ -56,9 +55,9 @@ function Calendar() {
 
   const dayLabels = useMemo(
     () => (
-      <div className="calendar__row" key="dayLabels">
+      <div className='calendar__row' key='dayLabels'>
         {DAY_LABELS.map((label, idx) => (
-          <div key={`label-${idx}`} className="calendar__day-label">
+          <div key={`label-${idx}`} className='calendar__day-label'>
             {label}
           </div>
         ))}
@@ -67,7 +66,7 @@ function Calendar() {
     []
   );
 
-  const handleToggleModal = (event) => {
+  const handleToggleModal = event => {
     event.preventDefault();
     localStorage.setItem('visitedPage', true);
     if (localStorage.getItem('enteredData') === 'initial') {
@@ -75,17 +74,17 @@ function Calendar() {
     }
     if (!localStorage.getItem('removeSpotlight')) {
       localStorage.setItem('removeSpotlight', true)
-      eventStore.closeNarrativeModal();
+      eventStore.closeNarrativeModal()
     }
     setShowModal(!showModal);
   };
 
   useScrollToTop();
 
-  if (eventStore.eventsLoaded && !eventStore.hasStartingBalance) return <Redirect to="/money-on-hand" />;
+  if (eventStore.eventsLoaded && !eventStore.hasStartingBalance) return <Redirect to='/money-on-hand' />;
 
   return (
-    <section className="calendar">
+    <section className='calendar'>
       {showModal && narrativeStep === 'step1' &&
         <NarrativeModal
           showModal={showModal}
@@ -95,32 +94,28 @@ function Calendar() {
         />
       }
       {showModal && narrativeStep === 'step2' && 
-        <NarrativeModal showModal={showModal}
-                        handleOkClick={handleToggleModal}
-                        copy={narrativeCopy.step2}
-                        step={narrativeStep}
-        />
+        <NarrativeModal showModal={showModal} handleOkClick={handleToggleModal} copy={narrativeCopy.step2} step={narrativeStep} />
       }
-      <header className="calendar__header">
+      <header className='calendar__header'>
         <IconButton
-          className="calendar__nav-button"
-          aria-label="Previous Month"
+          className='calendar__nav-button'
+          aria-label='Previous Month'
           onClick={() => uiStore.prevMonth()}
           icon={arrowLeft}
         />
 
-        <h2 className="calendar__subtitle">{uiStore.subtitle}</h2>
+        <h2 className='calendar__subtitle'>{uiStore.subtitle}</h2>
 
         <IconButton
-          className="calendar__nav-button"
-          aria-label="Next Month"
+          className='calendar__nav-button'
+          aria-label='Next Month'
           onClick={() => uiStore.nextMonth()}
           icon={arrowRight}
         />
       </header>
 
-      <div className="calendar__cols">
-        <div className="calendar__rows">
+      <div className='calendar__cols'>
+        <div className='calendar__rows'>
           {[
             dayLabels,
             ...uiStore.monthCalendarRows.map(({ days, weekNumber }) => (

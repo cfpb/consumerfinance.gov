@@ -8,8 +8,8 @@ import { CacheFirst, StaleWhileRevalidate, NetworkFirst } from 'workbox-strategi
 skipWaiting();
 clientsClaim();
 
-const minutes = (num) => num * 60;
-const days = (num) => minutes(num) * 60 * 24;
+const minutes = num => num * 60;
+const days = num => minutes(num) * 60 * 24;
 
 // Precache compiled Webpack assets:
 precacheAndRoute(self.__WB_MANIFEST);
@@ -21,8 +21,8 @@ precacheAndRoute(['/mmt-my-money-calendar', '/mmt-my-money-calendar/calendar', '
 const rootHandler = createHandlerBoundToURL('/mmt-my-money-calendar');
 const navRoute = new NavigationRoute(rootHandler, {
   allowList: [
-    /mmt-my-money-calendar/,
-  ],
+    /mmt-my-money-calendar/
+  ]
 });
 registerRoute(navRoute);
 
@@ -36,7 +36,7 @@ workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL('/m
 registerRoute(
   /^https:\/\/fonts\.google\.com/,
   new StaleWhileRevalidate({
-    cacheName: 'googleFonts',
+    cacheName: 'googleFonts'
   })
 );
 
@@ -50,9 +50,9 @@ registerRoute(
       }),
       new ExpirationPlugin({
         maxAgeSeconds: days(365),
-        maxEntries: 20,
-      }),
-    ],
+        maxEntries: 20
+      })
+    ]
   })
 );
 
@@ -64,9 +64,9 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: days(30),
-        maxEntries: 60,
-      }),
-    ],
+        maxEntries: 60
+      })
+    ]
   })
 );
 
@@ -74,7 +74,7 @@ registerRoute(
 registerRoute(
   /main\.css$/,
   new StaleWhileRevalidate({
-    cacheName: 'styles',
+    cacheName: 'styles'
   })
 );
 
@@ -82,7 +82,7 @@ registerRoute(
 registerRoute(
   /static\/apps\/mmt-my-money-calendar/,
   new StaleWhileRevalidate({
-    cacheName: 'appAssets',
+    cacheName: 'appAssets'
   })
 );
 

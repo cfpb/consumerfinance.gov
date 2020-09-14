@@ -21,7 +21,7 @@ function BalanceForm() {
 
   useScrollToTop();
 
-  if (!wizardStore.fundingSources.length) return <Redirect to="/money-on-hand" />;
+  if (!wizardStore.fundingSources.length) return <Redirect to='/money-on-hand' />;
 
   const currentIndex = wizardStore.fundingSources.indexOf(source);
   const prevSource = currentIndex > 0 ? wizardStore.fundingSources[currentIndex - 1] : null;
@@ -29,7 +29,7 @@ function BalanceForm() {
   const nextSource =
     wizardStore.fundingSources.length > currentIndex + 1 ? wizardStore.fundingSources[currentIndex + 1] : null;
   const nextStep = nextSource ? `/money-on-hand/balances/${nextSource}` : '/money-on-hand/summary';
-  const goBack = (evt) => {
+  const goBack = evt => {
     evt.preventDefault();
     history.push(prevStep);
   };
@@ -57,9 +57,9 @@ function BalanceForm() {
         <Formik
           initialValues={initialValues}
           validationSchema={yup.object({
-            [source]: yup.number('Balance must be a number').required('Balance is required'),
+            [source]: yup.number('Balance must be a number').required('Balance is required')
           })}
-          onSubmit={(values) => {
+          onSubmit={ values => {
             wizardStore.logger.debug('Submit form: %O', values);
             wizardStore.setFundingSourceBalance(source, Number(values[source]));
             history.push(nextStep);
@@ -81,8 +81,8 @@ function BalanceForm() {
               />
 
               <div className={bem('buttons')}>
-                <BackButton type="button" onClick={goBack}>Back</BackButton>
-                <NextButton type="submit">Next</NextButton>
+                <BackButton type='button' onClick={goBack}>Back</BackButton>
+                <NextButton type='submit'>Next</NextButton>
               </div>
             </form>
           )}

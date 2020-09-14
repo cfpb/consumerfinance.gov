@@ -17,7 +17,7 @@ dayjs.extend(isBetween);
 export { dayjs };
 
 export const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-export const DAY_LABELS = DAY_NAMES.map((name) => name.charAt(0));
+export const DAY_LABELS = DAY_NAMES.map(name => name.charAt(0));
 export const MONTH_NAMES = [
   'January',
   'February',
@@ -39,14 +39,14 @@ export function numberWithOrdinal(num) {
   return num + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
 }
 
-export const toDayJS = (date) => dayjs(date);
+export const toDayJS = date => dayjs(date);
 
 /**
  * Ensures that the argument is returned as a native JS Date object
  *
  * @param {Date|dayjs} date - A JS Date or dayjs object
  */
-export const toJSDate = (date) => (date instanceof Date ? date : date.toDate());
+export const toJSDate = date => (date instanceof Date ? date : date.toDate());
 
 /**
  * Get the ordinal day of the year for a date, as an integer
@@ -54,14 +54,14 @@ export const toJSDate = (date) => (date instanceof Date ? date : date.toDate());
  * @param {Date|dayjs} date - A Date or dayjs instance
  * @returns {Number} an integer between 1 and 365
  */
-export const dayOfYear = (date) => toDayJS(date).dayOfYear();
+export const dayOfYear = date => toDayJS(date).dayOfYear();
 
 /**
  * Returns the number of the specified month, zero-indexed.
  *
  * @param {String} monthName - The name of the current month
  */
-export const getMonthNumber = (monthName) => MONTH_NAMES.indexOf(monthName);
+export const getMonthNumber = monthName => MONTH_NAMES.indexOf(monthName);
 
 /**
  * Limits the number to a valid month number, zero-indexed
@@ -69,7 +69,7 @@ export const getMonthNumber = (monthName) => MONTH_NAMES.indexOf(monthName);
  * @param {Number} num - The month number
  * @returns {Number} A number between 0 and 11
  */
-export const limitMonthNumber = (num) => Math.min(Math.max(num, 0), 11);
+export const limitMonthNumber = num => Math.min(Math.max(num, 0), 11);
 
 /**
  * An object containing information about a month
@@ -98,12 +98,12 @@ export function getMonthInfo(date = dayjs()) {
  * @property {Number} weekNumber - The week number of the year
  */
 
-const monthSharesFirstWeek = (date) => {
+const monthSharesFirstWeek = date => {
   const start = date.startOf('month');
   return start.week() === start.subtract(1, 'month').endOf('month').week();
 };
 
-const monthSharesLastWeek = (date) => {
+const monthSharesLastWeek = date => {
   const end = date.endOf('month');
   return end.week() === end.add(1, 'month').startOf('month').week();
 };
@@ -153,13 +153,13 @@ export const DAY_OPTIONS = {
   Wednesday: RRule.WE,
   Thursday: RRule.TH,
   Friday: RRule.FR,
-  Saturday: RRule.SA,
+  Saturday: RRule.S,
 };
 
 export const recurrenceRules = {
   weekly: {
     label: 'Weekly',
-    handler: (dtstart, options = {}) => new RRule({ freq: RRule.WEEKLY, dtstart, ...options }),
+    handler: (dtstart, options = {}) => new RRule({ freq: RRule.WEEKLY, dtstart, ...options })
   },
   biweekly: {
     label: 'Every 2 weeks',
@@ -168,12 +168,12 @@ export const recurrenceRules = {
         freq: RRule.WEEKLY,
         interval: 2,
         dtstart,
-        ...options,
-      }),
+        ...options
+      })
   },
   monthly: {
     label: 'Monthly',
-    handler: (dtstart, options = {}) => new RRule({ freq: RRule.MONTHLY, dtstart, ...options }),
+    handler: (dtstart, options = {}) => new RRule({ freq: RRule.MONTHLY, dtstart, ...options })
   },
   semimonthly: {
     label: 'Twice a month',
@@ -191,7 +191,7 @@ export const recurrenceRules = {
           freq: RRule.MONTHLY,
           bysetpos: -1,
           byweekday: WEEKDAYS,
-          bymonthday: firstPaydayRange,
+          bymonthday: firstPaydayRange
         })
       );
 
@@ -201,11 +201,11 @@ export const recurrenceRules = {
           freq: RRule.MONTHLY,
           bysetpos: -1,
           byweekday: WEEKDAYS,
-          bymonthday: lastPaydayRange,
+          bymonthday: lastPaydayRange
         })
       );
 
       return rules;
-    },
-  },
+    }
+  }
 };

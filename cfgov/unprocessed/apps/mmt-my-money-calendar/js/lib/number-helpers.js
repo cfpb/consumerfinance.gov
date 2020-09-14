@@ -1,5 +1,5 @@
-/**
- * Maps a number in a range, to a number in a different range.
+
+/* Maps a number in a range, to a number in a different range.
  *
  * @param {number} num The number to map
  * @param {number} min The minimum value in the input range
@@ -11,8 +11,8 @@
  */
 export const mapRange = (num, min, max, outMin, outMax) => (num - min) / (max - min) * (outMax - outMin) + outMin;
 
-/**
- * Clamps the value of a number between a minimum and a maximum
+
+/* Clamps the value of a number between a minimum and a maximum
  *
  * @param {number} num The number to clamp
  * @param {number} min The minimum allowable value
