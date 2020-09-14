@@ -7,4 +7,3 @@ class TestServiceWorkerView(TestCase):
     def test_service_worker(self):
         response = self.client.get(reverse('mmt-my-money-calendar'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response['content-type'], 'application/json')
