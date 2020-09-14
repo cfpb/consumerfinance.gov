@@ -200,4 +200,24 @@ describe( 'FilterableListControls', () => {
       expect( filterableListControlsDom.getAttribute( 'data-js-hook' ) ).toStrictEqual( 'state_atomic_init' );
     } );
   } );
+
+  describe( 'error handling', () => {
+    it( 'should highlight text input fields with errors', done => {
+      const FIELD_ERROR_CLASS = 'a-text-input__error';
+      const form = document.querySelector( 'form' );
+      const field = document.querySelector( '#from_date' );
+
+      filterableListControls.init();
+
+      expect( field.classList.contains( FIELD_ERROR_CLASS ) ).toBeFalsy();
+
+      filterableListControls.addEventListener( 'fieldInvalid', () => {
+        expect( field.classList.contains( FIELD_ERROR_CLASS ) ).toBeTruthy();
+        done();
+      } );
+
+      field.value = 'text that is not a valid date';
+      form.dispatchEvent( new Event( 'submit' ) );
+    } );
+  } );
 } );
