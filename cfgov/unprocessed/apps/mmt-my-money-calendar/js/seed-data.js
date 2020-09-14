@@ -43,7 +43,7 @@ function seedCashFlowEvents() {
       recurrenceRule: new RRule({
         freq: RRule.WEEKLY,
         dtstart: currentDate,
-        count: 12,
+        count: 12
       }),
     },
     {
@@ -57,7 +57,7 @@ function seedCashFlowEvents() {
       recurrenceRule: new RRule({
         freq: RRule.MONTHLY,
         count: 3,
-        dtstart: currentDate,
+        dtstart: currentDate
       }),
     },
     {
@@ -70,7 +70,7 @@ function seedCashFlowEvents() {
       recurrenceRule: new RRule({
         freq: RRule.WEEKLY,
         dtstart: currentDate,
-        count: 12,
+        count: 12
       }),
     },
     {
@@ -83,7 +83,7 @@ function seedCashFlowEvents() {
       recurrenceRule: new RRule({
         freq: RRule.MONTHLY,
         dtstart: currentDate,
-        count: 3,
+        count: 3
       }),
     },
     {
@@ -96,7 +96,7 @@ function seedCashFlowEvents() {
       recurrenceRule: new RRule({
         freq: RRule.MONTHLY,
         dtstart: currentDate,
-        count: 3,
+        count: 3
       }),
     },
     {
@@ -109,7 +109,7 @@ function seedCashFlowEvents() {
       recurrenceRule: new RRule({
         freq: RRule.MONTHLY,
         dtstart: currentDate,
-        count: 3,
+        count: 3
       }),
     },
   ];
