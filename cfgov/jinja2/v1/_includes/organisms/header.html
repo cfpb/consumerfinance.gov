@@ -63,10 +63,6 @@
         {{ complaint_maintenance_banner(request) }}
     {% endif %}
 
-    {% if flag_enabled('HMDA_OUTAGE') %}
-        {{ hmda_outage_banner(request) }}
-    {% endif %}
-
     {% if flag_enabled('OMWI_SALESFORCE_OUTAGE') %}
         {{ omwi_salesforce_outage_banner(request) }}
     {% endif %}

@@ -91,7 +91,6 @@ INSTALLED_APPS = (
     "regulations3k",
     "treemodeladmin",
     "housing_counselor",
-    "hmda",
     "youth_employment",
     "diversity_inclusion",
     "mega_menu.apps.MegaMenuConfig",
@@ -698,21 +697,6 @@ FLAGS = {
     "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
     # Test financial well-being hub pages on Beta
     "FINANCIAL_WELLBEING_HUB": [("environment is", "beta")],
-    # Publish new HMDA Explore page
-    # Delete after HMDA API is deprecated (hopefully Summer 2019)
-    "HMDA_LEGACY_PUBLISH": [],
-    # The HMDA API and HMDA explorer pages will temporarily be taken down at
-    # TBD intervals. We use a GET parameter during downtime to trigger an
-    # explanatory banner about the outages.
-    # Delete after HMDA API is deprecated (hopefully Summer 2019)
-    "HMDA_OUTAGE": [
-        {"condition": "parameter", "value": "hmda-outage", "required": True},
-        {
-            "condition": "path matches",
-            "value": r"^/data-research",
-            "required": True,
-        },
-    ],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
