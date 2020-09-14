@@ -8,7 +8,6 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html_join
 
-import wagtail.admin.rich_text.editors.draftail.features as draftail_features
 from wagtail.admin.menu import MenuItem
 from wagtail.admin.rich_text.converters.editor_html import (
     WhitelistRule as AllowlistRule
