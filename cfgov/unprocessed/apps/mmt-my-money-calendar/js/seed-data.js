@@ -44,7 +44,7 @@ function seedCashFlowEvents() {
         freq: RRule.WEEKLY,
         dtstart: currentDate,
         count: 12
-      }),
+      })
     },
     {
       name: 'Rent',
@@ -58,7 +58,7 @@ function seedCashFlowEvents() {
         freq: RRule.MONTHLY,
         count: 3,
         dtstart: currentDate
-      }),
+      })
     },
     {
       name: 'Groceries',
@@ -71,7 +71,7 @@ function seedCashFlowEvents() {
         freq: RRule.WEEKLY,
         dtstart: currentDate,
         count: 12
-      }),
+      })
     },
     {
       name: 'Electricity',
@@ -84,7 +84,7 @@ function seedCashFlowEvents() {
         freq: RRule.MONTHLY,
         dtstart: currentDate,
         count: 3
-      }),
+      })
     },
     {
       name: 'Water Bill',
@@ -97,7 +97,7 @@ function seedCashFlowEvents() {
         freq: RRule.MONTHLY,
         dtstart: currentDate,
         count: 3
-      }),
+      })
     },
     {
       name: 'Student Loan',
@@ -110,7 +110,7 @@ function seedCashFlowEvents() {
         freq: RRule.MONTHLY,
         dtstart: currentDate,
         count: 3
-      }),
+      })
     },
   ];
 
