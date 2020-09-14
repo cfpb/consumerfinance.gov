@@ -13,9 +13,6 @@ from wagtail.admin.menu import MenuItem
 from wagtail.admin.rich_text.converters.editor_html import (
     WhitelistRule as AllowlistRule
 )
-from wagtail.admin.rich_text.converters.html_to_contentstate import (
-    InlineStyleElementHandler
-)
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
