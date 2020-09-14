@@ -46,7 +46,7 @@ registerRoute(
     cacheName: 'googleFonts',
     plugins: [
       new CacheableResponsePlugin({
-        statuses: [0, 200],
+        statuses: [0, 200]
       }),
       new ExpirationPlugin({
         maxAgeSeconds: days(365),

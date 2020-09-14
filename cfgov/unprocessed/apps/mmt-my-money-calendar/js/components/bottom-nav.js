@@ -22,10 +22,10 @@ const NavItem = ({ href, icon, label, badge, disabled = false, canSpotlight, spo
 
   return (
     <li className={`bottom-nav__item ${canSpotlight ? spotlight : ''}`}>
-      <NavLink onClick={clickHandler} id="nav-link" className={classes} disabled={disabled} to={href} {...params}>
+      <NavLink onClick={clickHandler} id='nav-link' className={classes} disabled={disabled} to={href} {...params}>
         <div className={iconClasses} dangerouslySetInnerHTML={{ __html: icon }} />
         <div className={labelClasses}>{label}</div>
-        {!!badge && <div className="bottom-nav__link-badge">{badge}</div>}
+        {!!badge && <div className='bottom-nav__link-badge'>{badge}</div>}
       </NavLink>
     </li>
   );
@@ -36,22 +36,22 @@ function BottomNav() {
   const {
     uiStore,
     strategiesStore,
-    eventStore: { hasStartingBalance, modalOpen },
+    eventStore: { hasStartingBalance, modalOpen }
   } = useStore();
-  uiStore.toggleSpotlight(modalOpen)
+  uiStore.toggleSpotlight(modalOpen);
   const addSpotlight = uiStore.hasSpotlight ? 'has-spotlight' : '';
   const classes = clsx('bottom-nav', uiStore.showBottomNav && 'bottom-nav--visible');
   if (!hasStartingBalance) return null;
   return (
     <footer className={classes}>
-      <nav className="bottom-nav__nav">
-        <ul className="bottom-nav__items">
-          <NavItem href='/calendar' icon={calendar} exact label="Calendar" disabled={!hasStartingBalance || uiStore.hasSpotlight} />
+      <nav className='bottom-nav__nav'>
+        <ul className='bottom-nav__items'>
+          <NavItem href='/calendar' icon={calendar} exact label='Calendar' disabled={!hasStartingBalance || uiStore.hasSpotlight} />
           <NavItem 
             id='add'
             href='/calendar/add/income' 
             icon={add} 
-            label="Income/Expense" 
+            label='Income/Expense' 
             disabled={!hasStartingBalance || uiStore.hasSpotlight} 
             canSpotlight={uiStore.hasSpotlight} 
             spotlight={addSpotlight}
