@@ -41,15 +41,15 @@ const Routes = () => (
           <Strategies />
         </Route>
 
-        <Route exact path="/more/export">
+        <Route exact path='/more/export'>
           <Redirect to="/more" />
         </Route>
 
-        <Route exact path="/more/export/:dataType">
+        <Route exact path='/more/export/:dataType'>
           <Export />
         </Route>
 
-        <Route exact path="/more">
+        <Route exact path='/more'>
           <More />
         </Route>
       </Switch>
