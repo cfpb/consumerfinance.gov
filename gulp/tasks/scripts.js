@@ -225,9 +225,7 @@ gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
-//
 gulp.task( 'scripts:admin', scriptsAdmin );
-//
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
@@ -254,6 +252,6 @@ gulp.task( 'scripts',
 gulp.task( 'scripts:watch', function() {
   gulp.watch(
     configScripts.src,
-    gulp.parallel( 'scripts:modern', 'scripts:admin' )
+    gulp.parallel( 'scripts:modern' )
   );
 } );

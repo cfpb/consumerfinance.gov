@@ -26,7 +26,7 @@ env:
   phantomjs: false
   protractor: false
   qunit: false
-  jquery: true
+  jquery: false
   prototypejs: false
   shelljs: false
   meteor: false

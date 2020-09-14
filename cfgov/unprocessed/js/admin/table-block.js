@@ -1,6 +1,7 @@
+/* eslint-env jquery */
 import { stateToHTML } from 'draft-js-export-html';
 
-/*  TableBlock HansonTable bridge
+/*  TableBlock HandsonTable bridge
 
     Code copied from
     https://github.com/wagtail/wagtail/blob/master/wagtail/contrib/table_block/static/table_block/js/table.js
