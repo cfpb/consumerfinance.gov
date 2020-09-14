@@ -113,6 +113,7 @@ pipeline {
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
         }
+
         stage('Run Functional Tests') {
             when {
                 anyOf {
@@ -135,15 +136,22 @@ pipeline {
         success {
             script {
                 if (env.GIT_BRANCH != 'main') {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} deployed via ${env.BUILD_URL} and available at https://${env.CFGOV_HOSTNAME}/")
                 }
                 else {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH deployed via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
-                 }
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: **main** branch stack deployed via ${env.BUILD_URL} and available at https://${env.CFGOV_HOSTNAME}/")
+                }
             }
         }
         unsuccessful {
-            notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
+            script{
+                if (env.GIT_BRANCH != 'main') {
+                    notify("${NOTIFICATION_CHANNEL}", ":x: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} failed to deploy. See: ${env.BUILD_URL}")
+                }
+                else {
+                    notify("${NOTIFICATION_CHANNEL}", ":x: **main** branch stack deployment failed. See: ${env.BUILD_URL}")
+                }
+            }
         }
     }
 }
