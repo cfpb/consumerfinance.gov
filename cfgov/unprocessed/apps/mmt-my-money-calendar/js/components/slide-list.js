@@ -82,7 +82,7 @@ export function SlideListItem({
     { filterTaps: true }
   );
 
-  useLayoutEffect(() => {
+  /* useLayoutEffect(() => {
     if (!background.current) return;
 
     const setSlideWidth = () => {
@@ -98,6 +98,24 @@ export function SlideListItem({
     return () => {
       window.removeEventListener('resize', setSlideWidth);
     };
+  }, [background.current]); */
+
+  useLayoutEffect(() => {
+    if (!background.current) return;
+
+    const setSlideWidth = () => {
+      slideWidth.current = Array.from(background.current.childNodes).reduce(
+        (width, node) => width + node.offsetWidth,
+        0
+      );
+    };
+
+    window.addEventListener('resize', setSlideWidth);
+    setSlideWidth();
+
+    window.removeEventListener('resize', setSlideWidth);
+
+    return;
   }, [background.current]);
 
   return (
