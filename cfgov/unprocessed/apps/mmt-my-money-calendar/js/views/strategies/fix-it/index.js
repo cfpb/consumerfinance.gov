@@ -21,7 +21,7 @@ const FixItButton = ({ result }) => {
   const buttonAction = useCallback(
     async evt => {
       evt.preventDefault();
-      history.push(href);
+      await history.push(href);
     },
     [result.event, href]
   );

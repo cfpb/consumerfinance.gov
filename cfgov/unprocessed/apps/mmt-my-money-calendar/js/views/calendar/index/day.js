@@ -17,8 +17,7 @@ function Day({ day, dateFormat = 'D' }) {
   const handleClick = useCallback(
     evt => {
       evt.preventDefault();
-
-      uiStore.selectedDate && day.isSame(uiStore.selectedDate)
+      uiStore.selectedDate !== undefined && day.isSame(uiStore.selectedDate)
         ? uiStore.clearSelectedDate()
         : uiStore.setSelectedDate(day);
     },
