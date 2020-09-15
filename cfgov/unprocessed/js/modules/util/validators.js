@@ -20,6 +20,14 @@ import ERROR_MESSAGES from '../../config/error-messages-config';
  */
 function date( field, currentStatus ) {
   const status = currentStatus || {};
+  let valueToEval = field.value;
+
+  /* TODO: Merge this into the regex checks.
+           This converts numbers from any other format to MM/DD/YYYY */
+  if ( !Number.isNaN( field.valueAsNumber ) ) {
+    const date = new Date( field.valueAsNumber );
+    valueToEval = `${ date.getUTCMonth() + 1 }/${ date.getUTCDate() }/${ date.getUTCFullYear() }`;
+  }
 
   /* Date regexes match the date patterns that are
      allowed in cfgov/v1/forms.py FilterableDateField */
@@ -32,15 +40,16 @@ function date( field, currentStatus ) {
   const dayMonthYearRegex =
     /^(?:\d{1}|\d{2})(?:\-|\/)(?:\d{1}|\d{2})(?:\-|\/)(?:\d{4}|\d{2})$/;
 
-  const inputIsValid = yearRegex.test( field.value ) ||
-    monthYearRegex.test( field.value ) ||
-    dayMonthYearRegex.test( field.value );
+  const inputIsValid = yearRegex.test( valueToEval ) ||
+                       monthYearRegex.test( valueToEval ) ||
+                       dayMonthYearRegex.test( valueToEval );
 
-  if ( field.value && !inputIsValid ) {
+  if ( valueToEval && !inputIsValid ) {
     status.msg = status.msg || '';
     status.msg += ERROR_MESSAGES.DATE.INVALID;
     status.date = false;
   }
+
   return status;
 }
 
