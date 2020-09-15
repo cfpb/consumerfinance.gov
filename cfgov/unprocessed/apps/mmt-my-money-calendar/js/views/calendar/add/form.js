@@ -44,6 +44,19 @@ function Form() {
   );
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
 
+  const recurrenceOptions = Object.entries(
+    category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
+  ).map(([value, { label }]) => ({ label, value }));
+  const handleModalSession = () => {
+    let snapVisit = localStorage.getItem('snapVisit');
+
+    if (category.name === 'SNAP' && !snapVisit) {
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  };
+
   useEffect(() => {
     handleModalSession();
   }, []);
@@ -97,19 +110,6 @@ function Form() {
     eventType = pathSegments[0];
     logger.log('Editing existing event: %O', event);
   }
-
-  const recurrenceOptions = Object.entries(
-    category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
-  ).map(([value, { label }]) => ({ label, value }));
-  const handleModalSession = () => {
-    let snapVisit = localStorage.getItem('snapVisit');
-
-    if (category.name === 'SNAP' && !snapVisit) {
-      setShowModal(true);
-    } else {
-      setShowModal(false);
-    }
-  };
 
   const handleToggleModal = event => {
     event.preventDefault();
@@ -175,7 +175,7 @@ function Form() {
             return showRecurrenceUpdateModal(true);
           }
 
-          if (!localStorage.getItem('enteredData')) {
+          if (localStorage.getItem('enteredData') === null) {
             localStorage.setItem('enteredData', 'initial');
           } else {
             localStorage.setItem('enteredData', 'subsequent');
