@@ -175,9 +175,9 @@ function Form() {
             return showRecurrenceUpdateModal(true);
           }
 
-          if (localStorage.getItem('enteredData') === null) {
+          if (!localStorage.getItem('enteredData')) {
             localStorage.setItem('enteredData', 'initial');
-          } else {
+          } else if (localStorage.getItem('enteredData')){
             localStorage.setItem('enteredData', 'subsequent');
           }
 
