@@ -27,27 +27,26 @@ function Form() {
   const [showModal, setShowModal] = useState();
   const logger = useMemo(() => Logger.addGroup('eventForm'), []);
   const monthDayOptions = useMemo(
-    () => [...range(1, 30)].map((num) => ({ label: numberWithOrdinal(num), value: num })),
+    () => [...range(1, 30)].map( num => ({ label: numberWithOrdinal(num), value: num })),
     []
   );
   const paydaySchema = useMemo(
-    () =>
-      yup.number().when(['recurs', 'recurrenceType'], {
+    () => yup.number().when(['recurs', 'recurrenceType'], {
         is: (recurs, recurrenceType) => recurs && recurrenceType === 'semimonthly',
         then: yup
           .number()
           .integer()
           .required('Day of month is required for semimonthly recurrences')
           .cast(),
-        otherwise: yup.number(),
+        otherwise: yup.number()
       }),
     []
   );
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
 
   useEffect(() => {
-    handleModalSession()
-  }, [])
+    handleModalSession();
+  }, []);
 
   // Toggle bottom nav bar when inputs are focused, to prevent it from obscuring text on mobile screens:
   const focusHandler = useCallback(
@@ -69,7 +68,7 @@ function Form() {
       history.push('/calendar');
     } catch (err) {
       logger.error(err);
-      uiStore.setError(err)
+      uiStore.setError(err);
     }
   }, [eventStore, logger, uiStore]);
 
@@ -91,7 +90,7 @@ function Form() {
       dateTime: uiStore.selectedDate
     });
 
-      if (id && event) {
+  if (id && event) {
     categoryPath = event.category;
     category = Categories.get(categoryPath);
     pathSegments = categoryPath.split('.');
@@ -120,8 +119,7 @@ function Form() {
 
   return (
     <section className='add-event'>
-      { showModal && 
-        <NarrativeModal showModal={showModal} handleOkClick={handleToggleModal} copy={narrativeCopy.step4} />
+      { showModal && <NarrativeModal showModal={showModal} handleOkClick={handleToggleModal} copy={narrativeCopy.step4} />
       }
       <BackButton variant='secondary' onClick={() => history.goBack()}>
         Back
@@ -133,8 +131,7 @@ function Form() {
       ) : (
         <p className='add-event__intro'>Enter the details of your {handleCatName(category.name)} {eventType}.</p>
        )}
-        
-        {!!category.description && <p className='add-event__description'>{category.description}</p>} 
+        {!!category.description && <p className='add-event__description'>{category.description}</p>}
 
       <Formik
         initialValues={event.toFormValues()}
@@ -152,7 +149,7 @@ function Form() {
             otherwise: yup.string()
           }),
           payday1: paydaySchema,
-          payday2: paydaySchema,
+          payday2: paydaySchema
         })}
         onSubmit={ values => {
           if (!values.name) values.name = category.name;
@@ -181,13 +178,13 @@ function Form() {
           if (!localStorage.getItem('enteredData')) {
             localStorage.setItem('enteredData', 'initial');
           } else {
-            localStorage.setItem('enteredData', 'subsequent')
+            localStorage.setItem('enteredData', 'subsequent');
           }
 
           return saveEvent(values);
         }}
       >
-        {(formik) => (
+        { formik => (
           <form onSubmit={formik.handleSubmit}>
             <TextField
               name='name'
@@ -298,14 +295,14 @@ function Form() {
             onClick: async () => {
               showRecurrenceUpdateModal(false);
               await saveEvent(formValues.current, true);
-            },
+            }
           },
           {
             label: 'No',
             onClick: async () => {
               showRecurrenceUpdateModal(false);
               await saveEvent(formValues.current);
-            },
+            }
           }
         ]}
         showCancel={false}

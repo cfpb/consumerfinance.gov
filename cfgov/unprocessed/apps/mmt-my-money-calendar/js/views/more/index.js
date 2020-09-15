@@ -14,7 +14,7 @@ function More() {
   const history = useHistory();
   const [clearDataModalOpen, toggleClearDataModal] = useToggle(false);
 
-  const clearAllData = useCallback(async (evt) => {
+  const clearAllData = useCallback(async evt => {
     evt.preventDefault();
     await eventStore.clearAllData();
     history.push('/');
@@ -59,8 +59,8 @@ function More() {
         actions={[
           {
             label: 'Yes',
-            onClick: clearAllData,
-          },
+            onClick: clearAllData
+          }
         ]}
       />
     </section>

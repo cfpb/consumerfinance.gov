@@ -29,7 +29,7 @@ const DetailRow = ({ event, onRequestEdit, onRequestDelete, balanceIsNegative = 
         className: 'slide-list-item__button--delete',
         onClick: onRequestDelete,
         disabled: event.category === 'income.startingBalance'
-      },
+      }
     ]}
     {...props}
   >
@@ -74,7 +74,7 @@ function Details() {
     (e) => evt => {
       evt.preventDefault();
       history.push(`/calendar/add/${e.id}/edit`);
-    },
+    }
     []
   );
 
@@ -88,7 +88,7 @@ function Details() {
     .filter((x) => x.category === 'income.startingBalance')
     .map( e => formatCurrency(e.totalCents / 100));
 
-const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative', uiStore.weekHasPositiveBalance && 'positive');
+  const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative', uiStore.weekHasPositiveBalance && 'positive');
   return (
     <section className='calendar-details'>
       <header className='calendar-details__header'>
@@ -132,7 +132,7 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
             message="You're in the green this week!"
             variant='savings'
             actionLink={
-              <Link to={`/calendar/add/expense/emergencySavings/new`} className='m-notification_save-button'>
+              <Link to={'/calendar/add/expense/emergencySavings/new'} className='m-notification_save-button'>
                 Save it
               </Link>
             }
@@ -167,7 +167,7 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
         <h3 className='calendar-details__events-section-title'>Transactions</h3>
 
         <ul className='calendar-details__events-list'>
-          {events.map((e) => (
+          {events.map( e => (
             <DetailRow
               event={e}
               onRequestEdit={editEvent(e)}
@@ -194,7 +194,7 @@ const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekH
             label: 'This event and future recurrences',
             onClick: eventDeleteHandler(true),
             condition: eventRecurs
-          },
+          }
         ]}
         showCancel
       />

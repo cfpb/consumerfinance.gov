@@ -16,14 +16,14 @@ function CategoryBrowser({ match }) {
   const category = Categories.get(categoryPath);
   const subcategories = Categories.childrenOf(categoryPath);
   const pathSegments = categoryPath.split('.');
-  const parentCategoryPath = pathSegments.slice(0, pathSegments.length - 1)
+  const parentCategoryPath = pathSegments.slice(0, pathSegments.length - 1);
   const backPath = parentCategoryPath.length ? `/calendar/add/${parentCategoryPath.join('/')}` : '/calendar';
   const isIncome = categoryPath.includes('income');
   const iconClass = clsx('category-links__icon', isIncome && '-income', !isIncome && '-expense');
 
   useLogger(
     'categoryBrowser',
-    (group) => {
+    group => {
       group.debug('Category browser category path: %O', categoryPath);
       group.debug('Category object: %O', category);
       group.debug('Parent category path: %O', parentCategoryPath);
@@ -40,10 +40,10 @@ function CategoryBrowser({ match }) {
       <nav className='category-browser__tab-nav'>
         <ul className='category-browser__tab-items'>
           <li className='category-browser__tab-item income-tab'>
-            <NavLink className='category-browser__tab-link income-tab' to={`/calendar/add/income`}>Income</NavLink>
+            <NavLink className='category-browser__tab-link income-tab' to={'/calendar/add/income'}>Income</NavLink>
           </li>
           <li className='category-browser__tab-item expense-tab'>
-            <NavLink className='category-browser__tab-link expense-tab' to={`/calendar/add/expense`}>Expense</NavLink>
+            <NavLink className='category-browser__tab-link expense-tab' to={'/calendar/add/expense'}>Expense</NavLink>
           </li>
         </ul>
       </nav>

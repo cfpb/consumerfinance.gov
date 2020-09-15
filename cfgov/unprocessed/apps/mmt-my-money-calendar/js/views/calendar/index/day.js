@@ -45,7 +45,7 @@ function Day({ day, dateFormat = 'D' }) {
       (dayjs(day).startOf('week') || dayjs(day).isBetween(dayjs(day).startOf('week'), dayjs(day).endOf('week'))),
     'neg-balance':
       weekEndBal < 0 &&
-      (dayjs(day).startOf('week') || dayjs(day).isBetween(dayjs(day).startOf('week'), dayjs(day).endOf('week'))),
+      (dayjs(day).startOf('week') || dayjs(day).isBetween(dayjs(day).startOf('week'), dayjs(day).endOf('week')))
   });
 
   const symbol = eventStore.dateHasEvents(day) ? <div className='calendar__day-symbols'>&bull;</div> : null;

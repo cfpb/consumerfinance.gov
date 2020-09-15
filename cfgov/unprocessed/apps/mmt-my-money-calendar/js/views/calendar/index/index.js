@@ -73,8 +73,8 @@ function Calendar() {
       localStorage.setItem('enteredData', 'subsequent');
     }
     if (!localStorage.getItem('removeSpotlight')) {
-      localStorage.setItem('removeSpotlight', true)
-      eventStore.closeNarrativeModal()
+      localStorage.setItem('removeSpotlight', true);
+      eventStore.closeNarrativeModal();
     }
     setShowModal(!showModal);
   };
@@ -93,7 +93,7 @@ function Calendar() {
           step={narrativeStep}
         />
       }
-      {showModal && narrativeStep === 'step2' && 
+      {showModal && narrativeStep === 'step2' &&
         <NarrativeModal showModal={showModal} handleOkClick={handleToggleModal} copy={narrativeCopy.step2} step={narrativeStep} />
       }
       <header className='calendar__header'>
@@ -124,7 +124,7 @@ function Calendar() {
                 key={`week-${weekNumber}`}
                 selected={uiStore.currentWeek.week() === weekNumber}
               />
-            )),
+            ))
           ]}
         </div>
 
