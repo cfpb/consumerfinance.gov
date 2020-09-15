@@ -15,6 +15,7 @@ const NavItem = ({ href, icon, label, badge, disabled = false, canSpotlight, spo
       if (!disabled) return true;
       event.preventDefault();
       event.stopPropagation();
+      return false;
     },
     [disabled]
   );

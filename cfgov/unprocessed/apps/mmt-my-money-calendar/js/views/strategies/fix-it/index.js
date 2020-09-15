@@ -9,7 +9,7 @@ import { dayjs } from '../../../lib/calendar-helpers';
 import { Button, ButtonLink } from '../../../components/button';
 import Strategies from '../index';
 
-import { pencil, arrowLeft, ideaRound } from '../../../lib/icons';
+import { pencil, arrowLeft } from '../../../lib/icons';
 import NarrativeModal from '../../../components/narrative-notification';
 import { narrativeCopy } from '../../../lib/narrative-copy';
 
@@ -20,9 +20,7 @@ const FixItButton = ({ result }) => {
   const history = useHistory();
   const buttonAction = useCallback(
     async evt => {
-
       evt.preventDefault();
-
       history.push(href);
     },
     [result.event, href]

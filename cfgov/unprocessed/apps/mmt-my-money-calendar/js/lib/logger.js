@@ -32,7 +32,7 @@ class Logger {
     'count',
     'group',
     'groupEnd',
-    'groupCollapsed',
+    'groupCollapsed'
   ];
 
   /** The localStorage key under which a JSON object of persistent settings will be saved
