@@ -28,7 +28,7 @@ const dbPromise = idb.openDB('myMoneyCalendar', DB_VERSION, {
         eventStore.createIndex('date', 'date', { unique: false });
         eventStore.createIndex('category', 'category', { unique: false });
         logger.info('Create events object store');
-      case 1:
+      default:
         eventStore = transaction.objectStore('events');
         eventStore.createIndex('originalEventID', 'originalEventID', { unique: false });
         eventStore.createIndex('originalEventID_date', ['originalEventID', 'date'], { unique: true });
