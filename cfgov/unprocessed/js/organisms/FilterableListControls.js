@@ -159,6 +159,7 @@ function FilterableListControls( element ) {
   /**
    * Highlight invalid text fields by giving them an error class.
    * @param {Array} fields - A list of form fields.
+   * @returns {Array} An array of invalid fields.
    */
   function _highlightInvalidFields( fields ) {
     INVALID_FIELDS.forEach( field => {
@@ -175,7 +176,7 @@ function FilterableListControls( element ) {
       }
     } );
 
-    return fields;
+    return INVALID_FIELDS;
   }
 
   /**
