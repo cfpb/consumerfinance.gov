@@ -54,30 +54,26 @@ export const toJSDate = date => (date instanceof Date ? date : date.toDate());
  */
 export const dayOfYear = date => toDayJS(date).dayOfYear();
 
-/**
- * Returns the number of the specified month, zero-indexed.
+/** Returns the number of the specified month, zero-indexed.
  *
  * @param {String} monthName - The name of the current month
  */
 export const getMonthNumber = monthName => MONTH_NAMES.indexOf(monthName);
 
-/**
- * Limits the number to a valid month number, zero-indexed
+/** Limits the number to a valid month number, zero-indexed
  *
  * @param {Number} num - The month number
  * @returns {Number} A number between 0 and 11
  */
 export const limitMonthNumber = num => Math.min(Math.max(num, 0), 11);
 
-/**
- * An object containing information about a month
+/** An object containing information about a month
  * @typedef {Object} MonthInfo
  * @property {Number} firstWeekDay - The weekday number of the first day of the month
  * @property {Number} daysInMonth - The number of days in the month
  */
 
-/**
- * Returns the number of the first day of the specified date's month, and the total number of days the month has
+/** Returns the number of the first day of the specified date's month, and the total number of days the month has
  *
  * @param {Date|dayjs} date - A JS Date or dayjs instance
  * @returns {Object}
@@ -161,11 +157,11 @@ export const recurrenceRules = {
   biweekly: {
     label: 'Every 2 weeks',
     handler: (dtstart, options = {}) => new RRule({
-        freq: RRule.WEEKLY,
-        interval: 2,
-        dtstart,
-        ...options
-      })
+      freq: RRule.WEEKLY,
+      interval: 2,
+      dtstart,
+      ...options
+    })
   },
   monthly: {
     label: 'Monthly',
@@ -176,7 +172,7 @@ export const recurrenceRules = {
     handler: (dtstart, payday1 = 15, payday2 = 30) => {
       const rules = new RRuleSet();
 
-      const firstPaydayRange = [0, 1, 2].map((num) => (payday1 > 2 ? payday1 - num : payday1 + num)).sort();
+      const firstPaydayRange = [0, 1, 2].map( num => (payday1 > 2 ? payday1 - num : payday1 + num)).sort();
       const lastPaydayRange =
         payday2 > 29 ? undefined : [0, 1, 2].map( num => (payday2 > 2 ? payday2 - num : payday2 + num)).sort();
 

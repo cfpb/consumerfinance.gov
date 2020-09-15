@@ -76,8 +76,7 @@ export function SlideListItem({
 
       // If user has dragged past a certain threshold, snap actions open. Otherwise return to closed
       if (last && !isOpen.current) mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5 ? close(vx) : open({ canceled });
-      else if (last && isOpen.current)
-        mx > -(slideWidth.current - slideWidth.current * (1 - threshold)) ? close(vx) : open({ canceled });
+      else if (last && isOpen.current) mx > -(slideWidth.current - slideWidth.current * (1 - threshold)) ? close(vx) : open({ canceled });
       else set({ x: mx, immediate: false, config: springConfig });
     },
     { filterTaps: true }

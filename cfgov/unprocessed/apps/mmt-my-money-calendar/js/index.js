@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 async function loadSeeders() {
-  window.seed = await import(/* webpackChunkName: "seeds.js" */ './seed-data.js');
+  window.seed = await import('./seed-data.js');
 }
 
 window.developer = {

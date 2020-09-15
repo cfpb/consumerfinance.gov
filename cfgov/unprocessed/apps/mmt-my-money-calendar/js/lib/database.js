@@ -38,7 +38,7 @@ const dbPromise = idb.openDB('myMoneyCalendar', DB_VERSION, {
         eventStore.createIndex('totalCents', 'totalCents', { unique: false });
         eventStore.createIndex('recurs', 'recurs', { unique: false });
     }
-  },
+  }
 });
 
 export default dbPromise;

@@ -114,7 +114,7 @@ function seedCashFlowEvents() {
     }
   ];
 
-  return Promise.all(events.map((event) => {
+  return Promise.all(events.map( event => {
     const cfe = new CashFlowEvent(event);
     console.log('Add event: %O', cfe.asObject);
     return cfe.save();
