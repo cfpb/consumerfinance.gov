@@ -15,14 +15,14 @@ function Summary() {
   const bem = useBEM('wizard');
   const history = useHistory();
   const saveAndRedirect = useCallback(
-    async (evt) => {
+    async evt => {
       evt.preventDefault();
 
       await eventStore.saveEvent({
         name: 'Starting Balance',
         category: 'income.startingBalance',
         totalCents: wizardStore.totalStartingFundsCents,
-        date: new Date(),
+        date: new Date()
       });
 
       wizardStore.reset();

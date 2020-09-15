@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 
-export const useClickHandler = (cb, deps) => useCallback((evt) => {
+export const useClickHandler = (cb, deps) => useCallback( evt => {
   evt.preventDefault();
   cb(evt);
 }, deps);
 
-export const useClickConfirm = (message, cb, deps, confirm = window.confirm) => useClickHandler( evt  => {
+export const useClickConfirm = (message, cb, deps, confirm = window.confirm) => useClickHandler( evt => {
   if (!confirm(message)) return;
   cb(evt);
 }, deps);

@@ -2,8 +2,7 @@
 
 import { useEffect } from 'react';
 
-/**
- * An object wrapping the Console API methods
+/** An object wrapping the Console API methods
  * @typedef {Object} ConsoleWrapper
  * @property {Function} debug
  * @property {Function} log
@@ -19,8 +18,7 @@ import { useEffect } from 'react';
  */
 
 class Logger {
-  /**
-   * The methods that will be present in the Console API wrapper object returned by addGroup
+  /** The methods that will be present in the Console API wrapper object returned by addGroup
    * @type {string[]}
    */
   static wrappedMethods = [
@@ -37,8 +35,7 @@ class Logger {
     'groupCollapsed',
   ];
 
-  /**
-   * The localStorage key under which a JSON object of persistent settings will be saved
+  /** The localStorage key under which a JSON object of persistent settings will be saved
    * @type {string}
    */
   static storageKey = 'mmtLogger';
@@ -47,8 +44,7 @@ class Logger {
     active: [],
   };
 
-  /**
-   * An array of background/foreground hex string pairs used in color coding group messages
+  /** An array of background/foreground hex string pairs used in color coding group messages
    * @type {Array<string[]>}
    */
   colors = [
@@ -77,8 +73,7 @@ class Logger {
 
   usedColors = [];
 
-  /**
-   * Computed property returning either localStorage or an ephemeral object in memory if
+  /** Computed property returning either localStorage or an ephemeral object in memory if
    * localStorage is not available (e.g. in incognito mode)
    * @type {Object}
    */
@@ -98,8 +93,8 @@ class Logger {
     }
   }
 
-  /**
-   * Configuration object, auto loaded from localStorage
+  
+  /** Configuration object, auto loaded from localStorage
    * @type {Object}
    */
   get config() {
@@ -109,24 +104,24 @@ class Logger {
     return this._config;
   }
 
-  /**
-   * Setter that automatically saves config object to localStorage
+  
+  /** Setter that automatically saves config object to localStorage
    */
   set config(obj) {
     this.storage[this.constructor.storageKey] = JSON.stringify(obj);
     this._config = obj;
   }
 
-  /**
-   * An array of registered group names
+  
+  /** An array of registered group names
    * @type {string[]}
    */
   get groupNames() {
     return [...this.groups.keys()];
   }
 
-  /**
-   * An array of currently enabled groups
+  
+  /** An array of currently enabled groups
    * @type {string[]}
    */
   get activeGroups() {
@@ -142,8 +137,8 @@ class Logger {
     if (!this.storage[storageKey]) this.storage[storageKey] = JSON.stringify(defaults);
   }
 
-  /**
-   * Get a random color pair
+  
+  /** Get a random color pair
    *
    * @returns {string[]}
    */
@@ -167,8 +162,8 @@ class Logger {
     return this.unusedColorPair();
   }
 
-  /**
-   * Load and parse JSON configuration from localStorage
+  
+  /** Load and parse JSON configuration from localStorage
    *
    * @returns {Object}
    */
@@ -178,8 +173,8 @@ class Logger {
     return parsed;
   }
 
-  /**
-   * Updates runtime config and persists it to localStorage
+  
+  /** Updates runtime config and persists it to localStorage
    *
    * @param {Object} params New configuration parameters
    * @returns {undefined}
@@ -189,8 +184,8 @@ class Logger {
     this._info('Logger config updated: %O', this.config);
   }
 
-  /**
-   * Registers a new message group and returns an object of wrapped console methods.
+  
+  /** Registers a new message group and returns an object of wrapped console methods.
    *
    * @param {string} name The name of the new group
    * @returns {ConsoleWrapper}
@@ -234,8 +229,8 @@ class Logger {
     return group;
   }
 
-  /**
-   * Makes messages from specified groups print to console
+  
+  /** Makes messages from specified groups print to console
    *
    * @param  {...string} groupNames Names of groups to enable
    */
@@ -258,8 +253,8 @@ class Logger {
     }
   }
 
-  /**
-   * Hides messages from specified groups and prevents them from printing to console.
+  
+  /** Hides messages from specified groups and prevents them from printing to console.
    *
    * @param  {...any} groupNames Names of groups to disable
    */
@@ -279,8 +274,8 @@ class Logger {
     }
   }
 
-  /**
-   * Enables all registered groups
+  
+  /** Enables all registered groups
    *
    * @returns {undefined}
    */
@@ -291,8 +286,8 @@ class Logger {
     this._info('Enabled all groups (%O)', this.groupNames);
   }
 
-  /**
-   * Disables all registered groups
+  
+  /** Disables all registered groups
    *
    * @returns {undefined}
    */

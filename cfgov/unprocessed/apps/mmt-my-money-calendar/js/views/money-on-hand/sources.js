@@ -51,7 +51,7 @@ function Sources() {
             history.push(`/money-on-hand/balances/${values.fundingSources[0]}`);
           }}
         >
-          {(formik) => (
+          { formik => (
             <form onSubmit={formik.handleSubmit}>
               <p className='checkbox-group-label'>Where do you have money?</p>
 
@@ -69,7 +69,7 @@ function Sources() {
                           id={`fundingSources-opt-${idx}`}
                           value={key}
                           checked={formik.values.fundingSources.includes(key)}
-                          onChange={(e) => {
+                          onChange={ e => {
                             if (e.target.checked) {
                               arrayHelpers.push(key);
                             } else {
