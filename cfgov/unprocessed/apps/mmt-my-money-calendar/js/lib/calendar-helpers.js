@@ -42,7 +42,7 @@ export function numberWithOrdinal(num) {
 export const toDayJS = date => dayjs(date);
 
 
- /** Ensures that the argument is returned as a native JS Date object
+/** Ensures that the argument is returned as a native JS Date object
  *
  * @param {Date|dayjs} date - A JS Date or dayjs object
  * @returns {Date} a js date
