@@ -98,6 +98,16 @@ import { stateToHTML } from 'draft-js-export-html';
           }
 
           const cellValue = window.DraftJS.convertToRaw( contentState );
+          if(cellValue.entityMap){
+            for(let entity in cellValue.entityMap){
+              if(cellValue.entityMap[entity] && cellValue.entityMap[entity].data){
+                cellValue.entityMap[entity].data.url = cellValue.entityMap[entity].data.href
+                if(cellValue.entityMap[entity].data.url.startsWith("/documents/")){
+                  cellValue.entityMap[entity].type = "DOCUMENT"
+                }
+              }
+            }
+          }
           const cellProperties = this.cellProperties;
           const instance = this.instance;
 
