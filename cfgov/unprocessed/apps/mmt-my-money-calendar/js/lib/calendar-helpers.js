@@ -41,9 +41,11 @@ export function numberWithOrdinal(num) {
 
 export const toDayJS = date => dayjs(date);
 
-/* * Ensures that the argument is returned as a native JS Date object
+
+ /** Ensures that the argument is returned as a native JS Date object
  *
  * @param {Date|dayjs} date - A JS Date or dayjs object
+ * @returns {Date} a js date
  */
 export const toJSDate = date => (date instanceof Date ? date : date.toDate());
 
@@ -57,6 +59,7 @@ export const dayOfYear = date => toDayJS(date).dayOfYear();
 /** Returns the number of the specified month, zero-indexed.
  *
  * @param {String} monthName - The name of the current month
+ * @returns {Number} an index of a month
  */
 export const getMonthNumber = monthName => MONTH_NAMES.indexOf(monthName);
 
@@ -76,7 +79,7 @@ export const limitMonthNumber = num => Math.min(Math.max(num, 0), 11);
 /** Returns the number of the first day of the specified date's month, and the total number of days the month has
  *
  * @param {Date|dayjs} date - A JS Date or dayjs instance
- * @returns {Object}
+ * @returns {Object} returns first day of the month and total number of days of the month
  */
 export function getMonthInfo(date = dayjs()) {
   date = toDayJS(date);
@@ -174,7 +177,7 @@ export const recurrenceRules = {
 
       const firstPaydayRange = [0, 1, 2].map( num => (payday1 > 2 ? payday1 - num : payday1 + num)).sort();
       const lastPaydayRange =
-        payday2 > 29 ? undefined : [0, 1, 2].map( num => (payday2 > 2 ? payday2 - num : payday2 + num)).sort();
+        payday2 > 29 ? null : [0, 1, 2].map( num => (payday2 > 2 ? payday2 - num : payday2 + num)).sort();
 
       // The last business day before the first payday provided, not considering holidays:
       rules.rrule(

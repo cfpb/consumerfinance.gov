@@ -13,7 +13,6 @@ const NavItem = ({ href, icon, label, badge, disabled = false, canSpotlight, spo
   const clickHandler = useCallback(
     event => {
       if (!disabled) return true;
-
       event.preventDefault();
       event.stopPropagation();
     },
