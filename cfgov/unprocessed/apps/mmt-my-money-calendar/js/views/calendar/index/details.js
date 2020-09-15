@@ -74,7 +74,7 @@ function Details() {
     (e) => evt => {
       evt.preventDefault();
       history.push(`/calendar/add/${e.id}/edit`);
-    }
+    },
     []
   );
 
