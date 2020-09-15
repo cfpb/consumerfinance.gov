@@ -44,10 +44,7 @@ function Form() {
   );
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
 
-  const recurrenceOptions = Object.entries(
-    category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
-  ).map(([value, { label }]) => ({ label, value }));
-  
+   
   useEffect(() => {
     handleModalSession();
   }, []);
@@ -61,6 +58,11 @@ function Form() {
       setShowModal(false);
     }
   };
+
+  const recurrenceOptions = Object.entries(
+    category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
+  ).map(([value, { label }]) => ({ label, value }));
+ 
 
   // Toggle bottom nav bar when inputs are focused, to prevent it from obscuring text on mobile screens:
   const focusHandler = useCallback(
@@ -175,7 +177,6 @@ function Form() {
             formValues.current = values;
             return showRecurrenceUpdateModal(true);
           }
-
           if (!localStorage.getItem('enteredData')) {
             localStorage.setItem('enteredData', 'initial');
           } else if (localStorage.getItem('enteredData')){
