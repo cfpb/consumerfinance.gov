@@ -30,7 +30,7 @@ export const MONTH_NAMES = [
   'September',
   'October',
   'November',
-  'December',
+  'December'
 ];
 
 export function numberWithOrdinal(num) {
@@ -41,15 +41,13 @@ export function numberWithOrdinal(num) {
 
 export const toDayJS = date => dayjs(date);
 
-/**
- * Ensures that the argument is returned as a native JS Date object
+/* * Ensures that the argument is returned as a native JS Date object
  *
  * @param {Date|dayjs} date - A JS Date or dayjs object
  */
 export const toJSDate = date => (date instanceof Date ? date : date.toDate());
 
-/**
- * Get the ordinal day of the year for a date, as an integer
+/** Get the ordinal day of the year for a date, as an integer
  *
  * @param {Date|dayjs} date - A Date or dayjs instance
  * @returns {Number} an integer between 1 and 365
@@ -135,9 +133,8 @@ export function getWeekRows(date) {
       weekNumber,
       days: Array(7)
         .fill(0)
-        .map((n, idx) => currentWeekStart.add(n + idx, 'days')),
+        .map((n, idx) => currentWeekStart.add(n + idx, 'days'))
     });
-
     currentWeekStart = currentWeekStart.add(1, 'week');
   }
 
@@ -153,7 +150,7 @@ export const DAY_OPTIONS = {
   Wednesday: RRule.WE,
   Thursday: RRule.TH,
   Friday: RRule.FR,
-  Saturday: RRule.S,
+  Saturday: RRule.S
 };
 
 export const recurrenceRules = {
@@ -163,8 +160,7 @@ export const recurrenceRules = {
   },
   biweekly: {
     label: 'Every 2 weeks',
-    handler: (dtstart, options = {}) =>
-      new RRule({
+    handler: (dtstart, options = {}) => new RRule({
         freq: RRule.WEEKLY,
         interval: 2,
         dtstart,
@@ -182,7 +178,7 @@ export const recurrenceRules = {
 
       const firstPaydayRange = [0, 1, 2].map((num) => (payday1 > 2 ? payday1 - num : payday1 + num)).sort();
       const lastPaydayRange =
-        payday2 > 29 ? undefined : [0, 1, 2].map((num) => (payday2 > 2 ? payday2 - num : payday2 + num)).sort();
+        payday2 > 29 ? undefined : [0, 1, 2].map( num => (payday2 > 2 ? payday2 - num : payday2 + num)).sort();
 
       // The last business day before the first payday provided, not considering holidays:
       rules.rrule(

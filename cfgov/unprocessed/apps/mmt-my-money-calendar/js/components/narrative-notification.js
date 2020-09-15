@@ -23,7 +23,7 @@ export default function NarrativeModal({showModal, handleOkClick, copy, step, ..
       <div className='narrative-modal'>
         <h4>{copy.headline}</h4>
         <p>{copy.body}</p>
-        <button style={{float: 'right'}} onClick={(e) => handleOkClick(e)}>OK</button>
+        <button style={{float: 'right'}} onClick={ e => handleOkClick(e)}>OK</button>
       </div>
     </Modal>
   );

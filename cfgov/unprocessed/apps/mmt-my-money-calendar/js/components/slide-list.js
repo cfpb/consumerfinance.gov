@@ -32,10 +32,10 @@ export function SlideListItem({
     return clamp(mapped, 0, 1) || 0.3;
   });
   const bgStyle = {
-    opacity,
+    opacity
   };
   const fgStyle = {
-    transform,
+    transform
   };
   const springConfig = { ...config.gentle, tension: 200 };
 
@@ -75,11 +75,9 @@ export function SlideListItem({
       else if (isOpen.current && mx > 0) cancel();
 
       // If user has dragged past a certain threshold, snap actions open. Otherwise return to closed
-      if (last && !isOpen.current)
-        mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5 ? close(vx) : open({ canceled });
+      if (last && !isOpen.current) mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5 ? close(vx) : open({ canceled });
       else if (last && isOpen.current)
         mx > -(slideWidth.current - slideWidth.current * (1 - threshold)) ? close(vx) : open({ canceled });
-      // when user keeps dragging, move according to touch or cursor position:
       else set({ x: mx, immediate: false, config: springConfig });
     },
     { filterTaps: true }
