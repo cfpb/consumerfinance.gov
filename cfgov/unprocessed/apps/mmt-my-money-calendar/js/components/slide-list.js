@@ -112,10 +112,7 @@ export function SlideListItem({
 
     window.addEventListener('resize', setSlideWidth);
     setSlideWidth();
-
     window.removeEventListener('resize', setSlideWidth);
-
-    return;
   }, [background.current]);
 
   return (

@@ -47,6 +47,11 @@ function Form() {
   const recurrenceOptions = Object.entries(
     category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
   ).map(([value, { label }]) => ({ label, value }));
+  
+  useEffect(() => {
+    handleModalSession();
+  }, []);
+
   const handleModalSession = () => {
     let snapVisit = localStorage.getItem('snapVisit');
 
@@ -56,10 +61,6 @@ function Form() {
       setShowModal(false);
     }
   };
-
-  useEffect(() => {
-    handleModalSession();
-  }, []);
 
   // Toggle bottom nav bar when inputs are focused, to prevent it from obscuring text on mobile screens:
   const focusHandler = useCallback(
