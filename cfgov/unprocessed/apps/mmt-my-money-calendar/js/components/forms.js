@@ -8,16 +8,14 @@ import { closeRound } from '../lib/icons';
 export const Checkbox = ({ id, name, onChange, checked, label, value = '1', castToBoolean = true, largeTarget = false, ...props }) => {
   const changeHandler = useCallback(
     evt => {
-      if (castToBoolean)
-        evt.target.value = evt.target.checked;
-
+      if (castToBoolean) evt.target.value = evt.target.checked;
       onChange(evt);
     },
     [onChange, castToBoolean]
   );
 
   const classes = clsx('m-form-field', 'm-form-field__checkbox', {
-    'm-form-field__lg-target': largeTarget,
+    'm-form-field__lg-target': largeTarget
   });
 
   return (
@@ -85,7 +83,7 @@ export const DateField = ({ onChange, value, ...props }) => (
 
 export const CurrencyField = ({ id, name, onChange, onBlur, label, value, ...props }) => {
   const handleChange = useCallback(
-    (evt) => {
+    evt => {
       evt.target.value = toCents(evt.target.value);
       onChange(evt);
     },
@@ -118,7 +116,7 @@ export const RadioButton = ({
   ...props
 }) => {
   const classes = clsx('m-form-field', 'm-form-field__radio', {
-    'm-form-field__lg-target': largeTarget,
+    'm-form-field__lg-target': largeTarget
   });
 
   return (
@@ -165,7 +163,7 @@ export const SelectField = ({
       <option value={optVal} key={optVal}>
         {optLabel}
       </option>
-    )),
+    ))
   ];
 
   return (
