@@ -32,14 +32,14 @@ function Form() {
   );
   const paydaySchema = useMemo(
     () => yup.number().when(['recurs', 'recurrenceType'], {
-        is: (recurs, recurrenceType) => recurs && recurrenceType === 'semimonthly',
-        then: yup
-          .number()
-          .integer()
-          .required('Day of month is required for semimonthly recurrences')
-          .cast(),
-        otherwise: yup.number()
-      }),
+      is: (recurs, recurrenceType) => recurs && recurrenceType === 'semimonthly',
+      then: yup
+        .number()
+        .integer()
+        .required('Day of month is required for semimonthly recurrences')
+        .cast(),
+      otherwise: yup.number()
+    }),
     []
   );
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
@@ -127,11 +127,11 @@ function Form() {
 
       <h2 className='add-event__title'>{category.name}</h2>
       {category.name === 'Job' ? (
-          <p className='add-event__intro'> Enter your paycheck information.</p>
+        <p className='add-event__intro'> Enter your paycheck information.</p>
       ) : (
         <p className='add-event__intro'>Enter the details of your {handleCatName(category.name)} {eventType}.</p>
-       )}
-        {!!category.description && <p className='add-event__description'>{category.description}</p>}
+      )}
+      {!!category.description && <p className='add-event__description'>{category.description}</p>}
 
       <Formik
         initialValues={event.toFormValues()}

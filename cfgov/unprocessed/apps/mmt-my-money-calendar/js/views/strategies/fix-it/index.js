@@ -86,11 +86,11 @@ function FixItStrategies() {
   useScrollToTop();
 
   const events = eventStore.getPositiveEventsForWeek(uiStore.currentWeek) || [];
-  let positiveFilter = events.filter((event) => event.total > 0);
-  let initialBalance = positiveFilter.find((event) => event.category === 'income.startingBalance');
-  let positiveEvents = positiveFilter.filter((event) => (event.category !== 'income.startingBalance' && event.category !== 'income.benefits.snap'));
+  let positiveFilter = events.filter( event => event.total > 0);
+  let initialBalance = positiveFilter.find( event => event.category === 'income.startingBalance');
+  let positiveEvents = positiveFilter.filter( event => (event.category !== 'income.startingBalance' && event.category !== 'income.benefits.snap'));
   let weekIncome = positiveEvents.reduce((acc, event) => acc + event.total, 0);
-  let negativeFilter = events.filter((event) => event.total < 0);
+  let negativeFilter = events.filter( event => event.total < 0);
   let weekExpenses = negativeFilter.reduce((acc, event) => acc + event.total, 0);
   return (
     <section className='strategies'>

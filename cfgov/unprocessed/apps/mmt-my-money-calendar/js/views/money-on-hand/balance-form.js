@@ -36,9 +36,9 @@ function BalanceForm() {
 
   const initialValues = useMemo(
     () => wizardStore.fundingSources.reduce((values, source) => {
-        values[source] = wizardStore.fundingSourceBalances[source] || 0;
-        return values;
-      }, {}),
+      values[source] = wizardStore.fundingSourceBalances[source] || 0;
+      return values;
+    }, {}),
     [wizardStore.fundingSources]
   );
 

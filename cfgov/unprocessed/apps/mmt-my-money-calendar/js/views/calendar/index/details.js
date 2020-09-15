@@ -49,7 +49,7 @@ function Details() {
   const [modalOpen, toggleModal] = useToggle(false);
 
   const confirmDelete = useCallback(
-    (event) => e => {
+    event => e => {
       e.preventDefault();
       e.stopPropagation();
       setSelectedEvent(event);
@@ -71,7 +71,7 @@ function Details() {
   const eventRecurs = selectedEvent && selectedEvent.recurs;
 
   const editEvent = useCallback(
-    (e) => evt => {
+    e => evt => {
       evt.preventDefault();
       history.push(`/calendar/add/${e.id}/edit`);
     },
@@ -85,7 +85,7 @@ function Details() {
 
   const events = eventStore.getEventsForWeek(uiStore.currentWeek) || [];
   const startBal = events
-    .filter((x) => x.category === 'income.startingBalance')
+    .filter( x => x.category === 'income.startingBalance')
     .map( e => formatCurrency(e.totalCents / 100));
 
   const endBalanceClasses = clsx('calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative', uiStore.weekHasPositiveBalance && 'positive');
