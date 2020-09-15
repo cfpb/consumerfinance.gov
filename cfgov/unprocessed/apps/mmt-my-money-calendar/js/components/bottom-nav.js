@@ -47,13 +47,13 @@ function BottomNav() {
       <nav className='bottom-nav__nav'>
         <ul className='bottom-nav__items'>
           <NavItem href='/calendar' icon={calendar} exact label='Calendar' disabled={!hasStartingBalance || uiStore.hasSpotlight} />
-          <NavItem 
+          <NavItem
             id='add'
-            href='/calendar/add/income' 
-            icon={add} 
-            label='Income/Expense' 
-            disabled={!hasStartingBalance || uiStore.hasSpotlight} 
-            canSpotlight={uiStore.hasSpotlight} 
+            href='/calendar/add/income'
+            icon={add}
+            label='Income/Expense'
+            disabled={!hasStartingBalance || uiStore.hasSpotlight}
+            canSpotlight={uiStore.hasSpotlight}
             spotlight={addSpotlight}
           />
           <NavItem
