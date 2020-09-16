@@ -38,12 +38,13 @@ function Form() {
         .required('Day of month is required for semimonthly recurrences')
         .cast(),
       otherwise: yup.number()
-      }),
+    }),
     []
   );
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
 
   useEffect(() => {
+    let categoryPath = categories.replace(/\//g, '.');
     let category = Categories.get(categoryPath);
     const handleModalSession = () => {
       let snapVisit = localStorage.getItem('snapVisit');
@@ -83,7 +84,7 @@ function Form() {
 
   let { id, categories = '' } = useParams();
   const isNew = !id;
-  let categoryPath = categories.replace(/\//g, '.');
+  /* let categoryPath = categories.replace(/\//g, '.'); */
   let pathSegments = categoryPath.split('.');
   /* let category = Categories.get(categoryPath); */
   let eventType = pathSegments[0];
