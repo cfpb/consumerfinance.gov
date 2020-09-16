@@ -141,7 +141,7 @@ export function getWeekRows(date) {
   }
 
   /* while (
-    currentWeekStart.startOf('week').isSame(date, 'month') ||
+    currentWeekStart.startOf('week').isSame(date, 'month') || curr
     currentWeekStart.endOf('week').isSame(date, 'month')
   ) {
     const weekNumber = currentWeekStart.week();
