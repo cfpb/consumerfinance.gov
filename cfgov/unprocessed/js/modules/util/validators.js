@@ -24,7 +24,7 @@ function date( field, currentStatus ) {
 
   /* TODO: Merge this into the regex checks.
            This converts numbers from any other format to MM/DD/YYYY */
-  if ( !Number.isNaN( field.valueAsNumber ) ) {
+  if ( !isNaN( field.valueAsNumber ) ) {
     const date = new Date( field.valueAsNumber );
     valueToEval = `${ date.getUTCMonth() + 1 }/${ date.getUTCDate() }/${ date.getUTCFullYear() }`;
   }
