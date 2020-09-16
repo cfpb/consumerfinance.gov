@@ -84,9 +84,9 @@ function Form() {
 
   let { id, categories = '' } = useParams();
   const isNew = !id;
-  /* let categoryPath = categories.replace(/\//g, '.'); */
+  let categoryPath = categories.replace(/\//g, '.');
   let pathSegments = categoryPath.split('.');
-  /* let category = Categories.get(categoryPath); */
+  let category = Categories.get(categoryPath);
   let eventType = pathSegments[0];
   // Should eventually return a loading spinner here:
   if (id && !eventStore.eventsLoaded) return null;
