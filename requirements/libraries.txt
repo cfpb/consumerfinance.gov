@@ -46,7 +46,7 @@ wagtail-treemodeladmin==1.2.1
 wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
-https://github.com/cfpb/elasticsearch-dsl-py.git
+git+https://github.com/cfpb/elasticsearch-dsl-py.git
 git+https://github.com/cfpb/django-college-costs-comparison.git@remove-haystack-dependency
 git+https://github.com/cfpb/django-elasticsearch-dsl.git
 git+https://github.com/cfpb/django-haystack.git@import-elasticsearch2
