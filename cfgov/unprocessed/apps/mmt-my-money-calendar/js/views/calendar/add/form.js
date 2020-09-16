@@ -44,6 +44,8 @@ function Form() {
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
 
   useEffect(() => {
+    let { id, categories = '' } = useParams();
+    const isNew = !id;
     let categoryPath = categories.replace(/\//g, '.');
     let category = Categories.get(categoryPath);
     const handleModalSession = () => {
