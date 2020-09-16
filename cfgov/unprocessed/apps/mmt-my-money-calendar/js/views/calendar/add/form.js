@@ -32,29 +32,28 @@ function Form() {
   );
   const paydaySchema = useMemo(
     () => yup.number().when(['recurs', 'recurrenceType'], {is: (recurs, recurrenceType) => recurs && recurrenceType === 'semimonthly',
-        then: yup
-          .number()
-          .integer()
-          .required('Day of month is required for semimonthly recurrences')
-          .cast(),
-        otherwise: yup.number()
+      then: yup
+        .number()
+        .integer()
+        .required('Day of month is required for semimonthly recurrences')
+        .cast(),
+      otherwise: yup.number()
       }),
     []
   );
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
 
   useEffect(() => {
-
+    let category = Categories.get(categoryPath);
     const handleModalSession = () => {
       let snapVisit = localStorage.getItem('snapVisit');
-  
       if (category.name === 'SNAP' && !snapVisit) {
         setShowModal(true);
       } else {
         setShowModal(false);
       }
     };
-    
+
     handleModalSession();
   }, []);
 
@@ -86,7 +85,7 @@ function Form() {
   const isNew = !id;
   let categoryPath = categories.replace(/\//g, '.');
   let pathSegments = categoryPath.split('.');
-  let category = Categories.get(categoryPath);
+  /* let category = Categories.get(categoryPath); */
   let eventType = pathSegments[0];
   // Should eventually return a loading spinner here:
   if (id && !eventStore.eventsLoaded) return null;
