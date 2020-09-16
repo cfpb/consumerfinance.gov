@@ -45,7 +45,6 @@ function Form() {
   let { id, categories = '' } = useParams();
 
   useEffect(() => {
-    
     const isNew = !id;
     let categoryPath = categories.replace(/\//g, '.');
     let category = Categories.get(categoryPath);
