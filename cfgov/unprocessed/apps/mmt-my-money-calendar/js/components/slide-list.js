@@ -49,11 +49,6 @@ export function SlideListItem({
     isOpen.current = false;
   };
 
-  /* const setDebounceDelay = (delay = 100) => {
-    debounced.current = true;
-    setTimeout(() => (debounced.current = false), delay);
-  }; */
-
   const bind = useDrag(
     ({ first, last, vxvy: [vx], movement: [mx], cancel, canceled, tap, down }) => {
       if (first) isDragging.current = true;
@@ -65,15 +60,6 @@ export function SlideListItem({
       } else if (last && tap && isOpen.current) {
         return close();
       }
-    /*  if (last && tap && !isOpen.current) {
-        if (debounced.current) return;
-        setDebounceDelay();
-        return open({ canceled: true });
-    } else if (last && tap && isOpen.current) {
-        if (debounced.current) return;
-        setDebounceDelay();
-        return close();
-    }  */
 
       // If user drags past slideWidth multiplied by props.threshold, cancel animation and set state to open
       if (!isOpen.current && mx < -(slideWidth.current * (1 + threshold))) cancel();
@@ -81,14 +67,14 @@ export function SlideListItem({
 
       // If user has dragged past a certain threshold, snap actions open. Otherwise return to closed
       if (last && !isOpen.current) {
-        if (mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5){
-          close(vx)
+        if (mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5) {
+          close(vx);
         } else {
           open({ canceled });
-        };    
+        };
       } else if (last && isOpen.current) {
-        if (mx > -(slideWidth.current - slideWidth.current * (1 - threshold))){
-          close(vx)
+        if (mx > -(slideWidth.current - slideWidth.current * (1 - threshold))) {
+          close(vx);
         } else {
           open({ canceled });
         }
@@ -98,24 +84,6 @@ export function SlideListItem({
     },
     { filterTaps: true }
   );
-
-  /* useLayoutEffect(() => {
-    if (!background.current) return;
-
-    const setSlideWidth = () => {
-      slideWidth.current = Array.from(background.current.childNodes).reduce(
-        (width, node) => width + node.offsetWidth,
-        0
-      );
-    };
-
-    window.addEventListener('resize', setSlideWidth);
-    setSlideWidth();
-
-    return () => {
-      window.removeEventListener('resize', setSlideWidth);
-    };
-  }, [background.current]); */
 
   useLayoutEffect(() => {
     if (!background.current) return;
