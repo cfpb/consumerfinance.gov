@@ -64,8 +64,7 @@ export function SlideListItem({
         return open({ canceled: true });
       } else if (last && tap && isOpen.current) {
         return close();
-      } 
-     
+      }
      /*  if (last && tap && !isOpen.current) {
         if (debounced.current) return;
         setDebounceDelay();

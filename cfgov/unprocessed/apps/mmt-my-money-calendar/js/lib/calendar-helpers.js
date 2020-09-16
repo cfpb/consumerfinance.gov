@@ -121,7 +121,7 @@ export function getWeekRows(date) {
   }
 
   /* let currentWeekStart; */
-  let currentWeekStart = date.startOf('week'); 
+  let currentWeekStart = date.startOf('week');
 
   if (currentWeekStart) {
     while (
@@ -129,7 +129,6 @@ export function getWeekRows(date) {
       currentWeekStart.endOf('week').isSame(date, 'month')
     ) {
       const weekNumber = currentWeekStart.week();
-  
       rows.push({
         weekNumber,
         days: Array(7)
@@ -137,7 +136,7 @@ export function getWeekRows(date) {
           .map((n, idx) => currentWeekStart.add(n + idx, 'days'))
       });
       currentWeekStart = currentWeekStart.add(1, 'week');
-    };
+    }
   }
 
   /* while (
@@ -155,8 +154,8 @@ export function getWeekRows(date) {
     currentWeekStart = currentWeekStart.add(1, 'week');
   }
 */
-  return rows; 
-} 
+  return rows;
+}
 
 export const WEEKDAYS = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR];
 
@@ -221,4 +220,4 @@ export const recurrenceRules = {
       return rules;
     }
   }
-}
+};
