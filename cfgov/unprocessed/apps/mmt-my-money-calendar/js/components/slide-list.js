@@ -81,6 +81,7 @@ export function SlideListItem({
       } else {
         set({ x: mx, immediate: false, config: springConfig });
       }
+      return;
     },
     { filterTaps: true }
   );
