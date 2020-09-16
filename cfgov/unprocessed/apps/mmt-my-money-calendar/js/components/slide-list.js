@@ -49,10 +49,10 @@ export function SlideListItem({
     isOpen.current = false;
   };
 
-  const setDebounceDelay = (delay = 100) => {
+  /* const setDebounceDelay = (delay = 100) => {
     debounced.current = true;
     setTimeout(() => (debounced.current = false), delay);
-  };
+  }; */
 
   const bind = useDrag(
     ({ first, last, vxvy: [vx], movement: [mx], cancel, canceled, tap, down }) => {
@@ -61,6 +61,12 @@ export function SlideListItem({
 
       // Handle isolated tap and click events
       if (last && tap && !isOpen.current) {
+        return open({ canceled: true });
+      } else if (last && tap && isOpen.current) {
+        return close();
+      } 
+     
+     /*  if (last && tap && !isOpen.current) {
         if (debounced.current) return;
         setDebounceDelay();
         return open({ canceled: true });
@@ -68,7 +74,7 @@ export function SlideListItem({
         if (debounced.current) return;
         setDebounceDelay();
         return close();
-      }
+      }  */
 
       // If user drags past slideWidth multiplied by props.threshold, cancel animation and set state to open
       if (!isOpen.current && mx < -(slideWidth.current * (1 + threshold))) cancel();
