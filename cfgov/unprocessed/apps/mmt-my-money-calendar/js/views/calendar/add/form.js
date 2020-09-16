@@ -31,8 +31,7 @@ function Form() {
     []
   );
   const paydaySchema = useMemo(
-    () =>
-      yup.number().when(['recurs', 'recurrenceType'], {is: (recurs, recurrenceType) => recurs && recurrenceType === 'semimonthly',
+    () => yup.number().when(['recurs', 'recurrenceType'], {is: (recurs, recurrenceType) => recurs && recurrenceType === 'semimonthly',
         then: yup
           .number()
           .integer()
@@ -45,6 +44,17 @@ function Form() {
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
 
   useEffect(() => {
+
+    const handleModalSession = () => {
+      let snapVisit = localStorage.getItem('snapVisit');
+  
+      if (category.name === 'SNAP' && !snapVisit) {
+        setShowModal(true);
+      } else {
+        setShowModal(false);
+      }
+    };
+    
     handleModalSession();
   }, []);
 
@@ -90,7 +100,7 @@ function Form() {
       dateTime: uiStore.selectedDate
     });
 
- if (id && event) {
+  if (id && event) {
     categoryPath = event.category;
     category = Categories.get(categoryPath);
     pathSegments = categoryPath.split('.');
@@ -102,7 +112,7 @@ function Form() {
     category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
   ).map(([value, { label }]) => ({ label, value }));
 
-  const handleModalSession = () => {
+  /* const handleModalSession = () => {
     let snapVisit = localStorage.getItem('snapVisit');
 
     if (category.name === 'SNAP' && !snapVisit) {
@@ -110,7 +120,7 @@ function Form() {
     } else {
       setShowModal(false);
     }
-  };
+  }; */
 
   const handleToggleModal = event => {
     event.preventDefault();
