@@ -120,10 +120,10 @@ export function getWeekRows(date) {
     numWeeks += 1;
   }
 
-  let currentWeekStart;
-  /* let currentWeekStart = date.startOf('week'); */
+  /* let currentWeekStart; */
+  let currentWeekStart = date.startOf('week'); 
 
-  if ( currentWeekStart = date.startOf('week')) {
+  if (currentWeekStart) {
     while (
       currentWeekStart.startOf('week').isSame(date, 'month') ||
       currentWeekStart.endOf('week').isSame(date, 'month')
