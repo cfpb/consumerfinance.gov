@@ -59,7 +59,7 @@ function Form() {
     cb => evt => {
       uiStore.toggleBottomNav(true);
       cb(evt);
-    ,
+    },
     [uiStore]
   );
   const saveEvent = useCallback(async (values, updateRecurrences = false) => {
