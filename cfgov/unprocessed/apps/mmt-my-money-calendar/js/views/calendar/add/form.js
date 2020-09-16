@@ -56,10 +56,10 @@ function Form() {
     [uiStore]
   );
   const blurHandler = useCallback(
-     cb => evt => {
+    cb => evt => {
       uiStore.toggleBottomNav(true);
       cb(evt);
-    },
+    ,
     [uiStore]
   );
   const saveEvent = useCallback(async (values, updateRecurrences = false) => {
@@ -88,9 +88,9 @@ function Form() {
     : new CashFlowEvent({
       category: categoryPath,
       dateTime: uiStore.selectedDate
-      });
+    });
 
-      if (id && event) {
+ if (id && event) {
     categoryPath = event.category;
     category = Categories.get(categoryPath);
     pathSegments = categoryPath.split('.');
@@ -101,7 +101,7 @@ function Form() {
   const recurrenceOptions = Object.entries(
     category.recurrenceTypes ? pluck(recurrenceRules, category.recurrenceTypes) : recurrenceRules
   ).map(([value, { label }]) => ({ label, value }));
-  
+
   const handleModalSession = () => {
     let snapVisit = localStorage.getItem('snapVisit');
 
@@ -120,8 +120,8 @@ function Form() {
 
   return (
     <section className='add-event'>
-      { showModal && 
-        <NarrativeModal showModal={showModal} 
+      { showModal &&
+        <NarrativeModal showModal={showModal}
           handleOkClick={handleToggleModal}
           copy={narrativeCopy.step4}
         />
@@ -136,7 +136,7 @@ function Form() {
       ) : (
         <p className='add-event__intro'>Enter the details of your {handleCatName(category.name)} {eventType}.</p>
       )}
-        {!!category.description && <p className='add-event__description'>{category.description}</p>} 
+      {!!category.description && <p className='add-event__description'>{category.description}</p>}
 
       <Formik
         initialValues={event.toFormValues()}
@@ -156,7 +156,7 @@ function Form() {
           payday1: paydaySchema,
           payday2: paydaySchema
         })}
-        onSubmit={(values) => {
+        onSubmit={ values => {
           if (!values.name) values.name = category.name;
 
           logger.debug('Event form submission: %O', values);
@@ -180,18 +180,16 @@ function Form() {
             return showRecurrenceUpdateModal(true);
           }
 
-          if (!localStorage.getItem('enteredData')) {
+          if (localStorage.getItem('enteredData') === null) {
             localStorage.setItem('enteredData', 'initial');
           } else {
-            localStorage.setItem('enteredData', 'subsequent')
+            localStorage.setItem('enteredData', 'subsequent');
           }
-
-          
 
           return saveEvent(values);
         }}
       >
-        {(formik) => (
+        { formik => (
           <form onSubmit={formik.handleSubmit}>
             <TextField
               name='name'
@@ -284,7 +282,6 @@ function Form() {
               tabIndex='0'
               required
             />
-            
 
             <Button fullWidth disabled={!formik.dirty && !formik.isValid} type='submit' tabIndex='0'>
               Save
@@ -312,7 +309,7 @@ function Form() {
             onClick: async () => {
               showRecurrenceUpdateModal(false);
               await saveEvent(formValues.current);
-            },
+            }
           }
         ]}
         showCancel={false}
