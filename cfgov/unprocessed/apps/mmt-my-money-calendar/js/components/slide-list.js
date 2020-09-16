@@ -65,24 +65,36 @@ export function SlideListItem({
       } else if (last && tap && isOpen.current) {
         return close();
       }
-     /*  if (last && tap && !isOpen.current) {
+    /*  if (last && tap && !isOpen.current) {
         if (debounced.current) return;
         setDebounceDelay();
         return open({ canceled: true });
-      } else if (last && tap && isOpen.current) {
+    } else if (last && tap && isOpen.current) {
         if (debounced.current) return;
         setDebounceDelay();
         return close();
-      }  */
+    }  */
 
       // If user drags past slideWidth multiplied by props.threshold, cancel animation and set state to open
       if (!isOpen.current && mx < -(slideWidth.current * (1 + threshold))) cancel();
       else if (isOpen.current && mx > 0) cancel();
 
       // If user has dragged past a certain threshold, snap actions open. Otherwise return to closed
-      if (last && !isOpen.current) mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5 ? close(vx) : open({ canceled });
-      else if (last && isOpen.current) mx > -(slideWidth.current - slideWidth.current * (1 - threshold)) ? close(vx) : open({ canceled });
-      else set({ x: mx, immediate: false, config: springConfig });
+      if (last && !isOpen.current) {
+        if (mx > -(slideWidth.current * (1 - threshold)) || vx > 0.5){
+          close(vx)
+        } else {
+          open({ canceled });
+        };    
+      } else if (last && isOpen.current) {
+        if (mx > -(slideWidth.current - slideWidth.current * (1 - threshold))){
+          close(vx)
+        } else {
+          open({ canceled });
+        }
+      } else {
+        set({ x: mx, immediate: false, config: springConfig });
+      }
     },
     { filterTaps: true }
   );
