@@ -11,7 +11,7 @@ cryptography==2.9.2
 dj-database-url==0.5.0
 djangorestframework==3.11.1
 django-csp==3.4
-django-elasticsearch-dsl==7.1.4
+# django-elasticsearch-dsl==7.1.4 TODO: Uncomment when all applications support Elasticsearch 7
 django-extensions==2.1.3
 django-flags==4.2.4
 # django-haystack==2.8.1 TODO: Remove when we're done extracting Haystack code
@@ -46,7 +46,9 @@ wagtail-treemodeladmin==1.2.1
 wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
+https://github.com/cfpb/elasticsearch-dsl-py.git
 git+https://github.com/cfpb/django-college-costs-comparison.git@remove-haystack-dependency
+git+https://github.com/cfpb/django-elasticsearch-dsl.git
 git+https://github.com/cfpb/django-haystack.git@import-elasticsearch2
 git+https://github.com/cfpb/ccdb5-api.git@elasticsearch2
 https://github.com/cfpb/wagtail-autocomplete/releases/download/0.7/wagtail_autocomplete-0.6-py3-none-any.whl
