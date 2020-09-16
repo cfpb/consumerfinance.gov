@@ -42,9 +42,10 @@ function Form() {
     []
   );
   const handleCatName = category => category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase();
+  let { id, categories = '' } = useParams();
 
   useEffect(() => {
-    let { id, categories = '' } = useParams();
+    
     const isNew = !id;
     let categoryPath = categories.replace(/\//g, '.');
     let category = Categories.get(categoryPath);
@@ -84,7 +85,7 @@ function Form() {
     }
   }, [eventStore, logger, uiStore]);
 
-  let { id, categories = '' } = useParams();
+  /* let { id, categories = '' } = useParams(); */
   const isNew = !id;
   let categoryPath = categories.replace(/\//g, '.');
   let pathSegments = categoryPath.split('.');
