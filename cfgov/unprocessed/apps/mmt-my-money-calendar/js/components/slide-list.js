@@ -71,7 +71,7 @@ export function SlideListItem({
           close(vx);
         } else {
           open({ canceled });
-        };
+        }
       } else if (last && isOpen.current) {
         if (mx > -(slideWidth.current - slideWidth.current * (1 - threshold))) {
           close(vx);
