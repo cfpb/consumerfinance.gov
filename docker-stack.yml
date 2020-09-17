@@ -4,8 +4,7 @@ version: "3.7"
 
 services:
   elasticsearch:
-    image: elasticsearch:2.4-alpine
-    user: elasticsearch
+    image: ${CFGOV_ES_IMAGE}
     deploy:
       placement:
         constraints:
