@@ -18,8 +18,8 @@ describe( 'Filterable List', () => {
     filterableList.open();
     filterableList.showFilters();
     filterableList.filterForm().should( 'be.visible' );
-    filterableList.setFromDate( '01/01/2010' );
-    filterableList.setToDate( '01/01/2020' );
+    filterableList.setFromDate( '2010-01-01' );
+    filterableList.setToDate( '2020-01-01' );
     filterableList.applyFilters();
     filterableList.filterNotification().should( 'be.visible' );
   } );
