@@ -10,7 +10,8 @@ services:
         constraints:
           - node.role!=manager
       restart_policy:
-        condition: none
+        condition: any
+        max_attempts: 3
     networks:
       - app
 
