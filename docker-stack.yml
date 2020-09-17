@@ -11,7 +11,10 @@ services:
         constraints:
           - node.role!=manager
       restart_policy:
-        condition: none
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
     networks:
       - app
 
@@ -23,7 +26,10 @@ services:
         constraints:
           - node.role!=manager
       restart_policy:
-        condition: none
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
     environment:
       POSTGRES_USER: cfpb
       POSTGRES_PASSWORD_FILE: /var/run/secrets/PGPASSWORD
@@ -65,7 +71,10 @@ services:
         constraints:
           - node.role!=manager
       restart_policy:
-        condition: none
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
       labels:
         - com.docker.lb.hosts=${CFGOV_HOSTNAME}
         - com.docker.lb.port=8000
