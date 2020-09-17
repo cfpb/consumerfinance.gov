@@ -201,11 +201,15 @@ To view, delete, and add database conditions, navigate to "Settings > Flags" in 
 
 ![settings, flags](img/settings_flags.gif)
 
-Once in the flag settings, you'll have a list of all flags and their conditions..
+Once in the flag settings, you'll have a list of all flags and their statuses.
 
 ![flag list](img/flags_list.png)
 
-Database conditions can be deleted with the trash can button on the right.
+Select a flag to see its conditions.
+
+![flag details](img/flag_details.png)
+
+Existing database conditions can be edited or deleted here.
 
 To create a new database condition, select "Add a condition". As with [hard-coded conditions](#hard-coded-conditions), to create a database condition you must select which condition type you would like to use and give it a value that must be satisfied for the flag to be enabled.
 
