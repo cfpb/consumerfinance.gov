@@ -116,9 +116,10 @@ class CFGOVPage(Page):
         verbose_name='Mark this page as archived'
     )
 
-    archived_date = models.DateField(
+    archived_at = models.DateField(
         blank=True,
-        null=True
+        null=True,
+        verbose_name="Archive date"
     )
 
     # This is used solely for subclassing pages we want to make at the CFPB.
@@ -156,7 +157,7 @@ class CFGOVPage(Page):
 
     archive_panels = [
         FieldPanel('is_archived'),
-        FieldPanel('archived_date'),
+        FieldPanel('archived_at'),
     ]
 
     settings_panels = [
