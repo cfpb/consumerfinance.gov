@@ -169,7 +169,8 @@ describe( 'web-storage-proxy', () => {
 
     it( 'should set storage to an object if ' +
         'sessionStorage is undefined', () => {
-      webStorageProxy.setItem( 'foo', 'bar', undefined );
+      let UNDEFINED;
+      webStorageProxy.setItem( 'foo', 'bar', UNDEFINED );
       expect( webStorageProxy.getItem( 'foo' ) ).toEqual( 'bar' );
     } );
 
