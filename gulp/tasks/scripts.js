@@ -28,19 +28,18 @@ const webpackStream = require( 'webpack-stream' );
  * @param {Object} localWebpackConfig - Settings for Webpack.
  * @param {string} src - Source URL in the unprocessed assets directory.
  * @param {string} dest - Destination URL in the processed assets directory.
- * @param {string} destPathPrefix - Destination URL prefix. Defaults to the processed assets directory.
  * @returns {PassThrough} A source stream.
  */
-function _processScript( localWebpackConfig, src, dest, destPathPrefix = paths.processed ) {
+function _processScript( localWebpackConfig, src, dest ) {
   return gulp.src( paths.unprocessed + src )
     .pipe( gulpNewer( {
-      dest:  destPathPrefix + dest,
+      dest: paths.processed + dest,
       extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( vinylNamed( file => file.relative ) )
     .pipe( webpackStream( localWebpackConfig, webpack ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
-    .pipe( gulp.dest( destPathPrefix + dest ) );
+    .pipe( gulp.dest( paths.processed + dest ) );
 }
 
 /**
@@ -94,8 +93,7 @@ function scriptsAdmin() {
   return _processScript(
     webpackConfig.modernConf,
     '/js/admin/*.js',
-    '/js/',
-    'cfgov/templates/wagtailadmin'
+    '/js/admin/'
   );
 }
 

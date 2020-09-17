@@ -89,7 +89,7 @@ def log_page_deletion(request, page):
 
 @hooks.register('insert_editor_js')
 def editor_js():
-    js_files = ['js/table-block.js']
+    js_files = ['js/admin/table-block.js']
 
     js_includes = format_html_join(
         '\n',

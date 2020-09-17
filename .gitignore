@@ -7,7 +7,6 @@
 _site/
 _build/
 cfgov/static_built/*
-cfgov/templates/wagtailadmin/js/*
 
 # Packages #
 ############
