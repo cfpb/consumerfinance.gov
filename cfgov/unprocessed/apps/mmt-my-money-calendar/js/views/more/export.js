@@ -7,16 +7,16 @@ import { useStore } from '../../stores';
 
 function Export() {
   const { eventStore, strategiesStore } = useStore();
-  const bem = useBEM('more');
+  const bem = useBEM( 'more' );
   const { dataType } = useParams();
 
   useScrollToTop();
 
   return (
     <section className={bem()}>
-      <header className={bem('header')}>
-        <h1 className={bem('app-title')}>myMoney Calendar</h1>
-        <h2 className={bem('section-title')}>Save {dataType}</h2>
+      <header className={bem( 'header' )}>
+        <h1 className={bem( 'app-title' )}>myMoney Calendar</h1>
+        <h2 className={bem( 'section-title' )}>Save {dataType}</h2>
       </header>
 
       <ButtonLink to='/more' variant='secondary'>
@@ -26,4 +26,4 @@ function Export() {
   );
 }
 
-export default observer(Export);
+export default observer( Export );

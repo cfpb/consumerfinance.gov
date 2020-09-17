@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import { useEffect, useMemo, useState } from 'react';
-import { useLocation, useParams, Redirect } from 'react-router-dom';
+import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
-import { useClickHandler, useClickConfirm } from '../../../lib/hooks';
+import { useClickConfirm, useClickHandler } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
 import NarrativeModal from '../../../components/narrative-notification';
@@ -13,16 +13,15 @@ import { narrativeCopy } from '../../../lib/narrative-copy';
 
 import { arrowLeft, arrowRight } from '../../../lib/icons';
 
-const IconButton = ({ icon, ...props }) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
+const IconButton = ( { icon, ...props } ) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
 
-const CalendarWeekRow = ({ days, selected }) => {
-  const classes = clsx('calendar__row', selected && 'selected');
+const CalendarWeekRow = ( { days, selected } ) => {
+  const classes = clsx( 'calendar__row', selected && 'selected' );
 
   return (
     <div className={classes}>
-      {days.map( day => (
-        <Day day={day} key={`day-${day.dayOfYear()}`} />
-      ))}
+      {days.map( day => <Day day={day} key={`day-${ day.dayOfYear() }`} />
+      )}
     </div>
   );
 };
@@ -31,57 +30,55 @@ function Calendar() {
   const { uiStore, eventStore } = useStore();
   const location = useLocation();
   const params = useParams();
-  const [showModal, setShowModal] = useState();
-  const [narrativeStep, setNarrativeStep] = useState();
+  const [ showModal, setShowModal ] = useState();
+  const [ narrativeStep, setNarrativeStep ] = useState();
 
   const handleModalSession = () => {
-    let visited = localStorage.getItem('visitedPage'),
-        enteredData = localStorage.getItem('enteredData');
+    const visited = localStorage.getItem( 'visitedPage' ),
+          enteredData = localStorage.getItem( 'enteredData' );
 
-    if (visited && (enteredData === 'subsequent' || !enteredData)) {
-      setShowModal(false);
+    if ( visited && ( enteredData === 'subsequent' || !enteredData ) ) {
+      setShowModal( false );
     } else {
-      let currentStep = (visited && enteredData === 'initial') ? 'step2' : 'step1';
-      setNarrativeStep(currentStep);
-      setShowModal(true);
+      const currentStep = visited && enteredData === 'initial' ? 'step2' : 'step1';
+      setNarrativeStep( currentStep );
+      setShowModal( true );
     }
   };
 
-  useEffect(() => {
-    uiStore.setPageTitle('myMoney Calendar');
-    uiStore.setSubtitle(uiStore.currentMonth.format('MMMM YYYY'));
+  useEffect( () => {
+    uiStore.setPageTitle( 'myMoney Calendar' );
+    uiStore.setSubtitle( uiStore.currentMonth.format( 'MMMM YYYY' ) );
     handleModalSession();
-  }, [location, params, uiStore.currentMonth]);
+  }, [ location, params, uiStore.currentMonth ] );
 
   const dayLabels = useMemo(
-    () => (
-      <div className='calendar__row' key='dayLabels'>
-        {DAY_LABELS.map((label, idx) => (
-          <div key={`label-${idx}`} className='calendar__day-label'>
-            {label}
-          </div>
-        ))}
+    () => <div className='calendar__row' key='dayLabels'>
+      {DAY_LABELS.map( ( label, idx ) => <div key={`label-${ idx }`} className='calendar__day-label'>
+        {label}
       </div>
-    ),
+      )}
+    </div>
+    ,
     []
   );
 
   const handleToggleModal = event => {
     event.preventDefault();
-    localStorage.setItem('visitedPage', true);
-    if (localStorage.getItem('enteredData') === 'initial') {
-      localStorage.setItem('enteredData', 'subsequent');
+    localStorage.setItem( 'visitedPage', true );
+    if ( localStorage.getItem( 'enteredData' ) === 'initial' ) {
+      localStorage.setItem( 'enteredData', 'subsequent' );
     }
-    if (!localStorage.getItem('removeSpotlight')) {
-      localStorage.setItem('removeSpotlight', true);
+    if ( !localStorage.getItem( 'removeSpotlight' ) ) {
+      localStorage.setItem( 'removeSpotlight', true );
       eventStore.closeNarrativeModal();
     }
-    setShowModal(!showModal);
+    setShowModal( !showModal );
   };
 
   useScrollToTop();
 
-  if (eventStore.eventsLoaded && !eventStore.hasStartingBalance) return <Redirect to='/money-on-hand' />;
+  if ( eventStore.eventsLoaded && !eventStore.hasStartingBalance ) return <Redirect to='/money-on-hand' />;
 
   return (
     <section className='calendar'>
@@ -118,13 +115,12 @@ function Calendar() {
         <div className='calendar__rows'>
           {[
             dayLabels,
-            ...uiStore.monthCalendarRows.map(({ days, weekNumber }) => (
-              <CalendarWeekRow
-                days={days}
-                key={`week-${weekNumber}`}
-                selected={uiStore.currentWeek.week() === weekNumber}
-              />
-            ))
+            ...uiStore.monthCalendarRows.map( ( { days, weekNumber } ) => <CalendarWeekRow
+              days={days}
+              key={`week-${ weekNumber }`}
+              selected={uiStore.currentWeek.week() === weekNumber}
+            />
+            )
           ]}
         </div>
 
@@ -134,4 +130,4 @@ function Calendar() {
   );
 }
 
-export default observer(Calendar);
+export default observer( Calendar );

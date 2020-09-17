@@ -1,4 +1,3 @@
-
 /* Maps a number in a range, to a number in a different range.
  *
  * @param {number} num The number to map
@@ -9,7 +8,7 @@
  * @returns {number}
  * @see {@link https://stackoverflow.com/questions/345187/math-mapping-numbers}
  */
-export const mapRange = (num, min, max, outMin, outMax) => (num - min) / (max - min) * (outMax - outMin) + outMin;
+export const mapRange = ( num, min, max, outMin, outMax ) => ( num - min ) / ( max - min ) * ( outMax - outMin ) + outMin;
 
 
 /* Clamps the value of a number between a minimum and a maximum
@@ -19,4 +18,4 @@ export const mapRange = (num, min, max, outMin, outMax) => (num - min) / (max - 
  * @param {number} max The maximum allowable value
  * @see {@link https://stackoverflow.com/questions/11409895/whats-the-most-elegant-way-to-cap-a-number-to-a-segment}
  */
-export const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+export const clamp = ( num, min, max ) => Math.min( Math.max( num, min ), max );

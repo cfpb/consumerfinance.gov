@@ -3,10 +3,10 @@ import { dayjs } from './lib/calendar-helpers';
 import { RRule } from 'rrule';
 
 let currentDate;
-const now = dayjs().startOf('day');
+const now = dayjs().startOf( 'day' );
 
-const randDay = (max = 30) => {
-  const date = now.add(Math.floor(Math.random() * max) + 1, 'days').toDate();
+const randDay = ( max = 30 ) => {
+  const date = now.add( Math.floor( Math.random() * max ) + 1, 'days' ).toDate();
   currentDate = date;
   return date;
 };
@@ -20,7 +20,7 @@ export async function clearData() {
 }
 
 export async function clearCashFlowEvents() {
-  const { store, tx } = await CashFlowEvent.transaction('readwrite');
+  const { store, tx } = await CashFlowEvent.transaction( 'readwrite' );
   await store.clear();
   return tx.complete;
 }
@@ -40,11 +40,11 @@ function seedCashFlowEvents() {
       totalCents: 50000,
       recurs: true,
       recurrenceType: 'weekly',
-      recurrenceRule: new RRule({
+      recurrenceRule: new RRule( {
         freq: RRule.WEEKLY,
         dtstart: currentDate,
         count: 12
-      })
+      } )
     },
     {
       name: 'Rent',
@@ -54,11 +54,11 @@ function seedCashFlowEvents() {
       totalCents: -80000,
       recurs: true,
       recurrenceType: 'monthly',
-      recurrenceRule: new RRule({
+      recurrenceRule: new RRule( {
         freq: RRule.MONTHLY,
         count: 3,
         dtstart: currentDate
-      })
+      } )
     },
     {
       name: 'Groceries',
@@ -67,11 +67,11 @@ function seedCashFlowEvents() {
       totalCents: -20000,
       recurs: true,
       recurrenceType: 'weekly',
-      recurrenceRule: new RRule({
+      recurrenceRule: new RRule( {
         freq: RRule.WEEKLY,
         dtstart: currentDate,
         count: 12
-      })
+      } )
     },
     {
       name: 'Electricity',
@@ -80,11 +80,11 @@ function seedCashFlowEvents() {
       totalCents: -10000,
       recurs: true,
       recurrenceType: 'monthly',
-      recurrenceRule: new RRule({
+      recurrenceRule: new RRule( {
         freq: RRule.MONTHLY,
         dtstart: currentDate,
         count: 3
-      })
+      } )
     },
     {
       name: 'Water Bill',
@@ -93,11 +93,11 @@ function seedCashFlowEvents() {
       totalCents: -5000,
       recurs: true,
       recurrenceType: 'monthly',
-      recurrenceRule: new RRule({
+      recurrenceRule: new RRule( {
         freq: RRule.MONTHLY,
         dtstart: currentDate,
         count: 3
-      })
+      } )
     },
     {
       name: 'Student Loan',
@@ -106,17 +106,17 @@ function seedCashFlowEvents() {
       totalCents: -30000,
       recurs: true,
       recurrenceType: 'monthly',
-      recurrenceRule: new RRule({
+      recurrenceRule: new RRule( {
         freq: RRule.MONTHLY,
         dtstart: currentDate,
         count: 3
-      })
+      } )
     }
   ];
 
-  return Promise.all(events.map( event => {
-    const cfe = new CashFlowEvent(event);
-    console.log('Add event: %O', cfe.asObject);
+  return Promise.all( events.map( event => {
+    const cfe = new CashFlowEvent( event );
+    console.log( 'Add event: %O', cfe.asObject );
     return cfe.save();
-  }));
+  } ) );
 }

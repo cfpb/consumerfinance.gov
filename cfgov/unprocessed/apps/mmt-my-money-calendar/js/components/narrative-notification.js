@@ -1,13 +1,13 @@
 import Modal from 'react-modal';
 import { useBEM } from '../lib/hooks';
 
-export default function NarrativeModal({showModal, handleOkClick, copy, step, ...props}) {
-  const bem = useBEM('modal-dialog');
+export default function NarrativeModal( { showModal, handleOkClick, copy, step, ...props } ) {
+  const bem = useBEM( 'modal-dialog' );
   return (
     <Modal isOpen={showModal}
       className={step === 'step1' ? 'narrative-step1' : bem()}
       overlayClassName='modal-overlay'
-      appElement={step === 'step1' ? document.querySelector('#add') : document.querySelector('#mmt-my-money-calendar')}
+      appElement={step === 'step1' ? document.querySelector( '#add' ) : document.querySelector( '#mmt-my-money-calendar' )}
       style={
         {
           content: {
@@ -15,7 +15,7 @@ export default function NarrativeModal({showModal, handleOkClick, copy, step, ..
             padding: '15px'
           },
           overlay: {
-            backgroundColor: localStorage.getItem('removeSpotlight') ? '' : 'rgba(0,0,0,0)'
+            backgroundColor: localStorage.getItem( 'removeSpotlight' ) ? '' : 'rgba(0,0,0,0)'
           }
         }
       }
@@ -23,7 +23,7 @@ export default function NarrativeModal({showModal, handleOkClick, copy, step, ..
       <div className='narrative-modal'>
         <h4>{copy.headline}</h4>
         <p>{copy.body}</p>
-        <button style={{float: 'right'}} onClick={ e => handleOkClick(e)}>OK</button>
+        <button style={{ 'float': 'right' }} onClick={ e => handleOkClick( e )}>OK</button>
       </div>
     </Modal>
   );

@@ -9,13 +9,13 @@ export default function ScrollToTop() {
 export function useScrollToTop() {
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  useEffect( () => {
+    window.scrollTo( 0, 0 );
+  }, [ pathname ] );
 }
 
 export function useScrollToTopOnMount() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useEffect( () => {
+    window.scrollTo( 0, 0 );
+  }, [] );
 }

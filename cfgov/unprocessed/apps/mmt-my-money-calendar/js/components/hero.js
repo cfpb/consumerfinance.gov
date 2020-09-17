@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
-const Hero = ({ title, subtitle, isSVG = false, image, alt = '' }) => {
+const Hero = ( { title, subtitle, isSVG = false, image, alt = '' } ) => {
   let imageTag;
 
-  if (isSVG && typeof image === 'string') {
-    imageTag = <img src={`data:image/svg+xml;base64,${btoa(image)}`} className='u-hide-on-print hero-image' />;
-  } else if (typeof image === 'string') {
+  if ( isSVG && typeof image === 'string' ) {
+    imageTag = <img src={`data:image/svg+xml;base64,${ btoa( image ) }`} className='u-hide-on-print hero-image' />;
+  } else if ( typeof image === 'string' ) {
     imageTag = <img src={image} alt={alt} className='u-hide-on-print hero-image' />;
   } else {
     imageTag = image;

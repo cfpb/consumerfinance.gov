@@ -12,38 +12,38 @@ import SvgImage from '../../components/svg-image';
 
 function Summary() {
   const { eventStore, wizardStore } = useStore();
-  const bem = useBEM('wizard');
+  const bem = useBEM( 'wizard' );
   const history = useHistory();
   const saveAndRedirect = useCallback(
     async evt => {
       evt.preventDefault();
 
-      await eventStore.saveEvent({
+      await eventStore.saveEvent( {
         name: 'Starting Balance',
         category: 'income.startingBalance',
         totalCents: wizardStore.totalStartingFundsCents,
         date: new Date()
-      });
+      } );
 
       wizardStore.reset();
 
-      history.push('/calendar');
+      history.push( '/calendar' );
     },
-    [wizardStore.totalStartingFundsCents]
+    [ wizardStore.totalStartingFundsCents ]
   );
 
   useScrollToTop();
 
-  if (!wizardStore.fundingSources.length && !wizardStore.noStartingFunds) return <Redirect to='/money-on-hand' />;
+  if ( !wizardStore.fundingSources.length && !wizardStore.noStartingFunds ) return <Redirect to='/money-on-hand' />;
 
   return (
     <>
-      <header className={bem('header')}>
-        <h2 className={bem('section-title')}>Money on Hand</h2>
+      <header className={bem( 'header' )}>
+        <h2 className={bem( 'section-title' )}>Money on Hand</h2>
       </header>
 
-      <main className={bem('main')}>
-        <figure className={bem('step-image')}>
+      <main className={bem( 'main' )}>
+        <figure className={bem( 'step-image' )}>
           <SvgImage src={categoryIcons.moneyOnHand} alt='Money on Hand icon' />
         </figure>
 
@@ -52,30 +52,30 @@ function Summary() {
         <p>You have money in the following places:</p>
 
         <ul>
-          {Boolean(wizardStore.fundingSources.length) && wizardStore.fundingSources.map((source, idx) => {
+          {Boolean( wizardStore.fundingSources.length ) && wizardStore.fundingSources.map( ( source, idx ) => {
             const { name } = wizardStore.fundingSourceOptions[source];
             const balance = wizardStore.fundingSourceBalances[source];
 
             return (
-              <li key={`funding-src-${idx}`} className='funding-source'>
+              <li key={`funding-src-${ idx }`} className='funding-source'>
                 <span className='funding-source__name'>{name}:</span>
-                <span className='funding-source__balance'>{formatCurrency(balance / 100)}</span>
+                <span className='funding-source__balance'>{formatCurrency( balance / 100 )}</span>
               </li>
             );
-          })}
+          } )}
 
-          {wizardStore.noStartingFunds && (
+          {wizardStore.noStartingFunds &&
             <li className='funding-source'>
               <em>No starting funds</em>
             </li>
-          )}
+          }
         </ul>
 
         <p>
-          <strong>Total Starting Balance:</strong> {formatCurrency(wizardStore.totalStartingFunds)}
+          <strong>Total Starting Balance:</strong> {formatCurrency( wizardStore.totalStartingFunds )}
         </p>
 
-        <div className={bem('buttons')}>
+        <div className={bem( 'buttons' )}>
           <BackButton onClick={history.goBack}>Back</BackButton>
           <NextButton onClick={saveAndRedirect}>Go to Calendar</NextButton>
         </div>
@@ -84,4 +84,4 @@ function Summary() {
   );
 }
 
-export default observer(Summary);
+export default observer( Summary );
