@@ -6,10 +6,10 @@ from haystack.backends.elasticsearch2_backend import (
     Elasticsearch2SearchBackend, Elasticsearch2SearchEngine
 )
 
-import elasticsearch2
+import elasticsearch
 
 
-haystack.backends.elasticsearch2_backend.elasticsearch = elasticsearch2
+haystack.backends.elasticsearch2_backend.elasticsearch = elasticsearch
 
 
 class CFGOVElasticsearch2SearchBackend(Elasticsearch2SearchBackend):
