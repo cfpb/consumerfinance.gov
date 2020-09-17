@@ -1,21 +1,23 @@
-import { observer } from 'mobx-react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Formik } from 'formik';
-import { Redirect, useHistory, useParams, withRouter } from 'react-router-dom';
 import * as yup from 'yup';
-import { useStore } from '../../../stores';
-import { Categories } from '../../../stores/models/categories';
 import Button, { BackButton } from '../../../components/button';
 import { Checkbox, CurrencyField, DateField, RadioButton, SelectField, TextField } from '../../../components/forms';
 import { dayjs, numberWithOrdinal, recurrenceRules } from '../../../lib/calendar-helpers';
-import { range } from '../../../lib/array-helpers';
+import { Redirect, useHistory, useParams, withRouter } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Categories } from '../../../stores/models/categories';
+import { Formik } from 'formik';
+import { narrativeCopy } from '../../../lib/narrative-copy';
+import { observer } from 'mobx-react';
 import { pluck } from '../../../lib/object-helpers';
+import { range } from '../../../lib/array-helpers';
 import { useScrollToTop } from '../../../components/scroll-to-top';
-import Logger from '../../../lib/logger';
+import { useStore } from '../../../stores';
+
 import CashFlowEvent from '../../../stores/models/cash-flow-event';
+import Logger from '../../../lib/logger';
 import ModalDialog from '../../../components/modal-dialog';
 import NarrativeModal from '../../../components/narrative-notification';
-import { narrativeCopy } from '../../../lib/narrative-copy';
+
 
 function Form() {
   useScrollToTop();
@@ -23,7 +25,9 @@ function Form() {
   const { uiStore, eventStore } = useStore();
   const formValues = useRef( null );
   const history = useHistory();
-  const [ recurrenceUpdateModalState, showRecurrenceUpdateModal ] = useState( false );
+  const [
+    recurrenceUpdateModalState,
+    showRecurrenceUpdateModal ] = useState( false );
   const [ showModal, setShowModal ] = useState();
   const logger = useMemo( () => Logger.addGroup( 'eventForm' ), [] );
   const monthDayOptions = useMemo(
@@ -31,17 +35,19 @@ function Form() {
     []
   );
   const paydaySchema = useMemo(
-    () => yup.number().when( [ 'recurs', 'recurrenceType' ], { is: ( recurs, recurrenceType ) => recurs && recurrenceType === 'semimonthly',
-      then: yup
-        .number()
-        .integer()
-        .required( 'Day of month is required for semimonthly recurrences' )
-        .cast(),
-      otherwise: yup.number()
-    } ),
+    () => yup.number().when( [ 'recurs', 'recurrenceType' ],
+      { is: ( recurs, recurrenceType ) => recurs && recurrenceType === 'semimonthly',
+        then: yup
+          .number()
+          .integer()
+          .required( 'Day of month is required for semimonthly recurrences' )
+          .cast(),
+        otherwise: yup.number()
+      } ),
     []
   );
-  const handleCatName = category => ( category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase() );
+  const handleCatName = category => (
+    category === 'TANF' || category === 'SNAP' ? category : category.toLowerCase() );
   const { id, categories = '' } = useParams();
 
   useEffect( () => {
@@ -74,7 +80,8 @@ function Form() {
     },
     [ uiStore ]
   );
-  const saveEvent = useCallback( async ( values, updateRecurrences = false ) => {
+  const saveEvent = useCallback( async ( values,
+    updateRecurrences = false ) => {
     try {
       await eventStore.saveEvent( values, updateRecurrences );
       history.push( '/calendar' );
@@ -111,18 +118,10 @@ function Form() {
   }
 
   const recurrenceOptions = Object.entries(
-    category.recurrenceTypes ? pluck( recurrenceRules, category.recurrenceTypes ) : recurrenceRules
+    category.recurrenceTypes ?
+      pluck( recurrenceRules, category.recurrenceTypes ) :
+      recurrenceRules
   ).map( ( [ value, { label } ] ) => ( { label, value } ) );
-
-  /* const handleModalSession = () => {
-    let snapVisit = localStorage.getItem('snapVisit');
-
-    if (category.name === 'SNAP' && !snapVisit) {
-      setShowModal(true);
-    } else {
-      setShowModal(false);
-    }
-  }; */
 
   const handleToggleModal = event => {
     event.preventDefault();
@@ -145,9 +144,15 @@ function Form() {
       <h2 className='add-event__title'>{category.name}</h2>
       {category.name === 'Job' ?
         <p className='add-event__intro'> Enter your paycheck information.</p> :
-        <p className='add-event__intro'>Enter the details of your {handleCatName( category.name )} {eventType}.</p>
+        <p className='add-event__intro'>
+          Enter the details of your {handleCatName( category.name )}
+          {eventType}.
+        </p>
       }
-      {Boolean( category.description ) && <p className='add-event__description'>{category.description}</p>}
+      {Boolean( category.description ) &&
+        <p className='add-event__description'>
+          {category.description}
+        </p>}
 
       <Formik
         initialValues={event.toFormValues()}
@@ -182,7 +187,8 @@ function Form() {
             const { handler } = recurrenceRules[values.recurrenceType];
             values.recurrenceRule =
               values.recurrenceType === 'semimonthly' ?
-                handler( values.dateTime.toDate(), values.payday1, values.payday2 ) :
+                handler( values.dateTime.toDate(),
+                  values.payday1, values.payday2 ) :
                 handler( values.dateTime.toDate() );
           }
 
@@ -293,7 +299,10 @@ function Form() {
             required
           />
 
-          <Button fullWidth disabled={!formik.dirty && !formik.isValid} type='submit' tabIndex='0'>
+          <Button
+            fullWidth disabled={!formik.dirty && !formik.isValid}
+            type='submit'
+            tabIndex='0'>
               Save
           </Button>
         </form>

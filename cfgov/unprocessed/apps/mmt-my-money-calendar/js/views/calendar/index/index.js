@@ -1,9 +1,9 @@
 import clsx from 'clsx';
+import { useClickConfirm, useClickHandler } from '../../../lib/hooks';
 import { useEffect, useMemo, useState } from 'react';
 import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useStore } from '../../../stores';
-import { useClickConfirm, useClickHandler } from '../../../lib/hooks';
 import Day from './day';
 import Details from './details';
 import NarrativeModal from '../../../components/narrative-notification';
@@ -91,7 +91,12 @@ function Calendar() {
         />
       }
       {showModal && narrativeStep === 'step2' &&
-        <NarrativeModal showModal={showModal} handleOkClick={handleToggleModal} copy={narrativeCopy.step2} step={narrativeStep} />
+        <NarrativeModal
+          showModal={showModal}
+          handleOkClick={handleToggleModal}
+          copy={narrativeCopy.step2}
+          step={narrativeStep}
+        />
       }
       <header className='calendar__header'>
         <IconButton
@@ -115,11 +120,12 @@ function Calendar() {
         <div className='calendar__rows'>
           {[
             dayLabels,
-            ...uiStore.monthCalendarRows.map( ( { days, weekNumber } ) => <CalendarWeekRow
-              days={days}
-              key={`week-${ weekNumber }`}
-              selected={uiStore.currentWeek.week() === weekNumber}
-            />
+            ...uiStore.monthCalendarRows.map(
+              ( { days, weekNumber } ) => <CalendarWeekRow
+                days={days}
+                key={`week-${ weekNumber }`}
+                selected={uiStore.currentWeek.week() === weekNumber}
+              />
             )
           ]}
         </div>

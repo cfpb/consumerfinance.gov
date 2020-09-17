@@ -1,19 +1,28 @@
-import clsx from 'clsx';
-import { useCallback, useState } from 'react';
-import { useKeyPressEvent, useLockBodyScroll, useToggle } from 'react-use';
-import { observer } from 'mobx-react';
+import { arrowLeft, arrowRight, delete as deleteIcon, hamburger as dragHandle, pencil } from '../../../lib/icons';
 import { Link, useHistory } from 'react-router-dom';
-import { useStore } from '../../../stores';
+import { useKeyPressEvent, useLockBodyScroll, useToggle } from 'react-use';
 import { formatCurrency } from '../../../lib/currency-helpers';
+import { observer } from 'mobx-react';
 import { Notification } from '../../../components/notification';
 import { SlideListItem } from '../../../components/slide-list';
+import { useCallback, useState } from 'react';
+import { useStore } from '../../../stores';
+
+import clsx from 'clsx';
 import ModalDialog from '../../../components/modal-dialog';
 
-import { arrowLeft, arrowRight, delete as deleteIcon, hamburger as dragHandle, pencil } from '../../../lib/icons';
+const IconButton = ( {
+  icon, ...props } ) => <button
+  dangerouslySetInnerHTML={{ __html: icon }}
+  {...props}
+/>;
 
-const IconButton = ( { icon, ...props } ) => <button dangerouslySetInnerHTML={{ __html: icon }} {...props} />;
-
-const DetailRow = ( { event, onRequestEdit, onRequestDelete, balanceIsNegative = false, ...props } ) => <SlideListItem
+const DetailRow = ( {
+  event,
+  onRequestEdit,
+  onRequestDelete,
+  balanceIsNegative = false,
+  ...props } ) => <SlideListItem
   className={clsx( 'calendar-details__event', balanceIsNegative && '-negative-balance' )}
   actions={[
     {
@@ -39,6 +48,7 @@ const DetailRow = ( { event, onRequestEdit, onRequestDelete, balanceIsNegative =
     <span className='calendar-details__drag-icon' dangerouslySetInnerHTML={{ __html: dragHandle }} />
   </div>
 </SlideListItem>;
+
 function Details() {
   const { uiStore, eventStore } = useStore();
   const history = useHistory();
@@ -46,9 +56,9 @@ function Details() {
   const [ modalOpen, toggleModal ] = useToggle( false );
 
   const confirmDelete = useCallback(
-    event => e => {
-      e.preventDefault();
-      e.stopPropagation();
+    event => ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
       setSelectedEvent( event );
       toggleModal( true );
     },
@@ -68,9 +78,9 @@ function Details() {
   const eventRecurs = selectedEvent && selectedEvent.recurs;
 
   const editEvent = useCallback(
-    e => evt => {
+    ev => evt => {
       evt.preventDefault();
-      history.push( `/calendar/add/${ e.id }/edit` );
+      history.push( `/calendar/add/${ ev.id }/edit` );
     },
     []
   );
@@ -83,7 +93,7 @@ function Details() {
   const events = eventStore.getEventsForWeek( uiStore.currentWeek ) || [];
   const startBal = events
     .filter( x => x.category === 'income.startingBalance' )
-    .map( e => formatCurrency( e.totalCents / 100 ) );
+    .map( ev => formatCurrency( ev.totalCents / 100 ) );
 
   const endBalanceClasses = clsx( 'calendar-details__ending-balance', uiStore.weekHasNegativeBalance && 'negative', uiStore.weekHasPositiveBalance && 'positive' );
   return (
@@ -118,8 +128,8 @@ function Details() {
         <IconButton
           className='calendar-details__nav-button'
           aria-label='Next Week'
-          onClick={() => uiStore.nextWeek()}
-          icon={arrowRight}
+          onClick={ () => uiStore.nextWeek()}
+          icon={ arrowRight }
         />
       </header>
 
@@ -164,12 +174,13 @@ function Details() {
         <h3 className='calendar-details__events-section-title'>Transactions</h3>
 
         <ul className='calendar-details__events-list'>
-          {events.map( e => <DetailRow
-            event={e}
-            onRequestEdit={editEvent( e )}
-            onRequestDelete={confirmDelete( e )}
-            key={e.id}
-            balanceIsNegative={e.total < 0 && eventStore.getDay( e.dateTime ).totalBalance < 1}
+          {events.map( ev => <DetailRow
+            event={ ev }
+            onRequestEdit={editEvent( ev )}
+            onRequestDelete={confirmDelete( ev )}
+            key={ ev.id }
+            balanceIsNegative={ ev.total < 0 &&
+              eventStore.getDay( ev.dateTime ).totalBalance < 1}
           />
           )}
         </ul>

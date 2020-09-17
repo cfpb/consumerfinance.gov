@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import { useCallback } from 'react';
-import { observer } from 'mobx-react';
-import { useStore } from '../../../stores';
 import { dayjs } from '../../../lib/calendar-helpers';
+import { observer } from 'mobx-react';
+import { useCallback } from 'react';
+import { useStore } from '../../../stores';
+
 
 function Day( { day, dateFormat = 'D' } ) {
   const { uiStore, eventStore } = useStore();
