@@ -37,7 +37,7 @@
                     <legend class="a-legend">
                         Category
                     </legend>
-                    <ul class="m-list m-list__unstyled">
+                    <ul class="m-list m-list__unstyled" role="group">
                     {% for slug, name in choices_for_page_type(value.categories.page_type) %}
                         {{ _filter_selectable('checkbox', category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
                     {% endfor %}
@@ -58,7 +58,7 @@
                                 <legend class="a-legend">
                                    Status
                                 </legend>
-                                <ul class="m-list m-list__unstyled">
+                                <ul class="m-list m-list__unstyled" role="group">
                                 {% for slug, name in form.statuses.field.choices %}
                                     {{ _filter_selectable('checkbox', name, 'statuses_' ~ slug, 'statuses', slug) }}
                                 {% endfor %}
