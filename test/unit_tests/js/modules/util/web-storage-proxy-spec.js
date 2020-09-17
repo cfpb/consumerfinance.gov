@@ -167,6 +167,17 @@ describe( 'web-storage-proxy', () => {
       expect( storageError ).toThrow( Error );
     } );
 
+    it( 'should set storage to an object if ' +
+        'sessionStorage is undefined', () => {
+      webStorageProxy.setItem( 'foo', 'bar', undefined );
+      expect( webStorageProxy.getItem( 'foo' ) ).toEqual( 'bar' );
+    } );
+
+    it( 'should set storage to an object if sessionStorage is null', () => {
+      webStorageProxy.setItem( 'foo', 'bar', null );
+      expect( webStorageProxy.getItem( 'foo' ) ).toEqual( 'bar' );
+    } );
+
     xit( 'should set storage to an object if sessionStorage throws an error',
       () => {
 

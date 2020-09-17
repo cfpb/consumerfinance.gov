@@ -8,7 +8,7 @@ let _localStorage;
 try {
   _localStorage = window.localStorage;
 } catch ( err ) {
-  _localStorage = {};
+  _localStorage = null;
 }
 
 /**

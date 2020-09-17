@@ -98,7 +98,7 @@ function setStorage( storage ) {
  */
 function _getStorageType( storage ) {
   // Use default setting if none is provided.
-  if ( typeof storage !== 'object' ) {
+  if ( storage === null || typeof storage !== 'object' ) {
     if ( typeof _storage === 'undefined' ) {
       try {
         storage = window.sessionStorage;
