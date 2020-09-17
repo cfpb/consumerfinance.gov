@@ -19,7 +19,7 @@
                  itemtype="http://schema.org/DefinedTerm">
                 <dt class="term_name" itemprop="name">
                     {{ term.name(page.language) }}
-                    <link itemprop="url" href="{{ page.full_url }}#{{ term.anchor(page.language) }}">
+                    <link itemprop="url" href="{{ page.full_url }}{{ page.category_slug }}/#{{ term.anchor(page.language) }}">
                 </dt>
                 <dd class="term_definition" itemprop="description">
                     {{ term.definition(page.language) | richtext }}
