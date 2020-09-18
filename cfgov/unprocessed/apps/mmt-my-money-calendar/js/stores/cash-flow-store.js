@@ -310,6 +310,7 @@ export default class CashFlowStore {
    *
    * @returns {undefined}
    */
+  /* eslint-disable-next-line */
   loadEvents = flow(function* () {
     // Flows are asynchronous actions, structured as generator functions
     this.rootStore.setLoading();
@@ -433,6 +434,7 @@ export default class CashFlowStore {
    * @param {Number} id - The event's ID property
    * @returns {undefined}
    */
+  /* eslint-disable-next-line */
   deleteEvent = flow(function* (id, andRecurrences) {
     const event = this.eventsById.get(id);
     const recurrences = yield event.getAllRecurrences();
@@ -461,6 +463,7 @@ export default class CashFlowStore {
    *
    * @param {CashFlowEvent} event The event to create recurrences for
    */
+  /* eslint-disable-next-line */
   createRecurrences = flow(function* (event) {
     const copies = event.recurrenceDates.map(
       dateTime => new CashFlowEvent({
@@ -497,6 +500,7 @@ export default class CashFlowStore {
    * @param {CashFlowEvent} event - The event whose recurrences should be deleted
    * @return {Promise}
    */
+  /* eslint-disable-next-line */
   deleteRecurrences = flow(function* (event, onlyFuture = false) {
     const recurrences = yield event.getAllRecurrences();
     const deletedIDs = [];
@@ -514,6 +518,7 @@ export default class CashFlowStore {
   /**
    * Delete all data from the DB and clear the store's events array
    */
+  /* eslint-disable-next-line */
   clearAllData = flow(function* () {
     yield CashFlowEvent.destroyAll();
     localStorage.clear();
