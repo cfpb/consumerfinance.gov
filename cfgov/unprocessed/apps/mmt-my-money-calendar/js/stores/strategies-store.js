@@ -198,8 +198,8 @@ class StrategiesStore {
     return events.reduce(
       (results, event) => {
         if (event.totalCents < 0 && !event.categoryDetails.hasBill) {
-          /* eslint dot-notation: ["error", { "allowKeywords": false }] */
-          if (this.fixItStrategies['largestAdHocExpense'].find((sgy) => sgy.categories.includes(event.category))) {
+          // eslint-disable-next-line dot-notation
+          if (this.fixItStrategies['largestAdHocExpense'].find( sgy => sgy.categories.includes(event.category))) {
             if (!results.largestAdHocExpense || results.largestAdHocExpense.isLessThan(event)) {
               results.largestAdHocExpense = event;
             }
@@ -208,7 +208,7 @@ class StrategiesStore {
 
         if (event.categoryDetails.hasBill) {
           if (!event.category.includes('expense.housing')) {
-            /* eslint dot-notation: ["error", { "allowKeywords": false }] */
+            // eslint-disable-next-line dot-notation
             if (this.fixItStrategies["largestBillableExpense"].find( sgy => sgy.categories.includes(event.category))) {
               if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
                 results.largestBillableExpense = event;
