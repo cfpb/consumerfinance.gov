@@ -198,7 +198,7 @@ class StrategiesStore {
     return events.reduce(
       (results, event) => {
         if (event.totalCents < 0 && !event.categoryDetails.hasBill) {
-          // eslint-disable-next-line dot-notation
+          /* eslint-disable-next-line */
           if (this.fixItStrategies['largestAdHocExpense'].find( sgy => sgy.categories.includes(event.category))) {
             if (!results.largestAdHocExpense || results.largestAdHocExpense.isLessThan(event)) {
               results.largestAdHocExpense = event;
@@ -208,7 +208,7 @@ class StrategiesStore {
 
         if (event.categoryDetails.hasBill) {
           if (!event.category.includes('expense.housing')) {
-            // eslint-disable-next-line dot-notation
+            /* eslint-disable-next-line */
             if (this.fixItStrategies["largestBillableExpense"].find( sgy => sgy.categories.includes(event.category))) {
               if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
                 results.largestBillableExpense = event;
