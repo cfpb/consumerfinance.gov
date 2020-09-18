@@ -419,7 +419,7 @@ export default class CashFlowStore {
   @action addEvent(event) {
     if (CashFlowEvent.isCashFlowEvent(event)) return this.events.push(event);
 
-    this.events.push(new CashFlowEvent(event));
+    return this.events.push(new CashFlowEvent(event));
   }
 
   /**

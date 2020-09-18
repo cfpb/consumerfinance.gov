@@ -210,7 +210,7 @@ class Logger {
           args[0] = `%c${name}%c ${args[0]}`;
           args.splice(1, 0, labelStyle, resetStyle);
         }
-        return console[method](...args);
+        console[method](...args);
       };
 
       return obj;
