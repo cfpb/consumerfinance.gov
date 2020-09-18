@@ -10,7 +10,7 @@ import { Categories } from '../models/categories';
 
 export default class CashFlowEvent {
   @observable originalEventID;
-  
+
   @observable id;
 
   @observable name = '';
@@ -28,6 +28,7 @@ export default class CashFlowEvent {
   @observable errors;
 
   @observable persisted = false;
+
   @observable updatedAt;
 
   @observable createdAt;
@@ -64,7 +65,7 @@ export default class CashFlowEvent {
 
   static directions = {
     DESC: 'prev',
-    ASC: 'next',
+    ASC: 'next'
   };
 
   static store = 'events';
@@ -115,7 +116,7 @@ export default class CashFlowEvent {
   static async getAll() {
     const { store } = await this.transaction();
     const records = await store.getAll();
-    return records.map((rec) => new CashFlowEvent({ ...rec, persisted: true }));
+    return records.map( rec => new CashFlowEvent({ ...rec, persisted: true }));
   }
 
   /**

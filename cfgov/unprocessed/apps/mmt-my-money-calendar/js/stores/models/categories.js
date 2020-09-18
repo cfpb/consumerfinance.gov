@@ -203,7 +203,7 @@ export const Categories = new CategoryTree({
         name: 'Property Tax',
         icon: icons.propertyTaxes,
         recurrenceTypes: ['monthly'],
-        hasBill: tru
+        hasBill: true
       },
       rentersInsurance: {
         name: 'Renters Insurance',
@@ -215,7 +215,7 @@ export const Categories = new CategoryTree({
         name: 'Homeowners Insurance',
         icon: icons.homeownersInsurance,
         recurrenceTypes: ['monthly'],
-        hasBill: tru
+        hasBill: true
       }
     },
     utilities: {

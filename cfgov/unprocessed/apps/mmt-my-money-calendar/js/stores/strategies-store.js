@@ -42,7 +42,7 @@ class StrategiesStore {
         icon1: icons.mortgage1,
         title: 'Rent',
         text: 'If possible, ask your landlord to let you make multiple payments toward rent.  If not, contact a local organization that helps with rental assistance.'
-      },
+      }
     ],
     largestBillableExpense: [
       {
@@ -157,7 +157,7 @@ class StrategiesStore {
       Object.entries(this.fixItWeekAnalysis).map(([type, event]) => {
         if (!event || event.hideFixItStrategy) return;
 
-        const strategy = this.fixItStrategies[type].find((sgy) => sgy.categories.includes(event.category));
+        const strategy = this.fixItStrategies[type].find( sgy => sgy.categories.includes(event.category));
 
         if (!strategy) return;
 
@@ -176,7 +176,7 @@ class StrategiesStore {
 
   @computed get strategyResults() {
     const strategyIDs = new Set();
-    const list = this.eventStore.eventCategories.map((catPath) => {
+    const list = this.eventStore.eventCategories.map( catPath => {
       const { strategy } = Categories.get(catPath) || {};
       return strategy;
     });
@@ -186,7 +186,7 @@ class StrategiesStore {
       }
     }
 
-    return compact(list).filter((item) => {
+    return compact(list).filter( item => {
       if (strategyIDs.has(item.id)) return false;
       strategyIDs.add(item.id);
       this.logger.debug('Strategy IDs set: %O', strategyIDs);
@@ -207,7 +207,7 @@ class StrategiesStore {
 
         if (event.categoryDetails.hasBill) {
           if (!event.category.includes('expense.housing')) {
-            if (this.fixItStrategies['largestBillableExpense'].find((sgy) => sgy.categories.includes(event.category))) {
+            if (this.fixItStrategies['largestBillableExpense'].find( sgy => sgy.categories.includes(event.category))) {
               if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
                 results.largestBillableExpense = event;
               }
@@ -215,7 +215,7 @@ class StrategiesStore {
           }
         }
 
-        if (/^expense\.housing/.test(event.category)) {
+        if ('/^expense\.housing/'.test(event.category)) {
           if (!results.largestHousingExpense || results.largestHousingExpense.isLessThan(event)) {
             results.largestHousingExpense = event;
           }

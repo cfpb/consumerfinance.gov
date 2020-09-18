@@ -15,13 +15,13 @@ export default class CashFlowStore {
   @observable events = [];
 
   @observable modalOpen = localStorage.getItem('removeSpotlight') ? false : true;
-  
+
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.logger = logger.addGroup('cashFlowStore');
     this.loadEvents();
 
-    CashFlowEvent.on('afterSave', (event) => {
+    CashFlowEvent.on('afterSave', event => {
       this.logger.info('Detected event save %O', event);
 
       if (event.recurs && event.recurrenceRule && !event.isRecurrence) this.createRecurrences(event);
@@ -49,7 +49,7 @@ export default class CashFlowStore {
 
     while (currentDate.isSameOrBefore(stopDate)) {
       const dayProps = {
-        date: currentDate,
+        date: currentDate
       };
 
       if (currentDate.isSame(startDate)) {
