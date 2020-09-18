@@ -48,7 +48,7 @@ export class CategoryTree {
     const parent = this.get(parentName);
 
     if (!this.hasSubcategories(parent)) return false;
-
+    /* eslint-disable-next-line */
     this.recurseSubcategories(parentName, key => {
       if (key === childKey) {
         result = true;
