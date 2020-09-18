@@ -46,7 +46,7 @@ wagtail-treemodeladmin==1.2.1
 wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
-git+https://github.com/cfpb/elasticsearch-dsl-py.git@import-elasticsearch7
+git+https://github.com/cfpb/elasticsearch-dsl-py.git
 git+https://github.com/cfpb/django-elasticsearch-dsl.git
 https://github.com/cfpb/wagtail-autocomplete/releases/download/0.7/wagtail_autocomplete-0.6-py3-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.16.0/owning_a_home_api-0.16.0-py3-none-any.whl
