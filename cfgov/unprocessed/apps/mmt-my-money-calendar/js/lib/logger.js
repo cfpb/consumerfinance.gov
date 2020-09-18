@@ -107,6 +107,7 @@ class Logger {
 
   /** Setter that automatically saves config object to localStorage
    * @type {object} an object
+   * @param {Object} obj an object
   */
   set config(obj) {
     this.storage[storageKey] = JSON.stringify(obj);
