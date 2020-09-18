@@ -62,8 +62,6 @@ describe( 'FormModel', () => {
 
       expect( model.get( 'elements' ).length ).toBe( 15 );
       expect( model.get( 'validateableElements' ).length ).toBe( 13 );
-      expect( model.get( 'fieldGroups' ).length ).toBe( 1 );
-      expect( model.get( 'fieldGroups' )[0] ).toBe( 'categories' );
     } );
 
   } );
