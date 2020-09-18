@@ -6,7 +6,7 @@ import { stateToHTML } from 'draft-js-export-html';
     Code copied from
     https://github.com/wagtail/wagtail/blob/master/wagtail/contrib/table_block/static/table_block/js/table.js
 
-    Modifications were made to add new form fields to the TableBlock in Wagtail admin and support the rich text editor within table cells. */
+    Modifications were made to add new form fields to the TableBlock in Wagtail admin and support the rich text editor within table cells */
 ( function( win ) {
 
 
