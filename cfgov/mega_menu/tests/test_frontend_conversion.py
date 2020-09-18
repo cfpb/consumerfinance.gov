@@ -13,8 +13,6 @@ class FrontendConverterTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.root_page = Site.objects.get(is_default_site=True).root_page
-        cls.request = RequestFactory().get('/foo/bar/')
-        Site.find_for_request(cls.request)
 
         consumer_tools_page = cls.make_test_page('Consumer Tools')
         about_us_page = cls.make_test_page('About Us')
@@ -95,12 +93,20 @@ class FrontendConverterTests(TestCase):
         cls.root_page.add_child(instance=page)
         return page
 
-    def do_conversion(self, menu):
-        converter = FrontendConverter(menu, request=self.request)
+    @classmethod
+    def make_request(cls, path):
+        request = RequestFactory().get(path)
+        Site.find_for_request(request)
+        return request
+
+    def do_conversion(self, menu, request):
+        converter = FrontendConverter(menu, request=request)
         return converter.get_menu_items()
 
     def test_converted_format_uses_basic_python_types(self):
-        converted = self.do_conversion(self.menu)
+        request = self.make_request('/auto-loans/')
+
+        converted = self.do_conversion(self.menu, request)
 
         # We want to pass only basic Python types (strings, etc.) to the
         # frontend, as opposed to complex Wagtail types like Pages. An easy
@@ -108,6 +114,8 @@ class FrontendConverterTests(TestCase):
         self.assertEqual(converted, json.loads(json.dumps(converted)))
 
     def test_conversion_database_queries(self):
+        request = self.make_request('/auto-loans/')
+
         self.menu.refresh_from_db()
 
         # We expect to see two queries here:
@@ -115,10 +123,83 @@ class FrontendConverterTests(TestCase):
         # 1. Wagtail's site root lookup.
         # 2. Single query to retrieve all pages at once.
         with self.assertNumQueries(2):
-            self.do_conversion(self.menu)
+            self.do_conversion(self.menu, request)
 
     def test_conversion_output(self):
-        self.assertEqual(self.do_conversion(self.menu), [
+        request = self.make_request('/auto-loans/')
+
+        self.assertEqual(self.do_conversion(self.menu, request), [
+            {
+                'selected': True,
+                'overview': {
+                    'url': '/consumer-tools/',
+                    'text': 'Consumer Tools',
+                },
+                'nav_groups': [
+                    {
+                        'title': 'Money Topics',
+                        'title_hidden': False,
+                        'nav_items': [
+                            {
+                                'url': '/auto-loans/',
+                                'text': 'Auto Loans',
+                                'selected': True,
+                            },
+                            {
+                                'url': '/bank-accounts/',
+                                'text': 'Wagtail page with other text',
+                            },
+                            {
+                                'url': '/foo/bar/?baz=1',
+                                'text': 'Non-Wagtail page',
+                            },
+                        ],
+                    },
+                ],
+                'featured_items': [
+                    {
+                        'url': '/featured/1/',
+                        'text': 'First featured link',
+                    },
+                ],
+            },
+            {
+                'overview': {
+                    'url': '/about-us/',
+                    'text': 'Alternate Submenu Title',
+                },
+                'featured_items': [
+                    {
+                        'url': '/featured/2/',
+                        'text': 'Second featured link',
+                    },
+                    {
+                        'url': '/featured/3/',
+                        'text': 'Third featured link',
+                    },
+                ],
+                'other_items': [
+                    {
+                        'url': '/financial-well-being/',
+                        'text': 'First other link',
+                        'icon': 'star',
+                    },
+                    {
+                        'url': '/other/2/',
+                        'text': 'Second other link',
+                        'icon': 'mail',
+                    },
+                ],
+            },
+        ])
+
+    def test_conversion_output_selection_ignores_query_string(self):
+        request = self.make_request('/foo/bar/')
+
+        # We expect the first submenu to be highlighted because it contains
+        # a link that starts with /foo/bar, but not the link itself
+        # (/foo/bar/?baz=1) because it contains a query string.
+        self.assertEqual(self.do_conversion(self.menu, request), [
             {
                 'selected': True,
                 'overview': {
