@@ -237,7 +237,7 @@ export default class CashFlowStore {
    * Determines whether or not the given date has any income events
    *
    * @param {Date|dayjs} date - The date to check
-   * @returns {Boolean} a Boolean
+   * @returns {Boolean} a boolean
    */
   dateHasIncome(date) {
     const events = this.getEventsForDate(date);
@@ -251,7 +251,7 @@ export default class CashFlowStore {
    * Determines whether or not the given date has any expense events
    *
    * @param {Date|dayjs} date - The date to check
-   * @returns {Boolean}
+   * @returns {Boolean} a boolean
    */
   dateHasExpenses(date) {
     const events = this.getEventsForDate(date);
@@ -265,7 +265,7 @@ export default class CashFlowStore {
    * Determines whether or not a given date has any events
    *
    * @param {Date|dayjs} date A JS date or dayjs object
-   * @returns {boolean}
+   * @returns {boolean} a Boolean
    */
   dateHasEvents(date) {
     return Boolean(this.getEventsForDate(date));
@@ -275,7 +275,7 @@ export default class CashFlowStore {
    * Returns all cash flow events for the given date
    *
    * @param {Date|dayjs} date - The date to check
-   * @returns {CashFlowEvent[]|undefined}
+   * @returns {CashFlowEvent[]|undefined} an Array or undefined
    */
   getEventsForDate(date) {
     date = toDayJS(date);
@@ -286,7 +286,7 @@ export default class CashFlowStore {
    * Gets all events occurring in the same week as the specified date
    *
    * @param {Date|dayjs} date - A date in the week to check
-   * @returns {CashFlowEvent[]|undefined}
+   * @returns {CashFlowEvent[]|undefined} an array or undefined
    */
   getEventsForWeek(date) {
     date = toDayJS(date).startOf('week');
@@ -297,7 +297,7 @@ export default class CashFlowStore {
    * Gets all positive events occurring in the same week as the specified date
    *
    * @param {Date|dayjs} date - A date in the week to check
-   * @returns {CashFlowEvent[]|undefined}
+   * @returns {CashFlowEvent[]|undefined} an array or undefined
    */
   getPositiveEventsForWeek(date) {
     date = toDayJS(date).startOf('week');
@@ -324,7 +324,7 @@ export default class CashFlowStore {
    * Get a single event from the store, by ID
    *
    * @param {number} id The event ID from the database
-   * @returns {CashFlowEvent|undefined}
+   * @returns {CashFlowEvent|undefined} an array or undefined
    */
   getEvent(id) {
     return this.eventsById.get(Number(id));
@@ -334,7 +334,7 @@ export default class CashFlowStore {
    * Directly sets the events array
    *
    * @param {CashFlowEvent[]} events An array of CashFlowEvent instances
-   * @returns {undefined}
+   * @returns {undefined} undefined
    */
   @action setEvents(events) {
     this.events = events;
@@ -500,7 +500,7 @@ export default class CashFlowStore {
    * Delete all recurrences of an event, irrespective of past or future date.
    *
    * @param {CashFlowEvent} event - The event whose recurrences should be deleted
-   * @return {Promise}
+   * @return {Promise} a promise
    */
   /* eslint-disable-next-line */
   deleteRecurrences = flow(function* (event, onlyFuture = false) {
