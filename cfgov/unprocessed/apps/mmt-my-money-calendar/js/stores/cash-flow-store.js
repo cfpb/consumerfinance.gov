@@ -354,6 +354,8 @@ export default class CashFlowStore {
    * @param {boolean} [updateRecurrences=false] - If event has recurrences, update their totals to match
    * @returns {undefined}
    */
+ 
+  /* eslint-disable-next-line */
   saveEvent = flow(function* (params, updateRecurrences = false) {
     let event;
 
