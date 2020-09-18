@@ -159,14 +159,13 @@ class StrategiesStore {
 
         const strategy = this.fixItStrategies[type].find( sgy => sgy.categories.includes(event.category));
 
-        if (!strategy) return;
+        if (!strategy) return null;
 
         strategy.event = event;
 
         if (strategy.template && typeof strategy.template === 'function') {
           strategy.text = strategy.template(event.categoryDetails.name);
         }
-
         return strategy;
       })
     );
