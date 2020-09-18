@@ -6,21 +6,37 @@ import Day from './models/day';
 
 export default class UIStore {
   @observable navOpen = false;
+  
   @observable pageTitle = 'myMoney Calendar';
+
   @observable subtitle;
+
   @observable description;
+
   @observable nextStepPath;
+
   @observable prevStepPath;
+
   @observable progress = 0;
+
   @observable error;
+
   @observable currentMonth = dayjs().startOf('month');
+
   @observable selectedDate;
+
   @observable currentWeek = dayjs().startOf('week');
+
   @observable selectedCategory = '';
+
   @observable showBottomNav = true;
+
   @observable isTouchDevice = false;
+
   @observable installPromptEvent;
+
   @observable days = [];
+
   @observable hasSpotlight;
 
   constructor(rootStore) {
@@ -111,7 +127,7 @@ export default class UIStore {
   @computed get weekHasNegativeBalance() {
     return this.weekEndingBalance < 0;
   }
-  
+
   @computed get weekHasPositiveBalance() {
     return this.weekEndingBalance > 0;
   }
@@ -220,13 +236,13 @@ export default class UIStore {
     window.removeEventListener('touchstart', this.setIsTouchDevice);
   };
 
-  @action setInstallPromptEvent = (event) => {
+  @action setInstallPromptEvent = event => {
     this.installPromptEvent = event;
     this.logger.debug('Store install prompt event: %O', this.installPromptEvent);
     window.removeEventListener('beforeinstallprompt', this.setInstallPromptEvent);
   };
 
-  @action toggleSpotlight = (bool) => {
+  @action toggleSpotlight = bool => {
     this.hasSpotlight = bool;
   };
 

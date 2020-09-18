@@ -2,7 +2,7 @@ import { observable, extendObservable, computed, action } from 'mobx';
 import { transform } from '../lib/object-helpers';
 import logger from '../lib/logger';
 
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 export default class WizardStore {
   fundingSourceOptions = {
@@ -10,19 +10,19 @@ export default class WizardStore {
       order: 1,
       name: 'Checking Account',
       label: 'How much do you have in your checking account?',
-      icon: 'paycheck',
+      icon: 'paycheck'
     },
     'savings': {
       order: 2,
       name: 'Savings Account',
       label: 'How much do you have in your savings account?',
-      icon: 'emergencySavings',
+      icon: 'emergencySavings'
     },
     'cash': {
       order: 3,
       name: 'Cash',
       label: 'How much cash do you have?',
-      icon: 'funMoney',
+      icon: 'funMoney'
     },
     'prepaid': {
       order: 4,
@@ -34,11 +34,12 @@ export default class WizardStore {
       order: 5,
       name: 'Other',
       label: 'How much other money on hand do you have?',
-      icon: 'other',
-    },
+      icon: 'other'
+    }
   };
 
   @observable fundingSources = [];
+
   @observable noStartingFunds = false;
 
   constructor(rootStore) {
