@@ -311,14 +311,12 @@ export default class CashFlowStore {
    * @returns {undefined}
    */
   loadEvents = flow(function* () {
-    //console.profile('loadEvents');
     // Flows are asynchronous actions, structured as generator functions
     this.rootStore.setLoading();
     const events = yield CashFlowEvent.getAllBy('date');
     this.events = events;
     this.eventsLoaded = true;
     this.rootStore.setIdle();
-    //console.profileEnd('loadEvents');
   });
 
   /**
@@ -454,7 +452,7 @@ export default class CashFlowStore {
       }
     }
 
-    this.events = this.events.filter((e) => !deletedIDs.includes(e.id));
+    this.events = this.events.filter( e => !deletedIDs.includes(e.id));
   });
 
   /**
@@ -465,13 +463,12 @@ export default class CashFlowStore {
    */
   createRecurrences = flow(function* (event) {
     const copies = event.recurrenceDates.map(
-      (dateTime) =>
-        new CashFlowEvent({
+      dateTime => new CashFlowEvent({
           ...event.toJS(),
           dateTime,
           id: null,
           originalEventID: event.id,
-          persisted: false,
+          persisted: false
         })
     );
     const savedEvents = [];

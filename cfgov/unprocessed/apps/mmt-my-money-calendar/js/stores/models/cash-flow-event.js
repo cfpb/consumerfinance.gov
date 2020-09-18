@@ -234,8 +234,8 @@ export default class CashFlowEvent {
     return yup.object().shape(this.constructor.schema);
   }
 
-  originalEvent = asyncComputed(undefined, 50, async () => {
-    if (!this.originalEventID) return undefined;
+  originalEvent = asyncComputed(null, 50, async () => {
+    if (!this.originalEventID) return null;
     return this.constructor.get(this.originalEventID);
   });
 
