@@ -179,6 +179,7 @@ export default class CashFlowEvent {
 
     while (cursor) {
       results.push(new CashFlowEvent({ ...cursor.value, persisted: true }));
+      /* eslint-disable-next-line */
       cursor = await cursor.continue();
     }
 
