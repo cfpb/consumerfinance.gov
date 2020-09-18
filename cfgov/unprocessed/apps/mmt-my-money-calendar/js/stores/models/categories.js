@@ -65,6 +65,7 @@ export class CategoryTree {
     if (!children) return;
 
     for (const [key, child] of Object.entries(children)) {
+      /* eslint-disable-next-line */
       const retVal = cb(key, child);
       if (retVal === false) return;
       if (this.hasSubcategories(child)) this.recurseSubcategories(child, cb);
