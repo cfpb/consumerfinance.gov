@@ -207,7 +207,8 @@ class StrategiesStore {
 
         if (event.categoryDetails.hasBill) {
           if (!event.category.includes('expense.housing')) {
-            if (this.fixItStrategies['largestBillableExpense'].find( sgy => sgy.categories.includes(event.category))) {
+            /*eslint dot-notation: ["error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" }]*/
+            if (this.fixItStrategies["largestBillableExpense"].find( sgy => sgy.categories.includes(event.category))) {
               if (!results.largestBillableExpense || results.largestBillableExpense.isLessThan(event)) {
                 results.largestBillableExpense = event;
               }

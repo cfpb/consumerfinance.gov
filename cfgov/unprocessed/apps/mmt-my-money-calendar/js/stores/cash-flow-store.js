@@ -464,12 +464,12 @@ export default class CashFlowStore {
   createRecurrences = flow(function* (event) {
     const copies = event.recurrenceDates.map(
       dateTime => new CashFlowEvent({
-          ...event.toJS(),
-          dateTime,
-          id: null,
-          originalEventID: event.id,
-          persisted: false
-        })
+        ...event.toJS(),
+        dateTime,
+        id: null,
+        originalEventID: event.id,
+        persisted: false
+      })
     );
     const savedEvents = [];
 
