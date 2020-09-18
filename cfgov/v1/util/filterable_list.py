@@ -6,11 +6,8 @@ from v1.util.ref import get_category_children
 from v1.util.util import get_secondary_nav_items
 
 
-class FilterableListMixin(object):
+class FilterableListMixin:
     """Wagtail Page mixin that allows for filtering of other pages."""
-
-    filterable_categories = []
-    """Determines page categories to be filtered; see filterable_pages."""
 
     filterable_children_only = True
     """Determines page tree to be filtered; see filterable_pages."""
@@ -29,18 +26,13 @@ class FilterableListMixin(object):
     def get_form_class():
         return FilterableListForm
 
-    def filterable_pages(self):
-        """Return pages that are eligible to be filtered by this page.
+    def get_filterable_queryset(self):
+        """Return the queryset of pages to be filtered by this page.
 
-        Always includes only live pages and pages that live in the same Wagtail
-        site as this page. If this page cannot be mapped to a Wagtail site (for
-        example, if it does not live under a site root), then it will not
-        return any filterable results.
-
-        The class property filterable_categories can be set to a list of page
-        categories from the set in v1.util.ref.categories. If set, this page
-        will only filter pages that are tagged with a tag in those categories.
-        By default this is an empty list and all page tags are eligible.
+        By default this includes only life pages and pages that live in the
+        same Wagtail Site as this page. If this page cannot be mapped to a
+        Wagtail site (for example, if it does not live under a site root),
+        then it will not return any filterable results.
 
         The class property filterable_children_only determines whether this
         page filters only pages that are direct children of this page. By
@@ -52,16 +44,12 @@ class FilterableListMixin(object):
         if not site:
             return self.get_model_class().objects.none()
 
-        pages = self.get_model_class().objects.in_site(site).live()
-
-        if self.filterable_categories:
-            category_names = get_category_children(self.filterable_categories)
-            pages = pages.filter(categories__name__in=category_names)
+        queryset = self.get_model_class().objects.in_site(site).live()
 
         if self.filterable_children_only:
-            pages = pages.child_of(self)
+            queryset = queryset.child_of(self)
 
-        return pages
+        return self.get_model_class().objects.in_site(site).live()
 
     def filterable_list_wagtail_block(self):
         return next((b for b in self.content if b.block_type == 'filter_controls'), None)  # noqa 501
@@ -74,7 +62,7 @@ class FilterableListMixin(object):
         form_data, has_active_filters = self.get_form_data(request.GET)
         form = self.get_form_class()(
             form_data,
-            filterable_pages=self.filterable_pages(),
+            filterable_pages=self.get_filterable_queryset(),
             wagtail_block=self.filterable_list_wagtail_block(),
         )
 
@@ -139,3 +127,20 @@ class FilterableListMixin(object):
         if self.do_not_index:
             response['X-Robots-Tag'] = 'noindex'
         return response
+
+
+class CategoryFilterableMixin:
+    filterable_categories = []
+    """Determines page categories to be filtered; see filterable_pages."""
+
+    def get_filterable_queryset(self):
+        """Return the queryset of pages to be filtered by this page.
+
+        The class property filterable_categories can be set to a list of page
+        categories from the set in v1.util.ref.categories. If set, this page
+        will only filter pages that are tagged with a tag in those categories.
+        By default this is an empty list and all page tags are eligible.
+        """
+        queryset = super().get_filterable_queryset()
+        category_names = get_category_children(self.filterable_categories)
+        return queryset.filter(categories__name__in=category_names)

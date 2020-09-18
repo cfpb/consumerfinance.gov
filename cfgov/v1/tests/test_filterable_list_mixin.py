@@ -45,7 +45,9 @@ class TestFilterableListMixin(TestCase):
             def get_site(self):
                 return None
 
-        self.assertFalse(MockPageInDefaultSite().filterable_pages().exists())
+        self.assertFalse(
+            MockPageInDefaultSite().get_filterable_queryset().exists()
+        )
 
     # FilterableListMixin.set_do_not_index tests
     def test_do_not_index_is_false_by_default(self):

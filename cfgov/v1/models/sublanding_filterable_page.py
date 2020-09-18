@@ -10,7 +10,9 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
-from v1.util.filterable_list import FilterableListMixin
+from v1.util.filterable_list import (
+    FilterableListMixin, CategoryFilterableMixin
+)
 
 
 class SublandingFilterableContent(StreamBlock):
@@ -61,7 +63,7 @@ class SublandingFilterablePage(FilterableFeedPageMixin,
     ]
 
 
-class ActivityLogPage(SublandingFilterablePage):
+class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
     template = 'activity-log/index.html'
     filterable_categories = ('Blog', 'Newsroom', 'Research Report')
     filterable_children_only = False

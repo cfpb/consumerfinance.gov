@@ -13,7 +13,10 @@ from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import EnforcementActionPage, EventPage
-from v1.util.filterable_list import FilterableListMixin
+from v1.util.filterable_list import (
+    FilterableListMixin, CategoryFilterableMixin
+)
+from v1.util.ref import get_category_children
 
 
 class BrowseFilterableContent(StreamBlock):
@@ -105,7 +108,7 @@ class EventArchivePage(BrowseFilterablePage):
         return forms.EventArchiveFilterForm
 
 
-class NewsroomLandingPage(BrowseFilterablePage):
+class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
     template = 'newsroom/index.html'
     filterable_categories = ['Newsroom']
     filterable_children_only = False
