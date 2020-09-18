@@ -231,7 +231,7 @@ export const Categories = new CategoryTree({
           icon1: icons.naturalGas1,
           title: 'Payment Plans for Utilities',
           body:
-            'Check with your gas company to see if you qualify.  Then enter the new bill amount into the calendar to see your cash flow.
+            'Check with your gas company to see if you qualify.  Then enter the new bill amount into the calendar to see your cash flow.'
         }
       },
       waterSewage: {

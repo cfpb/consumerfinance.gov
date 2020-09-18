@@ -10,20 +10,34 @@ import { Categories } from '../models/categories';
 
 export default class CashFlowEvent {
   @observable originalEventID;
+  
   @observable id;
+
   @observable name = '';
+
   @observable date;
+
   @observable category;
+
   @observable totalCents = 0;
+
   @observable recurs = false;
+
   @observable recurrence;
+
   @observable errors;
+
   @observable persisted = false;
   @observable updatedAt;
+
   @observable createdAt;
+
   @observable recurrenceType;
+
   @observable payday1 = 15;
+
   @observable payday2 = 30;
+
   @observable hideFixItStrategy = false;
 
   static MIN_DATE = dayjs(0);
@@ -66,7 +80,7 @@ export default class CashFlowEvent {
       .integer()
       .default(0),
     createdAt: yup.date().default(() => new Date()),
-    updatedAt: yup.date().default(() => new Date()),
+    updatedAt: yup.date().default(() => new Date())
   };
 
   static dbFields = [
@@ -81,7 +95,7 @@ export default class CashFlowEvent {
     'recurrenceType',
     'createdAt',
     'updatedAt',
-    'hideFixItStrategy',
+    'hideFixItStrategy'
   ];
 
   /**
@@ -205,7 +219,7 @@ export default class CashFlowEvent {
 
     return {
       tx,
-      store: tx.objectStore(this.store),
+      store: tx.objectStore(this.store)
     };
   }
 
@@ -270,7 +284,7 @@ export default class CashFlowEvent {
           .endOf('day')
           .toDate()
       )
-      .map((date) => dayjs(date));
+      .map( date => dayjs(date));
   }
 
   @computed get dateTime() {
@@ -427,7 +441,7 @@ export default class CashFlowEvent {
       recurs: this.recurs,
       recurrenceType: this.recurrenceType,
       payday1: this.payday1,
-      payday2: this.payday2,
+      payday2: this.payday2
     };
   }
 
@@ -438,7 +452,7 @@ export default class CashFlowEvent {
     const lowerBound = [id, this.constructor.MIN_DATE.toDate()];
     const upperBound = [
       id,
-      dayjs().add(3, 'months').toDate(),
+      dayjs().add(3, 'months').toDate()
     ];
     const range = IDBKeyRange.bound(lowerBound, upperBound);
     let cursor = await index.openCursor(range, 'next');
