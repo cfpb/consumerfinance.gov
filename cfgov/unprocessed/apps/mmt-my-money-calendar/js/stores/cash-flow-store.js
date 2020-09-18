@@ -11,13 +11,14 @@ export default class CashFlowStore {
   static snapCategories = ['expense.food.groceries', 'income.benefits.snap'];
 
   @observable eventsLoaded = false;
+
   @observable events = [];
+
   @observable modalOpen = localStorage.getItem('removeSpotlight') ? false : true;
   
   constructor(rootStore) {
     this.rootStore = rootStore;
     this.logger = logger.addGroup('cashFlowStore');
-
     this.loadEvents();
 
     CashFlowEvent.on('afterSave', (event) => {

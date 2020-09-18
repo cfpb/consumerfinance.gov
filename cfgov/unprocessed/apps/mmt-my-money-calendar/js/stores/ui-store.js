@@ -6,7 +6,7 @@ import Day from './models/day';
 
 export default class UIStore {
   @observable navOpen = false;
-  
+
   @observable pageTitle = 'myMoney Calendar';
 
   @observable subtitle;

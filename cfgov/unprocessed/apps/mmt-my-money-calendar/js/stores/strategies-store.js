@@ -71,7 +71,7 @@ class StrategiesStore {
         icon1: icons.personalLoan,
         title: 'Loan Due Date',
         text:
-          'Ask your lender if you could move the due date to a week with more money.
+          'Ask your lender if you could move the due date to a week with more money.'
       },
       {
         categories: ['expense.debt.creditCard'],
