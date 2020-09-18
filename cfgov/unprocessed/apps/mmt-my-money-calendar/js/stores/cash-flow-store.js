@@ -237,7 +237,7 @@ export default class CashFlowStore {
    * Determines whether or not the given date has any income events
    *
    * @param {Date|dayjs} date - The date to check
-   * @returns {Boolean}
+   * @returns {Boolean} a Boolean
    */
   dateHasIncome(date) {
     const events = this.getEventsForDate(date);
