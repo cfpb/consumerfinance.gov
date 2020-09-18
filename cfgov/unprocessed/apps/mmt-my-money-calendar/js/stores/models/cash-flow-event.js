@@ -103,6 +103,7 @@ export default class CashFlowEvent {
    * Indicates whether or not the object is an instance of CashFlowEvent
    *
    * @param {Object} obj - The object to check
+   * @returns {Object} obj an object
    */
   static isCashFlowEvent(obj) {
     return obj instanceof CashFlowEvent;
@@ -136,7 +137,7 @@ export default class CashFlowEvent {
    *
    * @param {string} indexName - The index to use for sorting
    * @param {string} [direction="next"] - The direction in which to sort
-   * @returns {Promise<CashFlowEvent>}
+   * @returns {Promise<CashFlowEvent>} a promise
    */
   static async getFirstBy(indexName, direction = 'next') {
     const cursor = await this.openCursor(indexName, direction);
@@ -236,12 +237,12 @@ export default class CashFlowEvent {
 
   originalEvent = asyncComputed(null, 50, async () => {
     if (!this.originalEventID) return null;
-    return this.constructor.get(this.originalEventID);
+    return await this.constructor.get(this.originalEventID);
   });
 
   recurrences = asyncComputed([], 100, async () => {
     if (this.isRecurrence || !this.id || !this.persisted || !this.rruleStr) return [];
-    return this.getAllRecurrences();
+    return await this.getAllRecurrences();
   });
 
   @computed get signature() {
