@@ -8,6 +8,7 @@ import { Categories } from './stores/models/categories';
 
 configureMobX({ enforceActions: 'observed' });
 
+/* eslint-disable-next-line */
 if (process.env.SERVICE_WORKER_ENABLED && 'serviceWorker' in navigator) {
   const wb = new Workbox('/mmt-my-money-calendar/service-worker.js', { scope: '/mmt-my-money-calendar' });
 
@@ -23,6 +24,7 @@ if (process.env.SERVICE_WORKER_ENABLED && 'serviceWorker' in navigator) {
 }
 
 // In development mode, expose global functions to seed and clear the local IDB database:
+/* eslint-disable-next-line */
 if (process.env.NODE_ENV === 'development') {
   window.dayjs = dayjs;
   window.Categories = Categories;

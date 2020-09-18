@@ -133,27 +133,12 @@ export function getWeekRows( date ) {
         weekNumber,
         days: Array( 7 )
           .fill( 0 )
+          /* eslint-disable-next-line */
           .map( ( n, idx ) => currentWeekStart.add( n + idx, 'days' ) )
       } );
       currentWeekStart = currentWeekStart.add( 1, 'week' );
     }
   }
-
-  /* while (
-    currentWeekStart.startOf('week').isSame(date, 'month') || curr
-    currentWeekStart.endOf('week').isSame(date, 'month')
-  ) {
-    const weekNumber = currentWeekStart.week();
-
-    rows.push({
-      weekNumber,
-      days: Array(7)
-        .fill(0)
-        .map((n, idx) => currentWeekStart.add(n + idx, 'days'))
-    });
-    currentWeekStart = currentWeekStart.add(1, 'week');
-  }
-*/
   return rows;
 }
 
