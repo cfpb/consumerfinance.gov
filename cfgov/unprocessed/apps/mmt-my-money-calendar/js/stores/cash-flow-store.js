@@ -94,11 +94,11 @@ export default class CashFlowStore {
    * @type {dayjs}
    */
   @computed get earliestEventDate() {
-    if (!this.eventsByDate) return undefined;
+    if (!this.eventsByDate) return null;
 
     const [firstTimestamp] = this.eventsByDate.keys();
 
-    if (!firstTimestamp) return undefined;
+    if (!firstTimestamp) return null;
 
     return dayjs(firstTimestamp);
   }
