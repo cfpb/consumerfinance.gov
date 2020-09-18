@@ -155,7 +155,7 @@ class StrategiesStore {
   @computed get fixItResults() {
     const results = compact(
       Object.entries(this.fixItWeekAnalysis).map(([type, event]) => {
-        if (!event || event.hideFixItStrategy) return;
+        if (!event || event.hideFixItStrategy) return null;
 
         const strategy = this.fixItStrategies[type].find( sgy => sgy.categories.includes(event.category));
 
