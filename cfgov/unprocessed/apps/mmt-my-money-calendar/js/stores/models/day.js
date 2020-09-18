@@ -4,7 +4,9 @@ import logger from '../../lib/logger';
 
 export default class Day {
   @observable date;
+  
   @observable snapBalance = 0;
+
   @observable nonSnapBalance = 0;
 
   constructor(store, props = {}) {
@@ -43,19 +45,19 @@ export default class Day {
   }
 
   @computed get nonSnapExpenses() {
-    return this.events.filter((event) => event.category !== 'expense.food.groceries' && event.total < 0);
+    return this.events.filter( event => event.category !== 'expense.food.groceries' && event.total < 0);
   }
 
   @computed get snapExpenses() {
-    return this.events.filter((event) => event.category === 'expense.food.groceries');
+    return this.events.filter( event => event.category === 'expense.food.groceries');
   }
 
   @computed get nonSnapIncome() {
-    return this.events.filter((event) => event.category !== 'income.benefits.snap' && event.total > 0);
+    return this.events.filter( event => event.category !== 'income.benefits.snap' && event.total > 0);
   }
 
   @computed get snapIncome() {
-    return this.events.filter((event) => event.category === 'income.benefits.snap');
+    return this.events.filter( event => event.category === 'income.benefits.snap');
   }
 
   @computed get nonSnapTotal() {
