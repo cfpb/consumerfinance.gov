@@ -13,7 +13,7 @@ class FrontendConverterTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.root_page = Site.objects.get(is_default_site=True).root_page
-        cls.request = RequestFactory().get('/consumer-tools/')
+        cls.request = RequestFactory().get('/foo/bar/')
         Site.find_for_request(cls.request)
 
         consumer_tools_page = cls.make_test_page('Consumer Tools')
@@ -39,7 +39,7 @@ class FrontendConverterTests(TestCase):
                                     'text': 'Wagtail page with other text',
                                 },
                                 {
-                                    'url': '/foo/bar/',
+                                    'url': '/foo/bar/?baz=1',
                                     'text': 'Non-Wagtail page',
                                 },
                             ],
@@ -124,7 +124,6 @@ class FrontendConverterTests(TestCase):
                 'overview': {
                     'url': '/consumer-tools/',
                     'text': 'Consumer Tools',
-                    'selected': True,
                 },
                 'nav_groups': [
                     {
@@ -140,7 +139,7 @@ class FrontendConverterTests(TestCase):
                                 'text': 'Wagtail page with other text',
                             },
                             {
-                                'url': '/foo/bar/',
+                                'url': '/foo/bar/?baz=1',
                                 'text': 'Non-Wagtail page',
                             },
                         ],

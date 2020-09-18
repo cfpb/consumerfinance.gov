@@ -1,4 +1,8 @@
+import re
 from itertools import chain
+
+
+REGEX_REMOVE_QUERY_STRING = re.compile(r'\?.*$')
 
 
 class FrontendConverter:
@@ -15,7 +19,7 @@ class FrontendConverter:
         # Normally we want to mark menu links as selected if the current
         # request is either on that link or one of its children; this lets us
         # properly highlight the menu if on the child of a menu link. But we
-        # don't want to do this for overview links, which are always the parent
+        # don't want to do this for overview links, which may be the parent
         # of all links beneath them.
         overview_link = self.make_link(
             {
@@ -48,9 +52,12 @@ class FrontendConverter:
             *chain(column['nav_items'] for column in columns)
         ):
             url = link.get('url')
-            if url and self.request.path.startswith(url):
-                menu_item['selected'] = True
-                break
+            if url:
+                url_no_query_string = REGEX_REMOVE_QUERY_STRING.sub('', url)
+
+                if self.request.path.startswith(url_no_query_string):
+                    menu_item['selected'] = True
+                    break
 
         return menu_item
 
