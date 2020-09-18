@@ -175,6 +175,7 @@ class Logger {
    * @returns {undefined}
    */
   updateConfig(params = {}) {
+    /* eslint-disable-next-line */
     this.config = Object.assign({}, this.config, params);
     this._info('Logger config updated: %O', this.config);
   }

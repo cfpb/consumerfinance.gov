@@ -13,10 +13,10 @@ if (process.env.SERVICE_WORKER_ENABLED && 'serviceWorker' in navigator) {
   const wb = new Workbox('/mmt-my-money-calendar/service-worker.js', { scope: '/mmt-my-money-calendar' });
 
   wb.addEventListener('activated', evt => {
-    if (!evt.isUpdate) {
-      console.info('MMC service worker activated for the first time');
-    } else {
+    if (evt.isUpdate) {
       console.info('MMC service worker updated');
+    } else {
+      console.info('MMC service worker activated for the first time');
     }
   });
 

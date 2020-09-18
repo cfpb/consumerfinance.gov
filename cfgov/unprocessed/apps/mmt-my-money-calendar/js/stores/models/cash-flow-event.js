@@ -420,6 +420,7 @@ export default class CashFlowEvent {
    *
    * @param {Boolean} [perms='readonly'] - Transaction permissions (readwrite or readonly)
    * @param {String|String[]} [stores=this.constructor.store] - Names of the object stores to be operated on
+   * @returns {Object} an object
    */
   transaction(...args) {
     return this.constructor.transaction(...args);
