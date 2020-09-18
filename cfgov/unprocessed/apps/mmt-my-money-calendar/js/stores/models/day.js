@@ -4,7 +4,7 @@ import logger from '../../lib/logger';
 
 export default class Day {
   @observable date;
-  
+
   @observable snapBalance = 0;
 
   @observable nonSnapBalance = 0;

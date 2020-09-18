@@ -13,7 +13,7 @@ export class CategoryTree {
     'strategy',
     'hasBill',
     'hasRestrictions',
-    'allowableExpenses',
+    'allowableExpenses'
   ];
 
   @observable categories = {};
@@ -39,7 +39,7 @@ export class CategoryTree {
   }
 
   hasSubcategories(category = {}) {
-    return Object.keys(category).filter((key) => !this.constructor.internalProps.includes(key)).length > 0;
+    return Object.keys(category).filter( key => !this.constructor.internalProps.includes(key)).length > 0;
   }
 
   isChildOf(childName, parentName) {
@@ -49,7 +49,7 @@ export class CategoryTree {
 
     if (!this.hasSubcategories(parent)) return false;
 
-    this.recurseSubcategories(parentName, (key) => {
+    this.recurseSubcategories(parentName, key => {
       if (key === childKey) {
         result = true;
         return false;
@@ -78,7 +78,7 @@ export const Categories = new CategoryTree({
     startingBalance: {
       name: 'Starting Balance',
       restricted: true,
-      recurrenceTypes: [],
+      recurrenceTypes: []
     },
     salary: {
       name: 'Job',
@@ -91,9 +91,9 @@ export const Categories = new CategoryTree({
         body: 'Sign up for direct deposit as a safer and faster option for your paycheck.',
         link: {
           href: 'https://www.consumerfinance.gov/ask-cfpb/should-i-enroll-in-direct-deposit-en-1027/',
-          text: 'See more',
-        },
-      },
+          text: 'See more'
+        }
+      }
     },
     benefits: {
       name: 'Benefits',
@@ -105,14 +105,14 @@ export const Categories = new CategoryTree({
         strategy: {
           id: 'vetBenefits',
           icon1: icons.veteransBenefits1,
-          title: "Explore Military Financial Resources",
+          title: 'Explore Military Financial Resources',
           body:
             'Manage financial challenges at every step of your military career.',
           link: {
             href: 'https://www.consumerfinance.gov/consumer-tools/military-financial-lifecycle/',
-            text: 'Navigating the Military Financial Lifecycle',
-          },
-        },
+            text: 'Navigating the Military Financial Lifecycle'
+          }
+        }
       },
       disability: {
         name: 'Disability Benefits',
@@ -126,19 +126,18 @@ export const Categories = new CategoryTree({
             'Find tips and skill-building resources for people with disabilities.',
           link: {
             href: 'https://www.consumerfinance.gov/about-us/blog/new-financial-empowerment-tools-people-disabilities/',
-            text: 'Focus on People with Disabilities Guide',
-          },
-        },
+            text: 'Focus on People with Disabilities Guide'
+          }
+        }
       },
       socialSecurity: {
         name: 'Social Security Benefits',
         icon: icons.socialSecurity,
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly']
       },
       unemployment: {
         name: 'Unemployment',
         icon: icons.unemployment,
-        
         recurrenceTypes: ['monthly'],
         strategy: {
           id: 'jobTraining',
@@ -148,29 +147,29 @@ export const Categories = new CategoryTree({
             'Find job training opportunities at your local Career One-Stop.',
           link: {
             href: 'https://www.careeronestop.org/localhelp/americanjobcenters/find-american-job-centers.aspx',
-            text: 'Locate an American Job Center',
-          },
-        },
+            text: 'Locate an American Job Center'
+          }
+        }
       },
       tanf: {
         name: 'TANF',
         icon: icons.tanf,
-        recurrenceTypes: ['monthly'],
+        recurrenceTypes: ['monthly']
       },
       snap: {
         name: 'SNAP',
         icon: icons.snap,
         recurrenceTypes: ['monthly'],
         hasRestrictions: true,
-        allowableExpenses: ['expense.food.groceries'],
-      },
+        allowableExpenses: ['expense.food.groceries']
+      }
     },
     other: {
       name: 'Other',
       icon: icons.other,
       description: 'Includes child support payments, etc.',
-      recurrenceTypes: ['weekly', 'biweekly', 'monthly', 'semimonthly'],
-    },
+      recurrenceTypes: ['weekly', 'biweekly', 'monthly', 'semimonthly']
+    }
   },
   expense: {
     name: 'Expense',
@@ -190,34 +189,34 @@ export const Categories = new CategoryTree({
             'Check with your mortgage lender to see if you qualify for a lower interest rate.  Then enter the new payment amount into the calendar.',
           link: {
             href: 'https://www.consumerfinance.gov/mortgage/',
-            text: 'Answers to Your Mortgage Questions',
-          },
-        },
+            text: 'Answers to Your Mortgage Questions'
+          }
+        }
       },
       rent: {
         name: 'Rent',
         icon: icons.rent,
         recurrenceTypes: ['weekly', 'monthly', 'biweekly'],
-        hasBill: true,
+        hasBill: true
       },
       propertyTaxes: {
         name: 'Property Tax',
         icon: icons.propertyTaxes,
         recurrenceTypes: ['monthly'],
-        hasBill: true,
+        hasBill: tru
       },
       rentersInsurance: {
         name: 'Renters Insurance',
         icon: icons.rentersInsurance,
         recurrenceTypes: ['monthly'],
-        hasBill: true,
+        hasBill: true
       },
       homeownersInsurance: {
         name: 'Homeowners Insurance',
         icon: icons.homeownersInsurance,
         recurrenceTypes: ['monthly'],
-        hasBill: true,
-      },
+        hasBill: tru
+      }
     },
     utilities: {
       name: 'Utilities',
@@ -232,14 +231,14 @@ export const Categories = new CategoryTree({
           icon1: icons.naturalGas1,
           title: 'Payment Plans for Utilities',
           body:
-            'Check with your gas company to see if you qualify.  Then enter the new bill amount into the calendar to see your cash flow.',
-        },
+            'Check with your gas company to see if you qualify.  Then enter the new bill amount into the calendar to see your cash flow.
+        }
       },
       waterSewage: {
         name: 'Water/Sewage',
         icon: icons.water,
         recurrenceTypes: ['monthly', 'biweekly'],
-        hasBill: true,
+        hasBill: true
       },
       electricity: {
         name: 'Electricity',
@@ -251,14 +250,14 @@ export const Categories = new CategoryTree({
           icon1: icons.electricity1,
           title: 'Payment Plans for Utilities',
           body:
-            'Check with your electric company to see if you qualify.  Then enter the new monthly amount into the calendar.',
-        },
+            'Check with your electric company to see if you qualify.  Then enter the new monthly amount into the calendar.'
+        }
       },
       trash: {
         name: 'Trash',
         icon: icons.trash,
         recurrenceTypes: ['monthly', 'biweekly'],
-        hasBill: true,
+        hasBill: true
       },
       cable: {
         name: 'Cable/Satellite',
@@ -271,7 +270,7 @@ export const Categories = new CategoryTree({
           title: 'Entertainment Options',
           body:
             'Contact your cable company to ask about lower-cost plans or consider a cheaper streaming service.'
-        },
+        }
       },
       internet: {
         name: 'Internet',
@@ -286,9 +285,9 @@ export const Categories = new CategoryTree({
             'If you qualify for the "Lifeline" program, you could lower the monthly cost of internet service.',
           link: {
             href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
-            text: 'Explore Lifeline',
-          },
-        },
+            text: 'Explore Lifeline'
+          }
+        }
       },
       phone: {
         name: 'Phone/Cell',
@@ -303,10 +302,10 @@ export const Categories = new CategoryTree({
             'If you qualify for the "Lifeline" program, you could lower the monthly cost of phone service.',
           link: {
             href: 'https://www.fcc.gov/consumers/guides/lifeline-support-affordable-communications',
-            text: 'Explore Lifeline',
-          },
-        },
-      },
+            text: 'Explore Lifeline'
+          }
+        }
+      }
     },
     transportation: {
       name: 'Transportation',
@@ -324,9 +323,9 @@ export const Categories = new CategoryTree({
             'Check with local car loan companies to see if you qualify for a lower interest rate.  Then enter the new expense into the calendar to see how it affects your cash flow.',
           link: {
             href: 'https://www.consumerfinance.gov/consumer-tools/auto-loans/',
-            text: 'Car Loans',
-          },
-        },
+            text: 'Car Loans'
+          }
+        }
       },
       carMaintenance: {
         name: 'Car Maintenance',
@@ -337,8 +336,8 @@ export const Categories = new CategoryTree({
           icon1: icons.carMaintenance1,
           title: 'Maintain Your Car',
           body:
-            'Regularly change your oil and maintain proper tire pressure to avoid some car repair expenses.',
-        },
+            'Regularly change your oil and maintain proper tire pressure to avoid some car repair expenses.'
+        }
       },
       carInsurance: {
         name: 'Car Insurance',
@@ -350,14 +349,14 @@ export const Categories = new CategoryTree({
           icon1: icons.carInsurance1,
           title: 'Shop Around for Car Insurance',
           body:
-            'Get free quotes from other insurance companies to see if you qualify for a lower rate.',
-        },
+            'Get free quotes from other insurance companies to see if you qualify for a lower rate.'
+        }
       },
       gas: {
         name: 'Gas',
         icon: icons.gas,
         recurrenceTypes: ['weekly'],
-        hasBill: false,
+        hasBill: false
       },
       publicTransportation: {
         name: 'Public Transportation Fare',
@@ -369,9 +368,9 @@ export const Categories = new CategoryTree({
           icon1: icons.publicTransportation1,
           title: 'Compare Fare Options',
           body:
-            'If you often use public transportation, a monthly pass may be a cheaper option than paying for each ride.',
-        },
-      },
+            'If you often use public transportation, a monthly pass may be a cheaper option than paying for each ride.'
+        }
+      }
     },
     food: {
       name: 'Food',
@@ -386,21 +385,21 @@ export const Categories = new CategoryTree({
           icon1: icons.eatingOut1,
           title: 'Reduce Eating Out Costs',
           body:
-            'Making your lunch, avoiding fountain drinks and even finding local restaurants with "Kids Eat Free" specials can help reduce costs.',
-        },
+            'Making your lunch, avoiding fountain drinks and even finding local restaurants with "Kids Eat Free" specials can help reduce costs.'
+        }
       },
       groceries: {
         name: 'Groceries',
         icon: icons.groceries,
         recurrenceTypes: ['weekly', 'monthly'],
-        hasBill: false,
-      },
+        hasBill: false
+      }
     },
     emergencySavings: {
       name: 'Savings',
       icon: icons.emergencySavings,
       recurrenceTypes: ['weekly', 'monthly'],
-      hasBill: false,
+      hasBill: false
     },
     personal: {
       name: 'Personal',
@@ -418,9 +417,9 @@ export const Categories = new CategoryTree({
             'Health insurance can drastically reduce the costs of unforeseen medical bills.  Find a plan that fits your budget.',
           link: {
             href: 'https://www.healthcare.gov',
-            text: 'HealthCare.gov',
-          },
-        },
+            text: 'HealthCare.gov'
+          }
+        }
       },
       subscriptions: {
         name: 'Subscription',
@@ -431,8 +430,8 @@ export const Categories = new CategoryTree({
           id: 'cancelSubscriptions',
           icon1: icons.subscriptions1,
           title: 'Subscriptions',
-          body: 'Remove auto-renew for subscriptions and cancel those you no longer use or need.',
-        },
+          body: 'Remove auto-renew for subscriptions and cancel those you no longer use or need.'
+        }
       },
       clothing: {
         name: 'Clothing',
@@ -443,8 +442,8 @@ export const Categories = new CategoryTree({
           icon1: icons.clothing1,
           title: 'Consider Second-hand Shops',
           body:
-            'Thrift shops and consignment stores are more cost-effective alternatives to retail.',
-        },
+            'Thrift shops and consignment stores are more cost-effective alternatives to retail.'
+        }
       },
       giving: {
         name: 'Giving',
@@ -456,14 +455,14 @@ export const Categories = new CategoryTree({
           icon1: icons.giving1,
           title: 'Donations',
           body:
-            'Your charitable donations may be tax deductible. Keep records and receipts to lower the cost of your annual taxes.',
-        },
+            'Your charitable donations may be tax deductible. Keep records and receipts to lower the cost of your annual taxes.'
+        }
       },
       education: {
         name: 'Education',
         icon: icons.education,
         recurrenceTypes: ['weekly', 'monthly'],
-        hasBill: true,
+        hasBill: true
       },
       childCare: {
         name: 'Child Care',
@@ -478,34 +477,34 @@ export const Categories = new CategoryTree({
             'See if you qualify for free or reduced rate childcare.',
           link: {
             href: 'https://www.childcare.gov/consumer-education/get-help-paying-for-child-care',
-            text: 'Get Help Paying for Childcare',
-          },
-        },
+            text: 'Get Help Paying for Childcare'
+          }
+        }
       },
       personalCare: {
         name: 'Personal Care/Cosmetics',
         icon: icons.personalCareCosmetics,
         recurrenceTypes: ['weekly', 'monthly'],
-        hasBill: false,
+        hasBill: false
       },
       pets: {
         name: 'Pet',
         icon: icons.pets,
         recurrenceTypes: ['weekly', 'monthly'],
-        hasBill: false,
+        hasBill: false
       },
       householdSupplies: {
         name: 'Household Supplies',
         icon: icons.householdSupplies,
         recurrenceTypes: ['weekly', 'monthly'],
-        hasBill: false,
+        hasBill: false
       },
       funMoney: {
         name: 'Fun Money',
         icon: icons.funMoney,
         recurrenceTypes: ['weekly', 'monthly'],
-        hasBill: false,
-      },
+        hasBill: false
+      }
     },
     debt: {
       name: 'Debt',
@@ -519,8 +518,8 @@ export const Categories = new CategoryTree({
         link: {
           href:
             'https://www.consumerfinance.gov/practitioner-resources/your-money-your-goals/toolkit/#dealing-with-debt',
-          text: 'Dealing with Debt',
-        },
+          text: 'Dealing with Debt'
+        }
       },
       medicalBill: {
         name: 'Medical Bill',
@@ -536,27 +535,27 @@ export const Categories = new CategoryTree({
           link: {
             href:
               'https://www.healthcare.gov',
-            text: 'HealthCare.gov',
-          },
-        },
+            text: 'HealthCare.gov'
+          }
+        }
       },
       courtOrderedExpenses: {
         name: 'Court-Ordered Fee',
         icon: icons.courtOrderedExpenses,
         recurrenceTypes: ['weekly', 'monthly'],
-        hasBill: true,
+        hasBill: true
       },
       personalLoan: {
         name: 'Personal Loan',
         icon: icons.personalLoan,
         recurrenceTypes: ['monthly'],
-        hasBill: true,
+        hasBill: true
       },
       creditCard: {
         name: 'Credit Card',
         icon: icons.creditCard,
         recurrenceTypes: ['monthly'],
-        hasBill: true,
+        hasBill: true
       },
       studentLoan: {
         name: 'Student Loan',
@@ -571,16 +570,16 @@ export const Categories = new CategoryTree({
             'You have choices when repaying student loans. Make sure your plan works for you.',
           link: {
             href: 'https://www.consumerfinance.gov/paying-for-college/repay-student-debt/',
-            text: 'Repay student debt',
-          },
-        },
-      },
+            text: 'Repay student debt'
+          }
+        }
+      }
     },
     other: {
       name: 'Other',
       icon: icons.other,
       recurrenceTypes: ['monthly', 'weekly'],
-      hasBill: false,
-    },
+      hasBill: false
+    }
   }
 });
