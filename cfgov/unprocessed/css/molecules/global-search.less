@@ -29,9 +29,13 @@
       markup: |
           <div class="m-global-search">
               <button class="m-global-search_trigger">
-                  <span class="m-global-search_trigger-label">
+                  <span class="m-global-search_trigger-open-label">
                       {{ svg_icon('search') }}
                       <span class="u-hide-on-mobile">Search</span>
+                  </span>
+                  <span class="m-global-search_trigger-close-label">
+                      {{ svg_icon('delete') }}
+                      <span class="u-hide-on-mobile">Close</span>
                   </span>
               </button>
               <div class="m-global-search_content"
@@ -52,7 +56,7 @@
                                             input-contains-label_after__clear
                                             u-hidden">
                                   {{ svg_icon('delete') }}
-                                  <span class="u-visually-hidden">Close</span>
+                                  <span class="u-visually-hidden">Clear search</span>
                               </label>
                               <input type="text"
                                      class="a-text-input"
@@ -61,7 +65,7 @@
                                      placeholder="Search the CFPB">
                           </div>
                           <div class="input-with-btn_btn">
-                              <button class="btn">Search</button>
+                              <button class="a-btn">Search</button>
                           </div>
                       </div>
 
@@ -242,19 +246,24 @@
 
             padding-left: unit( @grid_gutter-width / 2 / 18px, em );
             padding-right: unit( @grid_gutter-width / 2 / 18px, em );
-
-            // Show "Close" text when flyout is open.
-            &[aria-expanded="true"] {
-                .m-global-search_trigger-label:before {
-                    content: 'Close';
-                }
-            }
         }
 
         // Only show search suggestions at tablet size.
         &_content-suggestions {
             display: block;
         }
+    } );
+
+    // Tablet and above
+    .respond-to-min( @bp-sm-min, {
+
+        // Override for the .m-btn-inside-input class from the design system.
+        // This is needed because we don't have an icon inside the input
+        // at the desktop size (there is an icon at the mobile size).
+        .m-btn-inside-input .a-text-input {
+            padding-right: unit( 14px / @base-font-size-px, em );
+        }
+
     } );
 
     // Desktop and above
@@ -295,17 +304,15 @@
         }
     } );
 
-    // TODO: Move these styles to cf-enhancements/cf-forms.
-    //       Look into removing grid styles altogether.
     // Mobile size.
     .respond-to-min( 480px, {
         &_content-form {
             // Attach button to input.
             .o-form__input-w-btn_input-container {
-                width: 70%;
+                width: 75%;
             }
             .o-form__input-w-btn_btn-container {
-                width: 30%;
+                width: 25%;
                 border-left: 0;
 
                 button {
