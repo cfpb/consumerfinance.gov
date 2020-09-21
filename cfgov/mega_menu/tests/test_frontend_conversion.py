@@ -18,7 +18,6 @@ class FrontendConverterTests(TestCase):
         about_us_page = cls.make_test_page('About Us')
         auto_loans_page = cls.make_test_page('Auto Loans')
         bank_accounts_page = cls.make_test_page('Bank Accounts')
-        well_being_page = cls.make_test_page('Financial Well-Being')
 
         submenus = [
             {
@@ -61,21 +60,12 @@ class FrontendConverterTests(TestCase):
                             'url': '/featured/2/',
                             'text': 'Second featured link',
                         },
-                        {
-                            'url': '/featured/3/',
-                            'text': 'Third featured link',
-                        },
                     ],
                     'other_links': [
                         {
-                            'page': well_being_page.pk,
+                            'page': bank_accounts_page.pk,
                             'text': 'First other link',
                             'icon': 'star',
-                        },
-                        {
-                            'url': '/other/2/',
-                            'text': 'Second other link',
-                            'icon': 'mail',
                         },
                     ]
                 },
@@ -173,21 +163,12 @@ class FrontendConverterTests(TestCase):
                         'url': '/featured/2/',
                         'text': 'Second featured link',
                     },
-                    {
-                        'url': '/featured/3/',
-                        'text': 'Third featured link',
-                    },
                 ],
                 'other_items': [
                     {
-                        'url': '/financial-well-being/',
+                        'url': '/bank-accounts/',
                         'text': 'First other link',
                         'icon': 'star',
-                    },
-                    {
-                        'url': '/other/2/',
-                        'text': 'Second other link',
-                        'icon': 'mail',
                     },
                 ],
             },
@@ -243,21 +224,73 @@ class FrontendConverterTests(TestCase):
                         'url': '/featured/2/',
                         'text': 'Second featured link',
                     },
+                ],
+                'other_items': [
                     {
-                        'url': '/featured/3/',
-                        'text': 'Third featured link',
+                        'url': '/bank-accounts/',
+                        'text': 'First other link',
+                        'icon': 'star',
+                    },
+                ],
+            },
+        ])
+
+    def test_select_at_most_one_link(self):
+        request = self.make_request('/bank-accounts/')
+
+        # Even though /bank-accounts/ appears in two menus, only the first menu
+        # should be marked as selected.
+        self.assertEqual(self.do_conversion(self.menu, request), [
+            {
+                'selected': True,
+                'overview': {
+                    'url': '/consumer-tools/',
+                    'text': 'Consumer Tools',
+                },
+                'nav_groups': [
+                    {
+                        'title': 'Money Topics',
+                        'title_hidden': False,
+                        'nav_items': [
+                            {
+                                'url': '/auto-loans/',
+                                'text': 'Auto Loans',
+                            },
+                            {
+                                'url': '/bank-accounts/',
+                                'text': 'Wagtail page with other text',
+                                'selected': True,
+                            },
+                            {
+                                'url': '/foo/bar/?baz=1',
+                                'text': 'Non-Wagtail page',
+                            },
+                        ],
+                    },
+                ],
+                'featured_items': [
+                    {
+                        'url': '/featured/1/',
+                        'text': 'First featured link',
+                    },
+                ],
+            },
+            {
+                'overview': {
+                    'url': '/about-us/',
+                    'text': 'Alternate Submenu Title',
+                },
+                'featured_items': [
+                    {
+                        'url': '/featured/2/',
+                        'text': 'Second featured link',
                     },
                 ],
                 'other_items': [
                     {
-                        'url': '/financial-well-being/',
+                        'url': '/bank-accounts/',
                         'text': 'First other link',
                         'icon': 'star',
-                    },
-                    {
-                        'url': '/other/2/',
-                        'text': 'Second other link',
-                        'icon': 'mail',
                     },
                 ],
             },
