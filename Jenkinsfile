@@ -11,6 +11,7 @@ pipeline {
 
     environment {
         IMAGE_REPO = 'cfpb/cfgov-python'
+        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
@@ -43,6 +44,7 @@ pipeline {
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
+                    env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
             }
@@ -65,6 +67,7 @@ pipeline {
             steps {
                 script {
                     docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
+                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
                 }
             }
         }
@@ -72,6 +75,7 @@ pipeline {
         stage('Scan Image') {
             steps {
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
+                scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
             }
         }
 
@@ -91,6 +95,10 @@ pipeline {
 
                         // Sets fully-qualified image name
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
+
+                        image = docker.image(env.IMAGE_NAME_ES_LOCAL)
+                        image.push()
+                        env.CFGOV_ES_IMAGE = image.imageName()
                     }
                 }
             }
@@ -106,13 +114,14 @@ pipeline {
             }
             steps {
                 script {
-                    timeout(time: 15, unit: 'MINUTES') {
+                    timeout(time: 30, unit: 'MINUTES') {
                         dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                     }
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
         }
+
         stage('Run Functional Tests') {
             when {
                 anyOf {
@@ -135,15 +144,22 @@ pipeline {
         success {
             script {
                 if (env.GIT_BRANCH != 'main') {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH PR $env.CHANGE_URL deployed by $env.CHANGE_AUTHOR_EMAIL via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} deployed via ${env.BUILD_URL} and available at https://${env.CFGOV_HOSTNAME}/")
                 }
                 else {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: Branch $env.GIT_BRANCH deployed via $env.BUILD_URL and available at https://$env.CFGOV_HOSTNAME.")
-                 }
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: **main** branch stack deployed via ${env.BUILD_URL} and available at https://${env.CFGOV_HOSTNAME}/")
+                }
             }
         }
         unsuccessful {
-            notify("${NOTIFICATION_CHANNEL}", ":x: PR ${env.CHANGE_URL} by ${env.CHANGE_AUTHOR} failed. See: ${env.BUILD_URL}.")
+            script{
+                if (env.GIT_BRANCH != 'main') {
+                    notify("${NOTIFICATION_CHANNEL}", ":x: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} failed to deploy. See: ${env.BUILD_URL}")
+                }
+                else {
+                    notify("${NOTIFICATION_CHANNEL}", ":x: **main** branch stack deployment failed. See: ${env.BUILD_URL}")
+                }
+            }
         }
     }
 }
