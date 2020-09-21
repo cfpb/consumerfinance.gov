@@ -17,7 +17,7 @@ module.exports = {
     '<rootDir>/cfgov/unprocessed/apps/.+/common.js$',
     '<rootDir>/cfgov/unprocessed/apps/analytics-gtm/js/[a-zA-Z-]+.js$',
     '<rootDir>/cfgov/unprocessed/js/routes/',
-    '<rootDir>/cfgov/unprocessed/apps/mmt-my-money-calendar/',
+    '<rootDir>/cfgov/unprocessed/apps/mmt-my-money-calendar/'
   ],
   coverageDirectory: '<rootDir>/test/unit_test_coverage',
   moduleNameMapper: {
