@@ -99,7 +99,8 @@
     "wcag": "0.3.0"
   },
   "resolutions": {
-    "gulp-bless/bless/css": "github:cfpb/css"
+    "gulp-bless/bless/css": "github:cfpb/css",
+    "ua-parser-js": "^0.7.22"
   },
   "scripts": {
     "enforce": "enforce-node-version",
