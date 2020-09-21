@@ -13,7 +13,7 @@ export function useScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect( () => {
-    /* istanbul ignore next */
+  /* istanbul ignore next */
     window.scrollTo( 0, 0 );
   }, [ pathname ] );
 }
