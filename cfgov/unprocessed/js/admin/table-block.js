@@ -541,8 +541,8 @@ import { stateToHTML } from 'draft-js-export-html';
       '<input class="hidden" id="table-block-editor" maxlength="255" name="title" type="text" value="" class="data-draftail-input">',
       '</div><br>',
       '<div class="row active nice-padding m-t-10">',
-      '<label class="hidden" for="table-block-save-btn">Save</>',
-      '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save</button>',
+      '<label class="hidden" for="table-block-save-btn">Save</label>',
+      '<button id="table-block-save-btn" type="button" data-dismiss="modal" class="button">Save Button</button>',
       '</div>'
     ].join( '' );
 
@@ -552,7 +552,7 @@ import { stateToHTML } from 'draft-js-export-html';
       'tabindex="-1" role="dialog" aria-hidden="true">',
       '<div class="modal-dialog">',
       '<div class="modal-content">',
-      '<label class="hidden" for="close-table-block-modal-btn">Close Modal</>',
+      '<label class="hidden" for="close-table-block-modal-btn">Close Modal Button</label>',
       '<button id="close-table-block-modal-btn" type="button" class="button close icon text-replace icon-cross"',
       'data-dismiss="modal" aria-hidden="true">×</button>',
       '<div class="modal-body"></div>',
