@@ -11,7 +11,6 @@ omit =
     */ask_cfpb/search_indexes*
     */paying_for_college/data_sources/bls_processing.py
     */mmt_my_money_calendar/views.py
-    */unprocessed/apps/mmt-my-money-calendar/*
 data_file = ../.coverage
 
 [report]
