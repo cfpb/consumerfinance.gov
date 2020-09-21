@@ -2,8 +2,6 @@ from datetime import datetime
 
 from django.contrib.syndication.views import Feed
 
-from wagtail.contrib.routable_page.models import route
-
 import pytz
 
 
@@ -62,9 +60,11 @@ def get_appropriate_rss_feed_url_for_page(page, request=None):
 
     Returns None if neither the page nor any of its ancestors provide feeds.
     """
+    from v1.models.filterable_list_mixins import FilterableListMixin
+
     ancestors_including_page = page.get_ancestors(inclusive=True)
     ancestors_including_page_with_feeds = ancestors_including_page.filter(
-        ancestors_including_page.type_q(FilterableFeedRoutablePageMixin)
+        ancestors_including_page.type_q(FilterableListMixin)
     )
 
     # page.get_ancestors() orders from root down to page.
