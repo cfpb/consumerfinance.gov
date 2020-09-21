@@ -587,7 +587,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.feeds.FilterableFeedRoutablePageMixin, v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
+            bases=(v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
         ),
         migrations.CreateModel(
             name='BrowsePage',
@@ -636,7 +636,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.feeds.FilterableFeedRoutablePageMixin, v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
+            bases=(v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
         ),
         migrations.CreateModel(
             name='SublandingPage',

@@ -3,6 +3,7 @@ from django.template.response import TemplateResponse
 
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
+from v1.feeds import FilterableFeed
 from v1.forms import FilterableListForm
 from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
@@ -149,6 +150,11 @@ class FilterableListMixin(RoutablePageMixin):
     @route(r'^$')
     def index_route(self, request):
         return self.render(request)
+
+    @route(r'^feed/$')
+    def feed_route(self, request, *args, **kwargs):
+        context = self.get_context(request)
+        return FilterableFeed(self, context)(request)
 
 
 class CategoryFilterableMixin:

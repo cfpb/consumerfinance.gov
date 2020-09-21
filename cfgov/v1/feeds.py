@@ -48,13 +48,6 @@ class FilterableFeed(Feed):
         return "%s<>consumerfinance.gov" % item.page_ptr_id
 
 
-class FilterableFeedRoutablePageMixin(object):
-    @route(r'^feed/$')
-    def feed_route(self, request, *args, **kwargs):
-        context = self.get_context(request)
-        return FilterableFeed(self, context)(request)
-
-
 def get_appropriate_rss_feed_url_for_page(page, request=None):
     """Given a page, return the most appropriate RSS feed for it to link to.
 

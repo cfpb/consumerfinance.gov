@@ -8,7 +8,6 @@ from wagtail.search import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.feeds import FilterableFeedRoutablePageMixin
 from v1.models.base import CFGOVPage
 from v1.util.filterable_list import (
     FilterableListMixin,
@@ -33,11 +32,7 @@ class SublandingFilterableContent(StreamBlock):
         }
 
 
-class SublandingFilterablePage(
-    FilterableFeedRoutablePageMixin,
-    FilterableListMixin,
-    CFGOVPage
-):
+class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
