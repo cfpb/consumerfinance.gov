@@ -1,7 +1,6 @@
 import csv
 import logging
 
-from wagtail.contrib.redirects.models import Redirect
 from wagtail.core.models import Page
 
 
@@ -22,7 +21,10 @@ def run(*args):
         with open(page_moves_file, "r") as csv_file:
             page_list = csv.reader(csv_file, delimiter=',')
             next(page_list)  # skip the header row
-            for [page_id, destination_id, new_slug] in page_list:
+
+            # Edit this list to match the headers of the input file, just
+            # make sure page_id, destination_id, new_slug are included
+            for [_, _, new_slug, page_id, _, _, _, destination_id, _] in page_list:
                 page = Page.objects.get(id=page_id)
                 if new_slug:
                     page.slug = new_slug

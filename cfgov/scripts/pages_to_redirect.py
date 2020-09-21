@@ -1,7 +1,6 @@
 import csv
 import logging
 
-from wagtail.contrib.redirects.models import Redirect
 from wagtail.core.models import Page
 
 
@@ -21,15 +20,13 @@ def run(*args):
         pages_to_move = set()
         total = 0
 
-        # Edit this list to match the headers of the input file, just
-        # make sure page_id and redirect are included
-        headers = [page_id, destination_id, xlug, redirect]
-
-
         with open(page_moves_file, "r") as csv_file:
             page_list = csv.reader(csv_file, delimiter=',')
             next(page_list)  # skip the header row
-            for headers in page_list:
+
+            # Edit this list to match the headers of the input file, just
+            # make sure page_id and redirect are included
+            for [redirect, _, _, page_id, _, _, _, _, _]in page_list:
                 # Get the set of pages that will need wagtail redirects
                 if redirect == 'TRUE':
                     page = Page.objects.get(id=page_id)
@@ -37,11 +34,11 @@ def run(*args):
                     pages_to_move = pages_to_move.union(live_descendants)
 
             ids = [pg.id for pg in pages_to_move]
-            logger.info("IDs of pages to move: ", ids)
-            logger.info("Total pages: ", len(pages_to_move))
+            logger.info(f"IDs of pages to move: {ids}")
+            logger.info(f"Total pages: {len(ids)}")
 
         with open(redirects_file, "w") as output_file:
             redirects_list = csv.writer(output_file)
             for page in pages_to_move:
-                row = [page.url, page.i]
+                row = [page.url, page.id]
                 redirects_list.writerow(row)
