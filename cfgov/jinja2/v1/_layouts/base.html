@@ -262,6 +262,9 @@
     {{ wagtailuserbar() }}
 
     {% block banner_top %}
+        {% if page and page.is_archived %}
+            {% include 'molecules/archived-banner.html' %}
+        {% endif %}
     {% endblock %}
 
     {# PRIMARY CONTENT #}
