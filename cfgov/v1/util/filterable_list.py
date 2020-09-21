@@ -1,4 +1,7 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.template.response import TemplateResponse
+
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from v1.forms import FilterableListForm
 from v1.models.learn_page import AbstractFilterPage
@@ -6,7 +9,7 @@ from v1.util.ref import get_category_children
 from v1.util.util import get_secondary_nav_items
 
 
-class FilterableListMixin:
+class FilterableListMixin(RoutablePageMixin):
     """Wagtail Page mixin that allows for filtering of other pages."""
 
     filterable_children_only = True
@@ -51,11 +54,8 @@ class FilterableListMixin:
 
         return self.get_model_class().objects.in_site(site).live()
 
-    def filterable_list_wagtail_block(self):
-        return next((b for b in self.content if b.block_type == 'filter_controls'), None)  # noqa 501
-
     def get_context(self, request, *args, **kwargs):
-        context = super(FilterableListMixin, self).get_context(
+        context = super().get_context(
             request, *args, **kwargs
         )
 
@@ -73,6 +73,12 @@ class FilterableListMixin:
         })
 
         return context
+
+    def filterable_list_wagtail_block(self):
+        return next(
+            (b for b in self.content if b.block_type == 'filter_controls'),
+            None
+        )
 
     def process_form(self, request, form):
         filter_data = {}
@@ -118,15 +124,31 @@ class FilterableListMixin:
                 self.set_do_not_index(field, value)
         return form_data, has_active_filters
 
-    def serve(self, request, *args, **kwargs):
-        """Modify response headers."""
-        response = super(FilterableListMixin, self).serve(request)
+    def render(self, request, *args, context_overrides=None, **kwargs):
+        """Render with optional for context overrides."""
+        # Note: the context-overriding and template rendering can be replaced
+        # with super().render() in Wagtail 2.11, where RoutablePageMixin gains
+        # the context_overrides functionality built-in.
+        context = self.get_context(request, *args, **kwargs)
+        context.update(context_overrides or {})
+        response = TemplateResponse(
+            request,
+            self.get_template(request, *args, **kwargs),
+            context
+        )
+
         # Set a shorter TTL in Akamai
         response['Edge-Control'] = 'cache-maxage=10m'
+
         # Set noindex for crawlers if needed
         if self.do_not_index:
             response['X-Robots-Tag'] = 'noindex'
+
         return response
+
+    @route(r'^$')
+    def index_route(self, request):
+        return self.render(request)
 
 
 class CategoryFilterableMixin:
