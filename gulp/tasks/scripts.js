@@ -33,7 +33,7 @@ const webpackStream = require( 'webpack-stream' );
 function _processScript( localWebpackConfig, src, dest ) {
   return gulp.src( paths.unprocessed + src )
     .pipe( gulpNewer( {
-      dest:  paths.processed + dest,
+      dest: paths.processed + dest,
       extra: configScripts.otherBuildTriggerFiles
     } ) )
     .pipe( vinylNamed( file => file.relative ) )
@@ -81,6 +81,19 @@ function scriptsModern() {
     webpackConfig.modernConf,
     '/js/routes/**/*.js',
     '/js/routes/'
+  );
+}
+
+/**
+ * Bundle scripts in unprocessed/js/routes/
+ * and factor out common modules into common.js.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsAdmin() {
+  return _processScript(
+    webpackConfig.modernConf,
+    '/js/admin/*.js',
+    '/js/admin/'
   );
 }
 
@@ -210,6 +223,7 @@ gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
+gulp.task( 'scripts:admin', scriptsAdmin );
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
@@ -228,7 +242,8 @@ gulp.task( 'scripts',
     'scripts:modern',
     'scripts:apps',
     'scripts:external',
-    'scripts:ondemand'
+    'scripts:ondemand',
+    'scripts:admin'
   )
 );
 
