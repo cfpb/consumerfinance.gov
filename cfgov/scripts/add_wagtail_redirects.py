@@ -8,13 +8,6 @@ from wagtail.core.models import Page
 logger = logging.getLogger(__name__)
 
 
-# If the pages haven't been migrated yet, 'url' parameter should be the "from"
-# url. If the pages have migrated, 'url' parameter should be the "to" url.
-def existing_page_for_url(url):
-    url_path = f"/cfgov{url}"
-    return Page.objects.get(url_path=url_path)
-
-
 # Run this from the command line with this:
 #   cfgov/manage.py runscript add_wagtail_redirects --script-args [PATH]
 def run(*args):
@@ -31,7 +24,7 @@ def run(*args):
         with open(redirects_file, "r") as csv_file:
             redirect_list = csv.reader(csv_file, delimiter=',')
             next(redirect_list)  # skip the header row
-            for [from_url, to_url] in redirect_list:
+            for [from_url, to_id] in redirect_list:
                 # If conflicting redirects exist for this from_url, delete them
                 existing_redirects = Redirect.objects.filter(
                         old_path__iexact=Redirect.normalise_path(from_url))
@@ -41,7 +34,7 @@ def run(*args):
                     deletes += num
 
                 # Add the desired redirect
-                page = existing_page_for_url(from_url)
+                page = Page.objects.get(id=to_id)
                 Redirect.add_redirect(from_url, redirect_to=page, is_permanent=True)
                 successes += 1
 
