@@ -63,6 +63,15 @@ gulp.task( 'copy:lightbox2', () => {
   return stream;
 } );
 
+gulp.task( 'copy:jquery', () => {
+  console.log("COPY")
+  const stream = _genericCopy(
+    `${ paths.modules }/jquery/dist/**/*`,
+    `${ paths.processed }/jquery`
+  );
+  return stream;
+} );
+
 
 gulp.task( 'copy:icons',
   gulp.parallel(
@@ -76,6 +85,7 @@ gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
     'copy:lightbox2',
-    'copy:root'
+    'copy:root',
+    'copy:jquery'
   )
 );
