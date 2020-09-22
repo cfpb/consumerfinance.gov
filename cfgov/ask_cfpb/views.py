@@ -99,11 +99,12 @@ def ask_search(request, language='en', as_json=False):
 
     if flag_enabled('ELASTIC_SEARCH_DSL'):
         search = AnswerPageSearch(search_term, language=language)
+        if len(search.get('results')) == 0:
+            search.suggest(request=request)
     else:
         search = AskSearch(search_term=search_term, language=language)
-
-    if len(search.get('results')) == 0:
-        search.suggest(request=request)
+        if search.queryset.count() == 0:
+            search.suggest(request=request)
 
     if as_json:
         payload = {
@@ -117,7 +118,7 @@ def ask_search(request, language='en', as_json=False):
                     'text': result.text,
                     'preview': result.preview,
                 }
-                for result in search.get('results', [])
+                for result in search.queryset
             ]
         }
         json_results = json.dumps(payload)
@@ -126,10 +127,16 @@ def ask_search(request, language='en', as_json=False):
     results_page.query = search_term
     results_page.result_query = search.search_term
     results_page.suggestion = search.suggestion
-    results_page.answers = [
-        (result.url, result.autocomplete, result.preview)
-        for result in search.get("results")
-    ]
+    if flag_enabled('ELASTIC_SEARCH_DSL'):
+        results_page.answers = [
+            (result.url, result.autocomplete, result.preview)
+            for result in search.get("results")
+        ]
+    else:
+        results_page.answers = [
+            (result.url, result.autocomplete, result.preview)
+            for result in search.queryset
+        ]
     return results_page.serve(request)
 
 
