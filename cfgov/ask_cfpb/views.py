@@ -11,8 +11,10 @@ from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
+from flags.state import flag_enabled
 
 from ask_cfpb.models import AnswerResultsPage
+from ask_cfpb.models.search import AskSearch
 from ask_cfpb.models.search.documents import (  # noqa
     AnswerPage, AnswerPageSearch, AnswerPageSearchDocument, make_safe
 )
@@ -96,7 +98,11 @@ def ask_search(request, language='en', as_json=False):
         results_page.result_query = ''
         return results_page.serve(request)
 
-    search = AnswerPageSearch(search_term, language=language)
+    if flag_enabled('ELASTIC_SEARCH_DSL'):
+        search = AnswerPageSearch(search_term, language=language)
+    else:
+        search = AskSearch(search_term=search_term, language=language)
+
     if len(search.get('results')) == 0:
         search.suggest(request=request)
 
