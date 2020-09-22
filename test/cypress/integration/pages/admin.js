@@ -109,4 +109,51 @@ describe( 'Admin', () => {
     admin.getPageMetadataReports().its( 'length' ).should( 'be.gt', 2 );
   } );
 
+  describe( 'Editor Table', () => {
+    beforeEach( () => {
+      admin.openCFGovPage();
+      admin.addBlogChildPage();
+      admin.addFullWidthTextElement();
+      admin.addTable();
+    } );
+
+    it( 'should be able to create and edit a table', () => {
+      admin.selectFirstTableCell();
+      admin.selectTableEditorTextbox();
+      admin.selectTableEditorButton( 'unordered-list-item' );
+      admin.typeTableEditorTextbox( 'test cell text' );
+      admin.saveTableEditor();
+      cy.get( 'td' ).contains( 'test cell text' ).should( 'be.visible' );
+    } );
+
+    it( 'should be able to select all standard edit buttons in table', () => {
+      admin.selectFirstTableCell();
+      admin.selectTableEditorTextbox();
+      admin.selectTableEditorButton( 'BOLD' );
+      admin.selectTableEditorButton( 'ITALIC' );
+      admin.selectTableEditorButton( 'header-three' );
+      admin.selectTableEditorButton( 'header-four' );
+      admin.selectTableEditorButton( 'header-five' );
+      admin.selectTableEditorButton( 'ordered-list-item' );
+      admin.selectTableEditorButton( 'unordered-list-item' );
+      admin.selectTableEditorButton( 'undo' );
+      admin.selectTableEditorButton( 'redo' );
+    } );
+
+    it( 'should be able to use link button', () => {
+      admin.selectFirstTableCell();
+      admin.selectTableEditorButton( 'LINK' );
+      admin.selectInternalLink( 'CFGov' );
+      admin.saveTableEditor();
+      cy.get( 'td' ).contains( 'CFGov' ).should( 'be.visible' );
+    } );
+
+    it( 'should be able to use document button', () => {
+      admin.selectFirstTableCell();
+      admin.selectTableEditorButton( 'DOCUMENT' );
+      admin.selectDocumentLink( 'cfpb_interested-vendor-instructions_fy2020.pdf' );
+      admin.saveTableEditor();
+      cy.get( 'td' ).contains( 'cfpb_interested-vendor-instructions_fy2020.pdf' ).should( 'be.visible' );
+    } );
+  } );
 } );
