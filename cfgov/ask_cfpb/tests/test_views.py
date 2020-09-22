@@ -3,7 +3,7 @@ import unittest
 
 from django.apps import apps
 from django.http import Http404, HttpRequest, QueryDict
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import NoReverseMatch, reverse
 from django.utils import timezone
 
@@ -223,6 +223,7 @@ class AnswerViewTestCase(TestCase):
         response = self.client.get(reverse("ask-search-en"), {"q": "payday"})
         self.assertEqual(response.status_code, 404)
 
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
     def test_en_search(self, mock_ask_search):
         from v1.util.migrations import get_or_create_page
@@ -248,6 +249,7 @@ class AnswerViewTestCase(TestCase):
             mock_ask_search.called_with(language="en", search_term="payday")
         )
 
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
     def test_en_search_no_term(self, mock_ask_search):
         from v1.util.migrations import get_or_create_page
@@ -319,6 +321,7 @@ class AnswerViewTestCase(TestCase):
         redirect_ask_search(request, language="es")
         self.assertEqual(mock_redirect.call_count, 1)
 
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_es_search(self, mock_ask_search):
         get_or_create_page(
@@ -343,6 +346,7 @@ class AnswerViewTestCase(TestCase):
             mock_ask_search.called_with(language="es", search_term="payday")
         )
 
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_search_page_en_selection(self, mock_search):
         get_or_create_page(
@@ -361,6 +365,7 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(response.context_data.get("page").language, "en")
 
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_search_page_es_selection(self, mock_search):
         get_or_create_page(
@@ -438,6 +443,7 @@ class AnswerViewTestCase(TestCase):
     #     )
     #     self.assertEqual(mock_search.call_count, 1)
 
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
     def test_autocomplete_espaniol(self, mock_autocomplete):
         mock_search_result = mock.Mock()
