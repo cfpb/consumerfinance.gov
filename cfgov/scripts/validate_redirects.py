@@ -7,20 +7,23 @@ import requests
 from tablib import Dataset
 
 
-def load_redirects(redirects_filename):
+def load_redirects(redirects_filename, from_index, to_index):
     csv = redirects_filename.endswith('.csv')
     mode = 'rt' if csv else 'rb'
 
     with open(redirects_filename, mode) as f:
         dataset = Dataset().load(f, format='csv' if csv else None)
 
-    return [tuple(row[i].rstrip('*') for i in (5, 6)) for row in dataset]
+    return [
+        tuple(row[i].rstrip('*') for i in (from_index, to_index))
+        for row in dataset
+    ]
 
 
-def validate_redirects(redirects_filename, baseurl):
+def validate_redirects(redirects, baseurl):
     failures = []
 
-    for from_path, to_path in load_redirects(redirects_filename):
+    for from_path, to_path in redirects:
         print(f'Checking {from_path} -> {to_path}...', end='')
         response = requests.get(baseurl + from_path, allow_redirects=False)
 
@@ -61,6 +64,25 @@ if __name__ == '__main__':
         default='https://www.consumerfinance.gov',
         nargs='?'
     )
+    parser.add_argument(
+        '--from-index',
+        help='Column index for from path, defaults to %(default)s',
+        type=int,
+        default=5
+    )
+    parser.add_argument(
+        '--to-index',
+        help='Column index for to path, defaults to %(default)s',
+        type=int,
+        default=6
+    )
 
     args = parser.parse_args()
-    validate_redirects(**vars(args))
+
+    redirects = load_redirects(
+        args.redirects_filename,
+        args.from_index,
+        args.to_index
+    )
+
+    validate_redirects(redirects, args.baseurl)
