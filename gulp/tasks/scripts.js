@@ -188,23 +188,13 @@ function scriptsApps() {
 
     // eslint-disable-next-line no-sync
     if ( fs.existsSync( `${ appsPath }/package.json` ) ) {
-      // eslint-disable-next-line no-sync
-      if ( fs.existsSync( `${ appsPath }/node_modules` ) ) {
-        streams.push(
-          _processScript(
-            appWebpackConfig,
-            `/apps/${ app }/js/**/*.js`,
-            `/apps/${ app }/js`
-          )
-        );
-      } else {
-        // eslint-disable-next-line no-console
-        console.log(
-          '\x1b[31m%s\x1b[0m',
-          'App dependencies not installed, please run from project root:',
-          `yarn --cwd ${ appsPath }`
-        );
-      }
+      streams.push(
+        _processScript(
+          appWebpackConfig,
+          `/apps/${ app }/js/**/*.js`,
+          `/apps/${ app }/js`
+        )
+      );
     }
   } );
 
