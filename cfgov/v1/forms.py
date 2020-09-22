@@ -27,6 +27,7 @@ class FilterableDateField(forms.DateField):
         '%m-%d-%y',     # 10-25-16, 9-1-16
         '%m/%d/%Y',     # 10/25/2016, 9/1/2016
         '%m-%d-%Y',     # 10-25-2016, 9-1-2016
+        '%Y-%m-%d',     # 2016-10-25, 2016-9-1
         '%m/%Y',        # 10/2016, 7/2017
         '%m-%Y',        # 10-2016, 7-2017
         '%m/%y',        # 10/16, 4/18
@@ -36,7 +37,7 @@ class FilterableDateField(forms.DateField):
 
     default_widget_attrs = {
         'class': 'a-text-input a-text-input__full',
-        'type': 'text',
+        'type': 'date',
         'placeholder': 'mm/dd/yyyy',
         'data-type': 'date'
     }
@@ -102,7 +103,7 @@ class FilterableListForm(forms.Form):
         })
     )
 
-    preferred_datetime_format = '%m/%d/%Y'
+    preferred_datetime_format = '%Y-%m-%d'
 
     def __init__(self, *args, **kwargs):
         self.filterable_pages = kwargs.pop('filterable_pages')
