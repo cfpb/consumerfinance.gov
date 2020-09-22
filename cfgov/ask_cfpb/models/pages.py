@@ -22,7 +22,7 @@ from wagtail.search import index
 from modelcluster.fields import ParentalKey
 
 from ask_cfpb.documents import (
-    AnswerPage, AnswerPageDocument, AnswerPageSearch, extract_raw_text,
+    AnswerPage, AnswerPageSearch, AnswerPageSearchDocument, extract_raw_text,
     truncate_preview
 )
 from v1 import blocks as v1_blocks
@@ -324,6 +324,40 @@ class PortalSearchPage(
             'children': sorted_categories
         }], True
 
+    # def get_results(self, request):
+    #     context = self.get_context(request)
+    #     search_term = request.GET.get('search_term', '').strip()
+    #     if not search_term or len(unquote(search_term)) == 1:
+    #         results = self.query_base
+    #     else:
+    #         search = AskSearch(
+    #             search_term=search_term,
+    #             query_base=self.query_base)
+    #         results = search.queryset
+    #         if results.count() == 0:
+    #             # No results, so let's try to suggest a better query
+    #             search.suggest(request=request)
+    #             results = search.queryset
+    #             search_term = search.search_term
+    #     search_message = self.results_message(
+    #         results.count(),
+    #         self.get_heading(),
+    #         search_term)
+    #     paginator = Paginator(results, 10)
+    #     page_number = validate_page_number(request, paginator)
+    #     context.update({
+    #         'search_term': search_term,
+    #         'results_message': search_message,
+    #         'pages': paginator.page(page_number),
+    #         'paginator': paginator,
+    #         'current_page': page_number,
+    #         'get_secondary_nav_items': self.get_nav_items,
+    #     })
+    #     return TemplateResponse(
+    #         request,
+    #         'ask-cfpb/see-all.html',
+    #         context)
+
     def get_results_es7(self, request):
         context = self.get_context(request)
         search_term = request.GET.get('search_term', '').strip()
@@ -364,7 +398,7 @@ class PortalSearchPage(
     @route(r'^$')
     def portal_topic_page(self, request):
         self.portal_category = None
-        self.query_base = AnswerPageDocument.search().filter(
+        self.query_base = AnswerPageSearchDocument.search().filter(
             "match", portal_topics=self.portal_topic.heading)
         return self.get_results_es7(request)
 
@@ -386,7 +420,7 @@ class PortalSearchPage(
                 request,
                 'ask-cfpb/see-all.html',
                 context)
-        self.query_base = AnswerPageDocument.search().filter(
+        self.query_base = AnswerPageSearchDocument.search().filter(
             'match', portal_topics=self.portal_topic.heading).filter(
             'match', portal_categories=self.portal_category.heading)
         return self.get_results_es7(request)

@@ -13,7 +13,7 @@ from wagtailsharing.models import SharingSite
 import mock
 from model_bakery import baker
 
-from ask_cfpb.documents import AnswerPageDocument, make_safe
+from ask_cfpb.documents import AnswerPageSearchDocument, make_safe
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
 )
@@ -33,7 +33,7 @@ class MockSearchResult:
 
 
 def mock_es7_queryset(count=0):
-    class MockSearchQuerySet(AnswerPageDocument):
+    class MockSearchQuerySet(AnswerPageSearchDocument):
         def __iter__(self):
             if count:
                 return iter(
@@ -221,7 +221,7 @@ class AnswerViewTestCase(TestCase):
         response = self.client.get(reverse("ask-search-en"), {"q": "payday"})
         self.assertEqual(response.status_code, 404)
 
-    @mock.patch("ask_cfpb.views.AnswerPageDocument.search")
+    @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
     def test_en_search(self, mock_ask_search):
         from v1.util.migrations import get_or_create_page
 
@@ -246,7 +246,7 @@ class AnswerViewTestCase(TestCase):
             mock_ask_search.called_with(language="en", search_term="payday")
         )
 
-    @mock.patch("ask_cfpb.views.AnswerPageDocument.search")
+    @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
     def test_en_search_no_term(self, mock_ask_search):
         from v1.util.migrations import get_or_create_page
 
@@ -436,7 +436,7 @@ class AnswerViewTestCase(TestCase):
     #     )
     #     self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.views.AnswerPageDocument.search")
+    @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
     def test_autocomplete_espaniol(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "Spanish question"

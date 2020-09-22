@@ -393,7 +393,7 @@ class AnswerPage(CFGOVPage):
 
 
 @registry.register_document
-class AnswerPageDocument(Document):
+class AnswerPageSearchDocument(Document):
 
     autocomplete = fields.TextField(analyzer=label_autocomplete)
     portal_topics = fields.KeywordField()
@@ -436,7 +436,7 @@ class AnswerPageDocument(Document):
 
 
 def get_suggestion_for_search(search_term):
-    s = AnswerPageDocument.search().suggest(
+    s = AnswerPageSearchDocument.search().suggest(
         'text_suggestion', search_term, term={'field': 'text'})
     response = s.execute()
     try:
@@ -453,7 +453,7 @@ class AnswerPageSearch:
         self.base_query = base_query
 
     def autocomplete(self):
-        s = AnswerPageDocument.search().query(
+        s = AnswerPageSearchDocument.search().query(
             'match', autocomplete=self.search_term)
         results = [
             {'question': result.autocomplete, 'url': result.url}
@@ -463,7 +463,7 @@ class AnswerPageSearch:
 
     def search(self):
         if not self.base_query:
-            search = AnswerPageDocument.search().filter(
+            search = AnswerPageSearchDocument.search().filter(
                 "term", language=self.language)
         else:
             search = self.base_query.filter("term", language=self.language)
@@ -483,7 +483,7 @@ class AnswerPageSearch:
         suggested_term = get_suggestion_for_search(self.search_term)
         if suggested_term != self.search_term:
             if not self.base_query:
-                search = AnswerPageDocument.search()
+                search = AnswerPageSearchDocument.search()
             else:
                 search = self.base_query
             suggested_results = search.query(

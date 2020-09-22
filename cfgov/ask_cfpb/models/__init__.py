@@ -1,5 +1,7 @@
 # flake8: noqa F401
-from ask_cfpb.documents import AnswerPage, AnswerPageDocument, AnswerPageSearch
+from ask_cfpb.documents import (
+    AnswerPage, AnswerPageSearch, AnswerPageSearchDocument
+)
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, NextStep
 )
