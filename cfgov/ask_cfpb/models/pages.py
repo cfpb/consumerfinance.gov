@@ -21,7 +21,7 @@ from wagtail.search import index
 
 from modelcluster.fields import ParentalKey
 
-from ask_cfpb.documents import (
+from ask_cfpb.models.search.documents import (
     AnswerPage, AnswerPageSearch, AnswerPageSearchDocument, extract_raw_text,
     truncate_preview
 )

@@ -4,6 +4,7 @@ from urllib.parse import urljoin
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
+from haystack.query import SearchQuerySet
 
 from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
@@ -11,10 +12,10 @@ from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
-from ask_cfpb.documents import (  # noqa
+from ask_cfpb.models import AnswerResultsPage
+from ask_cfpb.models.search.documents import (  # noqa
     AnswerPage, AnswerPageSearch, AnswerPageSearchDocument, make_safe
 )
-from ask_cfpb.models import AnswerResultsPage
 
 
 def annotate_links(answer_text):
@@ -178,24 +179,24 @@ def ask_search_es7(request, language='en', as_json=False):
     return results_page.serve(request)
 
 
-# def ask_autocomplete(request, language='en'):
-#     term = request.GET.get(
-#         'term', '').strip().replace('<', '')
-#     if not term:
-#         return JsonResponse([], safe=False)
+def ask_autocomplete(request, language='en'):
+    term = request.GET.get(
+        'term', '').strip().replace('<', '')
+    if not term:
+        return JsonResponse([], safe=False)
 
-#     try:
-#         sqs = SearchQuerySet().models(AnswerPage)
-#         sqs = sqs.autocomplete(
-#             autocomplete=term,
-#             language=language
-#         )
-#         results = [{'question': result.autocomplete,
-#                     'url': result.url}
-#                    for result in sqs[:20]]
-#         return JsonResponse(results, safe=False)
-#     except IndexError:
-#         return JsonResponse([], safe=False)
+    try:
+        sqs = SearchQuerySet().models(AnswerPage)
+        sqs = sqs.autocomplete(
+            autocomplete=term,
+            language=language
+        )
+        results = [{'question': result.autocomplete,
+                    'url': result.url}
+                   for result in sqs[:20]]
+        return JsonResponse(results, safe=False)
+    except IndexError:
+        return JsonResponse([], safe=False)
 
 
 def ask_autocomplete_es7(request, language='en'):

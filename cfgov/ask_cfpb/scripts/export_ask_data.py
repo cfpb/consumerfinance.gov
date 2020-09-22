@@ -5,7 +5,7 @@ import html
 from django.http import HttpResponse
 from django.utils import html as html_util
 
-from ask_cfpb.documents import AnswerPage
+from ask_cfpb.models.search.documents import AnswerPage
 
 
 HEADINGS = [

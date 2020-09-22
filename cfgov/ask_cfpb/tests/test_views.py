@@ -13,9 +13,11 @@ from wagtailsharing.models import SharingSite
 import mock
 from model_bakery import baker
 
-from ask_cfpb.documents import AnswerPageSearchDocument, make_safe
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
+)
+from ask_cfpb.models.search.documents import (
+    AnswerPageSearchDocument, make_safe
 )
 from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
