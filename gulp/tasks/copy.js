@@ -64,7 +64,7 @@ gulp.task( 'copy:lightbox2', () => {
 } );
 
 gulp.task( 'copy:jquery', () => {
-  console.log("COPY")
+  console.log( 'COPY' );
   const stream = _genericCopy(
     `${ paths.modules }/jquery/dist/**/*`,
     `${ paths.processed }/jquery`
