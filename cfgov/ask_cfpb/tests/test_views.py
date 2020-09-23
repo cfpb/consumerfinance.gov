@@ -417,12 +417,14 @@ class AnswerViewTestCase(TestCase):
     #     self.assertEqual(mock_search.call_count, 1)
     #     self.assertEqual(json.loads(response.content)["query"], "tooition")
 
-    # @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    # def test_autocomplete_en_blank_term(self, mock_search):
-    #     result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})  # noqa
-    #     output = json.loads(result.content)
-    #     self.assertEqual(output, [])
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.views.AnswerPageSearch")
+    def test_autocomplete_en_blank_term(self, mock_search):
+        result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
+        output = json.loads(result.content)
+        self.assertEqual(output, [])
 
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_autocomplete_es_blank_term(self, mock_search):
         result = self.client.get(
@@ -432,22 +434,24 @@ class AnswerViewTestCase(TestCase):
         output = json.loads(result.content)
         self.assertEqual(output, [])
 
-    # @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    # def test_autocomplete_en(self, mock_search):
-    #     mock_search_result = mock.Mock()
-    #     mock_search_result.autocomplete = "question"
-    #     mock_search_result.url = "url"
-    #     mock_search.execute.return_value = [mock_search_result]
-    #     self.client.get(
-    #         reverse("ask-autocomplete-en"), {"term": "question"}
-    #     )
-    #     self.assertEqual(mock_search.call_count, 1)
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
+    def test_autocomplete_en(self, mock_autocomplete):
+        mock_search_result = mock.Mock()
+        mock_search_result.autocomplete = "question"
+        mock_search_result.url = "url"
+        mock_autocomplete.query.return_value = [mock_search_result]
+        result = self.client.get(
+            reverse("ask-autocomplete-en"), {"term": "question"}
+        )
+        self.assertEqual(mock_autocomplete.call_count, 1)
+        self.assertEqual(result.status_code, 200)
 
     @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
-    def test_autocomplete_espaniol(self, mock_autocomplete):
+    def test_autocomplete_es(self, mock_autocomplete):
         mock_search_result = mock.Mock()
-        mock_search_result.autocomplete = "Spanish question"
+        mock_search_result.autocomplete = "question"
         mock_search_result.url = "respuestas/url"
         mock_autocomplete.query.return_value = [mock_search_result]
         result = self.client.get(
