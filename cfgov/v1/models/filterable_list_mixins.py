@@ -33,7 +33,7 @@ class FilterableListMixin(RoutablePageMixin):
     def get_filterable_queryset(self):
         """Return the queryset of pages to be filtered by this page.
 
-        By default this includes only life pages and pages that live in the
+        By default this includes only live pages and pages that live in the
         same Wagtail Site as this page. If this page cannot be mapped to a
         Wagtail site (for example, if it does not live under a site root),
         then it will not return any filterable results.
@@ -53,7 +53,7 @@ class FilterableListMixin(RoutablePageMixin):
         if self.filterable_children_only:
             queryset = queryset.child_of(self)
 
-        return self.get_model_class().objects.in_site(site).live()
+        return queryset
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(
