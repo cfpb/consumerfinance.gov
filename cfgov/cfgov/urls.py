@@ -432,16 +432,6 @@ urlpatterns = [
         name='redirect-ask-search'
     ),
     re_path(
-        r'^(?P<language>es)/obtener-respuestas/buscar/$',
-        ask_search,
-        name='ask-search-es'
-    ),
-    re_path(
-        r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-es-json'
-    ),
-    re_path(
         r'^ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$',
         view_answer,
         name='ask-english-answer'
@@ -455,24 +445,6 @@ urlpatterns = [
         r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
         view_answer,
         name='ask-spanish-answer'
-    ),
-    re_path(
-        r'^ask-cfpb/search/$',
-        ask_search,
-        name='ask-search-en'
-    ),
-    re_path(
-        r'^ask-cfpb/search/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-en-json'
-    ),
-    re_path(
-        r'^ask-cfpb/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-en'
-    ),
-    re_path(
-        r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-es'
     ),
 
     # If 'ELASTIC_SEARCH_DSL' is True, use elasticsearch7.
@@ -578,6 +550,39 @@ urlpatterns = [
     ),
 
 ]
+
+# Ask CFPB search and autocomplete
+ask_urlpatterns = [
+    re_path(
+        r'^ask-cfpb/search/$',
+        ask_search,
+        name='ask-search-en'
+    ),
+    re_path(
+        r'^ask-cfpb/search/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-en-json'
+    ),
+    re_path(
+        r'^(?P<language>es)/obtener-respuestas/buscar/$',
+        ask_search,
+        name='ask-search-es'
+    ),
+    re_path(
+        r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-es-json'
+    ),
+    re_path(
+        r'^ask-cfpb/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-en'
+    ),
+    re_path(
+        r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-es'
+    ),
+]
+urlpatterns = urlpatterns + ask_urlpatterns
 
 # Ask CFPB category and subcategory redirects
 category_redirects = [
