@@ -28,7 +28,7 @@ def run(*args):
             for [from_url, to_id] in redirect_list:
                 # If conflicting redirects exist for this from_url, delete them
                 existing_redirects = Redirect.objects.filter(
-                        old_path__iexact=Redirect.normalise_path(from_url))
+                    old_path__iexact=Redirect.normalise_path(from_url))
                 if len(existing_redirects) > 0:
                     dupes.append(from_url)
                     num, _ = existing_redirects.delete()
@@ -36,10 +36,11 @@ def run(*args):
 
                 # Add the desired redirect
                 page = Page.objects.get(id=to_id)
-                Redirect.add_redirect(from_url, redirect_to=page, is_permanent=True)
+                Redirect.add_redirect(from_url, redirect_to=page,
+                                      is_permanent=True)
                 successes += 1
 
         logger.info(f"Done! Added {successes} redirects")
         if len(dupes) > 0:
-            logger.debug(f"Redirects already existed for the following urls: {dupes}")
-            logger.info(f"Deleted {deletes} redirects and replaced with updated ones.")
+            logger.debug(f"Redirects already existed for these urls: {dupes}")
+            logger.info(f"Replaced {deletes} redirects with updated ones")

@@ -20,7 +20,6 @@ def run(*args):
         redirects_file = 'redirects_list.csv'
 
         pages_to_move = set()
-        total = 0
 
         with open(page_moves_file, "r") as csv_file:
             page_list = csv.reader(csv_file, delimiter=',')
@@ -28,11 +27,12 @@ def run(*args):
 
             # Edit this list to match the headers of the input file, just
             # make sure page_id and redirect are included
-            for [redirect, _, _, page_id, _, _, _, _, _]in page_list:
+            for [redirect, _, _, page_id, _, _, _, _, _] in page_list:
                 # Get the set of pages that will need wagtail redirects
                 if redirect == 'TRUE':
                     page = Page.objects.get(id=page_id)
-                    live_descendants = page.get_descendants(True).filter(live=True)
+                    live_descendants = \
+                        page.get_descendants(True).filter(live=True)
                     pages_to_move = pages_to_move.union(live_descendants)
 
             ids = [pg.id for pg in pages_to_move]
