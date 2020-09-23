@@ -387,35 +387,36 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(response.context_data["page"].language, "es")
 
-    # @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    # def test_json_response(self, mock_search):
-    #     get_or_create_page(
-    #         apps,
-    #         "ask_cfpb",
-    #         "AnswerResultsPage",
-    #         "Mock results page",
-    #         "ask-cfpb-search-results",
-    #         self.english_parent_page,
-    #         language="en",
-    #         live=True,
-    #     )
-    #     mock_search.search.return_value = {
-    #         'search_term': "tooition",
-    #         'suggestion': None,
-    #         'results': []
-    #     }
-    #     mock_search.suggest.return_value = {
-    #         'search_term': "tooition",
-    #         'suggestion': "tuition",
-    #         'results': []
-    #     }
-    #     response = self.client.get(
-    #         reverse("ask-search-en-json", kwargs={"as_json": "json"}),
-    #         {"q": "tuition"},
-    #     )
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(mock_search.call_count, 1)
-    #     self.assertEqual(json.loads(response.content)["query"], "tooition")
+    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.views.AnswerPageSearch")
+    def test_json_response(self, mock_search):
+        get_or_create_page(
+            apps,
+            "ask_cfpb",
+            "AnswerResultsPage",
+            "Mock results page",
+            "ask-cfpb-search-results",
+            self.english_parent_page,
+            language="en",
+            live=True,
+        )
+        mock_search.search.return_value = {
+            'search_term': "tooition",
+            'suggestion': None,
+            'results': []
+        }
+        mock_search.suggest.return_value = {
+            'search_term': "tooition",
+            'suggestion': "tuition",
+            'results': []
+        }
+        response = self.client.get(
+            reverse("ask-search-en-json", kwargs={"as_json": "json"}),
+            {"q": "tuition"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(mock_search.call_count, 1)
+        self.assertEqual(json.loads(response.content)["query"], "tuition")
 
     @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")

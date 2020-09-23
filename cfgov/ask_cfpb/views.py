@@ -161,26 +161,33 @@ def ask_search_es7(request, language='en', as_json=False):
         results_page.query = ''
         results_page.result_query = ''
         return results_page.serve(request)
+
     search_obj = AnswerPageSearch(search_term, language=language)
     response = search_obj.search()
     if not response.get('results') and suggest:
         response = search_obj.suggest()
+        search_suggestion = response.get('suggestion')
+    else:
+        search_suggestion = search_term
+
     if as_json:
-        result_list = [{
-            'question': result.autocomplete,
-            'url': result.url,
-            'text': result.text,
-            'preview': result.preview}
-            for result in response.get('results')
-        ]
         payload = {
             'query': search_term,
             'result_query': make_safe(search_term).strip(),
-            'suggestion': search_obj.suggest().get("suggestion"),
-            'results': result_list
+            'suggestion': search_suggestion,
+            'results': [
+                {
+                    'question': result.autocomplete,
+                    'url': result.url,
+                    'text': result.text,
+                    'preview': result.preview,
+                }
+                for result in response.get('results')
+            ]
         }
         json_results = json.dumps(payload)
         return HttpResponse(json_results, content_type='application/json')
+
     results_page.query = search_term
     results_page.result_query = response.get('search_term')
     results_page.suggestion = response.get('suggestion')
