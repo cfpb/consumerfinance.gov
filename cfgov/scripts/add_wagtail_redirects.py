@@ -8,6 +8,8 @@ from wagtail.core.models import Page
 logger = logging.getLogger(__name__)
 
 
+# This script is for use on September 30, 2020, when we'll be migrating
+# cf.gov to a new IA. Delete this script after the migration is done.
 # Run this from the command line with this:
 #   cfgov/manage.py runscript add_wagtail_redirects --script-args [PATH]
 def run(*args):
@@ -23,7 +25,6 @@ def run(*args):
 
         with open(redirects_file, "r") as csv_file:
             redirect_list = csv.reader(csv_file, delimiter=',')
-            next(redirect_list)  # skip the header row
             for [from_url, to_id] in redirect_list:
                 # If conflicting redirects exist for this from_url, delete them
                 existing_redirects = Redirect.objects.filter(
