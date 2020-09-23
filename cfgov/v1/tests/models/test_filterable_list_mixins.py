@@ -91,17 +91,24 @@ class FilterableRoutesTestCase(TestCase):
         self.root.add_child(instance=self.filterable_page)
 
         self.page = BlogPage(
-            title="Test",
+            title="Not yet archived",
             slug="one",
             live=True,
         )
         self.filterable_page.add_child(instance=self.page)
+        self.archived_page = BlogPage(
+            title="Archived",
+            slug="two",
+            is_archived=True,
+            live=True,
+        )
+        self.filterable_page.add_child(instance=self.archived_page)
 
     def test_index_route(self):
         response = self.client.get("/test/")
         self.assertEqual(
             response.context_data["filter_data"]["page_set"][0].title,
-            "Test"
+            "Not yet archived"
         )
 
     def test_feed_route(self):
@@ -110,3 +117,11 @@ class FilterableRoutesTestCase(TestCase):
             response["content-type"],
             "application/rss+xml; charset=utf-8"
         )
+
+    def test_archive_route(self):
+        response = self.client.get("/test/archive/")
+        self.assertEqual(
+            response.context_data["filter_data"]["page_set"][0].title,
+            "Archived"
+        )
+

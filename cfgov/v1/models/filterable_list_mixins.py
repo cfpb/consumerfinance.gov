@@ -55,7 +55,10 @@ class FilterableListMixin(RoutablePageMixin):
 
         return queryset
 
-    def get_context(self, request, *args, **kwargs):
+    def get_context(self, request, *args, queryset=None, **kwargs):
+        if queryset is None:
+            queryset = self.get_filterable_queryset()
+
         context = super().get_context(
             request, *args, **kwargs
         )
@@ -63,7 +66,7 @@ class FilterableListMixin(RoutablePageMixin):
         form_data, has_active_filters = self.get_form_data(request.GET)
         form = self.get_form_class()(
             form_data,
-            filterable_pages=self.get_filterable_queryset(),
+            filterable_pages=queryset,
             wagtail_block=self.filterable_list_wagtail_block(),
         )
 
@@ -149,12 +152,24 @@ class FilterableListMixin(RoutablePageMixin):
 
     @route(r'^$')
     def index_route(self, request):
-        return self.render(request)
+        queryset = self.get_filterable_queryset().filter(is_archived=False)
+        return self.render(
+            request, queryset=queryset,
+        )
 
     @route(r'^feed/$')
     def feed_route(self, request, *args, **kwargs):
         context = self.get_context(request)
         return FilterableFeed(self, context)(request)
+
+    @route(r'^archive/$')
+    def archive_route(self, request):
+        queryset = self.get_filterable_queryset().filter(is_archived=True)
+        response = self.render(
+            request,
+            queryset=queryset,
+        )
+        return response
 
 
 class CategoryFilterableMixin:
