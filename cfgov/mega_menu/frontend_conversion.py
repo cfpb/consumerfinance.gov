@@ -1,4 +1,8 @@
+import re
 from itertools import chain
+
+
+REGEX_REMOVE_QUERY_STRING = re.compile(r'\?.*$')
 
 
 class FrontendConverter:
@@ -7,15 +11,19 @@ class FrontendConverter:
         self.request = request
 
     def get_menu_items(self):
+        self._submenu_selected = False
+        self._link_selected = False
+
         return [
-            self.get_menu_item(submenu.value) for submenu in self.menu.submenus
+            self._get_menu_item(submenu.value)
+            for submenu in self.menu.submenus
         ]
 
-    def get_menu_item(self, submenu):
+    def _get_menu_item(self, submenu):
         # Normally we want to mark menu links as selected if the current
         # request is either on that link or one of its children; this lets us
         # properly highlight the menu if on the child of a menu link. But we
-        # don't want to do this for overview links, which are always the parent
+        # don't want to do this for overview links, which may be the parent
         # of all links beneath them.
         overview_link = self.make_link(
             {
@@ -39,18 +47,26 @@ class FrontendConverter:
         if other_links:
             menu_item['other_items'] = other_links
 
-        # If the current request either matches or is a child of this menu's
-        # links (overview, other, and columns, deliberately excluding
-        # featured), then we mark this menu as selected.
-        for link in chain(
-            [overview_link],
-            other_links,
-            *chain(column['nav_items'] for column in columns)
-        ):
-            url = link.get('url')
-            if url and self.request.path.startswith(url):
-                menu_item['selected'] = True
-                break
+        if not self._submenu_selected:
+            # If the current request either matches or is a child of this
+            # menu's links (overview, other, and columns, deliberately
+            # excluding featured), then we mark this menu as selected.
+            for link in chain(
+                [overview_link],
+                other_links,
+                *chain(column['nav_items'] for column in columns)
+            ):
+                url = link.get('url')
+                if url:
+                    url_no_query_string = REGEX_REMOVE_QUERY_STRING.sub(
+                        '',
+                        url
+                    )
+
+                    if self.request.path.startswith(url_no_query_string):
+                        menu_item['selected'] = True
+                        self._submenu_selected = True
+                        break
 
         return menu_item
 
@@ -99,12 +115,14 @@ class FrontendConverter:
         if icon:
             link['icon'] = icon
 
-        if selected_exact_only:
-            selected = url and self.request.path == url
-        else:
-            selected = url and self.request.path.startswith(url)
+        if not self._link_selected:
+            if selected_exact_only:
+                selected = url and self.request.path == url
+            else:
+                selected = url and self.request.path.startswith(url)
 
-        if selected:
-            link['selected'] = True
+            if selected:
+                link['selected'] = True
+                self._link_selected = True
 
         return link

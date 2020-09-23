@@ -47,18 +47,6 @@
         padding-right: unit( @grid_gutter-width / @font-size - 0.25em, em );
         margin-bottom: 0;
         vertical-align: middle;
-
-        &__es {
-            display: none;
-        }
-
-        [lang="es"] & {
-            display: none;
-        }
-
-        [lang="es"] &__es {
-            display: inline-block;
-        }
     }
 
     .m-list {
@@ -77,10 +65,10 @@
     }
 
     &_icon {
-        color: @dark-gray;
+        color: @gray-dark;
         font-size: unit( @grid_gutter-width / @base-font-size-px, em );
         line-height: 1;
-        .u-link__colors( @dark-gray, @pacific-80 );
+        .u-link__colors( @gray-dark, @pacific-80 );
         .u-link__no-border();
     }
 

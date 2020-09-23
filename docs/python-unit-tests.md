@@ -4,7 +4,7 @@
 
 We have multiple resources for writing new unit tests for Django, Wagtial, and Python code:
 
-- [CFPB Django and Wagtail unit testing documentation](https://github.com/cfpb/development/blob/master/guides/unittesting-django-wagtail.md)
+- [CFPB Django and Wagtail unit testing documentation](https://github.com/cfpb/development/blob/main/guides/unittesting-django-wagtail.md)
 - [The Django testing documentation](https://docs.djangoproject.com/en/1.11/topics/testing/overview/)
 - [The Wagtail testing documentation](http://docs.wagtail.io/en/stable/advanced_topics/testing.html)
 - [Real Python's "Testing in Django"](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/)
@@ -23,7 +23,7 @@ workon consumerfinance.gov
 
 If you have not set up the standalone installation of consumerfinance.gov,
 you can still run the tests if you install Tox in your
-[local installation of Python](https://github.com/cfpb/development/blob/master/guides/installing-python.md):
+[local installation of Python](https://github.com/cfpb/development/blob/main/guides/installing-python.md):
 
 ```
 pip install tox
@@ -94,7 +94,7 @@ We use the `flake8` and `isort` tools to ensure compliance with
 [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/),
 [Django coding style guidelines](https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/),
 and the
-[CFPB Python style guide](https://github.com/cfpb/development/blob/master/standards/python.md#linting).
+[CFPB Python style guide](https://github.com/cfpb/development/blob/main/standards/python.md#linting).
 
 Both `flake8` and `isort` can be run using the Tox `lint` environment:
 

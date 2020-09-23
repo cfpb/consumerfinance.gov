@@ -132,6 +132,7 @@ cfgov/paying_for_college/fixtures/national_stats_backup.json
 ###############
 *.idea
 .vscode
+local-storage.json
 
 # Auto-generated service workers #
 ##################################
