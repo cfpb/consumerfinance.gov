@@ -1,0 +1,22 @@
+{
+  "short_name": "myMoney Calendar",
+  "name": "CFPB myMoney Calendar",
+  "icons": [
+    {
+      "src": "/static/apps/mmt-my-money-calendar/img/cfpb-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/apps/mmt-my-money-calendar/img/cfpb-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/mmt-my-money-calendar?source=pwa",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "scope": "/mmt-my-money-calendar",
+  "theme_color": "#5AB057",
+  "prefer_related_applications": false
+}

@@ -1,0 +1,129 @@
+@bottom_nav_bg: #f0f7f6;
+@bottom_nav_active_bg: #005e5d;
+@bottom_nav_link: #005e5d;
+@bottom_nav_active_link_color: #f0f7f6;
+@bottom_nav_disabled_color: #adb9c5;
+
+.bottom-nav {
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: @bottom_nav_bg;
+  border-top: 5px solid #21aa3f;
+  z-index: 1000;
+  transition: transform 200ms ease-in-out;
+  transform: translateY(100%);
+
+  &.bottom-nav--visible {
+    transform: translateY(0);
+  }
+
+  &__items {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    list-style: none;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  &__item {
+    flex-basis: 25%;
+
+    .cf-icon-svg {
+      width: 100%;
+      max-width: 40px;
+      height: auto;
+      fill: @bottom_nav_link;
+
+      &:active,
+      &.active {
+        fill: #fff;
+      }
+    }
+  }
+
+  &__link-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 40px;
+  }
+
+  &__link-badge {
+    font-size: 12px;
+    color: #fff;
+    background-color: @red;
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    top: 8%;
+    right: 8%;
+  }
+
+  &__link {
+    color: yellow;
+    display: block;
+    height: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    position: relative;
+
+    &:visited {
+      color: orange;
+    }
+
+    &:active {
+      color: @bottom_nav_link;
+    }
+
+    &:active,
+    &.active {
+      background-color: @bottom_nav_active_bg;
+    }
+
+    &.disabled {
+      color: @bottom_nav_disabled_color;
+
+      &:visited,
+      &:active {
+        color: @bottom_nav_disabled_color;
+      }
+
+      .cf-icon-svg {
+        fill: @bottom_nav_disabled_color;
+      }
+
+      .bottom-nav__link-label {
+        color: @bottom_nav_disabled_color;
+      }
+    }
+  }
+
+  &__link-label {
+    color: @bottom_nav_link;
+    font-size: 10px;
+  }
+}
+
+.bottom-nav__link.active div {
+  color: white;
+}
+
+.bottom-nav__link.active svg {
+  fill: white;
+}
+.o-footer {
+  padding-bottom: 6rem;
+}
+
+.has-spotlight {
+  box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.5) inset, 0px 0px 0px 1000px rgba(0,0,0,0.5);
+}

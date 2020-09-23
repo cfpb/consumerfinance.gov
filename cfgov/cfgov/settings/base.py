@@ -139,6 +139,7 @@ WAGTAILSEARCH_BACKENDS = {
 
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -752,9 +753,9 @@ FLAGS = {
         # Boolean to turn it off explicitly unless enabled by another condition
         {"condition": "boolean", "value": False},
     ],
-    # Controls whether or not to include Qualtrics Web Intercept code for the
-    # Q42020 Ask CFPB customer satisfaction survey.
-    "ASK_SURVEY_INTERCEPT": [],
+
+    # Toggle the public availability of the My Money Calendar progressive web app
+    'MMT_MY_MONEY_CALENDAR': [],
 }
 
 

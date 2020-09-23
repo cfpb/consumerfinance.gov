@@ -1,0 +1,130 @@
+@income_color: #257675;
+@expense_color: #B4267A;
+
+.category-browser {
+  &__tab-nav {
+    margin-bottom: 32px;
+    margin-top: 15px;
+  }
+
+  &__tab-items {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 0;
+  }
+
+  &__tab-item {
+    flex-basis: 50%;
+    width: 50%;
+    text-align: center;
+
+    &.income-tab:hover {
+      background-color: @income_color;
+      border-bottom: 0px solid @income_color;
+    }
+    &.expense-tab:hover {
+      background-color: @expense_color;
+      border-bottom: 0px solid @expense_color;
+    }
+  }
+
+  &__tab-link {
+    display: block;
+    padding: 16px 20px;
+    border-bottom: 1px solid @text;
+    color: @text;
+    font-size: 18px;
+
+    &:visited,
+    &:active {
+      color: @text;
+      border-color: @text;
+    }
+    &:hover {
+      color: @white !important;
+      &.income-tab {
+        border-bottom: 1px solid @income_color;
+
+      }
+      &.expense-tab {
+        border-bottom: 1px solid @expense_color;
+
+      }
+    }
+    &.active {
+      padding: 16px 20px 14px;
+      color: @white;
+      
+      &.income-tab {
+        background-color: @income_color;
+        border-bottom: 3px solid @income_color;
+
+      }
+      &.expense-tab {
+        background-color: @expense_color;
+        border-bottom: 3px solid @expense_color;
+
+      }
+    }
+  }
+
+}
+
+.category-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &__item {
+    flex-basis: 33%;
+    width: 33%;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    color: @text;
+    border: 0;
+
+    &:visited,
+    &:active {
+      color: @text;
+    }
+
+    &:active {
+      border: 1px dotted @text;
+    }
+  }
+
+  &__icon {
+    width: 60px;
+    height: auto;
+    margin-bottom: 16px;
+
+    &.-income {
+      svg, svg path {
+        fill: @income_color;
+      }
+    }
+
+    &.-expense {
+      svg, svg path {
+        fill: @expense_color;
+      }
+    }
+  }
+
+  &__label {
+    font-size: 14px;
+  }
+}

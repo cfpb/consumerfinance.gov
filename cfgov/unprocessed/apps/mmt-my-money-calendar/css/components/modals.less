@@ -1,0 +1,124 @@
+@modal-red: #b52121;
+@modal-padding: 20px;
+@modal-button-border: 1px solid #ececec;
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  &--after-open {
+    opacity: 1;
+  }
+
+  &--before-close {
+    opacity: 0;
+  }
+}
+
+.ReactModal__Content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  max-width: 500px;
+  padding: @modal-padding 0;
+  padding-bottom: 0;
+  background-color: #fff;
+  border-radius: 6px;
+  outline: none;
+}
+
+.narrative-step1 {
+  position: absolute;
+  top: calc(100% - 200px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  max-width: 500px;
+  padding: @modal-padding 0;
+  padding-bottom: 0;
+  background-color: #fff;
+  border-radius: 6px;
+  outline: none;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    left: calc(50% - 65px);
+    z-index: 1;
+    border: solid 15px transparent;
+    border-top-color: #FFF;
+  }
+}
+
+.modal-dialog {
+  &__prompt {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 0 @modal-padding;
+  }
+
+  &__actions {
+    list-style: none;
+    padding: 0;
+  }
+
+  &__action {
+    margin-bottom: 0;
+    border-bottom: @modal-button-border;
+
+    &:first-child {
+      border-top: @modal-button-border;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+
+      .modal-dialog__action-button {
+        border-radius: 6px;
+      }
+    }
+  }
+
+  &__action-button {
+    display: block;
+    text-align: left;
+    background: #fff;
+    border: 0;
+    padding: @modal-padding;
+    width: 100%;
+    transition: background-color 150ms ease-in-out;
+
+    &--cancel {
+      color: @modal-red;
+    }
+
+    &:active {
+      background-color: #ececec;
+    }
+  }
+
+  .arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #ececec;
+  }
+}
+
+.narrative-modal {
+  h4 {
+    font-weight: 600;
+  }
+}

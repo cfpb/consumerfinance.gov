@@ -75,12 +75,9 @@ class ParseLinksMiddleware(object):
     @classmethod
     def should_parse_links(cls, request_path, response_content_type):
         """Determine if links should be parsed for a given request/response.
-
         Returns True if
-
         1. The response has the settings.DEFAULT_CONTENT_TYPE (HTML) AND
         2. The request path does not match settings.PARSE_LINKS_EXCLUSION_LIST
-
         Otherwise returns False.
         """
         if "html" not in response_content_type:

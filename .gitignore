@@ -55,6 +55,7 @@ Thumbs.db
 # Environment vars #
 ####################
 .env
+.tool-versions
 
 # Node packages #
 #################
@@ -132,11 +133,11 @@ cfgov/paying_for_college/fixtures/national_stats_backup.json
 ###############
 *.idea
 .vscode
-local-storage.json
 
 # Auto-generated service workers #
 ##################################
 cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js
+cfgov/jinja2/v1/mmt-my-money-calendar/service-worker.js
 
 # Apache #
 ##########

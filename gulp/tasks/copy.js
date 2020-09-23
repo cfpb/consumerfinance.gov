@@ -2,6 +2,7 @@ const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
 const handleErrors = require( '../utils/handle-errors' );
 const paths = require( '../../config/environment' ).paths;
+const path = require( 'path' );
 
 /*
   Path to the cf-icons SVG icons folder,
@@ -72,10 +73,19 @@ gulp.task( 'copy:icons',
   )
 );
 
+gulp.task( 'copy:moneytools', () => {
+  const app = 'mmt-my-money-calendar';
+
+  return gulp
+    .src( path.join( paths.processed, `apps/${ app }/js/service-worker.js` ) )
+    .pipe( gulp.dest( `./cfgov/jinja2/v1/${ app }/` ) );
+} );
+
 gulp.task( 'copy',
   gulp.parallel(
     'copy:icons',
     'copy:lightbox2',
+    'copy:moneytools',
     'copy:root'
   )
 );

@@ -1,0 +1,41 @@
+.wizard {
+  &__step-image {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+    max-width: 40%;
+
+    @media screen and (min-width: 600px) {
+      max-width: 100%;
+      justify-content: flex-start;
+    }
+  }
+
+  &__step-image-asset {
+    max-width: 40%;
+  }
+
+  &__field {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #adb9c5;
+
+    &.last {
+      border-bottom: 0;
+    }
+  }
+
+  &__field + &__field {
+    margin-top: 1rem;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row nowrap;
+    margin-top: 2rem;
+  }
+}

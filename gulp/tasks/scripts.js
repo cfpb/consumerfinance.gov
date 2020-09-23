@@ -206,6 +206,61 @@ function scriptsApps() {
   return singleStream;
 }
 
+function scriptsMoneyTools( done ) {
+  const apps = [
+    `${ paths.unprocessed }/apps/mmt-my-money-calendar`
+  ];
+  const streams = [];
+
+  const watch = process.argv.includes( '--watch' );
+
+  apps.forEach( appsPath => {
+    const app = path.basename( appsPath );
+    let appWebpackConfig = webpackConfig.appsConf;
+    const appWebpackConfigPath = path.join( appsPath, 'webpack-config.js' );
+
+    // eslint-disable-next-line no-sync
+    if ( fs.existsSync( appWebpackConfigPath ) ) {
+      // eslint-disable-next-line global-require
+      appWebpackConfig = require( path.resolve( appWebpackConfigPath ) ).conf;
+    }
+
+    // eslint-disable-next-line no-sync
+    if ( !fs.existsSync( path.join( appsPath, 'node_modules' ) ) ) {
+      // eslint-disable-next-line no-console
+      console.log(
+        '\x1b[31m%s\x1b[0m',
+        'App dependencies not installed, please run from project root:',
+        `yarn --cwd ${ appsPath }`
+      );
+      return done();
+    }
+
+    appWebpackConfig.watch = watch;
+
+    streams.push(
+      _processScript(
+        appWebpackConfig,
+        `/apps/${ app }/js/index.js`,
+        `/apps/${ app }/js`
+      )
+    );
+
+    return done();
+  } );
+
+  let singleStream;
+
+  if ( streams.length > 0 ) {
+    singleStream = mergeStream( ...streams );
+  } else {
+    singleStream = mergeStream();
+  }
+
+  return singleStream;
+}
+
+gulp.task( 'scripts:moneytools', scriptsMoneyTools );
 gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:modern', scriptsModern );
