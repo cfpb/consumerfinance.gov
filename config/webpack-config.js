@@ -142,8 +142,7 @@ const appsConf = {
   mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
   output: {
-    filename: '[name]',
-    jsonpFunction: 'apps'
+    filename: '[name]'
   },
   plugins: [
     COMMON_CHUNK_CONFIG
