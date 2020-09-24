@@ -74,7 +74,7 @@ def get_secondary_nav_items(request, current_page):
         else:
             sibling = sibling
 
-        item_selected = current_page.pk == sibling.pk
+        item_selected = sibling.url == request.path
 
         item = {
             'title': sibling.title,
@@ -107,6 +107,11 @@ def get_secondary_nav_items(request, current_page):
                         'url': child.relative_url(site),
                         'active': child_selected,
                     })
+
+        # Include a hook for pages to provide their own nave items, for example
+        # so routable pages can provide navigation for their routes
+        if hasattr(page, "get_nav_items"):
+            item['children'].extend(page.get_nav_items(request))
 
         nav_items.append(item)
 

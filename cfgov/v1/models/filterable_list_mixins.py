@@ -150,6 +150,18 @@ class FilterableListMixin(RoutablePageMixin):
 
         return response
 
+    def get_nav_items(self, request):
+         items = []
+         if self.get_filterable_queryset().filter(is_archived=True).exists():
+             archive_url = self.reverse_subpage("archive_route")
+             items.append({
+                 'title': "Archive",
+                 'slug': "archive",
+                 'url': self.url + archive_url,
+                'active': self.url + archive_url == request.path,
+             })
+         return items
+
     @route(r'^$')
     def index_route(self, request):
         queryset = self.get_filterable_queryset().filter(is_archived=False)
