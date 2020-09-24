@@ -124,4 +124,3 @@ class FilterableRoutesTestCase(TestCase):
             response.context_data["filter_data"]["page_set"][0].title,
             "Archived"
         )
-

@@ -737,6 +737,21 @@ class ItemIntroduction(blocks.StructBlock):
 class FilterableList(BaseExpandable):
     title = blocks.BooleanBlock(default=True, required=False,
                                 label='Filter Title')
+    archive_link_text = blocks.RichTextBlock(
+        required=False,
+        help_text=mark_safe(
+            'Text that will be displayed if this filterable list has archived '
+            'posts. It may include a link to "archive/".'
+        )
+    )
+    return_from_archive_link_text = blocks.RichTextBlock(
+        required=False,
+        help_text=mark_safe(
+            'Text that will be displayed on the archive view of this '
+            'filterable list to return from the archive. If may include '
+            'a link back to this page.'
+        )
+    )
     no_posts_message = blocks.CharBlock(
         required=False,
         help_text=mark_safe(

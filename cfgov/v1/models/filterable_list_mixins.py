@@ -74,6 +74,8 @@ class FilterableListMixin(RoutablePageMixin):
             'filter_data': self.process_form(request, form),
             'get_secondary_nav_items': get_secondary_nav_items,
             'has_active_filters': has_active_filters,
+            'has_archives': self.get_filterable_queryset().filter(
+                is_archived=True).exists(),
         })
 
         return context
@@ -180,6 +182,7 @@ class FilterableListMixin(RoutablePageMixin):
         response = self.render(
             request,
             queryset=queryset,
+            context_overrides={'is_archived': True}
         )
         return response
 

@@ -53,6 +53,13 @@
     ) }}
 {% elif has_unfiltered_results %}
 
+    {# Archive notificaiton #}
+    {% if is_archived and value.return_from_archive_link_text %}
+        {% include_block value.return_from_archive_link_text %} 
+    {% elif not is_archived and has_archives and value.archive_link_text %}
+        {% include_block value.archive_link_text %} 
+    {% endif %}
+
     <div class="o-filterable-list">
         {% set form = filter_data.form %}
         {% set posts = filter_data.page_set %}
