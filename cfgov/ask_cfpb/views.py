@@ -11,7 +11,6 @@ from wagtailsharing.models import SharingSite
 from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
-from flags.state import flag_enabled
 
 from ask_cfpb.models import AnswerResultsPage, AskSearch
 from ask_cfpb.models.search.documents import (  # noqa
@@ -97,14 +96,9 @@ def ask_search(request, language='en', as_json=False):
         results_page.result_query = ''
         return results_page.serve(request)
 
-    if flag_enabled('ELASTIC_SEARCH_DSL'):
-        search = AnswerPageSearch(search_term, language=language)
-        if len(search.get('results')) == 0:
-            search.suggest(request=request)
-    else:
-        search = AskSearch(search_term=search_term, language=language)
-        if search.queryset.count() == 0:
-            search.suggest(request=request)
+    search = AskSearch(search_term=search_term, language=language)
+    if search.queryset.count() == 0:
+        search.suggest(request=request)
 
     if as_json:
         payload = {
@@ -127,16 +121,10 @@ def ask_search(request, language='en', as_json=False):
     results_page.query = search_term
     results_page.result_query = search.search_term
     results_page.suggestion = search.suggestion
-    if flag_enabled('ELASTIC_SEARCH_DSL'):
-        results_page.answers = [
-            (result.url, result.autocomplete, result.preview)
-            for result in search.get("results")
-        ]
-    else:
-        results_page.answers = [
-            (result.url, result.autocomplete, result.preview)
-            for result in search.queryset
-        ]
+    results_page.answers = [
+        (result.url, result.autocomplete, result.preview)
+        for result in search.queryset
+    ]
     return results_page.serve(request)
 
 
