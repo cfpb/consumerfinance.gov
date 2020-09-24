@@ -1,16 +1,17 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.template.response import TemplateResponse
 
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+
+from v1.feeds import FilterableFeed
 from v1.forms import FilterableListForm
 from v1.models.learn_page import AbstractFilterPage
 from v1.util.ref import get_category_children
 from v1.util.util import get_secondary_nav_items
 
 
-class FilterableListMixin(object):
+class FilterableListMixin(RoutablePageMixin):
     """Wagtail Page mixin that allows for filtering of other pages."""
-
-    filterable_categories = []
-    """Determines page categories to be filtered; see filterable_pages."""
 
     filterable_children_only = True
     """Determines page tree to be filtered; see filterable_pages."""
@@ -29,18 +30,13 @@ class FilterableListMixin(object):
     def get_form_class():
         return FilterableListForm
 
-    def filterable_pages(self):
-        """Return pages that are eligible to be filtered by this page.
+    def get_filterable_queryset(self):
+        """Return the queryset of pages to be filtered by this page.
 
-        Always includes only live pages and pages that live in the same Wagtail
-        site as this page. If this page cannot be mapped to a Wagtail site (for
-        example, if it does not live under a site root), then it will not
-        return any filterable results.
-
-        The class property filterable_categories can be set to a list of page
-        categories from the set in v1.util.ref.categories. If set, this page
-        will only filter pages that are tagged with a tag in those categories.
-        By default this is an empty list and all page tags are eligible.
+        By default this includes only live pages and pages that live in the
+        same Wagtail Site as this page. If this page cannot be mapped to a
+        Wagtail site (for example, if it does not live under a site root),
+        then it will not return any filterable results.
 
         The class property filterable_children_only determines whether this
         page filters only pages that are direct children of this page. By
@@ -52,29 +48,22 @@ class FilterableListMixin(object):
         if not site:
             return self.get_model_class().objects.none()
 
-        pages = self.get_model_class().objects.in_site(site).live()
-
-        if self.filterable_categories:
-            category_names = get_category_children(self.filterable_categories)
-            pages = pages.filter(categories__name__in=category_names)
+        queryset = self.get_model_class().objects.in_site(site).live()
 
         if self.filterable_children_only:
-            pages = pages.child_of(self)
+            queryset = queryset.child_of(self)
 
-        return pages
-
-    def filterable_list_wagtail_block(self):
-        return next((b for b in self.content if b.block_type == 'filter_controls'), None)  # noqa 501
+        return queryset
 
     def get_context(self, request, *args, **kwargs):
-        context = super(FilterableListMixin, self).get_context(
+        context = super().get_context(
             request, *args, **kwargs
         )
 
         form_data, has_active_filters = self.get_form_data(request.GET)
         form = self.get_form_class()(
             form_data,
-            filterable_pages=self.filterable_pages(),
+            filterable_pages=self.get_filterable_queryset(),
             wagtail_block=self.filterable_list_wagtail_block(),
         )
 
@@ -85,6 +74,12 @@ class FilterableListMixin(object):
         })
 
         return context
+
+    def filterable_list_wagtail_block(self):
+        return next(
+            (b for b in self.content if b.block_type == 'filter_controls'),
+            None
+        )
 
     def process_form(self, request, form):
         filter_data = {}
@@ -130,12 +125,50 @@ class FilterableListMixin(object):
                 self.set_do_not_index(field, value)
         return form_data, has_active_filters
 
-    def serve(self, request, *args, **kwargs):
-        """Modify response headers."""
-        response = super(FilterableListMixin, self).serve(request)
+    def render(self, request, *args, context_overrides=None, **kwargs):
+        """Render with optional context overrides."""
+        # TODO: the context-overriding and template rendering can be replaced
+        # with super().render() in Wagtail 2.11, where RoutablePageMixin gains
+        # the context_overrides functionality built-in.
+        context = self.get_context(request, *args, **kwargs)
+        context.update(context_overrides or {})
+        response = TemplateResponse(
+            request,
+            self.get_template(request, *args, **kwargs),
+            context
+        )
+
         # Set a shorter TTL in Akamai
         response['Edge-Control'] = 'cache-maxage=10m'
+
         # Set noindex for crawlers if needed
         if self.do_not_index:
             response['X-Robots-Tag'] = 'noindex'
+
         return response
+
+    @route(r'^$')
+    def index_route(self, request):
+        return self.render(request)
+
+    @route(r'^feed/$')
+    def feed_route(self, request, *args, **kwargs):
+        context = self.get_context(request)
+        return FilterableFeed(self, context)(request)
+
+
+class CategoryFilterableMixin:
+    filterable_categories = []
+    """Determines page categories to be filtered; see filterable_pages."""
+
+    def get_filterable_queryset(self):
+        """Return the queryset of pages to be filtered by this page.
+
+        The class property filterable_categories can be set to a list of page
+        categories from the set in v1.util.ref.categories. If set, this page
+        will only filter pages that are tagged with a tag in those categories.
+        By default this is an empty list and all page tags are eligible.
+        """
+        queryset = super().get_filterable_queryset()
+        category_names = get_category_children(self.filterable_categories)
+        return queryset.filter(categories__name__in=category_names)
