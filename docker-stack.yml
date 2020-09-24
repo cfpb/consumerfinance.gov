@@ -14,7 +14,21 @@ services:
         condition: none
     networks:
       - app
-
+  elasticsearch7:
+    image: elasticsearch:7.4.2
+    environment:
+      discovery.type: single-node
+    deploy:
+      placement:
+        constraints:
+          - node.role!=manager
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      networks:
+        - app
   postgres:
     image: postgres:10-alpine
     user: postgres
