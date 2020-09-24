@@ -35,7 +35,7 @@ def run(*args):
                         page.get_descendants(True).filter(live=True)
                     pages_to_move = pages_to_move.union(live_descendants)
 
-            pages_to_move = sorted(pages_to_move, key=lambda pg: pg.id)
+            pages_to_move = sorted(pages_to_move, key=lambda pg: pg.url)
             ids = [pg.id for pg in pages_to_move]
             logger.info(f"IDs of pages to redirect: {ids}")
             logger.info(f"Total pages: {len(ids)}")
