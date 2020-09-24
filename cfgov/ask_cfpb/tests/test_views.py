@@ -16,9 +16,7 @@ from model_bakery import baker
 from ask_cfpb.models import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, AnswerPage
 )
-from ask_cfpb.models.search.documents import (
-    AnswerPageSearchDocument, make_safe
-)
+from ask_cfpb.models.search.documents import AnswerPageDocument, make_safe
 from ask_cfpb.views import annotate_links, ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
 
@@ -35,7 +33,7 @@ class MockSearchResult:
 
 
 def mock_es7_queryset(count=0):
-    class MockSearchQuerySet(AnswerPageSearchDocument):
+    class MockSearchQuerySet(AnswerPageDocument):
         def __iter__(self):
             if count:
                 return iter(
@@ -224,7 +222,7 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(response.status_code, 404)
 
     @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
-    @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
+    @mock.patch("ask_cfpb.views.AnswerPageDocument.search")
     def test_en_search(self, mock_search):
         from v1.util.migrations import get_or_create_page
 
@@ -273,7 +271,7 @@ class AnswerViewTestCase(TestCase):
 
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
     @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
-    @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
+    @mock.patch("ask_cfpb.views.AnswerPageDocument.search")
     def test_en_search_suggestion(self, mock_search):
         from v1.util.migrations import get_or_create_page
 
@@ -436,7 +434,7 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(output, [])
 
     @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
-    @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
+    @mock.patch("ask_cfpb.views.AnswerPageDocument.search")
     def test_autocomplete_en(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
@@ -449,7 +447,7 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(result.status_code, 200)
 
     @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
-    @mock.patch("ask_cfpb.views.AnswerPageSearchDocument.search")
+    @mock.patch("ask_cfpb.views.AnswerPageDocument.search")
     def test_autocomplete_es(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"

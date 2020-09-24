@@ -24,7 +24,7 @@ from modelcluster.fields import ParentalKey
 
 from ask_cfpb.models.ask_search import AskSearch
 from ask_cfpb.models.search.documents import (
-    AnswerPage, AnswerPageSearch, AnswerPageSearchDocument, extract_raw_text,
+    AnswerPage, AnswerPageDocument, AnswerPageSearch, extract_raw_text,
     truncate_preview
 )
 from v1 import blocks as v1_blocks
@@ -400,7 +400,7 @@ class PortalSearchPage(
     @route(r'^$')
     def portal_topic_page(self, request):
         self.portal_category = None
-        self.query_base = AnswerPageSearchDocument.search().filter(
+        self.query_base = AnswerPageDocument.search().filter(
             "match", portal_topics=self.portal_topic.heading)
         return self.get_results_es7(request)
 
@@ -422,7 +422,7 @@ class PortalSearchPage(
                 request,
                 'ask-cfpb/see-all.html',
                 context)
-        self.query_base = AnswerPageSearchDocument.search().filter(
+        self.query_base = AnswerPageDocument.search().filter(
             'match', portal_topics=self.portal_topic.heading).filter(
             'match', portal_categories=self.portal_category.heading)
         return self.get_results_es7(request)

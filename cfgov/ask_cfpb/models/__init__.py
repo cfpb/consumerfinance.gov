@@ -9,6 +9,6 @@ from ask_cfpb.models.pages import (
     get_reusable_text_snippet, get_standard_text, validate_page_number
 )
 from ask_cfpb.models.search.documents import (
-    AnswerPage, AnswerPageSearch, AnswerPageSearchDocument
+    AnswerPage, AnswerPageDocument, AnswerPageSearch
 )
 from ask_cfpb.models.snippets import GlossaryTerm

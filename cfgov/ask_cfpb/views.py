@@ -13,8 +13,8 @@ from wagtailsharing.views import ServeView
 from bs4 import BeautifulSoup as bs
 
 from ask_cfpb.models import AnswerResultsPage, AskSearch
-from ask_cfpb.models.search.documents import (  # noqa
-    AnswerPage, AnswerPageSearch, AnswerPageSearchDocument, make_safe
+from ask_cfpb.models.search.documents import (
+    AnswerPage, AnswerPageDocument, AnswerPageSearch, make_safe
 )
 
 
