@@ -56,7 +56,7 @@ def get_appropriate_rss_feed_url_for_page(page, request=None):
     under the index page).
 
     Pages are considered to provide a feed if they inherit from
-    FilterableFeedRoutablePageMixin.
+    FilterableListMixin.
 
     Returns None if neither the page nor any of its ancestors provide feeds.
     """

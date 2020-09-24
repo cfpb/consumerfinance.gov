@@ -126,8 +126,8 @@ class FilterableListMixin(RoutablePageMixin):
         return form_data, has_active_filters
 
     def render(self, request, *args, context_overrides=None, **kwargs):
-        """Render with optional for context overrides."""
-        # Note: the context-overriding and template rendering can be replaced
+        """Render with optional context overrides."""
+        # TODO: the context-overriding and template rendering can be replaced
         # with super().render() in Wagtail 2.11, where RoutablePageMixin gains
         # the context_overrides functionality built-in.
         context = self.get_context(request, *args, **kwargs)
