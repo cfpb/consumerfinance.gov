@@ -1,6 +1,8 @@
 import csv
 import logging
 
+from django.db import transaction
+
 from wagtail.core.models import Page
 
 
@@ -27,12 +29,13 @@ def run(*args):
             # Edit this list to match the headers of the input file, just
             # make sure page_id, destination_id, new_slug are included
             for [_, _, new_slug, page_id, _, _, _, destination_id, _] in pages:
-                page = Page.objects.get(id=page_id)
-                if new_slug:
-                    page.slug = new_slug
-                    page.save()
-                new_parent = Page.objects.get(id=destination_id)
-                page.move(new_parent, pos='first-child')
-                successes += 1
+                with transaction.atomic():
+                    page = Page.objects.get(id=page_id)
+                    if new_slug:
+                        page.slug = new_slug
+                        page.save()
+                    new_parent = Page.objects.get(id=destination_id)
+                    page.move(new_parent, pos='first-child')
+                    successes += 1
 
         logger.info(f"Done! Moved {successes} top-level pages")

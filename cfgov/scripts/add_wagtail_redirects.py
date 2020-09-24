@@ -1,6 +1,8 @@
 import csv
 import logging
 
+from django.db import transaction
+
 from wagtail.contrib.redirects.models import Redirect
 from wagtail.core.models import Page
 
@@ -26,19 +28,23 @@ def run(*args):
         with open(redirects_file, "r") as csv_file:
             redirect_list = csv.reader(csv_file, delimiter=',')
             for [from_url, to_id] in redirect_list:
-                # If conflicting redirects exist for this from_url, delete them
-                existing_redirects = Redirect.objects.filter(
-                    old_path__iexact=Redirect.normalise_path(from_url))
-                if len(existing_redirects) > 0:
-                    dupes.append(from_url)
-                    num, _ = existing_redirects.delete()
-                    deletes += num
+                with transaction.atomic():
+                    # If conflicting redirects exist for this from_url,
+                    # delete them
+                    existing_redirects = Redirect.objects.filter(
+                        old_path__iexact=Redirect.normalise_path(from_url))
+                    if len(existing_redirects) > 0:
+                        dupes.append(from_url)
+                        num, _ = existing_redirects.delete()
+                        deletes += num
+                        logger.debug(f"Removed duplicate redirect: {from_url}")
 
-                # Add the desired redirect
-                page = Page.objects.get(id=to_id)
-                Redirect.add_redirect(from_url, redirect_to=page,
-                                      is_permanent=True)
-                successes += 1
+                    # Add the desired redirect
+                    page = Page.objects.get(id=to_id)
+                    Redirect.add_redirect(from_url, redirect_to=page,
+                                          is_permanent=True)
+                    logger.info(f"Added redirect: {from_url} -> {page.title}")
+                    successes += 1
 
         logger.info(f"Done! Added {successes} redirects")
         if len(dupes) > 0:

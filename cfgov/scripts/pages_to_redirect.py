@@ -35,8 +35,9 @@ def run(*args):
                         page.get_descendants(True).filter(live=True)
                     pages_to_move = pages_to_move.union(live_descendants)
 
+            pages_to_move = sorted(pages_to_move, key=lambda pg: pg.id)
             ids = [pg.id for pg in pages_to_move]
-            logger.info(f"IDs of pages to move: {ids}")
+            logger.info(f"IDs of pages to redirect: {ids}")
             logger.info(f"Total pages: {len(ids)}")
 
         with open(redirects_file, "w") as output_file:
@@ -44,3 +45,5 @@ def run(*args):
             for page in pages_to_move:
                 row = [page.url, page.id]
                 redirects_list.writerow(row)
+
+        logger.info(f"Generated redirects CSV at: {redirects_file}")
