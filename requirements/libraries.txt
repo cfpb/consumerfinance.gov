@@ -22,7 +22,7 @@ django-storages==1.7.1
 django-treebeard==4.2.0
 django-watchman==0.15.0
 edgegrid-python==1.0.10
-elasticsearch7
+elasticsearch7==7.9.1
 elasticsearch==2.4.1
 govdelivery==1.3
 Jinja2==2.11.2
