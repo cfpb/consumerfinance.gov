@@ -10,10 +10,11 @@ from wagtail.search import index
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
-from v1.feeds import FilterableFeedPageMixin
 from v1.models.base import CFGOVPage
+from v1.models.filterable_list_mixins import (
+    CategoryFilterableMixin, FilterableListMixin
+)
 from v1.models.learn_page import EnforcementActionPage, EventPage
-from v1.util.filterable_list import FilterableListMixin
 
 
 class BrowseFilterableContent(StreamBlock):
@@ -31,9 +32,7 @@ class BrowseFilterableContent(StreamBlock):
         }
 
 
-class BrowseFilterablePage(FilterableFeedPageMixin,
-                           FilterableListMixin,
-                           CFGOVPage):
+class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', organisms.FeaturedContent()),
@@ -105,7 +104,7 @@ class EventArchivePage(BrowseFilterablePage):
         return forms.EventArchiveFilterForm
 
 
-class NewsroomLandingPage(BrowseFilterablePage):
+class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
     template = 'newsroom/index.html'
     filterable_categories = ['Newsroom']
     filterable_children_only = False
