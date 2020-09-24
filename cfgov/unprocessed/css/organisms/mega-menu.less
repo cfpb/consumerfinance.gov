@@ -974,7 +974,7 @@ body {
                 padding: unit( @grid_gutter-width / @base-font-size-px, em );
                 padding-top: unit( 20px / @base-font-size-px, em );
                 padding-left: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
-                padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+                padding-right: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
             }
 
             &-alt-trigger {
@@ -1046,6 +1046,7 @@ body {
                 margin-bottom: unit( 30px / @base-font-size-px, em );
                 border: 1px solid @gray-40;
                 border-top: 6px solid @gold;
+                box-sizing: border-box;
             }
 
             &-list__featured &-link {
