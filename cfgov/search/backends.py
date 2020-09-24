@@ -1,15 +1,9 @@
 # Based on https://wellfire.co/learn/custom-haystack-elasticsearch-backend/
 
-import haystack.backends.elasticsearch2_backend
 from django.conf import settings
 from haystack.backends.elasticsearch2_backend import (
     Elasticsearch2SearchBackend, Elasticsearch2SearchEngine
 )
-
-import elasticsearch
-
-
-haystack.backends.elasticsearch2_backend.elasticsearch = elasticsearch
 
 
 class CFGOVElasticsearch2SearchBackend(Elasticsearch2SearchBackend):
