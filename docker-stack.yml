@@ -27,8 +27,8 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
-      networks:
-        - app
+    networks:
+      - app
   postgres:
     image: postgres:10-alpine
     user: postgres
