@@ -35,7 +35,10 @@
     <div class="eyebrow">{{ value.eyebrow }}</div>
 {% endif %}
 {% if value.heading %}
-    <h1>{{ value.heading }}</h1>
+    <h1>
+        {{ value.heading }}
+        {% if is_archived %}[Archived]{% endif %}
+    </h1>
 {% endif %}
 
 {% if value.intro.source %}
