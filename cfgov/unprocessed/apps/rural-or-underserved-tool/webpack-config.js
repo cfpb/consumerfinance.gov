@@ -63,8 +63,7 @@ const conf = {
   module: COMMON_MODULE_CONFIG,
   mode: 'production',
   output: {
-    filename: '[name]',
-    jsonpFunction: 'rout'
+    filename: '[name]'
   },
   optimization: {
     minimize: true,

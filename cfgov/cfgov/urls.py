@@ -539,13 +539,6 @@ urlpatterns = [
         r'^beta_external_testing/',
         empty_200_response),
 
-    # put financial well-being pages behind feature flag for testing
-    flagged_wagtail_only_view(
-        'FINANCIAL_WELLBEING_HUB',
-        r'^practitioner-resources/financial-well-being-resources/',
-        'financial-well-being-resources'
-    ),
-
     # Temporary: HMDA Legacy pages
     # Will be deleted when HMDA API is retired (hopefully Summer 2019)
     re_path(
