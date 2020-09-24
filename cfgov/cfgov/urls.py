@@ -452,35 +452,43 @@ urlpatterns = [
         'ELASTIC_SEARCH_DSL',
         r'^(?P<language>es)/obtener-respuestas/buscar/$',
         ask_search_es7,
+        fallback=ask_search,
         name='ask-search-es'
     ),
     flagged_re_path(
         'ELASTIC_SEARCH_DSL',
         r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search_es7,
+        fallback=ask_search,
         name='ask-search-es-json'
     ),
     flagged_re_path(
         'ELASTIC_SEARCH_DSL',
         r'^ask-cfpb/search/$',
         ask_search_es7,
+        fallback=ask_search,
         name='ask-search-en'
     ),
     flagged_re_path(
         'ELASTIC_SEARCH_DSL',
         r'^ask-cfpb/search/(?P<as_json>json)/$',
         ask_search_es7,
+        fallback=ask_search,
         name='ask-search-en-json'
     ),
     flagged_re_path(
         'ELASTIC_SEARCH_DSL',
         r'^ask-cfpb/api/autocomplete/$',
-        ask_autocomplete_es7, name='ask-autocomplete-en'
+        ask_autocomplete_es7,
+        fallback=ask_autocomplete,
+        name='ask-autocomplete-en'
     ),
     flagged_re_path(
         'ELASTIC_SEARCH_DSL',
         r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete_es7, name='ask-autocomplete-es'
+        ask_autocomplete_es7,
+        fallback=ask_autocomplete,
+        name='ask-autocomplete-es'
     ),
 
     re_path(r'^_status/', include('watchman.urls')),
@@ -550,39 +558,6 @@ urlpatterns = [
     ),
 
 ]
-
-# Ask CFPB search and autocomplete
-ask_urlpatterns = [
-    re_path(
-        r'^ask-cfpb/search/$',
-        ask_search,
-        name='ask-search-en'
-    ),
-    re_path(
-        r'^ask-cfpb/search/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-en-json'
-    ),
-    re_path(
-        r'^(?P<language>es)/obtener-respuestas/buscar/$',
-        ask_search,
-        name='ask-search-es'
-    ),
-    re_path(
-        r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-es-json'
-    ),
-    re_path(
-        r'^ask-cfpb/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-en'
-    ),
-    re_path(
-        r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-es'
-    ),
-]
-urlpatterns = urlpatterns + ask_urlpatterns
 
 # Ask CFPB category and subcategory redirects
 category_redirects = [
