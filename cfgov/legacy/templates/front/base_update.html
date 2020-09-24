@@ -148,8 +148,6 @@
     <script src="{% static 'nemo/_/js/html5shim.js' %}"></script>
     <![endif]-->
 
-    <script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
-
     {% block analytics_js %}
     {% endblock %}
 
@@ -189,11 +187,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     {% block app_modal %}
     {% endblock %}
 
-{% block nemo_js %}
-<script src="{% static 'nemo/_/js/functions.js' %}"></script>
-<script type="text/javascript" src="{% static 'agreements/js/chosen.jquery.js' %}"></script>
-{% endblock %}
-
 {% block app_js %}
 {% endblock %}
 
@@ -211,16 +204,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   //]]>
 </script>
 
-<script type="text/javascript">
-    // If there are no breadcrumbs on this page, remove the ul tag so that screen
-    // readers don't read it (since the ul has nothing in it).
-    $(function(){
-        var numBreadCrumbs = $( 'ul.bread' ).children( 'li' ).length;
-        if( numBreadCrumbs === 0 ) {
-           $( 'ul.bread' ).remove();
-        }
-    });
-</script>
 <!--[if gt IE 8]><!-->
 <script type="text/javascript" src="{% static "js/atomic/header.js" %}"></script>
 <script type="text/javascript" src="{% static "js/atomic/footer.js" %}"></script>
