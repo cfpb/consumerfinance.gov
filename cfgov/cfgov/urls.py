@@ -151,13 +151,13 @@ urlpatterns = [
         name='fair-lending'),
 
     re_path(
-        r'^practitioner-resources/students/knowbeforeyouowe/$',
+        r'^consumer-tools/educator-tools/students/knowbeforeyouowe/$',
         TemplateView.as_view(
             template_name='students/knowbeforeyouowe/index.html'),
         name='students-knowbeforeyouowe'
     ),
     re_path(
-        r'^practitioner-resources/students/'
+        r'^consumer-tools/educator-tools/students/'
         'helping-borrowers-find-ways-to-stay-afloat/$',
         TemplateView.as_view(
             template_name='students/helping-borrowers-find-'
@@ -371,7 +371,7 @@ urlpatterns = [
 
     # educational resources
     re_path(
-        r'^practitioner-resources/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
+        r'^consumer-tools/educator-tools/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
         FlaggedTemplateView.as_view(
             flag_name='YOUTH_EMPLOYMENT_SUCCESS',
             template_name='youth_employment_success/index.html'
@@ -386,12 +386,12 @@ urlpatterns = [
 
     # empowerment redirects
     re_path(r'^empowerment/$', RedirectView.as_view(
-            url='/practitioner-resources/economically-vulnerable/',
+            url='/consumer-tools/educator-tools/economically-vulnerable/',
             permanent=True)),
 
     # students redirects
     re_path(r'^students/(?P<path>.*)$', RedirectView.as_view(
-            url='/practitioner-resources/students/%(path)s',
+            url='/consumer-tools/educator-tools/students/%(path)s',
             permanent=True)),
 
     # ask-cfpb
@@ -479,12 +479,12 @@ urlpatterns = [
         'SEARCH_DOTGOV_API', r'^search/', include('search.urls')),
 
     re_path(
-        r'^practitioner-resources/youth-financial-education/',
+        r'^consumer-tools/educator-tools/youth-financial-education/',
         include('teachers_digital_platform.urls')
     ),
 
     re_path(
-        r'^practitioner-resources/youth-financial-education/curriculum-review/',  # noqa: E501
+        r'^consumer-tools/educator-tools/youth-financial-education/curriculum-review/',  # noqa: E501
         include('crtool.urls')
     ),
 
