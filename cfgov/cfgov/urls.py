@@ -370,20 +370,6 @@ urlpatterns = [
     ),
 
     # educational resources
-    re_path(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
-        url='/practitioner-resources/%(path)s', permanent=True)),
-    re_path(
-        r'^practitioner-resources/resources-for-older-adults/managing-someone-elses-money/(?P<path>.*)$',  # noqa: E501
-        RedirectView.as_view(
-            url='/consumer-tools/managing-someone-elses-money/%(path)s',  # noqa: E501
-            permanent=True)
-    ),
-    re_path(
-        r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
-        RedirectView.as_view(
-            url='/consumer-tools/money-as-you-grow/%(path)s',
-            permanent=True)
-    ),
     re_path(
         r'^practitioner-resources/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
         FlaggedTemplateView.as_view(
