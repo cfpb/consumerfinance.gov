@@ -12,7 +12,7 @@
 <meta property="og:url" content="{% url 'jobs_supervision' %}"/>
 {% endblock %}
 
-{% block title %}Supervision > Jobs{% endblock %}
+{% block title %}Supervision Jobs{% endblock %}
 
 {% block breadcrumbs %}
 <li><a href="/" class="internal-link">Home</a></li>
@@ -22,10 +22,6 @@
 
 {% block page_css %}
 <link rel="stylesheet" type="text/css" href="{% static 'jobmanager/css/jobs2.css' %}" />
-{% endblock %}
-
-{% block page_js %}
-<script src="{% static 'jobmanager/js/supervision.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -43,14 +39,21 @@
 
 </section>
 
+{% comment %} Commented out in Sept. 2020 when removing jQuery from the page and we
+   realized that the email list the form is pointing to is deleted.
+   Leaving here in case we need to restore it.
 <section id='jobs-right-sect'>
     <div class='border-top-sect job-box gray-box'>
 
     <h1><span style='font-size:.75em;'>Apply Now for the CFPB Supervision Team</span></h1>
-    <span ' class='green-button goto-jobs internal-page-link'>Learn more: View Jobs</span>
+    <a href="#featured_positions" class='green-button goto-jobs internal-page-link'>Learn more: View Jobs</a>
 
         <!-- the email tagging form -->
-        <form id='email_collection_form' style='margin:0px;padding:0px;'>
+        <form id='email_collection_form'
+              method="POST"
+              action="/subscriptions/new/"
+              enctype="application/x-www-form-urlencoded"
+              style='margin: 0px; padding: 0px;'>
             <input type="hidden" name="code" value="USCFPB_19">
             <p class='job-emphasize'>Sign up and you'll be the first to know when we start accepting applications. </p>
 
@@ -70,6 +73,7 @@
         <div style='margin-top:20px;'>Questions? Contact <a href='mailto:jobs@cfpb.gov' class="email-link">jobs@cfpb.gov</a></div>
     </div>
 </section>
+{% endcomment %}
 
 
 <div class='breaker'></div>
@@ -82,7 +86,7 @@
             <p>The supervision program will promote the development of markets for consumer financial products and services that are fair, transparent, and competitive.</p>
             <div class='job-quote'>
                 <div class='by-line'>"Holding both banks and nonbanks accountable to consumer financial laws will help create a fairer, more transparent market for consumers. It will create a better environment for the honest businesses that serve them. And it will help the overall economic stability of our country."</div>
-                <div class='dept-name'>&mdash; Richard Cordray, Director of the CFPB</div>
+                <div class='dept-name'>&ndash; Richard Cordray, Director of the CFPB</div>
             </div>
         </td>
         <td class='border-top-sect'>
@@ -96,9 +100,9 @@
         </td>
         <td class='border-top-sect'>
             <h3>See Featured Positions</h3>
-            <p>We have built &mdash; and continue to build &mdash; a diverse, talented, and highly qualified supervision and examination staff to execute on all of our important goals. Now, we need you! </p>
-            <p><a href='#' class='goto-jobs internal-page-link'>See Featured Positions</a> for some of our Supervision job opportunities and check this page for upcoming job announcements.</p>
-            <span class='goto-jobs green-button internal-page-link'>View Jobs</span>
+            <p>We have built &ndash; and continue to build &ndash; a diverse, talented, and highly qualified supervision and examination staff to execute on all of our important goals. Now, we need you! </p>
+            <p><a href='#featured_positions' class='goto-jobs internal-page-link'>See Featured Positions</a> for some of our Supervision job opportunities and check this page for upcoming job announcements.</p>
+            <a href='#featured_positions'class='goto-jobs green-button internal-page-link'>View Jobs</a>
         </td>
     </tr></table>
 </section>
@@ -118,7 +122,7 @@
         <li>Apply consistent standards in supervision of both bank and nonbank consumer financial companies.</li>
     </ol>
 
-    <p>The Dodd-Frank Wall Street Reform and Consumer Protection Act created the CFPB and gave it critical consumer protection oversight authority &mdash; promoting greater accountability for American consumers.  With this authority, the Consumer Financial Protection Bureau has the ability to examine for and monitor compliance with federal consumer financial laws and regulations at both large banks and nonbank financial services companies.</p>
+    <p>The Dodd-Frank Wall Street Reform and Consumer Protection Act created the CFPB and gave it critical consumer protection oversight authority &ndash; promoting greater accountability for American consumers.  With this authority, the Consumer Financial Protection Bureau has the ability to examine for and monitor compliance with federal consumer financial laws and regulations at both large banks and nonbank financial services companies.</p>
     <p>The CFPB has primary authority to enforce federal consumer financial laws for banks and other depository institutions with total assets of more than $10 billion, and their affiliates, which collectively hold more than 80 percent of the banking industry's assets.  The CFPB also has the authority to oversee nonbank compliance, regardless of size, in certain specific markets: mortgage companies (originators, brokers, and servicers, as well as providers of loan modification or foreclosure relief services); payday lenders; and private education lenders.  For other nonbank markets, the CFPB can also supervise "larger participants" after defining them by rule.</p>
     <p>CFPB supervision is a comprehensive, ongoing process of pre-examination scoping and review of information, data analysis, on-site examinations, and regular communication with supervised entities and prudential regulators, as well as follow-up monitoring. For most depository institutions supervised by the CFPB, periodic examinations will be conducted. For the largest and most complex banks in the country, the agency has implemented a year-round supervision program that will be customized to reflect the consumer protection risk profile of the organization.  The agency has implemented a risk-based nonbank supervision program that will include conducting individual examinations and may also include requiring reports from businesses to determine what businesses need greater focus.</p>
 </section>
@@ -135,11 +139,11 @@
         <li>Be a leader in your field by creating a federal supervision program focused on ensuring that markets work for American families.</li>
     </ul>
     <p>The purpose of the CFPB's supervision program is to assess compliance with Federal consumer financial laws, obtain information about supervised entities' activities and compliance systems and procedures, and detect and assess risks to consumers and the consumer financial markets.  In this way, the supervision program will promote the development of markets for consumer financial products and services that are fair, transparent, and competitive.  Supervision team members are working to provide consistent supervisory coverage that will help level the playing field for all industry participants to create a fairer marketplace for consumers and the responsible businesses that serve them.</p>
-    <p>We have built &mdash; and continue to build &mdash; a diverse, talented, and highly qualified supervision and examination staff to execute on all of our important goals.  Our team comes from a range of backgrounds and is stationed throughout the country. Supervision headquarters are in Washington, D.C., and we have regional offices in San Francisco (West), Chicago (Midwest), New York (Northeast), and Washington, D.C. (Southeast).  Now, we need you!</p>
+    <p>We have built &ndash; and continue to build &ndash; a diverse, talented, and highly qualified supervision and examination staff to execute on all of our important goals.  Our team comes from a range of backgrounds and is stationed throughout the country. Supervision headquarters are in Washington, D.C., and we have regional offices in San Francisco (West), Chicago (Midwest), New York (Northeast), and Washington, D.C. (Southeast).  Now, we need you!</p>
 
     <div class='job-quote'>
-        <div class='by-line'>"Working for the CFPB is rewarding both professionally and personally.  At the end of the day, I feel good about the job I do safeguarding the financial interests of all Americans &mdash; after all, we are all consumers of the financial markets one way or another."</div>
-        <div class='dept-name'> &mdash; Welkis Malveau, Examiner</div>
+        <div class='by-line'>"Working for the CFPB is rewarding both professionally and personally.  At the end of the day, I feel good about the job I do safeguarding the financial interests of all Americans &ndash; after all, we are all consumers of the financial markets one way or another."</div>
+        <div class='dept-name'> &ndash; Welkis Malveau, Examiner</div>
     </div>
 
 </section>
@@ -167,7 +171,7 @@
         </li>
         <li>
             <h3>Other Current Job Opportunities</h3>
-            <p>Please go to <a href='/about-us/careers/' class="internal-link">our jobs sections</a> to view other job opportunities</p>
+            <p>Please go to <a href='/about-us/careers/' class="internal-link">our jobs section</a> to view other job opportunities</p>
         </li>
     </ul>
 </section>
