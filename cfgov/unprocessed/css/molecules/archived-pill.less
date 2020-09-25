@@ -1,0 +1,33 @@
+/* topdoc
+  name: Archived pill
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-archived-pill">
+            Archived
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-archived-pill
+  tags:
+    - cfgov-molecules
+*/
+
+.m-archived-pill {
+    padding: unit( 9px / @base-font-size-px, em ) unit( 10px / @base-font-size-px, em );
+    background-color: @teal-mid-dark;
+    border-radius: 4px;
+    color: @white;
+    position: relative;
+    display: inline-block;
+    .heading-5();
+    margin-bottom: unit( 25px / @base-font-size-px, em );
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
