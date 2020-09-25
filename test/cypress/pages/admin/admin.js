@@ -246,7 +246,7 @@ export class AdminPage {
   }
 
   selectDocumentLink( text ) {
-    cy.get('#id_q').type( text )
+    cy.get( '#id_q' ).type( text );
     cy.get( '.document-choice' ).contains( text ).click();
   }
 }
