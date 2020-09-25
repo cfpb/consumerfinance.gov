@@ -163,10 +163,10 @@ pipeline {
         unsuccessful {
             script{
                 if (env.GIT_BRANCH != 'main') {
-                    notify("${NOTIFICATION_CHANNEL}", ":x: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} failed at stage **${LAST_STAGE}** \n:jenkins-devil: [Failure Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})")
+                    notify("${NOTIFICATION_CHANNEL}", ":x: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} failed at stage **${LAST_STAGE}** \n \n:jenkins-devil: [Failure Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})")
                 }
                 else {
-                    notify("${NOTIFICATION_CHANNEL}", ":x: **main** branch stack deployment failed at stage **${LAST_STAGE}** \n:jenkins-devil: [Failure Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})")
+                    notify("${NOTIFICATION_CHANNEL}", ":x: **main** branch stack deployment failed at stage **${LAST_STAGE}** \n \n:jenkins-devil: [Failure Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})")
                 }
             }
         }
