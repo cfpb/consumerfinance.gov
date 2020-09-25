@@ -263,6 +263,10 @@ msgstr "Oficina para la Protección Financiera del Consumidor"
 msgid "updated"
 msgstr "actualizado"
 
+#: jinja2/v1/ask-cfpb/answer-page.html:34
+msgid "last reviewed"
+msgstr "revisado"
+
 #: jinja2/v1/ask-cfpb/answer-page.html:61
 msgid "Read full answer"
 msgstr "Leer más"
