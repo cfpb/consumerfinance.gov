@@ -521,13 +521,6 @@ urlpatterns = [
         'BETA_EXTERNAL_TESTING',
         r'^beta_external_testing/',
         empty_200_response),
-
-    # put financial well-being pages behind feature flag for testing
-    flagged_wagtail_only_view(
-        'FINANCIAL_WELLBEING_HUB',
-        r'^practitioner-resources/financial-well-being-resources/',
-        'financial-well-being-resources'
-    ),
 ]
 
 # Ask CFPB category and subcategory redirects

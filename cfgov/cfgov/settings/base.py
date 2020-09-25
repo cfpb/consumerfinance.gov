@@ -696,8 +696,6 @@ FLAGS = {
     # SPLIT TESTING FLAGS
     # Ask CFPB page titles as H1s instead of H2s
     "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
-    # Test financial well-being hub pages on Beta
-    "FINANCIAL_WELLBEING_HUB": [("environment is", "beta")],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
