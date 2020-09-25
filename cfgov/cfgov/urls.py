@@ -521,18 +521,6 @@ urlpatterns = [
         'BETA_EXTERNAL_TESTING',
         r'^beta_external_testing/',
         empty_200_response),
-
-    # Temporary: HMDA Legacy pages
-    # Will be deleted when HMDA API is retired (hopefully Summer 2019)
-    re_path(
-        r'data-research/hmda/explore$',
-        FlaggedTemplateView.as_view(
-            flag_name='HMDA_LEGACY_PUBLISH',
-            template_name='hmda/orange-explorer.html'
-        ),
-        name='legacy_explorer_published'
-    ),
-
 ]
 
 # Ask CFPB category and subcategory redirects
