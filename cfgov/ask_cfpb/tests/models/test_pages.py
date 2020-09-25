@@ -16,7 +16,6 @@ from wagtail.tests.utils import WagtailTestUtils
 
 from model_bakery import baker
 
-from ask_cfpb.documents import AnswerPage, AnswerPageSearch
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
 )
@@ -28,6 +27,7 @@ from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
+from search.documents import AnswerPage, AnswerPageSearch
 from v1.models import (
     CFGOVImage, HomePage, PortalCategory, PortalTopic, SublandingPage
 )

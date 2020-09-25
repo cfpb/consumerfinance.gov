@@ -705,23 +705,6 @@ FLAGS = {
     # SPLIT TESTING FLAGS
     # Ask CFPB page titles as H1s instead of H2s
     "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
-    # Test financial well-being hub pages on Beta
-    "FINANCIAL_WELLBEING_HUB": [("environment is", "beta")],
-    # Publish new HMDA Explore page
-    # Delete after HMDA API is deprecated (hopefully Summer 2019)
-    "HMDA_LEGACY_PUBLISH": [],
-    # The HMDA API and HMDA explorer pages will temporarily be taken down at
-    # TBD intervals. We use a GET parameter during downtime to trigger an
-    # explanatory banner about the outages.
-    # Delete after HMDA API is deprecated (hopefully Summer 2019)
-    "HMDA_OUTAGE": [
-        {"condition": "parameter", "value": "hmda-outage", "required": True},
-        {
-            "condition": "path matches",
-            "value": r"^/data-research",
-            "required": True,
-        },
-    ],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
@@ -764,6 +747,9 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
+    # Used to enable use of django-elasticsearch-dsl and disable use of Haystack
+    # This will be used in the ask_cfpb and regulations applications
+    "ELASTIC_SEARCH_DSL": [("boolean", False)],
 }
 
 
@@ -867,5 +853,4 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
             ]
         },
     },
-    "legacy": {"WIDGET": "wagtail.admin.rich_text.HalloRichTextArea"},
 }

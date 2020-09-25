@@ -25,7 +25,6 @@ INSTALLED_APPS += (
     "wagtail.contrib.styleguide",
 )
 
-
 STATIC_ROOT = REPOSITORY_ROOT.child("collectstatic")
 
 ALLOW_ADMIN_URL = DEBUG or os.environ.get("ALLOW_ADMIN_URL", False)
@@ -100,3 +99,11 @@ if os.environ.get("ENABLE_POST_PREVIEW_CACHE"):
 # unless the GOVDELIVERY_BASE_URL environment variable is set.
 if not os.environ.get("GOVDELIVERY_BASE_URL"):
     GOVDELIVERY_API = "core.govdelivery.LoggingMockGovDelivery"
+
+# Use a placeholder image service to replace images that are uploaded to S3
+WAGTAIL_PLACEHOLDERIMAGES_DUMMY = True
+WAGTAIL_PLACEHOLDERIMAGES_SOURCE = "//placekitten.com/{width}/{height}"
+
+CSP_IMG_SRC += (
+    "placekitten.com",
+)

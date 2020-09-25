@@ -1,5 +1,6 @@
 import re
 from collections import OrderedDict
+from urllib.parse import unquote
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
@@ -21,10 +22,11 @@ from wagtail.search import index
 
 from modelcluster.fields import ParentalKey
 
-from ask_cfpb.documents import (
-    AnswerPage, AnswerPageDocument, AnswerPageSearch, extract_raw_text,
-    truncate_preview
+from ask_cfpb.models.answer_page import (
+    AnswerPage, extract_raw_text, truncate_preview
 )
+from ask_cfpb.models.ask_search import AskSearch
+from search.documents import AnswerPageDocument, AnswerPageSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
@@ -324,39 +326,39 @@ class PortalSearchPage(
             'children': sorted_categories
         }], True
 
-    # def get_results(self, request):
-    #     context = self.get_context(request)
-    #     search_term = request.GET.get('search_term', '').strip()
-    #     if not search_term or len(unquote(search_term)) == 1:
-    #         results = self.query_base
-    #     else:
-    #         search = AskSearch(
-    #             search_term=search_term,
-    #             query_base=self.query_base)
-    #         results = search.queryset
-    #         if results.count() == 0:
-    #             # No results, so let's try to suggest a better query
-    #             search.suggest(request=request)
-    #             results = search.queryset
-    #             search_term = search.search_term
-    #     search_message = self.results_message(
-    #         results.count(),
-    #         self.get_heading(),
-    #         search_term)
-    #     paginator = Paginator(results, 10)
-    #     page_number = validate_page_number(request, paginator)
-    #     context.update({
-    #         'search_term': search_term,
-    #         'results_message': search_message,
-    #         'pages': paginator.page(page_number),
-    #         'paginator': paginator,
-    #         'current_page': page_number,
-    #         'get_secondary_nav_items': self.get_nav_items,
-    #     })
-    #     return TemplateResponse(
-    #         request,
-    #         'ask-cfpb/see-all.html',
-    #         context)
+    def get_results(self, request):
+        context = self.get_context(request)
+        search_term = request.GET.get('search_term', '').strip()
+        if not search_term or len(unquote(search_term)) == 1:
+            results = self.query_base
+        else:
+            search = AskSearch(
+                search_term=search_term,
+                query_base=self.query_base)
+            results = search.queryset
+            if results.count() == 0:
+                # No results, so let's try to suggest a better query
+                search.suggest(request=request)
+                results = search.queryset
+                search_term = search.search_term
+        search_message = self.results_message(
+            results.count(),
+            self.get_heading(),
+            search_term)
+        paginator = Paginator(results, 10)
+        page_number = validate_page_number(request, paginator)
+        context.update({
+            'search_term': search_term,
+            'results_message': search_message,
+            'pages': paginator.page(page_number),
+            'paginator': paginator,
+            'current_page': page_number,
+            'get_secondary_nav_items': self.get_nav_items,
+        })
+        return TemplateResponse(
+            request,
+            'ask-cfpb/see-all.html',
+            context)
 
     def get_results_es7(self, request):
         context = self.get_context(request)

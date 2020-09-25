@@ -110,6 +110,18 @@ class CFGOVPage(Page):
         ),
     )
 
+    is_archived = models.BooleanField(
+        default=False,
+        blank=True,
+        verbose_name='Mark this page as archived'
+    )
+
+    archived_at = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Archive date"
+    )
+
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
@@ -143,6 +155,11 @@ class CFGOVPage(Page):
         StreamFieldPanel('sidefoot'),
     ]
 
+    archive_panels = [
+        FieldPanel('is_archived'),
+        FieldPanel('archived_at'),
+    ]
+
     settings_panels = [
         MultiFieldPanel(promote_panels, 'Settings'),
         InlinePanel('categories', label="Categories", max_num=2),
@@ -151,6 +168,7 @@ class CFGOVPage(Page):
         FieldPanel('schema_json', 'Structured Data'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),
+        MultiFieldPanel(archive_panels, 'Archive'),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass

@@ -4,6 +4,7 @@ from urllib.parse import urljoin
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
+from haystack.query import SearchQuerySet
 
 from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
@@ -11,10 +12,9 @@ from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
-from ask_cfpb.documents import (  # noqa
-    AnswerPage, AnswerPageDocument, AnswerPageSearch, make_safe
-)
-from ask_cfpb.models import AnswerResultsPage
+from ask_cfpb.models import AnswerResultsPage, AskSearch
+from ask_cfpb.models.answer_page import AnswerPage
+from search.documents import AnswerPageSearch, make_safe
 
 
 def annotate_links(answer_text):
@@ -95,8 +95,8 @@ def ask_search(request, language='en', as_json=False):
         results_page.result_query = ''
         return results_page.serve(request)
 
-    search = AnswerPageSearch(search_term, language=language)
-    if len(search.get('results')) == 0:
+    search = AskSearch(search_term=search_term, language=language)
+    if search.queryset.count() == 0:
         search.suggest(request=request)
 
     if as_json:
@@ -111,7 +111,7 @@ def ask_search(request, language='en', as_json=False):
                     'text': result.text,
                     'preview': result.preview,
                 }
-                for result in search.get('results', [])
+                for result in search.queryset
             ]
         }
         json_results = json.dumps(payload)
@@ -122,7 +122,7 @@ def ask_search(request, language='en', as_json=False):
     results_page.suggestion = search.suggestion
     results_page.answers = [
         (result.url, result.autocomplete, result.preview)
-        for result in search.get("results")
+        for result in search.queryset
     ]
     return results_page.serve(request)
 
@@ -148,26 +148,33 @@ def ask_search_es7(request, language='en', as_json=False):
         results_page.query = ''
         results_page.result_query = ''
         return results_page.serve(request)
+
     search_obj = AnswerPageSearch(search_term, language=language)
     response = search_obj.search()
     if not response.get('results') and suggest:
         response = search_obj.suggest()
+        search_suggestion = response.get('suggestion')
+    else:
+        search_suggestion = search_term
+
     if as_json:
-        result_list = [{
-            'question': result.autocomplete,
-            'url': result.url,
-            'text': result.text,
-            'preview': result.preview}
-            for result in response.get('results')
-        ]
         payload = {
             'query': search_term,
             'result_query': make_safe(search_term).strip(),
-            'suggestion': search_obj.suggest().get("suggestion"),
-            'results': result_list
+            'suggestion': search_suggestion,
+            'results': [
+                {
+                    'question': result.autocomplete,
+                    'url': result.url,
+                    'text': result.text,
+                    'preview': result.preview,
+                }
+                for result in response.get('results')
+            ]
         }
         json_results = json.dumps(payload)
         return HttpResponse(json_results, content_type='application/json')
+
     results_page.query = search_term
     results_page.result_query = response.get('search_term')
     results_page.suggestion = response.get('suggestion')
@@ -178,24 +185,24 @@ def ask_search_es7(request, language='en', as_json=False):
     return results_page.serve(request)
 
 
-# def ask_autocomplete(request, language='en'):
-#     term = request.GET.get(
-#         'term', '').strip().replace('<', '')
-#     if not term:
-#         return JsonResponse([], safe=False)
+def ask_autocomplete(request, language='en'):
+    term = request.GET.get(
+        'term', '').strip().replace('<', '')
+    if not term:
+        return JsonResponse([], safe=False)
 
-#     try:
-#         sqs = SearchQuerySet().models(AnswerPage)
-#         sqs = sqs.autocomplete(
-#             autocomplete=term,
-#             language=language
-#         )
-#         results = [{'question': result.autocomplete,
-#                     'url': result.url}
-#                    for result in sqs[:20]]
-#         return JsonResponse(results, safe=False)
-#     except IndexError:
-#         return JsonResponse([], safe=False)
+    try:
+        sqs = SearchQuerySet().models(AnswerPage)
+        sqs = sqs.autocomplete(
+            autocomplete=term,
+            language=language
+        )
+        results = [{'question': result.autocomplete,
+                    'url': result.url}
+                   for result in sqs[:20]]
+        return JsonResponse(results, safe=False)
+    except IndexError:
+        return JsonResponse([], safe=False)
 
 
 def ask_autocomplete_es7(request, language='en'):
