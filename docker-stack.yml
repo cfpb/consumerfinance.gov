@@ -17,7 +17,7 @@ services:
     networks:
       - app
   elasticsearch7:
-    image: blacktop/elasticsearch:7.4
+    image: ${CFGOV_ES7_IMAGE}
     environment:
       discovery.type: single-node
     deploy:

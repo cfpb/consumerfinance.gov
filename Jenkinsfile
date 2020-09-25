@@ -12,6 +12,7 @@ pipeline {
     environment {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-23'
+        IMAGE_ES7_REPO = 'cfpb/cfgov-elasticsearch-74'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
@@ -46,6 +47,7 @@ pipeline {
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
+                    env.IMAGE_NAME_ES7_LOCAL = "${env.IMAGE_ES7_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
             }
@@ -71,6 +73,7 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                     docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
+                    docker.build(env.IMAGE_NAME_ES7_LOCAL, '-f ./docker/elasticsearch/7.4/Dockerfile .')
                 }
             }
         }
@@ -82,6 +85,7 @@ pipeline {
                 }
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
                 scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
+                scanImage(env.IMAGE_ES7_REPO, env.IMAGE_TAG)
             }
         }
 
@@ -106,6 +110,10 @@ pipeline {
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         image.push()
                         env.CFGOV_ES_IMAGE = image.imageName()
+
+                        image = docker.image(env.IMAGE_NAME_ES7_LOCAL)
+                        image.push()
+                        env.CFGOV_ES7_IMAGE = image.imageName()
                     }
                 }
             }
