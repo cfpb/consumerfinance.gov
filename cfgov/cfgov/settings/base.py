@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
     "wagtailmedia",
+    "django_elasticsearch_dsl",
 
     # Satellites
     "comparisontool",
@@ -419,6 +420,14 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 }
 
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
+
+# ElasticSearch 7 Configuration
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': os.environ.get('ES7_HOST', '')
+    },
+}
 
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings

@@ -15,7 +15,7 @@ services:
     networks:
       - app
   elasticsearch7:
-    image: elasticsearch:7.4.2
+    image: blacktop/elasticsearch:7.4
     environment:
       discovery.type: single-node
     deploy:
@@ -58,6 +58,7 @@ services:
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
+      ES7_HOST: http://elasticsearch7:9200
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
