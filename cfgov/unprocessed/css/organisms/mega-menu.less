@@ -1131,6 +1131,15 @@ body {
         }
 
     } );
+
+    // Normalize second level width between 901px and 1260px
+    .respond-to-range( @bp-med-min, @bp-lg-max + @grid_gutter-width, {
+
+        &_content-2 {
+            width: 100%;
+        }
+
+    } );
 }
 
 .o-mega-menu {
