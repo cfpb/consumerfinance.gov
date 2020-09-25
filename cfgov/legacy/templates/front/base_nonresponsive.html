@@ -115,7 +115,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 {% endblock %}
 
-        {% include_header %}
+    {% include_header %}
     <div id="page">
         {% block app_notification %}
         {% endblock %}
@@ -135,10 +135,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     </div><!-- /#page -->
-        {% include_footer %}
+    {% include_footer %}
 
-    {% block app_modal %}
-    {% endblock %}
+{% block page_js %}
+{% endblock %}
 
 <!-- for search.usa.gov indexing -->
 <script>
