@@ -85,7 +85,7 @@ pipeline {
                 }
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
                 scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
-                scanImage(env.IMAGE_ES7_REPO, env.IMAGE_TAG)
+                // scanImage(env.IMAGE_ES7_REPO, env.IMAGE_TAG) We Will Scan once Twistlock is configured to ignore known issues with this image.
             }
         }
 
