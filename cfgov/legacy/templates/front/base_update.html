@@ -168,15 +168,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         {% endblock %}
         <div id="wrapper">
         <section id="maincontent">
-            <ul class="bread meta">
-                {% block breadcrumbs %}
-                {% endblock %}
-            </ul> <!-- /class=bread -->
-                {% block content %}
-                {% endblock %}
-                {% block share_box %}
-            {% include "front/share_box.html" %}
-                {% endblock %}
+            {% block content %}
+            {% endblock %}
+
+            {% block share_box %}
+                {% include "front/share_box.html" %}
+            {% endblock %}
         </section><!--/main_content-->
         </div><!-- /wrapper -->
 
