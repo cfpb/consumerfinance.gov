@@ -105,10 +105,7 @@ services:
                     ./cfgov/manage.py update_index
                 fi
 
-                if [ -z '$ES7_HOST' ]
-                then
-                  echo 'No ES7 Host defined'
-                else
+                if [ ! -z '$ES7_HOST' ]; then
                   ./cfgov/manage.py search_index --rebuild -f
                 fi
 
