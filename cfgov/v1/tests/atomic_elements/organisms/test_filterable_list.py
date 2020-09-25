@@ -49,7 +49,7 @@ class TestFilterableList(TestCase):
         self.page = BrowseFilterablePage(title='Browse filterable page')
         self.page.content = StreamValue(self.page.content.stream_block, [value], True)
         helpers.publish_page(child=self.page)
-        self.block = self.page.filterable_list_wagtail_block()
+        self.block = self.page.get_filterable_list_wagtail_block()
 
     def test_get_filterable_topics_sort_by_frequency(self):
         self.set_up_filterable_list_page(self.topics_by_frequency())

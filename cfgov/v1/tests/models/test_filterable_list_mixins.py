@@ -1,9 +1,11 @@
 from django.test import RequestFactory, TestCase
 
+from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 
 import mock
 
+from scripts._atomic_helpers import filter_controls
 from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
@@ -110,3 +112,61 @@ class FilterableRoutesTestCase(TestCase):
             response["content-type"],
             "application/rss+xml; charset=utf-8"
         )
+
+
+class FilterableListRelationsTestCase(TestCase):
+
+    def setUp(self):
+        self.filter_controls = filter_controls
+
+        self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
+        self.root = Site.objects.get(is_default_site=True).root_page
+        self.root.add_child(instance=self.filterable_page)
+
+        self.set_filterable_controls(filter_controls)
+
+        self.child_page = BlogPage(title="Child test page", live=True)
+        self.sibling_page = BlogPage(title="Sibling test page", live=True)
+        self.archived_sibling_page = BlogPage(title="Archive test page", live=True,
+                                         is_archived=True)
+        self.filterable_page.add_child(instance=self.child_page)
+        self.filterable_page.get_parent().add_child(instance=self.sibling_page)
+        self.filterable_page.get_parent().add_child(instance=self.archived_sibling_page)
+
+    def set_filterable_controls(self, value):
+        self.filterable_page.content = StreamValue(
+            self.filterable_page.content.stream_block,
+            [value],
+            True
+        )
+        self.filterable_page.save()
+
+    def test_get_filterable_children_pages(self):
+        filter_controls['value']['filter_children'] = True
+        filter_controls['value']['filter_siblings'] = False
+        filter_controls['value']['filter_archive'] = False
+        self.set_filterable_controls(self.filter_controls)
+
+        qs = self.filterable_page.get_filterable_queryset()
+        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs[0].pk, self.child_page.pk)
+
+    def test_get_filterable_siblings_pages(self):
+        filter_controls['value']['filter_children'] = False
+        filter_controls['value']['filter_siblings'] = True
+        filter_controls['value']['filter_archive'] = False
+        self.set_filterable_controls(self.filter_controls)
+
+        qs = self.filterable_page.get_filterable_queryset()
+        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs[0].pk, self.sibling_page.pk)
+
+    def test_get_filterable_archived_pages(self):
+        filter_controls['value']['filter_children'] = False
+        filter_controls['value']['filter_siblings'] = True
+        filter_controls['value']['filter_archive'] = True
+        self.set_filterable_controls(self.filter_controls)
+
+        qs = self.filterable_page.get_filterable_queryset()
+        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs[0].pk, self.archived_sibling_page.pk)
