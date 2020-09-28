@@ -28,7 +28,7 @@ lxml==4.2.5
 Markdown==3.2.1
 ntplib==0.3.4
 openpyxl==3.0.3
-psycopg2==2.7.3.2
+psycopg2>=2.8.4
 pyelasticsearch==0.6.1
 python-dateutil==2.7.3
 regdown==1.0.2
