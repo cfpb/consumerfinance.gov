@@ -14,7 +14,7 @@ pipeline {
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
-        NOTIFICATION_CHANNEL = 'jenkins-testing'
+        NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
         DEPLOY_SUCCESS = false
     }
