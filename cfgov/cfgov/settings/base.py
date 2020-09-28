@@ -428,9 +428,10 @@ ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 if os.environ.get('USE_AWS_ES', False):
     awsauth = AWS4Auth(os.environ.get('AWS_ES_ACCESS_KEY'), os.environ.get('AWS_ES_SECRET_KEY'), 'us-east-1', 'es')
+    host = os.environ.get('ES7_HOST', '')
     ELASTICSEARCH_DSL={
         'default': {
-            'hosts': [{'host': os.environ.get('ES7_HOST', ''), 'port': 443}],
+            'hosts': [{'host': host, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
             'connection_class': RequestsHttpConnection
