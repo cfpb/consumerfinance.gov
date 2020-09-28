@@ -22,11 +22,12 @@ from wagtail.search import index
 
 from modelcluster.fields import ParentalKey
 
+from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models.answer_page import (
     AnswerPage, extract_raw_text, truncate_preview
 )
 from ask_cfpb.models.ask_search import AskSearch
-from search.documents import AnswerPageDocument, AnswerPageSearch
+from search.documents import AnswerPageSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (

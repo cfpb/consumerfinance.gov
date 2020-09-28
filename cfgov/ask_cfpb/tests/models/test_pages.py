@@ -20,14 +20,15 @@ from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
 )
 from ask_cfpb.models.pages import (
-    REUSABLE_TEXT_TITLES, AnswerLandingPage, ArticlePage, PortalSearchPage,
-    get_answer_preview, get_standard_text, strip_html, validate_page_number
+    REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
+    PortalSearchPage, get_answer_preview, get_standard_text, strip_html,
+    validate_page_number
 )
 from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
-from search.documents import AnswerPage, AnswerPageSearch
+from search.documents import AnswerPageSearch
 from v1.models import (
     CFGOVImage, HomePage, PortalCategory, PortalTopic, SublandingPage
 )
