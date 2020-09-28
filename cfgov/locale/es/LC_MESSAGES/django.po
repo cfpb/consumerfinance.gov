@@ -260,10 +260,6 @@ msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:34
-msgid "updated"
-msgstr "actualizado"
-
-#: jinja2/v1/ask-cfpb/answer-page.html:34
 msgid "last reviewed"
 msgstr "revisado"
 
