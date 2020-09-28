@@ -521,25 +521,6 @@ urlpatterns = [
         'BETA_EXTERNAL_TESTING',
         r'^beta_external_testing/',
         empty_200_response),
-
-    # put financial well-being pages behind feature flag for testing
-    flagged_wagtail_only_view(
-        'FINANCIAL_WELLBEING_HUB',
-        r'^practitioner-resources/financial-well-being-resources/',
-        'financial-well-being-resources'
-    ),
-
-    # Temporary: HMDA Legacy pages
-    # Will be deleted when HMDA API is retired (hopefully Summer 2019)
-    re_path(
-        r'data-research/hmda/explore$',
-        FlaggedTemplateView.as_view(
-            flag_name='HMDA_LEGACY_PUBLISH',
-            template_name='hmda/orange-explorer.html'
-        ),
-        name='legacy_explorer_published'
-    ),
-
 ]
 
 # Ask CFPB category and subcategory redirects
