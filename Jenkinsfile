@@ -16,6 +16,7 @@ pipeline {
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'jenkins-testing'
         LAST_STAGE = 'Init'
+        DEPLOY_SUCCESS = false
     }
 
     parameters {
@@ -126,6 +127,7 @@ pipeline {
                     timeout(time: 30, unit: 'MINUTES') {
                         dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                     }
+                    DEPLOY_SUCCESS = true
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
@@ -156,17 +158,19 @@ pipeline {
                 author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
                 changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
                 notify("${NOTIFICATION_CHANNEL}", 
-                    """:white_check_mark: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author [deployed](${env.SITE_URL})! 
-                    :jenkins: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
+                    """:white_check_mark: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author [deployed](https://${env.CFGOV_HOSTNAME}/)! 
+                    \n:jenkins: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
             }
         }
 
         unsuccessful {
             script{
                 author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
+                changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
+                deployText = DEPLOY_SUCCESS ? "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" : "failed"
                 notify("${NOTIFICATION_CHANNEL}", 
-                    """:x: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author failed at stage **${LAST_STAGE}** 
-                    :jenkins-devil: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
+                    """:x: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author $deployText at stage **${LAST_STAGE}** 
+                    \n:jenkins-devil: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
             }
         }
     }
