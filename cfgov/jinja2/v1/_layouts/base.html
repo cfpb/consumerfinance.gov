@@ -60,9 +60,7 @@
     <meta name="description"
           content="
             {%- block desc -%}
-                {{- page.search_description if page and page.search_description
-                    else 'Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.'
-                -}}
+                {{- meta_description -}}
             {%- endblock -%}
           ">
     <link rel="canonical" href="{{ request.build_absolute_uri() | lower }}">

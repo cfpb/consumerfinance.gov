@@ -255,6 +255,15 @@ class CFGOVPage(Page):
         if self.schema_json:
             context['schema_json'] = self.schema_json
 
+        if self.search_description:
+            context['meta_description'] = self.search_description
+        else:
+            context['meta_description'] = ''
+
+        #hero only in header
+        #text_introduction can be in header OR content
+        #test example base.py TestCFGOVPageContext
+
         return context
 
     def serve(self, request, *args, **kwargs):
