@@ -259,9 +259,13 @@ msgstr "GobiernoUSA.gov"
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:34
+#: jinja2/v1/ask-cfpb/answer-page.html:35
 msgid "last reviewed"
 msgstr "revisado"
+
+#: jinja2/v1/ask-cfpb/answer-page.html:37
+msgid "updated"
+msgstr "actualizado"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:61
 msgid "Read full answer"
