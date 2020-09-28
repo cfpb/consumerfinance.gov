@@ -810,7 +810,7 @@ class FilterableList(BaseExpandable):
         default=False,
         required=False,
         help_text=(
-            "If checked this list will only filter archived pages."
+            "If checked this list will only filter archived pages. "
             "If unchecked this list will exclude archive pages."
         ),
     )
