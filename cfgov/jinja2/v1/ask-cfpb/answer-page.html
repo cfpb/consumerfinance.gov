@@ -31,7 +31,7 @@
                 block__flush-top
                 block__sub">
         {% if last_edited %}
-        <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
+        <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('last reviewed') }}: {{ dt.format_date(last_edited) }}</time>
         {% endif %}
         <h1>
             {{ page.question | striptags }}

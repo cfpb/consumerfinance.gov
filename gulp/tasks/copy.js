@@ -63,7 +63,6 @@ gulp.task( 'copy:lightbox2', () => {
   return stream;
 } );
 
-
 gulp.task( 'copy:icons',
   gulp.parallel(
     'copy:icons:main',
