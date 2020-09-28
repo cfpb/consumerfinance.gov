@@ -9,6 +9,9 @@ import wagtail
 import dj_database_url
 from unipath import DIRS, Path
 
+from requests_aws4auth import AWS4Auth
+from elasticsearch7 import RequestsHttpConnection
+
 from cfgov.util import admin_emails
 
 
@@ -423,11 +426,22 @@ ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 # ElasticSearch 7 Configuration
 
-ELASTICSEARCH_DSL={
-    'default': {
-        'hosts': os.environ.get('ES7_HOST', '')
-    },
-}
+if os.environ.get('USE_AWS_ES', False):
+    awsauth = AWS4Auth(os.environ.get('AWS_ES_ACCESS_KEY'), os.environ.get('AWS_ES_SECRET_KEY'), 'us-east-1', 'es')
+    ELASTICSEARCH_DSL={
+        'default': {
+            'hosts': [{'host': os.environ.get('ES7_HOST', ''), 'port': 443}],
+            'http_auth': awsauth,
+            'use_ssl': True,
+            'connection_class': RequestsHttpConnection
+        },
+    }
+else:
+    ELASTICSEARCH_DSL={
+        'default': {
+            'hosts': os.environ.get('ES7_HOST', '')
+        },
+    }
 
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
