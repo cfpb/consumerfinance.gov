@@ -34,6 +34,7 @@ psycopg2==2.7.3.2
 python-dateutil==2.7.3
 regdown==1.0.2
 requests==2.22.0
+requests_aws4auth==0.8.0
 requests_toolbelt==0.8.0
 sha3==0.2.1
 unipath>=1.1,<=2.0
