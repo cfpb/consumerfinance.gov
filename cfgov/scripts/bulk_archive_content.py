@@ -1,5 +1,6 @@
 import logging
 
+from django.db import transaction
 from django.http import Http404
 from django.utils import timezone
 
@@ -38,24 +39,24 @@ def run(*args):
                          "leading or trailing / characters.")
             return
 
-        cutoff_date = timezone.now() - relativedelta(years=2)
-
-        logger.info(
-            f"Archiving pages within {filterable_page.title} "
-            f"older than {cutoff_date}"
-        )
+        archived_at = timezone.now()
+        cutoff_date = archived_at - relativedelta(years=2)
 
         # Get the queryset and filter it on last_published_at.
-        queryset = filterable_page.get_filterable_queryset().filter(
-            last_published_at__lt=cutoff_date
-        ).filter(
+        filtered_pages = filterable_page.get_filterable_queryset().filter(
+            last_published_at__lt=cutoff_date,
             is_archived=False
         )
 
-        for page in queryset:
-            page = page.specific
-            page.is_archived = True
-            page.archived_at = timezone.now()
-            page.save()
+        logger.info(
+            f"Archiving {filtered_pages.count()} pages within "
+            f"{filterable_page.title} older than {cutoff_date}"
+        )
 
-        logger.info(f"Archived {queryset.count()} pages")
+        with transaction.atomic():
+            update_count = filtered_pages.select_for_update().update(
+                is_archived=True,
+                archived_at=archived_at
+            )
+
+        logger.info(f"Archived {update_count} pages")
