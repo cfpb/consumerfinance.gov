@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import re
 import sys
 
 import requests
@@ -23,6 +24,9 @@ def load_redirects(redirects_filename, from_index, to_index):
 def validate_redirects(redirects, baseurl):
     failures = []
 
+    base_url_http_or_https = re.sub(r'^https?', 'https?', baseurl)
+    strip_baseurl_re = re.compile(r'^' + base_url_http_or_https)
+
     for from_path, to_path in redirects:
         print(f'Checking {from_path} -> {to_path}...', end='')
         response = requests.get(baseurl + from_path, allow_redirects=False)
@@ -36,8 +40,10 @@ def validate_redirects(redirects, baseurl):
 
         location = response.headers.get('location')
 
-        if location != to_path:
-            print('error! location:', location)
+        relative_location = strip_baseurl_re.sub('', location)
+
+        if relative_location != to_path:
+            print('error! location:', relative_location)
             failures.append((from_path, to_path))
             continue
 
