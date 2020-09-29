@@ -9,6 +9,7 @@ from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone, translation
 from haystack.models import SearchResult
+from haystack.query import SearchQuerySet
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
@@ -64,6 +65,31 @@ class MockSearchResult(SearchResult):
         super(MockSearchResult, self).__init__(
             app_label, model_name, pk, score, **kwargs
         )
+
+
+def mock_queryset(count=0):
+    class MockSearchQuerySet(SearchQuerySet):
+        def __iter__(self):
+            if count:
+                return iter(
+                    [
+                        MockSearchResult("ask_cfpb", "AnswerPage", i, 0.5)
+                        for i in list(range(1, count + 1))
+                    ]
+                )
+            else:
+                return iter([])
+
+        def count(self):
+            return count
+
+        def filter(self, *args, **kwargs):
+            return self
+
+        def models(self, *models):
+            return self
+
+    return MockSearchQuerySet()
 
 
 def mock_e_search(search_term, count=0):
