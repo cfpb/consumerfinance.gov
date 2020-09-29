@@ -740,7 +740,7 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Used to enable use of django-elasticsearch-dsl and disable use of Haystack
     # This will be used in the ask_cfpb and regulations applications
-    "ELASTIC_SEARCH_DSL": [("boolean", False)],
+    "ELASTICSEARCH_DSL": [("boolean", False)],
 }
 
 

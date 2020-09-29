@@ -222,7 +222,7 @@ class AnswerViewTestCase(TestCase):
         response = self.client.get(reverse("ask-search-en"), {"q": "payday"})
         self.assertEqual(response.status_code, 404)
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_en_search(self, mock_search):
         from v1.util.migrations import get_or_create_page
@@ -248,7 +248,7 @@ class AnswerViewTestCase(TestCase):
             mock_search.called_with(language="en", search_term="payday")
         )
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_en_search_no_term(self, mock_search):
         from v1.util.migrations import get_or_create_page
@@ -271,7 +271,7 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(response.context_data["page"].result_query, "")
 
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_en_search_suggestion(self, mock_search):
         from v1.util.migrations import get_or_create_page
@@ -320,7 +320,7 @@ class AnswerViewTestCase(TestCase):
         redirect_ask_search(request, language="es")
         self.assertEqual(mock_redirect.call_count, 1)
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_es_search(self, mock_search):
         get_or_create_page(
@@ -345,7 +345,7 @@ class AnswerViewTestCase(TestCase):
             mock_search.called_with(language="es", search_term="payday")
         )
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_search_page_en_selection(self, mock_search):
         get_or_create_page(
@@ -364,7 +364,7 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(response.context_data.get("page").language, "en")
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_search_page_es_selection(self, mock_search):
         get_or_create_page(
@@ -386,7 +386,7 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(response.context_data["page"].language, "es")
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_json_response(self, mock_search):
         get_or_create_page(
@@ -417,14 +417,14 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(json.loads(response.content)["query"], "tuition")
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_autocomplete_en_blank_term(self, mock_search):
         result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
         output = json.loads(result.content)
         self.assertEqual(output, [])
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_autocomplete_es_blank_term(self, mock_search):
         result = self.client.get(
@@ -434,7 +434,7 @@ class AnswerViewTestCase(TestCase):
         output = json.loads(result.content)
         self.assertEqual(output, [])
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_autocomplete_en(self, mock_autocomplete):
         mock_search_result = mock.Mock()
@@ -447,7 +447,7 @@ class AnswerViewTestCase(TestCase):
         self.assertEqual(mock_autocomplete.call_count, 1)
         self.assertEqual(result.status_code, 200)
 
-    @override_settings(FLAGS={"ELASTIC_SEARCH_DSL": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_autocomplete_es(self, mock_autocomplete):
         mock_search_result = mock.Mock()

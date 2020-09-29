@@ -447,44 +447,44 @@ urlpatterns = [
         name='ask-spanish-answer'
     ),
 
-    # If 'ELASTIC_SEARCH_DSL' is True, use elasticsearch7.
+    # If 'ELASTICSEARCH_DSL' is True, use elasticsearch7.
     flagged_re_path(
-        'ELASTIC_SEARCH_DSL',
+        'ELASTICSEARCH_DSL',
         r'^(?P<language>es)/obtener-respuestas/buscar/$',
         ask_search_es7,
         fallback=ask_search,
         name='ask-search-es'
     ),
     flagged_re_path(
-        'ELASTIC_SEARCH_DSL',
+        'ELASTICSEARCH_DSL',
         r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search_es7,
         fallback=ask_search,
         name='ask-search-es-json'
     ),
     flagged_re_path(
-        'ELASTIC_SEARCH_DSL',
+        'ELASTICSEARCH_DSL',
         r'^ask-cfpb/search/$',
         ask_search_es7,
         fallback=ask_search,
         name='ask-search-en'
     ),
     flagged_re_path(
-        'ELASTIC_SEARCH_DSL',
+        'ELASTICSEARCH_DSL',
         r'^ask-cfpb/search/(?P<as_json>json)/$',
         ask_search_es7,
         fallback=ask_search,
         name='ask-search-en-json'
     ),
     flagged_re_path(
-        'ELASTIC_SEARCH_DSL',
+        'ELASTICSEARCH_DSL',
         r'^ask-cfpb/api/autocomplete/$',
         ask_autocomplete_es7,
         fallback=ask_autocomplete,
         name='ask-autocomplete-en'
     ),
     flagged_re_path(
-        'ELASTIC_SEARCH_DSL',
+        'ELASTICSEARCH_DSL',
         r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete_es7,
         fallback=ask_autocomplete,
