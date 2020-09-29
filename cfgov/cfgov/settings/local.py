@@ -28,7 +28,9 @@ INSTALLED_APPS += (
 
 ELASTICSEARCH_DSL={
     'default': {
-        'hosts': 'http://localhost:9200'
+        'hosts': os.path.join("http://",
+            os.environ.get("ES7_HOST", "localhost"), ":",
+            os.environ.get("ES_PORT", "9200"))
     },
 }
 
