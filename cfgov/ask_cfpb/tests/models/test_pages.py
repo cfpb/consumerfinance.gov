@@ -29,7 +29,6 @@ from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
     assemble_output, clean_and_strip, export_questions
 )
-from search.documents import AnswerPageSearch
 from v1.models import (
     CFGOVImage, HomePage, PortalCategory, PortalTopic, SublandingPage
 )
@@ -90,28 +89,6 @@ def mock_queryset(count=0):
             return self
 
     return MockSearchQuerySet()
-
-
-def mock_e_search(search_term, count=0):
-    class MockSearchQuery(AnswerPageSearch):
-        def __iter__(self):
-            if count:
-                return iter(
-                    [
-                        MockSearchResult("ask_cfpb", "AnswerPage", i, 0.5)
-                        for i in list(range(1, count + 1))
-                    ]
-                )
-            else:
-                return iter([])
-
-        def count(self):
-            return count
-
-        def search(self, *args, **kwargs):
-            return self
-
-    return MockSearchQuery()
 
 
 class AnswerStringTestCase(TestCase):
@@ -420,7 +397,18 @@ class PortalSearchPageTestCase(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
-    def test_spanish_category_title(self, mock_search):
+    def test_spanish_category_title_es7(self, mock_search):
+        page = self.spanish_search_page
+        url = page.url + page.reverse_subpage(
+            "portal_category_page", kwargs={"category": "paso-a-paso"}
+        )
+        response = self.client.get(url)
+        self.assertEqual(
+            response.context_data.get("page").title,
+            "Préstamos para vehículos paso a paso",
+        )
+
+    def test_spanish_category_title(self):
         page = self.spanish_search_page
         url = page.url + page.reverse_subpage(
             "portal_category_page", kwargs={"category": "paso-a-paso"}
@@ -479,9 +467,24 @@ class PortalSearchPageTestCase(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
-    def test_portal_topic_page_200(self, mock_search):
+    def test_portal_topic_page_200_es7(self, mock_search):
         page = self.english_search_page
         response = self.client.get(page.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_portal_topic_page_200(self):
+        page = self.english_search_page
+        response = self.client.get(page.url)
+        self.assertEqual(response.status_code, 200)
+
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
+    def test_portal_category_page_200(self, mock_filter):
+        mock_filter.return_value = mock_queryset(count=2)
+        page = self.english_search_page
+        url = page.url + page.reverse_subpage(
+            "portal_category_page", kwargs={"category": "how-to-guides"}
+        )
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
@@ -499,6 +502,24 @@ class PortalSearchPageTestCase(TestCase):
         response = self.client.get(portal_search_url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
+
+    @mock.patch("ask_cfpb.models.pages.PortalSearchPage.get_nav_items")
+    def test_spanish_portal_search_page_200(self, mock_nav):
+        mock_nav.return_value = (
+            [
+                {
+                    "title": "Spanish topic heading",
+                    "url": "mock-url",
+                    "active": False,
+                    "expanded": True,
+                    "children": [],
+                }
+            ],
+            True,
+        )
+        page = self.spanish_search_page
+        response = self.client.get(page.url)
+        self.assertEqual(response.status_code, 200)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
@@ -518,7 +539,7 @@ class PortalSearchPageTestCase(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
-    def test_portal_topic_page_with_no_hits_same_suggestion(self, mock_search):
+    def test_portal_topic_page_with_no_hits_same_suggestion_es7(self, mock_search):
         term = "hipotatoes"
         mock_search.suggest.return_value = {
             'search_term': term,
@@ -537,9 +558,22 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
+    def test_portal_topic_page_with_no_hits_same_suggestion(
+        self, mock_suggestion, mock_filter
+    ):
+        mock_suggestion.return_value = "hoodoo"
+        mock_filter.return_value = mock_queryset()
+        page = self.english_search_page
+        base_url = page.url
+        url = "{}?search_term=hoodoo".format(base_url)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
-    def test_portal_topic_page_with_no_hits_with_suggestion(self, mock_search):
+    def test_portal_topic_page_with_no_hits_with_suggestion_es7(self, mock_search):
         term = "hipotatoes"
         mock_search.suggest.return_value = {
             'search_term': term,
@@ -557,6 +591,75 @@ class PortalSearchPageTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
+
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
+    def test_portal_category_page_with_no_hits_with_suggestion(
+        self, mock_suggestion, mock_count, mock_filter
+    ):
+        mock_count.return_value = 0
+        mock_suggestion.return_value = "hoodunit"
+        mock_filter.return_value = mock_queryset()
+        page = self.english_search_page
+        base_url = page.url + page.reverse_subpage(
+            "portal_category_page", kwargs={"category": "how-to-guides"}
+        )
+        url = "{}?search_term=hoodoo".format(base_url)
+        with override_settings(
+            FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]}
+        ):
+            response = self.client.get(url)
+            self.assertEqual(response.context_data["search_term"], "hoodunit")
+            self.assertEqual(response.status_code, 200)
+
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
+    def test_portal_topic_page_with_no_hits_with_suggestion(
+        self, mock_suggestion, mock_count, mock_filter
+    ):
+        mock_suggestion.return_value = "hoodunit"
+        mock_count.return_value = 0
+        mock_filter.return_value = mock_queryset()
+        page = self.english_search_page
+        base_url = page.url
+        url = "{}?search_term=hoodoo".format(base_url)
+        with override_settings(
+            FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]}
+        ):
+            response = self.client.get(url)
+            self.assertEqual(response.context_data["search_term"], "hoodunit")
+            self.assertEqual(response.status_code, 200)
+
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
+    def test_portal_category_page_same_suggestion(
+        self, mock_suggestion, mock_count, mock_filter
+    ):
+        mock_filter.return_value = mock_queryset()
+        mock_count.return_value = 0
+        mock_suggestion.return_value = "hoodoo"
+        page = self.english_search_page
+        base_url = page.url + page.reverse_subpage(
+            "portal_category_page", kwargs={"category": "how-to-guides"}
+        )
+        url = "{}?search_term=hoodoo".format(base_url)
+        response = self.client.get(url)
+        self.assertEqual(response.context_data["search_term"], "hoodoo")
+        self.assertEqual(response.status_code, 200)
+
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.models")
+    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
+    def test_portal_topic_page_suggestion(self, mock_filter, mock_models):
+        mock_models.spelling_suggestion.return_value = "hoodunit"
+        mock_filter.return_value = mock_queryset()
+        page = self.english_search_page
+        url = "{}?search_term=hoodoo".format(page.url)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context_data["search_term"], "hoodoo")
 
     def test_get_glossary_terms(self):
         page = self.english_search_page
