@@ -642,6 +642,9 @@ FLAGS = {
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
+    # Ask CFPB date label
+    # When enabled, date label will be changed from 'updated' to 'last reviewed'
+    "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
@@ -696,23 +699,6 @@ FLAGS = {
     # SPLIT TESTING FLAGS
     # Ask CFPB page titles as H1s instead of H2s
     "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
-    # Test financial well-being hub pages on Beta
-    "FINANCIAL_WELLBEING_HUB": [("environment is", "beta")],
-    # Publish new HMDA Explore page
-    # Delete after HMDA API is deprecated (hopefully Summer 2019)
-    "HMDA_LEGACY_PUBLISH": [],
-    # The HMDA API and HMDA explorer pages will temporarily be taken down at
-    # TBD intervals. We use a GET parameter during downtime to trigger an
-    # explanatory banner about the outages.
-    # Delete after HMDA API is deprecated (hopefully Summer 2019)
-    "HMDA_OUTAGE": [
-        {"condition": "parameter", "value": "hmda-outage", "required": True},
-        {
-            "condition": "path matches",
-            "value": r"^/data-research",
-            "required": True,
-        },
-    ],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.

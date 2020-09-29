@@ -15,6 +15,8 @@ pipeline {
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
+        LAST_STAGE = 'Init'
+        DEPLOY_SUCCESS = false
     }
 
     parameters {
@@ -42,6 +44,7 @@ pipeline {
             steps {
                 script {
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
+                    env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
@@ -54,6 +57,7 @@ pipeline {
             steps {
                 dir('static.in/cfgov-fonts') {
                     script {
+                        LAST_STAGE = env.STAGE_NAME
                         git ghe.getRepoUrl('CFGOV/cfgov-fonts')
                     }
                 }
@@ -66,6 +70,7 @@ pipeline {
             }
             steps {
                 script {
+                    LAST_STAGE = env.STAGE_NAME
                     docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                     docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
                 }
@@ -74,6 +79,9 @@ pipeline {
 
         stage('Scan Image') {
             steps {
+                script {
+                    LAST_STAGE = env.STAGE_NAME
+                }
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
                 scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
             }
@@ -89,6 +97,7 @@ pipeline {
             }
             steps {
                 script {
+                    LAST_STAGE = env.STAGE_NAME
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         image = docker.image(env.IMAGE_NAME_LOCAL)
                         image.push()
@@ -114,9 +123,11 @@ pipeline {
             }
             steps {
                 script {
+                    LAST_STAGE = env.STAGE_NAME
                     timeout(time: 30, unit: 'MINUTES') {
                         dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                     }
+                    DEPLOY_SUCCESS = true
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
@@ -131,6 +142,7 @@ pipeline {
             }
             steps {
                 script {
+                    LAST_STAGE = env.STAGE_NAME
                     timeout(time: 15, unit: 'MINUTES') {
                         // sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
                         sh "docker run -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:4.10.0 npx cypress run -b chrome --headless"
@@ -143,22 +155,22 @@ pipeline {
     post {
         success {
             script {
-                if (env.GIT_BRANCH != 'main') {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} deployed via ${env.BUILD_URL} and available at https://${env.CFGOV_HOSTNAME}/")
-                }
-                else {
-                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: **main** branch stack deployed via ${env.BUILD_URL} and available at https://${env.CFGOV_HOSTNAME}/")
-                }
+                author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
+                changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
+                notify("${NOTIFICATION_CHANNEL}", 
+                    """:white_check_mark: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author [deployed](https://${env.CFGOV_HOSTNAME}/)! 
+                    \n:jenkins: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
             }
         }
+
         unsuccessful {
             script{
-                if (env.GIT_BRANCH != 'main') {
-                    notify("${NOTIFICATION_CHANNEL}", ":x: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} failed to deploy. See: ${env.BUILD_URL}")
-                }
-                else {
-                    notify("${NOTIFICATION_CHANNEL}", ":x: **main** branch stack deployment failed. See: ${env.BUILD_URL}")
-                }
+                author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
+                changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
+                deployText = DEPLOY_SUCCESS ? "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" : "failed"
+                notify("${NOTIFICATION_CHANNEL}", 
+                    """:x: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author $deployText at stage **${LAST_STAGE}** 
+                    \n:jenkins-devil: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
             }
         }
     }
