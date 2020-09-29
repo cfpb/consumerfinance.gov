@@ -539,7 +539,9 @@ class PortalSearchPageTestCase(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
-    def test_portal_topic_page_with_no_hits_same_suggestion_es7(self, mock_search):
+    def test_portal_topic_page_with_no_hits_same_suggestion_es7(
+        self, mock_search
+    ):
         term = "hipotatoes"
         mock_search.suggest.return_value = {
             'search_term': term,
@@ -573,7 +575,9 @@ class PortalSearchPageTestCase(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
-    def test_portal_topic_page_with_no_hits_with_suggestion_es7(self, mock_search):
+    def test_portal_topic_page_with_no_hits_with_suggestion_es7(
+        self, mock_search
+    ):
         term = "hipotatoes"
         mock_search.suggest.return_value = {
             'search_term': term,
