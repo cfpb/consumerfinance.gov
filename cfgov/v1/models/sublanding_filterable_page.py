@@ -63,7 +63,6 @@ class SublandingFilterablePage(FilterableListMixin, CFGOVPage):
 class ActivityLogPage(CategoryFilterableMixin, SublandingFilterablePage):
     template = 'activity-log/index.html'
     filterable_categories = ('Blog', 'Newsroom', 'Research Report')
-    filterable_children_only = False
     filterable_per_page_limit = 100
 
     objects = PageManager()
