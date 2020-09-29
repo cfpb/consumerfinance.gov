@@ -149,11 +149,12 @@ describe( 'Admin', () => {
     } );
 
     it( 'should be able to use document button', () => {
+      const documentName = 'cfpb_interested-vendor-instructions_fy2020.pdf';
       admin.selectFirstTableCell();
       admin.selectTableEditorButton( 'DOCUMENT' );
-      admin.selectDocumentLink( 'cfpb_interested-vendor-instructions_fy2020.pdf' );
+      admin.selectDocumentLink( documentName );
       admin.saveTableEditor();
-      cy.get( 'td' ).contains( 'cfpb_interested-vendor-instructions_fy2020.pdf' ).should( 'be.visible' );
+      cy.get( 'td' ).contains( documentName ).should( 'be.visible' );
     } );
   } );
 } );
