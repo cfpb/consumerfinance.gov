@@ -5,7 +5,7 @@ from django.apps import apps
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
-from django.test import SimpleTestCase, TestCase
+from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 from haystack.models import SearchResult
@@ -418,7 +418,8 @@ class PortalSearchPageTestCase(TestCase):
             "Auto loans how-to guides"
         )
 
-    @mock.patch("ask_cfpb.models.pages.AnswerPageDocument.search")
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_spanish_category_title(self, mock_search):
         page = self.spanish_search_page
         url = page.url + page.reverse_subpage(
@@ -476,13 +477,15 @@ class PortalSearchPageTestCase(TestCase):
             "See all results within auto loans</a></span>",
         )
 
-    @mock.patch("ask_cfpb.models.pages.AnswerPageDocument.search")
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_portal_topic_page_200(self, mock_search):
         page = self.english_search_page
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch("ask_cfpb.models.pages.AnswerPageDocument.search")
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_portal_category_page_calls_search(self, mock_search):
         page = self.english_search_page
         portal_search_url = page.url + page.reverse_subpage(
@@ -497,7 +500,8 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.AnswerPageDocument.search")
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_spanish_portal_search_page_renders(self, mock_search):
         page = self.spanish_search_page
         portal_search_url = page.url + page.reverse_subpage(
@@ -512,7 +516,8 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.AnswerPageSearch")
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_portal_topic_page_with_no_hits_same_suggestion(self, mock_search):
         term = "hipotatoes"
         mock_search.suggest.return_value = {
@@ -532,7 +537,8 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.AnswerPageSearch")
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
+    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_portal_topic_page_with_no_hits_with_suggestion(self, mock_search):
         term = "hipotatoes"
         mock_search.suggest.return_value = {
