@@ -13,6 +13,8 @@ def make_safe(term):
     return term
 
 
+# TODO: Make this class not dependent on Ask CFPB,
+#       and able to search any Document
 class AnswerPageSearch:
     def __init__(self, search_term, language='en', base_query=None,
                  document_class=None):
