@@ -61,7 +61,7 @@ def extract_raw_text(stream_data):
 
 
 def get_ask_breadcrumbs(language='en', portal_topic=None):
-    default_crumbs = {
+    DEFAULT_CRUMBS = {
         'es': [{
             'title': 'Obtener respuestas', 'href': '/es/obtener-respuestas/',
         }],
@@ -77,7 +77,7 @@ def get_ask_breadcrumbs(language='en', portal_topic=None):
             'href': page.url
         }]
         return crumbs
-    return default_crumbs[language]
+    return DEFAULT_CRUMBS[language]
 
 
 def get_portal_or_portal_search_page(portal_topic, language='en'):
