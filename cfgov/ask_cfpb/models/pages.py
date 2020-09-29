@@ -9,6 +9,7 @@ from django.template.response import TemplateResponse
 from django.utils.html import format_html, strip_tags
 from django.utils.text import slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
+from haystack.query import SearchQuerySet
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
@@ -20,6 +21,7 @@ from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable, Page
 from wagtail.search import index
 
+from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 
 from ask_cfpb.documents import AnswerPageDocument
@@ -401,9 +403,14 @@ class PortalSearchPage(
     @route(r'^$')
     def portal_topic_page(self, request):
         self.portal_category = None
-        self.query_base = AnswerPageDocument.search().filter(
-            "match", portal_topics=self.portal_topic.heading)
-        return self.get_results_es7(request)
+        if flag_enabled('ELASTICSEARCH_DSL'):
+            self.query_base = AnswerPageDocument.search().filter(
+                "match", portal_topics=self.portal_topic.heading)
+            return self.get_results_es7(request)
+        else:
+            self.query_base = SearchQuerySet().filter(
+                "match", portal_topics=self.portal_topic.heading)
+            return self.get_results(request)
 
     @route(r'^(?P<category>[^/]+)/$')
     def portal_category_page(self, request, **kwargs):
@@ -423,10 +430,16 @@ class PortalSearchPage(
                 request,
                 'ask-cfpb/see-all.html',
                 context)
-        self.query_base = AnswerPageDocument.search().filter(
-            'match', portal_topics=self.portal_topic.heading).filter(
-            'match', portal_categories=self.portal_category.heading)
-        return self.get_results_es7(request)
+        if flag_enabled('ELASTICSEARCH_DSL'):
+            self.query_base = AnswerPageDocument.search().filter(
+                'match', portal_topics=self.portal_topic.heading).filter(
+                'match', portal_categories=self.portal_category.heading)
+            return self.get_results_es7(request)
+        else:
+            self.query_base = SearchQuerySet().filter(
+                'match', portal_topics=self.portal_topic.heading).filter(
+                'match', portal_categories=self.portal_category.heading)
+            return self.get_results(request)
 
 
 class AnswerResultsPage(CFGOVPage):
