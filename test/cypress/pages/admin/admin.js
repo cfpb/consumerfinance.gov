@@ -246,9 +246,9 @@ export class AdminPage {
   }
 
   selectDocumentLink( text ) {
-    cy.get( '#id_q' ).invoke('val', text).trigger('change')
-    cy.get( '#id_q' ).type(' ')
-    cy.wait(3000)
+    cy.get( '#id_q' ).invoke( 'val', text ).trigger( 'change' );
+    cy.get( '#id_q' ).type( ' ' );
+    cy.wait( 3000 );
     cy.get( '.document-choice' ).contains( text ).click();
   }
 }
