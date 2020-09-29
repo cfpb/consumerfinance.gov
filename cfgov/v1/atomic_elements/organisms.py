@@ -796,21 +796,25 @@ class FilterableList(BaseExpandable):
         default=True,
         required=False,
         help_text=(
-            "If checked this list will only filter its child pages."
+            "If checked this list will only filter its child pages. "
+            "If both children and siblings are checked, only child pages will "
+            "be filtered."
         ),
     )
     filter_siblings = blocks.BooleanBlock(
         default=False,
         required=False,
         help_text=(
-            "If checked this list will only filter its sibling pages."
+            "If checked this list will only filter its sibling pages. "
+            "If both children and siblings are checked, only child pages will "
+            "be filtered."
         ),
     )
     filter_archive = blocks.BooleanBlock(
         default=False,
         required=False,
         help_text=(
-            "If checked this list will only filter archived pages. "
+            "If checked this list will only filter archived pages."
             "If unchecked this list will exclude archive pages."
         ),
     )
