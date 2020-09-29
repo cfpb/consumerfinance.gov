@@ -382,5 +382,8 @@ filter_controls = {
         'categories': {
             'page_type': '',
         },
+        'filter_children': True,
+        'filter_siblings': False,
+        'filter_archive': False,
     }
 }

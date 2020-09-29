@@ -9,6 +9,7 @@
 {%- endblock %}
 
 {% block content_main %}
+    {% include 'molecules/archived-pill.html' %}
     {% for block in page.header -%}
         {% if block.block_type == 'item_introduction' %}
             {% import 'organisms/item-introduction.html' as item_introduction with context %}
