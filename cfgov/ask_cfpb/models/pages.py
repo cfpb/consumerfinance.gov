@@ -409,7 +409,8 @@ class PortalSearchPage(
             return self.get_results_es7(request)
         else:
             self.query_base = SearchQuerySet().filter(
-                "match", portal_topics=self.portal_topic.heading)
+                portal_topics=self.portal_topic.heading,
+                language=self.language)
             return self.get_results(request)
 
     @route(r'^(?P<category>[^/]+)/$')
@@ -437,8 +438,9 @@ class PortalSearchPage(
             return self.get_results_es7(request)
         else:
             self.query_base = SearchQuerySet().filter(
-                'match', portal_topics=self.portal_topic.heading).filter(
-                'match', portal_categories=self.portal_category.heading)
+                portal_topics=self.portal_topic.heading,
+                language=self.language,
+                portal_categories=self.portal_category.heading)
             return self.get_results(request)
 
 
