@@ -71,14 +71,14 @@ class AnswerPagePreviewCase(TestCase):
         from ask_cfpb.models import Answer
         from v1.models import HomePage
 
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
+        self.root_page = HomePage.objects.get(slug="cfgov")
         self.english_parent_page = get_or_create_page(
             apps,
             "ask_cfpb",
             "AnswerLandingPage",
             "Ask CFPB",
             ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+            self.root_page,
             language="en",
             live=True,
         )
@@ -88,7 +88,7 @@ class AnswerPagePreviewCase(TestCase):
             "AnswerLandingPage",
             "Obtener respuestas",
             SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+            self.root_page,
             language="es",
             live=True,
         )
@@ -116,7 +116,7 @@ class AnswerPagePreviewCase(TestCase):
         self.english_answer_page2.save_revision().publish()
         self.site = baker.make(
             Site,
-            ROOT_PAGE=self.ROOT_PAGE,
+            root_page=self.root_page,
             hostname="localhost",
             port=8000,
             is_default_site=True,
@@ -164,14 +164,14 @@ class AnswerViewTestCase(TestCase):
     def setUp(self):
         from v1.models import HomePage
 
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
+        self.root_page = HomePage.objects.get(slug="cfgov")
         self.english_parent_page = get_or_create_page(
             apps,
             "ask_cfpb",
             "AnswerLandingPage",
             "Ask CFPB",
             ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+            self.root_page,
             language="en",
             live=True,
         )
@@ -181,7 +181,7 @@ class AnswerViewTestCase(TestCase):
             "AnswerLandingPage",
             "Obtener respuestas",
             SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
+            self.root_page,
             language="es",
             live=True,
         )
@@ -233,7 +233,7 @@ class AnswerViewTestCase(TestCase):
             "AnswerResultsPage",
             "Mock results page",
             "ask-cfpb-search-results",
-            self.ROOT_PAGE,
+            self.root_page,
             language="en",
         )
 
@@ -259,7 +259,7 @@ class AnswerViewTestCase(TestCase):
             "AnswerResultsPage",
             "Mock results page",
             "ask-cfpb-search-results",
-            self.ROOT_PAGE,
+            self.root_page,
             language="en",
         )
 

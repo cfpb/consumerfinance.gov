@@ -183,9 +183,9 @@ class ArticlePageTestCase(TestCase):
             return new_page
 
         self.test_user = User.objects.last()
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
+        self.root_page = HomePage.objects.get(slug="cfgov")
         self.tools_parent = create_page(
-            SublandingPage, "Consumer Tools", "consumer-tools", self.ROOT_PAGE
+            SublandingPage, "Consumer Tools", "consumer-tools", self.root_page
         )
         self.article_page = create_page(
             ArticlePage,
@@ -236,15 +236,15 @@ class PortalSearchPageTestCase(TestCase):
             return new_page
 
         self.site = Site.objects.get(is_default_site=True)
-        self.ROOT_PAGE = self.site.ROOT_PAGE
+        self.root_page = self.site.root_page
         self.portal_topic = PortalTopic.objects.get(pk=1)
         self.portal_topic2 = PortalTopic.objects.get(pk=2)
         self.test_user = User.objects.last()
         self.english_ask_parent = create_page(
-            AnswerLandingPage, "Ask CFPB", "ask-cfpb", self.ROOT_PAGE
+            AnswerLandingPage, "Ask CFPB", "ask-cfpb", self.root_page
         )
         self.english_portal_parent = create_page(
-            SublandingPage, "Consumer Tools", "consumer-tools", self.ROOT_PAGE
+            SublandingPage, "Consumer Tools", "consumer-tools", self.root_page
         )
         self.english_portal = create_page(
             SublandingPage,
@@ -278,7 +278,7 @@ class PortalSearchPageTestCase(TestCase):
             SublandingPage,
             "Obtener respuestas",
             "obtener-respuestas",
-            self.ROOT_PAGE,
+            self.root_page,
             language="es",
         )
         self.spanish_portal = create_page(
@@ -605,7 +605,7 @@ class AnswerPageTestCase(TestCase):
 
     def setUp(self):
         self.test_user = User.objects.get(pk=1)
-        ROOT_PAGE = HomePage.objects.get(slug="cfgov")
+        root_page = HomePage.objects.get(slug="cfgov")
         self.category = baker.make(
             Category, name="stub_cat", name_es="que", slug="stub-cat"
         )
@@ -625,7 +625,7 @@ class AnswerPageTestCase(TestCase):
             portal_topic=self.portal_topic,
             language="en",
         )
-        ROOT_PAGE.add_child(instance=self.portal_page)
+        root_page.add_child(instance=self.portal_page)
         self.portal_page.save()
         self.portal_page.save_revision().publish()
         self.portal_page_es = SublandingPage(
@@ -634,7 +634,7 @@ class AnswerPageTestCase(TestCase):
             portal_topic=self.portal_topic,
             language="es",
         )
-        ROOT_PAGE.add_child(instance=self.portal_page_es)
+        root_page.add_child(instance=self.portal_page_es)
         self.portal_page_es.save()
         self.portal_page_es.save_revision().publish()
         self.english_parent_page = get_or_create_page(
@@ -643,7 +643,7 @@ class AnswerPageTestCase(TestCase):
             "AnswerLandingPage",
             "Ask CFPB",
             ENGLISH_PARENT_SLUG,
-            ROOT_PAGE,
+            root_page,
             language="en",
             live=True,
         )
@@ -653,7 +653,7 @@ class AnswerPageTestCase(TestCase):
             "AnswerLandingPage",
             "Obtener respuestas",
             SPANISH_PARENT_SLUG,
-            ROOT_PAGE,
+            root_page,
             language="es",
             live=True,
         )
@@ -663,7 +663,7 @@ class AnswerPageTestCase(TestCase):
             "TagResultsPage",
             "Tag results page",
             "search-by-tag",
-            ROOT_PAGE,
+            root_page,
             language="en",
             live=True,
         )
@@ -673,7 +673,7 @@ class AnswerPageTestCase(TestCase):
             "TagResultsPage",
             "Tag results page",
             "buscar-por-etiqueta",
-            ROOT_PAGE,
+            root_page,
             language="es",
             live=True,
         )
