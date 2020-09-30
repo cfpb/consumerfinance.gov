@@ -12,14 +12,14 @@ services:
             - "9000:9200"
             - "9100:9300"
     elasticsearch:
-        image: blacktop/elasticsearch:7.4
+        build:
+            context: ./
+            dockerfile: ./docker/elasticsearch/7.4/Dockerfile
         ports: 
             - "9200:9200"
             - "9300:9300"
         environment:
             discovery.type: single-node
-        volumes:
-            - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
     kibana:
         image: blacktop/kibana:7.4
         depends_on:
