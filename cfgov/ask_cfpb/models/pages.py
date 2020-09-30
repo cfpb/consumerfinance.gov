@@ -50,6 +50,13 @@ REUSABLE_TEXT_TITLES = {
     }
 }
 
+
+def get_standard_text(language, text_type):
+    return get_reusable_text_snippet(
+        REUSABLE_TEXT_TITLES[text_type][language]
+    )
+
+
 JOURNEY_PATHS = (
     '/owning-a-home/prepare',
     '/owning-a-home/explore',
@@ -63,12 +70,6 @@ def strip_html(markup):
     """Make sure stripping doesn't mash headings into text."""
     markup = re.sub("</h[1-6]>", " ", markup)
     return strip_tags(markup)
-
-
-def get_standard_text(language, text_type):
-    return get_reusable_text_snippet(
-        REUSABLE_TEXT_TITLES[text_type][language]
-    )
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -121,9 +122,8 @@ def get_ask_breadcrumbs(language='en', portal_topic=None):
 
 def validate_page_number(request, paginator):
     """
-    A utility for parsing a pagination request.
-
-    This catches invalid page numbers and always returns
+    A utility for parsing a pagination request,
+    catching invalid page numbers and always returning
     a valid page number, defaulting to 1.
     """
     raw_page = request.GET.get('page', 1)
@@ -139,8 +139,9 @@ def validate_page_number(request, paginator):
 
 
 class AnswerLandingPage(LandingPage):
-    """Page type for Ask CFPB's landing page."""
-
+    """
+    Page type for Ask CFPB's landing page.
+    """
     content_panels = [
         StreamFieldPanel('header')
     ]
@@ -207,7 +208,9 @@ class SecondaryNavigationJSMixin(object):
 
 class PortalSearchPage(
         RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
-    """A routable page type for Ask CFPB portal search ("see-all") pages."""
+    """
+    A routable page type for Ask CFPB portal search ("see-all") pages.
+    """
 
     objects = CFGOVPageManager()
     portal_topic = models.ForeignKey(
@@ -219,6 +222,7 @@ class PortalSearchPage(
     portal_category = None
     query_base = None
     glossary_terms = None
+    category_slug = None
     overview = models.TextField(blank=True)
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('portal_topic'),
@@ -405,7 +409,7 @@ class PortalSearchPage(
         self.portal_category = None
         if flag_enabled('ELASTICSEARCH_DSL'):
             self.query_base = AnswerPageDocument.search().filter(
-                "match", portal_topics=self.portal_topic.heading)
+                'match', portal_topics=self.portal_topic.heading)
             return self.get_results_es7(request)
         else:
             self.query_base = SearchQuerySet().filter(
@@ -415,10 +419,10 @@ class PortalSearchPage(
 
     @route(r'^(?P<category>[^/]+)/$')
     def portal_category_page(self, request, **kwargs):
-        category_slug = kwargs.get('category')
-        if category_slug not in self.category_map:
+        self.category_slug = kwargs.get('category')
+        if self.category_slug not in self.category_map:
             raise Http404
-        self.portal_category = self.category_map.get(category_slug)
+        self.portal_category = self.category_map.get(self.category_slug)
         self.title = "{} {}".format(
             self.portal_topic.title(self.language),
             self.portal_category.title(self.language).lower())
@@ -475,7 +479,7 @@ class AnswerResultsPage(CFGOVPage):
 
 
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
-    """A routable page for serving Answers by tag."""
+    """A routable page for serving Answers by tag"""
 
     template = 'ask-cfpb/answer-search-results.html'
 
@@ -542,8 +546,9 @@ class ArticleLink(Orderable, models.Model):
 
 
 class ArticlePage(CFGOVPage):
-    """General article page type."""
-
+    """
+    General article page type.
+    """
     category = models.CharField(
         choices=[
             ('basics', 'Basics'),
