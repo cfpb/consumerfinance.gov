@@ -12,8 +12,7 @@ from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
-from ask_cfpb.models import AnswerResultsPage, AskSearch
-from ask_cfpb.models.answer_page import AnswerPage
+from ask_cfpb.models import AnswerPage, AnswerResultsPage, AskSearch
 from search.documents import AnswerPageSearch, make_safe
 
 
