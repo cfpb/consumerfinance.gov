@@ -1,10 +1,10 @@
-# ElasticSearch
+# Elasticsearch
 
-We use ElasticSearch 7.4 and the [django-elasticsearch-dsl](https://django-elasticsearch-dsl.readthedocs.io/en/latest/) library to interact with ElasticSearch. 
+We use Elasticsearch 7.4 and the [django-elasticsearch-dsl](https://django-elasticsearch-dsl.readthedocs.io/en/latest/) library to interact with Elasticsearch. 
 
-## Implementing ElasticSearch for a Wagtail Page
+## Implementing Elasticsearch for a Wagtail Page
 
-In order to introduce consistency across the different apps within consumerfinance.gov we are encouraging the following structure for interacting with ElasticSearch. We are looking to organize all of our search related code to a sub directory within the respective apps models directory. A typical structure would look like `ask-cfpb/models/search/documents.py`, where ask-cfpb is the app where the search will reside in. Within the documents.py file we would expect to see the following classes.
+In order to introduce consistency across the different apps within consumerfinance.gov we are encouraging the following structure for interacting with Elasticsearch. We are looking to organize all of our search related code to a sub directory within the respective apps models directory. A typical structure would look like `ask-cfpb/models/search/documents.py`, where ask-cfpb is the app where the search will reside in. Within the documents.py file we would expect to see the following classes.
 
 ### Wagtail Page
 
@@ -12,7 +12,7 @@ The first class to consider is the wagtail page, which is what our content edito
 
 ### Document Class
 
-This class is a model of what we load into our elasticsearch index. It should define the various fields and their types as well as do any data preparation/manipulation prior to being saved in the ElasticSearch index. This class extends the django-elasticsearch-dsl `Document` class and should have a reference to the wagtail page within its django subclass. Below is an example document.
+This class is a model of what we load into our elasticsearch index. It should define the various fields and their types as well as do any data preparation/manipulation prior to being saved in the Elasticsearch index. This class extends the django-elasticsearch-dsl `Document` class and should have a reference to the wagtail page within its django subclass. Below is an example document.
 
 ```python
 
@@ -47,7 +47,7 @@ class AnswerPageSearchDocument(Document):
 
 ### Search Class
 
-The search class is responsible for interacting with ElasticSearch and performing queries. The goal is to define a single source for where we perform queries, and allow them to be invoked when needed from various views. Below is an example of a Search Class.
+The search class is responsible for interacting with Elasticsearch and performing queries. The goal is to define a single source for where we perform queries, and allow them to be invoked when needed from various views. Below is an example of a Search Class.
 
 ```python
 class AnswerPageSearch:
