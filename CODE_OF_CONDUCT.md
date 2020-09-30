@@ -17,8 +17,8 @@ these behaviors and abide by applicable federal laws and CFPB policies. In addit
 everyone within CFPB spaces to exhibit these behaviors and refrain from behavior prohibited by 
 anti-harassment laws and federal policies on harassment. These spaces include:
 
-- CFPB’s physical offices,
-- CFPB events and meetings,
+- CFPB’s physical offices
+- CFPB events and meetings
 - All of CFPB’s online forums and virtual collaboration tools, including code repositories
 
 
@@ -57,7 +57,7 @@ discrimination or harassment based on:
 - Marital status
 - Uniformed status
 - Membership in a labor organization or union activities
-- Prior equal employment opportunity (EEO) or whistleblower activity, or
+- Prior equal employment opportunity (EEO) or whistleblower activity
 - Any other factor unrelated to your merit
 
 The policy also forbids harassing conduct, which includes unwelcome conduct based on any (or a combination of) protected traits or characteristics. Such conduct may take the form of any of the following: 
@@ -92,13 +92,13 @@ Consumer Financial Protection Bureau
 Washington, D.C. 20552
 
 For help filing a complaint about discrimination on the basis of marital status, political 
-affiliation, or any other non-merit factor, or for claims of retaliation for [whistleblower activity](https://www.consumerfinance.gov/office-civil-rights/whistleblowers/), contact the [Office of Special Counsel](http://www.osc.gov/) or the [Merit Systems Protection Board](http://www.mspb.gov/).
+affiliation, or any other non-merit factor, or for claims of retaliation for [whistleblower activity](https://www.consumerfinance.gov/office-civil-rights/whistleblowers/), contact the [Office of Special Counsel](https://www.osc.gov/) or the [Merit Systems Protection Board](https://www.mspb.gov/).
 
 For help filing a complaint about discrimination on the basis of uniformed status, you may contact 
-the [Veterans’ Employment and Training Service (VETS)](http://www.dol.gov/vets/) at the Department of Labor, the [Merit Systems Protection Board](http://www.mspb.gov/), or the [Office of Special Counsel](https://osc.gov/), depending on the circumstances.
+the [Veterans’ Employment and Training Service (VETS)](https://www.dol.gov/vets/) at the Department of Labor, the [Merit Systems Protection Board](https://www.mspb.gov/), or the [Office of Special Counsel](https://osc.gov/), depending on the circumstances.
 
 For help filing a complaint about discrimination on the basis of membership in a labor organization, 
-you may contact the [Federal Labor Relations Authority](http://flra.gov/) or your union (if applicable).
+you may contact the [Federal Labor Relations Authority](https://flra.gov/) or your union (if applicable).
 
 ### Equal employment opportunity policy
 
