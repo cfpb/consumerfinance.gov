@@ -11,7 +11,8 @@ pipeline {
 
     environment {
         IMAGE_REPO = 'cfpb/cfgov-python'
-        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-23'
+        IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
+        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-74'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
@@ -47,6 +48,7 @@ pipeline {
                     env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
+                    env.IMAGE_NAME_ES2_LOCAL = "${env.IMAGE_ES2_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
@@ -72,7 +74,8 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
-                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
+                    docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
+                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7.4/Dockerfile .')
                 }
             }
         }
@@ -83,7 +86,8 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                 }
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
-                scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
+                scanImage(env.IMAGE_ES2_REPO, env.IMAGE_TAG)
+                // scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG) We Will Scan once Twistlock is configured to ignore known issues with this image.
             }
         }
 
@@ -104,6 +108,10 @@ pipeline {
 
                         // Sets fully-qualified image name
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
+
+                        image = docker.image(env.IMAGE_NAME_ES2_LOCAL)
+                        image.push()
+                        env.CFGOV_ES2_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         image.push()
