@@ -13,9 +13,6 @@ from v1.util.util import get_secondary_nav_items
 class FilterableListMixin(RoutablePageMixin):
     """Wagtail Page mixin that allows for filtering of other pages."""
 
-    filterable_children_only = True
-    """Determines page tree to be filtered; see filterable_pages."""
-
     filterable_per_page_limit = 10
     """Number of results to return per page."""
 
@@ -30,6 +27,12 @@ class FilterableListMixin(RoutablePageMixin):
     def get_form_class():
         return FilterableListForm
 
+    def get_filterable_list_wagtail_block(self):
+        return next(
+            (b for b in self.content if b.block_type == 'filter_controls'),
+            None
+        )
+
     def get_filterable_queryset(self):
         """Return the queryset of pages to be filtered by this page.
 
@@ -38,10 +41,18 @@ class FilterableListMixin(RoutablePageMixin):
         Wagtail site (for example, if it does not live under a site root),
         then it will not return any filterable results.
 
-        The class property filterable_children_only determines whether this
-        page filters only pages that are direct children of this page. By
-        default this is True; set this to False to allow this page to filter
-        pages that are not direct children of this page.
+        The filter_children attribute determines whether this page filters
+        pages that are direct children of this page. By default this is True;
+        set this to False to allow this page to filter pages that are not
+        direct children of this page.
+
+        The filter_siblings attribute determines whether this page filters
+        pages that are siblings of this page. By default this is False.
+
+        The filter_archive attribute determines whether this page filters
+        pages that are archived. By default this is False, and archived pages
+        will be excluded. If this is True, only archived pages will be
+        filtered.
         """
         site = self.get_site()
 
@@ -50,8 +61,19 @@ class FilterableListMixin(RoutablePageMixin):
 
         queryset = self.get_model_class().objects.in_site(site).live()
 
-        if self.filterable_children_only:
+        filterable_list_block = self.get_filterable_list_wagtail_block()
+        if filterable_list_block is None:
+            return queryset
+
+        if filterable_list_block.value['filter_children']:
             queryset = queryset.child_of(self)
+        elif filterable_list_block.value['filter_siblings']:
+            queryset = queryset.sibling_of(self)
+
+        if filterable_list_block.value['filter_archive']:
+            queryset = queryset.filter(is_archived=True)
+        else:
+            queryset = queryset.filter(is_archived=False)
 
         return queryset
 
@@ -64,7 +86,7 @@ class FilterableListMixin(RoutablePageMixin):
         form = self.get_form_class()(
             form_data,
             filterable_pages=self.get_filterable_queryset(),
-            wagtail_block=self.filterable_list_wagtail_block(),
+            wagtail_block=self.get_filterable_list_wagtail_block(),
         )
 
         context.update({
@@ -74,12 +96,6 @@ class FilterableListMixin(RoutablePageMixin):
         })
 
         return context
-
-    def filterable_list_wagtail_block(self):
-        return next(
-            (b for b in self.content if b.block_type == 'filter_controls'),
-            None
-        )
 
     def process_form(self, request, form):
         filter_data = {}
