@@ -102,8 +102,9 @@ services:
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
                     ./refresh-data.sh 
-                    ./cfgov/manage.py update_index
                 fi
+
+                ./cfgov/manage.py update_index
 
                 httpd -d cfgov/apache -D FOREGROUND"
 
