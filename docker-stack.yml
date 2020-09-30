@@ -105,10 +105,6 @@ services:
                     ./cfgov/manage.py update_index
                 fi
 
-                if [ ! -z $$ES7_HOST ]; then
-                  ./cfgov/manage.py search_index --rebuild -f
-                fi
-
                 httpd -d cfgov/apache -D FOREGROUND"
 
 networks:
