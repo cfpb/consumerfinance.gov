@@ -4,28 +4,32 @@ volumes:
     postgres_data:
 
 services:
-    elasticsearch:
+    elasticsearch2:
         build:
             context: ./
             dockerfile: ./docker/elasticsearch/Dockerfile
         ports:
-            - "9200:9200"
-            - "9300:9300"
-    elasticsearch7:
-        image: elasticsearch:7.4.2
-        ports: 
             - "9000:9200"
             - "9100:9300"
+    elasticsearch:
+        image: blacktop/elasticsearch:7.4
+        ports: 
+            - "9200:9200"
+            - "9300:9300"
         environment:
             discovery.type: single-node
+        volumes:
+            - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
     kibana:
-        image: kibana:7.4.2
+        image: blacktop/kibana:7.4
         depends_on:
-            - elasticsearch7
+            - elasticsearch
         ports:
             - "5601:5601"
-        environment:
-            ELASTICSEARCH_HOSTS: http://elasticsearch7:9200
+    pgadmin:
+        image: thajeztah/pgadmin4
+        ports:
+            - "5050:5050"
     postgres:
         image: postgres:10.3
         restart: always
@@ -46,10 +50,13 @@ services:
                 scl_python_version: rh-python36
         depends_on:
             - elasticsearch
-            - elasticsearch7
+            - elasticsearch2
             - postgres
         stdin_open: true
         tty: true
+        environment:
+            ES7_HOST: http://elasticsearch:9200
+            ES_HOST: http://elasticsearch2
 
     docs:
         build:

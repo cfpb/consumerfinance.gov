@@ -12,11 +12,11 @@ pipeline {
     environment {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-23'
+        IMAGE_ES7_REPO = 'cfpb/cfgov-elasticsearch-74'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
-        DEPLOY_SUCCESS = false
     }
 
     parameters {
@@ -44,10 +44,10 @@ pipeline {
             steps {
                 script {
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
-                    env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
+                    env.IMAGE_NAME_ES7_LOCAL = "${env.IMAGE_ES7_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
             }
@@ -73,6 +73,7 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                     docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
+                    docker.build(env.IMAGE_NAME_ES7_LOCAL, '-f ./docker/elasticsearch/7.4/Dockerfile .')
                 }
             }
         }
@@ -84,6 +85,7 @@ pipeline {
                 }
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
                 scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
+                // scanImage(env.IMAGE_ES7_REPO, env.IMAGE_TAG) We Will Scan once Twistlock is configured to ignore known issues with this image.
             }
         }
 
@@ -108,6 +110,10 @@ pipeline {
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         image.push()
                         env.CFGOV_ES_IMAGE = image.imageName()
+
+                        image = docker.image(env.IMAGE_NAME_ES7_LOCAL)
+                        image.push()
+                        env.CFGOV_ES7_IMAGE = image.imageName()
                     }
                 }
             }
@@ -127,7 +133,6 @@ pipeline {
                     timeout(time: 30, unit: 'MINUTES') {
                         dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                     }
-                    DEPLOY_SUCCESS = true
                 }
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
             }
@@ -155,22 +160,22 @@ pipeline {
     post {
         success {
             script {
-                author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
-                changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
-                notify("${NOTIFICATION_CHANNEL}", 
-                    """:white_check_mark: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author [deployed](https://${env.CFGOV_HOSTNAME}/)! 
-                    \n:jenkins: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
+                if (env.GIT_BRANCH != 'main') {
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} deployed via [Jenkins](${env.BUILD_URL}) and available at https://${env.CFGOV_HOSTNAME}/")
+                }
+                else {
+                    notify("${NOTIFICATION_CHANNEL}", ":white_check_mark: **main** branch stack deployed via [Jenkins](${env.BUILD_URL}) and available at https://${env.CFGOV_HOSTNAME}/")
+                }
             }
         }
-
         unsuccessful {
             script{
-                author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
-                changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
-                deployText = DEPLOY_SUCCESS ? "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" : "failed"
-                notify("${NOTIFICATION_CHANNEL}", 
-                    """:x: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author $deployText at stage **${LAST_STAGE}** 
-                    \n:jenkins-devil: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
+                if (env.GIT_BRANCH != 'main') {
+                    notify("${NOTIFICATION_CHANNEL}", ":x: [**${env.GIT_BRANCH}**](${env.CHANGE_URL}) by ${env.CHANGE_AUTHOR} failed at stage **${LAST_STAGE}** \n:jenkins-devil: [Failure Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})")
+                }
+                else {
+                    notify("${NOTIFICATION_CHANNEL}", ":x: **main** branch stack deployment failed at stage **${LAST_STAGE}** \n:jenkins-devil: [Failure Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})")
+                }
             }
         }
     }

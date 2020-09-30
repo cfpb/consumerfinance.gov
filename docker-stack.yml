@@ -16,7 +16,21 @@ services:
         window: 120s
     networks:
       - app
-
+  elasticsearch7:
+    image: ${CFGOV_ES7_IMAGE}
+    environment:
+      discovery.type: single-node
+    deploy:
+      placement:
+        constraints:
+          - node.role!=manager
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - app
   postgres:
     image: postgres:10-alpine
     user: postgres
@@ -49,6 +63,7 @@ services:
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
       ES_HOST: elasticsearch
+      ES7_HOST: http://elasticsearch7:9200
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
@@ -87,10 +102,13 @@ services:
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
                     ./refresh-data.sh 
+                    ./cfgov/manage.py update_index
                 fi
 
-                ./cfgov/manage.py update_index
-                
+                if [ ! -z $$ES7_HOST ]; then
+                  ./cfgov/manage.py search_index --rebuild -f
+                fi
+
                 httpd -d cfgov/apache -D FOREGROUND"
 
 networks:
