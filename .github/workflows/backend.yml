@@ -32,7 +32,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       # Looks like it may be required to be running to run tests 
       elasticsearch:
-        image: blacktop/7.4
+        image: blacktop/elasticsearch:7.4
         env:
           discovery.type: single-node
         ports:
