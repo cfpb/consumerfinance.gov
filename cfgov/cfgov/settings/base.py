@@ -439,7 +439,7 @@ if os.environ.get('USE_AWS_ES', False):
 else:
     ELASTICSEARCH_DSL={
         'default': {
-            'hosts': os.environ.get('ES7_HOST', '')
+            'hosts': os.environ.get('ES7_HOST', 'localhost:9200')
         },
     }
 
