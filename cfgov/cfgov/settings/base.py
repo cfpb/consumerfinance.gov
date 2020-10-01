@@ -7,10 +7,9 @@ from django.utils.translation import ugettext_lazy as _
 import wagtail
 
 import dj_database_url
-from unipath import DIRS, Path
-
-from requests_aws4auth import AWS4Auth
 from elasticsearch7 import RequestsHttpConnection
+from requests_aws4auth import AWS4Auth
+from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
 
