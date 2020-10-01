@@ -3,6 +3,8 @@ from unittest import TestCase
 
 from django.db import models
 
+from wagtail.core.blocks import StreamValue
+
 from django_elasticsearch_dsl import fields
 from django_elasticsearch_dsl.documemts import DocType
 from django_elasticsearch_dsl.exceptions import ModelFieldNotMappedError
@@ -12,7 +14,7 @@ from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import Answer, AnswerPage
 
 
-class AnswerPageDocumentCase(TestCase):
+class AnswerPageDocumentTest(TestCase):
 
     def test_model_class_added(self):
         self.assertEqual(AnswerPageDocument.django.model, AnswerPage)
@@ -97,9 +99,20 @@ class AnswerPageDocumentCase(TestCase):
         self.assertEqual(qs.model, AnswerPage)
 
     def test_prepare(self):
-        answer_page = AnswerPage()
+        answer = Answer(id=1234)
+        answer.save()
+        page = AnswerPage(
+            slug="mock-question-en-1234", title="Mock question"
+        )
+        page.answer_base = answer
+        page.question = "Mock question"
+        page.answer_content = StreamValue(
+            page.answer_content.stream_block,
+            [{"type": "text", "value": {"content": "Mock answer"}}],
+            True,
+        )
         doc = AnswerPageDocument()
-        prepared_data = doc.prepare(answer_page)
+        prepared_data = doc.prepare(page)
         self.assertEqual(
             prepared_data, {
                 'autocomplete': doc.prepare_autocomplete(None),
@@ -114,7 +127,7 @@ class AnswerPageDocumentCase(TestCase):
     def test_model_instance_update_no_refresh(self):
         doc = AnswerPageDocument()
         doc.django.auto_refresh = False
-        answer_page = AnswerPage()
+        page = AnswerPage()
         with patch('django_elasticsearch_dsl.documents.bulk') as mock:
-            doc.update(answer_page)
+            doc.update(page)
             self.assertNotIn('refresh', mock.call_args_list[0][1])
