@@ -8,8 +8,9 @@ from wagtail.core import blocks
 from wagtail.core.models import Site
 
 import mock
+import json
 
-from v1.models import BrowsePage, CFGOVPage
+from v1.models import BrowsePage, CFGOVPage, LandingPage, SublandingPage
 from v1.models.banners import Banner
 from v1.tests.wagtail_pages.helpers import save_new_page
 
@@ -305,6 +306,144 @@ class TestCFGOVPageContext(TestCase):
         }
         test_context = self.page.get_context(self.request)
         self.assertIn('schema_json', test_context)
+    
+    def test_get_context_sets_meta_description_from_search_description(self):
+        result = 'Correct Meta Description'
+        self.page = LandingPage(
+            title='test', 
+            search_description = result, 
+                        header=json.dumps(
+                [
+                    {
+                        "type": "hero",
+                        "value": {
+                            "body": 'Incorrect Meta Description'
+                        },
+                    }
+                ]
+            ),)
+        test_context = self.page.get_context(self.request)
+        self.assertEqual(test_context['meta_description'], result)
+    
+    def test_get_context_sets_meta_description_from_hero(self):
+        expected = 'Correct Meta Description'
+        self.page = LandingPage(
+            title='test',             
+            header=json.dumps(
+                [
+                    {
+                        "type": "text_introduction",
+                        "value": {
+                            "body": 'Incorrect Meta Description'
+                        },
+                    },
+                    {
+                        "type": "hero",
+                        "value": {
+                            "body": expected
+                        },
+                    }
+                ]
+            ),
+            content=json.dumps(
+                [
+                    {
+                        "type": "text_introduction",
+                        "value": {
+                            "body": 'Incorrect Meta Description'
+                        }
+                    }
+                ]
+            )
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context['meta_description']
+        self.assertEqual(expected, result.source)
+
+    def test_get_context_sets_meta_description_from_header_text_introduction(self):
+        expected = 'Correct Meta Description'
+        self.page = LandingPage(
+            title='test',             
+            header=json.dumps(
+                [
+                    {
+                        "type": "text_introduction",
+                        "value": {
+                            "body": expected
+                        },
+                    },
+                    {
+                        "type": "text_introduction",
+                        "value": {
+                            "body": 'Incorrect Meta Description'
+                        },
+                    },
+                ]
+            ),
+            content=json.dumps(
+                [
+                    {
+                        "type": "text_introduction",
+                        "value": {
+                            "body": 'Incorrect Meta Description'
+                        }
+                    }
+                ]
+            )
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context['meta_description']
+        self.assertEqual(expected, result.source)
+
+    def test_get_context_sets_meta_description_from_content_text_introduction(self):
+        expected = 'Correct Meta Description'
+        self.page = SublandingPage(
+            title='test',             
+            content=json.dumps(
+                [
+                    {
+                        "type": "notification",
+                        "value": {
+                            "body": 'Incorrect Meta Description'
+                        }
+                    },
+                    {
+                        "type": "text_introduction",
+                        "value": {
+                            "body": expected
+                        }
+                    },
+                    {
+                        "type": "text_introduction",
+                        "value": {
+                            "body": 'Incorrect Meta Description'
+                        }
+                    },
+                ]
+            )
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context['meta_description']
+        self.assertEqual(expected, result.source)
+
+    def test_get_context_sets_meta_description_to_blank_if_no_other_data_to_set(self):
+        expected = ''
+        self.page = SublandingPage(
+            title='test',             
+            content=json.dumps(
+                [
+                    {
+                        "type": "notification",
+                        "value": {
+                            "body": 'Incorrect Meta Description'
+                        }
+                    }
+                ]
+            )
+        )
+        test_context = self.page.get_context(self.request)
+        result = test_context['meta_description']
+        self.assertEqual(expected, result)
 
 
 class TestCFGOVPageQuerySet(TestCase):

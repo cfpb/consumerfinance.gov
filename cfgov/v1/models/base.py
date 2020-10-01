@@ -255,14 +255,25 @@ class CFGOVPage(Page):
         if self.schema_json:
             context['schema_json'] = self.schema_json
 
+        context['meta_description'] = ''
         if self.search_description:
-            context['meta_description'] = self.search_description
+            context['meta_description'] = self.search_description            
         else:
-            context['meta_description'] = ''
-
-        #hero only in header
-        #text_introduction can be in header OR content
-        #test example base.py TestCFGOVPageContext
+            if hasattr(self, 'header'):
+                for header_item in self.header:
+                    if header_item.block_type is 'hero':
+                        context['meta_description'] = header_item.value['body']
+                        break
+                if not context['meta_description']:
+                    for header_item in self.header:
+                        if header_item.block_type is 'text_introduction':
+                            context['meta_description'] = header_item.value['body']
+                            break
+            if not context['meta_description'] and hasattr(self, 'content'):
+                for content_item in self.content:
+                    if content_item.block_type  is 'text_introduction':
+                        context['meta_description'] = content_item.value['body']
+                        break
 
         return context
 
