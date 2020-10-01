@@ -49,7 +49,7 @@ wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
 
-https://github.com/cfpb/elasticsearch-dsl-py/releases/download/7.2.1.1/elasticsearch_dsl-7.2.1.1-py2.py3-none-any.whl
+https://github.com/cfpb/elasticsearch-dsl-py/releases/download/7.2.2/elasticsearch_dsl-7.2.2-py2.py3-none-any.whl
 https://github.com/cfpb/wagtail-autocomplete/releases/download/0.7/wagtail_autocomplete-0.6-py3-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.16.0/owning_a_home_api-0.16.0-py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.15.0/retirement-0.15.0-py3-none-any.whl
