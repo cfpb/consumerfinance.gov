@@ -51,7 +51,7 @@ services:
         stdin_open: true
         tty: true
         environment:
-            # ES7_HOST: http://elasticsearch:9200
+            ES7_HOST: http://elasticsearch:9200
             ES_HOST: http://elasticsearch2
 
     docs:
