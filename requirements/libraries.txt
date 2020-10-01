@@ -11,6 +11,7 @@ cryptography==2.9.2
 dj-database-url==0.5.0
 djangorestframework==3.11.1
 django-csp==3.4
+django-elasticsearch-dsl==7.1.4
 django-extensions==2.1.3
 django-flags==4.2.4
 django-haystack==2.8.1
@@ -21,6 +22,7 @@ django-storages==1.7.1
 django-treebeard==4.2.0
 django-watchman==0.15.0
 edgegrid-python==1.0.10
+elasticsearch7==7.9.1
 elasticsearch==2.4.1
 govdelivery==1.3
 Jinja2==2.11.2
@@ -29,10 +31,10 @@ Markdown==3.2.1
 ntplib==0.3.4
 openpyxl==3.0.3
 psycopg2==2.7.3.2
-pyelasticsearch==0.6.1
 python-dateutil==2.7.3
 regdown==1.0.2
 requests==2.22.0
+requests_aws4auth==0.8.0
 requests_toolbelt==0.8.0
 sha3==0.2.1
 unipath>=1.1,<=2.0
@@ -46,6 +48,8 @@ wagtail-treemodeladmin==1.2.1
 wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
+
+https://github.com/cfpb/elasticsearch-dsl-py/releases/download/7.2.2/elasticsearch_dsl-7.2.2-py2.py3-none-any.whl
 https://github.com/cfpb/wagtail-autocomplete/releases/download/0.7/wagtail_autocomplete-0.6-py3-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.16.0/owning_a_home_api-0.16.0-py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.15.0/retirement-0.15.0-py3-none-any.whl
