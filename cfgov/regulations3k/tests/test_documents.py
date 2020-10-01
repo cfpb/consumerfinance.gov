@@ -1,7 +1,10 @@
 from unittest import TestCase
 
-from regulations3k.models import SectionParagraph, Section, Subpart, EffectiveVersion, Part
 from regulations3k.documents import SectionParagraphDocument
+from regulations3k.models import (
+    EffectiveVersion, Part, Section, SectionParagraph, Subpart
+)
+
 
 class SectionParagraphDocumentTest(TestCase):
 

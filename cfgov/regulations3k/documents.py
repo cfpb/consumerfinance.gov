@@ -3,6 +3,7 @@ from django_elasticsearch_dsl.registries import registry
 
 from regulations3k.models import SectionParagraph
 
+
 @registry.register_document
 class SectionParagraphDocument(Document):
 
