@@ -1,5 +1,6 @@
 # Based on https://github.com/django-es/django-elasticsearch-dsl/blob/master/tests/test_documents.py  # noqa
 from django.apps import apps
+from django.contrib.auth.models import User
 from django.db import models
 from django.test import TestCase
 
@@ -9,13 +10,27 @@ from django_elasticsearch_dsl import fields
 from django_elasticsearch_dsl.documents import DocType
 from django_elasticsearch_dsl.exceptions import ModelFieldNotMappedError
 from mock import patch
+from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
-from ask_cfpb.models import AnswerPage
+from ask_cfpb.models import AnswerPage, PortalSearchPage
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer
 )
+from v1.models import PortalCategory, PortalTopic, SublandingPage
 from v1.util.migrations import get_or_create_page
+
+
+def create_page(model, title, slug, parent, language="en", **kwargs):
+    new_page = model(
+        live=False, language=language, title=title, slug=slug
+    )
+    for k, v in kwargs.items():
+        setattr(new_page, k, v)
+    parent.add_child(instance=new_page)
+    new_page.save()
+    new_page.save_revision(user=User.objects.last()).publish()
+    return new_page
 
 
 class AnswerPageDocumentTest(TestCase):
@@ -96,13 +111,35 @@ class AnswerPageDocumentTest(TestCase):
 
     def test_prepare(self):
         self.site = Site.objects.get(is_default_site=True)
+        self.root_page = self.site.root_page
+        self.portal_category = baker.make(
+            PortalCategory, heading="mock_english_heading"
+        )
+        self.portal_topic = baker.make(
+            PortalTopic, heading="test topic", heading_es="prueba tema"
+        )
+        self.portal_page = SublandingPage(
+            title="test portal page",
+            slug="test-portal-page",
+            portal_topic=self.portal_topic,
+            language="en",
+        )
+        self.root_page.add_child(instance=self.portal_page)
+        self.portal_page.save()
+        self.portal_page.save_revision().publish()
+        self.english_search_page = create_page(
+            PortalSearchPage,
+            "Mock answers",
+            "answers",
+            self.portal_page,
+        )
         self.english_parent_page = get_or_create_page(
             apps,
             "ask_cfpb",
             "AnswerLandingPage",
             "Ask CFPB",
             ENGLISH_PARENT_SLUG,
-            self.site.root_page,
+            self.root_page,
             language="en",
             live=True,
         )
@@ -128,7 +165,7 @@ class AnswerPageDocumentTest(TestCase):
                 'portal_categories': doc.prepare_portal_categories(self.page),
                 'portal_topics': doc.prepare_portal_topics(self.page),
                 'search_tags': doc.prepare_search_tags(self.page),
-                'url': doc.prepare_url(self.page)
+                'url': doc.prepare_url(self.page),
             }
         )
 
