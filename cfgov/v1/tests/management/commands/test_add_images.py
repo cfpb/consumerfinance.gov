@@ -1,11 +1,11 @@
 import os
+from io import BytesIO
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, RequestFactory, TestCase
-from django.utils.six import BytesIO
 
 from PIL import Image
 
@@ -37,7 +37,7 @@ class TestAddImages(TestCase):
         self.factory = RequestFactory()
         self.request = self.factory.get('/')
         self.user = User.objects.get(pk=1)
- 
+
     def test_add_image(self):
         filename_only = os.path.split(self.filename)[-1]
         logo = create_image(None, filename_only)
