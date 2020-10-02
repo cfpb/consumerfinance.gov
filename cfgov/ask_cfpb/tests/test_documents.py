@@ -1,9 +1,10 @@
 # Based on https://github.com/django-es/django-elasticsearch-dsl/blob/master/tests/test_documents.py  # noqa
 from unittest import TestCase
 
+from django.apps import apps
 from django.db import models
 
-from wagtail.core.blocks import StreamValue
+from wagtail.core.models import Site
 
 from django_elasticsearch_dsl import fields
 from django_elasticsearch_dsl.documents import DocType
@@ -11,7 +12,11 @@ from django_elasticsearch_dsl.exceptions import ModelFieldNotMappedError
 from mock import patch
 
 from ask_cfpb.documents import AnswerPageDocument
-from ask_cfpb.models import Answer, AnswerPage
+from ask_cfpb.models import AnswerPage
+from ask_cfpb.models.django import (
+    ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer
+)
+from v1.util.migrations import get_or_create_page
 
 
 class AnswerPageDocumentTest(TestCase):
@@ -91,20 +96,32 @@ class AnswerPageDocumentTest(TestCase):
         self.assertEqual(qs.model, AnswerPage)
 
     def test_prepare(self):
-        answer = Answer(id=1234)
-        answer.save()
-        page = AnswerPage(
-            slug="mock-question-en-1234", title="Mock question"
+        self.site = Site.objects.get(is_default_site=True)
+        self.english_parent_page = get_or_create_page(
+            apps,
+            "ask_cfpb",
+            "AnswerLandingPage",
+            "Ask CFPB",
+            ENGLISH_PARENT_SLUG,
+            self.site.root_page,
+            language="en",
+            live=True,
         )
-        page.answer_base = answer
-        page.question = "Mock question"
-        page.answer_content = StreamValue(
-            page.answer_content.stream_block,
-            [{"type": "text", "value": {"content": "Mock answer"}}],
-            True,
+        self.answer = Answer(id=1234)
+        self.answer.save()
+        self.page = AnswerPage(
+            language="en",
+            slug="mock-english-question-en-1234",
+            title="Mock English question",
+            answer_base=self.answer,
+            answer_content="Mock English answer",
+            question="Mock English question",
+            search_tags="English",
         )
+        self.english_parent_page.add_child(instance=self.page)
+        self.page.save_revision().publish()
         doc = AnswerPageDocument()
-        prepared_data = doc.prepare(page)
+        prepared_data = doc.prepare(self.page)
         self.assertEqual(
             prepared_data, {
                 'autocomplete': doc.prepare_autocomplete(None),
@@ -117,20 +134,32 @@ class AnswerPageDocumentTest(TestCase):
         )
 
     def test_model_instance_update_no_refresh(self):
-        answer = Answer(id=1234)
-        answer.save()
-        page = AnswerPage(
-            slug="mock-question-en-1234", title="Mock question"
+        self.site = Site.objects.get(is_default_site=True)
+        self.spanish_parent_page = get_or_create_page(
+            apps,
+            "ask_cfpb",
+            "AnswerLandingPage",
+            "Obtener respuestas",
+            SPANISH_PARENT_SLUG,
+            self.site.root_page,
+            language="es",
+            live=True,
         )
-        page.answer_base = answer
-        page.question = "Mock question"
-        page.answer_content = StreamValue(
-            page.answer_content.stream_block,
-            [{"type": "text", "value": {"content": "Mock answer"}}],
-            True,
+        self.answer = Answer(id=1234)
+        self.answer.save()
+        self.page = AnswerPage(
+            language="es",
+            slug="mock-spanish-question-es-1234",
+            title="Mock Spanish question",
+            answer_base=self.answer,
+            answer_content="Mock Spanish answer",
+            question="Mock Spanish question",
+            search_tags="Spanish",
         )
+        self.spanish_parent_page.add_child(instance=self.page)
+        self.page.save_revision().publish()
         doc = AnswerPageDocument()
         doc.django.auto_refresh = False
         with patch('django_elasticsearch_dsl.documents.bulk') as mock:
-            doc.update(page)
+            doc.update(self.page)
             self.assertNotIn('refresh', mock.call_args_list[0][1])
