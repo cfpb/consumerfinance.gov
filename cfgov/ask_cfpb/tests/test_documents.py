@@ -123,12 +123,12 @@ class AnswerPageDocumentTest(TestCase):
         prepared_data = doc.prepare(self.page)
         self.assertEqual(
             prepared_data, {
-                'autocomplete': doc.prepare_autocomplete(None),
-                'portal_categories': doc.prepare_portal_categories(None),
-                'portal_topics': doc.prepare_portal_topics(None),
-                'url': doc.test_prepare_url(None),
-                'search_tags': doc.prepare_search_tags(None),
-                'language': 'en'
+                'autocomplete': doc.prepare_autocomplete(self.page),
+                'language': 'en',
+                'portal_categories': doc.prepare_portal_categories(self.page),
+                'portal_topics': doc.prepare_portal_topics(self.page),
+                'search_tags': doc.prepare_search_tags(self.page),
+                'url': doc.prepare_url(self.page)
             }
         )
 
