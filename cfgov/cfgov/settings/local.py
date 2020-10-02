@@ -17,7 +17,7 @@ if sys.version_info[0] < 3:
         "for how to reinstall."
     )
 
-DEBUG = False
+DEBUG = True
 SECRET_KEY = "not-secret-key-for-testing"
 
 INSTALLED_APPS += (
