@@ -1,8 +1,7 @@
 # Based on https://github.com/django-es/django-elasticsearch-dsl/blob/master/tests/test_documents.py  # noqa
-from unittest import TestCase
-
 from django.apps import apps
 from django.db import models
+from django.test import TestCase
 
 from wagtail.core.models import Site
 
