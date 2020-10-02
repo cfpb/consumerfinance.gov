@@ -77,7 +77,9 @@ class AnswerPageDocumentTest(TestCase):
                     'portal_topics': {'type': 'keyword'},
                     'preview': {'type': 'text'},
                     'search_tags': {'type': 'text'},
-                    'text': {'analyzer': 'synonym_analyzer_en', 'type': 'text'},
+                    'text': {
+                        'analyzer': 'synonym_analyzer_en', 'type': 'text'
+                    },
                     'url': {'type': 'text'}
                 }
             }
