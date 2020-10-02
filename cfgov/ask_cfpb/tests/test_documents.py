@@ -42,7 +42,7 @@ class AnswerPageDocumentTest(TestCase):
         self.assertFalse(AnswerPageDocument.django.ignore_signals)
 
     def test_auto_refresh_default(self):
-        self.assertTrue(AnswerPageDocument.django.auto_refresh)
+        self.assertFalse(AnswerPageDocument.django.auto_refresh)
 
     def test_fields_populated(self):
         mapping = AnswerPageDocument._doc_type.mapping
@@ -163,7 +163,7 @@ class AnswerPageDocumentTest(TestCase):
                 'autocomplete': doc.prepare_autocomplete(self.page),
                 'language': 'en',
                 'portal_categories': doc.prepare_portal_categories(self.page),
-                'portal_topics': doc.prepare_portal_topics(self.page),
+                'portal_topics': doc.prepare_portal_topics(self.portal_page),
                 'search_tags': doc.prepare_search_tags(self.page),
                 'url': doc.prepare_url(self.page),
             }
