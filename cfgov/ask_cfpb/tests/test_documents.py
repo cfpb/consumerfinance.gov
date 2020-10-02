@@ -6,7 +6,7 @@ from django.db import models
 from wagtail.core.blocks import StreamValue
 
 from django_elasticsearch_dsl import fields
-from django_elasticsearch_dsl.documemts import DocType
+from django_elasticsearch_dsl.documents import DocType
 from django_elasticsearch_dsl.exceptions import ModelFieldNotMappedError
 from mock import patch
 
