@@ -3,7 +3,7 @@
 
 {% block actions %}
     {% if view.list_export %}
-        <div class="button match-width">
+        <div class="actionbutton">
             <a href="{{ view.csv_export_url }}" class="button bicolor button--icon">{% icon name="download" wrapped=1 %}{% trans 'Download CSV' %}</a>
         </div>
     {% endif %}
