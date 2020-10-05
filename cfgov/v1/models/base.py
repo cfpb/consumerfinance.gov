@@ -33,6 +33,8 @@ from v1.models.snippets import ReusableText
 from v1.util import ref
 from v1.util.util import validate_social_sharing_image
 
+import re
+
 
 class CFGOVAuthoredPages(TaggedItemBase):
     content_object = ParentalKey('CFGOVPage')
@@ -235,6 +237,16 @@ class CFGOVPage(Page):
     def get_appropriate_siblings(self, inclusive=True):
         return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
+    def remove_html_tags(self, text):
+        clean = re.compile('<.*?>')
+        return re.sub(clean, ' ', text)
+
+    def get_streamfield_content(self, section, blockType, value):
+        for item in section:
+            if item.block_type  is blockType:
+                return self.remove_html_tags(item.value[value].source)
+        return
+
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
 
@@ -253,27 +265,24 @@ class CFGOVPage(Page):
             .filter(path__regex=F('url_pattern'))
 
         if self.schema_json:
-            context['schema_json'] = self.schema_json
+            context['schema_json'] = self.schema_json  
 
         context['meta_description'] = ''
         if self.search_description:
             context['meta_description'] = self.search_description            
-        else:
-            if hasattr(self, 'header'):
-                for header_item in self.header:
-                    if header_item.block_type is 'hero':
-                        context['meta_description'] = header_item.value['body']
-                        break
-                if not context['meta_description']:
-                    for header_item in self.header:
-                        if header_item.block_type is 'text_introduction':
-                            context['meta_description'] = header_item.value['body']
-                            break
-            if not context['meta_description'] and hasattr(self, 'content'):
-                for content_item in self.content:
-                    if content_item.block_type  is 'text_introduction':
-                        context['meta_description'] = content_item.value['body']
-                        break
+        if hasattr(self, 'header') and not context['meta_description']:
+            context['meta_description'] = self.get_streamfield_content(self.header, 'hero', 'body')
+        if hasattr(self, 'preview_description') and not context['meta_description']:
+            context['meta_description'] = self.preview_description
+        if hasattr(self, 'header') and not context['meta_description']:
+            context['meta_description'] = self.get_streamfield_content(self.header, 'text_introduction', 'intro')
+        if hasattr(self, 'content') and not context['meta_description']:
+            context['meta_description'] = self.get_streamfield_content(self.content, 'text_introduction', 'intro')
+        if hasattr(self, 'header') and not context['meta_description']:
+            print(self.header)
+            context['meta_description'] = self.get_streamfield_content(self.header, 'text_introduction', 'body')
+        if not context['meta_description']:
+            context['meta_description'] = ''
 
         return context
 
