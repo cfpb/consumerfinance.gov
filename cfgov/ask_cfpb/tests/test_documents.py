@@ -127,13 +127,13 @@ class AnswerPageDocumentTest(TestCase):
         self.root_page.add_child(instance=self.portal_page)
         self.portal_page.save()
         self.portal_page.save_revision().publish()
-        self.english_search_page = create_page(
+        self.en_search_page = create_page(
             PortalSearchPage,
             "Mock answers",
             "answers",
             self.portal_page,
         )
-        self.english_parent_page = get_or_create_page(
+        self.en_parent_page = get_or_create_page(
             apps,
             "ask_cfpb",
             "AnswerLandingPage",
@@ -154,7 +154,7 @@ class AnswerPageDocumentTest(TestCase):
             question="Mock English question",
             search_tags="English",
         )
-        self.english_parent_page.add_child(instance=self.page)
+        self.en_parent_page.add_child(instance=self.page)
         self.page.save_revision().publish()
         doc = AnswerPageDocument()
         prepared_data = doc.prepare(self.page)
@@ -163,15 +163,17 @@ class AnswerPageDocumentTest(TestCase):
                 'autocomplete': doc.prepare_autocomplete(self.page),
                 'language': 'en',
                 'portal_categories': doc.prepare_portal_categories(self.page),
-                'portal_topics': doc.prepare_portal_topics(self.portal_page),
+                'portal_topics': doc.prepare_portal_topics(self.page),
+                'preview': '',
                 'search_tags': doc.prepare_search_tags(self.page),
+                'text': '\n\n \n\nMock English question',
                 'url': doc.prepare_url(self.page),
             }
         )
 
     def test_model_instance_update_no_refresh(self):
         self.site = Site.objects.get(is_default_site=True)
-        self.spanish_parent_page = get_or_create_page(
+        self.es_parent_page = get_or_create_page(
             apps,
             "ask_cfpb",
             "AnswerLandingPage",
@@ -192,7 +194,7 @@ class AnswerPageDocumentTest(TestCase):
             question="Mock Spanish question",
             search_tags="Spanish",
         )
-        self.spanish_parent_page.add_child(instance=self.page)
+        self.es_parent_page.add_child(instance=self.page)
         self.page.save_revision().publish()
         doc = AnswerPageDocument()
         doc.django.auto_refresh = False
