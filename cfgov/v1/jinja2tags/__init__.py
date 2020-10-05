@@ -38,7 +38,7 @@ def image_alt_value(image):
         return image.alt
 
     # Otherwise, if it is a block
-    if image:
+    if image and hasattr(image, 'get'):
         block_alt = image.get('alt')
         upload = image.get('upload')
 
