@@ -309,13 +309,13 @@ class TestCFGOVPageContext(TestCase):
         }
         test_context = self.page.get_context(self.request)
         self.assertIn('schema_json', test_context)
-    
+
     def test_get_context_sets_meta_description_from_search_description(self):
         result = 'Correct Meta Description'
         self.page = LandingPage(
-            title='test', 
-            search_description = result, 
-                        header=json.dumps(
+            title='test',
+            search_description=result,
+            header=json.dumps(
                 [
                     {
                         "type": "hero",
@@ -327,11 +327,11 @@ class TestCFGOVPageContext(TestCase):
             ),)
         test_context = self.page.get_context(self.request)
         self.assertEqual(test_context['meta_description'], result)
-    
+
     def test_get_context_sets_meta_description_from_hero(self):
         expected = 'Correct Meta Description'
         self.page = LandingPage(
-            title='test',             
+            title='test',
             header=json.dumps(
                 [
                     {
@@ -383,10 +383,10 @@ class TestCFGOVPageContext(TestCase):
         result = test_context['meta_description']
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_from_header_text_introduction_intro(self):
+    def test_get_context_sets_meta_description_from_header_text_introduction_intro(self):  # noqa
         expected = 'Correct Meta Description'
         self.page = LandingPage(
-            title='test',             
+            title='test',
             header=json.dumps(
                 [
                     {
@@ -418,7 +418,7 @@ class TestCFGOVPageContext(TestCase):
         result = test_context['meta_description']
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_from_content_text_introduction_intro(self):
+    def test_get_context_sets_meta_description_from_content_text_introduction_intro(self):  # noqa
         expected = 'Correct Meta Description'
         self.page = SublandingPage(
             title='test',
@@ -431,7 +431,7 @@ class TestCFGOVPageContext(TestCase):
                         }
                     },
                 ]
-            ),            
+            ),
             content=json.dumps(
                 [
                     {
@@ -447,7 +447,7 @@ class TestCFGOVPageContext(TestCase):
         result = test_context['meta_description']
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_from_header_item_introduction_paragraph(self):
+    def test_get_context_sets_meta_description_from_header_item_introduction_paragraph(self):  # noqa
         expected = 'Correct Meta Description'
         self.page = AbstractFilterPage(
             title='test',
@@ -466,10 +466,10 @@ class TestCFGOVPageContext(TestCase):
         result = test_context['meta_description']
         self.assertEqual(expected, result)
 
-    def test_get_context_sets_meta_description_to_blank_if_no_other_data_to_set(self):
+    def test_get_context_sets_meta_description_to_blank_if_no_other_data_to_set(self):  # noqa
         expected = ''
         self.page = SublandingPage(
-            title='test',             
+            title='test',
             content=json.dumps(
                 [
                     {
@@ -488,7 +488,7 @@ class TestCFGOVPageContext(TestCase):
     def test_get_context_sets_meta_description_strips_html_tags(self):
         expected = 'Correct Meta Description'
         self.page = SublandingPage(
-            title='test',             
+            title='test',
             header=json.dumps(
                 [
                     {
