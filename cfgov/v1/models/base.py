@@ -280,7 +280,7 @@ class CFGOVPage(Page):
             context['meta_description'] = self.get_streamfield_content(self.content, 'text_introduction', 'intro')
         if hasattr(self, 'header') and not context['meta_description']:
             print(self.header)
-            context['meta_description'] = self.get_streamfield_content(self.header, 'text_introduction', 'body')
+            context['meta_description'] = self.get_streamfield_content(self.header, 'item_introduction', 'paragraph')
         if not context['meta_description']:
             context['meta_description'] = ''
 
