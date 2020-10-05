@@ -35,6 +35,81 @@ def create_page(model, title, slug, parent, language="en", **kwargs):
 
 class AnswerPageDocumentTest(TestCase):
 
+    def setUp(self):
+        self.site = Site.objects.get(is_default_site=True)
+        self.root_page = self.site.root_page
+        self.portal_topic = baker.make(
+            PortalTopic, heading="test topic", heading_es="prueba tema"
+        )
+        self.en_portal_category = baker.make(
+            PortalCategory, heading="mock_english_heading"
+        )
+        self.es_portal_category = baker.make(
+            PortalCategory, heading="mock_spanish_heading"
+        )
+        self.en_portal_page = SublandingPage(
+            title="test English portal page",
+            slug="test-en-portal-page",
+            portal_topic=self.portal_topic,
+            language="en",
+        )
+        self.es_portal_page = SublandingPage(
+            title="test Spanish portal page",
+            slug="test-es-portal-page",
+            portal_topic=self.portal_topic,
+            language="es",
+        )
+        self.root_page.add_child(instance=self.en_portal_page)
+        self.en_portal_page.save()
+        self.en_portal_page.save_revision().publish()
+        self.en_search_page = create_page(
+            PortalSearchPage,
+            "Mock answers",
+            "answers",
+            self.en_portal_page,
+        )
+        self.en_parent_page = get_or_create_page(
+            apps,
+            "ask_cfpb",
+            "AnswerLandingPage",
+            "Ask CFPB",
+            ENGLISH_PARENT_SLUG,
+            self.root_page,
+            language="en",
+            live=True,
+        )
+        self.es_parent_page = get_or_create_page(
+            apps,
+            "ask_cfpb",
+            "AnswerLandingPage",
+            "Obtener respuestas",
+            SPANISH_PARENT_SLUG,
+            self.root_page,
+            language="es",
+            live=True,
+        )
+        self.answer = Answer(id=1234)
+        self.answer.save()
+        self.en_page = AnswerPage(
+            language="en",
+            slug="mock-english-question-en-1234",
+            title="Mock English question",
+            answer_base=self.answer,
+            answer_content="Mock English answer",
+            question="Mock English question",
+            search_tags="English",
+        )
+        self.es_page = AnswerPage(
+            language="es",
+            slug="mock-spanish-question-es-1234",
+            title="Mock Spanish question",
+            answer_base=self.answer,
+            answer_content="Mock Spanish answer",
+            question="Mock Spanish question",
+            search_tags="Spanish",
+        )
+        self.doc = AnswerPageDocument()
+
     def test_model_class_added(self):
         self.assertEqual(AnswerPageDocument.django.model, AnswerPage)
 
@@ -109,95 +184,48 @@ class AnswerPageDocumentTest(TestCase):
         self.assertIsInstance(qs, models.QuerySet)
         self.assertEqual(qs.model, AnswerPage)
 
-    def test_prepare(self):
-        self.site = Site.objects.get(is_default_site=True)
-        self.root_page = self.site.root_page
-        self.portal_category = baker.make(
-            PortalCategory, heading="mock_english_heading"
-        )
-        self.portal_topic = baker.make(
-            PortalTopic, heading="test topic", heading_es="prueba tema"
-        )
-        self.portal_page = SublandingPage(
-            title="test portal page",
-            slug="test-portal-page",
-            portal_topic=self.portal_topic,
-            language="en",
-        )
-        self.root_page.add_child(instance=self.portal_page)
-        self.portal_page.save()
-        self.portal_page.save_revision().publish()
-        self.en_search_page = create_page(
-            PortalSearchPage,
-            "Mock answers",
-            "answers",
-            self.portal_page,
-        )
-        self.en_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Ask CFPB",
-            ENGLISH_PARENT_SLUG,
-            self.root_page,
-            language="en",
-            live=True,
-        )
-        self.answer = Answer(id=1234)
-        self.answer.save()
-        self.page = AnswerPage(
-            language="en",
-            slug="mock-english-question-en-1234",
-            title="Mock English question",
-            answer_base=self.answer,
-            answer_content="Mock English answer",
-            question="Mock English question",
-            search_tags="English",
-        )
-        self.en_parent_page.add_child(instance=self.page)
-        self.page.save_revision().publish()
-        doc = AnswerPageDocument()
-        prepared_data = doc.prepare(self.page)
+    def test_prepare_en(self):
+        self.en_parent_page.add_child(instance=self.en_page)
+        self.en_page.save_revision().publish()
+        en_prepared_data = self.doc.prepare(self.en_page)
         self.assertEqual(
-            prepared_data, {
-                'autocomplete': doc.prepare_autocomplete(self.page),
+            en_prepared_data, {
+                'autocomplete': self.doc.prepare_autocomplete(self.en_page),
                 'language': 'en',
-                'portal_categories': doc.prepare_portal_categories(self.page),
-                'portal_topics': doc.prepare_portal_topics(self.page),
+                'portal_categories': self.doc.prepare_portal_categories(
+                    self.en_page
+                ),
+                'portal_topics': self.doc.prepare_portal_topics(self.en_page),
                 'preview': '',
-                'search_tags': doc.prepare_search_tags(self.page),
+                'search_tags': self.doc.prepare_search_tags(self.en_page),
                 'text': '\n\n \n\nMock English question',
-                'url': doc.prepare_url(self.page),
+                'url': self.doc.prepare_url(self.en_page),
+            }
+        )
+
+    def test_prepare_es(self):
+        self.es_parent_page.add_child(instance=self.es_page)
+        self.es_page.save_revision().publish()
+        es_prepared_data = self.doc.prepare(self.es_page)
+        self.assertEqual(
+            es_prepared_data, {
+                'autocomplete': self.doc.prepare_autocomplete(self.es_page),
+                'language': 'es',
+                'portal_categories': self.doc.prepare_portal_categories(
+                    self.es_page
+                ),
+                'portal_topics': self.doc.prepare_portal_topics(self.es_page),
+                'preview': '',
+                'search_tags': self.doc.prepare_search_tags(self.es_page),
+                'text': '\n\n \n\nMock Spanish question',
+                'url': self.doc.prepare_url(self.es_page),
             }
         )
 
     def test_model_instance_update_no_refresh(self):
-        self.site = Site.objects.get(is_default_site=True)
-        self.es_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Obtener respuestas",
-            SPANISH_PARENT_SLUG,
-            self.site.root_page,
-            language="es",
-            live=True,
-        )
-        self.answer = Answer(id=1234)
-        self.answer.save()
-        self.page = AnswerPage(
-            language="es",
-            slug="mock-spanish-question-es-1234",
-            title="Mock Spanish question",
-            answer_base=self.answer,
-            answer_content="Mock Spanish answer",
-            question="Mock Spanish question",
-            search_tags="Spanish",
-        )
-        self.es_parent_page.add_child(instance=self.page)
-        self.page.save_revision().publish()
-        doc = AnswerPageDocument()
-        doc.django.auto_refresh = False
+        self.es_parent_page.add_child(instance=self.es_page)
+        self.es_page.save_revision().publish()
+        self.doc.django.auto_refresh = False
         with patch('django_elasticsearch_dsl.documents.bulk') as mock:
-            doc.update(self.page)
+            self.doc.update(self.es_page)
             self.assertNotIn('refresh', mock.call_args_list[0][1])
