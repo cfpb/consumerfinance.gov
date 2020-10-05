@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -32,8 +34,6 @@ from v1.models.banners import Banner
 from v1.models.snippets import ReusableText
 from v1.util import ref
 from v1.util.util import validate_social_sharing_image
-
-import re
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -243,7 +243,7 @@ class CFGOVPage(Page):
 
     def get_streamfield_content(self, section, blockType, value):
         for item in section:
-            if item.block_type  is blockType:
+            if item.block_type is blockType:
                 return self.remove_html_tags(item.value[value].source)
         return
 
@@ -265,22 +265,36 @@ class CFGOVPage(Page):
             .filter(path__regex=F('url_pattern'))
 
         if self.schema_json:
-            context['schema_json'] = self.schema_json  
+            context['schema_json'] = self.schema_json
 
         context['meta_description'] = ''
         if self.search_description:
-            context['meta_description'] = self.search_description            
+            context['meta_description'] = self.search_description
         if hasattr(self, 'header') and not context['meta_description']:
-            context['meta_description'] = self.get_streamfield_content(self.header, 'hero', 'body')
-        if hasattr(self, 'preview_description') and not context['meta_description']:
+            context['meta_description'] = self.get_streamfield_content(
+                self.header,
+                'hero',
+                'body')
+        if (
+            hasattr(self, 'preview_description')
+            and not context['meta_description']
+        ):
             context['meta_description'] = self.preview_description
         if hasattr(self, 'header') and not context['meta_description']:
-            context['meta_description'] = self.get_streamfield_content(self.header, 'text_introduction', 'intro')
+            context['meta_description'] = self.get_streamfield_content(
+                self.header,
+                'text_introduction',
+                'intro')
         if hasattr(self, 'content') and not context['meta_description']:
-            context['meta_description'] = self.get_streamfield_content(self.content, 'text_introduction', 'intro')
+            context['meta_description'] = self.get_streamfield_content(
+                self.content,
+                'text_introduction',
+                'intro')
         if hasattr(self, 'header') and not context['meta_description']:
-            print(self.header)
-            context['meta_description'] = self.get_streamfield_content(self.header, 'item_introduction', 'paragraph')
+            context['meta_description'] = self.get_streamfield_content(
+                self.header,
+                'item_introduction',
+                'paragraph')
         if not context['meta_description']:
             context['meta_description'] = ''
 

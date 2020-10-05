@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponseBadRequest
@@ -8,9 +10,10 @@ from wagtail.core import blocks
 from wagtail.core.models import Site
 
 import mock
-import json
 
-from v1.models import BrowsePage, CFGOVPage, LandingPage, SublandingPage, AbstractFilterPage
+from v1.models import (
+    AbstractFilterPage, BrowsePage, CFGOVPage, LandingPage, SublandingPage
+)
 from v1.models.banners import Banner
 from v1.tests.wagtail_pages.helpers import save_new_page
 
