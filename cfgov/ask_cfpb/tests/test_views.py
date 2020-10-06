@@ -244,7 +244,7 @@ class AnswerViewTestCase(TestCase):
         response = self.client.get(reverse("ask-search-en"), {"q": "payday"})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["page"], mock_page)
-        self.assertEqual(mock_search.call_count, 1)
+        self.assertEqual(mock_search.call_count, 3)
         self.assertTrue(
             mock_search.called_with(language="en", search_term="payday")
         )

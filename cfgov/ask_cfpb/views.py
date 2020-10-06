@@ -150,19 +150,21 @@ def ask_search_es7(request, language='en', as_json=False):
         results_page.result_query = ''
         return results_page.serve(request)
 
-    search_obj = AnswerPageSearch(search_term, language=language)
-    response = search_obj.search()
+    page = AnswerPageSearch(search_term, language=language)
+    if suggest:
+        suggestion = page.suggest().get('suggestion')
+
+    response = page.search()
     if not response.get('results') and suggest:
-        response = search_obj.suggest()
-        search_suggestion = response.get('suggestion')
+        suggestion = page.suggest().get('suggestion')
     else:
-        search_suggestion = search_term
+        suggestion = search_term
 
     if as_json:
         payload = {
             'query': search_term,
             'result_query': make_safe(search_term).strip(),
-            'suggestion': search_suggestion,
+            'suggestion': make_safe(suggestion).strip(),
             'results': [
                 {
                     'question': result.autocomplete,
