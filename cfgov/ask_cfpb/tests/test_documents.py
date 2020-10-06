@@ -1,6 +1,5 @@
 # Based on https://github.com/django-es/django-elasticsearch-dsl/blob/master/tests/test_documents.py  # noqa
 from django.apps import apps
-from django.contrib.auth.models import User
 from django.db import models
 from django.test import TestCase
 
@@ -13,24 +12,12 @@ from mock import patch
 from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
-from ask_cfpb.models import AnswerPage, PortalSearchPage
+from ask_cfpb.models import AnswerPage
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer
 )
 from v1.models import PortalCategory, PortalTopic, SublandingPage
 from v1.util.migrations import get_or_create_page
-
-
-def create_page(model, title, slug, parent, language="en", **kwargs):
-    new_page = model(
-        live=False, language=language, title=title, slug=slug
-    )
-    for k, v in kwargs.items():
-        setattr(new_page, k, v)
-    parent.add_child(instance=new_page)
-    new_page.save()
-    new_page.save_revision(user=User.objects.last()).publish()
-    return new_page
 
 
 class AnswerPageDocumentTest(TestCase):
@@ -42,10 +29,10 @@ class AnswerPageDocumentTest(TestCase):
             PortalTopic, heading="test topic", heading_es="prueba tema"
         )
         self.en_portal_category = baker.make(
-            PortalCategory, heading="mock_english_heading"
+            PortalCategory, heading="test_english_heading"
         )
         self.es_portal_category = baker.make(
-            PortalCategory, heading="mock_spanish_heading"
+            PortalCategory, heading="test_spanish_heading"
         )
         self.en_portal_page = SublandingPage(
             title="test English portal page",
@@ -62,12 +49,6 @@ class AnswerPageDocumentTest(TestCase):
         self.root_page.add_child(instance=self.en_portal_page)
         self.en_portal_page.save()
         self.en_portal_page.save_revision().publish()
-        self.en_search_page = create_page(
-            PortalSearchPage,
-            "Mock answers",
-            "answers",
-            self.en_portal_page,
-        )
         self.en_parent_page = get_or_create_page(
             apps,
             "ask_cfpb",
@@ -92,20 +73,20 @@ class AnswerPageDocumentTest(TestCase):
         self.answer.save()
         self.en_page = AnswerPage(
             language="en",
-            slug="mock-english-question-en-1234",
-            title="Mock English question",
+            slug="test-english-question-en-1234",
+            title="Test English question",
             answer_base=self.answer,
-            answer_content="Mock English answer",
-            question="Mock English question",
+            answer_content="Test English answer",
+            question="Test English question",
             search_tags="English",
         )
         self.es_page = AnswerPage(
             language="es",
-            slug="mock-spanish-question-es-1234",
-            title="Mock Spanish question",
+            slug="test-spanish-question-es-1234",
+            title="Test Spanish question",
             answer_base=self.answer,
-            answer_content="Mock Spanish answer",
-            question="Mock Spanish question",
+            answer_content="Test Spanish answer",
+            question="Test Spanish question",
             search_tags="Spanish",
         )
         self.doc = AnswerPageDocument()
@@ -198,7 +179,7 @@ class AnswerPageDocumentTest(TestCase):
                 'portal_topics': self.doc.prepare_portal_topics(self.en_page),
                 'preview': '',
                 'search_tags': self.doc.prepare_search_tags(self.en_page),
-                'text': '\n\n \n\nMock English question',
+                'text': '\n\n \n\nTest English question',
                 'url': self.doc.prepare_url(self.en_page),
             }
         )
@@ -217,7 +198,7 @@ class AnswerPageDocumentTest(TestCase):
                 'portal_topics': self.doc.prepare_portal_topics(self.es_page),
                 'preview': '',
                 'search_tags': self.doc.prepare_search_tags(self.es_page),
-                'text': '\n\n \n\nMock Spanish question',
+                'text': '\n\n \n\nTest Spanish question',
                 'url': self.doc.prepare_url(self.es_page),
             }
         )
