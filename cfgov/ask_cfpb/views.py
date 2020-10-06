@@ -155,9 +155,7 @@ def ask_search_es7(request, language='en', as_json=False):
         suggestion = page.suggest().get('suggestion')
 
     response = page.search()
-    if not response.get('results') and suggest:
-        suggestion = page.suggest().get('suggestion')
-    else:
+    if response.get('results'):
         suggestion = search_term
 
     if as_json:
