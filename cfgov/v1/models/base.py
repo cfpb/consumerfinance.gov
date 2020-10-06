@@ -247,6 +247,33 @@ class CFGOVPage(Page):
                 return self.remove_html_tags(item.value[value].source)
         return
 
+    def get_meta_description(self):
+        """Deliver a meta_description, following a preference order."""
+        preference_order = [
+            'header_hero_body',
+            'preview_description',
+            'header_text_intro',
+            'content_text_intro',
+            'header_item_intro',
+        ]
+        candidates = {}
+        if hasattr(self, 'header'):
+            candidates['header_hero_body'] = self.get_streamfield_content(
+                self.header, 'hero', 'body')
+            candidates['header_text_intro'] = self.get_streamfield_content(
+                self.header, 'text_introduction', 'intro')
+            candidates['header_item_intro'] = self.get_streamfield_content(
+                self.header, 'item_introduction', 'paragraph')
+        if self.preview_description:
+            candidates['preview_description'] = self.preview_description
+        if hasattr(self, 'content'):
+            candidates['content_text_intro'] = self.get_streamfield_content(
+                self.content, 'text_introduction', 'intro')
+        for entry in preference_order:
+            if candidates.get(entry):
+                return candidates[entry]
+        return ''
+
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
 
@@ -267,37 +294,10 @@ class CFGOVPage(Page):
         if self.schema_json:
             context['schema_json'] = self.schema_json
 
-        context['meta_description'] = ''
         if self.search_description:
             context['meta_description'] = self.search_description
-        if hasattr(self, 'header') and not context['meta_description']:
-            context['meta_description'] = self.get_streamfield_content(
-                self.header,
-                'hero',
-                'body')
-        if (
-            hasattr(self, 'preview_description')
-            and not context['meta_description']
-        ):
-            context['meta_description'] = self.preview_description
-        if hasattr(self, 'header') and not context['meta_description']:
-            context['meta_description'] = self.get_streamfield_content(
-                self.header,
-                'text_introduction',
-                'intro')
-        if hasattr(self, 'content') and not context['meta_description']:
-            context['meta_description'] = self.get_streamfield_content(
-                self.content,
-                'text_introduction',
-                'intro')
-        if hasattr(self, 'header') and not context['meta_description']:
-            context['meta_description'] = self.get_streamfield_content(
-                self.header,
-                'item_introduction',
-                'paragraph')
-        if not context['meta_description']:
-            context['meta_description'] = ''
-
+        else:
+            context['meta_description'] = self.get_meta_description()
         return context
 
     def serve(self, request, *args, **kwargs):
