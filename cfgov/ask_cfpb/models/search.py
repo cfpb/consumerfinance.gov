@@ -45,20 +45,20 @@ class AnswerPageSearch:
             'text_suggestion', self.search_term, term={'field': 'text'})
         response = s.execute()
         try:
-            suggest_term = response.suggest.text_suggestion[0].options[0].text
+            suggestion = response.suggest.text_suggestion[0].options[0].text
         except IndexError:
-            suggest_term = self.search_term
+            suggestion = self.search_term
 
-        if suggest_term != self.search_term:
+        if suggestion != self.search_term:
             search = self.base_query or AnswerPageDocument.search()
             suggest_results = search.query(
-                "match", text=suggest_term).filter(
+                "match", text=suggestion).filter(
                 "term", language=self.language)
             total = suggest_results.count()
             suggest_results = suggest_results[0:total]
             self.results = suggest_results.execute()[0:total]
             return {
-                'search_term': suggest_term,
+                'search_term': suggestion,
                 'suggestion': self.search_term,
                 'results': self.results
             }
