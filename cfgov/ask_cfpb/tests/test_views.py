@@ -226,8 +226,6 @@ class AnswerViewTestCase(TestCase):
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_en_search_es7(self, mock_search):
-        from v1.util.migrations import get_or_create_page
-
         mock_page = get_or_create_page(
             apps,
             "ask_cfpb",
@@ -251,8 +249,6 @@ class AnswerViewTestCase(TestCase):
 
     @mock.patch("ask_cfpb.views.AskSearch")
     def test_en_search(self, mock_ask_search):
-        from v1.util.migrations import get_or_create_page
-
         mock_page = get_or_create_page(
             apps,
             "ask_cfpb",
@@ -277,8 +273,6 @@ class AnswerViewTestCase(TestCase):
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_en_search_es7_no_term(self, mock_search):
-        from v1.util.migrations import get_or_create_page
-
         mock_page = get_or_create_page(
             apps,
             "ask_cfpb",
@@ -298,8 +292,6 @@ class AnswerViewTestCase(TestCase):
 
     @mock.patch("ask_cfpb.views.AskSearch")
     def test_en_search_no_term(self, mock_ask_search):
-        from v1.util.migrations import get_or_create_page
-
         mock_page = get_or_create_page(
             apps,
             "ask_cfpb",
@@ -320,8 +312,6 @@ class AnswerViewTestCase(TestCase):
     @override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
     @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
     def test_en_search_suggestion_es7(self, mock_search):
-        from v1.util.migrations import get_or_create_page
-
         mock_page = get_or_create_page(
             apps,
             "ask_cfpb",
@@ -347,8 +337,6 @@ class AnswerViewTestCase(TestCase):
     @mock.patch("ask_cfpb.models.search.SearchQuerySet.spelling_suggestion")
     @mock.patch("ask_cfpb.models.search.SearchQuerySet.filter")
     def test_en_search_suggestion(self, mock_filter, mock_suggestion):
-        from v1.util.migrations import get_or_create_page
-
         mock_page = get_or_create_page(
             apps,
             "ask_cfpb",
