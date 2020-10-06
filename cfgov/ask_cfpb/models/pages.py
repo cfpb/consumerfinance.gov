@@ -28,8 +28,7 @@ from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models.answer_page import (
     AnswerPage, extract_raw_text, truncate_preview
 )
-from ask_cfpb.models.search import AskSearch
-from search.documents import AnswerPageSearch
+from ask_cfpb.models.search import AnswerPageSearch, AskSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (

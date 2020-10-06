@@ -1,6 +1,3 @@
-from ask_cfpb.documents import AnswerPageDocument
-
-
 UNSAFE_CHARACTERS = [
     '#', '%', ';', '^', '~', '`', '|',
     '<', '>', '[', ']', '{', '}', '\\'
@@ -13,9 +10,7 @@ def make_safe(term):
     return term
 
 
-# TODO: Make this class not dependent on Ask CFPB,
-#       and able to search any Document
-class AnswerPageSearch:
+class DocumentPageSearch:
     def __init__(self, search_term, language='en', base_query=None,
                  document_class=None):
         self.language = language
@@ -24,7 +19,7 @@ class AnswerPageSearch:
         self.document_class = document_class
 
     def autocomplete(self):
-        s = AnswerPageDocument.search().query(
+        s = self.document_class.search().query(
             'match', autocomplete=self.search_term)
         results = [
             {'question': result.autocomplete, 'url': result.url}
@@ -34,7 +29,7 @@ class AnswerPageSearch:
 
     def search(self):
         if not self.base_query:
-            search = AnswerPageDocument.search().filter(
+            search = self.document_class.search().filter(
                 "term", language=self.language)
         else:
             search = self.base_query.filter("term", language=self.language)
@@ -51,7 +46,7 @@ class AnswerPageSearch:
         }
 
     def suggest(self):
-        s = AnswerPageDocument.search().suggest(
+        s = self.document_class.search().suggest(
             'text_suggestion', self.search_term, term={'field': 'text'})
         response = s.execute()
         try:
@@ -61,7 +56,7 @@ class AnswerPageSearch:
 
         if suggest_term != self.search_term:
             if not self.base_query:
-                search = AnswerPageDocument.search()
+                search = self.document_class.search()
             else:
                 search = self.base_query
             suggested_results = search.query(
