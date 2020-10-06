@@ -13,6 +13,7 @@ class SectionParagraphDocument(Document):
     date = fields.DateField()
     section_order = fields.TextField()
     section_label = fields.TextField()
+    short_name = fields.TextField()
 
     def prepare_date(self, instance):
         return instance.section.subpart.version.effective_date
@@ -25,6 +26,9 @@ class SectionParagraphDocument(Document):
 
     def prepare_section_order(self, instance):
         return instance.section.sortable_label
+
+    def prepare_short_name(self, instance):
+        return instance.section.subpart.version.part.short_name
 
     def prepare_title(self, instance):
         return instance.section.title
