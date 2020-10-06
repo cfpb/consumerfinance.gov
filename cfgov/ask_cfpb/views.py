@@ -205,7 +205,7 @@ def ask_autocomplete(request, language='en'):
 
 
 def ask_autocomplete_es7(request, language='en'):
-    term = request.GET.get("term", "")
+    term = request.GET.get('term', '')
     safe_term = make_safe(term)
     if not safe_term:
         return JsonResponse([], safe=False)
