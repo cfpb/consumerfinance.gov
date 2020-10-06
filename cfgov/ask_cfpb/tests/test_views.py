@@ -34,6 +34,7 @@ class MockSearchResult:
         self.preview = "Mock preview ..."
 
 
+@override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
 def mock_es7_queryset(count=0):
     class MockSearchQuerySet(AnswerPageDocument):
         def __iter__(self):
@@ -235,7 +236,6 @@ class AnswerViewTestCase(TestCase):
             self.ROOT_PAGE,
             language="en",
         )
-
         mock_search.queryset = mock_es7_queryset(count=3)
         mock_search.suggestion = None
         mock_search.search_term = "payday"
@@ -258,7 +258,6 @@ class AnswerViewTestCase(TestCase):
             self.ROOT_PAGE,
             language="en",
         )
-
         mock_ask_search.queryset = mock_queryset(count=3)
         mock_ask_search.suggestion = None
         mock_ask_search.search_term = "payday"
@@ -282,7 +281,6 @@ class AnswerViewTestCase(TestCase):
             self.ROOT_PAGE,
             language="en",
         )
-
         mock_search.queryset = mock_es7_queryset()
         response = self.client.get(reverse("ask-search-en"), {"q": ""})
         self.assertEqual(response.status_code, 200)
@@ -322,7 +320,6 @@ class AnswerViewTestCase(TestCase):
             language="en",
             live=True,
         )
-
         # AskSearch.suggest flips search_term and suggestion when called
         mock_search.queryset = mock_es7_queryset(count=0)
         mock_search.suggestion = "payday"
@@ -347,7 +344,6 @@ class AnswerViewTestCase(TestCase):
             language="en",
             live=True,
         )
-
         # AskSearch.sugggest flips search_term and suggestion when called
         mock_filter.return_value = mock_queryset(count=0)
         mock_suggestion.return_value = "payday"
