@@ -367,7 +367,7 @@ class TestCFGOVPageContext(TestCase):
         expected = 'Correct Meta Description'
         self.page = AbstractFilterPage(
             title='test',
-            preview_description=expected,
+            preview_description="<p>" + expected + "</p>",
             header=json.dumps(
                 [
                     {
@@ -381,7 +381,7 @@ class TestCFGOVPageContext(TestCase):
         )
         test_context = self.page.get_context(self.request)
         result = test_context['meta_description']
-        self.assertEqual(expected, result)
+        self.assertEqual(" " + expected + " ", result)
 
     def test_get_context_sets_meta_description_from_header_text_introduction_intro(self):  # noqa
         expected = 'Correct Meta Description'
