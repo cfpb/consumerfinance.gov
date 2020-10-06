@@ -17,6 +17,8 @@ def make_safe(term):
 #         self.search_term = make_safe(search_term).strip()
 #         self.base_query = base_query
 #         self.document_class = document_class
+#         self.results = []
+#         self.suggestion = None
 
 #     def autocomplete(self):
 #         s = self.document_class.search().query(
@@ -37,12 +39,11 @@ def make_safe(term):
 #             search = search.query("match", text=self.search_term)
 #         total_results = search.count()
 #         search = search[0:total_results]
-#         response = search.execute()
-#         results = response[0:total_results]
+#         self.results = search.execute()[0:total_results]
 #         return {
 #             'search_term': self.search_term,
-#             'suggestion': None,
-#             'results': results
+#             'suggestion': self.suggestion,
+#             'results': self.results
 #         }
 
 #     def suggest(self):
@@ -59,23 +60,22 @@ def make_safe(term):
 #                 search = self.document_class.search()
 #             else:
 #                 search = self.base_query
-#             suggested_results = search.query(
+#             suggest_results = search.query(
 #                 "match", text=suggest_term).filter(
 #                 "term", language=self.language)
-#             total = suggested_results.count()
-#             suggested_results = suggested_results[0:total]
-#             suggested_response = suggested_results.execute()
-#             results = suggested_response[0:total]
+#             total = suggest_results.count()
+#             suggest_results = suggest_results[0:total]
+#             self.results = suggest_results.execute()[0:total]
 #             return {
 #                 'search_term': suggest_term,
 #                 'suggestion': self.search_term,
-#                 'results': results
+#                 'results': self.results
 #             }
 #         else:
 #             # We know there are no results for the original term,
 #             # so return an empty results list with no suggestion.
 #             return {
 #                 'search_term': self.search_term,
-#                 'suggestion': None,
-#                 'results': []
+#                 'suggestion': self.suggestion,
+#                 'results': self.results
 #             }
