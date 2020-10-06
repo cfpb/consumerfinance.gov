@@ -866,7 +866,7 @@ class AnswerPageTestCase(TestCase):
             context.get("breadcrumb_items")[0]["title"], "Obtener respuestas"
         )
 
-    def test_get_answer_preview(self):
+    def test_get_answer_preview_word(self):
         """Check that get_answer_preview returns truncated text, no tags."""
         page = self.page1
         stream_data = [
@@ -895,6 +895,41 @@ class AnswerPageTestCase(TestCase):
         ]
         set_stream_data(page, "answer_content", stream_data)
         self.assertTrue(get_answer_preview(page).endswith("word word ..."))
+
+    def test_get_answer_preview_char(self):
+        """Check that get_answer_preview returns truncated text, no tags."""
+        page = self.page1
+        stream_data = [
+            {
+                "type": "video_player",
+                "id": "402b933b",
+                "value": {
+                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                },
+            },
+            {
+                "type": "text",
+                "id": "402b933c",
+                "value": {
+                    "content": (
+                        "<p><span>"
+                        "This a word with more than 255 characters: "
+                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                        "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
+                        "char char char char char char char char char char "
+                        "char char char char char char char char char char "
+                        "char char char char char char char char char char "
+                        "char char char char char char too-many."
+                        "</span></p>"
+                    )
+                },
+            },
+        ]
+        set_stream_data(page, "answer_content", stream_data)
+        self.assertTrue(get_answer_preview(page).endswith(" ..."))
 
     def test_english_page_context(self):
         from ask_cfpb.models.pages import get_reusable_text_snippet
