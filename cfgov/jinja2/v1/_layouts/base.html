@@ -60,7 +60,7 @@
     <meta name="description"
           content="
             {%- block desc -%}
-                {{- meta_description -}}
+                {{- meta_description if page else '' -}}
             {%- endblock -%}
           ">
     <link rel="canonical" href="{{ request.build_absolute_uri() | lower }}">
