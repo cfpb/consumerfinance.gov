@@ -34,7 +34,6 @@ class MockSearchResult:
         self.preview = "Mock preview ..."
 
 
-@override_settings(FLAGS={"ELASTICSEARCH_DSL": [("boolean", True)]})
 def mock_es7_queryset(count=0):
     class MockSearchQuerySet(AnswerPageDocument):
         def __iter__(self):
