@@ -56,10 +56,7 @@ def make_safe(term):
 #             suggest_term = self.search_term
 
 #         if suggest_term != self.search_term:
-#             if not self.base_query:
-#                 search = self.document_class.search()
-#             else:
-#                 search = self.base_query
+#             search = self.base_query or self.document_class.search()
 #             suggest_results = search.query(
 #                 "match", text=suggest_term).filter(
 #                 "term", language=self.language)
