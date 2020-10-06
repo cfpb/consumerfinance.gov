@@ -267,8 +267,8 @@ class CFGOVPage(Page):
                 self.header, 'text_introduction', 'intro')
             candidates['header_item_intro'] = self.get_streamfield_content(
                 self.header, 'item_introduction', 'paragraph')
-        if hasattr(self, 'preview_description'):
-            candidates['preview_description'] = self.preview_description
+        if hasattr(self, 'preview_description') and self.preview_description:
+            candidates['preview_description'] = self.remove_html_tags(self.preview_description)
         if hasattr(self, 'content'):
             candidates['content_text_intro'] = self.get_streamfield_content(
                 self.content, 'text_introduction', 'intro')
