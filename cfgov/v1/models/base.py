@@ -250,6 +250,7 @@ class CFGOVPage(Page):
     def get_meta_description(self):
         """Deliver a meta_description, following a preference order."""
         preference_order = [
+            'search_description',
             'header_hero_body',
             'preview_description',
             'header_text_intro',
@@ -257,6 +258,8 @@ class CFGOVPage(Page):
             'header_item_intro',
         ]
         candidates = {}
+        if self.search_description:
+            candidates['search_description'] = self.search_description
         if hasattr(self, 'header'):
             candidates['header_hero_body'] = self.get_streamfield_content(
                 self.header, 'hero', 'body')
@@ -264,7 +267,7 @@ class CFGOVPage(Page):
                 self.header, 'text_introduction', 'intro')
             candidates['header_item_intro'] = self.get_streamfield_content(
                 self.header, 'item_introduction', 'paragraph')
-        if self.preview_description:
+        if hasattr(self, 'preview_description'):
             candidates['preview_description'] = self.preview_description
         if hasattr(self, 'content'):
             candidates['content_text_intro'] = self.get_streamfield_content(
