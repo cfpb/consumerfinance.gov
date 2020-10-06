@@ -256,7 +256,7 @@ class CFGOVPage(Page):
             'content_text_intro',
             'header_item_intro',
         ]
-        candidates = {item: None for item in preference_order}
+        candidates = {}
         if hasattr(self, 'header'):
             candidates['header_hero_body'] = self.get_streamfield_content(
                 self.header, 'hero', 'body')
