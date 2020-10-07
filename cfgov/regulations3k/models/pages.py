@@ -28,9 +28,9 @@ from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
+from regulations3k.documents import SectionParagraphDocument
 from regulations3k.models import Part, Section, SectionParagraph, label_re_str
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
-from regulations3k.documents import SectionParagraphDocument
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
 
@@ -76,15 +76,18 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 request,
                 self.get_template(request),
                 self.get_context(request))
-        search = SectionParagraphDocument.search().query('match', text=search_query)
-        search = search.highlight('text', pre_tags="<strong>", post_tags="</strong>")
+        search = SectionParagraphDocument.search().query(
+            'match', text=search_query)
+        search = search.highlight(
+            'text', pre_tags="<strong>", post_tags="</strong>")
         total_results = search.count()
         all_regs = [{
-                        'short_name': reg.short_name,
-                        'id': reg.part_number,
-                        'num_results': search.filter('term', part=reg.part_number).count(),
-                        'selected': reg.part_number in regs }
-                        for reg in all_regs
+                    'short_name': reg.short_name,
+                    'id': reg.part_number,
+                    'num_results': search.filter(
+                        'term', part=reg.part_number).count(),
+                    'selected': reg.part_number in regs}
+                    for reg in all_regs
                     ]
         payload.update({
             'all_regs': all_regs,
@@ -138,7 +141,6 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             request,
             self.get_template(request),
             context)
-
 
     @route(r'^results/')
     def regulation_results_page(self, request):
