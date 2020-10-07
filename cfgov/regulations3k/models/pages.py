@@ -76,7 +76,8 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 request,
                 self.get_template(request),
                 self.get_context(request))
-        search = SectionParagraphDocument.search().query('match', text=search_query).highlight('text', pre_tags="<strong>", post_tags="</strong>")
+        search = SectionParagraphDocument.search().query('match', text=search_query)
+        search = search.highlight('text', pre_tags="<strong>", post_tags="</strong>")
         total_results = search.count()
         all_regs = [{
                         'short_name': reg.short_name,
@@ -103,7 +104,6 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                     "Query string {} produced a TypeError: {}".format(
                         search_query, e))
                 continue
-
             hit_payload = {
                 'id': hit.paragraph_id,
                 'part': hit.part,
@@ -143,7 +143,6 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
     @route(r'^results/')
     def regulation_results_page(self, request):
         if flag_enabled('ELASTICSEARCH_DSL_REGULATIONS'):
-            print("Calling ES7 Functions!")
             return self.regulation_results_page_es7(request)
         all_regs = Part.objects.order_by('part_number')
         regs = validate_regs_list(request)

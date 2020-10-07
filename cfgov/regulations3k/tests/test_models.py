@@ -25,6 +25,9 @@ from regulations3k.models.pages import (
     get_section_url, validate_num_results, validate_order,
     validate_page_number, validate_regs_list
 )
+from regulations3k.documents import SectionParagraphDocument
+
+from elasticsearch_dsl.response import Response
 
 
 class RegModelTests(DjangoTestCase):
@@ -416,6 +419,66 @@ class RegModelTests(DjangoTestCase):
                 'q=disclosure&regs=1002&regs=1003&order=regulation')))
         self.assertEqual(response2.status_code, 200)
         self.assertEqual(mock_sqs.call_count, 6)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_REGULATIONS": [("boolean", True)]})
+    @mock.patch.object(SectionParagraphDocument, 'search')
+    def test_routable_search_page_calls_elasticsearch7(self, mock_search):
+        mock_hit = mock.Mock()
+        mock_hit.text = 'i. Mortgage escrow accounts for collecting taxes and property insurance premiums.'
+        mock_hit.title = 'Comment for 1030.2 - Definitions'
+        mock_hit.part = '1030'
+        mock_hit.date = datetime.datetime(2011, 12, 30, 0, 0)
+        mock_hit.section_order = 'interp-0002'
+        mock_hit.section_label = 'Interp-2'
+        mock_hit.short_name = 'Regulation DD'
+        mock_hit.paragraph_id = '2-a-Interp-2-i'
+        mock_hit.meta.highlight.text = ["<strong>Mortgage</strong> highlighted"]
+        
+        mock_search().query().highlight().filter().sort().__getitem__().execute.return_value = [mock_hit]
+        mock_count = mock.Mock(return_value=1)
+        mock_search().query().highlight().count = mock_count
+        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count
+        response = self.client.get(
+            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+                'regulation_results_page'),
+            {'q': 'mortgage', 'regs': '1030', 'order': 'regulation', 'results': '50'})
+        self.assertEqual(mock_search.call_count, 4)
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_REGULATIONS": [("boolean", True)]})
+    @mock.patch.object(SectionParagraphDocument, 'search')
+    def test_routable_search_page_handles_null_highlights_elasticsearch7(self, mock_search):
+        mock_hit = mock.Mock()
+        mock_hit.text = 'i. Mortgage escrow accounts for collecting taxes and property insurance premiums.'
+        mock_hit.title = 'Comment for 1030.2 - Definitions'
+        mock_hit.part = '1030'
+        mock_hit.date = datetime.datetime(2011, 12, 30, 0, 0)
+        mock_hit.section_order = 'interp-0002'
+        mock_hit.section_label = 'Interp-2'
+        mock_hit.short_name = 'Regulation DD'
+        mock_hit.paragraph_id = '2-a-Interp-2-i'
+        
+        mock_search().query().highlight().filter().sort().__getitem__().execute.return_value = [mock_hit]
+        mock_count = mock.Mock(return_value=1)
+        mock_search().query().highlight().count = mock_count
+        mock_search().query().highlight().filter().sort().__getitem__().count = mock_count
+        response = self.client.get(
+            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+                'regulation_results_page'),
+            {'q': 'mortgage', 'regs': '1030', 'order': 'regulation', 'results': '50'})
+        self.assertEqual(mock_search.call_count, 4)
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_REGULATIONS": [("boolean", True)]})
+    @mock.patch.object(SectionParagraphDocument, 'search')
+    def test_search_page_refuses_single_character_search_elasticsearch7(self, mock_search):
+        response = self.client.get(
+            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+                'regulation_results_page'),
+            {'q': '%21', 'regs': '1002', 'order': 'regulation'})
+        self.assertEqual(mock_search.call_count, 0)
+        self.assertEqual(response.status_code, 200)
+
 
     @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
     def test_routable_search_page_handles_null_highlights(self, mock_sqs):
