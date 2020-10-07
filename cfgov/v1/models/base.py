@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -235,6 +237,47 @@ class CFGOVPage(Page):
     def get_appropriate_siblings(self, inclusive=True):
         return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
+    def remove_html_tags(self, text):
+        clean = re.compile('<.*?>')
+        return re.sub(clean, ' ', text)
+
+    def get_streamfield_content(self, section, blockType, value):
+        for item in section:
+            if item.block_type is blockType:
+                return self.remove_html_tags(item.value[value].source)
+        return
+
+    def get_meta_description(self):
+        """Deliver a meta_description, following a preference order."""
+        preference_order = [
+            'search_description',
+            'header_hero_body',
+            'preview_description',
+            'header_text_intro',
+            'content_text_intro',
+            'header_item_intro',
+        ]
+        candidates = {}
+        if self.search_description:
+            candidates['search_description'] = self.search_description
+        if hasattr(self, 'header'):
+            candidates['header_hero_body'] = self.get_streamfield_content(
+                self.header, 'hero', 'body')
+            candidates['header_text_intro'] = self.get_streamfield_content(
+                self.header, 'text_introduction', 'intro')
+            candidates['header_item_intro'] = self.get_streamfield_content(
+                self.header, 'item_introduction', 'paragraph')
+        if hasattr(self, 'preview_description') and self.preview_description:
+            candidates['preview_description'] = self.remove_html_tags(
+                self.preview_description)
+        if hasattr(self, 'content'):
+            candidates['content_text_intro'] = self.get_streamfield_content(
+                self.content, 'text_introduction', 'intro')
+        for entry in preference_order:
+            if candidates.get(entry):
+                return candidates[entry]
+        return ''
+
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
 
@@ -255,6 +298,7 @@ class CFGOVPage(Page):
         if self.schema_json:
             context['schema_json'] = self.schema_json
 
+        context['meta_description'] = self.get_meta_description()
         return context
 
     def serve(self, request, *args, **kwargs):
