@@ -22,11 +22,13 @@ from wagtail.core.fields import StreamField
 from wagtail.core.models import PageManager
 
 import requests
+from flags.state import flag_enabled
 from jinja2 import Markup
 from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
+from regulations3k.documents import SectionParagraphDocument
 from regulations3k.models import Part, Section, SectionParagraph, label_re_str
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
@@ -56,8 +58,94 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             template = 'regulations3k/search-regulations-results.html'
         return template
 
+    def regulation_results_page_es7(self, request):
+        all_regs = Part.objects.order_by('part_number')
+        regs = validate_regs_list(request)
+        order = validate_order(request)
+        search_query = request.GET.get('q', '').strip()
+        payload = {
+            'search_query': search_query,
+            'results': [],
+            'total_results': 0,
+            'regs': regs,
+            'all_regs': [],
+        }
+        if not search_query or len(urllib.parse.unquote(search_query)) == 1:
+            self.results = payload
+            return TemplateResponse(
+                request,
+                self.get_template(request),
+                self.get_context(request))
+        search = SectionParagraphDocument.search().query(
+            'match', text=search_query)
+        search = search.highlight(
+            'text', pre_tags="<strong>", post_tags="</strong>")
+        total_results = search.count()
+        all_regs = [{
+                    'short_name': reg.short_name,
+                    'id': reg.part_number,
+                    'num_results': search.filter(
+                        'term', part=reg.part_number).count(),
+                    'selected': reg.part_number in regs}
+                    for reg in all_regs
+                    ]
+        payload.update({
+            'all_regs': all_regs,
+            'total_count': total_results
+        })
+        if regs:
+            search = search.filter('terms', part=regs)
+        if order == 'regulation':
+            search = search.sort('part', 'section_order')
+        search = search[0:total_results]
+        response = search.execute()
+        for hit in response[0:total_results]:
+            try:
+                snippet = Markup("".join(hit.meta.highlight.text[0]))
+            except TypeError as e:
+                logger.warning(
+                    "Query string {} produced a TypeError: {}".format(
+                        search_query, e))
+                continue
+            hit_payload = {
+                'id': hit.paragraph_id,
+                'part': hit.part,
+                'reg': hit.short_name,
+                'label': hit.title,
+                'snippet': snippet,
+                'url': "{}{}/{}/#{}".format(
+                    self.parent().url, hit.part,
+                    hit.section_label, hit.paragraph_id),
+            }
+            payload['results'].append(hit_payload)
+
+        payload.update({'current_count': search.count()})
+        self.results = payload
+        context = self.get_context(request)
+        num_results = validate_num_results(request)
+        paginator = Paginator(payload['results'], num_results)
+        page_number = validate_page_number(request, paginator)
+        paginated_page = paginator.page(page_number)
+        context.update({
+            'current_count': payload['current_count'],
+            'total_count': payload['total_count'],
+            'paginator': paginator,
+            'current_page': page_number,
+            'num_results': num_results,
+            'order': order,
+            'results': paginated_page,
+            'show_filters': any(
+                reg['selected'] is True for reg in payload['all_regs'])
+        })
+        return TemplateResponse(
+            request,
+            self.get_template(request),
+            context)
+
     @route(r'^results/')
     def regulation_results_page(self, request):
+        if flag_enabled('ELASTICSEARCH_DSL_REGULATIONS'):
+            return self.regulation_results_page_es7(request)
         all_regs = Part.objects.order_by('part_number')
         regs = validate_regs_list(request)
         order = validate_order(request)

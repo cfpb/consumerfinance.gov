@@ -769,6 +769,8 @@ FLAGS = {
     # Used to enable use of django-elasticsearch-dsl and disable use of Haystack
     # This will be used in the ask_cfpb and regulations applications
     "ELASTIC_SEARCH_DSL": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
+    "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
 }
 
 
