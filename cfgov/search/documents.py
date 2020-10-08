@@ -51,28 +51,21 @@ def make_safe(term):
 #             'text_suggestion', self.search_term, term={'field': 'text'})
 #         response = s.execute()
 #         try:
-#             suggestion = response.suggest.text_suggestion[0].options[0].text
+#             self.suggestion = response.suggest.suggestion[0].options[0].text
 #         except IndexError:
-#             suggestion = self.search_term
+#             self.suggestion = self.search_term
 
-#         if suggestion != self.search_term:
+#         if self.suggestion != self.search_term:
 #             search = self.base_query or self.document_class.search()
 #             suggest_results = search.query(
-#                 "match", text=suggestion).filter(
+#                 "match", text=self.suggestion).filter(
 #                 "term", language=self.language)
 #             total = suggest_results.count()
 #             suggest_results = suggest_results[0:total]
 #             self.results = suggest_results.execute()[0:total]
-#             return {
-#                 'search_term': suggestion,
-#                 'suggestion': self.search_term,
-#                 'results': self.results
-#             }
-#         else:
-#             # We know there are no results for the original term,
-#             # so return an empty results list with no suggestion.
-#             return {
-#                 'search_term': self.search_term,
-#                 'suggestion': self.suggestion,
-#                 'results': self.results
-#             }
+#         return {
+#             'search_term': self.suggestion,
+#             'suggestion': self.search_term,
+#             'results': self.results
+#         }
+
