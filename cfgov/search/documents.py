@@ -68,4 +68,3 @@ def make_safe(term):
 #             'suggestion': self.search_term,
 #             'results': self.results
 #         }
-
