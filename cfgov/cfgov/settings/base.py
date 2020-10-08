@@ -644,6 +644,7 @@ CSP_CONNECT_SRC = (
     "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
+    "api.mapbox.com",
     "bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
