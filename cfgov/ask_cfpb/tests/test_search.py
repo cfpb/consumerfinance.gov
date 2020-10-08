@@ -61,7 +61,7 @@ class AskSearchSafetyTestCase(unittest.TestCase):
         )
 
 
-class AskSearchTestCase:
+class AskSearchTestCase(TestCase):
     def test_en_search_results_page_not_created(self):
         response = self.client.get(reverse("ask-search-en"), {"q": "payday"})
         self.assertEqual(response.status_code, 404)
