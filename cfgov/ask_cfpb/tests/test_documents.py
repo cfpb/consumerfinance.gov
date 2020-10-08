@@ -12,7 +12,7 @@ from mock import patch
 from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
-from ask_cfpb.models import AnswerPage
+from ask_cfpb.models.answer_page import AnswerPage
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer
 )
