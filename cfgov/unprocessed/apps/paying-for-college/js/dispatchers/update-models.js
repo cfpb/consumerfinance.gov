@@ -16,7 +16,18 @@ import { updateUrlQueryString } from '../dispatchers/update-view.js';
 import { urlParameters } from '../util/url-parameter-utils.js';
 
 /**
- * initializeFinancialModel - Create financial model values based on the input
+ * initializeExpenseValues - Create financial model values based on the input
+ * fields that exist in the DOM
+ */
+function initializeExpenseValues() {
+  const expenseItems = document.querySelectorAll( '[data-expenses-item]' );
+  expenseItems.forEach( elem => {
+    expenseModel.setValue( elem.dataset.expensesItem, 0, false );
+  } );
+}
+
+/**
+ * initializeFinancialValues - Create financial model values based on the input
  * fields that exist in the DOM
  */
 function initializeFinancialValues() {
@@ -208,6 +219,7 @@ function updateModelsFromQueryString( queryObj ) {
 
 export {
   createFinancial,
+  initializeExpenseValues,
   initializeFinancialValues,
   recalculateExpenses,
   recalculateFinancials,

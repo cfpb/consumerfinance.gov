@@ -2,6 +2,7 @@
 import { updateAffordingChart, updateCostOfBorrowingChart, updateExpensesView, updateFinancialView, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { getExpenses } from '../dispatchers/get-api-values.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
+import { initializeExpenseValues } from '../dispatchers/update-models.js';
 import { stringToNum } from '../util/number-utils.js';
 import { updateState } from '../dispatchers/update-state.js';
 
