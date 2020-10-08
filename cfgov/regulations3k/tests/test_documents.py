@@ -38,5 +38,6 @@ class SectionParagraphDocumentTest(TestCase):
             'date': version.effective_date,
             'section_order': section.sortable_label,
             'section_label': section.label,
+            'short_name': part.short_name,
             'paragraph_id': section_paragraph.paragraph_id
         })
