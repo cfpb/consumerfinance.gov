@@ -10,6 +10,7 @@ import mock
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
+from ask_cfpb.models.search import SearchQuerySet
 from ask_cfpb.tests.models.test_pages import mock_queryset
 from ask_cfpb.views import ask_search, redirect_ask_search
 from search.documents import make_safe
@@ -137,6 +138,30 @@ class AskSearchTest(TestCase):
         self.assertEqual(response.context_data["page"].query, "")
         self.assertEqual(response.context_data["page"].result_query, "")
 
+    @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
+    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
+    @mock.patch.object(SearchQuerySet, 'filter')
+    def test_en_search_suggestion(self, mock_filter, mock_suggestion):
+        mock_page = get_or_create_page(
+            apps,
+            "ask_cfpb",
+            "AnswerResultsPage",
+            "Mock results page",
+            "ask-cfpb-search-results",
+            self.english_parent_page,
+            language="en",
+            live=True,
+        )
+        # AskSearch.sugggest flips search_term and suggestion when called
+        mock_filter.return_value = mock_queryset(count=0)
+        mock_suggestion.return_value = "payday"
+        response = self.client.get(reverse("ask-search-en"), {"q": "paydya"})
+        self.assertEqual(response.status_code, 200)
+        response_page = response.context_data["page"]
+        self.assertEqual(response_page, mock_page)
+        self.assertEqual(response_page.result_query, "payday")
+        self.assertEqual(response_page.query, "paydya")
+
     @mock.patch("ask_cfpb.views.AskSearch")
     def test_es_search(self, mock_ask_search):
         get_or_create_page(
@@ -209,8 +234,8 @@ class AskSearchTest(TestCase):
             "ask-cfpb/answer-search-results.html",
         )
 
-    @mock.patch("ask_cfpb.views.SearchQuerySet.spelling_suggestion")
-    @mock.patch("ask_cfpb.views.SearchQuerySet.filter")
+    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
+    @mock.patch.object(SearchQuerySet, 'filter')
     def test_json_response(self, mock_filter, mock_suggestion):
         get_or_create_page(
             apps,
@@ -246,7 +271,7 @@ class AskSearchTest(TestCase):
         output = json.loads(result.content)
         self.assertEqual(output, [])
 
-    @mock.patch("ask_cfpb.views.SearchQuerySet.autocomplete")
+    @mock.patch.object(SearchQuerySet, 'autocomplete')
     def test_autocomplete_en(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
@@ -259,7 +284,7 @@ class AskSearchTest(TestCase):
         output = json.loads(result.content)
         self.assertEqual(sorted(output[0].keys()), ["question", "url"])
 
-    @mock.patch("ask_cfpb.views.SearchQuerySet.autocomplete")
+    @mock.patch.object(SearchQuerySet, 'autocomplete')
     def test_autocomplete_es(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
@@ -301,7 +326,7 @@ class AnswerPageSearchTest(TestCase):
         )
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_en_search_es7(self, mock_search):
         mock_page = get_or_create_page(
             apps,
@@ -344,7 +369,7 @@ class AnswerPageSearchTest(TestCase):
 
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_en_search_suggestion_es7(self, mock_search):
         mock_page = get_or_create_page(
             apps,
@@ -365,30 +390,6 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(response.context_data["page"], mock_page)
         self.assertEqual(response.context_data["page"].query, "paydya")
         self.assertEqual(response.context_data["page"].result_query, "paydya")
-
-    @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
-    @mock.patch("ask_cfpb.models.search.SearchQuerySet.spelling_suggestion")
-    @mock.patch("ask_cfpb.models.search.SearchQuerySet.filter")
-    def test_en_search_suggestion(self, mock_filter, mock_suggestion):
-        mock_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerResultsPage",
-            "Mock results page",
-            "ask-cfpb-search-results",
-            self.english_parent_page,
-            language="en",
-            live=True,
-        )
-        # AskSearch.sugggest flips search_term and suggestion when called
-        mock_filter.return_value = mock_queryset(count=0)
-        mock_suggestion.return_value = "payday"
-        response = self.client.get(reverse("ask-search-en"), {"q": "paydya"})
-        self.assertEqual(response.status_code, 200)
-        response_page = response.context_data["page"]
-        self.assertEqual(response_page, mock_page)
-        self.assertEqual(response_page.result_query, "payday")
-        self.assertEqual(response_page.query, "paydya")
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
@@ -505,7 +506,7 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(output, [])
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_autocomplete_es7_en(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
@@ -518,7 +519,7 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(result.status_code, 200)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_autocomplete_es7_es(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
