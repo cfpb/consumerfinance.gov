@@ -17,6 +17,7 @@ from wagtail.tests.utils import WagtailTestUtils
 
 from model_bakery import baker
 
+from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models.django import (
     ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG, Answer, Category, NextStep
 )
