@@ -384,6 +384,19 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(str(test_page), test_page.title)
         self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
 
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    @mock.patch.object(AnswerPageDocument, 'search')
+    def test_english_category_title_es7(self, mock_search):
+        page = self.english_search_page
+        url = page.url + page.reverse_subpage(
+            "portal_category_page", kwargs={"category": "how-to-guides"}
+        )
+        response = self.client.get(url)
+        self.assertEqual(
+            response.context_data.get("page").title,
+            "Auto loans how-to guides"
+        )
+
     @mock.patch("ask_cfpb.models.pages.AnswerPageSearch")
     def test_english_category_title(self, mock_search):
         page = self.english_search_page
