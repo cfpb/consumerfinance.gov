@@ -10,10 +10,9 @@ import mock
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
-from ask_cfpb.models.search import SearchQuerySet
+from ask_cfpb.models.search import AnswerPageSearch, SearchQuerySet, make_safe
 from ask_cfpb.tests.models.test_pages import mock_queryset
 from ask_cfpb.views import ask_search, redirect_ask_search
-from search.documents import make_safe
 from v1.util.migrations import get_or_create_page
 
 
@@ -326,7 +325,7 @@ class AnswerPageSearchTest(TestCase):
         )
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.views.AnswerPageSearch")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_en_search_es7_no_term(self, mock_search):
         mock_search.queryset = mock_es7_queryset()
         response = self.client.get(reverse("ask-search-en"), {"q": ""})
@@ -419,15 +418,15 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(json.loads(response.content)["query"], "tuition")
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    def test_autocomplete_es7_en_blank_term(self, mock_search):
+    @mock.patch.object(AnswerPageSearch, 'autocomplete')
+    def test_autocomplete_es7_en_blank_term(self, mock_autocomplete):
         result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
         output = json.loads(result.content)
         self.assertEqual(output, [])
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    def test_autocomplete_es7_es_blank_term(self, mock_search):
+    @mock.patch.object(AnswerPageSearch, 'autocomplete')
+    def test_autocomplete_es7_es_blank_term(self, mock_autocomplete):
         result = self.client.get(
             reverse("ask-autocomplete-es", kwargs={"language": "es"}),
             {"term": ""},
