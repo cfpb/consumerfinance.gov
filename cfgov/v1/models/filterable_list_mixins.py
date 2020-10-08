@@ -13,7 +13,7 @@ from v1.util.util import get_secondary_nav_items
 class FilterableListMixin(RoutablePageMixin):
     """Wagtail Page mixin that allows for filtering of other pages."""
 
-    filterable_per_page_limit = 10
+    filterable_per_page_limit = 25
     """Number of results to return per page."""
 
     do_not_index = False
