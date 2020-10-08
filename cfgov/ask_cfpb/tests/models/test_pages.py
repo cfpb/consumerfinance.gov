@@ -396,7 +396,7 @@ class PortalSearchPageTestCase(TestCase):
         )
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_spanish_category_title_es7(self, mock_search):
         page = self.spanish_search_page
         url = page.url + page.reverse_subpage(
@@ -466,7 +466,7 @@ class PortalSearchPageTestCase(TestCase):
         )
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_portal_topic_page_200_es7(self, mock_search):
         page = self.english_search_page
         response = self.client.get(page.url)
@@ -477,7 +477,7 @@ class PortalSearchPageTestCase(TestCase):
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
+    @mock.patch.object(SearchQuerySet, 'filter')
     def test_portal_category_page_200(self, mock_filter):
         mock_filter.return_value = mock_queryset(count=2)
         page = self.english_search_page
@@ -488,7 +488,7 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_portal_category_page_calls_search(self, mock_search):
         page = self.english_search_page
         portal_search_url = page.url + page.reverse_subpage(
@@ -503,7 +503,7 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.PortalSearchPage.get_nav_items")
+    @mock.patch.object(PortalSearchPage, 'get_nav_items')
     def test_spanish_portal_search_page_200(self, mock_nav):
         mock_nav.return_value = (
             [
@@ -522,7 +522,7 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_spanish_portal_search_page_renders(self, mock_search):
         page = self.spanish_search_page
         portal_search_url = page.url + page.reverse_subpage(
@@ -538,7 +538,7 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(mock_search.call_count, 1)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_portal_topic_page_with_no_hits_same_suggestion_es7(
         self, mock_search
     ):
@@ -560,8 +560,8 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
+    @mock.patch.object(SearchQuerySet, 'filter')
+    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     def test_portal_topic_page_with_no_hits_same_suggestion(
         self, mock_suggestion, mock_filter
     ):
@@ -574,7 +574,7 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch("ask_cfpb.documents.AnswerPageDocument.search")
+    @mock.patch.object(AnswerPageDocument, 'search')
     def test_portal_topic_page_with_no_hits_with_suggestion_es7(
         self, mock_search
     ):
@@ -596,9 +596,9 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
+    @mock.patch.object(SearchQuerySet, 'filter')
+    @mock.patch.object(SearchQuerySet, 'count')
+    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     def test_portal_category_page_with_no_hits_with_suggestion(
         self, mock_suggestion, mock_count, mock_filter
     ):
@@ -617,9 +617,9 @@ class PortalSearchPageTestCase(TestCase):
             self.assertEqual(response.context_data["search_term"], "hoodunit")
             self.assertEqual(response.status_code, 200)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
+    @mock.patch.object(SearchQuerySet, 'filter')
+    @mock.patch.object(SearchQuerySet, 'count')
+    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     def test_portal_topic_page_with_no_hits_with_suggestion(
         self, mock_suggestion, mock_count, mock_filter
     ):
@@ -636,9 +636,9 @@ class PortalSearchPageTestCase(TestCase):
             self.assertEqual(response.context_data["search_term"], "hoodunit")
             self.assertEqual(response.status_code, 200)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.count")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.spelling_suggestion")
+    @mock.patch.object(SearchQuerySet, 'filter')
+    @mock.patch.object(SearchQuerySet, 'count')
+    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     def test_portal_category_page_same_suggestion(
         self, mock_suggestion, mock_count, mock_filter
     ):
@@ -654,8 +654,8 @@ class PortalSearchPageTestCase(TestCase):
         self.assertEqual(response.context_data["search_term"], "hoodoo")
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.models")
-    @mock.patch("ask_cfpb.models.pages.SearchQuerySet.filter")
+    @mock.patch.object(SearchQuerySet, 'models')
+    @mock.patch.object(SearchQuerySet, 'filter')
     def test_portal_topic_page_suggestion(self, mock_filter, mock_models):
         mock_models.spelling_suggestion.return_value = "hoodunit"
         mock_filter.return_value = mock_queryset()
