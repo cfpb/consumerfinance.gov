@@ -3,7 +3,18 @@ from haystack.query import SearchQuerySet
 from flags.state import flag_enabled
 
 from ask_cfpb.documents import AnswerPageDocument
-from search.documents import make_safe
+
+
+UNSAFE_CHARACTERS = [
+    '#', '%', ';', '^', '~', '`', '|',
+    '<', '>', '[', ']', '{', '}', '\\'
+]
+
+
+def make_safe(term):
+    for char in UNSAFE_CHARACTERS:
+        term = term.replace(char, '')
+    return term
 
 
 class AnswerPageSearch:

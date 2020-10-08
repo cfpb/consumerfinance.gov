@@ -13,9 +13,8 @@ from wagtailsharing.views import ServeView
 from bs4 import BeautifulSoup as bs
 
 from ask_cfpb.models import (
-    AnswerPage, AnswerPageSearch, AnswerResultsPage, AskSearch
+    AnswerPage, AnswerPageSearch, AnswerResultsPage, AskSearch, make_safe
 )
-from search.documents import make_safe
 
 
 def annotate_links(answer_text):
