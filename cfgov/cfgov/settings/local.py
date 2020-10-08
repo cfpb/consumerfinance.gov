@@ -23,7 +23,6 @@ SECRET_KEY = "not-secret-key-for-testing"
 INSTALLED_APPS += (
     "sslserver",
     "wagtail.contrib.styleguide",
-    "django_elasticsearch_dsl",
 )
 
 ELASTICSEARCH_DSL={
