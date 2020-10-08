@@ -406,7 +406,7 @@ class PortalSearchPage(
     @route(r'^$')
     def portal_topic_page(self, request):
         self.portal_category = None
-        if flag_enabled('ELASTICSEARCH_DSL'):
+        if flag_enabled('ELASTICSEARCH_DSL_ASK'):
             self.query_base = AnswerPageDocument.search().filter(
                 'match', portal_topics=self.portal_topic.heading)
             return self.get_results_es7(request)
@@ -434,7 +434,7 @@ class PortalSearchPage(
                 request,
                 'ask-cfpb/see-all.html',
                 context)
-        if flag_enabled('ELASTICSEARCH_DSL'):
+        if flag_enabled('ELASTICSEARCH_DSL_ASK'):
             self.query_base = AnswerPageDocument.search().filter(
                 'match', portal_topics=self.portal_topic.heading).filter(
                 'match', portal_categories=self.portal_category.heading)

@@ -769,8 +769,10 @@ FLAGS = {
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
     # Used to enable use of django-elasticsearch-dsl and disable use of Haystack
-    # This will be used in the ask_cfpb and regulations applications
-    "ELASTICSEARCH_DSL": [("boolean", False)],
+    # These will be used in the ask_cfpb and regulations applications
+    "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
+    "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
 }
 
 

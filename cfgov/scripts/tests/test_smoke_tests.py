@@ -3,11 +3,11 @@ import unittest
 
 import mock
 import requests
-
-from scripts import static_asset_smoke_test
 from scripts.http_smoke_test import (
     ALLOWED_TIMEOUTS, FALLBACK_URLS, check_urls, get_full_list
 )
+
+from scripts import static_asset_smoke_test
 
 
 class StaticAssetTests(unittest.TestCase):
