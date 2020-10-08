@@ -491,6 +491,17 @@ class PortalSearchPageTestCase(TestCase):
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
 
+    # @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    # @mock.patch.object(AnswerPageDocument, 'search')
+    # def test_portal_category_page_200_es7(self, mock_filter):
+    #     mock_filter.return_value = mock_es7_queryset(count=2)
+    #     page = self.english_search_page
+    #     url = page.url + page.reverse_subpage(
+    #         "portal_category_page", kwargs={"category": "how-to-guides"}
+    #     )
+    #     response = self.client.get(url)
+    #     self.assertEqual(response.status_code, 200)
+
     @mock.patch.object(SearchQuerySet, 'filter')
     def test_portal_category_page_200(self, mock_filter):
         mock_filter.return_value = mock_queryset(count=2)
