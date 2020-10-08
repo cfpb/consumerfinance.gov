@@ -4,8 +4,8 @@ from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 
 import mock
-from scripts._atomic_helpers import filter_controls
 
+from scripts._atomic_helpers import filter_controls
 from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
