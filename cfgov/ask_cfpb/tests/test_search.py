@@ -11,45 +11,9 @@ import mock
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
 from ask_cfpb.models.search import AnswerPageSearch, SearchQuerySet, make_safe
-from ask_cfpb.tests.models.test_pages import mock_queryset
+from ask_cfpb.tests.models.test_pages import mock_es7_queryset, mock_queryset
 from ask_cfpb.views import ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
-
-
-class MockSearchResult:
-    def __init__(self, app_label, model_name, pk, score, **kwargs):
-        self.autocomplete = "What is mock question {}?".format(pk)
-        self.url = "/ask-cfpb/mock-question-en-{}/".format(pk)
-        self.text = "Mock answer text for question {}.".format(pk)
-        self.preview = "Mock preview ..."
-        super(MockSearchResult, self).__init__(
-            app_label, model_name, pk, score, **kwargs
-        )
-
-
-def mock_es7_queryset(count=0):
-    class MockSearchQuerySet(AnswerPageDocument):
-        def __iter__(self):
-            if count:
-                return iter(
-                    [
-                        MockSearchResult("ask_cfpb", "AnswerPage", i, 0.5)
-                        for i in list(range(1, count + 1))
-                    ]
-                )
-            else:
-                return iter([])
-
-        def count(self):
-            return count
-
-        def filter(self, *args, **kwargs):
-            return self
-
-        def models(self, *models):
-            return self
-
-    return MockSearchQuerySet()
 
 
 class AskSearchSafetyTestCase(unittest.TestCase):
