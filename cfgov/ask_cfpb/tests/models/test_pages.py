@@ -92,42 +92,6 @@ def mock_queryset(count=0):
     return MockSearchQuerySet()
 
 
-class MockSearch7Result:
-    def __init__(self, app_label, model_name, pk, score, **kwargs):
-        self.autocomplete = "What is mock question {}?".format(pk)
-        self.url = "/ask-cfpb/mock-question-en-{}/".format(pk)
-        self.text = "Mock answer text for question {}.".format(pk)
-        self.preview = "Mock preview ..."
-        super(MockSearch7Result, self).__init__(
-            app_label, model_name, pk, score, **kwargs
-        )
-
-
-def mock_es7_queryset(count=0):
-    class MockSearch7QuerySet(AnswerPageDocument):
-        def __iter__(self):
-            if count:
-                return iter(
-                    [
-                        MockSearch7Result("ask_cfpb", "AnswerPage", i, 0.5)
-                        for i in list(range(1, count + 1))
-                    ]
-                )
-            else:
-                return iter([])
-
-        def count(self):
-            return count
-
-        def filter(self, *args, **kwargs):
-            return self
-
-        def models(self, *models):
-            return self
-
-    return MockSearch7QuerySet()
-
-
 class AnswerStringTest(TestCase):
     def test_answer_string_method(self):
         test_answer = Answer(question="Test question?")
