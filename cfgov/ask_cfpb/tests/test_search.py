@@ -189,16 +189,14 @@ class AskSearchTest(TestCase):
 
     def test_autocomplete_en_blank_term(self):
         result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
-        output = json.loads(result.content)
-        self.assertEqual(output, [])
+        self.assertEqual(json.loads(result.content), [])
 
     def test_autocomplete_es_blank_term(self):
         result = self.client.get(
             reverse("ask-autocomplete-es", kwargs={"language": "es"}),
             {"term": ""},
         )
-        output = json.loads(result.content)
-        self.assertEqual(output, [])
+        self.assertEqual(json.loads(result.content), [])
 
     @mock.patch.object(SearchQuerySet, 'autocomplete')
     def test_autocomplete_en(self, mock_autocomplete):
@@ -427,8 +425,7 @@ class AnswerPageSearchTest(TestCase):
     @mock.patch.object(AnswerPageSearch, 'autocomplete')
     def test_autocomplete_es7_en_blank_term(self, mock_autocomplete):
         result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
-        output = json.loads(result.content)
-        self.assertEqual(output, [])
+        self.assertEqual(json.loads(result.content), [])
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageSearch, 'autocomplete')
@@ -437,8 +434,7 @@ class AnswerPageSearchTest(TestCase):
             reverse("ask-autocomplete-es", kwargs={"language": "es"}),
             {"term": ""},
         )
-        output = json.loads(result.content)
-        self.assertEqual(output, [])
+        self.assertEqual(json.loads(result.content), [])
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
