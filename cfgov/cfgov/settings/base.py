@@ -4,7 +4,11 @@ import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
 
+import wagtail
+
 import dj_database_url
+from elasticsearch7 import RequestsHttpConnection
+from requests_aws4auth import AWS4Auth
 from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
@@ -95,6 +99,8 @@ INSTALLED_APPS = (
     "mega_menu.apps.MegaMenuConfig",
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
+    "wagtailmedia",
+    "django_elasticsearch_dsl",
 
     # Satellites
     "comparisontool",
@@ -144,6 +150,7 @@ MIDDLEWARE = (
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
     "flags.middleware.FlagConditionsMiddleware",
+    "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
 )
@@ -416,6 +423,28 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
+# ElasticSearch 7 Configuration
+ELASTICSEARCH_DSL_AUTO_REFRESH = False
+ELASTICSEARCH_DSL_AUTOSYNC = False
+
+if os.environ.get('USE_AWS_ES', False):
+    awsauth = AWS4Auth(os.environ.get('AWS_ES_ACCESS_KEY'), os.environ.get('AWS_ES_SECRET_KEY'), 'us-east-1', 'es')
+    host = os.environ.get('ES7_HOST', '')
+    ELASTICSEARCH_DSL={
+        'default': {
+            'hosts': [{'host': host, 'port': 443}],
+            'http_auth': awsauth,
+            'use_ssl': True,
+            'connection_class': RequestsHttpConnection
+        },
+    }
+else:
+    ELASTICSEARCH_DSL={
+        'default': {
+            'hosts': os.environ.get('ES7_HOST', 'localhost:9200')
+        },
+    }
+
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_LOCATION = "f"  # A path prefix that will be prepended to all uploads
@@ -509,7 +538,7 @@ if ENABLE_CLOUDFRONT_CACHE_PURGE:
         },
     }
 
-# CSP Whitelists
+# CSP Allowlists
 
 # These specify what is allowed in <script> tags
 CSP_SCRIPT_SRC = (
@@ -517,7 +546,6 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "*.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "*.google-analytics.com",
     "*.googletagmanager.com",
     "tagmanager.google.com",
@@ -560,7 +588,6 @@ CSP_STYLE_SRC = (
 CSP_IMG_SRC = (
     "'self'",
     "*.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "www.ecfr.gov",
     "s3.amazonaws.com",
     "www.gstatic.com",
@@ -606,7 +633,6 @@ CSP_FONT_SRC = (
     "'self'",
     "data:",
     "*.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "fast.fonts.net",
     "fonts.google.com",
     "fonts.gstatic.com",
@@ -616,7 +642,6 @@ CSP_FONT_SRC = (
 CSP_CONNECT_SRC = (
     "'self'",
     "*.consumerfinance.gov",
-    "files.consumerfinance.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
     "bam.nr-data.net",
@@ -625,6 +650,12 @@ CSP_CONNECT_SRC = (
     "n2.mouseflow.com",
     "api.iperceptions.com",
     "*.qualtrics.com",
+)
+
+# These specify valid media sources (e.g., MP3 files)
+CSP_MEDIA_SRC = (
+    "'self'",
+    "*.consumerfinance.gov",
 )
 
 # Feature flags
@@ -636,6 +667,9 @@ FLAGS = {
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
+    # Ask CFPB date label	
+    # When enabled, date label will be changed from 'updated' to 'last reviewed'	
+    "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
@@ -690,23 +724,6 @@ FLAGS = {
     # SPLIT TESTING FLAGS
     # Ask CFPB page titles as H1s instead of H2s
     "ASK_CFPB_H1": [("in split testing cluster", "ASK_CFPB_H1")],
-    # Test financial well-being hub pages on Beta
-    "FINANCIAL_WELLBEING_HUB": [("environment is", "beta")],
-    # Publish new HMDA Explore page
-    # Delete after HMDA API is deprecated (hopefully Summer 2019)
-    "HMDA_LEGACY_PUBLISH": [],
-    # The HMDA API and HMDA explorer pages will temporarily be taken down at
-    # TBD intervals. We use a GET parameter during downtime to trigger an
-    # explanatory banner about the outages.
-    # Delete after HMDA API is deprecated (hopefully Summer 2019)
-    "HMDA_OUTAGE": [
-        {"condition": "parameter", "value": "hmda-outage", "required": True},
-        {
-            "condition": "path matches",
-            "value": r"^/data-research",
-            "required": True,
-        },
-    ],
     # Manually enabled when Beta is being used for an external test.
     # Controls the /beta_external_testing endpoint, which Jenkins jobs
     # query to determine whether to refresh Beta database.
@@ -749,6 +766,11 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
+    # Used to enable use of django-elasticsearch-dsl and disable use of Haystack
+    # This will be used in the ask_cfpb and regulations applications
+    "ELASTIC_SEARCH_DSL": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
+    "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
 }
 
 
@@ -852,5 +874,4 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
             ]
         },
     },
-    "legacy": {"WIDGET": "wagtail.admin.rich_text.HalloRichTextArea"},
 }

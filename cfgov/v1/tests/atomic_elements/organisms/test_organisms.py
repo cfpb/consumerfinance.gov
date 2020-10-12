@@ -1,13 +1,17 @@
 from django.core.exceptions import ValidationError
+from django.core.files import File
+from django.core.files.base import ContentFile
 from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 from wagtail.images.tests.utils import get_test_image_file
 
+from wagtailmedia.models import Media
+
 from scripts import _atomic_helpers as atomic
 from v1.atomic_elements.organisms import (
-    FeaturedContent, InfoUnitGroup, TableBlock, VideoPlayer
+    AudioPlayer, FeaturedContent, InfoUnitGroup, TableBlock, VideoPlayer
 )
 from v1.models import (
     BrowsePage, CFGOVImage, Contact, LandingPage, LearnPage, Resource,
@@ -659,4 +663,53 @@ class VideoPlayerThumbnailTests(TestCase):
         self.assertRegex(
             html,
             r'src="/f/images/test.*\.original\.png"'
+        )
+
+
+class TestAudioPlayer(TestCase):
+    def test_render_audio_player(self):
+        block = AudioPlayer()
+        fake_file = ContentFile('A boring example mp3')
+        fake_file.name = 'test.mp3'
+        media = Media.objects.create(
+            title='Test audio file',
+            type='audio',
+            duration=100,
+            file=File(fake_file)
+        )
+        value = block.to_python({
+            'audio_file': media.pk,
+        })
+
+        html = block.render(value)
+
+        self.assertInHTML(
+            (
+                '<audio class="o-audio-player" controls preload="metadata"'
+                '       data-title="Test audio file">'
+                '    <source src="/f/media/test.mp3" type="audio/mpeg">'
+                '    Your browser does not support this audio player.'
+                '</audio>'
+            ),
+            html
+        )
+
+    def test_audio_player_with_video_file_returns_error(self):
+        block = AudioPlayer()
+        fake_file = ContentFile('Example video')
+        fake_file.name = 'test.mp4'
+        media = Media.objects.create(
+            title='Test video file',
+            type='video',
+            duration=100,
+            file=File(fake_file)
+        )
+        value = block.to_python({
+            'audio_file': media.pk,
+        })
+
+        html = block.render(value)
+        self.assertInHTML(
+            '<b>Warning:</b>',
+            html
         )

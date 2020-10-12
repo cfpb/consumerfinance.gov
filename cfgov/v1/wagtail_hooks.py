@@ -8,10 +8,11 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.html import format_html_join
 
-from wagtail.admin.menu import AdminOnlyMenuItem, MenuItem
+from wagtail.admin.menu import MenuItem
 from wagtail.admin.rich_text.converters.editor_html import (
     WhitelistRule as AllowlistRule
 )
+from wagtail.contrib.modeladmin.mixins import ThumbnailMixin
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
@@ -89,32 +90,7 @@ def log_page_deletion(request, page):
 
 @hooks.register('insert_editor_js')
 def editor_js():
-    js_files = ['js/table-block.js']
-
-    # Temporarily adding Hallo-related JavaScript files to all admin pages
-    # to support the continued use of Hallo in our RichTextTableInput
-    # until we can take more time to migrate that to Draftail.
-    js_files.insert(0, 'wagtailadmin/js/vendor/hallo.js')
-    js_files.insert(0, 'wagtailadmin/js/hallo-plugins/hallo-hr.js')
-    js_files.insert(
-        0,
-        'wagtailadmin/js/hallo-plugins/hallo-requireparagraphs.js'
-    )
-    js_files.insert(
-        0, 'wagtailadmin/js/hallo-plugins/hallo-wagtaillink.js'
-    )
-    js_files.insert(
-        0,
-        'wagtaildocs/js/hallo-plugins/hallo-wagtaildoclink.js'
-    )
-    js_files.insert(
-        0,
-        'wagtailembeds/js/hallo-plugins/hallo-wagtailembeds.js'
-    )
-    js_files.insert(
-        0,
-        'wagtailimages/js/hallo-plugins/hallo-wagtailimage.js'
-    )
+    js_files = ['js/admin/table-block.js']
 
     js_includes = format_html_join(
         '\n',
@@ -132,14 +108,24 @@ def editor_css():
         'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
-        'css/hero.css',
+        'css/model-admin.css',
         'css/table-block.css',
     ]
 
-    # Temporarily adding Hallo CSS to all admin pages
-    # to support the continued use of Hallo in our RichTextTableInput
-    # until we can take more time to migrate that to Draftail.
-    css_files.insert(0, 'wagtailadmin/css/panels/hallo.css')
+    css_includes = format_html_join(
+        '\n',
+        '<link rel="stylesheet" href="{0}{1}">',
+        ((settings.STATIC_URL, filename) for filename in css_files)
+    )
+
+    return css_includes
+
+
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    css_files = [
+        'css/model-admin.css',
+    ]
 
     css_includes = format_html_join(
         '\n',
@@ -248,7 +234,7 @@ def serve_latest_draft_page(page, request, args, kwargs):
 
 @hooks.register('register_reports_menu_item')
 def register_page_metadata_report_menu_item():
-    return AdminOnlyMenuItem(
+    return MenuItem(
         "Page Metadata",
         reverse('page_metadata_report'),
         classnames='icon icon-' + PageMetadataReportView.header_icon,
@@ -308,11 +294,14 @@ class ResourceTagsFilter(admin.SimpleListFilter):
                 return queryset.filter(tags__slug__iexact=tag[0])
 
 
-class ResourceModelAdmin(ModelAdmin):
+class ResourceModelAdmin(ThumbnailMixin, ModelAdmin):
     model = Resource
     menu_label = 'Resources'
     menu_icon = 'snippet'
-    list_display = ('title', 'desc', 'order', 'thumbnail')
+    list_display = ('title', 'desc', 'order', 'admin_thumb')
+    thumb_image_field_name = 'thumbnail'
+    thumb_image_filter_spec = 'width-100'
+    thumb_image_width = None
     ordering = ('title',)
     list_filter = (ResourceTagsFilter,)
     search_fields = ('title',)

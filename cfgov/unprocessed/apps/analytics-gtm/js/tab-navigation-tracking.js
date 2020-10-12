@@ -1,3 +1,17 @@
+import webStorageProxy from '../../../js/modules/util/web-storage-proxy';
+
+// If cookies are turned off, we set localStorage variables to null.
+let _localStorage;
+let _sessionStorage;
+
+try {
+  _localStorage = window.localStorage;
+  _sessionStorage = window.sessionStorage;
+} catch ( err ) {
+  _localStorage = null;
+  _sessionStorage = null;
+}
+
 /**
  * Adapted from
  * https://www.simoahava.com/analytics/track-browsing-behavior-in-google-analytics/#1-the-why-and-how-theory
@@ -7,7 +21,8 @@
 // eslint-disable-next-line max-lines-per-function, complexity, max-statements
 const TabNavigationTracking = ( () => {
 
-  if ( !window.Storage ) {
+  // Bail out if localStorage is not supported or is blocked.
+  if ( !window.Storage || _localStorage === null || _sessionStorage === null ) {
     return;
   }
 
@@ -15,9 +30,13 @@ const TabNavigationTracking = ( () => {
      if either button was pressed. */
   const detailedBackForward = true;
 
-  let openTabs = JSON.parse( localStorage.getItem( '_tab_ids' ) );
-  let tabId = sessionStorage.getItem( '_tab_id' );
-  let navPath = JSON.parse( sessionStorage.getItem( '_nav_path' ) );
+  let openTabs = JSON.parse(
+    webStorageProxy.getItem( '_tab_ids', _localStorage )
+  );
+  let tabId = webStorageProxy.getItem( '_tab_id', _sessionStorage );
+  let navPath = JSON.parse(
+    webStorageProxy.getItem( '_nav_path', _sessionStorage )
+  );
   const curPage = document.location.href;
   let newTab = false;
   const origin = document.location.origin;
@@ -58,15 +77,21 @@ const TabNavigationTracking = ( () => {
     let index;
 
     // Get the most recent values from storage
-    openTabs = JSON.parse( localStorage.getItem( '_tab_ids' ) );
-    tabId = sessionStorage.getItem( '_tab_id' );
+    openTabs = JSON.parse(
+      webStorageProxy.getItem( '_tab_ids', _localStorage )
+    );
+    tabId = webStorageProxy.getItem( '_tab_id', _sessionStorage );
 
     if ( openTabs !== null && tabId !== null ) {
       index = openTabs.indexOf( tabId );
       if ( index > -1 ) {
         openTabs.splice( index, 1 );
       }
-      localStorage.setItem( '_tab_ids', JSON.stringify( openTabs ) );
+      webStorageProxy.setItem(
+        '_tab_ids',
+        JSON.stringify( openTabs ),
+        _localStorage
+      );
     }
 
   }
@@ -105,14 +130,18 @@ const TabNavigationTracking = ( () => {
   if ( tabId === null ) {
     tabId = generateTabId();
     newTab = true;
-    sessionStorage.setItem( '_tab_id', tabId );
+    webStorageProxy.setItem( '_tab_id', tabId, _sessionStorage );
   }
 
   openTabs = openTabs || [];
 
   if ( openTabs.indexOf( tabId ) === -1 ) {
     openTabs.push( tabId );
-    localStorage.setItem( '_tab_ids', JSON.stringify( openTabs ) );
+    webStorageProxy.setItem(
+      '_tab_ids',
+      JSON.stringify( openTabs ),
+      _localStorage
+    );
   }
 
   const tabCount = openTabs.length;
@@ -159,7 +188,11 @@ const TabNavigationTracking = ( () => {
       navPath.push( curPage );
     }
     try {
-      sessionStorage.setItem( '_nav_path', JSON.stringify( navPath ) );
+      webStorageProxy.setItem(
+        '_nav_path',
+        JSON.stringify( navPath ),
+        sessionStorage
+      );
     } catch ( exception ) {
       console.log( exception );
     }

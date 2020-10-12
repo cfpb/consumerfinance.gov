@@ -13,6 +13,7 @@ jobs:
           - lint-current
           - validate-migrations
           - validate-assets
+          - validate-translations
           - unittest-current
           - unittest-future
 
@@ -29,9 +30,13 @@ jobs:
         - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
+        
     steps:
       - uses: actions/checkout@v2
+
+      # Make sure we have gettext installed for the translation validation
+      - run: |
+          sudo apt-get install gettext
 
       - name: Set up Python
         uses: actions/setup-python@v1
@@ -46,8 +51,8 @@ jobs:
       - name: Run tox -e ${{ matrix.toxenv }}
         run: |
           tox -e ${{ matrix.toxenv }}
-        env: 
-          TEST_RUNNER: cfgov.test.StdoutCapturingTestRunner 
+        env:
+          TEST_RUNNER: core.testutils.runners.StdoutCapturingTestRunner
 
       - name: Prepare test coverage
         if: matrix.toxenv == 'unittest-current'
@@ -88,4 +93,4 @@ jobs:
 
       - name: Check backend test coverage
         run: |
-          diff-cover backend_coverage/coverage.xml --fail-under=100
+          diff-cover backend_coverage/coverage.xml --compare-branch=origin/main --fail-under=100

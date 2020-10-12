@@ -1,0 +1,50 @@
+/* topdoc
+  name: Archived banner
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-archived-banner">
+            <div class="m-archived-banner_content">
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-archived-banner
+            .m-archived-banner_content
+  tags:
+    - cfgov-molecules
+*/
+
+.m-archived-banner {
+    background-color: @teal-mid-dark;
+    position: relative;
+    color: @white;
+    
+    .content_wrapper {
+      padding: unit( @grid_gutter-width / @base-font-size-px, em )
+               unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+      box-sizing: border-box;
+    }
+    .cf-icon-svg {
+        fill: @white;
+        position: absolute;
+    }
+
+    .cf-icon-svg + &_content {
+        padding-left: unit( 25px / @base-font-size-px, em );
+    }
+
+     .respond-to-min( @bp-sm-min, {
+        .cf-icon-svg {
+            font-size: unit( @size-iv / @base-font-size-px, em );
+        }
+    });
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

@@ -93,11 +93,12 @@ function setStorage( storage ) {
  * @param {Object} storage
  *   Use non-persistent storage (sessionStorage)
  *   or persistent storage (localStorage).
+ *   Default is sessionStorage.
  * @returns {Object} A local storage or session storage instance.
  */
 function _getStorageType( storage ) {
   // Use default setting if none is provided.
-  if ( typeof storage !== 'object' ) {
+  if ( storage === null || typeof storage !== 'object' ) {
     if ( typeof _storage === 'undefined' ) {
       try {
         storage = window.sessionStorage;
@@ -114,7 +115,7 @@ function _getStorageType( storage ) {
 }
 
 // Expose public methods.
-export {
+export default {
   setItem,
   getItem,
   removeItem,

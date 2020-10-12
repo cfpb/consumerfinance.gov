@@ -3,21 +3,27 @@ from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
 
+# This utility file exists to support date input fields that are typeable
+# text inputs, which occur in browsers that don't support the date input field
+# https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
+
 # For more information on date formatting, see the python documentation here:
 # https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
 
 full_date_patterns = (
-    '%m/%d/%Y',     # 10/25/2016, 9/1/2016
-    '%m-%d-%Y',     # 10-25-2016, 9-1-2016
-    '%m/%d/%y',     # 10/25/16, 9/1/16
-    '%m-%d-%y',     # 10-25-16, 9-1-16
+    '%m/%d/%Y',     # 10/25/2016, 09/01/2016
+    '%m-%d-%Y',     # 10-25-2016, 09-01-2016
+    '%Y-%m-%d',     # 2016-10-25, 2016-09-01
+    '%m/%d/%y',     # 10/25/16, 09/01/16
+    '%m-%d-%y',     # 10-25-16, 09-01-16
 )
 
 month_year_date_patterns = (
-    '%m/%Y',        # 10/2016, 7/2017
-    '%m-%Y',        # 10-2016, 7-2017
-    '%m/%y',        # 10/16, 4/18
-    '%m-%y',        # 10-16, 4-18
+    '%m/%Y',        # 10/2016, 07/2017
+    '%m-%Y',        # 10-2016, 07-2017
+    '%Y-%m',        # 2016-10, 2017-07
+    '%m/%y',        # 10/16, 04/18
+    '%m-%y',        # 10-16, 04-18
 )
 
 year_date_patterns = (

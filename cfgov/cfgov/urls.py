@@ -1,4 +1,3 @@
-import re
 from functools import partial
 
 from django.conf import settings
@@ -6,12 +5,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.http import Http404, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
-from wagtail.documents import urls as wagtaildocs_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
@@ -37,6 +35,7 @@ from v1.views import (
     change_password, check_permissions, login_with_lockout,
     password_reset_confirm
 )
+from v1.views.documents import DocumentServeView
 
 
 try:
@@ -82,9 +81,16 @@ def empty_200_response(request, *args, **kwargs):
 
 
 urlpatterns = [
+
     re_path(r'^rural-or-underserved-tool/$', TemplateView.as_view(
         template_name='rural-or-underserved/index.html'),
         name='rural-or-underserved'),
+
+    re_path(
+        r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
+        DocumentServeView.as_view(),
+        name='wagtaildocs_serve'
+    ),
 
     re_path(
         r'^home/(?P<path>.*)$',
@@ -515,25 +521,6 @@ urlpatterns = [
         'BETA_EXTERNAL_TESTING',
         r'^beta_external_testing/',
         empty_200_response),
-
-    # put financial well-being pages behind feature flag for testing
-    flagged_wagtail_only_view(
-        'FINANCIAL_WELLBEING_HUB',
-        r'^practitioner-resources/financial-well-being-resources/',
-        'financial-well-being-resources'
-    ),
-
-    # Temporary: HMDA Legacy pages
-    # Will be deleted when HMDA API is retired (hopefully Summer 2019)
-    re_path(
-        r'data-research/hmda/explore$',
-        FlaggedTemplateView.as_view(
-            flag_name='HMDA_LEGACY_PUBLISH',
-            template_name='hmda/orange-explorer.html'
-        ),
-        name='legacy_explorer_published'
-    ),
-
 ]
 
 # Ask CFPB category and subcategory redirects
@@ -726,7 +713,6 @@ if settings.ALLOW_ADMIN_URL:
         ),
         re_path(r'^admin/autocomplete/', include(autocomplete_admin_urls)),
         re_path(r'^admin/', include(wagtailadmin_urls)),
-        re_path(r'^documents/', include(wagtaildocs_urls))
 
     ]
 
@@ -768,31 +754,5 @@ def handle_error(code, request, exception=None):
                             "HTTP Error %s." % str(code), status=code)
 
 
-def handle_404_error(code, request, exception=None):
-    """Attempt to self-heal 404-ing URLs.
-
-    Takes a 404ing request and tries to transform it to a successful request
-    by lowercasing the path and stripping extraneous characters from the end.
-    If those result in a modified path, redirect to the modified path.
-    If the path did not change, this is a legitimate 404, so continue handling
-    that as normal.
-    """
-
-    # Lowercase the path.
-    path = request.path.lower()
-
-    # Check for and remove extraneous characters at the end of the path.
-    extraneous_char_re = re.compile(
-        r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
-    )
-    path = extraneous_char_re.sub('', path)
-
-    # If the path has changed, redirect to the new path.
-    if path != request.path:
-        return redirect(path, permanent=True)
-
-    return handle_error(code, request, exception)
-
-
-handler404 = partial(handle_404_error, 404)
+handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)

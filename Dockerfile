@@ -14,7 +14,7 @@ ENV SCL_PYTHON_VERSION ${scl_python_version}
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
 
-ENV APP_HOME /src/cfgov-refresh
+ENV APP_HOME /src/consumerfinance.gov
 RUN mkdir -p ${APP_HOME}
 WORKDIR ${APP_HOME}
 
@@ -34,6 +34,7 @@ RUN yum -y install \
         mailcap \
         postgresql10 \
         which \
+        gettext \
         ${SCL_PYTHON_VERSION} && \
     yum clean all && rm -rf /var/cache/yum && \
     echo "source scl_source enable ${SCL_PYTHON_VERSION}" > /etc/profile.d/enable_scl_python.sh && \

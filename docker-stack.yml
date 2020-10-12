@@ -3,18 +3,34 @@
 version: "3.7"
 
 services:
-  elasticsearch:
-    image: elasticsearch:2.4-alpine
-    user: elasticsearch
+  elasticsearch2:
+    image: ${CFGOV_ES2_IMAGE}
     deploy:
       placement:
         constraints:
           - node.role!=manager
       restart_policy:
-        condition: none
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
     networks:
       - app
-
+  elasticsearch:
+    image: ${CFGOV_ES_IMAGE}
+    environment:
+      discovery.type: single-node
+    deploy:
+      placement:
+        constraints:
+          - node.role!=manager
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - app
   postgres:
     image: postgres:10-alpine
     user: postgres
@@ -23,7 +39,10 @@ services:
         constraints:
           - node.role!=manager
       restart_policy:
-        condition: none
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
     environment:
       POSTGRES_USER: cfpb
       POSTGRES_PASSWORD_FILE: /var/run/secrets/PGPASSWORD
@@ -40,25 +59,21 @@ services:
     environment:
       ALLOW_ADMIN_URL: "True"
       APACHE_PORT: 8000
-      APACHE_UPLOADS_F_ALIAS: /src/cfgov-refresh/cfgov/f/
+      APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
-      ES_HOST: elasticsearch
+      ES_HOST: elasticsearch2
+      ES7_HOST: http://elasticsearch:9200
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
-      MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
+      MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
       REFRESH_DB: ${REFRESH_DB}
-      S3_ENABLED: "True"
     ports:
       - 8000
     networks:
       - app
       - lb
     secrets:
-      - AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY
-      - AWS_STORAGE_BUCKET_NAME
-      - AWS_S3_URL
       - CFGOV_PROD_DB_LOCATION
       - DJANGO_ADMIN_PASSWORD
       - GOVDELIVERY_USER
@@ -70,7 +85,10 @@ services:
         constraints:
           - node.role!=manager
       restart_policy:
-        condition: none
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
       labels:
         - com.docker.lb.hosts=${CFGOV_HOSTNAME}
         - com.docker.lb.port=8000
@@ -84,9 +102,12 @@ services:
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
                     ./refresh-data.sh 
-                    ./cfgov/manage.py update_index
                 fi
+
+                ./cfgov/manage.py update_index
                 
+                ./cfgov/manage.py search_index --rebuild -f --parallel
+
                 httpd -d cfgov/apache -D FOREGROUND"
 
 networks:
@@ -96,18 +117,6 @@ networks:
     external: True
 
 secrets:
-  AWS_ACCESS_KEY_ID:
-    name: aws_access_key
-    external: True
-  AWS_SECRET_ACCESS_KEY:
-    name: aws_secret_key
-    external: True
-  AWS_STORAGE_BUCKET_NAME:
-    name: aws_s3_storage_bucket_name
-    external: True
-  AWS_S3_URL:
-    name: aws_s3_url
-    external: True
   CFGOV_PROD_DB_LOCATION:
     name: cfgov_prod_db_location
     external: True

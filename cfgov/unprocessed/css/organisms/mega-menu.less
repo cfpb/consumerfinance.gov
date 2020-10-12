@@ -629,7 +629,7 @@ body {
             &-overview-link {
                 position: relative;
                 // Colors for :link, :visited, :hover, :focus, :active.
-                .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
+                .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @navy-dark );
 
                 padding-top: unit( 15px / 18px, em );
                 padding-bottom: unit( 15px / 18px, em );
@@ -902,10 +902,11 @@ body {
                     }
                 }
 
+                // Adjusts position by 2px to accommodate longer titles
                 &-icon-closed .cf-icon-svg,
                 &-icon-open .cf-icon-svg {
                     position: absolute;
-                    right: unit( 24px / @base-font-size-px, em );
+                    right: unit( ( 15px - 2px ) / @base-font-size-px, rem );
                     top: 19px;
                     font-size: unit( 10px / @base-font-size-px, em );
                 }
@@ -922,9 +923,9 @@ body {
                     display: none;
                 }
 
-                // Add padding to accommodate caret.
+                // Add padding to accommodate caret, removing 2px to accommodate longer titles.
                 &__has-children {
-                    padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+                    padding-right: unit( ( @grid_gutter-width - 2px ) / @base-font-size-px, em );
                 }
 
                 &__current {
@@ -973,7 +974,7 @@ body {
                 padding: unit( @grid_gutter-width / @base-font-size-px, em );
                 padding-top: unit( 20px / @base-font-size-px, em );
                 padding-left: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
-                padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+                padding-right: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
             }
 
             &-alt-trigger {
@@ -1045,6 +1046,7 @@ body {
                 margin-bottom: unit( 30px / @base-font-size-px, em );
                 border: 1px solid @gray-40;
                 border-top: 6px solid @gold;
+                box-sizing: border-box;
             }
 
             &-list__featured &-link {
@@ -1126,6 +1128,15 @@ body {
         &_content-2 {
             left: -@grid_gutter-width;
             width: @menu_max_width_px + ( @grid_gutter-width * 2 );
+        }
+
+    } );
+
+    // Normalize second level width between 901px and 1260px
+    .respond-to-range( @bp-med-min, @bp-lg-max + @grid_gutter-width, {
+
+        &_content-2 {
+            width: 100%;
         }
 
     } );

@@ -122,6 +122,24 @@ export class AdminPage {
     this.submitForm();
   }
 
+  openPage( name ) {
+    cy.get( '.c-explorer__item__link' ).contains( name ).click();
+  }
+
+  openCFGovPage() {
+    this.openNavigationTab( 'Pages' );
+    this.openPage( 'CFGov' );
+  }
+
+  addBlogChildPage() {
+    cy.get( 'a' ).contains( 'Add child page' ).click();
+    cy.get( 'a' ).contains( 'Blog page' ).click();
+  }
+
+  addFullWidthTextElement() {
+    cy.get( '.action-add-block-full_width_text' ).click();
+  }
+
   openBuildingBlockActivity() {
     this.openNavigationTab( 'TDP Activity' );
     this.selectSubMenu( 'Building Block' );
@@ -197,4 +215,40 @@ export class AdminPage {
     return cy.get( '.listing' ).find( 'tr' );
   }
 
+  addTable() {
+    cy.get( '.action-add-block-table_block' ).click();
+  }
+
+  selectFirstTableCell() {
+    cy.get( '.htCore' ).find( 'td' ).first().click().click();
+  }
+
+  selectTableEditorButton( name ) {
+    cy.get( '.modal-body' ).find( `[name="${ name }"]` ).click();
+  }
+
+  saveTableEditor() {
+    // wait 1 second because editor has lag between input and appearing in editor
+    cy.wait( 1000 );
+    cy.get( '#table-block-save-btn' ).click();
+  }
+
+  selectTableEditorTextbox() {
+    return cy.get( '.modal-body' ).find( '.public-DraftEditor-content' ).click();
+  }
+
+  typeTableEditorTextbox( text ) {
+    return cy.get( '.modal-body' ).find( '.DraftEditor-editorContainer' ).type( text );
+  }
+
+  selectInternalLink( text ) {
+    cy.get( '.choose-page' ).contains( text ).click();
+  }
+
+  selectDocumentLink( text ) {
+    cy.get( '#id_q' ).invoke( 'val', text ).trigger( 'change' );
+    cy.get( '#id_q' ).type( ' ' );
+    cy.wait( 3000 );
+    cy.get( '.document-choice' ).contains( text ).click();
+  }
 }

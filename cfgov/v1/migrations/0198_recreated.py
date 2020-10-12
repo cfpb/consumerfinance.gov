@@ -16,7 +16,7 @@ import v1.atomic_elements.organisms
 import v1.blocks
 import v1.feeds
 import v1.models.snippets
-import v1.util.filterable_list
+import v1.models.filterable_list_mixins
 import v1.util.ref
 from wagtail.core import blocks as core_blocks
 from wagtail.core import fields as core_fields
@@ -587,7 +587,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.feeds.FilterableFeedPageMixin, v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
+            bases=(v1.models.filterable_list_mixins.FilterableListMixin, 'v1.cfgovpage'),
         ),
         migrations.CreateModel(
             name='BrowsePage',
@@ -636,7 +636,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.feeds.FilterableFeedPageMixin, v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
+            bases=(v1.models.filterable_list_mixins.FilterableListMixin, 'v1.cfgovpage'),
         ),
         migrations.CreateModel(
             name='SublandingPage',

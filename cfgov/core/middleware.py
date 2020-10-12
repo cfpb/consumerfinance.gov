@@ -1,6 +1,7 @@
 import re
 
 from django.conf import settings
+from django.shortcuts import redirect
 from django.utils import translation
 from django.utils.encoding import force_str
 
@@ -60,7 +61,10 @@ class ParseLinksMiddleware(object):
 
     def __call__(self, request):
         response = self.get_response(request)
-        if self.should_parse_links(request.path, response['content-type']):
+        if self.should_parse_links(
+            request.path,
+            response.get('Content-Type', '')
+        ):
             response.content = parse_links(
                 response.content,
                 request.path,
@@ -95,4 +99,38 @@ class DeactivateTranslationsMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
         translation.deactivate()
+        return response
+
+
+class SelfHealingMiddleware:
+    """Attempt to self-heal 404-ing URLs.
+    Takes a 404ing request and tries to transform it to a successful request
+    by lowercasing the path and stripping extraneous characters from the end.
+    If those result in a modified path, redirect to the modified path.
+    If the path did not change, this is a legitimate 404, so continue handling
+    that as normal.
+    """
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+
+        # If this request isn't 404ing, just return the existing response.
+        if response.status_code != 404:
+            return response
+
+        # Lowercase the path.
+        path = request.path.lower()
+
+        # Check for and remove extraneous characters at the end of the path.
+        extraneous_char_re = re.compile(
+            r'[`~!@#$%^&*()\-_–—=+\[\]{}\\|;:\'‘’"“”,.…<>? ]+$'
+        )
+        path = extraneous_char_re.sub('', path)
+
+        # If the path has changed, redirect to the new path.
+        if path != request.path:
+            return redirect(path, permanent=True)
+
         return response

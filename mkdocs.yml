@@ -1,6 +1,6 @@
-site_name: cfgov-refresh
+site_name: consumerfinance.gov
 
-repo_url: https://github.com/cfpb/cfgov-refresh
+repo_url: https://github.com/cfpb/consumerfinance.gov
 
 nav:
 - Introduction: index.md
@@ -37,7 +37,6 @@ nav:
     - Ask CFPB: ask-cfpb.md
     - Consumer Complaints: consumer-complaint-database.md
     - Find a Housing Counselor Tool: housing-counselor-tool.md
-    - HMDA Data: hmda.md
     - Website Feedback: website-feedback.md
 
 theme:
