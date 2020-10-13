@@ -134,7 +134,7 @@ pipeline {
         }
         stage('Build ElasticSearch') {
             when {
-                  expression { return params.BUILD_ES }
+                  expression { return params.BUILD_ES2 }
             }
             environment {
                 DOCKER_BUILDKIT = '1'
