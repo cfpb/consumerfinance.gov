@@ -34,7 +34,7 @@ pipeline {
         )
         booleanParam(
             name: 'BUILD_ES2',
-            defaultValue: true,
+            defaultValue: false,
             description: 'Build the elasticsearch 2.3 image?'
         )
     }
