@@ -25,6 +25,15 @@ INSTALLED_APPS += (
     "wagtail.contrib.styleguide",
 )
 
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': os.path.join("http://",
+            os.environ.get("ES7_HOST", "localhost"), ":",
+            os.environ.get("ES_PORT", "9200"))
+    },
+}
+
+
 STATIC_ROOT = REPOSITORY_ROOT.child("collectstatic")
 
 ALLOW_ADMIN_URL = DEBUG or os.environ.get("ALLOW_ADMIN_URL", False)

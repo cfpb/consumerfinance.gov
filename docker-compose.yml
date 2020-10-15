@@ -20,6 +20,8 @@ services:
             - "9300:9300"
         environment:
             discovery.type: single-node
+        volumes:
+            - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
     kibana:
         image: blacktop/kibana:7.4
         depends_on:
