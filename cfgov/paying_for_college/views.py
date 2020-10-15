@@ -15,6 +15,7 @@ from paying_for_college.forms import FeedbackForm
 from paying_for_college.models import (
     ConstantCap, ConstantRate, Feedback, Notification, Program, School
 )
+from paying_for_college.models.search import SchoolSearch, make_safe
 
 
 BASEDIR = os.path.dirname(__file__)
@@ -292,6 +293,19 @@ class ConstantsRepresentation(View):
                             content_type='application/json')
 
 
+def school_autocomplete(request):
+    term = request.GET.get('term', '').strip()
+    safe_term = make_safe(term)
+    if not safe_term:
+        return HttpResponse(json.dumps([]), content_type='application/json')
+    try:
+        results = SchoolSearch(search_term=safe_term).autocomplete()
+        response = json.dumps(results)
+        return HttpResponse(response, content_type='application/json')
+    except IndexError:
+        return HttpResponse(json.dumps([]), content_type='application/json')
+
+
 def school_search_api(request):
     sqs = SearchQuerySet().models(School)
     sqs = sqs.autocomplete(autocomplete=request.GET.get('q', ''))
@@ -306,6 +320,42 @@ def school_search_api(request):
                 for school in sqs]
     json_doc = json.dumps(document)
 
+    return HttpResponse(json_doc, content_type='application/json')
+
+
+def school_search(request):
+    # If there's no query string, don't search
+    search_term = request.GET.get('q', '').strip()
+    # Check if we want to use the suggestion or not
+    suggest = request.GET.get('correct', '1') == '1'
+    if not search_term:
+        return HttpResponse(json.dumps([]), content_type='application/json')
+
+    response = SchoolSearch(search_term=search_term).search()
+    if suggest:
+        suggestion = response.suggest().get('suggestion')
+
+    if response.get('results'):
+        suggestion = search_term
+
+    document = {
+        'query': search_term,
+        'result_query': make_safe(search_term).strip(),
+        'suggestion': make_safe(suggestion).strip(),
+        'results': [
+            {
+                'schoolname': school.text,
+                'id': school.school_id,
+                'city': school.city,
+                'nicknames': school.nicknames,
+                'state': school.state,
+                'url': reverse("paying_for_college:disclosures:school-json",
+                               args=[school.school_id]),
+            }
+            for school in response.get('results')
+        ]
+    }
+    json_doc = json.dumps(document)
     return HttpResponse(json_doc, content_type='application/json')
 
 

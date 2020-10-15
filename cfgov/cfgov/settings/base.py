@@ -772,6 +772,8 @@ FLAGS = {
     "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
     # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
     "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack in paying_for_college app.
+    "ELASTICSEARCH_DSL_PFC": [("boolean", False)],
 }
 
 
