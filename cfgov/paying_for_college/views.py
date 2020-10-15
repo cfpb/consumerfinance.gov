@@ -306,6 +306,7 @@ def school_autocomplete(request):
         return HttpResponse(json.dumps([]), content_type='application/json')
 
 
+# TODO: delete the school_search_api function after we migrate to ES7
 def school_search_api(request):
     sqs = SearchQuerySet().models(School)
     sqs = sqs.autocomplete(autocomplete=request.GET.get('q', ''))
