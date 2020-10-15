@@ -1,8 +1,19 @@
 from django.conf import settings
+import re
 
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
+
+
+def strip_html(markup):
+    """
+    Make sure markup stripping doesn't mash content elements together.
+
+    Also remove no-break space characters.
+    """
+    clean = re.compile("<.*?>")
+    return re.sub(clean, " ", markup).strip().replace("\xa0", "")
 
 
 UNSAFE_CHARACTERS = [
