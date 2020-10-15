@@ -22,7 +22,7 @@ import { urlParameters } from '../util/url-parameter-utils.js';
 function initializeExpenseValues() {
   const expenseItems = document.querySelectorAll( '[data-expenses-item]' );
   expenseItems.forEach( elem => {
-    expenseModel.setValue( elem.dataset.expensesItem, 0, false );
+    expensesModel.setValue( elem.dataset.expensesItem, 0, false );
   } );
 }
 
@@ -94,7 +94,6 @@ function updateRegion( region ) {
 function refreshExpenses() {
   expensesModel.setValuesByRegion( schoolModel.values.region );
 }
-
 
 
 /**
