@@ -15,9 +15,9 @@ class SchoolDocumentTest(TestCase):
         prepared_data = doc.prepare(school)
         self.assertEqual(prepared_data, {
             'autocomplete': doc.prepare_autocomplete(school),
-            'city': doc.prepare_city(school),
+            'city': school.city,
             'nicknames': doc.prepare_nicknames(school),
             'school_id': school.school_id,
-            'state': doc.prepare_state(school),
+            'state': school.state,
             'text': school.settlement_school,
         })
