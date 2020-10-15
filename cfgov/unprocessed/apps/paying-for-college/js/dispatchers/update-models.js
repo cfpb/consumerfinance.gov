@@ -95,7 +95,6 @@ function refreshExpenses() {
   expensesModel.setValuesByRegion( schoolModel.values.region );
 }
 
-
 /**
   * updateSchoolData - Fetch API data for school and update the model
   * @param {String} iped - The id of the school
