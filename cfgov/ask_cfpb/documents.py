@@ -1,36 +1,8 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 from ask_cfpb.models.answer_page import AnswerPage
-
-
-label_autocomplete = analyzer(
-    'label_autocomplete',
-    tokenizer=tokenizer(
-        'trigram',
-        'edge_ngram',
-        min_gram=2,
-        max_gram=25,
-        token_chars=["letter", "digit"]
-    ),
-    filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
-)
-
-synonynm_filter = token_filter(
-    'synonym_filter_en',
-    'synonym',
-    synonyms_path='/usr/share/elasticsearch/config/synonyms/synonyms_en.txt'
-)
-
-synonym_analyzer = analyzer(
-    'synonym_analyzer_en',
-    type='custom',
-    tokenizer='standard',
-    filter=[
-        synonynm_filter,
-        'lowercase'
-    ])
+from search.elasticsearch_helpers import label_autocomplete, synonym_analyzer
 
 
 @registry.register_document
