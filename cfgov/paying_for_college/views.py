@@ -327,22 +327,13 @@ def school_search_api(request):
 def school_search(request):
     # If there's no query string, don't search
     search_term = request.GET.get('q', '').strip()
-    # Check if we want to use the suggestion or not
-    suggest = request.GET.get('correct', '1') == '1'
     if not search_term:
         return HttpResponse(json.dumps([]), content_type='application/json')
-
-    response = SchoolSearch(search_term=search_term).search()
-    if suggest:
-        suggestion = response.suggest().get('suggestion')
-
-    if response.get('results'):
-        suggestion = search_term
+    response = SchoolSearch(search_term).search()
 
     document = {
         'query': search_term,
         'result_query': make_safe(search_term).strip(),
-        'suggestion': make_safe(suggestion).strip(),
         'results': [
             {
                 'schoolname': school.text,
@@ -350,6 +341,7 @@ def school_search(request):
                 'city': school.city,
                 'nicknames': school.nicknames,
                 'state': school.state,
+                'zip5': school.zip5,
                 'url': reverse("paying_for_college:disclosures:school-json",
                                args=[school.school_id]),
             }
