@@ -8,8 +8,7 @@ class SchoolDocumentTest(TestCase):
 
     def test_prepare(self):
         school = School(school_id="999999",
-                        settlement_school="Example University",
-                        city="Example City", state="VA")
+                        city="Example City", state="VA", zip5="12345")
         doc = SchoolDocument()
 
         prepared_data = doc.prepare(school)
@@ -19,5 +18,6 @@ class SchoolDocumentTest(TestCase):
             'nicknames': doc.prepare_nicknames(school),
             'school_id': school.school_id,
             'state': school.state,
-            'text': school.settlement_school,
+            'text': doc.prepare_primary_alias(school),
+            'zip5': school.zip5,
         })
