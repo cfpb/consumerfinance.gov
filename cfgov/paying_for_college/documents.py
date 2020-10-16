@@ -9,13 +9,16 @@ from search.elasticsearch_helpers import label_autocomplete
 class SchoolDocument(Document):
 
     autocomplete = fields.TextField(analyzer=label_autocomplete)
-    text = fields.TextField(attr='settlement_school')
+    text = fields.TextField(attr='primary_alias', boost=10)
     nicknames = fields.TextField()
 
     def prepare_autocomplete(self, instance):
         alias_strings = [a.alias for a in instance.alias_set.all()]
         nickname_strings = [n.nickname for n in instance.nickname_set.all()]
         return alias_strings + nickname_strings
+
+    def prepare_primary_alias(self, instance):
+        return instance.primary_alias
 
     def prepare_nicknames(self, instance):
         return [n.nickname for n in instance.nickname_set.all()]
@@ -32,4 +35,5 @@ class SchoolDocument(Document):
             'school_id',
             'city',
             'state',
+            'zip5',
         ]
