@@ -4,12 +4,13 @@ import unittest
 
 import django
 from django.http import HttpRequest
-from django.test import RequestFactory
+from django.test import RequestFactory, override_settings
 from django.urls import reverse
 
 import mock
 
 from paying_for_college.models import Program, School
+from paying_for_college.models.search import SchoolSearch
 from paying_for_college.views import (
     EXPENSE_FILE, Feedback, get_json_file, get_program, get_program_length,
     get_school, school_search_api, validate_oid, validate_pid
@@ -129,6 +130,7 @@ class SchoolSearchTest(django.test.TestCase):
             self.city = ""
             self.state = ""
             self.nicknames = ""
+            self.zip5 = ""
 
     def test_get_school(self):
         """test grabbing a school by ID"""
@@ -173,6 +175,34 @@ class SchoolSearchTest(django.test.TestCase):
         self.assertTrue(b"Kansas" in resp.content)
         self.assertTrue(b"155317" in resp.content)
         self.assertTrue(b"Jayhawks" in resp.content)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    @mock.patch.object(SchoolSearch, 'search')
+    def test_school_search(self, mock_search):
+        mock_school = School.objects.get(pk=155317)
+        # mock the search returned value
+        mock_return = mock.Mock()
+        mock_return.text = mock_school.primary_alias
+        mock_return.school_id = mock_school.school_id
+        mock_return.city = mock_school.city
+        mock_return.state = mock_school.state
+        mock_return.zip5 = mock_school.zip5
+        mock_return.nicknames = "Jayhawks"
+        mock_queryset = mock.Mock()
+        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
+        mock_queryset.count.return_value = 1
+        mock_search().query().highlight().filter().sort() \
+            .__getitem__().execute.return_value = [mock_return]
+        mock_count = mock.Mock(return_value=1)
+        mock_search().query().highlight().count = mock_count
+        mock_search().query().highlight().filter().sort() \
+            .__getitem__().count = mock_count
+        response = self.client.get(
+            reverse("paying_for_college:disclosures:school_search"),
+            {"q": "Kansas"}
+        )
+        self.assertEqual(mock_search.call_count, 3)
+        self.assertEqual(response.status_code, 200)
 
 
 class OfferTest(django.test.TestCase):
