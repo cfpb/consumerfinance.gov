@@ -428,9 +428,14 @@ ELASTICSEARCH_DSL_AUTO_REFRESH = False
 ELASTICSEARCH_DSL_AUTOSYNC = False
 
 if os.environ.get('USE_AWS_ES', False):
-    awsauth = AWS4Auth(os.environ.get('AWS_ES_ACCESS_KEY'), os.environ.get('AWS_ES_SECRET_KEY'), 'us-east-1', 'es')
+    awsauth = AWS4Auth(
+        os.environ.get('AWS_ES_ACCESS_KEY'),
+        os.environ.get('AWS_ES_SECRET_KEY'),
+        'us-east-1',
+        'es'
+    )
     host = os.environ.get('ES7_HOST', '')
-    ELASTICSEARCH_DSL={
+    ELASTICSEARCH_DSL = {
         'default': {
             'hosts': [{'host': host, 'port': 443}],
             'http_auth': awsauth,
@@ -439,12 +444,10 @@ if os.environ.get('USE_AWS_ES', False):
         },
     }
 else:
-    ELASTICSEARCH_DSL={
-        'default': {
-            'hosts': os.path.join("http://",
-                os.environ.get("ES7_HOST", "localhost"), ":",
-                os.environ.get("ES_PORT", "9200"))
-        },
+    host = os.environ.get("ES7_HOST", "localhost")
+    port = os.environ.get("ES_PORT", "9200")
+    ELASTICSEARCH_DSL = {
+        "default": {"hosts": f"http://{host}:{port}"}
     }
 
 # S3 Configuration
