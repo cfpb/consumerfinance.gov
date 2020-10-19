@@ -1,4 +1,4 @@
-FROM blacktop/elasticsearch:7.4
+FROM blacktop/elasticsearch:7.7
 
 # Copy Synonyms files into ElasticSearch
 COPY ./cfgov/search/resources/ /usr/share/elasticsearch/config/synonyms
