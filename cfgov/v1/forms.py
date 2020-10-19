@@ -247,15 +247,15 @@ class FilterableListForm(forms.Form):
     # Returns a list of query strings to associate for each field, ordered by
     # the field declaration for the form. Note: THEY MUST BE ORDERED IN THE
     # SAME WAY AS THEY ARE DECLARED IN THE FORM DEFINITION.
-    def get_query_strings(self):  # pragma: no cover
+    def get_query_strings(self):
         return [
-            'title__icontains',       # title
-            'date_published__gte',    # from_date
-            'date_published__lte',    # to_date
-            'categories__name__in',   # categories
-            'tags__slug__in',         # topics
-            'authors__slug__in',      # authors
-            'is_archived',            # archived
+            'title__icontains',      # title
+            'date_published__gte',   # from_date
+            'date_published__lte',   # to_date
+            'categories__name__in',  # categories
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
+            'is_archived',           # archived
         ]
 
     def clean_archived(self):
