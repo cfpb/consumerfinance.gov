@@ -18,7 +18,6 @@ class SchoolSearch:
         self.search_term = make_safe(search_term).strip()
         self.base_query = base_query
         self.results = []
-        self.suggestion = None
 
     def autocomplete(self):
         s = SchoolDocument.search().query(
@@ -41,28 +40,5 @@ class SchoolSearch:
         self.results = search.execute()[0:total_results]
         return {
             'search_term': self.search_term,
-            'suggestion': self.suggestion,
-            'results': self.results
-        }
-
-    def suggest(self):
-        s = SchoolDocument.search().suggest(
-            'suggestion', self.search_term, term={'field': 'text'})
-        response = s.execute()
-        try:
-            self.suggestion = response.suggest.suggestion[0].options[0].text
-        except IndexError:
-            self.suggestion = self.search_term
-
-        if self.suggestion != self.search_term:
-            search = self.base_query or SchoolDocument.search()
-            suggest_results = search.query(
-                "match", text=self.suggestion).filter("term")
-            total = suggest_results.count()
-            suggest_results = suggest_results[0:total]
-            self.results = suggest_results.execute()[0:total]
-        return {
-            'search_term': self.suggestion,
-            'suggestion': self.search_term,
             'results': self.results
         }
