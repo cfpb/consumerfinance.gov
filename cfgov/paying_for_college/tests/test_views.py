@@ -9,11 +9,13 @@ from django.urls import reverse
 
 import mock
 
+from paying_for_college.documents import SchoolDocument
 from paying_for_college.models import Program, School
 from paying_for_college.models.search import SchoolSearch
 from paying_for_college.views import (
     EXPENSE_FILE, Feedback, get_json_file, get_program, get_program_length,
-    get_school, school_search_api, validate_oid, validate_pid
+    get_school, school_autocomplete, school_search_api, validate_oid,
+    validate_pid
 )
 
 
@@ -175,6 +177,34 @@ class SchoolSearchTest(django.test.TestCase):
         self.assertTrue(b"Kansas" in resp.content)
         self.assertTrue(b"155317" in resp.content)
         self.assertTrue(b"Jayhawks" in resp.content)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    @mock.patch.object(SchoolSearch, 'autocomplete')
+    def test_school_autocomplete_blank_term(self, mock_autocomplete):
+        url = "{}?q=".format(
+            reverse("paying_for_college:disclosures:school_search")
+        )
+        request = RequestFactory().get(url)
+        response = school_autocomplete(request)
+        self.assertEqual(json.loads(response.content), [])
+        self.assertEqual(mock_autocomplete.call_count, 0)
+        self.assertEqual(response.status_code, 200)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    @mock.patch.object(SchoolDocument, 'search')
+    def test_school_autocomplete(self, mock_autocomplete):
+        mock_return = mock.Mock()
+        mock_return.autocomplete = "Kansas"
+        mock_return.url = "url"
+        mock_autocomplete.query.return_value = [mock_return]
+        url = "{}?q=Kanasas".format(
+            reverse("paying_for_college:disclosures:school_search")
+        )
+        request = RequestFactory().get(url)
+        response = school_autocomplete(request)
+        self.assertEqual(json.loads(response.content), [])
+        self.assertEqual(mock_autocomplete.call_count, 0)
+        self.assertEqual(response.status_code, 200)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(SchoolSearch, 'search')
