@@ -12,6 +12,7 @@ from wagtail.admin.menu import MenuItem
 from wagtail.admin.rich_text.converters.editor_html import (
     WhitelistRule as AllowlistRule
 )
+from wagtail.contrib.modeladmin.mixins import ThumbnailMixin
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
@@ -107,7 +108,23 @@ def editor_css():
         'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
+        'css/model-admin.css',
         'css/table-block.css',
+    ]
+
+    css_includes = format_html_join(
+        '\n',
+        '<link rel="stylesheet" href="{0}{1}">',
+        ((settings.STATIC_URL, filename) for filename in css_files)
+    )
+
+    return css_includes
+
+
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    css_files = [
+        'css/model-admin.css',
     ]
 
     css_includes = format_html_join(
@@ -277,11 +294,14 @@ class ResourceTagsFilter(admin.SimpleListFilter):
                 return queryset.filter(tags__slug__iexact=tag[0])
 
 
-class ResourceModelAdmin(ModelAdmin):
+class ResourceModelAdmin(ThumbnailMixin, ModelAdmin):
     model = Resource
     menu_label = 'Resources'
     menu_icon = 'snippet'
-    list_display = ('title', 'desc', 'order', 'thumbnail')
+    list_display = ('title', 'desc', 'order', 'admin_thumb')
+    thumb_image_field_name = 'thumbnail'
+    thumb_image_filter_spec = 'width-100'
+    thumb_image_width = None
     ordering = ('title',)
     list_filter = (ResourceTagsFilter,)
     search_fields = ('title',)

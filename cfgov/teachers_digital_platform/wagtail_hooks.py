@@ -5,6 +5,7 @@ from wagtail.contrib.modeladmin.options import (
 )
 
 from mptt.admin import DraggableMPTTAdmin
+
 from teachers_digital_platform.models import (
     ActivityAgeRange, ActivityBloomsTaxonomyLevel, ActivityBuildingBlock,
     ActivityCouncilForEconEd, ActivityDuration, ActivityGradeLevel,

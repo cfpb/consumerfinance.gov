@@ -7,6 +7,8 @@ from wagtail.tests.utils import WagtailPageTests
 
 import mock
 from model_bakery import baker
+
+from scripts import _atomic_helpers as atomic
 from teachers_digital_platform.models import (
     ActivityAgeRange, ActivityBloomsTaxonomyLevel, ActivityBuildingBlock,
     ActivityCouncilForEconEd, ActivityDuration, ActivityGradeLevel,
@@ -14,8 +16,6 @@ from teachers_digital_platform.models import (
     ActivitySchoolSubject, ActivityStudentCharacteristics,
     ActivityTeachingStrategy, ActivityTopic, ActivityType
 )
-
-from scripts import _atomic_helpers as atomic
 from v1.models import HomePage
 from v1.tests.wagtail_pages.helpers import publish_page
 
