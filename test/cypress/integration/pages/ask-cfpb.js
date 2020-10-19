@@ -22,7 +22,7 @@ describe( 'Ask CFPB', () => {
       search.enter( 'vehile' );
       search.search();
       search.resultsHeader().contains( 'results for “vehicle”' );
-      search.resultsHeader().siblings('p').first().contains( 'Search instead for' );
+      search.resultsHeader().siblings( 'p' ).first().contains( 'Search instead for' );
     } );
   } );
 } );

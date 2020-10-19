@@ -12,7 +12,10 @@ from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
-from ask_cfpb.models import AnswerPage, AnswerResultsPage, AskSearch
+from ask_cfpb.models import (
+    AnswerPage, AnswerPageSearch, AnswerResultsPage, AskSearch
+)
+from ask_cfpb.models.search import make_safe
 
 
 def annotate_links(answer_text):
@@ -98,7 +101,7 @@ def ask_search(request, language='en', as_json=False):
         search.suggest(request=request)
 
     if as_json:
-        results = {
+        payload = {
             'query': search_term,
             'result_query': search.search_term,
             'suggestion': search.suggestion,
@@ -112,7 +115,7 @@ def ask_search(request, language='en', as_json=False):
                 for result in search.queryset
             ]
         }
-        json_results = json.dumps(results)
+        json_results = json.dumps(payload)
         return HttpResponse(json_results, content_type='application/json')
 
     results_page.query = search_term
@@ -121,6 +124,64 @@ def ask_search(request, language='en', as_json=False):
     results_page.answers = [
         (result.url, result.autocomplete, result.preview)
         for result in search.queryset
+    ]
+    return results_page.serve(request)
+
+
+def ask_search_es7(request, language='en', as_json=False):
+    if 'selected_facets' in request.GET:
+        return redirect_ask_search(request, language=language)
+    language_map = {
+        'en': 'ask-cfpb-search-results',
+        'es': 'respuestas'
+    }
+    results_page = get_object_or_404(
+        AnswerResultsPage,
+        language=language,
+        slug=language_map[language]
+    )
+
+    # If there's no query string, don't search
+    search_term = request.GET.get('q', '')
+    # Check if we want to use the suggestion or not
+    suggest = request.GET.get('correct', '1') == '1'
+    if not search_term:
+        results_page.query = ''
+        results_page.result_query = ''
+        return results_page.serve(request)
+
+    page = AnswerPageSearch(search_term, language=language)
+    if suggest:
+        suggestion = page.suggest().get('suggestion')
+
+    response = page.search()
+    if response.get('results'):
+        suggestion = search_term
+
+    if as_json:
+        payload = {
+            'query': search_term,
+            'result_query': make_safe(search_term).strip(),
+            'suggestion': make_safe(suggestion).strip(),
+            'results': [
+                {
+                    'question': result.autocomplete,
+                    'url': result.url,
+                    'text': result.text,
+                    'preview': result.preview,
+                }
+                for result in response.get('results')
+            ]
+        }
+        json_results = json.dumps(payload)
+        return HttpResponse(json_results, content_type='application/json')
+
+    results_page.query = search_term
+    results_page.result_query = response.get('search_term')
+    results_page.suggestion = response.get('suggestion')
+    results_page.answers = [
+        (result.url, result.autocomplete, result.preview)
+        for result in response['results']
     ]
     return results_page.serve(request)
 
@@ -140,6 +201,18 @@ def ask_autocomplete(request, language='en'):
         results = [{'question': result.autocomplete,
                     'url': result.url}
                    for result in sqs[:20]]
+        return JsonResponse(results, safe=False)
+    except IndexError:
+        return JsonResponse([], safe=False)
+
+
+def ask_autocomplete_es7(request, language='en'):
+    term = request.GET.get('term', '')
+    safe_term = make_safe(term)
+    if not safe_term:
+        return JsonResponse([], safe=False)
+    try:
+        results = AnswerPageSearch(search_term=safe_term).autocomplete()
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)

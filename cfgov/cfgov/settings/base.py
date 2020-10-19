@@ -428,9 +428,14 @@ ELASTICSEARCH_DSL_AUTO_REFRESH = False
 ELASTICSEARCH_DSL_AUTOSYNC = False
 
 if os.environ.get('USE_AWS_ES', False):
-    awsauth = AWS4Auth(os.environ.get('AWS_ES_ACCESS_KEY'), os.environ.get('AWS_ES_SECRET_KEY'), 'us-east-1', 'es')
+    awsauth = AWS4Auth(
+        os.environ.get('AWS_ES_ACCESS_KEY'),
+        os.environ.get('AWS_ES_SECRET_KEY'),
+        'us-east-1',
+        'es'
+    )
     host = os.environ.get('ES7_HOST', '')
-    ELASTICSEARCH_DSL={
+    ELASTICSEARCH_DSL = {
         'default': {
             'hosts': [{'host': host, 'port': 443}],
             'http_auth': awsauth,
@@ -439,10 +444,10 @@ if os.environ.get('USE_AWS_ES', False):
         },
     }
 else:
-    ELASTICSEARCH_DSL={
-        'default': {
-            'hosts': os.environ.get('ES7_HOST', 'localhost:9200')
-        },
+    host = os.environ.get("ES7_HOST", "localhost")
+    port = os.environ.get("ES_PORT", "9200")
+    ELASTICSEARCH_DSL = {
+        "default": {"hosts": f"http://{host}:{port}"}
     }
 
 # S3 Configuration
@@ -766,9 +771,10 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Used to enable use of django-elasticsearch-dsl and disable use of Haystack
-    # This will be used in the ask_cfpb and regulations applications
-    "ELASTIC_SEARCH_DSL": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack in the ask_cfpb app.
+    "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
+    "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
 }
 
 
