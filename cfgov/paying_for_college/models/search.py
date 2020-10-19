@@ -22,11 +22,11 @@ class SchoolSearch:
     def autocomplete(self):
         s = SchoolDocument.search().query(
             'match', autocomplete=self.search_term)
-        results = [
+        self.results = [
             {'question': result.autocomplete, 'url': result.url}
             for result in s[:20]
         ]
-        return results
+        return self.results
 
     def search(self):
         if not self.base_query:
