@@ -12,7 +12,7 @@ pipeline {
     environment {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
-        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-74'
+        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
@@ -75,7 +75,7 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                     docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
-                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7.4/Dockerfile .')
+                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7.7/Dockerfile .')
                 }
             }
         }
