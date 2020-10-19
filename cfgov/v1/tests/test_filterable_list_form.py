@@ -156,6 +156,11 @@ class TestFilterableListForm(TestCase):
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 2)
 
+        form.data = {'archived': 'include'}
+        form.full_clean()
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 2)
+
         form.data = {'archived': 'exclude'}
         form.full_clean()
         page_set = form.get_page_set()
