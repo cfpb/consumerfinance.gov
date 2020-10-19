@@ -17,9 +17,6 @@ class SchoolDocument(Document):
         nickname_strings = [n.nickname for n in instance.nickname_set.all()]
         return alias_strings + nickname_strings
 
-    def prepare_primary_alias(self, instance):
-        return instance.primary_alias
-
     def prepare_nicknames(self, instance):
         return [n.nickname for n in instance.nickname_set.all()]
 

@@ -18,6 +18,6 @@ class SchoolDocumentTest(TestCase):
             'nicknames': doc.prepare_nicknames(school),
             'school_id': school.school_id,
             'state': school.state,
-            'text': doc.prepare_primary_alias(school),
+            'text': school.primary_alias,
             'zip5': school.zip5,
         })
