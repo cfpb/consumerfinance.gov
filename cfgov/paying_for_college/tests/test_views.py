@@ -17,14 +17,6 @@ from paying_for_college.views import (
 )
 
 
-# def setup_view(view, request, *args, **kwargs):
-#     """Mimic as_view() returned callable, return view instance instead."""
-#     view.request = request
-#     view.args = args
-#     view.kwargs = kwargs
-#     return view
-
-
 class Validators(unittest.TestCase):
     """check the oid validator"""
 
@@ -176,7 +168,7 @@ class SchoolSearchTest(django.test.TestCase):
         self.assertTrue(b"155317" in resp.content)
         self.assertTrue(b"Jayhawks" in resp.content)
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     @mock.patch.object(SchoolSearch, 'autocomplete')
     def test_school_autocomplete_blank_term(self, mock_autocomplete):
         url = "{}?q=".format(
@@ -188,7 +180,7 @@ class SchoolSearchTest(django.test.TestCase):
         self.assertEqual(mock_autocomplete.call_count, 0)
         self.assertEqual(response.status_code, 200)
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     @mock.patch.object(SchoolSearch, 'search')
     def test_school_search(self, mock_search):
         mock_school = School.objects.get(pk=155317)
