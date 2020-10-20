@@ -9,13 +9,11 @@ from django.urls import reverse
 
 import mock
 
-from paying_for_college.documents import SchoolDocument
 from paying_for_college.models import Program, School
 from paying_for_college.models.search import SchoolSearch
 from paying_for_college.views import (
     EXPENSE_FILE, Feedback, get_json_file, get_program, get_program_length,
-    get_school, school_autocomplete, school_search_api, validate_oid,
-    validate_pid
+    get_school, school_search, school_search_api, validate_oid, validate_pid
 )
 
 
@@ -120,7 +118,7 @@ class TestViews(django.test.TestCase):
         self.assertTrue("url_root" in response.context_data.keys())
 
 
-# understanding-financial-aid-offers/api/search-schools.json?q=Kansas
+# paying-for-college2/understanding-your-financial-aid-offer/api/search-schools.json?q=Kansas
 class SchoolSearchTest(django.test.TestCase):
 
     fixtures = ["test_fixture.json", "test_program.json"]
@@ -185,23 +183,7 @@ class SchoolSearchTest(django.test.TestCase):
             reverse("paying_for_college:disclosures:school_search")
         )
         request = RequestFactory().get(url)
-        response = school_autocomplete(request)
-        self.assertEqual(json.loads(response.content), [])
-        self.assertEqual(mock_autocomplete.call_count, 0)
-        self.assertEqual(response.status_code, 200)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch.object(SchoolDocument, 'search')
-    def test_school_autocomplete(self, mock_autocomplete):
-        mock_return = mock.Mock()
-        mock_return.autocomplete = "Kansas"
-        mock_return.url = "url"
-        mock_autocomplete.query.return_value = [mock_return]
-        url = "{}?q=Kanasas".format(
-            reverse("paying_for_college:disclosures:school_search")
-        )
-        request = RequestFactory().get(url)
-        response = school_autocomplete(request)
+        response = school_search(request)
         self.assertEqual(json.loads(response.content), [])
         self.assertEqual(mock_autocomplete.call_count, 0)
         self.assertEqual(response.status_code, 200)
@@ -239,7 +221,7 @@ class OfferTest(django.test.TestCase):
 
     fixtures = ["test_fixture.json", "test_program.json"]
 
-    # /paying-for-college/understanding-financial-aid-offers/offer/?[QUERYSTRING]
+    # /paying-for-college2/understanding-your-financial-aid-offer/offer/?[QUERYSTRING]
     def test_offer(self):
         """request for offer disclosure."""
 
@@ -317,7 +299,7 @@ class APITests(django.test.TestCase):
         "test_program.json",
     ]
 
-    # /paying-for-college/understanding-financial-aid-offers/api/school/155317.json
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/school/155317.json
     def test_school_json(self):
         """api call for school details."""
 
@@ -328,7 +310,7 @@ class APITests(django.test.TestCase):
         self.assertIn(b"Kansas", resp.content)
         self.assertIn(b"155317", resp.content)
 
-    # /paying-for-college/understanding-financial-aid-offers/api/constants/
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/constants/
     def test_constants_json(self):
         """api call for constants."""
 
@@ -337,7 +319,7 @@ class APITests(django.test.TestCase):
         self.assertIn(b"institutionalLoanRate", resp.content)
         self.assertIn(b"apiYear", resp.content)
 
-    # /paying-for-college/understanding-financial-aid-offers/api/constants/
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/national-stats/
     def test_national_stats_json(self):
         """api call for national statistics."""
 
@@ -370,7 +352,7 @@ class APITests(django.test.TestCase):
         resp = self.client.get(url)
         self.assertIn(b"No expense", resp.content)
 
-    # /paying-for-college/understanding-financial-aid-offers/api/program/408039_981/
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/program/408039_981/
     def test_program_json(self):
         """api call for program details."""
 
