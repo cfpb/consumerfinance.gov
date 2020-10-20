@@ -293,19 +293,6 @@ class ConstantsRepresentation(View):
                             content_type='application/json')
 
 
-def school_autocomplete(request):
-    term = request.GET.get('term', '').strip()
-    safe_term = make_safe(term)
-    if not safe_term:
-        return HttpResponse(json.dumps([]), content_type='application/json')
-    try:
-        results = SchoolSearch(search_term=safe_term).autocomplete()
-        response = json.dumps(results)
-        return HttpResponse(response, content_type='application/json')
-    except IndexError:
-        return HttpResponse(json.dumps([]), content_type='application/json')
-
-
 # TODO: delete the school_search_api function after we migrate to ES7
 def school_search_api(request):
     sqs = SearchQuerySet().models(School)
@@ -329,7 +316,7 @@ def school_search(request):
     search_term = request.GET.get('q', '').strip()
     if not search_term:
         return HttpResponse(json.dumps([]), content_type='application/json')
-    response = SchoolSearch(search_term).search()
+    response = SchoolSearch(search_term).autocomplete()
 
     document = {
         'query': search_term,
