@@ -20,4 +20,5 @@ class SchoolDocumentTest(TestCase):
             'state': school.state,
             'text': school.primary_alias,
             'zip5': school.zip5,
+            'url': doc.prepare_url(school),
         })

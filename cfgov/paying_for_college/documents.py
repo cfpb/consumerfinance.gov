@@ -1,3 +1,5 @@
+from django.urls import reverse
+
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
@@ -10,6 +12,7 @@ class SchoolDocument(Document):
 
     autocomplete = fields.TextField(analyzer=label_autocomplete)
     text = fields.TextField(attr='primary_alias', boost=10)
+    url = fields.TextField()
     nicknames = fields.TextField()
 
     def prepare_autocomplete(self, instance):
@@ -19,6 +22,10 @@ class SchoolDocument(Document):
 
     def prepare_nicknames(self, instance):
         return [n.nickname for n in instance.nickname_set.all()]
+
+    def prepare_url(self, instance):
+        return reverse("paying_for_college:disclosures:school-json",
+                       args=[instance.school_id])
 
     class Index:
         name = 'paying-for-college'
