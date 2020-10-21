@@ -123,6 +123,7 @@ class SchoolSearchTest(django.test.TestCase):
             self.state = ""
             self.nicknames = ""
             self.zip5 = ""
+            self.url = ""
 
     def test_get_school(self):
         """test grabbing a school by ID"""
