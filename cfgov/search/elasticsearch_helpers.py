@@ -1,6 +1,18 @@
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 
+UNSAFE_CHARACTERS = [
+    '#', '%', ';', '^', '~', '`', '|',
+    '<', '>', '[', ']', '{', '}', '\\'
+]
+
+
+def make_safe(term):
+    for char in UNSAFE_CHARACTERS:
+        term = term.replace(char, '')
+    return term
+
+
 label_autocomplete = analyzer(
     'label_autocomplete',
     tokenizer=tokenizer(
