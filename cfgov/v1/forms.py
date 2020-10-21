@@ -103,6 +103,14 @@ class FilterableListForm(forms.Form):
         })
     )
 
+    archived = forms.ChoiceField(
+        choices=[
+            ('exclude', 'Exclude archived items (default)'),
+            ('only', 'Show only archived items'),
+            ('include', 'Show all items'),
+        ]
+    )
+
     preferred_datetime_format = '%Y-%m-%d'
 
     def __init__(self, *args, **kwargs):
@@ -229,9 +237,11 @@ class FilterableListForm(forms.Form):
                 self.get_query_strings(),
                 self.declared_fields
             ):
-                if self.cleaned_data.get(field_name):
-                    final_query &= \
-                        Q((query, self.cleaned_data.get(field_name)))
+                if self.cleaned_data.get(field_name) not in (None, [], ''):
+                    final_query &= Q(
+                        (query, self.cleaned_data.get(field_name))
+                    )
+
         return final_query
 
     # Returns a list of query strings to associate for each field, ordered by
@@ -245,7 +255,17 @@ class FilterableListForm(forms.Form):
             'categories__name__in',  # categories
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors
+            'is_archived',           # archived
         ]
+
+    def clean_archived(self):
+        data = self.cleaned_data['archived']
+        if data == 'exclude':
+            return False
+        elif data == 'only':
+            return True
+
+        return None
 
 
 class EnforcementActionsFilterForm(FilterableListForm):
