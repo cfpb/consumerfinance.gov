@@ -248,7 +248,7 @@ export class AdminPage {
   selectDocumentLink( text ) {
     cy.get( '#id_q' ).invoke( 'val', text ).trigger( 'change' );
     cy.get( '#id_q' ).type( ' ' );
-    cy.wait( 3000 );
-    cy.get( '.document-choice' ).contains( text ).click();
+    cy.wait( 1000 );
+    cy.get( '#search-results', {timeout: 10000} ).contains( text ).click();
   }
 }
