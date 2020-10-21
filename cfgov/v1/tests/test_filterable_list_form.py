@@ -102,7 +102,7 @@ class TestFilterableListForm(TestCase):
 
     def test_validate_date_after_1900_can_pass(self):
         form = self.setUpFilterableForm()
-        form.data = {'from_date': '1/1/1900'}
+        form.data = {'from_date': '1/1/1900', 'archived': 'exclude'}
         self.assertTrue(form.is_valid())
 
     def test_validate_date_after_1900_can_fail(self):
@@ -143,3 +143,32 @@ class TestFilterableListForm(TestCase):
                 'to-congress',
             ]
         )
+
+    def test_filter_by_archived(self):
+        page1 = BlogPage(title='test page', is_archived=True)
+        page2 = BlogPage(title='another test page')
+        publish_page(page1)
+        publish_page(page2)
+        form = self.setUpFilterableForm()
+
+        form.data = {}
+        form.full_clean()
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 2)
+
+        form.data = {'archived': 'include'}
+        form.full_clean()
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 2)
+
+        form.data = {'archived': 'exclude'}
+        form.full_clean()
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, page2)
+
+        form.data = {'archived': 'only'}
+        form.full_clean()
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, page1)
