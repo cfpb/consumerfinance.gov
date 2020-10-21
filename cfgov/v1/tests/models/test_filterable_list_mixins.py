@@ -158,7 +158,7 @@ class FilterableListRelationsTestCase(TestCase):
         self.set_filterable_controls(self.filter_controls)
 
         qs = self.filterable_page.get_filterable_queryset()
-        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs.count(), 2)
         self.assertEqual(qs[0].pk, self.sibling_page.pk)
 
     def test_get_filterable_archived_pages(self):

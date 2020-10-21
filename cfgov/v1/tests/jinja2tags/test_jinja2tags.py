@@ -89,3 +89,9 @@ class TestIsFilterSelected(TestCase):
     def test_query_parameter_also_works_with_filter_prefix(self):
         request = self.factory.get('/?filter_foo=bar')
         self.assertEqual(self._render_template_with_request(request), 'True')
+
+    def test_query_parameter_archived_selected(self):
+        request = self.factory.get('/')
+        s = '{{ is_filter_selected("archived", "exclude") }}'
+        template = self.jinja_engine.from_string(s)
+        self.assertEqual(template.render({'request': request}), 'True')

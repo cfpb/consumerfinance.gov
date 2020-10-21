@@ -72,8 +72,6 @@ class FilterableListMixin(RoutablePageMixin):
 
         if filterable_list_block.value['filter_archive']:
             queryset = queryset.filter(is_archived=True)
-        else:
-            queryset = queryset.filter(is_archived=False)
 
         return queryset
 
@@ -83,9 +81,11 @@ class FilterableListMixin(RoutablePageMixin):
         )
 
         form_data, has_active_filters = self.get_form_data(request.GET)
+        queryset = self.get_filterable_queryset()
+        has_archived_posts = queryset.filter(is_archived=True).count() > 0
         form = self.get_form_class()(
             form_data,
-            filterable_pages=self.get_filterable_queryset(),
+            filterable_pages=queryset,
             wagtail_block=self.get_filterable_list_wagtail_block(),
         )
 
@@ -93,6 +93,7 @@ class FilterableListMixin(RoutablePageMixin):
             'filter_data': self.process_form(request, form),
             'get_secondary_nav_items': get_secondary_nav_items,
             'has_active_filters': has_active_filters,
+            'has_archived_posts': has_archived_posts,
         })
 
         return context
@@ -117,6 +118,7 @@ class FilterableListMixin(RoutablePageMixin):
         else:
             paginator = Paginator([], self.filterable_per_page_limit)
             filter_data['page_set'] = paginator.page(1)
+
         filter_data['form'] = form
         return filter_data
 
@@ -128,7 +130,7 @@ class FilterableListMixin(RoutablePageMixin):
     # Set up the form's data either with values from the GET request
     # or with defaults based on whether it's a dropdown/list or a text field
     def get_form_data(self, request_dict):
-        form_data = {}
+        form_data = {'archived': 'exclude'}
         has_active_filters = False
         for field in self.get_form_class().declared_fields:
             if field in ['categories', 'topics', 'authors', 'statuses']:
