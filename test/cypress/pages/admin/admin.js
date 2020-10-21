@@ -249,6 +249,6 @@ export class AdminPage {
     cy.get( '#id_q' ).invoke( 'val', text ).trigger( 'change' );
     cy.get( '#id_q' ).type( ' ' );
     cy.wait( 1000 );
-    cy.get( '#search-results', {timeout: 10000} ).contains( text ).click();
+    cy.get( '#search-results', { timeout: 10000 } ).contains( text ).click();
   }
 }
