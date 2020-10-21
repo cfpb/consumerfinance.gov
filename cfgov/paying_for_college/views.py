@@ -324,8 +324,7 @@ def school_search(request):
                  'nicknames': school.nicknames,
                  'state': school.state,
                  'zip5': school.zip5,
-                 'url': reverse("paying_for_college:disclosures:school-json",
-                                args=[school.school_id])}
+                 'url': school.url}
                 for school in response]
     json_doc = json.dumps(document)
 
