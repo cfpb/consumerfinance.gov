@@ -15,7 +15,7 @@ from paying_for_college.forms import FeedbackForm
 from paying_for_college.models import (
     ConstantCap, ConstantRate, Feedback, Notification, Program, School
 )
-from paying_for_college.models.search import SchoolSearch, make_safe
+from paying_for_college.models.search import SchoolSearch
 
 
 BASEDIR = os.path.dirname(__file__)
@@ -316,26 +316,19 @@ def school_search(request):
     search_term = request.GET.get('q', '').strip()
     if not search_term:
         return HttpResponse(json.dumps([]), content_type='application/json')
-    response = SchoolSearch(search_term).autocomplete()
+    response = SchoolSearch(search_term).search()
 
-    document = {
-        'query': search_term,
-        'result_query': make_safe(search_term).strip(),
-        'results': [
-            {
-                'schoolname': school.text,
-                'id': school.school_id,
-                'city': school.city,
-                'nicknames': school.nicknames,
-                'state': school.state,
-                'zip5': school.zip5,
-                'url': reverse("paying_for_college:disclosures:school-json",
-                               args=[school.school_id]),
-            }
-            for school in response.get('results')
-        ]
-    }
+    document = [{'schoolname': school.text,
+                 'id': school.school_id,
+                 'city': school.city,
+                 'nicknames': school.nicknames,
+                 'state': school.state,
+                 'zip5': school.zip5,
+                 'url': reverse("paying_for_college:disclosures:school-json",
+                                args=[school.school_id])}
+                for school in response]
     json_doc = json.dumps(document)
+
     return HttpResponse(json_doc, content_type='application/json')
 
 

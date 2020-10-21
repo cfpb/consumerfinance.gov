@@ -169,6 +169,31 @@ class SchoolSearchTest(django.test.TestCase):
         self.assertTrue(b"Jayhawks" in resp.content)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
+    @mock.patch.object(SchoolSearch, 'search')
+    def test_school_autocomplete(self, mock_autocomplete):
+        mock_school = School.objects.get(pk=155317)
+        # mock the search returned value
+        elastic_school = self.ElasticSchool()
+        elastic_school.text = mock_school.primary_alias
+        elastic_school.school_id = mock_school.school_id
+        elastic_school.city = mock_school.city
+        elastic_school.state = mock_school.state
+        elastic_school.zip5 = mock_school.zip5
+        elastic_school.nicknames = "Jayhawks"
+        mock_queryset = [elastic_school]
+        mock_autocomplete.return_value = mock_queryset
+        url = "{}?q=Kansas".format(
+            reverse("paying_for_college:disclosures:school_search")
+        )
+        request = RequestFactory().get(url)
+        response = school_search(request)
+        self.assertTrue(b"Kansas" in response.content)
+        self.assertTrue(b"155317" in response.content)
+        self.assertTrue(b"Jayhawks" in response.content)
+        self.assertTrue(b"Lawrence" in response.content)
+        self.assertTrue(b"KS" in response.content)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     @mock.patch.object(SchoolSearch, 'autocomplete')
     def test_school_autocomplete_blank_term(self, mock_autocomplete):
         url = "{}?q=".format(
@@ -205,7 +230,7 @@ class SchoolSearchTest(django.test.TestCase):
             reverse("paying_for_college:disclosures:school_search"),
             {"q": "Kansas"}
         )
-        self.assertEqual(mock_search.call_count, 3)
+        self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
 
 
