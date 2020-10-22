@@ -290,6 +290,7 @@ class EnforcementActionsFilterForm(FilterableListForm):
             'categories__name__in',  # categories
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors
+            'is_archived',           # archived
             'statuses__status__in',  # statuses
         ]
 
