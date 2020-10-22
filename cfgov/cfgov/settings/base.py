@@ -735,8 +735,6 @@ FLAGS = {
     "BETA_EXTERNAL_TESTING": [],
     # Used to hide new youth employment success pages prior to public launch
     "YOUTH_EMPLOYMENT_SUCCESS": [],
-    # Release of prepaid agreements database search
-    "PREPAID_AGREEMENTS_SEARCH": [],
     # Used to hide CCDB landing page updates prior to public launch
     "CCDB_CONTENT_UPDATES": [],
     # During a Salesforce system outage, the following flag should be enabled
