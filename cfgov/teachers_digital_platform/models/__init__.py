@@ -1,6 +1,6 @@
 # flake8: noqa F401
 from teachers_digital_platform.models.activity_index_page import (
-    ActivityCardMap, ActivityIndexPage, get_activity_card_map
+    ActivityIndexPage, ActivitySetUp, get_activity_setup
 )
 from teachers_digital_platform.models.django import (
     ActivityAgeRange, ActivityBloomsTaxonomyLevel, ActivityBuildingBlock,

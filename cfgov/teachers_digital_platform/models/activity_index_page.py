@@ -1,3 +1,5 @@
+import copy
+
 from django.contrib.postgres.fields import JSONField
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
@@ -7,9 +9,10 @@ from wagtail.admin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
 from wagtail.core.fields import StreamField
-
+from elasticsearch_dsl import A, FacetedSearch, Q, TermsFacet
 from flags.state import flag_enabled
 
+from teachers_digital_platform.documents import ActivityPageDocument
 from teachers_digital_platform.models.django import (
     ActivityAgeRange, ActivityBloomsTaxonomyLevel, ActivityBuildingBlock,
     ActivityCouncilForEconEd, ActivityDuration, ActivityGradeLevel,
@@ -17,37 +20,34 @@ from teachers_digital_platform.models.django import (
     ActivityStudentCharacteristics, ActivityTeachingStrategy, ActivityTopic,
     ActivityType
 )
-
-from teachers_digital_platform.documents import ActivityPageDocument
-from teachers_digital_platform.molecules import TdpSearchHeroImage
 from teachers_digital_platform.models.pages import ActivityPage
+from teachers_digital_platform.molecules import TdpSearchHeroImage
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, CFGOVPageManager
 
-from elasticsearch_dsl import FacetedSearch, TermsFacet
 
+# The second tuple value (boolean) in each entry identifies nested facets.
 FACET_MAP = (
-    ('building_block', (ActivityBuildingBlock, False, 10)),
-    ('school_subject', (ActivitySchoolSubject, False, 25)),
-    ('topic', (ActivityTopic, True, 25)),
-    ('grade_level', (ActivityGradeLevel, False, 10)),
-    ('age_range', (ActivityAgeRange, False, 10)),
-    ('student_characteristics', (ActivityStudentCharacteristics, False, 10)),  # noqa: E501
-    ('activity_type', (ActivityType, False, 10)),
-    ('teaching_strategy', (ActivityTeachingStrategy, False, 25)),
-    ('blooms_taxonomy_level', (ActivityBloomsTaxonomyLevel, False, 25)),  # noqa: E501
-    ('activity_duration', (ActivityDuration, False, 10)),
-    ('jump_start_coalition', (ActivityJumpStartCoalition, False, 25)),
-    ('council_for_economic_education', (ActivityCouncilForEconEd, False, 25)),  # noqa: E501
+    ("building_block", (ActivityBuildingBlock, False)),
+    ("school_subject", (ActivitySchoolSubject, False)),
+    ("topic", (ActivityTopic, True)),
+    ("grade_level", (ActivityGradeLevel, False)),
+    ("age_range", (ActivityAgeRange, False)),
+    ("student_characteristics", (ActivityStudentCharacteristics, False)),
+    ("activity_type", (ActivityType, False)),
+    ("teaching_strategy", (ActivityTeachingStrategy, False)),
+    ("blooms_taxonomy_level", (ActivityBloomsTaxonomyLevel, False)),
+    ("activity_duration", (ActivityDuration, False)),
+    ("jump_start_coalition", (ActivityJumpStartCoalition, False)),
+    ("council_for_economic_education", (ActivityCouncilForEconEd, False)),
 )
 FACET_LIST = [tup[0] for tup in FACET_MAP]
 
 
-class FacetSearch(FacetedSearch):
-    index = 'teachers-digital-platform'
-    doc_types = FACET_LIST
-    fields = ['pk']
-    facets = {doc: TermsFacet(field='pk') for doc in doc_types}
+class TDPFacetedSearch(FacetedSearch):
+    index = "teachers-digital-platform"
+    fields = "_all"
+    facets = {facet: TermsFacet(field=facet) for facet in FACET_LIST}
 
 
 class ActivityIndexPage(CFGOVPage):
@@ -67,6 +67,7 @@ class ActivityIndexPage(CFGOVPage):
     ], blank=True)
 
     results = {}
+    activity_setups = None
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('header_sidebar'),
@@ -91,27 +92,61 @@ class ActivityIndexPage(CFGOVPage):
         return template
 
     def dsl_search(self, request, *args, **kwargs):
-        activity_card_map = get_activity_card_map()
-        total_activities = len(activity_card_map)
+        """Search using Elasticsearch 7 and django-elasticsearch-dsl."""
+        all_facets = copy.copy(self.activity_setups.facet_setup)
+        card_setup = self.activity_setups.card_setup
+        total_activities = len(card_setup)
         search_query = request.GET.get('q', '')
-        doc_search = ActivityPageDocument.search()
-        all_facet_search = FacetSearch(",".join(FACET_LIST))
-        search = doc_search.query(
-            'match', _all=search_query)
-
-        # Load selected facets
+        facet_dict = {"aggs": {}}
+        for facet in FACET_LIST:
+            facet_dict["aggs"].update({
+                "{}_terms".format(facet): {"terms": {"field": facet}}
+            })
+        dsl_search = ActivityPageDocument().search().from_dict(facet_dict)
+        if search_query:
+            terms = search_query.split()
+            for term in terms:
+                dsl_search = dsl_search.query(
+                    "bool",
+                    must=Q("multi_match", **{"query": term})
+                )
+            # Get facet counts to remove facets with no hits after a search
+            initial_search = dsl_search.execute()
+            facet_response = {facet: getattr(
+                initial_search.aggregations, f"{facet}_terms").buckets
+                for facet in FACET_LIST}
+            for facet, facet_config in FACET_MAP:
+                facet_ids = [item['key'] for item in facet_response[facet]]
+                is_nested = facet_config[1]
+                if is_nested:
+                    for parent in all_facets[facet]:
+                        for child in parent['children']:
+                            if child['id'] not in facet_ids:
+                                parent['children'].remove(child)
+                    if parent['id'] not in facet_ids:
+                        i = all_facets[facet].index(parent)
+                        del all_facets[facet][i]
+                else:
+                    for flat_facet in all_facets[facet]:
+                        if flat_facet['id'] not in facet_ids:
+                            all_facets[facet].remove(flat_facet)
+        else:
+            dsl_search = dsl_search.sort('-date')
         selected_facets = {}
-        facet_queries = {}
         for facet, facet_config in FACET_MAP:
             if facet in request.GET and request.GET.get(facet):
-                selected_facets[facet] = [
+                facet_ids = [
                     int(value) for value in request.GET.getlist(facet)
                     if value.isdigit()
                 ]
-                facet_queries[facet] = facet + '_exact:' + (
-                    " OR " + facet + "_exact:").join(
-                    [str(value) for value in selected_facets[facet]]
-                )
+                selected_facets[facet] = facet_ids
+                for entry in all_facets[facet]:
+                    if entry["id"] in facet_ids:
+                        entry["selected"] = True
+                        if entry.get("children"):  # a nested facet
+                            for child in entry["children"]:
+                                if child["id"] in facet_ids:
+                                    child["selected"] = True
 
         payload = {
             'search_query': search_query,
@@ -119,26 +154,7 @@ class ActivityIndexPage(CFGOVPage):
             'total_results': 0,
             'total_activities': total_activities,
             'selected_facets': selected_facets,
-            'facet_queries': facet_queries,
-            'all_facets': {},
         }
-
-        # Apply search query if it exists, but don't apply facets
-        if search_query:
-            search = search.filter(
-                content=search_query)  # .order_by('-_score', '-date')
-        else:
-            search = search  # .order_by('-date')
-
-        # Get all facets and their counts
-        facet_counts = all_facet_search.facet_counts()
-        all_facets = self.get_all_facets(
-            FACET_MAP,
-            all_facet_search,
-            facet_counts,
-            facet_queries,
-            selected_facets,
-        )
 
         # List all facet blocks that need to be expanded
         always_expanded = {'building_block', 'topic', 'school_subject'}
@@ -151,17 +167,18 @@ class ActivityIndexPage(CFGOVPage):
         expanded_facets = always_expanded.union(set(conditionally_expanded))
 
         payload.update({
-            'facet_counts': facet_counts,
-            'all_facets': all_facets,
             'expanded_facets': expanded_facets,
         })
-        # Apply all the active facet values to our search results
-        for facet_narrow_query in facet_queries.values():
-            search = search.narrow(facet_narrow_query)
-
-        results = [activity_card_map[activity.pk] for activity in search]
-        total_results = len(results)
-
+        for facet, pks in selected_facets.items():
+            dsl_search = dsl_search.query(
+                "bool",
+                should=[Q("match", **{facet: pk}) for pk in pks]
+            )
+        total_results = dsl_search.count()
+        response = dsl_search.execute()
+        results = [
+            card_setup[str(hit.id)] for hit in response
+        ]
         payload.update({
             'results': results,
             'total_results': total_results,
@@ -172,14 +189,13 @@ class ActivityIndexPage(CFGOVPage):
         current_page = validate_page_number(request, paginator)
         paginated_page = paginator.page(current_page)
         context_update = {
-            'facet_counts': facet_counts,
-            'facets': all_facets,
+            'facets': all_facets,  # TEMPLATE USES
             'activities': paginated_page,
             'total_results': total_results,
             'results_per_page': results_per_page,
             'current_page': current_page,
             'paginator': paginator,
-            'show_filters': bool(facet_queries),
+            'show_filters': bool(selected_facets),
         }
         return context_update
 
@@ -190,7 +206,7 @@ class ActivityIndexPage(CFGOVPage):
         # Load selected facets
         selected_facets = {}
         facet_queries = {}
-        activity_card_map = get_activity_card_map()
+        activity_card_map = self.activity_setups.card_setup
 
         for facet, facet_config in FACET_MAP:
             sqs = sqs.facet(str(facet), size=facet_config[2])
@@ -203,7 +219,6 @@ class ActivityIndexPage(CFGOVPage):
                     " OR " + facet + "_exact:").join(
                     [str(value) for value in selected_facets[facet]]
                 )
-
         payload = {
             'search_query': search_query,
             'results': [],
@@ -273,6 +288,8 @@ class ActivityIndexPage(CFGOVPage):
         return context_update
 
     def get_context(self, request, *args, **kwargs):
+        if not self.activity_setups:
+            self.activity_setups = get_activity_setup()
         if flag_enabled('ELASTICSEARCH_DSL_TDP'):
             context_update = self.dsl_search(request, *args, **kwargs)
         else:
@@ -281,11 +298,12 @@ class ActivityIndexPage(CFGOVPage):
         context.update(context_update)
         return context
 
+    # TODO: Remove this function when we switch to DSL
     def get_all_facets(self, facet_map, sqs, facet_counts, facet_queries, selected_facets):  # noqa: E501
         all_facets = {}
         if 'fields' in facet_counts:
             for facet, facet_config in facet_map:
-                class_object, is_nested, max_facet_count = facet_config
+                class_object, is_nested = facet_config
                 all_facets_sqs = sqs
                 other_facet_queries = [
                     facet_query for facet_query_name, facet_query in facet_queries.items()  # noqa: E501
@@ -311,6 +329,7 @@ class ActivityIndexPage(CFGOVPage):
                         )
         return all_facets
 
+    # TODO: Remove this function when we switch to DSL
     def get_flat_facets(self, class_object, narrowed_facets, selected_facets):
         final_facets = [
             {
@@ -320,6 +339,7 @@ class ActivityIndexPage(CFGOVPage):
             } for result in class_object.objects.filter(pk__in=narrowed_facets).values('id', 'title')]  # noqa: E501
         return final_facets
 
+    # TODO: Remove this function when we switch to DSL
     def get_nested_facets(self, class_object, narrowed_facets, selected_facets, parent=None):  # noqa: E501
         if not parent:
             flat_final_facets = [
@@ -365,13 +385,65 @@ class ActivityIndexPage(CFGOVPage):
         verbose_name = "TDP Activity search page"
 
 
-class ActivityCardMap(models.Model):
-    card_map = JSONField(blank=True, null=True)
+def default_nested_facets(class_object):
+    """Build a nested facet tree, initially only for ActivityTopic objects."""
+    setup = []
+    parents = class_object.objects.filter(parent=None)
+    default_attrs = {
+        "selected": False,
+        "child_selected": False,
+        "children": None,
+        "parent": None,
+    }
+    for parent in parents:
+        parent_setup = copy.copy(default_attrs)
+        parent_setup.update({"id": parent.id, "title": parent.title})
+        child_setups = []
+        for child in parent.children.all():
+            _child_setup = copy.copy(default_attrs)
+            _child_setup.update({
+                "id": child.id,
+                "title": child.title,
+                "parent": child.parent_id})
+            child_setups.append(_child_setup)
+        parent_setup["children"] = child_setups
+        setup.append(parent_setup)
+    return setup
+
+
+def default_flat_facets(class_object):
+    return [
+        {
+            "selected": False,
+            "id": obj.id,
+            "title": obj.title
+        }
+        for obj in class_object.objects.all()
+    ]
+
+
+class ActivitySetUp(models.Model):
+    """A database cache of form setups for TDP activities."""
+
+    card_setup = JSONField(blank=True, null=True)
+    facet_setup = JSONField(blank=True, null=True)
 
     def __str__(self):
-        return "Cached Activity Page cards"
+        return "Cached activity facets and cards"
+
+    def update_facets(self):
+        _facet_setup = {}
+        # each facet_config is a tuple: (class, is_nested)
+        for facet_name, facet_config in FACET_MAP:
+            class_object, is_nested = facet_config
+            if is_nested:
+                _facet_setup[facet_name] = default_nested_facets(class_object)
+            else:
+                _facet_setup[facet_name] = default_flat_facets(class_object)
+        self.facet_setup = _facet_setup
 
     def update_cards(self):
+        _card_setup = {}
         facet_fields = (
             'school_subject',
             'grade_level',
@@ -383,7 +455,6 @@ class ActivityCardMap(models.Model):
             'jump_start_coalition',
             'council_for_economic_education',
         )
-        _card_map = {}
         base_query = ActivityPage.objects.filter(live=True)
         for activity in base_query:
             payload = {
@@ -407,15 +478,24 @@ class ActivityCardMap(models.Model):
                 payload.update({
                     field: [obj.title for obj in facet_queryset]
                 })
-            _card_map[activity.pk] = payload
-        self.card_map = _card_map
+            _card_setup[activity.pk] = payload
+        self.card_setup = _card_setup
+
+    def update_setups(self):
+        self.update_facets()
+        self.update_cards()
         self.save()
 
 
-def get_activity_card_map():
-    if not ActivityCardMap.objects.first():
-        ActivityCardMap().update_cards()
-    return ActivityCardMap.objects.first().card_map
+def get_activity_setup(refresh=False):
+    if not ActivitySetUp.objects.exists():
+        ActivitySetUp().update_setups()
+        return ActivitySetUp.objects.first()
+    map_obj = ActivitySetUp.objects.first()
+    if refresh:
+        map_obj.update_setups()
+        map_obj.refresh_from_db()
+    return map_obj
 
 
 def validate_results_per_page(request):
