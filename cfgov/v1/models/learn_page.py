@@ -241,6 +241,7 @@ class EnforcementActionPage(AbstractFilterPage):
         ], 'Relevant Dates', classname='collapsible'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'Language'),
+        MultiFieldPanel(CFGOVPage.archive_panels, 'Archive'),
     ]
 
     edit_handler = TabbedInterface([
