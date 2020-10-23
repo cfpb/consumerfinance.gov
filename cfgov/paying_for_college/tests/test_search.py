@@ -28,6 +28,7 @@ class SchoolSearchTest(TestCase):
             self.zip5 = ""
             self.url = ""
 
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     def test_search_blank_term(self):
         url = "{}?q=".format(
             reverse("paying_for_college:disclosures:school_search")
@@ -36,6 +37,7 @@ class SchoolSearchTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content), [])
 
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     def test_school_search(self):
         school = School.objects.get(pk=155317)
         school.save()
@@ -49,6 +51,7 @@ class SchoolSearchTest(TestCase):
         self.assertTrue(b"Lawrence" in response.content)
         self.assertTrue(b"KS" in response.content)
 
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     def test_school_autocomplete(self):
         school = School.objects.get(pk=155317)
         school.save()
