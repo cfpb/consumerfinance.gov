@@ -29,44 +29,44 @@ class SchoolSearchTest(TestCase):
             self.url = ""
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
-    def test_search_blank_term(self):
-        url = "{}?q=".format(
+    @mock.patch.object(SchoolDocument, 'search')
+    def test_school_search(self, mock_search):
+        term = "Kansas"
+        school = School.objects.get(pk=155317)
+        school.save()
+        # mock the search returned value
+        mock_return = mock.Mock()
+        mock_return.text = school.primary_alias
+        mock_return.school_id = school.school_id
+        mock_return.city = school.city
+        mock_return.state = school.state
+        mock_return.zip5 = school.zip5
+        mock_return.nicknames = "Jayhawks"
+        mock_queryset = mock.Mock()
+        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
+        mock_queryset.count.return_value = 1
+        mock_search().query().highlight().filter().sort() \
+            .__getitem__().execute.return_value = [mock_return]
+        mock_count = mock.Mock(return_value=1)
+        mock_search().query().highlight().count = mock_count
+        mock_search().query().highlight().filter().sort() \
+            .__getitem__().count = mock_count
+        url = "{}?q=Kansas".format(
             reverse("paying_for_college:disclosures:school_search")
         )
         response = school_search(RequestFactory().get(url))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content), [])
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
-    def test_school_search(self):
-        school = School.objects.get(pk=155317)
-        school.save()
-        url = "{}?q=Kansas".format(
-            reverse("paying_for_college:disclosures:school_search")
-        )
-        response = school_search(RequestFactory().get(url))
-        self.assertTrue(b"Kansas" in response.content)
-        self.assertTrue(b"155317" in response.content)
-        self.assertTrue(b"Jayhawks" in response.content)
-        self.assertTrue(b"Lawrence" in response.content)
-        self.assertTrue(b"KS" in response.content)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
-    def test_school_autocomplete(self):
-        school = School.objects.get(pk=155317)
-        school.save()
-        url = "{}?q=Kansas".format(
-            reverse("paying_for_college:disclosures:school_search")
-        )
-        response = school_autocomplete(RequestFactory().get(url))
-        self.assertTrue(b"Kansas" in response.content)
-        self.assertTrue(b"155317" in response.content)
-        self.assertTrue(b"Jayhawks" in response.content)
-        self.assertTrue(b"KS" in response.content)
+        self.assertEqual(mock_search.call_count, 4)
+        self.assertTrue(mock_search.called_with(search_term=term))
+        # self.assertTrue(b"Kansas" in response.content)
+        # self.assertTrue(b"155317" in response.content)
+        # self.assertTrue(b"Jayhawks" in response.content)
+        # self.assertTrue(b"Lawrence" in response.content)
+        # self.assertTrue(b"KS" in response.content)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     @mock.patch.object(SchoolDocument, 'search')
-    def test_search_no_term(self, mock_search):
+    def test_school_search_no_term(self, mock_search):
         term = ""
         mock_return = mock.Mock()
         mock_return.search_term = term
@@ -81,12 +81,32 @@ class SchoolSearchTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
+    @mock.patch.object(SchoolSearch, 'search')
+    def test_school_autocomplete(self, mock_autocomplete):
+        school = School.objects.get(pk=155317)
+        # mock the search returned value
+        elastic_school = self.ElasticSchool()
+        elastic_school.text = school.primary_alias
+        elastic_school.school_id = school.school_id
+        elastic_school.city = school.city
+        elastic_school.state = school.state
+        elastic_school.zip5 = school.zip5
+        elastic_school.nicknames = "Jayhawks"
+        mock_autocomplete.return_value = [elastic_school]
+        url = "{}?q=Kansas".format(
+            reverse("paying_for_college:disclosures:school_search")
+        )
+        response = school_autocomplete(RequestFactory().get(url))
+        self.assertTrue(b"Kansas" in response.content)
+        self.assertTrue(b"155317" in response.content)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     @mock.patch.object(SchoolSearch, 'autocomplete')
     def test_autocomplete_blank_term(self, mock_autocomplete):
-        response = self.client.get(
-            reverse("paying_for_college:disclosures:school_search"),
-            {"q": ""}
+        url = "{}?q=".format(
+            reverse("paying_for_college:disclosures:school_search")
         )
+        response = school_autocomplete(RequestFactory().get(url))
         self.assertEqual(json.loads(response.content), [])
         self.assertEqual(mock_autocomplete.call_count, 0)
         self.assertEqual(response.status_code, 200)
@@ -104,80 +124,38 @@ class SchoolSearchTest(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
     @mock.patch.object(SchoolSearch, 'search')
-    def test_school_search_es(self, mock_search):
-        mock_school = School.objects.get(pk=155317)
-        # mock the search returned value
-        mock_return = mock.Mock()
-        mock_return.text = mock_school.primary_alias
-        mock_return.school_id = mock_school.school_id
-        mock_return.city = mock_school.city
-        mock_return.state = mock_school.state
-        mock_return.zip5 = mock_school.zip5
-        mock_return.nicknames = "Jayhawks"
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_search().query().highlight().filter().sort() \
-            .__getitem__().execute.return_value = [mock_return]
-        mock_count = mock.Mock(return_value=1)
-        mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort() \
-            .__getitem__().count = mock_count
-        response = self.client.get(
-            reverse("paying_for_college:disclosures:school_search"),
-            {"q": "Kansas"}
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_search.call_count, 4)
-        self.assertTrue(mock_search.called_with(search_term="Kansas"))
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
-    @mock.patch.object(SchoolSearch, 'search')
-    def test_autocomplete(self, mock_autocomplete):
-        mock_school = School.objects.get(pk=155317)
-        # mock the search returned value
-        elastic_school = self.ElasticSchool()
-        elastic_school.text = mock_school.primary_alias
-        elastic_school.school_id = mock_school.school_id
-        elastic_school.city = mock_school.city
-        elastic_school.state = mock_school.state
-        elastic_school.zip5 = mock_school.zip5
-        elastic_school.nicknames = "Jayhawks"
-        mock_autocomplete.return_value = [elastic_school]
-        url = "{}?q=Kansas".format(
-            reverse("paying_for_college:disclosures:school_search")
-        )
-        response = school_autocomplete(RequestFactory().get(url))
-        self.assertTrue(b"Kansas" in response.content)
-        self.assertTrue(b"155317" in response.content)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
-    @mock.patch.object(SchoolSearch, 'autocomplete')
     def test_autocomplete_search(self, mock_autocomplete):
+        school = School.objects.get(pk=155317)
+        school.save()
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "Kansas"
         mock_search_result.url = "url"
         mock_autocomplete.return_value = [mock_search_result]
-        url = "{}?q=".format(
+        url = "{}?q=Kansas".format(
             reverse("paying_for_college:disclosures:school_search")
         )
-        response = school_search(RequestFactory().get(url))
+        response = school_autocomplete(RequestFactory().get(url))
+        output = json.loads(response.content)
+        self.assertEqual(sorted(output[0].keys()), ["question", "url"])
         self.assertEqual(mock_autocomplete.call_count, 0)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.content), [])
+        self.assertTrue(b"Kansas" in response.content)
+        self.assertTrue(b"155317" in response.content)
+        self.assertTrue(b"Jayhawks" in response.content)
+        self.assertTrue(b"KS" in response.content)
 
     # TODO: delete the test_school_search_api function after we migrate to ES7
     @mock.patch("paying_for_college.views.SearchQuerySet.autocomplete")
     def test_school_search_api(self, mock_autocomplete):
         """school_search_api should return json."""
 
-        mock_school = School.objects.get(pk=155317)
+        school = School.objects.get(pk=155317)
         # mock the search returned value
         elastic_school = self.ElasticSchool()
-        elastic_school.text = mock_school.primary_alias
-        elastic_school.school_id = mock_school.school_id
-        elastic_school.city = mock_school.city
-        elastic_school.state = mock_school.state
+        elastic_school.text = school.primary_alias
+        elastic_school.school_id = school.school_id
+        elastic_school.city = school.city
+        elastic_school.state = school.state
         elastic_school.nicknames = "Jayhawks"
         mock_queryset = [elastic_school]
         mock_autocomplete.return_value = mock_queryset
