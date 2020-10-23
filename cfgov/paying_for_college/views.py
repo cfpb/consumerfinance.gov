@@ -311,8 +311,16 @@ def school_search_api(request):
     return HttpResponse(json_doc, content_type='application/json')
 
 
+def school_autocomplete(request):
+    search_term = request.GET.get('q', '').strip()
+    if not search_term:
+        return HttpResponse(json.dumps([]), content_type='application/json')
+    results = SchoolSearch(search_term).autocomplete()
+
+    return HttpResponse(json.dumps(results), content_type='application/json')
+
+
 def school_search(request):
-    # If there's no query string, don't search
     search_term = request.GET.get('q', '').strip()
     if not search_term:
         return HttpResponse(json.dumps([]), content_type='application/json')
@@ -321,14 +329,13 @@ def school_search(request):
     document = [{'schoolname': school.text,
                  'id': school.school_id,
                  'city': school.city,
-                 'nicknames': school.nicknames,
+                 'nicknames': str(school.nicknames),
                  'state': school.state,
                  'zip5': school.zip5,
                  'url': school.url}
-                for school in response]
-    json_doc = json.dumps(document)
+                for school in response.get('results')]
 
-    return HttpResponse(json_doc, content_type='application/json')
+    return HttpResponse(json.dumps(document), content_type='application/json')
 
 
 class VerifyView(View):

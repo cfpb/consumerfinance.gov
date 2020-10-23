@@ -8,21 +8,24 @@ class SchoolSearch:
         self.results = []
 
     def autocomplete(self):
-        s = SchoolDocument.search().query(
-            'match', autocomplete=self.search_term)
-        self.results = [
-            {'question': result.autocomplete, 'url': result.url}
-            for result in s[:20]
-        ]
+        if self.search_term != '':
+            search = SchoolDocument.search().query(
+                'match', autocomplete=self.search_term)
+            total_results = search.count()
+            self.results = [
+                {'question': str(result.autocomplete), 'url': result.url}
+                for result in search[:total_results]
+            ]
         return self.results
 
     def search(self):
-        search = SchoolDocument.search().filter('term')
         if self.search_term != '':
-            search = search.query('match', text=self.search_term)
-        total_results = search.count()
-        search = search[0:total_results]
-        self.results = search.execute()[0:total_results]
+            search = SchoolDocument.search().query(
+                'match', text=self.search_term)
+            total_results = search.count()
+            search = search[0:total_results]
+            response = search.execute()
+            self.results = response[0:total_results]
         return {
             'search_term': self.search_term,
             'results': self.results
