@@ -4,16 +4,33 @@ volumes:
     postgres_data:
 
 services:
-    elasticsearch:
+    elasticsearch2:
         build:
             context: ./
             dockerfile: ./docker/elasticsearch/Dockerfile
         ports:
+            - "9000:9200"
+            - "9100:9300"
+    elasticsearch:
+        build:
+            context: ./
+            dockerfile: ./docker/elasticsearch/7.7/Dockerfile
+        ports: 
             - "9200:9200"
             - "9300:9300"
-
+        environment:
+            discovery.type: single-node
+        volumes:
+            - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
+    kibana:
+        image: blacktop/kibana:7.7
+        depends_on:
+            - elasticsearch
+        ports:
+            - "5601:5601"
     postgres:
-        image: postgres:10.3
+        image: postgres:10-alpine
+        user: postgres
         restart: always
         volumes:
             - postgres_data:/var/lib/postgresql/data/
@@ -32,9 +49,13 @@ services:
                 scl_python_version: rh-python36
         depends_on:
             - elasticsearch
+            - elasticsearch2
             - postgres
         stdin_open: true
         tty: true
+        environment:
+            ES7_HOST: http://elasticsearch:9200
+            ES_HOST: http://elasticsearch2
 
     docs:
         build:
@@ -46,11 +67,11 @@ services:
             LANG: en_US.utf8
             LC_ALL: en_US.utf8
         volumes:
-            - ./:/src/cfgov-refresh
+            - ./:/src/consumerfinance.gov
         entrypoint:
             - sh
-            - /src/cfgov-refresh/docker/docs/entrypoint.sh
-        working_dir: /src/cfgov-refresh
+            - /src/consumerfinance.gov/docker/docs/entrypoint.sh
+        working_dir: /src/consumerfinance.gov
         stdin_open: true
         tty: true
 networks:

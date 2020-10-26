@@ -27,6 +27,7 @@ class FilterableDateField(forms.DateField):
         '%m-%d-%y',     # 10-25-16, 9-1-16
         '%m/%d/%Y',     # 10/25/2016, 9/1/2016
         '%m-%d-%Y',     # 10-25-2016, 9-1-2016
+        '%Y-%m-%d',     # 2016-10-25, 2016-9-1
         '%m/%Y',        # 10/2016, 7/2017
         '%m-%Y',        # 10-2016, 7-2017
         '%m/%y',        # 10/16, 4/18
@@ -36,7 +37,7 @@ class FilterableDateField(forms.DateField):
 
     default_widget_attrs = {
         'class': 'a-text-input a-text-input__full',
-        'type': 'text',
+        'type': 'date',
         'placeholder': 'mm/dd/yyyy',
         'data-type': 'date'
     }
@@ -102,7 +103,15 @@ class FilterableListForm(forms.Form):
         })
     )
 
-    preferred_datetime_format = '%m/%d/%Y'
+    archived = forms.ChoiceField(
+        choices=[
+            ('exclude', 'Exclude archived items (default)'),
+            ('only', 'Show only archived items'),
+            ('include', 'Show all items'),
+        ]
+    )
+
+    preferred_datetime_format = '%Y-%m-%d'
 
     def __init__(self, *args, **kwargs):
         self.filterable_pages = kwargs.pop('filterable_pages')
@@ -228,9 +237,11 @@ class FilterableListForm(forms.Form):
                 self.get_query_strings(),
                 self.declared_fields
             ):
-                if self.cleaned_data.get(field_name):
-                    final_query &= \
-                        Q((query, self.cleaned_data.get(field_name)))
+                if self.cleaned_data.get(field_name) not in (None, [], ''):
+                    final_query &= Q(
+                        (query, self.cleaned_data.get(field_name))
+                    )
+
         return final_query
 
     # Returns a list of query strings to associate for each field, ordered by
@@ -244,7 +255,17 @@ class FilterableListForm(forms.Form):
             'categories__name__in',  # categories
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors
+            'is_archived',           # archived
         ]
+
+    def clean_archived(self):
+        data = self.cleaned_data['archived']
+        if data == 'exclude':
+            return False
+        elif data == 'only':
+            return True
+
+        return None
 
 
 class EnforcementActionsFilterForm(FilterableListForm):
@@ -269,6 +290,7 @@ class EnforcementActionsFilterForm(FilterableListForm):
             'categories__name__in',  # categories
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors
+            'is_archived',           # archived
             'statuses__status__in',  # statuses
         ]
 

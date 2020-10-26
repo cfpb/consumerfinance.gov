@@ -35,5 +35,5 @@ module.exports = {
   },
 
   // Default test name, which displays in Sauce Labs and the Terminal.
-  testName: 'cfgov-refresh screen test'
+  testName: 'consumerfinance.gov screen test'
 };

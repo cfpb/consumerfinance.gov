@@ -34,6 +34,7 @@
             </a>
         </div>
         <a href="{{ item.link_url }}" class="o-carousel_item-visual">
+            <span class="u-visually-hidden">{{ item.link_text }}</span>
             <div class="o-carousel_item-visual-wrapper">
                     {% set rendition = image( item.image, 'original' ) %}
                     <img class="o-carousel_item-img"

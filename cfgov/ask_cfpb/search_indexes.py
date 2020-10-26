@@ -69,7 +69,7 @@ class AnswerPageIndex(indexes.SearchIndex, indexes.Indexable):
         return self.prepared_data
 
     def get_model(self):
-        from ask_cfpb.models import AnswerPage
+        from ask_cfpb.models.answer_page import AnswerPage
         return AnswerPage
 
     def index_queryset(self, using=None):

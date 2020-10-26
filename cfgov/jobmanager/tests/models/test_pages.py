@@ -117,10 +117,13 @@ class JobListingPageFormTests(TestCase, WagtailTestUtils):
         self.assertContains(response, "Remote option only applies")
 
     def create_page(self, **kwargs):
+        description_field = JobListingPage._meta.get_field('description')
+        description_editor = description_field.formfield().widget
+        test_description = description_editor.format_value('Test description')
         post_data = {
             'title': 'Test job page',
             'slug': 'test-job-page',
-            'description': 'Test description',
+            'description': test_description,
             'open_date': '2099-01-01',
             'close_date': '2099-12-01',
             'salary_min': 1,
@@ -135,7 +138,7 @@ class JobListingPageFormTests(TestCase, WagtailTestUtils):
             'usajobs_application_links-INITIAL_FORMS': 0,
             'usajobs_application_links-TOTAL_FORMS': 0,
             'language': 'en',
-            'schema_json': '',
+            'schema_json': 'null',
         }
 
         post_data.update(kwargs)

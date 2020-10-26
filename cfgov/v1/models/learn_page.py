@@ -75,6 +75,7 @@ class AbstractFilterPage(CFGOVPage):
         ], 'Relevant Dates', classname='collapsible'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'Language'),
+        MultiFieldPanel(CFGOVPage.archive_panels, 'Archive'),
     ]
 
     # This page class cannot be created.
@@ -117,6 +118,7 @@ class LearnPage(AbstractFilterPage):
         ('call_to_action', molecules.CallToAction()),
         ('email_signup', organisms.EmailSignUp()),
         ('video_player', organisms.VideoPlayer()),
+        ('audio_player', organisms.AudioPlayer()),
         ('table_block', organisms.AtomicTableBlock(
             table_options={'renderer': 'html'}
         )),
@@ -239,6 +241,7 @@ class EnforcementActionPage(AbstractFilterPage):
         ], 'Relevant Dates', classname='collapsible'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'Language'),
+        MultiFieldPanel(CFGOVPage.archive_panels, 'Archive'),
     ]
 
     edit_handler = TabbedInterface([

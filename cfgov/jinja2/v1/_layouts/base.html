@@ -60,9 +60,7 @@
     <meta name="description"
           content="
             {%- block desc -%}
-                {{- page.search_description if page and page.search_description
-                    else 'Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.'
-                -}}
+                {{- meta_description if page else '' -}}
             {%- endblock -%}
           ">
     <link rel="canonical" href="{{ request.build_absolute_uri() | lower }}">
@@ -219,7 +217,7 @@
     {% include "v1/modernizr.html" %}
 </head>
 
-<body{% block body_classes %}{% endblock body_classes %}>
+<body{% block body_classes %}{% if page and page.is_archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
 
 {#
   =========
@@ -262,6 +260,9 @@
     {{ wagtailuserbar() }}
 
     {% block banner_top %}
+        {% if page and page.is_archived %}
+            {% include 'molecules/archived-banner.html' %}
+        {% endif %}
     {% endblock %}
 
     {# PRIMARY CONTENT #}

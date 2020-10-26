@@ -51,7 +51,7 @@ class LoginViewsTestCase(TestCase):
         response = self.client.get('/login/')
         self.assertRedirects(
             response,
-            '/login/check_permissions/?next=',
+            '/login/check_permissions/?next=/admin/',
             target_status_code=302,
             fetch_redirect_response=False,
         )

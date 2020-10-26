@@ -27,9 +27,7 @@ const expandableEls = Array.prototype.slice.call(
 
 const expandableData = expandableEls.reduce( ( memo, expandable ) => {
   const labelText = expandable.querySelector( `${ EXPANDABLE_UI_CLASSES.label }` );
-  const content = expandable.querySelector( `
-    ${ EXPANDABLE_UI_CLASSES.content } .rich-text
-  ` );
+  const content = expandable.querySelector( `${ EXPANDABLE_UI_CLASSES.content }` );
 
   memo[labelText.textContent.trim()] = content.innerHTML;
 

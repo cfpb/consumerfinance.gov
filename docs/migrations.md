@@ -90,7 +90,7 @@ that briefly describes the change(s) you're making:
 ```
 
 For examples of good migration names, look through some of
-[our existing migration files](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/migrations).
+[our existing migration files](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/migrations).
 
 !!! note
     Some changes will generate multiple migration files.
@@ -106,7 +106,7 @@ a regular source of conflicts between pull requests
 that are in flight at the same time.
 If a PR with a migration gets merged between the time you create your migration
 and the time that your PR is ready for merging,
-you will have to update your branch as normal to be current with master
+you will have to update your branch as normal to be current with main
 and then re-create your migration.
 Also note that our
 [back-end tests that run in GitHub Actions](../github-actions/)
@@ -174,7 +174,7 @@ that need to happen to a model's data are made.
 
 !!! note
     While backwards migrations are necessary in external libraries that we create,
-    we do not require them in cfgov-refresh
+    we do not require them in consumerfinance.gov
     because we prefer not to rollback migrations that have already been applied.
 
 ### Wagtail-specific considerations
@@ -182,7 +182,7 @@ that need to happen to a model's data are made.
 Django data migrations with Wagtail can be challenging because
 [programmatic editing of Wagtail pages is difficult](https://github.com/wagtail/wagtail/issues/1101),
 and pages have both revisions and StreamFields.
-This section describes ways we try to address these challenges in cfgov-refresh.
+This section describes ways we try to address these challenges in consumerfinance.gov.
 
 The data migration needs to modify both the existing Wagtail pages
 that correspond to the changed model and all revisions of that page.
@@ -197,7 +197,7 @@ it's a three-step process to modify a field without losing data:
    from the old field to the new field
 3. Delete the old field with an automatic schema migration
 
-We've written some utility functions in cfgov-refresh
+We've written some utility functions in consumerfinance.gov
 that make writing data migrations for StreamFields easier.
 Using these utilities, a Django data migration that modifies a StreamField
 would use the following format:
@@ -425,4 +425,4 @@ cfgov/manage.py migrate --noinput
 You'll see that there are no changes to apply,
 as the new files should exactly describe the current model state in the same way that the old migrations did.
 
-See [cfgov-refresh#3770](https://github.com/cfpb/cfgov-refresh/pull/3770) for an example of when this was done.
+See [consumerfinance.gov#3770](https://github.com/cfpb/consumerfinance.gov/pull/3770) for an example of when this was done.

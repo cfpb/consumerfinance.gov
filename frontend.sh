@@ -74,7 +74,7 @@ fake_fonts() {
   if [ ! -d static.in/cfgov-fonts/fonts ]; then
     echo "Faking font files…"
     # We want to test Django collectstatic, but we might not have our webfont 
-    # files if this script is running somewhere public. Because cfgov-refresh
+    # files if this script is running somewhere public. Because consumerfinance.gov
     # uses the Django ManifestStaticFilesStorage backend, the collectstatic 
     # command will fail if any referenced files are missing.
     #

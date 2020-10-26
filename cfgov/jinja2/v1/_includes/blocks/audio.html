@@ -1,0 +1,16 @@
+{% macro render(value) %}
+    {% if value.type == 'audio' %}
+        <audio class="o-audio-player" controls preload="metadata" data-title="{{ value.title }}">
+        {% for source in value.sources %}
+            <source src="{{ source.src }}" type="{{ source.type }}">
+            {{ _('Your browser does not support this audio player.') }}
+        {% endfor %}
+        </audio>
+    {% endif %}
+    {% if value.type == 'video' %}
+        <p>
+            <b>Warning:</b> We do not support using video in this block.
+            Please choose an audio file.
+        </p>
+    {% endif %}
+{% endmacro %}

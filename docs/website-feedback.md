@@ -28,7 +28,7 @@ or disabled for different Wagtail groups in the Groups area of the admin.
 ## Exporting feedback from the command line
 
 For more control over what feedback to export, the
-[`export_feedback`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/management/commands/export_feedback.py)
+[`export_feedback`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/management/commands/export_feedback.py)
 Django management command can be used. This command generates a CSV file
 containing feedback for a specified set of pages and/or dates.
 
@@ -73,7 +73,7 @@ cfgov/manage.py export_feedback --from-date 2019-01-01 --to-date 2019-12-31 --fi
 ## Querying feedback programmatically
 
 For even greater control, feedback can be queried from a Python shell using the
-[`Feedback`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/feedback.py)
+[`Feedback`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/feedback.py)
 Django model.
 
 This model includes a
