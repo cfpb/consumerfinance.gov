@@ -1,5 +1,5 @@
 <section class="college-costs_tool-section college-costs_tool-section__school-search" id="college-costs_school-search" data-tool-section="school-info">
-    <div class="school-search_start">
+    <div class="school-search_start" id="school-search_what-school">
         <h2>School & living situation</h2>
         <p>Start with the school you’re considering, plus the program and other info about your situation. Refer to your financial aid offer if you're not sure.</p>
         <label class="a-label a-label__heading u-mb15" for="search__school-input">
@@ -19,7 +19,7 @@
     </div>
 
     <div class="school-search_additional-info">
-        <div class="block block__sub program-question">
+        <div class="block block__sub program-question" id="school-search_program-type">
             <h3 class="h4">Select your program type</h3>
             {{ notification.render(
                 'default',
@@ -77,7 +77,7 @@
             </select>
           </div>
         </div>
-        <div class="block block__sub program-question">
+        <div class="block block__sub program-question" id="school-search_program-length">
             <h3 class="h4">How long do you expect your program to take?</h3>
             <div class="undergrad-content">
               {{ notification.render(
@@ -136,7 +136,7 @@
                 })
             }}
         </div>
-        <div class="block block__sub program-question" data-state-based-visibility="control-nonprivate">
+        <div class="block block__sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
             <h3 class="h4">Which tuition rate will apply to you?</h3>
             {{
                 radio.render({
@@ -156,7 +156,7 @@
             }}
             <!-- TODO: add option for N/A -- all students pay the same rate OR hide this question if N/A -->
         </div>
-        <div class="block block__sub program-question">
+        <div class="block block__sub program-question" id="school-search_program-housing">
             <h3 class="h4">Where do you plan to live while in school?</h3>
             {{
                 radio.render({
@@ -183,23 +183,23 @@
                 })
             }}
         </div>
-        <div class="block block__sub program-question undergrad-content">
+        <div class="block block__sub program-question undergrad-content" id="school-search_program-dependency">
             <h3 class="h4">Are you considered a dependent or independent student?</h3>
             <p><a href="https://studentaid.gov/help/view-sar" class="link-external">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
             {{
                 radio.render({
-                  'name':  "programStudentType",
+                  'name':  "programDependency",
                   'label': 'Dependent',
                   'value': 'dependent',
-                  'id': 'program-student-type-radio_dependent'
+                  'id': 'program-dependency-radio_dependent'
                 })
             }}
             {{
                 radio.render({
-                  'name':  "programStudentType",
+                  'name':  "programDependency",
                   'label': 'Independent',
                   'value': 'independent',
-                  'id': 'program-student-type-radio_independent'
+                  'id': 'program-dependency-radio_independent'
                 })
             }}
         </div>
