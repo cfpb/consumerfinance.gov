@@ -90,6 +90,7 @@ def index(request):
 
     # Provide valid initial values for the search form so that it is always
     # valid. A blank search will return all products.
+    page_number = 1
     search_term = ''
     search_field = 'all'
     search_form = SearchForm(
@@ -97,12 +98,13 @@ def index(request):
         initial={
             'q': search_term,
             'search_field': search_field,
-            'page': 1,
+            'page': page_number,
         }
     )
     # Get our search results. If the form is not valid, our default search_term
     # and search_field will be used below.
     if search_form.is_valid():
+        page_number = search_form.cleaned_data['page']
         search_field = search_form.cleaned_data['search_field']
         search_term = search_form.cleaned_data['q'].strip()
         if search_term != '':
@@ -134,7 +136,7 @@ def index(request):
 
     # Handle pagination
     paginator = Paginator(products.all(), 20)
-    page = paginator.get_page(search_form.cleaned_data['page'])
+    page = paginator.get_page(page_number)
 
     return TemplateResponse(request, 'prepaid_agreements/index.html', {
         'current_page': page.number,
