@@ -180,7 +180,7 @@ const financialModel = {
       financialModel.values.fellowAssist_fellowship = 0;
       financialModel.values.fellowAssist_assistantship = 0;
 
-      if ( getStateValue( 'programStudentType' ) === 'independent' ) {
+      if ( getStateValue( 'programStudentDependency' ) === 'independent' ) {
         unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' ).yearOne -
           financialModel.values.fedLoan_directSub );
 

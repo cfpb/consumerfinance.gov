@@ -23,7 +23,7 @@ import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/upda
  */
 function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLength ) {
   const level = getStateValue( 'programLevel' );
-  const dependency = getStateValue( 'programStudentType' );
+  const dependency = getStateValue( 'programStudentDependency' );
   let percentSub = 1;
   let percentUnsub = 1;
   let subPrincipal = 0;

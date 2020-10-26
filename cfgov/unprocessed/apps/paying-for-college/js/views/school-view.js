@@ -196,7 +196,7 @@ const schoolView = {
   _updateSchoolRadioButtons: () => {
     const campus = getSchoolValue( 'onCampusAvail' );
     const control = getSchoolValue( 'Public' );
-    const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programStudentType' ];
+    const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programStudentDependency' ];
 
 
     schoolView._searchResults.classList.remove( 'active' );

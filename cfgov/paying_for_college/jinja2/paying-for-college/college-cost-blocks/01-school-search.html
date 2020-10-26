@@ -203,5 +203,20 @@
                 })
             }}
         </div>
+        <div data-state-based-visibility="school-fields-errors">
+            {{ notification.render(
+                'warning',
+                true,
+                'Form is incomplete',
+                'Please make selections for the following fields on this page:
+                <div data-state-based-visibility="school-required"><a class="a-link" href="#school-search_what-school" data-gtm_ignore="true">What school are you considering?</a></div>
+                <div data-state-based-visibility="type-required"><a class="a-link" href="#school-search_program-type" data-gtm_ignore="true">Select your program type</a></div>
+                <div data-state-based-visibility="length-required"><a class="a-link" href="#school-search_program-length" data-gtm_ignore="true">How long do you expect your program to take?</a></div>
+                <div data-state-based-visibility="rate-required"><a class="a-link" href="#school-search_program-rate" data-gtm_ignore="true">Which tuition rate will apply to you?</a></div>
+                <div data-state-based-visibility="housing-required"><a class="a-link" href="#school-search_program-housing" data-gtm_ignore="true">Where do you plan to live while in school?</a></div>
+                <div data-state-based-visibility="dependency-required"><a class="a-link" href="#school-search_program-dependency" data-gtm_ignore="true">Are you considered a dependent or independent student?</a></div>
+                ' | safe
+            ) }}
+        </div>
     </div>
 </section>  

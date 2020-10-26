@@ -10,7 +10,7 @@ import { bindEvent } from '../../../../js/modules/util/dom-events';
 
 const urlVals = [
   'pid', 'programHousing', 'programType', 'programLength',
-  'programRate', 'programStudentType', 'costsQuestion', 'expensesRegion',
+  'programRate', 'programStudentDependency', 'costsQuestion', 'expensesRegion',
   'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign'
 ];
 
