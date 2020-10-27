@@ -3,7 +3,7 @@ import os
 import re
 from collections import OrderedDict
 
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
@@ -312,21 +312,21 @@ def school_search_api(request):
 
 
 def school_autocomplete(request):
+    document = []
     search_term = request.GET.get('q', '').strip()
-    if not search_term:
-        return HttpResponse(json.dumps([]), content_type='application/json')
-    response = SchoolSearch(search_term).autocomplete()
+    if search_term:
+        response = SchoolSearch(search_term).autocomplete()
 
-    document = [{'schoolname': school.text,
-                 'id': school.school_id,
-                 'city': school.city,
-                 'nicknames': str(school.nicknames),
-                 'state': school.state,
-                 'zip5': school.zip5,
-                 'url': school.url}
-                for school in response.get('results')]
+        document = [{'schoolname': school.text,
+                     'id': school.school_id,
+                     'city': school.city,
+                     'nicknames': str(school.nicknames),
+                     'state': school.state,
+                     'zip5': school.zip5,
+                     'url': school.url}
+                    for school in response.get('results')]
 
-    return HttpResponse(json.dumps(document), content_type='application/json')
+    return JsonResponse(document, safe=False)
 
 
 class VerifyView(View):
