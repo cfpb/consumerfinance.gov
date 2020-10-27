@@ -11,10 +11,13 @@ class SchoolSearch:
         if self.search_term != '':
             search = SchoolDocument.search().query(
                 'match', autocomplete=self.search_term)
-            total_results = search.count()
-            self.results = [
-                {'question': str(result.autocomplete), 'url': result.url}
-                for result in search[:total_results]
+            response = search.execute()
+            self.results = [{
+                'schoolname': result.text,
+                'id': result.school_id,
+                'city': result.city,
+                'state': result.state}
+                for result in response
             ]
         return self.results
 

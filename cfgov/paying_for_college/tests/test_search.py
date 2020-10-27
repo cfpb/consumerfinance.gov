@@ -116,8 +116,6 @@ class SchoolSearchTest(TestCase):
         mock_return.state = school.state
         mock_return.zip5 = school.zip5
         mock_return.nicknames = "Jayhawks"
-        # mock_return.autocomplete = "Kansas"
-        # mock_return.url = "url"
         # mock_autocomplete.return_value = [mock_return]
         mock_queryset = mock.Mock()
         mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
@@ -130,7 +128,7 @@ class SchoolSearchTest(TestCase):
         )
         response = school_autocomplete(RequestFactory().get(url))
         # output = json.loads(response.content)
-        # self.assertEqual(sorted(output[0].keys()), ["question", "url"])
+        # self.assertEqual(sorted(output[0].keys()), ["id", "schoolname"])
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_autocomplete.call_count, 2)
         self.assertTrue(mock_autocomplete.called_with(search_term=term))
