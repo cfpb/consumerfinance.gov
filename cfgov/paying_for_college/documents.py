@@ -18,7 +18,8 @@ class SchoolDocument(Document):
     def prepare_autocomplete(self, instance):
         alias_strings = [a.alias for a in instance.alias_set.all()]
         nickname_strings = [n.nickname for n in instance.nickname_set.all()]
-        return alias_strings + nickname_strings
+        auto_strings = alias_strings + nickname_strings + [str(instance.pk)]
+        return " ".join(auto_strings)
 
     def prepare_nicknames(self, instance):
         return [n.nickname for n in instance.nickname_set.all()]
