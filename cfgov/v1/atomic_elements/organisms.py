@@ -588,6 +588,47 @@ class ModelBlock(blocks.StructBlock):
         return self.limit
 
 
+class SimpleChartBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=True)
+    subtitle = blocks.CharBlock(required=False)
+
+    #chart_type = blocks.ChoiceBlock(
+    #    choices=[
+    #        ('bar', 'Bar | % y-axis values'),
+    #        ('line', 'Line | millions/billions y-axis values'),
+    #    ],
+    #    required=True
+    #)
+
+    data_source = blocks.CharBlock(
+        required=True,
+        help_text='URL of the chart\'s data source'
+    )
+
+    source = blocks.CharBlock(
+        required=False,
+        help_text='Data source'
+    )
+
+    y_axis_label = blocks.CharBlock(
+        required=True,
+        help_text='y-axis label'
+    )
+
+    notes = blocks.CharBlock(
+        required=False,
+        help_text='General chart information'
+    )
+
+    class Meta:
+        label = 'Simple Chart'
+        icon = 'image'
+        template = '_includes/organisms/simple-chart.html'
+
+    class Media:
+        js = ['simple-chart.js']
+
+
 class FullWidthText(blocks.StreamBlock):
     content = blocks.RichTextBlock(icon='edit')
     content_with_anchor = molecules.ContentWithAnchor()
@@ -601,6 +642,7 @@ class FullWidthText(blocks.StreamBlock):
     email_signup = EmailSignUp()
     well = Well()
     well_with_ask_search = WellWithAskSearch()
+    chart = SimpleChartBlock()
 
     class Meta:
         icon = 'edit'
