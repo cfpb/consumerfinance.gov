@@ -315,16 +315,7 @@ def school_autocomplete(request):
     search_term = request.GET.get('q', '').strip()
     if not search_term:
         return HttpResponse(json.dumps([]), content_type='application/json')
-    results = SchoolSearch(search_term).autocomplete()
-
-    return HttpResponse(json.dumps(results), content_type='application/json')
-
-
-def school_search(request):
-    search_term = request.GET.get('q', '').strip()
-    if not search_term:
-        return HttpResponse(json.dumps([]), content_type='application/json')
-    response = SchoolSearch(search_term).search()
+    response = SchoolSearch(search_term).autocomplete()
 
     document = [{'schoolname': school.text,
                  'id': school.school_id,
