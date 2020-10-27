@@ -14,7 +14,7 @@ from paying_for_college.views import school_autocomplete, school_search_api
 # paying-for-college2/understanding-your-financial-aid-offer/api/search-schools.json?q=Kansas
 class SchoolSearchTest(TestCase):
 
-    fixtures = ["test_fixture.json"]
+    fixtures = ["test_fixture.json", "test_school.json"]
 
     class ElasticSchool:
         def __init__(self):
@@ -171,6 +171,32 @@ class SchoolSearchTest(TestCase):
         self.assertEqual(json.loads(response.content), [])
         self.assertEqual(mock_autocomplete.call_count, 0)
         self.assertEqual(response.status_code, 200)
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_PFC": [("boolean", True)]})
+    @mock.patch.object(SchoolDocument, 'search')
+    def test_autocomplete_closed(self, mock_search):
+        school = School.objects.get(pk=987654)
+        school.save()
+        mock_return = mock.Mock()
+        mock_return.search_term = "closed"
+        mock_return.text = school.primary_alias
+        mock_return.school_id = school.school_id
+        mock_return.city = school.city
+        mock_return.state = school.state
+        mock_return.zip5 = school.zip5
+        mock_queryset = mock.Mock()
+        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
+        mock_queryset.count.return_value = 0
+        url = "{}?q=closed".format(
+            reverse("paying_for_college:disclosures:school_search")
+        )
+        response = school_autocomplete(RequestFactory().get(url))
+        self.assertEqual(json.loads(response.content), [])
+        self.assertEqual(mock_search.call_count, 1)
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(b"closed" in response.content)
+        self.assertFalse(b"987654" in response.content)
+        self.assertFalse(b"Closed Town" in response.content)
 
     # TODO: delete the test_school_search_api function after we migrate to ES7
     @mock.patch("paying_for_college.views.SearchQuerySet.autocomplete")
