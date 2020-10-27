@@ -5,7 +5,7 @@ from flags.urls import flagged_re_path
 from paying_for_college.views import (
     BaseTemplateView, ConstantsRepresentation, ExpenseRepresentation,
     FeedbackView, OfferView, ProgramRepresentation, SchoolRepresentation,
-    StatsRepresentation, VerifyView, school_search, school_search_api
+    StatsRepresentation, VerifyView, school_autocomplete, school_search_api
 )
 
 
@@ -30,7 +30,7 @@ urlpatterns = [
     flagged_re_path(
         'ELASTICSEARCH_DSL_PFC',
         r"^api/search-schools.json",
-        school_search,
+        school_autocomplete,
         fallback=school_search_api,
         name="school_search"),
 
