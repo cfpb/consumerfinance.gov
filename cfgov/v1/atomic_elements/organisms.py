@@ -591,6 +591,7 @@ class ModelBlock(blocks.StructBlock):
 class SimpleChartBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=True)
     subtitle = blocks.CharBlock(required=False)
+    figure = blocks.CharBlock(required=False)
 
     #chart_type = blocks.ChoiceBlock(
     #    choices=[
@@ -605,9 +606,24 @@ class SimpleChartBlock(blocks.StructBlock):
         help_text='URL of the chart\'s data source'
     )
 
-    source = blocks.CharBlock(
+    transform = blocks.CharBlock(
         required=False,
-        help_text='Data source'
+        help_text='Name of the javascript function in chart-hooks.js to run on the provided data before handing it to the chart'
+    )
+
+    style_overrides = blocks.CharBlock(
+        required=False,
+        help_text='A JSON object with style overrides for the underlying Highcharts chart. No object merging is done, nested objects should be referenced with dot notation: {"tooltip.shape": "circle"}'
+    )
+
+    description = blocks.CharBlock(
+        required=True,
+        help_text="Accessible description of the chart content"
+    )
+
+    credits = blocks.CharBlock(
+        required=False,
+        help_text='Attribution for the data source'
     )
 
     y_axis_label = blocks.CharBlock(
