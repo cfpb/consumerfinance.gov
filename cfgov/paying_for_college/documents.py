@@ -27,7 +27,7 @@ class SchoolDocument(Document):
         return " ".join(auto_strings)
 
     def prepare_nicknames(self, instance):
-        return [n.nickname for n in instance.nickname_set.all()]
+        return ", ".join([n.nickname for n in instance.nickname_set.all()])
 
     def prepare_url(self, instance):
         return reverse("paying_for_college:disclosures:school-json",

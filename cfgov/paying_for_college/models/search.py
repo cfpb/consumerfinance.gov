@@ -11,10 +11,7 @@ class SchoolSearch:
         if self.search_term != '':
             search = SchoolDocument.search().query(
                 'match', autocomplete=self.search_term)
-            total_results = search.count()
-            search = search[0:total_results]
-            response = search.execute()
-            self.results = response[0:total_results]
+            self.results = search.execute()
         return {
             'search_term': self.search_term,
             'results': self.results

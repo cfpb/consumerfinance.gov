@@ -320,7 +320,7 @@ def school_autocomplete(request):
         document = [{'schoolname': school.text,
                      'id': school.school_id,
                      'city': school.city,
-                     'nicknames': str(school.nicknames),
+                     'nicknames': school.nicknames,
                      'state': school.state,
                      'zip5': school.zip5,
                      'url': school.url}
