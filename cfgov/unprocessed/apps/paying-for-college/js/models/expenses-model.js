@@ -30,8 +30,8 @@ const expensesModel = {
     }
 
     expensesModel.values.total_expenses = totalExpenses;
-    expensesModel.values.total_remainder = getFinancialValue( 'salary_monthly' ) - totalExpenses
-      -  getFinancialValue( 'debt_tenYearMonthly' );
+    expensesModel.values.total_remainder = getFinancialValue( 'salary_monthly' ) - totalExpenses -
+      getFinancialValue( 'debt_tenYearMonthly' );
     if ( expensesModel.values.total_remainder > 0 ) {
       updateState.byProperty( 'expensesRemainder', 'surplus' );
     } else if ( expensesModel.values.total_remainder < 0 ) {
