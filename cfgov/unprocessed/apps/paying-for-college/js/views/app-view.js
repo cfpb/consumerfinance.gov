@@ -117,6 +117,7 @@ const appView = {
   setUrlQueryString: () => {
     updateState.replaceStateInHistory( buildUrlQueryString() );
     appView._updateSaveLink();
+    console.log( 'updated link!', buildUrlQueryString() );
   },
 
   /**

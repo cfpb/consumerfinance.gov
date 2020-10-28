@@ -7,6 +7,8 @@ import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { selectorMatches } from '../util/other-utils';
 import { updateState } from '../dispatchers/update-state.js';
+import { updateUrlQueryString } from '../dispatchers/update-view.js';
+
 
 const financialView = {
   _financialItems: [],
@@ -64,6 +66,8 @@ const financialView = {
         recalculateFinancials();
       }
     }
+
+    updateUrlQueryString();
   },
 
   /**
@@ -88,9 +92,11 @@ const financialView = {
       financialView._inputChangeTimeout = setTimeout(
         function() {
           updateFinancial( name, value );
+          updateUrlQueryString();
         }, 500 );
     } else {
       updateFinancial( name, value );
+      updateUrlQueryString();
     }
   },
 

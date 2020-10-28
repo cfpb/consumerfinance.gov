@@ -1,4 +1,4 @@
-import { expensesModel } from '../models/expenses-model.js';
+ import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
@@ -141,7 +141,7 @@ function buildUrlQueryString() {
     const value = model[variable.split( '.' )[1]];
 
     if ( typeof value !== 'undefined' && value !== 0 && value !== null &&
-          value !== false ) {
+          value !== false && value !== 'not-selected' ) {
       if ( query.length > 1 ) query += '&';
       query += key + '=' + value;
     }

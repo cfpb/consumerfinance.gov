@@ -3,7 +3,7 @@
  * which tracks the current app state and allows the views to update based on
  * state.
 */
-import { getProgramInfo } from '../dispatchers/get-model-values.js';
+import { getProgramInfo, getSchoolValue } from '../dispatchers/get-model-values.js';
 import { recalculateFinancials, updateFinancial } from '../dispatchers/update-models.js';
 import { updateFinancialViewAndFinancialCharts, updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
@@ -88,14 +88,14 @@ const stateModel = {
    updateStateInDom( 'schoolErrors', 'no' );
 
    const requiredErrors = {
-     housingSelected: smv.programHousing === 'not-selected',
-     dependencySelected: smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected',
-     rateSelected: smv.programRate === 'not-selected' && control === 'Public'
+     housingSelected: smv.programHousing !== 'not-selected',
+     dependencySelected: smv.programLevel === 'undergrad' && smv.programDependency !== 'not-selected',
+     rateSelected: smv.programRate !== 'not-selected' && control === 'Public'
    };
 
    // Change values to "required" which triggers error notification CSS rules
    for ( let key in requiredErrors ) {
-     if ( requiredErrors[key] === true ) {
+     if ( requiredErrors[key] === false ) {
        stateModel.values[key] = 'required';
        updateStateInDom( key, 'required' );
        stateModel.values['schoolErrors'] = 'yes';
@@ -110,6 +110,8 @@ const stateModel = {
      stateModel.values.showschoolErrors = false;
       updateStateInDom( 'showschoolErrors', false );
     }
+
+    console.log( 'check', requiredErrors );
   },
 
   /**
@@ -151,13 +153,15 @@ const stateModel = {
     const finUpdate = [ 'programType', 'programRate', 'programDependency',
       'programLength', 'programHousing' ];
 
+      console.log( 'property: ', property )
+
     // Properties which require a URL querystring update:
-    if ( urlParams.indexOf( property ) > 1 ) {
+    if ( urlParams.indexOf( property ) > 0 ) {
       updateUrlQueryString();
     }
 
     // Properties which require a financialModel and financialView update:
-    if ( finUpdate.indexOf( property ) > 1 ) {
+    if ( finUpdate.indexOf( property ) > 0 ) {
       recalculateFinancials();
       updateFinancialViewAndFinancialCharts();
     }

@@ -1,4 +1,20 @@
 <section class="college-costs_tool-section college-costs_tool-section__school-search" id="college-costs_school-search" data-tool-section="school-info">
+      <div data-state-based-visibility="school-fields-errors">
+        {{ notification.render(
+            'warning',
+            true,
+            'Form is incomplete',
+            'Please make selections for the following fields on this page:
+            <ul>
+            <div data-state-based-visibility="school-required"><li><a class="a-link" href="#school-search_what-school" data-gtm_ignore="true">What school are you considering?</a></li></div>
+            <div data-state-based-visibility="type-required"><li><a class="a-link" href="#school-search_program-type" data-gtm_ignore="true">Select your program type</a></li></div>
+            <div data-state-based-visibility="length-required"><li><a class="a-link" href="#school-search_program-length" data-gtm_ignore="true">How long do you expect your program to take?</a></li></div>
+            <div data-state-based-visibility="rate-required"><li><a class="a-link" href="#school-search_program-rate" data-gtm_ignore="true">Which tuition rate will apply to you?</a></li></div>
+            <div data-state-based-visibility="housing-required"><li><a class="a-link" href="#school-search_program-housing" data-gtm_ignore="true">Where do you plan to live while in school?</a></li></div>
+            <div data-state-based-visibility="dependency-required"><li><a class="a-link" href="#school-search_program-dependency" data-gtm_ignore="true">Are you considered a dependent or independent student?</a></li></div>
+            </ul>' | safe
+        ) }}
+    </div>
     <div class="school-search_start" id="school-search_what-school">
         <h2>School & living situation</h2>
         <p>Start with the school you’re considering, plus the program and other info about your situation. Refer to your financial aid offer if you're not sure.</p>
@@ -202,21 +218,6 @@
                   'id': 'program-dependency-radio_independent'
                 })
             }}
-        </div>
-        <div data-state-based-visibility="school-fields-errors">
-            {{ notification.render(
-                'warning',
-                true,
-                'Form is incomplete',
-                'Please make selections for the following fields on this page:
-                <div data-state-based-visibility="school-required"><a class="a-link" href="#school-search_what-school" data-gtm_ignore="true">What school are you considering?</a></div>
-                <div data-state-based-visibility="type-required"><a class="a-link" href="#school-search_program-type" data-gtm_ignore="true">Select your program type</a></div>
-                <div data-state-based-visibility="length-required"><a class="a-link" href="#school-search_program-length" data-gtm_ignore="true">How long do you expect your program to take?</a></div>
-                <div data-state-based-visibility="rate-required"><a class="a-link" href="#school-search_program-rate" data-gtm_ignore="true">Which tuition rate will apply to you?</a></div>
-                <div data-state-based-visibility="housing-required"><a class="a-link" href="#school-search_program-housing" data-gtm_ignore="true">Where do you plan to live while in school?</a></div>
-                <div data-state-based-visibility="dependency-required"><a class="a-link" href="#school-search_program-dependency" data-gtm_ignore="true">Are you considered a dependent or independent student?</a></div>
-                ' | safe
-            ) }}
         </div>
     </div>
 </section>  
