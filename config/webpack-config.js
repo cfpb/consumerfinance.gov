@@ -20,7 +20,11 @@ const WEBPACK_MODE_DEFAULT = 'production';
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
-    exclude: /node_modules/,
+    /* Exclude modules from transpiling.
+       The below regex will match and exclude all node modules
+       except those that start with `cf-` or `cfpb-`.
+       Regex test: https://regex101.com/r/zizz3V/7 */
+    exclude: /node_modules\/(?!(?:cf\-.+|cfpb\-.+)).+/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
