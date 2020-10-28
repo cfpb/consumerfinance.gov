@@ -7,7 +7,7 @@ const hooks = {
       }
     })
   },
-  enforcementReliefFormatter() {
+  enforcement_reliefTooltipFormatter() {
     const { x, y, name, relief, url } = this.points[0].point.options
     const total =
       y > 1e9
@@ -22,7 +22,12 @@ const hooks = {
       `Relief from action: <span style="font-weight: 500">$${relief}</span>`
     )
   },
-  enforcementActionsFormatter() {
+
+  enforcement_yAxisLabelsFormatter() {
+    return `$${Math.round(this.value / 1e9)}`
+  },
+
+  enforcement_actionsTooltipFormatter() {
     const { x, y, name, url } = this.points[0].point.options
     return (
       `<div style="margin-bottom: 0.5em;"><span style="font-weight: 500">${new Date(

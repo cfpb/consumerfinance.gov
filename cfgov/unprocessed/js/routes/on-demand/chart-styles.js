@@ -46,11 +46,6 @@ const styles = {
     title: {
       text: '',
       margin: 25
-    },
-    labels: {
-      formatter: function() {
-        return `$${Math.round(this.value / 1e9)}`
-      }
     }
   }
 }
