@@ -74,8 +74,8 @@
     "terser-webpack-plugin": "4.1.0",
     "turbolinks": "5.1.1",
     "vinyl-named": "1.1.0",
-    "webpack": "4.44.1",
-    "webpack-stream": "5.0.0",
+    "webpack": "5.2.0",
+    "webpack-stream": "6.1.0",
     "xdr": "0.5.3"
   },
   "devDependencies": {

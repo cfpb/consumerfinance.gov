@@ -20,15 +20,7 @@ const WEBPACK_MODE_DEFAULT = 'production';
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
-
-    /* The `exclude` rule is a double negative.
-       It excludes all of `node_modules/` but it then un-excludes modules that
-       start with `cf-` and `cfpb-` (CF components and cfpb-chart-builder).
-       Regex test: https://regex101.com/r/zizz3V/5 */
-    exclude: {
-      test: /node_modules/,
-      exclude: /node_modules\/(?:cf-.+|cfpb-.+)|@cfpb.+/
-    },
+    exclude: /node_modules/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
