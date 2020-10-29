@@ -25,10 +25,13 @@ label_autocomplete = analyzer(
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
 
+synonym_file = open('cfgov/search/resources/synonyms_en.txt')
+synonyms = [line.rstrip('\n') for line in synonym_file]
+
 synonynm_filter = token_filter(
     'synonym_filter_en',
     'synonym',
-    synonyms_path='/usr/share/elasticsearch/config/synonyms/synonyms_en.txt'
+    synonyms=synonyms
 )
 
 synonym_analyzer = analyzer(
