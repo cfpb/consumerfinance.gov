@@ -25,7 +25,7 @@ label_autocomplete = analyzer(
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
 
-synonym_file = open('cfgov/search/resources/synonyms_en.txt')
+synonym_file = open('/srv/cfgov/current/cfgov/search/resources/synonyms_en.txt')
 synonyms = [line.rstrip('\n') for line in synonym_file]
 
 synonynm_filter = token_filter(
