@@ -588,7 +588,7 @@ class ModelBlock(blocks.StructBlock):
         return self.limit
 
 
-class SimpleChartBlock(blocks.StructBlock):
+class SimpleChart(blocks.StructBlock):
     title = blocks.CharBlock(required=True)
     subtitle = blocks.CharBlock(required=False)
     figure = blocks.CharBlock(required=False)
@@ -658,7 +658,6 @@ class FullWidthText(blocks.StreamBlock):
     email_signup = EmailSignUp()
     well = Well()
     well_with_ask_search = WellWithAskSearch()
-    chart = SimpleChartBlock()
 
     class Meta:
         icon = 'edit'
