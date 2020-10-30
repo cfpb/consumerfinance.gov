@@ -147,24 +147,26 @@ class TestFilterableListForm(TestCase):
     def test_filter_by_archived(self):
         page1 = BlogPage(title='test page', is_archived='yes')
         page2 = BlogPage(title='another test page')
+        page3 = BlogPage(title='never-archived page', is_archived='never')
         publish_page(page1)
         publish_page(page2)
+        publish_page(page3)
         form = self.setUpFilterableForm()
 
         form.data = {}
         form.full_clean()
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 2)
+        self.assertEqual(len(page_set), 3)
 
         form.data = {'archived': 'include'}
         form.full_clean()
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 2)
+        self.assertEqual(len(page_set), 3)
 
         form.data = {'archived': 'exclude'}
         form.full_clean()
         page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
+        self.assertEqual(len(page_set), 2)
         self.assertEqual(page_set[0].specific, page2)
 
         form.data = {'archived': 'only'}
