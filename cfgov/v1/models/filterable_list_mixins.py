@@ -78,7 +78,7 @@ class FilterableListMixin(RoutablePageMixin):
 
         form_data, has_active_filters = self.get_form_data(request.GET)
         queryset = self.get_filterable_queryset()
-        has_archived_posts = queryset.filter(is_archived='true').count() > 0
+        has_archived_posts = queryset.filter(is_archived='yes').count() > 0
         form = self.get_form_class()(
             form_data,
             filterable_pages=queryset,

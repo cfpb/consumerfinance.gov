@@ -128,7 +128,7 @@ class FilterableListRelationsTestCase(TestCase):
         self.child_page = BlogPage(title="Child test page", live=True)
         self.sibling_page = BlogPage(title="Sibling test page", live=True)
         self.archived_sibling_page = BlogPage(title="Archive test page", live=True,
-                                         is_archived='true')
+                                         is_archived='yes')
         self.filterable_page.add_child(instance=self.child_page)
         self.filterable_page.get_parent().add_child(instance=self.sibling_page)
         self.filterable_page.get_parent().add_child(instance=self.archived_sibling_page)

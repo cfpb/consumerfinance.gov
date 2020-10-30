@@ -261,9 +261,9 @@ class FilterableListForm(forms.Form):
     def clean_archived(self):
         data = self.cleaned_data['archived']
         if data == 'exclude':
-            return ['false', 'never']
+            return ['no', 'never']
         elif data == 'only':
-            return ['true']
+            return ['yes']
 
         return None
 

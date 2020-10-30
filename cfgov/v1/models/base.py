@@ -115,11 +115,11 @@ class CFGOVPage(Page):
     is_archived = models.CharField(
         max_length=16,
         choices=[
-            ('false', 'No'),
-            ('true', 'Yes'),
+            ('no', 'No'),
+            ('yes', 'Yes'),
             ('never', 'Never'),
         ],
-        default='false',
+        default='no',
         verbose_name='This page is archived',
         help_text='If "Never" is selected, the page will not be archived '
                   'automatically after a certain period of time.'
@@ -427,7 +427,7 @@ class CFGOVPage(Page):
 
     @property
     def archived(self):
-        if self.is_archived == 'true':
+        if self.is_archived == 'yes':
             return True
 
         return False

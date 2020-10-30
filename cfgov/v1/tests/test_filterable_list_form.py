@@ -145,7 +145,7 @@ class TestFilterableListForm(TestCase):
         )
 
     def test_filter_by_archived(self):
-        page1 = BlogPage(title='test page', is_archived='true')
+        page1 = BlogPage(title='test page', is_archived='yes')
         page2 = BlogPage(title='another test page')
         publish_page(page1)
         publish_page(page2)
