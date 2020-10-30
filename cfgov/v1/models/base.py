@@ -119,7 +119,7 @@ class CFGOVPage(Page):
             ('true', 'Yes'),
             ('never', 'Never'),
         ],
-        default='no',
+        default='false',
         verbose_name='This page is archived',
         help_text='If "Never" is selected, the page will not be archived '
                   'automatically after a certain period of time.'
@@ -427,7 +427,7 @@ class CFGOVPage(Page):
 
     @property
     def archived(self):
-        if self.is_archived == 'yes':
+        if self.is_archived == 'true':
             return True
 
         return False
