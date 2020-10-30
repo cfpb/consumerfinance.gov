@@ -109,7 +109,7 @@ class AskSearchTest(TestCase):
     @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     @mock.patch.object(SearchQuerySet, 'filter')
     def test_en_search_suggestion(self, mock_filter, mock_suggestion):
-        # AskSearch.sugggest flips search_term and suggestion when called
+        # AskSearch.suggest flips search_term and suggestion when called
         mock_filter.return_value = mock_queryset(count=0)
         mock_suggestion.return_value = "payday"
         response = self.client.get(reverse("ask-search-en"), {"q": "paydya"})
@@ -283,11 +283,11 @@ class AnswerPageSearchTest(TestCase):
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_es_queryset.count.return_value = 3
         response = self.client.get(reverse("ask-search-en"), {"q": term})
-        mock_search().query().highlight().filter().sort() \
+        mock_search().query().filter().sort() \
             .__getitem__().execute.return_value = [mock_return]
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["page"], self.en_page)
-        self.assertEqual(mock_search.call_count, 4)
+        self.assertEqual(mock_search.call_count, 2)
         self.assertTrue(
             mock_search.called_with(language="en", search_term=term)
         )
@@ -319,14 +319,14 @@ class AnswerPageSearchTest(TestCase):
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_es_queryset.count.return_value = 1
-        mock_search().query().highlight().filter().sort() \
+        mock_search().query().filter().sort() \
             .__getitem__().execute.return_value = [mock_return]
         mock_count = mock.Mock(return_value=1)
-        mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort() \
+        mock_search().query().count = mock_count
+        mock_search().query().filter().sort() \
             .__getitem__().count = mock_count
         response = self.client.get(reverse("ask-search-en"), {"q": term})
-        self.assertEqual(mock_search.call_count, 6)
+        self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["page"], self.en_page)
         self.assertEqual(response.context_data["page"].query, term)
@@ -376,11 +376,11 @@ class AnswerPageSearchTest(TestCase):
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_es_queryset.count.return_value = 5
-        mock_search().query().highlight().filter().sort() \
+        mock_search().query().filter().sort() \
             .__getitem__().execute.return_value = [mock_return]
         mock_count = mock.Mock(return_value=5)
-        mock_search().query().highlight().count = mock_count
-        mock_search().query().highlight().filter().sort() \
+        mock_search().query().count = mock_count
+        mock_search().query().filter().sort() \
             .__getitem__().count = mock_count
         response = self.client.get(
             reverse("ask-search-es", kwargs={"language": "es"}),

@@ -143,19 +143,18 @@ def ask_search_es7(request, language='en', as_json=False):
 
     # If there's no query string, don't search
     search_term = request.GET.get('q', '')
-    # Check if we want to use the suggestion or not
-    suggest = request.GET.get('correct', '1') == '1'
     if not search_term:
         results_page.query = ''
         results_page.result_query = ''
         return results_page.serve(request)
 
     page = AnswerPageSearch(search_term, language=language)
-    if suggest:
-        suggestion = page.suggest().get('suggestion')
-
     response = page.search()
-    if response.get('results'):
+
+    # Provide a suggestion only when no results are found
+    if not response.get('results'):
+        suggestion = page.suggest().get('suggestion')
+    else:
         suggestion = search_term
 
     if as_json:
