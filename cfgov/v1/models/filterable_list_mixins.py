@@ -69,9 +69,6 @@ class FilterableListMixin(RoutablePageMixin):
         elif filterable_list_block.value['filter_siblings']:
             queryset = queryset.sibling_of(self)
 
-        if filterable_list_block.value['filter_archive']:
-            queryset = queryset.filter(is_archived=True)
-
         return queryset
 
     def get_context(self, request, *args, **kwargs):
