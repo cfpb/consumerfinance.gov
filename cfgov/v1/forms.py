@@ -255,15 +255,15 @@ class FilterableListForm(forms.Form):
             'categories__name__in',  # categories
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors
-            'is_archived',           # archived
+            'is_archived__in',       # archived
         ]
 
     def clean_archived(self):
         data = self.cleaned_data['archived']
         if data == 'exclude':
-            return False
+            return ['false', 'never']
         elif data == 'only':
-            return True
+            return ['true']
 
         return None
 
@@ -290,7 +290,7 @@ class EnforcementActionsFilterForm(FilterableListForm):
             'categories__name__in',  # categories
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors
-            'is_archived',           # archived
+            'is_archived__in',       # archived
             'statuses__status__in',  # statuses
         ]
 
