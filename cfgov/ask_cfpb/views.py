@@ -151,9 +151,13 @@ def ask_search_es7(request, language='en', as_json=False):
     page = AnswerPageSearch(search_term, language=language)
     response = page.search()
 
+    # Check if we want to use the suggestion or not
+    suggest = request.GET.get('correct', '1') == '1'
+
     # Provide a suggestion only when no results are found
-    if not response.get('results'):
-        suggestion = page.suggest().get('suggestion')
+    if not response.get('results') and suggest:
+        response = page.suggest()
+        suggestion = response.get('suggestion')
     else:
         suggestion = search_term
 
