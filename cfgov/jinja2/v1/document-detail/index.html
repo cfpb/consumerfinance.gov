@@ -36,7 +36,7 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {% if page and page.is_archived %}
+    {% if page and page.archived %}
         {% include 'molecules/archived-related-content.html' %}
     {% else %}
         {{ streamfield_sidefoot.render(page.sidefoot) }}
