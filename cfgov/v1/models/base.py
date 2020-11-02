@@ -112,10 +112,17 @@ class CFGOVPage(Page):
         ),
     )
 
-    is_archived = models.BooleanField(
-        default=False,
-        blank=True,
-        verbose_name='Mark this page as archived'
+    is_archived = models.CharField(
+        max_length=16,
+        choices=[
+            ('no', 'No'),
+            ('yes', 'Yes'),
+            ('never', 'Never'),
+        ],
+        default='no',
+        verbose_name='This page is archived',
+        help_text='If "Never" is selected, the page will not be archived '
+                  'automatically after a certain period of time.'
     )
 
     archived_at = models.DateField(
@@ -417,6 +424,13 @@ class CFGOVPage(Page):
     @property
     def post_preview_cache_key(self):
         return 'post_preview_{}'.format(self.id)
+
+    @property
+    def archived(self):
+        if self.is_archived == 'yes':
+            return True
+
+        return False
 
 
 class CFGOVPageCategory(Orderable):

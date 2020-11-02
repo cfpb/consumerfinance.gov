@@ -810,14 +810,6 @@ class FilterableList(BaseExpandable):
             "be filtered."
         ),
     )
-    filter_archive = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text=(
-            "If checked this list will only filter archived pages."
-            "If unchecked this list will exclude archive pages."
-        ),
-    )
 
     class Meta:
         label = 'Filterable List'
