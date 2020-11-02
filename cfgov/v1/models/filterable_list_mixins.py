@@ -49,10 +49,9 @@ class FilterableListMixin(RoutablePageMixin):
         The filter_siblings attribute determines whether this page filters
         pages that are siblings of this page. By default this is False.
 
-        The filter_archive attribute determines whether this page filters
-        pages that are archived. By default this is False, and archived pages
-        will be excluded. If this is True, only archived pages will be
-        filtered.
+        If there are any members of the base queryset that are archived,
+        the has_archived_posts context variable will be set,
+        triggering the visibility of the archive filtering options to the user.
         """
         site = self.get_site()
 
@@ -70,9 +69,6 @@ class FilterableListMixin(RoutablePageMixin):
         elif filterable_list_block.value['filter_siblings']:
             queryset = queryset.sibling_of(self)
 
-        if filterable_list_block.value['filter_archive']:
-            queryset = queryset.filter(is_archived=True)
-
         return queryset
 
     def get_context(self, request, *args, **kwargs):
@@ -82,7 +78,7 @@ class FilterableListMixin(RoutablePageMixin):
 
         form_data, has_active_filters = self.get_form_data(request.GET)
         queryset = self.get_filterable_queryset()
-        has_archived_posts = queryset.filter(is_archived=True).count() > 0
+        has_archived_posts = queryset.filter(is_archived='yes').count() > 0
         form = self.get_form_class()(
             form_data,
             filterable_pages=queryset,

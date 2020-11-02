@@ -217,7 +217,7 @@
     {% include "v1/modernizr.html" %}
 </head>
 
-<body{% block body_classes %}{% if page and page.is_archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
+<body{% block body_classes %}{% if page and page.archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
 
 {#
   =========
@@ -260,7 +260,7 @@
     {{ wagtailuserbar() }}
 
     {% block banner_top %}
-        {% if page and page.is_archived %}
+        {% if page and page.archived %}
             {% include 'molecules/archived-banner.html' %}
         {% endif %}
     {% endblock %}
