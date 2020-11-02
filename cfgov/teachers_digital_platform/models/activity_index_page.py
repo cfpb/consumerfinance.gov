@@ -9,7 +9,8 @@ from wagtail.admin.edit_handlers import (
     ObjectList, StreamFieldPanel, TabbedInterface
 )
 from wagtail.core.fields import StreamField
-from elasticsearch_dsl import A, FacetedSearch, Q, TermsFacet
+
+from elasticsearch_dsl import Q
 from flags.state import flag_enabled
 
 from teachers_digital_platform.documents import ActivityPageDocument
@@ -42,12 +43,6 @@ FACET_MAP = (
     ("council_for_economic_education", (ActivityCouncilForEconEd, False)),
 )
 FACET_LIST = [tup[0] for tup in FACET_MAP]
-
-
-class TDPFacetedSearch(FacetedSearch):
-    index = "teachers-digital-platform"
-    fields = "_all"
-    facets = {facet: TermsFacet(field=facet) for facet in FACET_LIST}
 
 
 class ActivityIndexPage(CFGOVPage):
