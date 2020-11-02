@@ -107,20 +107,21 @@
 */
 
 .m-global-search {
-    // Hide search unless we have JS or it's a desktop-ish size.
-    display: none;
-
-    .js & {
-        display: block;
-    }
 
     &_trigger {
+        // Hide search unless we have JavaScript (JS).
+        display: none;
+
+        // Only show global search if JavaScript (JS) is enabled.
+        html.js & {
+            display: block;
+        }
+
         font-weight: 500;
 
         // Resets for default button styles.
         background-color: transparent;
         border: none;
-        display: none;
 
         box-sizing: border-box;
         border-left: 1px solid transparent;
@@ -141,11 +142,6 @@
             display: none;
         }
 
-        // Only show trigger if we have JS.
-        .js & {
-            display: block;
-        }
-
         // Hover state for desktop.
         &:hover {
             color: @gray-80;
@@ -160,18 +156,15 @@
             width: 100%;
         }
 
-        // Only add transforms if we have JS.
-        .js & {
-            &.u-invisible {
-                overflow-x: hidden;
-            }
-
-            &-form {
-                position: absolute;
-            }
+        &.u-invisible {
+            overflow-x: hidden;
         }
 
-        .js &[aria-expanded="true"] &-form {
+        &-form {
+            position: absolute;
+        }
+
+        &[aria-expanded="true"] &-form {
             display: block;
         }
 
@@ -188,6 +181,11 @@
 
     // Up to desktops.
     .respond-to-max( @bp-sm-max, {
+
+        &_fallback {
+            margin: @margin_half__em;
+        }
+
         &_trigger{
             padding-top: 5px;
             height: @mobile_trigger_ht__px;
@@ -268,13 +266,13 @@
 
     // Desktop and above
     .respond-to-min( @bp-med-min, {
-        // Always show on desktop, even without JS.
-        display: block;
+
         // Center on the call to action (CTA) divider to right of search.
         padding-top: 6px;
         padding-bottom: 5px;
         // Match CTA offset from divider.
         padding-right: @margin_half__em;
+        position: relative;
 
         overflow: hidden;
 
@@ -287,20 +285,16 @@
             }
         }
 
-        .js & {
-            position: relative;
+        &_trigger {
+            float: right;
+        }
 
-            &_trigger {
-                float: right;
-            }
-
-            &_content {
-                right: @margin_half__em;
-                width: auto;
-                // Add margin so that the focus rectangle isn't cropped by
-                // the hidden overflow of the search container element.
-                margin-left: 3px;
-            }
+        &_content {
+            right: @margin_half__em;
+            width: auto;
+            // Add margin so that the focus rectangle isn't cropped by
+            // the hidden overflow of the search container element.
+            margin-left: 3px;
         }
     } );
 
@@ -338,6 +332,18 @@
             display: none !important;
         }
     } );
+
+    // Hide fallback by default.
+    &_fallback {
+        display: none;
+        padding: 8px;
+        padding-right: 0;
+
+        // Only show fallback if JavaScript (JS) is not enabled.
+        .no-js & {
+            display: block;
+        }
+    }
 }
 
 /* topdoc

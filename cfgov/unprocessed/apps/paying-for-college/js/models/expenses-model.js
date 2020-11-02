@@ -2,6 +2,7 @@
 import { updateAffordingChart, updateCostOfBorrowingChart, updateExpensesView, updateFinancialView, updateUrlQueryString } from '../dispatchers/update-view.js';
 import { getExpenses } from '../dispatchers/get-api-values.js';
 import { getFinancialValue } from '../dispatchers/get-model-values.js';
+import { initializeExpenseValues } from '../dispatchers/update-models.js';
 import { stringToNum } from '../util/number-utils.js';
 import { updateState } from '../dispatchers/update-state.js';
 
@@ -28,9 +29,9 @@ const expensesModel = {
       }
     }
 
-    totalExpenses += getFinancialValue( 'debt_tenYearMonthly' );
     expensesModel.values.total_expenses = totalExpenses;
-    expensesModel.values.total_remainder = getFinancialValue( 'salary_monthly' ) - totalExpenses;
+    expensesModel.values.total_remainder = getFinancialValue( 'salary_monthly' ) - totalExpenses -
+      getFinancialValue( 'debt_tenYearMonthly' );
     if ( expensesModel.values.total_remainder > 0 ) {
       updateState.byProperty( 'expensesRemainder', 'surplus' );
     } else if ( expensesModel.values.total_remainder < 0 ) {
@@ -55,6 +56,7 @@ const expensesModel = {
       updateExpensesView();
       updateCostOfBorrowingChart();
       updateAffordingChart();
+      updateUrlQueryString();
     }
   },
 
@@ -122,6 +124,10 @@ const expensesModel = {
 
     if ( typeof expensesModel.values.item_childcare === 'undefined' ) {
       expensesModel.values.item_childcare = 0;
+    }
+
+    if ( typeof expensesModel.values.item_currentDebts === 'undefined' ) {
+      expensesModel.values.item_currentDebts = 0;
     }
 
     expensesModel.calculateTotals();

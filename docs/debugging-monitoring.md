@@ -89,18 +89,13 @@ file contains placeholder entries for these two variables.
 Once you've set these two variables, start or restart your local web server.
 
 When you make your first web request, you'll see messages in the console
-indicating that the New Relic Python agent has been activated. You should see
-a message indicating your select application name:
+indicating that the New Relic Python agent has been activated. You should also
+see a message containing a link to the New Relic console:
 
 ```txt
-Successfully registered New Relic Python agent where app_name='cf.gov myname python'...
+Reporting to: https://rpm.newrelic.com/accounts/XXXXXXXX/applications/XXXXXXXX
 ```
 
-as well as a message indicating the use of high security mode:
-
-```txt        
-High Security Mode is being applied to all communications between the agent and the data collector for this session.
-```
-
-You should now be able to navigate to the New Relic console and, after a few
-seconds, see your web server traffic in New Relic APM and New Relic Browser.
+You should now be able to use that link to navigate to the New Relic console
+and, after a few seconds, see your web server traffic in New Relic APM and
+New Relic Browser.

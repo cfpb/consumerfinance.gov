@@ -38,7 +38,7 @@ def image_alt_value(image):
         return image.alt
 
     # Otherwise, if it is a block
-    if image:
+    if image and hasattr(image, 'get'):
         block_alt = image.get('alt')
         upload = image.get('upload')
 
@@ -51,6 +51,12 @@ def image_alt_value(image):
 
 
 def is_filter_selected(context, fieldname, value):
+    """Check URL query parameters to see if a filter option should be selected
+
+    Returns True if fieldname=value is found in the GET data in order to output
+    the `checked` attribute on a checkbox or radio button in the
+    _filter_selectable macro (see: filterable-list-controls.html).
+    """
     request_get = context['request'].GET
 
     query_string_values = [
@@ -59,6 +65,10 @@ def is_filter_selected(context, fieldname, value):
         request_get.getlist('filter_' + fieldname)
         if k
     ]
+
+    # Dirty hack to check the default option for the `archived` filter
+    if fieldname == 'archived' and value == 'exclude':
+        return True
 
     return value in query_string_values
 

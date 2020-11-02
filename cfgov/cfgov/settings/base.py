@@ -7,6 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 import wagtail
 
 import dj_database_url
+from elasticsearch7 import RequestsHttpConnection
+from requests_aws4auth import AWS4Auth
 from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
@@ -98,6 +100,7 @@ INSTALLED_APPS = (
     "form_explainer.apps.FormExplainerConfig",
     "teachers_digital_platform",
     "wagtailmedia",
+    "django_elasticsearch_dsl",
 
     # Satellites
     "comparisontool",
@@ -420,6 +423,33 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
+# ElasticSearch 7 Configuration
+ELASTICSEARCH_DSL_AUTO_REFRESH = False
+ELASTICSEARCH_DSL_AUTOSYNC = False
+
+if os.environ.get('USE_AWS_ES', False):
+    awsauth = AWS4Auth(
+        os.environ.get('AWS_ES_ACCESS_KEY'),
+        os.environ.get('AWS_ES_SECRET_KEY'),
+        'us-east-1',
+        'es'
+    )
+    host = os.environ.get('ES7_HOST', '')
+    ELASTICSEARCH_DSL = {
+        'default': {
+            'hosts': [{'host': host, 'port': 443}],
+            'http_auth': awsauth,
+            'use_ssl': True,
+            'connection_class': RequestsHttpConnection
+        },
+    }
+else:
+    host = os.environ.get("ES7_HOST", "localhost")
+    port = os.environ.get("ES_PORT", "9200")
+    ELASTICSEARCH_DSL = {
+        "default": {"hosts": f"http://{host}:{port}"}
+    }
+
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_LOCATION = "f"  # A path prefix that will be prepended to all uploads
@@ -642,8 +672,8 @@ FLAGS = {
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
-    # Ask CFPB date label
-    # When enabled, date label will be changed from 'updated' to 'last reviewed'
+    # Ask CFPB date label	
+    # When enabled, date label will be changed from 'updated' to 'last reviewed'	
     "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -705,8 +735,6 @@ FLAGS = {
     "BETA_EXTERNAL_TESTING": [],
     # Used to hide new youth employment success pages prior to public launch
     "YOUTH_EMPLOYMENT_SUCCESS": [],
-    # Release of prepaid agreements database search
-    "PREPAID_AGREEMENTS_SEARCH": [],
     # Used to hide CCDB landing page updates prior to public launch
     "CCDB_CONTENT_UPDATES": [],
     # During a Salesforce system outage, the following flag should be enabled
@@ -741,6 +769,12 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
+    # Used to enable django-elasticsearch-dsl and disable haystack in the ask_cfpb app.
+    "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
+    "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack in paying_for_college app.
+    "ELASTICSEARCH_DSL_PFC": [("boolean", False)],
 }
 
 
