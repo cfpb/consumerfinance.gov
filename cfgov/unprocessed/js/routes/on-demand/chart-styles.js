@@ -2,6 +2,7 @@ const styles = {
   chart: {
     style: {
       fontFamily: '"Avenir Next", Arial, sans-serif',
+      fontSize: '16px',
       lineHeight: 1.5
     }
   },
@@ -31,14 +32,18 @@ const styles = {
     padding: 10,
     useHTML: true,
     style: {
-      pointerEvents: 'auto'
+      pointerEvents: 'auto',
+      fontSize: '16px'
     }
   },
   xAxis: {
     type: 'datetime',
     crosshair: true,
     labels: {
-      format: '{value:%Y}'
+      format: '{value:%Y}',
+      style: {
+        fontSize: '16px'
+      }
     },
     tickInterval: 365 * 24 * 3600 * 1000
   },
@@ -46,6 +51,11 @@ const styles = {
     title: {
       text: '',
       margin: 25
+    },
+    labels: {
+      style: {
+        fontSize: '16px'
+      }
     }
   }
 }
