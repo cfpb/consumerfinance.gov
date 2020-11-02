@@ -323,8 +323,7 @@ class AnswerPageSearchTest(TestCase):
             .__getitem__().execute.return_value = [mock_return]
         mock_count = mock.Mock(return_value=1)
         mock_search().query().count = mock_count
-        mock_search().query().filter().sort() \
-            .__getitem__().count = mock_count
+        mock_search().query().filter().sort().__getitem__().count = mock_count
         response = self.client.get(reverse("ask-search-en"), {"q": term})
         self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
@@ -380,8 +379,7 @@ class AnswerPageSearchTest(TestCase):
             .__getitem__().execute.return_value = [mock_return]
         mock_count = mock.Mock(return_value=5)
         mock_search().query().count = mock_count
-        mock_search().query().filter().sort() \
-            .__getitem__().count = mock_count
+        mock_search().query().filter().sort().__getitem__().count = mock_count
         response = self.client.get(
             reverse("ask-search-es", kwargs={"language": "es"}),
             {"q": term},
