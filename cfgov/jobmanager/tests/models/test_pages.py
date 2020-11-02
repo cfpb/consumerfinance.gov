@@ -139,6 +139,7 @@ class JobListingPageFormTests(TestCase, WagtailTestUtils):
             'usajobs_application_links-TOTAL_FORMS': 0,
             'language': 'en',
             'schema_json': 'null',
+            'is_archived': 'no'
         }
 
         post_data.update(kwargs)

@@ -4,7 +4,6 @@ import unittest
 
 import django
 from django.http import HttpRequest
-from django.test import RequestFactory
 from django.urls import reverse
 
 import mock
@@ -12,19 +11,11 @@ import mock
 from paying_for_college.models import Program, School
 from paying_for_college.views import (
     EXPENSE_FILE, Feedback, get_json_file, get_program, get_program_length,
-    get_school, school_search_api, validate_oid, validate_pid
+    get_school, validate_oid, validate_pid
 )
 
 
-# def setup_view(view, request, *args, **kwargs):
-#     """Mimic as_view() returned callable, return view instance instead."""
-#     view.request = request
-#     view.args = args
-#     view.kwargs = kwargs
-#     return view
-
-
-class Validators(unittest.TestCase):
+class ValidatorTests(unittest.TestCase):
     """check the oid validator"""
 
     max_oid = (
@@ -117,18 +108,9 @@ class TestViews(django.test.TestCase):
         self.assertTrue("url_root" in response.context_data.keys())
 
 
-# understanding-financial-aid-offers/api/search-schools.json?q=Kansas
-class SchoolSearchTest(django.test.TestCase):
+class SchoolProgramTest(django.test.TestCase):
 
     fixtures = ["test_fixture.json", "test_program.json"]
-
-    class ElasticSchool:
-        def __init__(self):
-            self.text = ""
-            self.school_id = 0
-            self.city = ""
-            self.state = ""
-            self.nicknames = ""
 
     def test_get_school(self):
         """test grabbing a school by ID"""
@@ -151,35 +133,12 @@ class SchoolSearchTest(django.test.TestCase):
         test3 = get_program(school, "<program>")
         self.assertIs(test3, None)
 
-    @mock.patch("paying_for_college.views.SearchQuerySet.autocomplete")
-    def test_school_search_api(self, mock_sqs_autocomplete):
-        """school_search_api should return json."""
-
-        mock_school = School.objects.get(pk=155317)
-        # mock the search returned value
-        elastic_school = self.ElasticSchool()
-        elastic_school.text = mock_school.primary_alias
-        elastic_school.school_id = mock_school.school_id
-        elastic_school.city = mock_school.city
-        elastic_school.state = mock_school.state
-        elastic_school.nicknames = "Jayhawks"
-        solr_queryset = [elastic_school]
-        mock_sqs_autocomplete.return_value = solr_queryset
-        url = "{}?q=Kansas".format(
-            reverse("paying_for_college:disclosures:school_search")
-        )
-        request = RequestFactory().get(url)
-        resp = school_search_api(request)
-        self.assertTrue(b"Kansas" in resp.content)
-        self.assertTrue(b"155317" in resp.content)
-        self.assertTrue(b"Jayhawks" in resp.content)
-
 
 class OfferTest(django.test.TestCase):
 
     fixtures = ["test_fixture.json", "test_program.json"]
 
-    # /paying-for-college/understanding-financial-aid-offers/offer/?[QUERYSTRING]
+    # /paying-for-college2/understanding-your-financial-aid-offer/offer/?[QUERYSTRING]
     def test_offer(self):
         """request for offer disclosure."""
 
@@ -257,7 +216,7 @@ class APITests(django.test.TestCase):
         "test_program.json",
     ]
 
-    # /paying-for-college/understanding-financial-aid-offers/api/school/155317.json
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/school/155317.json
     def test_school_json(self):
         """api call for school details."""
 
@@ -268,7 +227,7 @@ class APITests(django.test.TestCase):
         self.assertIn(b"Kansas", resp.content)
         self.assertIn(b"155317", resp.content)
 
-    # /paying-for-college/understanding-financial-aid-offers/api/constants/
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/constants/
     def test_constants_json(self):
         """api call for constants."""
 
@@ -277,7 +236,7 @@ class APITests(django.test.TestCase):
         self.assertIn(b"institutionalLoanRate", resp.content)
         self.assertIn(b"apiYear", resp.content)
 
-    # /paying-for-college/understanding-financial-aid-offers/api/constants/
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/national-stats/
     def test_national_stats_json(self):
         """api call for national statistics."""
 
@@ -310,7 +269,7 @@ class APITests(django.test.TestCase):
         resp = self.client.get(url)
         self.assertIn(b"No expense", resp.content)
 
-    # /paying-for-college/understanding-financial-aid-offers/api/program/408039_981/
+    # /paying-for-college2/understanding-your-financial-aid-offer/api/program/408039_981/
     def test_program_json(self):
         """api call for program details."""
 

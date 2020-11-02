@@ -137,7 +137,7 @@ function buildUrlQueryString() {
 
   for ( const key in urlParameters ) {
     const variable = urlParameters[key];
-    const model = models[variable.split( '.' )[0]];
+    const model = models[variable.split( '.' )[0]].values;
     const value = model[variable.split( '.' )[1]];
 
     if ( typeof value !== 'undefined' && value !== 0 && value !== null &&
