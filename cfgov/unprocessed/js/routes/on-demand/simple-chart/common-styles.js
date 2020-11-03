@@ -21,7 +21,8 @@ const styles = {
         hover: {
           enabled: false
         }
-      }
+      },
+      color: '#20aa3f'
     }
   },
   tooltip: {
