@@ -34,7 +34,6 @@ const styles = {
     shadow: { color: '#b4b5b6', opacity: 0.2 },
     shared: true,
     split: false,
-    followPointer: true,
     style: {
       pointerEvents: 'auto',
       fontSize: '16px'
