@@ -593,13 +593,14 @@ class SimpleChart(blocks.StructBlock):
     subtitle = blocks.CharBlock(required=False)
     figure = blocks.CharBlock(required=False)
 
-    #chart_type = blocks.ChoiceBlock(
-    #    choices=[
-    #        ('bar', 'Bar | % y-axis values'),
-    #        ('line', 'Line | millions/billions y-axis values'),
-    #    ],
-    #    required=True
-    #)
+    chart_type = blocks.ChoiceBlock(
+        choices=[
+            ('bar', 'Bar'),
+            ('line', 'Line'),
+        ],
+        default='line',
+        required=True
+    )
 
     data_source = blocks.CharBlock(
         required=True,
@@ -642,7 +643,7 @@ class SimpleChart(blocks.StructBlock):
         template = '_includes/organisms/simple-chart.html'
 
     class Media:
-        js = ['simple-chart.js']
+        js = ['simple-chart/simple-chart.js']
 
 
 class FullWidthText(blocks.StreamBlock):

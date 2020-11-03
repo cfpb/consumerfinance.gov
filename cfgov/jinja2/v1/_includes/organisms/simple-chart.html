@@ -24,6 +24,7 @@
     {% endif %}
 
     <div class="simple-chart-target"
+         {% if value.chart_type %}data-chart-type="{{ value.chart_type }}"{% endif %}
          {% if value.data_source %}data-source="{{ value.data_source }}"{% endif %}
          {% if value.transform %}data-transform="{{ value.transform }}"{% endif %}
          {% if value.style_overrides %}data-style-overrides='{{ value.style_overrides }}'{% endif %}

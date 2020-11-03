@@ -16,7 +16,7 @@ const styles = {
   },
   plotOptions: {
     series: {
-      lineWidth: 1.5,
+      lineWidth: 2,
       states: {
         hover: {
           enabled: false
@@ -26,26 +26,19 @@ const styles = {
   },
   tooltip: {
     animation: false,
-    shape: 'square',
+    backgroundColor: '#f7f8f9',
+    borderColor: '#b4b5b6',
+    borderRadius: 3,
+    padding: 10,
+    shadow: { color: '#b4b5b6', opacity: 0.2 },
     shared: true,
     split: false,
-    padding: 10,
-    useHTML: true,
+    followPointer: true,
     style: {
       pointerEvents: 'auto',
       fontSize: '16px'
-    }
-  },
-  xAxis: {
-    type: 'datetime',
-    crosshair: true,
-    labels: {
-      format: '{value:%Y}',
-      style: {
-        fontSize: '16px'
-      }
     },
-    tickInterval: 365 * 24 * 3600 * 1000
+    useHTML: true
   },
   yAxis: {
     title: {

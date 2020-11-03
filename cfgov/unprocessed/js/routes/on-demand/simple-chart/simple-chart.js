@@ -7,19 +7,38 @@ import Highcharts from 'highcharts/highstock'
 import accessibility from 'highcharts/modules/accessibility'
 import fetch from 'cross-fetch'
 import chartHooks from './chart-hooks.js'
-import defaultObject from './chart-styles.js'
+import defaultLine from './line-styles.js'
+import defaultBar from './bar-styles.js'
 
 function fetchData(url) {
   return fetch(url).then(res => res.json())
 }
 
-function makeChartOptions(data, styleOverrides, description, yAxisLabel) {
-  const defaultObj = JSON.parse(JSON.stringify(defaultObject))
+function getDefaultChartObject(type) {
+  switch (type) {
+    case 'line':
+      return defaultLine
+    case 'bar':
+      return defaultBar
+  }
+  throw new Error('Unknown chart type specified')
+}
+
+function makeChartOptions(
+  data,
+  chartType,
+  styleOverrides,
+  description,
+  yAxisLabel
+) {
+  const defaultObj = JSON.parse(
+    JSON.stringify(getDefaultChartObject(chartType))
+  )
 
   if (styleOverrides) {
     const styles = JSON.parse(styleOverrides)
     Object.keys(styles).forEach(key => {
-      const override = resolveOverride(styles[key])
+      const override = resolveOverride(styles[key], data)
       key.split('.').reduce((acc, curr, i, arr) => {
         if (i === arr.length - 1) return (acc[curr] = override)
         if (!acc[curr]) acc[curr] = {}
@@ -36,9 +55,13 @@ function makeChartOptions(data, styleOverrides, description, yAxisLabel) {
   return defaultObj
 }
 
-function resolveOverride(override) {
-  if (typeof override === 'string' && override.match(/^hook__/)) {
-    return chartHooks[override.replace('hook__', '')]
+function resolveOverride(override, data) {
+  if (typeof override === 'string') {
+    if (override.match(/^fn__/)) {
+      return chartHooks[override.replace('fn__', '')]
+    } else if (override.match(/^hook__/)) {
+      return chartHooks[override.replace('hook__', '')](data)
+    }
   }
   return override
 }
@@ -50,6 +73,7 @@ function buildCharts() {
 
 function buildChart(chart) {
   const {
+    chartType,
     source,
     transform,
     styleOverrides,
@@ -63,7 +87,7 @@ function buildChart(chart) {
 
     Highcharts.chart(
       chart,
-      makeChartOptions(data, styleOverrides, description, yAxisLabel)
+      makeChartOptions(data, chartType, styleOverrides, description, yAxisLabel)
     )
   })
 }
