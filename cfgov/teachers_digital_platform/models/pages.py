@@ -201,7 +201,7 @@ class ActivityPage(CFGOVPage):
         parent: ActivityTopic
         """
         if parent:
-            descendants = set(parent.get_descendants()) & set(self.topic.all())  # noqa: E501
+            descendants = set(parent.get_descendants()) & set(self.topic.all())
             children = parent.get_children()
             children_list = []
             # If this parent has descendants in self.topic, add its children.
@@ -213,7 +213,7 @@ class ActivityPage(CFGOVPage):
                         children_list.append(child.title)
 
                 if children_list:
-                    return parent.title + " (" + ', '.join(children_list) + ")"  # noqa: E501
+                    return parent.title + " (" + ', '.join(children_list) + ")"
             # Otherwise, just add the parent.
             else:
                 return parent.title
@@ -221,15 +221,14 @@ class ActivityPage(CFGOVPage):
             # Build root list of topics and recurse their children.
             topic_list = []
             topic_ids = [topic.id for topic in self.topic.all()]
-            ancestors = ActivityTopic.objects.filter(id__in=topic_ids).get_ancestors(True)  # noqa: E501
+            ancestors = ActivityTopic.objects.filter(
+                id__in=topic_ids).get_ancestors(True)
             roots = ActivityTopic.objects.filter(parent=None) & ancestors
             for root_topic in roots:
                 topic_list.append(self.get_topics_list(root_topic))
 
             if topic_list:
                 return ', '.join(topic_list)
-            else:
-                return ''
 
     class Meta:
         verbose_name = "TDP Activity page"

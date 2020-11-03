@@ -184,7 +184,7 @@ class ActivityIndexPage(CFGOVPage):
         current_page = validate_page_number(request, paginator)
         paginated_page = paginator.page(current_page)
         context_update = {
-            'facets': all_facets,  # TEMPLATE USES
+            'facets': all_facets,
             'activities': paginated_page,
             'total_results': total_results,
             'results_per_page': results_per_page,
@@ -194,6 +194,7 @@ class ActivityIndexPage(CFGOVPage):
         }
         return context_update
 
+    # TODO: Remove this function when we switch to DSL
     def haystack_search(self, request, *args, **kwargs):
         search_query = request.GET.get('q', '')  # haystack cleans this string
         sqs = SearchQuerySet().models(ActivityPage)
@@ -439,6 +440,7 @@ class ActivitySetUp(models.Model):
 
     def update_cards(self):
         _card_setup = {}
+        # The information needed for displaying each result of a query
         facet_fields = (
             'school_subject',
             'grade_level',
