@@ -109,10 +109,10 @@ class AskSearchTest(TestCase):
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
     @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     @mock.patch.object(SearchQuerySet, 'filter')
-    def test_en_search_suggestion(self, mock_filter, mock_suggestion):
+    def test_en_search_suggestion(self, mock_filter, mock_search):
         # AskSearch.suggest flips search_term and suggestion when called
         mock_filter.return_value = mock_queryset(count=0)
-        mock_suggestion.return_value = "payday"
+        mock_search.return_value = "payday"
         response = self.client.get(reverse("ask-search-en"), {"q": "paydya"})
         self.assertEqual(response.status_code, 200)
         response_page = response.context_data["page"]
@@ -166,7 +166,7 @@ class AskSearchTest(TestCase):
 
     @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     @mock.patch.object(SearchQuerySet, 'filter')
-    def test_json_response(self, mock_filter, mock_suggestion):
+    def test_json_response(self, mock_filter, mock_search):
         get_or_create_page(
             apps,
             "ask_cfpb",
@@ -177,7 +177,7 @@ class AskSearchTest(TestCase):
             language="en",
             live=True,
         )
-        mock_suggestion.return_value = "tuition"
+        mock_search.return_value = "tuition"
         mock_filter.count.return_value = 5
         mock_filter.return_value = mock_queryset(count=5)
         response = self.client.get(
@@ -313,7 +313,7 @@ class AnswerPageSearchTest(TestCase):
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_en_search_suggestion_es7(self, mock_suggestion):
+    def test_en_search_suggestion_es7(self, mock_search):
         term = "paydya"
         mock_return = mock.Mock()
         mock_return.suggestion = "payday"
@@ -321,14 +321,14 @@ class AnswerPageSearchTest(TestCase):
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_es_queryset.count.return_value = 0
-        mock_suggestion().suggest().execute().suggest.suggestion \
+        mock_search().suggest().execute().suggest.suggestion \
             .__getitem__().execute.return_value = [mock_return]
         mock_count = mock.Mock(return_value=0)
-        mock_suggestion().suggest().count = mock_count
-        mock_suggestion().suggest().execute().suggest.suggestion \
+        mock_search().suggest().count = mock_count
+        mock_search().suggest().execute().suggest.suggestion \
             .__getitem__().count = mock_count
         response = self.client.get(reverse("ask-search-en"), {"q": term})
-        self.assertEqual(mock_suggestion.call_count, 4)
+        self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
         response_page = response.context_data["page"]
         self.assertEqual(response_page, self.en_page)
