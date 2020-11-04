@@ -1,5 +1,4 @@
-import os
-
+from django.conf import settings
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 
@@ -26,16 +25,16 @@ label_autocomplete = analyzer(
     ),
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
-synonym_home = '/src/cfgov/current/cfgov/search/resources' if os.environ.get('USE_AWS_ES', False) else '/usr/share/elasticsearch/config/synonyms'
-synonym_file_en = open(f'{synonym_home}/synonyms_en.txt')
+
+synonym_file_en = open(f'{settings.ELASTICSEARCH_SYNONYMS_HOME}/synonyms_en.txt')
 synonyms_en = [line.rstrip('\n') for line in synonym_file_en]
 synonym_file_en.close()
 
-synonym_es_file = open(f'{synonym_home}/synonyms_es.txt')
+synonym_file_es = open(f'{settings.ELASTICSEARCH_SYNONYMS_HOME}/synonyms_es.txt')
 synonyms_es = [line.rstrip('\n') for line in synonym_file_es]
-synonym_es_file.close()
+synonym_file_es.close()
 
-synonyms = synonyms_en.append(synonyms_es)
+synonyms = synonyms_en + synonyms_es
 
 synonynm_filter = token_filter(
     'synonym_filter',
@@ -44,7 +43,7 @@ synonynm_filter = token_filter(
 )
 
 synonym_analyzer = analyzer(
-    'synonym_analyzer_en',
+    'synonym_analyzer',
     type='custom',
     tokenizer='standard',
     filter=[
