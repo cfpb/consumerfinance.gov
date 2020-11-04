@@ -318,18 +318,22 @@ class AnswerPageSearchTest(TestCase):
         mock_return = mock.Mock()
         mock_return.suggestion = "payday"
         mock_return.search_term = term
+        mock_return.results = []
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_es_queryset.count.return_value = 0
+        mock_es_queryset.count.return_value = 1
+        # mock_search.return_value = [mock_es_queryset]
         mock_search().suggest().execute().suggest.suggestion \
             .__getitem__().execute.return_value = [mock_return]
-        mock_count = mock.Mock(return_value=0)
+        mock_count = mock.Mock(return_value=1)
         mock_search().suggest().count = mock_count
         mock_search().suggest().execute().suggest.suggestion \
             .__getitem__().count = mock_count
         response = self.client.get(reverse("ask-search-en"), {"q": term})
         self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get('results'), None)
+        self.assertEqual(response.get('suggestion'), None)
         response_page = response.context_data["page"]
         self.assertEqual(response_page, self.en_page)
         self.assertEqual(response_page.query, term)
