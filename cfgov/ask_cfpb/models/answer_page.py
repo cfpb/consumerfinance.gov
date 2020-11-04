@@ -33,15 +33,21 @@ REUSABLE_TEXT_TITLES = {
 }
 
 
-def truncate_preview(text):
-    """Limit preview text to 40 words AND to 255 characters."""
-    word_limit = 40
+def truncate_by_words_and_chars(text, word_limit=40, char_limit=255):
+    """Truncate text by whole words until it gets under the character limit.
+
+    Tries truncating by words to word_limit. If the result is not under the
+    char_limit, reduce the word_limit by 1 and try again. When it's under the
+    char_limit, return it.
+    """
+
     while word_limit:
-        test = Truncator(text).words(word_limit, truncate=' ...')
-        if len(test) <= 255:
-            return test
-        else:
-            word_limit -= 1
+        truncated = Truncator(text).words(word_limit, truncate=' ...')
+
+        if len(truncated) <= char_limit:
+            return truncated
+
+        word_limit -= 1
 
 
 def extract_raw_text(stream_data):
@@ -272,13 +278,49 @@ class AnswerPage(CFGOVPage):
             if sibling and sibling.live and not sibling.redirect_to_page:
                 return sibling.url
 
+    def get_meta_description(self):
+        """Determine what the page's meta and OpenGraph description should be
+
+            Checks seeral different possible fields in order of preference.
+            If none are found, returns an empty string, which is preferable to
+            a generic description repeated on many pages.
+            This method is overriding the standard one on CFGOVPage to factor
+            in Ask CFPB AnswerPage-specific fields.
+        """
+
+        preference_order = [
+            'search_description',
+            'short_answer',
+            'first_text',
+        ]
+        candidates = {}
+
+        if self.search_description:
+            candidates['search_description'] = self.search_description
+        if self.short_answer:
+            candidates['short_answer'] = self.short_answer
+        if hasattr(self, 'answer_content'):
+            for block in self.answer_content:
+                if block.block_type == 'text':
+                    candidates['first_text'] = truncate_by_words_and_chars(
+                        strip_tags(block.value['content'].source),
+                        word_limit=35,
+                        char_limit=160
+                    )
+                    break
+
+        for entry in preference_order:
+            if candidates.get(entry):
+                return candidates[entry]
+
+        return ''
+
     def get_context(self, request, *args, **kwargs):
+        # self.get_meta_description() is not called here because it is called
+        # and added to the context by CFGOVPage's get_context() method.
         portal_topic = self.primary_portal_topic or self.portal_topic.first()
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.related_questions.all()
-        context['description'] = (
-            self.short_answer if self.short_answer
-            else truncate_preview(self.answer_content))
         context['last_edited'] = self.last_edited
         context['portal_page'] = get_portal_or_portal_search_page(
             portal_topic, language=self.language)
@@ -296,7 +338,7 @@ class AnswerPage(CFGOVPage):
         return strip_tags(" ".join([self.short_answer, raw_text]))
 
     def answer_content_data(self):
-        return truncate_preview(self.answer_content_text())
+        return truncate_by_words_and_chars(self.answer_content_text())
 
     def short_answer_data(self):
         return ' '.join(

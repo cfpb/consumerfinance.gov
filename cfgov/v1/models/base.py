@@ -255,7 +255,13 @@ class CFGOVPage(Page):
         return
 
     def get_meta_description(self):
-        """Deliver a meta_description, following a preference order."""
+        """Determine what the page's meta and OpenGraph description should be
+
+            Checks seeral different possible fields in order of preference.
+            If none are found, returns an empty string, which is preferable to
+            a generic description repeated on many pages.
+        """
+
         preference_order = [
             'search_description',
             'header_hero_body',
@@ -265,6 +271,7 @@ class CFGOVPage(Page):
             'header_item_intro',
         ]
         candidates = {}
+
         if self.search_description:
             candidates['search_description'] = self.search_description
         if hasattr(self, 'header'):
@@ -280,9 +287,11 @@ class CFGOVPage(Page):
         if hasattr(self, 'content'):
             candidates['content_text_intro'] = self.get_streamfield_content(
                 self.content, 'text_introduction', 'intro')
+
         for entry in preference_order:
             if candidates.get(entry):
                 return candidates[entry]
+
         return ''
 
     def get_context(self, request, *args, **kwargs):
