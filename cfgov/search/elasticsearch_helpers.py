@@ -1,3 +1,5 @@
+import os
+
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 
@@ -24,12 +26,19 @@ label_autocomplete = analyzer(
     ),
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
+synonym_home = '/src/cfgov/current/cfgov/search/resources' if os.environ.get('USE_AWS_ES', False) else '/usr/share/elasticsearch/config/synonyms'
+synonym_file_en = open(f'{synonym_home}/synonyms_en.txt')
+synonyms_en = [line.rstrip('\n') for line in synonym_file_en]
+synonym_file_en.close()
 
-synonym_file = open('/srv/cfgov/current/cfgov/search/resources/synonyms_en.txt')
-synonyms = [line.rstrip('\n') for line in synonym_file]
+synonym_es_file = open(f'{synonym_home}/synonyms_es.txt')
+synonyms_es = [line.rstrip('\n') for line in synonym_file_es]
+synonym_es_file.close()
+
+synonyms = synonyms_en.append(synonyms_es)
 
 synonynm_filter = token_filter(
-    'synonym_filter_en',
+    'synonym_filter',
     'synonym',
     synonyms=synonyms
 )
