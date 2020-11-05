@@ -299,7 +299,7 @@ class AnswerPage(CFGOVPage):
         if self.search_description:
             candidates['search_description'] = self.search_description
         if self.short_answer:
-            candidates['short_answer'] = self.short_answer
+            candidates['short_answer'] = strip_tags(self.short_answer)
         if hasattr(self, 'answer_content'):
             for block in self.answer_content:
                 if block.block_type == 'text':
