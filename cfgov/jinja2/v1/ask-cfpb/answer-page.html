@@ -9,10 +9,6 @@
     {{- seo_title or page.question or page.title | striptags -}}
 {% endblock %}
 
-{% block desc %}
-    {{- meta_description -}}
-{% endblock %}
-
 {%- block og_desc -%}
     {{- meta_description -}}
 {%- endblock -%}
