@@ -281,11 +281,12 @@ class AnswerPage(CFGOVPage):
     def get_meta_description(self):
         """Determine what the page's meta and OpenGraph description should be
 
-            Checks seeral different possible fields in order of preference.
-            If none are found, returns an empty string, which is preferable to
-            a generic description repeated on many pages.
-            This method is overriding the standard one on CFGOVPage to factor
-            in Ask CFPB AnswerPage-specific fields.
+        Checks several different possible fields in order of preference.
+        If none are found, returns an empty string, which is preferable to a
+        generic description repeated on many pages.
+
+        This method is overriding the standard one on CFGOVPage to factor in
+        Ask CFPB AnswerPage-specific fields.
         """
 
         preference_order = [
