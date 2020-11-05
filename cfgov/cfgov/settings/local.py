@@ -108,4 +108,4 @@ CSP_IMG_SRC += (
     "placekitten.com",
 )
 
-ELASTICSEARCH_SYNONYMS_HOME = './cfgov/search/resources'
+ELASTICSEARCH_SYNONYMS_HOME = './search/resources'

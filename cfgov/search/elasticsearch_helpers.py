@@ -27,13 +27,23 @@ label_autocomplete = analyzer(
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
 
-synonym_file_en = open(
-    f'{settings.ELASTICSEARCH_SYNONYMS_HOME}/synonyms_en.txt')
+try:
+    synonym_file_en = open(
+        f'{settings.ELASTICSEARCH_SYNONYMS_HOME}/synonyms_en.txt')
+    synonym_file_es = open(
+        f'{settings.ELASTICSEARCH_SYNONYMS_HOME}/synonyms_es.txt')
+    # If we don't find the file where we anticipate it
+    # such as during build default to standard location.
+except FileNotFoundError:
+    # This now makes an assumption
+    # we are operating from within the cfgov directory!!
+    synonym_file_en = open('./search/resources/synonyms_en.txt')
+    synonym_file_es = open('./search/resources/synonyms_es.txt')
+
+
 synonyms_en = [line.rstrip('\n') for line in synonym_file_en]
 synonym_file_en.close()
 
-synonym_file_es = open(
-    f'{settings.ELASTICSEARCH_SYNONYMS_HOME}/synonyms_es.txt')
 synonyms_es = [line.rstrip('\n') for line in synonym_file_es]
 synonym_file_es.close()
 
