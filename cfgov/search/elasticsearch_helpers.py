@@ -1,5 +1,3 @@
-from django.conf import settings
-
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
@@ -29,11 +27,13 @@ label_autocomplete = analyzer(
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
 
+
 def get_synonyms():
     try:
         return list(Synonym.objects.values_list('synonym', flat=True))
     except Exception:
         return []
+
 
 synonynm_filter = token_filter(
     'synonym_filter',

@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
+
 from search.models import Synonym
+
 
 class Command(BaseCommand):
     help = 'This command loads our synonym files into the database'
@@ -10,7 +12,7 @@ class Command(BaseCommand):
             nargs='+',
             type=str
         )
-    
+
     def handle(self, *args, **options):
         for file in options['file']:
             try:
