@@ -4,16 +4,16 @@ export class PfcFinancialPathToGraduation {
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
   }
 
-  click( button_text ) {
-    cy.get( '.a-btn' ).contains( `${ button_text }` ).click();
+  click( name ) {
+    cy.get( '.a-btn' ).contains( name ).click();
   }
 
   setText( name, value ) {
     cy.get( `#${ name }` ).type( value );
   }
 
-  selectProgram( program, type ) {
-    cy.get( `#program-${ program }-radio_${ type }` ).check( { force: true } );
+  selectProgram( program, name ) {
+    cy.get( `#program-${ program }-radio_${ name }` ).check( { force: true } );
   }
 
   affordLoanChoice( name ) {
