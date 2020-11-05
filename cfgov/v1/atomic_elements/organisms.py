@@ -612,14 +612,19 @@ class SimpleChart(blocks.StructBlock):
         help_text='Name of the javascript function in chart-hooks.js to run on the provided data before handing it to the chart'
     )
 
-    style_overrides = blocks.CharBlock(
+    style_overrides = blocks.TextBlock(
         required=False,
         help_text='A JSON object with style overrides for the underlying Highcharts chart. No object merging is done, nested objects should be referenced with dot notation: {"tooltip.shape": "circle"}'
     )
 
     description = blocks.CharBlock(
         required=True,
-        help_text="Accessible description of the chart content"
+        help_text='Accessible description of the chart content'
+    )
+
+    y_axis_label = blocks.CharBlock(
+        required=True,
+        help_text='y-axis label'
     )
 
     credits = blocks.CharBlock(
@@ -627,9 +632,9 @@ class SimpleChart(blocks.StructBlock):
         help_text='Attribution for the data source'
     )
 
-    y_axis_label = blocks.CharBlock(
-        required=True,
-        help_text='y-axis label'
+    date_published = blocks.CharBlock(
+        required=False,
+        help_text='When the underlying data was published'
     )
 
     notes = blocks.CharBlock(

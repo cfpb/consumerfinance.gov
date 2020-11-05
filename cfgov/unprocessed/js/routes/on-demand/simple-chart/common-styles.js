@@ -3,6 +3,7 @@ const styles = {
     style: {
       fontFamily: '"Avenir Next", Arial, sans-serif',
       fontSize: '16px',
+      color: '#5a5d61',
       lineHeight: 1.5
     }
   },
@@ -16,7 +17,7 @@ const styles = {
   },
   plotOptions: {
     series: {
-      lineWidth: 2,
+      lineWidth: 3,
       states: {
         hover: {
           enabled: false
@@ -28,9 +29,8 @@ const styles = {
   tooltip: {
     animation: false,
     backgroundColor: '#f7f8f9',
-    borderColor: '#b4b5b6',
-    borderRadius: 3,
-    padding: 10,
+    borderColor: '#919395',
+    padding: 15,
     shadow: { color: '#b4b5b6', opacity: 0.2 },
     shared: true,
     split: false,
@@ -40,11 +40,14 @@ const styles = {
     },
     useHTML: true
   },
+  xAxis: {
+    lineColor: '#d2d3d5'
+  },
   yAxis: {
     title: {
-      text: '',
-      margin: 25
+      x: -16
     },
+    lineColor: '#d2d3d5',
     labels: {
       style: {
         fontSize: '16px'

@@ -4,6 +4,7 @@ const line = {
   ...styles,
   xAxis: {
     type: 'datetime',
+    lineColor: '#d2d3d5',
     crosshair: true,
     startOnTick: true,
     labels: {

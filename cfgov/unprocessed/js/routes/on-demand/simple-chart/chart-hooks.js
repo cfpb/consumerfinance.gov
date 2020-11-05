@@ -29,12 +29,16 @@ const hooks = {
   enforcement_reliefTooltipFormatter() {
     const { x, y, name, relief, url } = this.points[0].point.options
     return (
-      `<div style="margin-bottom: 0.5em;"><span style="font-weight: 500">${new Date(
-        x
-      ).toLocaleDateString('en-US', { dateStyle: 'medium' })}</span><br/>` +
-      `Total relief to date: <span style="font-weight: 500">$${y.toLocaleString()}</span></div>` +
-      `<a rel="noopener noreferrer" target="_blank" href="${url}" style="display: block; max-width: 285px; text-decoration: underline; text-decoration-style:dotted; text-overflow: ellipsis; overflow:hidden;">${name}</a>` +
-      `Relief from action: <span style="font-weight: 500">$${relief}</span>`
+      `<a rel="noopener noreferrer" target="_blank" href="${url}">` +
+      `<div style="margin-bottom:0.5em"><b>${new Date(x).toLocaleDateString(
+        'en-US',
+        {
+          dateStyle: 'medium'
+        }
+      )}</b><br/>` +
+      `Total relief to date: <b>$${y.toLocaleString()}</b></div>` +
+      `<span class="a-link" style="max-width: 285px;">${name}</span><br/>` +
+      `Relief from action: <b>$${relief}</b></a>`
     )
   },
 
@@ -45,20 +49,17 @@ const hooks = {
   enforcement_actionsTooltipFormatter() {
     const { x, y, name, url } = this.points[0].point.options
     return (
-      `<div style="margin-bottom: 0.5em;"><span style="font-weight: 500">${new Date(
-        x
-      ).toLocaleDateString('en-US')}</span><br/>` +
-      `Total actions to date: <span style="font-weight: 500">${y}</span></div>` +
-      `<a rel="noopener noreferrer" target="_blank" href="${url}" style="display: block; max-width: 180px; text-decoration: underline; text-decoration-style:dotted; text-overflow: ellipsis; overflow:hidden;">${name}</a>`
+      `<div style="margin-bottom:0.5em"><b>${new Date(x).toLocaleDateString(
+        'en-US'
+      )}</b><br/>` +
+      `Total actions to date: <b>${y}</b></div>` +
+      `<a rel="noopener noreferrer" target="_blank" href="${url}" style="max-width: 180px;">${name}</a>`
     )
   },
 
   enforcement_barTooltipFormatter() {
     const { y, name } = this.points[0].point.options
-    return (
-      `<span style="font-weight: 500">${name}</span><br/>` +
-      `Total enforcement actions: <span style="font-weight: 500">${y}</span>`
-    )
+    return `<b>${name}</b><br/>Total enforcement actions: <b>${y}</b>`
   }
 }
 

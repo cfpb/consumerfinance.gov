@@ -20,7 +20,7 @@
     {% endif %}
 
     {% if value.subtitle %}
-    <p style="font-size:14px">{{ value.subtitle }}</h3>
+    <p>{{ value.subtitle }}</p>
     {% endif %}
 
     <div class="simple-chart-target"
@@ -37,6 +37,7 @@
 
     <p class="m-chart-footnote block__sub block__border-top block short-desc">
         {% if value.credits %}<strong>Source:</strong> {{value.credits}}<br>{% endif %}
+        {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
         {% if value.data_source %}
         <strong>Download:</strong>
         <a class="icon-link icon-link__download"
