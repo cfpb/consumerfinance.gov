@@ -29,7 +29,7 @@ const urlParameters = {
   'book': 'financialModel.indiCost_books',
   'indo': 'financialModel.indiCost_other',
   'tran': 'financialModel.indiCost_transportation',
-  'nda': 'financialModel.indiCost_added',
+  'nda': 'financialModel.otherCost_additional',
 
   'pelg': 'financialModel.grant_pell',
   'seog': 'financialModel.grant_seog',
@@ -38,9 +38,9 @@ const urlParameters = {
   'schg': 'financialModel.grant_school',
   'othg': 'financialModel.grant_other',
 
-  'mta': 'financialModel.mil_milTuitAssist',
-  'gi': 'financialModel.mil_GIBill',
-  'othm': 'financialModel.mil_other',
+  'mta': 'financialModel.grant_mta',
+  'gi': 'financialModel.grant_gibill',
+  'othm': 'financialModel.grant_servicememberOther',
 
   'stas': 'financialModel.scholarship_state',
   'schs': 'financialModel.scholarship_school',
@@ -71,7 +71,7 @@ const urlParameters = {
   'offj': 'financialModel.income_jobOffCampus',
   'onj': 'financialModel.income_jobOnCampus',
   'eta': 'financialModel.income_employerAssist',
-  'othf': 'financialModel.income_other',
+  'othf': 'financialModel.income_otherFunding',
 
   'pvl1': 'financialModel.privLoan_privLoan1',
   'pvr1': 'financialModel.privloan_privLoanRate1',
