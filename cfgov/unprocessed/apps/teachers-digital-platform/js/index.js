@@ -6,7 +6,6 @@ const cfExpandables = require( '@cfpb/cfpb-expandables/src/Expandable' );
 const scroll = require( './scroll' );
 const search = require( './search' );
 const sticky = require( './sticky' );
-const closest = require( '../../../js/modules/util/dom-traverse' ).closest;
 const expandableFacets = require( './expandable-facets' );
 const analytics = require( './tdp-analytics' );
 
