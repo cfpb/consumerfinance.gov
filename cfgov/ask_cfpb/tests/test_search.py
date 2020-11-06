@@ -273,9 +273,34 @@ class AnswerPageSearchTest(TestCase):
             live=True,
         )
 
+    @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    @mock.patch.object(AnswerPageSearch, 'search')
+    def test_ask_search_en_suggestion(self, mock_search):
+        term = "paydya"
+        mock_search.search.return_value = {
+            'search_term': term,
+            'suggestion': None,
+            'results': []
+        }
+        mock_search.suggest.return_value = {
+            'search_term': term,
+            'suggestion': "payday",
+            'results': []
+        }
+        response = self.client.get(reverse("ask-search-en"), {"q": term})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context_data["page"], self.en_page)
+        self.assertEqual(mock_search.call_count, 1)
+        self.assertTrue(
+            mock_search.called_with(language="en", search_term=term)
+        )
+        self.assertEqual(response.get('results'), None)
+        self.assertEqual(response.get('suggestion'), None)
+
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_en_search_es7(self, mock_search):
+    def test_ask_search_en(self, mock_search):
         term = "payday"
         mock_return = mock.Mock()
         mock_return.search_term = term
@@ -295,7 +320,7 @@ class AnswerPageSearchTest(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_en_search_es7_no_term(self, mock_search):
+    def test_ask_search_en_no_term(self, mock_search):
         term = ""
         mock_return = mock.Mock()
         mock_return.search_term = term
@@ -313,7 +338,7 @@ class AnswerPageSearchTest(TestCase):
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_en_search_suggestion_es7(self, mock_search):
+    def test_ask_search_en_suggestion_es7(self, mock_search):
         term = "paydya"
         mock_return = mock.Mock()
         mock_return.suggestion = "payday"
@@ -322,7 +347,6 @@ class AnswerPageSearchTest(TestCase):
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
         mock_es_queryset.count.return_value = 1
-        # mock_search.return_value = [mock_es_queryset]
         mock_search().suggest().execute().suggest.suggestion \
             .__getitem__().execute.return_value = [mock_return]
         mock_count = mock.Mock(return_value=1)
@@ -342,7 +366,7 @@ class AnswerPageSearchTest(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    def test_es_search_es7(self, mock_search):
+    def test_ask_search_es(self, mock_search):
         term = "payday"
         mock_return = mock.Mock()
         mock_return.search_term = term
@@ -365,7 +389,7 @@ class AnswerPageSearchTest(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    def test_search_page_es7_en_selection(self, mock_search):
+    def test_ask_search_en_page_selection(self, mock_search):
         term = "tuition"
         mock_return = mock.Mock()
         mock_return.search_term = term
@@ -384,7 +408,7 @@ class AnswerPageSearchTest(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    def test_search_page_es7_es_selection(self, mock_search):
+    def test_ask_search_es_page_selection(self, mock_search):
         term = "hipotecas"
         mock_return = mock.Mock()
         mock_return.search_term = term
@@ -406,7 +430,9 @@ class AnswerPageSearchTest(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
-    def test_json_response_es7(self, mock_search):
+    def test_ask_search_en_json_response(self, mock_search):
+        term = "tuition"
+        search_term = "tooition"
         get_or_create_page(
             apps,
             "ask_cfpb",
@@ -418,32 +444,32 @@ class AnswerPageSearchTest(TestCase):
             live=True,
         )
         mock_search.search.return_value = {
-            'search_term': "tooition",
+            'search_term': search_term,
             'suggestion': None,
             'results': []
         }
         mock_search.suggest.return_value = {
-            'search_term': "tooition",
-            'suggestion': "tuition",
+            'search_term': search_term,
+            'suggestion': term,
             'results': []
         }
         response = self.client.get(
             reverse("ask-search-en-json", kwargs={"as_json": "json"}),
-            {"q": "tuition"},
+            {"q": term},
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
-        self.assertEqual(json.loads(response.content)["query"], "tuition")
+        self.assertEqual(json.loads(response.content)["query"], term)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageSearch, 'autocomplete')
-    def test_autocomplete_es7_en_blank_term(self, mock_autocomplete):
+    def test_ask_autocomplete_en_blank_term(self, mock_autocomplete):
         result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
         self.assertEqual(json.loads(result.content), [])
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageSearch, 'autocomplete')
-    def test_autocomplete_es7_es_blank_term(self, mock_autocomplete):
+    def test_ask_autocomplete_es_blank_term(self, mock_autocomplete):
         result = self.client.get(
             reverse("ask-autocomplete-es", kwargs={"language": "es"}),
             {"term": ""},
@@ -452,7 +478,7 @@ class AnswerPageSearchTest(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_autocomplete_es7_en(self, mock_autocomplete):
+    def test_ask_autocomplete_en(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
         mock_search_result.url = "url"
@@ -465,7 +491,7 @@ class AnswerPageSearchTest(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_autocomplete_es7_es(self, mock_autocomplete):
+    def test_ask_autocomplete_es(self, mock_autocomplete):
         mock_search_result = mock.Mock()
         mock_search_result.autocomplete = "question"
         mock_search_result.url = "respuestas/url"
