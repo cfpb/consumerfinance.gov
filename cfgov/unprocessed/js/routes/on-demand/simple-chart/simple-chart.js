@@ -8,6 +8,7 @@ import accessibility from 'highcharts/modules/accessibility'
 import fetch from 'cross-fetch'
 import chartHooks from './chart-hooks.js'
 import defaultLine from './line-styles.js'
+import defaultDatetime from './datetime-styles.js'
 import defaultBar from './bar-styles.js'
 
 accessibility(Highcharts)
@@ -18,10 +19,12 @@ function fetchData(url) {
 
 function getDefaultChartObject(type) {
   switch (type) {
-    case 'line':
-      return defaultLine
     case 'bar':
       return defaultBar
+    case 'datetime':
+      return defaultDatetime
+    case 'line':
+      return defaultLine
   }
   throw new Error('Unknown chart type specified')
 }
@@ -68,6 +71,14 @@ function resolveOverride(override, data) {
   return override
 }
 
+function resolveData(source) {
+  if (source.match(/^http/i)) {
+    return fetchData(source)
+  } else {
+    return Promise.resolve(JSON.parse(source))
+  }
+}
+
 function buildCharts() {
   const charts = [...document.getElementsByClassName('simple-chart-target')]
   charts.forEach(buildChart)
@@ -83,7 +94,7 @@ function buildChart(chart) {
     yAxisLabel
   } = chart.dataset
 
-  fetchData(source).then(d => {
+  resolveData(source.trim()).then(d => {
     const data =
       transform && chartHooks[transform] ? chartHooks[transform](d) : d
 

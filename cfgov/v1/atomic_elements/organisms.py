@@ -596,15 +596,16 @@ class SimpleChart(blocks.StructBlock):
     chart_type = blocks.ChoiceBlock(
         choices=[
             ('bar', 'Bar'),
+            ('datetime', 'Datetime'),
             ('line', 'Line'),
         ],
-        default='line',
+        default='datetime',
         required=True
     )
 
-    data_source = blocks.CharBlock(
+    data_source = blocks.TextBlock(
         required=True,
-        help_text='URL of the chart\'s data source'
+        help_text='URL of the chart\'s data source or an array of JSON data'
     )
 
     transform = blocks.CharBlock(
