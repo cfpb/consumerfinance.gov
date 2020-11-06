@@ -29,18 +29,18 @@ from v1.models import CFGOVPage, CFGOVPageManager
 
 # The second tuple value (boolean) in each entry identifies nested facets.
 FACET_MAP = (
-    ("building_block", (ActivityBuildingBlock, False)),
-    ("school_subject", (ActivitySchoolSubject, False)),
-    ("topic", (ActivityTopic, True)),
-    ("grade_level", (ActivityGradeLevel, False)),
-    ("age_range", (ActivityAgeRange, False)),
-    ("student_characteristics", (ActivityStudentCharacteristics, False)),
-    ("activity_type", (ActivityType, False)),
-    ("teaching_strategy", (ActivityTeachingStrategy, False)),
-    ("blooms_taxonomy_level", (ActivityBloomsTaxonomyLevel, False)),
-    ("activity_duration", (ActivityDuration, False)),
-    ("jump_start_coalition", (ActivityJumpStartCoalition, False)),
-    ("council_for_economic_education", (ActivityCouncilForEconEd, False)),
+    ('building_block', (ActivityBuildingBlock, False, 10)),
+    ('school_subject', (ActivitySchoolSubject, False, 25)),
+    ('topic', (ActivityTopic, True, 25)),
+    ('grade_level', (ActivityGradeLevel, False, 10)),
+    ('age_range', (ActivityAgeRange, False, 10)),
+    ('student_characteristics', (ActivityStudentCharacteristics, False, 10)),
+    ('activity_type', (ActivityType, False, 10)),
+    ('teaching_strategy', (ActivityTeachingStrategy, False, 25)),
+    ('blooms_taxonomy_level', (ActivityBloomsTaxonomyLevel, False, 25)),
+    ('activity_duration', (ActivityDuration, False, 10)),
+    ('jump_start_coalition', (ActivityJumpStartCoalition, False, 25)),
+    ('council_for_economic_education', (ActivityCouncilForEconEd, False, 25)),
 )
 FACET_LIST = [tup[0] for tup in FACET_MAP]
 
@@ -299,7 +299,7 @@ class ActivityIndexPage(CFGOVPage):
         all_facets = {}
         if 'fields' in facet_counts:
             for facet, facet_config in facet_map:
-                class_object, is_nested = facet_config
+                class_object, is_nested, max_facet_count = facet_config
                 all_facets_sqs = sqs
                 other_facet_queries = [
                     facet_query for facet_query_name, facet_query in facet_queries.items()  # noqa: E501
@@ -395,7 +395,7 @@ def default_nested_facets(class_object):
         parent_setup = copy.copy(default_attrs)
         parent_setup.update({"id": parent.id, "title": parent.title})
         child_setups = []
-        for child in parent.children.all():
+        for child in parent.children.exclude(activitypage=None):
             _child_setup = copy.copy(default_attrs)
             _child_setup.update({
                 "id": child.id,
@@ -429,9 +429,9 @@ class ActivitySetUp(models.Model):
 
     def update_facets(self):
         _facet_setup = {}
-        # each facet_config is a tuple: (class, is_nested)
+        # each facet_config is a tuple: (class, is_nested, max_facet_count)
         for facet_name, facet_config in FACET_MAP:
-            class_object, is_nested = facet_config
+            class_object, is_nested, max_facet_count = facet_config
             if is_nested:
                 _facet_setup[facet_name] = default_nested_facets(class_object)
             else:

@@ -132,8 +132,5 @@ class ActivityPageDocument(Document):
     def prepare_objectives(self, instance):
         return strip_html(instance.objectives)
 
-    def prepare_summary(self, instance):
-        return strip_html(instance.summary)
-
     def prepare_what_students_will_do(self, instance):
         return strip_html(instance.what_students_will_do)
