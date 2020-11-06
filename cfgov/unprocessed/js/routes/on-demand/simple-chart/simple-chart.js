@@ -10,6 +10,8 @@ import chartHooks from './chart-hooks.js'
 import defaultLine from './line-styles.js'
 import defaultBar from './bar-styles.js'
 
+accessibility(Highcharts)
+
 function fetchData(url) {
   return fetch(url).then(res => res.json())
 }
