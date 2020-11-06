@@ -273,31 +273,6 @@ class AnswerPageSearchTest(TestCase):
             live=True,
         )
 
-    @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
-    @mock.patch.object(AnswerPageSearch, 'search')
-    def test_ask_search_en_suggestion(self, mock_search):
-        term = "paydya"
-        mock_search.search.return_value = {
-            'search_term': term,
-            'suggestion': None,
-            'results': []
-        }
-        mock_search.suggest.return_value = {
-            'search_term': term,
-            'suggestion': "payday",
-            'results': []
-        }
-        response = self.client.get(reverse("ask-search-en"), {"q": term})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context_data["page"], self.en_page)
-        self.assertEqual(mock_search.call_count, 1)
-        self.assertTrue(
-            mock_search.called_with(language="en", search_term=term)
-        )
-        self.assertEqual(response.get('results'), None)
-        self.assertEqual(response.get('suggestion'), None)
-
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
     def test_ask_search_en(self, mock_search):
@@ -307,13 +282,13 @@ class AnswerPageSearchTest(TestCase):
         mock_return.suggestion = None
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_es_queryset.count.return_value = 3
+        mock_search().filter().query() \
+            .__getitem__().execute.return_value = [mock_es_queryset]
+        mock_search().filter().query().count = mock.Mock(return_value=1)
         response = self.client.get(reverse("ask-search-en"), {"q": term})
-        mock_search().query().filter() \
-            .__getitem__().execute.return_value = [mock_return]
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["page"], self.en_page)
-        self.assertEqual(mock_search.call_count, 2)
+        self.assertEqual(mock_search.call_count, 3)
         self.assertTrue(
             mock_search.called_with(language="en", search_term=term)
         )
@@ -324,9 +299,6 @@ class AnswerPageSearchTest(TestCase):
         term = ""
         mock_return = mock.Mock()
         mock_return.search_term = term
-        mock_es_queryset = mock.Mock()
-        mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_es_queryset.count.return_value = 1
         response = self.client.get(reverse("ask-search-en"), {"q": term})
         self.assertEqual(mock_search.call_count, 0)
         self.assertEqual(response.status_code, 200)
@@ -338,7 +310,7 @@ class AnswerPageSearchTest(TestCase):
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_ask_search_en_suggestion_es7(self, mock_search):
+    def test_ask_search_en_suggestion(self, mock_search):
         term = "paydya"
         mock_return = mock.Mock()
         mock_return.suggestion = "payday"
@@ -346,23 +318,21 @@ class AnswerPageSearchTest(TestCase):
         mock_return.results = []
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_es_queryset.count.return_value = 1
-        mock_search().suggest().execute().suggest.suggestion \
-            .__getitem__().execute.return_value = [mock_return]
-        mock_count = mock.Mock(return_value=1)
-        mock_search().suggest().count = mock_count
-        mock_search().suggest().execute().suggest.suggestion \
-            .__getitem__().count = mock_count
+        mock_search().filter().query() \
+            .__getitem__().execute.return_value = [mock_es_queryset]
+        mock_search().filter().query().count = mock.Mock(return_value=0)
         response = self.client.get(reverse("ask-search-en"), {"q": term})
-        self.assertEqual(mock_search.call_count, 4)
+        self.assertEqual(mock_search.call_count, 5)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get('results'), None)
         self.assertEqual(response.get('suggestion'), None)
         response_page = response.context_data["page"]
         self.assertEqual(response_page, self.en_page)
         self.assertEqual(response_page.query, term)
-        self.assertEqual(response_page.result_query, term)
-        self.assertEqual(response_page.suggestion, None)
+        self.assertEqual(response_page.suggestion, term)
+        self.assertTrue(
+            mock_search.called_with(language="en", search_term=term)
+        )
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
@@ -373,16 +343,16 @@ class AnswerPageSearchTest(TestCase):
         mock_return.suggestion = None
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_es_queryset.count.return_value = 1
-        mock_search().query().filter() \
-            .__getitem__().execute.return_value = [mock_return]
+        mock_search().filter().query() \
+            .__getitem__().execute.return_value = [mock_es_queryset]
+        mock_search().filter().query().count = mock.Mock(return_value=1)
         response = self.client.get(
             reverse("ask-search-es", kwargs={"language": "es"}),
             {"q": term},
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["page"], self.es_page)
-        self.assertEqual(mock_search.call_count, 2)
+        self.assertEqual(mock_search.call_count, 3)
         self.assertTrue(
             mock_search.called_with(language="es", search_term=term)
         )
@@ -395,15 +365,11 @@ class AnswerPageSearchTest(TestCase):
         mock_return.search_term = term
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_es_queryset.count.return_value = 1
-        mock_search().query().filter() \
-            .__getitem__().execute.return_value = [mock_return]
-        mock_count = mock.Mock(return_value=1)
-        mock_search().query().count = mock_count
-        mock_search().query().filter().__getitem__().count = mock_count
+        mock_search().filter().query() \
+            .__getitem__().execute.return_value = [mock_es_queryset]
         response = self.client.get(reverse("ask-search-en"), {"q": term})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_search.call_count, 4)
+        self.assertEqual(mock_search.call_count, 2)
         self.assertEqual(response.context_data.get("page").language, "en")
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
@@ -414,18 +380,14 @@ class AnswerPageSearchTest(TestCase):
         mock_return.search_term = term
         mock_es_queryset = mock.Mock()
         mock_es_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_es_queryset.count.return_value = 5
-        mock_search().query().filter() \
-            .__getitem__().execute.return_value = [mock_return]
-        mock_count = mock.Mock(return_value=5)
-        mock_search().query().count = mock_count
-        mock_search().query().filter().__getitem__().count = mock_count
+        mock_search().filter().query() \
+            .__getitem__().execute.return_value = [mock_es_queryset]
         response = self.client.get(
             reverse("ask-search-es", kwargs={"language": "es"}),
             {"q": term},
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_search.call_count, 4)
+        self.assertEqual(mock_search.call_count, 2)
         self.assertEqual(response.context_data["page"].language, "es")
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
