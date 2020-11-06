@@ -49,11 +49,15 @@ const hooks = {
   enforcement_actionsTooltipFormatter() {
     const { x, y, name, url } = this.points[0].point.options
     return (
+      `<a rel="noopener noreferrer" target="_blank" href="${url}">` +
       `<div style="margin-bottom:0.5em"><b>${new Date(x).toLocaleDateString(
-        'en-US'
+        'en-US',
+        {
+          dateStyle: 'medium'
+        }
       )}</b><br/>` +
       `Total actions to date: <b>${y}</b></div>` +
-      `<a rel="noopener noreferrer" target="_blank" href="${url}" style="max-width: 180px;">${name}</a>`
+      `<span class="a-link" style="max-width: 180px;">${name}</span></a>`
     )
   },
 
