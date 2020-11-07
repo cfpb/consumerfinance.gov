@@ -45,7 +45,12 @@ const styles = {
   },
   yAxis: {
     title: {
-      x: -16
+      x: -16,
+      y: 0,
+      align: 'middle',
+      reserveSpace: true,
+      rotation: 270,
+      textAlign: 'center'
     },
     lineColor: '#d2d3d5',
     labels: {
@@ -53,6 +58,35 @@ const styles = {
         fontSize: '16px'
       }
     }
+  },
+  responsive: {
+    rules: [
+      {
+        condition: {
+          maxWidth: 650
+        },
+        chartOptions: {
+          chart: {
+            spacingTop: 34
+          },
+          xAxis: {
+            labels: {
+              step: 2
+            }
+          },
+          yAxis: {
+            title: {
+              x: 0,
+              y: -22,
+              align: 'high',
+              reserveSpace: false,
+              rotation: 0,
+              textAlign: 'left'
+            }
+          }
+        }
+      }
+    ]
   }
 }
 
