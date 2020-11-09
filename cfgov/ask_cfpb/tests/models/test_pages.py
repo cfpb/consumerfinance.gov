@@ -1018,6 +1018,50 @@ class AnswerPageTest(TestCase):
             get_reusable_text_snippet("About us (For consumers)"),
         )
 
+    def test_get_meta_description(self):
+        page = self.page1
+        # Defaults to empty string
+        self.assertEqual(
+            page.get_meta_description(),
+            ""
+        )
+
+        # Second fallback is truncated answer_content text block
+        stream_data = [
+            {
+                "type": "video_player",
+                "id": "402b933b",
+                "value": {
+                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                },
+            },
+            {
+                "type": "text",
+                "id": "402b933c",
+                "value": {
+                    "content": (
+                        "<p><span>"
+                        "This is more than forty words: "
+                        "word word word word word word word word word word "
+                        "word word word word word word word word word word "
+                        "word word word word word word word word word word "
+                        "word word word word word word too-many."
+                        "</span></p>"
+                    )
+                },
+            },
+        ]
+        set_stream_data(page, "answer_content", stream_data)
+        self.assertTrue(page.get_meta_description().endswith("word word ..."))
+
+        # First fallback is the short_answer
+        page.short_answer = "Test short answer"
+        self.assertEqual(page.get_meta_description(), page.short_answer)
+
+        # First choice is the search_description
+        page.search_description = "Test search description"
+        self.assertEqual(page.get_meta_description(), page.search_description)
+
     def test_english_page_sibling_url(self):
         self.assertEqual(self.page1.get_sibling_url(), self.page1_es.url)
 
