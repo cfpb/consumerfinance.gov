@@ -23,6 +23,6 @@ class Command(BaseCommand):
                     synonym.save()
                     synonyms_saved += 1
             except Exception as e:
-                print(e)
+                self.stdout.write(e)
                 raise CommandError('Failed to load synonym file %s', file)
-        print(f'Successfully saved {synonyms_saved} synonyms')
+        self.stdout.write(f'Successfully saved {synonyms_saved} synonyms')
