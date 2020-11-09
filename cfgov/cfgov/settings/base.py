@@ -426,6 +426,7 @@ ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 # ElasticSearch 7 Configuration
 ELASTICSEARCH_DSL_AUTO_REFRESH = False
 ELASTICSEARCH_DSL_AUTOSYNC = False
+ELASTICSEARCH_SYNONYMS_HOME = '/srv/cfgov/current/cfgov/search/resources'
 
 if os.environ.get('USE_AWS_ES', False):
     awsauth = AWS4Auth(
