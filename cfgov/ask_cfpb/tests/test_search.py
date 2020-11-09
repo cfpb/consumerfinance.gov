@@ -109,10 +109,10 @@ class AskSearchTest(TestCase):
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
     @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     @mock.patch.object(SearchQuerySet, 'filter')
-    def test_en_search_suggestion(self, mock_filter, mock_search):
+    def test_en_search_suggestion(self, mock_filter, mock_suggestion):
         # AskSearch.suggest flips search_term and suggestion when called
         mock_filter.return_value = mock_queryset(count=0)
-        mock_search.return_value = "payday"
+        mock_suggestion.return_value = "payday"
         response = self.client.get(reverse("ask-search-en"), {"q": "paydya"})
         self.assertEqual(response.status_code, 200)
         response_page = response.context_data["page"]
@@ -166,7 +166,7 @@ class AskSearchTest(TestCase):
 
     @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     @mock.patch.object(SearchQuerySet, 'filter')
-    def test_json_response(self, mock_filter, mock_search):
+    def test_json_response(self, mock_filter, mock_suggestion):
         get_or_create_page(
             apps,
             "ask_cfpb",
@@ -177,7 +177,7 @@ class AskSearchTest(TestCase):
             language="en",
             live=True,
         )
-        mock_search.return_value = "tuition"
+        mock_suggestion.return_value = "tuition"
         mock_filter.count.return_value = 5
         mock_filter.return_value = mock_queryset(count=5)
         response = self.client.get(
