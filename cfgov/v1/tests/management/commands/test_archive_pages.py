@@ -45,10 +45,18 @@ class InactiveUsersTestCase(TestCase):
             first_published_at=datetime.datetime(2019, 1, 1, tzinfo=pytz.UTC),
             last_published_at=datetime.datetime(2019, 1, 1, tzinfo=pytz.UTC)
         )
+        self.page4 = BlogPage(
+            title="Page in archived in 2020",
+            live=True,
+            is_archived="yes",
+            first_published_at=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC),
+            last_published_at=datetime.datetime(2020, 1, 1, tzinfo=pytz.UTC)
+        )
 
         self.filterable_page.add_child(instance=self.page1)
         self.filterable_page.add_child(instance=self.page2)
         self.filterable_page.add_child(instance=self.page3)
+        self.filterable_page.add_child(instance=self.page4)
 
         self.stdout = StringIO()
 
@@ -67,10 +75,12 @@ class InactiveUsersTestCase(TestCase):
         self.page1.refresh_from_db()
         self.page2.refresh_from_db()
         self.page3.refresh_from_db()
+        self.page4.refresh_from_db()
 
         self.assertTrue(self.page1.archived)
         self.assertFalse(self.page2.archived)
         self.assertFalse(self.page3.archived)
+        self.assertTrue(self.page4.archived)
 
     @freeze_time("2019-2-3")
     def test_archive_months_days(self):
@@ -86,10 +96,12 @@ class InactiveUsersTestCase(TestCase):
         self.page1.refresh_from_db()
         self.page2.refresh_from_db()
         self.page3.refresh_from_db()
+        self.page4.refresh_from_db()
 
         self.assertTrue(self.page1.archived)
         self.assertTrue(self.page2.archived)
         self.assertFalse(self.page3.archived)
+        self.assertTrue(self.page4.archived)
 
     @freeze_time("2020-1-2")
     def test_archive_last_publish_date(self):
@@ -104,7 +116,9 @@ class InactiveUsersTestCase(TestCase):
         self.page1.refresh_from_db()
         self.page2.refresh_from_db()
         self.page3.refresh_from_db()
+        self.page4.refresh_from_db()
 
         self.assertFalse(self.page1.archived)
         self.assertTrue(self.page2.archived)
         self.assertTrue(self.page3.archived)
+        self.assertTrue(self.page4.archived)
