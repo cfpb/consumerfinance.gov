@@ -77,31 +77,32 @@ class Command(BaseCommand):
             days=options["days"],
         )
 
-        # Construct a Q object to filter on based on this command-line argument
+        # Construct a Q object to filter on based on this command-line
+        # argument.
         if options["by_published_date"] == "last":
             published_date_filter = Q(last_published_at__lt=cutoff_date)
         else:
             published_date_filter = Q(first_published_at__lt=cutoff_date)
 
-        # We"ll use Wagtail"s page routing to resolve the page at the given the
-        # URL paths
+        # We'll use Wagtail's page routing to resolve the page at the given the
+        # URL paths.
         default_site = Site.objects.get(is_default_site=True)
         root_page = default_site.root_page
 
         for path in url_paths:
             path_components = path.split("/")
 
-            # Get the filterable list page we"re interested in
+            # Get the filterable list page we're interested in.
             try:
                 filterable_page = root_page.route(None, path_components).page
             except Http404:
                 raise CommandError(
-                    f"Unable to find a filterable list page for {path}. "
+                    f"Unable to find a page at {path}. "
                     "Ensure that the path is correct, and leave off any "
                     "leading or trailing / characters."
                 )
 
-            # Get the filterable list queryset and filter it
+            # Get the filterable list QuerySet and filter it.
             filtered_pages = filterable_page.get_filterable_queryset().filter(
                 published_date_filter,
                 is_archived="no",
@@ -110,15 +111,13 @@ class Command(BaseCommand):
             # Archive the content, letting the user know the title of the
             # filterable list page, the cuttoff date and how many pages will be
             # archived.
-            self.stdout.write(
-                f"Found {filtered_pages.count()} pages within "
-                f"{filterable_page.title} older than {cutoff_date}"
-            )
             with transaction.atomic():
                 update_count = filtered_pages.select_for_update().update(
                     is_archived="yes",
                     archived_at=archived_at
                 )
             self.stdout.write(
-                f"Archived {update_count} pages under {filterable_page.title}"
+                f"Found and archived {update_count} pages within "
+                f"{filterable_page.title} older than "
+                f"{cutoff_date:%Y-%m-%d %H:%M %Z}. "
             )
