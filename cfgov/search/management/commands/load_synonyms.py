@@ -22,7 +22,6 @@ class Command(BaseCommand):
                     synonym = Synonym(synonym=line.rstrip('\n'))
                     synonym.save()
                     synonyms_saved += 1
-            except Exception as e:
-                self.stdout.write(e)
+            except Exception:
                 raise CommandError('Failed to load synonym file %s', file)
         self.stdout.write(f'Successfully saved {synonyms_saved} synonyms')
