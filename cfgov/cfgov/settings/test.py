@@ -92,3 +92,5 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'cfgov', 'tests', 'test-media')
 HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"] = (
     "test_" + HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"]
 )
+
+ELASTICSEARCH_SYNONYMS_HOME = './search/resources'

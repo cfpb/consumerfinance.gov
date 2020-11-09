@@ -107,3 +107,5 @@ WAGTAIL_PLACEHOLDERIMAGES_SOURCE = "//placekitten.com/{width}/{height}"
 CSP_IMG_SRC += (
     "placekitten.com",
 )
+
+ELASTICSEARCH_SYNONYMS_HOME = './search/resources'

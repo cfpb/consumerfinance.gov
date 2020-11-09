@@ -1,5 +1,7 @@
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
+from search.models import Synonym
+
 
 UNSAFE_CHARACTERS = [
     '#', '%', ';', '^', '~', '`', '|',
@@ -25,14 +27,22 @@ label_autocomplete = analyzer(
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
 
+
+def get_synonyms():
+    try:
+        return list(Synonym.objects.values_list('synonym', flat=True))
+    except Exception:
+        return []
+
+
 synonynm_filter = token_filter(
-    'synonym_filter_en',
+    'synonym_filter',
     'synonym',
-    synonyms_path='/usr/share/elasticsearch/config/synonyms/synonyms_en.txt'
+    synonyms=get_synonyms()
 )
 
 synonym_analyzer = analyzer(
-    'synonym_analyzer_en',
+    'synonym_analyzer',
     type='custom',
     tokenizer='standard',
     filter=[
