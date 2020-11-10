@@ -249,6 +249,19 @@ class TestCFGOVPage(TestCase):
         )
         self.assertEqual(result, mock_response())
 
+    def test_archived_property(self):
+        # Test default value of is_archived results in False property
+        self.assertFalse(self.page.archived)
+
+        self.page.is_archived = 'no'
+        self.assertFalse(self.page.archived)
+
+        self.page.is_archived = 'never'
+        self.assertFalse(self.page.archived)
+
+        self.page.is_archived = 'yes'
+        self.assertTrue(self.page.archived)
+
 
 class TestCFGOVPageContext(TestCase):
     def setUp(self):
