@@ -638,6 +638,11 @@ class SimpleChart(blocks.StructBlock):
         help_text='When the underlying data was published'
     )
 
+    download_file = blocks.CharBlock(
+        required=False,
+        help_text='Location of a file to download, if different from the data source'
+    )
+
     notes = blocks.CharBlock(
         required=False,
         help_text='General chart information'

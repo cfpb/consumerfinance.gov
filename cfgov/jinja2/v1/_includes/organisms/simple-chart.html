@@ -35,14 +35,16 @@
          >
     </div>
 
+    {% set download_source = value.download_file or value.data_source %}
+
     <p class="m-chart-footnote block__sub block__border-top block short-desc">
         {% if value.credits %}<strong>Source:</strong> {{value.credits}}<br>{% endif %}
         {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
         {% if value.data_source %}
         <strong>Download:</strong>
         <a class="icon-link icon-link__download"
-           href="{{ value.data_source }}">
-          <span class="icon-link_text">CSV file</span></a><br>
+           href="{{ download_source }}">
+          <span class="icon-link_text">{{'JSON' if download_source.endswith('json') else 'CSV'}} file</span></a><br>
         {% endif %}
 
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
