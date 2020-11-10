@@ -7,25 +7,25 @@ describe( 'Paying for College', () => {
     it( 'should display Direct debit and extra payments', () => {
       page.open();
       page.click( 'Federal' );
-      page.selectQuestion ( '2' );
+      page.selectQuestion( '2' );
       page.click( 'Yes' );
-      page.selectQuestion ( '3' );
+      page.selectQuestion( '3' );
       page.click( 'Not sure' );
-      page.selectQuestion ( '4' );
+      page.selectQuestion( '4' );
       page.click( 'Yes' );
-      page.selectQuestion ( '5' );
+      page.selectQuestion( '5' );
       page.click( 'No' );
     } );
     it( 'should display Lower your interest rate', () => {
       page.open();
       page.click( 'Non-Federal' );
-      page.selectQuestion ( '2' );
+      page.selectQuestion( '2' );
       page.click( 'Yes' );
-      page.selectQuestion ( '3' );
+      page.selectQuestion( '3' );
       page.click( 'Not sure' );
-      page.selectQuestion ( '4' );
+      page.selectQuestion( '4' );
       page.click( 'No' );
-      page.selectQuestion ( '5' );
+      page.selectQuestion( '5' );
       page.click( 'Yes' );
     } );
     it( 'should display Payment plans based on your income', () => {
