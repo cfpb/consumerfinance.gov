@@ -302,8 +302,7 @@ urlpatterns = [
 
     re_path(r'^credit-cards/agreements/', include('agreements.urls')),
 
-    flagged_re_path(
-        'PREPAID_AGREEMENTS_SEARCH',
+    re_path(
         r'^data-research/prepaid-accounts/search-agreements/',
         include((
             'prepaid_agreements.urls',

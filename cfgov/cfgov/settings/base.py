@@ -426,11 +426,17 @@ ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 # ElasticSearch 7 Configuration
 ELASTICSEARCH_DSL_AUTO_REFRESH = False
 ELASTICSEARCH_DSL_AUTOSYNC = False
+ELASTICSEARCH_SYNONYMS_HOME = '/srv/cfgov/current/cfgov/search/resources'
 
 if os.environ.get('USE_AWS_ES', False):
-    awsauth = AWS4Auth(os.environ.get('AWS_ES_ACCESS_KEY'), os.environ.get('AWS_ES_SECRET_KEY'), 'us-east-1', 'es')
+    awsauth = AWS4Auth(
+        os.environ.get('AWS_ES_ACCESS_KEY'),
+        os.environ.get('AWS_ES_SECRET_KEY'),
+        'us-east-1',
+        'es'
+    )
     host = os.environ.get('ES7_HOST', '')
-    ELASTICSEARCH_DSL={
+    ELASTICSEARCH_DSL = {
         'default': {
             'hosts': [{'host': host, 'port': 443}],
             'http_auth': awsauth,
@@ -439,12 +445,10 @@ if os.environ.get('USE_AWS_ES', False):
         },
     }
 else:
-    ELASTICSEARCH_DSL={
-        'default': {
-            'hosts': os.path.join("http://",
-                os.environ.get("ES7_HOST", "localhost"), ":",
-                os.environ.get("ES_PORT", "9200"))
-        },
+    host = os.environ.get("ES7_HOST", "localhost")
+    port = os.environ.get("ES_PORT", "9200")
+    ELASTICSEARCH_DSL = {
+        "default": {"hosts": f"http://{host}:{port}"}
     }
 
 # S3 Configuration
@@ -732,8 +736,6 @@ FLAGS = {
     "BETA_EXTERNAL_TESTING": [],
     # Used to hide new youth employment success pages prior to public launch
     "YOUTH_EMPLOYMENT_SUCCESS": [],
-    # Release of prepaid agreements database search
-    "PREPAID_AGREEMENTS_SEARCH": [],
     # Used to hide CCDB landing page updates prior to public launch
     "CCDB_CONTENT_UPDATES": [],
     # During a Salesforce system outage, the following flag should be enabled
@@ -772,6 +774,8 @@ FLAGS = {
     "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
     # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
     "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
+    # Used to enable django-elasticsearch-dsl and disable haystack in paying_for_college app.
+    "ELASTICSEARCH_DSL_PFC": [("boolean", False)],
 }
 
 

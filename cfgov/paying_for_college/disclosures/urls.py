@@ -1,9 +1,11 @@
 from django.urls import re_path
 
+from flags.urls import flagged_re_path
+
 from paying_for_college.views import (
     BaseTemplateView, ConstantsRepresentation, ExpenseRepresentation,
     FeedbackView, OfferView, ProgramRepresentation, SchoolRepresentation,
-    StatsRepresentation, VerifyView, school_search_api
+    StatsRepresentation, VerifyView, school_autocomplete, school_search_api
 )
 
 
@@ -25,8 +27,12 @@ urlpatterns = [
                 template_name="paying_for_college/disclosure_technote.html"),
             name="pfc-technote"),
 
-    re_path(r"^api/search-schools.json", school_search_api,
-            name="school_search"),
+    flagged_re_path(
+        'ELASTICSEARCH_DSL_PFC',
+        r"^api/search-schools.json",
+        school_autocomplete,
+        fallback=school_search_api,
+        name="school_search"),
 
     re_path(r"^api/program/([^/]+)/$", ProgramRepresentation.as_view(),
             name="program-json"),

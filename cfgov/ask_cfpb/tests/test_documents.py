@@ -153,7 +153,7 @@ class AnswerPageDocumentTest(TestCase):
                     'preview': {'type': 'text'},
                     'search_tags': {'type': 'text'},
                     'text': {
-                        'analyzer': 'synonym_analyzer_en', 'type': 'text'
+                        'analyzer': 'synonym_analyzer', 'type': 'text'
                     },
                     'url': {'type': 'text'}
                 }

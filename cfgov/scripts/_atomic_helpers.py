@@ -384,6 +384,5 @@ filter_controls = {
         },
         'filter_children': True,
         'filter_siblings': False,
-        'filter_archive': False,
     }
 }
