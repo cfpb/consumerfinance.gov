@@ -31,10 +31,7 @@ function getDefaultChartObject(type) {
 
 function makeChartOptions(
   data,
-  chartType,
-  styleOverrides,
-  description,
-  yAxisLabel
+  { chartType, styleOverrides, description, xAxisLabel, yAxisLabel }
 ) {
   const defaultObj = JSON.parse(
     JSON.stringify(getDefaultChartObject(chartType))
@@ -56,6 +53,7 @@ function makeChartOptions(
   defaultObj.series = [{ data }]
   defaultObj.description = description
   defaultObj.yAxis.title.text = yAxisLabel
+  if (xAxisLabel) defaultObj.xAxis.title.text = xAxisLabel
 
   return defaultObj
 }
@@ -85,23 +83,13 @@ function buildCharts() {
 }
 
 function buildChart(chart) {
-  const {
-    chartType,
-    source,
-    transform,
-    styleOverrides,
-    description,
-    yAxisLabel
-  } = chart.dataset
+  const { source, transform } = chart.dataset
 
   resolveData(source.trim()).then(d => {
     const data =
       transform && chartHooks[transform] ? chartHooks[transform](d) : d
 
-    Highcharts.chart(
-      chart,
-      makeChartOptions(data, chartType, styleOverrides, description, yAxisLabel)
-    )
+    Highcharts.chart(chart, makeChartOptions(data, chart.dataset))
   })
 }
 

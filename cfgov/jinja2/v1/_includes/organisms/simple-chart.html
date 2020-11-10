@@ -24,14 +24,15 @@
     {% endif %}
 
     <div class="simple-chart-target"
-         {% if value.chart_type %}data-chart-type="{{ value.chart_type }}"{% endif %}
-         {% if value.data_source %}data-source="{{ value.data_source }}"{% endif %}
+         data-chart-type="{{ value.chart_type }}"
+         data-source="{{ value.data_source }}"
+         data-description="{{ value.data_source }}"
+         data-y-axis-label="{{ value.y_axis_label }}"
+         {% if value.x_axis_label %}
+              data-x-axis-label="{{ value.x_axis_label }}"
+         {% endif %}
          {% if value.transform %}data-transform="{{ value.transform }}"{% endif %}
          {% if value.style_overrides %}data-style-overrides='{{ value.style_overrides }}'{% endif %}
-         {% if value.description %}data-description="{{ value.data_source }}"{% endif %}
-         {% if value.y_axis_label %}
-              data-y-axis-label="{{ value.y_axis_label }}"
-         {% endif %}
          >
     </div>
 
@@ -40,13 +41,10 @@
     <p class="m-chart-footnote block__sub block__border-top block short-desc">
         {% if value.credits %}<strong>Source:</strong> {{value.credits}}<br>{% endif %}
         {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
-        {% if value.data_source %}
         <strong>Download:</strong>
         <a class="icon-link icon-link__download"
            href="{{ download_source }}">
           <span class="icon-link_text">{{'JSON' if download_source.endswith('json') else 'CSV'}} file</span></a><br>
-        {% endif %}
-
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
     </p>
 </div>

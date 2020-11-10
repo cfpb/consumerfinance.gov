@@ -4,6 +4,21 @@
 
   .simple-chart-target {
     margin-top: 2.8125em;
+    .respond-to-max( @bp-xs-max + 60, {
+      margin-top: 1.875em;
+    })
+  }
+
+  .highcharts-graph {
+    stroke-width: 3px;
+  }
+
+  .highcharts-axis-line, .highcharts-tick, .highcharts-grid-line {
+    stroke: @gray-20;
+  }
+
+  .highcharts-tooltip-box{
+    background-color: #f7f8f9;
   }
 
   .highcharts-tooltip {

@@ -8,7 +8,6 @@ const bar = {
   },
   plotOptions: {
     series: {
-      lineWidth: 3,
       states: {
         hover: {
           color: '#addc91'
@@ -18,10 +17,17 @@ const bar = {
     }
   },
   xAxis: {
+    title: {
+      y: 12,
+      style: {
+        color: '#5a5d61'
+      }
+    },
     crosshair: false,
     labels: {
       y: 30,
       style: {
+        color: '#5a5d61',
         fontSize: '16px'
       }
     },

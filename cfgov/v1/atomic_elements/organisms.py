@@ -608,16 +608,6 @@ class SimpleChart(blocks.StructBlock):
         help_text='URL of the chart\'s data source or an array of JSON data'
     )
 
-    transform = blocks.CharBlock(
-        required=False,
-        help_text='Name of the javascript function in chart-hooks.js to run on the provided data before handing it to the chart'
-    )
-
-    style_overrides = blocks.TextBlock(
-        required=False,
-        help_text='A JSON object with style overrides for the underlying Highcharts chart. No object merging is done, nested objects should be referenced with dot notation: {"tooltip.shape": "circle"}'
-    )
-
     description = blocks.CharBlock(
         required=True,
         help_text='Accessible description of the chart content'
@@ -628,6 +618,21 @@ class SimpleChart(blocks.StructBlock):
         help_text='y-axis label'
     )
 
+    x_axis_label = blocks.CharBlock(
+        required=False,
+        help_text='x-axis label, if needed'
+    )
+
+    transform = blocks.CharBlock(
+        required=False,
+        help_text='Name of the javascript function in chart-hooks.js to run on the provided data before handing it to the chart'
+    )
+
+    style_overrides = blocks.TextBlock(
+        required=False,
+        help_text='A JSON object with style overrides for the underlying Highcharts chart. No object merging is done, nested objects should be referenced with dot notation: {"tooltip.shape": "circle"}'
+    )
+   
     credits = blocks.CharBlock(
         required=False,
         help_text='Attribution for the data source'

@@ -4,7 +4,7 @@ const styles = {
       fontFamily: '"Avenir Next", Arial, sans-serif',
       fontSize: '16px',
       color: '#5a5d61',
-      lineHeight: 1.5
+      lineHeight: 1.375
     }
   },
   credits: false,
@@ -17,19 +17,17 @@ const styles = {
   },
   plotOptions: {
     series: {
-      lineWidth: 3,
       states: {
         hover: {
           enabled: false
         }
-      },
-      color: '#20aa3f'
+      }
     }
   },
   tooltip: {
     animation: false,
-    backgroundColor: '#f7f8f9',
     borderColor: '#919395',
+    distance: 15,
     padding: 15,
     shadow: { color: '#b4b5b6', opacity: 0.2 },
     shared: true,
@@ -50,11 +48,15 @@ const styles = {
       align: 'middle',
       reserveSpace: true,
       rotation: 270,
-      textAlign: 'center'
+      textAlign: 'center',
+      style: {
+        color: '#5a5d61'
+      }
     },
     lineColor: '#d2d3d5',
     labels: {
       style: {
+        color: '#5a5d61',
         fontSize: '16px'
       }
     }
@@ -63,11 +65,12 @@ const styles = {
     rules: [
       {
         condition: {
-          maxWidth: 650
+          maxWidth: 600
         },
         chartOptions: {
           chart: {
-            spacingTop: 34
+            spacingTop: 40,
+            spacingLeft: 0
           },
           xAxis: {
             labels: {
@@ -77,7 +80,7 @@ const styles = {
           yAxis: {
             title: {
               x: 0,
-              y: -22,
+              y: -28,
               align: 'high',
               reserveSpace: false,
               rotation: 0,

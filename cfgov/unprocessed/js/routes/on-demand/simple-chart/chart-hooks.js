@@ -37,7 +37,7 @@ const hooks = {
         }
       )}</b><br/>` +
       `Total relief to date: <b>$${y.toLocaleString()}</b></div>` +
-      `<span class="a-link" style="max-width: 285px;">${name}</span><br/>` +
+      `<span class="a-link" style="max-width: 290px;">${name}</span><br/>` +
       `Relief from action: <b>$${relief}</b></a>`
     )
   },
@@ -57,7 +57,7 @@ const hooks = {
         }
       )}</b><br/>` +
       `Total actions to date: <b>${y}</b></div>` +
-      `<span class="a-link" style="max-width: 180px;">${name}</span></a>`
+      `<span class="a-link" style="max-width: 290px;">${name}</span></a>`
     )
   },
 
