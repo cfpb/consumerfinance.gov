@@ -26,7 +26,7 @@ from modelcluster.fields import ParentalKey
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models.answer_page import (
-    AnswerPage, extract_raw_text, truncate_preview
+    AnswerPage, extract_raw_text, truncate_by_words_and_chars
 )
 from ask_cfpb.models.search import AnswerPageSearch, AskSearch
 from v1 import blocks as v1_blocks
@@ -83,7 +83,7 @@ def get_answer_preview(page):
     """Extract an answer summary for use in search result previews."""
     raw_text = extract_raw_text(page.answer_content.stream_data)
     full_text = strip_tags(" ".join([page.short_answer, raw_text]))
-    return truncate_preview(full_text)
+    return truncate_by_words_and_chars(full_text)
 
 
 def get_portal_or_portal_search_page(portal_topic, language='en'):
