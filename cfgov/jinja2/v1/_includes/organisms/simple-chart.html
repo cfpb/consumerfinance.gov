@@ -9,6 +9,17 @@
    Create a chart organism with data
 
    ========================================================================== #}
+{% macro make_download_name(download_source, download_text) -%}
+  {% if download_text %}
+    {{download_text}}
+  {% else %}
+    {% if download_source.endswith('json') %}
+      JSON file
+    {% else %}
+      CSV file
+    {% endif %}
+  {% endif %}
+{%- endmacro %}
 
 <div class="o-simple-chart">
     {% if value.figure %}
@@ -44,7 +55,7 @@
         <strong>Download:</strong>
         <a class="icon-link icon-link__download"
            href="{{ download_source }}">
-          <span class="icon-link_text">{{'JSON' if download_source.endswith('json') else 'CSV'}} file</span></a><br>
+          <span class="icon-link_text">{{make_download_name(download_source, value.download_text)}}</span></a><br>
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
     </p>
 </div>

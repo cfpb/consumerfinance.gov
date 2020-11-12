@@ -44,7 +44,7 @@ const hooks = {
   enforcement_reliefTooltipFormatter() {
     const { x, y, name, relief, url } = this.points[0].point.options
     return (
-      `<a rel="noopener noreferrer" target="_blank" href="${url}">` +
+      `<a style="padding: 15px;" rel="noopener noreferrer" target="_blank" href="${url}">` +
       `<div style="margin-bottom:0.5em"><b>${new Date(x).toLocaleDateString(
         'en-US',
         {
@@ -64,7 +64,7 @@ const hooks = {
   enforcement_actionsTooltipFormatter() {
     const { x, y, name, url } = this.points[0].point.options
     return (
-      `<a rel="noopener noreferrer" target="_blank" href="${url}">` +
+      `<a style="padding: 15px;" rel="noopener noreferrer" target="_blank" href="${url}">` +
       `<div style="margin-bottom:0.5em"><b>${new Date(x).toLocaleDateString(
         'en-US',
         {

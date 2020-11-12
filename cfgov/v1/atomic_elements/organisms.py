@@ -646,6 +646,11 @@ class SimpleChart(blocks.StructBlock):
     download_file = blocks.CharBlock(
         required=False,
         help_text='Location of a file to download, if different from the data source'
+   )
+
+    download_text = blocks.CharBlock(
+        required=False,
+        help_text='Custom text for the chart download field'
     )
 
     notes = blocks.CharBlock(
