@@ -22,6 +22,21 @@ const hooks = {
       })
   },
 
+  enforcement_reliefCount(data) {
+    const years = {}
+    data.forEach(d => {
+      const year = new Date(d.x).getFullYear()
+      const relief = +d.relief.replace(/[,\.]/g, '') / 100
+      if (years[year]) years[year] += relief
+      else years[year] = relief
+    })
+    return Object.keys(years)
+      .sort()
+      .map(k => {
+        return { name: k, y: years[k] }
+      })
+  },
+
   enforcement_barCategories(data) {
     return data.map(d => d.name)
   },
@@ -64,6 +79,11 @@ const hooks = {
   enforcement_barTooltipFormatter() {
     const { y, name } = this.points[0].point.options
     return `<b>${name}</b><br/>Total enforcement actions: <b>${y}</b>`
+  },
+
+  enforcement_reliefBarTooltipFormatter() {
+    const { y, name } = this.points[0].point.options
+    return `<b>${name}</b><br/>Total relief: <b>$${y.toLocaleString()}</b>`
   }
 }
 
