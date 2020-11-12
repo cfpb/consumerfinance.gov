@@ -27,7 +27,7 @@ from v1.atomic_elements import molecules
 from v1.models import CFGOVPage, CFGOVPageManager
 
 
-# The second tuple value (boolean) in each entry identifies nested facets.
+# facet name, (facet class, is-nested, max facet count)
 FACET_MAP = (
     ('building_block', (ActivityBuildingBlock, False, 10)),
     ('school_subject', (ActivitySchoolSubject, False, 25)),
@@ -105,26 +105,6 @@ class ActivityIndexPage(CFGOVPage):
                     "bool",
                     must=Q("multi_match", **{"query": term})
                 )
-            # Get facet counts to remove facets with no hits after a search
-            initial_search = dsl_search.execute()
-            facet_response = {facet: getattr(
-                initial_search.aggregations, f"{facet}_terms").buckets
-                for facet in FACET_LIST}
-            for facet, facet_config in FACET_MAP:
-                facet_ids = [item['key'] for item in facet_response[facet]]
-                is_nested = facet_config[1]
-                if is_nested:
-                    for parent in all_facets[facet]:
-                        for child in parent['children']:
-                            if child['id'] not in facet_ids:
-                                parent['children'].remove(child)
-                    if parent['id'] not in facet_ids:
-                        i = all_facets[facet].index(parent)
-                        del all_facets[facet][i]
-                else:
-                    for flat_facet in all_facets[facet]:
-                        if flat_facet['id'] not in facet_ids:
-                            all_facets[facet].remove(flat_facet)
         else:
             dsl_search = dsl_search.sort('-date')
         selected_facets = {}
@@ -135,18 +115,53 @@ class ActivityIndexPage(CFGOVPage):
                     if value.isdigit()
                 ]
                 selected_facets[facet] = facet_ids
-                for entry in all_facets[facet]:
-                    if entry["id"] in facet_ids:
-                        entry["selected"] = True
-                        if entry.get("children"):  # a nested facet
-                            for child in entry["children"]:
-                                if child["id"] in facet_ids:
-                                    child["selected"] = True
+        for facet, pks in selected_facets.items():
+            dsl_search = dsl_search.query(
+                "bool",
+                should=[Q("match", **{facet: pk}) for pk in pks]
+            )
+        total_results = dsl_search.count()
+        response = dsl_search.execute()
+        results = [
+            card_setup[str(hit.id)] for hit in response
+        ]
+        facet_response = {facet: getattr(
+            response.aggregations, f"{facet}_terms").buckets  # noqa
+            for facet in FACET_LIST}
+        for facet, facet_config in FACET_MAP:
+            is_nested = facet_config[1]
+            selections = selected_facets.get(facet)
+            if not facet_response.get(facet):
+                del all_facets[facet]
+                continue
+            facet_ids = [
+                int(item['key']) for item in facet_response[facet]
+            ]
+            if is_nested:
+                for parent in all_facets[facet]:
+                    if selections and parent['id'] in selections:
+                        parent['selected'] = True
+                    for child in parent['children']:
+                        if child['id'] not in facet_ids:
+                            parent['children'].remove(child)
+                        elif selections and child['id'] in selections:
+                            child['selected'] = True
+                            parent['child_selected'] = True
+            else:
+                facet_list = all_facets[facet]
+                for flat_facet in facet_list:
+                    if flat_facet['id'] not in facet_ids:
+                        facet_list.remove(flat_facet)
+                    elif (
+                            selected_facets.get(facet) and
+                            flat_facet['id'] in selected_facets[facet]
+                    ):
+                        flat_facet['selected'] = True
 
         payload = {
             'search_query': search_query,
-            'results': [],
-            'total_results': 0,
+            'results': results,
+            'total_results': total_results,
             'total_activities': total_activities,
             'selected_facets': selected_facets,
         }
@@ -164,20 +179,6 @@ class ActivityIndexPage(CFGOVPage):
         payload.update({
             'expanded_facets': expanded_facets,
         })
-        for facet, pks in selected_facets.items():
-            dsl_search = dsl_search.query(
-                "bool",
-                should=[Q("match", **{facet: pk}) for pk in pks]
-            )
-        total_results = dsl_search.count()
-        response = dsl_search.execute()
-        results = [
-            card_setup[str(hit.id)] for hit in response
-        ]
-        payload.update({
-            'results': results,
-            'total_results': total_results,
-        })
         self.results = payload
         results_per_page = validate_results_per_page(request)
         paginator = Paginator(payload['results'], results_per_page)
@@ -192,6 +193,7 @@ class ActivityIndexPage(CFGOVPage):
             'paginator': paginator,
             'show_filters': bool(selected_facets),
         }
+        # import pdb; pdb.set_trace()
         return context_update
 
     # TODO: Remove this function when we switch to DSL
@@ -249,7 +251,6 @@ class ActivityIndexPage(CFGOVPage):
         expanded_facets = always_expanded.union(set(conditionally_expanded))
 
         payload.update({
-            'facet_counts': facet_counts,
             'all_facets': all_facets,
             'expanded_facets': expanded_facets,
         })
@@ -272,7 +273,6 @@ class ActivityIndexPage(CFGOVPage):
         paginated_page = paginator.page(current_page)
 
         context_update = {
-            'facet_counts': facet_counts,
             'facets': all_facets,
             'activities': paginated_page,
             'total_results': total_results,
@@ -429,7 +429,6 @@ class ActivitySetUp(models.Model):
 
     def update_facets(self):
         _facet_setup = {}
-        # each facet_config is a tuple: (class, is_nested, max_facet_count)
         for facet_name, facet_config in FACET_MAP:
             class_object, is_nested, max_facet_count = facet_config
             if is_nested:
