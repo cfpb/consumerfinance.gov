@@ -625,14 +625,17 @@ class SimpleChart(blocks.StructBlock):
 
     transform = blocks.CharBlock(
         required=False,
-        help_text='Name of the javascript function in chart-hooks.js to run on the provided data before handing it to the chart'
+        help_text='Name of the javascript function in chart-hooks.js to run '
+        'on the provided data before handing it to the chart'
     )
 
     style_overrides = blocks.TextBlock(
         required=False,
-        help_text='A JSON object with style overrides for the underlying Highcharts chart. No object merging is done, nested objects should be referenced with dot notation: {"tooltip.shape": "circle"}'
+        help_text='A JSON object with style overrides for the underlying '
+        'Highcharts chart. No object merging is done, nested objects should '
+        'be referenced with dot notation: {"tooltip.shape": "circle"}'
     )
-   
+
     credits = blocks.CharBlock(
         required=False,
         help_text='Attribution for the data source'
@@ -645,15 +648,16 @@ class SimpleChart(blocks.StructBlock):
 
     download_file = blocks.CharBlock(
         required=False,
-        help_text='Location of a file to download, if different from the data source'
-   )
+        help_text='Location of a file to download, if different from the '
+        'data source'
+    )
 
     download_text = blocks.CharBlock(
         required=False,
         help_text='Custom text for the chart download field'
     )
 
-    notes = blocks.CharBlock(
+    notes = blocks.TextBlock(
         required=False,
         help_text='General chart information'
     )
