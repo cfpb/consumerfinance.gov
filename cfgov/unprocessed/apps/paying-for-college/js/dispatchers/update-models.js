@@ -139,6 +139,7 @@ const updateSchoolData = function( iped ) {
 
         // Update expenses by region
         document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
+        updateRegion( schoolModel.values.region );
 
         updateSchoolView();
         updateUrlQueryString();
