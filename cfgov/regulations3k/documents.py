@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
@@ -34,7 +36,7 @@ class SectionParagraphDocument(Document):
         return instance.section.title
 
     class Index:
-        name = 'regulations3k'
+        name = f'{settings.ES_INDEX_PREFIX}regulations3k'
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
 

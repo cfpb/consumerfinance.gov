@@ -468,6 +468,9 @@ if os.environ.get("S3_ENABLED", "False") == "True":
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
 
+# Prefix for our elasticsearch indexes based on the environment
+ES_INDEX_PREFIX = os.environ.get('ES_INDEX_PREFIX', '')
+
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
 

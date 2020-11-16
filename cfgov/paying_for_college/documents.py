@@ -1,4 +1,5 @@
 from django.urls import reverse
+from django.conf import settings
 
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
@@ -34,7 +35,7 @@ class SchoolDocument(Document):
                        args=[instance.school_id])
 
     class Index:
-        name = 'paying-for-college'
+        name = f'{settings.ES_INDEX_PREFIX}paying-for-college'
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
 
