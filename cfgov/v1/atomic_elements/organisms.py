@@ -588,6 +588,89 @@ class ModelBlock(blocks.StructBlock):
         return self.limit
 
 
+class SimpleChart(blocks.StructBlock):
+    title = blocks.CharBlock(required=True)
+    subtitle = blocks.CharBlock(required=False)
+    figure = blocks.CharBlock(required=False)
+
+    chart_type = blocks.ChoiceBlock(
+        choices=[
+            ('bar', 'Bar'),
+            ('datetime', 'Datetime'),
+            ('line', 'Line'),
+        ],
+        default='datetime',
+        required=True
+    )
+
+    data_source = blocks.TextBlock(
+        required=True,
+        help_text='URL of the chart\'s data source or an array of JSON data'
+    )
+
+    description = blocks.CharBlock(
+        required=True,
+        help_text='Accessible description of the chart content'
+    )
+
+    y_axis_label = blocks.CharBlock(
+        required=True,
+        help_text='y-axis label'
+    )
+
+    x_axis_label = blocks.CharBlock(
+        required=False,
+        help_text='x-axis label, if needed'
+    )
+
+    transform = blocks.CharBlock(
+        required=False,
+        help_text='Name of the javascript function in chart-hooks.js to run '
+        'on the provided data before handing it to the chart'
+    )
+
+    style_overrides = blocks.TextBlock(
+        required=False,
+        help_text='A JSON object with style overrides for the underlying '
+        'Highcharts chart. No object merging is done, nested objects should '
+        'be referenced with dot notation: {"tooltip.shape": "circle"}'
+    )
+
+    credits = blocks.CharBlock(
+        required=False,
+        help_text='Attribution for the data source'
+    )
+
+    date_published = blocks.CharBlock(
+        required=False,
+        help_text='When the underlying data was published'
+    )
+
+    download_file = blocks.CharBlock(
+        required=False,
+        help_text='Location of a file to download, if different from the '
+        'data source'
+    )
+
+    download_text = blocks.CharBlock(
+        required=False,
+        help_text='Custom text for the chart download field'
+    )
+
+    notes = blocks.TextBlock(
+        required=False,
+        help_text='General chart information'
+    )
+
+    class Meta:
+        label = 'Simple Chart'
+        icon = 'image'
+        template = '_includes/organisms/simple-chart.html'
+
+    class Media:
+        js = ['simple-chart/simple-chart.js']
+
+
 class FullWidthText(blocks.StreamBlock):
     content = blocks.RichTextBlock(icon='edit')
     content_with_anchor = molecules.ContentWithAnchor()
