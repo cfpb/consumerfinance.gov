@@ -1,3 +1,7 @@
+# Temporary script that runs on  the Public Enforcement Actions CSV
+# This will remain in place until our API wrapping the enforcement
+# actions in Wagtail is complete
+
 import csv
 from datetime import datetime as dt
 

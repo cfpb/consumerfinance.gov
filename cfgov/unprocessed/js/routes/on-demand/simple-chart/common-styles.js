@@ -1,4 +1,5 @@
 const styles = {
+  accessibility: {},
   chart: {
     style: {
       fontFamily: '"Avenir Next", Arial, sans-serif',

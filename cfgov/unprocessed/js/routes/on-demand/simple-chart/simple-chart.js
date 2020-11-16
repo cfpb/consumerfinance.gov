@@ -67,7 +67,7 @@ function makeChartOptions(
   /* eslint-disable-next-line */
   defaultObj.title = { text: undefined };
   defaultObj.series = [ { data } ];
-  defaultObj.description = description;
+  defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;
   if ( xAxisLabel ) defaultObj.xAxis.title.text = xAxisLabel;
 
