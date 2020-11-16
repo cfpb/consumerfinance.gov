@@ -6,14 +6,11 @@
 {% import 'organisms/ask-search.html' as ask_search with context %}
 
 {% block title %}
-    {{ page.question | striptags }}
+    {{- seo_title or page.question or page.title | striptags -}}
 {% endblock %}
 
-{% block desc %}
-    {{ description | striptags | safe}}
-{% endblock %}
 {%- block og_desc -%}
-  {{- page.search_description or page.seo_title or page.short_answer|striptags -}}
+    {{- meta_description -}}
 {%- endblock -%}
 
 
@@ -21,10 +18,10 @@
     {{ super() }} ask-cfpb-page ask-cfpb-page__answer
 {%- endblock %}
 
-
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
+
 
 {% block content_main %}
     <div class="block

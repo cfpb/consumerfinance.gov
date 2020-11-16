@@ -63,6 +63,7 @@
    ========================================================================== #}
 
 {% import 'macros/time.html' as time %}
+{% import 'molecules/archived-pill.html' as archived_pill %}
 
 {% macro render(
     post,
@@ -156,6 +157,7 @@
             <h3 class="o-post-preview_title">
                 <a href="{{ post_url }}">
                     {{ post.preview_title | safe if post.preview_title else post.title }}
+                    {{ archived_pill.render( post ) }}
                 </a>
             </h3>
 
