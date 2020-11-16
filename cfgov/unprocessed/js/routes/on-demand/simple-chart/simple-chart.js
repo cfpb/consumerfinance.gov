@@ -78,8 +78,10 @@ function resolveData(source) {
 }
 
 function buildCharts() {
-  const charts = [...document.getElementsByClassName('simple-chart-target')]
-  charts.forEach(buildChart)
+  const charts = document.getElementsByClassName('simple-chart-target')
+  for (let i = 0; i < charts.length; i++) {
+    buildChart(charts[i])
+  }
 }
 
 function buildChart(chart) {
