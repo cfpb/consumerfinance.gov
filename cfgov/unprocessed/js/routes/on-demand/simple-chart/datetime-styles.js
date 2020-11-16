@@ -1,4 +1,4 @@
-import styles from './line-styles.js'
+import styles from './line-styles.js';
 
 const datetime = {
   ...styles,
@@ -12,6 +12,6 @@ const datetime = {
     },
     tickInterval: 365 * 24 * 3600 * 1000
   }
-}
+};
 
-export default datetime
+export default datetime;

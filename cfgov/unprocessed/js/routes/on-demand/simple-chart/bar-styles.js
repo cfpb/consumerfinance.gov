@@ -1,4 +1,4 @@
-import styles from './common-styles.js'
+import styles from './common-styles.js';
 
 const bar = {
   ...styles,
@@ -33,6 +33,6 @@ const bar = {
     },
     lineColor: '#d2d3d5'
   }
-}
+};
 
-export default bar
+export default bar;

@@ -1,4 +1,4 @@
-import styles from './common-styles.js'
+import styles from './common-styles.js';
 
 const line = {
   ...styles,
@@ -19,6 +19,6 @@ const line = {
       }
     }
   }
-}
+};
 
-export default line
+export default line;

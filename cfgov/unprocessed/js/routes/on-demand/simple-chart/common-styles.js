@@ -8,7 +8,7 @@ const styles = {
     }
   },
   credits: false,
-  colors: ['#20aa3f'],
+  colors: [ '#20aa3f' ],
   legend: {
     enabled: false
   },
@@ -91,6 +91,6 @@ const styles = {
       }
     ]
   }
-}
+};
 
-export default styles
+export default styles;
