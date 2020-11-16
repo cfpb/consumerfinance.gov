@@ -1,5 +1,5 @@
-from django.urls import reverse
 from django.conf import settings
+from django.urls import reverse
 
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
