@@ -120,8 +120,8 @@ const navigationView = {
       // TODO: Track time between Next button clicks for analytics
       sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
       updateState.nextSection();
+      window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
     }
-    window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
   },
 
   /**

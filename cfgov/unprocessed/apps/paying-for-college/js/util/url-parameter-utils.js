@@ -1,4 +1,4 @@
- import { expensesModel } from '../models/expenses-model.js';
+import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';

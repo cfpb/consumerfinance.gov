@@ -19,6 +19,7 @@ const stateModel = {
   values: {
     activeSection: false,
     constantsLoaded: false,
+    showSchoolErrors: false,
     schoolSelected: false,
     gotStarted: false,
     gradMeterCohort: 'cohortRankByHighestDegree',
@@ -31,7 +32,7 @@ const stateModel = {
     programHousing: 'not-selected',
     programDependency: 'not-selected',
     repayMeterCohort: 'cohortRankByHighestDegree',
-    repayMeterCohortName: 'U.S.',
+    repayMeterCohortName: 'U.S.'
   },
   textVersions: {
     programType: {
@@ -78,50 +79,60 @@ const stateModel = {
     'save-and-finish'
   ],
 
-/**
+  /**
   * Check whether required fields are selected
+  * @returns {Boolean} false if the school form is incomplete, true otherwise
   */
-  _checkRequiredFields: () => {
-   const smv = stateModel.values;
-   const control = getSchoolValue( 'control' );
-   stateModel.values['schoolErrors'] = 'no';
-   updateStateInDom( 'schoolErrors', 'no' );
+  _checkRequiredFields: function() {
+    // Don't check required fields until the
+    if ( stateModel.showSchoolErrors === false ) {
+      return false;
+    }
+    const smv = stateModel.values;
+    const control = getSchoolValue( 'control' );
+    stateModel.values.schoolErrors = 'no';
+    updateStateInDom( 'schoolErrors', 'no' );
 
-   const requiredErrors = {
-     housingSelected: smv.programHousing !== 'not-selected',
-     dependencySelected: smv.programLevel === 'undergrad' && smv.programDependency !== 'not-selected',
-     rateSelected: smv.programRate !== 'not-selected' && control === 'Public'
-   };
+    const requiredErrors = {
+      schoolSelected: getSchoolValue( 'schoolID' ) !== false,
+      programTypeSelected: smv.programType !== 'not-selected',
+      programLengthSelected: smv.programLength !== 'not-selected',
+      rateSelected: smv.programRate !== 'not-selected' && control === 'Public',
+      housingSelected: smv.programHousing !== 'not-selected',
+      dependencySelected: smv.programLevel === 'undergrad' && smv.programDependency !== 'not-selected'
+    };
 
-   // Change values to "required" which triggers error notification CSS rules
-   for ( let key in requiredErrors ) {
-     if ( requiredErrors[key] === false ) {
-       stateModel.values[key] = 'required';
-       updateStateInDom( key, 'required' );
-       stateModel.values['schoolErrors'] = 'yes';
-       updateStateInDom( 'schoolErrors', 'yes' );
-     } else {
-       stateModel.values[key] = false;
-       updateStateInDom( key, false );
-     }
-   }
+    if ( requiredErrors.schoolSelected === false ) requiredErrors.programRate = false;
 
-   if ( stateModel.values.schoolErrors === 'no' ) {
-     stateModel.values.showschoolErrors = false;
-      updateStateInDom( 'showschoolErrors', false );
+    // Change values to "required" which triggers error notification CSS rules
+    for ( const key in requiredErrors ) {
+      if ( requiredErrors[key] === false ) {
+        stateModel.values[key] = 'required';
+        updateStateInDom( key, 'required' );
+        stateModel.values.schoolErrors = 'yes';
+        updateStateInDom( 'schoolErrors', 'yes' );
+      } else {
+        stateModel.values[key] = false;
+        updateStateInDom( key, false );
+      }
     }
 
-    console.log( 'check', requiredErrors );
+    if ( stateModel.values.schoolErrors === 'no' ) {
+      stateModel.values.showSchoolErrors = false;
+      updateStateInDom( 'showSchoolErrors', false );
+    }
+
+    return true;
   },
 
   /**
    * set the salaryAvailable property based on other values
    */
   _setSalaryAvailable: () => {
-    let available = "yes";
-    const smv = stateModel.values
+    let available = 'yes';
+    const smv = stateModel.values;
     if ( smv.programLevel === 'graduate' && smv.pid === false ) {
-      available = "no";
+      available = 'no';
     }
     stateModel.values.salaryAvailable = available;
     updateStateInDom( 'salaryAvailable', available );
@@ -130,7 +141,7 @@ const stateModel = {
   /**
    * set programLevel property based on programType
    */
-   _setProgramLevel: () => {
+  _setProgramLevel: () => {
     const programType = stateModel.values.programType;
     let programLevel = 'undergrad';
     if ( programType === 'graduate' ) {
@@ -139,21 +150,21 @@ const stateModel = {
 
     stateModel.values.programLevel = programLevel;
     updateStateInDom( 'programLevel', programLevel );
-   },
+  },
 
   /**
    * update the application state based on the 'property' parameter.
    * @param {string} property  What property to update based on
    */
-  _updateApplicationState: ( property ) => {
-    const urlParams = [ 'pid', 'programHousing','programType', 'programLength',
+  _updateApplicationState: property => {
+    const urlParams = [ 'pid', 'programHousing', 'programType', 'programLength',
       'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
       'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign' ];
 
     const finUpdate = [ 'programType', 'programRate', 'programDependency',
       'programLength', 'programHousing' ];
 
-      console.log( 'property: ', property )
+    console.log( 'property: ', property );
 
     // Properties which require a URL querystring update:
     if ( urlParams.indexOf( property ) > 0 ) {
@@ -182,7 +193,7 @@ const stateModel = {
     stateModel._setProgramLevel();
     stateModel._setSalaryAvailable();
     stateModel._checkRequiredFields();
-   },
+  },
 
   /**
    * pushStateToHistory - Push current application state to window.history
