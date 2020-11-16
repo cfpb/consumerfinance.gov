@@ -156,8 +156,9 @@
 
         {% for page in value.pages %}
             {% set page_num = loop.index %}
-            <figure class="explain_page"
-                    id="explain_page-{{ loop.index }}">
+            <div class="explain_page"
+              id="explain_page-{{ page_num }}">
+            <figure class="explain_container">
                 <div class="image-map explain_image-map">
                     <div class="image-map_wrapper">
                         {% if page_count > 1 %}
@@ -193,6 +194,7 @@
                     </div>
                 </figcaption>
             </figure>
+          </div>
         {% endfor %}
     </div>
 </div>

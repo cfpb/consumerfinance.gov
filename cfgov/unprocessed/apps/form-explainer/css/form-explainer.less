@@ -3,27 +3,7 @@
    ========================================================================== */
 
 .form-explainer {
-    .u-right-on-desktop {
-        .respond-to-min( 801px, {
-            text-align: right;
-        } );
-    }
-
-    .page-intro {
-        padding-bottom: 36px;
-    }
-
-    .illustration {
-        display: block;
-        width: 200px;
-        padding-top: 1em;
-        margin: 0 auto;
-
-        .respond-to-max( 719px, {
-            display: none;
-        } );
-    }
-
+    
     .image-map {
         display: block;
         box-sizing: border-box;
@@ -33,7 +13,6 @@
 
     .image-map_wrapper {
         position: relative;
-        float: left;
     }
 
     .image-map_image {
@@ -107,7 +86,9 @@
         }
 
         &.has-attention {
-            transform: translateX( -15px );
+             .respond-to-min( @bp-sm-min, {
+                transform: translateX( unit( -@grid_gutter-width / 2 / @base-font-size-px, em ) );
+            });
 
             .o-expandable_link {
                 color: @black;
@@ -168,6 +149,10 @@
                 color: @teal-80;
             }
         }
+
+        &.o-expandable__form-explainer + h3 {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
     }
 
     .o-expandable_header-left {
@@ -187,20 +172,39 @@
     .explain {
         margin: 0 auto unit( 60px / @base-font-size-px, em );
 
-        .respond-to-min( 600px, {
-            .grid_nested-col-group();
+        .respond-to-max( @bp-xs-max, {
+            &_image-map {
+                display:flex;
+            }
+        });
+
+        .respond-to-min( @bp-sm-min, {
+            &_container{
+                display:flex;
+            }
 
             &_image-map {
-                .grid_column(8);
+                max-width: 66%;
+            }
+
+            .image-map_wrapper {
+                position: sticky;
+                top: 2vh;
+            }
+
+            .image-map_image{
+                margin-right: 2px;
+                max-height: 96vh;
+                max-width: 100%;
             }
 
             &_terms {
-                .grid_column(4);
-                border-left-width: @grid_gutter-width;
+                flex: 1;
+                padding-left: unit( 35px / @base-font-size-px, em );
             }
 
             &_pagination {
-                .grid_column(8);
+                margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
             }
         } );
     }
@@ -208,23 +212,14 @@
     .explain_page {
         // Position is needed to allow .explain_image-map
         // to stick to the bottom of .explain_page.
-        .respond-to-min( 600px, {
+        .respond-to-min( @bp-sm-min, {
             position: relative;
         } );
-
-        &__fixed {
-            position: fixed;
-            top: 30px;
-        }
-
-        &__absolute {
-            position: absolute;
-            bottom: 30px;
-        }
     }
 
     .explain_pagination {
         margin-top: unit( 15px / @base-font-size-px, em );
+        .u-clearfix();
     }
 
     .explain_pagination .pagination_form {
@@ -238,6 +233,7 @@
             top: 45%;
             padding-left: unit( 10px / @btn-font-size, em );
             padding-right: unit( 10px / @btn-font-size, em );
+            z-index: 100;
             &.prev {
                 left: -16px;
             }
@@ -253,20 +249,20 @@
     }
 
     .form-explainer_page-links {
-        margin-bottom: unit( 10px / @base-font-size-px, em ) !important;
+        margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em ) !important;
         float: left;
         li {
             float: left;
             a {
                 float: left;
                 display: block;
-                padding: 0 @grid_gutter-width/2;
+                padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
                 cursor: pointer;
 
-                .respond-to-min( 600px, {
+                .respond-to-min( @bp-sm-min, {
                     padding: 0;
                     border-bottom-width: 1px;
-                    margin: 0 @grid_gutter-width/2;
+                    margin: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
                 } );
 
                 &.current-page {
