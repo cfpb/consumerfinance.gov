@@ -1,11 +1,12 @@
-from django.conf import settings
 from django.urls import reverse
 
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
 from paying_for_college.models import School
-from search.elasticsearch_helpers import label_autocomplete
+from search.elasticsearch_helpers import (
+    environment_specific_index, label_autocomplete
+)
 
 
 @registry.register_document
@@ -35,7 +36,7 @@ class SchoolDocument(Document):
                        args=[instance.school_id])
 
     class Index:
-        name = f'{settings.ES_INDEX_PREFIX}paying-for-college'
+        name = environment_specific_index('paying-for-college')
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
 
