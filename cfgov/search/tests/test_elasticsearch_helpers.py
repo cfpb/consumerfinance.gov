@@ -15,6 +15,11 @@ class TestEnvironmentSpecificIndex(TestCase):
         name = environment_specific_index('index')
         self.assertEqual(name, 'index')
 
+    @override_settings(DEPLOY_ENVIRONMENT=None)
+    def test_environment_specific_index_excludes_deploy_env_undefined(self):
+        name = environment_specific_index('index')
+        self.assertEqual(name, 'index')
+
     @override_settings(DEPLOY_ENVIRONMENT='test')
     def test_environment_specific_index_includes_deploy_env(self):
         name = environment_specific_index('index')
