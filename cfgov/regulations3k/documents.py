@@ -2,6 +2,7 @@ from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
 from regulations3k.models import SectionParagraph
+from search.elasticsearch_helpers import environment_specific_index
 
 
 @registry.register_document
@@ -34,7 +35,7 @@ class SectionParagraphDocument(Document):
         return instance.section.title
 
     class Index:
-        name = 'regulations3k'
+        name = environment_specific_index('regulations3k')
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
 

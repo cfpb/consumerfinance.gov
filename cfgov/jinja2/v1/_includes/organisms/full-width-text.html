@@ -35,7 +35,7 @@
             </div>
         {% elif block_type in ['email_signup'] %}
             <div class="m-inset__email">
-                {{ block | safe }}
+                {% include_block block %}
             </div>
         {% elif block_type in ['well', 'well_with_ask_search'] %}
             <div class="block">
