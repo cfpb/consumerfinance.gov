@@ -43,6 +43,7 @@ FACET_MAP = (
     ('council_for_economic_education', (ActivityCouncilForEconEd, False, 25)),
 )
 FACET_LIST = [tup[0] for tup in FACET_MAP]
+ALWAYS_EXPANDED = {'building_block', 'topic', 'school_subject'}
 
 
 class ActivityIndexPage(CFGOVPage):
@@ -89,9 +90,40 @@ class ActivityIndexPage(CFGOVPage):
     def dsl_search(self, request, *args, **kwargs):
         """Search using Elasticsearch 7 and django-elasticsearch-dsl."""
         all_facets = copy.copy(self.activity_setups.facet_setup)
+        selected_facets = {}
         card_setup = self.activity_setups.card_setup
         total_activities = len(card_setup)
         search_query = request.GET.get('q', '')
+        facet_called = any(
+            [request.GET.get(facet, '') for facet in FACET_LIST]
+        )
+        # If there's no query or facet request, we can return cached setups:
+        if not search_query and not facet_called:
+            payload = {
+                'search_query': search_query,
+                'results': list(card_setup.values()),
+                'total_results': total_activities,
+                'total_activities': total_activities,
+                'selected_facets': selected_facets,
+                'all_facets': all_facets,
+                'expanded_facets': ALWAYS_EXPANDED,
+            }
+            self.results = payload
+            results_per_page = validate_results_per_page(request)
+            paginator = Paginator(payload['results'], results_per_page)
+            current_page = validate_page_number(request, paginator)
+            paginated_page = paginator.page(current_page)
+            context_update = {
+                'facets': all_facets,
+                'activities': paginated_page,
+                'total_results': total_activities,
+                'results_per_page': results_per_page,
+                'current_page': current_page,
+                'paginator': paginator,
+                'show_filters': bool(selected_facets),
+            }
+            return context_update
+
         facet_dict = {"aggs": {}}
         for facet in FACET_LIST:
             facet_dict["aggs"].update({
@@ -107,11 +139,10 @@ class ActivityIndexPage(CFGOVPage):
                 )
         else:
             dsl_search = dsl_search.sort('-date')
-        selected_facets = {}
         for facet, facet_config in FACET_MAP:
             if facet in request.GET and request.GET.get(facet):
                 facet_ids = [
-                    int(value) for value in request.GET.getlist(facet)
+                    value for value in request.GET.getlist(facet)
                     if value.isdigit()
                 ]
                 selected_facets[facet] = facet_ids
@@ -126,37 +157,43 @@ class ActivityIndexPage(CFGOVPage):
             card_setup[str(hit.id)] for hit in response
         ]
         facet_response = {facet: getattr(
-            response.aggregations, f"{facet}_terms").buckets  # noqa
+            response.aggregations, f"{facet}_terms").buckets
             for facet in FACET_LIST}
         for facet, facet_config in FACET_MAP:
+            returned_facet_ids = [hit['key'] for hit in facet_response[facet]]
             is_nested = facet_config[1]
-            selections = selected_facets.get(facet)
-            if not facet_response.get(facet):
-                del all_facets[facet]
-                continue
-            facet_ids = [
-                int(item['key']) for item in facet_response[facet]
-            ]
+            selections = selected_facets.get(facet, '')
             if is_nested:
-                for parent in all_facets[facet]:
-                    if selections and parent['id'] in selections:
-                        parent['selected'] = True
-                    for child in parent['children']:
-                        if child['id'] not in facet_ids:
-                            parent['children'].remove(child)
-                        elif selections and child['id'] in selections:
+                for pi, parent in enumerate(all_facets[facet]):
+                    for i, child in enumerate(parent['children']):
+                        if selections and child['id'] in selections:
                             child['selected'] = True
                             parent['child_selected'] = True
-            else:
-                facet_list = all_facets[facet]
-                for flat_facet in facet_list:
-                    if flat_facet['id'] not in facet_ids:
-                        facet_list.remove(flat_facet)
-                    elif (
-                            selected_facets.get(facet) and
-                            flat_facet['id'] in selected_facets[facet]
+                            all_facets[facet][pi].update(parent)
+                for pi, parent in enumerate(all_facets[facet]):
+                    for child in parent['children']:
+                        if child['id'] not in returned_facet_ids:
+                            parent['children'].remove(child)
+                            all_facets[facet][pi].update(parent)
+                for parent in all_facets[facet]:
+                    if (
+                            parent['id'] not in returned_facet_ids
+                            and parent['child_selected'] is False
                     ):
+                        all_facets[facet].remove(parent)
+            else:
+                for i, flat_facet in enumerate(all_facets[facet]):
+                    flat_id = flat_facet['id']
+                    if selections and flat_id in selections:
                         flat_facet['selected'] = True
+                        all_facets[facet][i].update(flat_facet)
+                for flat_facet in all_facets[facet]:
+                    flat_id = flat_facet['id']
+                    if (
+                            flat_id not in returned_facet_ids
+                            and flat_id not in selections
+                    ):
+                        all_facets[facet].remove(flat_facet)
 
         payload = {
             'search_query': search_query,
@@ -164,17 +201,17 @@ class ActivityIndexPage(CFGOVPage):
             'total_results': total_results,
             'total_activities': total_activities,
             'selected_facets': selected_facets,
+            'all_facets': all_facets,
         }
 
         # List all facet blocks that need to be expanded
-        always_expanded = {'building_block', 'topic', 'school_subject'}
         conditionally_expanded = {
             facet_name for facet_name, facet_items in all_facets.items()
             if any(
                 facet['selected'] is True for facet in facet_items
             )
         }
-        expanded_facets = always_expanded.union(set(conditionally_expanded))
+        expanded_facets = ALWAYS_EXPANDED.union(set(conditionally_expanded))
 
         payload.update({
             'expanded_facets': expanded_facets,
@@ -193,7 +230,6 @@ class ActivityIndexPage(CFGOVPage):
             'paginator': paginator,
             'show_filters': bool(selected_facets),
         }
-        # import pdb; pdb.set_trace()
         return context_update
 
     # TODO: Remove this function when we switch to DSL
@@ -241,14 +277,13 @@ class ActivityIndexPage(CFGOVPage):
         )
 
         # List all facet blocks that need to be expanded
-        always_expanded = {'building_block', 'topic', 'school_subject'}
         conditionally_expanded = {
             facet_name for facet_name, facet_items in all_facets.items()
             if any(
                 facet['selected'] is True for facet in facet_items
             )
         }
-        expanded_facets = always_expanded.union(set(conditionally_expanded))
+        expanded_facets = ALWAYS_EXPANDED.union(set(conditionally_expanded))
 
         payload.update({
             'all_facets': all_facets,
@@ -393,14 +428,14 @@ def default_nested_facets(class_object):
     }
     for parent in parents:
         parent_setup = copy.copy(default_attrs)
-        parent_setup.update({"id": parent.id, "title": parent.title})
+        parent_setup.update({"id": str(parent.id), "title": parent.title})
         child_setups = []
         for child in parent.children.exclude(activitypage=None):
             _child_setup = copy.copy(default_attrs)
             _child_setup.update({
-                "id": child.id,
+                "id": str(child.id),
                 "title": child.title,
-                "parent": child.parent_id})
+                "parent": str(child.parent_id)})
             child_setups.append(_child_setup)
         parent_setup["children"] = child_setups
         setup.append(parent_setup)
@@ -411,7 +446,7 @@ def default_flat_facets(class_object):
     return [
         {
             "selected": False,
-            "id": obj.id,
+            "id": str(obj.id),
             "title": obj.title
         }
         for obj in class_object.objects.all()
