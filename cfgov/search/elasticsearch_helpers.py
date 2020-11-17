@@ -54,7 +54,7 @@ synonym_analyzer = analyzer(
 
 
 def environment_specific_index(base_name):
-    if settings.DEPLOY_ENVIRONMENT == 'production' or settings.DEPLOY_ENVIRONMENT == 'local':
+    if settings.DEPLOY_ENVIRONMENT == 'production' or settings.DEPLOY_ENVIRONMENT == 'local':  # noqa: E501
         return base_name
     else:
         return f'{settings.DEPLOY_ENVIRONMENT}-{base_name}'

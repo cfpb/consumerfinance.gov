@@ -1,10 +1,10 @@
-from django.conf import settings
-
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
 from ask_cfpb.models.answer_page import AnswerPage
-from search.elasticsearch_helpers import label_autocomplete, synonym_analyzer, environment_specific_index
+from search.elasticsearch_helpers import (
+    environment_specific_index, label_autocomplete, synonym_analyzer
+)
 
 
 @registry.register_document
