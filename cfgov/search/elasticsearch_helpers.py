@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
@@ -49,3 +51,10 @@ synonym_analyzer = analyzer(
         synonynm_filter,
         'lowercase'
     ])
+
+
+def environment_specific_index(base_name):
+    if settings.DEPLOY_ENVIRONMENT in (None, '', 'local', 'production'):
+        return base_name
+    else:
+        return f'{settings.DEPLOY_ENVIRONMENT}-{base_name}'
