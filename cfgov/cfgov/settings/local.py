@@ -109,3 +109,5 @@ CSP_IMG_SRC += (
 )
 
 ELASTICSEARCH_SYNONYMS_HOME = './search/resources'
+
+DEPLOY_ENVIRONMENT = 'local'
