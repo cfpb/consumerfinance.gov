@@ -93,20 +93,19 @@ const stateModel = {
     stateModel.values.schoolErrors = 'no';
     updateStateInDom( 'schoolErrors', 'no' );
 
-    const requiredErrors = {
-      schoolSelected: getSchoolValue( 'schoolID' ) !== false,
-      programTypeSelected: smv.programType !== 'not-selected',
-      programLengthSelected: smv.programLength !== 'not-selected',
-      rateSelected: smv.programRate !== 'not-selected' && control === 'Public',
-      housingSelected: smv.programHousing !== 'not-selected',
-      dependencySelected: smv.programLevel === 'undergrad' && smv.programDependency !== 'not-selected'
+    const displayErrors = {
+      // These are true if the error should be shown, false otherwise
+      schoolSelected: getSchoolValue( 'schoolID' ) === false,
+      programTypeSelected: smv.programType === 'not-selected',
+      programLengthSelected: smv.programLength === 'not-selected',
+      rateSelected: smv.programRate === 'not-selected' && control == 'Public',
+      housingSelected: smv.programHousing === 'not-selected',
+      dependencySelected: ( smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected' )
     };
 
-    if ( requiredErrors.schoolSelected === false ) requiredErrors.programRate = false;
-
     // Change values to "required" which triggers error notification CSS rules
-    for ( const key in requiredErrors ) {
-      if ( requiredErrors[key] === false ) {
+    for ( const key in displayErrors ) {
+      if ( displayErrors[key] === true ) {
         stateModel.values[key] = 'required';
         updateStateInDom( key, 'required' );
         stateModel.values.schoolErrors = 'yes';
@@ -163,8 +162,6 @@ const stateModel = {
 
     const finUpdate = [ 'programType', 'programRate', 'programDependency',
       'programLength', 'programHousing' ];
-
-    console.log( 'property: ', property );
 
     // Properties which require a URL querystring update:
     if ( urlParams.indexOf( property ) > 0 ) {
