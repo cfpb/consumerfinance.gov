@@ -131,7 +131,7 @@ RUN ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
     mkdir -p cfgov/f /tmp/eregs_cache
 
 # Healthcheck retry set high since database loads take a while
-HEALTHCHECK --start-period=15s --interval=30s --retries=30 \
+HEALTHCHECK --start-period=300s --interval=30s --retries=30 \
             CMD curl -sf -A docker-healthcheck -o /dev/null http://localhost:8000
 
 CMD ["httpd", "-d", "cfgov/apache", "-D", "FOREGROUND"]
