@@ -1,3 +1,6 @@
+from unittest import mock
+
+from django.http import HttpRequest
 from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
@@ -5,7 +8,8 @@ from wagtail.core.models import Site
 from wagtail.documents.models import Document
 from wagtail.tests.utils import WagtailPageTests
 
-import mock
+from elasticsearch_dsl.response import Response as dsl_response
+from elasticsearch_dsl.response.hit import Hit
 from model_bakery import baker
 
 from scripts import _atomic_helpers as atomic
@@ -15,6 +19,9 @@ from teachers_digital_platform.models import (
     ActivityGradeLevel, ActivityIndexPage, ActivityJumpStartCoalition,
     ActivityPage, ActivitySchoolSubject, ActivitySetUp,
     ActivityTeachingStrategy, ActivityTopic, ActivityType, get_activity_setup
+)
+from teachers_digital_platform.models.activity_index_page import (
+    Paginator, parse_dsl_facets, validate_page_number
 )
 from v1.models import HomePage
 
@@ -61,15 +68,22 @@ class ActivityIndexPageTests(WagtailPageTests):
 
 class ActivitySetUpTests(TestCase):
 
+    from teachers_digital_platform.documents import ActivityPageDocument
     fixtures = ['tdp_initial_data']
 
     def setUp(self):
         self.doc = baker.make(Document, pk=1)
-        self.home_page = HomePage.objects.first()
+        self.home_page = HomePage.objects.get(slug='cfgov')
+        self.home_page.save_revision().publish()
         self.search_page = ActivityIndexPage(
             live=True,
             title='Search for activities',
-            slug='search',
+            slug='activity-search',
+        )
+        self.search_page.header = StreamValue(
+            self.search_page.header.stream_block,
+            [atomic.text_introduction],
+            True
         )
         self.home_page.add_child(instance=self.search_page)
         self.activity_page = ActivityPage(
@@ -97,10 +111,10 @@ class ActivitySetUpTests(TestCase):
             activity_file_id=1,
             activity_duration_id=1,
         )
-        self.home_page.add_child(instance=self.activity_page)
+        self.search_page.add_child(instance=self.activity_page)
         self.activity_page.building_block = [1, 2, 3]
         self.activity_page.school_subject = [1]
-        self.activity_page.topic = [1]
+        self.activity_page.topic = [1, 2, 3]
         self.activity_page.grade_level = [1]
         self.activity_page.age_range = [1]
         self.activity_page.student_characteristics = [1]
@@ -108,13 +122,18 @@ class ActivitySetUpTests(TestCase):
         self.activity_page.blooms_taxonomy_level = [1]
         self.activity_page.jump_start_coalition = [1]
         self.activity_page.council_for_economic_education = [1]
+        self.activity_page.activity_setups = get_activity_setup()
         self.activity_page.save()
 
+    def test_setup_str(self):
+        self.assertEqual(
+            ActivitySetUp().__str__(),
+            "Cached activity facets and cards")
+
     def test_facet_setup_creation(self):
-        # get_activity_setup creates a setup object
-        self.assertEqual(ActivitySetUp.objects.count(), 0)
+        """get_activity_setup should ensure existence of a setup object."""
         get_activity_setup()
-        self.assertEqual(ActivitySetUp.objects.count(), 1)
+        self.assertTrue(ActivitySetUp.objects.exists())
         setup_obj = ActivitySetUp.objects.first()
         # number of cards should match number of live activity pages
         self.assertEqual(
@@ -125,6 +144,111 @@ class ActivitySetUpTests(TestCase):
         self.assertEqual(
             len(setup_obj.facet_setup),
             len(FACET_LIST)
+        )
+        page1 = ActivityPage.objects.filter(live=True).first()
+        page1.summary = "Changed summary" + page1.summary
+        page1.save()
+        new_setup_obj = get_activity_setup(refresh=True)
+        self.assertNotEqual(
+            setup_obj.card_setup,
+            new_setup_obj.card_setup)
+
+    def test_dsl_facet_parsing(self):
+        all_facets = self.activity_page.activity_setups.facet_setup
+        original_topic_count = len(all_facets['topic'])
+        original_subject_count = len(all_facets['school_subject'])
+        facet_response = {
+            "building_block": [
+                {"key": "1", "doc_count": 14},
+                {"key": "2", "doc_count": 40},
+                {"key": "3", "doc_count": 18}
+            ],
+            "school_subject": [{"key": "1", "doc_count": 24}],
+            "topic": [
+                {"key": "1", "doc_count": 6},
+                {"key": "2", "doc_count": 6},
+                {"key": "3", "doc_count": 6}],
+            "grade_level": [{"key": "1", "doc_count": 11}],
+            "age_range": [{"key": "1", "doc_count": 11}],
+            "student_characteristics": [{"key": "1", "doc_count": 26}],
+            "activity_type": [{"key": "1", "doc_count": 26}],
+            "teaching_strategy": [{"key": "1", "doc_count": 2}],
+            "blooms_taxonomy_level": [{"key": "1", "doc_count": 4}],
+            "activity_duration": [{"key": "1", "doc_count": 8}],
+            "jump_start_coalition": [{"key": "1", "doc_count": 24}],
+            "council_for_economic_education": [{"key": "1", "doc_count": 14}]
+        }
+        selected_facets = {"topic": ["1", "2", "3"], "school_subject": ["1"]}
+        new_all_facets = parse_dsl_facets(
+            all_facets, facet_response, selected_facets
+        )
+        new_topic_count = len(new_all_facets['topic'])
+        new_subject_count = len(new_all_facets['school_subject'])
+        self.assertNotEqual(
+            original_topic_count,
+            new_topic_count
+        )
+        self.assertNotEqual(
+            original_subject_count,
+            new_subject_count
+        )
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
+    def test_bare_dsl_search_uses_setups(self):
+        """Search with no query or faceting should not need Elasticsearch."""
+        response = self.client.get(self.search_page.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            self.activity_page.title,
+            response.content.decode('utf8'))
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
+    @mock.patch.object(ActivityPageDocument, 'search')
+    def test_search_page_renders_with_query_parameter(self, mock_search):
+        mock_hit = mock.Mock(Hit)
+        mock_hit.id = self.activity_page.pk
+        mock_response = mock.Mock(dsl_response)
+        mock_response.__iter__ = mock.Mock(return_value=iter([mock_hit]))
+        mock_response.aggregations.topic_terms.buckets\
+            .return_value = mock.Mock(
+                return_value=iter({
+                    'topic': [{'key': '1'}]
+                })
+            )
+        mock_search().from_dict().query().count = mock.Mock(return_value=1)
+        mock_search().from_dict().query()\
+            .__getitem__().execute.return_value = mock_response
+        response = self.client.get(f"{self.search_page.url}?q=test-query")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "test-query",
+            response.content.decode('utf8')
+        )
+
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
+    @mock.patch.object(ActivityPageDocument, 'search')
+    def test_search_page_renders_with_facet_parameters(self, mock_search):
+        mock_hit = mock.Mock(Hit)
+        mock_hit.id = self.activity_page.pk
+        mock_response = mock.Mock(dsl_response)
+        mock_response.__iter__ = mock.Mock(return_value=iter([mock_hit]))
+        mock_response.aggregations.topic_terms.buckets\
+            .return_value = mock.Mock(
+                return_value=iter({
+                    'topic': [{'key': '1'}, {'key': '2'}, {'key': '3'}]
+                })
+            )
+        mock_search().from_dict().sort().query().count = mock.Mock(
+            return_value=1
+        )
+        mock_search().from_dict().sort().query()\
+            .__getitem__().execute.return_value = mock_response
+        response = self.client.get(
+            f"{self.search_page.url}?topic=1&topic=2&topic=3")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "topic=1",
+            response.content.decode('utf8')
         )
 
     def test_taxonomy_model_str(self):
@@ -140,6 +264,19 @@ class ActivitySetUpTests(TestCase):
             str(mptt_instance),
             mptt_instance.title
         )
+
+    def test_validate_pagination_number(self):
+        paginator = Paginator([{"fake": "results"}] * 30, 25)
+        request = HttpRequest()
+        self.assertEqual(validate_page_number(request, paginator), 1)
+        request.GET.update({"page": "2"})
+        self.assertEqual(validate_page_number(request, paginator), 2)
+        request = HttpRequest()
+        request.GET.update({"page": "1000"})
+        self.assertEqual(validate_page_number(request, paginator), 1)
+        request = HttpRequest()
+        request.GET.update({"page": "<script>Boo</script>"})
+        self.assertEqual(validate_page_number(request, paginator), 1)
 
 
 class TestActivityIndexPageSearch(TestCase):
@@ -178,29 +315,27 @@ class TestActivityIndexPageSearch(TestCase):
         response = self.client.get(self.search_page.url)
         self.assertEqual(response.status_code, 200)
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
     @mock.patch(
         'teachers_digital_platform.models.activity_index_page.'
-        'ActivityIndexPage.dsl_search')
-    def test_activity_index_page_renders_via_dsl(self, mock_dsl):
-        mock_dsl.return_value = {
-            "facets": self.activity_setups.facet_setup,
+        'SearchQuerySet.models')
+    def test_activity_index_page_calls_haystack(self, mock_haystack):
+        mock_haystack.facet_counts.return_value = {
+            "fields": {"grade_level": [("2", 115)]}
         }
-        response = self.client.get(self.search_page.url)
+        mock_haystack.count.return_value = 1
+        response = self.client.get(f"{self.search_page.url}?q=test-query")
         self.assertEqual(response.status_code, 200)
+        self.assertTrue(mock_haystack.call_count, 1)
 
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
     @mock.patch(
         'teachers_digital_platform.models.activity_index_page.'
         'ActivityIndexPage.dsl_search')
-    def test_activity_index_page_renders_with_query_parameters(self, mock_dsl):
+    def test_search_page_renders_via_dsl_search(self, mock_dsl):
         mock_dsl.return_value = {
             "facets": self.activity_setups.facet_setup,
         }
-        self.search_page.results = {
-            self.activity_setups.card_setup.values()
-        }
-        response = self.client.get(f"{self.search_page.url}?q=test-query")
+        response = self.client.get(self.search_page.url)
         self.assertEqual(response.status_code, 200)
 
     def test_search_page_get_template(self):
@@ -226,11 +361,11 @@ class TestActivityIndexPageSearch(TestCase):
     @mock.patch(
         'teachers_digital_platform.models.activity_index_page.'
         'ActivityIndexPage.dsl_search')
-    def test_search_index_page_handles_empty_query(self, mock_search):
+    def test_search_index_page_handles_no_results_query(self, mock_search):
         mock_search.return_value = {
             "facets": self.activity_setups.facet_setup,
         }
-        response = self.client.get(f"{self.search_page.url}?q=")
+        response = self.client.get(f"{self.search_page.url}?q=xxxxxxxxxx")
         self.assertIn(
             '<h3>No results match your search.</h3>',
             response.content.decode('utf8'))

@@ -159,42 +159,9 @@ class ActivityIndexPage(CFGOVPage):
         facet_response = {facet: getattr(
             response.aggregations, f"{facet}_terms").buckets
             for facet in FACET_LIST}
-        for facet, facet_config in FACET_MAP:
-            returned_facet_ids = [hit['key'] for hit in facet_response[facet]]
-            is_nested = facet_config[1]
-            selections = selected_facets.get(facet, '')
-            if is_nested:
-                for pi, parent in enumerate(all_facets[facet]):
-                    for i, child in enumerate(parent['children']):
-                        if selections and child['id'] in selections:
-                            child['selected'] = True
-                            parent['child_selected'] = True
-                            all_facets[facet][pi].update(parent)
-                for pi, parent in enumerate(all_facets[facet]):
-                    for child in parent['children']:
-                        if child['id'] not in returned_facet_ids:
-                            parent['children'].remove(child)
-                            all_facets[facet][pi].update(parent)
-                for parent in all_facets[facet]:
-                    if (
-                            parent['id'] not in returned_facet_ids
-                            and parent['child_selected'] is False
-                    ):
-                        all_facets[facet].remove(parent)
-            else:
-                for i, flat_facet in enumerate(all_facets[facet]):
-                    flat_id = flat_facet['id']
-                    if selections and flat_id in selections:
-                        flat_facet['selected'] = True
-                        all_facets[facet][i].update(flat_facet)
-                for flat_facet in all_facets[facet]:
-                    flat_id = flat_facet['id']
-                    if (
-                            flat_id not in returned_facet_ids
-                            and flat_id not in selections
-                    ):
-                        all_facets[facet].remove(flat_facet)
-
+        all_facets = parse_dsl_facets(
+            all_facets, facet_response, selected_facets
+        )
         payload = {
             'search_query': search_query,
             'results': results,
@@ -203,7 +170,6 @@ class ActivityIndexPage(CFGOVPage):
             'selected_facets': selected_facets,
             'all_facets': all_facets,
         }
-
         # List all facet blocks that need to be expanded
         conditionally_expanded = {
             facet_name for facet_name, facet_items in all_facets.items()
@@ -414,6 +380,45 @@ class ActivityIndexPage(CFGOVPage):
 
     class Meta:
         verbose_name = "TDP Activity search page"
+
+
+def parse_dsl_facets(all_facets, facet_response, selected_facets):
+    for facet, facet_config in FACET_MAP:
+        returned_facet_ids = [hit['key'] for hit in facet_response[facet]]
+        is_nested = facet_config[1]
+        selections = selected_facets.get(facet, '')
+        if is_nested:
+            for pi, parent in enumerate(all_facets[facet]):
+                for i, child in enumerate(parent['children']):
+                    if selections and child['id'] in selections:
+                        child['selected'] = True
+                        parent['child_selected'] = True
+                        all_facets[facet][pi].update(parent)
+            for pi, parent in enumerate(all_facets[facet]):
+                for child in parent['children']:
+                    if child['id'] not in returned_facet_ids:
+                        parent['children'].remove(child)
+                        all_facets[facet][pi].update(parent)
+            for parent in all_facets[facet]:
+                if (
+                        parent['id'] not in returned_facet_ids
+                        and parent['child_selected'] is False
+                ):
+                    all_facets[facet].remove(parent)
+        else:
+            for i, flat_facet in enumerate(all_facets[facet]):
+                flat_id = flat_facet['id']
+                if selections and flat_id in selections:
+                    flat_facet['selected'] = True
+                    all_facets[facet][i].update(flat_facet)
+            for flat_facet in all_facets[facet]:
+                flat_id = flat_facet['id']
+                if (
+                        flat_id not in returned_facet_ids
+                        and flat_id not in selections
+                ):
+                    all_facets[facet].remove(flat_facet)
+    return all_facets
 
 
 def default_nested_facets(class_object):
