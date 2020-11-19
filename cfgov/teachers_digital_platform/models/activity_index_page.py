@@ -389,21 +389,24 @@ def parse_dsl_facets(all_facets, facet_response, selected_facets):
         selections = selected_facets.get(facet, '')
         if is_nested:
             for pi, parent in enumerate(all_facets[facet]):
-                for i, child in enumerate(parent['children']):
-                    if selections and child['id'] in selections:
+                if parent['id'] in selections:
+                    parent['selected'] = True
+                    parent['child_selected'] = True
+                    for i, child in enumerate(parent['children']):
                         child['selected'] = True
-                        parent['child_selected'] = True
-                        all_facets[facet][pi].update(parent)
+                else:
+                    for i, child in enumerate(parent['children']):
+                        if selections and child['id'] in selections:
+                            child['selected'] = True
+                            parent['child_selected'] = True
+                all_facets[facet][pi].update(parent)
             for pi, parent in enumerate(all_facets[facet]):
                 for child in parent['children']:
                     if child['id'] not in returned_facet_ids:
                         parent['children'].remove(child)
-                        all_facets[facet][pi].update(parent)
+                all_facets[facet][pi].update(parent)
             for parent in all_facets[facet]:
-                if (
-                        parent['id'] not in returned_facet_ids
-                        and parent['child_selected'] is False
-                ):
+                if not parent['children']:
                     all_facets[facet].remove(parent)
         else:
             for i, flat_facet in enumerate(all_facets[facet]):
