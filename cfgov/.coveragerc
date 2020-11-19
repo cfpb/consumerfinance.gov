@@ -10,6 +10,7 @@ omit =
     */ask_cfpb/scripts/*
     */ask_cfpb/search_indexes*
     */paying_for_college/data_sources/bls_processing.py
+    */paying_for_college/search_indexes*
 data_file = ../.coverage
 
 [report]
