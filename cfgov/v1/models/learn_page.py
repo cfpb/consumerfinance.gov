@@ -25,7 +25,7 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
-from v1.util.ref import enforcement_statuses
+from v1.util.ref import enforcement_statuses, institution_types
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -174,16 +174,27 @@ class EnforcementActionDocket(models.Model):
                          related_name='docket_numbers')
 
 
+class EnforcementActionInstitutionType(models.Model):
+    institution_type = models.CharField(max_length=50, choices=institution_types)
+    action = ParentalKey('v1.EnforcementActionPage',
+                         on_delete=models.CASCADE,
+                         related_name='institution_types')
+
+
 class EnforcementActionPage(AbstractFilterPage):
     sidebar_header = models.CharField(
         default='Action details',
         max_length=100
     )
     court = models.CharField(default='', max_length=150, blank=True)
-    institution_type = models.CharField(max_length=50, choices=[
-        ('Nonbank', 'Nonbank'),
-        ('Bank', 'Bank')
-    ])
+
+    settled = models.BooleanField(
+        "Settled",
+        default=False,
+        blank=True,
+        help_text='Check if settled, leave blank if contested.'
+    )
+
 
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
@@ -204,10 +215,13 @@ class EnforcementActionPage(AbstractFilterPage):
         MultiFieldPanel([
             FieldPanel('sidebar_header'),
             FieldPanel('court'),
-            FieldPanel('institution_type'),
+            FieldPanel('settled'),
             FieldPanel('date_filed'),
             FieldPanel('tags', 'Tags'),
         ], heading='Basic Metadata'),
+        MultiFieldPanel([
+            InlinePanel('institution_types', label="Institution Type", min_num=1),
+        ], heading='Institution Type'),
         MultiFieldPanel([
             InlinePanel(
                 'docket_numbers',

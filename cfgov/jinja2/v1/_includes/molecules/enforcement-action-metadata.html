@@ -45,7 +45,11 @@
         <h3 class="h4">
           Institution type
         </h3>
-        {{_text(page.institution_type)}}
+        {% for institution_type in page.institution_types.all() %}
+            <div>
+                {{_text(institution_type.get_institution_type_display())}}
+            </div>
+        {% endfor %}
     </div>
     <div class="m-related-metadata_item-container m-related-metadata_status">
         <h3 class="h4">
