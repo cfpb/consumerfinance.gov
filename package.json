@@ -64,7 +64,7 @@
     "lodash.throttle": "4.1.1",
     "merge-stream": "2.0.0",
     "number-to-words": "1.2.4",
-    "postcss": "8.1.7",
+    "postcss": "8.1.8",
     "postcss-unmq": "1.0.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -75,7 +75,7 @@
     "terser-webpack-plugin": "5.0.3",
     "turbolinks": "5.1.1",
     "vinyl-named": "1.1.0",
-    "webpack": "5.5.0",
+    "webpack": "5.6.0",
     "webpack-stream": "6.1.1",
     "xdr": "0.5.3"
   },
@@ -96,7 +96,7 @@
     "protractor-retry": "1.2.13",
     "sauce-connect-tunnel": "0.2.1",
     "selenium-webdriver": "4.0.0-alpha.5",
-    "snyk": "1.427.2",
+    "snyk": "1.428.2",
     "through2": "4.0.2",
     "wcag": "0.3.0"
   },
