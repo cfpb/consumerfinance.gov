@@ -23,8 +23,7 @@ from ask_cfpb.models.django import (
 )
 from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
-    PortalSearchPage, get_answer_preview, get_standard_text, strip_html,
-    validate_page_number
+    PortalSearchPage, get_standard_text, strip_html, validate_page_number
 )
 from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
@@ -938,8 +937,12 @@ class AnswerPageTest(TestCase):
             context.get("breadcrumb_items")[0]["title"], "Obtener respuestas"
         )
 
-    def test_get_answer_preview_word(self):
-        """Check that get_answer_preview returns truncated text, no tags."""
+    def test_answer_content_preview_word(self):
+        """answer_content_preview returns truncated text by word count
+
+        And without HTML tags.
+        """
+
         page = self.page1
         stream_data = [
             {
@@ -966,10 +969,16 @@ class AnswerPageTest(TestCase):
             },
         ]
         set_stream_data(page, "answer_content", stream_data)
-        self.assertTrue(get_answer_preview(page).endswith("word word ..."))
+        self.assertTrue(
+            page.answer_content_preview().endswith("word word ...")
+        )
 
-    def test_get_answer_preview_char(self):
-        """Check that get_answer_preview returns truncated text, no tags."""
+    def test_answer_content_preview_char(self):
+        """answer_content_preview returns truncated text by character count
+
+        And without HTML tags.
+        """
+
         page = self.page1
         stream_data = [
             {
@@ -1001,7 +1010,7 @@ class AnswerPageTest(TestCase):
             },
         ]
         set_stream_data(page, "answer_content", stream_data)
-        self.assertTrue(get_answer_preview(page).endswith(" ..."))
+        self.assertTrue(page.answer_content_preview().endswith(" ..."))
 
     def test_english_page_context(self):
         from ask_cfpb.models.pages import get_reusable_text_snippet
