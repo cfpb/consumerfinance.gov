@@ -386,7 +386,7 @@ def parse_dsl_facets(all_facets, facet_response, selected_facets):
     for facet, facet_config in FACET_MAP:
         returned_facet_ids = [hit['key'] for hit in facet_response[facet]]
         is_nested = facet_config[1]
-        selections = selected_facets.get(facet, '')
+        selections = selected_facets.get(facet, [])
         if is_nested:
             for pi, parent in enumerate(all_facets[facet]):
                 if parent['id'] in selections:

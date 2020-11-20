@@ -114,7 +114,7 @@ class ActivitySetUpTests(TestCase):
         self.search_page.add_child(instance=self.activity_page)
         self.activity_page.building_block = [1, 2, 3]
         self.activity_page.school_subject = [1]
-        self.activity_page.topic = [1, 2, 3]
+        self.activity_page.topic = [1, 2, 3, 14]
         self.activity_page.grade_level = [1]
         self.activity_page.age_range = [1]
         self.activity_page.student_characteristics = [1]
@@ -167,7 +167,9 @@ class ActivitySetUpTests(TestCase):
             "topic": [
                 {"key": "1", "doc_count": 6},
                 {"key": "2", "doc_count": 6},
-                {"key": "3", "doc_count": 6}],
+                {"key": "3", "doc_count": 6},
+                {"key": "14", "doc_count": 6},
+            ],
             "grade_level": [{"key": "1", "doc_count": 11}],
             "age_range": [{"key": "1", "doc_count": 11}],
             "student_characteristics": [{"key": "1", "doc_count": 26}],
@@ -178,7 +180,7 @@ class ActivitySetUpTests(TestCase):
             "jump_start_coalition": [{"key": "1", "doc_count": 24}],
             "council_for_economic_education": [{"key": "1", "doc_count": 14}]
         }
-        selected_facets = {"topic": ["1", "2", "3"], "school_subject": ["1"]}
+        selected_facets = {"topic": ["1", "2", "14"], "school_subject": ["1"]}
         new_all_facets = parse_dsl_facets(
             all_facets, facet_response, selected_facets
         )
