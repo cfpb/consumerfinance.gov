@@ -50,22 +50,6 @@ def truncate_by_words_and_chars(text, word_limit=40, char_limit=255):
         word_limit -= 1
 
 
-def extract_raw_text(stream_data):
-    # Extract text from stream_data, starting with the answer text.
-    text_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') == 'text'
-    ]
-    extra_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') in ['tip', 'table']
-    ]
-    chunks = text_chunks + extra_chunks
-    return " ".join(chunks)
-
-
 def get_ask_breadcrumbs(language='en', portal_topic=None):
     DEFAULT_CRUMBS = {
         'es': [{
