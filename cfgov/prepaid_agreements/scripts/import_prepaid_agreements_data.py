@@ -72,7 +72,7 @@ def import_agreements_data(agreements_data):
             'created_time': created_time,
             'effective_date': effective_date,
             'compressed_files_url': url,
-            'bulk_download_path': item['path'],
+            'bulk_download_path': item['path'].replace("_", " "),
             'filename': item['agreements_files_location']
         })
 
