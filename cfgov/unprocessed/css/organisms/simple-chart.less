@@ -1,0 +1,59 @@
+.o-simple-chart {
+  border-top: 1px solid @horizontal-rule;
+  padding-top: 3em;
+
+  .simple-chart-target {
+    margin-top: 2.8125em;
+    .respond-to-max( @bp-xs-max + 60, {
+      margin-top: 1.875em;
+    })
+  }
+
+  .highcharts-graph {
+    stroke-width: 3px;
+  }
+
+  .highcharts-axis-line, .highcharts-tick, .highcharts-grid-line {
+    stroke: @gray-20;
+  }
+
+  .highcharts-tooltip-box{
+    background-color: #f7f8f9;
+  }
+
+  .highcharts-tooltip {
+    a, a:hover, a:active {
+      color: #101820;
+      display: block;
+    }
+
+    .a-link {
+      color: @link-text;
+      border-width: 0 0 1px 0;
+      border-style: dotted;
+      display:inline-block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      &:visited {
+        color: @link-text-visited;
+      }
+
+      &:hover {
+        border-style: solid;
+        color: @link-text-hover;
+      }
+
+      &:active {
+        border-style: solid;
+        color: @link-text-active;
+      }
+    }
+    b {
+      font-weight: 500;
+    }
+  }
+  .m-chart-footnote {
+    max-width: 55.8333333333rem;
+  }
+}

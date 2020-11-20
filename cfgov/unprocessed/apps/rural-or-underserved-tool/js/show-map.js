@@ -1,8 +1,8 @@
 import DT from './dom-tools';
 
-// See API docs at https://docs.mapbox.com/mapbox.js/api/v3.2.0/l-mapbox-map
-const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.js';
-const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css';
+// See API docs at https://docs.mapbox.com/mapbox.js/api/v3.3.1/l-mapbox-map
+const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
+const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
 const mapboxAccessToken = 'pk.eyJ1IjoiY2ZwYiIsImEiOiJodmtiSk5zIn0.VkCynzmVYcLBxbyHzlvaQw';
 const mapIdString = 'cfpb.k55b27gd';
 

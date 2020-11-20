@@ -468,6 +468,7 @@ if os.environ.get("S3_ENABLED", "False") == "True":
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
 
+
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
 
@@ -650,6 +651,7 @@ CSP_CONNECT_SRC = (
     "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
+    "api.mapbox.com",
     "bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",
