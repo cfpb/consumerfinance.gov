@@ -50,22 +50,6 @@ def truncate_by_words_and_chars(text, word_limit=40, char_limit=255):
         word_limit -= 1
 
 
-def extract_raw_text(stream_data):
-    # Extract text from stream_data, starting with the answer text.
-    text_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') == 'text'
-    ]
-    extra_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') in ['tip', 'table']
-    ]
-    chunks = text_chunks + extra_chunks
-    return " ".join(chunks)
-
-
 def get_ask_breadcrumbs(language='en', portal_topic=None):
     DEFAULT_CRUMBS = {
         'es': [{
@@ -334,22 +318,30 @@ class AnswerPage(CFGOVPage):
         context['sibling_url'] = self.get_sibling_url()
         return context
 
-    def answer_content_text(self):
-        raw_text = extract_raw_text(self.answer_content.stream_data)
-        return strip_tags(" ".join([self.short_answer, raw_text]))
+    def answer_text(self):
+        short_answer_field = self._meta.get_field('short_answer')
+        value = short_answer_field.value_from_object(self)
+        short_answer = short_answer_field.get_searchable_content(value)
+        # get_serachable_content returns a single-item list for a RichTextField
+        # so we want to pop out the one item to just get a regular string
+        short_answer = short_answer.pop()
 
-    def answer_content_data(self):
-        return truncate_by_words_and_chars(self.answer_content_text())
+        answer_content_field = self._meta.get_field('answer_content')
+        value = answer_content_field.value_from_object(self)
+        answer_content = answer_content_field.get_searchable_content(value)
+        # get_serachable_content returns a list of subblocks for a StreamField
+        # so we want to join them together with spaces
+        answer_content = ' '.join(answer_content)
 
-    def short_answer_data(self):
-        return ' '.join(
-            RichTextField.get_searchable_content(self, self.short_answer))
+        return f"{short_answer}\n\n{answer_content}"
+
+    def answer_content_preview(self):
+        answer_text = self.answer_text()
+        return truncate_by_words_and_chars(answer_text)
 
     def text(self):
-        short_answer = self.short_answer_data()
-        answer_text = self.answer_content_text()
-        full_text = f"{short_answer}\n\n{answer_text}\n\n{self.question}"
-        return full_text
+        answer_text = self.answer_text()
+        return f"{self.question}\n\n{answer_text}"
 
     def __str__(self):
         if self.answer_base:

@@ -15,7 +15,7 @@ class AnswerPageDocument(Document):
     portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
     url = fields.TextField()
-    preview = fields.TextField(attr="answer_content_data")
+    preview = fields.TextField(attr="answer_content_preview")
 
     def get_queryset(self):
         query_set = super().get_queryset()
