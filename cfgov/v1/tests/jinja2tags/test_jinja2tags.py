@@ -94,7 +94,7 @@ class TestIsFilterSelected(TestCase):
 
     def test_query_parameter_archived_selected(self):
         request = self.factory.get('/')
-        s = '{{ is_filter_selected("archived", "exclude") }}'
+        s = '{{ is_filter_selected("archived", "include") }}'
         template = self.jinja_engine.from_string(s)
         self.assertEqual(template.render({'request': request}), 'True')
 
