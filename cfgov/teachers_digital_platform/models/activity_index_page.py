@@ -505,7 +505,7 @@ class ActivitySetUp(models.Model):
             'jump_start_coalition',
             'council_for_economic_education',
         )
-        base_query = ActivityPage.objects.filter(live=True)
+        base_query = ActivityPage.objects.filter(live=True).order_by('-date')
         for activity in base_query:
             payload = {
                 'url': activity.url,
