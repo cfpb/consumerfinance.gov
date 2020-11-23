@@ -8,8 +8,6 @@ from wagtail.core.models import Site
 from wagtail.documents.models import Document
 from wagtail.tests.utils import WagtailPageTests
 
-from elasticsearch_dsl.response import Response as dsl_response
-from elasticsearch_dsl.response.hit import Hit
 from model_bakery import baker
 
 from scripts import _atomic_helpers as atomic
@@ -207,19 +205,11 @@ class ActivitySetUpTests(TestCase):
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
     @mock.patch.object(ActivityPageDocument, 'search')
     def test_search_page_renders_with_query_parameter(self, mock_search):
-        mock_hit = mock.Mock(Hit)
+        mock_hit = mock.Mock()
         mock_hit.id = self.activity_page.pk
-        mock_response = mock.Mock(dsl_response)
-        mock_response.__iter__ = mock.Mock(return_value=iter([mock_hit]))
-        mock_response.aggregations.topic_terms.buckets\
-            .return_value = mock.Mock(
-                return_value=iter({
-                    'topic': [{'key': '1'}]
-                })
-            )
-        mock_search().from_dict().query().count = mock.Mock(return_value=1)
-        mock_search().from_dict().query()\
-            .__getitem__().execute.return_value = mock_response
+        mock_search().query().count.return_value = 1
+        mock_search().query()\
+            .__getitem__().execute.return_value = [mock_hit]
         response = self.client.get(f"{self.search_page.url}?q=test-query")
         self.assertEqual(response.status_code, 200)
         self.assertIn(
@@ -230,21 +220,23 @@ class ActivitySetUpTests(TestCase):
     @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
     @mock.patch.object(ActivityPageDocument, 'search')
     def test_search_page_renders_with_facet_parameters(self, mock_search):
-        mock_hit = mock.Mock(Hit)
+        mock_hit = mock.Mock()
         mock_hit.id = self.activity_page.pk
-        mock_response = mock.Mock(dsl_response)
-        mock_response.__iter__ = mock.Mock(return_value=iter([mock_hit]))
-        mock_response.aggregations.topic_terms.buckets\
-            .return_value = mock.Mock(
-                return_value=iter({
-                    'topic': [{'key': '1'}, {'key': '2'}, {'key': '3'}]
-                })
-            )
-        mock_search().from_dict().sort().query().count = mock.Mock(
-            return_value=1
+        mock_search().query().count.return_value = 1
+        mock_search().query()\
+            .__getitem__().execute.return_value = [mock_hit]
+        mock_facet_response = mock.Mock()
+        mock_facet_response.aggregations = mock.Mock()
+        mock_facet_response.aggregations.buckets = mock.Mock(
+            return_value=iter({
+                'topic': [{'key': '1'}, {'key': '2'}, {'key': '3'}]
+            })
         )
-        mock_search().from_dict().sort().query()\
-            .__getitem__().execute.return_value = mock_response
+        mock_search().sort().query().count.return_value = 1
+        mock_search().sort().query()\
+            .__getitem__().execute.return_value = [mock_hit]
+        mock_search().sort().query().update_from_dict().__getitem__()\
+            .execute.return_value = mock_facet_response
         response = self.client.get(
             f"{self.search_page.url}?topic=1&topic=2&topic=3")
         self.assertEqual(response.status_code, 200)

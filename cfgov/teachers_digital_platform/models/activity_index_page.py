@@ -43,7 +43,21 @@ FACET_MAP = (
     ('council_for_economic_education', (ActivityCouncilForEconEd, False, 25)),
 )
 FACET_LIST = [tup[0] for tup in FACET_MAP]
+FACET_DICT = {"aggs": {}}
+for facet in FACET_LIST:
+    FACET_DICT["aggs"].update({
+        "{}_terms".format(facet): {"terms": {"field": facet}}
+    })
 ALWAYS_EXPANDED = {'building_block', 'topic', 'school_subject'}
+SEARCH_FIELDS = [
+    'text',
+    'related_text',
+    'title',
+    'big_idea',
+    'essential_questions',
+    'objectives',
+    'what_students_will_do'
+]
 
 
 class ActivityIndexPage(CFGOVPage):
@@ -124,18 +138,13 @@ class ActivityIndexPage(CFGOVPage):
             }
             return context_update
 
-        facet_dict = {"aggs": {}}
-        for facet in FACET_LIST:
-            facet_dict["aggs"].update({
-                "{}_terms".format(facet): {"terms": {"field": facet}}
-            })
-        dsl_search = ActivityPageDocument().search().from_dict(facet_dict)
+        dsl_search = ActivityPageDocument().search()
         if search_query:
             terms = search_query.split()
             for term in terms:
                 dsl_search = dsl_search.query(
                     "bool",
-                    must=Q("multi_match", **{"query": term})
+                    must=Q("multi_match", query=term, fields=SEARCH_FIELDS)
                 )
         else:
             dsl_search = dsl_search.sort('-date')
@@ -151,16 +160,19 @@ class ActivityIndexPage(CFGOVPage):
                 "bool",
                 should=[Q("match", **{facet: pk}) for pk in pks]
             )
+        facet_search = dsl_search.update_from_dict(FACET_DICT)
         total_results = dsl_search.count()
+        dsl_search = dsl_search[:total_results]
         response = dsl_search.execute()
         results = [
-            card_setup[str(hit.id)] for hit in response
+            card_setup[str(hit.id)] for hit in response[:total_results]
         ]
-        facet_response = {facet: getattr(
-            response.aggregations, f"{facet}_terms").buckets
+        facet_response = facet_search.execute()
+        facet_counts = {facet: getattr(
+            facet_response.aggregations, f"{facet}_terms").buckets
             for facet in FACET_LIST}
         all_facets = parse_dsl_facets(
-            all_facets, facet_response, selected_facets
+            all_facets, facet_counts, selected_facets
         )
         payload = {
             'search_query': search_query,
@@ -178,7 +190,6 @@ class ActivityIndexPage(CFGOVPage):
             )
         }
         expanded_facets = ALWAYS_EXPANDED.union(set(conditionally_expanded))
-
         payload.update({
             'expanded_facets': expanded_facets,
         })
@@ -382,11 +393,11 @@ class ActivityIndexPage(CFGOVPage):
         verbose_name = "TDP Activity search page"
 
 
-def parse_dsl_facets(all_facets, facet_response, selected_facets):
+def parse_dsl_facets(all_facets, facet_counts, selected_facets):
     for facet, facet_config in FACET_MAP:
-        returned_facet_ids = [hit['key'] for hit in facet_response[facet]]
+        returned_facet_ids = [hit['key'] for hit in facet_counts[facet]]
         is_nested = facet_config[1]
-        selections = selected_facets.get(facet, [])
+        selections = selected_facets.get(facet, '')
         if is_nested:
             for pi, parent in enumerate(all_facets[facet]):
                 if parent['id'] in selections:
