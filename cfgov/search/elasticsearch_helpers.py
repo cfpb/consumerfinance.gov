@@ -37,7 +37,7 @@ def get_synonyms():
         return []
 
 
-synonynm_filter = token_filter(
+synonym_filter = token_filter(
     'synonym_filter',
     'synonym',
     synonyms=get_synonyms()
@@ -48,7 +48,7 @@ synonym_analyzer = analyzer(
     type='custom',
     tokenizer='standard',
     filter=[
-        synonynm_filter,
+        synonym_filter,
         'lowercase'
     ])
 
