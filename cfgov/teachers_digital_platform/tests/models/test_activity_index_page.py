@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from unittest import mock
 
 from django.http import HttpRequest
@@ -130,13 +131,22 @@ class ActivitySetUpTests(TestCase):
 
     def test_facet_setup_creation(self):
         """get_activity_setup should ensure existence of a setup object."""
+        live_count = ActivityPage.objects.filter(live=True).count()
         get_activity_setup()
         self.assertTrue(ActivitySetUp.objects.exists())
         setup_obj = ActivitySetUp.objects.first()
         # number of cards should match number of live activity pages
         self.assertEqual(
             len(setup_obj.card_setup),
-            ActivityPage.objects.filter(live=True).count()
+            live_count
+        )
+        # ordered_cards should be an ordered dict of all live activities
+        self.assertTrue(
+            isinstance(setup_obj.ordered_cards, OrderedDict)
+        )
+        self.assertEqual(
+            len(setup_obj.ordered_cards),
+            live_count
         )
         # number of facets should match length of master facet list
         self.assertEqual(

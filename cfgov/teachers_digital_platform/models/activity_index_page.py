@@ -1,4 +1,5 @@
 import copy
+from collections import OrderedDict
 
 from django.contrib.postgres.fields import JSONField
 from django.core.paginator import InvalidPage, Paginator
@@ -105,7 +106,7 @@ class ActivityIndexPage(CFGOVPage):
         """Search using Elasticsearch 7 and django-elasticsearch-dsl."""
         all_facets = copy.copy(self.activity_setups.facet_setup)
         selected_facets = {}
-        card_setup = self.activity_setups.card_setup
+        card_setup = self.activity_setups.ordered_cards
         total_activities = len(card_setup)
         search_query = request.GET.get('q', '')
         facet_called = any(
@@ -476,6 +477,7 @@ class ActivitySetUp(models.Model):
     """A database cache of form setups for TDP activities."""
 
     card_setup = JSONField(blank=True, null=True)
+    card_order = JSONField(blank=True, null=True)
     facet_setup = JSONField(blank=True, null=True)
 
     def __str__(self):
@@ -505,7 +507,10 @@ class ActivitySetUp(models.Model):
             'jump_start_coalition',
             'council_for_economic_education',
         )
-        base_query = ActivityPage.objects.filter(live=True).order_by('-date')
+        base_query = ActivityPage.objects.filter(live=True).order_by(
+            '-date', 'title'
+        )
+        self.card_order = [a.pk for a in base_query]
         for activity in base_query:
             payload = {
                 'url': activity.url,
@@ -528,8 +533,14 @@ class ActivitySetUp(models.Model):
                 payload.update({
                     field: [obj.title for obj in facet_queryset]
                 })
-            _card_setup[activity.pk] = payload
+            _card_setup.update({str(activity.pk): payload})
         self.card_setup = _card_setup
+
+    @property
+    def ordered_cards(self):
+        return OrderedDict({
+            str(pk): self.card_setup[str(pk)] for pk in self.card_order
+        })
 
     def update_setups(self):
         self.update_facets()
