@@ -1,15 +1,17 @@
-var CFPBComparisonFeedback = (function() {
-    $('#feedback-container button').attr('disabled', true);
+const feedbackContainer = document.querySelector( '#feedback-container' );
+const feedbackButton = feedbackContainer.querySelector( 'button' );
+const feedbackTextarea = feedbackContainer.querySelector( 'textarea' );
+feedbackButton.setAttribute( 'disabled', 'disabled' );
+feedbackTextarea.addEventListener( 'keyup' , feedbackTextareaKeyUp );
 
-    $(document).ready(function() {
-        $('#feedback-container').on('keyup', 'textarea', function() {
-            if ( $(this).val() != "" ) {
-                $('#feedback-container button').removeAttr('disabled');            
-            }
-            else {
-                $('#feedback-container button').attr('disabled', true);
-            }
-        });
-    });
-
-})(jQuery); 
+/**
+ * Disable the submit button if there is no content in the textarea input.
+ * @param {KeyboardEvent} event - The keyup event object from the textarea.
+ */
+function feedbackTextareaKeyUp( event ) {
+    if ( event.target.value === '' ) {
+        feedbackButton.setAttribute( 'disabled', 'disabled' );
+    } else {
+        feedbackButton.removeAttribute( 'disabled' );
+    }
+}
