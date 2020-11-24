@@ -126,7 +126,7 @@ class FilterableListMixin(RoutablePageMixin):
     # Set up the form's data either with values from the GET request
     # or with defaults based on whether it's a dropdown/list or a text field
     def get_form_data(self, request_dict):
-        form_data = {'archived': 'exclude'}
+        form_data = {'archived': 'include'}
         has_active_filters = False
         for field in self.get_form_class().declared_fields:
             if field in ['categories', 'topics', 'authors', 'statuses']:

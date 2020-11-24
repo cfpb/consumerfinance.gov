@@ -7,7 +7,6 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
-  cache: true,
   parallel: true,
   extractComments: false,
   terserOptions: {
