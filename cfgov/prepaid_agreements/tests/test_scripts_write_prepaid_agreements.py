@@ -51,32 +51,32 @@ class TestViews(TestCase):
         self.path2 = 'CFPB/' + self.filename2
         self.path3 = 'CFPB/' + self.filename3
         self.agreement_old = PrepaidAgreement(
-            bulk_download_path = self.path1,
-            filename = self.filename1,
+            bulk_download_path=self.path1,
+            filename=self.filename1,
             effective_date=effective_date,
             created_time=created_date - timedelta(hours=1),
             product=self.product1,
         )
         self.agreement_old.save()
         self.agreement_older = PrepaidAgreement(
-            bulk_download_path = self.path2,
-            filename = self.filename2,
+            bulk_download_path=self.path2,
+            filename=self.filename2,
             effective_date=effective_date,
             created_time=created_date - timedelta(hours=2),
             product=self.product2,
         )
         self.agreement_older.save()
         self.agreement_new = PrepaidAgreement(
-            bulk_download_path = self.path1,
-            filename = self.filename1,
+            bulk_download_path=self.path1,
+            filename=self.filename1,
             effective_date=effective_date,
             created_time=created_date,
             product=self.product1,
         )
         self.agreement_new.save()
         self.agreement_newer = PrepaidAgreement(
-            bulk_download_path = self.path3,
-            filename = self.filename3,
+            bulk_download_path=self.path3,
+            filename=self.filename3,
             effective_date=effective_date,
             created_time=created_date + timedelta(hours=1),
             product=self.product3,
