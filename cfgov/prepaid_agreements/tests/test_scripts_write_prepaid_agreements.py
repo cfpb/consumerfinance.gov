@@ -47,26 +47,23 @@ class TestViews(TestCase):
 
         effective_date = date(month=2, day=3, year=2019)
         created_date = make_aware(datetime(month=4, day=1, year=2020))
-        self.filename1 = \
-            self.product_name1.replace(' ', '_') + '_01_04_2020.zip'
-        self.filename2 = \
-            self.product_name2.replace(' ', '_') + '_02_04_2020.zip'
-        self.filename3 = \
-            self.product_name3.replace(' ', '_') + '_03_04_2020.zip'
+        filename1 = self.product_name1.replace(' ', '_') + '_01_04_2020.zip'
+        filename2 = self.product_name2.replace(' ', '_') + '_02_04_2020.zip'
+        filename3 = self.product_name3.replace(' ', '_') + '_03_04_2020.zip'
         self.path1 = \
             self.issuer_name1 + '/' + self.product_name1 + '/20200401'
         self.path2 = \
             self.issuer_name2 + '/' + self.product_name2 + '/20200402'
         self.path3 = \
             self.issuer_name3 + '/' + self.product_name3 + '/20200403'
-        self.direct_download1 = S3_PATH + self.filename1
-        self.direct_download2 = S3_PATH + self.filename2
-        self.direct_download3 = S3_PATH + self.filename3
+        self.direct_download1 = S3_PATH + filename1
+        self.direct_download2 = S3_PATH + filename2
+        self.direct_download3 = S3_PATH + filename3
 
         self.agreement_old = PrepaidAgreement(
             compressed_files_url=self.direct_download1,
             bulk_download_path=self.path1,
-            filename=self.filename1,
+            filename=filename1,
             effective_date=effective_date,
             created_time=created_date - timedelta(hours=1),
             product=self.product1,
@@ -75,7 +72,7 @@ class TestViews(TestCase):
         self.agreement_older = PrepaidAgreement(
             compressed_files_url=self.direct_download2,
             bulk_download_path=self.path2,
-            filename=self.filename2,
+            filename=filename2,
             effective_date=effective_date,
             created_time=created_date - timedelta(hours=2),
             product=self.product2,
@@ -84,7 +81,7 @@ class TestViews(TestCase):
         self.agreement_new = PrepaidAgreement(
             compressed_files_url=self.direct_download1,
             bulk_download_path=self.path1,
-            filename=self.filename1,
+            filename=filename1,
             effective_date=effective_date,
             created_time=created_date,
             product=self.product1,
@@ -93,7 +90,7 @@ class TestViews(TestCase):
         self.agreement_newer = PrepaidAgreement(
             compressed_files_url=self.direct_download3,
             bulk_download_path=self.path3,
-            filename=self.filename3,
+            filename=filename3,
             effective_date=effective_date,
             created_time=created_date + timedelta(hours=1),
             product=self.product3,
