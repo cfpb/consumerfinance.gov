@@ -17,7 +17,7 @@
   },
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 11",
   "dependencies": {
-    "@babel/core": "7.12.7",
+    "@babel/core": "7.12.9",
     "@babel/preset-env": "7.12.7",
     "@cfpb/cfpb-atomic-component": "0.4.0",
     "@cfpb/cfpb-buttons": "0.4.0",
@@ -64,7 +64,7 @@
     "lodash.throttle": "4.1.1",
     "merge-stream": "2.0.0",
     "number-to-words": "1.2.4",
-    "postcss": "8.1.9",
+    "postcss": "8.1.10",
     "postcss-unmq": "1.0.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -96,7 +96,7 @@
     "protractor-retry": "1.2.13",
     "sauce-connect-tunnel": "0.2.1",
     "selenium-webdriver": "4.0.0-alpha.5",
-    "snyk": "1.430.2",
+    "snyk": "1.431.1",
     "through2": "4.0.2",
     "wcag": "0.3.0"
   },
