@@ -31,6 +31,6 @@ def run(*args):
         if dry_run:
             print(f'\n\nSummary: Would update {total} redirects matching {old_pattern}')
             print('run the following command to update them:')
-            print('  ./cfgov/manage.py runscript update_existing_redirects --script-args')
+            print('  ./cfgov/manage.py runscript update_existing_redirects --script-args update')
         else:
             print(f'\n\nSummary: Updated {total} redirects')
