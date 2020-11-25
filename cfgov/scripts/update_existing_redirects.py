@@ -1,7 +1,8 @@
 from wagtail.contrib.redirects.models import Redirect
 
 
-outdated_patterns = [ ('/policy-compliance/guidance', '/compliance') ]
+outdated_patterns = [('/policy-compliance/guidance', '/compliance')]
+
 
 # This script is for use on November 25, 2020, when we'll be migrating
 # cf.gov to a new IA. Delete this script after the migration is done.
@@ -15,7 +16,9 @@ def run(*args):
         dry_run = True
 
     for (old_pattern, new_pattern) in outdated_patterns:
-        matching_redirects = Redirect.objects.filter(old_path__startswith=old_pattern)
+        matching_redirects = Redirect.objects.filter(
+            old_path__startswith=old_pattern
+        )
         total = len(matching_redirects)
 
         for redirect in matching_redirects:
@@ -29,8 +32,8 @@ def run(*args):
                 redirect.save()
 
         if dry_run:
-            print(f'\n\nSummary: Would update {total} redirects matching {old_pattern}')
+            print(f'\n\nSummary: Would update {total} redirects matching {old_pattern}')  # noqa E501
             print('run the following command to update them:')
-            print('  ./cfgov/manage.py runscript update_existing_redirects --script-args update')
+            print('  ./cfgov/manage.py runscript update_existing_redirects --script-args update')  # noqa E501
         else:
             print(f'\n\nSummary: Updated {total} redirects')
