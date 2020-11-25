@@ -179,7 +179,7 @@ class AnswerPageDocumentTest(TestCase):
                 'portal_topics': self.doc.prepare_portal_topics(self.en_page),
                 'preview': '',
                 'search_tags': self.doc.prepare_search_tags(self.en_page),
-                'text': '\n\n \n\nTest English question',
+                'text': 'Test English question\n\n\n\n',
                 'url': self.doc.prepare_url(self.en_page),
             }
         )
@@ -198,7 +198,7 @@ class AnswerPageDocumentTest(TestCase):
                 'portal_topics': self.doc.prepare_portal_topics(self.es_page),
                 'preview': '',
                 'search_tags': self.doc.prepare_search_tags(self.es_page),
-                'text': '\n\n \n\nTest Spanish question',
+                'text': 'Test Spanish question\n\n\n\n',
                 'url': self.doc.prepare_url(self.es_page),
             }
         )

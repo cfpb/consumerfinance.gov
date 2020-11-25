@@ -33,7 +33,7 @@ const urlParameters = {
 
   'pelg': 'financialModel.grant_pell',
   'seog': 'financialModel.grant_seog',
-  'fedg': 'financialModel.grant_federal',
+  'fedg': 'financialModel.grant_otherFederal',
   'stag': 'financialModel.grant_state',
   'schg': 'financialModel.grant_school',
   'othg': 'financialModel.grant_other',

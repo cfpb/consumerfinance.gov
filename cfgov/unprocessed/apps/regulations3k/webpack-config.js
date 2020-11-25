@@ -22,7 +22,6 @@ const MANIFEST_DEST = `${ paths.processed }/apps/${ APP_NAME }/${ MANIFEST_FILEN
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
-  cache: true,
   parallel: true,
   extractComments: false,
   terserOptions: {
