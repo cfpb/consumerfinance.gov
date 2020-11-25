@@ -22,7 +22,7 @@ const COMMON_MODULE_CONFIG = {
     test: /\.js$/,
     /* Exclude modules from transpiling.
        The below regex will match and exclude all node modules
-       except those that start with `cf-` or `cfpb-`.
+       except those that start with `@cfpb/` or `cfpb-`.
        Regex test: https://regex101.com/r/zizz3V/8 */
     exclude: /^.*node_modules\/(?!(?:@cfpb\/.+|cfpb\-.+)).+/,
     use: {
