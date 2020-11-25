@@ -29,8 +29,8 @@ const COMMON_MODULE_CONFIG = {
     /* Exclude modules from transpiling.
        The below regex will match and exclude all node modules
        except those that start with `cf-` or `cfpb-`.
-       Regex test: https://regex101.com/r/zizz3V/7 */
-    exclude: /node_modules\/(?!(?:cf\-.+|cfpb\-.+)).+/,
+       Regex test: https://regex101.com/r/zizz3V/8 */
+    exclude: /^.*node_modules\/(?!(?:@cfpb\/.+|cfpb\-.+)).+/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
