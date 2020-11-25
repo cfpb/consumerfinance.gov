@@ -11,15 +11,15 @@ class TestImports(unittest.TestCase):
             "agreements": [
                 {
                     "agreement_id": "IFL-1",
-                    "agreements_files_location": "Bank_of_CFPB_01_01_2020.zip",
+                    "agreements_files_location": "Bank1_of_CFPB_01_01_2020.zip",
                     "created_date": "2020-01-01 12:34:56",
                     "effective_date": "01/01/2020",
-                    "path": "CFPB Bank1/Bank1_of_CFPB/20200101",
+                    "path": "CFPB Bank1/Bank1 of CFPB/20200101",
                     "product_id": "PRODUCT-1"
                 },
                 {
                     "agreement_id": "IFL-2",
-                    "agreements_files_location": "Bank_of_CFPB_02_02_2020.zip",
+                    "agreements_files_location": "Bank2_of_CFPB_02_02_2020.zip",
                     "created_date": "2020-02-02 12:34:56",
                     "effective_date": "02/02/2020",
                     "path": "CFPB Bank2/Bank2_of_CFPB/20200202",
@@ -27,23 +27,23 @@ class TestImports(unittest.TestCase):
                 },
                 {
                     "agreement_id": "IFL-3",
-                    "agreements_files_location": "Bank_of_CFPB_03_03_2020.zip",
+                    "agreements_files_location": "Bank3_of_CFPB_03_03_2020.zip",
                     "created_date": "2020-03-03 12:34:56",
                     "effective_date": "03/03/2020",
-                    "path": "CFPB Bank3/Bank3_of_CFPB/20200303",
+                    "path": "CFPB Bank3/Bank3_of CFPB/20200303",
                     "product_id": "PRODUCT-3"
                 },
                 {
                     "agreement_id": "IFL-4",
-                    "agreements_files_location": "Bank_of_CFPB_04_04_2020.zip",
+                    "agreements_files_location": "Bank4_of_CFPB_04_04_2020.zip",
                     "created_date": "2020-04-04 12:34:56",
                     "effective_date": "04/04/2020",
-                    "path": "CFPB Bank4/Bank4_of_CFPB/20200404",
+                    "path": "CFPB Bank4/Bank4 of CFPB/20200404",
                     "product_id": "PRODUCT-4"
                 },
                 {
                     "agreement_id": "IFL-5",
-                    "agreements_files_location": "Bank_of_CFPB_05_05_2020.zip",
+                    "agreements_files_location": "Bank5_of_CFPB_05_05_2020.zip",
                     "created_date": "2020-05-05 12:34:56",
                     "effective_date": "05/05/2020",
                     "path": "CFPB Bank5/Bank5_of_CFPB/20200505",
@@ -51,10 +51,10 @@ class TestImports(unittest.TestCase):
                 },
                 {
                     "agreement_id": "IFL-6",
-                    "agreements_files_location": "Bank_of_CFPB_06_06_2020.zip",
+                    "agreements_files_location": "Bank6_of_CFPB_06_06_2020.zip",
                     "created_date": "2020-06-06 12:34:56",
                     "effective_date": "06/06/2020",
-                    "path": "CFPB Bank6/Bank6 of CFPB/20200606",
+                    "path": "CFPB Bank6/Bank6_of CFPB/20200606",
                     "product_id": "PRODUCT-6"
                 }
             ],
