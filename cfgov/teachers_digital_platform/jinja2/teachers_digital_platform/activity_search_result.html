@@ -4,8 +4,8 @@
         <span class="a-date">
             Updated
             <span class="datetime">
-                <time class="datetime_date" datetime="{{ result.date.strftime("%Y-%m-%d") }}">
-                    {{ result.date.strftime("%b %d, %Y") }}
+                <time class="datetime_date" datetime="{{ result.date_attr }}">
+                    {{ result.date }}
                 </time>
             </span>
         </span>
@@ -14,7 +14,7 @@
         <span class="a-icon a-icon__large a-icon__gold a-icon__space-after">
             {{ svg_icon('star-round') }}
         </span>
-        <span class="activity_for">Ideal for: {{ result.grade_level.all() | join(', ') }}</span>
+        <span class="activity_for">Ideal for: {{ result.grade_level | join(', ') }}</span>
     </p>
     <p class="lead-paragraph u-mb30">{{ result.summary }}</p>
     <div class="activity_meta-wrapper">
@@ -22,7 +22,7 @@
             <h4 class="h5">Key information</h4>
             <div class="layout-row u-mb15">
                 <h5 class="activity_meta-key">Topic:</h5>
-                {{ result.get_topics_list() }}
+                {{ result.topic }}
             </div>
             <div class="layout-row">
                 <h5 class="activity_meta-key">Activity duration:</h5>
@@ -32,7 +32,7 @@
         <div>
             <h4 class="h5">Building block</h4>
             <ul class="m-list__unstyled">
-                {% for block in result.building_block.all() %}
+                {% for block in result.building_block %}
                     <li>
                         {% set svg_icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm353.1 537.2c0 11-8.9 21.5-19.7 23.4l-60.1 10.4c-1.1.2-2.1.3-3.2.3-6.5 24.9-16.4 48.8-29.5 71 .8.8 1.5 1.6 2.1 2.5l35.2 49.8c6.3 9 5.2 22.7-2.6 30.5l-51.2 51.2c-7.8 7.8-21.5 9-30.5 2.6l-49.8-35.2c-.9-.6-1.7-1.3-2.5-2.1-22.2 13.1-46.1 23-71 29.5 0 1.1-.1 2.1-.3 3.2l-10.4 60.1c-1.9 10.8-12.4 19.7-23.4 19.7h-72.4c-11 0-21.5-8.9-23.4-19.7L430 879.5c-.2-1.1-.3-2.1-.3-3.2-24.9-6.5-48.8-16.4-71-29.5-.8.8-1.6 1.5-2.5 2.1l-49.9 35.2c-9 6.3-22.7 5.2-30.5-2.6l-51.2-51.2c-7.8-7.8-9-21.5-2.6-30.5l35.2-49.8c.6-.9 1.3-1.7 2.1-2.5-13.1-22.2-23-46.1-29.4-71-1.1 0-2.1-.1-3.2-.3l-60.1-10.4c-10.8-1.9-19.7-12.4-19.7-23.4V570c0-11 8.9-21.5 19.7-23.4l60.1-10.4c1.1-.2 2.2-.2 3.2-.2 6.5-24.9 16.4-48.8 29.5-71-.8-.8-1.5-1.6-2.1-2.5l-35.2-49.9c-6.3-9-5.2-22.7 2.6-30.5l51.1-51.2c7.8-7.8 21.5-9 30.5-2.6l49.9 35.2c.9.6 1.7 1.3 2.5 2.1 22.2-13.1 46.1-23 71-29.5 0-1.1.1-2.1.2-3.2l10.4-60.1c1.9-10.8 12.4-19.7 23.4-19.7h72.4c11 0 21.5 8.9 23.4 19.7L570 333c.2 1.1.3 2.1.3 3.2 24.9 6.5 48.8 16.4 71 29.5.8-.8 1.6-1.5 2.5-2.1l49.8-35.2c9-6.3 22.7-5.2 30.5 2.6l51.2 51.2c7.8 7.8 9 21.5 2.6 30.5l-35.2 49.8c-.6.9-1.3 1.7-2.1 2.5 13 22.2 22.9 46.1 29.4 71 1.1 0 2.1.1 3.2.3l60.1 10.4c10.9 1.8 19.8 12.3 19.8 23.3v72.4z"/><circle cx="500" cy="606.2" r="120.2"/></svg>' %}
                         {% if block.svg_icon == "split" %}
@@ -43,7 +43,7 @@
                         <span class="a-icon a-icon__large a-icon__space-after">
                             {{ svg_icon | safe }}
                         </span>
-                        {{ block }}
+                        {{ block.title }}
                     </li>
                 {% endfor %}
             </ul>

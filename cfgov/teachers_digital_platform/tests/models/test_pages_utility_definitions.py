@@ -5,7 +5,9 @@ from django.test.client import RequestFactory
 
 from wagtail.tests.utils import WagtailTestUtils
 
-from teachers_digital_platform.models.pages import validate_results_per_page
+from teachers_digital_platform.models.activity_index_page import (
+    validate_results_per_page
+)
 
 
 class PagingTestCases(TestCase, WagtailTestUtils):
@@ -18,14 +20,16 @@ class PagingTestCases(TestCase, WagtailTestUtils):
 
     def test_validate_results_per_page_by_request_ten_is_correct(self):
         factory = RequestFactory()
-        expectedVaue = 10
-        mock_request = factory.get('/search/?q=test&results=' + str(expectedVaue))  # noqa: E501
+        expected_value = 10
+        mock_request = factory.get(
+            '/search/?q=test&results=' + str(expected_value))
         results_per_page = validate_results_per_page(mock_request)
-        self.assertEqual(results_per_page, expectedVaue)
+        self.assertEqual(results_per_page, expected_value)
 
     def test_validate_results_per_page_by_request_fifty_is_correct(self):
         factory = RequestFactory()
-        expectedVaue = 50
-        mock_request = factory.get('/search/?q=test&results=' + str(expectedVaue))  # noqa: E501
+        expected_value = 50
+        mock_request = factory.get(
+            '/search/?q=test&results=' + str(expected_value))
         results_per_page = validate_results_per_page(mock_request)
-        self.assertEqual(results_per_page, expectedVaue)
+        self.assertEqual(results_per_page, expected_value)
