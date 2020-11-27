@@ -1,10 +1,8 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
-import { updateAffordingChart, updateCostOfBorrowingChart, updateExpensesView, updateMakePlanChart, updateMaxDebtChart } from '../dispatchers/update-view.js';
 import numberToMoney from 'format-usd';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { closest } from '../../../../js/modules/util/dom-traverse';
-import { createFinancial, recalculateFinancials, updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
+import { recalculateFinancials, updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
 import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { selectorMatches } from '../util/other-utils';
