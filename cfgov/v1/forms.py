@@ -105,9 +105,9 @@ class FilterableListForm(forms.Form):
 
     archived = forms.ChoiceField(
         choices=[
-            ('exclude', 'Exclude archived items (default)'),
+            ('include', 'Show all items (default)'),
+            ('exclude', 'Exclude archived items'),
             ('only', 'Show only archived items'),
-            ('include', 'Show all items'),
         ]
     )
 

@@ -424,9 +424,6 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 # ElasticSearch 7 Configuration
-ELASTICSEARCH_DSL_AUTO_REFRESH = False
-ELASTICSEARCH_DSL_AUTOSYNC = False
-
 if os.environ.get('USE_AWS_ES', False):
     awsauth = AWS4Auth(
         os.environ.get('AWS_ES_ACCESS_KEY'),
@@ -466,6 +463,7 @@ if os.environ.get("S3_ENABLED", "False") == "True":
         AWS_S3_CUSTOM_DOMAIN = os.environ["AWS_S3_CUSTOM_DOMAIN"]
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
+
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
@@ -649,6 +647,7 @@ CSP_CONNECT_SRC = (
     "*.consumerfinance.gov",
     "*.google-analytics.com",
     "*.tiles.mapbox.com",
+    "api.mapbox.com",
     "bam.nr-data.net",
     "s3.amazonaws.com",
     "public.govdelivery.com",

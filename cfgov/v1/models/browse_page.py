@@ -28,6 +28,7 @@ class BrowsePage(CFGOVPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
+        ('simple_chart', organisms.SimpleChart()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),

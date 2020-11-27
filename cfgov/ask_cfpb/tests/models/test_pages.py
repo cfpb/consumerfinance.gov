@@ -23,8 +23,7 @@ from ask_cfpb.models.django import (
 )
 from ask_cfpb.models.pages import (
     REUSABLE_TEXT_TITLES, AnswerLandingPage, AnswerPage, ArticlePage,
-    PortalSearchPage, get_answer_preview, get_standard_text, strip_html,
-    validate_page_number
+    PortalSearchPage, get_standard_text, strip_html, validate_page_number
 )
 from ask_cfpb.models.snippets import GlossaryTerm
 from ask_cfpb.scripts.export_ask_data import (
@@ -938,8 +937,12 @@ class AnswerPageTest(TestCase):
             context.get("breadcrumb_items")[0]["title"], "Obtener respuestas"
         )
 
-    def test_get_answer_preview_word(self):
-        """Check that get_answer_preview returns truncated text, no tags."""
+    def test_answer_content_preview_word(self):
+        """answer_content_preview returns truncated text by word count
+
+        And without HTML tags.
+        """
+
         page = self.page1
         stream_data = [
             {
@@ -966,10 +969,16 @@ class AnswerPageTest(TestCase):
             },
         ]
         set_stream_data(page, "answer_content", stream_data)
-        self.assertTrue(get_answer_preview(page).endswith("word word ..."))
+        self.assertTrue(
+            page.answer_content_preview().endswith("word word ...")
+        )
 
-    def test_get_answer_preview_char(self):
-        """Check that get_answer_preview returns truncated text, no tags."""
+    def test_answer_content_preview_char(self):
+        """answer_content_preview returns truncated text by character count
+
+        And without HTML tags.
+        """
+
         page = self.page1
         stream_data = [
             {
@@ -1001,7 +1010,7 @@ class AnswerPageTest(TestCase):
             },
         ]
         set_stream_data(page, "answer_content", stream_data)
-        self.assertTrue(get_answer_preview(page).endswith(" ..."))
+        self.assertTrue(page.answer_content_preview().endswith(" ..."))
 
     def test_english_page_context(self):
         from ask_cfpb.models.pages import get_reusable_text_snippet
@@ -1017,6 +1026,50 @@ class AnswerPageTest(TestCase):
             test_context["about_us"],
             get_reusable_text_snippet("About us (For consumers)"),
         )
+
+    def test_get_meta_description(self):
+        page = self.page1
+        # Defaults to empty string
+        self.assertEqual(
+            page.get_meta_description(),
+            ""
+        )
+
+        # Second fallback is truncated answer_content text block
+        stream_data = [
+            {
+                "type": "video_player",
+                "id": "402b933b",
+                "value": {
+                    "video_url": "https://www.youtube.com/embed/wcQ1a_Gg8tI"
+                },
+            },
+            {
+                "type": "text",
+                "id": "402b933c",
+                "value": {
+                    "content": (
+                        "<p><span>"
+                        "This is more than forty words: "
+                        "word word word word word word word word word word "
+                        "word word word word word word word word word word "
+                        "word word word word word word word word word word "
+                        "word word word word word word too-many."
+                        "</span></p>"
+                    )
+                },
+            },
+        ]
+        set_stream_data(page, "answer_content", stream_data)
+        self.assertTrue(page.get_meta_description().endswith("word word ..."))
+
+        # First fallback is the short_answer
+        page.short_answer = "Test short answer"
+        self.assertEqual(page.get_meta_description(), page.short_answer)
+
+        # First choice is the search_description
+        page.search_description = "Test search description"
+        self.assertEqual(page.get_meta_description(), page.search_description)
 
     def test_english_page_sibling_url(self):
         self.assertEqual(self.page1.get_sibling_url(), self.page1_es.url)
