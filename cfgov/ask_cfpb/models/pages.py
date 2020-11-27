@@ -25,9 +25,7 @@ from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 
 from ask_cfpb.documents import AnswerPageDocument
-from ask_cfpb.models.answer_page import (
-    AnswerPage, extract_raw_text, truncate_preview
-)
+from ask_cfpb.models.answer_page import AnswerPage
 from ask_cfpb.models.search import AnswerPageSearch, AskSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
@@ -77,13 +75,6 @@ def get_reusable_text_snippet(snippet_title):
             title=snippet_title)
     except ReusableText.DoesNotExist:
         pass
-
-
-def get_answer_preview(page):
-    """Extract an answer summary for use in search result previews."""
-    raw_text = extract_raw_text(page.answer_content.stream_data)
-    full_text = strip_tags(" ".join([page.short_answer, raw_text]))
-    return truncate_preview(full_text)
 
 
 def get_portal_or_portal_search_page(portal_topic, language='en'):
@@ -511,7 +502,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
             redirect_to_page=None,
             live=True)
         answer_tuples = [
-            (page.url, page.question, get_answer_preview(page))
+            (page.url, page.question, page.answer_content_preview())
             for page in base_query if tag in page.clean_search_tags
         ]
         paginator = Paginator(answer_tuples, 20)

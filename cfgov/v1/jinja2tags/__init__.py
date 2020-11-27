@@ -67,7 +67,7 @@ def is_filter_selected(context, fieldname, value):
     ]
 
     # Dirty hack to check the default option for the `archived` filter
-    if fieldname == 'archived' and value == 'exclude':
+    if fieldname == 'archived' and value == 'include':
         return True
 
     return value in query_string_values
@@ -98,6 +98,36 @@ def render_stream_child(context, stream_child):
     return Markup(unescaped)
 
 
+def unique_id_in_context(context):
+    """Return an ID that is unique within the given context
+
+    For a given request, return a unique ID each time this method is
+    called. The goal is to generate IDs to uniquely identify elements
+    in a template that are consistent between page loads.
+
+    If the context has a request object, the generated id will increment:
+
+    >>> context = {'request': request}
+    >>> unique_id_in_context(context)  # returns 1
+    >>> unique_id_in_context(context)  # returns 2
+    >>> unique_id_in_context(context)  # returns 3
+
+    If the context lacks a request, this function will return a 14-character
+    unique alphanumeric string.
+    """
+    request = context.get('request')
+    if request:
+        attribute_name = '__last_unique_id'
+        if not hasattr(request, attribute_name):
+            setattr(request, attribute_name, 0)
+        id = getattr(request, attribute_name) + 1
+        setattr(request, attribute_name, id)
+        return id
+
+    else:
+        return get_unique_id()
+
+
 class V1Extension(Extension):
     def __init__(self, environment):
         super(V1Extension, self).__init__(environment)
@@ -118,6 +148,7 @@ class V1Extension(Extension):
             'is_report': ref.is_report,
             'is_filter_selected': contextfunction(is_filter_selected),
             'render_stream_child': contextfunction(render_stream_child),
+            'unique_id_in_context': contextfunction(unique_id_in_context),
             'app_url': app_url,
             'app_page_url': app_page_url,
         })

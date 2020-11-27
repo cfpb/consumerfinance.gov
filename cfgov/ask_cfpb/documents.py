@@ -2,7 +2,9 @@ from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
 from ask_cfpb.models.answer_page import AnswerPage
-from search.elasticsearch_helpers import label_autocomplete, synonym_analyzer
+from search.elasticsearch_helpers import (
+    environment_specific_index, label_autocomplete, synonym_analyzer
+)
 
 
 @registry.register_document
@@ -13,7 +15,7 @@ class AnswerPageDocument(Document):
     portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
     url = fields.TextField()
-    preview = fields.TextField(attr="answer_content_data")
+    preview = fields.TextField(attr="answer_content_preview")
 
     def get_queryset(self):
         query_set = super().get_queryset()
@@ -35,7 +37,7 @@ class AnswerPageDocument(Document):
         return instance.url
 
     class Index:
-        name = 'ask-cfpb'
+        name = environment_specific_index('ask-cfpb')
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
 

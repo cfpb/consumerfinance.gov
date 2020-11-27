@@ -33,31 +33,21 @@ REUSABLE_TEXT_TITLES = {
 }
 
 
-def truncate_preview(text):
-    """Limit preview text to 40 words AND to 255 characters."""
-    word_limit = 40
+def truncate_by_words_and_chars(text, word_limit=40, char_limit=255):
+    """Truncate text by whole words until it gets under the character limit.
+
+    Tries truncating by words to word_limit. If the result is not under the
+    char_limit, reduce the word_limit by 1 and try again. When it's under the
+    char_limit, return it.
+    """
+
     while word_limit:
-        test = Truncator(text).words(word_limit, truncate=' ...')
-        if len(test) <= 255:
-            return test
-        else:
-            word_limit -= 1
+        truncated = Truncator(text).words(word_limit, truncate=' ...')
 
+        if len(truncated) <= char_limit:
+            return truncated
 
-def extract_raw_text(stream_data):
-    # Extract text from stream_data, starting with the answer text.
-    text_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') == 'text'
-    ]
-    extra_chunks = [
-        block.get('value').get('content')
-        for block in stream_data
-        if block.get('type') in ['tip', 'table']
-    ]
-    chunks = text_chunks + extra_chunks
-    return " ".join(chunks)
+        word_limit -= 1
 
 
 def get_ask_breadcrumbs(language='en', portal_topic=None):
@@ -272,13 +262,50 @@ class AnswerPage(CFGOVPage):
             if sibling and sibling.live and not sibling.redirect_to_page:
                 return sibling.url
 
+    def get_meta_description(self):
+        """Determine what the page's meta and OpenGraph description should be
+
+        Checks several different possible fields in order of preference.
+        If none are found, returns an empty string, which is preferable to a
+        generic description repeated on many pages.
+
+        This method is overriding the standard one on CFGOVPage to factor in
+        Ask CFPB AnswerPage-specific fields.
+        """
+
+        preference_order = [
+            'search_description',
+            'short_answer',
+            'first_text',
+        ]
+        candidates = {}
+
+        if self.search_description:
+            candidates['search_description'] = self.search_description
+        if self.short_answer:
+            candidates['short_answer'] = strip_tags(self.short_answer)
+        if hasattr(self, 'answer_content'):
+            for block in self.answer_content:
+                if block.block_type == 'text':
+                    candidates['first_text'] = truncate_by_words_and_chars(
+                        strip_tags(block.value['content'].source),
+                        word_limit=35,
+                        char_limit=160
+                    )
+                    break
+
+        for entry in preference_order:
+            if candidates.get(entry):
+                return candidates[entry]
+
+        return ''
+
     def get_context(self, request, *args, **kwargs):
+        # self.get_meta_description() is not called here because it is called
+        # and added to the context by CFGOVPage's get_context() method.
         portal_topic = self.primary_portal_topic or self.portal_topic.first()
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.related_questions.all()
-        context['description'] = (
-            self.short_answer if self.short_answer
-            else truncate_preview(self.answer_content))
         context['last_edited'] = self.last_edited
         context['portal_page'] = get_portal_or_portal_search_page(
             portal_topic, language=self.language)
@@ -291,22 +318,30 @@ class AnswerPage(CFGOVPage):
         context['sibling_url'] = self.get_sibling_url()
         return context
 
-    def answer_content_text(self):
-        raw_text = extract_raw_text(self.answer_content.stream_data)
-        return strip_tags(" ".join([self.short_answer, raw_text]))
+    def answer_text(self):
+        short_answer_field = self._meta.get_field('short_answer')
+        value = short_answer_field.value_from_object(self)
+        short_answer = short_answer_field.get_searchable_content(value)
+        # get_serachable_content returns a single-item list for a RichTextField
+        # so we want to pop out the one item to just get a regular string
+        short_answer = short_answer.pop()
 
-    def answer_content_data(self):
-        return truncate_preview(self.answer_content_text())
+        answer_content_field = self._meta.get_field('answer_content')
+        value = answer_content_field.value_from_object(self)
+        answer_content = answer_content_field.get_searchable_content(value)
+        # get_serachable_content returns a list of subblocks for a StreamField
+        # so we want to join them together with spaces
+        answer_content = ' '.join(answer_content)
 
-    def short_answer_data(self):
-        return ' '.join(
-            RichTextField.get_searchable_content(self, self.short_answer))
+        return f"{short_answer}\n\n{answer_content}"
+
+    def answer_content_preview(self):
+        answer_text = self.answer_text()
+        return truncate_by_words_and_chars(answer_text)
 
     def text(self):
-        short_answer = self.short_answer_data()
-        answer_text = self.answer_content_text()
-        full_text = f"{short_answer}\n\n{answer_text}\n\n{self.question}"
-        return full_text
+        answer_text = self.answer_text()
+        return f"{self.question}\n\n{answer_text}"
 
     def __str__(self):
         if self.answer_base:

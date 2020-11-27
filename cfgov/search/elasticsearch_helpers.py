@@ -1,4 +1,8 @@
+from django.conf import settings
+
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
+
+from search.models import Synonym
 
 
 UNSAFE_CHARACTERS = [
@@ -25,17 +29,32 @@ label_autocomplete = analyzer(
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
 
-synonynm_filter = token_filter(
-    'synonym_filter_en',
+
+def get_synonyms():
+    try:
+        return list(Synonym.objects.values_list('synonym', flat=True))
+    except Exception:
+        return []
+
+
+synonym_filter = token_filter(
+    'synonym_filter',
     'synonym',
-    synonyms_path='/usr/share/elasticsearch/config/synonyms/synonyms_en.txt'
+    synonyms=get_synonyms()
 )
 
 synonym_analyzer = analyzer(
-    'synonym_analyzer_en',
+    'synonym_analyzer',
     type='custom',
     tokenizer='standard',
     filter=[
-        synonynm_filter,
+        synonym_filter,
         'lowercase'
     ])
+
+
+def environment_specific_index(base_name):
+    if settings.DEPLOY_ENVIRONMENT in (None, '', 'local', 'production'):
+        return base_name
+    else:
+        return f'{settings.DEPLOY_ENVIRONMENT}-{base_name}'

@@ -28,6 +28,7 @@
 {% import 'organisms/item-introduction.html' as item_introduction with context %}
 {%- import 'templates/render_block.html' as render_block with context -%}
 {%- import 'tags.html' as tags -%}
+{% import 'molecules/archived-pill.html' as archived_pill with context %}
 
 {% macro setCTAFlag( blocks ) %}
   {% for block in blocks.value %}
@@ -53,7 +54,7 @@
             {% endif %}
         {% endfor %}
 
-        {% include 'molecules/archived-pill.html' %}
+        {{ archived_pill.render( page if page else '' ) }}
         {{ item_introduction.render(data) }}
     </header>
 
