@@ -1,7 +1,4 @@
-import {
-  scrollIntoView,
-  scrollTo
-} from '../../../js/modules/util/scroll';
+import { scrollIntoView } from '../../../js/modules/util/scroll';
 import DT from '../../owning-a-home/js/form-explainer/dom-tools';
 import { assign } from '../../../js/modules/util/assign';
 import { closest } from '../../../js/modules/util/dom-traverse';
