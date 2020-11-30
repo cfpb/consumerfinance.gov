@@ -7,7 +7,7 @@ boto3==1.7.80
 # has an open-ended dependency on cryptography. cryptography 3.0 currently
 # doesn't build in our build environment. This pins the last release that
 # does until we can solve that problem.
-cryptography==2.9.2
+# cryptography==2.9.2
 dj-database-url==0.5.0
 djangorestframework==3.11.1
 django-csp==3.4
