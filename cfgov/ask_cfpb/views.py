@@ -215,7 +215,8 @@ def ask_autocomplete_es7(request, language='en'):
     if not safe_term:
         return JsonResponse([], safe=False)
     try:
-        results = AnswerPageSearch(search_term=safe_term).autocomplete()
+        results = AnswerPageSearch(
+            search_term=safe_term, language=language).autocomplete()
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)
