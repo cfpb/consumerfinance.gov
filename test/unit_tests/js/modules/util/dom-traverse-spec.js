@@ -29,38 +29,6 @@ describe( 'Dom Traverse', () => {
     } );
   } );
 
-  describe( 'getSiblings()', () => {
-    beforeAll( () => {
-      document.body.innerHTML =
-        '<div class="div-1"></div><div class="div-2"></div>';
-    } );
-
-    it( 'should return an array with a single sibling', () => {
-      const elem = document.querySelector( '.div-1' );
-      const siblings = domTraverse.getSiblings( elem, 'div' );
-
-      expect( siblings.length ).toBe( 1 );
-      expect( siblings[0].className ).toBe( 'div-2' );
-    } );
-  } );
-
-  describe( 'not()', () => {
-    beforeAll( () => {
-      document.body.innerHTML =
-        '<div class="div-1"></div><div class="div-2"></div>';
-    } );
-
-    it( 'should return an array with the item that wasn’t excluded', () => {
-      let items = document.querySelectorAll( 'div' );
-      const exclude = document.querySelector( '.div-2' );
-
-      items = domTraverse.not( items, exclude );
-
-      expect( items.length ).toBe( 1 );
-      expect( items[0].className ).toBe( 'div-1' );
-    } );
-  } );
-
   describe( 'closest()', () => {
     beforeAll( () => {
       document.body.innerHTML =

@@ -26,7 +26,8 @@ class AnswerPageSearch:
         self.suggestion = None
 
     def autocomplete(self):
-        s = AnswerPageDocument.search().query(
+        s = AnswerPageDocument.search().filter(
+            "term", language=self.language).query(
             'match', autocomplete=self.search_term)
         results = [
             {'question': result.autocomplete, 'url': result.url}
@@ -54,7 +55,8 @@ class AnswerPageSearch:
         }
 
     def suggest(self):
-        s = AnswerPageDocument.search().suggest(
+        s = AnswerPageDocument.search().filter(
+            "term", language=self.language).suggest(
             'suggestion', self.search_term, term={'field': 'text'})
         response = s.execute()
         try:

@@ -1,10 +1,7 @@
 import os
 
-import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
-
-import wagtail
 
 import dj_database_url
 from elasticsearch7 import RequestsHttpConnection
@@ -671,8 +668,8 @@ FLAGS = {
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
-    # Ask CFPB date label	
-    # When enabled, date label will be changed from 'updated' to 'last reviewed'	
+    # Ask CFPB date label
+    # When enabled, date label will be changed from 'updated' to 'last reviewed'
     "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -768,12 +765,14 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Used to enable django-elasticsearch-dsl and disable haystack in the ask_cfpb app.
+    # Enable django-elasticsearch-dsl and disable haystack in ask_cfpb.
     "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
-    # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
+    # Enable django-elasticsearch-dsl and disable haystack in regulations3k.
     "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
-    # Used to enable django-elasticsearch-dsl and disable haystack in paying_for_college app.
+    # Enable django-elasticsearch-dsl and disable haystack in paying_for_college.
     "ELASTICSEARCH_DSL_PFC": [("boolean", False)],
+    # Enable django-elasticsearch-dsl and disable haystack in teachers_digital_platform.
+    "ELASTICSEARCH_DSL_TDP": [("boolean", False)],
 }
 
 
