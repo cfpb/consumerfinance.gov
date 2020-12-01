@@ -4,7 +4,83 @@ const page = new PfcFinancialPathToGraduation();
 
 describe( 'Paying For College', () => {
   describe( 'Your Financial Path To Graduation', () => {
-    it( 'should display total costs', () => {
+    it( 'American college search should return results', () => {
+      page.open();
+      page.click( 'Get started' );
+      page.enter( 'American' );
+      page.searchResults().should( 'be.visible' );
+    } );
+    // it( 'ABC college search should contain results', () => {
+    //   page.open();
+    //   page.click( 'Get started' );
+    //   page.select( 'ABC' );
+    //   page.searchResults().should( 'be.visible' );
+    //   page.searchResults().contains( 'ABCO Technology' );
+    // } );
+    it( 'certificate should display total costs', () => {
+      page.open();
+      page.click( 'Get started' );
+      page.setText( 'search__school-input', 'Harvard' );
+      page.selectProgram( 'type', 'certificate' );
+      page.selectProgram( 'length', '1' );
+      page.selectProgram( 'rate', 'in-state' );
+      page.selectProgram( 'housing', 'on-campus' );
+      page.click( 'Next step' );
+      page.click( 'No' );
+      page.setText( 'costs__tuition-fees', '50000' );
+      page.setText( 'costs__room-board', '25000' );
+      page.setText( 'costs__otherDirect-board', '12500' );
+      page.getText( 'total_directCosts', '$87,500' );
+      page.setText( 'costs__books', '7500' );
+      page.setText( 'costs__transportation', '5000' );
+      page.setText( 'costs__other', '2500' );
+      page.getText( 'total_indirectCosts', '$15,000' );
+      page.setText( 'costs__otherIndirect', '1250' );
+      page.getText( 'total_costs', '$103,750' );
+    } );
+    it( 'associates degree should display total costs', () => {
+      page.open();
+      page.click( 'Get started' );
+      page.setText( 'search__school-input', 'Harvard' );
+      page.selectProgram( 'type', 'associates' );
+      page.selectProgram( 'length', '2' );
+      page.selectProgram( 'rate', 'out-of-state' );
+      page.selectProgram( 'housing', 'off-campus' );
+      page.click( 'Next step' );
+      page.click( 'Yes' );
+      page.setText( 'costs__tuition-fees', '100000' );
+      page.setText( 'costs__room-board', '50000' );
+      page.setText( 'costs__otherDirect-board', '25000' );
+      page.getText( 'total_directCosts', '$175,000' );
+      page.setText( 'costs__books', '12500' );
+      page.setText( 'costs__transportation', '7500' );
+      page.setText( 'costs__other', '5000' );
+      page.getText( 'total_indirectCosts', '$25,000' );
+      page.setText( 'costs__otherIndirect', '2500' );
+      page.getText( 'total_costs', '$202,500' );
+    } );
+    it( 'graduate degree should display total costs', () => {
+      page.open();
+      page.click( 'Get started' );
+      page.setText( 'search__school-input', 'Harvard' );
+      page.selectProgram( 'type', 'graduate' );
+      page.selectProgram( 'length', '4' );
+      page.selectProgram( 'rate', 'out-of-state' );
+      page.selectProgram( 'housing', 'off-campus' );
+      page.click( 'Next step' );
+      page.click( 'No' );
+      page.setText( 'costs__tuition-fees', '400000' );
+      page.setText( 'costs__room-board', '200000' );
+      page.setText( 'costs__otherDirect-board', '100000' );
+      page.getText( 'total_directCosts', '$700,000' );
+      page.setText( 'costs__books', '50000' );
+      page.setText( 'costs__transportation', '25000' );
+      page.setText( 'costs__other', '12500' );
+      page.getText( 'total_indirectCosts', '$87,500' );
+      page.setText( 'costs__otherIndirect', '10000' );
+      page.getText( 'total_costs', '$797,500' );
+    } );
+    it( 'bachelors degree should display total costs', () => {
       page.open();
       page.click( 'Get started' );
       page.setText( 'search__school-input', 'Harvard' );
@@ -17,10 +93,13 @@ describe( 'Paying For College', () => {
       page.setText( 'costs__tuition-fees', '200000' );
       page.setText( 'costs__room-board', '100000' );
       page.setText( 'costs__otherDirect-board', '50000' );
+      page.getText( 'total_directCosts', '$350,000' );
       page.setText( 'costs__books', '25000' );
       page.setText( 'costs__transportation', '12500' );
       page.setText( 'costs__other', '7500' );
+      page.getText( 'total_indirectCosts', '$45,000' );
       page.setText( 'costs__otherIndirect', '5000' );
+      page.getText( 'total_costs', '$400,000' );
       page.click( 'Next step' );
       page.setText( 'grants__pell', '90000' );
       page.setText( 'grants__seog', '80000' );
@@ -34,13 +113,17 @@ describe( 'Paying For College', () => {
       page.setText( 'scholarships__state', '20000');
       page.setText( 'scholarships__school', '30000');
       page.setText( 'scholarships__other', '40000');
+      page.getText( 'total_grantsScholarships', '$433,793' );
       page.click( 'Next step' );
       page.setText( 'workStudy__workStudy', '50000');
+      page.getText( 'total_workStud', '$50,000' )
       page.click( 'Next step' );
       // page.setText('fellowAssist__fellowship', '60000');
       // page.setText('fellowAssist__assistantship', '70000');
+      // page.getText('total_fellowAssist', '$130,000')
       // page.setText('loans__directSub', '80000');
       page.setText('loans__directUnsub', '90000');
+      page.getText( 'total_fedLoans', '$5,442' );
       page.click( 'Next step' );
       page.setText('loans__stateLoan', '100000');
       page.setText('loans__stateLoanRate', '9');
@@ -51,6 +134,7 @@ describe( 'Paying For College', () => {
       page.setText('loans__nonprofitLoan', '40000');
       page.setText('loans__nonprofitLoanRate', '3');
       page.setText('loans__nonprofitLoanFee', '2');
+      page.getText( 'total_publicLoans', '$209,99' );
       page.click( 'Next step' );
       page.setText('savings__personal', '10000');
       page.setText('savings__family', '20000');
@@ -59,6 +143,7 @@ describe( 'Paying For College', () => {
       page.setText('income__jobOnCampus', '50000');
       page.setText('income__employerAssist', '60000');
       page.setText('income_otherFunding', '70000');
+      page.getText( 'total_otherResources', '$280,000' );
       page.click( 'Next step' );
       page.click( 'Next step' );
       page.click( 'Next step' );
