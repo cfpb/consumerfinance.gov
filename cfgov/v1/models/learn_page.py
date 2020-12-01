@@ -25,7 +25,7 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
-from v1.util.ref import enforcement_statuses, institution_types
+from v1.util.ref import enforcement_statuses, institution_types, final_disposition_types
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -159,6 +159,28 @@ class DocumentDetailPage(AbstractFilterPage):
     ]
 
 
+class EnforcementActionMetadata(models.Model):
+    final_disposition_name = models.CharField(max_length=150)
+    final_disposition_type = models.CharField(max_length=50, choices=final_disposition_types)
+    institution_type = models.CharField(max_length=50, choices=institution_types)
+    final_order_date = models.DateField(null=True, blank=True)
+    dismissal_date = models.DateField(null=True, blank=True)
+    settled = models.BooleanField(
+        "Settled",
+        default=False,
+        blank=True,
+        help_text='Check if settled, leave blank if contested.'
+    )
+#    court = models.CharField(default='', max_length=150, blank=True)
+#    docket_number = models.CharField(max_length=50)
+#    status = models.CharField(max_length=50, choices=enforcement_statuses)
+
+    action = ParentalKey('v1.EnforcementActionPage',
+                         on_delete=models.CASCADE,
+                         related_name='enforcement_metadata')
+
+
+# Will exist until can be sourced from enforce db
 class EnforcementActionStatus(models.Model):
     institution = models.CharField(max_length=200, blank=True)
     status = models.CharField(max_length=50, choices=enforcement_statuses)
@@ -167,18 +189,12 @@ class EnforcementActionStatus(models.Model):
                          related_name='statuses')
 
 
+# Will exist until can be sourced from enforce db
 class EnforcementActionDocket(models.Model):
     docket_number = models.CharField(max_length=50)
     action = ParentalKey('v1.EnforcementActionPage',
                          on_delete=models.CASCADE,
                          related_name='docket_numbers')
-
-
-class EnforcementActionInstitutionType(models.Model):
-    institution_type = models.CharField(max_length=50, choices=institution_types)
-    action = ParentalKey('v1.EnforcementActionPage',
-                         on_delete=models.CASCADE,
-                         related_name='institution_types')
 
 
 class EnforcementActionPage(AbstractFilterPage):
@@ -187,14 +203,6 @@ class EnforcementActionPage(AbstractFilterPage):
         max_length=100
     )
     court = models.CharField(default='', max_length=150, blank=True)
-
-    settled = models.BooleanField(
-        "Settled",
-        default=False,
-        blank=True,
-        help_text='Check if settled, leave blank if contested.'
-    )
-
 
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
@@ -212,30 +220,15 @@ class EnforcementActionPage(AbstractFilterPage):
     ]
 
     metadata_panels = [
-        MultiFieldPanel([
-            FieldPanel('sidebar_header'),
-            FieldPanel('court'),
-            FieldPanel('settled'),
-            FieldPanel('date_filed'),
-            FieldPanel('tags', 'Tags'),
-        ], heading='Basic Metadata'),
-        MultiFieldPanel([
-            InlinePanel('institution_types', label="Institution Type", min_num=1),
-        ], heading='Institution Type'),
-        MultiFieldPanel([
-            InlinePanel(
-                'docket_numbers',
-                label="Docket Number",
-                min_num=1
-            ),
-        ], heading='Docket Number'),
-        MultiFieldPanel([
-            InlinePanel('statuses', label="Enforcement Status", min_num=1),
-        ], heading='Enforcement Status'),
-        MultiFieldPanel([
-            InlinePanel('categories', label="Categories",
-                        min_num=1, max_num=2),
-        ], heading='Categories'),
+        InlinePanel(
+          'enforcement_metadata',
+          label='Final Disposition',
+          min_num=1
+        ),
+        InlinePanel('docket_numbers', label="Docket Number", min_num=1),
+        InlinePanel('statuses', label="Enforcement Status", min_num=1),
+        FieldPanel('tags', 'Tags'),
+        InlinePanel('categories', label="Categories", min_num=1, max_num=2)
     ]
 
     settings_panels = [
