@@ -18,8 +18,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import Orderable, Page
-from wagtail.search import index
+from wagtail.core.models import Orderable
 
 from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
@@ -638,10 +637,6 @@ class ArticlePage(CFGOVPage):
     ], blank=True)
 
     sidebar_panels = [StreamFieldPanel('sidebar'), ]
-
-    search_fields = Page.search_fields + [
-        index.SearchField('title'),
-    ]
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
