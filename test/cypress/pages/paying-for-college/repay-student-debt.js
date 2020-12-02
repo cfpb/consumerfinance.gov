@@ -4,12 +4,19 @@ export class PfcRepayStudentDebt {
     cy.visit( '/paying-for-college/repay-student-debt/' );
   }
 
-  selectQuestion( questionNumber ) {
-    const id = `#q${ questionNumber }`;
-    return cy.get( id );
+  selectQuestion( id, question ) {
+    return cy.get( `#q${ id }` ).contains( question );
   }
 
   click( name ) {
     cy.get( '.btn' ).contains( name ).click( { force: true } );
+  }
+
+  checkResponse( value ) {
+    return cy.get( '.ds-response-container' ).contains( value );
+  }
+
+  clickResponse( id, name) {
+    cy.get( `#q${ id }` ).contains( name ).click( { force: true } );
   }
 }
