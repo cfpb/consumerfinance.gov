@@ -34,9 +34,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Make sure we have gettext installed for the translation validation
-      - run: |
-          sudo apt-get install gettext
+      - name: Install gettext for translation validation
+        if: matrix.toxenv == 'validate-translations'
+        run: sudo apt-get install gettext
 
       - name: Set up Python
         uses: actions/setup-python@v1
