@@ -128,8 +128,12 @@ const updateSchoolData = function( iped ) {
         }
 
         // Take only the top 3 programs
-        const topThreeArr = schoolModel.values.programsPopular.slice( 0, 3 );
-        schoolModel.values.programsTopThree = topThreeArr.join( ', ' );
+        const programsPopular = schoolModel.values.programsPopular;
+        schoolModel.values.programsTopThree = '';
+        if ( programsPopular !== null ) {
+          topThreeArr = programsPopular.slice( 0, 3 );
+          schoolModel.values.programsTopThree = topThreeArr.join( ', ' );
+        }
 
         // add the full state name to the schoolModel
         schoolModel.values.stateName = getStateByCode( schoolModel.values.state );
@@ -137,9 +141,11 @@ const updateSchoolData = function( iped ) {
         // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
 
-        // Update expenses by region
-        document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
-        updateRegion( schoolModel.values.region );
+        // Update expenses by 
+        if ( schoolModel.values.hasOwnProperty( 'region' ) ) {
+          document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
+          updateRegion( schoolModel.values.region );
+        }
 
         updateSchoolView();
         updateUrlQueryString();
