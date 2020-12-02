@@ -68,7 +68,7 @@ class AnswerPageSearch:
                 'suggestion': None,
                 'results': self.results
             }
-   
+
         search = self.base_query or AnswerPageDocument.search()
         suggest_results = search.query(
             "match", text=self.suggestion).filter(
