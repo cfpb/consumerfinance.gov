@@ -116,11 +116,11 @@ describe( 'Paying For College', () => {
       page.getText( 'total_grantsScholarships', '$433,793' );
       page.click( 'Next step' );
       page.setText( 'workStudy__workStudy', '50000');
-      page.getText( 'total_workStud', '$50,000' )
+      page.getText( 'total_workStud', '$50,000' );
       page.click( 'Next step' );
       // page.setText('fellowAssist__fellowship', '60000');
       // page.setText('fellowAssist__assistantship', '70000');
-      // page.getText('total_fellowAssist', '$130,000')
+      // page.getText('total_fellowAssist', '$130,000');
       // page.setText('loans__directSub', '80000');
       page.setText('loans__directUnsub', '90000');
       page.getText( 'total_fedLoans', '$5,442' );
