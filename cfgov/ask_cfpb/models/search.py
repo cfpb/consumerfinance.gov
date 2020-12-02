@@ -62,15 +62,13 @@ class AnswerPageSearch:
         try:
             self.suggestion = response.suggest.suggestion[0].options[0].text
         except IndexError:
-            self.suggestion = self.search_term
-
-        # No Suggestions Found
-        if self.suggestion == self.search_term:
+            # No Suggestions Found
             return {
                 'search_term': self.search_term,
                 'suggestion': None,
                 'results': self.results
             }
+   
         search = self.base_query or AnswerPageDocument.search()
         suggest_results = search.query(
             "match", text=self.suggestion).filter(
