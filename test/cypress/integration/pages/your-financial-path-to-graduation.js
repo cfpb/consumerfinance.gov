@@ -17,7 +17,7 @@ describe( 'Paying For College', () => {
     //   page.searchResults().should( 'be.visible' );
     //   page.searchResults().contains( 'ABCO Technology' );
     // } );
-    it( 'certificate should display total costs', () => {
+    it( 'certificate should display total_costs', () => {
       page.open();
       page.click( 'Get started' );
       page.setText( 'search__school-input', 'Harvard' );
@@ -38,7 +38,7 @@ describe( 'Paying For College', () => {
       page.setText( 'costs__otherIndirect', '1250' );
       page.getText( 'total_costs', '$103,750' );
     } );
-    it( 'associates degree should display total costs', () => {
+    it( 'associates degree should display total_costs', () => {
       page.open();
       page.click( 'Get started' );
       page.setText( 'search__school-input', 'Harvard' );
@@ -59,7 +59,7 @@ describe( 'Paying For College', () => {
       page.setText( 'costs__otherIndirect', '2500' );
       page.getText( 'total_costs', '$202,500' );
     } );
-    it( 'graduate degree should display total costs', () => {
+    it( 'graduate degree should display total_costs', () => {
       page.open();
       page.click( 'Get started' );
       page.setText( 'search__school-input', 'Harvard' );
@@ -80,7 +80,7 @@ describe( 'Paying For College', () => {
       page.setText( 'costs__otherIndirect', '10000' );
       page.getText( 'total_costs', '$797,500' );
     } );
-    it( 'bachelors degree should display total costs', () => {
+    it( 'bachelors degree should display total_costs', () => {
       page.open();
       page.click( 'Get started' );
       page.setText( 'search__school-input', 'Harvard' );
