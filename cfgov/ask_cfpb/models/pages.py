@@ -360,7 +360,9 @@ class PortalSearchPage(
         context = self.get_context(request)
         search_term = request.GET.get('search_term', '').strip()
         search = AnswerPageSearch(
-            search_term=search_term, base_query=self.query_base)
+            search_term=search_term,
+            base_query=self.query_base,
+            language=self.language)
         response = search.search()
         if not response['results']:
             response = search.suggest()
