@@ -48,10 +48,6 @@ export class PfcFinancialPathToGraduation {
     cy.get( `#${ name }` ).type( value );
   }
 
-  getText( name, value ) {
-    return cy.get( '.financial-item_value' ).contains( value );
-  }
-
   selectProgram( program, name ) {
     cy.get( `#program-${ program }-radio_${ name }` ).check( { force: true } );
   }
