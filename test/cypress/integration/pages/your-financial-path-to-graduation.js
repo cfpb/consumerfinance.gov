@@ -30,13 +30,15 @@ describe( 'Paying For College', () => {
       page.setText( 'costs__tuition-fees', '50000' );
       page.setText( 'costs__room-board', '25000' );
       page.setText( 'costs__otherDirect-board', '12500' );
-      page.getText( 'total_directCosts', '$87,500' );
+      cy.get( '[data-financial-item="total_directCosts"]' ).should( 'contain', '$87,500' );
       page.setText( 'costs__books', '7500' );
       page.setText( 'costs__transportation', '5000' );
       page.setText( 'costs__other', '2500' );
       page.getText( 'total_indirectCosts', '$15,000' );
       page.setText( 'costs__otherIndirect', '1250' );
-      page.getText( 'total_costs', '$103,750' );
+      cy.get( '[data-financial-item="total_costs"]' ).each( el => {
+        cy.wrap( el ).should( 'contain', '$103,750' );
+      } );
     } );
     it( 'associates degree should display total_costs', () => {
       page.open();
