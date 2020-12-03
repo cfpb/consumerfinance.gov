@@ -67,7 +67,7 @@
                 {% if aria_group_title %}
                 aria-labelledby="{{ aria_group_title | slugify ~ '-menu' }}"
                 {% elif nav_title %}
-                aria-label="{{ nav_title | safe }}"
+                title="{{ nav_title | safe }}"
                 {% endif %}>
                 {% if nav_depth == 1 -%}
                     {% set complaint_url = '/es/enviar-una-queja/' if language == 'es' else '/complaint/' %}
