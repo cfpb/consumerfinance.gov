@@ -1,9 +1,5 @@
 export class PfcChooseStudentLoan {
 
-  open() {
-    cy.visit( '/paying-for-college/choose-a-student-loan/' );
-  }
-
   openOption( name ) {
     cy.visit( `/paying-for-college/choose-a-student-loan/#${ name }` );
   }
