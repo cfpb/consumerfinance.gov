@@ -133,6 +133,8 @@ class TestImports(unittest.TestCase):
                 }
             ]
         }
-        import_products_data(data['products'])
+        imported_products = import_products_data(data['products'])
+        self.assertEqual(imported_products, ['1', '2', '3', '4', '5', '6'])
 
-        import_agreements_data(data['agreements'])
+        imported_agreements = import_agreements_data(data['agreements'])
+        self.assertEqual(imported_agreements, None)
