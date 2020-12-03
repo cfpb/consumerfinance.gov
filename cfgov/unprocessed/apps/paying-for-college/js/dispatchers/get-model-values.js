@@ -59,7 +59,7 @@ function getFinancialValue( name ) {
  * @returns {array} an arry of objects containing program data
  */
 function getProgramList( level ) {
-  return schoolModel.getAlphbeticalProgramList( level );
+  return schoolModel.getAlphabeticalProgramList( level );
 }
 
 /**
