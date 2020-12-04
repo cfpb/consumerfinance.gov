@@ -415,43 +415,6 @@ class SidebarContactInfo(MainContactInfo):
         template = '_includes/organisms/sidebar-contact-info.html'
 
 
-class BureauStructurePosition(blocks.StructBlock):
-    name = blocks.CharBlock()
-    title = blocks.TextBlock(required=False)
-
-
-class BureauStructureOffice(blocks.StructBlock):
-    name = blocks.CharBlock()
-    leads = blocks.ListBlock(BureauStructurePosition())
-
-
-class BureauStructureOffices(BureauStructureOffice):
-    offices = blocks.ListBlock(BureauStructureOffice())
-
-
-class BureauStructureDivision(BureauStructureOffices):
-    overview_page = blocks.CharBlock()
-
-
-class BureauStructure(blocks.StructBlock):
-    last_updated_date = blocks.DateBlock(required=False)
-    download_image = DocumentChooserBlock(icon='image', required=False)
-    director = blocks.CharBlock()
-    divisions = blocks.ListBlock(BureauStructureDivision())
-    office_of_the_director = blocks.ListBlock(
-        BureauStructureOffices(),
-        label='Office of the Director'
-    )
-
-    class Meta:
-        icon = None
-        template = '_includes/organisms/bureau-structure.html'
-        icon = "table"
-
-    class Media:
-        js = ['bureau-structure.js']
-
-
 class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
     def __init__(self, table_options=None, attrs=None):
         super(RichTextTableInput, self).__init__(attrs=attrs)
