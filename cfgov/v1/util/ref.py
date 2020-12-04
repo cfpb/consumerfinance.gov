@@ -163,12 +163,6 @@ institution_types = [
     ('Individual', 'Individual')
 ]
 
-final_disposition_types = [
-    ('final-order', 'Final Order'),
-    ('dismissal', 'Dismissal'),
-    ('pending', 'Pending Litigation')
-]
-
 
 def get_appropriate_categories(specific_categories, page_type):
     """ An array of specific categories is provided from whatever

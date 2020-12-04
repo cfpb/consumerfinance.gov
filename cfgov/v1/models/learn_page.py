@@ -25,7 +25,7 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
-from v1.util.ref import enforcement_statuses, institution_types, final_disposition_types
+from v1.util.ref import enforcement_statuses, institution_types
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -159,10 +159,13 @@ class DocumentDetailPage(AbstractFilterPage):
     ]
 
 
-class EnforcementActionMetadata(models.Model):
-    final_disposition_name = models.CharField(max_length=150)
-    final_disposition_type = models.CharField(max_length=50, choices=final_disposition_types)
+class EnforcementActionDisposition(models.Model):
+    name = models.CharField(max_length=150)
+    status = models.CharField(max_length=50, choices=enforcement_statuses)
     institution_type = models.CharField(max_length=50, choices=institution_types)
+    total_consumer_relief = models.DecimalField(decimal_places=2, max_digits=13)
+    civil_money_penalties = models.DecimalField(decimal_places=2, max_digits=13)
+    date_filed = models.DateField(null=True, blank=True)
     final_order_date = models.DateField(null=True, blank=True)
     dismissal_date = models.DateField(null=True, blank=True)
     settled = models.BooleanField(
@@ -173,11 +176,10 @@ class EnforcementActionMetadata(models.Model):
     )
 #    court = models.CharField(default='', max_length=150, blank=True)
 #    docket_number = models.CharField(max_length=50)
-#    status = models.CharField(max_length=50, choices=enforcement_statuses)
 
     action = ParentalKey('v1.EnforcementActionPage',
                          on_delete=models.CASCADE,
-                         related_name='enforcement_metadata')
+                         related_name='enforcement_disposition')
 
 
 # Will exist until can be sourced from enforce db
@@ -221,10 +223,11 @@ class EnforcementActionPage(AbstractFilterPage):
 
     metadata_panels = [
         InlinePanel(
-          'enforcement_metadata',
+          'enforcement_disposition',
           label='Final Disposition',
           min_num=1
         ),
+        FieldPanel('court'),
         InlinePanel('docket_numbers', label="Docket Number", min_num=1),
         InlinePanel('statuses', label="Enforcement Status", min_num=1),
         FieldPanel('tags', 'Tags'),
