@@ -16,10 +16,7 @@
             </div>
         {% endif %}
 
-        {% block above_login %}
-            <p>This is a Consumer Financial Protection Bureau (CFPB) information system. The CFPB is an independent agency of the United States Government. CFPB information systems are provided for the processing of official information only. Unauthorized or improper use of this system may result in administrative action, as well as civil and criminal penalties.</p>
-            <p>Because this is a CFPB information system, you have no reasonable expectation of privacy regarding any communication or data, transiting or stored, on this information system. All data contained in CFPB information systems is owned by the CFPB, and your use of the CFPB information system serves as your consent to your usage being monitored, intercepted, recorded, read, copied, captured, or otherwise audited in any manner by authorized personnel, including, but not limited to, employees, contractors, and/or agents of the United States Government.</p>
-        {% endblock %}
+        {% block above_login %}{% endblock %}
 
         <form action="{% url 'cfpb_login' %}" method="post" autocomplete="off" novalidate>
             {% block login_form %}
@@ -47,6 +44,9 @@
                             {{ form.password }}
                         </div>
                     </div>
+                    {% if show_password_reset %}
+                        <p class="help"><a href="{% url 'wagtailadmin_password_reset' %}" aria-label="{% trans 'Reset your password' %}">{% trans "Forgotten it?" %}</a></p>
+                    {% endif %}
                 </li>
 
                 {% block extra_fields %}
@@ -71,18 +71,17 @@
                 {% endblock %}
                 <li class="submit">
                     {% block submit_buttons %}
-                    <button type="submit" class="button button-longrunning" data-clicked-text="{% trans 'Signing in…' %}">{% icon name="spinner" %}<em>{% trans 'Sign in' %}</em></button>
+                    <button type="submit" class="button button-longrunning" data-clicked-text="{% trans 'Signing in…' %}">{% icon name="spinner" %}<em>{% trans 'Accept and sign in' %}</em></button>
                     {% endblock %}
                 </li>
             </ul>
-
-            {% if show_password_reset %}
-                <p class="help"><a href="{% url 'wagtailadmin_password_reset' %}" aria-label="{% trans 'Reset your password' %}">{% trans "Forgotten it?" %}</a></p>
-            {% endif %}
         {% endblock %}
         </form>
 
-        {% block below_login %}{% endblock %}
+        {% block below_login %}
+            <p>This is a Consumer Financial Protection Bureau (CFPB) information system. The CFPB is an independent agency of the United States Government. CFPB information systems are provided for the processing of official information only. Unauthorized or improper use of this system may result in administrative action, as well as civil and criminal penalties.</p>
+            <p>Because this is a CFPB information system, you have no reasonable expectation of privacy regarding any communication or data, transiting or stored, on this information system. All data contained in CFPB information systems is owned by the CFPB, and your use of the CFPB information system serves as your consent to your usage being monitored, intercepted, recorded, read, copied, captured, or otherwise audited in any manner by authorized personnel, including, but not limited to, employees, contractors, and/or agents of the United States Government.</p>
+        {% endblock %}
 
     </main>
 {% endblock %}
