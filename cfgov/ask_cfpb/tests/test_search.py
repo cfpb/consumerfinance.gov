@@ -465,6 +465,18 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(mock_autocomplete.call_count, 1)
         self.assertEqual(result.status_code, 200)
 
+    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
+    @mock.patch.object(AnswerPageDocument, 'search')
+    def test_ask_suggest_no_suggestions(self, mock_search):
+        term = 'zelle'
+        mock_response = mock.MagicMock()
+        mock_response.suggest.suggestion.__getitem__.side_effect = IndexError
+        mock_search().filter().suggest() \
+            .execute.return_value = mock_response
+        answer_search = AnswerPageSearch(search_term=term)
+        response = answer_search.suggest()
+        self.assertEqual(response.get('suggestion'), None)
+
 
 class RedirectAskSearchTestCase(TestCase):
     @mock.patch("ask_cfpb.views.redirect_ask_search")
