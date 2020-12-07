@@ -136,7 +136,7 @@ describe( 'Paying For College', () => {
       page.click( 'Next step' );
       page.actionPlan( 'put-into-action' );
       page.click( 'Next step' );
-  } );
+    } );
     it( 'bachelors degree should display total_costs', () => {
       page.open();
       page.click( 'Get started' );
