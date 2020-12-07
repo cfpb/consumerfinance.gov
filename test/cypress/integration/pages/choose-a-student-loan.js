@@ -16,7 +16,7 @@ describe( 'Paying for College', () => {
       page.selectOption( 'What happened to Stafford Loans?' );
       page.closeOption( 'These are now called Federal Direct Loans' );
     } );
-     it( 'should display your grants and federal loans are not enough', () => {
+    it( 'should display your grants and federal loans are not enough', () => {
       page.openOption( 'o2' );
       page.expandOption( 'Federal Loan Options' );
       cy.get( '#FederalLoanOptions' ).should( 'be.visible' );
