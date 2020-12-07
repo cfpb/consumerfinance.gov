@@ -1,9 +1,5 @@
 export class PfcManageCollegeMoney {
 
-  open() {
-    cy.visit( '/paying-for-college/manage-your-college-money/' );
-  }
-
   openOption( name ) {
     cy.visit( `/paying-for-college/manage-your-college-money/#${ name }` );
   }
