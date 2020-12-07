@@ -104,7 +104,6 @@ def editor_js():
 @hooks.register('insert_editor_css')
 def editor_css():
     css_files = [
-        'css/bureau-structure.css',
         'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
