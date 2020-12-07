@@ -205,7 +205,7 @@ If you'd like to audit a specific page, use `gulp audit:a11y`:
   3. Run `gulp audit:a11y` to run an audit on the homepage.
   4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
      For example, `gulp audit:a11y --u=contact-us`
-     or `gulp audit:a11y --u=the-bureau/bureau-structure/`.
+     or `gulp audit:a11y --u=about-us/blog/`.
 
 ## Source code linting
 
