@@ -40,8 +40,8 @@ const schoolModel = {
    */
   createProgramLists: function() {
     schoolModel.values.programList = {};
-    if ( schoolModel.values.hasOwnProperty( 'programCodes' ) 
-            && schoolModel.values.programCodes !== null ) {
+    if ( schoolModel.values.hasOwnProperty( 'programCodes' ) &&
+            schoolModel.values.programCodes !== null ) {
       const programCodes = schoolModel.values.programCodes;
       for ( const key in programCodes ) {
         schoolModel.values.programList[key] = {};

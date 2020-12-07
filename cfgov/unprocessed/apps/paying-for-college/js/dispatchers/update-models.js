@@ -131,7 +131,7 @@ const updateSchoolData = function( iped ) {
         const programsPopular = schoolModel.values.programsPopular;
         schoolModel.values.programsTopThree = '';
         if ( programsPopular !== null ) {
-          topThreeArr = programsPopular.slice( 0, 3 );
+          const topThreeArr = programsPopular.slice( 0, 3 );
           schoolModel.values.programsTopThree = topThreeArr.join( ', ' );
         }
 
@@ -141,7 +141,7 @@ const updateSchoolData = function( iped ) {
         // Some values must migrate to the financial model
         financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
 
-        // Update expenses by 
+        // Update expenses by
         if ( schoolModel.values.hasOwnProperty( 'region' ) ) {
           document.querySelector( '#expenses__region' ).value = schoolModel.values.region;
           updateRegion( schoolModel.values.region );
