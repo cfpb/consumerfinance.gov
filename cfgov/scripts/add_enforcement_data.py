@@ -63,8 +63,15 @@ def add_counts(data_file='./cfgov/scripts/pea_counts.csv'):
 
         for fields in split:
             settled, institution_type, url = strip_fields(fields, 2, 3, 5)
+            if 'Individual' in institution_type:
+                it = 'Individual'
+            elif 'Non-Bank' in institution_type:
+                it = 'Non-Bank'
+            else:
+                it = 'Bank'
             o = {
                     'settled': True if settled == 'Settled' else False,
+                    'institution_type': it
                 }
             try:
                 cdata[url].append(o)
@@ -78,10 +85,13 @@ def run():
     add_relief()
 
     for url in rdata:
-        if len(cdata[url]) != len(rdata[url]):
-            continue
-        for i in range(len(cdata[url])):
-            rdata[url][i]['settled'] = cdata[url][i]['settled']
+        for i in range(len(rdata[url])):
+            if len(cdata[url]) > i:
+                c_index = i
+            else:
+                c_index = 0
+            rdata[url][i]['settled'] = cdata[url][c_index]['settled']
+            rdata[url][i]['institution_type'] = cdata[url][c_index]['institution_type']
             
     for url in rdata:
         for disp in rdata[url]:

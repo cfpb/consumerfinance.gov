@@ -20,76 +20,13 @@
    ========================================================================== #}
 
 {% macro render() %}
-
 <div class="m-related-metadata block block__flush-top">
     <header class="m-slug-header">
         <h2 class="a-heading">
-            {{ page.sidebar_header }}
+          Action Details
         </h2>
     </header>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Category
-        </h3>
-        {{_categories(page.categories)}}
-    </div>
-    {% if page.court %}
-        <div class="m-related-metadata_item-container">
-            <h3 class="h4">
-              Court
-            </h3>
-            {{_text(page.court)}}
-        </div>
-    {% endif %}
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Institution type
-        </h3>
-        {% for institution_type in page.institution_types.all() %}
-            <div>
-                {{_text(institution_type.get_institution_type_display())}}
-            </div>
-        {% endfor %}
-    </div>
-    <div class="m-related-metadata_item-container m-related-metadata_status">
-        <h3 class="h4">
-          Status
-        </h3>
-        {% for action_status in page.statuses.all() %}
-            <div>
-                <h6>{{_text(action_status.institution)}}</h6>
-                {{_text(action_status.get_status_display())}}
-            </div>
-        {% endfor %}
-        <a
-          class="status-definitions"
-          href="/enforcement/actions/enforcement-action-definitions/"
-          target="_blank"
-          rel="noopener referrer"
-        >See status definitions</a>
-    </div>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Docket number
-        </h3>
-        {% for docket in page.docket_numbers.all() %}
-            <p>{{_text(docket.docket_number)}}</p>
-        {% endfor %}
-    </div>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Topics
-        </h3>
-        {{_topics(page.tags)}}
-    </div>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Date filed
-        </h3>
-        {% if page.date_filed %}
-            {{_date(page.date_filed)}}
-        {% endif %}
-    </div>
+    {{_dispositions(page.enforcement_disposition.all())}}
 </div>
 {% endmacro %}
 
@@ -166,6 +103,93 @@
 
 {% macro _text(text) %}
     {{ text | safe }}
+{% endmacro %}
+
+{# ==========================================================================
+
+   _dispositions(dispositions)
+
+   ==========================================================================
+
+   Description:
+
+   Renders metadata side based on list of dispositions
+
+   dispositions: List of dispositions associated with an enforcement page
+
+   ========================================================================== #}
+{% macro _dispositions(dispositions) %}
+    <div class="m-related-metadata_item-container">
+        <h3 class="h4">
+          Forum
+        </h3>
+        {{_categories(page.categories)}}
+    </div>
+    {% if page.court %}
+        <div class="m-related-metadata_item-container">
+            <h3 class="h4">
+              Court
+            </h3>
+            {{_text(page.court)}}
+        </div>
+    {% endif %}
+    <div class="m-related-metadata_item-container">
+        <h3 class="h4">
+          Docket number
+        </h3>
+        {% for docket in page.docket_numbers.all() %}
+            <p>{{_text(docket.docket_number)}}</p>
+        {% endfor %}
+    </div>
+    <div class="m-related-metadata_item-container">
+        <h3 class="h4">
+          Initial filing date
+        </h3>
+        {% if page.date_filed %}
+            {{_date(page.date_filed)}}
+        {% endif %}
+    </div>
+    <div class="m-related-metadata_item-container m-related-metadata_status">
+        <h3 class="h4">
+          Status
+        </h3>
+        {% for action_status in page.statuses.all() %}
+            <div>
+                <h6>{{_text(action_status.institution)}}</h6>
+                {{_text(action_status.get_status_display())}}
+            </div>
+        {% endfor %}
+        <a
+          class="status-definitions"
+          href="/enforcement/actions/enforcement-action-definitions/"
+          target="_blank"
+          rel="noopener referrer"
+        >See status definitions</a>
+    </div>
+    <div class="m-related-metadata_item-container">
+        <h3 class="h4">
+          Institution type
+        </h3>
+        {#% for disposition in dispositions %#}
+        <div>
+          {{dispositions[0].get_institution_type_display()}}
+        </div>
+        {#% endfor %#}
+    </div>
+    <div class="m-related-metadata_item-container">
+        <h3 class="h4">
+          Total consumer relief
+        </h3>
+        <div>
+          ${{'{:,}'.format(dispositions|sum(attribute='total_consumer_relief'))}}
+        </div>
+    </div>
+    <div class="m-related-metadata_item-container">
+        <h3 class="h4">
+          Topics
+        </h3>
+        {{_topics(page.tags)}}
+    </div>
 {% endmacro %}
 
 {# ==========================================================================
