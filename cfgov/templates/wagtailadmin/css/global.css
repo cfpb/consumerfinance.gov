@@ -42,7 +42,7 @@ body:before {
 [data-env="dev3"]:before,
 [data-env="dev4"]:before,
 [data-env="dev5"]:before,
-[data-env^="cfgov-"] /* Dev Docker stacks */ {
+[data-env^="cfgov-"]:before /* Dev Docker stacks */ {
     background-color: #e9b04d; /* Orange */
     color: #000;
 }
