@@ -162,9 +162,18 @@ class DocumentDetailPage(AbstractFilterPage):
 class EnforcementActionDisposition(models.Model):
     name = models.CharField(max_length=150)
     status = models.CharField(max_length=50, choices=enforcement_statuses)
-    institution_type = models.CharField(max_length=50, choices=institution_types)
-    total_consumer_relief = models.DecimalField(decimal_places=2, max_digits=13)
-    civil_money_penalties = models.DecimalField(decimal_places=2, max_digits=13)
+    institution_type = models.CharField(
+        max_length=50,
+        choices=institution_types
+    )
+    total_consumer_relief = models.DecimalField(
+        decimal_places=2,
+        max_digits=13
+    )
+    civil_money_penalties = models.DecimalField(
+        decimal_places=2,
+        max_digits=13
+    )
     date_filed = models.DateField(null=True, blank=True)
     final_order_date = models.DateField(null=True, blank=True)
     dismissal_date = models.DateField(null=True, blank=True)
@@ -223,9 +232,9 @@ class EnforcementActionPage(AbstractFilterPage):
 
     metadata_panels = [
         InlinePanel(
-          'enforcement_disposition',
-          label='Final Disposition',
-          min_num=1
+            'enforcement_disposition',
+            label='Final Disposition',
+            min_num=1
         ),
         FieldPanel('court'),
         InlinePanel('docket_numbers', label="Docket Number", min_num=1),
