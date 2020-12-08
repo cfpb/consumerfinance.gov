@@ -166,24 +166,26 @@
           rel="noopener referrer"
         >See status definitions</a>
     </div>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Institution type
-        </h3>
-        {#% for disposition in dispositions %#}
-        <div>
-          {{dispositions[0].get_institution_type_display()}}
-        </div>
-        {#% endfor %#}
-    </div>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Total consumer relief
-        </h3>
-        <div>
-          ${{'{:,}'.format(dispositions|sum(attribute='total_consumer_relief'))}}
-        </div>
-    </div>
+    {% if dispositions|length > 0 %}
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            Institution type
+          </h3>
+          {#% for disposition in dispositions %#}
+          <div>
+            {{dispositions[0].get_institution_type_display()}}
+          </div>
+          {#% endfor %#}
+      </div>
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            Total consumer relief
+          </h3>
+          <div>
+            ${{'{:,}'.format(dispositions|sum(attribute='total_consumer_relief'))}}
+          </div>
+      </div>
+    {% endif %}
     <div class="m-related-metadata_item-container">
         <h3 class="h4">
           Topics
