@@ -16,16 +16,6 @@ class SchoolSearchTest(TestCase):
 
     fixtures = ["test_fixture.json", "test_school.json"]
 
-    class ElasticSchool:
-        def __init__(self):
-            self.text = ""
-            self.school_id = 0
-            self.city = ""
-            self.state = ""
-            self.nicknames = ""
-            self.zip5 = ""
-            self.url = ""
-
     @mock.patch.object(SchoolDocument, 'search')
     def test_school_autocomplete(self, mock_autocomplete):
         term = "Kansas"
