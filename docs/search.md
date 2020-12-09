@@ -132,7 +132,13 @@ With the `Document` class created for your model in a `documents.py` module with
 ./cfgov/manage.py search_index --create --models [app.Model]
 ```
 
-The index can also be rebuilt at any time:
+The index for that model can also be rebuilt at any time:
+
+```shell
+./cfgov/manage.py search_index --rebuild -f --models [app.Model]
+```
+
+Finally, the indexes for all models can be rebuilt using:
 
 ```shell
 ./cfgov/manage.py search_index --rebuild --parallel -f
