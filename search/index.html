@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Search - consumerfinance.gov</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../css/overrides.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Search";
+    var mkdocs_page_input_path = "search.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> consumerfinance.gov</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../installation/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Running this Project</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../running-virtualenv/">Running in a Virtual Environment</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../running-docker/">Running in Docker</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-monitoring/">Debugging and Monitoring</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../deployment/">Artifacts and Deployment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Pages and Components</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../atomic-structure/">Atomic Structure and Design</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../editing-components/">Creating and Editing Components</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../debugging-templates/">Debugging Templates</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../migrations/">Django and Wagtail Migrations</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../forms-in-wagtail/">Forms in Wagtail Page Context</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../wagtail-pages/">Wagtail Pages</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Supporting Features</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../caching/">Caching</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../feature-flags/">Feature Flags</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Search</a>
+    <ul class="subnav">
+            
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#indexing">Indexing</a></li>
+        
+            <li><a class="toctree-l4" href="#searching">Searching</a></li>
+        
+            <li><a class="toctree-l4" href="#references">References</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../split-testing/">Split Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../translation/">Translation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Testing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../browser-acceptance-tests/">Browser/Acceptance Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../javascript-unit-tests/">JavaScript Unit Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../python-unit-tests/">Python Unit Testing</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../functional-testing/">Functional Testing</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Contributing</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../branching-merging/">Branching and Merging</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../contributing-docs/">Contributing to the Docs</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../related-projects/">Related Projects</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../development-tips/">Development Tips</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../github-actions/">How We Use GitHub Actions</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">APIs and Data</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../ask-cfpb/">Ask CFPB</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../consumer-complaint-database/">Consumer Complaints</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../housing-counselor-tool/">Find a Housing Counselor Tool</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../website-feedback/">Website Feedback</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">consumerfinance.gov</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Supporting Features &raquo;</li>
+        
+      
+    
+    <li>Search</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/search.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="search">Search<a class="headerlink" href="#search" title="Permanent link">¶</a></h1>
+<p>For custom searches on consumerfinance.gov, we use Elasticsearch and the <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/">django-elasticsearch-dsl</a> library, which is a lightweight wrapper around <a href="https://elasticsearch-dsl.readthedocs.io/en/latest/">elasticsearch-dsl</a>.</p>
+<ul>
+<li><a href="#indexing">Indexing</a><ul>
+<li><a href="#elasticsearch-index-configuration">Elasticsearch index configuration</a></li>
+<li><a href="#django-model-information">Django model information</a></li>
+<li><a href="#custom-fields">Custom fields</a></li>
+<li><a href="#helpers">Helpers</a></li>
+<li><a href="#building-the-index">Building the index</a></li>
+</ul>
+</li>
+<li><a href="#searching">Searching</a><ul>
+<li><a href="#autocomplete">Autocomplete</a></li>
+<li><a href="#suggestions">Suggestions</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+<h2 id="indexing">Indexing<a class="headerlink" href="#indexing" title="Permanent link">¶</a></h2>
+<p>For any of our Django apps that need to implement search for their Django models or <a href="../wagtail-pages/">Wagtail page types</a>, we include a <code>documents.py</code> file that defines the Elasticsearch documents that will <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/quickstart.html#declare-data-to-index">map the model or page to the Elasticsearch index</a>.</p>
+<p>The <code>Document</code> class includes three things:</p>
+<ol>
+<li>The <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/quickstart.html#declare-data-to-index">Elasticsearch index configuration</a></li>
+<li>The Django model information</li>
+<li><a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/fields.html">Custom fields to index</a>, and any preparation that they require</li>
+</ol>
+<p>We'll use our <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/ask_cfpb/documents.py">Ask CFPB answer search document as an example</a> for each of these:</p>
+<pre class="highlight"><code class="language-python">from django_elasticsearch_dsl import Document
+from django_elasticsearch_dsl.registries import registry
+
+@registry.register_document
+class AnswerPageDocument(Document):
+    pass</code></pre>
+
+<h3 id="elasticsearch-index-configuration">Elasticsearch index configuration<a class="headerlink" href="#elasticsearch-index-configuration" title="Permanent link">¶</a></h3>
+<p>The index configuration is provided by an <code>Index</code> class on the document class that defines the <a href="https://elasticsearch-dsl.readthedocs.io/en/latest/persistence.html#class-index-options">elasticsearch-dsl index options</a>.</p>
+<pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import environment_specific_index
+
+class AnswerPageDocument(Document):
+
+    class Index:
+        name = environment_specific_index('ask-cfpb')
+        settings = {'number_of_shards': 1,
+                    'number_of_replicas': 0}</code></pre>
+
+<p>For index naming, we have a helper function, <code>environment_specific_index</code>, that will generate the index name specific to the deployment environment. This allows each index to be isolated to a deployment environment within an Elasticsearch cluster.</p>
+<h3 id="django-model-information">Django model information<a class="headerlink" href="#django-model-information" title="Permanent link">¶</a></h3>
+<p>The Django model information is provided by a <code>Django</code> class on the document class that defines the model and any fields names to be indexed directly from the model. A <code>get_queryset</code> method can be overriden to perform any filtering on the model's queryset before content is indexed.</p>
+<pre class="highlight"><code class="language-python">from ask_cfpb.models.answer_page import AnswerPage
+
+class AnswerPageDocument(Document):
+
+    def get_queryset(self):
+        query_set = super().get_queryset()
+        return query_set.filter(live=True, redirect_to_page=None)
+
+    class Django:
+        model = AnswerPage
+
+        fields = [
+            'search_tags',
+            'language',
+        ]</code></pre>
+
+<p>The fields in <code>fields</code> will be indexed without any preparation/manipulation, directly as are stored on the model. </p>
+<h3 id="custom-fields">Custom fields<a class="headerlink" href="#custom-fields" title="Permanent link">¶</a></h3>
+<p>Sometimes it might be desirable to index a field as an alternative type — say, the string that matches an integer for a Django field that species <code>choices</code>. </p>
+<p>It might also be desirable to construct a field to index from multiple fields on the model, particularly for Wagtail pages with stream fields. </p>
+<p>We may also want to specify Elasticsearch-specific <a href="https://elasticsearch-dsl.readthedocs.io/en/stable/persistence.html#mappings">field properties</a>, like a custom analyzer.</p>
+<p>To do so, we specify <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/fields.html">custom fields</a> as attributes on the document class, with an <code>attr</code> argument that specifies the field on the model to reference.</p>
+<pre class="highlight"><code class="language-python">from django_elasticsearch_dsl import fields
+
+from search.elasticsearch_helpers import synonym_analyzer
+
+class AnswerPageDocument(Document):
+    text = fields.TextField(attr=&quot;text&quot;, analyzer=synonym_analyzer)</code></pre>
+
+<p>The <code>attr</code> on the model can be a <code>@property</code> or a Django model field.</p>
+<p>We can also do any data preparation/manipulation for fields using <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/fields.html#using-prepare-field"><code>prepare_</code>-prefixed methods</a>.</p>
+<pre class="highlight"><code class="language-python">from django_elasticsearch_dsl import fields
+
+class AnswerPageDocument(Document):
+    portal_topics = fields.KeywordField()
+
+    def prepare_portal_topics(self, instance):
+        return [topic.heading for topic in instance.portal_topic.all()]</code></pre>
+
+<h3 id="helpers">Helpers<a class="headerlink" href="#helpers" title="Permanent link">¶</a></h3>
+<p>We provide a few common helpers in <code>search.elasticsearch_helpers</code> for use in creating document classes:</p>
+<ul>
+<li><code>environment_specific_index(base_name)</code>: Generate the index name for the <code>base_name</code> that is specific to the deployment environment. This allows each index to be isolated to a deployment environment within an Elasticsearch cluster.</li>
+<li><code>label_autocomplete</code>: A reusable autocomplete analyzer for creating fields that <a href="#autocomplete">autocomplete terms</a>. This is used for type-ahead search boxes.</li>
+<li><code>synonym_analyzer</code>: A reusable analyzer for creating fields that will match synonyms of a search term.</li>
+</ul>
+<pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import (
+    environment_specific_index,
+    label_autocomplete,
+    synonym_analyzer,
+)</code></pre>
+
+<h3 id="building-the-index">Building the index<a class="headerlink" href="#building-the-index" title="Permanent link">¶</a></h3>
+<p>With the <code>Document</code> class created for your model in a <code>documents.py</code> module within a Django app listed in <code>INSTALLED_APPS</code>, all that is left to do is to use the <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/management.html">django-elasticsearch-dsl management commands</a> to rebuild the index:</p>
+<pre class="highlight"><code class="language-shell">./cfgov/manage.py search_index --create --models [app.Model]</code></pre>
+
+<p>The index for that model can also be rebuilt at any time:</p>
+<pre class="highlight"><code class="language-shell">./cfgov/manage.py search_index --rebuild -f --models [app.Model]</code></pre>
+
+<p>Finally, the indexes for all models can be rebuilt using:</p>
+<pre class="highlight"><code class="language-shell">./cfgov/manage.py search_index --rebuild --parallel -f</code></pre>
+
+<h2 id="searching">Searching<a class="headerlink" href="#searching" title="Permanent link">¶</a></h2>
+<p>The document class <a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/quickstart.html#search">provides a <code>search()</code> class method</a> that returns a <a href="https://elasticsearch-dsl.readthedocs.io/en/stable/search_dsl.html"><code>Search</code> object</a>. The <code>Search</code> object is elasticsearch-dsl's representation of Elasticsearch search requests.</p>
+<p>To <a href="https://elasticsearch-dsl.readthedocs.io/en/stable/search_dsl.html#queries">query</a> for a specific term, for example:</p>
+<pre class="highlight"><code class="language-python">from ask_cfpb.documents import AnswerPageDocument
+
+AnswerPageDocument.search().query(
+    &quot;match&quot;, text={&quot;query&quot;: search_term, &quot;operator&quot;: &quot;AND&quot;}
+)</code></pre>
+
+<p>We can also <a href="https://elasticsearch-dsl.readthedocs.io/en/stable/search_dsl.html#filters">add a filter context</a> before querying, which we do to limit results to a specific language in Ask CFPB:</p>
+<pre class="highlight"><code class="language-python">from ask_cfpb.documents import AnswerPageDocument
+
+search = AnswerPageDocument.search().filter(&quot;term&quot;, language=language)
+search.query(
+    &quot;match&quot;, text={&quot;query&quot;: search_term, &quot;operator&quot;: &quot;AND&quot;}
+)</code></pre>
+
+<h3 id="autocomplete">Autocomplete<a class="headerlink" href="#autocomplete" title="Permanent link">¶</a></h3>
+<p>For search box autocomplete, we use a field with our <code>label_autocomplete</code> analyzer and then issue a "match" search query for that field.</p>
+<p>Using the Ask CFPB document search above, with its language filter context, this looks like:</p>
+<pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import label_autocomplete
+
+class AnswerPageDocument(Document):
+    autocomplete = fields.TextField(analyzer=label_autocomplete)
+
+search = AnswerPageDocument.search().filter(&quot;term&quot;, language=language)
+search.query('match', autocomplete=search_term)</code></pre>
+
+<h3 id="suggestions">Suggestions<a class="headerlink" href="#suggestions" title="Permanent link">¶</a></h3>
+<p>For suggested spelling corrections for search terms, <a href="https://elasticsearch-dsl.readthedocs.io/en/stable/search_dsl.html#suggestions">the <code>Search</code> object has a <code>suggest()</code> method</a> that provides spelling suggestions for a given term on a given field.</p>
+<p>Using the Ask CFPB document search above, with its language filter context, this looks like:</p>
+<pre class="highlight"><code class="language-python">from ask_cfpb.documents import AnswerPageDocument
+
+search = AnswerPageDocument.search().filter(&quot;term&quot;, language=language)
+search.suggest('suggestion', search_term, term={'field': 'text'})</code></pre>
+
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://django-elasticsearch-dsl.readthedocs.io/en/latest/">django-elasticsearch-dsl</a></li>
+<li><a href="https://elasticsearch-dsl.readthedocs.io/en/latest/">elasticsearch-dsl</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../split-testing/" class="btn btn-neutral float-right" title="Split Testing">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../feature-flags/" class="btn btn-neutral" title="Feature Flags"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../feature-flags/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../split-testing/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="main.js" defer></script>
+
+</body>
+</html>
