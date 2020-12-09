@@ -2,7 +2,7 @@ from collections import OrderedDict
 from unittest import mock
 
 from django.http import HttpRequest
-from django.test import RequestFactory, TestCase, override_settings
+from django.test import RequestFactory, TestCase
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
@@ -13,7 +13,7 @@ from model_bakery import baker
 
 from scripts import _atomic_helpers as atomic
 from teachers_digital_platform.models import (
-    FACET_LIST, FACET_MAP, ActivityAgeRange, ActivityBloomsTaxonomyLevel,
+    FACET_LIST, ActivityAgeRange, ActivityBloomsTaxonomyLevel,
     ActivityBuildingBlock, ActivityCouncilForEconEd, ActivityDuration,
     ActivityGradeLevel, ActivityIndexPage, ActivityJumpStartCoalition,
     ActivityPage, ActivitySchoolSubject, ActivitySetUp,
@@ -203,7 +203,6 @@ class ActivitySetUpTests(TestCase):
             new_subject_count
         )
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
     def test_bare_dsl_search_uses_setups(self):
         """Search with no query or faceting should not need Elasticsearch."""
         response = self.client.get(self.search_page.url)
@@ -212,7 +211,6 @@ class ActivitySetUpTests(TestCase):
             self.activity_page.title,
             response.content.decode('utf8'))
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
     @mock.patch.object(ActivityPageDocument, 'search')
     def test_search_page_renders_with_query_parameter(self, mock_search):
         mock_hit = mock.Mock()
@@ -227,7 +225,6 @@ class ActivitySetUpTests(TestCase):
             response.content.decode('utf8')
         )
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
     @mock.patch.object(ActivityPageDocument, 'search')
     def test_search_page_renders_with_facet_parameters(self, mock_search):
         mock_hit = mock.Mock()
@@ -311,29 +308,6 @@ class TestActivityIndexPageSearch(TestCase):
 
     @mock.patch(
         'teachers_digital_platform.models.activity_index_page.'
-        'ActivityIndexPage.haystack_search')
-    def test_activity_index_page_renders_via_haystack(self, mock_haystack):
-        mock_haystack.return_value = {
-            "facets": self.activity_setups.facet_setup,
-        }
-        response = self.client.get(self.search_page.url)
-        self.assertEqual(response.status_code, 200)
-
-    @mock.patch(
-        'teachers_digital_platform.models.activity_index_page.'
-        'SearchQuerySet.models')
-    def test_activity_index_page_calls_haystack(self, mock_haystack):
-        mock_haystack.facet_counts.return_value = {
-            "fields": {"grade_level": [("2", 115)]}
-        }
-        mock_haystack.count.return_value = 1
-        response = self.client.get(f"{self.search_page.url}?q=test-query")
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(mock_haystack.call_count, 1)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
-    @mock.patch(
-        'teachers_digital_platform.models.activity_index_page.'
         'ActivityIndexPage.dsl_search')
     def test_search_page_renders_via_dsl_search(self, mock_dsl):
         mock_dsl.return_value = {
@@ -361,7 +335,6 @@ class TestActivityIndexPageSearch(TestCase):
             self.search_page.get_template(request),
             'teachers_digital_platform/activity_search_facets_and_results.html')  # noqa: E501
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_TDP": [("boolean", True)]})
     @mock.patch(
         'teachers_digital_platform.models.activity_index_page.'
         'ActivityIndexPage.dsl_search')
@@ -373,52 +346,6 @@ class TestActivityIndexPageSearch(TestCase):
         self.assertIn(
             '<h3>No results match your search.</h3>',
             response.content.decode('utf8'))
-
-    @mock.patch(
-        'teachers_digital_platform.models.'
-        'activity_index_page.SearchQuerySet.models')
-    def test_search_get_all_facets_with_building_block_filter(self, mock_sqs):
-        # Arrange
-        facet_counts = {
-            'dates': {},
-            'fields': {
-                'topic': ['1', '4'],
-                'building_block': ['1', '2'],
-                'school_subject': ['1'],
-            },
-            'queries': {}
-        }
-        selected_facets = {u'building_block': [1]}
-        facet_queries = {'building_block': 'building_block_exact'}
-        facet_map = FACET_MAP
-        mock_sqs.facet_counts.return_value = facet_counts
-        # Act
-        actual_all_facets = self.search_page.get_all_facets(facet_map, mock_sqs, facet_counts, facet_queries, selected_facets)  # noqa: E501
-        # Assert
-        self.assertTrue('building_block' in actual_all_facets)
-
-    @mock.patch(
-        'teachers_digital_platform.models.'
-        'activity_index_page.SearchQuerySet.models')
-    def test_search_get_all_facets_with_topic_block_is_nested_filter(
-            self, mock_sqs):
-        # Arrange
-        facet_counts = {
-            'dates': {},
-            'fields': {
-                'topic': ['4'],
-            },
-            'queries': {}
-        }
-        selected_facets = {'topic': [1]}
-        facet_queries = {'topic': 'topic_exact'}
-        facet_map = FACET_MAP
-        mock_sqs.facet_counts.return_value = facet_counts
-        # Act
-        actual_all_facets = self.search_page.get_all_facets(
-            facet_map, mock_sqs, facet_counts, facet_queries, selected_facets)
-        # Assert
-        self.assertTrue('topic' in actual_all_facets)
 
     def test_get_topics_list_returns_correct_topic_list_for_parent(self):
         # Arrange
