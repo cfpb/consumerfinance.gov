@@ -4,14 +4,13 @@ import unittest
 from django.apps import apps
 from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
-from django.urls import NoReverseMatch, reverse
+from django.urls import reverse
 
 import mock
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
 from ask_cfpb.models.search import AnswerPageSearch, make_safe
-from ask_cfpb.tests.models.test_pages import mock_queryset
 from ask_cfpb.views import ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
 

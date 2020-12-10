@@ -54,31 +54,6 @@ class TestStripHTML(SimpleTestCase):
         self.assertNotIn("mortgageA", strip_html(markup))
 
 
-def mock_queryset(count=0):
-    class MockSearchQuerySet(SearchQuerySet):
-        def __iter__(self):
-            if count:
-                return iter(
-                    [
-                        MockSearchResult("ask_cfpb", "AnswerPage", i, 0.5)
-                        for i in list(range(1, count + 1))
-                    ]
-                )
-            else:
-                return iter([])
-
-        def count(self):
-            return count
-
-        def filter(self, *args, **kwargs):
-            return self
-
-        def models(self, *models):
-            return self
-
-    return MockSearchQuerySet()
-
-
 class AnswerStringTest(TestCase):
     def test_answer_string_method(self):
         test_answer = Answer(question="Test question?")
