@@ -62,8 +62,9 @@ services:
       APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
+      ES_PORT: 9200
       ES_HOST: elasticsearch2
-      ES7_HOST: http://elasticsearch:9200
+      ES7_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
       MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
@@ -105,6 +106,8 @@ services:
                 fi
 
                 ./cfgov/manage.py update_index
+                
+                ./cfgov/manage.py search_index --rebuild -f --parallel
 
                 httpd -d cfgov/apache -D FOREGROUND"
 

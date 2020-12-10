@@ -196,7 +196,6 @@ class SchoolModelsTest(TestCase):
         self.assertTrue(isinstance(p, Program))
         self.assertIn(p.program_name, p.__str__())
         self.assertIn(p.program_name, p.as_json())
-        self.assertIn('Bachelor', p.get_level())
         noti = self.create_notification(s)
         self.assertTrue(isinstance(noti, Notification))
         self.assertIn(noti.oid, noti.__str__())
@@ -441,7 +440,7 @@ class ProgramCodesTest(TestCase):
 
     def test_program_codes_deliver_no_undergrad(self):
         programs = self.school.program_codes
-        self.assertEqual(len(programs.get('undergrad')), 0)
+        self.assertEqual(len(programs.get('undergrad')), 1)
 
     def test_grad_program_codes(self):
         programs = self.school.program_codes

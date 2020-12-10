@@ -1,11 +1,10 @@
 /* This file handles view items which apply only to the "state" of the
 application, and are otherwise inappropriate for the
 other views. */
-import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
+import { updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
 import { closest } from '../../../../js/modules/util/dom-traverse';
-import { getAllStateValues } from '../dispatchers/get-model-values.js';
 import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';

@@ -112,10 +112,17 @@ class CFGOVPage(Page):
         ),
     )
 
-    is_archived = models.BooleanField(
-        default=False,
-        blank=True,
-        verbose_name='Mark this page as archived'
+    is_archived = models.CharField(
+        max_length=16,
+        choices=[
+            ('no', 'No'),
+            ('yes', 'Yes'),
+            ('never', 'Never'),
+        ],
+        default='no',
+        verbose_name='This page is archived',
+        help_text='If "Never" is selected, the page will not be archived '
+                  'automatically after a certain period of time.'
     )
 
     archived_at = models.DateField(
@@ -248,7 +255,13 @@ class CFGOVPage(Page):
         return
 
     def get_meta_description(self):
-        """Deliver a meta_description, following a preference order."""
+        """Determine what the page's meta and OpenGraph description should be
+
+        Checks several different possible fields in order of preference.
+        If none are found, returns an empty string, which is preferable to a
+        generic description repeated on many pages.
+        """
+
         preference_order = [
             'search_description',
             'header_hero_body',
@@ -258,6 +271,7 @@ class CFGOVPage(Page):
             'header_item_intro',
         ]
         candidates = {}
+
         if self.search_description:
             candidates['search_description'] = self.search_description
         if hasattr(self, 'header'):
@@ -273,9 +287,11 @@ class CFGOVPage(Page):
         if hasattr(self, 'content'):
             candidates['content_text_intro'] = self.get_streamfield_content(
                 self.content, 'text_introduction', 'intro')
+
         for entry in preference_order:
             if candidates.get(entry):
                 return candidates[entry]
+
         return ''
 
     def get_context(self, request, *args, **kwargs):
@@ -417,6 +433,13 @@ class CFGOVPage(Page):
     @property
     def post_preview_cache_key(self):
         return 'post_preview_{}'.format(self.id)
+
+    @property
+    def archived(self):
+        if self.is_archived == 'yes':
+            return True
+
+        return False
 
 
 class CFGOVPageCategory(Orderable):

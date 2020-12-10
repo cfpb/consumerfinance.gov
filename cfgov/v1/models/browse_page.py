@@ -8,8 +8,6 @@ from wagtail.core.fields import StreamField
 from wagtail.core.models import PageManager
 from wagtail.search import index
 
-from youth_employment.blocks import YESChecklist
-
 from data_research.blocks import (
     ConferenceRegistrationForm, MortgageDataDownloads
 )
@@ -18,6 +16,7 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 from v1.util.util import get_secondary_nav_items
+from youth_employment.blocks import YESChecklist
 
 
 class BrowsePage(CFGOVPage):
@@ -29,6 +28,7 @@ class BrowsePage(CFGOVPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
+        ('simple_chart', organisms.SimpleChart()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
@@ -48,7 +48,6 @@ class BrowsePage(CFGOVPage):
         ('mortgage_downloads_block', MortgageDataDownloads()),
         ('data_snapshot', organisms.DataSnapshot()),
         ('job_listing_table', JobListingTable()),
-        ('bureau_structure', organisms.BureauStructure()),
         ('yes_checklist', YESChecklist()),
     ], blank=True)
 

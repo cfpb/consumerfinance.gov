@@ -1,48 +1,34 @@
 from urllib.parse import urlparse
 
 from django.contrib.postgres.search import SearchVector
-from django.core.paginator import InvalidPage, Paginator
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
+from django.template.response import TemplateResponse
 from django.urls import reverse
 
+from prepaid_agreements.forms import FilterForm, SearchForm
 from prepaid_agreements.models import PrepaidProduct
 from v1.models.snippets import ReusableText
 
 
-def validate_page_number(request, paginator):
-    """
-    A utility for parsing a pagination request,
-    catching invalid page numbers and always returning
-    a valid page number, defaulting to 1.
-    TODO: can be replaced by Paginator.get_page
-    when/if upgraded to Django 2.0+
-    """
-    raw_page = request.GET.get('page', 1)
-    try:
-        page_number = int(raw_page)
-    except ValueError:
-        page_number = 1
-    try:
-        paginator.page(page_number)
-    except InvalidPage:
-        page_number = 1
-    return page_number
-
-
 def get_available_filters(products):
     available_filters = {'prepaid_type': [], 'status': [], 'issuer_name': []}
+
     for product in products.all():
         prepaid_type = product.prepaid_type
         if prepaid_type and prepaid_type != '':
             if prepaid_type not in available_filters['prepaid_type']:
                 available_filters['prepaid_type'].append(prepaid_type)
+
         status = product.status
         if status and status not in available_filters['status']:
             available_filters['status'].append(status)
+
         issuer_name = product.issuer_name
         if issuer_name and issuer_name not in available_filters['issuer_name']:
             available_filters['issuer_name'].append(issuer_name)
+
     return available_filters
 
 
@@ -95,47 +81,70 @@ def get_support_text():
 
 
 def index(request):
-    params = dict(request.GET.lists())
-    available_filters = {}
-    search_term = None
-    search_field = None
     products = PrepaidProduct.objects.valid()
     total_count = products.count()
     valid_filters = [
         'prepaid_type', 'status', 'issuer_name'
     ]
-    if params:
-        params.pop('page', None)
-        search_term = params.pop('q', None)
-        search_field = params.pop('search_field', None)
-        if search_field:
-            search_field = search_field[0]
-        if search_term:
-            search_term = search_term[0].strip()
-            if search_term != '':
-                products = search_products(
-                    search_term, search_field, products
-                )
-            available_filters = get_available_filters(products)
-        products = filter_products(params, products)
+    available_filters = {}
 
-    if not available_filters:
-        for filter_name in valid_filters:
-            available_filters[filter_name] = PrepaidProduct.objects.order_by(
-                filter_name).values_list(filter_name, flat=True).distinct()
+    # Provide valid initial values for the search form so that it is always
+    # valid. A blank search will return all products.
+    page_number = 1
+    search_term = ''
+    search_field = 'all'
+    search_form = SearchForm(
+        request.GET,
+        initial={
+            'q': search_term,
+            'search_field': search_field,
+            'page': page_number,
+        }
+    )
+    # Get our search results. If the form is not valid, our default search_term
+    # and search_field will be used below.
+    if search_form.is_valid():
+        page_number = search_form.cleaned_data['page']
+        search_field = search_form.cleaned_data['search_field']
+        search_term = search_form.cleaned_data['q'].strip()
+        if search_term != '':
+            products = search_products(
+                search_term, search_field, products
+            )
+
+    # Get the available filters for products in the search results and then set
+    # those filter choices on the filter form
+    filters = {}
+    available_filters = get_available_filters(products)
+    filter_form = FilterForm(request.GET)
+    filter_form.set_issuer_name_choices(available_filters['issuer_name'])
+    filter_form.set_prepaid_type_choices(available_filters['prepaid_type'])
+    filter_form.set_status_choices(available_filters['status'])
+
+    # Filter our products based on the sanitized values from the filter form.
+    # If the form is not valid, the products already selected based on the
+    # search form will be used below.
+    if filter_form.is_valid():
+        filters = {
+            k: filter_form.cleaned_data[k]
+            for k in valid_filters
+            if filter_form.cleaned_data[k]
+        }
+        products = filter_products(filters, products)
 
     current_count = products.count()
-    paginator = Paginator(products.all(), 20)
-    page_number = validate_page_number(request, paginator)
-    page = paginator.page(page_number)
 
-    return render(request, 'prepaid_agreements/index.html', {
-        'current_page': page_number,
+    # Handle pagination
+    paginator = Paginator(products.all(), 20)
+    page = paginator.get_page(page_number)
+
+    return TemplateResponse(request, 'prepaid_agreements/index.html', {
+        'current_page': page.number,
         'results': page,
         'total_count': total_count,
         'paginator': paginator,
         'current_count': current_count,
-        'filters': params,
+        'filters': filters,
         'query': search_term or '',
         'active_filters': available_filters,
         'valid_filters': valid_filters,

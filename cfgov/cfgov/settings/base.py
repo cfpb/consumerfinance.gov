@@ -1,10 +1,7 @@
 import os
 
-import django
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
-
-import wagtail
 
 import dj_database_url
 from elasticsearch7 import RequestsHttpConnection
@@ -339,9 +336,6 @@ SHEER_ELASTICSEARCH_SETTINGS = {
 
 
 # LEGACY APPS
-
-STATIC_VERSION = ""
-
 MAPBOX_ACCESS_TOKEN = os.environ.get("MAPBOX_ACCESS_TOKEN")
 
 HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
@@ -424,13 +418,15 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 # ElasticSearch 7 Configuration
-ELASTICSEARCH_DSL_AUTO_REFRESH = False
-ELASTICSEARCH_DSL_AUTOSYNC = False
-
 if os.environ.get('USE_AWS_ES', False):
-    awsauth = AWS4Auth(os.environ.get('AWS_ES_ACCESS_KEY'), os.environ.get('AWS_ES_SECRET_KEY'), 'us-east-1', 'es')
+    awsauth = AWS4Auth(
+        os.environ.get('AWS_ES_ACCESS_KEY'),
+        os.environ.get('AWS_ES_SECRET_KEY'),
+        'us-east-1',
+        'es'
+    )
     host = os.environ.get('ES7_HOST', '')
-    ELASTICSEARCH_DSL={
+    ELASTICSEARCH_DSL = {
         'default': {
             'hosts': [{'host': host, 'port': 443}],
             'http_auth': awsauth,
@@ -439,10 +435,10 @@ if os.environ.get('USE_AWS_ES', False):
         },
     }
 else:
-    ELASTICSEARCH_DSL={
-        'default': {
-            'hosts': os.environ.get('ES7_HOST', 'localhost:9200')
-        },
+    host = os.environ.get("ES7_HOST", "localhost")
+    port = os.environ.get("ES_PORT", "9200")
+    ELASTICSEARCH_DSL = {
+        "default": {"hosts": f"http://{host}:{port}"}
     }
 
 # S3 Configuration
@@ -461,6 +457,7 @@ if os.environ.get("S3_ENABLED", "False") == "True":
         AWS_S3_CUSTOM_DOMAIN = os.environ["AWS_S3_CUSTOM_DOMAIN"]
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     MEDIA_URL = os.path.join(os.environ.get("AWS_S3_URL"), AWS_LOCATION, "")
+
 
 # GovDelivery
 GOVDELIVERY_ACCOUNT_CODE = os.environ.get("GOVDELIVERY_ACCOUNT_CODE")
@@ -668,8 +665,8 @@ FLAGS = {
     # When enabled, spelling suggestions will appear in Ask CFPB search and
     # will be used when the given search term provides no results
     "ASK_SEARCH_TYPOS": [],
-    # Ask CFPB date label	
-    # When enabled, date label will be changed from 'updated' to 'last reviewed'	
+    # Ask CFPB date label
+    # When enabled, date label will be changed from 'updated' to 'last reviewed'
     "ASK_UPDATED_DATE_LABEL": [],
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -731,8 +728,6 @@ FLAGS = {
     "BETA_EXTERNAL_TESTING": [],
     # Used to hide new youth employment success pages prior to public launch
     "YOUTH_EMPLOYMENT_SUCCESS": [],
-    # Release of prepaid agreements database search
-    "PREPAID_AGREEMENTS_SEARCH": [],
     # Used to hide CCDB landing page updates prior to public launch
     "CCDB_CONTENT_UPDATES": [],
     # During a Salesforce system outage, the following flag should be enabled
@@ -767,10 +762,9 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Used to enable use of django-elasticsearch-dsl and disable use of Haystack
-    # This will be used in the ask_cfpb and regulations applications
-    "ELASTIC_SEARCH_DSL": [("boolean", False)],
-    # Used to enable django-elasticsearch-dsl and disable haystack within the regulations app.
+    # Enable django-elasticsearch-dsl and disable haystack in ask_cfpb.
+    "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
+    # Enable django-elasticsearch-dsl and disable haystack in regulations3k.
     "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
 }
 

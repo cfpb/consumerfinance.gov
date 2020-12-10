@@ -267,18 +267,20 @@ const costOfBorrowingOpts = {
     ]
   },
   series: [ {
-    name: 'Interest',
+    name: 'Total interest',
     data: [ 0 ],
     color: '#ffe1b9'
   }, {
-    name: 'Amount borrowed',
+    name: 'Total money borrowed',
     data: [ 1 ],
     color: '#ff9e1b'
   } ]
 };
 
 const makePlanOpts = {
-
+  series: [ {
+    color: '#addc91'
+  } ]
 };
 
 const maxDebtOpts = {
