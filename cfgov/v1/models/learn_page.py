@@ -160,21 +160,28 @@ class DocumentDetailPage(AbstractFilterPage):
 
 
 class EnforcementActionDisposition(models.Model):
-    name = models.CharField(max_length=150)
-    status = models.CharField(max_length=50, choices=enforcement_statuses)
+    name = models.CharField(max_length=150, blank=True)
+    status = models.CharField(
+        max_length=50,
+        choices=enforcement_statuses,
+        blank=True
+    )
     institution_type = models.CharField(
         max_length=50,
-        choices=institution_types
+        choices=institution_types,
+        blank=True
     )
     total_consumer_relief = models.DecimalField(
         decimal_places=2,
-        max_digits=13
+        max_digits=13,
+        default=0
     )
     civil_money_penalties = models.DecimalField(
         decimal_places=2,
-        max_digits=13
+        max_digits=13,
+        default=0
     )
-    date_filed = models.DateField(null=True, blank=True)
+    date_filed = models.DateField(null=True)
     final_order_date = models.DateField(null=True, blank=True)
     dismissal_date = models.DateField(null=True, blank=True)
     settled = models.BooleanField(
@@ -188,7 +195,7 @@ class EnforcementActionDisposition(models.Model):
 
     action = ParentalKey('v1.EnforcementActionPage',
                          on_delete=models.CASCADE,
-                         related_name='enforcement_disposition')
+                         related_name='enforcement_dispositions')
 
 
 # Will exist until can be sourced from enforce db
@@ -209,10 +216,6 @@ class EnforcementActionDocket(models.Model):
 
 
 class EnforcementActionPage(AbstractFilterPage):
-    sidebar_header = models.CharField(
-        default='Action details',
-        max_length=100
-    )
     court = models.CharField(default='', max_length=150, blank=True)
 
     content = StreamField([
@@ -232,9 +235,8 @@ class EnforcementActionPage(AbstractFilterPage):
 
     metadata_panels = [
         InlinePanel(
-            'enforcement_disposition',
-            label='Final Disposition',
-            min_num=1
+            'enforcement_dispositions',
+            label='Final Disposition'
         ),
         FieldPanel('court'),
         InlinePanel('docket_numbers', label="Docket Number", min_num=1),
@@ -280,6 +282,18 @@ class EnforcementActionPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('content')
     ]
+
+    def get_context(self, request):
+        context = super(EnforcementActionPage, self).get_context(request)
+
+        context.update({
+            'total_consumer_relief': sum(
+                disp.total_consumer_relief for disp in
+                self.enforcement_dispositions.all()
+            )
+        })
+
+        return context
 
 
 class AgendaItemBlock(blocks.StructBlock):

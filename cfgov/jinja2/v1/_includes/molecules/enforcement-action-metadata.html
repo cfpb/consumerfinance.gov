@@ -26,7 +26,7 @@
           Action Details
         </h2>
     </header>
-    {{_dispositions(page.enforcement_disposition.all())}}
+    {{_dispositions(page.enforcement_dispositions.all())}}
 </div>
 {% endmacro %}
 
@@ -182,7 +182,7 @@
             Total consumer relief
           </h3>
           <div>
-            ${{'{:,}'.format(dispositions|sum(attribute='total_consumer_relief'))}}
+            ${{'{:,}'.format(total_consumer_relief)}}
           </div>
       </div>
     {% endif %}

@@ -1,7 +1,20 @@
-# Need court, institution type, docket number, tags(sp pop&prod), categories
-# status is record type
+# This is a one time script used to populate enforcement actions
+# across the site with data from our internal ENForce system
+# Currently this data has been reported in two csvs, a relief
+# csv and a count csv, with different pieces of data in each.
+# Ideally all the data would be in one csv and would include
+# court, institution type, docket number, special populations,
+# products, and forum (none of which are included in either csv now).
+# Once this final csv is produced, the code below will be modified
+# to reload the complete dataset into the enforcement actions in wagtail
+#
+# To run this script, invoke it as follows:
+# cfgov/manage.py runscript add_enforcement_data --script-args
+#    [COUNT_CSV_PATH] [RELIEF_CSV_PATH]
 
 import csv
+import logging
+import sys
 from datetime import datetime as dt
 from decimal import Decimal
 from re import sub
@@ -11,11 +24,15 @@ from v1.models.learn_page import (
 )
 
 
+logger = logging.getLogger(__name__)
+
+
 def strip_fields(f, *args):
     return [f[i].strip() for i in args]
 
 
 def make_date(d):
+    d = sub('2020', '20', d)
     return dt.strptime(d, '%m/%d/%y') if d else ''
 
 
@@ -90,9 +107,13 @@ def add_counts(data_file='./cfgov/scripts/pea_counts.csv'):
                 cdata[url] = [o]
 
 
-def run():
-    add_counts()
-    add_relief()
+def run(*args):
+    if not args or len(args) != 2:
+        logger.error("error. Use --script-args [COUNT_PATH] [RELIEF_PATH] " +
+                     "to specify the location of the data csvs.")
+        sys.exit()
+    add_counts(args[0])
+    add_relief(args[1])
 
     for url in rdata:
         for i in range(len(rdata[url])):
@@ -114,17 +135,23 @@ def run():
             for key in to_del:
                 del disp[key]
 
+    count = 0
+
     for page in EnforcementActionPage.objects.all():
         if not page.live or page.has_unpublished_changes:
+            logger.info(f"Skipping unpublished page: {page.slug}\n")
             continue
 
         url = 'https://www.consumerfinance.gov' + page.get_url()
 
         try:
-            page.enforcement_disposition.set([
+            page.enforcement_dispositions.set([
                 EnforcementActionDisposition(**x) for x in rdata[url]
             ])
 
             page.save()
+            count += 1
         except KeyError:
-            print('No data for', url)
+            logger.info(f"No data in csv data file for {url}\n")
+
+    logger.info(f"Data update finished. {count} pages updated.")
