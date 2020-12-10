@@ -92,7 +92,7 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
 
         DT.nextFrame( function() {
           const latlng = window.L.latLng( lon, lat );
-          const map = window.L.mapbox.map(id)
+          const map = window.L.mapbox.map( id )
             .setView( latlng, 12 )
             .addLayer( window.L.mapbox.styleLayer( mapIdString ) );
           map.dragging.disable();
