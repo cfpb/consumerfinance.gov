@@ -6,6 +6,7 @@ from unittest import TestCase
 from zipfile import ZipFile
 
 import mock
+
 from deployable_zipfile.create import create_zipfile, save_wheels
 
 

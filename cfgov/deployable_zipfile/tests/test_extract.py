@@ -4,6 +4,7 @@ import tempfile
 from unittest import TestCase
 
 import mock
+
 from deployable_zipfile.extract import (
     extract_zipfile, locate_virtualenv_site_packages
 )

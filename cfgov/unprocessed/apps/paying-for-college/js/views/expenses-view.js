@@ -1,11 +1,10 @@
 // This file contains the 'view' of expenses budget after graduation
 import numberToMoney from 'format-usd';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { closest } from '../../../../js/modules/util/dom-traverse';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
 import { selectorMatches } from '../util/other-utils';
 import { stringToNum } from '../util/number-utils.js';
-import { updateAffordingChart, updateCostOfBorrowingChart } from '../dispatchers/update-view.js';
+import { updateAffordingChart } from '../dispatchers/update-view.js';
 import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
 
 const expensesView = {

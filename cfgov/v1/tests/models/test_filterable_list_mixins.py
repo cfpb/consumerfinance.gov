@@ -127,11 +127,16 @@ class FilterableListRelationsTestCase(TestCase):
 
         self.child_page = BlogPage(title="Child test page", live=True)
         self.sibling_page = BlogPage(title="Sibling test page", live=True)
-        self.archived_sibling_page = BlogPage(title="Archive test page", live=True,
-                                         is_archived=True)
+        self.archived_sibling_page = BlogPage(
+            title="Archive test page",
+            live=True,
+            is_archived='yes'
+        )
         self.filterable_page.add_child(instance=self.child_page)
         self.filterable_page.get_parent().add_child(instance=self.sibling_page)
-        self.filterable_page.get_parent().add_child(instance=self.archived_sibling_page)
+        self.filterable_page.get_parent().add_child(
+            instance=self.archived_sibling_page
+        )
 
     def set_filterable_controls(self, value):
         self.filterable_page.content = StreamValue(
@@ -144,7 +149,6 @@ class FilterableListRelationsTestCase(TestCase):
     def test_get_filterable_children_pages(self):
         filter_controls['value']['filter_children'] = True
         filter_controls['value']['filter_siblings'] = False
-        filter_controls['value']['filter_archive'] = False
         self.set_filterable_controls(self.filter_controls)
 
         qs = self.filterable_page.get_filterable_queryset()
@@ -154,19 +158,8 @@ class FilterableListRelationsTestCase(TestCase):
     def test_get_filterable_siblings_pages(self):
         filter_controls['value']['filter_children'] = False
         filter_controls['value']['filter_siblings'] = True
-        filter_controls['value']['filter_archive'] = False
         self.set_filterable_controls(self.filter_controls)
 
         qs = self.filterable_page.get_filterable_queryset()
-        self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs.count(), 2)
         self.assertEqual(qs[0].pk, self.sibling_page.pk)
-
-    def test_get_filterable_archived_pages(self):
-        filter_controls['value']['filter_children'] = False
-        filter_controls['value']['filter_siblings'] = True
-        filter_controls['value']['filter_archive'] = True
-        self.set_filterable_controls(self.filter_controls)
-
-        qs = self.filterable_page.get_filterable_queryset()
-        self.assertEqual(qs.count(), 1)
-        self.assertEqual(qs[0].pk, self.archived_sibling_page.pk)

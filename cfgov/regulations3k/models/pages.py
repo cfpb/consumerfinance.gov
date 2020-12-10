@@ -77,7 +77,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
                 self.get_template(request),
                 self.get_context(request))
         search = SectionParagraphDocument.search().query(
-            'match', text=search_query)
+            'match', text={"query": search_query, "operator": "AND"})
         search = search.highlight(
             'text', pre_tags="<strong>", post_tags="</strong>")
         total_results = search.count()

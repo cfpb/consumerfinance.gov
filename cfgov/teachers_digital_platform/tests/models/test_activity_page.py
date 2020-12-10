@@ -3,6 +3,7 @@ from django.test import TestCase
 from wagtail.documents.models import Document
 
 from model_bakery import baker
+
 from teachers_digital_platform.models import (
     ActivityAgeRange, ActivityBloomsTaxonomyLevel, ActivityBuildingBlock,
     ActivityCouncilForEconEd, ActivityDuration, ActivityGradeLevel,
@@ -10,7 +11,6 @@ from teachers_digital_platform.models import (
     ActivitySchoolSubject, ActivityTeachingStrategy, ActivityTopic,
     ActivityType
 )
-
 from v1.models import HomePage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
