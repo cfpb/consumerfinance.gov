@@ -1,6 +1,5 @@
 import re
 from collections import OrderedDict
-from urllib.parse import unquote
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
@@ -9,7 +8,6 @@ from django.template.response import TemplateResponse
 from django.utils.html import format_html, strip_tags
 from django.utils.text import slugify
 from django.utils.translation import activate, deactivate_all, gettext as _
-from haystack.query import SearchQuerySet
 
 from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
@@ -20,12 +18,11 @@ from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable
 
-from flags.state import flag_enabled
 from modelcluster.fields import ParentalKey
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models.answer_page import AnswerPage
-from ask_cfpb.models.search import AnswerPageSearch, AskSearch
+from ask_cfpb.models.search import AnswerPageSearch
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models import (
@@ -325,40 +322,6 @@ class PortalSearchPage(
     def get_results(self, request):
         context = self.get_context(request)
         search_term = request.GET.get('search_term', '').strip()
-        if not search_term or len(unquote(search_term)) == 1:
-            results = self.query_base
-        else:
-            search = AskSearch(
-                search_term=search_term,
-                query_base=self.query_base)
-            results = search.queryset
-            if results.count() == 0:
-                # No results, so let's try to suggest a better query
-                search.suggest(request=request)
-                results = search.queryset
-                search_term = search.search_term
-        search_message = self.results_message(
-            results.count(),
-            self.get_heading(),
-            search_term)
-        paginator = Paginator(results, 10)
-        page_number = validate_page_number(request, paginator)
-        context.update({
-            'search_term': search_term,
-            'results_message': search_message,
-            'pages': paginator.page(page_number),
-            'paginator': paginator,
-            'current_page': page_number,
-            'get_secondary_nav_items': self.get_nav_items,
-        })
-        return TemplateResponse(
-            request,
-            'ask-cfpb/see-all.html',
-            context)
-
-    def get_results_es7(self, request):
-        context = self.get_context(request)
-        search_term = request.GET.get('search_term', '').strip()
         search = AnswerPageSearch(
             search_term=search_term,
             base_query=self.query_base,
@@ -398,15 +361,9 @@ class PortalSearchPage(
     @route(r'^$')
     def portal_topic_page(self, request):
         self.portal_category = None
-        if flag_enabled('ELASTICSEARCH_DSL_ASK'):
-            self.query_base = AnswerPageDocument.search().filter(
-                'match', portal_topics=self.portal_topic.heading)
-            return self.get_results_es7(request)
-        else:
-            self.query_base = SearchQuerySet().filter(
-                portal_topics=self.portal_topic.heading,
-                language=self.language)
-            return self.get_results(request)
+        self.query_base = AnswerPageDocument.search().filter(
+            'match', portal_topics=self.portal_topic.heading)
+        return self.get_results(request)
 
     @route(r'^(?P<category>[^/]+)/$')
     def portal_category_page(self, request, **kwargs):
@@ -426,17 +383,10 @@ class PortalSearchPage(
                 request,
                 'ask-cfpb/see-all.html',
                 context)
-        if flag_enabled('ELASTICSEARCH_DSL_ASK'):
-            self.query_base = AnswerPageDocument.search().filter(
-                'match', portal_topics=self.portal_topic.heading).filter(
-                'match', portal_categories=self.portal_category.heading)
-            return self.get_results_es7(request)
-        else:
-            self.query_base = SearchQuerySet().filter(
-                portal_topics=self.portal_topic.heading,
-                language=self.language,
-                portal_categories=self.portal_category.heading)
-            return self.get_results(request)
+        self.query_base = AnswerPageDocument.search().filter(
+            'match', portal_topics=self.portal_topic.heading).filter(
+            'match', portal_categories=self.portal_category.heading)
+        return self.get_results(request)
 
 
 class AnswerResultsPage(CFGOVPage):
