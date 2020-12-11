@@ -21,8 +21,8 @@ describe( 'obtener-respuestas', () => {
       buscar.open();
       buscar.enter( 'vehíclo' );
       buscar.search();
-      buscar.resultsHeader().contains( 'results for “vehículo”' );
-      buscar.resultsHeader().siblings( 'p' ).first().contains( 'Search instead for' );
+      buscar.resultsHeader().contains( 'resultados para “vehículo”' );
+      buscar.resultsHeader().siblings( 'p' ).first().contains( 'Busca de' );
     } );
   } );
 } );
