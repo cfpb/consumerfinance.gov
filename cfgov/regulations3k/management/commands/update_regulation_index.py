@@ -11,7 +11,9 @@ logger = logging.getLogger(__name__)
 
 def _run_elasticsearch_rebuild():
     """Rebuild the Elasticsearch index after prepping section paragraphs."""
-    call_command('search_index', 'regulations3k', '--rebuild -f --parallel')
+    call_command('search_index',
+        '--rebuild', '-f',
+        '--models', 'regulations3k')
 
 
 class Command(BaseCommand):
