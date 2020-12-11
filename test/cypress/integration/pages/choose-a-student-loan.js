@@ -9,17 +9,20 @@ describe( 'Paying for College', () => {
   describe( 'Choose a student loan', () => {
     it( 'should display answers to each question', () => {
       cy.get( '#_o1' ).click();
-      cy.get( '#_o1' ).should( 'contain', 'I have to borrow money for school. What are my options?' );
+      cy.get( '#_o1' ).should( 'be.visible' )
+        .and( 'contain', 'I have to borrow money for school. What are my options?' );
       cy.get( '#answer1' ).should( 'be.visible' )
         .and( 'contain', 'If you have to take out student loans' );
 
       cy.get( '#_o2' ).click();
-      cy.get( '#_o2' ).should( 'contain', "What if my grants and federal loans don't cover the cost of attendance?" );
+      cy.get( '#_o2' ).should( 'be.visible' )
+        .and( 'contain', "What if my grants and federal loans don't cover the cost of attendance?" );
       cy.get( '#answer2' ).should( 'be.visible' )
         .and( 'contain', 'If your grants and federal loans are not enough to cover the cost of your education' );
 
       cy.get( '#_o3' ).click();
-      cy.get( '#_o3' ).should( 'contain', 'What should I consider when shopping for a private loan?' );
+      cy.get( '#_o3' ).should( 'be.visible' )
+        .and( 'contain', 'What should I consider when shopping for a private loan?' );
       cy.get( '#answer3' ).should( 'be.visible' )
         .and( 'contain', 'First, make sure you need a private student loan' );
     } );
