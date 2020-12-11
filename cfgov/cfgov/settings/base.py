@@ -762,14 +762,8 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Enable django-elasticsearch-dsl and disable haystack in ask_cfpb.
-    "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
     # Enable django-elasticsearch-dsl and disable haystack in regulations3k.
     "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
-    # Enable django-elasticsearch-dsl and disable haystack in paying_for_college.
-    "ELASTICSEARCH_DSL_PFC": [("boolean", False)],
-    # Enable django-elasticsearch-dsl and disable haystack in teachers_digital_platform.
-    "ELASTICSEARCH_DSL_TDP": [("boolean", False)],
 }
 
 

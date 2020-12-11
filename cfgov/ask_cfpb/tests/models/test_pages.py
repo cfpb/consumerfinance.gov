@@ -8,8 +8,6 @@ from django.http import HttpRequest, HttpResponse
 from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
-from haystack.models import SearchResult
-from haystack.query import SearchQuerySet
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
@@ -54,41 +52,6 @@ class TestStripHTML(SimpleTestCase):
             "</span></li></ul>"
         )
         self.assertNotIn("mortgageA", strip_html(markup))
-
-
-class MockSearchResult(SearchResult):
-    def __init__(self, app_label, model_name, pk, score, **kwargs):
-        self.autocomplete = "What is mock question {}?".format(pk)
-        self.url = "/ask-cfpb/mock-question-en-{}/".format(pk)
-        self.text = "Mock answer text for question {}.".format(pk)
-        super(MockSearchResult, self).__init__(
-            app_label, model_name, pk, score, **kwargs
-        )
-
-
-def mock_queryset(count=0):
-    class MockSearchQuerySet(SearchQuerySet):
-        def __iter__(self):
-            if count:
-                return iter(
-                    [
-                        MockSearchResult("ask_cfpb", "AnswerPage", i, 0.5)
-                        for i in list(range(1, count + 1))
-                    ]
-                )
-            else:
-                return iter([])
-
-        def count(self):
-            return count
-
-        def filter(self, *args, **kwargs):
-            return self
-
-        def models(self, *models):
-            return self
-
-    return MockSearchQuerySet()
 
 
 class AnswerStringTest(TestCase):
@@ -383,9 +346,8 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(str(test_page), test_page.title)
         self.assertEqual(test_page.portal_topic, PortalTopic.objects.get(pk=1))
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_english_category_title_es7(self, mock_search):
+    def test_english_category_title(self, mock_search):
         page = self.english_search_page
         url = page.url + page.reverse_subpage(
             "portal_category_page", kwargs={"category": "how-to-guides"}
@@ -396,31 +358,8 @@ class PortalSearchPageTest(TestCase):
             "Auto loans how-to guides"
         )
 
-    def test_english_category_title(self):
-        page = self.english_search_page
-        url = page.url + page.reverse_subpage(
-            "portal_category_page", kwargs={"category": "how-to-guides"}
-        )
-        response = self.client.get(url)
-        self.assertEqual(
-            response.context_data.get("page").title,
-            "Auto loans how-to guides"
-        )
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_spanish_category_title_es7(self, mock_search):
-        page = self.spanish_search_page
-        url = page.url + page.reverse_subpage(
-            "portal_category_page", kwargs={"category": "paso-a-paso"}
-        )
-        response = self.client.get(url)
-        self.assertEqual(
-            response.context_data.get("page").title,
-            "Préstamos para vehículos paso a paso",
-        )
-
-    def test_spanish_category_title(self):
+    def test_spanish_category_title(self, mock_search):
         page = self.spanish_search_page
         url = page.url + page.reverse_subpage(
             "portal_category_page", kwargs={"category": "paso-a-paso"}
@@ -477,29 +416,12 @@ class PortalSearchPageTest(TestCase):
             "See all results within auto loans</a></span>",
         )
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_topic_page_200_es7(self, mock_search):
+    def test_portal_topic_page_200(self, mock_search):
         page = self.english_search_page
         response = self.client.get(page.url)
         self.assertEqual(response.status_code, 200)
 
-    def test_portal_topic_page_200(self):
-        page = self.english_search_page
-        response = self.client.get(page.url)
-        self.assertEqual(response.status_code, 200)
-
-    @mock.patch.object(SearchQuerySet, 'filter')
-    def test_portal_category_page_200(self, mock_filter):
-        mock_filter.return_value = mock_queryset(count=2)
-        page = self.english_search_page
-        url = page.url + page.reverse_subpage(
-            "portal_category_page", kwargs={"category": "how-to-guides"}
-        )
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
     def test_portal_category_page_calls_search(self, mock_search):
         page = self.english_search_page
@@ -515,25 +437,6 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch.object(PortalSearchPage, 'get_nav_items')
-    def test_spanish_portal_search_page_200(self, mock_nav):
-        mock_nav.return_value = (
-            [
-                {
-                    "title": "Spanish topic heading",
-                    "url": "mock-url",
-                    "active": False,
-                    "expanded": True,
-                    "children": [],
-                }
-            ],
-            True,
-        )
-        page = self.spanish_search_page
-        response = self.client.get(page.url)
-        self.assertEqual(response.status_code, 200)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
     def test_spanish_portal_search_page_renders(self, mock_search):
         page = self.spanish_search_page
@@ -549,45 +452,30 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_topic_page_with_no_hits_same_suggestion_es7(
-        self, mock_search
-    ):
-        term = "hipotatoes"
-        mock_search.suggest.return_value = {
-            'search_term': term,
-            'suggestion': None,
-            'results': []
-        }
-        mock_search.search.return_value = {
-            'search_term': term,
-            'suggestion': None,
-            'results': []
-        }
-        page = self.english_search_page
-        base_url = page.url
-        url = f"{base_url}?search_term={term}"
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_search.call_count, 1)
-
-    @mock.patch.object(SearchQuerySet, 'filter')
-    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
     def test_portal_topic_page_with_no_hits_same_suggestion(
-        self, mock_suggestion, mock_filter
+        self, mock_search
     ):
-        mock_suggestion.return_value = "hoodoo"
-        mock_filter.return_value = mock_queryset()
+        term = "hipotatoes"
+        mock_search.suggest.return_value = {
+            'search_term': term,
+            'suggestion': None,
+            'results': []
+        }
+        mock_search.search.return_value = {
+            'search_term': term,
+            'suggestion': None,
+            'results': []
+        }
         page = self.english_search_page
         base_url = page.url
-        url = "{}?search_term=hoodoo".format(base_url)
+        url = f"{base_url}?search_term={term}"
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(mock_search.call_count, 1)
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_topic_page_with_no_hits_with_suggestion_es7(
+    def test_portal_topic_page_with_no_hits_with_suggestion(
         self, mock_search
     ):
         term = "hipotatoes"
@@ -608,30 +496,8 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(mock_search.call_count, 1)
 
-    @mock.patch.object(SearchQuerySet, 'filter')
-    @mock.patch.object(SearchQuerySet, 'count')
-    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
-    def test_portal_category_page_with_no_hits_with_suggestion(
-        self, mock_suggestion, mock_count, mock_filter
-    ):
-        mock_count.return_value = 0
-        mock_suggestion.return_value = "hoodunit"
-        mock_filter.return_value = mock_queryset()
-        page = self.english_search_page
-        base_url = page.url + page.reverse_subpage(
-            "portal_category_page", kwargs={"category": "how-to-guides"}
-        )
-        url = "{}?search_term=hoodoo".format(base_url)
-        with override_settings(
-            FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]}
-        ):
-            response = self.client.get(url)
-            self.assertEqual(response.context_data["search_term"], "hoodunit")
-            self.assertEqual(response.status_code, 200)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_category_page_with_no_hits_with_suggestion_es7(
+    def test_portal_category_page_with_no_hits_with_suggestion(
         self, mock_search
     ):
         term = "hoodoo"
@@ -652,28 +518,8 @@ class PortalSearchPageTest(TestCase):
             self.assertEqual(response.context_data["search_term"], term)
             self.assertEqual(response.status_code, 200)
 
-    @mock.patch.object(SearchQuerySet, 'filter')
-    @mock.patch.object(SearchQuerySet, 'count')
-    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
-    def test_portal_topic_page_with_no_hits_with_suggestion(
-        self, mock_suggestion, mock_count, mock_filter
-    ):
-        mock_suggestion.return_value = "hoodunit"
-        mock_count.return_value = 0
-        mock_filter.return_value = mock_queryset()
-        page = self.english_search_page
-        base_url = page.url
-        url = "{}?search_term=hoodoo".format(base_url)
-        with override_settings(
-            FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]}
-        ):
-            response = self.client.get(url)
-            self.assertEqual(response.context_data["search_term"], "hoodunit")
-            self.assertEqual(response.status_code, 200)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_category_page_same_suggestion_es7(
+    def test_portal_category_page_same_suggestion(
         self, mock_search
     ):
         term = "hoodoo"
@@ -691,27 +537,8 @@ class PortalSearchPageTest(TestCase):
         self.assertEqual(response.context_data["search_term"], term)
         self.assertEqual(response.status_code, 200)
 
-    @mock.patch.object(SearchQuerySet, 'filter')
-    @mock.patch.object(SearchQuerySet, 'count')
-    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
-    def test_portal_category_page_same_suggestion(
-        self, mock_suggestion, mock_count, mock_filter
-    ):
-        mock_filter.return_value = mock_queryset()
-        mock_count.return_value = 0
-        mock_suggestion.return_value = "hoodoo"
-        page = self.english_search_page
-        base_url = page.url + page.reverse_subpage(
-            "portal_category_page", kwargs={"category": "how-to-guides"}
-        )
-        url = "{}?search_term=hoodoo".format(base_url)
-        response = self.client.get(url)
-        self.assertEqual(response.context_data["search_term"], "hoodoo")
-        self.assertEqual(response.status_code, 200)
-
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
-    def test_portal_topic_page_suggestion_es7(self, mock_search):
+    def test_portal_topic_page_suggestion(self, mock_search):
         term = "hoodoo"
         mock_search.suggest.return_value = {
             'search_term': term,
@@ -724,17 +551,6 @@ class PortalSearchPageTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["search_term"], term)
-
-    @mock.patch.object(SearchQuerySet, 'models')
-    @mock.patch.object(SearchQuerySet, 'filter')
-    def test_portal_topic_page_suggestion(self, mock_filter, mock_models):
-        mock_models.spelling_suggestion.return_value = "hoodunit"
-        mock_filter.return_value = mock_queryset()
-        page = self.english_search_page
-        url = "{}?search_term=hoodoo".format(page.url)
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context_data["search_term"], "hoodoo")
 
     def test_get_glossary_terms(self):
         page = self.english_search_page
