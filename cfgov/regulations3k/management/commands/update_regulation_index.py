@@ -17,7 +17,7 @@ def _run_elasticsearch_rebuild():
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        """Extract paragraphs and run Elasticsearch's `search_index` command."""
+        """Extract paragraphs and run `search_index` Elasticsearch command."""
         counter = {
             'created': 0,
             'deleted': 0,
