@@ -9,7 +9,6 @@ import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 
-
 const appView = {
   _actionPlanChoices: null,
   _didThisHelpChoices: null,

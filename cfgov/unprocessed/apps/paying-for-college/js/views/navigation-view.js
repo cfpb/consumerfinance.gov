@@ -3,7 +3,10 @@
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { updateState } from '../dispatchers/update-state.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { getAllStateValues, getStateValue } from '../dispatchers/get-model-values.js';
+import {
+  getAllStateValues,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 
 const navigationView = {
@@ -216,7 +219,6 @@ const navigationView = {
     updateState.replaceStateInHistory( window.location.search );
     this._addPopStateListener();
   }
-
 };
 
 export {

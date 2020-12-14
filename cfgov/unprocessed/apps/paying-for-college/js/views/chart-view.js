@@ -3,7 +3,13 @@ import { bindEvent } from '../../../../js/modules/util/dom-events';
 import Highcharts from 'highcharts/highstock';
 import more from 'highcharts/highcharts-more';
 import numberToMoney from 'format-usd';
-import { getExpensesValue, getFinancialValue, getSchoolCohortValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
+import {
+  getExpensesValue,
+  getFinancialValue,
+  getSchoolCohortValue,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
 import { updateState } from '../dispatchers/update-state.js';
 
 // curlies in strings is a way of formatting Highcharts labels
@@ -630,9 +636,7 @@ const chartView = {
       chartView.repaymentMeterChart.series[0].setData( [ arc ] );
     }
   }
-
 };
-
 
 export {
   chartView

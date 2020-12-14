@@ -91,7 +91,6 @@ const expensesView = {
   updateExpensesView: () => {
     expensesView._updateExpensesItems();
   }
-
 };
 
 export {

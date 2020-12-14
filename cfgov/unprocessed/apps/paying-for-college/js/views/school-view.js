@@ -4,11 +4,22 @@ import { closest } from '../../../../js/modules/util/dom-traverse';
 import { decimalToPercentString } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { refreshExpenses, updateFinancial, updateSchoolData } from '../dispatchers/update-models.js';
+import {
+  refreshExpenses,
+  updateFinancial,
+  updateSchoolData
+} from '../dispatchers/update-models.js';
 import { updateState } from '../dispatchers/update-state.js';
-import { getProgramList, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { updateFinancialView, updateGradMeterChart, updateRepaymentMeterChart } from '../dispatchers/update-view.js';
-
+import {
+  getProgramList,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import {
+  updateFinancialView,
+  updateGradMeterChart,
+  updateRepaymentMeterChart
+} from '../dispatchers/update-view.js';
 
 const schoolView = {
   _searchSection: null,
@@ -236,7 +247,6 @@ const schoolView = {
     // Initialize listeners
     schoolView._addListeners();
   }
-
 };
 
 export {

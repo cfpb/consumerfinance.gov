@@ -1,7 +1,6 @@
 import { updateFinancial } from '../dispatchers/update-models.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { getConstants } from '../dispatchers/get-api-values.js';
-import { updateFinancialView } from '../dispatchers/update-view.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
