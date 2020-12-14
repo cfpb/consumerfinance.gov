@@ -1,7 +1,7 @@
 export class RegulationsSearch {
 
   open() {
-    cy.visit( '/rules-policy/rulemaking/regulations/search-regulations/results/' );
+    cy.visit( '/rules-policy/regulations/search-regulations/results/' );
   }
 
   searchForm() {
