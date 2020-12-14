@@ -88,10 +88,6 @@
             <div class="m-info-unit_heading-text">
                 {% include_block value.heading %}
             </div>
-        {%- elif value.heading %}
-            <div class="m-info-unit_heading-text">
-                {{ value.heading|safe }}
-            </div>
         {%- endif %}
 
     {%- if link_image_and_heading %}
