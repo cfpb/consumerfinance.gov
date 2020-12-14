@@ -3,29 +3,24 @@ import { PfcFinancialPathToGraduation } from '../../pages/paying-for-college/you
 const page = new PfcFinancialPathToGraduation();
 
 describe( 'Paying For College', () => {
+  beforeEach( () => {
+    cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
+  } );
   describe( 'Your Financial Path To Graduation', () => {
     it( 'American college search should return results', () => {
-      page.open();
-      page.click( 'Get started' );
+      page.clickGetStarted( );
       page.enter( 'American' );
       page.searchResults().should( 'be.visible' );
     } );
-    // it( 'ABC college search should contain results', () => {
-    //   page.open();
-    //   page.click( 'Get started' );
-    //   page.select( 'ABC' );
-    //   page.searchResults().should( 'be.visible' );
-    //   page.searchResults().contains( 'ABCO Technology' );
-    // } );
     it( 'certificate should display total_costs', () => {
-      page.open();
-      page.click( 'Get started' );
-      page.setText( 'search__school-input', 'Harvard' );
+      page.clickGetStarted( );
+      page.enter( 'Harvard University' );
+      page.searchResults().should( 'be.visible' );
       page.selectProgram( 'type', 'certificate' );
       page.selectProgram( 'length', '1' );
       page.selectProgram( 'rate', 'in-state' );
       page.selectProgram( 'housing', 'on-campus' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.click( 'No' );
       page.setText( 'costs__tuition-fees', '50000' );
       page.setText( 'costs__room-board', '25000' );
@@ -41,14 +36,14 @@ describe( 'Paying For College', () => {
       } );
     } );
     it( 'associates degree should display total_costs', () => {
-      page.open();
-      page.click( 'Get started' );
-      page.setText( 'search__school-input', 'Harvard' );
+      page.clickGetStarted( );
+      page.enter( 'Harvard University' );
+      page.searchResults().should( 'be.visible' );
       page.selectProgram( 'type', 'associates' );
       page.selectProgram( 'length', '2' );
       page.selectProgram( 'rate', 'out-of-state' );
       page.selectProgram( 'housing', 'off-campus' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.click( 'Yes' );
       page.setText( 'costs__tuition-fees', '100000' );
       page.setText( 'costs__room-board', '50000' );
@@ -64,14 +59,14 @@ describe( 'Paying For College', () => {
       } );
     } );
     it( 'graduate degree should display total_costs', () => {
-      page.open();
-      page.click( 'Get started' );
-      page.setText( 'search__school-input', 'Harvard' );
+      page.clickGetStarted( );
+      page.enter( 'Harvard University' );
+      page.searchResults().should( 'be.visible' );
       page.selectProgram( 'type', 'graduate' );
       page.selectProgram( 'length', '4' );
       page.selectProgram( 'rate', 'out-of-state' );
       page.selectProgram( 'housing', 'off-campus' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.click( 'No' );
       page.setText( 'costs__tuition-fees', '400000' );
       page.setText( 'costs__room-board', '200000' );
@@ -85,7 +80,7 @@ describe( 'Paying For College', () => {
       cy.get( '[data-financial-item="total_costs"]' ).each( el => {
         cy.wrap( el ).should( 'contain', '$797,500' );
       } );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText( 'grants__pell', '9000' );
       page.setText( 'grants__seog', '10000' );
       page.setText( 'grants__otherFederal', '11000' );
@@ -99,13 +94,13 @@ describe( 'Paying For College', () => {
       page.setText( 'scholarships__school', '18000');
       page.setText( 'scholarships__other', '19000');
       cy.get( '[data-financial-item="total_grantsScholarships"]' ).should( 'contain', '$158,500' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText( 'workStudy__workStudy', '50000');
       cy.get( '[data-financial-item="total_workStudy"]' ).should( 'contain', '$50,000' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText('loans__directUnsub', '90000');
       cy.get( '[data-financial-item="total_fedLoans"]' ).should( 'contain', '$5,442' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText('loans__stateLoan', '100000');
       page.setText('loans__stateLoanRate', '9');
       page.setText('loans__stateLoanFee', '8');
@@ -116,7 +111,7 @@ describe( 'Paying For College', () => {
       page.setText('loans__nonprofitLoanRate', '3');
       page.setText('loans__nonprofitLoanFee', '2');
       cy.get( '[data-financial-item="total_publicLoans"]' ).should( 'contain', '$209,99' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText('savings__personal', '10000');
       page.setText('savings__family', '20000');
       page.setText('savings__collegeSavings', '30000');
@@ -125,27 +120,27 @@ describe( 'Paying For College', () => {
       page.setText('income__employerAssist', '60000');
       page.setText('income_otherFunding', '70000');
       cy.get( '[data-financial-item="total_otherResources"]' ).should( 'contain', '$280,000' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
+      page.clickNextStep( );
+      page.clickNextStep( );
+      page.clickNextStep( );
+      page.clickNextStep( );
       page.affordLoanChoice( 'monthly' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
+      page.clickNextStep( );
+      page.clickNextStep( );
       page.actionPlan( 'put-into-action' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
     } );
     it( 'bachelors degree should display total_costs', () => {
-      page.open();
-      page.click( 'Get started' );
-      page.setText( 'search__school-input', 'Harvard' );
+      page.clickGetStarted( );
+      page.enter( 'Harvard University' );
+      page.searchResults().should( 'be.visible' );
       page.selectProgram( 'type', 'bachelors' );
       page.selectProgram( 'length', '3' );
       page.selectProgram( 'rate', 'in-state' );
       page.selectProgram( 'housing', 'on-campus' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.click( 'Yes' );
       page.setText( 'costs__tuition-fees', '200000' );
       page.setText( 'costs__room-board', '100000' );
@@ -159,7 +154,7 @@ describe( 'Paying For College', () => {
       cy.get( '[data-financial-item="total_costs"]' ).each( el => {
         cy.wrap( el ).should( 'contain', '$400,000' );
       } );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText( 'grants__pell', '9293' );
       page.setText( 'grants__seog', '8000' );
       page.setText( 'grants__otherFederal', '7000' );
@@ -173,17 +168,13 @@ describe( 'Paying For College', () => {
       page.setText( 'scholarships__school', '2000');
       page.setText( 'scholarships__other', '3000');
       cy.get( '[data-financial-item="total_grantsScholarships"]' ).should( 'contain', '$54,793' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText( 'workStudy__workStudy', '50000');
       cy.get( '[data-financial-item="total_workStudy"]' ).should( 'contain', '$50,000' );
-      page.click( 'Next step' );
-      // page.setText('fellowAssist__fellowship', '60000');
-      // page.setText('fellowAssist__assistantship', '70000');
-      // cy.get( '[data-financial-item="total_fellowAssist"]' ).should( 'contain', '$130,000' );
-      // page.setText('loans__directSub', '80000');
+      page.clickNextStep( );
       page.setText('loans__directUnsub', '90000');
       cy.get( '[data-financial-item="total_fedLoans"]' ).should( 'contain', '$5,442' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText('loans__stateLoan', '100000');
       page.setText('loans__stateLoanRate', '9');
       page.setText('loans__stateLoanFee', '8');
@@ -194,7 +185,7 @@ describe( 'Paying For College', () => {
       page.setText('loans__nonprofitLoanRate', '3');
       page.setText('loans__nonprofitLoanFee', '2');
       cy.get( '[data-financial-item="total_publicLoans"]' ).should( 'contain', '$209,99' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
       page.setText('savings__personal', '10000');
       page.setText('savings__family', '20000');
       page.setText('savings__collegeSavings', '30000');
@@ -203,17 +194,17 @@ describe( 'Paying For College', () => {
       page.setText('income__employerAssist', '60000');
       page.setText('income_otherFunding', '70000');
       cy.get( '[data-financial-item="total_otherResources"]' ).should( 'contain', '$280,000' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
+      page.clickNextStep( );
+      page.clickNextStep( );
+      page.clickNextStep( );
+      page.clickNextStep( );
       page.affordLoanChoice( 'hourly' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
+      page.clickNextStep( );
+      page.clickNextStep( );
       page.actionPlan( 'consider' );
-      page.click( 'Next step' );
+      page.clickNextStep( );
     } );
   } );
 } );

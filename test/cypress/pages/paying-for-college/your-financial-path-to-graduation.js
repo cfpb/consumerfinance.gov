@@ -1,19 +1,19 @@
 export class PfcFinancialPathToGraduation {
 
-  open() {
-    cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
-  }
-
   click( name ) {
     cy.get( '.a-btn' ).contains( name ).click();
   }
 
-  enter( name ) {
-    cy.get( '#search__school-input' ).type( name, { force: true } );
+  clickGetStarted() {
+    cy.get( '.btn__get-started' ).click();
   }
 
-  select( name ) {
-    cy.get( '#search__school-input' ).select( name, { force: true } );
+  clickNextStep() {
+    cy.get( '.btn__next-step' ).click();
+  }
+
+  enter( name ) {
+    cy.get( '#search__school-input' ).type( name, { force: true } );
   }
 
   searchResults() {
