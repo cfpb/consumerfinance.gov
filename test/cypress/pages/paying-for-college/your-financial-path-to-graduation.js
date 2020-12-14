@@ -1,29 +1,5 @@
 export class PfcFinancialPathToGraduation {
 
-  openConstants() {
-    cy.visit( '/paying-for-college2/understanding-your-financial-aid-offer/api/constants/' );
-  }
-
-  openNationalStats() {
-    cy.visit( '/paying-for-college2/understanding-your-financial-aid-offer/api/national-stats/' );
-  }
-
-  openOffer( name ) {
-    cy.visit( `/paying-for-college2/understanding-your-financial-aid-offer/offer/?${ name }` );
-  }
-
-  openProgram( name ) {
-    cy.visit( `/paying-for-college2/understanding-your-financial-aid-offer/api/program/${ name }/` );
-  }
-
-  openSchool( id ) {
-    cy.visit( `/paying-for-college2/understanding-your-financial-aid-offer/api/school/${ id }.json` );
-  }
-
-  school( term ) {
-    cy.visit( `/paying-for-college2/understanding-your-financial-aid-offer/api/search-schools.json?q=${ term }` );
-  }
-
   open() {
     cy.visit( '/paying-for-college/your-financial-path-to-graduation/' );
   }
