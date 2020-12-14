@@ -98,8 +98,8 @@ describe( 'Paying For College', () => {
       page.setText( 'workStudy__workStudy', '50000');
       cy.get( '[data-financial-item="total_workStudy"]' ).should( 'contain', '$50,000' );
       page.clickNextStep( );
-      page.setText('loans__directUnsub', '90000');
-      cy.get( '[data-financial-item="total_fedLoans"]' ).should( 'contain', '$5,442' );
+      page.setText('loans__directUnsub', '2000');
+      cy.get( '[data-financial-item="total_fedLoans"]' ).should( 'contain', '$1,979' );
       page.clickNextStep( );
       page.setText('loans__stateLoan', '100000');
       page.setText('loans__stateLoanRate', '9');
@@ -172,8 +172,8 @@ describe( 'Paying For College', () => {
       page.setText( 'workStudy__workStudy', '50000');
       cy.get( '[data-financial-item="total_workStudy"]' ).should( 'contain', '$50,000' );
       page.clickNextStep( );
-      page.setText('loans__directUnsub', '90000');
-      cy.get( '[data-financial-item="total_fedLoans"]' ).should( 'contain', '$5,442' );
+      page.setText('loans__directUnsub', '2000');
+      cy.get( '[data-financial-item="total_fedLoans"]' ).should( 'contain', '$1,979' );
       page.clickNextStep( );
       page.setText('loans__stateLoan', '100000');
       page.setText('loans__stateLoanRate', '9');
