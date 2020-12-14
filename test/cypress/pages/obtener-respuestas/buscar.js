@@ -1,7 +1,7 @@
-export class AskCfpbSearch {
+export class ObtenerRespuestasBuscar {
 
   open() {
-    cy.visit( '/ask-cfpb/' );
+    cy.visit( '/es/obtener-respuestas/' );
   }
 
   enter( term ) {
