@@ -5,10 +5,8 @@ from collections import OrderedDict
 
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import TemplateView, View
-from haystack.query import SearchQuerySet
 
 from paying_for_college.disclosures.scripts import nat_stats
 from paying_for_college.forms import FeedbackForm
@@ -291,24 +289,6 @@ class ConstantsRepresentation(View):
     def get(self, request):
         return HttpResponse(self.get_constants(),
                             content_type='application/json')
-
-
-# TODO: delete the school_search_api function after we migrate to ES7
-def school_search_api(request):
-    sqs = SearchQuerySet().models(School)
-    sqs = sqs.autocomplete(autocomplete=request.GET.get('q', ''))
-
-    document = [{'schoolname': school.text,
-                 'id': school.school_id,
-                 'city': school.city,
-                 'nicknames': school.nicknames,
-                 'state': school.state,
-                 'url': reverse("paying_for_college:disclosures:school-json",
-                                args=[school.school_id])}
-                for school in sqs]
-    json_doc = json.dumps(document)
-
-    return HttpResponse(json_doc, content_type='application/json')
 
 
 def school_autocomplete(request):
