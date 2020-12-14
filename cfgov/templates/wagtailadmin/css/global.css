@@ -1,0 +1,52 @@
+body:before {
+    content: attr(data-env);
+    display: block;
+    padding: 0.25em;
+    background-color: #bb5b03; /* Dark Orange */
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@media screen and (min-width: 800px) {
+    body:before {
+        box-sizing: border-box;
+        width: 200px;
+        padding: 0.5em;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
+    }
+}
+
+[data-env="content"]:before {
+    background-color: #f37e77; /* Salmon */
+    color: #000;
+}
+
+[data-env="beta-admin"]:before {
+    background-color: #fcf2f2; /* Salmon Light */
+    color: #000;
+}
+
+[data-env="build"]:before {
+    background-color: #71b2d4; /* Blue */
+    color: #000;
+}
+
+[data-env="dev2"]:before,
+[data-env="dev3"]:before,
+[data-env="dev4"]:before,
+[data-env="dev5"]:before,
+[data-env^="cfgov-"]:before /* Dev Docker stacks */ {
+    background-color: #e9b04d; /* Orange */
+    color: #000;
+}
+
+.login .help {
+    top: 50%;
+}
