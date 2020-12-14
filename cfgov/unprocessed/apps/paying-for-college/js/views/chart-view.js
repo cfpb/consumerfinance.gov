@@ -1,8 +1,3 @@
-import accessibility from 'highcharts/modules/accessibility';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
-import Highcharts from 'highcharts/highstock';
-import more from 'highcharts/highcharts-more';
-import numberToMoney from 'format-usd';
 import {
   getExpensesValue,
   getFinancialValue,
@@ -10,6 +5,11 @@ import {
   getSchoolValue,
   getStateValue
 } from '../dispatchers/get-model-values.js';
+import Highcharts from 'highcharts/highstock';
+import accessibility from 'highcharts/modules/accessibility';
+import { bindEvent } from '../../../../js/modules/util/dom-events';
+import more from 'highcharts/highcharts-more';
+import numberToMoney from 'format-usd';
 import { updateState } from '../dispatchers/update-state.js';
 
 // curlies in strings is a way of formatting Highcharts labels

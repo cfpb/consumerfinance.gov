@@ -1,13 +1,13 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
-import { closest } from '../../../../js/modules/util/dom-traverse';
-import { updateState } from '../dispatchers/update-state.js';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
 import {
   getAllStateValues,
   getStateValue
 } from '../dispatchers/get-model-values.js';
+import { bindEvent } from '../../../../js/modules/util/dom-events';
+import { closest } from '../../../../js/modules/util/dom-traverse';
 import { sendAnalyticsEvent } from '../util/analytics.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 const navigationView = {
   _contentSidebar: null,

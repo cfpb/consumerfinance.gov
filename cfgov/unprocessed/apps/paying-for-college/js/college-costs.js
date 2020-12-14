@@ -26,7 +26,7 @@ const init = function() {
 
   schoolView.init( body );
   expensesView.init( body );
-  financialView.init( body );
+  financialView.init();
   navigationView.init( body );
   chartView.init( body );
   appView.init();
