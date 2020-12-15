@@ -3,10 +3,17 @@
  * which tracks the current app state and allows the views to update based on
  * state.
 */
-import { getProgramInfo } from '../dispatchers/get-model-values.js';
-import { recalculateFinancials, updateFinancial } from '../dispatchers/update-models.js';
-import { updateFinancialViewAndFinancialCharts, updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
+import {
+  recalculateFinancials,
+  updateFinancial
+} from '../dispatchers/update-models.js';
+import {
+  updateFinancialViewAndFinancialCharts,
+  updateNavigationView,
+  updateSchoolItems,
+  updateStateInDom,
+  updateUrlQueryString
+} from '../dispatchers/update-view.js';
 
 const urlVals = [
   'pid', 'programHousing', 'programType', 'programLength',
