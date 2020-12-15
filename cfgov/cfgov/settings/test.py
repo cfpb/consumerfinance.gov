@@ -72,7 +72,7 @@ STATICFILES_FINDERS += [
 ]
 
 STATICFILES_DIRS += [
-    PROJECT_ROOT.child('core', 'testutils', 'staticfiles'),
+    PROJECT_ROOT.joinpath('core', 'testutils', 'staticfiles'),
 ]
 
 MOCK_STATICFILES_PATTERNS = {
