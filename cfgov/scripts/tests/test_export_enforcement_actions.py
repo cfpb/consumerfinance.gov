@@ -29,7 +29,6 @@ class TestExportEnforcementActions(TestCase):
 
         self.test_all_data_page = EnforcementActionPage(
             title="Great Test Page",
-            institution_type="Bank",
             live=True,
             preview_description='This is a great test page.'
         )
@@ -86,7 +85,6 @@ class TestExportEnforcementActions(TestCase):
 
         self.test_no_data_page = EnforcementActionPage(
             title="Terrible Test Page",
-            institution_type="Bank",
             live=False,
             preview_description='This is a terrible test page.'
         )
@@ -94,7 +92,6 @@ class TestExportEnforcementActions(TestCase):
 
         self.test_wrong_page = EnforcementActionPage(
             title="Wrong Test Page",
-            institution_type="Bank",
             live=True,
             preview_description='This is the wrong test page.'
         )
