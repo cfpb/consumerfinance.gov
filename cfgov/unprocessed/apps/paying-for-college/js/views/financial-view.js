@@ -1,10 +1,17 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
-import numberToMoney from 'format-usd';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { recalculateFinancials, updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
 import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
-import { getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
+import {
+  getFinancialValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import {
+  recalculateFinancials,
+  updateFinancial,
+  updateFinancialsFromSchool
+} from '../dispatchers/update-models.js';
+import { bindEvent } from '../../../../js/modules/util/dom-events';
+import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
 import { updateState } from '../dispatchers/update-state.js';
 
@@ -51,8 +58,6 @@ const financialView = {
   _handleCostsButtonClick: function( event ) {
     const target = event.target;
     const answer = target.dataset.costs_offerAnswer;
-    const offerContent = document.querySelector( '[data-offer-costs-info="' + answer + '"]' );
-    const costsContent = document.getElementById( 'costs_inputs-section' );
 
     // When the button is clicked, bring in school data if 'No'
     if ( getStateValue( 'costsQuestion' ) === false ) {
@@ -150,7 +155,7 @@ const financialView = {
   },
 
   /* init - Initialize the financialView object */
-  init: function( body ) {
+  init: function() {
     this._financialItems = document.querySelectorAll( '[data-financial-item]' );
     this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
     this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
@@ -158,7 +163,6 @@ const financialView = {
     this._addInputListeners();
     this._addButtonListeners();
   }
-
 };
 
 export {

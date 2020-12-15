@@ -1,7 +1,6 @@
 /**
  * Update the values of models
  */
-
 import { expensesModel } from '../models/expenses-model.js';
 import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
@@ -10,8 +9,12 @@ import { getSchoolData } from '../dispatchers/get-api-values.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { isNumeric, stringToNum } from '../util/number-utils.js';
-import { getConstantsValue, getProgramInfo, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { updateGradMeterChart, updateRepaymentMeterChart, updateSchoolView } from './update-view.js';
+import {
+  getProgramInfo,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import { updateSchoolView } from './update-view.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 import { urlParameters } from '../util/url-parameter-utils.js';
 
