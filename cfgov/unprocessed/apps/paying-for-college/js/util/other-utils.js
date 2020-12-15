@@ -56,8 +56,8 @@ function getStateByCode( code ) {
   if ( statesByCode.hasOwnProperty( code ) ) {
     return statesByCode[code];
   }
-  return '';
 
+  return '';
 }
 
 /**

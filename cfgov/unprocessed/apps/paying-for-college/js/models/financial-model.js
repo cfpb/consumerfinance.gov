@@ -4,9 +4,19 @@ of college, grants, loans, etc. It also includes debt calculations
 based on these costs.
 */
 
-import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { initializeFinancialValues, recalculateExpenses } from '../dispatchers/update-models.js';
-import { updateAffordingChart, updateCostOfBorrowingChart, updateFinancialView, updateFinancialViewAndFinancialCharts, updateMakePlanChart, updateMaxDebtChart, updateUrlQueryString } from '../dispatchers/update-view.js';
+import {
+  getConstantsValue,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import {
+  initializeFinancialValues,
+  recalculateExpenses
+} from '../dispatchers/update-models.js';
+import {
+  updateFinancialViewAndFinancialCharts,
+  updateUrlQueryString
+} from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
 import { enforceRange, stringToNum } from '../util/number-utils.js';
