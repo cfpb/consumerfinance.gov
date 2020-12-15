@@ -3,7 +3,7 @@ import unittest
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Locale
 
 from mock import Mock
 from model_bakery import baker
@@ -33,7 +33,8 @@ class ApplicationLinkTestCaseMixin(object):
         cls.root = Page.objects.get(slug='root')
 
     def setUp(self):
-        self.job_listing = baker.prepare(JobListingPage, description='foo')
+        locale = Locale.objects.get(pk=1)
+        self.job_listing = baker.prepare(JobListingPage, description='foo', locale=locale)
         self.job_listing.full_clean = Mock(return_value=None)
         self.root.add_child(instance=self.job_listing)
 
