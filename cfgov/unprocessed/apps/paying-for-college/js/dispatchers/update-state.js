@@ -1,8 +1,11 @@
 /**
  * Update the application state model, then trigger updates in views
  */
-import { updateCostOfBorrowingChart, updateMakePlanChart, updateMaxDebtChart } from '../dispatchers/update-view.js';
-import { navigationView } from '../views/navigation-view.js';
+import {
+  updateCostOfBorrowingChart,
+  updateMakePlanChart,
+  updateMaxDebtChart
+} from '../dispatchers/update-view.js';
 import { stateModel } from '../models/state-model.js';
 
 const updateState = {
