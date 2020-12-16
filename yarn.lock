@@ -903,10 +903,10 @@
     "@cfpb/cfpb-core" "^0.7.0"
     "@cfpb/cfpb-icons" "^0.7.0"
 
-"@cfpb/cfpb-forms@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.7.0.tgz#1358fc37a3c502957dd90df0f20b54b0253c3cbb"
-  integrity sha512-PxSr1CNWCe/01FlLo7ukZGBjgYfwb2+/BWiTI47x1Pg3Bww5VniGQWfTPG2Vl4OahxSEL6nw6/KWasfrCm4ZqQ==
+"@cfpb/cfpb-forms@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.7.1.tgz#1ffa0fb6f75e7f7455446bababa04f48786c213c"
+  integrity sha512-VWk2rlFN1FoeEFV2+ThYE7pIHSPcst1nJmUIgOm77lc1ekiPBfjTsQ0YIfwYMvuPg6HEotYCBcdzQ/nHxlWgbg==
   dependencies:
     "@cfpb/cfpb-buttons" "^0.7.0"
     "@cfpb/cfpb-core" "^0.7.0"

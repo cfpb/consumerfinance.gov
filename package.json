@@ -23,7 +23,7 @@
     "@cfpb/cfpb-buttons": "0.7.0",
     "@cfpb/cfpb-core": "0.7.0",
     "@cfpb/cfpb-expandables": "0.7.0",
-    "@cfpb/cfpb-forms": "0.7.0",
+    "@cfpb/cfpb-forms": "0.7.1",
     "@cfpb/cfpb-grid": "0.7.0",
     "@cfpb/cfpb-icons": "0.7.0",
     "@cfpb/cfpb-layout": "0.7.0",
