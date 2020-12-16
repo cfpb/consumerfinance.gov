@@ -18,7 +18,7 @@
   "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead, ie >= 11",
   "dependencies": {
     "@babel/core": "7.12.10",
-    "@babel/preset-env": "7.12.10",
+    "@babel/preset-env": "7.12.11",
     "@cfpb/cfpb-atomic-component": "0.4.0",
     "@cfpb/cfpb-buttons": "0.4.0",
     "@cfpb/cfpb-core": "0.4.0",
@@ -75,7 +75,7 @@
     "terser-webpack-plugin": "5.0.3",
     "turbolinks": "5.1.1",
     "vinyl-named": "1.1.0",
-    "webpack": "5.10.2",
+    "webpack": "5.10.3",
     "webpack-stream": "6.1.1",
     "xdr": "0.5.3"
   },
