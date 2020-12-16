@@ -4,7 +4,7 @@
    ========================================================================== */
 
 // Required Modules
-import * as typeCheckers from '../../modules/util/type-checkers';
+import typeCheckers from '@cfpb/cfpb-atomic-component/src/utilities/type-checkers';
 import ERROR_MESSAGES from '../../config/error-messages-config';
 
 /* TODO: Update all the validators to return both passed and failed states

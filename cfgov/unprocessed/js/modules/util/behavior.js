@@ -23,7 +23,10 @@
 
 // Required modules.
 import * as dataHook from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';
-import { BEHAVIOR_PREFIX, JS_HOOK } from './standard-type';
+import {
+  BEHAVIOR_PREFIX,
+  JS_HOOK
+} from '@cfpb/cfpb-atomic-component/src/utilities/standard-type';
 
 
 /**

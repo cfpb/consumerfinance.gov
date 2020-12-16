@@ -3,7 +3,7 @@ import {
   BEHAVIOR_PREFIX,
   JS_HOOK,
   noopFunct
-} from '../../modules/util/standard-type';
+} from '@cfpb/cfpb-atomic-component/src/utilities/standard-type';
 import BaseTransition from '../../modules/transition/BaseTransition';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import { checkBehaviorDom } from '../../modules/util/behavior';
