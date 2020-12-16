@@ -5,7 +5,7 @@ import {
   noopFunct
 } from '../../modules/util/standard-type';
 import BaseTransition from '../../modules/transition/BaseTransition';
-import EventObserver from '../../modules/util/EventObserver';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import { checkBehaviorDom } from '../../modules/util/behavior';
 
 /**

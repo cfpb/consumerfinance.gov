@@ -3,6 +3,6 @@
    ========================================================================== */
 
 import FilterableList from '../../organisms/FilterableList';
-import { instantiateAll } from '../../modules/util/atomic-helpers';
+import { instantiateAll } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
 instantiateAll( '.o-filterable-list', FilterableList );

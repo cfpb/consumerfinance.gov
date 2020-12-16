@@ -1,7 +1,6 @@
 const behavior = require( '../../../js/modules/util/behavior' );
 const utils = require( './search-utils' );
-const closest = require( '../../../js/modules/util/dom-traverse' ).closest;
-const find = require( '../../../js/modules/util/dom-traverse' ).queryOne;
+import { closest, queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 const expandableFacets = require( './expandable-facets' );
 const cfExpandables = require( '@cfpb/cfpb-expandables/src/Expandable' );
 const analytics = require( './tdp-analytics' );

@@ -1,7 +1,7 @@
 import { scrollIntoView } from '../../../js/modules/util/scroll';
 import DT from '../../owning-a-home/js/form-explainer/dom-tools';
 import { assign } from '../../../js/modules/util/assign';
-import { closest } from '../../../js/modules/util/dom-traverse';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import throttle from 'lodash.throttle';
 
 

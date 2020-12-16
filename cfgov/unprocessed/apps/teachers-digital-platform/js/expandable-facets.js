@@ -5,13 +5,13 @@
 // polyfill for ie9 compatibility
 require( 'classlist-polyfill' );
 
-const closest = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-closest' ).closest;
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
-const Events = require( '@cfpb/cfpb-atomic-component/src/mixins/Events.js' );
-const Organism = require( '@cfpb/cfpb-atomic-component/src/components/Organism' );
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+const AtomicComponent = require( '@cfpb/cfpb-atomic-component/src/components/AtomicComponent' );
 const ExpandableFacetTransition = require( './ExpandableFacetTransition' );
 
-const ExpandableFacets = Organism.extend( {
+const ExpandableFacets = AtomicComponent.extend( {
   ui: {
     base:           '.o-expandable-facets',
     target:         '.o-expandable-facets_target',
@@ -71,7 +71,7 @@ function initialize() {
     expandableGroup.classList.contains( this.classes.groupAccordion );
 
   if ( this.isAccordionGroup ) {
-    Events.on(
+    EventObserver.addEventListener(
       'accordionActivated',
       _accordionActivatedHandler.bind( this )
     );
@@ -106,7 +106,7 @@ function expandableClickHandler() {
     if ( this.activeAccordion ) {
       this.activeAccordion = false;
     } else {
-      Events.trigger( 'accordionActivated', { target: this } );
+      EventObserver.dispatchEvent( 'accordionActivated', { target: this } );
       this.activeAccordion = true;
     }
   }

@@ -1,4 +1,4 @@
-import EventObserver from '../modules/util/EventObserver';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import { isArray } from './util/type-checkers';
 
 const eventObserver = new EventObserver();

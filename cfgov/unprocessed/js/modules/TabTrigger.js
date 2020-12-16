@@ -1,5 +1,5 @@
 // Required modules.
-import EventObserver from '../modules/util/EventObserver';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 
 // Key code for the tab key on the keyboard.
 const KEY_TAB = 9;
