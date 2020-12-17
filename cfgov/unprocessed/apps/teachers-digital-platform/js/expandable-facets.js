@@ -8,7 +8,7 @@ require( 'classlist-polyfill' );
 import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-const AtomicComponent = require( '@cfpb/cfpb-atomic-component/src/components/AtomicComponent' );
+import AtomicComponent from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
 const ExpandableFacetTransition = require( './ExpandableFacetTransition' );
 
 const ExpandableFacets = AtomicComponent.extend( {
