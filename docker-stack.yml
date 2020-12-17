@@ -81,6 +81,7 @@ services:
       - GOVDELIVERY_PASSWORD
       - PGPASSWORD
       - SECRET_KEY
+      - MAPBOX_ACCESS_TOKEN
     deploy:
       placement:
         constraints:
@@ -135,4 +136,7 @@ secrets:
     external: True
   GOVDELIVERY_PASSWORD:
     name: staging_govdelivery_password
+    external: True
+  MAPBOX_ACCESS_TOKEN:
+    name: mapbox_access_token
     external: True

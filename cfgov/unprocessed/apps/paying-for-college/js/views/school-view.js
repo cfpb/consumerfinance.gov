@@ -1,15 +1,28 @@
 /* schoolView specifically covers the school search and associated fields, such as
    program length and living situation. */
+import {
+  getProgramList,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import {
+  refreshExpenses,
+  updateFinancial,
+  updateSchoolData
+} from '../dispatchers/update-models.js';
+import {
+  updateFinancialView,
+  updateGradMeterChart,
+  updateRepaymentMeterChart
+} from '../dispatchers/update-view.js';
+import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { closest } from '../../../../js/modules/util/dom-traverse';
 import { decimalToPercentString } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { refreshExpenses, updateFinancial, updateSchoolData } from '../dispatchers/update-models.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { getProgramList, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { updateFinancialView, updateGradMeterChart, updateRepaymentMeterChart } from '../dispatchers/update-view.js';
 import { stringToNum } from '../util/number-utils.js';
-
 
 const schoolView = {
   _searchSection: null,
@@ -174,6 +187,7 @@ const schoolView = {
     if ( getStateValue( 'programType' ) === 'graduate' ) {
       level = 'graduate';
     }
+
     const list = getProgramList( level );
     if ( list.length > 0 ) {
       updateState.byProperty( 'schoolHasPrograms', 'yes' );
@@ -200,10 +214,7 @@ const schoolView = {
   },
 
   _updateSchoolRadioButtons: () => {
-    const campus = getSchoolValue( 'onCampusAvail' );
-    const control = getSchoolValue( 'Public' );
     const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programStudentType' ];
-
 
     schoolView._searchResults.classList.remove( 'active' );
     schoolView._searchBox.value = getSchoolValue( 'school' );
@@ -242,7 +253,6 @@ const schoolView = {
     // Initialize listeners
     schoolView._addListeners();
   }
-
 };
 
 export {

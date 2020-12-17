@@ -1,7 +1,3 @@
-from haystack.query import SearchQuerySet
-
-from flags.state import flag_enabled
-
 from ask_cfpb.documents import AnswerPageDocument
 
 
@@ -62,35 +58,22 @@ class AnswerPageSearch:
         try:
             self.suggestion = response.suggest.suggestion[0].options[0].text
         except IndexError:
-            self.suggestion = self.search_term
+            # No Suggestions Found
+            return {
+                'search_term': self.search_term,
+                'suggestion': None,
+                'results': self.results
+            }
 
-        if self.suggestion != self.search_term:
-            search = self.base_query or AnswerPageDocument.search()
-            suggest_results = search.query(
-                "match", text=self.suggestion).filter(
-                "term", language=self.language)
-            total = suggest_results.count()
-            suggest_results = suggest_results[0:total]
-            self.results = suggest_results.execute()[0:total]
+        search = self.base_query or AnswerPageDocument.search()
+        suggest_results = search.query(
+            "match", text=self.suggestion).filter(
+            "term", language=self.language)
+        total = suggest_results.count()
+        suggest_results = suggest_results[0:total]
+        self.results = suggest_results.execute()[0:total]
         return {
             'search_term': self.suggestion,
             'suggestion': self.search_term,
             'results': self.results
         }
-
-
-class AskSearch:
-    def __init__(self, search_term, query_base=None, language='en'):
-        self.query_base = query_base or SearchQuerySet().filter(
-            language=language)
-        self.search_term = make_safe(search_term).strip()
-        self.queryset = self.query_base.filter(content=self.search_term)
-        self.suggestion = None
-
-    def suggest(self, request):
-        suggestion = SearchQuerySet().spelling_suggestion(self.search_term)
-        if (suggestion and suggestion != self.search_term and
-                request.GET.get('correct', '1') == '1' and
-                flag_enabled('ASK_SEARCH_TYPOS', request=request)):
-            self.queryset = self.query_base.filter(content=suggestion)
-            self.search_term, self.suggestion = suggestion, self.search_term

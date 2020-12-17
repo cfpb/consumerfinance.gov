@@ -3,7 +3,6 @@ import { financialModel } from '../models/financial-model.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 
-
 const urlParameters = {
   'iped': 'schoolModel.schoolID',
   'oid': 'schoolModel.oid',

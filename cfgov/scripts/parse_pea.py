@@ -12,7 +12,8 @@ def make_row(row, *positions):
 
 def make_date(val):
     d = val.strip().split('/')
-    d[2] = '20' + d[2]
+    if len(d[2]) == 2:
+        d[2] = '20' + d[2]
     return int(dt(int(d[2]), int(d[0]), int(d[1])).timestamp() * 1000)
 
 

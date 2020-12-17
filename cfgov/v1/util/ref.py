@@ -157,6 +157,12 @@ enforcement_statuses = [
     ('post-order-post-judgment', 'Post Order/Post Judgment'),
 ]
 
+institution_types = [
+    ('Non-Bank', 'Nonbank'),
+    ('Bank', 'Bank'),
+    ('Individual', 'Individual')
+]
+
 
 def get_appropriate_categories(specific_categories, page_type):
     """ An array of specific categories is provided from whatever
