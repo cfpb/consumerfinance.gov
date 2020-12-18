@@ -2,7 +2,7 @@
 import {
   checkDom,
   setInitFlag
-} from '../../../../js/modules/util/atomic-helpers';
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import rangesliderJs from 'rangeslider-js';
 
 /**

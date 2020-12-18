@@ -5,7 +5,7 @@ import {
   getStateValue
 } from '../dispatchers/get-model-values.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { closest } from '../../../../js/modules/util/dom-traverse';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateState } from '../dispatchers/update-state.js';
 

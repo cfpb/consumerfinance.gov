@@ -1,5 +1,5 @@
 // Required modules.
-import EventObserver from '../../modules/util/EventObserver';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 
 // eslint-disable-next-line max-statements
 /**

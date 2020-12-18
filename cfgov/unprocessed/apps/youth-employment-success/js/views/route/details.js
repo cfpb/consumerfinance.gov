@@ -1,5 +1,5 @@
 import { assign, formatNegative, isNumber, toArray, toPrecision } from '../../util';
-import { checkDom, setInitFlag } from '../../../../../js/modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import { ALERT_TYPES } from '../../data-types/notifications';
 import { getPlanItem } from '../../data-types/todo-items';
 import money from '../../money';

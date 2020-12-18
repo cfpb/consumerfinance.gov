@@ -172,7 +172,7 @@ expandable.init( _expandable.EXPANDED );
 or
 
 ```js
-const atomicHelpers = require( '../../modules/util/atomic-helpers' );
+const atomicHelpers = require( '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js' );
 const Expandable = require( '../../organisms/Expandable' );
 atomicHelpers.instantiateAll( '.o-expandable', Expandable );
 ```
