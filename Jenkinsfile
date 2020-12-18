@@ -82,8 +82,8 @@ pipeline {
                 DOCKER_BUILDKIT = '1'
             }
             steps {
-                postGitHubStatus("jenkins/deploy", "pending", "Building", env.JOB_URL)
-                postGitHubStatus("jenkins/functional-tests", "pending", "Waiting", env.JOB_URL)
+                postGitHubStatus("jenkins/deploy", "pending", "Building", env.RUN_DISPLAY_URL)
+                postGitHubStatus("jenkins/functional-tests", "pending", "Waiting", env.RUN_DISPLAY_URL)
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
@@ -96,7 +96,7 @@ pipeline {
 
         stage('Scan Image') {
             steps {
-                postGitHubStatus("jenkins/deploy", "pending", "Scanning", env.JOB_URL)
+                postGitHubStatus("jenkins/deploy", "pending", "Scanning", env.RUN_DISPLAY_URL)
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
@@ -146,7 +146,7 @@ pipeline {
                 }
             }
             steps {
-                postGitHubStatus("jenkins/deploy", "pending", "Deploying", env.JOB_URL)
+                postGitHubStatus("jenkins/deploy", "pending", "Deploying", env.RUN_DISPLAY_URL)
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 30, unit: 'MINUTES') {
@@ -157,7 +157,7 @@ pipeline {
 
                 echo "Site available at: https://${CFGOV_HOSTNAME}"
 
-                postGitHubStatus("jenkins/deploy", "success", "Deployed", env.JOB_URL)
+                postGitHubStatus("jenkins/deploy", "success", "Deployed", env.RUN_DISPLAY_URL)
             }
         }
 
@@ -169,7 +169,7 @@ pipeline {
                 }
             }
             steps {
-                postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.JOB_URL)
+                postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
@@ -179,7 +179,7 @@ pipeline {
                     }
                 }
 
-                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.JOB_URL)
+                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
             }
         }
     }
@@ -206,7 +206,7 @@ pipeline {
 
                 if (env.DEPLOY_SUCCESS == false) {
                     postGitHubStatus("jenkins/deploy", "failure", "Failed", env.RUN_DISPLAY_URL)
-                    postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.JOB_URL)
+                    postGitHubStatus("jenkins/functional-tests", "error", "Cancelled", env.RUN_DISPLAY_URL)
                 } else {
                     postGitHubStatus("jenkins/functional-tests", "failure", "Failed", env.RUN_DISPLAY_URL)
                 }

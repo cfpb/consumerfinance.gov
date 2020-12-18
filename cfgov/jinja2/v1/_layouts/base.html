@@ -256,8 +256,14 @@
         ) }}
     {% endblock header %}
 
-    {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
-    {{ wagtailuserbar() }}
+    {% block wagtailuserbar %}
+        {#
+          WAGTAILUSERBAR IN-PAGE VIEW CONTROLS
+          If you _don't_ want this to show up in a particular template,
+          add an empty wagtailuserbar block to that template.
+        #}
+        {{ wagtailuserbar() }}
+    {% endblock %}
 
     {% block banner_top %}
         {% if page and page.archived %}
