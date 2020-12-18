@@ -1,4 +1,5 @@
 {% macro render(block, index) %}
+    {%- import 'macros/accessible-languages.html' as accessible_languages with context -%}
     <div class="block
                 {{ 'block__flush-top' if index == 1
                    and not (block.value.has_top_border or block.value.has_top_rule_line) else '' }}
@@ -9,7 +10,8 @@
                 {{ 'block__padded-bottom block__border-bottom'
                    if block.value.has_rule or block.value.has_bottom_border else '' }}
 
-                {{ block.block.meta.classname if block.block.meta.classname else '' -}}">
+                {{ block.block.meta.classname if block.block.meta.classname else '' -}}"
+        {{ accessible_languages.render() }}>
         {{ render_stream_child(block) | safe }}
     </div>
 {% endmacro %}
