@@ -11,7 +11,7 @@
                    if block.value.has_rule or block.value.has_bottom_border else '' }}
 
                 {{ block.block.meta.classname if block.block.meta.classname else '' -}}"
-         {{ accessible_languages.render() }}>
+        {{ accessible_languages.render() }}>
         {{ render_stream_child(block) | safe }}
     </div>
 {% endmacro %}
