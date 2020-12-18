@@ -1,6 +1,6 @@
 // Required modules.
 import { assign } from '../modules/util/assign';
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import { ajaxRequest } from '../modules/util/ajax-request';
 import { bindEvent } from '../modules/util/dom-events';
 import * as throttle from 'lodash.throttle';
