@@ -1,6 +1,6 @@
 // Required modules.
 import BaseTransition from './BaseTransition';
-import EventObserver from '../../modules/util/EventObserver';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 
 // Exported constants.
 const CLASSES = {

@@ -1,5 +1,5 @@
 // Required modules.
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import GlobalSearch from '../molecules/GlobalSearch';
 import MegaMenu from '../organisms/MegaMenu';
 

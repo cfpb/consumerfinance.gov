@@ -4,13 +4,13 @@ import {
   checkDom,
   instantiateAll,
   setInitFlag
-} from '../modules/util/atomic-helpers';
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import Analytics from '../modules/Analytics';
 import ERROR_MESSAGES from '../config/error-messages-config';
-import EventObserver from '../modules/util/EventObserver';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import FormModel from '../modules/util/FormModel';
-import Multiselect from '../molecules/Multiselect';
+import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 
