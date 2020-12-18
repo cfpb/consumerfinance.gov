@@ -7392,10 +7392,10 @@ liftoff@^3.1.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-lightbox2@2.11.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/lightbox2/-/lightbox2-2.11.0.tgz#fe3df40010a732a680296f6f554360f06e0f3bfa"
-  integrity sha512-ABzZ96qKu1KqzVAwrmkXwoW7GWOsR9vLTr7i9UIj36T01euVivDPrGuBl51ZK1UskmdqEkOYKqoYX6pqxBL6Zg==
+lightbox2@2.11.3:
+  version "2.11.3"
+  resolved "https://registry.yarnpkg.com/lightbox2/-/lightbox2-2.11.3.tgz#057d9244badb0f0fd4603c25d739a19a85a71978"
+  integrity sha512-Q4v6il/OK9ttgEkAxSok/jrI/LUbqTrePFchqP2x/59qaDIZgJjEEc5Xf7peSMc/55Zo5PAgmX6EiN/BeEeUBQ==
 
 lines-and-columns@^1.1.6:
   version "1.1.6"
