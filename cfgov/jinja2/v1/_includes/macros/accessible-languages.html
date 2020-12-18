@@ -11,10 +11,8 @@
    ========================================================================== #}
 
 {% macro render() %}
-    {%- if page -%}
-        lang="{{ page.language if page.language else 'en' }}"
-              {%- if page.language in ['ar'] -%}
-                  dir="rtl"
-              {%- endif -%}
+    {%- set rtl_languages = ['ar'] -%}
+    {%- if page and page.language in rtl_languages -%}
+        lang="{{ page.language }}" dir="rtl"
     {%- endif -%}
 {% endmacro %}
