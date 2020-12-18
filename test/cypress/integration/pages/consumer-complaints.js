@@ -14,9 +14,7 @@ describe( 'Consumer Complaint Database', () => {
   it( 'should display chart with complaints for all 50 states', () => {
     page.clickButton( 'Complaints' );
     page.checkLegend( 'description' ).should( 'contain', 'Complaints' );
-    page.chartSize( 580, 940 );
-    page.clickTile( 'DC' );
-    cy.url().should( 'include', 'state=DC' );
+    cy.get( '.cfpb-chart' ).should( 'be.visible' );
     states.forEach(name => {
       page.checkChart( name ).should( 'be.visible' );
     });
@@ -26,6 +24,8 @@ describe( 'Consumer Complaint Database', () => {
     states.forEach(name => {
       page.checkState( name ).should( 'be.visible' );
     });
+    page.clickTile( 'DC' );
+    cy.url().should( 'include', 'state=DC' );
   } );
 
   it( 'should limit results by a date range', () => {

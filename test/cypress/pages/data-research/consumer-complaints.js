@@ -16,14 +16,6 @@ export class ConsumerComplaints {
     cy.get( '.a-btn' ).contains( name ).click();
   }
 
-  chartSize( height, width) {
-    cy.get( '.cfpb-chart' ).should( 'be.visible' )
-      .and(chart => {
-        expect(chart.height()).to.be.equal(height);
-        expect(chart.width()).to.be.equal(width);
-    });
-  }
-
   clickTile( name ) {
     const tile = name.toUpperCase();
     return cy.get( `.tile-${tile}` ).click();
