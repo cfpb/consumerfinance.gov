@@ -145,8 +145,12 @@
         <h3 class="h4">
           Initial filing date
         </h3>
-        {% if page.date_filed %}
-            {{_date(page.date_filed)}}
+        {% if dispositions|length > 0 %}
+            {{_date(dispositions[0].date_filed)}}
+        {% else %}
+            {% if page.date_filed %}
+                {{_date(page.date_filed)}}
+            {% endif %}
         {% endif %}
     </div>
     <div class="m-related-metadata_item-container m-related-metadata_status">
