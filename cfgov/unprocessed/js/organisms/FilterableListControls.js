@@ -170,7 +170,7 @@ function FilterableListControls( element ) {
 
     fields.invalid.forEach( validation => {
       const field = validation.field;
-      if ( field.type === 'text' ) {
+      if ( field.type === 'text' || field.type === 'date' ) {
         validation.field.classList.add( FIELD_ERROR_CLASS );
         INVALID_FIELDS.push( validation.field );
       }
