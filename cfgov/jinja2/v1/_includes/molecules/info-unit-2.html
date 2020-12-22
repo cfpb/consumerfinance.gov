@@ -16,15 +16,8 @@
 
    value.image.alt:              String for image alt text.
 
-   value.heading:                (Optional) An object containing:
-
-   value.heading.text            The text of a heading.
-
-   value.heading.level:          The heading level (H2, H3, H4). Default: H3
-
-   value.heading.icon:           (Optional) A string containing cf-icon name
-                                 that triggers the insertion of an icon before
-                                 the heading.
+   value.heading:                (Optional) A heading object.
+                                 See _includes/blocks/heading.html.
 
    value.body:                   (Optional) A string containing the content
                                  to display below the heading (typically a
@@ -46,6 +39,8 @@
 
    ========================================================================== #}
 
+{%- from 'blocks/heading.html' import heading without context %}
+
 {%- macro info_unit(value, format, link_image_and_heading) -%}
 
 {# Confirm that not only is link_image_and_heading set, but that this
@@ -55,7 +50,7 @@
                                  and value.links
                                  and value.links[0]
                                  and value.links[0].url
-                                 and (value.image.upload or value.heading) %}
+                                 and (value.image.upload or value.heading.text) %}
 
 <div class="m-info-unit
             {{- ' m-info-unit__inline' if format == '25-75' else '' }}">
@@ -84,9 +79,9 @@
                 {% endif %}
         {%- endif %}
 
-        {%- if value.heading.text %}
+        {%- if value.heading and value.heading.text %}
             <div class="m-info-unit_heading-text">
-                {% include_block value.heading %}
+                {{ heading( value.heading ) }}
             </div>
         {%- endif %}
 
