@@ -165,8 +165,7 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 
   for ( let i = 0, len = capabilities.length; i < len; i++ ) {
     capability = capabilities[i];
-    let p;
-    for ( p in injectParams ) {
+    for ( const p in injectParams ) {
       if ( injectParams.hasOwnProperty( p ) ) {
         capability[p] = injectParams[p];
       }
@@ -249,7 +248,7 @@ function _onPrepare() {
 const config = {
   baseUrl:                  environmentTest.baseUrl,
   cucumberOpts: {
-    'require':   'cucumber/step_definitions/*.js',
+    'require':   'cucumber/step_definitions/**/*.js',
     'tags':      [ '~@mobile', '~@skip', '~@undefined' ],
     'profile':   false,
     'no-source': true,
