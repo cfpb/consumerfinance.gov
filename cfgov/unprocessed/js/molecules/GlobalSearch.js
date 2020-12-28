@@ -4,7 +4,7 @@ import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities
 import ClearableInput from '../modules/ClearableInput';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu';
-import MoveTransition from '../modules/transition/MoveTransition';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition';
 import TabTrigger from '../modules/TabTrigger';
 
 /**

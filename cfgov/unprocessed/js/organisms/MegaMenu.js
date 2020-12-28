@@ -4,7 +4,7 @@ import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.
 import FlyoutMenu from '../modules/behavior/FlyoutMenu';
 import MegaMenuDesktop from '../organisms/MegaMenuDesktop';
 import MegaMenuMobile from '../organisms/MegaMenuMobile';
-import MoveTransition from '../modules/transition/MoveTransition';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition';
 import TabTrigger from '../modules/TabTrigger';
 import Tree from '../modules/Tree';
 import { contains } from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';

@@ -4,7 +4,7 @@ import {
   JS_HOOK,
   noopFunct
 } from '@cfpb/cfpb-atomic-component/src/utilities/standard-type';
-import BaseTransition from '../../modules/transition/BaseTransition';
+import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import { checkBehaviorDom } from '../../modules/util/behavior';
 

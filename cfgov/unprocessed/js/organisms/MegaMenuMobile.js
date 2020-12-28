@@ -1,7 +1,7 @@
 // Required modules.
 import * as treeTraversal from '../modules/util/tree-traversal';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import MoveTransition from '../modules/transition/MoveTransition';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition';
 
 /**
  * MegaMenuMobile
