@@ -1,4 +1,4 @@
-const MultiSelect = require( '../../shared_objects/multiselect' );
+const MultiSelect = require( '../../shared_objects/multiselect.js' );
 const { Then, When, Before } = require( 'cucumber' );
 const chai = require( 'chai' );
 const expect = chai.expect;
@@ -134,7 +134,7 @@ Then( 'the first option should be highlighted',
 
       return multiSelect.getDropDownLabelElements()
         .first()
-        .getText();
+        .getAttribute( 'for' );
     }
 
     function _getActiveElementValue() {
