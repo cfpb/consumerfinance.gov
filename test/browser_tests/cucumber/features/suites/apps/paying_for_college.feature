@@ -59,7 +59,7 @@ Examples:
 | in-state    | on-campus  |
 | out-state   | on-campus  |
 | in-district | on-campus  |
-| in -state   | off-campus |
+| in-state    | off-campus |
 | out-state   | off-campus |
 | in-district | off-campus |
 | in-state    | family     |
