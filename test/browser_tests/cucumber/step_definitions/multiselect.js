@@ -137,20 +137,20 @@ Then( 'the first option should be highlighted',
         .getAttribute( 'for' );
     }
 
-    function _getActiveElementValue() {
+    function _getActiveElementId() {
 
       return browser
         .driver
         .switchTo()
         .activeElement()
-        .getAttribute( 'value' );
+        .getAttribute( 'id' );
     }
 
-    return Promise.all( [ _getfirstElementText(), _getActiveElementValue() ] )
-      .then( function( [ firstElementText, activeElementValue ] ) {
+    return Promise.all( [ _getfirstElementText(), _getActiveElementId() ] )
+      .then( function( [ firstElementText, activeElementId ] ) {
 
         return expect( firstElementText )
-          .to.equal( activeElementValue );
+          .to.equal( activeElementId );
       } );
   }
 );
