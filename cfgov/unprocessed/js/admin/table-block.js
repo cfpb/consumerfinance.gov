@@ -116,7 +116,11 @@ import { stateToHTML } from 'draft-js-export-html';
           const editorHtml = _createRichTextEditor( cellValue );
 
           modalDom.on( 'save-btn:clicked', function() {
-            const raw = JSON.parse( editorHtml.value );
+            let editorValue = editorHtml.value
+            if( !editorValue || editorValue === 'null'){
+              editorValue = '{"blocks":[{"key":"94s3s","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}'
+            }
+            const raw = JSON.parse( editorValue );
             const state = window.DraftJS.convertFromRaw( raw );
             const options = {
               entityStyleFn: entity => {
