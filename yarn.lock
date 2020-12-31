@@ -841,10 +841,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cfpb/cfpb-atomic-component@0.7.2", "@cfpb/cfpb-atomic-component@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.7.2.tgz#44d491534b1136d7f50594a4e8ac54f55ffc72e5"
-  integrity sha512-EssDTzMC98LLGNCP9e8179oukFjI2U27Yw+K6aUX2nCNS++gauPv5YUqQacx1pmLIsV7tfoWLlS61PNtgdzwiQ==
+"@cfpb/cfpb-atomic-component@0.7.3", "@cfpb/cfpb-atomic-component@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.7.3.tgz#3fd3733b4796554a4b9b5ffff19ea8bad62003ba"
+  integrity sha512-eEweXJGSPYAicLhYRSf7i0ogqTMcDb9snwOcApG7UdT9zEJJsIlEcGQyMEgyxC6aKMtVV9uu1UqeJm+d6cQ6gg==
   dependencies:
     ftdomdelegate "^3.0.0"
 
@@ -872,12 +872,12 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-expandables@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.7.2.tgz#0a5e96625b6956dccbe89246f53b5953b87a7bb4"
-  integrity sha512-EONJuqoX6gZbnF/GQIJE7O4lpSHscsKIaIB3z4L0piBIBjx1BkEgyF0YD3VB9QsmEnyxY0r6VGfhKd+B6QWPnQ==
+"@cfpb/cfpb-expandables@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.7.3.tgz#f6c2b9ff6ed3d40e68d541938389d5ad9e980614"
+  integrity sha512-2euenJIxvbZqORTkU3SZm96uGtU2gUocXhVLQ6dnytlr0mQZlb9PxfhKYG8N9Cau/6NFtZBWIyREjjMzHhLWpw==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.7.2"
+    "@cfpb/cfpb-atomic-component" "^0.7.3"
     "@cfpb/cfpb-core" "^0.7.2"
     "@cfpb/cfpb-icons" "^0.7.2"
 
@@ -950,12 +950,12 @@
     "@cfpb/cfpb-core" "^0.7.2"
     "@cfpb/cfpb-icons" "^0.7.2"
 
-"@cfpb/cfpb-tables@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-tables/-/cfpb-tables-0.7.2.tgz#06498cd427bac6c6a2fd1ef403439456a19003a0"
-  integrity sha512-7CybP71Y8tZekvehO2bXxuAFY31sC/8kHoFCWcvAnkOmFYA4/EKN0OREOH70i2CyTza8cr0NPlyMbrLWfgIPpg==
+"@cfpb/cfpb-tables@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-tables/-/cfpb-tables-0.7.3.tgz#9e97844356c19c23799644d84dea461f461c6bfd"
+  integrity sha512-/q87UllZhtI7QnyjsM0qcVREyiinbkDLTCkLFhZP3x8090u2YoyAU7mEM2TsLhJUHTOXOFltB4IB1rWWguuXQQ==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.7.2"
+    "@cfpb/cfpb-atomic-component" "^0.7.3"
     "@cfpb/cfpb-core" "^0.7.2"
 
 "@cfpb/cfpb-typography@0.3.2":
