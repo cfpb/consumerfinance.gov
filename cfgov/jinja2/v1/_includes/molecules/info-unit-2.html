@@ -64,19 +64,10 @@
             {%- set img = image(value.image.upload, 'original') %}
             {# Empty alt attribute if header text is present to prevent screen reader repetition #}
             {%- set img_alt_text = '' if value.heading.text else image_alt_value(value.image) %}
-                {%- if image_alt_value(value.image) %}
-                    <img class="m-info-unit_image
-                                {{- ' m-info-unit_image__square' if img.is_square else '' }}"
-                        src="{{ img.url }}"
-                        alt="{{ img_alt_text }}">
-                {%- else %}
-                    <div class="m-info-unit_image
-                                {{- ' m-info-unit_image__square' if img.is_square else '' }}"
-                        style="background-image: url( '{{ img.url }}' );
-                                {{- ' padding-bottom: ' ~ ( img.height / img.width * 100 ) ~ '%;'
-                                    if not img.is_square else '' }}">
-                    </div>
-                {% endif %}
+            <img class="m-info-unit_image
+                        {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+                src="{{ img.url }}"
+                alt="{{ img_alt_text }}">
         {%- endif %}
 
         {%- if value.heading and value.heading.text %}
