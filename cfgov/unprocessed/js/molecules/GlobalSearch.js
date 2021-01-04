@@ -1,11 +1,11 @@
 // Required modules.
-import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state';
+import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
-import ClearableInput from '../modules/ClearableInput';
+import ClearableInput from '../modules/ClearableInput.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import FlyoutMenu from '../modules/behavior/FlyoutMenu';
-import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition';
-import TabTrigger from '../modules/TabTrigger';
+import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
+import TabTrigger from '../modules/TabTrigger.js';
 
 /**
  * GlobalSearch
