@@ -227,8 +227,12 @@ export class AdminPage {
     cy.get( '.modal-body' ).find( `[name="${ name }"]` ).click();
   }
 
+  searchFirstTableCell( text ) {
+    return cy.get( '.htCore' ).find( 'td' ).first().contains( text );
+  }
+
   saveTableEditor() {
-    // wait 1 second because editor has lag between input and appearing in editor
+    // Wait 1 second because editor lags between input and appearing in editor.
     cy.wait( 1000 );
     cy.get( '#table-block-save-btn' ).click();
   }

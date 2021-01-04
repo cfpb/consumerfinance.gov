@@ -1,4 +1,4 @@
-import { PfcRepayStudentDebt } from '../../pages/paying-for-college/repay-student-debt/';
+import { PfcRepayStudentDebt } from '../../pages/paying-for-college/repay-student-debt.js';
 
 const page = new PfcRepayStudentDebt();
 
