@@ -1,4 +1,4 @@
-import { queryOne } from './dom-traverse';
+import { queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 /**
  * Shortcut for creating new dom elements.

@@ -20,6 +20,7 @@ const WEBPACK_MODE_DEFAULT = 'production';
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
+
     /* Exclude modules from transpiling.
        The below regex will match and exclude all node modules
        except those that start with `@cfpb/` or `cfpb-`.
@@ -37,6 +38,10 @@ const COMMON_MODULE_CONFIG = {
         } ] ]
       }
     }
+  },
+  {
+    test: /\.svg$/,
+    loader: 'svg-inline-loader'
   } ]
 };
 

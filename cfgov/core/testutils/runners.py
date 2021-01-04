@@ -34,8 +34,8 @@ class TestRunner(DiscoverRunner):
         )
 
         for p in PLACEHOLDER_FILES:
-            filename = settings.PROJECT_ROOT.child(*p.split(os.sep))
-            filename.parent.mkdir(parents=True)
+            filename = settings.PROJECT_ROOT.joinpath(*p.split(os.sep))
+            filename.parent.mkdir(parents=True, exist_ok=True)
 
             if not filename.exists():
                 with open(filename, 'w') as f:

@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from django.conf import global_settings
 from django.utils.translation import ugettext_lazy as _
@@ -6,17 +7,16 @@ from django.utils.translation import ugettext_lazy as _
 import dj_database_url
 from elasticsearch7 import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
-from unipath import DIRS, Path
 
 from cfgov.util import admin_emails
 
 
 # Repository root is 4 levels above this file
-REPOSITORY_ROOT = Path(__file__).ancestor(4)
+REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 # This is the root of the Django project, 'cfgov'
-PROJECT_ROOT = REPOSITORY_ROOT.child("cfgov")
-V1_TEMPLATE_ROOT = PROJECT_ROOT.child("jinja2", "v1")
+PROJECT_ROOT = REPOSITORY_ROOT.joinpath("cfgov")
+V1_TEMPLATE_ROOT = PROJECT_ROOT.joinpath("jinja2", "v1")
 
 SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
 
@@ -173,7 +173,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # Look for Django templates in these directories
-        "DIRS": [PROJECT_ROOT.child("templates")],
+        "DIRS": [PROJECT_ROOT.joinpath("templates")],
         # Look for Django templates in each app under a templates subdirectory
         "APP_DIRS": True,
         "OPTIONS": {
@@ -192,9 +192,9 @@ TEMPLATES = [
         # Look for Jinja2 templates in these directories
         "DIRS": [
             V1_TEMPLATE_ROOT,
-            V1_TEMPLATE_ROOT.child("_includes"),
-            V1_TEMPLATE_ROOT.child("_layouts"),
-            PROJECT_ROOT.child("static_built"),
+            V1_TEMPLATE_ROOT.joinpath("_includes"),
+            V1_TEMPLATE_ROOT.joinpath("_layouts"),
+            PROJECT_ROOT.joinpath("static_built"),
         ],
         # Look for Jinja2 templates in each app under a jinja2 subdirectory
         "APP_DIRS": True,
@@ -275,12 +275,14 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.child("static_built"),
-    PROJECT_ROOT.child("templates", "wagtailadmin"),
+    PROJECT_ROOT.joinpath("static_built"),
+    PROJECT_ROOT.joinpath("templates", "wagtailadmin"),
 ]
 
 # Also include any directories under static.in
-STATICFILES_DIRS += REPOSITORY_ROOT.child("static.in").listdir(filter=DIRS)
+STATICFILES_DIRS += [
+    d for d in REPOSITORY_ROOT.joinpath("static.in").iterdir() if d.is_dir()
+]
 
 ALLOWED_HOSTS = ["*"]
 
@@ -714,9 +716,6 @@ FLAGS = {
     "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Search.gov API-based site-search
     "SEARCH_DOTGOV_API": [],
-    # Turbolinks is a JS library that speeds up page loads
-    # https://github.com/turbolinks/turbolinks
-    "TURBOLINKS": [],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # SPLIT TESTING FLAGS
@@ -762,14 +761,6 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
-    # Enable django-elasticsearch-dsl and disable haystack in ask_cfpb.
-    "ELASTICSEARCH_DSL_ASK": [("boolean", False)],
-    # Enable django-elasticsearch-dsl and disable haystack in regulations3k.
-    "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", False)],
-    # Enable django-elasticsearch-dsl and disable haystack in paying_for_college.
-    "ELASTICSEARCH_DSL_PFC": [("boolean", False)],
-    # Enable django-elasticsearch-dsl and disable haystack in teachers_digital_platform.
-    "ELASTICSEARCH_DSL_TDP": [("boolean", False)],
 }
 
 

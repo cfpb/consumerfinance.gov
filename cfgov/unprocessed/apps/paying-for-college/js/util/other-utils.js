@@ -53,7 +53,11 @@ const statesByCode = {
 };
 
 function getStateByCode( code ) {
-  return statesByCode[code];
+  if ( statesByCode.hasOwnProperty( code ) ) {
+    return statesByCode[code];
+  }
+
+  return '';
 }
 
 /**

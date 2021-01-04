@@ -1,10 +1,13 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
-import { closest } from '../../../../js/modules/util/dom-traverse';
-import { updateState } from '../dispatchers/update-state.js';
+import {
+  getAllStateValues,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { getAllStateValues, getStateValue } from '../dispatchers/get-model-values.js';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 const navigationView = {
   _contentSidebar: null,
@@ -216,7 +219,6 @@ const navigationView = {
     updateState.replaceStateInHistory( window.location.search );
     this._addPopStateListener();
   }
-
 };
 
 export {

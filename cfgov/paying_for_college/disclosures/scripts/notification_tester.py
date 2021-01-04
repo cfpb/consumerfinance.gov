@@ -6,10 +6,6 @@ from paying_for_college.models import Contact
 
 
 # urls
-EDMC_DEV = "https://dev.exml.edmc.edu/cfpb"
-EDMC_BETA = "https://beta.exml.edmc.edu/cfpb"
-EDMC_PROD = 'edmc'
-BPI_PROD = 'bpi'
 BIN = "https://httpbin.org/"
 BINPOST = "https://httpbin.org/post"
 BINGET = "https://httpbin.org/get"
@@ -33,8 +29,10 @@ def send_test_notifications(url=None, oid=OID, errors=ERRORS):
     - print(send_test_notifications(url=BINPOST))
     """
     prod_endpoints = {
-        'edmc': Contact.objects.get(name='EDMC').endpoint,
-        'bpi': Contact.objects.get(name='Bridgepoint Education').endpoint
+        # 'edmc': Contact.objects.get(name='EDMC').endpoint,
+        'bpi': Contact.objects.get(name='Bridgepoint Education').endpoint,
+        'su': Contact.objects.get(name='South University').endpoint,
+        'ai': Contact.objects.get(name='Art Institutes').endpoint,
     }
     if not url:
         urls = list(prod_endpoints.values())

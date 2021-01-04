@@ -1,6 +1,6 @@
 import * as emailHelpers from '../modules/util/email-popup-helpers';
 import * as validators from '../modules/util/validators';
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import FormSubmit from './FormSubmit.js';
 
 /**

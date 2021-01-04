@@ -85,7 +85,6 @@ function enforceRange( n, min, max ) {
   };
 }
 
-
 /**
  * isNumeric - Verify that a value contains only number or decimal characters
  * @param {*} value Value to be checked

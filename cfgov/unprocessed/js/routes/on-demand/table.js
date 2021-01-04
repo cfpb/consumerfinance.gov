@@ -3,4 +3,5 @@
    ========================================================================== */
 
 // See https://github.com/cfpb/design-system/
-require( '@cfpb/cfpb-tables/src/Table' ).init();
+import Table from '@cfpb/cfpb-tables/src/Table';
+Table.init();
