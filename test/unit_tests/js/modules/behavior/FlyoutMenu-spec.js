@@ -225,7 +225,9 @@ describe( 'FlyoutMenu', () => {
          In a future JSDom update this should be revisited.
          See https://github.com/jsdom/jsdom/issues/1781
       */
-      contentDom.dispatchEvent( new Event( 'transitionend' ) );
+      const event = new Event( 'transitionend' );
+      event.propertyName = 'transform';
+      contentDom.dispatchEvent( event );
     } );
   } );
 
@@ -251,7 +253,9 @@ describe( 'FlyoutMenu', () => {
          In a future JSDom update this should be revisited.
          See https://github.com/jsdom/jsdom/issues/1781
       */
-      contentDom.dispatchEvent( new Event( 'transitionend' ) );
+      const event = new Event( 'transitionend' );
+      event.propertyName = 'transform';
+      contentDom.dispatchEvent( event );
     } );
   } );
 
