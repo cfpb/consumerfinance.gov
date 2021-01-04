@@ -19,7 +19,7 @@ import {
   updateWayfinder
 } from './permalinks-utils';
 import { bindEvent } from '../../../js/modules/util/dom-events';
-import { queryOne as find } from '../../../js/modules/util/dom-traverse';
+import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 const wayfinderLink = find( '.o-regulations-wayfinder_link' );
 

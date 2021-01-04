@@ -64,25 +64,23 @@
 
 {#
     Since desktop uses a button and mobile uses links,
-    we duplicate the markup here but use a div instead of a button.
+    we duplicate the markup here but use a link instead of a button.
 #}
-{% macro render_carousel_thumbnail_mobile( item, is_selected=false ) %}
-<div class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{% endif %}">
-    <a href="{{ item.link_url }}" title="{{ item.title }}">
-        <div class="o-carousel_thumbnail-layout">
-            <span class="o-carousel_thumbnail-visual">
-                {% set rendition = image( item.image, 'fill-48x48' ) %}
-                <img class="o-carousel_thumbnail-img"
-                        src="{{ rendition.url }}"
-                        alt="{{ item.title }}"
-                        aria-hidden="true">
-            </span>
-            <span class="o-carousel_thumbnail-text">
-                {{ item.title }}
-            </span>
-        </div>
-    </a>
-</div>
+{% macro render_carousel_thumbnail_mobile( item ) %}
+<a class="o-carousel_thumbnail" href="{{ item.link_url }}" title="{{ item.title }}">
+    <div class="o-carousel_thumbnail-layout">
+        <span class="o-carousel_thumbnail-visual">
+            {% set rendition = image( item.image, 'fill-48x48' ) %}
+            <img class="o-carousel_thumbnail-img"
+                    src="{{ rendition.url }}"
+                    alt="{{ item.title }}"
+                    aria-hidden="true">
+        </span>
+        <span class="o-carousel_thumbnail-text">
+            {{ item.title }}
+        </span>
+    </div>
+</a>
 {% endmacro %}
 
 {% macro render( value ) %}
@@ -115,7 +113,7 @@
 
     <div class="o-carousel_thumbnails o-carousel_thumbnails__mobile">
         {% for item in value %}
-            {{ render_carousel_thumbnail_mobile( item, loop.first ) }}
+            {{ render_carousel_thumbnail_mobile( item ) }}
         {% endfor %}
     </div>
 </div>

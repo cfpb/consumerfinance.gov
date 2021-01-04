@@ -3,8 +3,8 @@
    ========================================================================== */
 
 // Required modules.
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import EventObserver from '../modules/util/EventObserver';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import youTubeAPI from '../modules/youtube-api';
 
 const BASE_CLASS = 'o-video-player';

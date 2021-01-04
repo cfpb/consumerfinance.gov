@@ -256,8 +256,14 @@
         ) }}
     {% endblock header %}
 
-    {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
-    {{ wagtailuserbar() }}
+    {% block wagtailuserbar %}
+        {#
+          WAGTAILUSERBAR IN-PAGE VIEW CONTROLS
+          If you _don't_ want this to show up in a particular template,
+          add an empty wagtailuserbar block to that template.
+        #}
+        {{ wagtailuserbar() }}
+    {% endblock %}
 
     {% block banner_top %}
         {% if page and page.archived %}
@@ -336,9 +342,6 @@
           {% set js_source = page_js() | trim %}
           {% if js_source | length > 0 %}
             s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
-          {% endif %}
-          {% if flag_enabled('TURBOLINKS') %}
-            s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
           {% endif %}
           {# Pass scripts to JavaScript loader. #}
           jsl(s);

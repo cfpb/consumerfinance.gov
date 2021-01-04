@@ -1,5 +1,5 @@
 import Analytics from '../../../js/modules/Analytics';
-import { closest, queryOne } from '../../../js/modules/util/dom-traverse';
+import { closest, queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { bindEvent } from '../../../js/modules/util/dom-events';
 
 /* eslint-disable consistent-return */

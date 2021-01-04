@@ -1,7 +1,8 @@
 // This file contains the 'view' of expenses budget after graduation
-import numberToMoney from 'format-usd';
+import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
 import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
+import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
 import { stringToNum } from '../util/number-utils.js';
 import { updateAffordingChart, updateUrlQueryString } from '../dispatchers/update-view.js';
@@ -74,8 +75,6 @@ const expensesView = {
     expensesView._expensesItems.forEach( elem => {
       if ( !selectorMatches( elem, ':focus' ) ) {
         const prop = elem.dataset.expensesItem;
-        const isRate = prop.substr( 0, 5 ) === 'rate_';
-        const isFee = prop.substr( 0, 4 ) === 'fee_';
         let val = getExpensesValue( prop );
         val = numberToMoney( { amount: val, decimalPlaces: 0 } );
 
@@ -94,7 +93,6 @@ const expensesView = {
   updateExpensesView: () => {
     expensesView._updateExpensesItems();
   }
-
 };
 
 export {

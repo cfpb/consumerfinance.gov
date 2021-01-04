@@ -1,9 +1,8 @@
 const behavior = require( '../../../js/modules/util/behavior' );
 const utils = require( './search-utils' );
-const closest = require( '../../../js/modules/util/dom-traverse' ).closest;
-const find = require( '../../../js/modules/util/dom-traverse' ).queryOne;
-const expandableFacets = require( './expandable-facets' );
-const cfExpandables = require( '@cfpb/cfpb-expandables/src/Expandable' );
+import { closest, queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import expandableFacets from './expandable-facets';
+import cfExpandables from '@cfpb/cfpb-expandables/src/Expandable';
 const analytics = require( './tdp-analytics' );
 const fetch = require( './utils' ).fetch;
 const ClearableInput = require( './ClearableInput' ).ClearableInput;
