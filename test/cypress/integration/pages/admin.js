@@ -123,7 +123,7 @@ describe( 'Admin', () => {
       admin.selectTableEditorButton( 'unordered-list-item' );
       admin.typeTableEditorTextbox( 'test cell text' );
       admin.saveTableEditor();
-      cy.get( 'td' ).contains( 'test cell text' ).should( 'be.visible' );
+      admin.searchFirstTableCell( 'test cell text' ).should( 'be.visible' );
     } );
 
     it( 'should be able to select all standard edit buttons in table', () => {
