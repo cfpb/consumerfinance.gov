@@ -1,4 +1,4 @@
-import { PayingForCollege } from '../../components/paying-for-college/';
+import { PayingForCollege } from '../../components/paying-for-college.js';
 
 const page = new PayingForCollege();
 
