@@ -6,7 +6,6 @@ import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
 import { stringToNum } from '../util/number-utils.js';
 import { updateAffordingChart, updateUrlQueryString } from '../dispatchers/update-view.js';
-import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
 
 const expensesView = {
   _currentInput: null,

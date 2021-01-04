@@ -106,7 +106,7 @@ const stateModel = {
       schoolSelected: getSchoolValue( 'schoolID' ) === false,
       programTypeSelected: smv.programType === 'not-selected',
       programLengthSelected: smv.programLength === 'not-selected',
-      rateSelected: smv.programRate === 'not-selected' && control == 'Public',
+      rateSelected: smv.programRate === 'not-selected' && control === 'Public',
       housingSelected: smv.programHousing === 'not-selected',
       dependencySelected: ( smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected' )
     };
