@@ -8,37 +8,6 @@ const spawn = require( 'child_process' ).spawn;
 const SauceConnectTunnel = require( 'sauce-connect-tunnel' );
 
 /**
- * Run tox Acceptance tests.
- * @param {Function} cb - Callback function to call on completion.
- */
-function testAcceptanceBrowser( cb ) {
-  const params = minimist( process.argv.slice( 3 ) ) || {};
-  const toxParams = [ '-e', 'acceptance' ];
-
-  if ( params.recreate ) {
-    delete params.recreate;
-    toxParams.push( '-r' );
-  }
-
-  Object.keys( params ).forEach( key => {
-    if ( key !== '_' ) {
-      toxParams.push( key + '=' + params[key] );
-    }
-  } );
-
-  spawn( 'tox', toxParams, { stdio: 'inherit' } )
-    .once( 'close', function( code ) {
-      if ( code ) {
-        fancyLog( 'Tox tests exited with code ' + code );
-        cb(); // eslint-disable-line callback-return
-        process.exit( 1 );
-      }
-      fancyLog( 'Tox tests done!' );
-      cb(); // eslint-disable-line callback-return
-    } );
-}
-
-/**
  * Add a command-line flag to a list of Protractor parameters, if present.
  * @param {Object} protractorParams Parameters to pass to Protractor binary.
  * @param {Object} commandLineParams Parameters passed
@@ -234,5 +203,4 @@ async function spawnProtractor( cb ) {
   }
 }
 
-gulp.task( 'test:acceptance', testAcceptanceBrowser );
-gulp.task( 'test:acceptance:protractor', spawnProtractor );
+gulp.task( 'test:acceptance', spawnProtractor );

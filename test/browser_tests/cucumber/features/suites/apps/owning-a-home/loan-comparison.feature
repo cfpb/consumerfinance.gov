@@ -1,5 +1,5 @@
 Feature: Test the default values in the Loan Comparison page
-  As a first time visitor to the Buying a House page
+  As a first time visitor to the Owning a Home page
   I want to have fields pre-poluated
   So that I can compare loan costs easily
 
