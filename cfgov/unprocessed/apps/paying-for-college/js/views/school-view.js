@@ -222,7 +222,7 @@ const schoolView = {
   },
 
   _updateSchoolRadioButtons: () => {
-    const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programStudentType' ];
+    const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programDependency' ];
 
     schoolView._searchResults.classList.remove( 'active' );
     schoolView._searchBox.value = getSchoolValue( 'school' );

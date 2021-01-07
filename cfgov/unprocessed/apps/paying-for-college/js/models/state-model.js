@@ -18,7 +18,7 @@ import {
 
 const urlVals = [
   'pid', 'programHousing', 'programType', 'programLength',
-  'programRate', 'programStudentDependency', 'costsQuestion', 'expensesRegion',
+  'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
   'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign'
 ];
 

@@ -12,7 +12,7 @@ const urlParameters = {
   'typp': 'stateModel.programType',
   'lenp': 'stateModel.programLength',
   'ratp': 'stateModel.programRate',
-  'depp': 'stateModel.programStudentDependency',
+  'depp': 'stateModel.programDependency',
   'cobs': 'stateModel.costsQuestion',
   'regs': 'stateModel.expensesRegion',
   'iqof': 'stateModel.impactOffer',
