@@ -1,24 +1,25 @@
 heading_defaults = {
     'text': 'This is a heading.',
+    'level': 'h3',
 }
 
 
 heading_test_cases = {
-    'Text only': {},
+    'H3': {},
 
-    'No text (should render nothing)': {
+    'H3, no text (should render nothing)': {
         'text': None,
     },
 
-    'Different heading level (H2)': {
+    'H2': {
         'level': 'h2',
     },
 
-    'Different heading class (H3 rendered as H2)': {
+    'H3 rendered as H2': {
         'level_class': 'h2',
     },
 
-    'Icon': {
+    'H3 with icon': {
         'icon': 'pencil',
     },
 }

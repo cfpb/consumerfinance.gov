@@ -10,7 +10,7 @@
 
    value.text:          Heading text.
 
-   value.level:         The heading level (h2, h3, h4). Default: h3.
+   value.level:         The heading level (h2, h3, h4).
 
    value.level_class:   (Optional) Alternate heading class, used for tags like:
                         <h2 class="h3">
@@ -22,17 +22,15 @@
    ========================================================================== #}
 {%- macro heading( value ) -%}
 
-{%- set _default_level = 'h3' -%}
-
 {# Don't render anything if the heading text is empty. #}
 {% if value.text -%}
 
-<{{ value.level | default( _default_level ) }}
+<{{ value.level }}
 {%- if value.level_class %} class="{{ value.level_class }}"{% endif -%}
 >
     {%- if value.icon %}{{ svg_icon( value.icon ) }} {% endif %}
     {{- value.text | safe -}}
-</{{ value.level | default( _default_level ) }}>
+</{{ value.level }}>
 
 {%- endif %}
 
