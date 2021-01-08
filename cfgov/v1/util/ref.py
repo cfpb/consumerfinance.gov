@@ -157,10 +157,93 @@ enforcement_statuses = [
     ('post-order-post-judgment', 'Post Order/Post Judgment'),
 ]
 
-institution_types = [
+enforcement_defendant_types = [
     ('Non-Bank', 'Nonbank'),
     ('Bank', 'Bank'),
     ('Individual', 'Individual')
+]
+
+enforcement_products = [
+    ('Auto Finance Origination', 'Auto Finance Origination'),
+    ('Auto Finance Servicing', 'Auto Finance Servicing'),
+    ('Consumer Reporting Agencies', 'Consumer Reporting Agencies'),
+    ('Consumer Reporting ? User', 'Consumer Reporting - User'),
+    ('Credit Cards', 'Credit Cards'),
+    ('Credit Repair', 'Credit Repair'),
+    ('Debt Collection', 'Debt Collection'),
+    ('Debt Relief', 'Debt Relief'),
+    ('Deposits', 'Deposits'),
+    ('Furnishing', 'Furnishing'),
+    ('Mortgage Origination', 'Mortgage Origination'),
+    ('Mortgage Servicing', 'Mortgage Servicing'),
+    ('Payments', 'Payments'),
+    ('Prepaid', 'Prepaid'),
+    ('Remittances', 'Remittances'),
+    ('Short Term, Small Dollar', 'Short Term, Small Dollar'),
+    ('Business Lending (ECOA)', 'Business Lending (ECOA)'),
+    ('Student Loan Origination', 'Student Loan Origination'),
+    ('Student Loan Servicing', 'Student Loan Servicing'),
+    ('Other Consumer Lending', 'Other Consumer Lending'),
+    (
+        'Other Consumer Products (Not Lending)',
+        'Other Consumer Product (not lending)'
+    )
+]
+
+enforcement_at_risk_groups = [
+    ('Older Americans', 'Older Americans'),
+    ('Servicemembers', 'Servicemembers'),
+    ('Limited English Proficiency', 'Limited English Proficiency'),
+    ('Fair Lending', 'Fair Lending'),
+    ('Students', 'Students')
+]
+
+enforcement_statutes = [
+    (
+        'CFPA Deceptive',
+        'Consumer Financial Protection Act - Deceptive Acts or Practices'
+    ),
+    (
+        'CFPA Unfair',
+        'Consumer Financial Protection Act - Unfair Acts or Practices'
+    ),
+    (
+        'CFPA Abusive',
+        'Consumer Financial Protection Act - Abusive Acts or Practices'
+    ),
+    ('CFPA', 'Consumer Financial Protection Act - Other'),
+    ('AMTPA', 'Alternative Mortgage Transaction Parity Act/Regulation D'),
+    ('CLA', 'Consumer Leasing Act/Regulation M'),
+    ('Credit Practice Rules', 'Credit Practices Rule'),
+    ('EFTA/Regulation E', 'Electronic Fund Transfer Act/Regulation E'),
+    ('ECOA/Regulation B', 'Equal Credit Opportunity Act/Regulation B'),
+    ('FCBA', 'Fair Credit Billing Act'),
+    ('FCRA/Regulation V', 'Fair Credit Reporting Act/Regulation V'),
+    ('FDCPA', 'Fair Debt Collection Practices Act/Regulation F'),
+    ('FDIA', 'Federal Deposit Insurance Act/Regulation I'),
+    ('GLBA/Regulation P', 'Gramm-Leach-Bliley Act/Regulation P'),
+    ('HMDA', 'Home Mortgage Disclosure Act/Regulation C'),
+    ('HOEPA', 'Home Ownership and Equity Protection Act'),
+    ('HOPA', 'Home Owners Protection Act'),
+    (
+        'ILSFDA',
+        'Interstate Land Sales Full Disclosure Act/Regulation J, K, and L'
+    ),
+    ('Military Lending Act', 'Military Lending Act'),
+    (
+        'Regulation N (MAP Rule)',
+        'Mortgage Acts and Practices – Advertising Final Rule (Regulation N)'
+    ),
+    (
+        'Regulation O (MARS Rule)',
+        'Mortgage Assistance Relief Services Rule (Regulation O)'
+    ),
+    ('MRAPLA', 'Mortgage Reform and Anti-Predatory Lending Act'),
+    ('RESPA', 'Real Estate Settlement Procedures Act/Regulation X'),
+    ('SMLA', 'S.A.F.E. Mortgage Licensing Act/Regulation H'),
+    ('Telemarketing Sales Rule (TSR)', 'Telemarketing Sales Rule'),
+    ('TILA/Regulation Z', 'Truth in Lending Act/Regulation Z'),
+    ('TISA/Regulation DD', 'Truth in Savings Act/Regulation DD')
 ]
 
 
