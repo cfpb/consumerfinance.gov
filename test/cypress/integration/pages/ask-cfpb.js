@@ -1,12 +1,15 @@
 import { AskCfpbSearch } from '../../pages/ask-cfpb/search';
+import { AskCfpbArticle } from '../../pages/ask-cfpb/article';
 
 const search = new AskCfpbSearch();
+const article = new AskCfpbArticle();
 
 describe( 'Ask CFPB', () => {
-  beforeEach( () => {
-    search.open();
-  } );
   describe( 'Search', () => {
+    beforeEach( () => {
+      search.open();
+    } );
+
     it( 'should autocomplete results', () => {
       search.enter( 'security' );
       search.autocomplete().should( 'be.visible' );
@@ -23,6 +26,25 @@ describe( 'Ask CFPB', () => {
       search.search();
       search.resultsHeader().should( 'contain', 'results for “vehicle”' );
       search.resultsHeader().siblings( 'p' ).first().should( 'contain', 'Search instead for' );
+    } );
+  } );
+
+  describe( 'Article', () => {
+    beforeEach( () => {
+      article.open();
+    } );
+
+    it( 'should hide content on mobile', () => {
+      cy.viewport( 600, 1000 );
+      cy.get( '.o-summary-mobile_content' ).should( 'have.class', 'u-max-height-transition' );
+      cy.get( '.o-summary-mobile_content' ).should( 'have.class', 'u-max-height-summary' );
+      cy.get( '.o-summary-mobile_content' ).invoke( 'outerHeight' ).should( 'be.lte', 88 );
+      article.clickSummary();
+      cy.get( '.o-summary-mobile_content' ).should( 'have.class', 'u-max-height-transition' );
+      cy.get( '.o-summary-mobile_content' ).should( 'not.have.class', 'u-no-animation' );
+      cy.get( '.o-summary-mobile_content' ).should( 'not.have.class', 'u-max-height-summary' );
+      cy.get( '.o-summary-mobile_content' ).should( 'have.class', 'u-max-height-default' );
+      cy.get( '.o-summary-mobile_content' ).invoke( 'outerHeight' ).should( 'be.gt', 88 );
     } );
   } );
 } );
