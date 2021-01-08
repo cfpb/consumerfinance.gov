@@ -1,0 +1,96 @@
+/* topdoc
+  name: Summary Mobile
+  family: cf-organisms
+  notes:
+    - "Styles a one-way Expandable-like organism that previews content on mobile."
+  patterns:
+  - name: Summary Mobile organism
+    markup: |
+      <div class="o-summary-mobile">
+          <div class="o-summary-mobile_content" aria-expanded="false">
+          </div>
+          <button class="o-summary-mobile_btn" aria-expanded="false">
+            Read full description
+          </button>
+      </div>
+    codenotes:
+      - |
+        Pattern structure
+        -----------------
+        .o-summary-mobile
+          .o-summary-mobile_content
+          .o-summary-mobile_btn
+
+    notes:
+      - "One-way expandable. Displays an approximately 4-line
+         preview of content on mobile screen sizes only. "
+  tags:
+  - cf-organisms
+*/
+
+.o-summary-mobile {
+
+    // Hide the "read more" button on desktop.
+    &_btn {
+        display: none;
+    }
+
+    @media only screen and (max-width: @bp-xs-max) {
+
+        &_content {
+          overflow: hidden;
+          position: relative;
+
+          &[aria-expanded="false"]:after {
+            // fades content out over approx. 2 lines
+            display: block;
+            height: unit( @base-line-height-px * 2 / @base-font-size-px, em );
+            margin: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100% );
+            content: '';
+          }
+        }
+
+        &_btn {
+            position: relative;
+            z-index: 2;
+            display: block;
+            width: 100%;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border: dotted @pacific;
+            border-width: 1px 0;
+            text-align: center;
+            color: @pacific;
+            background: #fff;
+
+            &:focus {
+              outline: 1px dotted @pacific;
+              outline-offset: 2px;
+            }
+        }
+    }
+}
+
+.u-max-height-default {
+    max-height: 1000px;
+}
+
+.u-max-height-zero {
+   max-height: 0px !important;
+}
+
+.u-max-height-summary {
+    max-height: unit( @base-line-height-px * 4 / @base-font-size-px, em ) !important;
+}
+
+.u-max-height-transition {
+    // This is an arbitrary value to give max-height an initial value.
+    max-height: 1000px;
+
+    transition: max-height 0.25s ease-out;
+}
