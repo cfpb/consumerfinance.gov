@@ -47,7 +47,7 @@
             <h3 class="h4">
               Court
             </h3>
-            {{_text(page.court)}}
+            {{page.court}}
         </div>
     {% endif %}
     <div class="m-related-metadata_item-container">
@@ -55,7 +55,7 @@
           Docket number
         </h3>
         {% for docket in page.docket_numbers.all() %}
-            <p>{{_text(docket.docket_number)}}</p>
+            <p>{{docket.docket_number}}</p>
         {% endfor %}
     </div>
     {% if page.initial_filing_date %}
@@ -72,7 +72,7 @@
         </h3>
         {% for action_status in page.statuses.all() %}
             <div>
-                {{_text(action_status.get_status_display())}}
+                {{action_status.get_status_display()}}
             </div>
         {% endfor %}
         <a
@@ -96,7 +96,7 @@
           Defendant/Respondent type
         </h3>
         {% for dt in page.defendant_types.all() %}
-            <p>{{_text(dt.get_defendant_type_display())}}</p>
+            <p>{{dt.get_defendant_type_display()}}</p>
         {% endfor %}
         <div>
         </div>
@@ -147,7 +147,7 @@
            m-related-metadata_topics">
     {% for item in list %}
     <li class="m-list_item">
-        <span class="m-list_link">{{ _text(item) }}</span>
+        <span class="m-list_link">{{item}}</span>
     </li>
     {% endfor %}
 </ul>
@@ -174,23 +174,6 @@
 </p>
 {% endmacro %}
 
-{# ==========================================================================
-
-   _text()
-
-   ==========================================================================
-
-   Description:
-
-   Creates related metadata text markup when given:
-
-   text: A string representing text.
-
-   ========================================================================== #}
-
-{% macro _text(text) %}
-    {{ text | safe }}
-{% endmacro %}
 
 {# ==========================================================================
 
