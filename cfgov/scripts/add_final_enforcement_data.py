@@ -1,15 +1,15 @@
 # This is a one time script used to populate enforcement actions
 # across the site with data from our internal ENForce system
-# Currently this data has been reported in four csvs, a relief
-# csv a count csv, a product csv, and a statute csv, with
-# different pieces of data in each.
+# Currently this data has been reported in three csvs, a relief
+# csv, a product csv, and a statute csv, with different pieces
+# of data in each.
 #
 # In the future, data will be drawn from Wagtail itself instead
 # of being loaded from these scattered csvs.
 #
 # To run this script, invoke it as follows:
-# cfgov/manage.py runscript add_enforcement_data --script-args
-#    [COUNT_CSV_PATH] [RELIEF_CSV_PATH] [PRODUCT_CSV_PATH] [STATUTE_CSV_PATH]
+# cfgov/manage.py runscript add_final_enforcement_data --script-args
+#    [RELIEF_CSV_PATH] [PRODUCT_CSV_PATH] [STATUTE_CSV_PATH]
 
 import csv
 import logging
@@ -103,37 +103,6 @@ def add_relief(data_file='./cfgov/scripts/pea.csv'):
                 data[url] = {'dispositions': [o]}
 
 
-def add_counts(data_file='./cfgov/scripts/pea_counts.csv'):
-    with open(data_file, 'r', encoding='utf-8-sig') as csv_file:
-        split = csv.reader(csv_file, delimiter=',')
-        # header
-        next(split)
-
-        for fields in split:
-            (
-                name,
-                settled,
-                defendant_type,
-                initial_filing_date,
-                url
-            ) = strip_fields(fields, 1, 2, 3, 4, 5)
-
-            defendant_type = [
-                {'defendant_type': x}
-                for x in defendant_type.split('; ') if x != ''
-            ]
-
-            try:
-                data[url]['public_enforcement_action'] = name
-                data[url]['initial_filing_date'] = make_date(
-                    initial_filing_date
-                )
-                data[url]['settled_or_contested_at_filing'] = settled
-                data[url]['defendant_types'] = defendant_type
-            except KeyError:
-                logger.info(f"No data in csv data file for {url}\n")
-
-
 def add_products(data_file):
     with open(data_file, 'r', encoding='utf-8-sig') as csv_file:
         split = csv.reader(csv_file, delimiter=',')
@@ -142,29 +111,47 @@ def add_products(data_file):
 
         for fields in split:
             (
+                name,
+                initial_filing_date,
+                defendant_type,
                 court,
                 docket,
+                settled,
                 products,
                 at_risk_groups,
                 url
-            ) = strip_fields(fields, 4, 5, 7, 8, 9)
+            ) = strip_fields(fields, 0, 1, 2, 4, 5, 6, 7, 8, 9)
+
+            defendant_type = [
+                {'defendant_type': x}
+                for x in defendant_type.split('; ') if x != ''
+            ]
+
             docket = [
                 {'docket_number': x} for x in docket.split('; ') if x != ''
             ]
+
             products = [
                 {'product': x}
                 for x in products.replace(' (Including Payday)', '').replace(
                     ' (Not Payday)', ''
                 ).split('; ') if x != ''
             ]
+
             at_risk_groups = [
                 {'at_risk_group': x}
                 for x in at_risk_groups.split('; ') if x != ''
             ]
 
             try:
+                data[url]['public_enforcement_action'] = name
+                data[url]['initial_filing_date'] = make_date(
+                    initial_filing_date
+                )
+                data[url]['defendant_types'] = defendant_type
                 data[url]['court'] = court
                 data[url]['docket_numbers'] = docket
+                data[url]['settled_or_contested_at_filing'] = settled
                 data[url]['products'] = products
                 data[url]['at_risk_groups'] = at_risk_groups
             except KeyError:
@@ -203,15 +190,14 @@ def add_statutes(data_file):
 
 
 def run(*args):
-    if not args or len(args) != 4:
-        logger.error("error. Use --script-args [COUNT_PATH] [RELIEF_PATH] " +
+    if not args or len(args) != 3:
+        logger.error("error. Use --script-args [RELIEF_PATH] " +
                      "[PRODUCT_PATH] [STATUTE_PATH] " +
                      "to specify the location of the data csvs.")
         sys.exit()
-    add_relief(args[1])
-    add_counts(args[0])
-    add_products(args[2])
-    add_statutes(args[3])
+    add_relief(args[0])
+    add_products(args[1])
+    add_statutes(args[2])
 
     count = 0
 

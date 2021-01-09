@@ -8,6 +8,7 @@ from django.forms import widgets
 
 from taggit.models import Tag
 
+from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
@@ -272,7 +273,7 @@ class EnforcementActionsFilterForm(FilterableListForm):
 
     statuses = forms.MultipleChoiceField(
         required=False,
-        choices=ref.enforcement_statuses,
+        choices=enforcement_action_page.enforcement_statuses,
         widget=widgets.CheckboxSelectMultiple()
     )
 

@@ -58,12 +58,14 @@
             <p>{{_text(docket.docket_number)}}</p>
         {% endfor %}
     </div>
+    {% if page.initial_filing_date %}
     <div class="m-related-metadata_item-container">
         <h3 class="h4">
           Initial filing date
         </h3>
         {{_date(page.initial_filing_date)}}
     </div>
+    {% endif %}
     <div class="m-related-metadata_item-container m-related-metadata_status">
         <h3 class="h4">
           Status
