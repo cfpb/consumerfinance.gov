@@ -6,10 +6,14 @@
   patterns:
   - name: Summary Mobile organism
     markup: |
-      <div class="o-summary-mobile">
-          <div class="o-summary-mobile_content" aria-expanded="false">
+      <div class="o-summary-mobile"
+           data-js-hook="behavior_flyout-menu">
+          <div class="o-summary-mobile_content"
+               data-js-hook="behavior_flyout-menu_content">
+               Content
           </div>
-          <button class="o-summary-mobile_btn" aria-expanded="false">
+          <button class="o-summary-mobile_btn"
+                  data-js-hook="behavior_flyout-menu_trigger">
             Read full description
           </button>
       </div>
