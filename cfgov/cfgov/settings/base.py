@@ -1,4 +1,5 @@
 import os
+import secrets
 from pathlib import Path
 
 from django.conf import global_settings
@@ -765,7 +766,7 @@ FLAGS = {
 
 
 # Watchman tokens, used to authenticate global status endpoint
-WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS", os.urandom(32))
+WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS", secrets.token_hex())
 
 # This specifies what checks Watchman should run and include in its output
 # https://github.com/mwarkentin/django-watchman#custom-checks
