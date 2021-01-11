@@ -770,6 +770,7 @@ WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS", os.urandom(32))
 # This specifies what checks Watchman should run and include in its output
 # https://github.com/mwarkentin/django-watchman#custom-checks
 WATCHMAN_CHECKS = (
+    "alerts.checks.elasticsearch_health",
 )
 
 # Search.gov values
