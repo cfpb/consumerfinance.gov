@@ -22,7 +22,7 @@ function SummaryMobile( element ) {
   const _contentDom = _dom.querySelector( `.${ BASE_CLASS }_content` );
   const _btnDom = _dom.querySelector( `.${ BASE_CLASS }_btn` );
   let _transition;
-  let _menu;
+  let _expandable;
 
   // Whether the menu has been expanded or not.
   let _isExpanded = false;
@@ -39,7 +39,7 @@ function SummaryMobile( element ) {
     }
 
     _transition = new MaxHeightTransition( _contentDom ).init();
-    _menu = new FlyoutMenu( _dom ).init();
+    _expandable = new FlyoutMenu( _dom ).init();
 
     _resizeHandler();
 
@@ -86,11 +86,11 @@ function SummaryMobile( element ) {
    */
   function _resume() {
     if ( _suspended && _isExpanded === false ) {
-      _menu.addEventListener( 'expandEnd', _expandEndHandler );
+      _expandable.addEventListener( 'expandEnd', _expandEndHandler );
       // Set resume state.
       _transition.setElement( _contentDom );
-      _menu.setExpandTransition( _transition, _transition.maxHeightDefault );
-      _menu.setCollapseTransition( _transition, _transition.maxHeightSummary );
+      _expandable.setExpandTransition( _transition, _transition.maxHeightDefault );
+      _expandable.setCollapseTransition( _transition, _transition.maxHeightSummary );
       _transition.animateOff();
       _transition.maxHeightSummary();
       _transition.animateOn();
@@ -109,8 +109,8 @@ function SummaryMobile( element ) {
   function _suspend() {
     if ( !_suspended ) {
       _suspended = true;
-      _menu.removeEventListener( 'expandEnd', _expandEndHandler );
-      _menu.clearTransitions();
+      _expandable.removeEventListener( 'expandEnd', _expandEndHandler );
+      _expandable.clearTransitions();
     }
 
     return _suspended;

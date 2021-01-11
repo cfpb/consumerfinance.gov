@@ -60,12 +60,22 @@ describe( 'Summary Mobile', () => {
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       expect( targetDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       simulateEvent( 'click', targetDom );
+
+      /* The transitionend event should fire on its own,
+         but for some reason the transitionend event is not firing within JSDom.
+         In a future JSDom update this should be revisited.
+         See https://github.com/jsdom/jsdom/issues/1781
+      */
+     const event = new Event( 'transitionend' );
+     event.propertyName = 'max-height';
+     contentDom.dispatchEvent( event );
+
       expect( contentDom.style.maxHeight ).not.toBe( '0' );
-      // Delay 1 second to allow expansion animation to complete.
-      setTimeout(() => {
-        expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-        expect( targetDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-      }, 1000 );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+      expect( targetDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+
+      expect( targetDom.classList.contains( 'u-hidden' ) ).toBe( true );
+      windowResizeTo( 1200 );
     } );
   } );
 } );
