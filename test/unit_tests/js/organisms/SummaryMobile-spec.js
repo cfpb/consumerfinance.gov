@@ -66,9 +66,9 @@ describe( 'Summary Mobile', () => {
          In a future JSDom update this should be revisited.
          See https://github.com/jsdom/jsdom/issues/1781
       */
-     const event = new Event( 'transitionend' );
-     event.propertyName = 'max-height';
-     contentDom.dispatchEvent( event );
+      const event = new Event( 'transitionend' );
+      event.propertyName = 'max-height';
+      contentDom.dispatchEvent( event );
 
       expect( contentDom.style.maxHeight ).not.toBe( '0' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
