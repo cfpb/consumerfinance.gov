@@ -20,6 +20,20 @@ let summaryMobileDom;
 let targetDom;
 let contentDom;
 
+/**
+ * Change the viewport to width x height. Mocks window.resizeTo( w, h ).
+ * @param  {number} width - width in pixels.
+ * @param  {number} height - height in pixels.
+ */
+function windowResizeTo( width, height ) {
+  // Change the viewport to width x height. Mocks window.resizeTo( w, h ).
+  global.innerWidth = width;
+  global.innerHeight = height;
+
+  // Trigger the window resize event.
+  global.dispatchEvent( new Event( 'resize' ) );
+}
+
 describe( 'Summary Mobile', () => {
 
   beforeEach( () => {
@@ -42,12 +56,16 @@ describe( 'Summary Mobile', () => {
   describe( 'interactions', () => {
     it( 'should expand on click', () => {
       summaryMobile.init();
+      windowResizeTo( 300 );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       expect( targetDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       simulateEvent( 'click', targetDom );
       expect( contentDom.style.maxHeight ).not.toBe( '0' );
-      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
-      expect( targetDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+      // Delay 1 second to allow expansion animation to complete.
+      setTimeout(() => {
+        expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+        expect( targetDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+      }, 1000 );
     } );
   } );
 } );
