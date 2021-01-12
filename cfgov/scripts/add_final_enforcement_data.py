@@ -245,8 +245,8 @@ def run(*args):
             ])
 
             try:
-                def clean(list):
-                    return (v.full_clean() for v in list)
+                def clean(l):
+                    return (v.full_clean() for v in l)
 
                 page.full_clean()
                 clean(page.enforcement_dispositions.all())
