@@ -245,7 +245,16 @@ def run(*args):
             ])
 
             try:
+                def clean(list):
+                    return (v.full_clean() for v in list)
+
                 page.full_clean()
+                clean(page.enforcement_dispositions.all())
+                clean(page.defendant_types.all())
+                clean(page.docket_numbers.all())
+                clean(page.products.all())
+                clean(page.at_risk_groups.all())
+                clean(page.statutes.all())
                 page.save()
                 count += 1
             except ValidationError:
