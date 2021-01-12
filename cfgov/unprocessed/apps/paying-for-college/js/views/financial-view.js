@@ -14,6 +14,8 @@ import { bindEvent } from '../../../../js/modules/util/dom-events';
 import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
 import { updateState } from '../dispatchers/update-state.js';
+import { updateUrlQueryString } from '../dispatchers/update-view.js';
+
 
 const financialView = {
   _financialItems: [],
@@ -69,6 +71,8 @@ const financialView = {
         recalculateFinancials();
       }
     }
+
+    updateUrlQueryString();
   },
 
   /**
@@ -93,9 +97,11 @@ const financialView = {
       financialView._inputChangeTimeout = setTimeout(
         function() {
           updateFinancial( name, value );
+          updateUrlQueryString();
         }, 500 );
     } else {
       updateFinancial( name, value );
+      updateUrlQueryString();
     }
   },
 

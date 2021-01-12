@@ -53,6 +53,10 @@ const COMMON_MODULE_CONFIG = {
     use: {
       loader: 'handlebars-loader'
     }
+  },
+  {
+    test: /\.svg$/,
+    loader: 'svg-inline-loader'
   } ]
 };
 

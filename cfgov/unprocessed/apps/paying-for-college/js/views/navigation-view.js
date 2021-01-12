@@ -96,15 +96,19 @@ const navigationView = {
    */
   _handleNavButtonClick: function( event ) {
     event.preventDefault();
-    const target = event.target;
-    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText );
+    if ( getStateValue( 'schoolErrors' ) === 'yes' ) {
+      updateState.byProperty( 'showSchoolErrors', 'yes' );
+      window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
+    } else {
+      const target = event.target;
+      sendAnalyticsEvent( 'Secondary nav click', event.target.innerText );
 
-    if ( typeof target.dataset.nav_item !== 'undefined' ) {
-      updateState.activeSection( target.dataset.nav_item );
-    } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
-      closest( target, '[data-nav-is-open]' ).setAttribute( 'data-nav-is-open', 'True' );
+      if ( typeof target.dataset.nav_item !== 'undefined' ) {
+        updateState.activeSection( target.dataset.nav_item );
+      } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
+        closest( target, '[data-nav-is-open]' ).setAttribute( 'data-nav-is-open', 'True' );
+      }
     }
-
   },
 
   /**
@@ -112,10 +116,15 @@ const navigationView = {
    * @param {Object} event - click event
    */
   _handleNextButtonClick: function( event ) {
-    // TODO: Track time between Next button clicks for analytics
-    sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
-    updateState.nextSection();
-    window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
+    // Check if there are missing form fields
+    if ( getStateValue( 'schoolErrors' ) === 'yes' ) {
+      updateState.byProperty( 'showSchoolErrors', 'yes' );
+    } else {
+      // TODO: Track time between Next button clicks for analytics
+      sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
+      updateState.nextSection();
+      window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
+    }
   },
 
   /**
