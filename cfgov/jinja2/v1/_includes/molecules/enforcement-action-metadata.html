@@ -91,16 +91,18 @@
       </div>
     {% endif %}
     {{_dispositions(page.enforcement_dispositions.all())}}
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Defendant/Respondent type
-        </h3>
-        {% for dt in page.defendant_types.all() %}
-            <p>{{dt.get_defendant_type_display()}}</p>
-        {% endfor %}
-        <div>
-        </div>
-    </div>
+    {% if defendant_types|length > 0 %}
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            Defendant/Respondent type
+          </h3>
+          {% for dt in defendant_types %}
+              <p>{{dt}}</p>
+          {% endfor %}
+          <div>
+          </div>
+      </div>
+    {% endif %}
     {% if products|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
