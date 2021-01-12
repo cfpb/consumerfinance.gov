@@ -295,8 +295,10 @@ class EnforcementActionPage(AbstractFilterPage):
                 disp.final_order_civil_money_penalty
                 for disp in dispositions
             ),
-            'defendant_types': [d.get_defendant_type_display()
-                for d in self.defendant_types.all()],
+            'defendant_types': [
+                d.get_defendant_type_display()
+                for d in self.defendant_types.all()
+            ],
             'statutes': [s.statute for s in self.statutes.all()],
             'products': [p.product for p in self.products.all()],
             'at_risk_groups': [

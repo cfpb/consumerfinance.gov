@@ -18,6 +18,8 @@ from datetime import datetime as dt
 from decimal import Decimal
 from re import sub
 
+from django.core.exceptions import ValidationError
+
 from v1.models.enforcement_action_page import (
     EnforcementActionAtRisk, EnforcementActionDefendantType,
     EnforcementActionDisposition, EnforcementActionDocket,
@@ -242,8 +244,13 @@ def run(*args):
                 for x in data[url]['statutes']
             ])
 
-            page.save()
-            count += 1
+            try:
+                page.full_clean()
+                page.save()
+                count += 1
+            except ValidationError:
+                logger.info(f"Field validation failed for {url}\n")
+
         except KeyError:
             logger.info(f"No data in csv data files for {url}\n")
 
