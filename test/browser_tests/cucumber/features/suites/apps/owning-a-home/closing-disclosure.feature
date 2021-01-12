@@ -1,10 +1,11 @@
 Feature: Test the default values in the Closing Disclosure page
-  As a first time visitor to the Buying a House page
+  As a first time visitor to the Owning a Home page
   I want to have content loaded
   So that I can get clever and conquer the world
 
 Background:
   Given I navigate to the "Closing Disclosure" page
+
 
 @closing_disclosure @smoke_testing
 Scenario Outline: Test that tabs are on the page
