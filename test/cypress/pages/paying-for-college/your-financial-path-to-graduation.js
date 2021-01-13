@@ -21,7 +21,11 @@ export class PfcFinancialPathToGraduation {
   }
 
   clickSearchResult( name ) {
-    cy.get( '#search-results' ).contains( name ).click();
+    cy.get( '#search-results' ).contains( name ).then( btn => {
+      if ( Cypress.dom.isAttached( btn ) ) {
+        btn.click();
+      }
+    } );
   }
 
   setText( name, value ) {
