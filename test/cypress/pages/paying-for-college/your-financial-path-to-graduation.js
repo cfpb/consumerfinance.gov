@@ -13,19 +13,23 @@ export class PfcFinancialPathToGraduation {
   }
 
   enter( name ) {
-    cy.get( '#search__school-input' ).type( name, { force: true } );
+    cy.get( '#search__school-input' ).type( name );
   }
 
   searchResults() {
     return cy.get( '#search-results' );
   }
 
+  clickSearchResult( name ) {
+    cy.get( '#search-results' ).contains( name ).click();
+  }
+
   setText( name, value ) {
-    cy.get( `#${ name }` ).type( value );
+    cy.get( `#${ name }` ).clear().type( value );
   }
 
   selectProgram( program, name ) {
-    cy.get( `#program-${ program }-radio_${ name }` ).check( { force: true } );
+    cy.get( `#program-${ program }-radio_${ name } + label` ).click();
   }
 
   affordLoanChoice( name ) {
