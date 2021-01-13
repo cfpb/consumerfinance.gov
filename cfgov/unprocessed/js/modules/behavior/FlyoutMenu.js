@@ -3,10 +3,10 @@ import {
   BEHAVIOR_PREFIX,
   JS_HOOK,
   noopFunct
-} from '@cfpb/cfpb-atomic-component/src/utilities/standard-type';
-import BaseTransition from '../../modules/transition/BaseTransition';
+} from '@cfpb/cfpb-atomic-component/src/utilities/standard-type.js';
+import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import { checkBehaviorDom } from '../../modules/util/behavior';
+import { checkBehaviorDom } from '../../modules/util/behavior.js';
 
 /**
  * FlyoutMenu
