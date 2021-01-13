@@ -27,7 +27,7 @@ from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, RelatedResource, ReusableText
 from v1.template_debug import (
-    featured_content_test_cases, notification_test_cases,
+    featured_content_test_cases, heading_test_cases, notification_test_cases,
     register_template_debug, video_player_test_cases
 )
 from v1.util import util
@@ -441,6 +441,14 @@ register_template_debug(
     '_includes/organisms/featured-content.html',
     featured_content_test_cases,
     extra_js=['featured-content-module.js']
+)
+
+
+register_template_debug(
+    'v1',
+    'heading',
+    '_includes/blocks/heading.html',
+    heading_test_cases
 )
 
 
