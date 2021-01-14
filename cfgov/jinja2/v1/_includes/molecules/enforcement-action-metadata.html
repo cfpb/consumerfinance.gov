@@ -82,7 +82,7 @@
           rel="noopener referrer"
         >See status definitions</a>
     </div>
-    {% if statutes|length > 0 %}
+    {% if statutes|length > 100 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             Statutes
@@ -90,8 +90,8 @@
           {{_list(statutes)}}
       </div>
     {% endif %}
-    {{_dispositions(page.enforcement_dispositions.all())}}
-    {% if defendant_types|length > 0 %}
+    {#{{_dispositions(page.enforcement_dispositions.all())}}#}
+    {% if defendant_types|length > 100 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             Defendant/Respondent type
@@ -103,7 +103,7 @@
           </div>
       </div>
     {% endif %}
-    {% if products|length > 0 %}
+    {% if products|length > 100 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             Products
@@ -112,7 +112,7 @@
       </div>
     {% endif %}
 
-    {% if at_risk_groups|length > 0 %}
+    {% if at_risk_groups|length > 100 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             At Risk Groups
