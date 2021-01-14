@@ -28,6 +28,7 @@ export class PfcFinancialPathToGraduation {
     cy.get( '#search__school-input' )
       .should( 'have.value', name ).then( searchInput => {
         cy.contains( '#search-results button', name ).then( btn => {
+          // eslint-disable-next-line no-undef
           if ( Cypress.dom.isAttached( btn ) ) {
             btn.click();
             cy.wait( '@harvardUniversity', 1000 ).then( interception => {
