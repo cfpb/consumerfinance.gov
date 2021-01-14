@@ -64,11 +64,19 @@
     {%- if has_image %}
         {%- set img = image( value.image.upload, 'original' ) %}
 
-        {# Don't include image alt text if the image is being linked and
-           there's also heading text in the link. #}
-        {%- set img_alt_text = ''
-            if ( link_image_and_heading and has_heading )
-            else image_alt_value( value.image ) %}
+        {%- if not link_image_and_heading %}
+            {# If the image isn't being linked, include its alt text. #}
+            {% set img_alt_text = image_alt_value( value.image ) %}
+        {% elif has_heading %}
+            {# If the image is being linked, and there's a heading, set
+               empty alt text to avoid having duplicate text in the link. #}
+            {% set img_alt_text = '' %}
+        {% else %}
+            {# If the image is being linked, but there's no heading, use
+               the text from the link. #}
+            {% set img_alt_text = value.links[0].text %}
+        {% endif -%}
+
         <img class="m-info-unit_image
                     {{- ' m-info-unit_image__square' if img.is_square else '' }}"
             src="{{ img.url }}"
