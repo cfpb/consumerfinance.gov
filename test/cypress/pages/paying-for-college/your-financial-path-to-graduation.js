@@ -21,11 +21,9 @@ export class PfcFinancialPathToGraduation {
   }
 
   clickSearchResult( name ) {
-    cy.get( '#search-results' ).contains( name ).then( btn => {
-      if ( Cypress.dom.isAttached( btn ) ) {
-        btn.click();
-      }
-    } );
+    // Wait briefly for the search modal to appear.
+    cy.wait( 500 );
+    cy.contains( '#search-results button', name ).click();
   }
 
   setText( name, value ) {
