@@ -23,7 +23,9 @@ export class PfcFinancialPathToGraduation {
   clickSearchResult( name ) {
     // Wait briefly for the search modal to appear.
     cy.wait( 500 );
-    cy.contains( '#search-results button', name ).click();
+    cy.contains( '#search-results button', name ).then( btn => {
+      cy.get( btn ).click();
+    } );
   }
 
   setText( name, value ) {
