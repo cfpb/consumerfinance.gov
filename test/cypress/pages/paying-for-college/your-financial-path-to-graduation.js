@@ -31,7 +31,7 @@ export class PfcFinancialPathToGraduation {
           // eslint-disable-next-line no-undef
           if ( Cypress.dom.isAttached( btn ) ) {
             btn.click();
-            cy.wait( '@harvardUniversity', 1000 ).then( interception => {
+            cy.wait( '@harvardUniversity' ).then( interception => {
               cy.get( '#search-results' ).should( 'not.be.visible' );
             } );
           } else {
