@@ -108,7 +108,7 @@ const stateModel = {
       programLengthSelected: smv.programLength === 'not-selected',
       rateSelected: smv.programRate === 'not-selected' && control === 'Public',
       housingSelected: smv.programHousing === 'not-selected',
-      dependencySelected: ( smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected' )
+      dependencySelected:  smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected'
     };
 
     // Change values to "required" which triggers error notification CSS rules
