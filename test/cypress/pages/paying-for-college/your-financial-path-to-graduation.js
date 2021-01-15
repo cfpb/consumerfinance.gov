@@ -13,7 +13,14 @@ export class PfcFinancialPathToGraduation {
   }
 
   enter( name ) {
-    cy.get( '#search__school-input' ).type( name );
+    // Intercept calls to the schools API so results are immediately returned.
+    cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/search-schools.json?q=Harvard%20University', { fixture: 'search-schools' } ).as( 'searchSchools' );
+    /* The following pastes the `name` value into the input and manually fires
+       the keyup event. This is used so that the search-schools API is only
+       called once, instead of each time a key is typed in. This prevents
+       several API calls from occurring in the tests, which made them flaky.
+    */
+    cy.get( '#search__school-input' ).invoke( 'val', name ).trigger( 'keyup' );
   }
 
   searchResults() {
@@ -22,27 +29,11 @@ export class PfcFinancialPathToGraduation {
 
   clickSearchResult( name ) {
     // Intercept calls to the schools API so results are immediately returned.
-    cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/search-schools.json?q=Harvard%20University', { fixture: 'search-schools' } ).as( 'searchSchools' );
     cy.intercept( '/paying-for-college2/understanding-your-financial-aid-offer/api/school/166027/', { fixture: 'harvard-university' } ).as( 'harvardUniversity' );
 
-    cy.get( '#search__school-input' )
-      .should( 'have.value', name ).then( searchInput => {
-        cy.contains( '#search-results button', name ).then( btn => {
-          // eslint-disable-next-line no-undef
-          if ( Cypress.dom.isAttached( btn ) ) {
-            btn.click();
-            cy.wait( '@harvardUniversity' ).then( interception => {
-              cy.get( '#search-results' ).should( 'not.be.visible' );
-            } );
-          } else {
-            throw new Error(
-              'Button is not attached to the dom. ' +
-              'This likely means the search box results markup was ' +
-              'overwritten before the test completed.'
-            );
-          }
-        } );
-      } );
+    cy.contains( '#search-results button', name ).click();
+    cy.wait( '@harvardUniversity' );
+    cy.get( '#search-results' ).should( 'not.be.visible' );
   }
 
   setText( name, value ) {
