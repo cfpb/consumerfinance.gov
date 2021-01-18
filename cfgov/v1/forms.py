@@ -280,7 +280,7 @@ class EnforcementActionsFilterForm(FilterableListForm):
     def get_page_set(self):
         query = self.generate_query()
         return self.filterable_pages.filter(query).distinct().order_by(
-            '-date_published'
+            '-initial_filing_date'
         )
 
     def get_query_strings(self):
