@@ -13,6 +13,7 @@ from v1.models.browse_filterable_page import (
 from v1.models.browse_page import BrowsePage
 from v1.models.caching import CDNHistory
 from v1.models.campaign_page import CampaignPage
+from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.feedback import Feedback
 from v1.models.home_page import HomePage
 from v1.models.images import CFGOVImage, CFGOVRendition
