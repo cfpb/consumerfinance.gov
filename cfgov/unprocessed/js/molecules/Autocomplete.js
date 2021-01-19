@@ -2,7 +2,6 @@
 import { assign } from '../modules/util/assign';
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import { ajaxRequest } from '../modules/util/ajax-request';
-import { bindEvent } from '../modules/util/dom-events';
 import * as throttle from 'lodash.throttle';
 
 /**
@@ -127,55 +126,49 @@ function Autocomplete( element, opts ) {
    * resize event on window.
    */
   function _bindEvents() {
-    bindEvent( _input, {
-      input: function() {
-        _searchTerm = this.value;
-        if ( _searchTerm.length >= _settings.minChars ) {
-          if ( _settings.url ) {
-            _throttleFetch();
-          } else {
-            _settings.filterList( _settings.list );
-          }
+    _input.addEventListener( 'input', function() {
+      _searchTerm = this.value;
+      if ( _searchTerm.length >= _settings.minChars ) {
+        if ( _settings.url ) {
+          _throttleFetch();
         } else {
+          _settings.filterList( _settings.list );
+        }
+      } else {
+        _hide();
+      }
+    } );
+    _input.addEventListener( 'blur', function() {
+      setTimeout( function() {
+        const active = document.activeElement;
+        if ( active !== _autocomplete && !_autocomplete.contains( active ) ) {
           _hide();
         }
-      },
-      blur: function() {
-        setTimeout( function() {
-          const active = document.activeElement;
-          if ( active !== _autocomplete && !_autocomplete.contains( active ) ) {
-            _hide();
-          }
-        }, 1 );
-      },
-      keydown: function( event ) {
-        const key = event.keyCode;
-        if ( _isVisible ) {
-          if ( key === UP ) {
-            _prev( event );
-          } else if ( key === DOWN ) {
-            _next( event );
-          } else if ( key === ENTER && _selection > -1 ) {
-            event.preventDefault();
-            _settings.onSubmit( event, _suggestions[_selection] );
-          } else if ( key === ESCAPE ) {
-            event.preventDefault();
-            _hide();
-          }
+      }, 1 );
+    } );
+    _input.addEventListener( 'keydown', function( event ) {
+      const key = event.keyCode;
+      if ( _isVisible ) {
+        if ( key === UP ) {
+          _prev( event );
+        } else if ( key === DOWN ) {
+          _next( event );
+        } else if ( key === ENTER && _selection > -1 ) {
+          event.preventDefault();
+          _settings.onSubmit( event, _suggestions[_selection] );
+        } else if ( key === ESCAPE ) {
+          event.preventDefault();
+          _hide();
         }
       }
     } );
 
-    bindEvent( window, {
-      resize: function() {
-        _positionContainer();
-      }
+    window.addEventListener( 'resize', function() {
+      _positionContainer();
     } );
 
-    bindEvent( _autocomplete, {
-      mousedown: function( event ) {
-        event.preventDefault();
-      }
+    _autocomplete.addEventListener( 'mousedown', function( event ) {
+      event.preventDefault();
     } );
   }
 
