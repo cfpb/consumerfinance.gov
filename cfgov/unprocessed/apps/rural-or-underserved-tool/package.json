@@ -16,7 +16,7 @@
     "node": ">=12.x"
   },
   "dependencies": {
-    "axios": "0.21.0",
+    "axios": "0.21.1",
     "es6-promise": "^4.2.6",
     "fastdom": "^1.0.6",
     "jsonp-p": "^2.0.0",
