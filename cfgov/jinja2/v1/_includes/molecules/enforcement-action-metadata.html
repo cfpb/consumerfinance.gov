@@ -85,7 +85,7 @@
     {% if statutes|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
-            Statutes
+            Statutes / Regulations
           </h3>
           {{_list(statutes)}}
       </div>
@@ -94,7 +94,7 @@
     {% if defendant_types|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
-            Defendant/Respondent type
+            Defendant / Respondent type
           </h3>
           {% for dt in defendant_types %}
               <p>{{dt}}</p>
@@ -115,7 +115,7 @@
     {% if at_risk_groups|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
-            At Risk Groups
+            At risk groups
           </h3>
           {{_list(at_risk_groups)}}
       </div>
