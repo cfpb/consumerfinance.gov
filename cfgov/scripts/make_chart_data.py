@@ -179,5 +179,15 @@ def run(*args):
                 except KeyError:
                     data[url]['dispositions'] = [o]
 
+    def ifd_sort(v):
+        return v['initial_filing_date']
+
+    list_data = []
+    for key, val in data.items():
+        val['url'] = key
+        list_data.append(val)
+
+    list_data.sort(reverse=True, key=ifd_sort)
+
     with open('./scripts/chart_data.json', 'w') as f:
-        f.write(json.dumps(data))
+        f.write(json.dumps(list_data))
