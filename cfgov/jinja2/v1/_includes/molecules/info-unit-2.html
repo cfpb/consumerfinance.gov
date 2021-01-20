@@ -16,15 +16,8 @@
 
    value.image.alt:              String for image alt text.
 
-   value.heading:                (Optional) An object containing:
-
-   value.heading.text            The text of a heading.
-
-   value.heading.level:          The heading level (H2, H3, H4). Default: H3
-
-   value.heading.icon:           (Optional) A string containing cf-icon name
-                                 that triggers the insertion of an icon before
-                                 the heading.
+   value.heading:                (Optional) A heading object.
+                                 See _includes/blocks/heading.html.
 
    value.body:                   (Optional) A string containing the content
                                  to display below the heading (typically a
@@ -46,16 +39,19 @@
 
    ========================================================================== #}
 
+{%- from 'blocks/heading.html' import heading without context %}
+
 {%- macro info_unit(value, format, link_image_and_heading) -%}
 
 {# Confirm that not only is link_image_and_heading set, but that this
    particular info unit has a link in its list and there's either an
    image or heading to wrap in a link. #}
+{%- set has_heading = value.heading and value.heading.text %}
+{%- set has_image = value.image and value.image.upload %}
+{%- set has_link = value.links and value.links[0] and value.links[0].url %}
 {%- set link_image_and_heading = link_image_and_heading
-                                 and value.links
-                                 and value.links[0]
-                                 and value.links[0].url
-                                 and (value.image.upload or value.heading) %}
+                                 and has_link
+                                 and ( has_heading or has_image ) %}
 
 <div class="m-info-unit
             {{- ' m-info-unit__inline' if format == '25-75' else '' }}">
@@ -65,42 +61,40 @@
            href="{{ value.links[0].url | safe }}">
     {% endif %}
 
-        {%- if value.image.upload %}
-            {%- set img = image(value.image.upload, 'original') %}
-            {# Empty alt attribute if header text is present to prevent screen reader repetition #}
-            {%- set img_alt_text = '' if value.heading.text else image_alt_value(value.image) %}
-                {%- if image_alt_value(value.image) %}
-                    <img class="m-info-unit_image
-                                {{- ' m-info-unit_image__square' if img.is_square else '' }}"
-                        src="{{ img.url }}"
-                        alt="{{ img_alt_text }}">
-                {%- else %}
-                    <div class="m-info-unit_image
-                                {{- ' m-info-unit_image__square' if img.is_square else '' }}"
-                        style="background-image: url( '{{ img.url }}' );
-                                {{- ' padding-bottom: ' ~ ( img.height / img.width * 100 ) ~ '%;'
-                                    if not img.is_square else '' }}">
-                    </div>
-                {% endif %}
-        {%- endif %}
+    {%- if has_image %}
+        {%- set img = image( value.image.upload, 'original' ) %}
 
-        {%- if value.heading.text %}
-            <div class="m-info-unit_heading-text">
-                {% include_block value.heading %}
-            </div>
-        {%- elif value.heading %}
-            <div class="m-info-unit_heading-text">
-                {{ value.heading|safe }}
-            </div>
-        {%- endif %}
+        {%- if not link_image_and_heading %}
+            {# If the image isn't being linked, include its alt text. #}
+            {% set img_alt_text = image_alt_value( value.image ) %}
+        {% elif has_heading %}
+            {# If the image is being linked, and there's a heading, set
+               empty alt text to avoid having duplicate text in the link. #}
+            {% set img_alt_text = '' %}
+        {% else %}
+            {# If the image is being linked, but there's no heading, use
+               the text from the link. #}
+            {% set img_alt_text = value.links[0].text %}
+        {% endif -%}
+
+        <img class="m-info-unit_image
+                    {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+            src="{{ img.url }}"
+            alt="{{ img_alt_text }}">
+    {%- endif %}
+
+    {%- if has_heading %}
+        <div class="m-info-unit_heading-text">
+            {{ heading( value.heading ) }}
+        </div>
+    {%- endif %}
 
     {%- if link_image_and_heading %}
         </a>
     {%- endif -%}
 
-        <div class="m-info-unit_content">
-
-            {{ value.body | safe }}
+    <div class="m-info-unit_content">
+        {{ value.body | safe }}
 
         {% if value.links %}
             <ul class="m-list m-list__links u-mt15">
@@ -122,9 +116,6 @@
             {%- endfor %}
             </ul>
         {%- endif %}
-
-        </div>
-
+    </div>
 </div>
-
 {% endmacro %}

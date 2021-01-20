@@ -1,10 +1,10 @@
 import { ConsumerComplaints } from '../../pages/data-research/consumer-complaints';
 
 const page = new ConsumerComplaints();
-const states = ['AK', 'AL', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+const states = [ 'AK', 'AL', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
   'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN',
   'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK',
-  'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
+  'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY' ];
 
 describe( 'Consumer Complaint Database', () => {
   beforeEach( () => {
@@ -15,15 +15,15 @@ describe( 'Consumer Complaint Database', () => {
     page.clickButton( 'Complaints' );
     page.checkLegend( 'description' ).should( 'contain', 'Complaints' );
     cy.get( '.cfpb-chart' ).should( 'be.visible' );
-    states.forEach(name => {
+    states.forEach( name => {
       page.checkChart( name ).should( 'be.visible' );
-    });
+    } );
     page.clickButton( 'Complaints per 1,000' );
     page.checkLegend( 'description' ).should( 'contain', 'Complaints per 1,000' );
     page.checkLegend( 'dates' ).should( 'be.visible' );
-    states.forEach(name => {
+    states.forEach( name => {
       page.checkState( name ).should( 'be.visible' );
-    });
+    } );
     page.clickTile( 'DC' );
     cy.url().should( 'include', 'state=DC' );
   } );

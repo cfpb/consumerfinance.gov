@@ -68,6 +68,7 @@ const financialModel = {
         Math.abs( financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual );
 
     financialModel._updateStateWithFinancials();
+
   },
 
   /**
@@ -190,15 +191,13 @@ const financialModel = {
       financialModel.values.fellowAssist_fellowship = 0;
       financialModel.values.fellowAssist_assistantship = 0;
 
-      if ( getStateValue( 'programStudentType' ) === 'independent' ) {
-        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' ).yearOne -
-          financialModel.values.fedLoan_directSub );
-
+      if ( getStateValue( 'programDependency' ) === 'independent' ) {
+        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' ).yearOne );
       } else {
-        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' ).yearOne -
-          financialModel.values.fedLoan_directSub );
+        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' ).yearOne );
       }
     }
+
     // enforce unsub range
     const unsubResult = enforceRange( financialModel.values.fedLoan_directUnsub,
       0,

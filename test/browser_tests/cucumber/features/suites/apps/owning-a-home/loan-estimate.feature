@@ -6,14 +6,16 @@ Feature: Test the default values in the Loan Estimate page
 Background:
   Given I navigate to the "Loan Estimate" page
 
+
 @loan_estimate @smoke_testing
 Scenario Outline: Test that tabs are on the page
-  Then I should see "<tab_name>" tab
+   Then I should see "<tab_name>" tab
 
 Examples:
 | tab_name    |
 | Checklist   |
 | Definitions |
+
 
 @loan_estimate
 Scenario Outline: Test that the content is loaded
@@ -25,6 +27,7 @@ Examples:
 | Checklist   |
 | Definitions |
 
+
 @loan_estimate
 Scenario Outline: Test that resizing window size changes image size too
   When I click the tab "<tab_name>"
@@ -34,6 +37,7 @@ Examples:
 | tab_name    | css_selector        |
 | Checklist   | img.image-map_image |
 | Definitions | img.image-map_image |
+
 
 @loan_estimate
 Scenario Outline: Test that expandable explainers are loaded
@@ -46,6 +50,7 @@ Examples:
 | Checklist   |
 | Definitions |
 
+
 @loan_estimate
 Scenario Outline: Test overlays/highlights
   When I click the tab "<tab_name>"
@@ -56,6 +61,7 @@ Examples:
 | Checklist   |
 | Definitions |
 
+
 @loan_estimate
 Scenario Outline: Test overlays/highlights
   When I click the tab "<tab_name>"
@@ -65,6 +71,7 @@ Examples:
 | tab_name    |
 | Checklist   |
 | Definitions |
+
 
 @loan_estimate
 Scenario Outline: Test pagination
@@ -78,6 +85,7 @@ Examples:
 | 3        |
 | 1        |
 
+
 @loan_estimate
 Scenario Outline: Test Next Page
   When I click page "<current_num>" in Form Explainer
@@ -89,6 +97,7 @@ Examples:
 | 1           | 2        |
 | 2           | 3        |
 
+
 @loan_estimate
 Scenario Outline: Test Prev Page
   When I click page "<current_num>" in Form Explainer
@@ -99,6 +108,7 @@ Examples:
 | current_num | page_num |
 | 3           | 2        |
 | 2           | 1        |
+
 
 @404 @loan_estimate
 Scenario Outline: Testing availability of pages on Loan Estimate

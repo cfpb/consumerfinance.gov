@@ -7,6 +7,7 @@
 
   &_navigator {
     position: relative;
+    z-index: 0;
     border: 1px solid @gray-40;
     border-bottom: none;
 
@@ -196,10 +197,14 @@
       display: block !important;
     }
 
-    // Allow focus state on image inside link.
-    &_thumbnail-visual a {
-      display: block;
-      border-bottom-width: 0;
+    // Remove default link (a) styles.
+    &_thumbnail,
+    &_thumbnail:active,
+    &_thumbnail:focus,
+    &_thumbnail:hover,
+    &_thumbnail:visited {
+      border: none;
+      border-right: 1px solid @gray-40;
     }
   } );
 

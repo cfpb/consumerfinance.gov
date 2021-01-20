@@ -716,9 +716,6 @@ FLAGS = {
     "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Search.gov API-based site-search
     "SEARCH_DOTGOV_API": [],
-    # Turbolinks is a JS library that speeds up page loads
-    # https://github.com/turbolinks/turbolinks
-    "TURBOLINKS": [],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # SPLIT TESTING FLAGS
