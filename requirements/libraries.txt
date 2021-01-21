@@ -26,11 +26,10 @@ ntplib==0.3.4
 openpyxl==3.0.3
 psycopg2==2.7.3.2
 python-dateutil==2.7.3
-regdown==1.0.2
+regdown==1.0.3
 requests==2.22.0
 requests_aws4auth==0.8.0
 requests_toolbelt==0.8.0
-sha3==0.2.1
 urllib3==1.25.2
 # wagtail-autocomplete==0.6 TODO: Restore when wagtail-autocomplete #77 is merged
 wagtail-flags==5.0.0
