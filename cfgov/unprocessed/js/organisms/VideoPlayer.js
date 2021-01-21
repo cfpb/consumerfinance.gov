@@ -161,6 +161,16 @@ function VideoPlayer( element ) {
     if ( _player ) {
       _player.playVideo();
       _dom.classList.add( 'video-playing' );
+
+      /* Allow keyboard navigation of the close button and video iframe.
+       * Disallow keyboard navigation of the play button. */
+      _closeBtnDom.removeAttribute( 'tabindex' );
+      _iframeDom.removeAttribute( 'tabindex' );
+      _playBtnDom.setAttribute( 'tabindex', '-1' );
+
+      // Set the keyboard focus to the close button.
+      _closeBtnDom.focus();
+
       this.dispatchEvent( 'onPlay' );
     }
 
@@ -175,6 +185,16 @@ function VideoPlayer( element ) {
     if ( _player ) {
       _player.stopVideo();
       _dom.classList.remove( 'video-playing' );
+
+      /* Allow keyboard navigation of the play button.
+       * Disallow keyboard navigation of the close button and video iframe. */
+      _closeBtnDom.setAttribute( 'tabindex', '-1' );
+      _iframeDom.setAttribute( 'tabindex', '-1' );
+      _playBtnDom.removeAttribute( 'tabindex' );
+
+      // Set the keyboard focus to the play button.
+      _playBtnDom.focus();
+
       this.dispatchEvent( 'onStop' );
     }
 
