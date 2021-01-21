@@ -134,4 +134,3 @@ class EnforcementAPITestCase(TestCase):
         output_keys = serializer.data.keys()
         expected_keys = self.expected_json.keys()
         self.assertEqual(output_keys, expected_keys)
-
