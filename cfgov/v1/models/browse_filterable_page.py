@@ -77,6 +77,8 @@ class BrowseFilterablePage(FilterableListMixin, CFGOVPage):
 
 
 class EnforcementActionsFilterPage(BrowseFilterablePage):
+    subpage_types = ['v1.EnforcementActionPage', 'v1.LearnPage']
+
     template = 'browse-filterable/index.html'
     objects = PageManager()
 

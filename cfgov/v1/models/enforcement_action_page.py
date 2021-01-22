@@ -201,6 +201,10 @@ class EnforcementActionStatute(models.Model):
 
 
 class EnforcementActionPage(AbstractFilterPage):
+    # Only allow these pages in the Enforcement Actions filter or Trash
+    parent_page_types = ['v1.EnforcementActionsFilterPage', 'v1.HomePage']
+    subpage_types = []
+
     public_enforcement_action = models.CharField(max_length=150, blank=True)
     initial_filing_date = models.DateField(null=True, blank=True)
     settled_or_contested_at_filing = models.CharField(
