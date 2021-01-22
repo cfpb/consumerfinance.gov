@@ -275,6 +275,14 @@ msgstr "https://gobiernousa.gov/"
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
+#: jinja2/v1/_includes/organisms/video-player.html:98
+msgid "Play video on YouTube"
+msgstr "Ver video en YouTube"
+
+#: jinja2/v1/_includes/organisms/video-player.html:110
+msgid "Play video"
+msgstr "Ver video"
+
 #: jinja2/v1/_layouts/base.html:57
 #: jinja2/v1/youth_employment_success/index.html:10
 #: legacy/templates/front/base_nonresponsive.html:32

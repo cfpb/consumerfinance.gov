@@ -95,7 +95,7 @@
                href="{{ video_url }}"
                target="_blank"
                rel="noopener noreferrer"
-               aria-label="Play video on YouTube">
+               aria-label="{{ _('Play video on YouTube') }}">
                 {{ svg_icon('play') }}
             </a>
 
@@ -107,7 +107,7 @@
             <button class="o-video-player_play-btn
                            o-video-player_play-btn__{{ button_pos }}
                            u-hidden"
-                    aria-label="Play video">
+                    aria-label="{{ _('Play video') }}">
                 {{ svg_icon('play') }}
             </button>
 
