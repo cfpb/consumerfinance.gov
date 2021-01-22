@@ -218,6 +218,23 @@ msgstr "/es/obtener-respuestas/buscar/"
 msgid "Search for your question"
 msgstr "Busca su pregunta"
 
+#: jinja2/v1/_includes/organisms/carousel.html:89
+msgid "Featured content"
+msgstr "Ítem destacado"
+
+#: jinja2/v1/_includes/organisms/carousel.html:90
+#: jinja2/v1/_includes/organisms/mega-menu.html:167
+msgid "Featured"
+msgstr "Destacado"
+
+#: jinja2/v1/_includes/organisms/carousel.html:95
+msgid "Previous featured content item"
+msgstr "Ítem destacado previo"
+
+#: jinja2/v1/_includes/organisms/carousel.html:99
+msgid "Next featured content item"
+msgstr "Siguiente ítem destacado"
+
 #: jinja2/v1/_includes/organisms/email-signup.html:53
 msgid "Email address"
 msgstr "Dirección email"
@@ -1600,9 +1617,6 @@ msgstr "Jubilado"
 
 #~ msgid "Take the next step"
 #~ msgstr "Dar el siguiente paso"
-
-#~ msgid "Featured"
-#~ msgstr "Destacado"
 
 #~ msgid "Clear"
 #~ msgstr "Borrar"
