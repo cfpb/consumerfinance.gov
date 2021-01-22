@@ -355,10 +355,6 @@ urlpatterns = [
         template_name='jobmanager/supervision.html'),
         name='jobs_supervision'),
 
-    re_path(r'^jobs/technology-innovation-fellows/$', TemplateView.as_view(
-        template_name='jobmanager/technology-innovation-fellows.html'),
-        name='technology_innovation_fellows'),
-
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
