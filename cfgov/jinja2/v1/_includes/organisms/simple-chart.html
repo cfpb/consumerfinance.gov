@@ -27,12 +27,14 @@
     {% endif %}
 
     {% if value.title %}
-    <h3>{{ value.title }}</h3>
+    <h2>{{ value.title }}</h2>
     {% endif %}
 
     {% if value.subtitle %}
     <p>{{ value.subtitle }}</p>
     {% endif %}
+
+    <div data-title="{{value.title}}" class="chart-selects"></div>
 
     <div class="simple-chart-target"
          data-chart-type="{{ value.chart_type }}"
@@ -43,6 +45,7 @@
               data-x-axis-label="{{ value.x_axis_label }}"
          {% endif %}
          {% if value.transform %}data-transform="{{ value.transform }}"{% endif %}
+         {% if value.filters %}data-filters='{{ value.filters }}'{% endif %}
          {% if value.style_overrides %}data-style-overrides='{{ value.style_overrides }}'{% endif %}
          >
     </div>
