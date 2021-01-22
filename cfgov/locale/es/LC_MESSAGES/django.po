@@ -279,6 +279,10 @@ msgstr "https://gobiernousa.gov/"
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
+#: jinja2/v1/_includes/organisms/mega-menu.html:298
+msgid "Main menu"
+msgstr "Menú principal"
+
 #: jinja2/v1/_includes/organisms/secondary-navigation.html:40
 #: jinja2/v1/_includes/organisms/secondary-navigation.html:89
 msgid "Section navigation"
