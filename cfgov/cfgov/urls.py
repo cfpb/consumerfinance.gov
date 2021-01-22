@@ -355,10 +355,6 @@ urlpatterns = [
         template_name='jobmanager/supervision.html'),
         name='jobs_supervision'),
 
-    re_path(r'^jobs/technology-innovation-fellows/$', TemplateView.as_view(
-        template_name='jobmanager/technology-innovation-fellows.html'),
-        name='technology_innovation_fellows'),
-
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
@@ -461,8 +457,6 @@ urlpatterns = [
         ask_autocomplete,
         name='ask-autocomplete-es'
     ),
-
-    re_path(r'^_status/', include('watchman.urls')),
 
     re_path(
         r'^consumer-tools/financial-well-being/',
@@ -705,6 +699,11 @@ if settings.ALLOW_ADMIN_URL:
     ]
 
     urlpatterns = patterns + urlpatterns
+
+if settings.WATCHMAN_TOKENS is not None:
+    urlpatterns.append(
+        re_path(r'^_status/', include('watchman.urls')),
+    )
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
