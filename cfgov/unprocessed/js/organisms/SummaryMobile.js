@@ -1,7 +1,7 @@
 // Required modules.
 import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
-import MaxHeightTransition from '../modules/transition/MaxHeightTransition.js';
+import MaxHeightTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MaxHeightTransition.js';
 import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
 import { DESKTOP, TABLET, viewportIsIn } from '../modules/util/breakpoint-state.js';
 
