@@ -382,6 +382,10 @@ msgstr "Leer más"
 msgid "Narrow your results"
 msgstr "Búsqueda especial"
 
+#: jinja2/v1/ask-cfpb/see-all.html:48
+msgid "Search term"
+msgstr "Palabra a buscar"
+
 #: jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
