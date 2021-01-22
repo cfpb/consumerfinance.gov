@@ -101,6 +101,13 @@ msgstr ""
 "No incluya información confidencial, como su nombre, información de "
 "contacto, número de cuenta o número de seguro social en este campo."
 
+#: jinja2/v1/_includes/breadcrumbs.html:17
+#: jinja2/v1/_includes/molecules/breadcrumbs.html:17
+#: wellbeing/jinja2/wellbeing/about.html:24
+#: wellbeing/jinja2/wellbeing/results.html:210
+msgid "Breadcrumbs"
+msgstr "Guía de navegación"
+
 #: jinja2/v1/_includes/molecules/global-header-cta.html:23
 msgid "Submit a Complaint"
 msgstr "Enviar una queja"
