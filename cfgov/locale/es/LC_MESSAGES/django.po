@@ -159,6 +159,10 @@ msgstr "Hipoteca"
 msgid "College loans"
 msgstr "Préstamos para vehículos"
 
+#: jinja2/v1/_includes/molecules/pagination.html:33
+msgid "Pagination"
+msgstr "Número de página"
+
 #: jinja2/v1/_includes/molecules/pagination.html:69
 msgid "Page"
 msgstr "Página"
