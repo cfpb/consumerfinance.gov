@@ -277,6 +277,28 @@ class EnforcementActionsFilterForm(FilterableListForm):
         widget=widgets.CheckboxSelectMultiple()
     )
 
+    products = forms.MultipleChoiceField(
+        required=False,
+        choices=enforcement_action_page.enforcement_products,
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_products',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for products',
+            'multiple': 'multiple',
+        })
+    )
+
+    at_risk_groups = forms.MultipleChoiceField(
+        required=False,
+        choices=enforcement_action_page.enforcement_at_risk_groups,
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_at_risk_groups',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for at risk groups',
+            'multiple': 'multiple',
+        })
+    )
+
     def get_page_set(self):
         query = self.generate_query()
         return self.filterable_pages.filter(query).distinct().order_by(
@@ -285,14 +307,16 @@ class EnforcementActionsFilterForm(FilterableListForm):
 
     def get_query_strings(self):
         return [
-            'title__icontains',          # title
-            'initial_filing_date__gte',  # from_date
-            'initial_filing_date__lte',  # to_date
-            'categories__name__in',      # categories
-            'tags__slug__in',            # topics
-            'authors__slug__in',         # authors
-            'is_archived__in',           # archived
-            'statuses__status__in',      # statuses
+            'title__icontains',                      # title
+            'initial_filing_date__gte',              # from_date
+            'initial_filing_date__lte',              # to_date
+            'categories__name__in',                  # categories
+            'tags__slug__in',                        # topics
+            'authors__slug__in',                     # authors
+            'is_archived__in',                       # archived
+            'statuses__status__in',                  # statuses
+            'products__product__in',                 # products
+            'at_risk_groups__at_risk_group__in',     # at_risk_groups
         ]
 
 
