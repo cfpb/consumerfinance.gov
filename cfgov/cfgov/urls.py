@@ -462,8 +462,6 @@ urlpatterns = [
         name='ask-autocomplete-es'
     ),
 
-    re_path(r'^_status/', include('watchman.urls')),
-
     re_path(
         r'^consumer-tools/financial-well-being/',
         include('wellbeing.urls')
@@ -705,6 +703,11 @@ if settings.ALLOW_ADMIN_URL:
     ]
 
     urlpatterns = patterns + urlpatterns
+
+if settings.WATCHMAN_TOKENS is not None:
+    urlpatterns.append(
+        re_path(r'^_status/', include('watchman.urls')),
+    )
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

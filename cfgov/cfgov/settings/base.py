@@ -764,9 +764,11 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
 }
 
-
-# Watchman tokens, used to authenticate global status endpoint
-WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS", secrets.token_hex())
+# Watchman tokens, a comma-separated string of tokens used to authenticate
+# global status endpoint. The Watchman status URL endpoint is only included if
+# WATCHMAN_TOKENS is defined as an environment variable. A blank value for
+# WATCHMAN_TOKENS will make the status endpoint accessible without a token.
+WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS")
 
 # This specifies what checks Watchman should run and include in its output
 # https://github.com/mwarkentin/django-watchman#custom-checks
