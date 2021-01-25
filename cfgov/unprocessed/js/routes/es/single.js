@@ -1,2 +1,2 @@
 import '../on-demand/ask-autocomplete';
-import '../on-demand/summary-mobile';
+import '../on-demand/summary';

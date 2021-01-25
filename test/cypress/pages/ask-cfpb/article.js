@@ -5,6 +5,6 @@ export class AskCfpbArticle {
   }
 
   clickSummary() {
-    cy.get( '.o-summary-mobile_btn' ).click();
+    cy.get( '.o-summary_btn' ).click();
   }
 }

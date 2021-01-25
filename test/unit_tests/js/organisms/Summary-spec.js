@@ -1,22 +1,22 @@
-import SummaryMobile from '../../../../cfgov/unprocessed/js/organisms/SummaryMobile.js';
+import Summary from '../../../../cfgov/unprocessed/js/organisms/Summary.js';
 import { simulateEvent } from '../../../util/simulate-event';
 
 const HTML_SNIPPET = `
-<div class="o-summary-mobile"
+<div class="o-summary o-summary__mobile"
      data-js-hook="behavior_flyout-menu">
-    <div class="o-summary-mobile_content"
+    <div class="o-summary_content"
          data-js-hook="behavior_flyout-menu_content">
         Content
     </div>
-    <button class="o-summary-mobile_btn"
+    <button class="o-summary_btn"
             data-js-hook="behavior_flyout-menu_trigger">
         Read full description
     </button>
 </div>
 `;
 
-let summaryMobile;
-let summaryMobileDom;
+let summary;
+let summaryDom;
 let targetDom;
 let contentDom;
 
@@ -34,28 +34,28 @@ function windowResizeTo( width, height ) {
   global.dispatchEvent( new Event( 'resize' ) );
 }
 
-describe( 'Summary Mobile', () => {
+describe( 'Summary', () => {
 
   beforeEach( () => {
     document.body.innerHTML = HTML_SNIPPET;
-    summaryMobileDom = document.querySelector( '.o-summary-mobile' );
-    targetDom = summaryMobileDom.querySelector( '.o-summary-mobile_btn' );
-    contentDom = summaryMobileDom.querySelector( '.o-summary-mobile_content' );
+    summaryDom = document.querySelector( '.o-summary__mobile' );
+    targetDom = summaryDom.querySelector( '.o-summary_btn' );
+    contentDom = summaryDom.querySelector( '.o-summary_content' );
 
-    summaryMobile = new SummaryMobile( summaryMobileDom );
+    summary = new Summary( summaryDom );
   } );
 
   describe( 'initialized state', () => {
     it( 'should be initialized', () => {
-      expect( summaryMobileDom.getAttribute( 'data-js-hook' ) ).toBe( 'behavior_flyout-menu' );
-      summaryMobile.init();
-      expect( summaryMobileDom.getAttribute( 'data-js-hook' ) ).toBe( 'behavior_flyout-menu state_atomic_init' );
+      expect( summaryDom.getAttribute( 'data-js-hook' ) ).toBe( 'behavior_flyout-menu' );
+      summary.init();
+      expect( summaryDom.getAttribute( 'data-js-hook' ) ).toBe( 'behavior_flyout-menu state_atomic_init' );
     } );
   } );
 
   describe( 'interactions', () => {
     it( 'should expand on click', () => {
-      summaryMobile.init();
+      summary.init();
       windowResizeTo( 300 );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
       expect( targetDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );

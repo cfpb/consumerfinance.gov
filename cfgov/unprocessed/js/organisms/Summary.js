@@ -5,20 +5,21 @@ import MaxHeightTransition from '@cfpb/cfpb-atomic-component/src/utilities/trans
 import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
 import { DESKTOP, TABLET, viewportIsIn } from '../modules/util/breakpoint-state.js';
 
-const BASE_CLASS = 'o-summary-mobile';
+const BASE_CLASS = 'o-summary';
 
 /**
- * SummaryMobile
+ * Summary
  * @class
  *
- * @classdesc Initializes a new SummaryMobile organism.
+ * @classdesc Initializes a new Summary organism.
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the organism.
- * @returns {SummaryMobile} An instance.
+ * @returns {Summary} An instance.
  */
-function SummaryMobile( element ) {
+function Summary( element ) {
   const _dom = checkDom( element, BASE_CLASS );
+  const _hasMobileModifier = _dom.classList.contains( `${ BASE_CLASS }__mobile` );
   const _contentDom = _dom.querySelector( `.${ BASE_CLASS }_content` );
   const _btnDom = _dom.querySelector( `.${ BASE_CLASS }_btn` );
   let _transition;
@@ -31,7 +32,7 @@ function SummaryMobile( element ) {
   let _suspended = true;
 
   /**
-   * @returns {SummaryMobile} An instance.
+   * @returns {Summary} An instance.
    */
   function init() {
     if ( !setInitFlag( _dom ) ) {
@@ -57,7 +58,8 @@ function SummaryMobile( element ) {
    * suspends or resumes the mobile or desktop menu behaviors.
    */
   function _resizeHandler() {
-    if ( viewportIsIn( DESKTOP ) || viewportIsIn( TABLET ) ) {
+    if ( _hasMobileModifier &&
+         viewportIsIn( DESKTOP ) || viewportIsIn( TABLET ) ) {
       _suspend();
     } else {
       _resume();
@@ -127,6 +129,6 @@ function SummaryMobile( element ) {
   return this;
 }
 
-SummaryMobile.BASE_CLASS = BASE_CLASS;
+Summary.BASE_CLASS = BASE_CLASS;
 
-export default SummaryMobile;
+export default Summary;
