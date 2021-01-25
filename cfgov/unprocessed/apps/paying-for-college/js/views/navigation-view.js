@@ -143,7 +143,7 @@ const navigationView = {
 
     const navItem = document.querySelector( '[data-nav_item="' + activeName + '"]' );
     const activeElem = closest( navItem, 'li' );
-    const activeParent = closest( activeElem, 'li' );
+    const activeParent = closest( activeElem, '.m-list_item__parent' );
 
     this._navListItems.forEach( elem => {
       elem.setAttribute( 'data-nav-is-active', 'False' );
@@ -182,8 +182,8 @@ const navigationView = {
    */
   updateView: function() {
     const started = getStateValue( 'gotStarted' );
-    if ( started ) {
-      const activeName = getStateValue( 'activeSection' );
+    const activeName = getStateValue( 'activeSection' );
+    if ( started && activeName ) {
       this._updateSideNav( activeName );
       this._showAndHideSections( activeName );
     }
