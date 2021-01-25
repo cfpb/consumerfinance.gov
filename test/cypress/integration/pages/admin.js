@@ -166,8 +166,8 @@ describe( 'Admin', () => {
       admin.getFirstTableCell().should( 'not.be.empty' );
       admin.selectFirstTableCell();
       admin.selectTableEditorTextbox();
-      for(let x = 0; x < initialText.length; x++){
-        admin.backspaceTableEditorTextbox()
+      for ( let x = 0; x < initialText.length; x++ ) {
+        admin.backspaceTableEditorTextbox();
       }
       admin.saveTableEditor();
       admin.getFirstTableCell().should( 'be.empty' );

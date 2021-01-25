@@ -219,8 +219,8 @@ export class AdminPage {
     cy.get( '.action-add-block-table_block' ).click();
   }
 
-  getFirstTableCell(){
-    return cy.get( '.htCore' ).find( 'td' ).first()
+  getFirstTableCell() {
+    return cy.get( '.htCore' ).find( 'td' ).first();
   }
 
   selectFirstTableCell() {
