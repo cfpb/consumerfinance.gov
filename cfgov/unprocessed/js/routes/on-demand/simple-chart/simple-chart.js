@@ -13,13 +13,38 @@ import fetch from 'cross-fetch';
 
 accessibility( Highcharts );
 
+const dataCache = {};
+
+/**
+ * Fetches data from the global dataCache
+ * @param {string} url The url to fetch data from
+ * @returns {Object} JSON data or undefined
+ */
+function fetchFromCache( url ) {
+  return dataCache[url];
+}
+
+/**
+ * Stores data in the global dataCache
+ * @param {string} url The url to use for the key
+ * @param {Object} data The JSON data to store
+ */
+function storeInCache( url, data ) {
+  dataCache[url] = data;
+}
+
 /**
  * Fetches JSON data
  * @param {string} url The url to fetch data from
  * @returns {Promise} Promise that resolves to JSON data
  */
 function fetchData( url ) {
-  return fetch( url ).then( res => res.json() );
+  const data = fetchFromCache( url );
+  if ( data ) return Promise.resolve( data );
+  return fetch( url ).then( res => res.json().then( d => {
+    storeInCache( url, d );
+    return Promise.resolve( d );
+  } ) );
 }
 
 /**
