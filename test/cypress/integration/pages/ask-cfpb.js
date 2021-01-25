@@ -1,8 +1,8 @@
 import { AskCfpbSearch } from '../../pages/ask-cfpb/search';
-import { AskCfpbArticle } from '../../pages/ask-cfpb/article';
+import { AskCfpbAnswerPage } from '../../pages/ask-cfpb/answer-page';
 
 const search = new AskCfpbSearch();
-const article = new AskCfpbArticle();
+const answerPage = new AskCfpbAnswerPage();
 
 describe( 'Ask CFPB', () => {
   describe( 'Search', () => {
@@ -31,7 +31,7 @@ describe( 'Ask CFPB', () => {
 
   describe( 'Article', () => {
     beforeEach( () => {
-      article.open();
+      answerPage.open();
     } );
 
     it( 'should hide content on mobile', () => {
@@ -39,7 +39,7 @@ describe( 'Ask CFPB', () => {
       cy.get( '.o-summary_content' ).should( 'have.class', 'u-max-height-transition' );
       cy.get( '.o-summary_content' ).should( 'have.class', 'u-max-height-summary' );
       cy.get( '.o-summary_content' ).invoke( 'outerHeight' ).should( 'be.lte', 88 );
-      article.clickSummary();
+      answerPage.clickSummary();
       cy.get( '.o-summary_content' ).should( 'have.class', 'u-max-height-transition' );
       cy.get( '.o-summary_content' ).should( 'not.have.class', 'u-no-animation' );
       cy.get( '.o-summary_content' ).should( 'not.have.class', 'u-max-height-summary' );
