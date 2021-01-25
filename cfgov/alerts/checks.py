@@ -1,26 +1,15 @@
-import math
-
-from django.conf import settings
-
-import ntplib
+from elasticsearch_dsl import connections
 from watchman.decorators import check
 
 
 @check
-def check_clock_drift():
-    ntp_client = ntplib.NTPClient()
-    response = ntp_client.request(
-        settings.NTP_TIME_SERVER,
-        version=3,
-    )
-    offset = settings.MAX_ALLOWED_TIME_OFFSET
-    if math.fabs(response.offset) > offset:
-        result = {
-            'ok': False,
-            'error': 'Clock has drifted more than {} seconds'.format(offset),
-            'stacktrace': 'Drift is {} seconds'.format(response.offset)
-        }
-    else:
-        result = {'ok': True}
+def elasticsearch_health():
+    es = connections.get_connection()
+    health = es.cluster.health(level="shards")
 
-    return {'clock sync': result}
+    if (health["timed_out"] or health["status"] != "green"):
+        ok = False
+    else:
+        ok = True
+
+    return {"elasticsearch": {"ok": ok, "health": health}}
