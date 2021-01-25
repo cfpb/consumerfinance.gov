@@ -6,7 +6,6 @@ from urllib.parse import urlencode
 from django import forms
 from django.apps import apps
 from django.core.exceptions import ValidationError
-from django.db import models
 from django.db.models import Q
 from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
@@ -20,8 +19,6 @@ from wagtail.core.rich_text import expand_db_html
 from wagtail.images import blocks as images_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.utils.widgets import WidgetWithScript
-
-from modelcluster.fields import ParentalKey
 
 from jinja2 import Markup
 from taggit.models import Tag
