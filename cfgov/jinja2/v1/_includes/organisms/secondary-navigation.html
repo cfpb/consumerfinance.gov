@@ -37,7 +37,7 @@
 {% endif %}
 <nav class="o-secondary-navigation
             {{ '' if has_children else 'o-secondary-navigation__no-children' }}"
-     aria-label="Section navigation">
+     aria-label="{{ _('Section navigation') }}">
     {% set sec_nav_settings = {
         'label': _('In this section'),
         'is_midtone': true,
@@ -86,7 +86,7 @@
    ========================================================================== #}
 {% macro _render_secondary_navigation_deprecated(active_nav_id, nav_items) %}
 <nav class="o-secondary-navigation"
-     aria-label="Section navigation">
+     aria-label="{{ _('Section navigation') }}">
     {% set sec_nav_settings = {
         'label': _('In this section'),
         'is_bordered': false,
