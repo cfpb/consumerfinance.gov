@@ -60,19 +60,19 @@ class EnforcementAPITestCase(TestCase):
         self.enforcement_page.public_enforcement_action = 'Sample Enforcement Action'
         self.enforcement_page.initial_filing_date = date(2021, 1, 1)
         self.enforcement_page.defendant_types = [
-                EnforcementActionDefendantType(defendant_type='Bank'),
-                EnforcementActionDefendantType(defendant_type='Non-Bank'),
-                ]
+            EnforcementActionDefendantType(defendant_type='Bank'),
+            EnforcementActionDefendantType(defendant_type='Non-Bank'),
+        ]
         self.enforcement_page.court = "CFPB Office of Administrative Adjudication"
         self.enforcement_page.docket_numbers.add(
-                EnforcementActionDocket(docket_number='2021-CFPB-0001'))
+            EnforcementActionDocket(docket_number='2021-CFPB-0001'))
         self.enforcement_page.settled_or_contested_at_filing = 'Settled'
         self.enforcement_page.products.add(
             EnforcementActionProduct(product='Other Consumer Products (Not Lending)'))
         self.enforcement_page.at_risk_groups.add(
             EnforcementActionAtRisk(at_risk_group='Students'))
         self.enforcement_page.enforcement_dispositions.add(
-                EnforcementActionDisposition(
+            EnforcementActionDisposition(
                 final_disposition = "Sample Sample Action",
                 final_disposition_type = "Final Order",
                 final_order_date = "2021-02-02",
@@ -85,11 +85,11 @@ class EnforcementAPITestCase(TestCase):
                 final_order_civil_money_penalty = "999.00",
                 final_order_civil_money_penalty_suspended = "111.00",
                 estimated_consumers_entitled_to_relief = "Zero"
-                    ))
+            ))
         self.enforcement_page.statuses.add(
             EnforcementActionStatus(status='expired-terminated-dismissed'))
         self.enforcement_page.statutes.add(
-                EnforcementActionStatute(statute='CLA'))
+            EnforcementActionStatute(statute='CLA'))
 
 
     def test_serializes_correct_keys(self):
@@ -103,18 +103,18 @@ class EnforcementAPITestCase(TestCase):
         self.assertEqual(
                 serializer.data['statuses'],
                 self.expected_json['statuses']
-                )
+        )
         self.assertEqual(
                 serializer.data['products'],
                 self.expected_json['products']
-                )
+        )
 
     def test_flattens_lists(self):
         serializer = EnforcementActionSerializer(self.enforcement_page)
         self.assertEqual(
                 serializer.data['defendant_types'],
                 self.expected_json['defendant_types']
-                )
+        )
 
     def test_can_serialize_empty_metadata(self):
         empty_page = baker.prepare(EnforcementActionPage)
