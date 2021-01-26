@@ -156,5 +156,21 @@ describe( 'Admin', () => {
       admin.saveTableEditor();
       cy.get( 'td' ).contains( documentName ).should( 'be.visible' );
     } );
+
+    it( 'should be able to save an empty cell', () => {
+      const initialText = 'hi';
+      admin.selectFirstTableCell();
+      admin.selectTableEditorTextbox();
+      admin.typeTableEditorTextbox( initialText );
+      admin.saveTableEditor();
+      admin.getFirstTableCell().should( 'not.be.empty' );
+      admin.selectFirstTableCell();
+      admin.selectTableEditorTextbox();
+      for ( let x = 0; x < initialText.length; x++ ) {
+        admin.backspaceTableEditorTextbox();
+      }
+      admin.saveTableEditor();
+      admin.getFirstTableCell().should( 'be.empty' );
+    } );
   } );
 } );
