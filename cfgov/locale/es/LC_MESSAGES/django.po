@@ -8,40 +8,40 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 12:13-0400\n"
+"POT-Creation-Date: 2021-01-26 15:09-0500\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ask_cfpb/models/pages.py:251
+#: ask_cfpb/models/pages.py:247
 msgid "for"
 msgstr "para"
 
-#: ask_cfpb/models/pages.py:255
+#: ask_cfpb/models/pages.py:251
 msgid "Showing "
 msgstr "Se muestra "
 
-#: ask_cfpb/models/pages.py:256
+#: ask_cfpb/models/pages.py:252
 msgid "result"
 msgstr "resultado"
 
-#: ask_cfpb/models/pages.py:258
+#: ask_cfpb/models/pages.py:254
 #: jinja2/v1/ask-cfpb/answer-search-results.html:27
 msgid "Showing"
 msgstr "Se muestran"
 
-#: ask_cfpb/models/pages.py:259
+#: ask_cfpb/models/pages.py:255
 msgid "results"
 msgstr "resultados"
 
-#: ask_cfpb/models/pages.py:269 ask_cfpb/models/pages.py:280
-#: ask_cfpb/models/pages.py:288
+#: ask_cfpb/models/pages.py:265 ask_cfpb/models/pages.py:276
+#: ask_cfpb/models/pages.py:284
 msgid "within"
 msgstr "en"
 
-#: ask_cfpb/models/pages.py:272
+#: ask_cfpb/models/pages.py:268
 msgid "See all results within"
 msgstr "Ver todos los resultados para"
 
@@ -49,11 +49,11 @@ msgstr "Ver todos los resultados para"
 msgid "Export Ask data"
 msgstr ""
 
-#: cfgov/settings/base.py:243
+#: cfgov/settings/base.py:244
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:244
+#: cfgov/settings/base.py:245
 msgid "Spanish"
 msgstr ""
 
@@ -113,47 +113,48 @@ msgid "Submit a Complaint"
 msgstr "Enviar una queja"
 
 #: jinja2/v1/_includes/molecules/global-search.html:21
-#: jinja2/v1/_includes/molecules/global-search.html:24
-#: jinja2/v1/_includes/molecules/global-search.html:59
-#: jinja2/v1/_includes/molecules/global-search.html:78
+#: jinja2/v1/_includes/molecules/global-search.html:26
+#: jinja2/v1/_includes/molecules/global-search.html:29
+#: jinja2/v1/_includes/molecules/global-search.html:64
+#: jinja2/v1/_includes/molecules/global-search.html:83
 #: jinja2/v1/_includes/organisms/ask-search.html:62
 #: jinja2/v1/ask-cfpb/see-all.html:52
 msgid "Search"
 msgstr "Buscar"
 
-#: jinja2/v1/_includes/molecules/global-search.html:28
+#: jinja2/v1/_includes/molecules/global-search.html:33
 msgid "Close"
 msgstr "Cerrar"
 
-#: jinja2/v1/_includes/molecules/global-search.html:64
-#: jinja2/v1/_includes/molecules/global-search.html:67
+#: jinja2/v1/_includes/molecules/global-search.html:69
+#: jinja2/v1/_includes/molecules/global-search.html:72
 msgid "Search the CFPB"
 msgstr "Buscar la CFPB"
 
-#: jinja2/v1/_includes/molecules/global-search.html:73
+#: jinja2/v1/_includes/molecules/global-search.html:78
 #: jinja2/v1/ask-cfpb/see-all.html:56
 msgid "Clear search"
 msgstr "Borrar búsqueda"
 
-#: jinja2/v1/_includes/molecules/global-search.html:83
+#: jinja2/v1/_includes/molecules/global-search.html:88
 msgid "Suggested search terms:"
 msgstr ""
 
-#: jinja2/v1/_includes/molecules/global-search.html:87
+#: jinja2/v1/_includes/molecules/global-search.html:92
 #, fuzzy
 #| msgid "Related questions"
 msgid "Regulations"
 msgstr "Otras preguntas"
 
-#: jinja2/v1/_includes/molecules/global-search.html:92
+#: jinja2/v1/_includes/molecules/global-search.html:97
 msgid "Compliance guides"
 msgstr ""
 
-#: jinja2/v1/_includes/molecules/global-search.html:97
+#: jinja2/v1/_includes/molecules/global-search.html:102
 msgid "Mortgage"
 msgstr "Hipoteca"
 
-#: jinja2/v1/_includes/molecules/global-search.html:102
+#: jinja2/v1/_includes/molecules/global-search.html:107
 #, fuzzy
 #| msgid "Auto loans"
 msgid "College loans"
@@ -164,10 +165,11 @@ msgid "Pagination"
 msgstr "Número de página"
 
 #: jinja2/v1/_includes/molecules/pagination.html:69
+#: templates/wagtailadmin/reports/site_history.html:18
 msgid "Page"
 msgstr "Página"
 
-#: jinja2/v1/_includes/molecules/pagination.html:98
+#: jinja2/v1/_includes/molecules/pagination.html:100
 msgid "Go"
 msgstr "Ir"
 
@@ -271,11 +273,11 @@ msgstr "Ocultar"
 msgid "Back to top"
 msgstr "Ir arriba"
 
-#: jinja2/v1/_includes/organisms/footer.html:175
+#: jinja2/v1/_includes/organisms/footer.html:180
 msgid "https://usa.gov/"
 msgstr "https://gobiernousa.gov/"
 
-#: jinja2/v1/_includes/organisms/footer.html:175
+#: jinja2/v1/_includes/organisms/footer.html:180
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
@@ -297,34 +299,34 @@ msgid "Play video"
 msgstr "Ver video"
 
 #: jinja2/v1/_layouts/base.html:57
-#: jinja2/v1/youth_employment_success/index.html:10
-#: legacy/templates/front/base_nonresponsive.html:32
-#: legacy/templates/front/base_update.html:52 v1/jinja2/v1/home_page.html:7
+#: jinja2/v1/youth_employment_success/index.html:9
+#: legacy/templates/front/base_nonresponsive.html:28
+#: legacy/templates/front/base_update.html:47 v1/jinja2/v1/home_page.html:7
 #: v1/jinja2/v1/home_page.html:13
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:35
+#: jinja2/v1/ask-cfpb/answer-page.html:32
 msgid "last reviewed"
 msgstr "revisado"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:37
+#: jinja2/v1/ask-cfpb/answer-page.html:34
 msgid "updated"
 msgstr "actualizado"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:61
+#: jinja2/v1/ask-cfpb/answer-page.html:72
 msgid "Read full answer"
 msgstr "Leer más"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:73 jinja2/v1/ask-cfpb/see-all.html:78
+#: jinja2/v1/ask-cfpb/answer-page.html:78 jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Don't see what you're looking for?"
 msgstr "¿No encuentra lo que busca?"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:76
+#: jinja2/v1/ask-cfpb/answer-page.html:81
 msgid "Browse related questions"
 msgstr "Otras preguntas"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:89
+#: jinja2/v1/ask-cfpb/answer-page.html:94
 #: jinja2/v1/ask-cfpb/landing-page.html:80
 msgid "Learn more about"
 msgstr "Sepa más sobre"
@@ -450,11 +452,11 @@ msgstr ""
 #: legacy/templates/common/password_change_confirm.html:21
 #: legacy/templates/common/password_change_form.html:19
 #: legacy/templates/common/password_change_form.html:23
-#: legacy/templates/common/password_change_form.html:49
+#: legacy/templates/common/password_change_form.html:48
 msgid "Password change"
 msgstr ""
 
-#: legacy/templates/common/password_change_form.html:33
+#: legacy/templates/common/password_change_form.html:32
 msgid ""
 "\n"
 "        Please correct the error below."
@@ -464,25 +466,25 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: legacy/templates/common/password_change_form.html:51
+#: legacy/templates/common/password_change_form.html:50
 msgid ""
 "Please enter your old password, for security's sake, and then enter your new "
 "password twice so we can verify you typed it in correctly."
 msgstr ""
 
-#: legacy/templates/common/password_change_form.html:67
+#: legacy/templates/common/password_change_form.html:66
 msgid "Old password"
 msgstr ""
 
-#: legacy/templates/common/password_change_form.html:72
+#: legacy/templates/common/password_change_form.html:71
 msgid "New password"
 msgstr ""
 
-#: legacy/templates/common/password_change_form.html:77
+#: legacy/templates/common/password_change_form.html:76
 msgid "Password (again)"
 msgstr ""
 
-#: legacy/templates/common/password_change_form.html:84
+#: legacy/templates/common/password_change_form.html:83
 msgid "Change my password"
 msgstr ""
 
@@ -502,20 +504,20 @@ msgstr ""
 msgid "Your username (in case you've forgotten):"
 msgstr ""
 
-#: legacy/templates/front/base_nonresponsive.html:23
-#: legacy/templates/front/base_nonresponsive.html:24
-#: legacy/templates/front/base_nonresponsive.html:25
-#: legacy/templates/front/base_nonresponsive.html:26
-#: legacy/templates/front/base_update.html:29
-#: legacy/templates/front/base_update.html:30
-#: legacy/templates/front/base_update.html:31
-#: legacy/templates/front/base_update.html:32
-#: legacy/templates/front/base_update.html:33
+#: legacy/templates/front/base_nonresponsive.html:19
+#: legacy/templates/front/base_nonresponsive.html:20
+#: legacy/templates/front/base_nonresponsive.html:21
+#: legacy/templates/front/base_nonresponsive.html:22
+#: legacy/templates/front/base_update.html:24
+#: legacy/templates/front/base_update.html:25
+#: legacy/templates/front/base_update.html:26
+#: legacy/templates/front/base_update.html:27
+#: legacy/templates/front/base_update.html:28
 msgid "en-US"
 msgstr ""
 
-#: legacy/templates/front/base_nonresponsive.html:110
-#: legacy/templates/front/base_update.html:159
+#: legacy/templates/front/base_nonresponsive.html:106
+#: legacy/templates/front/base_update.html:152
 msgid "en"
 msgstr ""
 
@@ -555,6 +557,7 @@ msgid "View permissions for this user"
 msgstr ""
 
 #: search/templates/search/_list_explore_revised.html:17
+#: templates/wagtailadmin/reports/site_history.html:38
 msgid "Edit this page"
 msgstr ""
 
@@ -607,20 +610,63 @@ msgstr ""
 msgid "Export data"
 msgstr ""
 
-#: templates/wagtailadmin/login.html:50
+#: templates/wagtailadmin/login.html:10
+#, python-format
+msgid "Your %(username_field)s and password didn't match. Please try again."
+msgstr ""
+
+#: templates/wagtailadmin/login.html:28
+msgid "Sign in to Wagtail"
+msgstr ""
+
+#: templates/wagtailadmin/login.html:48
+#, fuzzy
+#| msgid "Review your answers"
+msgid "Reset your password"
+msgstr "Revise sus respuestas"
+
+#: templates/wagtailadmin/login.html:48
 msgid "Forgotten it?"
 msgstr ""
 
-#: templates/wagtailadmin/login.html:65
-msgid "Signing in..."
+#: templates/wagtailadmin/login.html:75
+msgid "Signing in…"
 msgstr ""
 
-#: templates/wagtailadmin/login.html:65
-msgid "Sign in"
+#: templates/wagtailadmin/login.html:75
+msgid "Accept and sign in"
 msgstr ""
 
 #: templates/wagtailadmin/pages/listing/_button_with_dropdown.html:9
 msgid "Delete"
+msgstr ""
+
+#: templates/wagtailadmin/reports/site_history.html:7
+#: v1/templates/v1/page_metadata_report.html:7
+#, fuzzy
+#| msgid "Download CSV file"
+msgid "Download CSV"
+msgstr "Descargue CSV file"
+
+#: templates/wagtailadmin/reports/site_history.html:21
+msgid "Action"
+msgstr ""
+
+#: templates/wagtailadmin/reports/site_history.html:24
+msgid "User"
+msgstr ""
+
+#: templates/wagtailadmin/reports/site_history.html:27
+msgid "Date / Time"
+msgstr ""
+
+#: templates/wagtailadmin/reports/site_history.html:53
+#, python-format
+msgid "%(time_period)s ago"
+msgstr ""
+
+#: templates/wagtailadmin/reports/site_history.html:60
+msgid "No log entries found."
 msgstr ""
 
 #: v1/jinja2/v1/home_page.html:13
@@ -643,7 +689,7 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: v1/models/base.py:376
+#: v1/models/base.py:467
 msgid "password"
 msgstr ""
 
