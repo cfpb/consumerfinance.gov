@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from v1.models.enforcement_action_page import (
     EnforcementActionDisposition, EnforcementActionPage
@@ -85,6 +86,8 @@ class EnforcementActionSerializer(serializers.ModelSerializer):
         ]
 
 
-class EnforcementAPIView(ListAPIView):
-    serializer_class = EnforcementActionSerializer
-    queryset = EnforcementActionPage.all_actions()
+class EnforcementAPIView(APIView):
+    def get(self, request):
+        queryset = EnforcementActionPage.all_actions()
+        serializer = EnforcementActionSerializer(queryset, many=True)
+        return Response(serializer.data)
