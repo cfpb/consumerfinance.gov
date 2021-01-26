@@ -29,7 +29,7 @@ describe( 'Ask CFPB', () => {
     } );
   } );
 
-  describe( 'Article', () => {
+  describe( 'Answer Page', () => {
     beforeEach( () => {
       answerPage.open();
     } );
