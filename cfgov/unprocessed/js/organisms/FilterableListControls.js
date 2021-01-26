@@ -53,21 +53,22 @@ function FilterableListControls( element ) {
     const _expandables = Expandable.init( _dom );
     _expandable = _expandables[0];
 
+    /**
+     * Refresh the height of the filterable list control's expandable
+     * to ensure all its children are visible.
+     */
+    function _refreshExpandableHeight() {
+      window.setTimeout(
+        _expandable.transition.expand.bind( _expandable.transition ),
+        250
+      );
+    }
+
     // If multiselects exist on the form, iterate over them.
     multiSelects.forEach( multiSelect => {
-      multiSelect.addEventListener( 'expandBegin', function refresh() {
-        window.setTimeout(
-          _expandable.transition.expand.bind( _expandable.transition ),
-          250
-        );
-      } );
-
-      multiSelect.addEventListener( 'expandEnd', function refresh() {
-        window.setTimeout(
-          _expandable.transition.expand.bind( _expandable.transition ),
-          250
-        );
-      } );
+      multiSelect.addEventListener( 'expandBegin', _refreshExpandableHeight );
+      multiSelect.addEventListener( 'expandEnd', _refreshExpandableHeight );
+      multiSelect.addEventListener( 'selectionsUpdated', _refreshExpandableHeight );
     } );
 
     _formModel.init();
