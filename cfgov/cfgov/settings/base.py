@@ -434,7 +434,8 @@ if os.environ.get('USE_AWS_ES', False):
             'hosts': [{'host': host, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
-            'connection_class': RequestsHttpConnection
+            'connection_class': RequestsHttpConnection,
+            'timeout': 60
         },
     }
 else:
