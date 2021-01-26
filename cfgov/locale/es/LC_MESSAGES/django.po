@@ -271,10 +271,6 @@ msgstr "actualizado"
 msgid "Read full answer"
 msgstr "Leer más"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:65
-msgid "Hide full answer"
-msgstr "Esconder la respuesta completa"
-
 #: jinja2/v1/ask-cfpb/answer-page.html:73 jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Don't see what you're looking for?"
 msgstr "¿No encuentra lo que busca?"
@@ -360,6 +356,10 @@ msgid ""
 "Join the conversation. Follow CFPB on %(twitter_link)s and %(facebook_link)s."
 msgstr ""
 "Únase a la conversación. Síganos en %(twitter_link)s y en %(facebook_link)s."
+
+#: jobmanager/jinja2/jobmanager/job_listing_page.html:76
+msgid "Read full description"
+msgstr "Leer descripción completa"
 
 #: legacy/templates/common/forgot_password.html:24
 msgid "Email"
