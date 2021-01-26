@@ -230,4 +230,4 @@ class JobListingPage(CFGOVPage):
 
     @property
     def page_js(self):
-        return super(JobListingPage, self).page_js + ['read-more.js']
+        return super(JobListingPage, self).page_js + ['summary.js']
