@@ -841,34 +841,19 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cfpb/cfpb-atomic-component@0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.7.3.tgz#3fd3733b4796554a4b9b5ffff19ea8bad62003ba"
-  integrity sha512-eEweXJGSPYAicLhYRSf7i0ogqTMcDb9snwOcApG7UdT9zEJJsIlEcGQyMEgyxC6aKMtVV9uu1UqeJm+d6cQ6gg==
+"@cfpb/cfpb-atomic-component@0.7.6", "@cfpb/cfpb-atomic-component@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.7.6.tgz#7abf8eb0348ae2a3a62e42dc489b6c1d83980137"
+  integrity sha512-16xuES/o5+Sti/nInXpYxbc94C25PedgUQblmdsIkNkxv+DozF4u1X+B3YM/FmBTPdwPG55UuTmX29O8Fgs8ZA==
   dependencies:
     ftdomdelegate "^3.0.0"
 
-"@cfpb/cfpb-atomic-component@^0.7.3":
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.7.5.tgz#a0b9d3856c160ca36b95b1d8550ade291e2141bf"
-  integrity sha512-nAlByqPh8UN9DncToqtUXTHiQ2vQLnWTdJKVXLckJFb7A/gc8lN4k0qZFsCpnCX51Zb4Yo9Sk/9JkUn/JBnsGQ==
+"@cfpb/cfpb-buttons@0.7.6", "@cfpb/cfpb-buttons@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-buttons/-/cfpb-buttons-0.7.6.tgz#2eb13c373f598f2b1dee2d0c967a6795735b2beb"
+  integrity sha512-sFyARbsiRTUhw1/Slqyb9y30ZVtxJojbNqUmMKaeD/wg0IAjyaUX6BdZLfF71A9ffriTM2kd+GGMI6yoKw9gRA==
   dependencies:
-    ftdomdelegate "^3.0.0"
-
-"@cfpb/cfpb-buttons@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-buttons/-/cfpb-buttons-0.7.2.tgz#707bf6505c2eb29004157f7c34347b9c825f979c"
-  integrity sha512-PWBoVB/tkw0EsGeg9ruSytkF8my92lJbX9oQF3DpY/GeBRxPfSVF/5WGEItF9hIUB5UFeZb7HzQEWl9MGYMEeg==
-  dependencies:
-    "@cfpb/cfpb-core" "^0.7.2"
-    "@cfpb/cfpb-icons" "^0.7.2"
-
-"@cfpb/cfpb-buttons@^0.7.2":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-buttons/-/cfpb-buttons-0.7.4.tgz#041d6bc383fbcd8fe47aee2737526a71468eee47"
-  integrity sha512-S+JZzTsEXxYDJz/PcOZVJarrenkcHS+D84AJgOkexBT3N6GnM6UAQxu0t04MVS67wUJpQpq1nlnes8L6U7YTRw==
-  dependencies:
-    "@cfpb/cfpb-core" "^0.7.4"
+    "@cfpb/cfpb-core" "^0.7.6"
     "@cfpb/cfpb-icons" "^0.7.2"
 
 "@cfpb/cfpb-core@0.3.1", "@cfpb/cfpb-core@^0.3.1":
@@ -879,38 +864,30 @@
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-core@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.7.2.tgz#6799b69b070c390f06e16400ed5372e396f07035"
-  integrity sha512-c7vAbGINVS/SP6T9bH5laV5cSS+/CpCfZ/h3LSdgfbOm+p9VOaf5GX2sjtVQXYfXnilyeLtqaNROKHVDofRWUQ==
+"@cfpb/cfpb-core@0.7.6", "@cfpb/cfpb-core@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.7.6.tgz#9f7dad1bc2b17ef0e41b5f179cbf657be07029ed"
+  integrity sha512-uft/Oq91nJog1dN4RnVkKK1Jku5l65l2R5XCgepW8I6XiCgz73tYbs2z2LrVmcg93vZowV6Sy5Y2SRWdMmPBQQ==
   dependencies:
     normalize-css "^2.0.0"
     normalize-legacy-addon "0.1.0"
 
-"@cfpb/cfpb-core@^0.7.2", "@cfpb/cfpb-core@^0.7.4":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-core/-/cfpb-core-0.7.4.tgz#cd7d4bbe5e28da950805e8b07f4324b0ca1e4618"
-  integrity sha512-69gxH12xVMSeokpYDqov+wdSULDZg16cxWV6Yw4tJ1N9iJrc0loNxLDEzaAPGS8zgdG/GslK32VBJaGSV0aegQ==
+"@cfpb/cfpb-expandables@0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.7.6.tgz#6b7a481f612244006a29d02d5213f4a457cf0ff1"
+  integrity sha512-FOahAeuCutsEINtPz/BlzcabR+B6ftI3npWigD0qmEcyMXFhJdUDiehnBl29oa4bB9BPgd81c8oWYHqbeOgrCg==
   dependencies:
-    normalize-css "^2.0.0"
-    normalize-legacy-addon "0.1.0"
-
-"@cfpb/cfpb-expandables@0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-expandables/-/cfpb-expandables-0.7.3.tgz#f6c2b9ff6ed3d40e68d541938389d5ad9e980614"
-  integrity sha512-2euenJIxvbZqORTkU3SZm96uGtU2gUocXhVLQ6dnytlr0mQZlb9PxfhKYG8N9Cau/6NFtZBWIyREjjMzHhLWpw==
-  dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.7.3"
-    "@cfpb/cfpb-core" "^0.7.2"
+    "@cfpb/cfpb-atomic-component" "^0.7.6"
+    "@cfpb/cfpb-core" "^0.7.6"
     "@cfpb/cfpb-icons" "^0.7.2"
 
-"@cfpb/cfpb-forms@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.7.2.tgz#0bfd66a38f9c44a900bce21aa738be98fe5a25f3"
-  integrity sha512-TFk9jAT6HhHNu4Rq4J5qXvVcloGHvi/4liQPAE9XyQsxdFRoS2WkBkpfBHnI/A4e/ZwcGQ/O6wvZcbkvid82fA==
+"@cfpb/cfpb-forms@0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-forms/-/cfpb-forms-0.7.6.tgz#c06f1bdd7347c6de64202645b7b50fd9204d2368"
+  integrity sha512-l9y8xxa+K5mzO8gZ/TtFCIUdOzfYJa1OXbUK2PMa1vWebL4ijCEueRy2M0DZK2IevnNYF5ffLJu47V5H/3bqAg==
   dependencies:
-    "@cfpb/cfpb-buttons" "^0.7.2"
-    "@cfpb/cfpb-core" "^0.7.2"
+    "@cfpb/cfpb-buttons" "^0.7.6"
+    "@cfpb/cfpb-core" "^0.7.6"
     "@cfpb/cfpb-grid" "^0.7.2"
     "@cfpb/cfpb-icons" "^0.7.2"
 
@@ -948,38 +925,38 @@
     "@cfpb/cfpb-core" "^0.3.1"
     "@cfpb/cfpb-grid" "^0.3.1"
 
-"@cfpb/cfpb-layout@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.7.2.tgz#a8694cddb36220a37c6a645fed545e816c2dbfbf"
-  integrity sha512-fwoROs+wG0aZJD5stP/DaECYRmPzQUSdG8lsyjXDoX6JcfrNrfIdxV7fD4zO+yXTVxOpSlcYBSMvQpq4kYhOIw==
+"@cfpb/cfpb-layout@0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-layout/-/cfpb-layout-0.7.6.tgz#b0a3d6d2c50b0db7adabba9f1a19a7e084f87ad9"
+  integrity sha512-P5ducPdHlLHUsrzcK9kwGy5dTGYutIcoMtXAfyGX4PUvAKZOPaB1cN1LBZlZV2GMTaiOawdpYDUyADCUGOAAEA==
   dependencies:
-    "@cfpb/cfpb-core" "^0.7.2"
+    "@cfpb/cfpb-core" "^0.7.6"
     "@cfpb/cfpb-grid" "^0.7.2"
 
-"@cfpb/cfpb-notifications@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.7.2.tgz#61595599b051b9dc6c54f2f10fc5dd23d9e030a9"
-  integrity sha512-cwVTb/YMSxyNICSB9goAEcKzsqon/ZW1ZCClee3SlRjPxllJWJw6zzOkrjOHPI4OMSmkqXPy18Jw2KtBtuqBvA==
+"@cfpb/cfpb-notifications@0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-notifications/-/cfpb-notifications-0.7.6.tgz#7f33edc7e5e8f3481fe25db44327915d7be713a4"
+  integrity sha512-c2vDUSEykTIeDtUC8IwUpO9xENj+GJmTG4kBQpYQysxebVccIW3rXdPb+V+lg3WXmrvEG5bEPWwnRCZFiNLgwQ==
   dependencies:
-    "@cfpb/cfpb-core" "^0.7.2"
+    "@cfpb/cfpb-core" "^0.7.6"
     "@cfpb/cfpb-icons" "^0.7.2"
 
-"@cfpb/cfpb-pagination@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-pagination/-/cfpb-pagination-0.7.2.tgz#1aa183a3137cb749cf22a850df66ca38c5fc3b86"
-  integrity sha512-IkiU/t0PTjb0qKQ90n7kBJVrnKraNj0+8u9ZuhkEDEWc1NkfIRTQKV/yz+bLSofEQimeUyPKr3LpUST8VHDPdA==
+"@cfpb/cfpb-pagination@0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-pagination/-/cfpb-pagination-0.7.6.tgz#f4dab23d374d54ce4200e7e4cba376038cace14c"
+  integrity sha512-UM7xGZUxqwevRtr98UF5pbMV8kcxPneBiIHaLb7V5gKzFwvBa9afV7PTViSD4QtWXtBazPRjjGINFJ4NKJa6LQ==
   dependencies:
-    "@cfpb/cfpb-buttons" "^0.7.2"
-    "@cfpb/cfpb-core" "^0.7.2"
+    "@cfpb/cfpb-buttons" "^0.7.6"
+    "@cfpb/cfpb-core" "^0.7.6"
     "@cfpb/cfpb-icons" "^0.7.2"
 
-"@cfpb/cfpb-tables@0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-tables/-/cfpb-tables-0.7.3.tgz#9e97844356c19c23799644d84dea461f461c6bfd"
-  integrity sha512-/q87UllZhtI7QnyjsM0qcVREyiinbkDLTCkLFhZP3x8090u2YoyAU7mEM2TsLhJUHTOXOFltB4IB1rWWguuXQQ==
+"@cfpb/cfpb-tables@0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-tables/-/cfpb-tables-0.7.6.tgz#c9f6ce5527b50e9a53517d25bbad546d0af26afb"
+  integrity sha512-7p40N4e0miaUVQQR26L1V13ftrRM4TWhx6SCIGOi1/y2yOl80IXHkAKpWbNO6ILKvGqTBquRta3ph9yP58x6lg==
   dependencies:
-    "@cfpb/cfpb-atomic-component" "^0.7.3"
-    "@cfpb/cfpb-core" "^0.7.2"
+    "@cfpb/cfpb-atomic-component" "^0.7.6"
+    "@cfpb/cfpb-core" "^0.7.6"
 
 "@cfpb/cfpb-typography@0.3.2":
   version "0.3.2"
@@ -989,12 +966,12 @@
     "@cfpb/cfpb-core" "^0.3.1"
     "@cfpb/cfpb-icons" "^0.3.2"
 
-"@cfpb/cfpb-typography@0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.7.2.tgz#33565b965b65d4d834c28e68423906714597cf20"
-  integrity sha512-B2WZfD2TXTT+zgMfov0czOOqV0M085Kjd9aQakeUw6a7jHaBoub0Wv6Fqqz16hJjFgjduvImOEsIKpGjT1YbEA==
+"@cfpb/cfpb-typography@0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-typography/-/cfpb-typography-0.7.6.tgz#d62e1812b918ac89137f1f490691811c5551f086"
+  integrity sha512-W1Kgi6qxe+ZBsXsCq8BTjMg6KzHR6hfz7bji9UnnJls8iJpH9z2s2UwxcHJD97WhXg6C7pHfEuWL95Bvh5IJlg==
   dependencies:
-    "@cfpb/cfpb-core" "^0.7.2"
+    "@cfpb/cfpb-core" "^0.7.6"
     "@cfpb/cfpb-icons" "^0.7.2"
 
 "@cnakazawa/watch@^1.0.3":
@@ -1416,10 +1393,10 @@
     tslib "^1.9.3"
     xml-js "^1.6.11"
 
-"@snyk/java-call-graph-builder@1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@snyk/java-call-graph-builder/-/java-call-graph-builder-1.18.0.tgz#f93abeaf347083b9d534a4f94b1468fd97d111a0"
-  integrity sha512-6Mt+Rs2N4HdHICCjxWRwtGXUrSktCsSGnn7HlL6wi+4JXjPWa+rDCzaF6furqRR3aphZAclgved0haFwwmqBxQ==
+"@snyk/java-call-graph-builder@1.19.0":
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@snyk/java-call-graph-builder/-/java-call-graph-builder-1.19.0.tgz#ed6e80843cc3968b8332c5db52649a9146565069"
+  integrity sha512-in26UkFVEWvGyHmSmVUebvgyubANJB7rfrkE3PKjHDA80NwSLZDSNWOOC2lF2B+4ob4STWjQdMbv+bMqXl5Yew==
   dependencies:
     ci-info "^2.0.0"
     debug "^4.1.1"
@@ -1541,15 +1518,10 @@
     "@types/estree" "*"
     "@types/json-schema" "*"
 
-"@types/estree@*":
+"@types/estree@*", "@types/estree@^0.0.46":
   version "0.0.46"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.46.tgz#0fb6bfbbeabd7a30880504993369c4bf1deab1fe"
   integrity sha512-laIjwTQaD+5DukBZaygQ79K1Z0jb1bPEMRrkXSLjtCcZm+abyp5YbrqpSLzD42FwWW6gK/aS4NYpJ804nG2brg==
-
-"@types/estree@^0.0.45":
-  version "0.0.45"
-  resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.45.tgz#e9387572998e5ecdac221950dab3e8c3b16af884"
-  integrity sha512-jnqIUKDUqJbDIUxm0Uj7bnlMnRm1T/eZ9N+AVMqhPgzrba2GhGG5o/jCTwmdPK709nEZsGoMzXEDUjcXHa3W0g==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.4"
@@ -10386,14 +10358,14 @@ snyk-go-plugin@1.16.4:
     tmp "0.2.1"
     tslib "^1.10.0"
 
-snyk-gradle-plugin@3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/snyk-gradle-plugin/-/snyk-gradle-plugin-3.11.0.tgz#4d22704c38875e23a96469ac27d0d43ae746fc70"
-  integrity sha512-OXf1A+kcif+vslm/nsel3bDYWsGwum2PsZLETM28nG4JOgqBLYLWvCHPgH9r2aa0MKTq0nBpimvFkzDm/+2qQQ==
+snyk-gradle-plugin@3.12.0:
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/snyk-gradle-plugin/-/snyk-gradle-plugin-3.12.0.tgz#3721626e0557fd6ea039dfe116df7510b7b45315"
+  integrity sha512-WAmViagNolXsqPO/xmArlnpmisw6j/4xN6FLJ/gl9cDSSrgTh013sZlynkZj0G1v4enkelIMuqfVKXzinthm/Q==
   dependencies:
     "@snyk/cli-interface" "2.9.1"
     "@snyk/dep-graph" "^1.19.4"
-    "@snyk/java-call-graph-builder" "1.18.0"
+    "@snyk/java-call-graph-builder" "1.19.0"
     "@types/debug" "^4.1.4"
     chalk "^3.0.0"
     debug "^4.1.1"
@@ -10426,10 +10398,10 @@ snyk-module@^2.0.2:
     debug "^3.1.0"
     hosted-git-info "^2.7.1"
 
-snyk-mvn-plugin@2.25.0:
-  version "2.25.0"
-  resolved "https://registry.yarnpkg.com/snyk-mvn-plugin/-/snyk-mvn-plugin-2.25.0.tgz#9d7c89e5ad14f6b63d0be5548c2c20124905b257"
-  integrity sha512-2NDWrMWi9K32i9CdWUy2Pce8D9myR0dxPDJJpamVt/DD3fDxH4ia701i2HdDgOjMq8PI6yIgI+vRaAW3X2GrbA==
+snyk-mvn-plugin@2.25.1:
+  version "2.25.1"
+  resolved "https://registry.yarnpkg.com/snyk-mvn-plugin/-/snyk-mvn-plugin-2.25.1.tgz#e76bf7884152356e099f10200aeaa3017d0b4bdb"
+  integrity sha512-buhFh7iDxIxTiQy1D+bLm2aYlqHqMoQxaeLTtMw939rU4TqIrvFiTDYZo0kq8PfvCWU5yvxLHlbR5V4goObv7w==
   dependencies:
     "@snyk/cli-interface" "2.9.1"
     "@snyk/java-call-graph-builder" "1.17.0"
@@ -10590,10 +10562,10 @@ snyk-try-require@1.3.1, snyk-try-require@^1.1.1, snyk-try-require@^1.3.1:
     lru-cache "^4.0.0"
     then-fs "^2.0.0"
 
-snyk@1.438.0:
-  version "1.438.0"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.438.0.tgz#d54ffd3f8cf93c4bb931d3a8cd4755f247ec5767"
-  integrity sha512-z7OwAQbejPUcvicsxt4Gb2YyLZsEzPJwNhZNvuwxgcaHGk+WSHIiZfpNZB4/oF4tdAOU8hJg93DvhgkF6tb8rQ==
+snyk@1.439.1:
+  version "1.439.1"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.439.1.tgz#e42195e53e9dd60d3739ee8e903eb8a62db4d9c0"
+  integrity sha512-aWZixzm6HDaK/e/nDvyAX+IeBeQ6IFjQx559ExU+mKWQuGgmBHJryuODTFq1ymQCI7TzQvzM5GCrrEL48JIWkw==
   dependencies:
     "@snyk/cli-interface" "2.11.0"
     "@snyk/dep-graph" "1.21.0"
@@ -10621,9 +10593,9 @@ snyk@1.438.0:
     snyk-cpp-plugin "2.2.1"
     snyk-docker-plugin "4.13.1"
     snyk-go-plugin "1.16.4"
-    snyk-gradle-plugin "3.11.0"
+    snyk-gradle-plugin "3.12.0"
     snyk-module "3.1.0"
-    snyk-mvn-plugin "2.25.0"
+    snyk-mvn-plugin "2.25.1"
     snyk-nodejs-lockfile-parser "1.30.1"
     snyk-nuget-plugin "1.19.4"
     snyk-php-plugin "1.9.2"
@@ -12161,10 +12133,10 @@ webpack-sources@^2.1.1:
     source-list-map "^2.0.1"
     source-map "^0.6.1"
 
-webpack-stream@6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/webpack-stream/-/webpack-stream-6.1.1.tgz#8db6b1efdbebf796b1e30ac1256645f4a3cf5867"
-  integrity sha512-XRd4ydP5H43twoLfh541VRtEg0ig/GJQnR0D3npjSOhjHsAUaYDEFoAUZwH+tfWSHyp6OyVJPYHRPmRoyCDYBA==
+webpack-stream@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/webpack-stream/-/webpack-stream-6.1.2.tgz#ee90bc07d0ff937239d75ed22aa728072c9e7ee1"
+  integrity sha512-Bpbsrix1cmWRN705JEg69ErgNAEOpQBvtuWKFW3ZCrLddoPPK6oVpQn4svxNdfedqMLlWA3GLOLvw4c7u63GqA==
   dependencies:
     fancy-log "^1.3.3"
     lodash.clone "^4.3.2"
@@ -12176,13 +12148,13 @@ webpack-stream@6.1.1:
     vinyl "^2.1.0"
     webpack "^4.26.1"
 
-webpack@5.16.0:
-  version "5.16.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.16.0.tgz#796e093c2d92c229f013aefefde82b50c0572570"
-  integrity sha512-QOkctcjYfEGxcYg4AzPJafyAQ7ANc266/URkX881uFA7b2k31E0Dmpy1ExfppHOTp1kHDTsRh9sXojVUvgPF0g==
+webpack@5.17.0:
+  version "5.17.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.17.0.tgz#e92aebad45be25f86f788dc72fc11daacdcfd55d"
+  integrity sha512-R+IdNEaYcYaACpXZOt7reyc8txBK7J06lOPkX1SbgmeoAnUbyBZivJIksrDBnmMA3wlTWvPcX7DubxELyPB8rA==
   dependencies:
     "@types/eslint-scope" "^3.7.0"
-    "@types/estree" "^0.0.45"
+    "@types/estree" "^0.0.46"
     "@webassemblyjs/ast" "1.11.0"
     "@webassemblyjs/wasm-edit" "1.11.0"
     "@webassemblyjs/wasm-parser" "1.11.0"
