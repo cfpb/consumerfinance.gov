@@ -1,16 +1,13 @@
 import logging
 import os
 import shutil
-import subprocess
-import sys
 from contextlib import redirect_stdout
 from io import StringIO
 
 from django.conf import settings
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test.runner import DiscoverRunner
 
-from scripts import initial_data, test_data
+from scripts import initial_data
 
 
 class TestRunner(DiscoverRunner):
@@ -72,55 +69,6 @@ class TestRunner(DiscoverRunner):
         parts = migration.split('.')
         migration_tuple = (parts[-3], parts[-1])
         return migration_tuple in loader.applied_migrations
-
-
-class AcceptanceTestRunner(TestRunner):
-    def run_suite(self, **kwargs):
-        gulp_command = ['gulp', 'test:acceptance:protractor']
-        protractor_args = sys.argv[2:]
-
-        if protractor_args:
-            for arg in protractor_args:
-                gulp_command.append('--' + arg)
-
-        try:
-            subprocess.check_call(gulp_command)
-        except subprocess.CalledProcessError:
-            sys.exit(1)
-        finally:
-            self.teardown()
-
-    def set_env_test_url(self):
-        server_thread = StaticLiveServerTestCase.server_thread
-        os.environ['TEST_HTTP_HOST'] = server_thread.host
-        os.environ['DJANGO_HTTP_PORT'] = str(server_thread.port)
-
-    def setup_databases(self, **kwargs):
-        dbs = super(AcceptanceTestRunner, self).setup_databases(**kwargs)
-        test_data.run()
-        return dbs
-
-    def teardown(self):
-        self.teardown_databases(self.dbs)
-        self.teardown_test_environment()
-        StaticLiveServerTestCase.tearDownClass()
-
-    def run_tests(self, test_labels, extra_tests=None, **kwargs):
-        # Disable logging below CRITICAL during tests.
-        logging.disable(logging.CRITICAL)
-
-        self.setup_test_environment()
-        self.dbs = self.setup_databases()
-
-        # Create a static server, it should start immediately.
-        StaticLiveServerTestCase.setUpClass()
-
-        # Set the environment variables used by Protractor.
-        self.set_env_test_url()
-
-        self.run_suite()
-
-        return
 
 
 class StdoutCapturingTestRunner(TestRunner):

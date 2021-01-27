@@ -434,7 +434,8 @@ if os.environ.get('USE_AWS_ES', False):
             'hosts': [{'host': host, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
-            'connection_class': RequestsHttpConnection
+            'connection_class': RequestsHttpConnection,
+            'timeout': 60
         },
     }
 else:
@@ -857,4 +858,9 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
             ]
         },
     },
+}
+
+# Serialize Decimal(3.14) as 3.14, not "3.14"
+REST_FRAMEWORK = {
+    "COERCE_DECIMAL_TO_STRING": False
 }

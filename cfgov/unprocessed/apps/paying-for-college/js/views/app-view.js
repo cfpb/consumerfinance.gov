@@ -51,7 +51,7 @@ const appView = {
     const target = event.target;
     let href = 'mailto:' + document.querySelector( '#finish_email' ).value;
     href += '?subject=Link: Your financial path to graduation&body=';
-    href += encodeURIComponent(window.location.href);
+    href += encodeURIComponent( window.location.href );
     target.setAttribute( 'href', href );
   },
 
