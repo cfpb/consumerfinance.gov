@@ -74,7 +74,7 @@
     "svg-inline-loader": "0.8.2",
     "terser-webpack-plugin": "5.1.1",
     "vinyl-named": "1.1.0",
-    "webpack": "5.17.0",
+    "webpack": "5.18.0",
     "webpack-stream": "6.1.2",
     "xdr": "0.5.3"
   },
@@ -95,7 +95,7 @@
     "protractor-retry": "2.0.1",
     "sauce-connect-tunnel": "0.2.1",
     "selenium-webdriver": "4.0.0-alpha.5",
-    "snyk": "1.439.1",
+    "snyk": "1.439.2",
     "through2": "4.0.2",
     "wcag": "0.3.0"
   },
