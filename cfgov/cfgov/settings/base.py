@@ -859,3 +859,8 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         },
     },
 }
+
+# Serialize Decimal(3.14) as 3.14, not "3.14"
+REST_FRAMEWORK = {
+    "COERCE_DECIMAL_TO_STRING": False
+}
