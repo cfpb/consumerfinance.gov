@@ -76,20 +76,22 @@
         } );
     }
 
-    &__170 {
+    &.m-inset__170 {
+        // Ensure that 170px inset images are that same size on XS screens
         width: unit( 170px / @base-font-size-px, em );
     }
 
     &__270 {
+        // Ensure that 270px inset images are that same size on XS screens
         width: unit( 270px / @base-font-size-px, em );
     }
 
     .respond-to-min( @bp-sm-min, {
+        // Default anything with just an .m-inset class to 270px floating right,
+        // e.g., quote and related links blocks.
         float: right;
         width: unit( 270px / @base-font-size-px, em );
-    } );
 
-    .respond-to-min( @bp-sm-min, {
         &__left {
             float: left;
             clear: left;
