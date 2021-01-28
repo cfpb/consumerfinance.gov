@@ -27,38 +27,6 @@ gulp test:acceptance --specs=multiselect.feature ( runs just the multiselect fea
 gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )
 ```
 
-### Running the legacy browser tests locally (with a Tox server)
-
-To run browser tests, open a new Terminal window or tab and change to the project directory,
-then tell gulp to start the tests:
-
-```sh
-gulp build
-gulp test:acceptance ( tox -e acceptance can be run as well )
-```
-
-There are several options you can pass to run a particular suite of tests,
-to run a particular list of features,
-and/or to run it in "fast" mode:
-
-```sh
-gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin suite )
-gulp test:acceptance --specs=multiselect.feature ( runs just the multiselect feature )
-gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )
-gulp test:acceptance --recreate ( runs the tests and recreates the virtual environment )
-```
-
-The same options can be used with tox (--omitted):
-
-```sh
-tox -e acceptance suite=wagtail-admin
-tox -e acceptance specs=multiselect.feature
-tox -e acceptance tags=@mobile
-```
-
-These tests will run on their own server; you do not need to be running your development server.
-
-
 ### Running the legacy browser tests in Sauce Labs
 
 Sauce Labs can be used to run the legacy browser tests remotely in the cloud.

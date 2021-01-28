@@ -32,6 +32,7 @@ enforcement_defendant_types = [
 enforcement_products = [
     ('Auto Finance Origination', 'Auto Finance Origination'),
     ('Auto Finance Servicing', 'Auto Finance Servicing'),
+    ('Business Lending (ECOA)', 'Business Lending (ECOA)'),
     ('Consumer Reporting Agencies', 'Consumer Reporting Agencies'),
     ('Consumer Reporting ? User', 'Consumer Reporting - User'),
     ('Credit Cards', 'Credit Cards'),
@@ -46,7 +47,6 @@ enforcement_products = [
     ('Prepaid', 'Prepaid'),
     ('Remittances', 'Remittances'),
     ('Short Term, Small Dollar', 'Short Term, Small Dollar'),
-    ('Business Lending (ECOA)', 'Business Lending (ECOA)'),
     ('Student Loan Origination', 'Student Loan Origination'),
     ('Student Loan Servicing', 'Student Loan Servicing'),
     ('Other Consumer Lending', 'Other Consumer Lending'),
@@ -57,10 +57,10 @@ enforcement_products = [
 ]
 
 enforcement_at_risk_groups = [
+    ('Fair Lending', 'Fair Lending'),
+    ('Limited English Proficiency', 'Limited English Proficiency'),
     ('Older Americans', 'Older Americans'),
     ('Servicemembers', 'Servicemembers'),
-    ('Limited English Proficiency', 'Limited English Proficiency'),
-    ('Fair Lending', 'Fair Lending'),
     ('Students', 'Students')
 ]
 
@@ -280,6 +280,24 @@ class EnforcementActionPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('content')
     ]
+
+    @classmethod
+    def all_actions(cls):
+        # Return the collection of all Enforcement Action Pages.
+        # Exclude any pages in the Trash or otherwise not a child of the
+        # EnforcementActionsFilterPage.
+        try:
+            # TODO: find a less hacky way to get only the pages in the
+            # correct part of the page tree
+            pg_id = 1327
+            parent_page = Page.objects.get(id=pg_id)
+            query = cls.objects.child_of(parent_page)
+        except(Page.DoesNotExist):
+            query = cls.objects
+
+        query = query.filter(initial_filing_date__isnull=False)
+        query = query.live().order_by('-initial_filing_date')
+        return query
 
     def get_context(self, request):
         context = super(EnforcementActionPage, self).get_context(request)
