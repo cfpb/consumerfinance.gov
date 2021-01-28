@@ -181,7 +181,7 @@ function makeFilterDOM( options, chartNode, filter ) {
 
   const allOpt = document.createElement( 'option' );
   allOpt.value = '';
-  allOpt.innerText = 'View All';
+  allOpt.innerText = 'View all';
   select.appendChild( allOpt );
 
   options.forEach( option => {
@@ -200,13 +200,23 @@ function makeFilterDOM( options, chartNode, filter ) {
 }
 
 /**
+ * @param {string} title The title to be case adjusted
+ * @returns {string} The case adjusted title
+ */
+function titleCase( title ) {
+  if ( title[0].match( /[A-Z]/ ) && !title[1].match( /[A-Z]/ ) ) {
+    return title[0].toLowerCase() + title.slice( 1 );
+  }
+}
+
+/**
  * @param {object} chartNode The DOM node of the current chart
  * @returns {object} the built select DOM node
  */
 function makeSelectHeaderDOM( chartNode ) {
   const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
   const selectHeader = document.createElement( 'h3' );
-  selectHeader.innerText = 'Total ' + attachPoint.dataset.title;
+  selectHeader.innerText = 'Total ' + titleCase( attachPoint.dataset.title );
   attachPoint.appendChild( selectHeader );
 
   return selectHeader;
@@ -226,7 +236,7 @@ function attachFilter(
 ) {
   const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
   const selectHeader = attachPoint.querySelector( 'h3' );
-  const { title } = attachPoint.dataset;
+  const title = titleCase( attachPoint.dataset.title );
   selectNode.addEventListener( 'change', () => {
     // filter on all selects
     const selects = chartNode.querySelectorAll( '.a-select > select' );
@@ -239,10 +249,10 @@ function attachFilter(
       const { value } = curr;
       if ( value ) {
         if ( isFirst ) {
-          headerText = title + ' for ' + value;
+          headerText = attachPoint.dataset.title + ' for <b>' + value + '</b>';
           isFirst = false;
         } else {
-          headerText = headerText + ' and ' + value;
+          headerText = headerText + ' and <b>' + value + '</b>';
         }
       }
 
@@ -254,7 +264,7 @@ function attachFilter(
       filtered = transform( filtered );
     }
 
-    selectHeader.innerText = headerText;
+    selectHeader.innerHTML = headerText;
     chart.series[0].setData( filtered );
     if ( dataset.chartType === 'bar' && chart.xAxis[0].categories &&
       dataset.styleOverrides && dataset.styleOverrides.match( 'xAxis.categories' ) ) {
