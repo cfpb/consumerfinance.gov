@@ -219,6 +219,10 @@ export class AdminPage {
     cy.get( '.action-add-block-table_block' ).click();
   }
 
+  getFirstTableCell() {
+    return cy.get( '.htCore' ).find( 'td' ).first();
+  }
+
   selectFirstTableCell() {
     cy.get( '.htCore' ).find( 'td' ).first().click().click();
   }
@@ -243,6 +247,10 @@ export class AdminPage {
 
   typeTableEditorTextbox( text ) {
     return cy.get( '.modal-body' ).find( '.DraftEditor-editorContainer' ).type( text );
+  }
+
+  backspaceTableEditorTextbox( ) {
+    return cy.get( '.modal-body' ).find( '.DraftEditor-editorContainer' ).type( '{backspace}' );
   }
 
   selectInternalLink( text ) {

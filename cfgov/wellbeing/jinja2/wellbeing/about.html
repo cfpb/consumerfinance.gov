@@ -21,7 +21,7 @@
 
 {% block pre_content %}
     <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        <nav class="breadcrumbs" aria-label="{{ _('Breadcrumbs') }}">
             <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home_' + current_language) }}">
                 {{ svg_icon( 'left' ) }}
                 {{ _('Back to the questionnaire') }}
