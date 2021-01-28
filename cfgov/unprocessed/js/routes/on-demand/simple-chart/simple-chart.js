@@ -1,5 +1,5 @@
-/* eslint complexity: ["error", 8] */
-/* eslint max-params: ["error", 8] */
+/* eslint complexity: ["error", 9] */
+/* eslint max-params: ["error", 9] */
 /* eslint consistent-return: [0] */
 // Polyfill Promise for IE11
 import 'core-js/features/promise';
@@ -82,7 +82,6 @@ function makeChartOptions(
   const defaultObj = JSON.parse(
     JSON.stringify( getDefaultChartObject( chartType ) )
   );
-
   if ( styleOverrides ) {
     const styles = JSON.parse( styleOverrides );
     Object.keys( styles ).forEach( key => {
@@ -128,7 +127,7 @@ function resolveOverride( override, data ) {
  * @returns {Promise} Promise resolving to either fetched JSON or parsed inline JSON
  */
 function resolveData( source ) {
-  if ( source.match( /^http/i ) ) {
+  if ( source.match( /^http/i ) || source.match( /^\// ) ) {
     return fetchData( source );
   }
   return Promise.resolve( JSON.parse( source ) );
@@ -217,12 +216,13 @@ function makeSelectHeaderDOM( chartNode ) {
  * @param {object} selectNode The DOM node of the select component
  * @param {object} chartNode The DOM node of the chart
  * @param {object} chart The Highcharts chart object
+ * @param {object} dataset Data passed via data-* tags
  * @param {object} filter The filter key and possible label
  * @param {object} data The raw chart data, untransformed
  * @param {function} transform The transform function for this chart
  */
 function attachFilter(
-  selectNode, chartNode, chart, filter, data, transform
+  selectNode, chartNode, chart, dataset, filter, data, transform
 ) {
   const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
   const selectHeader = attachPoint.querySelector( 'h3' );
@@ -256,18 +256,24 @@ function attachFilter(
 
     selectHeader.innerText = headerText;
     chart.series[0].setData( filtered );
-
+    if ( dataset.chartType === 'bar' && chart.xAxis[0].categories &&
+      dataset.styleOverrides && dataset.styleOverrides.match( 'xAxis.categories' ) ) {
+      const styles = JSON.parse( dataset.styleOverrides );
+      const cats = resolveOverride( styles['xAxis.categories'], filtered );
+      chart.xAxis[0].setCategories( cats );
+    }
   } );
 }
 
 /** Wires up select filters, if present
-  * @param {string} filters Stringified JSON array of objects
+  * @param {object} dataset Data passed via data-* tags
   * @param {object} chartNode The DOM node of the current chart
   * @param {object} chart The initialized chart
   * @param {object} data The raw chart data, untransformed
   * @param {function} transform The transform function for this chart
   * */
-function initFilters( filters, chartNode, chart, data, transform ) {
+function initFilters( dataset, chartNode, chart, data, transform ) {
+  let filters = dataset.filters;
   if ( !filters ) return;
   try {
     filters = JSON.parse( filters );
@@ -281,7 +287,7 @@ function initFilters( filters, chartNode, chart, data, transform ) {
       makeSelectHeaderDOM( chartNode );
       selects.forEach( ( selectNode, i ) => {
         attachFilter(
-          selectNode, chartNode, chart, filters[i], data, transform
+          selectNode, chartNode, chart, dataset, filters[i], data, transform
         );
       } );
     }
@@ -307,7 +313,7 @@ function buildCharts() {
  */
 function buildChart( chartNode ) {
   const target = chartNode.getElementsByClassName( 'simple-chart-target' )[0];
-  const { source, transform, filters } = target.dataset;
+  const { source, transform } = target.dataset;
 
   resolveData( source.trim() ).then( d => {
     const data =
@@ -317,7 +323,7 @@ function buildChart( chartNode ) {
       makeChartOptions( data, target.dataset )
     );
     initFilters(
-      filters, chartNode, chart, d, transform && chartHooks[transform]
+      target.dataset, chartNode, chart, d, transform && chartHooks[transform]
     );
   } );
 }

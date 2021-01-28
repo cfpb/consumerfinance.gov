@@ -18,7 +18,7 @@ const hooks = {
   enforcement_relief( data ) {
     const dispositions = [];
     data.forEach( val => {
-      const disp = val.dispositions;
+      const disp = val.enforcement_dispositions;
       if ( disp ) {
         disp.forEach( v => {
           if ( v.final_order_date ) {
@@ -28,7 +28,8 @@ const hooks = {
         } );
       }
     } );
-    dispositions.sort( ( a, b ) => a.final_order_date - b.final_order_date );
+    dispositions.sort( ( a, b ) => Number( new Date( a.final_order_date ) ) -
+      Number( new Date( b.final_order_date ) ) );
 
     let total = 0;
     return dispositions.map( v => {
@@ -37,7 +38,7 @@ const hooks = {
       total += relief;
 
       return {
-        x: v.final_order_date,
+        x: Number( new Date( v.final_order_date ) ),
         y: total,
         name: v.final_disposition,
         relief: relief,
@@ -48,7 +49,8 @@ const hooks = {
 
   enforcement_counts( data ) {
     const d = data.slice().sort(
-      ( a, b ) => a.initial_filing_date - b.initial_filing_date
+      ( a, b ) => Number( new Date( a.initial_filing_date ) ) -
+          Number( new Date( b.initial_filing_date ) )
     );
 
     let total = 0;
@@ -56,7 +58,7 @@ const hooks = {
       total++;
 
       return {
-        x: v.initial_filing_date,
+        x: Number( new Date( v.initial_filing_date ) ),
         y: total,
         name: v.public_enforcement_action,
         url: v.url
@@ -67,7 +69,7 @@ const hooks = {
   enforcement_reliefCount( data ) {
     const years = {};
     data.forEach( d => {
-      const disp = d.dispositions;
+      const disp = d.enforcement_dispositions;
       if ( disp ) {
         disp.forEach( v => {
           if ( v.final_order_date ) {
@@ -94,6 +96,7 @@ const hooks = {
       if ( years[year] ) years[year]++;
       else years[year] = 1;
     } );
+
     return Object.keys( years )
       .sort()
       .map( k => ( { name: k, y: years[k] } ) );
