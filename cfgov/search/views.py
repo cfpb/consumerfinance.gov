@@ -10,7 +10,7 @@ from v1.models.resources import Resource
 from v1.models.snippets import Contact, ReusableText
 
 
-class SearchView(View):
+class ExternalLinksSearchView(View):
     template_name = 'search/external_links.html'
 
     def get(self, request):

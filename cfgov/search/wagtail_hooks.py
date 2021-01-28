@@ -3,7 +3,7 @@ from django.urls import reverse
 from wagtail.admin.menu import MenuItem
 from wagtail.core import hooks
 
-from search.views import SearchView
+from search.views import ExternalLinksSearchView
 
 
 try:
@@ -16,7 +16,9 @@ except ImportError:
 def register_external_links_url():
     return [
         re_path(
-            r"^external-links/$", SearchView.as_view(), name="external-links"
+            r"^external-links/$",
+            ExternalLinksSearchView.as_view(),
+            name="external-links"
         )
     ]
 
