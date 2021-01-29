@@ -1,3 +1,5 @@
+from django.template.response import TemplateResponse
+
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import StreamField
@@ -38,6 +40,24 @@ class BlogPage(AbstractFilterPage):
         )
 
         return context
+
+    @property
+    def preview_modes(self):
+        return super().preview_modes + [
+            ("list_view", "List view"),
+        ]
+
+    def serve_preview(self, request, mode_name):
+        if mode_name != "list_view":
+            return super().serve_preview(request, mode_name)
+
+        return TemplateResponse(
+            request,
+            "v1/blog/blog_page_list_preview.html",
+            {
+                "post": self,
+            },
+        )
 
 
 class LegacyBlogContent(BlogContent):
