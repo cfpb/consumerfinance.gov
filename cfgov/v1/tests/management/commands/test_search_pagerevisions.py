@@ -17,7 +17,11 @@ class SearchPageRevisionsTestCase(TestCase):
         self.page = SimplePage(title='Test', content='Testing', live=True)
         root_page.add_child(instance=self.page)
         self.revision = self.page.save_revision()
-        call_command('wagtail_update_index', stdout=StringIO())
+        call_command(
+            'wagtail_update_index',
+            backend='fulltext',
+            stdout=StringIO()
+        )
 
     def test_search_pagerevisions_stdout(self):
         stdout = StringIO()
