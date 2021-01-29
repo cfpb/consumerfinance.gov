@@ -37,14 +37,14 @@ class EnforcementAPITestCase(TestCase):
                 "final_disposition_type": "Final Order",
                 "final_order_date": "2021-02-02",
                 "dismissal_date": null,
-                "final_order_consumer_redress": "333.00",
-                "final_order_consumer_redress_suspended": "444.00",
-                "final_order_other_consumer_relief": "555.00",
-                "final_order_other_consumer_relief_suspended": "666.00",
-                "final_order_disgorgement": "777.00",
-                "final_order_disgorgement_suspended": "888.00",
-                "final_order_civil_money_penalty": "999.00",
-                "final_order_civil_money_penalty_suspended": "111.00",
+                "final_order_consumer_redress": 333.0,
+                "final_order_consumer_redress_suspended": 444.0,
+                "final_order_other_consumer_relief": 555.0,
+                "final_order_other_consumer_relief_suspended": 666.0,
+                "final_order_disgorgement": 777.0,
+                "final_order_disgorgement_suspended": 888.0,
+                "final_order_civil_money_penalty": 999.0,
+                "final_order_civil_money_penalty_suspended": 111.0,
                 "estimated_consumers_entitled_to_relief": "Zero"
             }
         ],
@@ -115,6 +115,18 @@ class EnforcementAPITestCase(TestCase):
                 serializer.data['defendant_types'],
                 self.expected_json['defendant_types']
         )
+
+    def test_serializes_disposition(self):
+        serializer = EnforcementActionSerializer(self.enforcement_page)
+        output_keys = serializer.data['enforcement_dispositions'][0].keys()
+        expected_keys = self.expected_json['enforcement_dispositions'][0].keys()  # noqa E501
+        self.assertEqual(output_keys, expected_keys)
+
+    def test_serializes_decimals_as_numbers(self):
+        serializer = EnforcementActionSerializer(self.enforcement_page)
+        output = serializer.data['enforcement_dispositions'][0]['final_order_disgorgement']  # noqa E501
+        expected = self.expected_json['enforcement_dispositions'][0]['final_order_disgorgement']   # noqa E501
+        self.assertEqual(output, expected)
 
     def test_can_serialize_empty_metadata(self):
         empty_page = baker.prepare(EnforcementActionPage)
