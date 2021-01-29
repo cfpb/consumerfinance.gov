@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from haystack.fields import CharField
 
-from search.backends import CFGOVElasticsearch2SearchBackend
+from search.backends.haystack import CFGOVElasticsearch2SearchBackend
 
 
 class CFGOVElasticsearch2SearchBackendTestCase(TestCase):

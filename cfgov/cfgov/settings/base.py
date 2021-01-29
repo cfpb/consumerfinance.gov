@@ -348,7 +348,7 @@ HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
 
 HAYSTACK_CONNECTIONS = {
     "default": {
-        "ENGINE": "search.backends.CFGOVElasticsearch2SearchEngine",
+        "ENGINE": "search.backends.haystack.CFGOVElasticsearch2SearchEngine",
         "URL": SHEER_ELASTICSEARCH_SERVER,
         "INDEX_NAME": os.environ.get(
             "HAYSTACK_ELASTICSEARCH_INDEX",
