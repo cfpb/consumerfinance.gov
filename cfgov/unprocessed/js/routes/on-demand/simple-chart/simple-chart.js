@@ -70,6 +70,24 @@ function getDefaultChartObject( type ) {
 }
 
 /**
+ * Mutates a style object with entries from the style overrides field
+ * @param {string} styleOverrides Stringified JSON style overrides
+ * @param {object} obj The object to mutate
+ * @param {object} data The data to provide to the chart
+ */
+function applyOverrides( styleOverrides, obj, data ) {
+  const styles = JSON.parse( styleOverrides );
+  Object.keys( styles ).forEach( key => {
+    const override = resolveOverride( styles[key], data );
+    key.split( '.' ).reduce( ( acc, curr, i, arr ) => {
+      if ( i === arr.length - 1 ) return ( acc[curr] = override );
+      if ( !acc[curr] ) acc[curr] = {};
+      return acc[curr];
+    }, obj );
+  } );
+}
+
+/**
  * Overrides default chart options using provided Wagtail configurations
  * @param {object} data The data to provide to the chart
  * @param {object} dataProps (destructured) data-* props attached to the chart HTML
@@ -82,16 +100,9 @@ function makeChartOptions(
   const defaultObj = JSON.parse(
     JSON.stringify( getDefaultChartObject( chartType ) )
   );
+
   if ( styleOverrides ) {
-    const styles = JSON.parse( styleOverrides );
-    Object.keys( styles ).forEach( key => {
-      const override = resolveOverride( styles[key], data );
-      key.split( '.' ).reduce( ( acc, curr, i, arr ) => {
-        if ( i === arr.length - 1 ) return ( acc[curr] = override );
-        if ( !acc[curr] ) acc[curr] = {};
-        return acc[curr];
-      }, defaultObj );
-    } );
+    applyOverrides( styleOverrides, defaultObj, data );
   }
 
   /* eslint-disable-next-line */
@@ -236,6 +247,7 @@ function attachFilter(
 ) {
   const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
   const selectHeader = attachPoint.querySelector( 'h3' );
+  const { styleOverrides } = dataset;
   const title = titleCase( attachPoint.dataset.title );
   selectNode.addEventListener( 'change', () => {
     // filter on all selects
@@ -265,12 +277,14 @@ function attachFilter(
     }
 
     selectHeader.innerHTML = headerText;
-    chart.series[0].setData( filtered );
-    if ( dataset.chartType === 'bar' && chart.xAxis[0].categories &&
-      dataset.styleOverrides && dataset.styleOverrides.match( 'xAxis.categories' ) ) {
-      const styles = JSON.parse( dataset.styleOverrides );
-      const cats = resolveOverride( styles['xAxis.categories'], filtered );
-      chart.xAxis[0].setCategories( cats );
+    const applyHooks = styleOverrides && styleOverrides.match( 'hook__' );
+
+    chart.series[0].setData( filtered, !applyHooks );
+
+    if ( applyHooks ) {
+      const obj = {};
+      applyOverrides( styleOverrides, obj, filtered );
+      chart.update( obj );
     }
   } );
 }
