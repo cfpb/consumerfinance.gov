@@ -107,7 +107,7 @@
             {{ global_header_cta.render( language ) }}
 
             {% import 'molecules/global-search.html' as global_search with context %}
-            {{ global_search.render() }}
+            {{ global_search.render( language ) }}
 
             {% if mega_menu_content %}
                 {% from 'organisms/mega-menu.html' import mega_menu with context %}
