@@ -35,7 +35,7 @@ The possible cache state values are:
 
 ### Django caching
 
-Starting in December 2017, we use [template fragment caching](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/fragment_cache_extension.py) to cache all or part of a template.  It is enabled on our "post previews", snippets of a page that we display on results of filterable pages (e.g. [our blog page](https://consumerfinance.gov/about-us/blog) & [research & reports](https://www.consumerfinance.gov/data-research/research-reports/)).
+Starting in December 2017, we use [template fragment caching](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/jinja2tags/fragment_cache.py) to cache all or part of a template.  It is enabled on our "post previews", snippets of a page that we display on results of filterable pages (e.g. [our blog page](https://consumerfinance.gov/about-us/blog) & [research & reports](https://www.consumerfinance.gov/data-research/research-reports/)).
 
 It can easily be enabled on other templates. See [this PR](https://github.com/cfpb/consumerfinance.gov/pull/3663/files) as an example of the code that would need to be introduced to cache a new fragment.
 
