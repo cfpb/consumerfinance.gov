@@ -32,6 +32,7 @@ enforcement_defendant_types = [
 enforcement_products = [
     ('Auto Finance Origination', 'Auto Finance Origination'),
     ('Auto Finance Servicing', 'Auto Finance Servicing'),
+    ('Business Lending (ECOA)', 'Business Lending (ECOA)'),
     ('Consumer Reporting Agencies', 'Consumer Reporting Agencies'),
     ('Consumer Reporting ? User', 'Consumer Reporting - User'),
     ('Credit Cards', 'Credit Cards'),
@@ -46,7 +47,6 @@ enforcement_products = [
     ('Prepaid', 'Prepaid'),
     ('Remittances', 'Remittances'),
     ('Short Term, Small Dollar', 'Short Term, Small Dollar'),
-    ('Business Lending (ECOA)', 'Business Lending (ECOA)'),
     ('Student Loan Origination', 'Student Loan Origination'),
     ('Student Loan Servicing', 'Student Loan Servicing'),
     ('Other Consumer Lending', 'Other Consumer Lending'),
@@ -57,10 +57,10 @@ enforcement_products = [
 ]
 
 enforcement_at_risk_groups = [
+    ('Fair Lending', 'Fair Lending'),
+    ('Limited English Proficiency', 'Limited English Proficiency'),
     ('Older Americans', 'Older Americans'),
     ('Servicemembers', 'Servicemembers'),
-    ('Limited English Proficiency', 'Limited English Proficiency'),
-    ('Fair Lending', 'Fair Lending'),
     ('Students', 'Students')
 ]
 

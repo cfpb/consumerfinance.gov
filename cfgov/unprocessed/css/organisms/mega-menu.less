@@ -902,11 +902,11 @@ body {
                     }
                 }
 
-                // Adjusts position by 2px to accommodate longer titles
                 &-icon-closed .cf-icon-svg,
                 &-icon-open .cf-icon-svg {
                     position: absolute;
-                    right: unit( ( 15px - 2px ) / @base-font-size-px, rem );
+                    // Adjusts position by 4px to accommodate longer titles.
+                    right: unit( ( 15px - 4px ) / @base-font-size-px, rem );
                     top: 19px;
                     font-size: unit( 10px / @base-font-size-px, em );
                 }
@@ -923,9 +923,10 @@ body {
                     display: none;
                 }
 
-                // Add padding to accommodate caret, removing 2px to accommodate longer titles.
+                // Add padding to accommodate caret.
                 &__has-children {
-                    padding-right: unit( ( @grid_gutter-width - 2px ) / @base-font-size-px, em );
+                    // Remove 4px to accommodate longer titles.
+                    padding-right: unit( ( @grid_gutter-width - 4px ) / @base-font-size-px, em );
                 }
 
                 &__current {
