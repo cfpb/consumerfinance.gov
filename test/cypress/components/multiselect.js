@@ -1,5 +1,9 @@
 export class Multiselect {
 
+  constructor() {
+    this.selectedTags = [];
+  }
+
   click() {
     return cy.get( '.o-expandable_target' ).click();
   }
@@ -36,11 +40,9 @@ export class Multiselect {
     return this.searchInput().clear().type( name );
   }
 
-  selectedTags = [];
-
   async areTagSelected() {
     const tagsSelected = this.selectedTags.length;
-    const selectedTagsCount = await displayedTag().length;
+    const selectedTagsCount = await this.displayedTag().length;
 
     return tagsSelected !== 0 || selectedTagsCount !== 0;
   }
