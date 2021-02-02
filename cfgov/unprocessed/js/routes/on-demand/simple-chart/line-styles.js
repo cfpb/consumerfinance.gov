@@ -4,6 +4,7 @@ const line = {
   ...styles,
   xAxis: {
     title: {
+      margin: 10,
       y: 12,
       style: {
         color: '#5a5d61'

@@ -40,7 +40,12 @@ const styles = {
     useHTML: true
   },
   xAxis: {
-    lineColor: '#d2d3d5'
+    lineColor: '#d2d3d5',
+    xAxis: {
+      title: {
+        margin: 10
+      }
+    }
   },
   yAxis: {
     title: {
