@@ -1,10 +1,10 @@
-// The tests assume some blog posts already exist, and will need some test post data if they're run locally.
-// This includes at least one post that contains the word "loan" in the title, one post without the word "loan" in the title,
-// posts published both before and after the date 01/01/2017. The posts should be in several different categories,
-// and tagged with several different topic tags, including at least one with the tag "mortgages" and at least one without the "mortgages" tag.
-// The posts should also have several different authors, including at least one with the author "CFPB Web Team".
-import { FilterableListControl } from '../../components/filterable-list-control';
+/* The tests assume some blog posts already exist, and will need some test post data if they're run locally.
+This includes at least one post that contains the word "loan" in the title, one post without the word "loan" in the title,
+posts published both before and after the date 01/01/2017. The posts should be in several different categories,
+and tagged with several different topic tags, including at least one with the tag "mortgages" and at least one without the "mortgages" tag.
+The posts should also have several different authors, including at least one with the author "CFPB Web Team". */
 import { Filter } from '../../components/filter';
+import { FilterableListControl } from '../../components/filterable-list-control';
 
 const page = new FilterableListControl();
 const filter = new Filter();

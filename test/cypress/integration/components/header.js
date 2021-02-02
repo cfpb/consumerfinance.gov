@@ -30,11 +30,11 @@ describe( 'Header', () => {
   } );
   it( 'Header, if you click the mega-menu trigger', () => {
     // When I click on the first mega-menu trigger
-    menu.trigger().first().click( { force: true });
+    menu.trigger().first().click( { force: true } );
     // Then the header organism should display the mega menu content
     menu.contentLink( '1' ).should( 'be.visible' );
     // When I click on the last mega-menu trigger
-    menu.trigger().last().click( { force: true });
+    menu.trigger().last().click( { force: true } );
     // Then the header organism should display the mega menu content
     menu.contentLink( '2' ).should( 'be.visible' );
     // Then the header organism should display the global eyebrow horizontal
@@ -44,7 +44,7 @@ describe( 'Header', () => {
   } );
   it( 'Header, if you click mega-menu, and you click search', () => {
     // When I click on the mega-menu trigger
-    menu.trigger().first().click( { force: true });
+    menu.trigger().first().click( { force: true } );
     // Then the header organism should display content
     menu.content().should( 'be.visible' );
     // When I click on the mega-menu search trigger

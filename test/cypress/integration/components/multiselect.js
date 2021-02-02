@@ -1,5 +1,5 @@
-import { Multiselect } from '../../components/multiselect';
 import { FilterableListControl } from '../../components/filterable-list-control';
+import { Multiselect } from '../../components/multiselect';
 
 const multiselect = new Multiselect();
 const filterableList = new FilterableListControl();
@@ -14,7 +14,7 @@ describe( 'I should be able to select using the multiselect', () => {
     // Then the multiselect should be rendered
     multiselect.isRendered();
     // But no tags should be selected
-    multiselect.displayedTag().should('have.length', 0);
+    multiselect.displayedTag().should( 'have.length', 0 );
     // And the multiselect dropdown shouldn't be visible
     multiselect.fieldSet().should( 'not.be.visible' );
   } );
@@ -38,7 +38,7 @@ describe( 'I should be able to select using the multiselect', () => {
     // Then the multiselect dropdown shouldn't be visible
     multiselect.fieldSet().should( 'not.be.visible' );
     // And the multiselect dropdown length should be 0
-    multiselect.dropDown().should('have.length', 0);
+    multiselect.dropDown().should( 'have.length', 0 );
   } );
   it( 'Typing in search input, returning matched results', () => {
     // When I enter "students" in the search input
@@ -46,15 +46,15 @@ describe( 'I should be able to select using the multiselect', () => {
     // Then the multiselect dropdown should display "students"
     multiselect.dropDownHasValue( 'students' );
     // And the multiselect dropdown length should be 1
-    multiselect.dropDown().should('have.length', 1);
+    multiselect.dropDown().should( 'have.length', 1 );
   } );
   it( 'Typing in search input, not returning unmatched results', () => {
     // When I enter "students" in the search input
     multiselect.enterSearchInput( 'students' );
     // Then the multiselect dropdown shouldn't display "mortgages"
-    multiselect.dropDownValue( 'mortgages' ).should('have.length', 0);
+    multiselect.dropDownValue( 'mortgages' ).should( 'have.length', 0 );
     // And the multiselect dropdown length should be 1
-    multiselect.dropDown().should('have.length', 1);
+    multiselect.dropDown().should( 'have.length', 1 );
   } );
   it( 'Typing in search input, clearing the input and closing results', () => {
     // When I enter "students" in the search input
@@ -63,9 +63,9 @@ describe( 'I should be able to select using the multiselect', () => {
     // Then the multiselect dropdown shouldn't be visible
     multiselect.fieldSet().should( 'not.be.visible' );
     // And the multiselect dropdown length should be 0
-    multiselect.dropDown().should('have.length', 0);
+    multiselect.dropDown().should( 'have.length', 0 );
     // And the options field shouldn't contain the class "filtered"
-    multiselect.optionsField().should('not.have.class', 'filtered');
+    multiselect.optionsField().should( 'not.have.class', 'filtered' );
   } );
   it( 'Typing in search input, highlighting the first item', () => {
     // When I click on the multiselect search input
@@ -81,11 +81,11 @@ describe( 'I should be able to select using the multiselect', () => {
     // And I click on the first option in the dropdown
     multiselect.dropDownLabelClick();
     // Then the choices element should contain the first option
-    // const firstElementText = multiselect.dropDownLabel().first().invoke('text');
+    // const firstElementText = multiselect.dropDownLabel().first().invoke( 'text' );
     const firstElementText = 'Financial education';
     multiselect.dropDownLabel().first().should( 'have.text', firstElementText );
     multiselect.choicesElement().first().should( 'have.text', firstElementText );
-    multiselect.choicesElement().should('have.length', 1);
+    multiselect.choicesElement().should( 'have.length', 1 );
   } );
   it( 'Interacting with choices list, remove an option from choices', () => {
     // When I click on the multiselect search input
@@ -95,7 +95,7 @@ describe( 'I should be able to select using the multiselect', () => {
     // And I click on the first choices element
     multiselect.choicesElementClick();
     // Then the choices element length should be 0
-    multiselect.choicesElement().should('have.length', 0);
+    multiselect.choicesElement().should( 'have.length', 0 );
   } );
   it( 'Interacting with options list, removing option from choices', () => {
     // When I click on the multiselect search input
@@ -105,6 +105,6 @@ describe( 'I should be able to select using the multiselect', () => {
     // And I click on the first option in the dropdown again
     multiselect.dropDownLabelClick();
     // Then the choices element length should be 0
-    multiselect.choicesElement().should('have.length', 0);
+    multiselect.choicesElement().should( 'have.length', 0 );
   } );
 } );

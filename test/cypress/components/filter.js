@@ -35,7 +35,7 @@ export class Filter {
   }
 
   categoryLabel( id ) {
-    return cy.get(`label[for="filter_categories_${ id }"]`);
+    return cy.get( `label[for="filter_categories_${ id }"]` );
   }
 
   searchFilterBtn() {

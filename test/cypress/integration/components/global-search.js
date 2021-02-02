@@ -46,8 +46,10 @@ describe( 'Global Search molecule to search for content on the site', () => {
     search.trigger().type( ' ' );
     // And I perform tab actions on the search molecule
     // search.input().type( '{tab}' );
-    cy.realPress('Tab'); // native tab click switches the focus
-    cy.focused().realHover(); // hovers over the new focused element
+    // native tab click switches the focus
+    cy.realPress( 'Tab' );
+    // hovers over the new focused element
+    cy.focused().realHover();
     // Then it shouldn't have search input content
     search.content().should( 'contain', '' );
   } );

@@ -34,7 +34,7 @@ describe( 'Mega-Menu organism for site navigation', () => {
     menu.globalEyebrowElement().should( 'be.visible' );
     // Then the global-eyebrow organism should show languages when clicked
     menu.globalEyebrowLanguages().should( 'exist' );
-    menu.globalEyebrow( 'actions').should( 'exist' );
+    menu.globalEyebrow( 'actions' ).should( 'exist' );
     menu.globalEyebrow( 'phone' ).should( 'be.visible' );
   } );
 } );

@@ -1,5 +1,5 @@
-import { FilterableListControl } from '../../components/filterable-list-control';
 import { Filter } from '../../components/filter';
+import { FilterableListControl } from '../../components/filterable-list-control';
 
 const filterableList = new FilterableListControl();
 const filter = new Filter();
@@ -43,7 +43,7 @@ describe( 'Filterable Page shows all results when no filter selected', () => {
     filterableList.firstResult().should( 'be.visible' );
     filterableList.lastResult().should( 'be.visible' );
     // And I should see page results
-    filterableList.results().should( 'contain', 'rule');
+    filterableList.results().should( 'contain', 'rule' );
     filterableList.results().its( 'length' ).should( 'be.gt', 0 );
   } );
 } );

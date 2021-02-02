@@ -15,11 +15,11 @@ export class Header {
   }
 
   globalHeaderElement( name ) {
-    return cy.get( `.m-global-header-${name}` );
+    return cy.get( `.m-global-header-${ name }` );
   }
 
   globalSearchElement( name ) {
-    return cy.get( `.m-global-search_${name}` );
+    return cy.get( `.m-global-search_${ name }` );
   }
 
   globalSearch() {

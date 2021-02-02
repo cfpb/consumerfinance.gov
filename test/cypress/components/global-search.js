@@ -1,11 +1,11 @@
 export class GlobalSearch {
 
   globalSearch( name ) {
-    return cy.get( `.m-global-search ${name}` );
+    return cy.get( `.m-global-search ${ name }` );
   }
 
   globalSearchMenu( name ) {
-    return this.globalSearch( `[data-js-hook="behavior_flyout-menu_${name}"]` );
+    return this.globalSearch( `[data-js-hook="behavior_flyout-menu_${ name }"]` );
   }
 
   footerTagline() {

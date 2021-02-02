@@ -1,11 +1,11 @@
 export class MegaMenu {
 
   megaMenu( name ) {
-    return cy.get( `.o-mega-menu_${name}` );
+    return cy.get( `.o-mega-menu_${ name }` );
   }
 
   megaMenuContent( name ) {
-    return this.megaMenu( `content-${name}` );
+    return this.megaMenu( `content-${ name }` );
   }
 
   content() {
@@ -25,11 +25,11 @@ export class MegaMenu {
   }
 
   focusLink( value ) {
-    return this.megaMenuContent( `${value}-link` ).first().focus();
+    return this.megaMenuContent( `${ value }-link` ).first().focus();
   }
 
   clickLink( value ) {
-    return this.megaMenuContent( `${value}-link` ).first().click( { force: true } );
+    return this.megaMenuContent( `${ value }-link` ).first().click( { force: true } );
   }
 
   clickTriggerBtn() {
@@ -49,31 +49,31 @@ export class MegaMenu {
   }
 
   contentLink( value ) {
-    return this.megaMenuContent( `${value}-link` );
+    return this.megaMenuContent( `${ value }-link` );
   }
 
   contentItem( value ) {
-    return this.megaMenuContent( `${value}-item` );
+    return this.megaMenuContent( `${ value }-item` );
   }
 
   contentLists( value ) {
-    return this.megaMenuContent( `${value}-lists` );
+    return this.megaMenuContent( `${ value }-lists` );
   }
 
   contentValueListGroup( value ) {
-    return this.megaMenuContent( `${value}-list-group` );
+    return this.megaMenuContent( `${ value }-list-group` );
   }
 
   contentOverview( value ) {
-    return this.megaMenuContent( `${value}-overview` );
+    return this.megaMenuContent( `${ value }-overview` );
   }
 
   contentOverviewLink( value ) {
-    return this.megaMenuContent( `${value}-overview-link` );
+    return this.megaMenuContent( `${ value }-overview-link` );
   }
 
   contentWrapper( value ) {
-    return this.megaMenuContent( `${value}-wrapper` );
+    return this.megaMenuContent( `${ value }-wrapper` );
   }
 
   tagLine() {
@@ -85,7 +85,7 @@ export class MegaMenu {
   }
 
   globalEyebrow( name ) {
-    return cy.get( `.m-global-eyebrow_${name}` );
+    return cy.get( `.m-global-eyebrow_${ name }` );
   }
 
   globalEyebrowHorizontal() {
@@ -101,13 +101,13 @@ export class MegaMenu {
   }
 
   clickLanguage( name ) {
-    return this.globalEyebrowLanguages.type( `/language/${name}/` ).click();
+    return this.globalEyebrowLanguages.type( `/language/${ name }/` ).click();
   }
 
   tabbing() {
-    cy.realPress('Tab');
-    cy.realPress('Tab');
-    cy.realPress('Tab');
-    cy.realPress('Tab');
+    cy.realPress( 'Tab' );
+    cy.realPress( 'Tab' );
+    cy.realPress( 'Tab' );
+    cy.realPress( 'Tab' );
   }
 }
