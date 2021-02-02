@@ -105,9 +105,9 @@ export class MegaMenu {
   }
 
   tabbing() {
-    cy.realPress("Tab");
-    cy.realPress("Tab");
-    cy.realPress("Tab");
-    cy.realPress("Tab");
+    cy.realPress('Tab');
+    cy.realPress('Tab');
+    cy.realPress('Tab');
+    cy.realPress('Tab');
   }
 }

@@ -15,4 +15,4 @@ export class SecondaryNavigation {
   hideButton() {
     return this.secondaryNav.get( '..cf-icon-svg' );
   }
-};
+}

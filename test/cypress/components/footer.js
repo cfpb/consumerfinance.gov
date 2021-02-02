@@ -29,4 +29,4 @@ export class Footer {
   officialWebsite() {
     return this.footer().get( '.o-footer_official-website' );
   }
-};
+}

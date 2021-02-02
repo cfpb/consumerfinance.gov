@@ -28,7 +28,7 @@ describe( 'Global Search molecule to search for content on the site', () => {
     // Then I click on the search molecule
     search.trigger().click();
     // When I enter "test" in the search molecule
-    search.input().type( "test" );
+    search.input().type( 'test' );
     // Then I should navigate to search portal
     // const portalUrl = 'https://search.consumerfinance.gov/' +
     //                   'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
@@ -43,10 +43,10 @@ describe( 'Global Search molecule to search for content on the site', () => {
   } );
   it( 'after the tab key is pressed', () => {
     // When I focus on the search molecule trigger
-    search.trigger().type( " " );
+    search.trigger().type( ' ' );
     // And I perform tab actions on the search molecule
     // search.input().type( '{tab}' );
-    cy.realPress("Tab"); // native tab click switches the focus
+    cy.realPress('Tab'); // native tab click switches the focus
     cy.focused().realHover(); // hovers over the new focused element
     // Then it shouldn't have search input content
     search.content().should( 'contain', '' );

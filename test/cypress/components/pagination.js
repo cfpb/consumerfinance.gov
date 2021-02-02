@@ -23,4 +23,4 @@ export class Pagination {
   clickSubmitButton() {
     cy.get( '.m-pagination_submit-btn' ).click();
   }
-};
+}

@@ -15,4 +15,4 @@ export class RelatedLinksSection {
   relatedLinksSectionDescriptions() {
     return this.relatedLinksSection().get( '.short-desc' );
   }
-};
+}

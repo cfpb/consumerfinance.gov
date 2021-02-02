@@ -31,4 +31,4 @@ export class VideoPlayer {
   videoPlayerVideoContainer() {
     return this.videoPlayerElement( '.o-video-player_video-container' );
   }
-};
+}

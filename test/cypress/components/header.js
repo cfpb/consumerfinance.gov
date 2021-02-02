@@ -9,7 +9,7 @@ export class Header {
   }
 
   /* Overlay is technically outside of the header,
-    but makes organizational sense to include here. */   
+    but makes organizational sense to include here. */
   overlay() {
     return cy.get( '.a-overlay' );
   }

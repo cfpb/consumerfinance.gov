@@ -22,7 +22,7 @@ describe( 'I should be able to select using the multiselect', () => {
     // When I click on the multiselect search input
     multiselect.clickSearchInput();
     // Then the multiselect dropdown shouldn't be visible
-    multiselect.fieldSet().should( 'not.be.visible' )
+    multiselect.fieldSet().should( 'not.be.visible' );
   } );
   it( 'Search input focus', () => {
     // When I focus on the multiselect search input
@@ -82,7 +82,7 @@ describe( 'I should be able to select using the multiselect', () => {
     multiselect.dropDownLabelClick();
     // Then the choices element should contain the first option
     // const firstElementText = multiselect.dropDownLabel().first().invoke('text');
-    const firstElementText = 'Financial education'
+    const firstElementText = 'Financial education';
     multiselect.dropDownLabel().first().should( 'have.text', firstElementText );
     multiselect.choicesElement().first().should( 'have.text', firstElementText );
     multiselect.choicesElement().should('have.length', 1);
