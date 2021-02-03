@@ -27,7 +27,7 @@ const schoolModel = {
           updateState.byProperty( name + 'range', 'high' );
         }
       }
-      
+
     }
     // Alert the state model to school control
     if ( name === 'control' ) {

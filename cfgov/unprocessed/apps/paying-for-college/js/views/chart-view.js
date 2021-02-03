@@ -556,7 +556,7 @@ const chartView = {
 
       if ( percentile <= 33 ) {
         updateState.byProperty( 'gradMeterThird', 'bottom third' );
-        updateState.byProperty( 'rategraduationrange', 'low' );        
+        updateState.byProperty( 'rategraduationrange', 'low' );
       } else if ( percentile <= 66 ) {
         updateState.byProperty( 'gradMeterThird', 'middle third' );
         updateState.byProperty( 'rategraduationrange', 'medium' );
