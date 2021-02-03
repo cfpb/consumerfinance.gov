@@ -4,14 +4,6 @@ volumes:
     postgres_data:
 
 services:
-    cypress:
-        build:
-            context: ./
-            dockerfile: ./docker/cypress/6/Dockerfile
-        ports:
-            - 127.0.0.1:8000:8000
-        depends_on:
-            - python
     elasticsearch2:
         build:
             context: ./
