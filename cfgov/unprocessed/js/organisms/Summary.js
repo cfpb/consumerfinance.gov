@@ -39,6 +39,13 @@ function Summary( element ) {
       return this;
     }
 
+    /* Bail out of initializatiion if the height of the summary's content
+       is less then our summary height of 5.5ems (16 * 5.5 = 88) */
+    if ( _contentDom.offsetHeight <= 88 ) {
+      _hideButton();
+      return this;
+    }
+
     _transition = new MaxHeightTransition( _contentDom ).init();
     _flyout = new FlyoutMenu( _dom ).init();
 
