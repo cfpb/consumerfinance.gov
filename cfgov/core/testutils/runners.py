@@ -1,10 +1,14 @@
+import importlib
 import logging
 import os
 import shutil
 from contextlib import redirect_stdout
 from io import StringIO
 
+from django.apps import apps
 from django.conf import settings
+from django.db import connection
+from django.db.migrations.loader import MigrationLoader
 from django.test.runner import DiscoverRunner
 
 from scripts import initial_data
@@ -58,17 +62,51 @@ class TestRunner(DiscoverRunner):
     def setup_databases(self, **kwargs):
         dbs = super(TestRunner, self).setup_databases(**kwargs)
 
+        # Ensure that certain key data migrations are always run even if
+        # tests are being run with most migrations disabled (e.g. using
+        # settings.MIGRATION_MODULES).
+        self.run_required_data_migrations()
+
         # Set up additional required test data that isn't contained in data
         # migrations, for example an admin user.
         initial_data.run()
 
         return dbs
 
+    def run_required_data_migrations(self):
+        if not settings.MIGRATION_MODULES:
+            return
+
+        migration_methods = (
+            (
+                'wagtailcore',
+                'wagtail.core.migrations.0054_initial_locale',
+                'initial_locale'
+            ),
+            (
+                'wagtailcore',
+                'wagtail.core.migrations.0002_initial_data',
+                'initial_data'
+            ),
+            (
+                'wagtailcore',
+                'wagtail.core.migrations.0025_collection_initial_data',
+                'initial_data'
+            ),
+        )
+
+        loader = MigrationLoader(connection)
+
+        for app_name, migration, method in migration_methods:
+            if not self.is_migration_applied(loader, app_name, migration):
+                print('applying migration {}'.format(migration))
+                module = importlib.import_module(migration)
+                getattr(module, method)(apps, None)
+
     @staticmethod
-    def is_migration_applied(loader, migration):
-        parts = migration.split('.')
-        migration_tuple = (parts[-3], parts[-1])
-        return migration_tuple in loader.applied_migrations
+    def is_migration_applied(loader, app_name, migration):
+        migration_name = migration.split('.')[-1]
+        return (app_name, migration_name) in loader.applied_migrations
 
 
 class StdoutCapturingTestRunner(TestRunner):
