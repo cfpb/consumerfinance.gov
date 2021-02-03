@@ -32,7 +32,7 @@ services:
     networks:
       - app
   postgres:
-    image: postgres:10-alpine
+    image: postgres:11-alpine
     user: postgres
     deploy:
       placement:
