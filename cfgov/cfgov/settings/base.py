@@ -136,6 +136,9 @@ WAGTAILSEARCH_BACKENDS = {
     'fulltext': {
         'BACKEND': 'wagtail.contrib.postgres_search.backend',
     },
+    'pages': {
+        'BACKEND': 'search.backends.elasticsearch_pages',
+    }
 }
 
 MIDDLEWARE = (

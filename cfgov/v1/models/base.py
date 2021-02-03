@@ -26,6 +26,7 @@ from modelcluster.fields import ParentalKey
 from taggit.models import TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
+from search.index import RelatedFilterField
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.banners import Banner
@@ -136,6 +137,10 @@ class CFGOVPage(Page):
 
     search_fields = Page.search_fields + [
         index.SearchField('sidefoot'),
+        index.FilterField('is_archived'),
+        RelatedFilterField('categories', 'name'),
+        RelatedFilterField('authors', 'slug'),
+        RelatedFilterField('tags', 'slug'),
     ]
 
     # These fields show up in either the sidebar or the footer of the page

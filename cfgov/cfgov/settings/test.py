@@ -96,6 +96,13 @@ HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"] = (
 ELASTICSEARCH_DSL_AUTO_REFRESH = False
 ELASTICSEARCH_DSL_AUTOSYNC = False
 
+es_pages_backend = WAGTAILSEARCH_BACKENDS['pages']
+es_pages_backend.update({
+    'INDEX': 'test_wagtail',
+    'AUTO_UPDATE': False,
+})
+
+
 if os.getenv('SKIP_DJANGO_MIGRATIONS'):
     class _NoMigrations:
         def __contains__(self, item):

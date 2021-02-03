@@ -82,7 +82,8 @@ class AbstractFilterPage(CFGOVPage):
     objects = CFGOVPageManager()
 
     search_fields = CFGOVPage.search_fields + [
-        index.SearchField('header')
+        index.SearchField('header'),
+        index.FilterField('date_published'),
     ]
 
     @classmethod
