@@ -54,7 +54,19 @@ describe( 'Summary', () => {
   } );
 
   describe( 'interactions', () => {
+
+    it ( 'should be absent when content is too brief', () => {
+      jest.spyOn(contentDom, 'offsetHeight', 'get')
+        .mockImplementation(() => 50);
+      summary.init();
+      windowResizeTo( 300 );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( null );
+      expect( targetDom.classList.contains( 'u-hidden' ) ).toBe( true );
+    } )
+
     it( 'should expand on click', () => {
+      jest.spyOn(contentDom, 'offsetHeight', 'get')
+        .mockImplementation(() => 200);
       summary.init();
       windowResizeTo( 300 );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
