@@ -841,7 +841,14 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cfpb/cfpb-atomic-component@0.7.6", "@cfpb/cfpb-atomic-component@^0.7.6":
+"@cfpb/cfpb-atomic-component@0.7.7":
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.7.7.tgz#6183dd95d940b96c534e09cdaed71866d63755cd"
+  integrity sha512-eo+W9eLnpCIr06FEo1DgnhlCKo+agmdNoyXyvUIvL7p0h9J7eUxWSTRpLIk8lVBEDbXTWOZdf0BKXiAuf6kkFA==
+  dependencies:
+    ftdomdelegate "^3.0.0"
+
+"@cfpb/cfpb-atomic-component@^0.7.6":
   version "0.7.6"
   resolved "https://registry.yarnpkg.com/@cfpb/cfpb-atomic-component/-/cfpb-atomic-component-0.7.6.tgz#7abf8eb0348ae2a3a62e42dc489b6c1d83980137"
   integrity sha512-16xuES/o5+Sti/nInXpYxbc94C25PedgUQblmdsIkNkxv+DozF4u1X+B3YM/FmBTPdwPG55UuTmX29O8Fgs8ZA==

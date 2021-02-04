@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/core": "7.12.10",
     "@babel/preset-env": "7.12.11",
-    "@cfpb/cfpb-atomic-component": "0.7.6",
+    "@cfpb/cfpb-atomic-component": "0.7.7",
     "@cfpb/cfpb-buttons": "0.7.6",
     "@cfpb/cfpb-core": "0.7.6",
     "@cfpb/cfpb-expandables": "0.7.6",

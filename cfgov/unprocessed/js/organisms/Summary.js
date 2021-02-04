@@ -94,6 +94,9 @@ function Summary( element ) {
    * @returns {boolean} Whether it has successfully been resumed or not.
    */
   function _resume() {
+    // Re-initialize the transition on every resize to set the max-height.
+    _transition.refresh();
+
     if ( _suspended && _isExpanded === false ) {
       _flyout.addEventListener( 'expandEnd', _expandEndHandler );
       // Set resume state.
