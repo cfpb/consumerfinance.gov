@@ -174,8 +174,8 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 15, unit: 'MINUTES') {
-                        // sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
-                        sh "docker run -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -v ${WORKSPACE}/node_modules:/app/node_modules -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:6.4.0 npm install cypress-real-events && npx cypress run -b chrome --headless"
+                        sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
+                        // sh "docker run -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -v ${WORKSPACE}/node_modules:/app/node_modules -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:6.4.0 npm install cypress-real-events && npx cypress run -b chrome --headless"
                     }
                 }
 
