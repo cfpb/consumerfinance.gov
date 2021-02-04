@@ -15,6 +15,7 @@ services:
     volumes:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
+      - ./node_modules:/app/node_modules
 networks:
   default:
     external:
