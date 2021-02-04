@@ -8,7 +8,7 @@ const HTML_SNIPPET = `
          data-js-hook="behavior_flyout-menu_content">
         Content
     </div>
-    <button class="o-summary_btn"
+    <button class="o-summary_btn u-hidden"
             data-js-hook="behavior_flyout-menu_trigger">
         Read full description
     </button>
