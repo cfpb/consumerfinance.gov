@@ -9,7 +9,7 @@ export class Pagination {
   }
 
   form() {
-    cy.get( '.m-pagination_current' ).get( 'form' );
+    cy.get( '.m-pagination_form' );
   }
 
   clickNextButton() {
@@ -21,6 +21,6 @@ export class Pagination {
   }
 
   clickSubmitButton() {
-    cy.get( '.m-pagination_submit-btn' ).click( { force: true } );
+    cy.get( '.m-pagination_btn-submit' ).click( { force: true } );
   }
 }
