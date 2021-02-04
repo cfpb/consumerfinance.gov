@@ -14,9 +14,10 @@ describe( 'Filter Blog Posts based on content', () => {
     cy.visit( '/about-us/blog/' );
     // And I open the filterable list control
     page.openFilterableListControl();
+    // The I click "Show filters" button
+    page.showFilters();
   } );
   it( 'Item name search', () => {
-    page.showFilters();
     // When I enter "loan" in the item name input field
     page.filterItemName( 'loan' );
     // And I click "Apply filters" button
@@ -45,7 +46,6 @@ describe( 'Filter Blog Posts based on content', () => {
     page.notification().should( 'be.visible' );
   } );
   it( 'Date range to present', () => {
-    page.showFilters();
     // When I enter "01/01/2021" in the From date entry field
     page.filterFromDate( '2021-01-01' );
     // And I click "Apply filters" button
@@ -56,7 +56,6 @@ describe( 'Filter Blog Posts based on content', () => {
     page.results().should( 'not.contain', '2020' );
   } );
   it( 'Date range in past', () => {
-    page.showFilters();
     // When I enter "01/01/2020" in the From date entry field
     page.filterFromDate( '2020-01-01' );
     // And I enter "12/31/2020" in the To date entry field
@@ -191,7 +190,6 @@ describe( 'Filter Blog Posts based on content', () => {
     page.results().should( 'contain', 'loans' );
   } );
   it( 'Name search plus date range', () => {
-    page.showFilters();
     // When I type "loans" in the item name input box
     page.filterItemName( 'loans' );
     // And I type "01/01/2020" in the From date entry field
