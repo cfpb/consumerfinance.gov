@@ -37,7 +37,7 @@ export class Multiselect {
   }
 
   enterSearchInput( name ) {
-    return this.searchInput().clear().type( name );
+    return this.searchInput().clear( { force: true } ).type( name );
   }
 
   async areTagSelected() {
