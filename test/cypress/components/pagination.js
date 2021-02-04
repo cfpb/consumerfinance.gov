@@ -13,14 +13,14 @@ export class Pagination {
   }
 
   clickNextButton() {
-    cy.get( '.m-pagination_btn-next' ).click();
+    cy.get( '.m-pagination_btn-next' ).click( { force: true } );
   }
 
   clickPreviousButton() {
-    cy.get( '.m-pagination_btn-prev' ).click();
+    cy.get( '.m-pagination_btn-prev' ).click( { force: true } );
   }
 
   clickSubmitButton() {
-    cy.get( '.m-pagination_submit-btn' ).click();
+    cy.get( '.m-pagination_submit-btn' ).click( { force: true } );
   }
 }
