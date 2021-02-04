@@ -329,13 +329,14 @@ You can select specific environments using <code>-e</code>.</p>
   Python, Django, and Wagtail. We do not require this environment to pass in
   CI.</li>
 </ul>
-<p>By default this uses a local SQLite database for tests. To override this, you
-can set the <code>TEST_DATABASE_URL</code> environment variable to a database connection
-string as supported by <a href="https://github.com/kennethreitz/dj-database-url">dj-database-url</a>.</p>
+<p>Tests will run against the default Django database as configured in settings
+using the <code>DATABASE_URL</code> environment variable.</p>
 <p>If you would like to run only a specific test, or the tests for a specific app,
 you can provide a dotted path to the test as the final argument to any of the above calls to <code>tox</code>:</p>
 <pre class="highlight"><code class="language-sh">tox -e unittest regulations3k.tests.test_regdown</code></pre>
 
+<p>If you would like to skip running Django migrations when testing, set the
+<code>SKIP_DJANGO_MIGRATIONS</code> environment variable to any value before running <code>tox</code>.</p>
 <h3 id="linting">Linting<a class="headerlink" href="#linting" title="Permanent link">¶</a></h3>
 <p>We use the <code>flake8</code> and <code>isort</code> tools to ensure compliance with
 <a href="https://www.python.org/dev/peps/pep-0008/">PEP8 style guide</a>,
