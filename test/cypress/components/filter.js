@@ -5,7 +5,7 @@ export class Filter {
   }
 
   clear() {
-    cy.get( '.a-btn__warning' ).click();
+    cy.get( '.a-btn__warning' ).click( { force: true } );
   }
 
   clickAuthor( name ) {

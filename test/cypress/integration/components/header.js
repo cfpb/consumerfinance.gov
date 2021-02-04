@@ -48,7 +48,7 @@ describe( 'Header', () => {
     // Then the header organism should display content
     menu.content().should( 'be.visible' );
     // When I click on the mega-menu search trigger
-    page.globalSearchTrigger().click();
+    page.globalSearchTrigger().click( { force: true } );
     // Then the mega-menu search form should be displayed
     page.globalSearchContent().should( 'be.visible' );
     // And the mega-menu shouldn't display content overview

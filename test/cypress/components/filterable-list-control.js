@@ -13,7 +13,7 @@ export class FilterableListControl {
   }
 
   openFilterableListControl() {
-    return cy.get( '#o-filterable-list-controls' ).find( 'button' ).first().click();
+    return cy.get( '#o-filterable-list-controls' ).find( 'button' ).first().click( { force: true } );
   }
 
   filterItemName( name ) {
@@ -61,11 +61,11 @@ export class FilterableListControl {
   }
 
   showFilters() {
-    return cy.get( '[data-qa-hook="expandable"]' ).find( 'button' ).first().click();
+    return cy.get( '[data-qa-hook="expandable"]' ).find( 'button' ).first().click( { force: true } );
   }
 
   hideFilters() {
-    return cy.get( '[data-qa-hook="expandable"]' ).find( 'button' ).last().click();
+    return cy.get( '[data-qa-hook="expandable"]' ).find( 'button' ).last().click( { force: true } );
   }
 
 }

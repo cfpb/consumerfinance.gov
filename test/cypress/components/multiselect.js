@@ -5,7 +5,7 @@ export class Multiselect {
   }
 
   click() {
-    return cy.get( '.o-expandable_target' ).click();
+    return cy.get( '.o-expandable_target' ).click( { force: true } );
   }
 
   multiSelect( name ) {

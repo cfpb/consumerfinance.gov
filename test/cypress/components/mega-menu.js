@@ -101,7 +101,7 @@ export class MegaMenu {
   }
 
   clickLanguage( name ) {
-    return this.globalEyebrowLanguages.type( `/language/${ name }/` ).click();
+    return this.globalEyebrowLanguages.type( `/language/${ name }/` ).click( { force: true } );
   }
 
   tabbing() {
