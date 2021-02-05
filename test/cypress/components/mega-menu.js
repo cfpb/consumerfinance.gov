@@ -24,8 +24,12 @@ export class MegaMenu {
     return this.megaMenu( 'trigger-close' );
   }
 
-  focusLink( value ) {
+  focusFirstLink( value ) {
     return this.megaMenuContent( `${ value }-link` ).first().focus();
+  }
+
+  focusLastLink( value ) {
+    return this.megaMenuContent( `${ value }-link` ).last().focus();
   }
 
   clickLink( value ) {
@@ -104,10 +108,22 @@ export class MegaMenu {
     return this.globalEyebrowLanguages.type( `/language/${ name }/` ).click( { force: true } );
   }
 
+/*   tabbing() {
+    cy.realPress( 'Tab' );
+    cy.realPress( 'Tab' );
+    cy.realPress( 'Tab' );
+    cy.realPress( 'Tab' );
+  } */
+
   tabbing() {
-    cy.realPress( 'Tab' );
-    cy.realPress( 'Tab' );
-    cy.realPress( 'Tab' );
-    cy.realPress( 'Tab' );
+    this.clickTriggerBtn();
+    this.focusFirstLink( '1' );
+    this.focusLastLink( '1' );
+    this.focusFirstLink( '2' );
+    this.focusLastLink( '2' );
+/*     cy.tab();
+    cy.tab();
+    cy.tab();
+    cy.tab(); */
   }
 }
