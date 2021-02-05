@@ -21,8 +21,8 @@ describe( 'I should be able to select using the multiselect', () => {
   it( 'Search input click', () => {
     // When I click on the multiselect search input
     multiselect.clickSearchInput();
-    // Then the multiselect dropdown shouldn't be visible
-    multiselect.fieldSet().should( 'not.be.visible' );
+    // Then the multiselect dropdown should be visible
+    multiselect.fieldSet().should( 'be.visible' );
   } );
   it( 'Search input focus', () => {
     // When I focus on the multiselect search input
