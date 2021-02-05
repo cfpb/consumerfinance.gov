@@ -1,26 +1,24 @@
 export class Pagination {
 
-  paginationContent() {
-    return cy.get( '.m-pagination' );
+  clickButton( name ) {
+    return cy.get( `.m-pagination_btn-${ name }` )
+      .click( { force: true } );
   }
 
   enter( name ) {
-    cy.get( '.m-pagination_current-page' ).clear( { force: true } ).type( name );
+    cy.get( '#m-pagination_current-page-0' )
+      .clear( { force: true } ).type( name );
+    cy.get( '.m-pagination' )
+      .within( () => {
+        cy.get( '.m-pagination_form' ).submit();
+      } );
   }
 
-  form() {
-    cy.get( '.m-pagination_form' );
+  firstPagination() {
+    cy.get( '[aria-label="Pagination"]' ).first();
   }
 
-  clickNextButton() {
-    cy.get( '.m-pagination_btn-next' ).click( { force: true } );
-  }
-
-  clickPreviousButton() {
-    cy.get( '.m-pagination_btn-prev' ).click( { force: true } );
-  }
-
-  clickSubmitButton() {
-    cy.get( '.m-pagination_btn-submit' ).click( { force: true } );
+  paginationLabel() {
+    cy.get( 'label[for="m-pagination_current-page-0"]' );
   }
 }
