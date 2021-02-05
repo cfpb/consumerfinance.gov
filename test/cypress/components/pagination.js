@@ -5,7 +5,7 @@ export class Pagination {
   }
 
   enter( name ) {
-    cy.get( '.m-pagination_current-page' ).type( name );
+    cy.get( '.m-pagination_current-page' ).clear( { force: true } ).type( name );
   }
 
   form() {

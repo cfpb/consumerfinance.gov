@@ -33,6 +33,10 @@ describe( 'Pagination molecule to navigate on the filterable pages', () => {
     page.clickNextButton();
     // And I click on the "previous" button
     page.clickPreviousButton();
+    // When I enter "1" in the page input field
+    page.enter( '1' );
+    // And I click on the "submit" button
+    page.clickSubmitButton();
     // Then the page url should contain "page=1"
     cy.url().should( 'include', 'page=1' );
   } );
