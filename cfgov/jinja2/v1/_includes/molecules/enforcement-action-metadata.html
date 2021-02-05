@@ -30,6 +30,8 @@
    ========================================================================== #}
 
 {% macro render() %}
+
+{% set show_enf_data = False %}
 <div class="m-related-metadata block block__flush-top">
     <header class="m-slug-header">
         <h2 class="a-heading">
@@ -82,7 +84,7 @@
           rel="noopener referrer"
         >See status definitions</a>
     </div>
-    {% if statutes|length > 100 %}
+    {% if show_enf_data and statutes|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             Statutes
@@ -91,7 +93,7 @@
       </div>
     {% endif %}
     {{_dispositions(page.enforcement_dispositions.all())}}
-    {% if defendant_types|length > 100 %}
+    {% if show_enf_data and defendant_types|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             Defendant/Respondent type
@@ -103,7 +105,7 @@
           </div>
       </div>
     {% endif %}
-    {% if products|length > 100 %}
+    {% if show_enf_data and products|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             Products
@@ -112,7 +114,7 @@
       </div>
     {% endif %}
 
-    {% if at_risk_groups|length > 100 %}
+    {% if show_enf_data and at_risk_groups|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             At Risk Groups
@@ -191,7 +193,7 @@
 
    ========================================================================== #}
 {% macro _dispositions(dispositions) %}
-    {% if dispositions|length > 0 %}
+    {% if show_enf_data and dispositions|length > 0 %}
       <div class="m-related-metadata_item-container">
           <h3 class="h4">
             Total consumer relief
@@ -200,14 +202,14 @@
             ${{'{:,}'.format(total_consumer_relief)}}
           </div>
       </div>
-      {#<div class="m-related-metadata_item-container">
+      <div class="m-related-metadata_item-container">
           <h3 class="h4">
             Total civil money penalties
           </h3>
           <div>
             ${{'{:,}'.format(total_cmp)}}
           </div>
-      </div>#}
+      </div>
     {% endif %}
 {% endmacro %}
 
