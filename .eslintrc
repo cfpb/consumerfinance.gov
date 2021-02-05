@@ -1267,7 +1267,7 @@ rules:
 
   # Sort import declarations within module.
   sort-imports:
-    - 1
+    - 0
     -
       ignoreCase: false
       ignoreMemberSort: false
