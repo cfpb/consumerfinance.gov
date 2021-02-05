@@ -98,7 +98,7 @@ enforcement_statutes = [
     ('Military Lending Act', 'Military Lending Act'),
     (
         'Regulation N (MAP Rule)',
-        'Mortgage Acts and Practices – Advertising Final Rule (Regulation N)'
+        'Mortgage Acts and Practices - Advertising Final Rule (Regulation N)'
     ),
     (
         'Regulation O (MARS Rule)',
@@ -148,6 +148,15 @@ class EnforcementActionDisposition(models.Model):
         on_delete=models.CASCADE,
         related_name='enforcement_dispositions'
     )
+
+    @classmethod
+    def all_dispositions(cls):
+        # Return the collection of all Final Dispositions that are associated
+        # with a valid Enforcement Action Page, i.e. any EAP that is returned
+        # by EnforcementActionPage.all_actions.
+        actions = EnforcementActionPage.all_actions()
+        query = cls.objects.filter(action__in=actions)
+        return query
 
 
 class EnforcementActionStatus(models.Model):
@@ -299,20 +308,27 @@ class EnforcementActionPage(AbstractFilterPage):
         query = query.live().order_by('-initial_filing_date')
         return query
 
+    def total_consumer_relief(self):
+        relief = sum(
+            disp.final_order_consumer_redress +
+            disp.final_order_other_consumer_relief
+            for disp in self.enforcement_dispositions.all()
+        )
+        return relief
+
+    def total_civil_penalties(self):
+        penalties = sum(
+            disp.final_order_civil_money_penalty
+            for disp in self.enforcement_dispositions.all()
+        )
+        return penalties
+
     def get_context(self, request):
         context = super(EnforcementActionPage, self).get_context(request)
-        dispositions = self.enforcement_dispositions.all()
 
         context.update({
-            'total_consumer_relief': sum(
-                disp.final_order_consumer_redress +
-                disp.final_order_other_consumer_relief
-                for disp in dispositions
-            ),
-            'total_cmp': sum(
-                disp.final_order_civil_money_penalty
-                for disp in dispositions
-            ),
+            'total_consumer_relief': self.total_consumer_relief(),
+            'total_cmp': self.total_civil_penalties(),
             'defendant_types': [
                 d.get_defendant_type_display()
                 for d in self.defendant_types.all()

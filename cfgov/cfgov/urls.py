@@ -36,7 +36,7 @@ from v1.views import (
     password_reset_confirm
 )
 from v1.views.documents import DocumentServeView
-from v1.views.enforcement_api import EnforcementAPIView
+from v1.views.enforcement_api import EnforcementAPIView, EnforcementCSVView
 
 
 try:
@@ -369,6 +369,12 @@ urlpatterns = [
         r'^api/enforcement_actions/v1/$',
         EnforcementAPIView.as_view(),
         name='enforcement_action_api'
+    ),
+
+    re_path(
+        r'^api/enforcement_actions/csv/$',
+        EnforcementCSVView.get,
+        name='enforcement_action_csv_api'
     ),
 
     # educational resources
