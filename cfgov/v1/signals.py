@@ -54,6 +54,7 @@ def break_enforcement_cache(sender, instance, **kwargs):
     base = instance.get_site().root_url
     batch = PurgeBatch()
     enf_api_url = base + reverse('enforcement_action_api')
+    enf_csv_api_url = base + reverse('enforcement_action_csv_api')
     enf_charts_url = base + '/enforcement/payments-harmed-consumers/enforcement-database/'  # noqa: E501
-    batch.add_urls([enf_api_url, enf_charts_url])
+    batch.add_urls([enf_api_url, enf_csv_api_url, enf_charts_url])
     batch.purge()
