@@ -13,14 +13,16 @@ from v1.models.enforcement_action_page import (
     EnforcementActionPage, EnforcementActionProduct, EnforcementActionStatus,
     EnforcementActionStatute
 )
-from v1.views.enforcement_api import EnforcementActionSerializer
+from v1.views.enforcement_api import (
+    EnforcementActionCSVSerializer, EnforcementActionJSONSerializer
+)
 
 
 class EnforcementAPITestCase(TestCase):
     # Things to note in the expected JSON output:
     # Lists of products, statuses, etc. are flattened to lists of strings, not
     # JSON objects. ChoiceFields like statuses, statutes, etc. use their
-    # display values.
+    # display values. Numeric fields return numerals, not strings.
     expected_json = json.loads('''
     {
         "public_enforcement_action": "Sample Enforcement Action",
@@ -93,13 +95,13 @@ class EnforcementAPITestCase(TestCase):
 
 
     def test_serializes_correct_keys(self):
-        serializer = EnforcementActionSerializer(self.enforcement_page)
+        serializer = EnforcementActionJSONSerializer(self.enforcement_page)
         output_keys = serializer.data.keys()
         expected_keys = self.expected_json.keys()
         self.assertEqual(output_keys, expected_keys)
 
     def test_uses_display_names(self):
-        serializer = EnforcementActionSerializer(self.enforcement_page)
+        serializer = EnforcementActionJSONSerializer(self.enforcement_page)
         self.assertEqual(
                 serializer.data['statuses'],
                 self.expected_json['statuses']
@@ -110,28 +112,109 @@ class EnforcementAPITestCase(TestCase):
         )
 
     def test_flattens_lists(self):
-        serializer = EnforcementActionSerializer(self.enforcement_page)
+        serializer = EnforcementActionJSONSerializer(self.enforcement_page)
         self.assertEqual(
                 serializer.data['defendant_types'],
                 self.expected_json['defendant_types']
         )
 
     def test_serializes_disposition(self):
-        serializer = EnforcementActionSerializer(self.enforcement_page)
+        serializer = EnforcementActionJSONSerializer(self.enforcement_page)
         output_keys = serializer.data['enforcement_dispositions'][0].keys()
         expected_keys = self.expected_json['enforcement_dispositions'][0].keys()  # noqa E501
         self.assertEqual(output_keys, expected_keys)
 
     def test_serializes_decimals_as_numbers(self):
-        serializer = EnforcementActionSerializer(self.enforcement_page)
+        serializer = EnforcementActionJSONSerializer(self.enforcement_page)
         output = serializer.data['enforcement_dispositions'][0]['final_order_disgorgement']  # noqa E501
         expected = self.expected_json['enforcement_dispositions'][0]['final_order_disgorgement']   # noqa E501
         self.assertEqual(output, expected)
 
     def test_can_serialize_empty_metadata(self):
         empty_page = baker.prepare(EnforcementActionPage)
-        serializer = EnforcementActionSerializer(empty_page)
+        serializer = EnforcementActionJSONSerializer(empty_page)
         output_keys = serializer.data.keys()
         expected_keys = self.expected_json.keys()
         self.assertEqual(output_keys, expected_keys)
 
+
+class EnforcementCSVSerializerTestCase(TestCase):
+    expected_output = [
+        'Sample Enforcement Action',
+        date(2021, 1, 1),
+        'Bank;Nonbank',
+        '',
+        'CFPB Office of Administrative Adjudication',
+        '2021-CFPB-0001;2021-CFPB-0002',
+        'Settled',
+        'Expired/Terminated/Dismissed',
+        'Other Consumer Product (not lending)',
+        'Students',
+        'Consumer Leasing Act/Regulation M',
+        800.0,
+        900.0,
+        'Sample Sample Action',
+        'Final Order',
+        '2021-02-02',
+        None,
+        800.0,
+        80.0,
+        720.0,
+        300.0,
+        30.0,
+        270.0,
+        500.0,
+        50.0,
+        450.0,
+        700.0,
+        70.0,
+        630.0,
+        900.0,
+        90.0,
+        810.0,
+        'Zero',
+    ]
+
+    def setUp(self):
+        self.enforcement_page = baker.prepare(EnforcementActionPage)
+
+        self.enforcement_page.public_enforcement_action = 'Sample Enforcement Action'
+        self.enforcement_page.initial_filing_date = date(2021, 1, 1)
+        self.enforcement_page.defendant_types = [
+            EnforcementActionDefendantType(defendant_type='Bank'),
+            EnforcementActionDefendantType(defendant_type='Non-Bank'),
+        ]
+        self.enforcement_page.court = "CFPB Office of Administrative Adjudication"
+        self.enforcement_page.docket_numbers.add(
+            EnforcementActionDocket(docket_number='2021-CFPB-0001'))
+        self.enforcement_page.docket_numbers.add(
+            EnforcementActionDocket(docket_number='2021-CFPB-0002'))
+        self.enforcement_page.settled_or_contested_at_filing = 'Settled'
+        self.enforcement_page.products.add(
+            EnforcementActionProduct(product='Other Consumer Products (Not Lending)'))
+        self.enforcement_page.at_risk_groups.add(
+            EnforcementActionAtRisk(at_risk_group='Students'))
+        self.enforcement_page.enforcement_dispositions.add(
+            EnforcementActionDisposition(
+                final_disposition = "Sample Sample Action",
+                final_disposition_type = "Final Order",
+                final_order_date = "2021-02-02",
+                final_order_consumer_redress = 300.00,
+                final_order_consumer_redress_suspended = 30.00,
+                final_order_other_consumer_relief = 500.00,
+                final_order_other_consumer_relief_suspended = 50.00,
+                final_order_disgorgement = 700.00,
+                final_order_disgorgement_suspended = 70.00,
+                final_order_civil_money_penalty = 900.00,
+                final_order_civil_money_penalty_suspended = 90.00,
+                estimated_consumers_entitled_to_relief = "Zero"
+            ))
+        self.enforcement_page.statuses.add(
+            EnforcementActionStatus(status='expired-terminated-dismissed'))
+        self.enforcement_page.statutes.add(
+            EnforcementActionStatute(statute='CLA'))
+
+    def test_serializer(self):
+        output = EnforcementActionCSVSerializer.serialize_enforcement_action(
+                self.enforcement_page.enforcement_dispositions.first())
+        self.assertEqual(output, self.expected_output)

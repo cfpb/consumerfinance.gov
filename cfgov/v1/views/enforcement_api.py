@@ -61,7 +61,7 @@ class EnforcementDispositionSerializer(serializers.ModelSerializer):
         ]
 
 
-class EnforcementActionSerializer(serializers.ModelSerializer):
+class EnforcementActionJSONSerializer(serializers.ModelSerializer):
 
     products = EnforcementProductSerializer(many=True)
     defendant_types = EnforcementDefendantTypeSerializer(many=True)
@@ -96,7 +96,7 @@ class EnforcementActionSerializer(serializers.ModelSerializer):
 # EnforcementActionPage.all_actions() filters for live pages that are children
 # of the Enforcement Actions filter page in the Wagtail tree.
 #
-# EnforcementActionSerializer creates a JSON representation of each
+# EnforcementActionJSONSerializer creates a JSON representation of each
 # EnforcementActionPage, including all of the metadata fields. See
 # v1.tests.views.test_enforcement_api for more information.
 #
@@ -107,11 +107,11 @@ class EnforcementActionSerializer(serializers.ModelSerializer):
 class EnforcementAPIView(APIView):
     def get(self, request):
         queryset = EnforcementActionPage.all_actions()
-        serializer = EnforcementActionSerializer(queryset, many=True)
+        serializer = EnforcementActionJSONSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
-class EnforcementCSVSerializer():
+class EnforcementActionCSVSerializer():
     header_row = [
         "Public Enforcement Action",
         "Initial Filing Date",
@@ -247,9 +247,9 @@ class EnforcementCSVView():
         response['Content-Disposition'] = \
             'attachment; filename="enforcement.csv"'
         writer = csv.writer(response)
-        writer.writerow(EnforcementCSVSerializer.header_row)
+        writer.writerow(EnforcementActionCSVSerializer.header_row)
         for disposition in queryset:
-            row = EnforcementCSVSerializer.serialize_enforcement_action(disposition)  # noqa E501
+            row = EnforcementActionCSVSerializer.serialize_enforcement_action(disposition)  # noqa E501
             writer.writerow(row)
 
         return response
