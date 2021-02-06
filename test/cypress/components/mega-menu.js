@@ -108,13 +108,6 @@ export class MegaMenu {
     return this.globalEyebrowLanguages.type( `/language/${ name }/` ).click( { force: true } );
   }
 
-/*   tabbing() {
-    cy.realPress( 'Tab' );
-    cy.realPress( 'Tab' );
-    cy.realPress( 'Tab' );
-    cy.realPress( 'Tab' );
-  } */
-
   tabbing() {
     this.clickTriggerBtn();
     this.focusFirstLink( '1' );
