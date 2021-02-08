@@ -12,8 +12,8 @@ export class ActivitySearch {
     return cy.get( '.results_filters-clear' );
   }
 
-  resultsFilterTag(filterName) {
-    return cy.get( `[data-value="#building-block--${filterName}"]` );
+  resultsFilterTag( filterName ) {
+    return cy.get( `[data-value="#building-block--${ filterName }"]` );
   }
 
   resultsCountEmpty() {
