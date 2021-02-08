@@ -168,6 +168,8 @@ describe( 'Filter Blog Posts based on content', () => {
     cy.url().should( 'include', 'topics=consumer-complaints' );
     // Then I should see only results that are both in the selected category and tagged with the selected topic
     page.results().should( 'contain', 'consumer' );
+    // And when I click "Show filters"
+    page.showFilters();
     // And when I click "Clear filters"
     page.clearFilters();
     // And I click "Hide filters" button
