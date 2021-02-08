@@ -33,6 +33,19 @@ class FilterableListMixin(RoutablePageMixin):
             None
         )
 
+    def get_filterable_root(self):
+
+        filterable_list_block = self.get_filterable_list_wagtail_block()
+        if filterable_list_block is None:
+            return '/'
+
+        if filterable_list_block.value['filter_children']:
+            return self.get_url()
+        elif filterable_list_block.value['filter_siblings']:
+            return self.get_parent().get_url()
+
+        return '/'
+
     def get_filterable_queryset(self):
         """Return the queryset of pages to be filtered by this page.
 
@@ -83,6 +96,7 @@ class FilterableListMixin(RoutablePageMixin):
             form_data,
             filterable_pages=queryset,
             wagtail_block=self.get_filterable_list_wagtail_block(),
+            filterable_root=self.get_filterable_root(),
         )
 
         context.update({

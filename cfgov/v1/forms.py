@@ -1,5 +1,6 @@
 from collections import Counter
 from datetime import date
+import json
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -8,6 +9,7 @@ from django.forms import widgets
 
 from taggit.models import Tag
 
+from v1.documents import FilterablePagesDocumentSearch
 from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
@@ -117,6 +119,8 @@ class FilterableListForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.filterable_pages = kwargs.pop('filterable_pages')
         self.wagtail_block = kwargs.pop('wagtail_block')
+        self.filterable_root = kwargs.pop('filterable_root')
+        
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
         clean_categories(selected_categories=self.data.get('categories'))
@@ -126,10 +130,18 @@ class FilterableListForm(forms.Form):
         self.set_authors(page_ids)
 
     def get_page_set(self):
-        query = self.generate_query()
-        return self.filterable_pages.filter(query).distinct().order_by(
-            '-date_published'
-        )
+        return FilterablePagesDocumentSearch(
+            prefix=self.filterable_root,
+            topics=self.cleaned_data.get('topics'),
+            categories=self.cleaned_data.get('categories'),
+            authors=self.cleaned_data.get('authors')).search()
+
+
+        # print(self.filterable_root)
+        # query = self.generate_query()
+        # return self.filterable_pages.filter(query).distinct().order_by(
+        #     '-date_published'
+        # )
 
     def first_page_date(self):
         first_post = self.filterable_pages.order_by('date_published').first()
