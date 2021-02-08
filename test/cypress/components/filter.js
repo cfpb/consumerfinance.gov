@@ -21,6 +21,10 @@ export class Filter {
     return cy.get( `#filter_categories_${ id }` ).check( { force: true } );
   }
 
+  categoryLabel( id ) {
+    return cy.get( `label[for="filter_categories_${ id }"]` );
+  }
+
   checkCategoryName( name ) {
     return this.checkCategoryId( name.split( ' ' ).join( '-' ).toLowerCase() );
   }
@@ -34,20 +38,20 @@ export class Filter {
     return cy.get( '.o-expandable' );
   }
 
-  categoryLabel( id ) {
-    return cy.get( `label[for="filter_categories_${ id }"]` );
+  expandableCue( name ) {
+    return cy.get( `.o-expandable_cue .o-expandable_cue-${ name }` );
   }
 
-  searchFilterBtn() {
+  search() {
     return cy.get( '.o-expandable_header .o-expandable_target' );
   }
 
-  searchFilterShowBtn() {
-    return cy.get( '.o-expandable_cue .o-expandable_cue-open' );
+  show() {
+    return this.expandableCue( 'open' );
   }
 
-  searchFilterHideBtn() {
-    return cy.get( '.o-expandable_cue .o-expandable_cue-close' );
+  hide() {
+    return this.expandableCue( 'close' );
   }
 
 }
