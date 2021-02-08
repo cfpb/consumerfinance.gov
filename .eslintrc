@@ -43,6 +43,7 @@ env:
 
 globals:
   cy: true
+  Cypress: true
 
 # Linting rules for ESLint.
 # 0's ignore a rule, 1's produce a warning, and 2's throw an error.
