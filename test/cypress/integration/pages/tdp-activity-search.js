@@ -2,7 +2,7 @@ import { ActivitySearch } from '../../pages/practitioner-resources/activity-sear
 
 const search = new ActivitySearch();
 
-describe( 'Activity Search', () => { 
+describe( 'Activity Search', () => {
   it( 'should filter results', () => {
     const resultsFilterText = 'financial-habits-and-norms';
     search.open();
