@@ -30,10 +30,10 @@ describe( 'Global Search molecule to search for content on the site', () => {
     // When I enter "test" in the search molecule
     search.input().type( 'test' );
     // Then I should navigate to search portal
-/*  const portalUrl = 'https://search.consumerfinance.gov/' +
-                      'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
-    search.button().click( { force: true } );
-    cy.url().should( 'include', portalUrl ); */
+    /*  const portalUrl = 'https://search.consumerfinance.gov/' +
+                          'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
+        search.button().click( { force: true } );
+        cy.url().should( 'include', portalUrl ); */
   } );
   it( 'after clicking off search', () => {
     // And I click off the search molecule

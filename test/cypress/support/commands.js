@@ -29,20 +29,21 @@ import nextTabbable from './nextTabbable';
 /**
  * Emulates Tab key navigation
  */
-Cypress.Commands.add('tab', { prevSubject: 'optional' }, ($subject, direction = 'forward', options = {}) => {
-   const thenable = $subject
-     ? cy.wrap($subject, { log: false })
-     : cy.focused({ log: options.log !== false });
-   thenable
-     .then($el => nextTabbable($el, direction))
-     .then(($el) => {
-       if (options.log !== false) {
-         Cypress.log({
-           $el,
-           name: 'tab',
-           message: direction,
-         });
-       }
-     })
-     .focus({ log: false });
- });
+Cypress.Commands.add( 'tab', { prevSubject: 'optional' },
+  ( $subject, direction = 'forward', options = {} ) => {
+    const thenable = $subject ?
+      cy.wrap( $subject, { log: false } ) :
+      cy.focused( { log: options.log !== false } );
+    thenable
+      .then( $el => nextTabbable( $el, direction ) )
+      .then( $el => {
+        if ( options.log !== false ) {
+          Cypress.log( {
+            $el,
+            name: 'tab',
+            message: direction
+          } );
+        }
+      } )
+      .focus( { log: false } );
+  } );
