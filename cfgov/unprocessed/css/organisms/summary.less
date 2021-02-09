@@ -12,7 +12,7 @@
                data-js-hook="behavior_flyout-menu_content">
                Content
           </div>
-          <button class="o-summary_btn"
+          <button class="o-summary_btn u-hidden"
                   data-js-hook="behavior_flyout-menu_trigger">
             Read full description
           </button>
@@ -23,7 +23,7 @@
         -----------------
         .o-summary
           .o-summary_content
-          .o-summary_btn
+          .o-summary_btn.u-hidden
 
     notes:
       - "One-way expandable. Displays an approximately 4-line
@@ -78,7 +78,7 @@
 
             .o-summary_content[aria-expanded="false"]:after {
                 // Don't fade content if on desktop.
-                background: none;
+                display: none;
             }
 
             .o-summary_btn {
