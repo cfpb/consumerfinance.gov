@@ -78,14 +78,14 @@
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
     <article class="o-post-preview">
         <div class="m-meta-header">
-            {% if show_categories and post.categories|length > 0  %}
+            {% if show_categories and post.categories.exists()  %}
             <div class="m-meta-header_left">
                 {# If rendering a blog post in the newsroom, use the 'Blog' aggregate category instead of the post's true category. #}
                 {% import 'macros/category-slug.html' as category_slug %}
                 {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
                     {{ category_slug.render(category='blog', href=url) }}
                 {% else %}
-                    {% for cat in post.categories %}
+                    {% for cat in post.categories.all() %}
                         {% if loop.index > 1 %}
                             <span class="m-meta-header_separator">|</span>
                         {% endif %}
@@ -101,9 +101,9 @@
             <div class="m-meta-header_right">
                 <span class="a-date">
                     {{ date_desc }}
-                    {% if 'EventPage' in post.specific_class %}
-                        {{ time.render(post.start_dt, {'date':true}) }}
-                    {% elif 'EnforcementAction' in post.specific_class and post.initial_filing_date %}
+                    {% if 'EventPage' in post.specific_class.__name__ %}
+                        {{ time.render(post.specific.start_dt, {'date':true}) }}
+                    {% elif 'EnforcementAction' in post.specific_class.__name__ and post.initial_filing_date %}
                         {{ time.render(post.initial_filing_date, {'date':true}) }}
                     {% else %}
                         {{ time.render(post.date_published, {'date':true}) }}
@@ -114,8 +114,8 @@
         </div>
 
         {% cache post.post_preview_cache_key, 'post_preview' %}
-        {% set post_url = post.url %}
-        {% if 'EventPage' in post.specific_class %}
+        {% set post_url = pageurl(post) %}
+        {% if 'EventPage' in post.specific_class.__name__ %}
             {% set event = post.specific %}
             {% if event.venue_image_type != 'none' %}
                 <div class="o-post-preview_image-container">
@@ -190,9 +190,9 @@
                     {{ post.preview_description | safe }}
                 </div>
             {% endif %}
-            {% if post.authors|length > 0 %}
+            {% if post.get_authors() %}
                 <div class="o-post-preview_byline-group">
-                {% for author in post.authors %}
+                {% for author in post.get_authors() %}
                     {% if loop.first %}By {% elif loop.last %}and {% endif %}
                     <a href="{{ url }}?authors={{ author.slug }}">{{ author.name }}</a>
                     {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
@@ -200,9 +200,9 @@
                 </div>
             {% endif %}
 
-            {% if show_tags and post.tags|length > 0 %}
+            {% if show_tags and post.tags.exists() %}
                 {%- import 'tags.html' as tags %}
-                {{ tags.render(post.related_metadata_tags, hide_heading=true, is_wagtail=True) }}
+                {{ tags.render(post.related_metadata_tags(), hide_heading=true, is_wagtail=True) }}
             {% endif %}
 
             {% if post.secondary_link_url and post.secondary_link_text %}
