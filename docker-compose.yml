@@ -29,7 +29,7 @@ services:
         ports:
             - 127.0.0.1:5601:5601
     postgres:
-        image: postgres:11-alpine
+        image: postgres:12-alpine
         user: postgres
         restart: always
         volumes:
