@@ -32,7 +32,7 @@ RUN yum -y install \
         gcc \
         git \
         mailcap \
-        postgresql12 \
+        postgresql13 \
         which \
         gettext \
         ${SCL_PYTHON_VERSION} && \
