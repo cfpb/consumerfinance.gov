@@ -30,11 +30,10 @@ class FilterablePagesDocument(Document):
     title = fields.TextField(attr='title')
     is_archived = fields.TextField(attr='is_archived')
     content = fields.TextField()
-    preview_description = fields.TextField()
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
-    specific_class = fields.TextField()
     start_dt = fields.DateField()
+    end_dt = fields.DateField()
     statuses = fields.KeywordField()
     initial_filing_date = fields.DateField()
     related_metadata_tags = fields.TextField()
@@ -54,18 +53,18 @@ class FilterablePagesDocument(Document):
         except:
             return None
 
-    def prepare_preview_description(self, instance):
-        return unescape(strip_tags(instance.preview_description))
-
     def prepare_url(self, instance):
         return instance.url
-
-    def prepare_specific_class(self, instance):
-        return instance.specific_class.__name__
 
     def prepare_start_dt(self, instance):
         try:
             return instance.specific.start_dt
+        except:
+            return None
+
+    def prepare_end_dt(self, instance):
+        try:
+            return instance.specific.end_dt
         except:
             return None
 
@@ -99,14 +98,6 @@ class FilterablePagesDocument(Document):
     class Django:
         model = AbstractFilterPage
 
-        fields = [
-            'secondary_link_url',
-            'secondary_link_text',
-            'preview_title',
-            'preview_subheading',
-            
-        ]
-
         related_models = [
             CFGOVAuthoredPages,
             CFGOVPageCategory,
@@ -119,62 +110,91 @@ class FilterablePagesDocument(Document):
 
 class FilterablePagesDocumentSearch:
     
-    def __init__(self, prefix='/', topics=[], categories=[], authors=[]):
+    def __init__(self,
+                 prefix='/', topics=[], categories=[],
+                 authors=[], to_date=None, from_date=None,
+                 title=''):
          self.prefix = prefix
          self.topics = topics
          self.categories = categories
          self.authors = authors
+         self.to_date = to_date
+         self.from_date = from_date
+         self.title = title
+
+    def filter_topics(self, search):
+        return search.filter("terms", tags__slug=self.topics)
+
+    def filter_categories(self, search):
+        return search.filter("terms", categories__name=self.categories)
+
+    def filter_authors(self, search):
+        return search.filter("terms", authors__slug=self.authors)
+
+    def filter_date(self, search):
+        return search.filter("range", **{'date_published': {'gte': self.from_date, 'lte': self.to_date}})
+
+    def search_title(self, search):
+        return search.query(
+                "match", title={"query": self.title, "operator": "AND"}
+            )
+
+    def order_results(self, search):
+        total_results = search.count()
+        return search.sort('-date_published')[0:total_results]
+
+    def has_dates(self):
+        return self.to_date != None and self.from_date != None
+
+    def apply_specific_filters(self, search):
+        return search
+
 
     def search(self):
         search = FilterablePagesDocument.search()
         if self.prefix != '':
             search = search.filter('prefix', url=self.prefix)
         if self.topics not in ([], '', None):
-            search = search.filter("terms", tags__slug=self.topics)
+            search = self.filter_topics(search)
         if self.categories not in ([], '', None):
-            search = search.filter("terms", categories__name=self.categories)
+            search = self.filter_categories(search)
         if self.authors not in ([], '', None):
-            search = search.filter("terms", authors__slug=self.authors)
+            search = self.filter_authors(search)
+        if self.has_dates:
+            search = self.filter_date(search)
+        if self.title not in ([], '', None):
+            search = self.search_title(search)
             
-        total_results = search.count()
-        results = search.sort('-date_published')[0:total_results]
+        search = self.apply_specific_filters(search)
+        results = self.order_results(search)
         return results.to_queryset()
 
-    def map_results(self, results):
-        return [
-            {'title': hit.title, 'url': hit.url,
-             'categories': hit.categories, 'tags': [{ 'slug': tag.slug } for tag in hit.tags], 
-             'authors': [{'name': author.name, 'slug': author.slug } for author in hit.authors],
-             'is_archived': hit.is_archived, 'specific_class': hit.specific_class,
-             'start_dt': hit.start_dt, 'initial_filing_date': hit.initial_filing_date, 
-             'date_published': hit.date_published,
-             'related_metadata_tags': json.loads(hit.related_metadata_tags),
-             'secondary_link_url': hit.secondary_link_url, 'secondary_link_text': hit.secondary_link_text,
-             'preview_title': hit.preview_title, 'preview_subheading': hit.preview_subheading,
-             'preview_description': hit.preview_description} for hit in results
-        ]
+class EventFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):
+    
+    def filter_date(self, search):
+        return search.filter("range", **{'start_dt': {'gte': self.from_date}}).filter("range", **{'end_dt': {'lte': self.to_date}})
 
-    def set_topics(self, topics):
-        self.search.filter("terms", tags__slug=topics)
-        return self
+class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):
 
-    def set_categories(self, categories):
-        self.search.filter("terms", categories__name=categories)
-        return self
+    def __init__(self,
+                 prefix='/', topics=[], categories=[],
+                 authors=[], to_date=None, from_date=None,
+                 title='', statuses=[]):
+        super(EnforcementActionFilterablePagesDocumentSearch, self).__init__(
+            prefix, topics, categories, authors, to_date, from_date, title
+        )
+        self.statuses = statuses
 
-    def set_authors(self, authors):
-        self.search.filter("terms", authors__slug=authors)
-        return self
 
-    def filter_queryset(self, path):
-        self.search.filter("prefix", url=path)
-        return self
+    def filter_date(self, search):
+        return search.filter("range", **{"initial_filing_date": {"gte": self.from_date, "lte": self.to_date}})
 
-    # Date Format needs to be YYYY-MM-DD
-    def filter_date_published(self, from_date, to_date):
-        return self.search.filter("range", **{'date_published': {'gte': from_date, 'lte': to_date}})
-
-    def execute(self):
-        total_results = self.search.count()
-        return self.search.execute()[0:total_results]
-
+    def apply_specific_filters(self, search):
+        if self.statuses != []:
+            return search.filter("terms", statuses=self.statuses)
+        
+        return search
+    
+    def order_results(self, search):
+        total_results = search.count()
+        return search.sort('-initial_filing_date')[0:total_results]
