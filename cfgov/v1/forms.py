@@ -9,7 +9,7 @@ from django.forms import widgets
 
 from taggit.models import Tag
 
-from v1.documents import FilterablePagesDocumentSearch
+from v1.documents import EnforcementActionFilterablePagesDocumentSearch, EventFilterablePagesDocumentSearch, FilterablePagesDocumentSearch
 from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
@@ -134,14 +134,10 @@ class FilterableListForm(forms.Form):
             prefix=self.filterable_root,
             topics=self.cleaned_data.get('topics'),
             categories=self.cleaned_data.get('categories'),
-            authors=self.cleaned_data.get('authors')).search()
-
-
-        # print(self.filterable_root)
-        # query = self.generate_query()
-        # return self.filterable_pages.filter(query).distinct().order_by(
-        #     '-date_published'
-        # )
+            authors=self.cleaned_data.get('authors'),
+            to_date=self.cleaned_data.get('to_date'),
+            from_date=self.cleaned_data.get('from_date'),
+            title=self.cleaned_data.get('title')).search()
 
     def first_page_date(self):
         first_post = self.filterable_pages.order_by('date_published').first()
@@ -290,10 +286,23 @@ class EnforcementActionsFilterForm(FilterableListForm):
     )
 
     def get_page_set(self):
-        query = self.generate_query()
-        return self.filterable_pages.filter(query).distinct().order_by(
-            '-initial_filing_date'
-        )
+
+        print(self.cleaned_data)
+
+        return EnforcementActionFilterablePagesDocumentSearch(
+            prefix=self.filterable_root,
+            topics=self.cleaned_data.get('topics'),
+            categories=self.cleaned_data.get('categories'),
+            authors=self.cleaned_data.get('authors'),
+            to_date=self.cleaned_data.get('to_date'),
+            from_date=self.cleaned_data.get('from_date'),
+            title=self.cleaned_data.get('title'),
+            statuses=self.cleaned_data.get('statuses')).search()
+
+        # query = self.generate_query()
+        # return self.filterable_pages.filter(query).distinct().order_by(
+        #     '-initial_filing_date'
+        # )
 
     def get_query_strings(self):
         return [
@@ -309,6 +318,17 @@ class EnforcementActionsFilterForm(FilterableListForm):
 
 
 class EventArchiveFilterForm(FilterableListForm):
+
+    def get_page_set(self):
+        return EventFilterablePagesDocumentSearch(
+            prefix=self.filterable_root,
+            topics=self.cleaned_data.get('topics'),
+            categories=self.cleaned_data.get('categories'),
+            authors=self.cleaned_data.get('authors'),
+            to_date=self.cleaned_data.get('to_date'),
+            from_date=self.cleaned_data.get('from_date'),
+            title=self.cleaned_data.get('title')).search()
+
     def get_query_strings(self):
         return [
             'title__icontains',      # title
