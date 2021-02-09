@@ -136,11 +136,9 @@ class FilterablePagesDocumentSearch:
         if self.authors not in ([], '', None):
             search = search.filter("terms", authors__slug=self.authors)
             
-        print(search.to_dict())
         total_results = search.count()
-        results = search.sort('-date_published').execute()[0:total_results]
-        print(results)
-        return self.map_results(results)
+        results = search.sort('-date_published')[0:total_results]
+        return results.to_queryset()
 
     def map_results(self, results):
         return [
