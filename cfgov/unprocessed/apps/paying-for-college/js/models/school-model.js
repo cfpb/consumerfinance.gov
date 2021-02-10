@@ -30,6 +30,11 @@ const schoolModel = {
     if ( name === 'control' ) {
       updateState.byProperty( 'schoolControl', value );
     }
+
+    if ( name === 'highestDegree' ) {
+      updateState.byProperty( 'communityCollege', value === 'Associate degree' );
+    }
+
     if ( updateURL !== false ) {
       updateUrlQueryString();
     }
