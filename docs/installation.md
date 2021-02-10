@@ -156,7 +156,7 @@ Then create the database, associated user, and schema for that user:
 ```bash
 dropdb --if-exists cfgov && dropuser --if-exists cfpb
 createuser --createdb cfpb && createdb -O cfpb cfgov
-psql postgres://cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
+psql postgres://cfpb:cfpb@localhost/cfgov -c 'CREATE SCHEMA cfpb'
 ```
 
 We don't support using an SQLite database, because we use database fields
