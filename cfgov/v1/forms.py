@@ -1,6 +1,5 @@
 from collections import Counter
 from datetime import date
-import json
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -9,7 +8,10 @@ from django.forms import widgets
 
 from taggit.models import Tag
 
-from v1.documents import EnforcementActionFilterablePagesDocumentSearch, EventFilterablePagesDocumentSearch, FilterablePagesDocumentSearch
+from v1.documents import (
+    EnforcementActionFilterablePagesDocumentSearch,
+    EventFilterablePagesDocumentSearch, FilterablePagesDocumentSearch
+)
 from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
@@ -121,7 +123,7 @@ class FilterableListForm(forms.Form):
         self.wagtail_block = kwargs.pop('wagtail_block')
         self.filterable_root = kwargs.pop('filterable_root')
         self.filterable_categories = kwargs.pop('filterable_categories')
-        
+
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
         clean_categories(selected_categories=self.data.get('categories'))
@@ -136,11 +138,12 @@ class FilterableListForm(forms.Form):
 
         # If no categories are submitted by the form
         if categories == []:
-            # And we have defined a prexisting set of categories to limit results by
-            # Using CategoryFilterableMixin
+            # And we have defined a prexisting set of categories
+            # to limit results by Using CategoryFilterableMixin
             if self.filterable_categories not in ([], None):
                 # Search for results only within the provided categories
-                categories = ref.get_category_children(self.filterable_categories)
+                categories = ref.get_category_children(
+                    self.filterable_categories)
 
         return FilterablePagesDocumentSearch(
             prefix=self.filterable_root,
