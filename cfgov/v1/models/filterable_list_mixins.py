@@ -20,7 +20,8 @@ class FilterableListMixin(RoutablePageMixin):
     """Determines whether we tell crawlers to index the page or not."""
 
     filterable_categories = None
-    """Used for activity-log and newsroom to determine which pages to render when sitewide"""
+    """Used for activity-log and newsroom to determine
+       which pages to render when sitewide"""
 
     @staticmethod
     def get_model_class():
@@ -48,7 +49,7 @@ class FilterableListMixin(RoutablePageMixin):
             return self.get_parent().get_url()
 
         return '/'
-    
+
     def get_filterable_page_type(self):
         filterable_list_block = self.get_filterable_list_wagtail_block()
         if filterable_list_block is None:
