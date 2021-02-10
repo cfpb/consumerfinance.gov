@@ -108,5 +108,6 @@ class EventArchivePage(BrowseFilterablePage):
 class NewsroomLandingPage(CategoryFilterableMixin, BrowseFilterablePage):
     template = 'newsroom/index.html'
     filterable_categories = ['Newsroom']
+    searchable_page_types = ['NewsroomPage']
 
     objects = PageManager()

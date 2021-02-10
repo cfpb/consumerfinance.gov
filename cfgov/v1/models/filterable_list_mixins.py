@@ -19,6 +19,9 @@ class FilterableListMixin(RoutablePageMixin):
     do_not_index = False
     """Determines whether we tell crawlers to index the page or not."""
 
+    filterable_categories = None
+    """Used for activity-log and newsroom to determine which pages to render when sitewide"""
+
     @staticmethod
     def get_model_class():
         return AbstractFilterPage
@@ -45,6 +48,13 @@ class FilterableListMixin(RoutablePageMixin):
             return self.get_parent().get_url()
 
         return '/'
+    
+    def get_filterable_page_type(self):
+        filterable_list_block = self.get_filterable_list_wagtail_block()
+        if filterable_list_block is None:
+            return None
+
+        return filterable_list_block.value['page_type']
 
     def get_filterable_queryset(self):
         """Return the queryset of pages to be filtered by this page.
@@ -97,6 +107,7 @@ class FilterableListMixin(RoutablePageMixin):
             filterable_pages=queryset,
             wagtail_block=self.get_filterable_list_wagtail_block(),
             filterable_root=self.get_filterable_root(),
+            filterable_categories=self.filterable_categories
         )
 
         context.update({
