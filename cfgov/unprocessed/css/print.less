@@ -38,10 +38,20 @@
         content: " (" attr(href) ")";
     }
 
-    a[href^="/"]:not([href*="?authors"]):not([href="/"]):after {
-        // Output root-relative hrefs in parentheses with our domain prepended,
-        // as long as they are not author links or the logo homepage link.
-        content: " (https://www.consumerfinance.gov" attr(href) ")";
+    a[href^="/"]:after {
+        // Output root-relative hrefs in parentheses with our domain prepended.
+        content: " (https://www.cfpb.gov" attr(href) ")";
+    }
+
+    a[href^="/external-site"]:after {
+        // Output original href for links with external site interstitial.
+        content: " (" attr(data-orig-href) ")";
+    }
+
+    a[href="/"]:after,
+    a[href*="?authors"]:after {
+        // Don't append hrefs to the logo or author links.
+        content: none;
     }
 
     a[href^="#"],
