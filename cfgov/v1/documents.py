@@ -28,7 +28,7 @@ class FilterablePagesDocument(Document):
         'slug': fields.KeywordField()
     })
     title = fields.TextField(attr='title')
-    is_archived = fields.TextField(attr='is_archived')
+    is_archived = fields.KeywordField(attr='is_archived')
     content = fields.TextField()
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
@@ -113,7 +113,7 @@ class FilterablePagesDocumentSearch:
     def __init__(self,
                  prefix='/', topics=[], categories=[],
                  authors=[], to_date=None, from_date=None,
-                 title=''):
+                 title='', archived=None):
          self.prefix = prefix
          self.topics = topics
          self.categories = categories
@@ -121,6 +121,7 @@ class FilterablePagesDocumentSearch:
          self.to_date = to_date
          self.from_date = from_date
          self.title = title
+         self.archived = archived
 
     def filter_topics(self, search):
         return search.filter("terms", tags__slug=self.topics)
@@ -133,6 +134,9 @@ class FilterablePagesDocumentSearch:
 
     def filter_date(self, search):
         return search.filter("range", **{'date_published': {'gte': self.from_date, 'lte': self.to_date}})
+
+    def filter_archived(self, search):
+        return search.filter("terms", is_archived=self.archived)
 
     def search_title(self, search):
         return search.query(
@@ -162,6 +166,8 @@ class FilterablePagesDocumentSearch:
             search = self.filter_authors(search)
         if self.has_dates:
             search = self.filter_date(search)
+        if self.archived != None:
+            search = self.filter_archived(search)
         if self.title not in ([], '', None):
             search = self.search_title(search)
             
@@ -179,9 +185,9 @@ class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSear
     def __init__(self,
                  prefix='/', topics=[], categories=[],
                  authors=[], to_date=None, from_date=None,
-                 title='', statuses=[]):
+                 title='', archived=None, statuses=[]):
         super(EnforcementActionFilterablePagesDocumentSearch, self).__init__(
-            prefix, topics, categories, authors, to_date, from_date, title
+            prefix, topics, categories, authors, to_date, from_date, title, archived
         )
         self.statuses = statuses
 

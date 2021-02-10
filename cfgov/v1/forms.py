@@ -120,6 +120,7 @@ class FilterableListForm(forms.Form):
         self.filterable_pages = kwargs.pop('filterable_pages')
         self.wagtail_block = kwargs.pop('wagtail_block')
         self.filterable_root = kwargs.pop('filterable_root')
+        self.filterable_categories = kwargs.pop('filterable_categories')
         
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
@@ -130,14 +131,26 @@ class FilterableListForm(forms.Form):
         self.set_authors(page_ids)
 
     def get_page_set(self):
+
+        categories = self.cleaned_data.get('categories')
+
+        # If no categories are submitted by the form
+        if categories == []:
+            # And we have defined a prexisting set of categories to limit results by
+            # Using CategoryFilterableMixin
+            if self.filterable_categories not in ([], None):
+                # Search for results only within the provided categories
+                categories = ref.get_category_children(self.filterable_categories)
+
         return FilterablePagesDocumentSearch(
             prefix=self.filterable_root,
             topics=self.cleaned_data.get('topics'),
-            categories=self.cleaned_data.get('categories'),
+            categories=categories,
             authors=self.cleaned_data.get('authors'),
             to_date=self.cleaned_data.get('to_date'),
             from_date=self.cleaned_data.get('from_date'),
-            title=self.cleaned_data.get('title')).search()
+            title=self.cleaned_data.get('title'),
+            archived=self.cleaned_data.get('archived')).search()
 
     def first_page_date(self):
         first_post = self.filterable_pages.order_by('date_published').first()
@@ -286,9 +299,6 @@ class EnforcementActionsFilterForm(FilterableListForm):
     )
 
     def get_page_set(self):
-
-        print(self.cleaned_data)
-
         return EnforcementActionFilterablePagesDocumentSearch(
             prefix=self.filterable_root,
             topics=self.cleaned_data.get('topics'),
