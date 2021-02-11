@@ -67,7 +67,7 @@ describe( 'Filter Blog Posts based on content', () => {
     // Then I should see only results dated 01/01/2021 or later
     page.notification().should( 'be.visible' );
     page.lastResult().should( 'contain', '2021' );
-    page.results().should( 'not.contain', '2020' );
+    page.lastResult().should( 'not.contain', '2020' );
     // And the page url should contain "from_date=2021-01-01"
     cy.url().should( 'include', 'from_date=2021-01-01' );
   } );
