@@ -1,4 +1,4 @@
-import { ActivitySearch } from '../../pages/consumer-tools/activity-search';
+import { ActivitySearch } from '../../../pages/consumer-tools/activity-search';
 
 const search = new ActivitySearch();
 
