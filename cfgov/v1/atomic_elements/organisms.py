@@ -880,7 +880,6 @@ class FilterableList(BaseExpandable):
             return []
 
     def get_context(self, value, parent_context=None):
-
         context = super(FilterableList, self).get_context(
             value,
             parent_context=parent_context

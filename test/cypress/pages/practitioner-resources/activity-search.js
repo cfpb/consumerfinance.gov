@@ -12,6 +12,14 @@ export class ActivitySearch {
     return cy.get( '.results_filters-clear' );
   }
 
+  resultsFilterTag( filterName ) {
+    return cy.get( `[data-value="#building-block--${ filterName }"]` );
+  }
+
+  resultsCountEmpty() {
+    return cy.get( '.results_count__empty' );
+  }
+
   search( term ) {
     cy.get( '#search-text' ).type( term );
     cy.get( 'form[action="."]' ).within( () => {
