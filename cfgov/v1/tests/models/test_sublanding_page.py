@@ -1,7 +1,9 @@
 import datetime as dt
+from io import StringIO
 from unittest import mock
 
-from django.test import TestCase, override_settings
+from django.core import management
+from django.test import TestCase
 
 from wagtail.core.blocks import StreamValue
 
@@ -10,8 +12,6 @@ from v1.models import AbstractFilterPage, BrowseFilterablePage, SublandingPage
 from v1.tests.wagtail_pages import helpers
 
 
-@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
-@override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
 class SublandingPageTestCase(TestCase):
     """
     This test case checks that the browse-filterable posts of a sublanding
@@ -50,6 +50,9 @@ class SublandingPageTestCase(TestCase):
         helpers.save_new_page(self.child1_of_post1, self.post1)
         helpers.save_new_page(self.child2_of_post1, self.post1)
         helpers.save_new_page(self.child1_of_post2, self.post2)
+
+        # Create a clean index for the test suite
+        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
 
     def tearDown(self):
 
