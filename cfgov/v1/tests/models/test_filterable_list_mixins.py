@@ -1,4 +1,6 @@
-from django.test import RequestFactory, TestCase
+import time
+
+from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
@@ -11,6 +13,8 @@ from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
 
 
+@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
+@override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
 class TestFilterableListMixin(TestCase):
     def setUp(self):
         self.mixin = FilterableListMixin()
@@ -84,7 +88,8 @@ class TestFilterableListMixin(TestCase):
         self.mixin.get_form_data(self.factory.get(request_string).GET)
         assert self.mixin.do_not_index is False
 
-
+@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
+@override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
 class FilterableRoutesTestCase(TestCase):
 
     def setUp(self):
@@ -98,6 +103,7 @@ class FilterableRoutesTestCase(TestCase):
             live=True,
         )
         self.filterable_page.add_child(instance=self.page)
+        time.sleep(2)
 
     def test_index_route(self):
         response = self.client.get("/test/")

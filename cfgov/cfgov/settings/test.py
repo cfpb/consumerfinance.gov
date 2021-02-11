@@ -93,5 +93,9 @@ HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"] = (
     "test_" + HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"]
 )
 
+ELASTICSEARCH_DSL = {
+    "default": {"hosts": "http://localhost:9200"}
+}
+
 ELASTICSEARCH_DSL_AUTO_REFRESH = False
 ELASTICSEARCH_DSL_AUTOSYNC = False
