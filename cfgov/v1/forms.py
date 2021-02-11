@@ -133,27 +133,35 @@ class FilterableListForm(forms.Form):
         self.set_authors(page_ids)
 
     def get_page_set(self):
+        # Taken from the generate query method
+        # Looks like this helps enable the filterable form on Sublanding Pages
+        if self.is_bound:
+            categories = self.cleaned_data.get('categories')
 
-        categories = self.cleaned_data.get('categories')
+            # If no categories are submitted by the form
+            if categories == []:
+                # And we have defined a prexisting set of categories
+                # to limit results by Using CategoryFilterableMixin
+                if self.filterable_categories not in ([], None):
+                    # Search for results only within the provided categories
+                    categories = ref.get_category_children(
+                        self.filterable_categories)
 
-        # If no categories are submitted by the form
-        if categories == []:
-            # And we have defined a prexisting set of categories
-            # to limit results by Using CategoryFilterableMixin
-            if self.filterable_categories not in ([], None):
-                # Search for results only within the provided categories
-                categories = ref.get_category_children(
-                    self.filterable_categories)
+            return FilterablePagesDocumentSearch(
+                prefix=self.filterable_root,
+                topics=self.cleaned_data.get('topics'),
+                categories=categories,
+                authors=self.cleaned_data.get('authors'),
+                to_date=self.cleaned_data.get('to_date'),
+                from_date=self.cleaned_data.get('from_date'),
+                title=self.cleaned_data.get('title'),
+                archived=self.cleaned_data.get('archived')).search()
 
+        # If we don't have the form
+        # return all results under the root we are searching.
         return FilterablePagesDocumentSearch(
-            prefix=self.filterable_root,
-            topics=self.cleaned_data.get('topics'),
-            categories=categories,
-            authors=self.cleaned_data.get('authors'),
-            to_date=self.cleaned_data.get('to_date'),
-            from_date=self.cleaned_data.get('from_date'),
-            title=self.cleaned_data.get('title'),
-            archived=self.cleaned_data.get('archived')).search()
+            prefix=self.filterable_root
+        ).search()
 
     def first_page_date(self):
         first_post = self.filterable_pages.order_by('date_published').first()

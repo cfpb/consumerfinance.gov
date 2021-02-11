@@ -1,10 +1,12 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
-from v1.models.base import (
-    CFGOVAuthoredPages, CFGOVPageCategory, CFGOVTaggedPages
+from v1.models.blog_page import BlogPage, LegacyBlogPage
+from v1.models.enforcement_action_page import EnforcementActionPage
+from v1.models.learn_page import (
+    AbstractFilterPage, DocumentDetailPage, EventPage, LearnPage
 )
-from v1.models.learn_page import AbstractFilterPage
+from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
 
 
 @registry.register_document
@@ -73,20 +75,21 @@ class FilterablePagesDocument(Document):
             return None
 
     def get_instances_from_related(self, related_instance):
-        if isinstance(related_instance, CFGOVAuthoredPages):
-            return related_instance.authors.all()
-        if isinstance(related_instance, CFGOVPageCategory):
-            return related_instance.categories.all()
-        if isinstance(related_instance, CFGOVTaggedPages):
-            return related_instance.tags.all()
+        # Related instances all inherit from AbstractFilerPage
+        return related_instance
 
     class Django:
         model = AbstractFilterPage
 
         related_models = [
-            CFGOVAuthoredPages,
-            CFGOVPageCategory,
-            CFGOVTaggedPages
+            BlogPage,
+            DocumentDetailPage,
+            EnforcementActionPage,
+            EventPage,
+            LearnPage,
+            LegacyBlogPage,
+            LegacyNewsroomPage,
+            NewsroomPage
         ]
 
     class Index:
@@ -151,7 +154,7 @@ class FilterablePagesDocumentSearch:
             search = self.filter_categories(search)
         if self.authors not in ([], '', None):
             search = self.filter_authors(search)
-        if self.has_dates:
+        if self.has_dates():
             search = self.filter_date(search)
         if self.archived is not None:
             search = self.filter_archived(search)
