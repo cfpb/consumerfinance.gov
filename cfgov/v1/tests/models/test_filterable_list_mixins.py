@@ -1,13 +1,13 @@
 import time
+from io import StringIO
 
-from django.test import RequestFactory, TestCase, override_settings
 from django.core import management
+from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 
 import mock
-from io import StringIO
 
 from scripts._atomic_helpers import filter_controls
 from v1.models import BlogPage

@@ -18,6 +18,7 @@ from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
+
 @override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
 @override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
 class MoleculesTestCase(TestCase):
