@@ -1,8 +1,8 @@
-import { RuralOrUnderserved } from '../../pages/rural-or-underserved/rural-or-underserved';
+import { RuralOrUnderservedTool } from '../../pages/rural-or-underserved-tool/rural-or-underserved';
 
-const page = new RuralOrUnderserved();
+const page = new RuralOrUnderservedTool();
 
-describe( 'Rural or Underserved', () => {
+describe( 'Rural or Underserved Tool', () => {
 
   describe( 'Address Search', () => {
 
