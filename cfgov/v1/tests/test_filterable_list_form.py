@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from io import StringIO
 
 from django.core import management
 from django.test import TestCase, override_settings
@@ -22,8 +23,8 @@ class TestFilterableListForm(TestCase):
     def setUpTestData(cls):
 
         # Create a clean index for the test suite
-        management.call_command('search_index', action='delete', force=True, models=['v1'])
-        management.call_command('search_index', action='create', models=['v1'])
+        management.call_command('search_index', action='delete', force=True, models=['v1'], stdout=StringIO())
+        management.call_command('search_index', action='create', models=['v1'], stdout=StringIO())
 
         blog1 = BlogPage(title='test page')
         blog1.categories.add(CFGOVPageCategory(name='foo'))
@@ -172,8 +173,8 @@ class TestFilterableListFormArchive(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Create a clean index for the test suite
-        management.call_command('search_index', action='delete', force=True, models=['v1'])
-        management.call_command('search_index', action='create', models=['v1'])
+        management.call_command('search_index', action='delete', force=True, models=['v1'], stdout=StringIO())
+        management.call_command('search_index', action='create', models=['v1'], stdout=StringIO())
 
         page1 = BlogPage(title='test page', is_archived='yes')
         page2 = BlogPage(title='another test page')
