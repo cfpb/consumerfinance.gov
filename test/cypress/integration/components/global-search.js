@@ -45,7 +45,7 @@ describe( 'Global Search molecule to search for content on the site', () => {
     // When I focus on the search molecule trigger
     search.trigger().type( ' ' );
     // And I perform tab actions on the search molecule
-    // search.input().type( '{tab}' );
+    /* search.input().type( '{tab}' ); */
     cy.tab();
     // Then it shouldn't have search input content
     search.content().should( 'contain', '' );
