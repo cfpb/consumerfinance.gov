@@ -1,5 +1,4 @@
 import datetime as dt
-import time
 
 from django.test import TestCase, override_settings
 
@@ -52,7 +51,6 @@ class SublandingPageTestCase(TestCase):
         helpers.save_new_page(self.child1_of_post1, self.post1)
         helpers.save_new_page(self.child2_of_post1, self.post1)
         helpers.save_new_page(self.child1_of_post2, self.post2)
-        time.sleep(2)
 
     def tearDown(self):
 

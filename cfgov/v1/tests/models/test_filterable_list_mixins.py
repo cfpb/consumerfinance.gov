@@ -1,4 +1,3 @@
-import time
 from io import StringIO
 
 from django.core import management
@@ -118,7 +117,6 @@ class FilterableRoutesTestCase(TestCase):
             live=True,
         )
         self.filterable_page.add_child(instance=self.page)
-        time.sleep(2)
 
     def test_index_route(self):
         response = self.client.get("/test/")

@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 from io import StringIO
 
@@ -59,7 +58,6 @@ class TestFilterableListForm(TestCase):
         cls.event1 = event1
         cls.cool_event = cool_event
         cls.awesome_event = awesome_event
-        time.sleep(2)
     
     @classmethod
     def tearDownTestData(cls):
@@ -185,7 +183,6 @@ class TestFilterableListFormArchive(TestCase):
         cls.page1 = page1
         cls.page2 = page2
         cls.page3 = page3
-        time.sleep(2)
 
     @classmethod
     def tearDownTestData(cls):
