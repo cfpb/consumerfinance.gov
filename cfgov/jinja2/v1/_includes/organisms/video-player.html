@@ -127,6 +127,11 @@
                         {{- ' o-featured-content-module_img' if is_fcm else '' }}"
                  alt=""
                  src="{{ image_url }}">
+
+            {#
+                Provide a duration timestamp in the corner of the video.
+            #}
+            <div class="o-video-player_duration"></div>
         </div>
     </div>
 {%- endmacro %}

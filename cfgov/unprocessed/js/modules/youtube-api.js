@@ -52,11 +52,6 @@ function embedVideoScript( callback ) {
 /**
  * Load Youtube max res image if it exists.
  * TODO: Replace this method by calling the Youtube data API.
- * https://developers.google.com/youtube/v3/getting-started#fields
- */
-/**
- * Load Youtube max res image if it exists.
- * TODO: Replace this method by calling the Youtube data API.
  *       https://developers.google.com/youtube/v3/getting-started#fields
  * @param {string} videoId - A YouTube video ID.
  * @returns {string} The image URL.
