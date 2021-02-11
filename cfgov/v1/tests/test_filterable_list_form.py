@@ -2,7 +2,7 @@ from datetime import datetime
 from io import StringIO
 
 from django.core import management
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from pytz import timezone
 
@@ -14,16 +14,10 @@ from v1.tests.wagtail_pages.helpers import publish_page
 from v1.util.categories import clean_categories
 
 
-@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
-@override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
 class TestFilterableListForm(TestCase):
     
     @classmethod
     def setUpTestData(cls):
-
-        # Create a clean index for the test suite
-        management.call_command('search_index', action='delete', force=True, models=['v1'], stdout=StringIO())
-        management.call_command('search_index', action='create', models=['v1'], stdout=StringIO())
 
         blog1 = BlogPage(title='test page')
         blog1.categories.add(CFGOVPageCategory(name='foo'))
@@ -58,15 +52,9 @@ class TestFilterableListForm(TestCase):
         cls.event1 = event1
         cls.cool_event = cool_event
         cls.awesome_event = awesome_event
-    
-    @classmethod
-    def tearDownTestData(cls):
-        # Delete pages to remove them from the ES Index
-        cls.blog1.delete()
-        cls.blog2.delete()
-        cls.event1.delete()
-        cls.cool_event.delete()
-        cls.awesome_event.delete()
+
+        # Create a clean index for the test suite
+        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
     
     def setUpFilterableForm(self, data=None):
         filterable_pages = AbstractFilterPage.objects.live()
@@ -164,16 +152,10 @@ class TestFilterableListForm(TestCase):
         )
 
 
-@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
-@override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
 class TestFilterableListFormArchive(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        # Create a clean index for the test suite
-        management.call_command('search_index', action='delete', force=True, models=['v1'], stdout=StringIO())
-        management.call_command('search_index', action='create', models=['v1'], stdout=StringIO())
-
         page1 = BlogPage(title='test page', is_archived='yes')
         page2 = BlogPage(title='another test page')
         page3 = BlogPage(title='never-archived page', is_archived='never')
@@ -184,11 +166,8 @@ class TestFilterableListFormArchive(TestCase):
         cls.page2 = page2
         cls.page3 = page3
 
-    @classmethod
-    def tearDownTestData(cls):
-        cls.page1.delete()
-        cls.page2.delete()
-        cls.page3.delete()
+        # Create a clean index for the test suite
+        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
 
     def setUpFilterableForm(self, data=None):
         filterable_pages = AbstractFilterPage.objects.live()
