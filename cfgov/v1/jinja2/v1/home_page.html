@@ -7,6 +7,10 @@
     {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content_main__home
+{%- endblock %}
+
 {% block content_main %}
 
 <h1 class="u-visually-hidden">
