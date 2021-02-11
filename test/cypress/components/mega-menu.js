@@ -109,16 +109,12 @@ export class MegaMenu {
   }
 
   tabbing() {
-    // changing focus from one link to another
-    // is similar to tabbing between elements
+    /* changing focus from one link to another
+       is similar to tabbing between elements */
     this.clickTriggerBtn();
     this.focusFirstLink( '1' );
     this.focusLastLink( '1' );
     this.focusFirstLink( '2' );
     this.focusLastLink( '2' );
-    /*  cy.tab();
-        cy.tab();
-        cy.tab();
-        cy.tab(); */
   }
 }
