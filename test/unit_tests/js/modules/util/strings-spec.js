@@ -17,7 +17,7 @@ describe( 'Strings formatTimestamp()', () => {
     expect( formatTimestamp( seconds ) ).toBe( '02:40' );
   } );
 
-  it( 'should convert 1600 seconds into 00:23 timestamp', () => {
+  it( 'should convert 16001 seconds into 04:26:41 timestamp', () => {
     const seconds = 16001;
     expect( formatTimestamp( seconds ) ).toBe( '04:26:41' );
   } );
