@@ -1,7 +1,9 @@
 import time
+from io import StringIO
 from unittest import mock
 
 from django.test import RequestFactory, TestCase, override_settings
+from django.core import management
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
@@ -15,6 +17,13 @@ from v1.models.filterable_list_mixins import FilterableListMixin
 @override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
 @override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
 class TestFilterableListMixin(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        # Create a clean index for the test suite
+        management.call_command('search_index', action='delete', force=True, models=['v1'], stdout=StringIO())
+        management.call_command('search_index', action='create', models=['v1'], stdout=StringIO())
+
     def setUp(self):
         self.mixin = FilterableListMixin()
         self.factory = RequestFactory()
@@ -90,6 +99,12 @@ class TestFilterableListMixin(TestCase):
 @override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
 @override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
 class FilterableRoutesTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        # Create a clean index for the test suite
+        management.call_command('search_index', action='delete', force=True, models=['v1'], stdout=StringIO())
+        management.call_command('search_index', action='create', models=['v1'], stdout=StringIO())
 
     def setUp(self):
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
