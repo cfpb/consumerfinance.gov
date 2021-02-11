@@ -1,4 +1,4 @@
-import { FinancialWellBeing } from '../../pages/consumer-tools/financial-well-being';
+import { FinancialWellBeing } from '../../../pages/consumer-tools/financial-well-being';
 
 const financialWellBeing = new FinancialWellBeing();
 

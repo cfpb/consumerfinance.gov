@@ -1,4 +1,4 @@
-import { ConsumerComplaints } from '../../pages/data-research/consumer-complaints';
+import { ConsumerComplaints } from '../../../pages/data-research/consumer-complaints';
 
 const page = new ConsumerComplaints();
 const states = [ 'AK', 'AL', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',

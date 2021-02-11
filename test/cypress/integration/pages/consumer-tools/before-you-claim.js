@@ -1,4 +1,4 @@
-import { BeforeYouClaim } from '../../pages/consumer-tools/before-you-claim';
+import { BeforeYouClaim } from '../../../pages/consumer-tools/before-you-claim';
 
 const claim = new BeforeYouClaim();
 
