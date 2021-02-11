@@ -5,11 +5,11 @@ export class ConsumerComplaints {
   }
 
   clickTab( name ) {
-    cy.get( `.${name}` ).click();
+    cy.get( `.${ name }` ).click();
   }
 
   clickDateRange( name ) {
-    cy.get( `.range-${name}` ).click();
+    cy.get( `.range-${ name }` ).click();
   }
 
   clickButton( name ) {
@@ -18,11 +18,11 @@ export class ConsumerComplaints {
 
   clickTile( name ) {
     const tile = name.toUpperCase();
-    return cy.get( `.tile-${tile}` ).click();
+    return cy.get( `.tile-${ tile }` ).click();
   }
 
   checkState( name ) {
-    return cy.get( `.highcharts-name-${name}`.toLowerCase() );
+    return cy.get( `.highcharts-name-${ name }`.toLowerCase() );
   }
 
   checkChart( name ) {
@@ -30,7 +30,7 @@ export class ConsumerComplaints {
   }
 
   checkLegend( name ) {
-    return cy.get( `.highcharts-legend-${name}` );
+    return cy.get( `.highcharts-legend-${ name }` );
   }
 
   enter( term ) {

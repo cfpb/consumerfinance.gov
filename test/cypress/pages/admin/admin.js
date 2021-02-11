@@ -219,6 +219,10 @@ export class AdminPage {
     cy.get( '.action-add-block-table_block' ).click();
   }
 
+  getFirstTableCell() {
+    return cy.get( '.htCore' ).find( 'td' ).first();
+  }
+
   selectFirstTableCell() {
     cy.get( '.htCore' ).find( 'td' ).first().click().click();
   }
@@ -227,8 +231,12 @@ export class AdminPage {
     cy.get( '.modal-body' ).find( `[name="${ name }"]` ).click();
   }
 
+  searchFirstTableCell( text ) {
+    return cy.get( '.htCore' ).find( 'td' ).first().contains( text );
+  }
+
   saveTableEditor() {
-    // wait 1 second because editor has lag between input and appearing in editor
+    // Wait 1 second because editor lags between input and appearing in editor.
     cy.wait( 1000 );
     cy.get( '#table-block-save-btn' ).click();
   }
@@ -239,6 +247,10 @@ export class AdminPage {
 
   typeTableEditorTextbox( text ) {
     return cy.get( '.modal-body' ).find( '.DraftEditor-editorContainer' ).type( text );
+  }
+
+  backspaceTableEditorTextbox( ) {
+    return cy.get( '.modal-body' ).find( '.DraftEditor-editorContainer' ).type( '{backspace}' );
   }
 
   selectInternalLink( text ) {

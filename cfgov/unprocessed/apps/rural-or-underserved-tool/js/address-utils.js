@@ -144,11 +144,11 @@ function render( result ) {
  * @returns {Array} Return the updated list of addresses.
  */
 function pushAddress( row, addresses ) {
-  addresses.push( row.data[0]['Street Address'] +
+  addresses.push( row.data['Street Address'] +
     ', ' +
-    row.data[0].City + ', ' +
-    row.data[0].State + ' ' +
-    row.data[0].Zip );
+    row.data.City + ', ' +
+    row.data.State + ' ' +
+    row.data.Zip );
   return addresses;
 }
 

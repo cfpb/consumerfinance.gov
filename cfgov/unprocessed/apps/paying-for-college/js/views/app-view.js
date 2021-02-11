@@ -1,7 +1,6 @@
 /* This file handles view items which apply only to the "state" of the
 application, and are otherwise inappropriate for the
 other views. */
-import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { buildUrlQueryString } from '../util/url-parameter-utils.js';
 import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { recalculateFinancials } from '../dispatchers/update-models.js';
@@ -16,44 +15,6 @@ const appView = {
   _saveForLaterBtn: null,
   _saveLinks: null,
   _sendLinkBtn: null,
-
-  /**
-   * Listeners for buttons
-   */
-  _addButtonListeners: function() {
-    appView._didThisHelpChoices.forEach( elem => {
-      bindEvent( elem, { click: this._handleDidThisHelpClick } );
-    } );
-
-    appView._actionPlanChoices.forEach( elem => {
-      bindEvent( elem, { click: this._handleActionPlanClick } );
-    } );
-
-    bindEvent( appView._restartBtn, { click: appView._handleRestartBtn } );
-    bindEvent( appView._saveForLaterBtn, { click: appView._handleSaveForLaterBtn } );
-    bindEvent( appView._sendLinkBtn, { click: appView._handleSendLinkBtn } );
-    bindEvent( appView._includeParentPlusBtn, { click: appView._handleIncludeParentPlusBtn } );
-  },
-
-  /**
-   * Event handling for action-plan choice clicks
-   * @param {Object} event - Triggering event
-   */
-  _handleActionPlanClick: function( event ) {
-    const target = event.target;
-    updateState.byProperty( 'actionPlan', target.value );
-  },
-
-  /**
-   * Handle the click of buttons on final page
-   * @param {Object} event - Click event object
-   */
-  _handleDidThisHelpClick: event => {
-    const button = event.target;
-    const parent = closest( button, '.o-form_fieldset' );
-    sendAnalyticsEvent( 'Impact question click: ' + parent.dataset.impact, event.target.value );
-    updateState.byProperty( parent.dataset.impact, event.target.value );
-  },
 
   /**
    * Handle the click of the Include Parent Plus checkbox
@@ -90,7 +51,7 @@ const appView = {
     const target = event.target;
     let href = 'mailto:' + document.querySelector( '#finish_email' ).value;
     href += '?subject=Link: Your financial path to graduation&body=';
-    href += window.location.href;
+    href += encodeURIComponent( window.location.href );
     target.setAttribute( 'href', href );
   },
 
@@ -130,9 +91,47 @@ const appView = {
     appView._sendLinkBtn = document.querySelector( '#email-your-link' );
     appView._includeParentPlusBtn = document.querySelector( '#plan__parentPlusFeeRepay' );
 
-    appView._addButtonListeners();
+    _addButtonListeners();
   }
 };
+
+/**
+ * Listeners for buttons.
+ */
+function _addButtonListeners() {
+  appView._didThisHelpChoices.forEach( elem => {
+    elem.addEventListener( 'click', _handleDidThisHelpClick );
+  } );
+
+  appView._actionPlanChoices.forEach( elem => {
+    elem.addEventListener( 'click', _handleActionPlanClick );
+  } );
+
+  appView._restartBtn.addEventListener( 'click', appView._handleRestartBtn );
+  appView._saveForLaterBtn.addEventListener( 'click', appView._handleSaveForLaterBtn );
+  appView._sendLinkBtn.addEventListener( 'click', appView._handleSendLinkBtn );
+  appView._includeParentPlusBtn.addEventListener( 'click', appView._handleIncludeParentPlusBtn );
+}
+
+/**
+ * Handle the click of buttons on final page.
+ * @param {MouseEvent} event - Click event object.
+ */
+function _handleDidThisHelpClick( event ) {
+  const button = event.target;
+  const parent = closest( button, '.o-form_fieldset' );
+  sendAnalyticsEvent( 'Impact question click: ' + parent.dataset.impact, event.target.value );
+  updateState.byProperty( parent.dataset.impact, event.target.value );
+}
+
+/**
+ * Event handling for action-plan choice clicks.
+ * @param {MouseEvent} event - Triggering event.
+ */
+function _handleActionPlanClick( event ) {
+  const target = event.target;
+  updateState.byProperty( 'actionPlan', target.value );
+}
 
 export {
   appView

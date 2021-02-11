@@ -1,4 +1,4 @@
-import { PfcFinancialPathToGraduation } from '../../pages/paying-for-college/your-financial-path-to-graduation/';
+import { PfcFinancialPathToGraduation } from '../../pages/paying-for-college/your-financial-path-to-graduation.js';
 
 const page = new PfcFinancialPathToGraduation();
 
@@ -16,11 +16,12 @@ describe( 'Paying For College', () => {
       page.clickGetStarted( );
       page.enter( 'Harvard University' );
       page.searchResults().should( 'be.visible' );
+      page.clickSearchResult( 'Harvard University' );
       page.selectProgram( 'type', 'certificate' );
       page.selectProgram( 'length', '1' );
-      page.selectProgram( 'rate', 'in-state' );
       page.selectProgram( 'housing', 'on-campus' );
-      page.clickNextStep( );
+      page.selectProgram( 'dependency', 'dependent' );
+      page.clickNextStep();
       page.click( 'No' );
       page.setText( 'costs__tuition-fees', '50000' );
       page.setText( 'costs__room-board', '25000' );
@@ -39,10 +40,11 @@ describe( 'Paying For College', () => {
       page.clickGetStarted( );
       page.enter( 'Harvard University' );
       page.searchResults().should( 'be.visible' );
+      page.clickSearchResult( 'Harvard University' );
       page.selectProgram( 'type', 'associates' );
       page.selectProgram( 'length', '2' );
-      page.selectProgram( 'rate', 'out-of-state' );
       page.selectProgram( 'housing', 'off-campus' );
+      page.selectProgram( 'dependency', 'dependent' );
       page.clickNextStep( );
       page.click( 'Yes' );
       page.setText( 'costs__tuition-fees', '100000' );
@@ -62,9 +64,9 @@ describe( 'Paying For College', () => {
       page.clickGetStarted( );
       page.enter( 'Harvard University' );
       page.searchResults().should( 'be.visible' );
+      page.clickSearchResult( 'Harvard University' );
       page.selectProgram( 'type', 'graduate' );
       page.selectProgram( 'length', '4' );
-      page.selectProgram( 'rate', 'out-of-state' );
       page.selectProgram( 'housing', 'off-campus' );
       page.clickNextStep( );
       page.click( 'No' );
@@ -110,7 +112,7 @@ describe( 'Paying For College', () => {
       page.setText( 'loans__nonprofitLoan', '40000' );
       page.setText( 'loans__nonprofitLoanRate', '3' );
       page.setText( 'loans__nonprofitLoanFee', '2' );
-      cy.get( '[data-financial-item="total_publicLoans"]' ).should( 'contain', '$209,99' );
+      cy.get( '[data-financial-item="total_publicLoans"]' ).should( 'contain', '$197,700' );
       page.clickNextStep( );
       page.setText( 'savings__personal', '10000' );
       page.setText( 'savings__family', '20000' );
@@ -136,10 +138,11 @@ describe( 'Paying For College', () => {
       page.clickGetStarted( );
       page.enter( 'Harvard University' );
       page.searchResults().should( 'be.visible' );
+      page.clickSearchResult( 'Harvard University' );
       page.selectProgram( 'type', 'bachelors' );
       page.selectProgram( 'length', '3' );
-      page.selectProgram( 'rate', 'in-state' );
       page.selectProgram( 'housing', 'on-campus' );
+      page.selectProgram( 'dependency', 'dependent' );
       page.clickNextStep( );
       page.click( 'Yes' );
       page.setText( 'costs__tuition-fees', '200000' );
@@ -184,7 +187,7 @@ describe( 'Paying For College', () => {
       page.setText( 'loans__nonprofitLoan', '40000' );
       page.setText( 'loans__nonprofitLoanRate', '3' );
       page.setText( 'loans__nonprofitLoanFee', '2' );
-      cy.get( '[data-financial-item="total_publicLoans"]' ).should( 'contain', '$209,99' );
+      cy.get( '[data-financial-item="total_publicLoans"]' ).should( 'contain', '$197,700' );
       page.clickNextStep( );
       page.setText( 'savings__personal', '10000' );
       page.setText( 'savings__family', '20000' );

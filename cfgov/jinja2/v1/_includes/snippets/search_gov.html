@@ -1,11 +1,11 @@
 {#
-  Script allows Digital Gov to generate our global site search results.
-  Do not edit, this script comes straight from Digital Gov.
-  https://search.digitalgov.gov/manual/code.html
+  Script allows Search.gov to generate our global site search results.
+  Do not edit, this script comes straight from Search.gov.
+  https://search.gov/manual/code.html
 #}
 <script>
-  //<![CDATA[
-  var usasearch_config = { siteHandle:"cfpb" };
+//<![CDATA[
+  var usasearch_config = { siteHandle: "{{ 'cfpb_es' if language == 'es' else 'cfpb' }}" };
 
   var script = document.createElement("script");
   script.type = "text/javascript";

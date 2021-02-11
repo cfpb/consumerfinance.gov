@@ -1,11 +1,10 @@
 // This file contains the 'view' of expenses budget after graduation
 import { updateExpense, updateRegion } from '../dispatchers/update-models.js';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
 import { getExpensesValue } from '../dispatchers/get-model-values.js';
 import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
 import { stringToNum } from '../util/number-utils.js';
-import { updateAffordingChart } from '../dispatchers/update-view.js';
+import { updateAffordingChart, updateUrlQueryString } from '../dispatchers/update-view.js';
 
 const expensesView = {
   _currentInput: null,
@@ -15,45 +14,6 @@ const expensesView = {
   _regionSelect: null,
 
   /**
-   * Event handling for expenses-item INPUT changes
-   * @param {Object} event - Triggering event
-   */
-  _handleInputChange: function( event ) {
-    clearTimeout( expensesView._inputChangeTimeout );
-    const elem = event.target;
-    const name = elem.dataset.expensesItem;
-    const value = stringToNum( elem.value );
-
-    expensesView._currentInput = elem;
-
-    if ( selectorMatches( elem, ':focus' ) ) {
-      expensesView._inputChangeTimeout = setTimeout(
-        function() {
-          updateExpense( name, value );
-        }, 500 );
-    } else {
-      updateExpense( name, value );
-    }
-  },
-
-  _handleRegionChange: function() {
-    updateRegion( expensesView._regionSelect.value );
-    updateAffordingChart();
-  },
-
-  _addInputListeners: function() {
-    expensesView._expensesInputs.forEach( elem => {
-      const events = {
-        keyup: this._handleInputChange,
-        focusout: this._handleInputChange
-      };
-      bindEvent( elem, events );
-    } );
-
-    bindEvent( expensesView._regionSelect, { change: this._handleRegionChange } );
-  },
-
-  /**
    * Initialize the Expenses View
    */
   init: () => {
@@ -61,7 +21,7 @@ const expensesView = {
     expensesView._expensesInputs = document.querySelectorAll( 'input[data-expenses-item]' );
     expensesView._regionSelect = document.querySelector( '#expenses__region' );
 
-    expensesView._addInputListeners();
+    _addInputListeners();
   },
 
   /**
@@ -90,6 +50,51 @@ const expensesView = {
     expensesView._updateExpensesItems();
   }
 };
+
+/**
+ * Add event listeners to inputs.
+ */
+function _addInputListeners() {
+  expensesView._expensesInputs.forEach( elem => {
+    elem.addEventListener( 'keyup', _handleInputChange );
+    elem.addEventListener( 'focusout', _handleInputChange );
+  } );
+
+  expensesView._regionSelect.addEventListener( 'change', _handleRegionChange );
+}
+
+/**
+ * Event handling for expenses-item INPUT changes.
+ * @param {KeyboardEvent} event - Triggering event.
+ */
+function _handleInputChange( event ) {
+  clearTimeout( expensesView._inputChangeTimeout );
+  const elem = event.target;
+  const name = elem.dataset.expensesItem;
+  const value = stringToNum( elem.value );
+
+  expensesView._currentInput = elem;
+
+  if ( selectorMatches( elem, ':focus' ) ) {
+    expensesView._inputChangeTimeout = setTimeout(
+      function() {
+        updateExpense( name, value );
+      }, 500 );
+  } else {
+    updateExpense( name, value );
+  }
+
+  updateUrlQueryString();
+}
+
+/**
+ * Handle change of region selection.
+ */
+function _handleRegionChange() {
+  updateRegion( expensesView._regionSelect.value );
+  updateAffordingChart();
+  updateUrlQueryString();
+}
 
 export {
   expensesView

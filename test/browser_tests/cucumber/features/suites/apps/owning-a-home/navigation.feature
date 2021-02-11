@@ -1,11 +1,12 @@
 Feature: Verify the navigation tabs/links works according to requirements
-  As a first time visitor to the Buying a House page
+  As a first time visitor to the Owning a Home page
   I want to click on invidual tabs and links
   So that I can easily navigate the site
 
+
 @smoke_testing @landing_page
 Scenario Outline: Test Journey links in the landing page
-  Given I navigate to the BAH Landing page
+  Given I navigate to the OAH Landing page
   When I click on the link with id "<link_id>"
   Then I should be directed to the internal "<relative_url>" URL
   And I should see "<page_title>" displayed in the page title
@@ -21,9 +22,10 @@ Examples:
 | close-header-link   | Know the Process | process/close/   |
 | close-learn-link    | Know the Process | process/close/   |
 
+
 @smoke_testing @landing_page
 Scenario Outline: Test outbound links in the landing page
-  Given I navigate to the BAH Landing page
+  Given I navigate to the OAH Landing page
   When I click on the "<link_name>" link
   Then I should see the "<relative_url>" URL with page title <page_title> open in a new tab
 

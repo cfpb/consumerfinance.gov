@@ -1,5 +1,5 @@
 import FlyoutMenu from '../../../../../cfgov/unprocessed/js/modules/behavior/FlyoutMenu';
-import MoveTransition from '../../../../../cfgov/unprocessed/js/modules/transition/MoveTransition';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition';
 
 const HTML_SNIPPET = `
 <div data-js-hook="behavior_flyout-menu">
@@ -65,8 +65,16 @@ describe( 'FlyoutMenu', () => {
       expect( flyoutMenu.getData() ).toBeUndefined();
     } );
 
-    it( 'should have correct state after initializing', () => {
+    it( 'should have correct state after initializing as collapsed', () => {
       expect( flyoutMenu.init() ).toBeInstanceOf( FlyoutMenu );
+      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+    } );
+
+    it( 'should have correct state after initializing as expanded', () => {
+      expect( flyoutMenu.init( true ) ).toBeInstanceOf( FlyoutMenu );
+      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
     } );
   } );
 
@@ -225,7 +233,9 @@ describe( 'FlyoutMenu', () => {
          In a future JSDom update this should be revisited.
          See https://github.com/jsdom/jsdom/issues/1781
       */
-      contentDom.dispatchEvent( new Event( 'transitionend' ) );
+      const event = new Event( 'transitionend' );
+      event.propertyName = 'transform';
+      contentDom.dispatchEvent( event );
     } );
   } );
 
@@ -251,7 +261,9 @@ describe( 'FlyoutMenu', () => {
          In a future JSDom update this should be revisited.
          See https://github.com/jsdom/jsdom/issues/1781
       */
-      contentDom.dispatchEvent( new Event( 'transitionend' ) );
+      const event = new Event( 'transitionend' );
+      event.propertyName = 'transform';
+      contentDom.dispatchEvent( event );
     } );
   } );
 

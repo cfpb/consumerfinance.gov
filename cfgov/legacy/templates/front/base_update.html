@@ -151,13 +151,14 @@
 
 <body class="{% block body_class %}page{% endblock %}" data-lang="{% trans "en" %}">
 {% block gtm_js %}
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 {% endblock %}
 
     {% include_header %}
+
     <div id="page">
         {% block app_notification %}
         {% endblock %}
@@ -174,31 +175,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     </div><!-- /#page -->
+
     {% include_footer %}
 
     {% block app_modal %}
     {% endblock %}
 
-{% block app_js %}
-{% endblock %}
+    {% block app_js %}
+    {% endblock %}
 
-{% block page_js %}
-{% endblock %}
+    {% block page_js %}
+    {% endblock %}
 
-<!-- for search.usa.gov indexing -->
-<script>
-  //<![CDATA[
-    var aid = 'cfpb';
-    var script = document.createElement( 'script' );
-    script.type = 'text/javascript';
-    script.src = 'https://search.usa.gov/javascripts/stats.js';
-    document.getElementsByTagName( 'head' )[0].appendChild( script );
-  //]]>
-</script>
-
-<!--[if gt IE 8]><!-->
-<script src="{% static "js/atomic/header.js" %}"></script>
-<script src="{% static "js/atomic/footer.js" %}"></script>
-<!--<![endif]-->
+    <!--[if gt IE 8]><!-->
+    <script src="{% static "js/atomic/header.js" %}"></script>
+    <script src="{% static "js/atomic/footer.js" %}"></script>
+    <!--<![endif]-->
 </body>
 </html>

@@ -18,7 +18,6 @@ import {
   updateUrlHash,
   updateWayfinder
 } from './permalinks-utils';
-import { bindEvent } from '../../../js/modules/util/dom-events';
 import { queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 const wayfinderLink = find( '.o-regulations-wayfinder_link' );
@@ -31,11 +30,9 @@ const init = () => {
   updateParagraphPositions();
   updateWayfinder( true );
   if ( wayfinderLink !== null ) {
-    bindEvent( wayfinderLink, {
-      click: event => {
-        event.preventDefault();
-        updateWayfinder( true );
-      }
+    wayfinderLink.addEventListener( 'click', event => {
+      event.preventDefault();
+      updateWayfinder( true );
     } );
   }
 

@@ -14,7 +14,7 @@ services:
     elasticsearch:
         build:
             context: ./
-            dockerfile: ./docker/elasticsearch/7.7/Dockerfile
+            dockerfile: ./docker/elasticsearch/7/Dockerfile
         ports:
             - 127.0.0.1:9200:9200
             - 127.0.0.1:9300:9300
@@ -23,7 +23,7 @@ services:
         volumes:
             - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
     kibana:
-        image: blacktop/kibana:7.7
+        image: blacktop/kibana:7.10.1
         depends_on:
             - elasticsearch
         ports:

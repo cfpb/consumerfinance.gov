@@ -12,7 +12,7 @@
 
    value.heading:   Heading text.
 
-   value.body:      Body text (rich text).
+   value.body:      Body text.
 
    value.links:     List of links to render with:
 
@@ -31,7 +31,7 @@
     <div class="o-featured-content-module_text">
         <h2 class="h3">{{ value.heading }}</h2>
 
-        {{ value.body | richtext }}
+        <p>{{ value.body }}</p>
 
         {% if value.links %}
         <ul class="m-list m-list__links">
