@@ -181,7 +181,8 @@ export class AdminPage {
 
   searchBlocks() {
     cy.get( '#id_form-0-block' ).select( 'ask_cfpb.models.blocks.AskContent' );
-    cy.get( 'form[action="/admin/inventory/"]' ).submit(); // This form doesn't follow the standard Wagtail Format
+    // This form doesn't follow the standard Wagtail Format
+    cy.get( 'form[action="/admin/inventory/"]' ).submit();
   }
 
   searchResults() {
