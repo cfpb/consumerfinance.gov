@@ -611,6 +611,7 @@ CSP_IMG_SRC = (
     "www.facebook.com",
     "www.gravatar.com",
     "*.qualtrics.com",
+    "*.mouseflow.com",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
