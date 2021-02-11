@@ -1,7 +1,7 @@
+from django.core.exceptions import FieldDoesNotExist
+
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-
-from django.core.exceptions import FieldDoesNotExist
 
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
