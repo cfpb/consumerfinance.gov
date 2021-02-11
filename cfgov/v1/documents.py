@@ -46,6 +46,8 @@ class FilterablePagesDocument(Document):
             return content
         except FieldDoesNotExist:
             return None
+        except IndexError:
+            return None
 
     def prepare_url(self, instance):
         return instance.url
