@@ -1,4 +1,3 @@
-import time
 from unittest.mock import patch
 
 from django.core.cache import cache, caches
@@ -36,7 +35,6 @@ class TestFragmentCacheExtension(TestCase):
             slug='test-blog-page'
         )
         page.add_child(instance=child_page)
-        time.sleep(2)
 
         cache = caches['post_preview']
         with patch.object(cache, 'add') as add_to_cache:
