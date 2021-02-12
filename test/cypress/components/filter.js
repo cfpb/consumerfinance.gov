@@ -42,16 +42,28 @@ export class Filter {
     return cy.get( `.o-expandable_cue .o-expandable_cue-${ name }` );
   }
 
+  expandableTarget() {
+    return cy.get( '.o-expandable_target' );
+  }
+
   search() {
     return cy.get( '.o-expandable_header .o-expandable_target' );
   }
 
+  open() {
+    return this.expandableCue( 'open' ).click();
+  }
+
+  close() {
+    return this.expandableCue( 'close' ).click();
+  }
+
   show() {
-    return this.expandableCue( 'open' );
+    return this.expandableTarget().first().click();
   }
 
   hide() {
-    return this.expandableCue( 'close' );
+    return this.expandableTarget().last().click();
   }
 
 }
