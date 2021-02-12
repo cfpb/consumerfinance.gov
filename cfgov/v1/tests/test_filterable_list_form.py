@@ -6,6 +6,7 @@ from django.test import TestCase
 
 from pytz import timezone
 
+from search.elasticsearch_helpers import WaitForElasticsearchMixin
 from v1.forms import FilterableListForm
 from v1.models import BlogPage
 from v1.models.base import CFGOVPageCategory
@@ -152,61 +153,50 @@ class TestFilterableListForm(TestCase):
         )
 
 
-class TestFilterableListFormArchive(TestCase):
+class TestFilterableListFormArchive(WaitForElasticsearchMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        page1 = BlogPage(title='test page', is_archived='yes')
-        page2 = BlogPage(title='another test page')
-        page3 = BlogPage(title='never-archived page', is_archived='never')
-        publish_page(page1)
-        publish_page(page2)
-        publish_page(page3)
-        cls.page1 = page1
-        cls.page2 = page2
-        cls.page3 = page3
+        cls.page1 = BlogPage(title='test page', is_archived='yes')
+        cls.page2 = BlogPage(title='another test page')
+        cls.page3 = BlogPage(title='never-archived page', is_archived='never')
+        publish_page(cls.page1)
+        publish_page(cls.page2)
+        publish_page(cls.page3)
 
         # Create a clean index for the test suite
-        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
+        management.call_command(
+            'search_index',
+            action='rebuild',
+            force=True,
+            models=['v1'],
+            stdout=StringIO()
+        )
 
-    def setUpFilterableForm(self, data=None):
+    def get_filtered_pages(self, data):
         filterable_pages = AbstractFilterPage.objects.live()
+
         form = FilterableListForm(
             filterable_pages=filterable_pages,
             wagtail_block=None,
             filterable_root='/',
-            filterable_categories=None
+            filterable_categories=None,
+            data=data
         )
-        form.is_bound = True
-        form.cleaned_data = data
-        return form
 
-    def test_filter_by_archived_all(self):
-        form = self.setUpFilterableForm()
-        form.data = {}
-        form.full_clean()
-        page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 3)
+        self.assertTrue(form.is_valid())
+        return form.get_page_set()
 
     def test_filter_by_archived_include(self):
-        form = self.setUpFilterableForm()
-        form.data = {'archived': 'include'}
-        form.full_clean()
-        page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 3)
+        pages = self.get_filtered_pages({'archived': 'include'})
+        self.assertEqual(len(pages), 3)
 
     def test_filter_by_archived_exclude(self):
-        form = self.setUpFilterableForm()
-        form.data = {'archived': 'exclude'}
-        form.full_clean()
-        page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 2)
-        self.assertEqual(page_set[0].specific, self.page2)
+        pages = self.get_filtered_pages({'archived': 'exclude'})
+        self.assertEqual(len(pages), 2)
+        self.assertEqual(pages[0].specific, self.page2)
 
     def test_filter_by_archived_only(self):
-        form = self.setUpFilterableForm()
-        form.data = {'archived': 'only'}
-        form.full_clean()
-        page_set = form.get_page_set()
-        self.assertEqual(len(page_set), 1)
-        self.assertEqual(page_set[0].specific, self.page1)
+        pages = self.get_filtered_pages({'archived': 'only'})
+        self.assertEqual(len(pages), 1)
+        self.assertEqual(pages[0].specific, self.page1)

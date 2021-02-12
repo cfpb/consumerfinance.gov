@@ -1,4 +1,5 @@
 import re
+from mock import patch
 
 from django.conf import settings
 
@@ -70,3 +71,29 @@ def environment_specific_index(base_name):
         return base_name
     else:
         return f'{settings.DEPLOY_ENVIRONMENT}-{base_name}'
+
+
+# https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-refresh.html
+class WaitForElasticsearchMixin:
+    """Test case mixin that makes Elasticsearch bulk updates blocking."""
+    @classmethod
+    def setUpClass(cls):
+        from elasticsearch.helpers import bulk as original_bulk
+
+        def bulk_wait_for_refresh(*args, **kwargs):
+            kwargs.setdefault('refresh', 'wait_for')
+            return original_bulk(*args, **kwargs)
+
+        cls.patched_es_bulk = patch(
+            'django_elasticsearch_dsl.documents.bulk',
+            new=bulk_wait_for_refresh
+        )
+        cls.patched_es_bulk.start()
+
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.patched_es_bulk.stop()
+
+        super().tearDownClass()
