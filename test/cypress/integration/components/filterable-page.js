@@ -13,10 +13,10 @@ describe( 'Filterable Page shows all results when no filter selected', () => {
     // Then I should not see filtered results
     filterableList.notification().should( 'not.be.visible' );
     // Then I should see the (first|last) page result
-    filterableList.firstResult().should( 'be.visible' );
-    filterableList.lastResult().should( 'be.visible' );
+    filterableList.firstResultContent().should( 'be.visible' );
+    filterableList.lastResultContent().should( 'be.visible' );
     // And I should see page results
-    filterableList.results().its( 'length' ).should( 'be.gt', 0 );
+    filterableList.resultsContent().its( 'length' ).should( 'be.gt', 0 );
   } );
   it( 'Browse filterable page', () => {
     // When I goto a browse filterable page
@@ -25,8 +25,6 @@ describe( 'Filterable Page shows all results when no filter selected', () => {
     cy.url().should( 'not.include', '?' );
     // Then I should not see filtered results
     filterableList.notification().should( 'not.be.visible' );
-    // And I open the filterable list control
-    filterableList.open();
     // When I select the first checkbox in the Category list
     filter.checkCategoryId( 'interim-final-rule' );
     // When I select a checkbox in the Topic list
@@ -40,10 +38,10 @@ describe( 'Filterable Page shows all results when no filter selected', () => {
     // Then I should see filtered results
     filterableList.notification().should( 'be.visible' );
     // Then I should see the (first|last) page result
-    filterableList.firstResult().should( 'be.visible' );
-    filterableList.lastResult().should( 'be.visible' );
+    filterableList.firstResultContent().should( 'be.visible' );
+    filterableList.lastResultContent().should( 'be.visible' );
     // And I should see page results
-    filterableList.results().should( 'contain', 'rule' );
-    filterableList.results().its( 'length' ).should( 'be.gt', 0 );
+    filterableList.resultsContent().should( 'contain', 'rule' );
+    filterableList.resultsContent().its( 'length' ).should( 'be.gt', 0 );
   } );
 } );
