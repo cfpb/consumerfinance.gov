@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
+from unittest.mock import patch
 
 from django.test import TestCase
 
 import github3
-from mock import patch
 
 from alerts.github_alert import GithubAlert
 

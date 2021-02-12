@@ -2,10 +2,8 @@ import os
 import shutil
 import sys
 import tempfile
-from unittest import TestCase
+from unittest import TestCase, mock
 from zipfile import ZipFile
-
-import mock
 
 from deployable_zipfile.create import create_zipfile, save_wheels
 

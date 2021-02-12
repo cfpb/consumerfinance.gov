@@ -1,4 +1,5 @@
 from datetime import date
+from unittest import mock
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission, User
@@ -8,8 +9,6 @@ from django.urls import reverse
 
 from wagtail.core.models import Site
 from wagtail.tests.testapp.models import SimplePage
-
-import mock
 
 from v1.admin_views import ExportFeedbackView
 from v1.tests.wagtail_pages.helpers import save_new_page

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
+from unittest.mock import patch
 
 from django.test import TestCase
-
-from mock import patch
 
 from alerts.mattermost_alert import MattermostAlert
 

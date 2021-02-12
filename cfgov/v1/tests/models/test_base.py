@@ -1,4 +1,5 @@
 import json
+from unittest import mock
 
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -8,8 +9,6 @@ from django.test.client import RequestFactory
 
 from wagtail.core import blocks
 from wagtail.core.models import Site
-
-import mock
 
 from v1.models import (
     AbstractFilterPage, BrowsePage, CFGOVPage, LandingPage, SublandingPage
