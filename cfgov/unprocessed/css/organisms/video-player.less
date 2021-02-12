@@ -69,7 +69,8 @@
 }
 
 .o-video-player_duration {
-    color: rgb( 255, 255, 255 );
+    color: @white;
+    background: rgba( 0, 0, 0, 0.4 );
     z-index: 1;
     padding-left: 6px;
     padding-right: 6px;
@@ -79,10 +80,6 @@
     position: absolute;
     right: 0;
     bottom: 0;
-
-    &.duration-loaded {
-        background: rgba( 0, 0, 0, 0.4 );
-    }
 }
 
 .o-video-player_play-btn {

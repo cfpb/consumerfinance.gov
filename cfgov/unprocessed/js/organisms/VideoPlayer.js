@@ -81,8 +81,10 @@ function VideoPlayer( element ) {
   function _videoPlayerReadyHandler( event ) {
     // Add duration timestamp to video.
     const player = event.target;
-    _durationDom.innerHTML = formatTimestamp( player.getDuration() );
-    _durationDom.classList.add( 'duration-loaded' );
+    const duration = player.getDuration();
+    _durationDom.setAttribute( 'datetime', duration + 'S' );
+    _durationDom.innerHTML = formatTimestamp( duration );
+    _durationDom.classList.remove( 'u-hidden' );
 
     /* On page load we show a play link that links directly to the video, so
      * that the user can still access the video with no JavaScript. We need to
