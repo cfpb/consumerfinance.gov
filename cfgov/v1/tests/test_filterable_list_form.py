@@ -2,7 +2,7 @@ from datetime import datetime
 from io import StringIO
 
 from django.core import management
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from pytz import timezone
 
@@ -15,7 +15,8 @@ from v1.tests.wagtail_pages.helpers import publish_page
 from v1.util.categories import clean_categories
 
 
-class TestFilterableListForm(TestCase):
+@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
+class TestFilterableListForm(WaitForElasticsearchMixin, TestCase):
     
     @classmethod
     def setUpTestData(cls):
@@ -152,7 +153,7 @@ class TestFilterableListForm(TestCase):
             ]
         )
 
-
+@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
 class TestFilterableListFormArchive(WaitForElasticsearchMixin, TestCase):
 
     @classmethod

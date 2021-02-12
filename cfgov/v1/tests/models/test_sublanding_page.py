@@ -3,16 +3,18 @@ from io import StringIO
 from unittest import mock
 
 from django.core import management
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
+from search.elasticsearch_helpers import WaitForElasticsearchMixin
 from v1.models import AbstractFilterPage, BrowseFilterablePage, SublandingPage
 from v1.tests.wagtail_pages import helpers
 
 
-class SublandingPageTestCase(TestCase):
+@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
+class SublandingPageTestCase(WaitForElasticsearchMixin, TestCase):
     """
     This test case checks that the browse-filterable posts of a sublanding
     page are properly retrieved.

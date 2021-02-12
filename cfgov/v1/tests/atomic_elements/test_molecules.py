@@ -19,15 +19,13 @@ from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
-@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
-@override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
+@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
 class MoleculesTestCase(TestCase):
 
     @classmethod
     def setUpTestData(cls):
         # Create a clean index for the test suite
-        management.call_command('search_index', action='delete', force=True, models=['v1'], stdout=StringIO())
-        management.call_command('search_index', action='create', models=['v1'], stdout=StringIO())
+        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
 
     def test_text_intro(self):
         """Text introduction value correctly displays on a Browse Filterable Page"""

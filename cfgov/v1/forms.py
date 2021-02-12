@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.forms import widgets
 
+from flags.state import flag_enabled
 from taggit.models import Tag
 
 from v1.documents import (
@@ -133,27 +134,32 @@ class FilterableListForm(forms.Form):
         self.set_authors(page_ids)
 
     def get_page_set(self):
-        
-        categories = self.cleaned_data.get('categories')
+        if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
+            categories = self.cleaned_data.get('categories')
 
-        # If no categories are submitted by the form
-        if categories == []:
-            # And we have defined a prexisting set of categories
-            # to limit results by Using CategoryFilterableMixin
-            if self.filterable_categories not in ([], None):
-                # Search for results only within the provided categories
-                categories = ref.get_category_children(
-                    self.filterable_categories)
+            # If no categories are submitted by the form
+            if categories == []:
+                # And we have defined a prexisting set of categories
+                # to limit results by Using CategoryFilterableMixin
+                if self.filterable_categories not in ([], None):
+                    # Search for results only within the provided categories
+                    categories = ref.get_category_children(
+                        self.filterable_categories)
 
-        return FilterablePagesDocumentSearch(
-            prefix=self.filterable_root,
-            topics=self.cleaned_data.get('topics'),
-            categories=categories,
-            authors=self.cleaned_data.get('authors'),
-            to_date=self.cleaned_data.get('to_date'),
-            from_date=self.cleaned_data.get('from_date'),
-            title=self.cleaned_data.get('title'),
-            archived=self.cleaned_data.get('archived')).search()
+            return FilterablePagesDocumentSearch(
+                prefix=self.filterable_root,
+                topics=self.cleaned_data.get('topics'),
+                categories=categories,
+                authors=self.cleaned_data.get('authors'),
+                to_date=self.cleaned_data.get('to_date'),
+                from_date=self.cleaned_data.get('from_date'),
+                title=self.cleaned_data.get('title'),
+                archived=self.cleaned_data.get('archived')).search()
+        else:
+            query = self.generate_query()
+            return self.filterable_pages.filter(query).distinct().order_by(
+                '-date_published'
+            )
 
     def first_page_date(self):
         first_post = self.filterable_pages.order_by('date_published').first()
@@ -302,20 +308,21 @@ class EnforcementActionsFilterForm(FilterableListForm):
     )
 
     def get_page_set(self):
-        return EnforcementActionFilterablePagesDocumentSearch(
-            prefix=self.filterable_root,
-            topics=self.cleaned_data.get('topics'),
-            categories=self.cleaned_data.get('categories'),
-            authors=self.cleaned_data.get('authors'),
-            to_date=self.cleaned_data.get('to_date'),
-            from_date=self.cleaned_data.get('from_date'),
-            title=self.cleaned_data.get('title'),
-            statuses=self.cleaned_data.get('statuses')).search()
-
-        # query = self.generate_query()
-        # return self.filterable_pages.filter(query).distinct().order_by(
-        #     '-initial_filing_date'
-        # )
+        if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
+            return EnforcementActionFilterablePagesDocumentSearch(
+                prefix=self.filterable_root,
+                topics=self.cleaned_data.get('topics'),
+                categories=self.cleaned_data.get('categories'),
+                authors=self.cleaned_data.get('authors'),
+                to_date=self.cleaned_data.get('to_date'),
+                from_date=self.cleaned_data.get('from_date'),
+                title=self.cleaned_data.get('title'),
+                statuses=self.cleaned_data.get('statuses')).search()
+        else:
+            query = self.generate_query()
+            return self.filterable_pages.filter(query).distinct().order_by(
+                '-date_published'
+            )
 
     def get_query_strings(self):
         return [
@@ -333,14 +340,20 @@ class EnforcementActionsFilterForm(FilterableListForm):
 class EventArchiveFilterForm(FilterableListForm):
 
     def get_page_set(self):
-        return EventFilterablePagesDocumentSearch(
-            prefix=self.filterable_root,
-            topics=self.cleaned_data.get('topics'),
-            categories=self.cleaned_data.get('categories'),
-            authors=self.cleaned_data.get('authors'),
-            to_date=self.cleaned_data.get('to_date'),
-            from_date=self.cleaned_data.get('from_date'),
-            title=self.cleaned_data.get('title')).search()
+        if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
+            return EventFilterablePagesDocumentSearch(
+                prefix=self.filterable_root,
+                topics=self.cleaned_data.get('topics'),
+                categories=self.cleaned_data.get('categories'),
+                authors=self.cleaned_data.get('authors'),
+                to_date=self.cleaned_data.get('to_date'),
+                from_date=self.cleaned_data.get('from_date'),
+                title=self.cleaned_data.get('title')).search()
+        else:
+            query = self.generate_query()
+            return self.filterable_pages.filter(query).distinct().order_by(
+                '-date_published'
+            )
 
     def get_query_strings(self):
         return [
