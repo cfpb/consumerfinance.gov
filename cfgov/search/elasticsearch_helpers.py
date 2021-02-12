@@ -1,9 +1,9 @@
 import re
-from mock import patch
 
 from django.conf import settings
 
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
+from mock import patch
 
 from search.models import Synonym
 

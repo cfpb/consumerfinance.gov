@@ -4,7 +4,6 @@ from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
 from search.elasticsearch_helpers import environment_specific_index
-
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import (

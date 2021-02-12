@@ -1,7 +1,7 @@
 from io import StringIO
 
 from django.core import management
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
@@ -9,6 +9,7 @@ from wagtail.core.models import Site
 import mock
 
 from scripts._atomic_helpers import filter_controls
+from search.elasticsearch_helpers import WaitForElasticsearchMixin
 from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
@@ -88,8 +89,8 @@ class TestFilterableListMixin(TestCase):
         self.mixin.get_form_data(self.factory.get(request_string).GET)
         assert self.mixin.do_not_index is False
 
-
-class FilterableRoutesTestCase(TestCase):
+@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
+class FilterableRoutesTestCase(WaitForElasticsearchMixin, TestCase):
 
     def setUp(self):
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")

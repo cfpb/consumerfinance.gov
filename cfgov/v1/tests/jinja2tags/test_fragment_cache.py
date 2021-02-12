@@ -1,3 +1,6 @@
+from io import StringIO
+
+from django.core import management
 from django.core.cache import cache, caches
 from django.template import engines
 from django.test import Client, TestCase, override_settings
@@ -7,14 +10,14 @@ from wagtail.core.blocks import StreamValue
 from mock import patch
 
 from scripts import _atomic_helpers as atomic
+from search.elasticsearch_helpers import WaitForElasticsearchMixin
 from v1.models.blog_page import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
-@override_settings(ELASTICSEARCH_DSL_AUTOSYNC=True)
-@override_settings(ELASTICSEARCH_DSL_AUTO_REFRESH=True)
-class TestFragmentCacheExtension(TestCase):
+@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
+class TestFragmentCacheExtension(WaitForElasticsearchMixin, TestCase):
     def test_cache_gets_called_when_visiting_filterable_page(self):
         # Create a filterable page
         page = BrowseFilterablePage(
@@ -35,6 +38,8 @@ class TestFragmentCacheExtension(TestCase):
             slug='test-blog-page'
         )
         page.add_child(instance=child_page)
+        # Index new page
+        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
 
         cache = caches['post_preview']
         with patch.object(cache, 'add') as add_to_cache:
