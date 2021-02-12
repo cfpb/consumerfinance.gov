@@ -19,7 +19,7 @@ describe( 'Filter Blog Posts based on content', () => {
     // And I click "Apply filters" button
     page.applyFilters();
     // Then I should see only results with the word "loan" in the post title
-    page.results().should( 'contain', 'loan' );
+    page.resultsContent().should( 'contain', 'loan' );
     // And the page url should contain "title=loan"
     cy.url().should( 'include', 'title=loan' );
   } );
@@ -62,8 +62,8 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results dated 01/01/2021 or later
     page.notification().should( 'be.visible' );
-    page.lastResult().should( 'contain', '2021' );
-    page.lastResult().should( 'not.contain', '2020' );
+    page.lastResultHeader().should( 'contain', '2021' );
+    page.resultsHeaderRight().should( 'not.contain', '2020' );
     // And the page url should contain "from_date=2021-01-01"
     cy.url().should( 'include', 'from_date=2021-01-01' );
   } );
@@ -74,11 +74,11 @@ describe( 'Filter Blog Posts based on content', () => {
     page.filterToDate( '2020-12-31' );
     // And I click "Apply filters" button
     page.applyFilters();
-    // Then I should see only results between 01/01/2020 and 01/01/2021, inclusive
+    // Then I should see only results between 01/01/2020 and 2020-12-31, inclusive
     page.notification().should( 'be.visible' );
-    page.results().should( 'not.contain', '2019' );
-    page.firstResult().should( 'contain', '2020' );
-    page.firstResult().should( 'not.contain', '2021' );
+    page.resultsHeaderRight().should( 'not.contain', '2019' );
+    page.resultsHeaderRight().should( 'not.contain', '2021' );
+    page.resultsHeaderRight().should( 'contain', '2020' );
     // And the page url should contain "from_date=2020-01-01"
     cy.url().should( 'include', 'from_date=2020-01-01' );
     // And the page url should contain "to_date=2020-12-31"
@@ -91,7 +91,7 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results tagged with the selected topic
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'education' );
+    page.resultsContent().should( 'contain', 'education' );
     // And the page url should contain "topics=financial-education"
     cy.url().should( 'include', 'topics=financial-education' );
   } );
@@ -106,7 +106,7 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results tagged with at least one of the two selected topics
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'financial' );
+    page.resultsContent().should( 'contain', 'financial' );
     // And the page url should contain "topics=student-loans"
     cy.url().should( 'include', 'topics=student-loans' );
     // And the page url should contain "topics=financial-education"
@@ -122,14 +122,14 @@ describe( 'Filter Blog Posts based on content', () => {
     // When I type "mortgage" in the topic input box
     filter.clickTopic( 'Mortgages' );
     // Then the list of topics should show only tags that contain the word "mortgage"
-    page.results().should( 'contain', 'mortgage' );
+    page.resultsContent().should( 'contain', 'mortgage' );
     // And when I select a topic in the list
     filter.clickTopic( 'Servicemembers' );
     // And I click "Apply filters" button
     page.applyFilters();
     // Then I should see only results tagged with the selected topic
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'service' );
+    page.resultsContent().should( 'contain', 'service' );
     // And the page url should contain "topics=mortgages"
     cy.url().should( 'include', 'topics=mortgages' );
     // And the page url should contain "topics=servicemembers"
@@ -144,8 +144,8 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results that are both in the selected category and tagged with the selected topic
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'student' );
-    page.results().should( 'contain', 'policy' );
+    page.resultsContent().should( 'contain', 'student' );
+    page.resultsContent().should( 'contain', 'policy' );
     // And the page url should contain "categories=policy_compliance"
     cy.url().should( 'include', 'categories=policy_compliance' );
     // And the page url should contain "topics=students"
@@ -163,7 +163,7 @@ describe( 'Filter Blog Posts based on content', () => {
     // And the page url should contain "topics=consumer-complaints"
     cy.url().should( 'include', 'topics=consumer-complaints' );
     // Then I should see only results that are both in the selected category and tagged with the selected topic
-    page.results().should( 'contain', 'consumer' );
+    page.resultsContent().should( 'contain', 'consumer' );
     // And when I click "Show filters"
     page.showFilters();
     // And when I click "Clear filters"
@@ -186,7 +186,7 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results posted by the selected author
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'CFPB Web Team' );
+    page.resultsContent().should( 'contain', 'CFPB Web Team' );
     // And the page url should contain "authors=cfpb-web-team"
     cy.url().should( 'include', 'authors=cfpb-web-team' );
     // And the page url should not contain "authors=cfpb-research-team"
@@ -203,7 +203,7 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results posted by at least one of the two selected authors
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'CFPB' );
+    page.resultsContent().should( 'contain', 'CFPB' );
     // And the page url should contain "authors=cfpb-web-team"
     cy.url().should( 'include', 'authors=cfpb-web-team' );
     // And the page url should contain "authors=cfpb-research-team"
@@ -219,15 +219,15 @@ describe( 'Filter Blog Posts based on content', () => {
     // When I type "CFPB" in the Author input box
     filter.clickAuthor( 'CFPB' );
     // Then the list of authors should show only items that contain "CFPB"
-    page.results().should( 'contain', 'CFPB' );
+    page.resultsContent().should( 'contain', 'CFPB' );
     // And when I select the first checkbox in the Author list
     filter.clickAuthor( 'CFPB Research Team' );
     // And I click "Apply filters" button
     page.applyFilters();
     // Then I should see only results posted by the selected author
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'CFPB Research Team' );
-    page.results().should( 'not.contain', 'CFPB Web Team' );
+    page.resultsContent().should( 'contain', 'CFPB Research Team' );
+    page.resultsContent().should( 'not.contain', 'CFPB Web Team' );
     // And the page url should contain "authors=cfpb-research-team"
     cy.url().should( 'include', 'authors=cfpb-research-team' );
     // And the page url should not contain "authors=cfpb-web-team"
@@ -242,8 +242,8 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results in the selected category with "loans" in the post title
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'consumers' );
-    page.results().should( 'contain', 'loans' );
+    page.resultsContent().should( 'contain', 'consumers' );
+    page.resultsContent().should( 'contain', 'loans' );
     // And the page url should contain "title=loans"
     cy.url().should( 'include', 'title=loans' );
     // And the page url should contain "categories=info-for-consumers"
@@ -258,7 +258,7 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results tagged with the selected topic with "loans" in the post title
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'loans' );
+    page.resultsContent().should( 'contain', 'loans' );
     // And the page url should contain "title=loans"
     cy.url().should( 'include', 'title=loans' );
     // And the page url should contain "topics=student-loans"
@@ -273,9 +273,9 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results dated "01/01/2020" or later with "loans" in the post title
     page.notification().should( 'be.visible' );
-    page.lastResult().should( 'contain', '2020' );
-    page.results().should( 'not.contain', '2019' );
-    page.results().should( 'contain', 'loans' );
+    page.lastResultHeader().should( 'contain', '2020' );
+    page.resultsHeaderRight().should( 'not.contain', '2019' );
+    page.resultsContent().should( 'contain', 'loans' );
     // And the page url should contain "title=loans"
     cy.url().should( 'include', 'title=loans' );
     // And the page url should contain "from_date=2020-01-01"
@@ -290,8 +290,8 @@ describe( 'Filter Blog Posts based on content', () => {
     page.applyFilters();
     // Then I should see only results posted by the select author with "loans" in the post title
     page.notification().should( 'be.visible' );
-    page.results().should( 'contain', 'CFPB Web Team' );
-    page.results().should( 'contain', 'loans' );
+    page.resultsContent().should( 'contain', 'CFPB Web Team' );
+    page.resultsContent().should( 'contain', 'loans' );
     // And the page url should contain "title=loans"
     cy.url().should( 'include', 'title=loans' );
     // And the page url should contain "authors=cfpb-web-team"

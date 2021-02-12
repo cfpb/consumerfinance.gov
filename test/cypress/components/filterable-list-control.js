@@ -24,16 +24,36 @@ export class FilterableListControl {
     return this.filterableListElement( 'to-date' ).type( date );
   }
 
-  results() {
+  resultsContent() {
     return cy.get( '.o-post-preview_content' );
   }
 
-  firstResult() {
-    return this.results().first();
+  firstResultContent() {
+    return this.resultsContent().first();
   }
 
-  lastResult() {
-    return this.results().last();
+  lastResultContent() {
+    return this.resultsContent().last();
+  }
+
+  resultsHeader( name ) {
+    return cy.get( `.o-post-preview .m-meta-header_${ name }` );
+  }
+
+  resultsHeaderLeft() {
+    return this.resultsHeader( 'left' );
+  }
+
+  resultsHeaderRight() {
+    return this.resultsHeader( 'right' );
+  }
+
+  firstResultHeader() {
+    return this.resultsHeaderRight().first();
+  }
+
+  lastResultHeader() {
+    return this.resultsHeaderRight().last();
   }
 
   notification() {
