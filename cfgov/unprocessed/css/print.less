@@ -29,6 +29,11 @@
 */
 
 .respond-to-print({
+    .a-link__icon .a-link_text {
+        border-bottom-style: solid;
+        font-weight: 500;
+    }
+
     a:after {
         word-break: break-all;
     }
@@ -40,7 +45,7 @@
 
     a[href^="/"]:after {
         // Output root-relative hrefs in parentheses with our domain prepended.
-        content: " (https://www.cfpb.gov" attr(href) ")";
+        content: " (cfpb.gov" attr(href) ")";
     }
 
     a[href^="/external-site"]:after {
