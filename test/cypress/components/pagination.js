@@ -18,6 +18,10 @@ export class Pagination {
     cy.get( '[aria-label="Pagination"]' ).first();
   }
 
+  lastPagination() {
+    cy.get( '[aria-label="Pagination"]' ).last();
+  }
+
   paginationLabel() {
     cy.get( 'label[for="m-pagination_current-page-0"]' );
   }
