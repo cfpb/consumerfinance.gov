@@ -12,10 +12,6 @@ const filter = new Filter();
 describe( 'Filter Blog Posts based on content', () => {
   beforeEach( () => {
     cy.visit( '/about-us/blog/' );
-    // And I open the filterable list control
-    page.openFilterableListControl();
-    // The I click "Show filters" button
-    page.showFilters();
   } );
   it( 'Item name search', () => {
     // When I enter "loan" in the item name input field
@@ -173,11 +169,13 @@ describe( 'Filter Blog Posts based on content', () => {
     // And when I click "Clear filters"
     page.clearFilters();
     // And I click "Hide filters" button
-    page.hideFilters();
+    filter.hide();
     // Then the page url should not contain "categories=info-for-consumers"
     cy.url().should( 'not.include', 'categories=info-for-consumers' );
     // And the page url should not contain "topics=consumer-complaints"
     cy.url().should( 'not.include', 'topics=consumer-complaints' );
+    // And when I click "Apply filters"
+    page.applyFilters();
     // Then I should see the full list of results
     page.notification().should( 'be.visible' );
   } );

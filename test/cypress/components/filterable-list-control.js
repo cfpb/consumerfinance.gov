@@ -12,11 +12,6 @@ export class FilterableListControl {
     return cy.get( `#o-filterable-list-controls_${ name }` );
   }
 
-  openFilterableListControl() {
-    return cy.get( '#o-filterable-list-controls' )
-      .find( 'button' ).first().click( { force: true } );
-  }
-
   filterItemName( name ) {
     return this.filterableListElement( 'title' ).type( name );
   }
@@ -41,17 +36,12 @@ export class FilterableListControl {
     return this.results().last();
   }
 
-  openExpandable() {
-    return cy.get( '.o-filterable-list-controls .o-expandable' )
-      .click( { force: true } );
-  }
-
   notification() {
     return cy.get( '.o-filterable-list_notification' );
   }
 
   open() {
-    return this.openExpandable();
+    return this.showFilters();
   }
 
   applyFilters() {
@@ -63,13 +53,11 @@ export class FilterableListControl {
   }
 
   showFilters() {
-    return cy.get( '[data-qa-hook="expandable"]' )
-      .find( 'button' ).first().click( { force: true } );
+    return cy.get( '.o-expandable_cue-open' ).click( { force: true } );
   }
 
   hideFilters() {
-    return cy.get( '[data-qa-hook="expandable"]' )
-      .find( 'button' ).last().click( { force: true } );
+    return cy.get( '.o-expandable_cue-close' ).click();
   }
 
 }
