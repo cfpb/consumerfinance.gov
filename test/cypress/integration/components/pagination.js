@@ -12,21 +12,13 @@ describe( 'Pagination molecule to navigate on the filterable pages', () => {
     // Then the page url should contain "page=2"
     cy.url().should( 'include', 'page=2' );
   } );
-  it( 'should be able to navigate to the second page', () => {
-    // When I enter "2" in the page input field
-    page.enter( '2' );
+  it( 'should be able to navigate to a specific page', () => {
+    // When I enter "3" in the page input field
+    page.enter( '3' );
     // And I click on the "submit" button
     page.clickButton( 'submit' );
-    // Then the page url should contain "page=2"
-    cy.url().should( 'include', 'page=2' );
-  } );
-  it( 'should be able to navigate to the last page', () => {
-    // When I enter "54" in the page input field
-    page.enter( '54' );
-    // And I click on the "submit" button
-    page.clickButton( 'submit' );
-    // Then the page url should contain "page=54"
-    cy.url().should( 'include', 'page=54' );
+    // Then the page url should contain "page=3"
+    cy.url().should( 'include', 'page=3' );
   } );
   it( 'should be able to navigate to the previous page', () => {
     // When I click on the "next" button
