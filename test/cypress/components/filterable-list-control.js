@@ -73,7 +73,7 @@ export class FilterableListControl {
   }
 
   showFilters() {
-    return cy.get( '.o-expandable_cue-open' ).click( { force: true } );
+    return cy.get( '.o-filterable-list .o-expandable_cue-open' ).click();
   }
 
   hideFilters() {
