@@ -14,15 +14,20 @@ export class Pagination {
       } );
   }
 
-  firstPagination() {
-    cy.get( '[aria-label="Pagination"]' ).first();
+  lastResults() {
+    cy.get( '.m-pagination_form .u-visually-hidden' )
+      .invoke( 'text' ).then( ( $el ) => {
+        const lastPage = $el.toString().trim().split( ' ' )[3];
+        this.enter( lastPage );
+      } );
   }
 
-  lastPagination() {
-    cy.get( '[aria-label="Pagination"]' ).last();
+  currentPageLabel() {
+    cy.get( 'label[for="m-pagination_current-page-0"]' );
   }
 
   paginationLabel() {
-    cy.get( 'label[for="m-pagination_current-page-0"]' );
+    cy.get( '[aria-label="Pagination"]' );
   }
+
 }
