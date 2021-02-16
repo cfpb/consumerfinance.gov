@@ -79,6 +79,13 @@ export class Multiselect {
     return cy.get( '.o-multiselect_options li .o-multiselect_label' );
   }
 
+  firstChoicesElement() {
+    this.dropDownLabel().first().invoke( 'text' ).then( $el => {
+      const firstLabel = $el.toString();
+      this.choicesElement().first().should( 'have.text', firstLabel );
+    } );
+  }
+
   dropDownLabelClick() {
     return this.dropDownLabel().first().click( { force: true } );
   }
