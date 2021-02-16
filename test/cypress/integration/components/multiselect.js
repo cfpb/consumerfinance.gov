@@ -77,10 +77,8 @@ describe( 'I should be able to select using the multiselect', () => {
     // And I click on the first option in the dropdown
     multiselect.dropDownLabelClick();
     // Then the choices element should contain the first option
-    // const firstElementText = multiselect.dropDownLabel().first().invoke( 'text' );
-    const firstElementText = 'Financial education';
-    multiselect.dropDownLabel().first().should( 'have.text', firstElementText );
-    multiselect.choicesElement().first().should( 'have.text', firstElementText );
+    multiselect.firstChoicesElement();
+    // And the choices element length should be 1
     multiselect.choicesElement().should( 'have.length', 1 );
   } );
   it( 'Interacting with choices list, remove an option from choices', () => {
