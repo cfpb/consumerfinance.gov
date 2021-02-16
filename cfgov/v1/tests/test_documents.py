@@ -57,8 +57,7 @@ class FilterablePagesDocumentTest(TestCase):
             start_dt=datetime.now(timezone('UTC'))
         )
         qs = FilterablePagesDocument().get_queryset()
-        if test_event in qs.all():
-            self.fail("Non pubished event exists in elasticsearch queryset")
+        self.assertFalse(qs.filter(title=test_event.title).exists())
 
     def test_prepare_content_no_content_defined(self):
         event = EventPage(
@@ -157,9 +156,7 @@ class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
             from_date=from_date,
             title='Event Test',
             archived=['no']).search()
-
-        if not results.filter(title=self.event.title).exists():
-            self.fail("Did not find test event in search results by title")
+        self.assertTrue(results.filter(title=self.event.title).exists())
 
     def test_search_blog_dates(self):
         to_date_dt = datetime.today() + relativedelta(months=1)
@@ -176,8 +173,7 @@ class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
             from_date=from_date,
             title=None,
             archived=None).search()
-        if not results.filter(title=self.blog.title).exists():
-            self.fail("Did not find test blog in search results by title")
+        self.assertTrue(results.filter(title=self.blog.title).exists())
 
     def test_search_enforcement_actions(self):
         to_date_dt = datetime.today() + relativedelta(months=1)
@@ -195,8 +191,7 @@ class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
             title=None,
             statuses=['expired-terminated-dismissed'],
             archived=None).search()
-        if not results.filter(title=self.enforcement.title).exists():
-            self.fail("Did not find test blog in search results by title")
+        self.assertTrue(results.filter(title=self.enforcement.title).exists())
 
     def test_search_enforcement_actions_no_statuses(self):
         to_date_dt = datetime.today() + relativedelta(months=1)
@@ -214,5 +209,4 @@ class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
             title=None,
             statuses=[],
             archived=None).search()
-        if not results.filter(title=self.enforcement.title).exists():
-            self.fail("Did not find test blog in search results by title")
+        self.assertTrue(results.filter(title=self.enforcement.title).exists())
