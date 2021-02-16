@@ -3,7 +3,7 @@ import re
 from django.conf import settings
 
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
-from mock import patch
+from unittest.mock import patch
 
 from search.models import Synonym
 
