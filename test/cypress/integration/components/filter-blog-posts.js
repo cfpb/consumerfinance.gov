@@ -62,15 +62,12 @@ describe( 'Filter Blog Posts based on content', () => {
     blog.filterFromDate( '2020-01-01' );
     // And I click "Apply filters" button
     blog.applyFilters();
-    // Then I shouldn't see results dated 12/31/2019 or older
-    blog.resultsHeaderRight().should( 'not.contain', '2019' );
-    blog.notification().should( 'be.visible' );
-    // And I paginate to the last page of results
+    // Then the page url should contain "from_date=2020-01-01"
+    cy.url().should( 'include', 'from_date=2020-01-01' );
+    // When I paginate to the last page of results
     page.lastResults();
     // Then I should see only results dated 01/01/2020 or later
     blog.lastResultHeader().should( 'contain', '2020' );
-    // And the page url should contain "from_date=2020-01-01"
-    cy.url().should( 'include', 'from_date=2020-01-01' );
   } );
   it( 'Date range in past', () => {
     // When I enter "01/01/2020" in the From date entry field
@@ -156,13 +153,13 @@ describe( 'Filter Blog Posts based on content', () => {
     // And the page url should contain "topics=students"
     cy.url().should( 'include', 'topics=students' );
   } );
-  it( 'Clear and hide filters', () => {
+  it( 'Clear filters', () => {
     // When I select the last checkbox in the Category list
     filter.checkCategoryName( 'Info for consumers' );
     // When I select a checkbox in the Topic list
     filter.clickTopic( 'Consumer complaints' );
     // And I click "Apply filters" button
-    blog.applyFilters();
+    filter.apply();
     // Then the page url should contain "categories=info-for-consumers"
     cy.url().should( 'include', 'categories=info-for-consumers' );
     // And the page url should contain "topics=consumer-complaints"
@@ -170,19 +167,23 @@ describe( 'Filter Blog Posts based on content', () => {
     // Then I should see only results that are both in the selected category and tagged with the selected topic
     blog.resultsContent().should( 'contain', 'consumer' );
     // And when I click "Show filters"
-    blog.showFilters();
+    filter.show();
     // And when I click "Clear filters"
-    blog.clearFilters();
-    // And I click "Hide filters" button
-    filter.hide();
+    filter.clear();
     // Then the page url should not contain "categories=info-for-consumers"
     cy.url().should( 'not.include', 'categories=info-for-consumers' );
     // And the page url should not contain "topics=consumer-complaints"
     cy.url().should( 'not.include', 'topics=consumer-complaints' );
     // And when I click "Apply filters"
-    blog.applyFilters();
+    filter.apply();
     // Then I should see the full list of results
     blog.notification().should( 'be.visible' );
+  } );
+  it( 'Hide filters', () => {
+    // When I click "Hide filters"
+    filter.hide();
+    // Then I shouldn't see the full list of results
+    blog.notification().should( 'not.be.visible' );
   } );
   it( 'Select a single author', () => {
     // When I select a checkbox in the Author list
