@@ -1,6 +1,5 @@
 import json
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from io import StringIO
 
 from django.core import management
@@ -9,6 +8,7 @@ from django.test import TestCase
 from wagtail.core.models import Site
 
 import dateutil.relativedelta
+from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
 from search.elasticsearch_helpers import WaitForElasticsearchMixin
