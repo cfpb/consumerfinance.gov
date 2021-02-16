@@ -174,15 +174,13 @@ describe( 'Filter Blog Posts based on content', () => {
     cy.url().should( 'not.include', 'categories=info-for-consumers' );
     // And the page url should not contain "topics=consumer-complaints"
     cy.url().should( 'not.include', 'topics=consumer-complaints' );
-    // And when I click "Apply filters"
-    filter.apply();
-    // Then I should see the full list of results
-    blog.notification().should( 'be.visible' );
+    // Then there is no visible notification
+    blog.notification().should( 'not.be.visible' );
   } );
   it( 'Hide filters', () => {
     // When I click "Hide filters"
     filter.hide();
-    // Then I shouldn't see the full list of results
+    // Then there is no visible notification
     blog.notification().should( 'not.be.visible' );
   } );
   it( 'Select a single author', () => {
