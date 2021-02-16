@@ -170,3 +170,19 @@ class FilterableListRelationsTestCase(TestCase):
         qs = self.filterable_page.get_filterable_queryset()
         self.assertEqual(qs.count(), 2)
         self.assertEqual(qs[0].pk, self.sibling_page.pk)
+
+    def test_get_filterable_root_siblings(self):
+        filter_controls['value']['filter_children'] = False
+        filter_controls['value']['filter_siblings'] = True
+        self.set_filterable_controls(self.filter_controls)
+
+        root = self.filterable_page.get_filterable_root()
+        self.assertEqual("/", root)
+
+    def test_get_filterable_root_site_wide(self):
+        filter_controls['value']['filter_children'] = False
+        filter_controls['value']['filter_siblings'] = False
+        self.set_filterable_controls(self.filter_controls)
+
+        root = self.filterable_page.get_filterable_root()
+        self.assertEqual("/", root)
