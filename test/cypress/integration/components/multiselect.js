@@ -1,14 +1,10 @@
-import { FilterableListControl } from '../../components/filterable-list-control';
 import { Multiselect } from '../../components/multiselect';
 
 const multiselect = new Multiselect();
-const filterableList = new FilterableListControl();
 
 describe( 'I should be able to select using the multiselect', () => {
   beforeEach( () => {
     cy.visit( '/about-us/blog/' );
-    // And I open the filterable list control
-    filterableList.open();
   } );
   it( 'State on page load', () => {
     // Then the multiselect should be rendered
