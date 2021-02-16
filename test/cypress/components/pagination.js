@@ -16,7 +16,7 @@ export class Pagination {
 
   lastResults() {
     cy.get( '.m-pagination_form .u-visually-hidden' )
-      .invoke( 'text' ).then( ( $el ) => {
+      .invoke( 'text' ).then( $el => {
         const lastPage = $el.toString().trim().split( ' ' )[3];
         this.enter( lastPage );
       } );
