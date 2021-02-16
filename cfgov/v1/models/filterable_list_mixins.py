@@ -50,13 +50,6 @@ class FilterableListMixin(RoutablePageMixin):
 
         return '/'
 
-    def get_filterable_page_type(self):
-        filterable_list_block = self.get_filterable_list_wagtail_block()
-        if filterable_list_block is None:
-            return None
-
-        return filterable_list_block.value['page_type']
-
     def get_filterable_queryset(self):
         """Return the queryset of pages to be filtered by this page.
 
