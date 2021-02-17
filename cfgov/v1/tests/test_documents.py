@@ -2,7 +2,6 @@ import json
 from datetime import datetime
 from io import StringIO
 
-from django.core import management
 from django.test import TestCase
 
 from wagtail.core.models import Site
@@ -11,7 +10,7 @@ import dateutil.relativedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
-from search.elasticsearch_helpers import WaitForElasticsearchMixin
+from search.elasticsearch_helpers import rebuild_elasticsearch_index
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
     EventFilterablePagesDocumentSearch, FilterablePagesDocument,
@@ -108,7 +107,7 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertEqual(prepared_data['statuses'], ['expired-terminated-dismissed'])
 
 
-class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
+class FilterablePagesDocumentSearchTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -138,8 +137,7 @@ class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
         cls.enforcement = enforcement
         cls.blog = blog
 
-        # Create a clean index for the test suite
-        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
+        rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_search_event_all_fields(self):
         to_date_dt = datetime(2021, 3, 16)
