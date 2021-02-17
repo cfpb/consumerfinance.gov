@@ -1,5 +1,3 @@
-from django.core.exceptions import FieldDoesNotExist
-
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
@@ -27,7 +25,6 @@ class FilterablePagesDocument(Document):
     })
     title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
-    content = fields.TextField()
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
     start_dt = fields.DateField()
@@ -37,18 +34,6 @@ class FilterablePagesDocument(Document):
 
     def get_queryset(self):
         return AbstractFilterPage.objects.live().public()
-
-    def prepare_content(self, instance):
-        try:
-            content_field = instance._meta.get_field('content')
-            value = content_field.value_from_object(instance)
-            content = content_field.get_searchable_content(value)
-            content = content.pop()
-            return content
-        except FieldDoesNotExist:
-            return None
-        except IndexError:
-            return None
 
     def prepare_url(self, instance):
         return instance.url

@@ -38,16 +38,13 @@ class FilterablePagesDocumentTest(TestCase):
 
     def test_fields_populated(self):
         mapping = FilterablePagesDocument._doc_type.mapping
-        self.assertEqual(
-            set(mapping.properties.properties.to_dict().keys()),
-            set(
-                [
-                    'tags', 'categories', 'authors',
-                    'title', 'url', 'is_archived',
-                    'content', 'date_published', 'start_dt',
-                    'end_dt', 'statuses', 'initial_filing_date'
-                ]
-            )
+        self.assertCountEqual(
+            mapping.properties.properties.to_dict().keys(),
+            [
+                'tags', 'categories', 'authors', 'title', 'url',
+                'is_archived', 'date_published', 'start_dt', 'end_dt',
+                'statuses', 'initial_filing_date'
+            ]
         )
 
     def test_get_queryset(self):
@@ -57,42 +54,6 @@ class FilterablePagesDocumentTest(TestCase):
         )
         qs = FilterablePagesDocument().get_queryset()
         self.assertFalse(qs.filter(title=test_event.title).exists())
-
-    def test_prepare_content_no_content_defined(self):
-        event = EventPage(
-            title='Event Test',
-            start_dt=datetime.now(timezone('UTC'))
-        )
-        doc = FilterablePagesDocument()
-        prepared_data = doc.prepare(event)
-        self.assertIsNone(prepared_data['content'])
-
-    def test_prepare_content_exists(self):
-        blog = BlogPage(
-            title='Test Blog',
-            content=json.dumps([
-                {
-                    'type': 'full_width_text',
-                    'value': [
-                        {
-                            'type':'content',
-                            'value': 'Blog Text'
-                    }]
-                }
-            ])
-        )
-        doc = FilterablePagesDocument()
-        prepared_data = doc.prepare(blog)
-        self.assertEqual(prepared_data['content'], 'Blog Text')
-
-    def test_prepare_content_empty(self):
-        blog = BlogPage(
-            title='Test Blog',
-            content=json.dumps([])
-        )
-        doc = FilterablePagesDocument()
-        prepared_data = doc.prepare(blog)
-        self.assertIsNone(prepared_data['content'])
 
     def test_prepare_statuses(self):
         enforcement = EnforcementActionPage(
