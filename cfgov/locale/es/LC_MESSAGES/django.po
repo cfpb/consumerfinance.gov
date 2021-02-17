@@ -385,6 +385,10 @@ msgstr "Por favor escriba su búsqueda arriba"
 msgid "In this article"
 msgstr "En este artículo"
 
+#: jinja2/v1/ask-cfpb/landing-page.html:71
+msgid "Read answer"
+msgstr "Leer la respuesta"
+
 #: jinja2/v1/ask-cfpb/see-all.html:27
 msgid "Read more"
 msgstr "Leer más"
@@ -1628,6 +1632,10 @@ msgstr "Desempleado o despedido"
 msgid "Retired"
 msgstr "Jubilado"
 
+#: Content entered in Wagtail
+msgid "Was this answer helpful to you?"
+msgstr "¿Te resultó útil esta respuesta?"
+
 #~ msgid "Get a grip on debt."
 #~ msgstr "Tome control de sus deudas."
 
@@ -1702,9 +1710,6 @@ msgstr "Jubilado"
 #~ msgstr ""
 #~ "Suscríbase a nuestra lista de email con consejos útiles sobre hipotecas."
 
-#~ msgid "Read answer"
-#~ msgstr "Leer la respuesta"
-
 #~ msgid "Next"
 #~ msgstr "Siguiente"
 
@@ -1719,9 +1724,6 @@ msgstr "Jubilado"
 
 #~ msgid "results within"
 #~ msgstr "resultados de"
-
-#~ msgid "Was this answer helpful to you?"
-#~ msgstr "¿Te resultó útil esta respuesta?"
 
 #~ msgid "Explore"
 #~ msgstr "Explorar"
