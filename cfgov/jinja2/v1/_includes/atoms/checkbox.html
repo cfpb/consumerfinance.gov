@@ -37,7 +37,7 @@
 {%- set behavior = 'data-js-hook=behavior_' ~ value.behavior if value.behavior else '' -%}
 {%- set checked = 'checked' if value.selected else '' -%}
 
-<{{ el }} class="m-form-field m-form-field__checkbox {{ value.class }}">
+<{{ el }} class="m-form-field m-form-field__checkbox {{ value.class if value.class else '' }}">
     <input class="a-checkbox"
            type="checkbox"
            value="{{ val }}"
