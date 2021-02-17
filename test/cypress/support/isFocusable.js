@@ -12,7 +12,7 @@ const DISABLEABLE_ELEMENTS = [ 'input', 'button', 'select', 'textarea', 'button'
 export default function isFocusable( $element ) {
   const nodeName = $element.prop( 'nodeName' ).toLowerCase();
   return (
-    nodeName === 'a' || !!$element.attr( 'tabindex' ) || (
+    nodeName === 'a' || Boolean( $element.attr( 'tabindex' ) ) || (
       DISABLEABLE_ELEMENTS.includes( nodeName ) && $element.is( ':enabled' )
     )
   ) && $element.is( ':visible' );
