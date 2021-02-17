@@ -54,8 +54,9 @@ describe( 'I should be able to select using the multiselect', () => {
   } );
   it( 'Typing in search input, clearing the input and closing results', () => {
     // When I enter "students" in the search input
+    multiselect.searchInput().type( 'students' );
     // And I hit the escape button on the search input
-    // multiselect.searchInput().type( 'students{esc}' );
+    multiselect.searchInput().type( '{esc}' );
     // Then the multiselect dropdown shouldn't be visible
     multiselect.fieldSet().should( 'not.be.visible' );
     // And the multiselect dropdown length should be 0
