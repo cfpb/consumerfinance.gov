@@ -70,8 +70,8 @@ class Command(BaseCommand):
 
         # Get the current date/time and then get our cutoff date for restoring
         # based on it.
-        restored_at = timezone.now()
-        cutoff_date = restored_at - relativedelta(
+        archived_at = timezone.now()
+        cutoff_date = archived_at - relativedelta(
             years=options["years"],
             months=options["months"],
             days=options["days"],
@@ -114,7 +114,7 @@ class Command(BaseCommand):
             with transaction.atomic():
                 update_count = filtered_pages.select_for_update().update(
                     is_archived="no",
-                    restored_at=restored_at
+                    archived_at=archived_at
                 )
             self.stdout.write(
                 f"Found and restored {update_count} pages within "
