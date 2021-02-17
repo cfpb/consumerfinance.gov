@@ -1,9 +1,9 @@
+from unittest import mock
+
 from django.test import RequestFactory, TestCase
 
 from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
-
-import mock
 
 from scripts._atomic_helpers import filter_controls
 from v1.models import BlogPage

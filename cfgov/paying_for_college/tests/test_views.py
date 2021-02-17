@@ -1,12 +1,11 @@
 import copy
 import json
 import unittest
+from unittest import mock
 
 import django
 from django.http import HttpRequest
 from django.urls import reverse
-
-import mock
 
 from paying_for_college.models import Program, School
 from paying_for_college.views import (

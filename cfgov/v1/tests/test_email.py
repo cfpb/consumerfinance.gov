@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.contrib.auth.models import User
 from django.core import mail
 from django.http import HttpRequest
@@ -5,7 +7,6 @@ from django.test import TestCase
 
 from wagtail.core.models import Site
 
-from mock import patch
 from model_bakery import baker
 
 from v1.email import create_request_for_email, send_password_reset_email
