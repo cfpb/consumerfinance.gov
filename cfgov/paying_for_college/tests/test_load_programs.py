@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
+from unittest import mock
 from unittest.mock import mock_open, patch
 
 import django
-
-import mock
 
 from paying_for_college.disclosures.scripts.load_programs import (
     clean, clean_number_as_string, clean_string_as_string, get_school, load,

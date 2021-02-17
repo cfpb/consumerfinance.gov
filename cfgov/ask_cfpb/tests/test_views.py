@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.apps import apps
 from django.http import Http404, HttpRequest
 from django.test import TestCase
@@ -6,7 +8,6 @@ from django.utils import timezone
 from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
 
-import mock
 from model_bakery import baker
 
 from ask_cfpb.models import (

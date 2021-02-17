@@ -1,4 +1,5 @@
 import unittest
+from unittest import mock
 
 from django.test import (
     RequestFactory, SimpleTestCase, TestCase, override_settings
@@ -8,8 +9,6 @@ from wagtail.core.models import Site
 from wagtail.core.whitelist import Whitelister as Allowlister
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
-
-import mock
 
 from v1.models.base import CFGOVPage
 from v1.models.resources import Resource
