@@ -33,29 +33,29 @@ class FilterablePagesDocument(Document):
     initial_filing_date = fields.DateField()
 
     def get_queryset(self):
-        return AbstractFilterPage.objects.live().public()
+        return AbstractFilterPage.objects.live().public().specific()
 
     def prepare_url(self, instance):
         return instance.url
 
     def prepare_start_dt(self, instance):
-        return getattr(instance.specific, 'start_dt', None)
+        return getattr(instance, 'start_dt', None)
 
     def prepare_end_dt(self, instance):
-        return getattr(instance.specific, 'end_dt', None)
+        return getattr(instance, 'end_dt', None)
 
     def prepare_statuses(self, instance):
-        statuses = getattr(instance.specific, 'statuses', None)
+        statuses = getattr(instance, 'statuses', None)
         if statuses is not None:
             return [status.status for status in statuses.all()]
         else:
             return None
 
     def prepare_initial_filing_date(self, instance):
-        return getattr(instance.specific, 'initial_filing_date', None)
+        return getattr(instance, 'initial_filing_date', None)
 
     def get_instances_from_related(self, related_instance):
-        # Related instances all inherit from AbstractFilerPage
+        # Related instances all inherit from AbstractFilterPage.
         return related_instance
 
     class Django:
