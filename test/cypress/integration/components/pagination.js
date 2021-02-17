@@ -6,21 +6,19 @@ describe( 'Pagination molecule to navigate on the filterable pages', () => {
   beforeEach( () => {
     cy.visit( '/about-us/blog/' );
   } );
-  it( 'should be able to navigate to the first page', () => {
-    // When I click on the "next" button
-    page.clickButton( 'next' );
-    // When I enter "1" in the page input field
-    page.enter( '1' );
-    // And I click on the "submit" button
-    page.clickButton( 'submit' );
-    // Then the page url should contain "page=1"
-    cy.url().should( 'include', 'page=1' );
-  } );
   it( 'should be able to navigate to the next page', () => {
     // When I click on the "next" button
     page.clickButton( 'next' );
     // Then the page url should contain "page=2"
     cy.url().should( 'include', 'page=2' );
+  } );
+  it( 'should be able to navigate to the previous page', () => {
+    // When I click on the "next" button
+    page.clickButton( 'next' );
+    // And I click on the "previous" button
+    page.clickButton( 'prev' );
+    // Then the page url should contain "page=1"
+    cy.url().should( 'include', 'page=1' );
   } );
   it( 'should be able to navigate to a specific page', () => {
     // When I enter "3" in the page input field
@@ -30,11 +28,13 @@ describe( 'Pagination molecule to navigate on the filterable pages', () => {
     // Then the page url should contain "page=3"
     cy.url().should( 'include', 'page=3' );
   } );
-  it( 'should be able to navigate to the previous page', () => {
+  it( 'should be able to navigate to the first page', () => {
     // When I click on the "next" button
     page.clickButton( 'next' );
-    // And I click on the "previous" button
-    page.clickButton( 'prev' );
+    // When I enter "1" in the page input field
+    page.enter( '1' );
+    // And I click on the "submit" button
+    page.clickButton( 'submit' );
     // Then the page url should contain "page=1"
     cy.url().should( 'include', 'page=1' );
   } );
