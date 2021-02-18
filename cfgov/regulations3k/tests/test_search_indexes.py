@@ -1,7 +1,7 @@
+from unittest import mock
+
 from django.core.management import call_command
 from django.test import TestCase
-
-import mock
 
 from regulations3k.management.commands import update_regulation_index
 from regulations3k.models import Section, SectionParagraph

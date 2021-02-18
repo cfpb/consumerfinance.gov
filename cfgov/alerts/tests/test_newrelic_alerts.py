@@ -1,8 +1,8 @@
 import datetime
 import time
 import unittest
+from unittest import mock
 
-import mock
 import requests
 
 from alerts.newrelic_alerts import NewRelicAlertViolations
