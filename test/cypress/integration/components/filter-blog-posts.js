@@ -12,7 +12,7 @@ const filter = new Filter();
 const page = new Pagination();
 
 describe( 'Filter Blog Posts based on content', () => {
-  before( () => {
+  beforeEach( () => {
     cy.visit( '/about-us/blog/' );
   } );
   it( 'Item name search', () => {
