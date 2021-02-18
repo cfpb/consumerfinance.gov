@@ -32,8 +32,8 @@ def make_safe(term):
     return term
 
 
-label_autocomplete = analyzer(
-    'label_autocomplete',
+ngram_tokenizer = analyzer(
+    'ngram_tokenizer',
     tokenizer=tokenizer(
         'trigram',
         'edge_ngram',

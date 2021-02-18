@@ -1,7 +1,9 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
-from search.elasticsearch_helpers import environment_specific_index
+from search.elasticsearch_helpers import (
+    environment_specific_index, ngram_tokenizer
+)
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import (
@@ -23,7 +25,7 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
-    title = fields.TextField(attr='title')
+    title = fields.TextField(attr='title', analyzer=ngram_tokenizer)
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
