@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 "The URL path (without leading /) of a filterable list page "
                 "whose content should be restored if it was archived the "
                 "specified number of years, months, and days ago. "
-                "The filerable list page at the URL will not be restored."
+                "The filterable list page at the URL will not be restored."
             ),
         )
         parser.add_argument(
