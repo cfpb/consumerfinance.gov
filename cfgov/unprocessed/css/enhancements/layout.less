@@ -286,7 +286,7 @@
 } );
 
 
-// Jumbo hero for CampaignPages
+// Jumbo hero for CampaignPages and the HomePage
 .m-hero__jumbo {
     .m-hero_subhead {
         .lead-paragraph();
@@ -306,22 +306,17 @@
         }
 
         .m-hero_subhead {
-            .heading-2();
+            .heading-3();
         }
     } );
 
-    .respond-to-min( @bp-med-min, {
-        // .m-hero_text {
-        //     .grid_column( 6, 12 );
-        // }
-
+    .respond-to-min( @bp-lg-min, {
         .m-hero_heading {
             .superheading();
         }
-
-        // .m-hero_subhead {
-        //     .heading-2();
-        // }
+        .m-hero_subhead {
+            .heading-2();
+        }
     } );
 }
 
