@@ -1,4 +1,6 @@
 # Based on https://github.com/django-es/django-elasticsearch-dsl/blob/master/tests/test_documents.py  # noqa
+from unittest.mock import patch
+
 from django.apps import apps
 from django.db import models
 from django.test import TestCase
@@ -8,7 +10,6 @@ from wagtail.core.models import Site
 from django_elasticsearch_dsl import fields
 from django_elasticsearch_dsl.documents import DocType
 from django_elasticsearch_dsl.exceptions import ModelFieldNotMappedError
-from mock import patch
 from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument

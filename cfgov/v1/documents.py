@@ -1,5 +1,3 @@
-from django.core.exceptions import FieldDoesNotExist
-
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
@@ -27,7 +25,6 @@ class FilterablePagesDocument(Document):
     })
     title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
-    content = fields.TextField()
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
     start_dt = fields.DateField()
@@ -36,41 +33,29 @@ class FilterablePagesDocument(Document):
     initial_filing_date = fields.DateField()
 
     def get_queryset(self):
-        return AbstractFilterPage.objects.live().public()
-
-    def prepare_content(self, instance):
-        try:
-            content_field = instance._meta.get_field('content')
-            value = content_field.value_from_object(instance)
-            content = content_field.get_searchable_content(value)
-            content = content.pop()
-            return content
-        except FieldDoesNotExist:
-            return None
-        except IndexError:
-            return None
+        return AbstractFilterPage.objects.live().public().specific()
 
     def prepare_url(self, instance):
         return instance.url
 
     def prepare_start_dt(self, instance):
-        return getattr(instance.specific, 'start_dt', None)
+        return getattr(instance, 'start_dt', None)
 
     def prepare_end_dt(self, instance):
-        return getattr(instance.specific, 'end_dt', None)
+        return getattr(instance, 'end_dt', None)
 
     def prepare_statuses(self, instance):
-        statuses = getattr(instance.specific, 'statuses', None)
+        statuses = getattr(instance, 'statuses', None)
         if statuses is not None:
             return [status.status for status in statuses.all()]
         else:
             return None
 
     def prepare_initial_filing_date(self, instance):
-        return getattr(instance.specific, 'initial_filing_date', None)
+        return getattr(instance, 'initial_filing_date', None)
 
     def get_instances_from_related(self, related_instance):
-        # Related instances all inherit from AbstractFilerPage
+        # Related instances all inherit from AbstractFilterPage.
         return related_instance
 
     class Django:

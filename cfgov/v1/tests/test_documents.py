@@ -2,7 +2,6 @@ import json
 from datetime import datetime
 from io import StringIO
 
-from django.core import management
 from django.test import TestCase
 
 from wagtail.core.models import Site
@@ -11,7 +10,7 @@ import dateutil.relativedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
-from search.elasticsearch_helpers import WaitForElasticsearchMixin
+from search.elasticsearch_helpers import rebuild_elasticsearch_index
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
     EventFilterablePagesDocumentSearch, FilterablePagesDocument,
@@ -39,16 +38,13 @@ class FilterablePagesDocumentTest(TestCase):
 
     def test_fields_populated(self):
         mapping = FilterablePagesDocument._doc_type.mapping
-        self.assertEqual(
-            set(mapping.properties.properties.to_dict().keys()),
-            set(
-                [
-                    'tags', 'categories', 'authors',
-                    'title', 'url', 'is_archived',
-                    'content', 'date_published', 'start_dt',
-                    'end_dt', 'statuses', 'initial_filing_date'
-                ]
-            )
+        self.assertCountEqual(
+            mapping.properties.properties.to_dict().keys(),
+            [
+                'tags', 'categories', 'authors', 'title', 'url',
+                'is_archived', 'date_published', 'start_dt', 'end_dt',
+                'statuses', 'initial_filing_date'
+            ]
         )
 
     def test_get_queryset(self):
@@ -58,42 +54,6 @@ class FilterablePagesDocumentTest(TestCase):
         )
         qs = FilterablePagesDocument().get_queryset()
         self.assertFalse(qs.filter(title=test_event.title).exists())
-
-    def test_prepare_content_no_content_defined(self):
-        event = EventPage(
-            title='Event Test',
-            start_dt=datetime.now(timezone('UTC'))
-        )
-        doc = FilterablePagesDocument()
-        prepared_data = doc.prepare(event)
-        self.assertIsNone(prepared_data['content'])
-
-    def test_prepare_content_exists(self):
-        blog = BlogPage(
-            title='Test Blog',
-            content=json.dumps([
-                {
-                    'type': 'full_width_text',
-                    'value': [
-                        {
-                            'type':'content',
-                            'value': 'Blog Text'
-                    }]
-                }
-            ])
-        )
-        doc = FilterablePagesDocument()
-        prepared_data = doc.prepare(blog)
-        self.assertEqual(prepared_data['content'], 'Blog Text')
-
-    def test_prepare_content_empty(self):
-        blog = BlogPage(
-            title='Test Blog',
-            content=json.dumps([])
-        )
-        doc = FilterablePagesDocument()
-        prepared_data = doc.prepare(blog)
-        self.assertIsNone(prepared_data['content'])
 
     def test_prepare_statuses(self):
         enforcement = EnforcementActionPage(
@@ -108,7 +68,7 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertEqual(prepared_data['statuses'], ['expired-terminated-dismissed'])
 
 
-class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
+class FilterablePagesDocumentSearchTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -138,8 +98,7 @@ class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
         cls.enforcement = enforcement
         cls.blog = blog
 
-        # Create a clean index for the test suite
-        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
+        rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_search_event_all_fields(self):
         to_date_dt = datetime(2021, 3, 16)
@@ -209,4 +168,8 @@ class FilterablePagesDocumentSearchTest(WaitForElasticsearchMixin, TestCase):
             title=None,
             statuses=[],
             archived=None).search()
+<<<<<<< HEAD
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
+=======
+        self.assertTrue(results.filter(title=self.enforcement.title).exists())
+>>>>>>> 9fe888a8641bc3d8aa47a201707ddf6c9e9cac96
