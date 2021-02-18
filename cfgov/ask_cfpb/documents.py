@@ -3,14 +3,14 @@ from django_elasticsearch_dsl.registries import registry
 
 from ask_cfpb.models.answer_page import AnswerPage
 from search.elasticsearch_helpers import (
-    environment_specific_index, label_autocomplete, synonym_analyzer
+    environment_specific_index, ngram_tokenizer, synonym_analyzer
 )
 
 
 @registry.register_document
 class AnswerPageDocument(Document):
 
-    autocomplete = fields.TextField(analyzer=label_autocomplete)
+    autocomplete = fields.TextField(analyzer=ngram_tokenizer)
     portal_topics = fields.KeywordField()
     portal_categories = fields.TextField()
     text = fields.TextField(attr="text", analyzer=synonym_analyzer)
