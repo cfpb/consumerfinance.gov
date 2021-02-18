@@ -5,7 +5,6 @@ from django.test import TestCase, override_settings
 
 from pytz import timezone
 
-
 from search.elasticsearch_helpers import rebuild_elasticsearch_index
 from v1.forms import FilterableListForm
 from v1.models import BlogPage

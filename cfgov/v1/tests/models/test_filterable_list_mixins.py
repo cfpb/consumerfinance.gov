@@ -7,7 +7,6 @@ from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 
 from scripts._atomic_helpers import filter_controls
-
 from search.elasticsearch_helpers import rebuild_elasticsearch_index
 from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage

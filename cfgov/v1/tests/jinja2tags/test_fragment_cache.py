@@ -7,7 +7,6 @@ from django.template import engines
 from django.test import Client, TestCase, override_settings
 
 from scripts import _atomic_helpers as atomic
-
 from search.elasticsearch_helpers import rebuild_elasticsearch_index
 from v1.models.blog_page import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
