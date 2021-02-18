@@ -358,12 +358,12 @@ class AnswerPageDocument(Document):
 <p>We provide a few common helpers in <code>search.elasticsearch_helpers</code> for use in creating document classes:</p>
 <ul>
 <li><code>environment_specific_index(base_name)</code>: Generate the index name for the <code>base_name</code> that is specific to the deployment environment. This allows each index to be isolated to a deployment environment within an Elasticsearch cluster.</li>
-<li><code>label_autocomplete</code>: A reusable autocomplete analyzer for creating fields that <a href="#autocomplete">autocomplete terms</a>. This is used for type-ahead search boxes.</li>
+<li><code>ngram_tokenizer</code>: A reusable ngram analyzer for creating fields that <a href="#autocomplete">autocomplete terms</a>. This is used for type-ahead search boxes.</li>
 <li><code>synonym_analyzer</code>: A reusable analyzer for creating fields that will match synonyms of a search term.</li>
 </ul>
 <pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import (
     environment_specific_index,
-    label_autocomplete,
+    ngram_tokenizer,
     synonym_analyzer,
 )</code></pre>
 
@@ -395,12 +395,12 @@ search.query(
 )</code></pre>
 
 <h3 id="autocomplete">Autocomplete<a class="headerlink" href="#autocomplete" title="Permanent link">¶</a></h3>
-<p>For search box autocomplete, we use a field with our <code>label_autocomplete</code> analyzer and then issue a "match" search query for that field.</p>
+<p>For search box autocomplete, we use a field with our <code>ngram_tokenizer</code> analyzer and then issue a "match" search query for that field.</p>
 <p>Using the Ask CFPB document search above, with its language filter context, this looks like:</p>
-<pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import label_autocomplete
+<pre class="highlight"><code class="language-python">from search.elasticsearch_helpers import ngram_tokenizer
 
 class AnswerPageDocument(Document):
-    autocomplete = fields.TextField(analyzer=label_autocomplete)
+    autocomplete = fields.TextField(analyzer=ngram_tokenizer)
 
 search = AnswerPageDocument.search().filter(&quot;term&quot;, language=language)
 search.query('match', autocomplete=search_term)</code></pre>
