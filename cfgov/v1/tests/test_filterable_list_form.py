@@ -6,9 +6,12 @@ from django.test import TestCase, override_settings
 from pytz import timezone
 
 from search.elasticsearch_helpers import rebuild_elasticsearch_index
-from v1.forms import FilterableListForm
+from v1.forms import (
+    EnforcementActionsFilterForm, EventArchiveFilterForm, FilterableListForm
+)
 from v1.models import BlogPage
 from v1.models.base import CFGOVPageCategory
+from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import AbstractFilterPage, EventPage
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.util.categories import clean_categories
@@ -336,3 +339,87 @@ class TestFilterableListFormArchive(TestCase):
         pages = self.get_filtered_pages({'archived': 'only'})
         self.assertEqual(len(pages), 1)
         self.assertEqual(pages[0].specific, self.page1)
+
+
+class TestEventArchiveFilterForm(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        event = EventPage(
+            title='test page 2',
+            start_dt=datetime.now(timezone('UTC'))
+        )
+        event.tags.add('bar')
+        publish_page(event)
+        cls.event = event
+
+        rebuild_elasticsearch_index('v1', stdout=StringIO())
+
+    @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
+    def test_event_archive_elasticsearch(self):
+        filterable_pages = AbstractFilterPage.objects.live()
+        form = EventArchiveFilterForm(
+            filterable_pages=filterable_pages,
+            filterable_root='/',
+            wagtail_block=None,
+            filterable_categories=None
+        )
+        form.is_bound = True
+        form.cleaned_data = {'categories': []}
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, self.event)
+
+    def test_event_archive_postgres(self):
+        filterable_pages = AbstractFilterPage.objects.live()
+        form = EventArchiveFilterForm(
+            filterable_pages=filterable_pages,
+            filterable_root='/',
+            wagtail_block=None,
+            filterable_categories=None
+        )
+        form.is_bound = True
+        form.cleaned_data = {'categories': []}
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, self.event)
+
+
+class TestEnforcementActionsFilterForm(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        enforcement = EnforcementActionPage(title="Enforcement Action")
+        publish_page(enforcement)
+        cls.enforcement = enforcement
+
+        rebuild_elasticsearch_index('v1', stdout=StringIO())
+
+    @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
+    def test_enforcement_action_elasticsearch(self):
+        filterable_pages = AbstractFilterPage.objects.live()
+        form = EnforcementActionsFilterForm(
+            filterable_pages=filterable_pages,
+            filterable_root='/',
+            wagtail_block=None,
+            filterable_categories=None
+        )
+        form.is_bound = True
+        form.cleaned_data = {'categories': [], 'statuses': []}
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, self.enforcement)
+
+    def test_enforcement_action_postgres(self):
+        filterable_pages = AbstractFilterPage.objects.live()
+        form = EnforcementActionsFilterForm(
+            filterable_pages=filterable_pages,
+            filterable_root='/',
+            wagtail_block=None,
+            filterable_categories=None
+        )
+        form.is_bound = True
+        form.cleaned_data = {'categories': [], 'statuses': []}
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, self.enforcement)
