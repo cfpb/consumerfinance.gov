@@ -3,7 +3,7 @@ import { Multiselect } from '../../components/multiselect';
 const multiselect = new Multiselect();
 
 describe( 'I should be able to select using the multiselect', () => {
-  before( () => {
+  beforeEach( () => {
     cy.visit( '/about-us/blog/' );
   } );
   it( 'State on page load', () => {
