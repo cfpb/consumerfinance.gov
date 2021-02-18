@@ -1,6 +1,8 @@
 import datetime
 from unittest import TestCase
 
+from django.core import management
+
 from v1.models import BlogPage
 from v1.models.base import CFGOVPageCategory
 from v1.templatetags import activity_feed
