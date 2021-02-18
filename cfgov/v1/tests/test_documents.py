@@ -168,8 +168,4 @@ class FilterablePagesDocumentSearchTest(TestCase):
             title=None,
             statuses=[],
             archived=None).search()
-<<<<<<< HEAD
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
-=======
-        self.assertTrue(results.filter(title=self.enforcement.title).exists())
->>>>>>> 9fe888a8641bc3d8aa47a201707ddf6c9e9cac96

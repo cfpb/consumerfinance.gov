@@ -32,8 +32,6 @@ class TestFragmentCacheExtension(TestCase):
             slug='test-blog-page'
         )
         page.add_child(instance=child_page)
-        # Index new page
-        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
 
         rebuild_elasticsearch_index('v1', stdout=StringIO())
 

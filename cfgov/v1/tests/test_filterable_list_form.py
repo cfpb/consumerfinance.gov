@@ -30,6 +30,8 @@ class TestFilterableListForm(TestCase):
         blog2.categories.add(CFGOVPageCategory(name='bar'))
         blog2.tags.add('blah')
         blog2.authors.add('richard-cordray')
+        category_blog = BlogPage(title='Category Test')
+        category_blog.categories.add(CFGOVPageCategory(name='info-for-consumers'))
         event1 = EventPage(
             title='test page 2',
             start_dt=datetime.now(timezone('UTC'))
@@ -48,21 +50,23 @@ class TestFilterableListForm(TestCase):
         publish_page(event1)
         publish_page(cool_event)
         publish_page(awesome_event)
+        publish_page(category_blog)
         cls.blog1 = blog1
         cls.blog2 = blog2
         cls.event1 = event1
         cls.cool_event = cool_event
         cls.awesome_event = awesome_event
+        cls.category_blog = category_blog
 
         rebuild_elasticsearch_index('v1', stdout=StringIO())
-
-    def setUpFilterableForm(self, data=None):
+    
+    def setUpFilterableForm(self, data=None, filterable_categories=None):
         filterable_pages = AbstractFilterPage.objects.live()
         form = FilterableListForm(
             filterable_pages=filterable_pages,
             wagtail_block=None,
             filterable_root='/',
-            filterable_categories=None
+            filterable_categories=filterable_categories
         )
         form.is_bound = True
         form.cleaned_data = data
@@ -151,8 +155,14 @@ class TestFilterableListForm(TestCase):
             ]
         )
 
+    def test_filterable_categories_sets_initial_category_list(self):
+        form = self.setUpFilterableForm(data={'categories': []}, filterable_categories=('Blog', 'Newsroom', 'Research Report'))
+        page_set = form.get_page_set()
+        self.assertEqual(len(page_set), 1)
+        self.assertEqual(page_set[0].specific, self.category_blog)
 
-class TestFilterableListFormWithoutElasticsearch(TestCase):
+
+class TestFilterableListFormNoEs(TestCase):
     
     @classmethod
     def setUpTestData(cls):
@@ -284,6 +294,7 @@ class TestFilterableListFormWithoutElasticsearch(TestCase):
                 'to-congress',
             ]
         )
+    
 
 
 @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
