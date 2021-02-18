@@ -3,7 +3,7 @@ import { GlobalSearch } from '../../components/global-search';
 const search = new GlobalSearch();
 
 describe( 'Global Search molecule to search for content on the site', () => {
-  beforeEach( () => {
+  before( () => {
     cy.visit( '/' );
   } );
   it( 'on page load', () => {

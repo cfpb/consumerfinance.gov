@@ -5,7 +5,7 @@ const page = new Header();
 const menu = new MegaMenu();
 
 describe( 'Header', () => {
-  beforeEach( () => {
+  before( () => {
     cy.visit( '/' );
   } );
   it( 'Header, at page load', () => {

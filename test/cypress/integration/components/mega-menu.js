@@ -3,7 +3,7 @@ import { MegaMenu } from '../../components/mega-menu';
 const menu = new MegaMenu();
 
 describe( 'Mega-Menu organism for site navigation', () => {
-  beforeEach( () => {
+  before( () => {
     cy.visit( '/' );
   } );
   it( 'Mega-Menu, on page Load', () => {
