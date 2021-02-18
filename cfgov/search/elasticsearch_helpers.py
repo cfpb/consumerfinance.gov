@@ -1,6 +1,9 @@
 import re
+import sys
+from unittest.mock import patch
 
 from django.conf import settings
+from django.core.management import call_command
 
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
@@ -29,8 +32,8 @@ def make_safe(term):
     return term
 
 
-label_autocomplete = analyzer(
-    'label_autocomplete',
+ngram_tokenizer = analyzer(
+    'ngram_tokenizer',
     tokenizer=tokenizer(
         'trigram',
         'edge_ngram',
@@ -70,3 +73,39 @@ def environment_specific_index(base_name):
         return base_name
     else:
         return f'{settings.DEPLOY_ENVIRONMENT}-{base_name}'
+
+
+def rebuild_elasticsearch_index(*models, stdout=sys.stdout):
+    """Rebuild an Elasticsearch index, waiting for its completion.
+
+    This method is an alias for the built-in search_index Django management
+    command provided by django-elasticsearch-dsl.
+
+    That command does not currently provide a way to make the indexing
+    blocking. This method patches the Elasticsearch bulk API call to ensure
+    that the reindex is immediately available in search results.
+
+    See the Elasticsearch documentation on refresh:
+    https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-refresh.html # noqa
+
+    See https://github.com/django-es/django-elasticsearch-dsl/pull/323 for
+    a proposed pull request to django-elasticsearch-dsl to support this
+    blocking behavior.
+    """
+    from elasticsearch.helpers import bulk as original_bulk
+
+    def bulk_wait_for_refresh(*args, **kwargs):
+        kwargs.setdefault('refresh', 'wait_for')
+        return original_bulk(*args, **kwargs)
+
+    with patch(
+        'django_elasticsearch_dsl.documents.bulk',
+        new=bulk_wait_for_refresh
+    ):
+        call_command(
+            'search_index',
+            action='rebuild',
+            force=True,
+            models=models,
+            stdout=stdout
+        )
