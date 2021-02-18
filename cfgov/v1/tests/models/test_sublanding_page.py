@@ -1,9 +1,7 @@
 import datetime as dt
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from wagtail.core.blocks import StreamValue
-
-import mock
 
 from scripts import _atomic_helpers as atomic
 from v1.models import AbstractFilterPage, BrowseFilterablePage, SublandingPage

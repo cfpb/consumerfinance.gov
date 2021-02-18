@@ -1,7 +1,7 @@
+from unittest.mock import patch
+
 from django.contrib.auth.models import User
 from django.test import TestCase
-
-from mock import patch
 
 from v1.auth_forms import UserCreationForm, UserEditForm
 
