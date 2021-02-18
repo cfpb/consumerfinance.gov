@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 from io import StringIO
 
@@ -341,10 +342,12 @@ class TestFilterableListFormArchive(TestCase):
         self.assertEqual(pages[0].specific, self.page1)
 
 
+@override_settings(ELASTICSEARCH_DSL_AUTOSYNC = True)
 class TestEventArchiveFilterForm(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        rebuild_elasticsearch_index('v1', stdout=StringIO())
         event = EventPage(
             title='test page 2',
             start_dt=datetime.now(timezone('UTC'))
@@ -352,8 +355,9 @@ class TestEventArchiveFilterForm(TestCase):
         event.tags.add('bar')
         publish_page(event)
         cls.event = event
-
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        # This test class relies on auto sync so we sleep to ensure the update occurs
+        time.sleep(2)
+        
 
     @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
     def test_event_archive_elasticsearch(self):
