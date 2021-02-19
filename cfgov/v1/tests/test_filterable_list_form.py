@@ -401,7 +401,7 @@ class TestEnforcementActionsFilterForm(TestCase):
 
     @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
     def test_enforcement_action_elasticsearch(self):
-        filterable_pages = AbstractFilterPage.objects.live()
+        filterable_pages = EnforcementActionPage.objects.live()
         form = EnforcementActionsFilterForm(
             filterable_pages=filterable_pages,
             filterable_root='/',
@@ -415,7 +415,7 @@ class TestEnforcementActionsFilterForm(TestCase):
         self.assertEqual(page_set[0].specific, self.enforcement)
 
     def test_enforcement_action_postgres(self):
-        filterable_pages = AbstractFilterPage.objects.live()
+        filterable_pages = EnforcementActionPage.objects.live()
         form = EnforcementActionsFilterForm(
             filterable_pages=filterable_pages,
             filterable_root='/',
