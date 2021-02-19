@@ -273,13 +273,31 @@
               
                 <h1 id="python-testing">Python testing<a class="headerlink" href="#python-testing" title="Permanent link">¶</a></h1>
 <h2 id="writing-tests">Writing tests<a class="headerlink" href="#writing-tests" title="Permanent link">¶</a></h2>
-<p>We have multiple resources for writing new unit tests for Django, Wagtial, and Python code:</p>
+<p>We have multiple resources for writing new unit tests for Django, Wagtail, and Python code:</p>
 <ul>
 <li><a href="https://github.com/cfpb/development/blob/main/guides/unittesting-django-wagtail.md">CFPB Django and Wagtail unit testing documentation</a></li>
 <li><a href="https://docs.djangoproject.com/en/1.11/topics/testing/overview/">The Django testing documentation</a></li>
 <li><a href="http://docs.wagtail.io/en/stable/advanced_topics/testing.html">The Wagtail testing documentation</a></li>
 <li><a href="https://realpython.com/testing-in-django-part-1-best-practices-and-examples/">Real Python's "Testing in Django"</a></li>
 </ul>
+<h3 id="testing-elasticsearch">Testing Elasticsearch<a class="headerlink" href="#testing-elasticsearch" title="Permanent link">¶</a></h3>
+<p>When writing tests that rely on a running Elasticsearch service, consider using the
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/search/elasticsearch_helpers.py"><code>search.elasticsearch_helpers.ElasticsearchTestsMixin</code></a>
+mixin:</p>
+<pre class="highlight"><code class="language-py">from django.test import TestCase
+
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
+
+
+class MyTests(ElasticsearchTestsMixin, TestCase):
+    def test_something(self):
+        self.rebuild_elasticsearch_index()
+
+        # test something that relies on the Elasticsearch index</code></pre>
+
+<p>Refer to the mixin's
+<a href="https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/search/elasticsearch_helpers.py">source code</a>
+for additional details on its functionality.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
 <p>If you have set up
 <a href="/installation/#install-system-level-requirements">a standalone installation of consumerfinance.gov</a>,
