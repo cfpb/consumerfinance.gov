@@ -3,10 +3,10 @@ import datetime
 import tempfile
 import unittest
 from io import StringIO
+from unittest import mock
 
 import django
 
-import mock
 from dateutil import parser
 from model_bakery import baker
 

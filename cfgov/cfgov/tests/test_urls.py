@@ -1,9 +1,8 @@
 from importlib import reload
+from unittest import mock
 
 import django
 from django.test import RequestFactory, TestCase, override_settings
-
-import mock
 
 from cfgov import urls
 

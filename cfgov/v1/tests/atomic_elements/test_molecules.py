@@ -1,5 +1,8 @@
+from io import StringIO
+
+from django.core import management
 from django.core.exceptions import ValidationError
-from django.test import SimpleTestCase, TestCase
+from django.test import SimpleTestCase, TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
 
@@ -16,7 +19,13 @@ from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
+@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
 class MoleculesTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        # Create a clean index for the test suite
+        management.call_command('search_index', action='rebuild', force=True, models=['v1'], stdout=StringIO())
 
     def test_text_intro(self):
         """Text introduction value correctly displays on a Browse Filterable Page"""

@@ -1,5 +1,6 @@
 import datetime
 import unittest
+from unittest import mock
 
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import ValidationError
@@ -11,7 +12,6 @@ from django.test import (
 
 from wagtail.core.models import Site
 
-import mock
 from model_bakery import baker
 
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
