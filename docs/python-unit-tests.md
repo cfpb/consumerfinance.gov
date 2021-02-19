@@ -2,12 +2,35 @@
 
 ## Writing tests
 
-We have multiple resources for writing new unit tests for Django, Wagtial, and Python code:
+We have multiple resources for writing new unit tests for Django, Wagtail, and Python code:
 
 - [CFPB Django and Wagtail unit testing documentation](https://github.com/cfpb/development/blob/main/guides/unittesting-django-wagtail.md)
 - [The Django testing documentation](https://docs.djangoproject.com/en/1.11/topics/testing/overview/)
 - [The Wagtail testing documentation](http://docs.wagtail.io/en/stable/advanced_topics/testing.html)
 - [Real Python's "Testing in Django"](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/)
+
+### Testing Elasticsearch
+
+When writing tests that rely on a running Elasticsearch service, consider using the
+[`search.elasticsearch_helpers.ElasticsearchTestsMixin`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/search/elasticsearch_helpers.py)
+mixin:
+
+```py
+from django.test import TestCase
+
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
+
+
+class MyTests(ElasticsearchTestsMixin, TestCase):
+    def test_something(self):
+        self.rebuild_elasticsearch_index()
+
+        # test something that relies on the Elasticsearch index
+```
+
+Refer to the mixin's
+[source code](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/search/elasticsearch_helpers.py)
+for additional details on its functionality.
 
 ## Prerequisites
 
