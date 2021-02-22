@@ -8,9 +8,9 @@ from wagtail.core.models import Site
 
 from dateutil.relativedelta import relativedelta
 
-
-def path_without_leading_trailing_slashes(path):
-    return path.lstrip("/").rstrip("/")
+from v1.management.commands.archive_pages import (
+    path_without_leading_trailing_slashes
+)
 
 
 class Command(BaseCommand):
