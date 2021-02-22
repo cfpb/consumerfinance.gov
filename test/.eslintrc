@@ -1,5 +1,6 @@
 env:
   jest: true
+  mocha: true
 rules:
   dot-notation: 0
   global-require: 0

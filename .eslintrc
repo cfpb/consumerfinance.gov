@@ -22,7 +22,7 @@ env:
   es6: true
   worker: false
   amd: true
-  mocha: true
+  mocha: false
   jasmine: false
   jest: false
   phantomjs: false
