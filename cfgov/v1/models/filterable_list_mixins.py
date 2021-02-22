@@ -99,9 +99,9 @@ class FilterableListMixin(RoutablePageMixin):
         queryset = self.get_filterable_queryset()
         # flag check to enable or disable archive filter options
         if flag_enabled('ARCHIVE_FILTER_OPTIONS', request=request):
-            has_archived_posts = queryset.filter(is_archived='yes').count() > 0
-        else:
             has_archived_posts = False
+        else:
+            has_archived_posts = queryset.filter(is_archived='yes').count() > 0
         form = self.get_form_class()(
             form_data,
             filterable_pages=queryset,
