@@ -7,14 +7,14 @@ from django.template import engines
 from django.test import Client, TestCase, override_settings
 
 from scripts import _atomic_helpers as atomic
-from search.elasticsearch_helpers import rebuild_elasticsearch_index
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.models.blog_page import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
 @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
-class TestFragmentCacheExtension(TestCase):
+class TestFragmentCacheExtension(ElasticsearchTestsMixin, TestCase):
     def test_cache_gets_called_when_visiting_filterable_page(self):
         # Create a filterable page
         page = BrowseFilterablePage(
@@ -32,7 +32,7 @@ class TestFragmentCacheExtension(TestCase):
         )
         page.add_child(instance=child_page)
 
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
         cache = caches['post_preview']
         with patch.object(cache, 'add') as add_to_cache:
