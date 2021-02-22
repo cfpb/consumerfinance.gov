@@ -2,6 +2,7 @@ import html
 
 from django.utils.module_loading import import_string
 
+from flags.state import flag_enabled
 from jinja2 import Markup, contextfunction
 from jinja2.ext import Extension
 
@@ -68,7 +69,8 @@ def is_filter_selected(context, fieldname, value):
 
     # Dirty hack to check the default option for the `archived` filter
     if fieldname == 'archived' and value == 'include':
-        return True
+        if flag_enabled('ARCHIVE_FILTER_OPTIONS'):
+            return True
 
     return value in query_string_values
 

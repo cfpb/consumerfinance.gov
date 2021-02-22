@@ -92,6 +92,7 @@ class TestIsFilterSelected(TestCase):
         request = self.factory.get('/?filter_foo=bar')
         self.assertEqual(self._render_template_with_request(request), 'True')
 
+    @override_settings(FLAGS={"ARCHIVE_FILTER_OPTIONS": [("boolean", True)]})
     def test_query_parameter_archived_selected(self):
         request = self.factory.get('/')
         s = '{{ is_filter_selected("archived", "include") }}'
