@@ -5,10 +5,14 @@ globals:
   cy: true
   Cypress: true
 rules:
+  complexity:
+    - 1
+    - 10
   dot-notation: 0
   global-require: 0
   max-lines-per-function: 0
   max-nested-callbacks: 0
   max-statements: 0
   no-unused-expressions: 0
+  no-unused-vars: 0
   require-jsdoc: 0
