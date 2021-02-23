@@ -152,9 +152,12 @@ urlpatterns = [
         name='fair-lending'),
 
     # KBYO redirect
-    re_path(r'^consumer-tools/educator-tools/students/knowbeforeyouowe/$', RedirectView.as_view(
-        url='/consumer-tools/educator-tools/students/helping-borrowers-find-ways-to-stay-afloat/$',
-        permanent=True)),
+    re_path(r'^consumer-tools/educator-tools/students/knowbeforeyouowe/$',
+        RedirectView.as_view(
+            url='/consumer-tools/educator-tools/students/helping-borrowers-find-ways-to-stay-afloat/$', # noqa: E501
+            permanent=True
+        )
+    ),
 
     re_path(r'^parents/(?P<path>.*)$', RedirectView.as_view(
         url='/money-as-you-grow/%(path)s', permanent=True)),
