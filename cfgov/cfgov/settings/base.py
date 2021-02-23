@@ -765,7 +765,7 @@ FLAGS = {
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
-    "ARCHIVE_FILTER_OPTIONS": [],
+    "DISABLE_ARCHIVE_FILTER_OPTIONS": [],
     # Enable ES as the backend for FilterableLists
     "ELASTICSEARCH_FILTERABLE_LISTS": []
 }
