@@ -33,6 +33,7 @@ class FilterablePagesDocument(Document):
     end_dt = fields.DateField()
     statuses = fields.KeywordField()
     initial_filing_date = fields.DateField()
+    model_class = fields.KeywordField()
 
     def get_queryset(self):
         return AbstractFilterPage.objects.live().public().specific()
@@ -55,6 +56,9 @@ class FilterablePagesDocument(Document):
 
     def prepare_initial_filing_date(self, instance):
         return getattr(instance, 'initial_filing_date', None)
+
+    def prepare_model_class(self, instance):
+        return instance.__class__.__name__
 
     def get_instances_from_related(self, related_instance):
         # Related instances all inherit from AbstractFilterPage.
@@ -156,6 +160,9 @@ class EventFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):
                 'start_dt': {'gte': self.from_date}}).filter(
                     "range", **{'end_dt': {'lte': self.to_date}})
 
+    def apply_specific_filters(self, search):
+        return search.filter("term", model_class="EventPage")
+
 
 class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):  # noqa: E501
 
@@ -170,6 +177,7 @@ class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSear
                     "gte": self.from_date, "lte": self.to_date}})
 
     def apply_specific_filters(self, search):
+        search = search.filter("term", model_class="EnforcementActionPage")
         if self.statuses != []:
             return search.filter("terms", statuses=self.statuses)
 

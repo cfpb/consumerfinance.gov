@@ -43,7 +43,7 @@ class FilterablePagesDocumentTest(TestCase):
             [
                 'tags', 'categories', 'authors', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
-                'statuses', 'initial_filing_date'
+                'statuses', 'initial_filing_date', 'model_class'
             ]
         )
 
