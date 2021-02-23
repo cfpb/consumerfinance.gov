@@ -17,7 +17,5 @@
  * @param {object} on hook into various events Cypress emits
  * @param {object} config the resolved Cypress config
  */
-module.exports = ( on, config ) => {
-  /* `on` is used to hook into various events Cypress emits
-     `config` is the resolved Cypress config */
-};
+/* module.exports = ( on, config ) => {
+   }; */
