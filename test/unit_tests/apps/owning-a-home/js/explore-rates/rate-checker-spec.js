@@ -153,8 +153,9 @@ const HTML_SNIPPET = `
 `;
 
 let downPaymentDom;
-let rateStructureDom;
-let armTypeDom;
+
+/* let rateStructureDom;
+   let armTypeDom; */
 
 describe( 'explore-rates/rate-checker', () => {
   describe( 'init()', () => {
@@ -177,8 +178,9 @@ describe( 'explore-rates/rate-checker', () => {
     beforeEach( () => {
       document.body.innerHTML = HTML_SNIPPET;
       downPaymentDom = document.querySelector( '#down-payment' );
-      rateStructureDom = document.querySelector( '#rate-structure' );
-      armTypeDom = document.querySelector( '#arm-type' );
+
+      /* rateStructureDom = document.querySelector( '#rate-structure' );
+         armTypeDom = document.querySelector( '#arm-type' ); */
       rateChecker.init();
     } );
 

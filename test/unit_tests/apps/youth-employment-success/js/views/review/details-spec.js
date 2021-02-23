@@ -3,6 +3,8 @@ import mockStore from '../../../../../mocks/store';
 import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 
+let state;
+
 const CLASSES = reviewDetailsView.CLASSES;
 
 const HTML = `
@@ -78,7 +80,7 @@ describe( 'reviewDetailsView', () => {
     const budget = { earned: 1, spent: 1 };
     const actionPlanRoute = { transportation: 'Walk', actionPlanItems: [ PLAN_TYPES.MILES ]};
 
-    const state = {
+    state = {
       budget,
       routes: {
         routes: [
@@ -95,7 +97,7 @@ describe( 'reviewDetailsView', () => {
     } );
 
     it( 'hides the `Possible Option` headings when the user selects the `wait` choice', () => {
-      const state = {
+      state = {
         budget,
         routes: { routes: []},
         routeChoice: 'wait'

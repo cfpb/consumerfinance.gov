@@ -89,7 +89,8 @@ describe( 'YES utility functions', () => {
 
     it( 'overwrites properties of the original object', () => {
       const override = { agency: 'GSA' };
-      expect( assign( originalObject, override ).agency ).toBe( override.agency );
+      expect( assign( originalObject, override ).agency )
+        .toBe( override.agency );
     } );
 
     it( 'does not mutate the original object', () => {
@@ -147,7 +148,8 @@ describe( 'YES utility functions', () => {
     it( 'throws an error when it receives a value that isn\'t an object', () => {
       const invalidArgs = [ function() { return 'a'; }, null, 1, 'bad', [] ];
 
-      invalidArgs.forEach( invalidArg => expect( () => entries( invalidArg ) ).toThrow()
+      invalidArgs.forEach(
+        invalidArg => expect( () => entries( invalidArg ) ).toThrow()
       );
     } );
 

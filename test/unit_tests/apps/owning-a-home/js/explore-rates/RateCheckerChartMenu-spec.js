@@ -80,7 +80,7 @@ describe( 'explore-rates/RateCheckerChartMenu', () => {
       const _initEvents = RateCheckerChartMenu.prototype._initEvents;
       const mockInitEvents = jest.fn();
       RateCheckerChartMenu.prototype._initEvents = mockInitEvents;
-      const chartMenu = new RateCheckerChartMenu( highCharts );
+      chartMenu = new RateCheckerChartMenu( highCharts );
 
       expect( mockInitEvents.mock.calls.length ).toBe( 1 );
       RateCheckerChartMenu.prototype._initEvents = _initEvents;

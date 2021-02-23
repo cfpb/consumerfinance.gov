@@ -43,7 +43,6 @@ describe( 'InputView', () => {
       blur: mockHandler
     };
     let eventTarget;
-    let view;
 
     beforeEach( () => {
       const root = document.querySelector( 'div' );

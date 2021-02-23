@@ -112,7 +112,9 @@ describe( 'routeOptionFormView', () => {
     const mock = store.dispatch.mock;
 
     expect( mock.calls.length ).toBe( 1 );
-    expect( mock.calls[0][0] ).toEqual( updateTransportationAction( { routeIndex: 0, value: radioEl.value } ) );
+    expect( mock.calls[0][0] ).toEqual(
+      updateTransportationAction( { routeIndex: 0, value: radioEl.value } )
+    );
   } );
 
   it( 'hides the transportation discount section when transportation method is Walk', () => {
@@ -123,11 +125,9 @@ describe( 'routeOptionFormView', () => {
         } ]
       }
     };
-    let discountEl;
-
     store.subscriber()( {}, state );
 
-    discountEl = document.querySelector( `.${ CLASSES.DISCOUNT }` );
+    const discountEl = document.querySelector( `.${ CLASSES.DISCOUNT }` );
 
     expect( discountEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
 

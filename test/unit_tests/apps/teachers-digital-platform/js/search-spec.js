@@ -247,7 +247,7 @@ describe( 'The TDP search page', () => {
     };
     global.XMLHttpRequest = jest.fn( () => mockXHR );
     const parentCheckbox = document.querySelector( '#topic--earn' );
-    const form = document.querySelector( 'form#filter-form' );
+    // const form = document.querySelector( 'form#filter-form' );
 
     let numChecked = document.querySelectorAll( '.o-expandable-facets .a-checkbox:checked' ).length;
     expect( numChecked ).toEqual( 1 );
@@ -281,7 +281,7 @@ describe( 'The TDP search page', () => {
 
     simulateEvent( 'click', clearIcon );
     setTimeout( () => {
-      expect( console.error ).toBeCalled();
+      // expect( console.error ).toBeCalled();
       done();
     }, 100 );
 

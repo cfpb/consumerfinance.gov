@@ -1,5 +1,3 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/modules/util';
-
 const HTML_SNIPPET = `
 <div class="o-email-popup o-email-signup" lang="en" data-popup-label="testPopup">
     <div class="o-email-popup_header u-clearfix">
@@ -57,7 +55,6 @@ describe( 'add-email-popup', () => {
   } );
 
   it( 'should hide the email popup initially', () => {
-    const addEmailPopup = require( BASE_JS_PATH + '/add-email-popup' );
     const emailPopupDom = document.querySelector( '.o-email-popup' );
     expect( emailPopupDom.classList.contains( 'o-email-popup__visible' ) )
       .toBe( false );

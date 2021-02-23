@@ -31,7 +31,6 @@ const HTML = `
 
 describe( 'transitTimeView', () => {
   const routeIndex = 0;
-  const CLASSES = transitTimeView.CLASSES;
   const todoNotification = new TodoNotificationMock();
   const dispatch = jest.fn();
   let el;

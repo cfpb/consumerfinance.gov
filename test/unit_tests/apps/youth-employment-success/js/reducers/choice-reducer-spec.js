@@ -13,7 +13,9 @@ describe( 'choiceReducer', () => {
 
   it( 'reduces the .updateRouteChoiceAction', () => {
     const selectedRouteIndex = '1';
-    const state = choiceReducer( UNDEFINED, updateRouteChoiceAction( selectedRouteIndex ) );
+    const state = choiceReducer(
+      UNDEFINED, updateRouteChoiceAction( selectedRouteIndex )
+    );
 
     expect( state ).toBe( selectedRouteIndex );
   } );

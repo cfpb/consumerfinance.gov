@@ -1,5 +1,4 @@
 import notificationsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications';
-import { toArray } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import { ALERT_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/notifications';
 
 const CLASSES = notificationsView.CLASSES;

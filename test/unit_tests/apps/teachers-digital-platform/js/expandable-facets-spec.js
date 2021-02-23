@@ -2,9 +2,9 @@ import { simulateEvent } from '../../../../util/simulate-event';
 import ExpandableFacets from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
 
 let ef;
-let efLabel;
+// let efLabel;
 let efTarget;
-let efHeader;
+// let efHeader;
 let efBody;
 let expandableFacet;
 
@@ -66,9 +66,9 @@ describe( 'Expandable facets', () => {
     ef = document.querySelector( '.o-expandable-facets' );
     expandableFacet = new ExpandableFacets( ef );
     expandableFacet.init();
-    efLabel = document.querySelector( '.o-expandable-facets_checkbox ~ .a-label' );
+    // efLabel = document.querySelector( '.o-expandable-facets_checkbox ~ .a-label' );
     efTarget = document.querySelector( '.o-expandable-facets_target' );
-    efHeader = document.querySelector( '.o-expandable_header' );
+    // efHeader = document.querySelector( '.o-expandable_header' );
     efBody = document.querySelector( '.o-expandable-facets_content' );
 
     const mockXHR = {

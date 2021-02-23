@@ -119,7 +119,9 @@ describe( 'routeDetailsView', () => {
       view.render( nextState );
 
       const budgetEl = document.querySelector( `.${ CLASSES.BUDGET }` );
-      const expectedBudget = toPrecision( String( nextState.budget.earned - nextState.budget.spent ), 2 );
+      const expectedBudget = toPrecision(
+        String( nextState.budget.earned - nextState.budget.spent ), 2
+      );
 
       expect( budgetEl.textContent ).toBe( expectedBudget );
     } );
@@ -368,7 +370,9 @@ describe( 'routeDetailsView', () => {
         budget: { ...nextState.budget },
         route: {
           ...nextState.route,
-          actionPlanItems: nextState.route.actionPlanItems.concat( [ PLAN_TYPES.MILES ] )
+          actionPlanItems: nextState.route.actionPlanItems.concat(
+            [ PLAN_TYPES.MILES ]
+          )
         }
       };
 
