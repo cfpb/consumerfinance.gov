@@ -1,6 +1,9 @@
 env:
   jest: true
   mocha: true
+globals:
+  cy: true
+  Cypress: true
 rules:
   dot-notation: 0
   global-require: 0
