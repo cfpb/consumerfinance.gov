@@ -6,7 +6,7 @@ from django.test import TestCase, override_settings
 
 from pytz import timezone
 
-from search.elasticsearch_helpers import rebuild_elasticsearch_index
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.forms import (
     EnforcementActionsFilterForm, EventArchiveFilterForm, FilterableListForm
 )
@@ -19,7 +19,7 @@ from v1.util.categories import clean_categories
 
 
 @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
-class TestFilterableListForm(TestCase):
+class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -61,7 +61,7 @@ class TestFilterableListForm(TestCase):
         cls.awesome_event = awesome_event
         cls.category_blog = category_blog
 
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
     
     def setUpFilterableForm(self, data=None, filterable_categories=None):
         filterable_pages = AbstractFilterPage.objects.live()
@@ -301,7 +301,7 @@ class TestFilterableListFormNoEs(TestCase):
 
 
 @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
-class TestFilterableListFormArchive(TestCase):
+class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -312,7 +312,7 @@ class TestFilterableListFormArchive(TestCase):
         publish_page(cls.page2)
         publish_page(cls.page3)
 
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def get_filtered_pages(self, data):
         filterable_pages = AbstractFilterPage.objects.live()
@@ -343,11 +343,12 @@ class TestFilterableListFormArchive(TestCase):
 
 
 @override_settings(ELASTICSEARCH_DSL_AUTOSYNC = True)
-class TestEventArchiveFilterForm(TestCase):
+class TestEventArchiveFilterForm(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
+
         event = EventPage(
             title='test page 2',
             start_dt=datetime.now(timezone('UTC'))
@@ -355,9 +356,6 @@ class TestEventArchiveFilterForm(TestCase):
         event.tags.add('bar')
         publish_page(event)
         cls.event = event
-        # This test class relies on auto sync so we sleep to ensure the update occurs
-        time.sleep(2)
-        
 
     @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
     def test_event_archive_elasticsearch(self):
@@ -389,7 +387,7 @@ class TestEventArchiveFilterForm(TestCase):
         self.assertEqual(page_set[0].specific, self.event)
 
 
-class TestEnforcementActionsFilterForm(TestCase):
+class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -397,11 +395,11 @@ class TestEnforcementActionsFilterForm(TestCase):
         publish_page(enforcement)
         cls.enforcement = enforcement
 
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
     def test_enforcement_action_elasticsearch(self):
-        filterable_pages = AbstractFilterPage.objects.live()
+        filterable_pages = EnforcementActionPage.objects.live()
         form = EnforcementActionsFilterForm(
             filterable_pages=filterable_pages,
             filterable_root='/',
@@ -415,7 +413,7 @@ class TestEnforcementActionsFilterForm(TestCase):
         self.assertEqual(page_set[0].specific, self.enforcement)
 
     def test_enforcement_action_postgres(self):
-        filterable_pages = AbstractFilterPage.objects.live()
+        filterable_pages = EnforcementActionPage.objects.live()
         form = EnforcementActionsFilterForm(
             filterable_pages=filterable_pages,
             filterable_root='/',

@@ -7,7 +7,7 @@ from wagtail.core.blocks import StreamValue
 from wagtail.core.models import Site
 
 from scripts._atomic_helpers import filter_controls
-from search.elasticsearch_helpers import rebuild_elasticsearch_index
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.models import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.filterable_list_mixins import FilterableListMixin
@@ -88,7 +88,7 @@ class TestFilterableListMixin(TestCase):
         assert self.mixin.do_not_index is False
 
 @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
-class FilterableRoutesTestCase(TestCase):
+class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
 
     def setUp(self):
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
@@ -102,7 +102,7 @@ class FilterableRoutesTestCase(TestCase):
         )
         self.filterable_page.add_child(instance=self.page)
 
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_index_route(self):
         response = self.client.get("/test/")

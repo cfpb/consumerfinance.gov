@@ -8,13 +8,13 @@ from django.test import TestCase, override_settings
 from wagtail.core.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
-from search.elasticsearch_helpers import rebuild_elasticsearch_index
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.models import AbstractFilterPage, BrowseFilterablePage, SublandingPage
 from v1.tests.wagtail_pages import helpers
 
 
 @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
-class SublandingPageTestCase(TestCase):
+class SublandingPageTestCase(ElasticsearchTestsMixin, TestCase):
     """
     This test case checks that the browse-filterable posts of a sublanding
     page are properly retrieved.
@@ -58,7 +58,7 @@ class SublandingPageTestCase(TestCase):
         helpers.save_new_page(self.child2_of_post1, self.post1)
         helpers.save_new_page(self.child1_of_post2, self.post2)
 
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_get_appropriate_descendants(self):
         """

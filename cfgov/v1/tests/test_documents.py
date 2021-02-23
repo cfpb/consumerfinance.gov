@@ -10,7 +10,7 @@ import dateutil.relativedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
-from search.elasticsearch_helpers import rebuild_elasticsearch_index
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
     EventFilterablePagesDocumentSearch, FilterablePagesDocument,
@@ -43,7 +43,7 @@ class FilterablePagesDocumentTest(TestCase):
             [
                 'tags', 'categories', 'authors', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
-                'statuses', 'initial_filing_date'
+                'statuses', 'initial_filing_date', 'model_class'
             ]
         )
 
@@ -68,7 +68,7 @@ class FilterablePagesDocumentTest(TestCase):
         self.assertEqual(prepared_data['statuses'], ['expired-terminated-dismissed'])
 
 
-class FilterablePagesDocumentSearchTest(TestCase):
+class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -98,7 +98,7 @@ class FilterablePagesDocumentSearchTest(TestCase):
         cls.enforcement = enforcement
         cls.blog = blog
 
-        rebuild_elasticsearch_index('v1', stdout=StringIO())
+        cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_search_event_all_fields(self):
         to_date_dt = datetime(2021, 3, 16)

@@ -7,6 +7,7 @@ from django.test import SimpleTestCase, TestCase, override_settings
 from wagtail.core.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.atomic_elements.molecules import (
     ContactEmail, ContactHyperlink, RSSFeed, TextIntroduction
 )
@@ -20,7 +21,7 @@ from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
 @override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
-class MoleculesTestCase(TestCase):
+class MoleculesTestCase(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
