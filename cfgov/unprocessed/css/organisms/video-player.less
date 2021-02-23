@@ -26,6 +26,11 @@
 .o-video-player {
     overflow: hidden;
     background: @white;
+
+    // When JavaScript is disabled add a border to stand-alone videos.
+    .no-js &:not( .o-featured-content-module_visual ) {
+        border: 1px solid @black;
+    }
 }
 
 .o-video-player.video-playing {

@@ -612,7 +612,7 @@ class VideoPlayerTests(SimpleTestCase):
 
         # Default no-JS image is used if no thumbnail is provided.
         self.assertIn(
-            'src="/static/img/cfpb_video_cover_card_1380x776.png"',
+            'src="/static/img/cfpb_video_cover_card_1380x1120.png"',
             html
         )
 
