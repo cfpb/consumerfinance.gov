@@ -46,6 +46,16 @@ class TestFilterableListMixin(TestCase):
             request=self.factory.get("/")
         )
 
+    @override_settings(FLAGS={"HIDE_ARCHIVE_FILTER_OPTIONS": [("boolean", True)]})
+    def test_get_context_raises_exception_for_super_obj_has_no_archive_context(
+        self
+    ):
+        self.assertRaises(
+            AttributeError,
+            self.mixin.get_context,
+            request=self.factory.get("/")
+        )
+ 
     @mock.patch("v1.models.filterable_list_mixins.Paginator")
     def test_process_form_calls_is_valid_on_each_form(self, mock_paginator):
         mock_request = mock.Mock()
