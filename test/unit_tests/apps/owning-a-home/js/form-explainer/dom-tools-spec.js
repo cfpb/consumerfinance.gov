@@ -1,4 +1,6 @@
-import domTools from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/form-explainer/dom-tools';
+import
+domTools
+  from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/form-explainer/dom-tools';
 
 const HTML_SNIPPET = `
 <div id="test"></div>
@@ -43,7 +45,8 @@ describe( 'dom-tools', () => {
       expect( domTools.hasClass( '#test2', 'test' ) ).toBe( true );
     } );
 
-    it( 'should return false when element does not have provided class', () => {
+    it( 'should return false when element ' +
+        'does not have provided class', () => {
       const dom = document.querySelector( '.test' );
       expect( domTools.hasClass( dom, 'example' ) ).toBe( false );
       // hasClass takes both a selector and a dom node.
