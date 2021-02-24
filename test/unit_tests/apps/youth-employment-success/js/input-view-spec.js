@@ -1,4 +1,6 @@
-import inputView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/input';
+import
+inputView
+  from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/input';
 import { simulateEvent } from '../../../../util/simulate-event';
 
 const HTML = `
@@ -22,10 +24,12 @@ describe( 'InputView', () => {
     view = inputView( document.querySelector( 'div' ) );
     view.init();
 
-    expect( document.querySelector( 'div' ).getAttribute( 'data-js-hook' ) ).toBeTruthy();
+    expect( document.querySelector( 'div' )
+      .getAttribute( 'data-js-hook' ) ).toBeTruthy();
   } );
 
-  it( 'throws an error when an <input> node matching the `type` prop cannot be found', () => {
+  it( 'throws an error when an <input> node matching ' +
+      'the `type` prop cannot be found', () => {
     document.body.innerHTML = `
       <div>
         <input type="number">
@@ -71,7 +75,8 @@ describe( 'InputView', () => {
     } );
 
     describe( 'sanitizing data', () => {
-      it( 'removes data that is not valid when `data-sanitize` attribute is present', () => {
+      it( 'removes data that is not valid ' +
+          'when `data-sanitize` attribute is present', () => {
         document.body.innerHTML = `
           <input type="text" data-sanitize="money">
         `;
@@ -87,7 +92,7 @@ describe( 'InputView', () => {
         expect( mockHandler.mock.calls[0][0].value ).toBe( '122' );
       } );
 
-      it( 'returns the original value if the type of input is not text', () => {
+      it( 'returns original value if type of input is not text', () => {
         document.body.innerHTML = `
           <input type="number">
         `;
@@ -104,7 +109,8 @@ describe( 'InputView', () => {
         expect( mockHandler.mock.calls[0][0].value ).toBe( '12' );
       } );
 
-      it( 'returns the original value if input is text but there is no pattern', () => {
+      it( 'returns original value if input is text ' +
+          'but there is no pattern', () => {
         document.body.innerHTML = `
           <input type="text">
         `;
