@@ -1,4 +1,6 @@
-import validate from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/validators/route-option';
+import
+validate
+  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/validators/route-option';
 
 describe( '.validate', () => {
   const data = {
@@ -33,7 +35,8 @@ describe( '.validate', () => {
     } ) ).toBeFalsy();
   } );
 
-  it( 'validates data to true if value is not present and action plan item exists', () => {
+  it( 'validates data to true if value is ' +
+      'not present and action plan item exists', () => {
     expect(
       validate( {
         ...data,
