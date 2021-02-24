@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 11:58-0500\n"
+"POT-Creation-Date: 2021-02-26 14:16-0500\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -224,10 +224,6 @@ msgstr "/es/obtener-respuestas/buscar/"
 msgid "Search for your question"
 msgstr "Busca su pregunta"
 
-#: jinja2/v1/_includes/organisms/mega-menu.html:167
-msgid "Featured"
-msgstr "Destacado"
-
 #: jinja2/v1/_includes/organisms/email-signup.html:53
 msgid "Email address"
 msgstr "Dirección email"
@@ -268,6 +264,10 @@ msgstr "https://gobiernousa.gov/"
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
+#: jinja2/v1/_includes/organisms/mega-menu.html:167
+msgid "Featured"
+msgstr "Destacado"
+
 #: jinja2/v1/_includes/organisms/mega-menu.html:298
 msgid "Main menu"
 msgstr "Menú principal"
@@ -288,8 +288,7 @@ msgstr "Ver video"
 #: jinja2/v1/_layouts/base.html:57
 #: jinja2/v1/youth_employment_success/index.html:9
 #: legacy/templates/front/base_nonresponsive.html:28
-#: legacy/templates/front/base_update.html:47 v1/jinja2/v1/home_page.html:7
-#: v1/jinja2/v1/home_page.html:43
+#: legacy/templates/front/base_update.html:47 v1/jinja2/v1/home_page.html:6
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
@@ -391,18 +390,6 @@ msgstr "Palabra a buscar"
 #: jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
-
-#: jinja2/v1/blog/blog_page.html:29
-#, python-format
-msgid ""
-"Join the conversation. Follow CFPB on %(twitter_link)s and %(facebook_link)s."
-msgstr ""
-"Únase a la conversación. Síganos en %(twitter_link)s y en %(facebook_link)s."
-
-#: jinja2/v1/owning-a-home/_templates/ratings-form.html:10
-#: v1/models/feedback.py:15
-msgid "Was this page helpful to you?"
-msgstr "¿Fue útil esta página?"
 
 #: jobmanager/jinja2/jobmanager/job_listing_page.html:76
 msgid "Read full description"
@@ -665,10 +652,6 @@ msgstr ""
 msgid "No log entries found."
 msgstr ""
 
-#: v1/jinja2/v1/home_page.html:43
-msgid "homepage"
-msgstr ""
-
 #: v1/models/base.py:41
 msgid "Author"
 msgstr ""
@@ -689,6 +672,10 @@ msgstr ""
 msgid "password"
 msgstr ""
 
+#: v1/models/feedback.py:15
+msgid "Was this page helpful to you?"
+msgstr "¿Fue útil esta página?"
+
 #: v1/models/feedback.py:16
 msgid "Was this answer helpful to you?"
 msgstr "¿Fue útil esta respuesta?"
@@ -703,13 +690,6 @@ msgstr ""
 
 #: v1/tests/management/commands/test_makemessages_data/__init__.py:4
 msgid "Test string from Python file."
-msgstr ""
-
-#: v1/tests/management/commands/test_makemessages_data/jinja2/test.html:1
-msgid ""
-"\n"
-"Test string from Jinja template.\n"
-"This is in a multi-line block.\n"
 msgstr ""
 
 #: v1/tests/management/commands/test_makemessages_data/templates/test.html:2
@@ -1627,6 +1607,14 @@ msgstr "Desempleado o despedido"
 #: wellbeing/views.py:157
 msgid "Retired"
 msgstr "Jubilado"
+
+#, python-format
+#~ msgid ""
+#~ "Join the conversation. Follow CFPB on %(twitter_link)s and "
+#~ "%(facebook_link)s."
+#~ msgstr ""
+#~ "Únase a la conversación. Síganos en %(twitter_link)s y en "
+#~ "%(facebook_link)s."
 
 #~ msgid "Get a grip on debt."
 #~ msgstr "Tome control de sus deudas."
