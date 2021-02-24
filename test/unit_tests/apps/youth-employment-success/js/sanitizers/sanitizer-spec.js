@@ -1,4 +1,6 @@
-import sanitizeMap from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/sanitizers';
+import
+sanitizeMap
+  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/sanitizers';
 
 describe( 'exposed sanitize functions', () => {
   describe( 'money', () => {
@@ -10,7 +12,8 @@ describe( 'exposed sanitize functions', () => {
       expect( moneySanitizer( badMoney ) ).toBe( '122.3' );
     } );
 
-    it( 'does not allow for multiple zeros in a row at the beginning of the string', () => {
+    it( 'does not allow for multiple zeros in ' +
+        'a row at the beginning of the string', () => {
       expect( moneySanitizer( '00' ) ).toBe( '0' );
     } );
 
