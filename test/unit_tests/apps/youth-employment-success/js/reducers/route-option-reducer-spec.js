@@ -21,14 +21,19 @@ import routeOptionReducer, {
   updateTransitTimeMinutesAction,
   updateTransportationAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import {
+  UNDEFINED
+} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import {
+  PLAN_TYPES
+} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 
 // Arbitrary value to ensure reducer is updating properly
 const nextValue = '15';
 
 describe( 'routeOptionReducer', () => {
-  it( 'returns an initial state when it recevives an unsupported action type', () => {
+  it( 'returns an initial state when it ' +
+      'receives an unsupported action type', () => {
     const state = routeOptionReducer( UNDEFINED, { type: null } );
 
     expect( state ).toEqual( initialState );
@@ -56,7 +61,8 @@ describe( 'routeOptionReducer', () => {
 
   } );
 
-  it( 'exposes a helper to determine if a given plan type if in a route action plan', () => {
+  it( 'exposes a helper to determine if a given ' +
+      'plan type if in a route action plan', () => {
     const initialRoutes = routeOptionReducer(
       UNDEFINED, addRouteOptionAction( createRoute( {
         actionPlanItems: [ PLAN_TYPES.MILES ]
@@ -150,10 +156,15 @@ describe( 'routeOptionReducer', () => {
 
     it( 'does not reduce routes for which it did not receive an index', () => {
       const transportationType = 'Walk';
-      const state = routeOptionReducer( {
-        routes: [ createRoute(), createRoute() ]
-      },
-      updateTransportationAction( { routeIndex: 0, value: transportationType } )
+      const state = routeOptionReducer(
+        {
+          routes: [ createRoute(), createRoute() ]
+        },
+        updateTransportationAction(
+          {
+            routeIndex: 0, value: transportationType
+          }
+        )
       );
 
       expect( state.routes[0].transportation ).toBe( transportationType );
@@ -228,7 +239,8 @@ describe( 'routeOptionReducer', () => {
       expect( todos[0] ).toBe( PLAN_TYPES.MILES );
     } );
 
-    it( 'reduces the state of actionPlanItems when a mismatching type is supplied', () => {
+    it( 'reduces the state of actionPlanItems ' +
+        'when a mismatching type is supplied', () => {
       const state = routeOptionReducer(
         {
           routes: [
