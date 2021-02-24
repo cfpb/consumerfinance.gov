@@ -25,7 +25,8 @@ describe( 'InputView', () => {
     view.init();
 
     expect( document.querySelector( 'div' )
-      .getAttribute( 'data-js-hook' ) ).toBeTruthy();
+      .getAttribute( 'data-js-hook' )
+    ).toBeTruthy();
   } );
 
   it( 'throws an error when an input node matching ' +
