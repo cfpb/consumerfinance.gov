@@ -5,7 +5,8 @@ import choiceReducer, {
 let UNDEFINED;
 
 describe( 'choiceReducer', () => {
-  it( 'returns an initial state when it receives an unsupported action type', () => {
+  it( 'returns an initial state when it ' +
+      'receives an unsupported action type', () => {
     const state = choiceReducer( UNDEFINED, { type: null } );
 
     expect( state ).toEqual( '' );
