@@ -14,5 +14,4 @@ rules:
   max-nested-callbacks: 0
   max-statements: 0
   no-unused-expressions: 0
-  no-unused-vars: 0
   require-jsdoc: 0
