@@ -1,6 +1,8 @@
 import { simulateEvent } from '../../../../util/simulate-event';
 
-const app = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js' );
+const app = require(
+  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js'
+);
 
 const HTML_SNIPPET = `
 
@@ -248,21 +250,35 @@ describe( 'The TDP search page', () => {
     global.XMLHttpRequest = jest.fn( () => mockXHR );
     const parentCheckbox = document.querySelector( '#topic--earn' );
 
-    let numChecked = document.querySelectorAll( '.o-expandable-facets .a-checkbox:checked' ).length;
+    let numChecked = document.querySelectorAll(
+      '.o-expandable-facets .a-checkbox:checked'
+    ).length;
     expect( numChecked ).toEqual( 1 );
 
     parentCheckbox.checked = true;
     simulateEvent( 'change', parentCheckbox );
-    numChecked = document.querySelectorAll( '.o-expandable-facets .a-checkbox:checked' ).length;
+    numChecked = document.querySelectorAll(
+      '.o-expandable-facets .a-checkbox:checked'
+    ).length;
     expect( numChecked ).toEqual( 3 );
-    expect( window.location.href ).toEqual( 'http://localhost/?q=executive&building_block=1&topic=1&topic=4&topic=2' );
+    expect(
+      window.location.href
+    ).toEqual(
+      'http://localhost/?q=executive&building_block=1&topic=1&topic=4&topic=2'
+    );
 
     const childCheckbox = document.querySelector( '#topic--getting-paid' );
     childCheckbox.checked = false;
     simulateEvent( 'change', childCheckbox );
-    numChecked = document.querySelectorAll( '.o-expandable-facets .a-checkbox:checked' ).length;
+    numChecked = document.querySelectorAll(
+      '.o-expandable-facets .a-checkbox:checked'
+    ).length;
     expect( numChecked ).toEqual( 1 );
-    expect( window.location.href ).toEqual( 'http://localhost/?q=executive&building_block=1&topic=2' );
+    expect(
+      window.location.href
+    ).toEqual(
+      'http://localhost/?q=executive&building_block=1&topic=2'
+    );
 
   } );
 

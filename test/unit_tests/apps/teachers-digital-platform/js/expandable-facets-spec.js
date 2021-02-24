@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../util/simulate-event';
-import ExpandableFacets from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
+import
+ExpandableFacets
+  from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
 
 let ef;
 let efLabel;
@@ -65,9 +67,15 @@ describe( 'Expandable facets', () => {
     ef = document.querySelector( '.o-expandable-facets' );
     expandableFacet = new ExpandableFacets( ef );
     expandableFacet.init();
-    efLabel = document.querySelector( '.o-expandable-facets_checkbox ~ .a-label' );
-    efTarget = document.querySelector( '.o-expandable-facets_target' );
-    efBody = document.querySelector( '.o-expandable-facets_content' );
+    efLabel = document.querySelector(
+      '.o-expandable-facets_checkbox ~ .a-label'
+    );
+    efTarget = document.querySelector(
+      '.o-expandable-facets_target'
+    );
+    efBody = document.querySelector(
+      '.o-expandable-facets_content'
+    );
 
     const mockXHR = {
       open: jest.fn(),
@@ -82,22 +90,31 @@ describe( 'Expandable facets', () => {
 
   it( 'should not throw any errors on init', () => {
     expect( () => ExpandableFacets.init() ).not.toThrow();
-    expect( efLabel.classList.contains( 'u-visually-hidden' ) ).toEqual( false );
+    expect( efLabel.classList.contains( 'u-visually-hidden' ) )
+      .toEqual( false );
   } );
 
   it( 'should collapse an expanded facet when target is clicked', () => {
 
     expect( efTarget.classList.contains( 'is-open' ) ).toEqual( false );
     expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( true );
-    expect( efBody.classList.contains( 'o-expandable-facets_content__expanded' ) ).toEqual( false );
-    expect( efBody.classList.contains( 'o-expandable-facets_content__collapsed' ) ).toEqual( true );
+    expect(
+      efBody.classList.contains( 'o-expandable-facets_content__expanded' )
+    ).toEqual( false );
+    expect(
+      efBody.classList.contains( 'o-expandable-facets_content__collapsed' )
+    ).toEqual( true );
 
     simulateEvent( 'click', efTarget );
 
     expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( false );
     expect( efTarget.classList.contains( 'is-open' ) ).toEqual( true );
-    expect( efBody.classList.contains( 'o-expandable-facets_content__expanded' ) ).toEqual( true );
-    expect( efBody.classList.contains( 'o-expandable-facets_content__collapsed' ) ).toEqual( false );
+    expect(
+      efBody.classList.contains( 'o-expandable-facets_content__expanded' )
+    ).toEqual( true );
+    expect(
+      efBody.classList.contains( 'o-expandable-facets_content__collapsed' )
+    ).toEqual( false );
 
   } );
 
@@ -115,8 +132,12 @@ describe( 'Expandable facets', () => {
 
     expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( true );
     expect( efTarget.classList.contains( 'is-open' ) ).toEqual( false );
-    expect( efBody.classList.contains( 'o-expandable-facets_content__expanded' ) ).toEqual( false );
-    expect( efBody.classList.contains( 'o-expandable-facets_content__collapsed' ) ).toEqual( true );
+    expect(
+      efBody.classList.contains( 'o-expandable-facets_content__expanded' )
+    ).toEqual( false );
+    expect(
+      efBody.classList.contains( 'o-expandable-facets_content__collapsed' )
+    ).toEqual( true );
 
   } );
 

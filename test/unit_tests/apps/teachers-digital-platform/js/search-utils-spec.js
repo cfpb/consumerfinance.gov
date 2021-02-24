@@ -1,4 +1,6 @@
-const utils = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search-utils.js' );
+const utils = require(
+  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search-utils.js'
+);
 
 describe( 'The TDP search utils', () => {
 
@@ -51,11 +53,14 @@ describe( 'The TDP search utils', () => {
 
   it( 'should handle errors', () => {
     const searchError = utils.handleError( 'no-results' );
-    expect( searchError.msg ).toEqual( 'Your query returned zero results.' );
+    expect( searchError.msg )
+      .toEqual( 'Your query returned zero results.' );
     const cancelError = utils.handleError( 0 );
-    expect( cancelError.msg ).toEqual( 'Search request was cancelled.' );
+    expect( cancelError.msg )
+      .toEqual( 'Search request was cancelled.' );
     const unknownError = utils.handleError();
-    expect( unknownError.msg ).toEqual( 'Sorry, our search engine is temporarily down.' );
+    expect( unknownError.msg )
+      .toEqual( 'Sorry, our search engine is temporarily down.' );
   } );
 
   it( 'should replace the browser history', () => {
@@ -66,9 +71,17 @@ describe( 'The TDP search utils', () => {
     expect( rs.mock.calls.length ).toEqual( 1 );
     expect( rs.mock.calls[0] ).toEqual( [ null, null, 'foo?bar' ] );
 
-    utils.updateUrl( '/teach/activities/', 'building_block=1&topic=3&q=executive' );
+    utils.updateUrl(
+      '/teach/activities/', 'building_block=1&topic=3&q=executive'
+    );
     expect( rs.mock.calls.length ).toEqual( 2 );
-    expect( rs.mock.calls[1] ).toEqual( [ null, null, '/teach/activities/?building_block=1&topic=3&q=executive' ] );
+    expect( rs.mock.calls[1] ).toEqual(
+      [
+        null,
+        null,
+        '/teach/activities/?building_block=1&topic=3&q=executive'
+      ]
+    );
   } );
 
 } );

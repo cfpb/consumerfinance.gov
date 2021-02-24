@@ -1,4 +1,6 @@
-const scroll = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/scroll.js' );
+const scroll = require(
+  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/scroll.js'
+);
 
 const HTML_SNIPPET = `
   <a class="one" href="#one" data-scroll>one</a>
