@@ -2,9 +2,9 @@ import { simulateEvent } from '../../../../util/simulate-event';
 import ExpandableFacets from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
 
 let ef;
-// let efLabel;
+let efLabel;
 let efTarget;
-// let efHeader;
+let efHeader;
 let efBody;
 let expandableFacet;
 
@@ -66,9 +66,9 @@ describe( 'Expandable facets', () => {
     ef = document.querySelector( '.o-expandable-facets' );
     expandableFacet = new ExpandableFacets( ef );
     expandableFacet.init();
-    // efLabel = document.querySelector( '.o-expandable-facets_checkbox ~ .a-label' );
+    efLabel = document.querySelector( '.o-expandable-facets_checkbox ~ .a-label' );
     efTarget = document.querySelector( '.o-expandable-facets_target' );
-    // efHeader = document.querySelector( '.o-expandable_header' );
+    efHeader = document.querySelector( '.o-expandable_header' );
     efBody = document.querySelector( '.o-expandable-facets_content' );
 
     const mockXHR = {
@@ -84,9 +84,12 @@ describe( 'Expandable facets', () => {
 
   it( 'should not throw any errors on init', () => {
     expect( () => ExpandableFacets.init() ).not.toThrow();
+    // expect( efLabel.value ).toBe( 'Earn' );
+    expect( efLabel.classList.contains( 'u-visually-hidden' ) ).toEqual( false );
+    expect( efHeader.classList.contains( 'u-visually-hidden' ) ).toEqual( false );
   } );
 
-  it( 'should collapse an expanded facet when label is clicked', () => {
+  it( 'should collapse an expanded facet when target is clicked', () => {
 
     expect( efTarget.classList.contains( 'is-open' ) ).toEqual( false );
     expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( true );
@@ -102,7 +105,7 @@ describe( 'Expandable facets', () => {
 
   } );
 
-  it( 'should expand a collapsed facet when label is clicked', () => {
+  it( 'should expand a collapsed facet when target is clicked', () => {
 
     expect( efTarget.classList.contains( 'is-open' ) ).toEqual( false );
     expect( efTarget.classList.contains( 'is-closed' ) ).toEqual( true );
