@@ -113,7 +113,8 @@ describe( 'The Regs3K search page', () => {
     mockXHR.onreadystatechange();
 
     setTimeout( () => {
-      // expect( console.error ).toBeCalled();
+      // eslint-disable-next-line no-console
+      expect( console.error ).toBeCalled();
       done();
     }, 100 );
   } );
