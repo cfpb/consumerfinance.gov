@@ -1,6 +1,13 @@
 env:
   jest: true
+  mocha: true
+globals:
+  cy: true
+  Cypress: true
 rules:
+  complexity:
+    - 1
+    - 10
   dot-notation: 0
   global-require: 0
   max-lines-per-function: 0
