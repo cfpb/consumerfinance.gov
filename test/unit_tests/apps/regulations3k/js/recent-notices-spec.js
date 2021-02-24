@@ -8,14 +8,17 @@ const HTML_SNIPPET = `
 const TEST_DATA = {
   results: [
     {
+      // eslint-disable-next-line camelcase
       html_url: 'https://example.com',
       title: 'Notice A'
     },
     {
+      // eslint-disable-next-line camelcase
       html_url: 'https://example.com',
       title: 'Notice B'
     },
     {
+      // eslint-disable-next-line camelcase
       html_url: 'https://example.com',
       title: 'Notice C'
     }
@@ -48,6 +51,7 @@ describe( 'The Regs3K search page', () => {
 
   it( 'should process a notice', () => {
     const notice = {
+      // eslint-disable-next-line camelcase
       html_url: 'https://federalregister.gov/',
       title: 'Really great notice'
     };
@@ -60,10 +64,12 @@ describe( 'The Regs3K search page', () => {
   it( 'should process notices', () => {
     const notices = [
       {
+        // eslint-disable-next-line camelcase
         html_url: 'https://federalregister.gov/1',
         title: 'Really great notice'
       },
       {
+        // eslint-disable-next-line camelcase
         html_url: 'https://federalregister.gov/2',
         title: 'Another really great notice'
       }
