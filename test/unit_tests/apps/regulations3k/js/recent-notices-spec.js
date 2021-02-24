@@ -5,25 +5,24 @@ const HTML_SNIPPET = `
   <ul id="regs3k-notices"></ul>
 `;
 
+/* eslint-disable camelcase */
 const TEST_DATA = {
   results: [
     {
-      // eslint-disable-next-line camelcase
       html_url: 'https://example.com',
       title: 'Notice A'
     },
     {
-      // eslint-disable-next-line camelcase
       html_url: 'https://example.com',
       title: 'Notice B'
     },
     {
-      // eslint-disable-next-line camelcase
       html_url: 'https://example.com',
       title: 'Notice C'
     }
   ]
 };
+/* eslint-enable camelcase */
 
 // Back up global xhr
 const xhr = global.XMLHttpRequest;
@@ -63,18 +62,18 @@ describe( 'The Regs3K search page', () => {
   } );
 
   it( 'should process notices', () => {
+    /* eslint-disable camelcase */
     const notices = [
       {
-        // eslint-disable-next-line camelcase
         html_url: 'https://federalregister.gov/1',
         title: 'Really great notice'
       },
       {
-        // eslint-disable-next-line camelcase
         html_url: 'https://federalregister.gov/2',
         title: 'Another really great notice'
       }
     ];
+    /* eslint-enable camelcase */
     const processedNotices = app.processNotices( notices );
     expect( processedNotices.querySelectorAll( 'li' ).length ).toEqual( 3 );
     expect( processedNotices.querySelectorAll( 'a' )[2].textContent )
