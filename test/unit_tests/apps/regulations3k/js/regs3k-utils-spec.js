@@ -57,8 +57,10 @@ describe( 'The Regs3K search utils', () => {
       expect( utils.getNewHash( '1011-4-a' ) ).toEqual( 'a' );
       expect( utils.getNewHash( '#1011-4-a' ) ).toEqual( 'a' );
 
-      expect( utils.getNewHash( '1003-2-f-Interp-3' ) ).toEqual( '2-f-Interp-3' );
-      expect( utils.getNewHash( '#1003-2-f-Interp-3' ) ).toEqual( '2-f-Interp-3' );
+      expect( utils.getNewHash( '1003-2-f-Interp-3' ) )
+        .toEqual( '2-f-Interp-3' );
+      expect( utils.getNewHash( '#1003-2-f-Interp-3' ) )
+        .toEqual( '2-f-Interp-3' );
 
       expect( utils.getNewHash( '1003-4-a-9-ii-C' ) ).toEqual( 'a-9-ii-C' );
       expect( utils.getNewHash( '#1003-4-a-9-ii-C' ) ).toEqual( 'a-9-ii-C' );

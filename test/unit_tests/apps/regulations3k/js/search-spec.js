@@ -70,7 +70,8 @@ describe( 'The Regs3K search page', () => {
 
     simulateEvent( 'submit', form );
 
-    expect( global.location.assign ).toBeCalledWith( 'http://localhost/?q=money&regs=1002' );
+    expect( global.location.assign )
+      .toBeCalledWith( 'http://localhost/?q=money&regs=1002' );
   } );
 
   it( 'should clear a filter when its X icon is clicked', () => {
