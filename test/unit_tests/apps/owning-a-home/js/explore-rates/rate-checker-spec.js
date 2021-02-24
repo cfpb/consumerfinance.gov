@@ -190,11 +190,11 @@ describe( 'explore-rates/rate-checker', () => {
     } );
 
     it( 'rate structure', () => {
-      expect( rateStructureDom.value ).toBe( 'Fixed' );
+      expect( rateStructureDom.value ).toBe( 'fixed' );
     } );
 
     it( 'ARM type', () => {
-      expect( armTypeDom.value ).toBe( '3/1' );
+      expect( armTypeDom.value ).toBe( '5/1' );
     } );
   } );
 } );
