@@ -4,7 +4,6 @@ import ExpandableFacets from '../../../../../cfgov/unprocessed/apps/teachers-dig
 let ef;
 let efLabel;
 let efTarget;
-let efHeader;
 let efBody;
 let expandableFacet;
 
@@ -68,7 +67,6 @@ describe( 'Expandable facets', () => {
     expandableFacet.init();
     efLabel = document.querySelector( '.o-expandable-facets_checkbox ~ .a-label' );
     efTarget = document.querySelector( '.o-expandable-facets_target' );
-    efHeader = document.querySelector( '.o-expandable_header' );
     efBody = document.querySelector( '.o-expandable-facets_content' );
 
     const mockXHR = {
@@ -84,9 +82,7 @@ describe( 'Expandable facets', () => {
 
   it( 'should not throw any errors on init', () => {
     expect( () => ExpandableFacets.init() ).not.toThrow();
-    // expect( efLabel.value ).toBe( 'Earn' );
     expect( efLabel.classList.contains( 'u-visually-hidden' ) ).toEqual( false );
-    expect( efHeader.classList.contains( 'u-visually-hidden' ) ).toEqual( false );
   } );
 
   it( 'should collapse an expanded facet when target is clicked', () => {
