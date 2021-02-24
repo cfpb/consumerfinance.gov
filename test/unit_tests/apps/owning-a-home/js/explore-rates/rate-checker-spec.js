@@ -153,9 +153,8 @@ const HTML_SNIPPET = `
 `;
 
 let downPaymentDom;
-
-/* let rateStructureDom;
-   let armTypeDom; */
+let rateStructureDom;
+let armTypeDom;
 
 describe( 'explore-rates/rate-checker', () => {
   describe( 'init()', () => {
@@ -179,8 +178,8 @@ describe( 'explore-rates/rate-checker', () => {
       document.body.innerHTML = HTML_SNIPPET;
       downPaymentDom = document.querySelector( '#down-payment' );
 
-      /* rateStructureDom = document.querySelector( '#rate-structure' );
-         armTypeDom = document.querySelector( '#arm-type' ); */
+      rateStructureDom = document.querySelector( '#rate-structure' );
+      armTypeDom = document.querySelector( '#arm-type' );
       rateChecker.init();
     } );
 
@@ -188,6 +187,14 @@ describe( 'explore-rates/rate-checker', () => {
       expect( downPaymentDom.value ).toBe( '20000' );
       simulateEvent( 'focusout', downPaymentDom );
       expect( downPaymentDom.value ).toBe( '20,000' );
+    } );
+
+    it( 'rate structure', () => {
+      expect( rateStructureDom.value ).toBe( 'Fixed' );
+    } );
+
+    it( 'ARM type', () => {
+      expect( armTypeDom.value ).toBe( '3/1' );
     } );
   } );
 } );
