@@ -95,10 +95,12 @@ describe( 'Dropdown utils', () => {
   } );
 
   it( 'should select several select elements', () => {
-    document.body.innerHTML +=
-      '<select id="foo1"><option value="baz1"></option></select>';
-    document.body.innerHTML +=
-      '<select id="foo2"><option value="baz1"></option></select>';
+    document.body.innerHTML += `
+<select id="foo1"><option value="baz1"></option></select>
+`;
+    document.body.innerHTML += `
+<select id="foo2"><option value="baz1"></option></select>
+`;
     dropDownUtils( [ 'foo', 'foo2' ] ).disable();
     expect( document.querySelectorAll( 'select :disabled' ).length ).toBe( 2 );
     dropDownUtils( [ 'foo', 'foo1', 'foo2' ] ).enable();
