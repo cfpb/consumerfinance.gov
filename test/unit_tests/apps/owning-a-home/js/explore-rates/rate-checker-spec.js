@@ -194,7 +194,7 @@ describe( 'explore-rates/rate-checker', () => {
     } );
 
     it( 'ARM type', () => {
-      expect( armTypeDom.value ).toBe( '5/1' );
+      expect( armTypeDom.value ).toBe( '5-1' );
     } );
   } );
 } );
