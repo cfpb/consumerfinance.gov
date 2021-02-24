@@ -145,7 +145,8 @@ describe( 'YES utility functions', () => {
   } );
 
   describe( '.entries', () => {
-    it( 'throws an error when it receives a value that isn\'t an object', () => {
+    it( 'throws an error when it receives ' +
+        'a value that isn\'t an object', () => {
       const invalidArgs = [ function() { return 'a'; }, null, 1, 'bad', [] ];
 
       invalidArgs.forEach(
@@ -153,7 +154,7 @@ describe( 'YES utility functions', () => {
       );
     } );
 
-    it( 'reduces an object into an array of arays form key/value pairs', () => {
+    it( 'reduces object into array of arrays form key/value pairs', () => {
       const pet = {
         name: 'buddy',
         type: 'cat'
@@ -181,7 +182,10 @@ describe( 'YES utility functions', () => {
       expect( obj.length ).toBe( 0 );
 
       const fragment = document.createDocumentFragment();
-      const children = [ document.createElement( 'a' ), document.createElement( 'a' ) ];
+      const children = [
+        document.createElement( 'a' ),
+        document.createElement( 'a' )
+      ];
       children.forEach( child => fragment.appendChild( child ) );
 
       const dom = document.createElement( 'div' );
@@ -193,7 +197,8 @@ describe( 'YES utility functions', () => {
   } );
 
   describe( '.toggleCFNotification', () => {
-    it( 'throws an error if first arg is supplied and value is not a dom node', () => {
+    it( 'throws an error if first arg is supplied ' +
+        'and value is not a dom node', () => {
       expect( () => toggleCFNotification( 'foo', true ) ).toThrow();
     } );
 
@@ -204,11 +209,13 @@ describe( 'YES utility functions', () => {
 
       toggleCFNotification( el, true );
 
-      expect( el.classList.contains( 'm-notification__visible' ) ).toBeTruthy();
+      expect( el.classList.contains( 'm-notification__visible' ) )
+        .toBeTruthy();
 
       toggleCFNotification( el, false );
 
-      expect( el.classList.contains( 'm-notification__visible' ) ).toBeFalsy();
+      expect( el.classList.contains( 'm-notification__visible' ) )
+        .toBeFalsy();
     } );
   } );
 
@@ -217,7 +224,7 @@ describe( 'YES utility functions', () => {
       expect( toPrecision( 'string' ) ).toBe( 'string' );
     } );
 
-    it( 'returns the original number when a precision is not specified', () => {
+    it( 'returns original number when a precision is not specified', () => {
       const num = '100';
       expect( toPrecision( num ) ).toBe( num );
     } );
@@ -226,7 +233,8 @@ describe( 'YES utility functions', () => {
       expect( toPrecision() ).toBe( '0' );
     } );
 
-    it( 'adds a number of zeros to the end of a string commesurate with the value supplied as the second argument', () => {
+    it( 'adds a number of zeros to the end of a string commesurate ' +
+        'with the value supplied as the second argument', () => {
       const string = '100.';
 
       expect( toPrecision( string, 3 ) ).toBe( '100.000' );
