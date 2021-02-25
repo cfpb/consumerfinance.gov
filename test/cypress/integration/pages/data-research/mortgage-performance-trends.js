@@ -1,4 +1,6 @@
-import { MortgagePerformanceTrends } from '../../../pages/data-research/mortgage-performance-trends';
+import {
+  MortgagePerformanceTrends
+} from '../../../pages/data-research/mortgage-performance-trends';
 
 const trends = new MortgagePerformanceTrends();
 

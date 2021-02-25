@@ -21,9 +21,13 @@ describe( 'Paying for College', () => {
       cy.get( '#answer3' ).should( 'be.visible' );
     } );
     it( 'should display expandable comparison tables', () => {
-      page.clickExpandable( 'Detailed comparison of Federal and Private loans' );
+      page.clickExpandable(
+        'Detailed comparison of Federal and Private loans'
+      );
       cy.get( '.compare-table' ).should( 'be.visible' );
-      page.clickExpandable( 'Detailed comparison of Federal and Private loans' );
+      page.clickExpandable(
+        'Detailed comparison of Federal and Private loans'
+      );
       cy.get( '.compare-table' ).should( 'not.be.visible' );
 
       page.clickExpandable( 'Federal Loan Options' );
@@ -37,7 +41,10 @@ describe( 'Paying for College', () => {
       cy.get( '#PrivateLoanOptions' ).should( 'not.be.visible' );
     } );
     it( 'should display answers to each question', () => {
-      page.clickBubble( "What's the difference between subsidized and unsubsidized student loans?" );
+      page.clickBubble(
+        'What\'s the difference between ' +
+        'subsidized and unsubsidized student loans?'
+      );
       cy.get( '.bubble-transparent-answer' ).should( 'be.visible' );
       page.closeFirstBubble();
       cy.get( '.bubble-transparent-answer' ).should( 'not.be.visible' );
@@ -45,13 +52,19 @@ describe( 'Paying for College', () => {
       page.clickBubble( 'What happened to Stafford Loans?' );
       cy.get( '.bubble-transparent-answer' ).should( 'be.visible' );
 
-      page.clickBubble( 'How often do student loan rates change?' );
+      page.clickBubble(
+        'How often do student loan rates change?'
+      );
       cy.get( '.bubble-transparent-answer' ).should( 'be.visible' );
 
-      page.clickBubble( 'Should I use a credit card to cover my education costs?' );
+      page.clickBubble(
+        'Should I use a credit card to cover my education costs?'
+      );
       cy.get( '.bubble-transparent-answer' ).should( 'be.visible' );
 
-      page.clickBubble( "What if I can't repay my private student loan?" );
+      page.clickBubble(
+        "What if I can't repay my private student loan?"
+      );
       cy.get( '.bubble-transparent-answer' ).should( 'be.visible' );
       page.closeLastBubble();
 

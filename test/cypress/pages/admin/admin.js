@@ -63,7 +63,8 @@ export class AdminPage {
   }
 
   addMortgageConstant() {
-    cy.get( 'a[href="/admin/data_research/mortgagedataconstant/create/"]' ).click();
+    cy.get( 'a[href="/admin/data_research/mortgagedataconstant/create/"]' )
+      .click();
     cy.get( '#id_name' ).type( 'test' );
     this.submitForm();
   }
@@ -74,7 +75,8 @@ export class AdminPage {
   }
 
   addMortgageMetadata() {
-    cy.get( 'a[href="/admin/data_research/mortgagemetadata/create/"]' ).click();
+    cy.get( 'a[href="/admin/data_research/mortgagemetadata/create/"]' )
+      .click();
     cy.get( '#id_name' ).type( 'Test' );
     this.submitForm();
   }
@@ -93,7 +95,8 @@ export class AdminPage {
 
   editRegulation() {
     this.getFirstTableRow().trigger( 'mouseover' );
-    cy.get( 'a[href="/admin/regulations3k/part/edit/1/"]' ).click( { force: true } );
+    cy.get( 'a[href="/admin/regulations3k/part/edit/1/"]' )
+      .click( { force: true } );
     this.submitForm();
   }
 
@@ -105,7 +108,8 @@ export class AdminPage {
   }
 
   cleanUpRegulations() {
-    cy.get( 'table' ).find( 'tr' ).last().contains( 'Delete' ).click( { force: true } );
+    cy.get( 'table' ).find( 'tr' ).last().contains( 'Delete' )
+      .click( { force: true } );
     this.submitForm();
   }
 
@@ -243,11 +247,13 @@ export class AdminPage {
   typeTableEditorTextbox( text ) {
     // Wait for Wagtail JS to finish initializing. If we don't, it interrupts the typing.
     cy.wait( 500 );
-    return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( text );
+    return cy.get( '.table-block-modal .public-DraftEditor-content' )
+      .type( text );
   }
 
   backspaceTableEditorTextbox( ) {
-    return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( '{backspace}' );
+    return cy.get( '.table-block-modal .public-DraftEditor-content' )
+      .type( '{backspace}' );
   }
 
   selectInternalLink( text ) {

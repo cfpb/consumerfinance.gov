@@ -21,8 +21,10 @@ describe( 'Obtener Respuestas', () => {
     it( 'should correct spelling', () => {
       buscar.enter( 'vehíclo' );
       buscar.search();
-      buscar.resultsHeader().should( 'contain', 'resultados para “vehículo”' );
-      buscar.resultsHeader().siblings( 'p' ).first().should( 'contain', 'Busca de vehíclo' );
+      buscar.resultsHeader()
+        .should( 'contain', 'resultados para “vehículo”' );
+      buscar.resultsHeader().siblings( 'p' ).first()
+        .should( 'contain', 'Busca de vehíclo' );
     } );
   } );
 } );

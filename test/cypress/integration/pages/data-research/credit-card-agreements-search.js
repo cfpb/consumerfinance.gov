@@ -1,4 +1,6 @@
-import { CreditCardAgreementSearch } from '../../../pages/data-research/credit-card-agreements-search';
+import {
+  CreditCardAgreementSearch
+} from '../../../pages/data-research/credit-card-agreements-search';
 
 const searchPage = new CreditCardAgreementSearch();
 

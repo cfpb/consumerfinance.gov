@@ -91,7 +91,8 @@ describe( 'Admin', () => {
     admin.toggleFlag();
     admin.flagHeading().should( 'contain', 'enabled for all requests' );
     admin.toggleFlag();
-    admin.flagHeading().should( 'contain', 'enabled when any condition is met.' );
+    admin.flagHeading()
+      .should( 'contain', 'enabled when any condition is met.' );
   } );
 
   it( 'should use Block Inventory to search for blocks', () => {

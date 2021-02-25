@@ -10,6 +10,7 @@ describe( 'Email Sign Up', () => {
     page.signUp( 'testing@cfpb.gov' );
     // Assert
     page.successNotification().should( 'exist' );
-    page.successNotification().contains( 'Your submission was successfully received.' );
+    page.successNotification()
+      .contains( 'Your submission was successfully received.' );
   } );
 } );

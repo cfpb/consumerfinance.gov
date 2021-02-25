@@ -1,7 +1,10 @@
 export class ActivitySearch {
 
   open() {
-    cy.visit( '/consumer-tools/educator-tools/youth-financial-education/teach/activities/' );
+    cy.visit(
+      '/consumer-tools/educator-tools/' +
+      'youth-financial-education/teach/activities/'
+    );
   }
 
   selectFilter( label ) {

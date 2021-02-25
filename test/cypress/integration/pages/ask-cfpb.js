@@ -24,8 +24,10 @@ describe( 'Ask CFPB', () => {
     it( 'should correct spelling', () => {
       search.enter( 'vehile' );
       search.search();
-      search.resultsHeader().should( 'contain', 'results for “vehicle”' );
-      search.resultsHeader().siblings( 'p' ).first().should( 'contain', 'Search instead for' );
+      search.resultsHeader()
+        .should( 'contain', 'results for “vehicle”' );
+      search.resultsHeader().siblings( 'p' ).first()
+        .should( 'contain', 'Search instead for' );
     } );
   } );
 
@@ -36,15 +38,23 @@ describe( 'Ask CFPB', () => {
 
     it( 'should hide content on mobile', () => {
       cy.viewport( 600, 1000 );
-      cy.get( '.o-summary_content' ).should( 'have.class', 'u-max-height-transition' );
-      cy.get( '.o-summary_content' ).should( 'have.class', 'u-max-height-summary' );
-      cy.get( '.o-summary_content' ).invoke( 'outerHeight' ).should( 'be.lte', 88 );
+      cy.get( '.o-summary_content' )
+        .should( 'have.class', 'u-max-height-transition' );
+      cy.get( '.o-summary_content' )
+        .should( 'have.class', 'u-max-height-summary' );
+      cy.get( '.o-summary_content' )
+        .invoke( 'outerHeight' ).should( 'be.lte', 88 );
       answerPage.clickSummary();
-      cy.get( '.o-summary_content' ).should( 'have.class', 'u-max-height-transition' );
-      cy.get( '.o-summary_content' ).should( 'not.have.class', 'u-no-animation' );
-      cy.get( '.o-summary_content' ).should( 'not.have.class', 'u-max-height-summary' );
-      cy.get( '.o-summary_content' ).should( 'have.class', 'u-max-height-default' );
-      cy.get( '.o-summary_content' ).invoke( 'outerHeight' ).should( 'be.gt', 88 );
+      cy.get( '.o-summary_content' )
+        .should( 'have.class', 'u-max-height-transition' );
+      cy.get( '.o-summary_content' )
+        .should( 'not.have.class', 'u-no-animation' );
+      cy.get( '.o-summary_content' )
+        .should( 'not.have.class', 'u-max-height-summary' );
+      cy.get( '.o-summary_content' )
+        .should( 'have.class', 'u-max-height-default' );
+      cy.get( '.o-summary_content' ).invoke( 'outerHeight' )
+        .should( 'be.gt', 88 );
     } );
   } );
 } );

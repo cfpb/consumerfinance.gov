@@ -1,5 +1,7 @@
 import { Filter } from '../../components/filter';
-import { FilterableListControl } from '../../components/filterable-list-control';
+import {
+  FilterableListControl
+} from '../../components/filterable-list-control';
 
 const filterableList = new FilterableListControl();
 const filter = new Filter();
