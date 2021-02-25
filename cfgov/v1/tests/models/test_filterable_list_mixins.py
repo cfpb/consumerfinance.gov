@@ -47,7 +47,17 @@ class TestFilterableListMixin(TestCase):
         )
 
     @override_settings(FLAGS={"HIDE_ARCHIVE_FILTER_OPTIONS": [("boolean", True)]})
-    def test_get_context_raises_exception_for_super_obj_has_no_archive_context(
+    def test_get_context_disable_archive_filter_options(
+        self
+    ):
+        self.assertRaises(
+            AttributeError,
+            self.mixin.get_context,
+            request=self.factory.get("/")
+        )
+
+    @override_settings(FLAGS={"HIDE_ARCHIVE_FILTER_OPTIONS": [("boolean", False)]})
+    def test_get_context_enable_archive_filter_options(
         self
     ):
         self.assertRaises(
