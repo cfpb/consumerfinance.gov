@@ -146,7 +146,7 @@ class AnswerPageDocumentTest(TestCase):
             AnswerPageDocument._doc_type.mapping.to_dict(), {
                 'properties': {
                     'autocomplete': {
-                        'analyzer': 'label_autocomplete', 'type': 'text'
+                        'analyzer': 'ngram_tokenizer', 'type': 'text'
                     },
                     'language': {'type': 'text'},
                     'portal_categories': {'type': 'text'},
