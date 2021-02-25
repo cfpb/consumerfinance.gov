@@ -95,7 +95,7 @@ describe( 'Dropdown utils', () => {
   } );
 
   it( 'should select several select elements', () => {
-    /* eslint-disable max-line */
+    /* eslint-disable max-len */
     document.body.innerHTML += '<select id="foo1"><option value="baz1"></option></select>';
     document.body.innerHTML += '<select id="foo2"><option value="baz1"></option></select>';
     /* eslint-enable max-len */
