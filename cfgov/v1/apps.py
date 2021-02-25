@@ -3,7 +3,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.staticfiles import storage
 from django.db.models.signals import post_save
 
-from .signals import user_save_callback
+from wagtail.core.signals import (
+    page_published, page_unpublished, post_page_move
+)
+
+from .signals import break_enforcement_cache, user_save_callback
 
 
 class V1AppConfig(AppConfig):
@@ -25,3 +29,11 @@ class V1AppConfig(AppConfig):
                 (r"""(@import\s*["']\s*(.*?)["'])""", """@import url("%s")"""),
             )),
         )
+
+        from v1.models.enforcement_action_page import EnforcementActionPage
+        page_published.connect(break_enforcement_cache,
+                               sender=EnforcementActionPage)
+        page_unpublished.connect(break_enforcement_cache,
+                                 sender=EnforcementActionPage)
+        post_page_move.connect(break_enforcement_cache,
+                               sender=EnforcementActionPage)

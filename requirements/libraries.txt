@@ -43,7 +43,7 @@ wagtailmedia==0.6.0
 https://github.com/cfpb/elasticsearch-dsl-py/releases/download/7.2.2/elasticsearch_dsl-7.2.2-py2.py3-none-any.whl
 https://github.com/cfpb/wagtail-autocomplete/releases/download/0.7/wagtail_autocomplete-0.6-py3-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.17.1/owning_a_home_api-0.17.1-py3-none-any.whl
-https://github.com/cfpb/retirement/releases/download/0.15.1/retirement-0.15.1-py3-none-any.whl
+https://github.com/cfpb/retirement/releases/download/0.15.2/retirement-0.15.2-py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.5.1/ccdb5_api-1.5.1-py3-none-any.whl
 https://github.com/cfpb/ccdb5-ui/releases/download/2.3.1/ccdb5_ui-2.3.1-py3-none-any.whl
 https://github.com/cfpb/django-college-costs-comparison/releases/download/1.17.1/comparisontool-1.17.1-py3-none-any.whl

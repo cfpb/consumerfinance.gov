@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
+from unittest import mock
+
 from django.apps import apps
 from django.test import SimpleTestCase, TestCase
 
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.tests.testapp.models import StreamPage
-
-import mock
 
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import (

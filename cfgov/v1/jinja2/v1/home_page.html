@@ -7,21 +7,62 @@
     {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
+{% block css %}
+    {{ super() }}
+    <style>
+        /* TODO: remove inline styles when new homepage design is finalized in 2021. */
+        .m-hero_wrapper {
+            /* #b4b5b6 is @gray-40 */
+            border-right: 1px solid #b4b5b6;
+            border-bottom: 1px solid #b4b5b6;
+            border-left: 1px solid #b4b5b6;
+        }
+        /* Swap the homepage hero's white text to black on small screens */
+        @media only all and (max-width: 37.5625em) {
+            .m-hero__knockout {
+                /* CFPB Black #101820 */
+                color: #101820;
+            }
+        }
+    </style>
+{% endblock css %}
+
+{% block hero %}
+    {% for block in page.content %}
+        {% if block.block_type == 'features' %}
+            <section class="wrapper
+                            wrapper__match-content
+                            block
+                            block__bg
+                            block__border
+                            block__flush-top
+                            u-mb0">
+                {% include_block block %}
+            </section>
+        {% else %}
+            {% include_block block %}
+        {% endif %}
+    {% endfor %}
+{% endblock hero %}
+
 {% block content_main %}
+    {% if carousel_items %}
+        <h1 class="u-visually-hidden">
+            {{ _('Consumer Financial Protection Bureau') }} {{ _('homepage') }}
+        </h1>
+        {{ carousel.render( carousel_items ) }}
+        <section class="block">
+            {% with value = {'info_units': info_units, 'format': '33-33-33'} %}
+                {% include 'organisms/info-unit-group-2.html' %}
+            {% endwith %}
+        </section>
+    {% else %}
+        {% with value = {'info_units': info_units, 'format': '33-33-33'} %}
+            {% include 'organisms/info-unit-group-2.html' %}
+        {% endwith %}
+    {% endif %}
 
-<h1 class="u-visually-hidden">
-	{{ _('Consumer Financial Protection Bureau') }} {{ _('homepage') }}
-</h1>
-
-{{ carousel.render( carousel_items ) }}
-
-<section class="block">
-    {% with value = {'info_units': info_units, 'format': '33-33-33'} %}
-    {% include 'organisms/info-unit-group-2.html' %}
-    {% endwith %}
-</section>
-
-<section class="block">
-    {{ card_group.render( card_heading, cards ) }}
-</section>
+    <section class="block">
+        {{ card_group.render( card_heading, cards ) }}
+    </section>
 {% endblock content_main %}

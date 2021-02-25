@@ -1,11 +1,11 @@
 import unittest
+from unittest.mock import Mock
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from wagtail.core.models import Locale, Page
 
-from mock import Mock
 from model_bakery import baker
 
 from jobmanager.models.django import ApplicantType, Grade
