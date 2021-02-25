@@ -39,6 +39,14 @@ function Summary( element ) {
       return this;
     }
 
+    /* Bail out of initializatiion if the height of the summary's content
+       is less then our summary height of 5.5ems (16 * 5.5 = 88)
+       See https://github.com/cfpb/design-system/blob/72623270013f2ad08dbe92b5b709ed2b434ee41e/packages/cfpb-atomic-component/src/utilities/transition/transition.less#L84 */
+    if ( _contentDom.offsetHeight <= 88 ) {
+      _hideButton();
+      return this;
+    }
+
     _transition = new MaxHeightTransition( _contentDom ).init();
     _flyout = new FlyoutMenu( _dom ).init();
 
@@ -87,6 +95,9 @@ function Summary( element ) {
    * @returns {boolean} Whether it has successfully been resumed or not.
    */
   function _resume() {
+    // Re-initialize the transition on every resize to set the max-height.
+    _transition.refresh();
+
     if ( _suspended && _isExpanded === false ) {
       _flyout.addEventListener( 'expandEnd', _expandEndHandler );
       // Set resume state.

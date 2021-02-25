@@ -2,11 +2,10 @@ from django.db import models
 from django.utils.safestring import mark_safe
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, InlinePanel, ObjectList, TabbedInterface
+    FieldPanel, InlinePanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.admin.forms import (
-    WagtailAdminModelFormMetaclass, WagtailAdminPageForm
-)
+from wagtail.core.blocks import StreamBlock
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Orderable, PageManager
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -14,37 +13,37 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 
+from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage
 
 
-# These classes are used to add support for nested InlinePanels, and are
-# referenced by HomePage.base_form_class. This workaround comes from
-# https://github.com/wagtail/wagtail/issues/5511. Proper support for nested
-# inline panels in Wagtail won't be added until version 2.8, see
-# https://github.com/wagtail/wagtail/pull/5566.
-class HomePageFormMetaclass(WagtailAdminModelFormMetaclass):
-    @classmethod
-    def child_form(cls):
-        return HomePageForm
+class HomePageContentBlock(StreamBlock):
+    jumbo_hero = molecules.JumboHero()
+    features = organisms.InfoUnitGroup()
 
-
-class HomePageForm(WagtailAdminPageForm, metaclass=HomePageFormMetaclass):
-    pass
+    class Meta:
+        block_counts = {
+            'jumbo_hero': {'max_num': 1},
+            'features': {'max_num': 1},
+        }
 
 
 class HomePage(CFGOVPage):
+    content = StreamField(HomePageContentBlock, blank=True)
+
     card_heading = models.CharField(max_length=40, null=True, blank=True)
 
     # Tab handler interface
     edit_handler = TabbedInterface([
+        ObjectList([StreamFieldPanel('content')], heading='Content'),
         ObjectList([
             InlinePanel(
-                'carousel_items', min_num=4, max_num=4, label="Carousel Item"
+                'carousel_items', max_num=4, label="Carousel Item"
             ),
         ], heading='Carousel'),
         ObjectList([
             InlinePanel(
-                'info_units', min_num=6, max_num=6, label="Info Unit"
+                'info_units', min_num=3, max_num=6, label="Info Unit"
             ),
         ], heading='Info Units'),
         ObjectList([
@@ -65,8 +64,6 @@ class HomePage(CFGOVPage):
     parent_page_types = ['wagtailcore.Page']
 
     objects = PageManager()
-
-    base_form_class = HomePageForm
 
     @property
     def page_js(self):
@@ -162,7 +159,11 @@ class HomePageInfoUnit(Orderable, ClusterableModel):
             'image': {
                 'upload': self.image,
             },
-            'heading': '<h3>%s</h3>' % self.title,
+            'heading': {
+                'text': self.title,
+                'level': 'h2',
+                'level_class': 'h3',
+            },
             'body': self.body,
             'links': [
                 {

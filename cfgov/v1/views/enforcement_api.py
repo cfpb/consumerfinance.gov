@@ -86,6 +86,20 @@ class EnforcementActionSerializer(serializers.ModelSerializer):
         ]
 
 
+# This API serves a JSON representation of the collection of official
+# enforcement actions.
+#
+# EnforcementActionPage.all_actions() filters for live pages that are children
+# of the Enforcement Actions filter page in the Wagtail tree.
+#
+# EnforcementActionSerializer creates a JSON representation of each
+# EnforcementActionPage, including all of the metadata fields. See
+# v1.tests.views.test_enforcement_api for more information.
+#
+# This endpoint is cached with Akamai. When any EnforcementActionPage is
+# published, unpublished, or moved, the cache is invalidated by
+# v1.signals.break_enforcement_cache. Listeners for those actions are
+# registered in v1.apps.
 class EnforcementAPIView(APIView):
     def get(self, request):
         queryset = EnforcementActionPage.all_actions()
