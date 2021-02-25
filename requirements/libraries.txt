@@ -7,7 +7,7 @@ djangorestframework==3.11.1
 django-csp==3.4
 django-elasticsearch-dsl==7.1.4
 django-extensions==2.1.3
-django-flags==4.2.4
+django-flags==5.0.3
 django-haystack==2.8.1
 # django-localflavor is required by django-college-costs-comparison
 django-localflavor==2.2
@@ -32,7 +32,7 @@ requests_aws4auth==0.8.0
 requests_toolbelt==0.8.0
 urllib3==1.25.2
 # wagtail-autocomplete==0.6 TODO: Restore when wagtail-autocomplete #77 is merged
-wagtail-flags==5.0.0
+wagtail-flags==5.1.0
 wagtail-inventory==1.2.0
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.4.0
