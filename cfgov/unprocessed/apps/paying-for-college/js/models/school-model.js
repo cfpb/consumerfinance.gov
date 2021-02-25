@@ -64,7 +64,7 @@ const schoolModel = {
    * @param {string} level - program level - 'undergrad' or 'graduate'
    * @returns {array} an array of objects containing program data
    */
-  getAlphbeticalProgramList: function( level ) {
+  getAlphabeticalProgramList: function( level ) {
     let list = [];
     if ( !schoolModel.values.hasOwnProperty( 'programCodes' ) ) return list;
     if ( !schoolModel.values.programCodes.hasOwnProperty( level ) ) return list;
