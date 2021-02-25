@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
-import goalsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/goals';
+import
+goalsView
+  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/goals';
 import {
   updateGoalAction,
   updateGoalImportanceAction,
@@ -32,7 +34,9 @@ describe( 'goalsView', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML;
     store = mockStore();
-    view = goalsView( document.querySelector( `.${ CLASSES.CONTAINER }` ), { store } );
+    view = goalsView(
+      document.querySelector( `.${ CLASSES.CONTAINER }` ), { store }
+    );
     view.init();
   } );
 
@@ -41,8 +45,11 @@ describe( 'goalsView', () => {
     view = null;
   } );
 
-  it( 'dispatches the correct event when the long term goal field is blurred', () => {
-    const ltgEl = document.querySelector( `.${ CLASSES.LONG_TERM_GOAL }` );
+  it( 'dispatches the correct event when ' +
+      'the long term goal field is blurred', () => {
+    const ltgEl = document.querySelector(
+      `.${ CLASSES.LONG_TERM_GOAL }`
+    );
     const goal = 'my goal';
     const mock = store.dispatch.mock;
 
@@ -56,8 +63,11 @@ describe( 'goalsView', () => {
     );
   } );
 
-  it( 'dispatches the correct event when the goal importance field is blurred', () => {
-    const importanceEl = document.querySelector( `.${ CLASSES.GOAL_IMPORTANCE }` );
+  it( 'dispatches the correct event when ' +
+      'the goal importance field is blurred', () => {
+    const importanceEl = document.querySelector(
+      `.${ CLASSES.GOAL_IMPORTANCE }`
+    );
     const goal = 'my goal';
     const mock = store.dispatch.mock;
 
@@ -71,8 +81,11 @@ describe( 'goalsView', () => {
     );
   } );
 
-  it( 'dispatches the correct event when the goal steps field is blurred', () => {
-    const stepsEl = document.querySelector( `.${ CLASSES.GOAL_STEPS }` );
+  it( 'dispatches the correct event when ' +
+      'the goal steps field is blurred', () => {
+    const stepsEl = document.querySelector(
+      `.${ CLASSES.GOAL_STEPS }`
+    );
     const goal = 'my goal';
     const mock = store.dispatch.mock;
 
@@ -86,7 +99,8 @@ describe( 'goalsView', () => {
     );
   } );
 
-  it( 'dispatches the correct event when a radio timeline button is selected', () => {
+  it( 'dispatches the correct event when ' +
+      'a radio timeline button is selected', () => {
     const shortTimelineEl = document.querySelectorAll( '.a-radio' )[0];
     const mock = store.dispatch.mock;
 

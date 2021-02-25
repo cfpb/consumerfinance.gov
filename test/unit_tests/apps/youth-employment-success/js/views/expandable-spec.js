@@ -1,4 +1,6 @@
-import expandableView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/expandable';
+import
+expandableView
+  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/expandable';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 
 const HTML = `
@@ -40,7 +42,7 @@ describe( 'expandableView', () => {
     } );
 
 
-    it( 'adds the route-details section as a direct child when closed', () => {
+    it( 'adds route-details section as a direct child when closed', () => {
       target.click();
       // The expandable starts open, so click it again.
       target.click();
@@ -52,7 +54,8 @@ describe( 'expandableView', () => {
       );
     } );
 
-    it( 'removes the route-details section as a direct child when re-opened', () => {
+    it( 'removes route-details section as a ' +
+        'direct child when re-opened', () => {
       target.click();
       target.click();
       target.click();

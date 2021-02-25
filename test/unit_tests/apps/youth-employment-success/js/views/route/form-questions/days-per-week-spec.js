@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
-import daysPerWeekView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week';
+import
+daysPerWeekView
+  from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week';
 import {
   clearDaysPerWeekAction,
   updateDaysPerWeekAction,
@@ -58,13 +60,13 @@ describe( 'DaysPerWeekView', () => {
       expect( store.subscribe ).toHaveBeenCalled();
     } );
 
-    it( 'initializes the todo notification component on init', () => {
+    it( 'initializes todo notification component on init', () => {
       expect( todoNotification.init.mock.calls.length ).toBe( 1 );
     } );
   } );
 
   describe( 'event handling', () => {
-    it( 'calls the correct action on text input', () => {
+    it( 'calls correct action on text input', () => {
       const daysEl = dom.querySelector( 'input[type="text"]' );
       const daysPerWeek = '2';
       const mock = store.dispatch.mock;
@@ -82,7 +84,7 @@ describe( 'DaysPerWeekView', () => {
       );
     } );
 
-    it( 'calls the correct action on checkbox input', () => {
+    it( 'calls correct action on checkbox input', () => {
       const notSureEl = dom.querySelector( 'input[type="checkbox"]' );
       const mock = store.dispatch.mock;
 
@@ -152,7 +154,7 @@ describe( 'DaysPerWeekView', () => {
         }
       };
 
-      it( 'clears the form inputs', () => {
+      it( 'clears form inputs', () => {
         const daysEl = dom.querySelector( 'input[type="text"]' );
         const notSureEl = dom.querySelector( 'input[type="checkbox"]' );
 
@@ -165,7 +167,7 @@ describe( 'DaysPerWeekView', () => {
         expect( notSureEl.checked ).toBe( false );
       } );
 
-      it( 'hides the container element, if not hidden', () => {
+      it( 'hides container element if not hidden', () => {
         const subscriberFn = store.subscriber();
         subscriberFn( prevState, state );
 
@@ -186,7 +188,7 @@ describe( 'DaysPerWeekView', () => {
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
       } );
 
-      it( 'dispatches the correct action when daysPerWeek is filled in', () => {
+      it( 'dispatches correct action when daysPerWeek is filled in', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( prevState, state );
 
@@ -196,7 +198,8 @@ describe( 'DaysPerWeekView', () => {
         );
       } );
 
-      it( 'calls .remove on the todo notification component when this view is toggled', () => {
+      it( 'calls .remove on todo notification ' +
+          'component when this view is toggled', () => {
         store.subscriber()( { routes: { routes: [ {} ]}}, state );
 
         expect( todoNotification.remove.mock.calls.length ).toBe( 1 );

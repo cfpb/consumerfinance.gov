@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
-import budgetFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/budget';
+import
+budgetFormView
+  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/budget';
 import mockStore from '../../../../../mocks/store';
 
 const HTML = `
@@ -91,7 +93,8 @@ describe( 'BudgetFormView', () => {
     view = null;
   } );
 
-  it( 'updates the total when either/both money spent or earned values are present', () => {
+  it( 'updates the total when either/both ' +
+      'money spent or earned values are present', () => {
     const moneySpentEl = document.querySelector( `.${ CLASSES.SPENT_INPUT }` );
     const moneyEarnedEl = document.querySelector( `.${ CLASSES.EARNED_INPUT }` );
     const totalEl = document.querySelector( `.${ CLASSES.REMAINING }` );

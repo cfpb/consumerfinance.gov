@@ -1,7 +1,16 @@
-import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
-import { toArray, toPrecision } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
-import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
+import
+routeDetailsView
+  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import {
+  toArray,
+  toPrecision
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import {
+  PLAN_TYPES
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import
+transportationMap
+  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
 jest.mock(
   '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications',
@@ -111,7 +120,8 @@ describe( 'routeDetailsView', () => {
 
       const expected = transportationMap[nextState.route.transportation];
 
-      transportationEls.forEach( el => expect( el.textContent ).toBe( expected )
+      transportationEls.forEach(
+        el => expect( el.textContent ).toBe( expected )
       );
     } );
 
@@ -129,12 +139,14 @@ describe( 'routeDetailsView', () => {
     it( 'updates its days per week value', () => {
       view.render( nextState );
 
-      const daysPerWeekEl = document.querySelector( `.${ CLASSES.DAYS_PER_WEEK }` );
+      const daysPerWeekEl = document.querySelector(
+        `.${ CLASSES.DAYS_PER_WEEK }`
+      );
 
       expect( daysPerWeekEl.textContent ).toBe( nextState.route.daysPerWeek );
     } );
 
-    it( 'hides the average cost helper text when isMonthlyCost is true', () => {
+    it( 'hides average cost helper text when isMonthlyCost is true', () => {
       const state = {
         budget: { ...nextState.budget },
         route: {
@@ -147,15 +159,20 @@ describe( 'routeDetailsView', () => {
 
       view.render( state );
 
-      const averageCostHelperEl = document.querySelector( `.${ CLASSES.AVERAGE_COST_HELPER }` );
-      expect( averageCostHelperEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
+      const averageCostHelperEl = document.querySelector(
+        `.${ CLASSES.AVERAGE_COST_HELPER }`
+      );
+      expect( averageCostHelperEl.classList.contains( 'u-hidden' ) )
+        .toBeTruthy();
     } );
 
     describe( 'total costs', () => {
       let totalCostEl;
 
       beforeEach( () => {
-        totalCostEl = document.querySelector( `.${ CLASSES.TOTAL_COST }` );
+        totalCostEl = document.querySelector(
+          `.${ CLASSES.TOTAL_COST }`
+        );
       } );
 
       describe( 'when driving', () => {
@@ -177,7 +194,8 @@ describe( 'routeDetailsView', () => {
           expect( totalCostEl.textContent ).toBe( '—' );
         } );
 
-        it( 'does not update calculations if daysPerWeek is not supplied', () => {
+        it( 'does not update calculations if ' +
+            'daysPerWeek is not supplied', () => {
           view.render( {
             ...nextState,
             route: {
@@ -222,7 +240,8 @@ describe( 'routeDetailsView', () => {
           expect( totalCostEl.textContent ).toBe( '120.00' );
         } );
 
-        it( 'does not update the total cost if per day or per month is not supplied', () => {
+        it( 'does not update total cost if per day ' +
+            'or per month is not supplied', () => {
           const state = {
             budget: { ...nextState.budget },
             route: {
@@ -237,7 +256,8 @@ describe( 'routeDetailsView', () => {
           expect( totalCostEl.textContent ).toBe( '—' );
         } );
 
-        it( 'does not update the total cost if averageCost is not supplied', () => {
+        it( 'does not update total cost if ' +
+            'averageCost is not supplied', () => {
           const state = {
             budget: { ...nextState.budget },
             route: {
@@ -254,7 +274,8 @@ describe( 'routeDetailsView', () => {
           expect( totalCostEl.textContent ).toBe( '—' );
         } );
 
-        it( 'does not update the total cost if daysPerWeek is not supplied', () => {
+        it( 'does not update total cost if ' +
+            'daysPerWeek is not supplied', () => {
           const state = {
             budget: { ...nextState.budget },
             route: {
@@ -292,9 +313,12 @@ describe( 'routeDetailsView', () => {
     it( 'updates its budget remaining', () => {
       view.render( nextState );
 
-      const budgetLeftEl = document.querySelector( `.${ CLASSES.BUDGET_REMAINING }` );
+      const budgetLeftEl = document.querySelector(
+        `.${ CLASSES.BUDGET_REMAINING }`
+      );
 
-      expect( budgetLeftEl.textContent ).toBe( `${ String.fromCharCode( 8722 ) }117.00` );
+      expect( budgetLeftEl.textContent )
+        .toBe( `${ String.fromCharCode( 8722 ) }117.00` );
     } );
 
     it( 'updates the time in hours', () => {
@@ -323,13 +347,16 @@ describe( 'routeDetailsView', () => {
       expect( todosEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
     } );
 
-    it( 'preserves the first todo list item if hasDefaultTodo prop is true', () => {
+    it( 'preserves first todo list item if ' +
+        'hasDefaultTodo prop is true', () => {
       view = null;
       document.body.innerHTML = HTML;
 
       view = routeDetailsView(
         document.querySelector( `.${ CLASSES.CONTAINER }` ), {
-          alertTarget: document.querySelector( '.js-route-inline-notification' ),
+          alertTarget: document.querySelector(
+            '.js-route-inline-notification'
+          ),
           hasDefaultTodo: true
         }
       );
@@ -365,7 +392,8 @@ describe( 'routeDetailsView', () => {
       expect( todoItemsEl.querySelectorAll( 'li' ).length ).toBe( 0 );
     } );
 
-    it( 'does not hide the to-do list when an item is removed and there are remaining items', () => {
+    it( 'does not hide to-do list when an item ' +
+        'is removed and there are remaining items', () => {
       const state = {
         budget: { ...nextState.budget },
         route: {

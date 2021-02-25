@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
-import routeOptionToggleView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-toggle';
+import
+routeOptionToggleView
+  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-toggle';
 
 const HTML = `
   <button class="${ routeOptionToggleView.CLASSES.BUTTON }"></buton>
@@ -33,7 +35,9 @@ describe( 'routeOptionToggleView', () => {
     document.body.innerHTML = HTML;
     expandable = mockExpandable();
 
-    el = document.querySelector( `.${ routeOptionToggleView.CLASSES.BUTTON }` );
+    el = document.querySelector(
+      `.${ routeOptionToggleView.CLASSES.BUTTON }`
+    );
     view = routeOptionToggleView( el, {
       expandable,
       routeOptionForm: mockRouteForm

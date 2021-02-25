@@ -1,4 +1,6 @@
-import TodoNotification from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/todo-notification';
+import
+TodoNotification
+  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/todo-notification';
 import TODO_FIXTURE from '../../fixtures/todo-alert';
 
 const CONTAINER = 'alert-container';
@@ -47,7 +49,9 @@ describe( 'TodoNotification', () => {
     const children = container.children;
 
     expect( children.length ).toBe( 1 );
-    expect( children[0] ).toBe( document.querySelector( `.${ TodoNotification.CLASSES.CONTAINER }` ) );
+    expect( children[0] ).toBe( document.querySelector(
+      `.${ TodoNotification.CLASSES.CONTAINER }`
+    ) );
   } );
 
   it( 'removes the `add` alert and appends the `remove` alert', () => {
@@ -55,13 +59,15 @@ describe( 'TodoNotification', () => {
     instance.show();
 
     expect(
-      document.querySelector( '.js-alert-content' ).textContent.indexOf( 'added' )
+      document.querySelector( '.js-alert-content' )
+        .textContent.indexOf( 'added' )
     ).toBeGreaterThan( -1 );
 
     instance.hide();
 
     expect(
-      document.querySelector( '.js-alert-content' ).textContent.indexOf( 'removed' )
+      document.querySelector( '.js-alert-content' )
+        .textContent.indexOf( 'removed' )
     ).toBeGreaterThan( -1 );
   } );
 

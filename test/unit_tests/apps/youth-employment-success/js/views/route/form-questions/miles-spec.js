@@ -1,12 +1,16 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
-import milesView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/miles';
+import
+milesView
+  from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/miles';
 import mockStore from '../../../../../../mocks/store';
 import {
   clearMilesAction,
   updateMilesAction,
   updateMilesToActionPlan
 } from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import { PLAN_TYPES } from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import {
+  PLAN_TYPES
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 import TODO_FIXTURE from '../../../../fixtures/todo-alert';
 import TodoNotificationMock from '../../../../mocks/todo-notification';
 
@@ -48,13 +52,13 @@ describe( 'milesView', () => {
       expect( store.subscribe ).toHaveBeenCalled();
     } );
 
-    it( 'initializes the todo notification component on init', () => {
+    it( 'initializes todo notification component on init', () => {
       expect( todoNotification.init.mock.calls.length ).toBe( 1 );
     } );
   } );
 
   describe( 'event handling', () => {
-    it( 'calls the correct action on `miles` field input', () => {
+    it( 'calls correct action on `miles` field input', () => {
       const milesEl = dom.querySelector( 'input[type="text"]' );
       const milesPerDay = '5';
       const mock = store.dispatch.mock;
@@ -72,7 +76,7 @@ describe( 'milesView', () => {
       );
     } );
 
-    it( 'calls the correct action when the `not sure` checkbox is clicked', () => {
+    it( 'calls correct action when the `not sure` checkbox is clicked', () => {
       const notSureEl = document.querySelector( 'input[type="checkbox"]' );
       const mock = store.dispatch.mock;
 
@@ -170,7 +174,8 @@ describe( 'milesView', () => {
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
       } );
 
-      it( 'dispatches the correct action when miles is filled in and transportation method is not drive', () => {
+      it( 'dispatches correct action when miles is filled in ' +
+          'and transportation method is not drive', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( prevState, state );
 
@@ -180,7 +185,8 @@ describe( 'milesView', () => {
         );
       } );
 
-      it( 'dispatches the correct action when not sure is selected and transportation method is not drive', () => {
+      it( 'dispatches correct action when not sure is selected ' +
+          'and transportation method is not drive', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( {
           routes: {
@@ -196,7 +202,8 @@ describe( 'milesView', () => {
         );
       } );
 
-      it( 'calls .remove on the todo notification component when this view is toggled', () => {
+      it( 'calls .remove on todo notification ' +
+          'component when this view is toggled', () => {
         store.subscriber()( prevState, state );
 
         expect( todoNotification.remove.mock.calls.length ).toBe( 1 );

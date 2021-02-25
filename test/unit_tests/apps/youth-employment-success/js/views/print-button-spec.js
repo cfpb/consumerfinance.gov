@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../util/simulate-event';
-import printButton from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/print-button';
+import
+printButton
+  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/print-button';
 
 const CLASSES = printButton.CLASSES;
 const HTML = `
@@ -42,7 +44,8 @@ describe( 'printButtonView', () => {
     expect( removeEventSpy ).toHaveBeenCalled();
   } );
 
-  it( 'hides elements with the no print class on print, and shows them afterwards', () => {
+  it( 'hides elements with the no print class, ' +
+      'on print and shows them afterwards', () => {
     const elToToggle = document.querySelector( `.${ CLASSES.NO_PRINT }` );
 
     expect( elToToggle.classList.contains( CLASSES.HIDE ) ).toBeFalsy();

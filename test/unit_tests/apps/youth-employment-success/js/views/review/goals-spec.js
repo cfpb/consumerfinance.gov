@@ -1,6 +1,10 @@
-import reviewGoalsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/goals';
+import
+reviewGoalsView
+  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/goals';
 import mockStore from '../../../../../mocks/store';
-import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import {
+  toArray
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
 const HTML = `
 <div class="js-your-goals">
@@ -32,7 +36,12 @@ describe( 'reviewGoalsView', () => {
     store.mockState( {
       goals: {}
     } );
-    view = reviewGoalsView( document.querySelector( `.${ reviewGoalsView.CLASSES.CONTAINER }` ), { store } );
+    view = reviewGoalsView(
+      document.querySelector(
+        `.${ reviewGoalsView.CLASSES.CONTAINER }`
+      ),
+      { store }
+    );
     view.init();
   } );
 
@@ -64,13 +73,17 @@ describe( 'reviewGoalsView', () => {
       }
     };
 
-    let els = toArray( document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` ) );
+    let els = toArray(
+      document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` )
+    );
 
     els.forEach( el => expect( el.textContent ).toBe( '' ) );
 
     store.subscriber()( prevState, state );
 
-    els = toArray( document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` ) );
+    els = toArray(
+      document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` )
+    );
 
     els.forEach( el => {
       const expected = state.goals[el.getAttribute( 'data-js-goal' )];
@@ -89,13 +102,17 @@ describe( 'reviewGoalsView', () => {
       }
     };
 
-    let els = toArray( document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` ) );
+    let els = toArray(
+      document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` )
+    );
 
     els.forEach( el => expect( el.textContent ).toBe( '' ) );
 
     store.subscriber()( prevState, state );
 
-    els = toArray( document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` ) );
+    els = toArray(
+      document.querySelectorAll( `.${ reviewGoalsView.CLASSES.GOAL }` )
+    );
 
     els.forEach( el => {
       const expected = state.goals[el.getAttribute( 'data-js-goal' )];

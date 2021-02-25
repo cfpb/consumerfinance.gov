@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
-import routeOptionFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form';
+import
+routeOptionFormView
+  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form';
 import {
   averageCostView,
   daysPerWeekView,
@@ -7,13 +9,18 @@ import {
   milesView,
   transitTimeView
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions';
-import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import
+routeDetailsView
+  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
 import {
   updateTransportationAction
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import mockStore from '../../../../../mocks/store';
 
-jest.mock( '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/todo-notification' );
+jest.mock(
+  '../../../../../../../cfgov/unprocessed/apps/' +
+  'youth-employment-success/js/views/todo-notification'
+);
 
 const CLASSES = routeOptionFormView.CLASSES;
 const HTML = `
@@ -73,16 +80,19 @@ describe( 'routeOptionFormView', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML;
     store = mockStore();
-    view = routeOptionFormView( document.querySelector( `.${ CLASSES.FORM }` ), {
-      store,
-      routeIndex: 0,
-      routeDetailsView: detailsView,
-      averageCostView: costViewMock,
-      daysPerWeekView: daysPerWeekViewMock,
-      drivingCostEstimateView: costEstimateView,
-      milesView: milesViewMock,
-      transitTimeView: transitViewMock
-    } );
+    view = routeOptionFormView(
+      document.querySelector( `.${ CLASSES.FORM }` ),
+      {
+        store,
+        routeIndex: 0,
+        routeDetailsView: detailsView,
+        averageCostView: costViewMock,
+        daysPerWeekView: daysPerWeekViewMock,
+        drivingCostEstimateView: costEstimateView,
+        milesView: milesViewMock,
+        transitTimeView: transitViewMock
+      }
+    );
     view.init();
   } );
 
@@ -117,7 +127,8 @@ describe( 'routeOptionFormView', () => {
     );
   } );
 
-  it( 'hides the transportation discount section when transportation method is Walk', () => {
+  it( 'hides transportation discount section when ' +
+      'transportation method is Walk', () => {
     const state = {
       routes: {
         routes: [ {
@@ -131,7 +142,9 @@ describe( 'routeOptionFormView', () => {
 
     expect( discountEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
 
-    store.subscriber()( {}, { routes: { routes: [ { transportation: 'Drive' } ]}} );
+    store.subscriber()(
+      {}, { routes: { routes: [ { transportation: 'Drive' } ]}}
+    );
 
     expect( discountEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
   } );
