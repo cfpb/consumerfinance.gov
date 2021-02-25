@@ -764,6 +764,8 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
+    # Hide archive filter options in the filterable UI
+    "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Enable ES as the backend for FilterableLists
     "ELASTICSEARCH_FILTERABLE_LISTS": []
 }
