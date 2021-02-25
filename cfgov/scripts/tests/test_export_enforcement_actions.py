@@ -5,7 +5,7 @@ from django.test import TestCase
 from wagtail.core.models import Page, Site
 
 from scripts.export_enforcement_actions import assemble_output
-from v1.models.learn_page import EnforcementActionPage
+from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
 

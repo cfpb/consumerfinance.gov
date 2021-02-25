@@ -382,5 +382,47 @@ main.college-costs {
 		}
 	}
 
+	// Error visibility
+	&[data-state_showschoolerrors="yes"] {
+		[data-state-based-visibility="school-fields-errors"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_schoolselected="required"] {
+		[data-state-based-visibility="school-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_programtypeselected="required"] {
+		[data-state-based-visibility="type-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_programlengthselected="required"] {
+		[data-state-based-visibility="length-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_rateselected="required"] {
+		[data-state-based-visibility="rate-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_housingselected="required"] {
+		[data-state-based-visibility="housing-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_dependencyselected="required"] {
+		[data-state-based-visibility="dependency-required"] {
+			display: block;
+		}
+	}
 
 }

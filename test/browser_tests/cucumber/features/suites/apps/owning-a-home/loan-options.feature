@@ -1,12 +1,13 @@
 # Navigational links: open in same tab
 # Non-Navigational links: open in new tab
 Feature: Verify the Loan Options page works according to requirements
-  As a first time visitor to the Buying a House page
+  As a first time visitor to the Owning a Home page
   I want to navigate the Loan Options page
   So that I can find the information I'm looking for
 
 Background:
-   Given I navigate to the "Loan Options" page
+  Given I navigate to the "Loan Options" page
+
 
 @smoke_testing @loan_options @loan_options_expandable
 Scenario Outline: Click 'Learn More' to expand sections
@@ -20,6 +21,7 @@ Examples:
 | Interest rate type | Compare your interest rate options |
 | Loan type          | Choosing the right loan type       |
 
+
 @loan_options @loan_options_expandable
 Scenario Outline: Click 'Collapse' button to collapse sections
   When I click Learn More to expand the "<section_name>" section
@@ -31,6 +33,7 @@ Examples:
 | Loan term          |
 | Interest rate type |
 | Loan type          |
+
 
 @loan_options @loan_options_expandable
 Scenario Outline: Click 'Collapse <section_name>' link to collapse sections
@@ -47,19 +50,19 @@ Examples:
 
 @smoke_testing @loan_options
 Scenario Outline: Test inbound links in the Loan Options page
-  When I click on the "<link_name>" link
-  Then I should be directed to the internal "<relative_url>" URL
-    And I should see "<page_title>" displayed in the page title
+   When I click on the "<link_name>" link
+   Then I should be directed to the internal "<relative_url>" URL
+      And I should see "<page_title>" displayed in the page title
 
 Examples:
-| link_name      | page_title                                            | relative_url |
-| Buying a House | Buying a House > Consumer Financial Protection Bureau | /            |
+| link_name     | page_title                                           | relative_url |
+| Owning a Home | Owning a Home > Consumer Financial Protection Bureau | /            |
 
 
 @smoke_testing @loan_options
-Scenario: Test BAH link in the Loan Options page
-  When I click on the "Buying a House" link
-  Then I should be directed to the BAH Landing page
+Scenario: Test OAH link in the Loan Options page
+   When I click on the "Owning a Home" link
+   Then I should be directed to the OAH Landing page
 
 
 @loan_options @loan_options_expandable
@@ -83,8 +86,8 @@ Scenario Outline: Expand 'Loan Types' section then click Non-Navigational links 
   Then I should see the "<relative_url>" URL with page title <page_title> open in a new tab
 
 Examples:
-| link_name          | relative_url                               | page_title                     |
-| Qualified Mortgage | /askcfpb/1789/what-qualified-mortgage.html | What is a Qualified Mortgage?  |
+| link_name          | relative_url                               | page_title                    |
+| Qualified Mortgage | /askcfpb/1789/what-qualified-mortgage.html | What is a Qualified Mortgage? |
 
 @loan_options @prod_only @loan_options_expandable
 Scenario Outline: Expand 'Loan Term' section then click Non-Navigational links inside the expanded section
@@ -98,8 +101,8 @@ Examples:
 | Learn why                              | /askcfpb/1941/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment.html |
 | Learn more                             | /askcfpb/1965/how-do-mortgage-lenders-calculate-monthly-payments.html                                                        |
 | Explore rates for different loan terms | /explore-rates/                                                                                                              |
-| Loan Estimates                         |  askcfpb/1995/what-is-a-loan-estimate.html |
-| Learn more about balloon loans         | /askcfpb/104/what-is-a-balloon-loan.html   |
+| Loan Estimates                         | askcfpb/1995/what-is-a-loan-estimate.html |
+| Learn more about balloon loans         | /askcfpb/104/what-is-a-balloon-loan.html  |
 
 
 @loan_options @prod_only @loan_options_expandable

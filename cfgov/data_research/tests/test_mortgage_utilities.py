@@ -1,6 +1,6 @@
-import django
+from unittest import mock
 
-import mock
+import django
 
 from data_research.models import MortgageDataConstant
 from data_research.mortgage_utilities.fips_meta import load_constants

@@ -17,7 +17,6 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
 from localflavor.us.models import USStateField
-from modelcluster.fields import ParentalKey
 from pytz import timezone
 
 from v1 import blocks as v1_blocks
@@ -25,7 +24,6 @@ from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
 from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
-from v1.util.ref import enforcement_statuses, institution_types
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -157,143 +155,6 @@ class DocumentDetailPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('content')
     ]
-
-
-class EnforcementActionDisposition(models.Model):
-    name = models.CharField(max_length=150, blank=True)
-    status = models.CharField(
-        max_length=50,
-        choices=enforcement_statuses,
-        blank=True
-    )
-    institution_type = models.CharField(
-        max_length=50,
-        choices=institution_types,
-        blank=True
-    )
-    total_consumer_relief = models.DecimalField(
-        decimal_places=2,
-        max_digits=13,
-        default=0
-    )
-    civil_money_penalties = models.DecimalField(
-        decimal_places=2,
-        max_digits=13,
-        default=0
-    )
-    date_filed = models.DateField(null=True)
-    final_order_date = models.DateField(null=True, blank=True)
-    dismissal_date = models.DateField(null=True, blank=True)
-    settled = models.BooleanField(
-        "Settled",
-        default=False,
-        blank=True,
-        help_text='Check if settled, leave blank if contested.'
-    )
-#    court = models.CharField(default='', max_length=150, blank=True)
-#    docket_number = models.CharField(max_length=50)
-
-    action = ParentalKey('v1.EnforcementActionPage',
-                         on_delete=models.CASCADE,
-                         related_name='enforcement_dispositions')
-
-
-# Will exist until can be sourced from enforce db
-class EnforcementActionStatus(models.Model):
-    institution = models.CharField(max_length=200, blank=True)
-    status = models.CharField(max_length=50, choices=enforcement_statuses)
-    action = ParentalKey('v1.EnforcementActionPage',
-                         on_delete=models.CASCADE,
-                         related_name='statuses')
-
-
-# Will exist until can be sourced from enforce db
-class EnforcementActionDocket(models.Model):
-    docket_number = models.CharField(max_length=50)
-    action = ParentalKey('v1.EnforcementActionPage',
-                         on_delete=models.CASCADE,
-                         related_name='docket_numbers')
-
-
-class EnforcementActionPage(AbstractFilterPage):
-    court = models.CharField(default='', max_length=150, blank=True)
-
-    content = StreamField([
-        ('full_width_text', organisms.FullWidthText()),
-        ('expandable', organisms.Expandable()),
-        ('expandable_group', organisms.ExpandableGroup()),
-        ('notification', molecules.Notification()),
-        ('table_block', organisms.AtomicTableBlock(
-            table_options={'renderer': 'html'})),
-        ('feedback', v1_blocks.Feedback()),
-    ], blank=True)
-
-    content_panels = [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content')
-    ]
-
-    metadata_panels = [
-        InlinePanel(
-            'enforcement_dispositions',
-            label='Final Disposition'
-        ),
-        FieldPanel('court'),
-        InlinePanel('docket_numbers', label="Docket Number", min_num=1),
-        InlinePanel('statuses', label="Enforcement Status", min_num=1),
-        FieldPanel('tags', 'Tags'),
-        InlinePanel('categories', label="Categories", min_num=1, max_num=2)
-    ]
-
-    settings_panels = [
-        MultiFieldPanel(CFGOVPage.promote_panels, 'Settings'),
-        MultiFieldPanel([
-            FieldPanel('preview_title'),
-            FieldPanel('preview_subheading'),
-            FieldPanel('preview_description'),
-            FieldPanel('secondary_link_url'),
-            FieldPanel('secondary_link_text'),
-            ImageChooserPanel('preview_image'),
-        ], heading='Page Preview Fields', classname='collapsible'),
-        FieldPanel('authors', 'Authors'),
-        MultiFieldPanel([
-            FieldPanel('date_published'),
-            FieldPanel('comments_close_by'),
-        ], 'Relevant Dates', classname='collapsible'),
-        MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
-        FieldPanel('language', 'Language'),
-        MultiFieldPanel(CFGOVPage.archive_panels, 'Archive'),
-    ]
-
-    edit_handler = TabbedInterface([
-        ObjectList(
-            AbstractFilterPage.content_panels + content_panels,
-            heading='General Content'
-        ),
-        ObjectList(metadata_panels, heading='Metadata'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(settings_panels, heading='Configuration')
-    ])
-
-    template = 'enforcement-action/index.html'
-
-    objects = PageManager()
-
-    search_fields = AbstractFilterPage.search_fields + [
-        index.SearchField('content')
-    ]
-
-    def get_context(self, request):
-        context = super(EnforcementActionPage, self).get_context(request)
-
-        context.update({
-            'total_consumer_relief': sum(
-                disp.total_consumer_relief for disp in
-                self.enforcement_dispositions.all()
-            )
-        })
-
-        return context
 
 
 class AgendaItemBlock(blocks.StructBlock):

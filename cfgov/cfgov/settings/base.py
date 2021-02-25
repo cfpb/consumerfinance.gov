@@ -1,4 +1,5 @@
 import os
+import secrets
 from pathlib import Path
 
 from django.conf import global_settings
@@ -302,10 +303,11 @@ TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
 
+ES_PORT = os.getenv("ES_PORT", "9200")
 SHEER_ELASTICSEARCH_SERVER = (
     os.environ.get("ES_HOST", "localhost")
     + ":"
-    + os.environ.get("ES_PORT", "9200")
+    + ES_PORT
 )
 SHEER_ELASTICSEARCH_INDEX = os.environ.get(
     "SHEER_ELASTICSEARCH_INDEX", "content"
@@ -420,6 +422,8 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 # ElasticSearch 7 Configuration
+ES7_HOST = os.getenv('ES7_HOST', 'localhost')
+
 if os.environ.get('USE_AWS_ES', False):
     awsauth = AWS4Auth(
         os.environ.get('AWS_ES_ACCESS_KEY'),
@@ -427,20 +431,18 @@ if os.environ.get('USE_AWS_ES', False):
         'us-east-1',
         'es'
     )
-    host = os.environ.get('ES7_HOST', '')
     ELASTICSEARCH_DSL = {
         'default': {
-            'hosts': [{'host': host, 'port': 443}],
+            'hosts': [{'host': ES7_HOST, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
-            'connection_class': RequestsHttpConnection
+            'connection_class': RequestsHttpConnection,
+            'timeout': 60
         },
     }
 else:
-    host = os.environ.get("ES7_HOST", "localhost")
-    port = os.environ.get("ES_PORT", "9200")
     ELASTICSEARCH_DSL = {
-        "default": {"hosts": f"http://{host}:{port}"}
+        "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
     }
 
 # S3 Configuration
@@ -609,6 +611,7 @@ CSP_IMG_SRC = (
     "www.facebook.com",
     "www.gravatar.com",
     "*.qualtrics.com",
+    "*.mouseflow.com",
 )
 
 # These specify what URL's we allow to appear in frames/iframes
@@ -716,9 +719,6 @@ FLAGS = {
     "EMAIL_POPUP_DEBT": [("boolean", True)],
     # Search.gov API-based site-search
     "SEARCH_DOTGOV_API": [],
-    # Turbolinks is a JS library that speeds up page loads
-    # https://github.com/turbolinks/turbolinks
-    "TURBOLINKS": [],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # SPLIT TESTING FLAGS
@@ -764,27 +764,21 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
+    # Enable ES as the backend for FilterableLists
+    "ELASTICSEARCH_FILTERABLE_LISTS": []
 }
 
-
-# Watchman tokens, used to authenticate global status endpoint
-WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS", os.urandom(32))
+# Watchman tokens, a comma-separated string of tokens used to authenticate
+# global status endpoint. The Watchman status URL endpoint is only included if
+# WATCHMAN_TOKENS is defined as an environment variable. A blank value for
+# WATCHMAN_TOKENS will make the status endpoint accessible without a token.
+WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS")
 
 # This specifies what checks Watchman should run and include in its output
 # https://github.com/mwarkentin/django-watchman#custom-checks
 WATCHMAN_CHECKS = (
-    "watchman.checks.databases",
-    "watchman.checks.storage",
-    "watchman.checks.caches",
-    "alerts.checks.check_clock_drift",
+    "alerts.checks.elasticsearch_health",
 )
-
-# Used to check server's time against in check_clock_drift
-NTP_TIME_SERVER = "north-america.pool.ntp.org"
-
-# If server's clock drifts from NTP by more than specified offset
-# (in seconds), check_clock_drift will fail
-MAX_ALLOWED_TIME_OFFSET = 5
 
 # Search.gov values
 SEARCH_DOT_GOV_AFFILIATE = os.environ.get("SEARCH_DOT_GOV_AFFILIATE")
@@ -867,4 +861,9 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
             ]
         },
     },
+}
+
+# Serialize Decimal(3.14) as 3.14, not "3.14"
+REST_FRAMEWORK = {
+    "COERCE_DECIMAL_TO_STRING": False
 }

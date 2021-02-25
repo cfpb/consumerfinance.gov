@@ -38,6 +38,10 @@ const COMMON_MODULE_CONFIG = {
         } ] ]
       }
     }
+  },
+  {
+    test: /\.svg$/,
+    loader: 'svg-inline-loader'
   } ]
 };
 

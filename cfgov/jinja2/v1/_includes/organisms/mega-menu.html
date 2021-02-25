@@ -164,7 +164,7 @@
                          class="h5 {{ base_class ~ '_group-heading' }}">
                         Featured
                     </div>
-                    <ul aria-label="Featured">
+                    <ul aria-label="{{ _('Featured') }}">
                         {% for link in nav_item.featured_items | default( [], true ) %}
                         <li class="{{ _content_classes( nav_depth, '-item' ) }}
                                     {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
@@ -295,7 +295,7 @@
 <nav class="{{ base_class }}
             u-hidden"
      data-js-hook="behavior_flyout-menu"
-     aria-label="main menu">
+     aria-label="{{ _('Main menu') }}">
     <button class="{{ base_class ~ '_trigger' }}"
             data-js-hook="behavior_flyout-menu_trigger"
             aria-haspopup="menu">

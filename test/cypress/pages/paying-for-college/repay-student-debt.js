@@ -12,7 +12,7 @@ export class PfcRepayStudentDebt {
     cy.get( '.btn' ).contains( name ).click( { force: true } );
   }
 
-  clickResponse( id, name) {
+  clickResponse( id, name ) {
     cy.get( `#q${ id }` ).contains( name ).click( { force: true } );
   }
 }

@@ -36,6 +36,7 @@ from v1.views import (
     password_reset_confirm
 )
 from v1.views.documents import DocumentServeView
+from v1.views.enforcement_api import EnforcementAPIView
 
 
 try:
@@ -149,21 +150,6 @@ urlpatterns = [
     re_path(r'^fair-lending/$', TemplateView.as_view(
         template_name='fair-lending/index.html'),
         name='fair-lending'),
-
-    re_path(
-        r'^consumer-tools/educator-tools/students/knowbeforeyouowe/$',
-        TemplateView.as_view(
-            template_name='students/knowbeforeyouowe/index.html'),
-        name='students-knowbeforeyouowe'
-    ),
-    re_path(
-        r'^consumer-tools/educator-tools/students/'
-        'helping-borrowers-find-ways-to-stay-afloat/$',
-        TemplateView.as_view(
-            template_name='students/helping-borrowers-find-'
-            'ways-to-stay-afloat/index.html'),
-        name='students-helping-borrowers'
-    ),
 
     re_path(r'^parents/(?P<path>.*)$', RedirectView.as_view(
         url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -355,10 +341,6 @@ urlpatterns = [
         template_name='jobmanager/supervision.html'),
         name='jobs_supervision'),
 
-    re_path(r'^jobs/technology-innovation-fellows/$', TemplateView.as_view(
-        template_name='jobmanager/technology-innovation-fellows.html'),
-        name='technology_innovation_fellows'),
-
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
@@ -366,6 +348,12 @@ urlpatterns = [
     re_path(
         r'^data-research/mortgages/api/v1/',
         include('data_research.urls')
+    ),
+
+    re_path(
+        r'^api/enforcement_actions/v1/$',
+        EnforcementAPIView.as_view(),
+        name='enforcement_action_api'
     ),
 
     # educational resources
@@ -461,8 +449,6 @@ urlpatterns = [
         ask_autocomplete,
         name='ask-autocomplete-es'
     ),
-
-    re_path(r'^_status/', include('watchman.urls')),
 
     re_path(
         r'^consumer-tools/financial-well-being/',
@@ -705,6 +691,11 @@ if settings.ALLOW_ADMIN_URL:
     ]
 
     urlpatterns = patterns + urlpatterns
+
+if settings.WATCHMAN_TOKENS is not None:
+    urlpatterns.append(
+        re_path(r'^_status/', include('watchman.urls')),
+    )
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

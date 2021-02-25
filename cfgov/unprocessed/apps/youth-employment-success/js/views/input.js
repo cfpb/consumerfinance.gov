@@ -1,5 +1,5 @@
 import { assign, entries } from '../util';
-import { setInitFlag } from '../../../../js/modules/util/atomic-helpers';
+import { setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import sanitizeMap from '../sanitizers';
 
 const defaultProps = {

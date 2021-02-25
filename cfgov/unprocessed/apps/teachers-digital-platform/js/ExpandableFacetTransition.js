@@ -1,9 +1,10 @@
 // Required modules.
-const Events = require( '@cfpb/cfpb-atomic-component/src/mixins/Events.js' );
-const BaseTransition = require( '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition' );
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import BaseTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/BaseTransition';
 
 // Exported constants.
 const CLASSES = {
+  CSS_PROPERTY: 'max-height',
   BASE_CLASS:   'o-expandable-facets_content__transition',
   EXPANDED:     'o-expandable-facets_content__expanded',
   COLLAPSED:    'o-expandable-facets_content__collapsed',
@@ -104,9 +105,10 @@ function ExpandableFacetTransition( element ) {
   }
 
   // Attach public events.
-  this.addEventListener = Events.on;
-  this.dispatchEvent = Events.trigger;
-  this.removeEventListener = Events.off;
+  const eventObserver = new EventObserver();
+  this.addEventListener = eventObserver.addEventListener;
+  this.removeEventListener = eventObserver.removeEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
 
   this.animateOff = _baseTransition.animateOff;
   this.animateOn = _baseTransition.animateOn;
@@ -127,4 +129,4 @@ function ExpandableFacetTransition( element ) {
 // Public static properties.
 ExpandableFacetTransition.CLASSES = CLASSES;
 
-module.exports = ExpandableFacetTransition;
+export default ExpandableFacetTransition;

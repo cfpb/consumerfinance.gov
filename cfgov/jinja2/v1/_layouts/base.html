@@ -343,9 +343,6 @@
           {% if js_source | length > 0 %}
             s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
           {% endif %}
-          {% if flag_enabled('TURBOLINKS') %}
-            s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
-          {% endif %}
           {# Pass scripts to JavaScript loader. #}
           jsl(s);
         }();

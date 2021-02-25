@@ -239,4 +239,4 @@ class JobListingPageTests(TestCase):
         self.assertEqual(context['grades'], ['53'])
 
     def test_page_includes_extra_js(self):
-        self.assertIn('read-more.js', JobListingPage().page_js)
+        self.assertIn('summary.js', JobListingPage().page_js)

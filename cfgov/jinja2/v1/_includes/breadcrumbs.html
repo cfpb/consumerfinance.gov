@@ -14,7 +14,7 @@
    ========================================================================== #}
 
 {% macro render(items) %}
-<nav class="breadcrumbs" aria-label="Breadcrumbs">
+<nav class="breadcrumbs" aria-label="{{ _('Breadcrumbs') }}">
     {% for href, id, caption in items %}
     <a class="breadcrumbs_link" href="{{ href }}">
         {{ caption | e }}

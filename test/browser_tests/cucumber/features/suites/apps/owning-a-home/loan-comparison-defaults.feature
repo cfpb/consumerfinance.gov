@@ -1,18 +1,18 @@
 Feature: Test the default values in the Loan Comparison page
-  As a first time visitor to the Buying a House page
+  As a first time visitor to the Owning a Home page
   I want to have fields pre-poluated
   So that I can compare loan costs easily
 
 Background:
-  Given I navigate to the "Loan Comparison" page
+   Given I navigate to the "Loan Comparison" page
 
 @loan_comparison
 Scenario: First time visitor should see default State selected
-  Then I should see "Alabama" as default State
+ Then I should see "Alabama" as default State
 
 @loan_comparison
 Scenario: First time visitor should see default Credit Score
-  Then I should see "701 - 720" as default Credit Score
+ Then I should see "701 - 720" as default Credit Score
 
 @loan_comparison
 Scenario: First time visitor should see Loan A but NOT Loan B or C
@@ -156,4 +156,3 @@ Scenario: First time Desktop visitor should see default Discount point and credi
   When I click Add another loan
     And I click Add another loan again
   Then I should see "0" as default Discount point and credits for "Loan C"
-

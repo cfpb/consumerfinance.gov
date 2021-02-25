@@ -59,64 +59,55 @@
         {% endif %}
 
         <div class="block block__sub">
-            <div data-qa-hook="expandable"
-                 data-read-more="true"
-                 class="o-expandable
-                        o-expandable__read-more-mobile">
-                <div class="o-expandable_content" id="answer-content">
-                    <div class="answer-text">
-                        {% include_block page.answer_content %}
-                    </div>
+
+            <div class="o-summary o-summary__mobile"
+                 data-js-hook="behavior_flyout-menu">
+                <div class="o-summary_content answer-text"
+                     data-js-hook="behavior_flyout-menu_content">
+                    {% include_block page.answer_content %}
                 </div>
-                <button class="o-expandable_header o-expandable_target"
-                        title="Expand content">
-                    <span class="o-expandable_link">
-                        <span class="o-expandable_cue o-expandable_cue-open">
-                            {{ _('Read full answer') }}
-                            {{ svg_icon('plus-round') }}
-                       </span>
-                        <span class="o-expandable_cue o-expandable_cue-close">
-                            {{ _('Hide full answer') }}
-                            {{ svg_icon('minus-round') }}
-                       </span>
-                    </span>
+
+                <button class="o-summary_btn u-hidden"
+                        data-js-hook="behavior_flyout-menu_trigger">
+                    {{ _('Read full answer') }}
+                    {{ svg_icon('plus-round') }}
                 </button>
             </div>
 
-        <div class="block related-questions">
-            <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
-            {% if related_questions %}
-            <div class="block block__sub">
-                <h3>{{ _('Browse related questions') }} </h3>
-                <ul class="m-list m-list__unstyled m-list__links">
-                    {% for question in related_questions %}
-                    <li class="m-list_item">
-                        <a href="{{ question.url }}" class="m-list_link">
-                            {{ question.question | safe }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                    {% if portal_page %}
-                    <li class="m-list_item m-list_item__last">
-                        <a href="{{ portal_page.url }}" class="m-list_link">
-                            <b>
-                                {{ _('Learn more about') }}
-                                {{ portal_page.portal_topic.title(page.language) | lower }}
-                            </b>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
+            <div class="block related-questions">
+                <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
+                {% if related_questions %}
+                <div class="block block__sub">
+                    <h3>{{ _('Browse related questions') }} </h3>
+                    <ul class="m-list m-list__unstyled m-list__links">
+                        {% for question in related_questions %}
+                        <li class="m-list_item">
+                            <a href="{{ question.url }}" class="m-list_link">
+                                {{ question.question | safe }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% if portal_page %}
+                        <li class="m-list_item m-list_item__last">
+                            <a href="{{ portal_page.url }}" class="m-list_link">
+                                <b>
+                                    {{ _('Learn more about') }}
+                                    {{ portal_page.portal_topic.title(page.language) | lower }}
+                                </b>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="block block__sub">
+                    {{ ask_search.render( language=page.language ) }}
+                </div>
             </div>
-            {% endif %}
-            <div class="block block__sub">
-                {{ ask_search.render( language=page.language ) }}
-            </div>
-        </div>
-        {# This brings in the feedback module #}
-        {% for block in page.user_feedback %}
-            {{- form_block.render(block, 'user_feedback', loop.index0) -}}
-        {% endfor %}
+            {# This brings in the feedback module #}
+            {% for block in page.user_feedback %}
+                {{- form_block.render(block, 'user_feedback', loop.index0) -}}
+            {% endfor %}
         </div>
 
     </div>

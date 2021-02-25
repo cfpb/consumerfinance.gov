@@ -4,15 +4,17 @@ import {
   checkDom,
   instantiateAll,
   setInitFlag
-} from '../modules/util/atomic-helpers';
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 import Analytics from '../modules/Analytics';
 import ERROR_MESSAGES from '../config/error-messages-config';
-import EventObserver from '../modules/util/EventObserver';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 import FormModel from '../modules/util/FormModel';
-import Multiselect from '../molecules/Multiselect';
+import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect';
 
 const BASE_CLASS = 'o-filterable-list-controls';
+const FIELD_ERROR_CLASS = 'a-text-input__error';
+let INVALID_FIELDS = [];
 
 /**
  * FilterableListControls
@@ -51,21 +53,22 @@ function FilterableListControls( element ) {
     const _expandables = Expandable.init( _dom );
     _expandable = _expandables[0];
 
+    /**
+     * Refresh the height of the filterable list control's expandable
+     * to ensure all its children are visible.
+     */
+    function _refreshExpandableHeight() {
+      window.setTimeout(
+        _expandable.transition.expand.bind( _expandable.transition ),
+        250
+      );
+    }
+
     // If multiselects exist on the form, iterate over them.
     multiSelects.forEach( multiSelect => {
-      multiSelect.addEventListener( 'expandBegin', function refresh() {
-        window.setTimeout(
-          _expandable.transition.expand.bind( _expandable.transition ),
-          250
-        );
-      } );
-
-      multiSelect.addEventListener( 'expandEnd', function refresh() {
-        window.setTimeout(
-          _expandable.transition.expand.bind( _expandable.transition ),
-          250
-        );
-      } );
+      multiSelect.addEventListener( 'expandBegin', _refreshExpandableHeight );
+      multiSelect.addEventListener( 'expandEnd', _refreshExpandableHeight );
+      multiSelect.addEventListener( 'selectionsUpdated', _refreshExpandableHeight );
     } );
 
     _formModel.init();
@@ -131,6 +134,7 @@ function FilterableListControls( element ) {
     );
 
     if ( validatedFields.invalid.length > 0 ) {
+      _highlightInvalidFields( validatedFields );
       this.dispatchEvent( 'fieldInvalid', {
         message: _buildErrorMessage( validatedFields.invalid )
       } );
@@ -151,6 +155,29 @@ function FilterableListControls( element ) {
     } );
 
     return msg || ERROR_MESSAGES.DEFAULT;
+  }
+
+  /**
+   * Highlight invalid text fields by giving them an error class.
+   * @param {Array} fields - A list of form fields.
+   * @returns {Array} An array of invalid fields.
+   */
+  function _highlightInvalidFields( fields ) {
+    INVALID_FIELDS.forEach( field => {
+      field.classList.remove( FIELD_ERROR_CLASS );
+    } );
+
+    INVALID_FIELDS = [];
+
+    fields.invalid.forEach( validation => {
+      const field = validation.field;
+      if ( field.type === 'text' || field.type === 'date' ) {
+        validation.field.classList.add( FIELD_ERROR_CLASS );
+        INVALID_FIELDS.push( validation.field );
+      }
+    } );
+
+    return INVALID_FIELDS;
   }
 
   /**

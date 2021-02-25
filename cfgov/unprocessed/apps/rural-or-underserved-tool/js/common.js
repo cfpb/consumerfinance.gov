@@ -2,7 +2,7 @@
    Common application-wide scripts for rural-or-underserved-tool.
    ========================================================================== */
 
-import Expandable from '../../../../../node_modules/@cfpb/cfpb-expandables/src/Expandable.js';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import addressUtils from './address-utils';
 import axios from 'axios';
 import callCensus from './call-census';
@@ -10,7 +10,7 @@ import contentControl from './content-control';
 import count from './count';
 import DT from './dom-tools';
 import fileInput from './file-input';
-const Papaparse = require( 'papaparse' );
+import Papaparse from 'papaparse';
 import ruralCounties from './get-rural-counties';
 import textInputs from './text-inputs';
 import tiger from './call-tiger';
@@ -170,7 +170,7 @@ fileChangeDom.addEventListener( 'change', function( evt ) {
           );
           return;
         }
-        if ( results.data[0]['Street Address'] !== '' ) {
+        if ( results.data['Street Address'] !== '' ) {
           rowCount++;
         }
 
@@ -237,7 +237,7 @@ geocodeCSVDom.addEventListener( 'submit', function( evt ) {
       header: true,
       step: function( results, parser ) {
         if ( addressUtils.isValid( results ) ) {
-          if ( rowCount < MAX_CSV_ROWS && results.data[0]['Street Address'] !== '' ) {
+          if ( rowCount < MAX_CSV_ROWS && results.data['Street Address'] !== '' ) {
             addresses = addressUtils.pushAddress( results, addresses );
           }
           rowCount++;

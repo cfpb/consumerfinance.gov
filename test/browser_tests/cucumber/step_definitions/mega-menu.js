@@ -41,14 +41,14 @@ Then( 'the mega-menu organism should not show content', function() {
 
   return expect( _dom.contentFifthMenuItem.isDisplayed() )
     .to.eventually.equal( false );
-}
-);
+} );
 
 Then( 'should only show second link content', async function() {
   await EC.not( EC.elementToBeClickable( _dom.contentFourthMenuItem ) );
   await browser.sleep( 500 );
 
-  expect( _dom.contentFourthMenuItem.isDisplayed() )
+
+  await expect( _dom.contentFourthMenuItem.isDisplayed() )
     .to.eventually.equal( false );
 
   return expect( _dom.contentFourthMenuItem.isDisplayed() )

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
+from unittest import mock
 
 from django.test import TestCase
-
-import mock
 
 from regulations3k.models import Section
 from regulations3k.scripts.insert_section_links import (

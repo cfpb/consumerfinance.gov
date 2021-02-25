@@ -1050,7 +1050,7 @@ class FeaturedContentStructValue(blocks.StructValue):
 
 class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock()
-    body = blocks.RichTextBlock()
+    body = blocks.TextBlock(help_text="Line breaks will be ignored.")
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,

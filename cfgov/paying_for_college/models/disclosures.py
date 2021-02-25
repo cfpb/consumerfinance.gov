@@ -718,6 +718,12 @@ class Program(models.Model):
     def __str__(self):
         return "{} ({})".format(self.program_name, self.institution)
 
+    def get_level(self):
+        level = ''
+        if self.level and str(self.level) in HIGHEST_DEGREES:
+            level = HIGHEST_DEGREES[str(self.level)]
+        return level
+
     def as_json(self):
         ordered_out = OrderedDict()
         dict_out = {

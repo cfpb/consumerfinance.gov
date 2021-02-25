@@ -12,7 +12,7 @@ const urlParameters = {
   'typp': 'stateModel.programType',
   'lenp': 'stateModel.programLength',
   'ratp': 'stateModel.programRate',
-  'depp': 'stateModel.programStudentType',
+  'depp': 'stateModel.programDependency',
   'cobs': 'stateModel.costsQuestion',
   'regs': 'stateModel.expensesRegion',
   'iqof': 'stateModel.impactOffer',
@@ -140,7 +140,7 @@ function buildUrlQueryString() {
     const value = model[variable.split( '.' )[1]];
 
     if ( typeof value !== 'undefined' && value !== 0 && value !== null &&
-          value !== false ) {
+          value !== false && value !== 'not-selected' ) {
       if ( query.length > 1 ) query += '&';
       query += key + '=' + value;
     }

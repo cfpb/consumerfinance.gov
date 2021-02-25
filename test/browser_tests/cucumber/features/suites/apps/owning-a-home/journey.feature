@@ -1,5 +1,5 @@
 Feature: Verify the /owning-a-home/process page works according to requirements
-As a first time visitor to the Buying a House page
+As a first time visitor to the Owning a Home page
 I want to navigate the process page
 So that I can find the information I'm looking for
 

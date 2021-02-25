@@ -1,5 +1,5 @@
 Feature: Verify the /owning-a-home/mortgage-estimate page works according to requirements
-As a first time visitor to the Buying a House page
+As a first time visitor to the Owning a Home page
 I want to navigate the Mortgage Estimate page
 So that I can find the information I'm looking for
 

@@ -1,4 +1,4 @@
-import { closest } from './dom-traverse';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 /**
  * FormModel

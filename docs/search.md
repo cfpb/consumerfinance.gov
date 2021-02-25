@@ -113,13 +113,13 @@ class AnswerPageDocument(Document):
 We provide a few common helpers in `search.elasticsearch_helpers` for use in creating document classes:
 
 - `environment_specific_index(base_name)`: Generate the index name for the `base_name` that is specific to the deployment environment. This allows each index to be isolated to a deployment environment within an Elasticsearch cluster.
-- `label_autocomplete`: A reusable autocomplete analyzer for creating fields that [autocomplete terms](#autocomplete). This is used for type-ahead search boxes.
+- `ngram_tokenizer`: A reusable ngram analyzer for creating fields that [autocomplete terms](#autocomplete). This is used for type-ahead search boxes.
 - `synonym_analyzer`: A reusable analyzer for creating fields that will match synonyms of a search term.
 
 ```python
 from search.elasticsearch_helpers import (
     environment_specific_index,
-    label_autocomplete,
+    ngram_tokenizer,
     synonym_analyzer,
 )
 ```
@@ -171,15 +171,15 @@ search.query(
 
 ### Autocomplete
 
-For search box autocomplete, we use a field with our `label_autocomplete` analyzer and then issue a "match" search query for that field.
+For search box autocomplete, we use a field with our `ngram_tokenizer` analyzer and then issue a "match" search query for that field.
 
 Using the Ask CFPB document search above, with its language filter context, this looks like:
 
 ```python
-from search.elasticsearch_helpers import label_autocomplete
+from search.elasticsearch_helpers import ngram_tokenizer
 
 class AnswerPageDocument(Document):
-    autocomplete = fields.TextField(analyzer=label_autocomplete)
+    autocomplete = fields.TextField(analyzer=ngram_tokenizer)
 
 search = AnswerPageDocument.search().filter("term", language=language)
 search.query('match', autocomplete=search_term)

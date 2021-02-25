@@ -1,12 +1,11 @@
 import json
 import unittest
+from unittest import mock
 
 from django.apps import apps
 from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
 from django.urls import reverse
-
-import mock
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG

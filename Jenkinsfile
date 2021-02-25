@@ -89,7 +89,7 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                     docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
-                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7.7/Dockerfile .')
+                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
                 }
             }
         }
@@ -175,7 +175,7 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 15, unit: 'MINUTES') {
                         // sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
-                        sh "docker run -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:4.10.0 npx cypress run -b chrome --headless"
+                        sh "docker run -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:6.5.0 npx cypress run -b chrome --headless"
                     }
                 }
 
@@ -189,8 +189,8 @@ pipeline {
             script {
                 author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
                 changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
-                notify("${NOTIFICATION_CHANNEL}", 
-                    """:white_check_mark: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author [deployed](https://${env.CFGOV_HOSTNAME}/)! 
+                notify("${NOTIFICATION_CHANNEL}",
+                    """:white_check_mark: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author [deployed](https://${env.CFGOV_HOSTNAME}/)!
                     \n:jenkins: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
             }
         }
@@ -200,8 +200,8 @@ pipeline {
                 author = env.CHANGE_AUTHOR ? "by ${env.CHANGE_AUTHOR}" : "branch"
                 changeUrl = env.CHANGE_URL ? env.CHANGE_URL : env.GIT_URL
                 deployText = DEPLOY_SUCCESS ? "[deployed](https://${env.CFGOV_HOSTNAME}/) but failed" : "failed"
-                notify("${NOTIFICATION_CHANNEL}", 
-                    """:x: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author $deployText at stage **${LAST_STAGE}** 
+                notify("${NOTIFICATION_CHANNEL}",
+                    """:x: **${STACK_PREFIX} [${env.GIT_BRANCH}]($changeUrl)** $author $deployText at stage **${LAST_STAGE}**
                     \n:jenkins-devil: [Details](${env.RUN_DISPLAY_URL})    :mantelpiece_clock: [Pipeline History](${env.JOB_URL})    :docker-dance: [Stack URL](${env.STACK_URL}) """)
 
                 if (env.DEPLOY_SUCCESS == false) {

@@ -3,7 +3,7 @@
    Used on at least `/external-site/`.
    ========================================================================== */
 
-import { checkDom } from '../modules/util/atomic-helpers';
+import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
 const BASE_CLASS = 'external-site';
 const TOTAL_DURATION = 5;

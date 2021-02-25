@@ -150,10 +150,6 @@
                             <div class="content-l_col
                                         content-l_col-1-2">
                                 {% set post_url = pageurl(post) %}
-                                {% set heading = '<h2 class="h3">' ~
-                                                 post.preview_title ~
-                                                 '</h2>'
-                                if post.preview_title else null %}
                                 {% if post.secondary_link_url and post.secondary_link_text %}
                                     {% set links = [
                                         {
@@ -166,10 +162,14 @@
                                 {{ info_unit( 
                                     {
                                         'image': {
-                                        'upload': post.preview_image,
-                                        'alt': post.preview_image.alt if post.preview_image.alt else '',
+                                            'upload': post.preview_image,
+                                            'alt': post.preview_image.alt if post.preview_image.alt else ''
                                         } if post.preview_image else {},
-                                        'heading': heading,
+                                        'heading': {
+                                            'text': post.preview_title,
+                                            'level': 'h2',
+                                            'level_class': 'h3'
+                                        } if post.preview_title else null,
                                         'body': post.preview_description,
                                         'links': links or null,
                                     },

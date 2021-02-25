@@ -1,4 +1,4 @@
-import { checkDom } from '../../../../js/modules/util/atomic-helpers';
+import { checkDom } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
 const CLASSES = Object.freeze( {
   CONTAINER: 'o-expandable'

@@ -90,8 +90,8 @@ import { stateToHTML } from 'draft-js-export-html';
         RichTextEditor.prototype.beginEditing = function() {
           const initialCellValue = this.instance.getValue();
           let contentState;
-          if ( initialCellValue ) {
-            const blocksFromHTML = window.DraftJS.convertFromHTML( initialCellValue );
+          const blocksFromHTML = initialCellValue ? window.DraftJS.convertFromHTML( initialCellValue ) : null;
+          if ( blocksFromHTML && blocksFromHTML.contentBlocks ) {
             contentState = window.DraftJS.ContentState.createFromBlockArray( blocksFromHTML.contentBlocks, blocksFromHTML.entityMap );
           } else {
             contentState = window.DraftJS.ContentState.createFromText( '' );
@@ -116,29 +116,39 @@ import { stateToHTML } from 'draft-js-export-html';
           const editorHtml = _createRichTextEditor( cellValue );
 
           modalDom.on( 'save-btn:clicked', function() {
-            const raw = JSON.parse( editorHtml.value );
-            const state = window.DraftJS.convertFromRaw( raw );
-            const options = {
-              entityStyleFn: entity => {
-                const entityType = entity.get( 'type' ).toLowerCase();
-                if ( entityType === 'document' ) {
-                  const data = entity.getData();
-                  return {
-                    element: 'a',
-                    attributes: {
-                      'href': data.url,
-                      'data-linktype': 'DOCUMENT',
-                      'data-id': data.id,
-                      'type': 'DOCUMENT'
-                    },
-                    style: {
-                    }
-                  };
+            const editorValue = editorHtml.value;
+            let html;
+
+            /* If editor is empty then set html to null becasue some 3rd parrty helper
+               functions don't play nicely with empty valu cells */
+            if ( !editorValue || editorValue === 'null' ) {
+              html = null;
+            } else {
+              const raw = JSON.parse( editorValue );
+              const state = window.DraftJS.convertFromRaw( raw );
+              const options = {
+                entityStyleFn: entity => {
+                  const entityType = entity.get( 'type' ).toLowerCase();
+                  if ( entityType === 'document' ) {
+                    const data = entity.getData();
+                    return {
+                      element: 'a',
+                      attributes: {
+                        'href': data.url,
+                        'data-linktype': 'DOCUMENT',
+                        'data-id': data.id,
+                        'type': 'DOCUMENT'
+                      },
+                      style: {
+                      }
+                    };
+                  }
+                  return null;
                 }
-                return null;
-              }
-            };
-            const html = stateToHTML( state, options );
+              };
+              html = stateToHTML( state, options );
+            }
+
             instance.setDataAtCell( cellProperties.row, cellProperties.col, html );
             instance.render();
             $( win ).resize();

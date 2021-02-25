@@ -1,14 +1,14 @@
 // Required modules.
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import EventObserver from '../modules/util/EventObserver';
-import FlyoutMenu from '../modules/behavior/FlyoutMenu';
-import MegaMenuDesktop from '../organisms/MegaMenuDesktop';
-import MegaMenuMobile from '../organisms/MegaMenuMobile';
-import MoveTransition from '../modules/transition/MoveTransition';
-import TabTrigger from '../modules/TabTrigger';
-import Tree from '../modules/Tree';
-import { contains } from '../modules/util/data-hook';
-import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
+import MegaMenuDesktop from '../organisms/MegaMenuDesktop.js';
+import MegaMenuMobile from '../organisms/MegaMenuMobile.js';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
+import TabTrigger from '../modules/TabTrigger.js';
+import Tree from '../modules/Tree.js';
+import { contains } from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';
+import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
 
 /**
  * MegaMenu
