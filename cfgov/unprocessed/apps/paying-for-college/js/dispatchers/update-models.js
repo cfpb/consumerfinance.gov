@@ -122,7 +122,7 @@ const updateSchoolData = function( iped ) {
         schoolModel.createProgramLists();
 
         // If we have a pid, validate it
-        let pid = getStateValue( 'pid' );
+        const pid = getStateValue( 'pid' );
         let programInfo = false;
         if ( pid !== false && pid !== null ) {
           programInfo = getProgramInfo( pid );

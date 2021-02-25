@@ -16,10 +16,9 @@ import {
   updateRepaymentMeterChart
 } from '../dispatchers/update-view.js';
 import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import { decimalToPercentString } from '../util/number-utils.js';
+import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values';
 import { updateState } from '../dispatchers/update-state.js';
-import { stringToNum } from '../util/number-utils.js';
 
 const schoolView = {
   _searchSection: null,
