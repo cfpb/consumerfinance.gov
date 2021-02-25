@@ -65,8 +65,16 @@ describe( 'FlyoutMenu', () => {
       expect( flyoutMenu.getData() ).toBeUndefined();
     } );
 
-    it( 'should have correct state after initializing', () => {
+    it( 'should have correct state after initializing as collapsed', () => {
       expect( flyoutMenu.init() ).toBeInstanceOf( FlyoutMenu );
+      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+    } );
+
+    it( 'should have correct state after initializing as expanded', () => {
+      expect( flyoutMenu.init( true ) ).toBeInstanceOf( FlyoutMenu );
+      expect( triggerDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+      expect( contentDom.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
     } );
   } );
 

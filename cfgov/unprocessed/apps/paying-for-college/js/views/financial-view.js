@@ -10,12 +10,10 @@ import {
   updateFinancial,
   updateFinancialsFromSchool
 } from '../dispatchers/update-models.js';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
 import numberToMoney from 'format-usd';
 import { selectorMatches } from '../util/other-utils';
 import { updateState } from '../dispatchers/update-state.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
-
 
 const financialView = {
   _financialItems: [],
@@ -27,98 +25,8 @@ const financialView = {
   _undergradProgramContent: null,
 
   /**
-   * Listeners for INPUT fields and radio buttons
-   */
-  _addButtonListeners: function() {
-    financialView._costsOfferButtons.forEach( elem => {
-      const events = {
-        click: this._handleCostsButtonClick
-      };
-      bindEvent( elem, events );
-    } );
-  },
-
-  /**
-   * Listeners for INPUT fields and radio buttons
-   */
-  _addInputListeners: function() {
-    financialView._financialInputs.forEach( elem => {
-      const events = {
-        keyup: this._handleInputChange,
-        focusout: this._handleInputChange,
-        click: this._handleInputClick
-      };
-      bindEvent( elem, events );
-    } );
-
-  },
-
-  /**
-   * Event handling for button choice - "Does your offer include costs?"
-   * @param {object} event - Triggering event
-   */
-  _handleCostsButtonClick: function( event ) {
-    const target = event.target;
-    const answer = target.dataset.costs_offerAnswer;
-
-    // When the button is clicked, bring in school data if 'No'
-    if ( getStateValue( 'costsQuestion' ) === false ) {
-      updateState.byProperty( 'costsQuestion', answer );
-      // If their offer does not have costs, use the Department of Ed data
-      if ( answer === 'n' ) {
-        updateFinancialsFromSchool();
-      } else {
-        recalculateFinancials();
-      }
-    }
-
-    updateUrlQueryString();
-  },
-
-  /**
-   * Event handling for financial-item INPUT changes
-   * @param {object} event - Triggering event
-   */
-  _handleInputChange: function( event ) {
-    clearTimeout( financialView._inputChangeTimeout );
-    const elem = event.target;
-    const name = elem.dataset.financialItem;
-    const isRate = name.substr( 0, 5 ) === 'rate_';
-    const isFee = name.substr( 0, 4 ) === 'fee_';
-    let value = stringToNum( elem.value );
-
-    financialView._currentInput = elem;
-
-    if ( isRate || isFee ) {
-      value /= 100;
-    }
-
-    if ( selectorMatches( elem, ':focus' ) ) {
-      financialView._inputChangeTimeout = setTimeout(
-        function() {
-          updateFinancial( name, value );
-          updateUrlQueryString();
-        }, 500 );
-    } else {
-      updateFinancial( name, value );
-      updateUrlQueryString();
-    }
-  },
-
-  /**
-   * Event handling for input clicks
-   * @param {object} event - the triggering event
-   */
-  _handleInputClick: function( event ) {
-    const target = event.target;
-    if ( target.value === '$0' ) {
-      target.value = '';
-    }
-  },
-
-  /**
-   * Event handling for "see steps" action plan button
-   * @param {object} event - Triggering event
+   * Event handling for "see steps" action plan button.
+   * @param {MouseEvent} event - Triggering event.
    */
   _handleSeeStepsClick: function( event ) {
     // TODO - This could all be written better.
@@ -166,10 +74,94 @@ const financialView = {
     this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
     this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
     this._costsOfferButtons = document.querySelectorAll( '.costs_button-section button' );
-    this._addInputListeners();
-    this._addButtonListeners();
+    _addInputListeners();
+    _addButtonListeners();
   }
 };
+
+/**
+ * Listeners for INPUT fields and radio buttons.
+ */
+function _addInputListeners() {
+  financialView._financialInputs.forEach( elem => {
+    elem.addEventListener( 'keyup', _handleInputChange );
+    elem.addEventListener( 'focusout', _handleInputChange );
+    elem.addEventListener( 'click', _handleInputClick );
+  } );
+}
+
+/**
+ * Listeners for INPUT fields and radio buttons.
+ */
+function _addButtonListeners() {
+  financialView._costsOfferButtons.forEach( elem => {
+    elem.addEventListener( 'click', _handleCostsButtonClick );
+  } );
+}
+
+/**
+ * Event handling for financial-item INPUT changes.
+ * @param {KeyboardEvent} event - The triggering keyboard event.
+ */
+function _handleInputChange( event ) {
+  clearTimeout( financialView._inputChangeTimeout );
+  const elem = event.target;
+  const name = elem.dataset.financialItem;
+  const isRate = name.substr( 0, 5 ) === 'rate_';
+  const isFee = name.substr( 0, 4 ) === 'fee_';
+  let value = stringToNum( elem.value );
+
+  financialView._currentInput = elem;
+
+  if ( isRate || isFee ) {
+    value /= 100;
+  }
+
+  if ( selectorMatches( elem, ':focus' ) ) {
+    financialView._inputChangeTimeout = setTimeout(
+      function() {
+        updateFinancial( name, value );
+        updateUrlQueryString();
+      }, 500 );
+  } else {
+    updateFinancial( name, value );
+    updateUrlQueryString();
+  }
+}
+
+/**
+ * Event handling for input clicks.
+ * @param {MouseEvent} event - the triggering click event object.
+ */
+function _handleInputClick( event ) {
+  const target = event.target;
+  if ( target.value === '$0' ) {
+    target.value = '';
+  }
+}
+
+
+/**
+ * Event handling for button choice - "Does your offer include costs?".
+ * @param {MouseEvent} event - Triggering event.
+ */
+function _handleCostsButtonClick( event ) {
+  const target = event.target;
+  const answer = target.dataset.costs_offerAnswer;
+
+  // When the button is clicked, bring in school data if 'No'
+  if ( getStateValue( 'costsQuestion' ) === false ) {
+    updateState.byProperty( 'costsQuestion', answer );
+    // If their offer does not have costs, use the Department of Ed data
+    if ( answer === 'n' ) {
+      updateFinancialsFromSchool();
+    } else {
+      recalculateFinancials();
+    }
+  }
+
+  updateUrlQueryString();
+}
 
 export {
   financialView

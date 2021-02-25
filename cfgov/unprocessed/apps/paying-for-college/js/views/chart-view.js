@@ -7,7 +7,6 @@ import {
 } from '../dispatchers/get-model-values.js';
 import Highcharts from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
 import more from 'highcharts/highcharts-more';
 import numberToMoney from 'format-usd';
 import { updateState } from '../dispatchers/update-state.js';
@@ -365,13 +364,9 @@ const affordingOpts = {
   } ]
 };
 
-const gradMeterOpts = {
+const gradMeterOpts = {};
 
-};
-
-const repaymentMeterOpts = {
-
-};
+const repaymentMeterOpts = {};
 
 const chartView = {
   costOfBorrowingElem: null,
@@ -400,7 +395,7 @@ const chartView = {
     chartView.gradMeterElem = body.querySelector( '#school-results_grad-meter' );
     chartView.repaymentMeterElem = body.querySelector( '#school-results_repayment-meter' );
 
-    chartView._addRadioListeners();
+    _addRadioListeners();
 
     // Set initial buttons
     document.querySelector( '#graduation-rate_us' ).checked = true;
@@ -450,45 +445,6 @@ const chartView = {
       { ...meterOpts, ...repaymentMeterOpts }
     );
 
-  },
-
-  /**
-   * Listen for radio button clicks
-   */
-  _addRadioListeners: () => {
-    const radioEvents = {
-      click: chartView._handleRadioClicks
-    };
-    chartView._meterChartBtns.forEach( elem => {
-      bindEvent( elem, radioEvents );
-    } );
-  },
-
-  _handleRadioClicks: event => {
-    const target = event.target;
-    const cohort = target.value;
-    const graph = target.getAttribute( 'name' ).replace( /-/g, '' );
-    const handlers = {
-      repaymentratemeterselector: {
-        'function': chartView.updateRepaymentMeterChart,
-        'stateProp': 'repayMeterCohort',
-        'cohortName': 'repayMeterCohortName'
-      },
-      graduationratemeterselector: {
-        'function': chartView.updateGradMeterChart,
-        'stateProp': 'gradMeterCohort',
-        'cohortName': 'gradMeterCohortName'
-      }
-    };
-    const names = {
-      cohortRankByHighestDegree: 'U.S.',
-      cohortRankByState: getSchoolValue( 'stateName' ),
-      cohortRankByControl: getSchoolValue( 'control' )
-    };
-
-    updateState.byProperty( handlers[graph].cohortName, names[cohort] );
-    updateState.byProperty( handlers[graph].stateProp, cohort );
-    handlers[graph].function();
   },
 
   updateCostOfBorrowingChart: () => {
@@ -637,6 +593,45 @@ const chartView = {
     }
   }
 };
+
+/**
+ * Listen for radio button clicks.
+ */
+function _addRadioListeners() {
+  chartView._meterChartBtns.forEach( elem => {
+    elem.addEventListener( 'click', _handleRadioClicks );
+  } );
+}
+
+/**
+ * @param {MouseEvent} event - The click event object.
+ */
+function _handleRadioClicks( event ) {
+  const target = event.target;
+  const cohort = target.value;
+  const graph = target.getAttribute( 'name' ).replace( /-/g, '' );
+  const handlers = {
+    repaymentratemeterselector: {
+      'function': chartView.updateRepaymentMeterChart,
+      'stateProp': 'repayMeterCohort',
+      'cohortName': 'repayMeterCohortName'
+    },
+    graduationratemeterselector: {
+      'function': chartView.updateGradMeterChart,
+      'stateProp': 'gradMeterCohort',
+      'cohortName': 'gradMeterCohortName'
+    }
+  };
+  const names = {
+    cohortRankByHighestDegree: 'U.S.',
+    cohortRankByState: getSchoolValue( 'stateName' ),
+    cohortRankByControl: getSchoolValue( 'control' )
+  };
+
+  updateState.byProperty( handlers[graph].cohortName, names[cohort] );
+  updateState.byProperty( handlers[graph].stateProp, cohort );
+  handlers[graph].function();
+}
 
 export {
   chartView

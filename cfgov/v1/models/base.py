@@ -185,6 +185,11 @@ class CFGOVPage(Page):
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
+    default_exclude_fields_in_copy = Page.default_exclude_fields_in_copy + [
+        'tags',
+        'authors'
+    ]
+
     def clean(self):
         super(CFGOVPage, self).clean()
         validate_social_sharing_image(self.social_sharing_image)

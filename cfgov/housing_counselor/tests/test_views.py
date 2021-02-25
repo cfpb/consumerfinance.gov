@@ -1,6 +1,7 @@
+from unittest import mock
+
 from django.test import TestCase, override_settings
 
-import mock
 import requests
 
 from housing_counselor.views import (

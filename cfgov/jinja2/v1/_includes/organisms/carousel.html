@@ -85,14 +85,19 @@
 
 {% macro render( value ) %}
 <div class="o-carousel u-hidden" aria-labelledby="o-carousel_heading">
-    <h2 class="h5" id="o-carousel_heading" aria-label="Featured content">{{ _( 'Featured' ) }}</h2>
+    <h2 class="h5" id="o-carousel_heading"
+        aria-label="{{ _('Featured content') }}">
+        {{ _('Featured') }}
+    </h2>
     <div class="o-carousel_navigator">
 
-        <button class="o-carousel_btn o-carousel_btn-prev a-btn" aria-label="Previous featured content item">
-            {{ svg_icon( 'left' ) }}
+        <button class="o-carousel_btn o-carousel_btn-prev a-btn"
+            aria-label="{{ _('Previous featured content item') }}">
+            {{- svg_icon( 'left' ) -}}
         </button>
-        <button class="o-carousel_btn o-carousel_btn-next a-btn" aria-label="Next featured content item">
-            {{ svg_icon( 'right' ) }}
+        <button class="o-carousel_btn o-carousel_btn-next a-btn"
+            aria-label="{{ _('Next featured content item') }}">
+            {{- svg_icon( 'right' ) -}}
         </button>
 
         <div class="o-carousel_items-container">
