@@ -18,7 +18,7 @@ rules:
   max-len:
     - 1
     -
-      ignorePattern: '^import\s(([A-Za-z]*)|([*]\sas\s[A-Za-z]*))\sfrom\s'
+      ignorePattern: '^import\s(([A-Za-z0-9]*)|([*]\sas\s[A-Za-z0-9]*))\sfrom\s'
       ignoreComments: true
       ignoreTrailingComments: true
       ignoreUrls: true
