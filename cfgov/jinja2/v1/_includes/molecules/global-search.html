@@ -12,7 +12,7 @@
 
 
 
-{% macro render() %}
+{% macro render( language='en' ) %}
 
 <div class="m-global-search"
      data-js-hook="behavior_flyout-menu">
@@ -43,7 +43,7 @@
               method="get">
             {#
                 The following two inputs are required by the search portal.
-                See https://search.digitalgov.gov/manual/code.html
+                See: https://search.gov/manual/code.html
             #}
             <input type="hidden"
                    name="utf8"
@@ -51,7 +51,7 @@
             <input type="hidden"
                    id="affiliate"
                    name="affiliate"
-                   value="cfpb">
+                   value="{{ 'cfpb_es' if language == 'es' else 'cfpb' }}">
 
             <div class="o-form__input-w-btn">
                <div class="o-form__input-w-btn_input-container">

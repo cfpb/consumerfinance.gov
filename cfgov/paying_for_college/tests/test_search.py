@@ -1,9 +1,8 @@
 import json
+from unittest import mock
 
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
-
-import mock
 
 from paying_for_college.documents import SchoolDocument
 from paying_for_college.models import School

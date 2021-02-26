@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
+from unittest import mock
 
 from django.test import RequestFactory, TestCase
-
-import mock
 
 from v1.handlers.blocks.feedback import FeedbackHandler, get_feedback_type
 from v1.models import CFGOVPage, Feedback

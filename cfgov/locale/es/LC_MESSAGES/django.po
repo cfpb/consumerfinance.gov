@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-26 15:09-0500\n"
+"POT-Creation-Date: 2021-02-17 11:58-0500\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -302,7 +302,7 @@ msgstr "Ver video"
 #: jinja2/v1/youth_employment_success/index.html:9
 #: legacy/templates/front/base_nonresponsive.html:28
 #: legacy/templates/front/base_update.html:47 v1/jinja2/v1/home_page.html:7
-#: v1/jinja2/v1/home_page.html:13
+#: v1/jinja2/v1/home_page.html:43
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
@@ -327,7 +327,7 @@ msgid "Browse related questions"
 msgstr "Otras preguntas"
 
 #: jinja2/v1/ask-cfpb/answer-page.html:94
-#: jinja2/v1/ask-cfpb/landing-page.html:80
+#: jinja2/v1/ask-cfpb/landing-page.html:82
 msgid "Learn more about"
 msgstr "Sepa más sobre"
 
@@ -373,7 +373,7 @@ msgid "/ask-cfpb/"
 msgstr "/es/obtener-respuestas/"
 
 #: jinja2/v1/ask-cfpb/answer-search-results.html:83
-#: jinja2/v1/ask-cfpb/landing-page.html:25
+#: jinja2/v1/ask-cfpb/landing-page.html:27
 msgid "Browse questions by category"
 msgstr "Examinar las preguntas por categoría"
 
@@ -384,6 +384,10 @@ msgstr "Por favor escriba su búsqueda arriba"
 #: jinja2/v1/ask-cfpb/article-page.html:28
 msgid "In this article"
 msgstr "En este artículo"
+
+#: jinja2/v1/ask-cfpb/landing-page.html:7
+msgid "Read answer"
+msgstr "Leer la respuesta"
 
 #: jinja2/v1/ask-cfpb/see-all.html:27
 msgid "Read more"
@@ -407,6 +411,11 @@ msgid ""
 "Join the conversation. Follow CFPB on %(twitter_link)s and %(facebook_link)s."
 msgstr ""
 "Únase a la conversación. Síganos en %(twitter_link)s y en %(facebook_link)s."
+
+#: jinja2/v1/owning-a-home/_templates/ratings-form.html:10
+#: v1/models/feedback.py:15
+msgid "Was this page helpful to you?"
+msgstr "¿Fue útil esta página?"
 
 #: jobmanager/jinja2/jobmanager/job_listing_page.html:76
 msgid "Read full description"
@@ -669,7 +678,7 @@ msgstr ""
 msgid "No log entries found."
 msgstr ""
 
-#: v1/jinja2/v1/home_page.html:13
+#: v1/jinja2/v1/home_page.html:43
 msgid "homepage"
 msgstr ""
 
@@ -692,6 +701,10 @@ msgstr ""
 #: v1/models/base.py:467
 msgid "password"
 msgstr ""
+
+#: v1/models/feedback.py:16
+msgid "Was this answer helpful to you?"
+msgstr "¿Fue útil esta respuesta?"
 
 #: v1/templates/cdnadmin/disabled.html:3 v1/templates/cdnadmin/index.html:5
 msgid "CDN Manager"
@@ -1702,9 +1715,6 @@ msgstr "Jubilado"
 #~ msgstr ""
 #~ "Suscríbase a nuestra lista de email con consejos útiles sobre hipotecas."
 
-#~ msgid "Read answer"
-#~ msgstr "Leer la respuesta"
-
 #~ msgid "Next"
 #~ msgstr "Siguiente"
 
@@ -1719,9 +1729,6 @@ msgstr "Jubilado"
 
 #~ msgid "results within"
 #~ msgstr "resultados de"
-
-#~ msgid "Was this answer helpful to you?"
-#~ msgstr "¿Te resultó útil esta respuesta?"
 
 #~ msgid "Explore"
 #~ msgstr "Explorar"

@@ -5,7 +5,7 @@ volumes:
 
 services:
   e2e:
-    image: cypress/included:6.2.1
+    image: cypress/included:6.5.0
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
