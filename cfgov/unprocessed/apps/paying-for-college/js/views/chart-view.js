@@ -556,10 +556,13 @@ const chartView = {
 
       if ( percentile <= 33 ) {
         updateState.byProperty( 'gradMeterThird', 'bottom third' );
+        updateState.byProperty( 'rategraduationrange', 'low' );
       } else if ( percentile <= 66 ) {
         updateState.byProperty( 'gradMeterThird', 'middle third' );
+        updateState.byProperty( 'rategraduationrange', 'medium' );
       } else {
         updateState.byProperty( 'gradMeterThird', 'top third' );
+        updateState.byProperty( 'rategraduationrange', 'high' );
       }
 
       // Percentile works along a 180-degree axis:
@@ -581,10 +584,13 @@ const chartView = {
 
       if ( percentile <= 33 ) {
         updateState.byProperty( 'repayMeterThird', 'bottom third' );
+        updateState.byProperty( 'raterepay3yrrange', 'low' );
       } else if ( percentile <= 66 ) {
         updateState.byProperty( 'repayMeterThird', 'middle third' );
+        updateState.byProperty( 'raterepay3yrrange', 'medium' );
       } else {
         updateState.byProperty( 'repayMeterThird', 'top third' );
+        updateState.byProperty( 'raterepay3yrrange', 'high' );
       }
 
       // Percentile works along a 180-degree axis:
