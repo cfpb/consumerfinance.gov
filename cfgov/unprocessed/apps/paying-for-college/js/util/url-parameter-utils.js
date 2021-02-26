@@ -36,6 +36,7 @@ const urlParameters = {
   'fedg': 'financialModel.grant_otherFederal',
   'stag': 'financialModel.grant_state',
   'schg': 'financialModel.grant_school',
+  'tuig': 'financialModel.grant_tuition',
   'othg': 'financialModel.grant_other',
 
   'mta': 'financialModel.grant_mta',
