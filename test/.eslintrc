@@ -18,7 +18,8 @@ rules:
   max-len:
     - 1
     -
-      ignorePattern: '^import\s(([A-Za-z0-9]*)|([*]\sas\s[A-Za-z0-9]*))\sfrom\s'
+      // https://regex101.com/r/hVU4sX/1
+      ignorePattern: '(^import\s([*])|([A-Za-z0-9]*)\s)|(\sfrom\s)'
       ignoreComments: true
       ignoreTrailingComments: true
       ignoreUrls: true
