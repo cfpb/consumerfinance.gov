@@ -1,6 +1,7 @@
 import { simulateEvent } from '../../../../util/simulate-event';
+const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 const tdpAnalytics = require(
-  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/tdp-analytics.js'
+  BASE_JS_PATH + 'teachers-digital-platform/js/tdp-analytics.js'
 );
 
 const HTML_SNIPPET = `

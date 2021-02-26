@@ -1,5 +1,6 @@
+const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 const ClearableInput = require(
-  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/ClearableInput'
+  BASE_JS_PATH + 'teachers-digital-platform/js/ClearableInput'
 ).ClearableInput;
 import { simulateEvent } from '../../../../util/simulate-event';
 
