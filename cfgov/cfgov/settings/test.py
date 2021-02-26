@@ -95,3 +95,19 @@ HAYSTACK_CONNECTIONS["default"]["INDEX_NAME"] = (
 
 ELASTICSEARCH_DSL_AUTO_REFRESH = False
 ELASTICSEARCH_DSL_AUTOSYNC = False
+
+if os.getenv('SKIP_DJANGO_MIGRATIONS'):
+    class _NoMigrations:
+        def __contains__(self, item):
+            return True
+
+        def __getitem__(self, item):
+            return None
+
+
+    MIGRATION_MODULES = _NoMigrations()
+
+for search_backend_settings in WAGTAILSEARCH_BACKENDS.values():
+    search_backend_settings['AUTO_UPDATE'] = False
+
+DEPLOY_ENVIRONMENT = 'test'
