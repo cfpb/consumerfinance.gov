@@ -114,7 +114,8 @@ describe( 'routeOptionFormView', () => {
     expect( store.subscribe.mock.calls.length ).toBe( 1 );
   } );
 
-  it( 'dispatches an action to update `transportation` with checkbox selection', () => {
+  it( 'dispatches an action to update `transportation` ' +
+      'with checkbox selection', () => {
     const radioEl = document.querySelectorAll( 'input[name="transpo"]' )[0];
 
     simulateEvent( 'click', radioEl );
