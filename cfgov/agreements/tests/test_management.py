@@ -2,13 +2,12 @@ import io
 import os.path
 import unittest
 import zipfile
+from unittest import mock
 from zipfile import ZipFile
 
 from django.core import management
 from django.core.management.base import CommandError
 from django.test import TestCase
-
-import mock
 
 from agreements.management.commands import _util
 from agreements.management.commands.import_agreements import empty_folder_test

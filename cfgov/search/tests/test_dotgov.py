@@ -1,6 +1,6 @@
-from django.test import TestCase
+from unittest import mock
 
-import mock
+from django.test import TestCase
 
 from search.dotgov import search, typeahead
 
