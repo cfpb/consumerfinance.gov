@@ -1,6 +1,7 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
 import
 budgetFormView
+  // eslint-disable-next-line max-len
   from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/budget';
 import mockStore from '../../../../../mocks/store';
 

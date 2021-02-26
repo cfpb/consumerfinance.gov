@@ -1,4 +1,6 @@
-const simulateEvent = require( '../../../../util/simulate-event' ).simulateEvent;
+const simulateEvent = require(
+  '../../../../util/simulate-event'
+).simulateEvent;
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 
 const app = require( `${ BASE_JS_PATH }/js/search.js` );

@@ -1,11 +1,13 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
 import
 daysPerWeekView
+  // eslint-disable-next-line max-len
   from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week';
 import {
   clearDaysPerWeekAction,
   updateDaysPerWeekAction,
   updateDaysToActionPlan
+// eslint-disable-next-line max-len
 } from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import TODO_FIXTURE from '../../../../fixtures/todo-alert';
 import TodoNotificationMock from '../../../../mocks/todo-notification';

@@ -1,4 +1,7 @@
-import * as analyticsUtil from '../../../../../../cfgov/unprocessed/apps/analytics-gtm/js/util/analytics-util';
+import
+* as analyticsUtil
+  // eslint-disable-next-line max-len
+  from '../../../../../../cfgov/unprocessed/apps/analytics-gtm/js/util/analytics-util';
 
 const HTML_SNIPPET = `
   <div id="test-elem"></div>

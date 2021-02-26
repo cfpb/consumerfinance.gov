@@ -1,5 +1,6 @@
 import
 RateCheckerChart
+  // eslint-disable-next-line max-len
   from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/RateCheckerChart';
 
 const HTML_SNIPPET = `

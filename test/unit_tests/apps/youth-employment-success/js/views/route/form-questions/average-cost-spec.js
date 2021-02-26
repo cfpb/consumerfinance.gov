@@ -1,11 +1,13 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
 import
 averageCostView
+  // eslint-disable-next-line max-len
   from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/average-cost';
 import {
   updateAverageCostAction,
   updateCostToActionPlan,
   updateIsMonthlyCostAction
+// eslint-disable-next-line max-len
 } from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import TODO_FIXTURE from '../../../../fixtures/todo-alert';
 import TodoNotificationMock from '../../../../mocks/todo-notification';

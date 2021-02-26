@@ -1,12 +1,14 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
 import
 goalsView
+  // eslint-disable-next-line max-len
   from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/goals';
 import {
   updateGoalAction,
   updateGoalImportanceAction,
   updateGoalStepsAction,
   updateGoalTimelineAction
+// eslint-disable-next-line max-len
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/goal-reducer';
 
 const HTML = `

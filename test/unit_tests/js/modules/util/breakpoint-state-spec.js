@@ -115,9 +115,11 @@ describe( 'breakpoint-state', () => {
     it( 'should correctly handle non-standard base font sizes', () => {
       // Ensure test utility is working.
       setBaseFontSize( 16 );
-      expect( window.getComputedStyle( document.body ).fontSize ).toBe( '16px' );
+      expect( window.getComputedStyle( document.body ).fontSize )
+        .toBe( '16px' );
       setBaseFontSize( 24 );
-      expect( window.getComputedStyle( document.body ).fontSize ).toBe( '24px' );
+      expect( window.getComputedStyle( document.body ).fontSize )
+        .toBe( '24px' );
 
       // Test that live code still works with base font size change.
       setBaseFontSize( 16 );

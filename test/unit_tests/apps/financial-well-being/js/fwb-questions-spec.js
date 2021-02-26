@@ -1,5 +1,6 @@
 import
 fwbQuestions
+  // eslint-disable-next-line max-len
   from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-questions';
 import { simulateEvent } from '../../../../util/simulate-event';
 

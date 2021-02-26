@@ -1,5 +1,9 @@
-import * as validators from '../../../../../cfgov/unprocessed/js/modules/util/validators.js';
-import ERROR_MESSAGES from '../../../../../cfgov/unprocessed/js/config/error-messages-config';
+import
+* as validators
+  from '../../../../../cfgov/unprocessed/js/modules/util/validators.js';
+import
+ERROR_MESSAGES
+  from '../../../../../cfgov/unprocessed/js/config/error-messages-config';
 
 let testField;
 let returnedObject;

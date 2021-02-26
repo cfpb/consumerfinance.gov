@@ -2,6 +2,7 @@
    Unfortunately, we can't place path variables into import statements. */
 import
 actions
+  // eslint-disable-next-line max-len
   from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/chart.js';
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );

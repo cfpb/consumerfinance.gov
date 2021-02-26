@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime';
 import
 * as d3
+  // eslint-disable-next-line max-len
   from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/node_modules/d3-selection';
 import
 * as sut

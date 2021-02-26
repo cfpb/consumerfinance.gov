@@ -1,5 +1,6 @@
 import
 createRoute
+  // eslint-disable-next-line max-len
   from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
 
 describe( 'route factory function', () => {

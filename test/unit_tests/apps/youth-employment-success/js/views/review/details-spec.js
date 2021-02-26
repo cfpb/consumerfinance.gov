@@ -1,12 +1,15 @@
 import
 reviewDetailsView
+  // eslint-disable-next-line max-len
   from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/details';
 import mockStore from '../../../../../mocks/store';
 import {
   toArray
+// eslint-disable-next-line max-len
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import {
   PLAN_TYPES
+// eslint-disable-next-line max-len
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 
 let state;

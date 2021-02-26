@@ -1,5 +1,6 @@
 import
 TodoNotification
+  // eslint-disable-next-line max-len
   from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/todo-notification';
 import TODO_FIXTURE from '../../fixtures/todo-alert';
 

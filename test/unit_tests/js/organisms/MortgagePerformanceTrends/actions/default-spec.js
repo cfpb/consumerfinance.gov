@@ -2,6 +2,7 @@
    Unfortunately, we can't place path variables into import statements. */
 import
 * as defaultActionCreators
+  // eslint-disable-next-line max-len
   from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/default.js';
 const actions = defaultActionCreators.default();
 

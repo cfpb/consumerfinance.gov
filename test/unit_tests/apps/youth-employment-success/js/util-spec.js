@@ -8,6 +8,7 @@ import {
   toArray,
   toPrecision,
   toggleCFNotification
+// eslint-disable-next-line max-len
 } from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
 const reducerStateA = {

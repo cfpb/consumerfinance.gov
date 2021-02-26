@@ -1,8 +1,10 @@
 import
 notificationsView
+  // eslint-disable-next-line max-len
   from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications';
 import {
   ALERT_TYPES
+// eslint-disable-next-line max-len
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/notifications';
 
 const CLASSES = notificationsView.CLASSES;

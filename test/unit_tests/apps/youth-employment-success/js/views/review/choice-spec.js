@@ -1,16 +1,20 @@
 import
 reviewChoiceView
+  // eslint-disable-next-line max-len
   from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/choice';
 import mockStore from '../../../../../mocks/store';
 import { simulateEvent } from '../../../../../../util/simulate-event';
 import {
   toArray
+// eslint-disable-next-line max-len
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import {
   updateRouteChoiceAction
+// eslint-disable-next-line max-len
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer';
 import
 transportationMap
+  // eslint-disable-next-line max-len
   from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
 const CLASSES = reviewChoiceView.CLASSES;

@@ -1,5 +1,6 @@
 import
 fwbResults
+  // eslint-disable-next-line max-len
   from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-results';
 import { simulateEvent } from '../../../../util/simulate-event';
 
@@ -122,8 +123,10 @@ describe( 'fwb-results', () => {
 
   // TODO: Add aria pressed states to cf-expandables
   xit( 'initialize the expandables on page load', () => {
-    expect( expandableTarget.getAttribute( 'aria-pressed' ) ).toBe( 'false' );
-    expect( expandableContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+    expect( expandableTarget.getAttribute( 'aria-pressed' ) )
+      .toBe( 'false' );
+    expect( expandableContent.getAttribute( 'aria-expanded' ) )
+      .toBe( 'false' );
   } );
 
   it( 'should submit the correct analytics when a toggle button is clicked',

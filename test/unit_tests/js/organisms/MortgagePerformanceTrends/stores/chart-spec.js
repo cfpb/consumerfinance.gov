@@ -1,5 +1,6 @@
 import
 Store
+  // eslint-disable-next-line max-len
   from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/stores/chart.js';
 let store;
 
