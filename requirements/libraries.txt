@@ -7,7 +7,7 @@ djangorestframework==3.11.1
 django-csp==3.4
 django-elasticsearch-dsl==7.1.4
 django-extensions==2.1.3
-django-flags==4.2.4
+django-flags==5.0.3
 django-haystack==2.8.1
 # django-localflavor is required by django-college-costs-comparison
 django-localflavor==2.2
@@ -32,7 +32,7 @@ requests_aws4auth==0.8.0
 requests_toolbelt==0.8.0
 urllib3==1.25.2
 # wagtail-autocomplete==0.6 TODO: Restore when wagtail-autocomplete #77 is merged
-wagtail-flags==5.0.0
+wagtail-flags==5.1.0
 wagtail-inventory==1.2.0
 wagtail-placeholder-images==0.1.1
 wagtail-sharing==2.4.0
@@ -44,7 +44,7 @@ https://github.com/cfpb/elasticsearch-dsl-py/releases/download/7.2.2/elasticsear
 https://github.com/cfpb/wagtail-autocomplete/releases/download/0.7/wagtail_autocomplete-0.6-py3-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.17.1/owning_a_home_api-0.17.1-py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.15.2/retirement-0.15.2-py3-none-any.whl
-https://github.com/cfpb/ccdb5-api/releases/download/1.5.1/ccdb5_api-1.5.1-py3-none-any.whl
+https://github.com/cfpb/ccdb5-api/releases/download/1.5.2/ccdb5_api-1.5.2-py3-none-any.whl
 https://github.com/cfpb/ccdb5-ui/releases/download/2.3.1/ccdb5_ui-2.3.1-py3-none-any.whl
 https://github.com/cfpb/django-college-costs-comparison/releases/download/1.17.1/comparisontool-1.17.1-py3-none-any.whl
 https://github.com/cfpb/curriculum-review-tool/releases/download/2.1.3/crtool-2.1.3-py3-none-any.whl

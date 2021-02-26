@@ -24,3 +24,14 @@ class TestEnvironmentSpecificIndex(TestCase):
     def test_environment_specific_index_includes_deploy_env(self):
         name = environment_specific_index('index')
         self.assertEqual(name, 'test-index')
+
+    # Handle uppercase deploy environment vars (for Jenkins)
+    @override_settings(DEPLOY_ENVIRONMENT='PRODUCTION')
+    def test_environment_specific_index_excludes_deploy_env_PRODUCTION(self):
+        name = environment_specific_index('index')
+        self.assertEqual(name, 'index')
+
+    @override_settings(DEPLOY_ENVIRONMENT='TEST')
+    def test_environment_specific_index_lowercases_index(self):
+        name = environment_specific_index('index')
+        self.assertEqual(name, 'test-index')
