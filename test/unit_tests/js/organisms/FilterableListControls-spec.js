@@ -1,4 +1,6 @@
-import FilterableListControls from '../../../../cfgov/unprocessed/js/organisms/FilterableListControls';
+import
+FilterableListControls
+  from '../../../../cfgov/unprocessed/js/organisms/FilterableListControls';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 const HTML_SNIPPET = `
@@ -195,9 +197,11 @@ describe( 'FilterableListControls', () => {
 
   describe( 'init()', () => {
     it( 'should return the FormSubmit instance when initialized', () => {
-      expect( filterableListControlsDom.getAttribute( 'data-js-hook' ) ).toBeNull();
+      expect( filterableListControlsDom.getAttribute( 'data-js-hook' ) )
+        .toBeNull();
       filterableListControls.init();
-      expect( filterableListControlsDom.getAttribute( 'data-js-hook' ) ).toStrictEqual( 'state_atomic_init' );
+      expect( filterableListControlsDom.getAttribute( 'data-js-hook' ) )
+        .toStrictEqual( 'state_atomic_init' );
     } );
   } );
 

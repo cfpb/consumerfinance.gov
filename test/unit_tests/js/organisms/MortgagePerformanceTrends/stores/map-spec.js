@@ -1,4 +1,6 @@
-import Store from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/stores/map.js';
+import
+Store
+  from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/stores/map.js';
 let store;
 
 describe( 'Mortgage Performance map store', () => {
@@ -107,7 +109,8 @@ describe( 'Mortgage Performance map store', () => {
       metros: { 12345: 'Akron, OH' }
     };
     store.dispatch( action );
-    expect( store.getState().metros ).toStrictEqual( { 12345: 'Akron, OH' } );
+    expect( store.getState().metros )
+      .toStrictEqual( { 12345: 'Akron, OH' } );
     action = {
       type: 'UPDATE_CHART',
       geo: {
@@ -118,7 +121,8 @@ describe( 'Mortgage Performance map store', () => {
       metros: { 67890: 'Boston, MA' }
     };
     store.dispatch( action );
-    expect( store.getState().metros ).toStrictEqual( { 67890: 'Boston, MA' } );
+    expect( store.getState().metros )
+      .toStrictEqual( { 67890: 'Boston, MA' } );
   } );
 
   it( 'should properly reduce counties', () => {
@@ -127,7 +131,8 @@ describe( 'Mortgage Performance map store', () => {
       counties: { 12345: 'Acme County' }
     };
     store.dispatch( action );
-    expect( store.getState().counties ).toStrictEqual( { 12345: 'Acme County' } );
+    expect( store.getState().counties )
+      .toStrictEqual( { 12345: 'Acme County' } );
     action = {
       type: 'UPDATE_CHART',
       geo: {

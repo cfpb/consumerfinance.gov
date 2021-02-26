@@ -24,9 +24,13 @@ describe( 'MegaMenu', () => {
     it( 'should expand on the first level sub-menu button click', done => {
       window.innerWidth = 420;
       const menuTrigger = navElem.querySelector( '.o-mega-menu_trigger' );
-      const subTrigger = navElem.querySelector( '.o-mega-menu_content-1-link__has-children' );
+      const subTrigger = navElem.querySelector(
+        '.o-mega-menu_content-1-link__has-children'
+      );
       const subContent = navElem.querySelector( '.o-mega-menu_content-2' );
-      const subContentWrapper = navElem.querySelector( '.o-mega-menu_content-2-wrapper' );
+      const subContentWrapper = navElem.querySelector(
+        '.o-mega-menu_content-2-wrapper'
+      );
       let isExpanded;
 
       function resolveFirstClick() {
@@ -82,12 +86,17 @@ describe( 'MegaMenu', () => {
       window.setTimeout( resolveFirstClick, 1000 );
     } );
 
-    it( 'should collapse on the first level sub-menu back button click', done => {
+    it( 'should collapse on the first level' +
+        'sub-menu back button click', done => {
       window.innerWidth = 420;
       const menuTrigger = navElem.querySelector( '.o-mega-menu_trigger' );
-      const subTrigger = navElem.querySelector( '.o-mega-menu_content-1-link__has-children' );
+      const subTrigger = navElem.querySelector(
+        '.o-mega-menu_content-1-link__has-children'
+      );
       const subContent = navElem.querySelector( '.o-mega-menu_content-2' );
-      const subAltTrigger = subContent.querySelector( '.o-mega-menu_content-alt-trigger' );
+      const subAltTrigger = subContent.querySelector(
+        '.o-mega-menu_content-alt-trigger'
+      );
       let isExpanded;
 
       function resolveFirstClick() {

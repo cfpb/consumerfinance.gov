@@ -24,9 +24,13 @@ describe( 'MegaMenu', () => {
     it( 'should expand on the first level sub-menu button click', done => {
       window.innerWidth = 1220;
       const menuTrigger = navElem.querySelector( '.o-mega-menu_trigger' );
-      const subTrigger = navElem.querySelector( '.o-mega-menu_content-1-link__has-children' );
+      const subTrigger = navElem.querySelector(
+        '.o-mega-menu_content-1-link__has-children'
+      );
       const subContent = navElem.querySelector( '.o-mega-menu_content-2' );
-      const subContentWrapper = navElem.querySelector( '.o-mega-menu_content-2-wrapper' );
+      const subContentWrapper = navElem.querySelector(
+        '.o-mega-menu_content-2-wrapper'
+      );
       let isExpanded;
 
       function resolveFirstClick() {

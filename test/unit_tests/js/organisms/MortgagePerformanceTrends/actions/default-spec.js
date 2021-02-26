@@ -1,10 +1,13 @@
 /* Disable the AJAX library used by the action creator.
    Unfortunately, we can't place path variables into import statements. */
-import * as defaultActionCreators from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/default.js';
+import
+* as defaultActionCreators
+  from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/default.js';
 const actions = defaultActionCreators.default();
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
-jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
+jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/' +
+           'MortgagePerformanceTrends/utils', () => ( {
   getNonMetroData: cb => {
     const nonMetros = [ {
       valid: true,
