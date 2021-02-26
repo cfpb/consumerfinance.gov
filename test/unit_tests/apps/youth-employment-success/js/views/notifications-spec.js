@@ -1,11 +1,5 @@
-import
-notificationsView
-  // eslint-disable-next-line max-len
-  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications';
-import {
-  ALERT_TYPES
-// eslint-disable-next-line max-len
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/notifications';
+import notificationsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications';
+import { ALERT_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/notifications';
 
 const CLASSES = notificationsView.CLASSES;
 const NOTIFICATION_CLASS = 'm-notification';

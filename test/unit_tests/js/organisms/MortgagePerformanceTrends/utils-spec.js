@@ -1,10 +1,7 @@
 // Disable the AJAX library used by the action creator.
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
 
-import
-utils
-  // eslint-disable-next-line max-len
-  from '../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils.js';
+import utils from '../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils.js';
 
 let el;
 

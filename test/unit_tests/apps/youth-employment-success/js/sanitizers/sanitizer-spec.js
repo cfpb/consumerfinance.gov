@@ -1,7 +1,4 @@
-import
-sanitizeMap
-  // eslint-disable-next-line max-len
-  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/sanitizers';
+import sanitizeMap from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/sanitizers';
 
 describe( 'exposed sanitize functions', () => {
   describe( 'money', () => {

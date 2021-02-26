@@ -1,13 +1,9 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
-import
-transitTimeView
-  // eslint-disable-next-line max-len
-  from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/transit-time';
+import transitTimeView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/transit-time';
 import {
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
-// eslint-disable-next-line max-len
 } from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import TODO_FIXTURE from '../../../../fixtures/todo-alert';
 import mockStore from '../../../../../../mocks/store';

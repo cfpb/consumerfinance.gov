@@ -2,12 +2,8 @@ import budgetReducer, {
   initialState,
   updateEarnedAction,
   updateSpentAction
-// eslint-disable-next-line max-len
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/budget-reducer';
-import {
-  UNDEFINED
-// eslint-disable-next-line max-len
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
 describe( 'budgetReducer', () => {
 

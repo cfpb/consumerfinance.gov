@@ -1,9 +1,6 @@
 /* Disable the AJAX library used by the action creator.
    Unfortunately, we can't place path variables into import statements. */
-import
-* as defaultActionCreators
-  // eslint-disable-next-line max-len
-  from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/default.js';
+import * as defaultActionCreators from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/default.js';
 const actions = defaultActionCreators.default();
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );

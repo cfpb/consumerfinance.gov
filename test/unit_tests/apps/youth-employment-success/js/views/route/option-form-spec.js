@@ -1,24 +1,14 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
-import
-routeOptionFormView
-  // eslint-disable-next-line max-len
-  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form';
+import routeOptionFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form';
 import {
   averageCostView,
   daysPerWeekView,
   drivingCostEstimateView,
   milesView,
   transitTimeView
-// eslint-disable-next-line max-len
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions';
-import
-routeDetailsView
-  // eslint-disable-next-line max-len
-  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
-import {
-  updateTransportationAction
-// eslint-disable-next-line max-len
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import { updateTransportationAction } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import mockStore from '../../../../../mocks/store';
 
 jest.mock(

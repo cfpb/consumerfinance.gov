@@ -1,7 +1,4 @@
-import
-expandableView
-  // eslint-disable-next-line max-len
-  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/expandable';
+import expandableView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/expandable';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
 
 const HTML = `

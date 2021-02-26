@@ -1,20 +1,10 @@
-import
-routeDetailsView
-  // eslint-disable-next-line max-len
-  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
 import {
   toArray,
   toPrecision
-// eslint-disable-next-line max-len
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import {
-  PLAN_TYPES
-// eslint-disable-next-line max-len
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
-import
-transportationMap
-  // eslint-disable-next-line max-len
-  from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
+import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
 jest.mock(
   '../../../../../../../cfgov/unprocessed/apps/' +

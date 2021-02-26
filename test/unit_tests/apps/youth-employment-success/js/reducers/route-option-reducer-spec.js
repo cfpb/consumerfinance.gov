@@ -1,7 +1,4 @@
-import
-createRoute
-  // eslint-disable-next-line max-len
-  from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
+import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
 import routeOptionReducer, {
   addRouteOptionAction,
   clearAverageCostAction,
@@ -21,16 +18,9 @@ import routeOptionReducer, {
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction,
   updateTransportationAction
-// eslint-disable-next-line max-len
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import {
-  UNDEFINED
-// eslint-disable-next-line max-len
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import {
-  PLAN_TYPES
-// eslint-disable-next-line max-len
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import { PLAN_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 
 // Arbitrary value to ensure reducer is updating properly
 const nextValue = '15';

@@ -5,7 +5,6 @@ import goalReducer, {
   updateGoalImportanceAction,
   updateGoalStepsAction,
   updateGoalTimelineAction
-// eslint-disable-next-line max-len
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/goal-reducer';
 
 let UNDEFINED;

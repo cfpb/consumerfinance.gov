@@ -1,7 +1,4 @@
-import
-dropDownUtils
-  // eslint-disable-next-line max-len
-  from '../../../../../cfgov/unprocessed/apps/owning-a-home/js/dropdown-utils.js';
+import dropDownUtils from '../../../../../cfgov/unprocessed/apps/owning-a-home/js/dropdown-utils.js';
 
 const HTML_SNIPPET = `
 <div class="foo">
