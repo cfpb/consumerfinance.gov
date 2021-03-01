@@ -8,12 +8,23 @@ main.college-costs {
 	.private-loan-section,
 	.parentplus-loan-section,
 	.gradplus-loan-section,
+	.community-college,
 	.program-select {
 		display: none;
 	}
 
 	[data-state-based-visibility] {
 		display: none;
+	}
+
+	// 2 vs 4 year
+	&[data-state_communitycollege="true"] {
+		span.community-college {
+			display: inline;
+		}
+		span.four-year-college {
+			display: none;
+		}
 	}
 
 	// Grad & undergrad content control
