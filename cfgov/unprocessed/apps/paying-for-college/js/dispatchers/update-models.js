@@ -123,8 +123,9 @@ const updateSchoolData = function( iped ) {
 
         // If we have a pid, validate it
         const pid = getStateValue( 'pid' );
+        let programInfo = false;
         if ( pid !== false && pid !== null ) {
-          const programInfo = getProgramInfo( pid );
+          programInfo = getProgramInfo( pid );
           if ( programInfo === false ) {
             stateModel.setValue( 'pid', false );
           }
@@ -142,7 +143,11 @@ const updateSchoolData = function( iped ) {
         schoolModel.values.stateName = getStateByCode( schoolModel.values.state );
 
         // Some values must migrate to the financial model
-        financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+        if ( programInfo ) {
+          financialModel.setValue( 'salary_annual', stringToNum( programInfo.salary ) );
+        } else {
+          financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+        }
 
         // Update expenses by
         if ( schoolModel.values.hasOwnProperty( 'region' ) ) {

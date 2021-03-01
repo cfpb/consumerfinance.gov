@@ -7,7 +7,7 @@ import { recalculateFinancials } from '../dispatchers/update-models.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
-
+import { getStateValue } from '../dispatchers/get-model-values.js';
 const appView = {
   _actionPlanChoices: null,
   _didThisHelpChoices: null,
@@ -25,6 +25,7 @@ const appView = {
     updateState.byProperty( 'includeParentPlus', target.checked );
     recalculateFinancials();
     updateFinancialViewAndFinancialCharts();
+    appView.setUrlQueryString();
   },
 
   /**
@@ -71,6 +72,10 @@ const appView = {
     appView._updateSaveLink();
   },
 
+
+  updateUI: () => {
+    appView._includeParentPlusBtn.checked = getStateValue( 'includeParentPlus' ) ? true : false;
+  },
   /**
    * Replaces current state, adding the formatted querystring as the URL
    */
