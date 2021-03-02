@@ -29,7 +29,7 @@
 
     // When JavaScript is disabled add a border to stand-alone videos.
     .no-js &:not( .o-featured-content-module_visual ) {
-        border: 1px solid @black;
+        border: 1px solid @gray-40;
     }
 }
 
@@ -58,6 +58,24 @@
     text-align: center;
     height: 100%;
     width: 100%;
+
+    // Create an aspect ratio box, see https://css-tricks.com/aspect-ratio-boxes/#the-psuedo-element-tactic
+    &:before {
+        content: "";
+        width: 1px;
+        margin-left: -1px;
+        float: left;
+        height: 0;
+        // 1280px / 720px (16/9) aspect ratio.
+        padding-top: 720px / 1280px * 100%;
+    }
+
+    // To clear float.
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
 .o-video-player_image {
@@ -66,10 +84,37 @@
     opacity: 0;
     transition: opacity .25s;
 
+    .no-js & {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        display: flex;
+
+        img {
+            padding: 10px;
+            box-sizing: border-box;
+            align-self: center;
+        }
+
+        // Overrides values set in featured-content-module.less file in the DS.
+        img.o-featured-content-module_img {
+            max-width: 100%;
+            height: auto;
+            left: 0;
+            transform: none;
+        }
+    }
     .no-js &,
     &-loaded,
     &__thumbnail {
         opacity: 1;
+    }
+
+    img {
+        display: inherit;
     }
 }
 

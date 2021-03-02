@@ -30,7 +30,7 @@ function VideoPlayer( element ) {
   const _showCustomThumbnail = _dom.hasAttribute( 'data-custom-thumbnail' );
 
   const _iframeDom = _dom.querySelector( `.${ BASE_CLASS }_iframe` );
-  const _imageDom = _dom.querySelector( `.${ BASE_CLASS }_image` );
+  const _imageDom = _dom.querySelector( `.${ BASE_CLASS }_image img` );
   const _closeBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_close-btn` );
   const _playBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_play-btn` );
   const _playLinkDom = _dom.querySelector( `a.${ BASE_CLASS }_play-btn` );
@@ -156,7 +156,7 @@ function VideoPlayer( element ) {
    * Show the image by adding a class that changes its opacity.
    */
   function _imageShow() {
-    _imageDom.classList.add( `${ BASE_CLASS }_image-loaded` );
+    _imageDom.parentNode.classList.add( `${ BASE_CLASS }_image-loaded` );
   }
 
   /**
