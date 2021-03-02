@@ -72,10 +72,11 @@ synonym_analyzer = analyzer(
 
 
 def environment_specific_index(base_name):
-    if settings.DEPLOY_ENVIRONMENT in (None, '', 'local', 'production'):
+    env = settings.DEPLOY_ENVIRONMENT
+    if not env or env.lower() in ('local', 'production'):
         return base_name
     else:
-        return f'{settings.DEPLOY_ENVIRONMENT}-{base_name}'
+        return f'{env}-{base_name}'.lower()
 
 
 class ElasticsearchTestsMixin:
