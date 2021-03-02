@@ -3,6 +3,8 @@ from django.template.response import TemplateResponse
 
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
+from flags.state import flag_enabled
+
 from v1.feeds import FilterableFeed
 from v1.forms import FilterableListForm
 from v1.models.learn_page import AbstractFilterPage
@@ -95,7 +97,11 @@ class FilterableListMixin(RoutablePageMixin):
 
         form_data, has_active_filters = self.get_form_data(request.GET)
         queryset = self.get_filterable_queryset()
-        has_archived_posts = queryset.filter(is_archived='yes').count() > 0
+        # flag check to enable or disable archive filter options
+        if flag_enabled('HIDE_ARCHIVE_FILTER_OPTIONS', request=request):
+            has_archived_posts = False
+        else:
+            has_archived_posts = queryset.filter(is_archived='yes').count() > 0
         form = self.get_form_class()(
             form_data,
             filterable_pages=queryset,

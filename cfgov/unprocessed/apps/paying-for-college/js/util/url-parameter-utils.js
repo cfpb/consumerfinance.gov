@@ -20,6 +20,7 @@ const urlParameters = {
   'utm_source': 'stateModel.utmSource',
   'utm_medium': 'stateModel.utm_medium',
   'utm_campaign': 'stateModel.utm_campaign',
+  'inpp': 'stateModel.includeParentPlus',
 
   'tuit': 'financialModel.dirCost_tuition',
   'hous': 'financialModel.dirCost_housing',
@@ -35,6 +36,7 @@ const urlParameters = {
   'fedg': 'financialModel.grant_otherFederal',
   'stag': 'financialModel.grant_state',
   'schg': 'financialModel.grant_school',
+  'tuig': 'financialModel.grant_tuition',
   'othg': 'financialModel.grant_other',
 
   'mta': 'financialModel.grant_mta',

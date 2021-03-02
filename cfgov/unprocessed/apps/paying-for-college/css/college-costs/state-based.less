@@ -7,12 +7,24 @@ main.college-costs {
 	.graduate-content,
 	.private-loan-section,
 	.parentplus-loan-section,
-	.gradplus-loan-section {
+	.gradplus-loan-section,
+	.community-college,
+	.program-select {
 		display: none;
 	}
 
 	[data-state-based-visibility] {
 		display: none;
+	}
+
+	// 2 vs 4 year
+	&[data-state_communitycollege="true"] {
+		span.community-college {
+			display: inline;
+		}
+		span.four-year-college {
+			display: none;
+		}
 	}
 
 	// Grad & undergrad content control
@@ -25,6 +37,12 @@ main.college-costs {
 		}
 		li.undergrad-content {
 			display: list-item;
+		}
+	}
+
+	&[data-state_pid] {
+		.no-program-selected {
+			display: none;
 		}
 	}
 
@@ -49,6 +67,12 @@ main.college-costs {
 		}
 		li.associates-content {
 			display: list-item;
+		}
+	}
+
+	&[data-state_programtype][data-state_schoolhasprograms="yes"] {
+		.program-select {
+			display: block;
 		}
 	}
 
@@ -143,7 +167,7 @@ main.college-costs {
 	}
 
 	// Program selection visibility
-	&[data-state_schoolhasprograms="yes"][data-state_programtype="graduate"] {
+	&[data-state_schoolhasprograms="yes"] {
 		[data-state-based-visibility="school-has-programs"] {
 			display: block;
 		}
@@ -151,7 +175,7 @@ main.college-costs {
 			display: inline;
 		}
 	}
-	&[data-state_schoolhasprograms="no"][data-state_programtype="graduate"] {
+	&[data-state_schoolhasprograms="no"] {
 		[data-state-based-visibility="school-no-programs"] {
 			display: block;
 		}
@@ -296,6 +320,9 @@ main.college-costs {
 		}
 	}
 
+	.school-results_comparison-section__default-rate .big-percentile {
+		border-color: @gray-20;
+	}
 
 	&[data-state_rategraduationrange="high"] {
 		.school-results_comparison-section__grad-rate .big-percentile {
