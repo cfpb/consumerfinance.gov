@@ -134,6 +134,8 @@ def add_link_markup(tag, request_path):
         arguments = parse_qs(components.query)
         if 'ext_url' in arguments:
             external_url = arguments['ext_url'][0]
+            # Add original URL for print styles
+            tag['data-orig-href'] = external_url
             # Add the redirect notice as well
             tag['href'] = signed_redirect(external_url)
 
@@ -141,6 +143,8 @@ def add_link_markup(tag, request_path):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         icon = 'external-link'
         if NON_GOV_LINKS.match(tag['href']):
+            # Add original URL for print styles
+            tag['data-orig-href'] = tag['href']
             # Add the redirect notice as well
             tag['href'] = signed_redirect(tag['href'])
 
