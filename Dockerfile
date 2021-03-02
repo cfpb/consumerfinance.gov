@@ -10,6 +10,8 @@ LABEL maintainer="tech@cfpb.gov"
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
 ARG scl_python_version
 ENV SCL_PYTHON_VERSION ${scl_python_version}
+ARG postgres_version
+ENV POSTGRES_VERSION ${postgres_version}
 
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
@@ -32,7 +34,7 @@ RUN yum -y install \
         gcc \
         git \
         mailcap \
-        postgresql13 \
+        ${POSTGRES_VERSION} \
         which \
         gettext \
         ${SCL_PYTHON_VERSION} && \
