@@ -53,11 +53,10 @@
 
 .o-video-player_image-container {
     position: relative;
-    // @black not used because it's not totally black.
-    background-color: #000;
+    background-color: #fff;
     text-align: center;
     height: 100%;
-    width: 100%;
+    display: flex;
 
     // Create an aspect ratio box, see https://css-tricks.com/aspect-ratio-boxes/#the-psuedo-element-tactic
     &:before {
@@ -83,38 +82,28 @@
     display: block;
     opacity: 0;
     transition: opacity .25s;
+    // Needed for IE11 to not stretch the image.
+    flex-shrink: 0;
 
-    .no-js & {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        background: #fff;
-        display: flex;
-
-        img {
-            padding: 10px;
-            box-sizing: border-box;
-            align-self: center;
-        }
+    // Using the default CFPB cover card image.
+    &[src="/static/img/cfpb_video_cover_card_954x200.png"] {
+        padding: 10px;
+        box-sizing: border-box;
+        align-self: center;
 
         // Overrides values set in featured-content-module.less file in the DS.
-        img.o-featured-content-module_img {
+        &.o-featured-content-module_img {
             max-width: 100%;
             height: auto;
             left: 0;
             transform: none;
         }
     }
+
     .no-js &,
     &-loaded,
     &__thumbnail {
         opacity: 1;
-    }
-
-    img {
-        display: inherit;
     }
 }
 
