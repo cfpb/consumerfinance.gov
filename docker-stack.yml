@@ -14,8 +14,14 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
     networks:
       - app
+
   elasticsearch:
     image: ${CFGOV_ES_IMAGE}
     environment:
@@ -29,8 +35,14 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
     networks:
       - app
+
   postgres:
     image: postgres:10-alpine
     user: postgres
@@ -43,6 +55,11 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
     environment:
       POSTGRES_USER: cfpb
       POSTGRES_PASSWORD_FILE: /var/run/secrets/PGPASSWORD
@@ -95,6 +112,11 @@ services:
         - com.docker.lb.hosts=${CFGOV_HOSTNAME}
         - com.docker.lb.port=8000
         - com.docker.lb.network=${LB_NETWORK}
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
     command: >
                 bash -c "
 
@@ -103,11 +125,11 @@ services:
                 django_tables_exist=$$?
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
-                    ./refresh-data.sh 
+                    ./refresh-data.sh
                 fi
 
                 ./cfgov/manage.py update_index
-                
+
                 ./cfgov/manage.py search_index --rebuild -f --parallel
 
                 httpd -d cfgov/apache -D FOREGROUND"
