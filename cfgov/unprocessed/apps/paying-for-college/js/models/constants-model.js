@@ -21,7 +21,8 @@ const constantsModel = {
       yearOne: 0,
       yearTwo: 0,
       yearThree: 0
-    }
+    },
+    existingDebtRate: .07
   },
   nonNumeric: [ 'constantsYear' ],
   financialValues: {

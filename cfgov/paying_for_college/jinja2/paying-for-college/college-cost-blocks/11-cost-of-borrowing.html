@@ -1,35 +1,40 @@
 <section class="college-costs_tool-section" data-tool-section="cost-of-borrowing">
-    <h2>What will interest cost me?</h2>
-    <p> This page depicts the total cost of borrowing if you repay your debt over 10 years on the standard repayment plan; other plans with lower monthly payments (and higher total costs of borrowing) are available.</p>
+    <h1>What will interest cost me?</h1>
+    <p> This page shows the total cost of borrowing if you repay your debt over 10 years on the standard repayment plan. Other plans may be available with lower monthly payments, but the total cost of borrowing will be higher.</p>
+
+    <h2>Estimated total cost of these loans with a standard 10-year repayment plan: <span data-financial-item="debt_tenYearTotal"></span></h2>
 
     <div id="cost-of-borrowing_chart"></div>
     <div class="block block__mid">
-        <h3 class="u-border-bottom">Cost of borrowing your loans</h3>
-
         {{
             text_item.render({
-                'label': 'Total money borrowed',
+                'label': 'Estimated total money borrowed at graduation',
                 'value': '$0',
                 'type': 'text',
+                'helper_text': 'Includes any current debt from previous schooling, if you entered it on the previous page',
                 'data_attribute': 'data-financial-item="total_borrowingAtGrad"'
             })
         }}
         {{
             text_item.render({
-                'label': 'Interest accrued while in school ',
+                'label': 'Interest estimated to accrue while you\'re in school ',
                 'value': '$0',
                 'type': 'text',
+                'helper_text': 'Assumes approximate interest rate of <span data-financial-item="existingDebt_rate"></span>  on any current debt from previous schooling, based on recent rate',
                 'data_attribute': 'data-financial-item="debt_programInterest"'
             })
         }}
-        {{
-            text_item.render({
-                'label': 'Interest over 10-year repayment plan',
-                'value': '$0',
-                'type': 'text',
-                'data_attribute': 'data-financial-item="debt_tenYearInterest"'
-            })
-        }}
+        <div class="math-equation__bottom-line">
+            {{
+                text_item.render({
+                    'label': 'Estimated interest over a 10-year repayment plan',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'Assumes approximate interest rate of <span data-financial-item="existingDebt_rate"></span>  on any current debt from previous schooling, based on recent rate',
+                    'data_attribute': 'data-financial-item="debt_tenYearInterest"'
+                })
+            }}            
+        </div>
         {{
             text_item.render({
                 'label': 'Total cost of borrowing',

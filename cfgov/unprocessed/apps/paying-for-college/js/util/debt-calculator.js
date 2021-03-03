@@ -169,6 +169,13 @@ function debtCalculator() {
     interest[key] = int;
   } );
 
+  // calculate existing loan debt
+  const existingLoanRate = getConstantsValue( 'existingDebtRate' );
+  const existingDebtMonthly = calcMonthlyPayment(
+    fin.existingDebt_amount,existingLoanRate, 10 );
+
+  console.log( 'Existing debt: ', existingDebtMonthly, existingDebtMonthly * 120 );
+
   allLoans.forEach( key => {
     interest.totalAtGrad += interest[key];
     debts.totalAtGrad += debts[key];

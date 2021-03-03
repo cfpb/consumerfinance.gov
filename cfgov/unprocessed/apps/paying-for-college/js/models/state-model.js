@@ -27,6 +27,7 @@ const stateModel = {
   values: {
     activeSection: false,
     constantsLoaded: false,
+    hoursToCoverPaymentText: '',
     showSchoolErrors: false,
     schoolSelected: false,
     gotStarted: false,
@@ -39,6 +40,7 @@ const stateModel = {
     programRate: 'not-selected',
     programHousing: 'not-selected',
     programDependency: 'not-selected',
+    programProgress: 'not-selected',
     repayMeterCohort: 'cohortRankByHighestDegree',
     repayMeterCohortName: 'U.S.'
   },

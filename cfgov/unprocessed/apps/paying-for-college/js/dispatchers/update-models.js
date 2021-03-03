@@ -209,7 +209,7 @@ function updateModelsFromQueryString( queryObj ) {
       queryObj.cobs = 'y';
     }
   }
-
+  
   for ( const key in queryObj ) {
     if ( urlParameters.hasOwnProperty( key ) ) {
       const match = urlParameters[key].split( '.' );

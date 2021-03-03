@@ -204,6 +204,14 @@ main.college-costs {
 			display: inline;
 		}
 	}
+	&:not([data-state_pid]) {
+		[data-state-based-visibility="no-program-selected"] {
+			display: block;
+		}
+		span[data-state-based-visibility="no-program-selected"] {
+			display: inline;
+		}	
+	}
 	
 	&[data-state_programtype="graduate"]:not( [data-state_pid] ) {
 		[data-state-based-visibility="no-program-selected"] {
@@ -321,6 +329,18 @@ main.college-costs {
 
 	&:not( [data-state_schoolcontrol="Private"] ) {
 		[data-state-based-visibility="control-nonprivate"] {
+			display: block;
+		}
+	}
+
+	&[data-state_programprogress="0"] {
+		[data-state-based-visibility="is_first_year-true"] {
+			display: block;
+		}
+	}
+
+	&:not( [data-state_programprogress="0"] ) {
+		[data-state-based-visibility="is_first_year-false"] {
 			display: block;
 		}
 	}

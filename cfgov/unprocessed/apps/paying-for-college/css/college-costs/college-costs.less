@@ -34,7 +34,29 @@
     .u-border-bottom {
         border-bottom: 1px solid @block__border-bottom;
     }
-    
+
+    .respond-to-min( @bp-med-min, {
+        @supports (position: sticky) {
+            .app-container {
+                display: flex;
+            }
+            .app {
+                width: 70%;
+            }
+            .costs-not-covered-sticky {
+                width: 30%;
+                .number-callout {
+                    position: sticky;
+                    top: unit( 10px / @base-font-size-px, em );
+                }
+            }
+        }
+    });
+
+    .u-border-bottom {
+        border-bottom: 1px solid @block__border-bottom;
+    }
+
     .block.block__mid {
         margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
         margin-bottom: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
@@ -188,3 +210,4 @@
         }
     }
 }
+

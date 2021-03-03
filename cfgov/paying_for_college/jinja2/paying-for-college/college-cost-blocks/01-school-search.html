@@ -3,7 +3,7 @@
         <h2>School & living situation</h2>
         <p>Start with the school you’re considering, plus the program and other info about your situation. Refer to your financial aid offer if you're not sure.</p>
         <label class="a-label a-label__heading u-mb15" for="search__school-input">
-            What school are you considering?
+            Enter the name of the school. (You can also search by mascot.)
         </label>
         <p>
             <input type="text"
@@ -90,8 +90,56 @@
             </select>
           </div>
         </div>
-        <div class="block block__sub program-question" id="school-search_program-length">
-            <h3 class="h4">How long do you expect your program to take?</h3>
+
+        <div class="block block__sub program-question" id="school-search_program-years_spent">
+          <h3 class="h4">How much progress have you made towards this degree, excluding credits from AP/IB exams?</h3>
+            {{
+                radio.render({
+                  'name':  "programProgress",
+                  'label': '<strong>None.</strong> I have no credits or only credits from AP/IB exams.',
+                  'value': '0',
+                  'id': 'program-years_spent0'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programProgress",
+                  'label': '<strong>I will be a first-year student.</strong> I have completed 1 - 29 credits, or less than 1 year.',
+                  'value': '1',
+                  'id': 'program-years_spent1'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programProgress",
+                  'label': '<strong>I will be a second-year student.</strong> I have completed 30 - 59 credits, or less than 2 years.',
+                  'value': '2',
+                  'id': 'program-years_spent2'
+                })
+            }}
+            <div data-state-based-visibility="is_first_year-false">
+              {{
+                  radio.render({
+                    'name':  "programProgress",
+                    'label': '<strong>I have an associate\'s degree.</strong> I will be a third-year student.',
+                    'value': '3',
+                    'id': 'program-years_spent3'
+                  })
+              }}
+            </div>
+            {{
+                radio.render({
+                  'name':  "programProgress",
+                  'label': '<strong>I will be a third-year student, or beyond.</strong> I have completed 60+ credits, or 2+ years.',
+                  'value': '3',
+                  'id': 'program-years_spent3'
+                })
+            }}
+        </div>
+
+        <div class="block block__sub prcgt4/ogram-question" id="school-search_program-length">
+            <h3 class="h4" data-state-based-visibility="is_first_year-false">How much longer do you expect your program to take?</h3>
+            <h3 class="h4" data-state-based-visibility="is_first_year-true">How long do you expect your program to take?</h3>
             <div class="undergrad-content">
               {{ notification.render(
                   'information',
