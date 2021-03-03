@@ -16,9 +16,9 @@ services:
         window: 120s
       resources:
         limits:
-          memory: 512M
+          memory: 1024M
         reservations:
-          memory: 128M
+          memory: 256M
     networks:
       - app
 
@@ -37,9 +37,9 @@ services:
         window: 120s
       resources:
         limits:
-          memory: 512M
+          memory: 1024M
         reservations:
-          memory: 128M
+          memory: 256M
     networks:
       - app
 
