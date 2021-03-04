@@ -174,7 +174,7 @@ pipeline {
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    env.CYPRESS_PATH = "test/cypress/integration"
+                    env.CYPRESS_PATH = 'test/cypress/integration'
                     env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1"
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                     env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run"
