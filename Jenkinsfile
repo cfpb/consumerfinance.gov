@@ -18,6 +18,7 @@ pipeline {
     }
 
     environment {
+        CYPRESS_REPO = 'cypress/included:6.6.0'
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
@@ -173,9 +174,18 @@ pipeline {
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
+                    env.CYPRESS_PATH = "test/cypress/integration"
+                    env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1"
+                    env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
+                    env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run"
                     timeout(time: 20, unit: 'MINUTES') {
-                        // sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
-                        sh "docker run -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:6.6.0 npx cypress run -b chrome --headless"
+                        // sh "docker-compose -f docker-compose.e2e.yml run e2e ${env.CYPRESS_ENV}"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*' -b chrome --headless"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*' -b chrome --headless"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*' -b chrome --headless"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*' -b chrome --headless"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*' -b chrome --headless"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/*' -b chrome --headless"
                     }
                 }
 
