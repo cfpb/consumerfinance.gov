@@ -337,10 +337,6 @@ urlpatterns = [
         url='/data-research/research-reports/%(path)s',
         permanent=True)),
 
-    re_path(r'^jobs/supervision/$', TemplateView.as_view(
-        template_name='jobmanager/supervision.html'),
-        name='jobs_supervision'),
-
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
