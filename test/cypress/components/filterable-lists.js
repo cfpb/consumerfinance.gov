@@ -37,10 +37,6 @@ export class FilterableList {
     cy.get( '#o-filterable-list-controls_to-date' ).type( date );
   }
 
-  openTopics() {
-    cy.get( '#topics' ).click();
-  }
-
   selectTopic( topic ) {
     const id = topic.split( ' ' ).join( '-' ).toLowerCase();
     cy.get( `#topics-${ id }` ).check( { force: true } );

@@ -26,7 +26,6 @@ describe( 'Filterable List', () => {
   it( 'should filter by topics', () => {
     filterableList.open();
     filterableList.showFilters();
-    filterableList.openTopics();
     filterableList.selectTopic( 'Open government' );
     filterableList.selectedTopics().should( 'be.visible' );
     filterableList.applyFilters();
