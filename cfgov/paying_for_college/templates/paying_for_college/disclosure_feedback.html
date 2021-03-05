@@ -6,10 +6,6 @@
 {% block page_css %}
 {% endblock %}
 
-{% block page_js %}
-<script src="{% static 'apps/paying-for-college/js/disclosure-feedback.js' %}"></script>
-{% endblock %}
-
 {% block body_class %}page paying-for-college{% endblock %}
 
 {% block content %}
@@ -39,3 +35,7 @@
   </section><!-- end .feedback-section -->
 </div>
 {% endblock content %}
+
+{% block page_js %}
+<script src="{% static 'apps/paying-for-college/js/disclosure-feedback.js' %}"></script>
+{% endblock %}
