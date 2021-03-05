@@ -254,6 +254,7 @@
                     }}
                 </div>
                 <div class="undergrad-content">
+                    <div class="no-program-selected">
                     {{
                         text_item.render({
                             'label': 'Median salary of this school\'s recent students',
@@ -262,8 +263,10 @@
                             'data_attribute': 'data-financial-item="salary_annual"'
                         })
                     }}
+                    </div>
                 </div>
-                <div data-state-based-visibility="no-program-selected">
+                <div class="graduate-content">
+                    <div class="no-program-selected">
                     {{
                         text_item.render({
                             'label': 'Median first-year salary of this program\'s graduates',
@@ -272,6 +275,7 @@
                             'data_attribute': ''
                         })
                     }}
+                    </div>
                 </div>
             {% endcall %}
 
@@ -314,6 +318,7 @@
                         'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
                     })
                 }}
+
                 <div data-state-based-visibility="program-is-selected">
                     {{
                         text_item.render({
@@ -325,6 +330,8 @@
                     }}
                 </div>
                 <div class="undergrad-content">
+                    <div class="no-program-selected">
+
                     {{
                         text_item.render({
                             'label': 'Median monthly salary of this school\'s recent students',
@@ -333,8 +340,10 @@
                             'data_attribute': 'data-financial-item="salary_monthly"'
                         })
                     }}
+                    </div>
                 </div>
-                <div data-state-based-visibility="no-program-selected">
+                <div class="graduate-content">
+                    <div class="no-program-selected">
                     {{
                         text_item.render({
                             'label': 'Median monthly first-year salary of this program\'s graduates',
@@ -343,6 +352,7 @@
                             'data_attribute': ''
                         })
                     }}
+                    </div>
                 </div>
                 {{
                     text_item.render({

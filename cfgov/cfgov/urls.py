@@ -151,21 +151,6 @@ urlpatterns = [
         template_name='fair-lending/index.html'),
         name='fair-lending'),
 
-    re_path(
-        r'^consumer-tools/educator-tools/students/knowbeforeyouowe/$',
-        TemplateView.as_view(
-            template_name='students/knowbeforeyouowe/index.html'),
-        name='students-knowbeforeyouowe'
-    ),
-    re_path(
-        r'^consumer-tools/educator-tools/students/'
-        'helping-borrowers-find-ways-to-stay-afloat/$',
-        TemplateView.as_view(
-            template_name='students/helping-borrowers-find-'
-            'ways-to-stay-afloat/index.html'),
-        name='students-helping-borrowers'
-    ),
-
     re_path(r'^parents/(?P<path>.*)$', RedirectView.as_view(
         url='/money-as-you-grow/%(path)s', permanent=True)),
     re_path(r'^blog/(?P<path>.*)$', RedirectView.as_view(
@@ -351,10 +336,6 @@ urlpatterns = [
     re_path(r'^reports/(?P<path>.*)$', RedirectView.as_view(
         url='/data-research/research-reports/%(path)s',
         permanent=True)),
-
-    re_path(r'^jobs/supervision/$', TemplateView.as_view(
-        template_name='jobmanager/supervision.html'),
-        name='jobs_supervision'),
 
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),

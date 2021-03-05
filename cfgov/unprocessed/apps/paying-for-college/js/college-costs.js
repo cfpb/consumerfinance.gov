@@ -35,6 +35,7 @@ const init = function() {
   updateModelsFromQueryString( getQueryVariables() );
 
   financialView.updateFinancialItems();
+  appView.updateUI();
 };
 
 window.addEventListener( 'load', init );

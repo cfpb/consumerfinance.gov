@@ -19,8 +19,8 @@
 
 {% import 'organisms/header.html' as header with context %}
 {{ header.render(
-    show_banner=show_banner,
-    show_mega_menu=show_mega_menu,
-    language=language
+    show_banner=show_banner | default( true ),
+    show_mega_menu=show_mega_menu | default( true ),
+    language=language | default( 'en' )
 ) }}
 <div id="after-nav"></div>

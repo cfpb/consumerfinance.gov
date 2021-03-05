@@ -41,8 +41,8 @@ env:
   webextensions: false
   greasemonkey: false
 
-globals:
-  cy: true
+# globals:
+# No globals outside of env settings
 
 # Linting rules for ESLint.
 # 0's ignore a rule, 1's produce a warning, and 2's throw an error.
@@ -1267,7 +1267,7 @@ rules:
 
   # Sort import declarations within module.
   sort-imports:
-    - 1
+    - 0
     -
       ignoreCase: false
       ignoreMemberSort: false

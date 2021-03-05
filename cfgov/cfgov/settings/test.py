@@ -106,3 +106,8 @@ if os.getenv('SKIP_DJANGO_MIGRATIONS'):
 
 
     MIGRATION_MODULES = _NoMigrations()
+
+for search_backend_settings in WAGTAILSEARCH_BACKENDS.values():
+    search_backend_settings['AUTO_UPDATE'] = False
+
+DEPLOY_ENVIRONMENT = 'test'

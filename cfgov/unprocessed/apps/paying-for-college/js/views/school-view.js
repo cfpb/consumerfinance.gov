@@ -16,7 +16,7 @@ import {
   updateRepaymentMeterChart
 } from '../dispatchers/update-view.js';
 import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
-import { decimalToPercentString } from '../util/number-utils.js';
+import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values';
 import { updateState } from '../dispatchers/update-state.js';
 
@@ -216,14 +216,19 @@ function _handleInputChange( event ) {
 function _handleProgramSelectChange( event ) {
   const target = event.target;
   const salary = target.options[target.selectedIndex].dataset.programSalary;
-  const programName = target.options[target.selectedIndex].innerText;
+  let programName = target.options[target.selectedIndex].innerText;
   let pid = target.value;
   if ( pid === 'null' ) {
     pid = false;
+    programName = '';
   }
   updateState.byProperty( 'pid', pid );
   updateState.byProperty( 'programName', programName );
-  updateFinancial( 'salary_annual', salary );
+  if ( salary ) {
+    updateFinancial( 'salary_annual', salary );
+  } else {
+    updateFinancial( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+  }
   refreshExpenses();
 }
 

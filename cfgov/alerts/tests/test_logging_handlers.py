@@ -1,11 +1,10 @@
 import logging
 import os
+from unittest.mock import patch
 
 from django.conf import settings
 from django.http import QueryDict
 from django.test import RequestFactory, TestCase
-
-from mock import patch
 
 
 class ObjectThatCantBeRepresented(object):

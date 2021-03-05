@@ -3,7 +3,11 @@
    ========================================================================== */
 
 // Required modules.
-import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import {
+  checkDom,
+  setInitFlag
+} from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import { formatTimestamp } from '../modules/util/strings.js';
 import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
 import youTubeAPI from '../modules/youtube-api';
 
@@ -30,6 +34,7 @@ function VideoPlayer( element ) {
   const _closeBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_close-btn` );
   const _playBtnDom = _dom.querySelector( `button.${ BASE_CLASS }_play-btn` );
   const _playLinkDom = _dom.querySelector( `a.${ BASE_CLASS }_play-btn` );
+  const _durationDom = _dom.querySelector( `.${ BASE_CLASS }_duration` );
 
   const _defaultThumbnailURL = _imageDom.src;
 
@@ -70,8 +75,16 @@ function VideoPlayer( element ) {
 
   /**
    * Event handler for when the video is ready.
+   * @param {Object} event -
+   *   Event object containing target to video player instance.
    */
-  function _videoPlayerReadyHandler() {
+  function _videoPlayerReadyHandler( event ) {
+    // Add duration timestamp to video.
+    const player = event.target;
+    const duration = player.getDuration();
+    _durationDom.setAttribute( 'datetime', duration + 'S' );
+    _durationDom.innerHTML = formatTimestamp( duration );
+    _durationDom.classList.remove( 'u-hidden' );
 
     /* On page load we show a play link that links directly to the video, so
      * that the user can still access the video with no JavaScript. We need to
