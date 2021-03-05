@@ -17,6 +17,7 @@
  * @param {object} on hook into various events Cypress emits
  * @param {object} config the resolved Cypress config
  */
+// eslint-disable-next-line no-unused-vars
 module.exports = ( on, config ) => {
   /* `on` is used to hook into various events Cypress emits
      `config` is the resolved Cypress config */

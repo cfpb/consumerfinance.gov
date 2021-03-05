@@ -1,7 +1,7 @@
 """Test the deployment http and static resource smoke tests."""
 import unittest
+from unittest import mock
 
-import mock
 import requests
 
 from scripts import static_asset_smoke_test

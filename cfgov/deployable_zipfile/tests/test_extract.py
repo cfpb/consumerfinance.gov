@@ -1,9 +1,7 @@
 import os
 import shutil
 import tempfile
-from unittest import TestCase
-
-import mock
+from unittest import TestCase, mock
 
 from deployable_zipfile.extract import (
     extract_zipfile, locate_virtualenv_site_packages

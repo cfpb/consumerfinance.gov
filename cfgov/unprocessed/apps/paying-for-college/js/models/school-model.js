@@ -16,20 +16,16 @@ const schoolModel = {
     if ( schoolModel.textPercents.indexOf( name ) !== -1 ) {
       const key = name + 'Text';
       schoolModel.values[key] = decimalToPercentString( value, 1 );
-
-      const percentage = value * 100;
-      if ( percentage <= 33 ) {
-        updateState.byProperty( name + 'range', 'low' );
-      } else if ( percentage <= 66 ) {
-        updateState.byProperty( name + 'range', 'medium' );
-      } else {
-        updateState.byProperty( name + 'range', 'high' );
-      }
     }
     // Alert the state model to school control
     if ( name === 'control' ) {
       updateState.byProperty( 'schoolControl', value );
     }
+
+    if ( name === 'highestDegree' ) {
+      updateState.byProperty( 'communityCollege', value === 'Associate degree' );
+    }
+
     if ( updateURL !== false ) {
       updateUrlQueryString();
     }
@@ -64,7 +60,7 @@ const schoolModel = {
    * @param {string} level - program level - 'undergrad' or 'graduate'
    * @returns {array} an array of objects containing program data
    */
-  getAlphbeticalProgramList: function( level ) {
+  getAlphabeticalProgramList: function( level ) {
     let list = [];
     if ( !schoolModel.values.hasOwnProperty( 'programCodes' ) ) return list;
     if ( !schoolModel.values.programCodes.hasOwnProperty( level ) ) return list;

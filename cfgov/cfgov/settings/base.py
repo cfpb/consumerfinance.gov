@@ -303,10 +303,11 @@ TAGGIT_CASE_INSENSITIVE = True
 WAGTAIL_USER_CREATION_FORM = "v1.auth_forms.UserCreationForm"
 WAGTAIL_USER_EDIT_FORM = "v1.auth_forms.UserEditForm"
 
+ES_PORT = os.getenv("ES_PORT", "9200")
 SHEER_ELASTICSEARCH_SERVER = (
     os.environ.get("ES_HOST", "localhost")
     + ":"
-    + os.environ.get("ES_PORT", "9200")
+    + ES_PORT
 )
 SHEER_ELASTICSEARCH_INDEX = os.environ.get(
     "SHEER_ELASTICSEARCH_INDEX", "content"
@@ -421,6 +422,8 @@ ELASTICSEARCH_INDEX_SETTINGS = {
 ELASTICSEARCH_DEFAULT_ANALYZER = "snowball"
 
 # ElasticSearch 7 Configuration
+ES7_HOST = os.getenv('ES7_HOST', 'localhost')
+
 if os.environ.get('USE_AWS_ES', False):
     awsauth = AWS4Auth(
         os.environ.get('AWS_ES_ACCESS_KEY'),
@@ -428,10 +431,9 @@ if os.environ.get('USE_AWS_ES', False):
         'us-east-1',
         'es'
     )
-    host = os.environ.get('ES7_HOST', '')
     ELASTICSEARCH_DSL = {
         'default': {
-            'hosts': [{'host': host, 'port': 443}],
+            'hosts': [{'host': ES7_HOST, 'port': 443}],
             'http_auth': awsauth,
             'use_ssl': True,
             'connection_class': RequestsHttpConnection,
@@ -439,10 +441,8 @@ if os.environ.get('USE_AWS_ES', False):
         },
     }
 else:
-    host = os.environ.get("ES7_HOST", "localhost")
-    port = os.environ.get("ES_PORT", "9200")
     ELASTICSEARCH_DSL = {
-        "default": {"hosts": f"http://{host}:{port}"}
+        "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
     }
 
 # S3 Configuration
@@ -764,6 +764,10 @@ FLAGS = {
     # Controls whether or not to include Qualtrics Web Intercept code for the
     # Q42020 Ask CFPB customer satisfaction survey.
     "ASK_SURVEY_INTERCEPT": [],
+    # Hide archive filter options in the filterable UI
+    "HIDE_ARCHIVE_FILTER_OPTIONS": [],
+    # Enable ES as the backend for FilterableLists
+    "ELASTICSEARCH_FILTERABLE_LISTS": []
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
@@ -831,6 +835,8 @@ PARSE_LINKS_EXCLUSION_LIST = [
     r"^/login/",
     # Regulations pages that have their own link markup
     r"^/policy-compliance/rulemaking/regulations/\d+/",
+    # DjangoRestFramework API pages where link icons are intrusive
+    r"^/oah-api/",
 ]
 
 # Required by django-extensions to determine the execution directory used by
