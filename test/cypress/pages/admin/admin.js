@@ -246,10 +246,6 @@ export class AdminPage {
     return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( text );
   }
 
-  // backspaceTableEditorTextbox( ) {
-  //   return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( '{backspace}' );
-  // }
-
   selectInternalLink( text ) {
     cy.get( '.choose-page' ).contains( text ).click();
   }
