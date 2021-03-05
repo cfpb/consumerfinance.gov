@@ -344,7 +344,7 @@ django-admin.py compilemessages</code></pre>
 <p>If you have a variable that will be translated in a template later using the variable name, but you need to mark it for translation so that <code>makemessages</code> will pick it up, use Django's <a href="https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#marking-strings-as-no-op"><code>gettext_noop</code></a>:</p>
 <pre class="highlight"><code class="language-python">from django.utils.translation import gettext_noop
 
-mystring = _(&quot;Hello World!&quot;)</code></pre>
+mystring = gettext_noop(&quot;Hello World!&quot;)</code></pre>
 
 <pre class="highlight"><code class="language-jinja">{{ _(mystring) }}</code></pre>
               
