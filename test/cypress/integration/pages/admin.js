@@ -152,7 +152,8 @@ describe( 'Admin', () => {
     } );
 
     it( 'should be able to save an empty cell', () => {
-      cy.focused().clear();
+      // cy.focused().clear();
+      admin.typeTableEditorTextbox( '{selectall}{backspace}' );
       admin.saveTableEditor();
       admin.getFirstTableCell().should( 'be.empty' );
     } );
