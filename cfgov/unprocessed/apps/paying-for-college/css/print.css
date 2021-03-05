@@ -1,0 +1,193 @@
+.letterhead {float:left; width:75%;}
+body {font-family: "Avenir Next"; color: #000 !important;}
+.wrapper-banner {display:none;}
+.header {display:none;}
+#header {display:none;}
+.bread {display:none;}
+.pfc-header {display:none;}
+.share {display:none;}
+#footer {display:none;}
+#subnav {display: none;}
+#button {display:none;}
+.icon {display:none;}
+
+.guide-content {margin-top:0;}
+.font-xs,.font-s,.font-m,.font-l,.font-xl,.font-xxl {font-family:"Avenir Next";}
+.font-m {font-size:14px;}
+.font-xs {font-size:10px;}
+.font-s {font-size:12px; line-height:17px; margin-left: 30px;}
+.font-l {font-size:16px; line-height:21px;}
+.font-xl {font-size:16px; line-height:18px; margin-top: 6px;font-weight:500;}
+.font-xxl {font-size:18px; line-height:20px; letter-spacing: 0px; margin-top: 15px;}
+.font-xxxl {font-size:1.5em; line-height:1em; font-weight:500;}
+
+.well-solid h1 {font-size:32px; text-transform:none; line-height:36px;}
+.guide-hero h1,
+.guide-hero h2 {text-transform:none; margin:0;}
+.guide-hero h1 {font-size:32px; line-height:36px; font-weight:500; letter-spacing: .5px; margin-bottom:8px; padding-top:.67em;}
+.guide-hero h2 {font-size:32px; line-height:36px;}
+
+.hero h1 {font-weight:600; line-height:1em; letter-spacing: .5px; font-family:"Avenir Next"; margin-bottom: 45px;}
+.sub-hero {font-size:24px; line-height:1.67em; margin-top:0px; margin-left:0px; margin-bottom: .67em; font-weight:500;}
+
+.label {font-size: 14px; line-height: 20px; font-weight: 400; }
+.lead {margin-bottom: 6px;}
+#federal-loans {font-size: 14px; line-height:20px; margin-right: 10px; color:#004D6B; font-weight: 500;  margin-left: 60px;}
+#private-loans {font-size:14px; line-height: 20px; color: #004D6B; font-weight:500;  margin-left:60px;}
+
+#choosing {font-size: 14px; line-height: 20px; margin-right: 10px; color: #004D6B; font-weight:500;  margin-left:60px;}
+#financial-aid {font-size: 14px; line-height: 20px; margin-right: 10px; color: #004D6B; font-weight:500;  margin-left:60px;}
+
+.btn {display: none;}
+.btn-close {display:none;}
+
+.related-resources-col {font-size: 16px; font-weight: 400; color:#212121;}
+.related-resources br{display:none;}
+.related-resources h2{color: #212121; border-top: none; font-size: 14px;}
+.uc {text-transform:uppercase; font-weight:500; }
+.tb {}
+.related-resources p {margin: 0px; font-size: 14px; line-height: 20px;}
+
+#its-important { }
+#print-questions {display:block; text-transform: none; font-size: 18px; font-weight: 400; color:#212121;}
+#print-questions ul, li {font-family:"Georgia"; font-size: 12px;}
+#print-questions h2 {}
+
+.bubble-top-text {font-size:16px; line-height:20px; margin-top:15px; text-transform:none; font-weight:500; letter-spacing:0;}
+.bubble-transparent-answer {font-size:12px;}
+
+
+a, .lnk {border-bottom:1px dotted #004D6B; text-decoration:none; color: #3A7188; font-weight:500;}
+
+a.ec,a.ec-blk {
+    font-weight:500;
+    text-decoration:none;
+    padding-left:0px;
+    background-repeat:no-repeat;
+    background-position-x:0px;
+    background-position-y:0px;
+}
+
+ul.m,ol.m {line-height:18px;}
+a.collapse {background-position-y:-14px;color:#212121;}
+
+a.fix2bottom {position:absolute;bottom:18px;}
+
+ul.m,ol.m {line-height:18px;}
+
+h1, h2, h3, h4, h5, h6 {margin:0; font-weight:normal; color: #000 !important;}
+h2 {text-transform:uppercase;}
+h1 {font-size:28px; font-weight:400; padding-top: .67em;}
+h2 {font-size:14px; font-weight:500; margin-bottom: 0px; line-height:18px;}
+h3 {font-size:1.5em; font-weight:500; margin-bottom: .4em; margin-top: 1.4em; text-transform:none; border-bottom: 3px solid #212121;}
+h4 {font-size:1em; text-transform:none; font-weight:500; margin-bottom: -.5em; margin-top: 1em;}
+#takeaction h1 {text-transform: none;}
+
+p,p.body {font-size:12px; font-family: Georgia; margin-bottom:10px; }
+
+table {}
+th {font-size:1.5em;line-height:1em;font-weight:500;}
+td {font-family:georgia;font-size:14px;line-height:20px;text-align:center;font-weight:500;}
+
+
+.preheading-s,.preheading-l,.preheading-xl {text-transform:uppercase; font-weight:500;}
+.preheading-s {font-size:14px;}
+.preheading-l {font-size:20px;}
+.preheading-xl {font-size:22px;}
+
+.lc {text-transform:lowercase;}
+.nc {text-transform:none; font-weight:500; letter-spacing:0px; margin-bottom: -.3em; }
+
+.s  {font-weight:normal!important; font-style:italic;}
+.ss {font-family:"Avenir Next";}
+
+    table {border-collapse:separate; border-spacing:18px 0px;padding-bottom:20px;}
+td,th { vertical-align:top;padding:10px 0px 10px;text-align:left;}
+td.line {border-top:1px solid #000;}
+td.thick-line {border-top: 3px solid #000; font-size:12px;}
+.rh {text-align:left;}
+.rh .icon {top:9px;}
+ol,ul {padding:0; list-style: none;}
+ol li {margin-bottom:10px;padding-left:30px;background-position-y:2px;}
+ol .li-1 {background-image:url(../images/bullet-1.png);background-repeat: no-repeat;}
+ol .li-2 {background-image:url(../images/bullet-2.png);background-repeat: no-repeat;}
+ol .li-3 {background-image:url(../images/bullet-3.png);background-repeat: no-repeat;}
+
+.loans-table {background-color: #fff;margin-bottom: 10px;}
+.loans-table td {width:242px;}
+.loans-table td.rh {width:80px;}
+.loans-table .rh {
+     position:relative;
+     padding-left:23px;
+}
+
+.banking-table td {width:155px;}
+.banking-table td.rh {width:80px;}
+.banking-table th {font-size:18px;}
+
+.banking-table .rh {
+     position:relative;
+     padding-left:0px;
+}
+
+.ico {background: url(../images/resources.png) no-repeat top left;padding-left:26px;padding-top:3px;}
+.ico-ask { background-position: 0 0; width: 12px; height: 17px; }
+.ico-watch{ background-position: 0 -37px; width: 21px; height: 20px; }
+.ico-explore{ background-position: 0 -77px; width: 23px; height: 13px; }
+.ico-compare{ background-position: 0 -110px; width: 19px; height: 19px; }
+
+/* Options Table */
+table{border:0px;border-collapse: separate;border-spacing: 18px 0px;padding-bottom: 20px;}
+table th{background:transparent;color:#212121;border:0px;text-align:left;}
+table td{border:0px;}
+
+.thick-line {border-top: 3px solid #212121; font-size:12px;}
+.line {border-top:1px solid #212121;}
+td{padding: 10px 0px 10px;}
+td, .smlr-text{font-family: georgia;font-size: 12px;line-height: 20px;font-weight: 500;}
+
+/* Modals */
+.modal {display:none;}
+
+/* orange */
+.orange-bg {color:#D83D00;}
+.slate-blue {color:#D83D00;}
+
+/* Print Specific */
+
+#action-steps {display:none;}
+.action-steps {display:none;}
+
+.bubbles {display: none;}
+#print-check {margin-right:5px; height: 10px; width: 10px;}
+
+#intro-blocks-p {margin-left: 60px;}
+#print-ask-cfpb li {font-size:14px;line-height:20px;font-family: Georgia; margin:0 0 10px;}
+.bullet {float:left; display:inline-block;height:25px;width:25px;text-align:center;line-height:26px;font-size:1.5em;border-radius:100%;-moz-border-radius:100%;-webkit-border-radius:100%; margin-right:5px;font-weight:600; margin-top:-6px;}
+
+.ico-criteria_repayment{ background-position: -235px 0; width: 20px; height: 19px; }
+.print-hide{display:none;}
+.accordion-item{display:block !important;}
+
+.ico-criteria_repayment{ background-position: -235px 0; width: 20px; height: 19px; }
+.print-hide{display:none;}
+
+@page {
+margin: 0.5cm;
+}
+
+.major-sect{border-top: 1px solid #babbbd;}
+
+/* Apply to container element at top of .section to achieve boder overlay */
+.border-overlay-spacing {
+    margin-top: -2px;
+}
+
+/* Apply to heading at top of .section to achieve boder overlay */
+.border-overlay {
+    border-top: 4px solid #30b14a;
+    display: inline-block;
+    zoom: 1;
+        *display: inline;
+    padding-top: 0.25em;
+}
