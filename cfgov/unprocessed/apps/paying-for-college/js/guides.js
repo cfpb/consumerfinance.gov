@@ -87,4 +87,3 @@ const pfcGuides = ( function() {
     });
 
 } )( $ );
-/* eslint-enable */
