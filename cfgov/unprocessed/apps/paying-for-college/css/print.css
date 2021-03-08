@@ -109,9 +109,9 @@ td.thick-line {border-top: 3px solid #000; font-size:12px;}
 .rh .icon {top:9px;}
 ol,ul {padding:0; list-style: none;}
 ol li {margin-bottom:10px;padding-left:30px;background-position-y:2px;}
-ol .li-1 {background-image:url(../images/bullet-1.png);background-repeat: no-repeat;}
-ol .li-2 {background-image:url(../images/bullet-2.png);background-repeat: no-repeat;}
-ol .li-3 {background-image:url(../images/bullet-3.png);background-repeat: no-repeat;}
+ol .li-1 {background-image:url(/static/apps/paying-for-college/img/bullet-1.png);background-repeat: no-repeat;}
+ol .li-2 {background-image:url(/static/apps/paying-for-college/img/bullet-2.png);background-repeat: no-repeat;}
+ol .li-3 {background-image:url(/static/apps/paying-for-college/img/bullet-3.png);background-repeat: no-repeat;}
 
 .loans-table {background-color: #fff;margin-bottom: 10px;}
 .loans-table td {width:242px;}
@@ -130,7 +130,7 @@ ol .li-3 {background-image:url(../images/bullet-3.png);background-repeat: no-rep
      padding-left:0px;
 }
 
-.ico {background: url(../images/resources.png) no-repeat top left;padding-left:26px;padding-top:3px;}
+.ico {background: url(/static/apps/paying-for-college/img/resources.png) no-repeat top left;padding-left:26px;padding-top:3px;}
 .ico-ask { background-position: 0 0; width: 12px; height: 17px; }
 .ico-watch{ background-position: 0 -37px; width: 21px; height: 20px; }
 .ico-explore{ background-position: 0 -77px; width: 23px; height: 13px; }
