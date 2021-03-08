@@ -36,7 +36,6 @@ from v1.views import (
     password_reset_confirm
 )
 from v1.views.documents import DocumentServeView
-from v1.views.enforcement_api import EnforcementAPIView
 
 
 try:
@@ -337,10 +336,6 @@ urlpatterns = [
         url='/data-research/research-reports/%(path)s',
         permanent=True)),
 
-    re_path(r'^jobs/supervision/$', TemplateView.as_view(
-        template_name='jobmanager/supervision.html'),
-        name='jobs_supervision'),
-
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
@@ -348,12 +343,6 @@ urlpatterns = [
     re_path(
         r'^data-research/mortgages/api/v1/',
         include('data_research.urls')
-    ),
-
-    re_path(
-        r'^api/enforcement_actions/v1/$',
-        EnforcementAPIView.as_view(),
-        name='enforcement_action_api'
     ),
 
     # educational resources
