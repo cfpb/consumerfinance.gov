@@ -100,17 +100,7 @@ button {width: auto; overflow: visible;}
 .clearfix {
 		/* IE7 hack to mimic inline-block on block elements */
     *display: inline;
-    *zoom: 1; }
-
-/* Hide from both screenreaders and browsers: h5bp.com/u */
-.cfpb_hide {
-    display: none !important;
-    visibility: hidden;
-}
-
-/* Hide visually and from screenreaders, but maintain layout */
-.cfpb_invisible {
-    visibility: hidden;
+    *zoom: 1;
 }
 
 

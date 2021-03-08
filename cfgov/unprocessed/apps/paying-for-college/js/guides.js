@@ -1,3 +1,4 @@
+/* eslint-disable */
 // TODO: Remove jquery.
 import $ from 'jquery';
 
@@ -86,3 +87,4 @@ const pfcGuides = ( function() {
     });
 
 } )( $ );
+/* eslint-enable */
