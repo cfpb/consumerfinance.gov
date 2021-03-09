@@ -1430,12 +1430,6 @@ label.tooltip-info {
     width: 0;
 }
 
-/* Adds white space between sections that can't be done otherwise because
-   of border-collapse: collapse; */
-#comparison-tables .bg-spacer {
-    background: url("/static/comparisontool/images/bg-spacer.png") #f8f8f8 repeat-x;
-}
-
 /* BAR GRAPH, AKA .meter */
 /* TODO: Make this section less specific. */
 #comparison-tables .breakdown td,
