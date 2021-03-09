@@ -4,14 +4,15 @@ from unittest import mock
 from django.apps import apps
 from django.test import SimpleTestCase, TestCase
 
+import wagtail
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.tests.testapp.models import StreamPage
 
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import (
-    get_stream_data, is_page, migrate_page_types_and_fields,
-    migrate_stream_data, migrate_stream_field, set_stream_data
+    get_data, is_page, migrate_data, migrate_page_types_and_fields,
+    migrate_stream_field, set_data
 )
 
 
@@ -21,7 +22,7 @@ class MigrationsUtilTestCase(TestCase):
         self.root = Page.objects.get(slug='cfgov')
         self.page = StreamPage(title="Test Page", slug="testpage")
         save_new_page(self.page, self.root)
-        set_stream_data(self.page, 'body', [
+        set_data(self.page, 'body', [
             {'type': 'text', 'value': 'some text'}
         ])
 
@@ -36,53 +37,59 @@ class MigrationsUtilTestCase(TestCase):
         """ Test that a revision is verifiably not a page """
         self.assertFalse(is_page(self.revision))
 
-    def test_get_stream_data_page(self):
-        """ Test that get_stream_data fetches the stream_data correctly
+    def test_get_data_page(self):
+        """ Test that get_data fetches the data correctly
         from a page object. """
-        stream_data = get_stream_data(self.page, 'body')
+        data = get_data(self.page, 'body')
 
-        self.assertEqual(stream_data[0]['type'], 'text')
-        self.assertEqual(stream_data[0]['value'], 'some text')
+        self.assertEqual(data[0]['type'], 'text')
+        self.assertEqual(data[0]['value'], 'some text')
 
-    def test_get_stream_data_revision(self):
-        """ Test that get_stream_data fetches the stream_data correctly
+    def test_get_data_revision(self):
+        """ Test that get_data fetches the data correctly
         from a revision object. """
-        stream_data = get_stream_data(self.revision, 'body')
+        data = get_data(self.revision, 'body')
 
-        self.assertEqual(stream_data[0]['type'], 'text')
-        self.assertEqual(stream_data[0]['value'], 'some text')
+        self.assertEqual(data[0]['type'], 'text')
+        self.assertEqual(data[0]['value'], 'some text')
 
-    def test_get_stream_data_revision_no_field(self):
+    def test_get_data_revision_no_field(self):
         """ Test that get an empty list for fields that don't exist on
         revisions """
-        stream_data = get_stream_data(self.revision, 'notbody')
-        self.assertEqual(stream_data, [])
+        data = get_data(self.revision, 'notbody')
+        self.assertEqual(data, [])
 
-    def test_set_stream_data_page(self):
-        """ Test that set_stream_data correctly sets stream data for a
+    def test_set_data_page(self):
+        """ Test that set_data correctly sets data for a
         given page and saves the page. """
-        new_stream_data = [{'type': 'text', 'value': 'new text'}]
-        set_stream_data(self.page, 'body', new_stream_data)
+        new_data = [{'type': 'text', 'value': 'new text'}]
+        set_data(self.page, 'body', new_data)
 
-        self.assertEqual(self.page.body.stream_data[0]['value'], 'new text')
+        if wagtail.VERSION < (2, 12):
+            data = self.page.body.stream_data
+        else:
+            data = self.page.body.raw_data
+        self.assertEqual(data[0]['value'], 'new text')
 
-    def test_set_stream_data_revision(self):
-        """ Test that set_stream_data correctly sets stream data for a
+    def test_set_data_revision(self):
+        """ Test that set_data correctly sets data for a
         given revision and saves the page. """
-        new_stream_data = [{'type': 'text', 'value': 'new text'}]
-        set_stream_data(self.revision, 'body', new_stream_data)
+        new_data = [{'type': 'text', 'value': 'new text'}]
+        set_data(self.revision, 'body', new_data)
 
-        self.assertEqual(
-            self.revision.as_page_object().body.stream_data[0]['value'],
-            'new text')
+        if wagtail.VERSION < (2, 12):
+            data = self.revision.as_page_object().body.stream_data
+        else:
+            data = self.revision.as_page_object().body.raw_data
+        self.assertEqual(data[0]['value'], 'new text')
 
-    def test_set_stream_data_page_without_committing(self):
-        """ Test that set_stream_data correctly sets stream data for a
+    def test_set_data_page_without_committing(self):
+        """ Test that set_data correctly sets data for a
         given page and saves the page. """
         self.page.save = mock.Mock()
 
-        new_stream_data = [{'type': 'text', 'value': 'new text'}]
-        set_stream_data(self.page, 'body', new_stream_data, commit=False)
+        new_data = [{'type': 'text', 'value': 'new text'}]
+        set_data(self.page, 'body', new_data, commit=False)
 
         self.assertEqual(self.page.save.mock_calls, [])
 
@@ -91,35 +98,38 @@ class MigrationsUtilTestCase(TestCase):
         old data, calls the mapper function, and stores new data
         based on the mapper results. """
         # Mock the field mapper migration function. We'll inspect the
-        # call to this and ensure the return value makes it to
-        # set_stream_data.
+        # call to this and ensure the return value makes it to set_data.
         mapper = mock.Mock(return_value='new text')
 
         migrate_stream_field(self.page, 'body', 'text', mapper)
 
         mapper.assert_called_with(self.page, 'some text')
-        self.assertEqual(self.page.body.stream_data[0]['value'],
-                         'new text')
+        if wagtail.VERSION < (2, 12):
+            data = self.page.body.stream_data
+        else:
+            data =self.page.body.raw_data
+        self.assertEqual(data[0]['value'], 'new text')
 
     def test_migrate_stream_field_revision(self):
         """ Test that the migrate_stream_field function correctly gets
         old data, calls the mapper function, and stores new data
         based on the mapper results. """
         # Mock the field mapper migration function. We'll inspect the
-        # call to this and ensure the return value makes it to
-        # set_stream_data.
+        # call to this and ensure the return value makes it to set_data.
         mapper = mock.Mock(return_value='new text')
 
         migrate_stream_field(self.revision, 'body', 'text', mapper)
 
         mapper.assert_called_with(self.revision, 'some text')
-        self.assertEqual(
-            self.revision.as_page_object().body.stream_data[0]['value'],
-            'new text')
+        if wagtail.VERSION < (2, 12):
+            data = self.revision.as_page_object().body.stream_data
+        else:
+            data = self.revision.as_page_object().body.raw_data
+        self.assertEqual(data[0]['value'], 'new text')
 
-    @mock.patch('v1.util.migrations.set_stream_data')
+    @mock.patch('v1.util.migrations.set_data')
     def test_migrate_stream_field_not_migrated(self,
-                                               mock_set_stream_data):
+                                               mock_set_data):
         """ Test that the migrate_stream_field function correctly
         ignores a field that does not have the correct type and
         shouldn't be migrated. """
@@ -130,8 +140,8 @@ class MigrationsUtilTestCase(TestCase):
         # The mapper should not be called
         mapper.assert_not_called()
 
-        # set_stream_data should not be called
-        mock_set_stream_data.assert_not_called()
+        # set_data should not be called
+        mock_set_data.assert_not_called()
 
     @mock.patch('v1.util.migrations.migrate_stream_field')
     def test_migrate_page_types_and_fields(self,
@@ -174,11 +184,11 @@ class TestStreamBlock(blocks.StreamBlock):
     stream = ChildStreamBlock()
 
 
-class MigrateStreamDataTests(SimpleTestCase):
+class MigrateDataTests(SimpleTestCase):
     def setUp(self):
         self.page = 'mock'
 
-        self.original_stream_data = [
+        self.original_data = [
             {'type': 'text', 'value': 'foo'},
             {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
             {'type': 'struct', 'value': {'text': 'bar'}},
@@ -189,41 +199,45 @@ class MigrateStreamDataTests(SimpleTestCase):
         ]
 
         self.block = TestStreamBlock()
-        self.value = self.block.to_python(self.original_stream_data)
+        self.value = self.block.to_python(self.original_data)
+        if wagtail.VERSION < (2, 12):
+            self.data = self.value.stream_data
+        else:
+            self.data = self.value.raw_data
 
     @staticmethod
     def mapper(page_or_revision, data):
         return 'mapped'
 
-    def test_migrate_stream_data_empty_block_path(self):
-        modified_data, migrated = migrate_stream_data(
-            self.page, '', self.value.stream_data, self.mapper
+    def test_migrate_data_empty_block_path(self):
+        modified_data, migrated = migrate_data(
+            self.page, '', self.data, self.mapper
         )
         self.assertFalse(migrated)
-        self.assertEqual(modified_data, self.original_stream_data)
+        self.assertSequenceEqual(modified_data, self.original_data)
 
-    def test_migrate_stream_data_invalid_block_path(self):
-        modified_data, migrated = migrate_stream_data(
-            self.page, 'invalid', self.value.stream_data, self.mapper
+    def test_migrate_data_invalid_block_path(self):
+        modified_data, migrated = migrate_data(
+            self.page, 'invalid', self.data, self.mapper
         )
         self.assertFalse(migrated)
-        self.assertEqual(modified_data, self.original_stream_data)
+        self.assertSequenceEqual(modified_data, self.original_data)
 
-    def test_migrate_stream_data_raises_valueerror_on_bad_data(self):
+    def test_migrate_data_raises_valueerror_on_bad_data(self):
         with self.assertRaises(ValueError):
-            migrate_stream_data(
+            migrate_data(
                 self.page,
                 ('parent', 'child'),
                 [{'type': 'parent', 'value': 'invalid'}],
                 self.mapper
             )
 
-    def test_migrate_stream_data_top_level_block(self):
-        modified_data, migrated = migrate_stream_data(
-            self.page, 'text', self.value.stream_data, self.mapper
+    def test_migrate_data_top_level_block(self):
+        modified_data, migrated = migrate_data(
+            self.page, 'text', self.data, self.mapper
         )
         self.assertTrue(migrated)
-        self.assertEqual(modified_data, [
+        self.assertSequenceEqual(modified_data, [
             {'type': 'text', 'value': 'mapped'},
             {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
             {'type': 'struct', 'value': {'text': 'bar'}},
@@ -233,12 +247,12 @@ class MigrateStreamDataTests(SimpleTestCase):
             ]},
         ])
 
-    def test_migrate_stream_data_listblock(self):
-        modified_data, migrated = migrate_stream_data(
-            self.page, 'texts', self.value.stream_data, self.mapper
+    def test_migrate_data_listblock(self):
+        modified_data, migrated = migrate_data(
+            self.page, 'texts', self.data, self.mapper
         )
         self.assertTrue(migrated)
-        self.assertEqual(modified_data, [
+        self.assertSequenceEqual(modified_data, [
             {'type': 'text', 'value': 'foo'},
             {'type': 'texts', 'value': ['mapped', 'mapped', 'mapped']},
             {'type': 'struct', 'value': {'text': 'bar'}},
@@ -248,12 +262,12 @@ class MigrateStreamDataTests(SimpleTestCase):
             ]},
         ])
 
-    def test_migrate_stream_data_structblock(self):
-        modified_data, migrated = migrate_stream_data(
-            self.page, 'struct', self.value.stream_data, self.mapper
+    def test_migrate_data_structblock(self):
+        modified_data, migrated = migrate_data(
+            self.page, 'struct', self.data, self.mapper
         )
         self.assertTrue(migrated)
-        self.assertEqual(modified_data, [
+        self.assertSequenceEqual(modified_data, [
             {'type': 'text', 'value': 'foo'},
             {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
             {'type': 'struct', 'value': 'mapped'},
@@ -263,12 +277,12 @@ class MigrateStreamDataTests(SimpleTestCase):
             ]},
         ])
 
-    def test_migrate_stream_data_structblock_child(self):
-        modified_data, migrated = migrate_stream_data(
-            self.page, ('struct', 'text'), self.value.stream_data, self.mapper
+    def test_migrate_data_structblock_child(self):
+        modified_data, migrated = migrate_data(
+            self.page, ('struct', 'text'), self.data, self.mapper
         )
         self.assertTrue(migrated)
-        self.assertEqual(modified_data, [
+        self.assertSequenceEqual(modified_data, [
             {'type': 'text', 'value': 'foo'},
             {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
             {'type': 'struct', 'value': {'text': 'mapped'}},
@@ -278,24 +292,24 @@ class MigrateStreamDataTests(SimpleTestCase):
             ]},
         ])
 
-    def test_migrate_stream_data_streamblock(self):
-        modified_data, migrated = migrate_stream_data(
-            self.page, 'stream', self.value.stream_data, self.mapper
+    def test_migrate_data_streamblock(self):
+        modified_data, migrated = migrate_data(
+            self.page, 'stream', self.data, self.mapper
         )
         self.assertTrue(migrated)
-        self.assertEqual(modified_data, [
+        self.assertSequenceEqual(modified_data, [
             {'type': 'text', 'value': 'foo'},
             {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
             {'type': 'struct', 'value': {'text': 'bar'}},
             {'type': 'stream', 'value': 'mapped'},
         ])
 
-    def test_migrate_stream_data_streamblock_child(self):
-        modified_data, migrated = migrate_stream_data(
-            self.page, ('stream', 'text'), self.value.stream_data, self.mapper
+    def test_migrate_data_streamblock_child(self):
+        modified_data, migrated = migrate_data(
+            self.page, ('stream', 'text'), self.data, self.mapper
         )
         self.assertTrue(migrated)
-        self.assertEqual(modified_data, [
+        self.assertSequenceEqual(modified_data, [
             {'type': 'text', 'value': 'foo'},
             {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
             {'type': 'struct', 'value': {'text': 'bar'}},

@@ -4,6 +4,8 @@ import os
 
 from django.core.management.base import BaseCommand
 
+import wagtail
+
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_changes
 
@@ -45,9 +47,13 @@ class Command(BaseCommand):
         """ Update date_published on all chart blocks """
 
         for page in BrowsePage.objects.all():
+            if wagtail.VERSION < (2, 12):
+                data = page.specific.content.stream_data
+            else:
+                data = page.specific.content.raw_data
             chart_blocks = filter(
                 lambda item: item['type'] == 'chart_block',
-                page.specific.content.stream_data
+                data
             )
             if not chart_blocks:
                 continue

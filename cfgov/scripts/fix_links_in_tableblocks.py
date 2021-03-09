@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 
+import wagtail
 from wagtail.core.models import Page
 from wagtail.documents import get_document_model
 
@@ -15,13 +16,16 @@ def get_tableblocks(page):
     or in a FullWidthText item. So we must check both.
     """
     try:
-        stream_data = page.specific.content.stream_data
+        if wagtail.VERSION < (2, 12):
+            data = page.specific.content.stream_data
+        else:
+            data = page.specific.content.raw_data
     except Exception:
         return []
     tableblocks = list(
-        filter(lambda item: item['type'] == 'table_block', stream_data))
+        filter(lambda item: item['type'] == 'table_block', data))
     full_width_text_items = list(
-        filter(lambda item: item['type'] == 'full_width_text', stream_data))
+        filter(lambda item: item['type'] == 'full_width_text', data))
     for item in full_width_text_items:
         sub_items = item['value']
         for sub_item in list(

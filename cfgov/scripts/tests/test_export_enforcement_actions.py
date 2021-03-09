@@ -7,7 +7,7 @@ from wagtail.core.models import Page, Site
 from scripts.export_enforcement_actions import assemble_output
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.tests.wagtail_pages.helpers import save_new_page
-from v1.util.migrations import set_stream_data
+from v1.util.migrations import set_data
 
 
 class TestExportEnforcementActions(TestCase):
@@ -33,7 +33,7 @@ class TestExportEnforcementActions(TestCase):
             preview_description='This is a great test page.'
         )
         save_new_page(self.test_all_data_page, root=self.actions_page)
-        set_stream_data(
+        set_data(
             self.test_all_data_page,
             'sidefoot',
             [
@@ -67,7 +67,7 @@ class TestExportEnforcementActions(TestCase):
                 },
             ]
         )
-        set_stream_data(
+        set_data(
             self.test_all_data_page,
             'content',
             [

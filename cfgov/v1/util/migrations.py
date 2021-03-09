@@ -3,6 +3,7 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
+import wagtail
 from wagtail.core.blocks import StreamValue
 
 from treebeard.mp_tree import MP_Node
@@ -68,30 +69,33 @@ def is_page(page_or_revision):
     return not hasattr(page_or_revision, 'content_json')
 
 
-def get_stream_data(page_or_revision, field_name):
-    """ Get the stream field data for a given field name on a page or a
+def get_data(page_or_revision, field_name):
+    """ Get the field data for a given field name on a page or a
     revision """
     if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
-        return field.stream_data
+        if wagtail.VERSION < (2, 12):
+            return field.stream_data
+        else:
+            return field.raw_data
     else:
         revision_content = json.loads(page_or_revision.content_json)
         field = revision_content.get(field_name, "[]")
         return json.loads(field)
 
 
-def set_stream_data(page_or_revision, field_name, stream_data, commit=True):
-    """ Set the stream field data for a given field name on a page or a
+def set_data(page_or_revision, field_name, data, commit=True):
+    """ Set the field data for a given field name on a page or a
     revision. If commit is True (default) save() is called on the
     page_or_revision object. """
     if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
         stream_block = field.stream_block
-        stream_value = StreamValue(stream_block, stream_data, is_lazy=True)
+        stream_value = StreamValue(stream_block, data, is_lazy=True)
         setattr(page_or_revision, field_name, stream_value)
     else:
         revision_content = json.loads(page_or_revision.content_json)
-        revision_content[field_name] = json.dumps(stream_data)
+        revision_content[field_name] = json.dumps(data)
         page_or_revision.content_json = json.dumps(revision_content)
 
     if commit:
@@ -181,9 +185,9 @@ def migrate_listblock(page_or_revision, block_path, block, mapper):
     return block, migrated
 
 
-def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
+def migrate_data(page_or_revision, block_path, data, mapper):
     if not block_path:
-        return stream_data, False
+        return data, False
 
     if isinstance(block_path, str):
         block_path = [block_path, ]
@@ -191,20 +195,20 @@ def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
         block_path = list(block_path)
 
     return migrate_streamblock(
-        page_or_revision, block_path, stream_data, mapper
+        page_or_revision, block_path, data, mapper
     )
 
 
 def migrate_stream_field(page_or_revision, field_name, block_path, mapper):
     """ Run mapper on blocks within a StreamField on a page or revision. """
-    stream_data = get_stream_data(page_or_revision, field_name)
+    data = get_data(page_or_revision, field_name)
 
-    stream_data, migrated = migrate_stream_data(
-        page_or_revision, block_path, stream_data, mapper
+    data, migrated = migrate_data(
+        page_or_revision, block_path, data, mapper
     )
 
     if migrated:
-        set_stream_data(page_or_revision, field_name, stream_data)
+        set_data(page_or_revision, field_name, data)
 
 
 @transaction.atomic
