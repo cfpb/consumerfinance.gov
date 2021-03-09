@@ -26,7 +26,7 @@
               <p>With your help, you can help us design a tool that makes that process a little bit less daunting &ndash; helping families make smarter choices about student debt.</p>
               <form method="post" id="feedback-container" class="block">
                   <p><label for="id_message"><strong>Enter your comments here</strong></label></p>
-                                  {% csrf_token %}
+                  {% csrf_token %}
                   <p class="pfc-feedback">{{ form.message }}</p>
                   <p><button class="a-btn">Submit your feedback</button></p>
               </form>
