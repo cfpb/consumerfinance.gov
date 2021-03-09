@@ -66,7 +66,6 @@ const getSchoolData = function( iped ) {
   return getApi( url );
 };
 
-
 export {
   getConstants,
   getExpenses,

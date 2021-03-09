@@ -67,7 +67,7 @@ def is_filter_selected(context, fieldname, value):
     ]
 
     # Dirty hack to check the default option for the `archived` filter
-    if fieldname == 'archived' and value == 'exclude':
+    if fieldname == 'archived' and value == 'include':
         return True
 
     return value in query_string_values

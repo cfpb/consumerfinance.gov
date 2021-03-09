@@ -1,6 +1,5 @@
 from unittest import TestCase
-
-from mock import patch
+from unittest.mock import patch
 
 from housing_counselor.geocoder import (
     BulkZipCodeGeocoder, ZipCodeBasedCounselorGeocoder, geocode_counselors

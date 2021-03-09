@@ -4,6 +4,8 @@
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'organisms/ask-search.html' as ask_search with context %}
 
+{% set read_answer_text = _('Read answer') %}
+
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__landing
 {%- endblock %}
@@ -68,7 +70,7 @@
                                     <li class="m-list_item">
                                     {{ partially_styled_link.render({
                                         'plain_text': page.question,
-                                        'underlined_text': _('Read answer'),
+                                        'underlined_text': read_answer_text,
                                         'url': page.url })
                                     }}
                                     </li>

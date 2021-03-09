@@ -1,12 +1,13 @@
 # Navigational links: open in same tab
 # Non-Navigational links: open in new tab
 Feature: Verify the Special Programs Loan page works according to requirements
-  As a first time visitor to the Buying a House page
+  As a first time visitor to the Owning a Home page
   I want to navigate the Special Programs Loan page
   So that I can find the information I'm looking for
 
 Background:
-   Given I navigate to the "Special Loan Programs" page
+  Given I navigate to the "Special Loan Programs" page
+
 
 @smoke_testing @loan_options
 Scenario Outline: Test Navigational links in the Special Programs Loan page
@@ -15,10 +16,10 @@ Scenario Outline: Test Navigational links in the Special Programs Loan page
     And I should see "<page_title>" displayed in the page title
 
 Examples:
-| link_name                  | relative_url                                           | page_title     |
-| Buying a House             | /                                                      | Buying a House |
-| More on mortgage insurance | loan-options/special-loan-programs/#mortgage-insurance | Loan Options   |
-| mortgage insurance         | loan-options/special-loan-programs/#mortgage-insurance | Loan Options   |
+| link_name                  | relative_url                                           | page_title    |
+| Owning a Home              | /                                                      | Owning a Home |
+| More on mortgage insurance | loan-options/special-loan-programs/#mortgage-insurance | Loan Options  |
+| mortgage insurance         | loan-options/special-loan-programs/#mortgage-insurance | Loan Options  |
 
 
 @smoke_testing @loan_options
@@ -48,7 +49,7 @@ Examples:
 | this tool                           | downpaymentresource.com/                                            | Down Payment Resource                             |
 | local housing counselor             | find-a-housing-counselor/                                           | Find a housing counselor                          |
 | Learn more about mortgage insurance | askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html   | What is mortgage insurance and how does it work?  |
-| Loan Estimates                    | askcfpb/1995/what-is-a-loan-estimate.html    | Consumer Financial Protection Bureau                 |
+| Loan Estimates                      | askcfpb/1995/what-is-a-loan-estimate.html    | Consumer Financial Protection Bureau                 |
 
 
 @smoke_testing @loan_options

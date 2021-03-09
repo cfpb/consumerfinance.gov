@@ -1,4 +1,4 @@
-import Analytics from '../../../js/modules/Analytics';
+import Analytics from '../../../js/modules/Analytics.js';
 
 let questionsDom;
 let radiosDom;

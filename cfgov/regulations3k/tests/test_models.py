@@ -1,5 +1,6 @@
 import datetime
 import unittest
+from unittest import mock
 
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import ValidationError
@@ -11,7 +12,6 @@ from django.test import (
 
 from wagtail.core.models import Site
 
-import mock
 from model_bakery import baker
 
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
@@ -389,39 +389,8 @@ class RegModelTests(DjangoTestCase):
             'Appendix B to Part 1002-Errata'
         )
 
-    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
-    def test_routable_search_page_calls_elasticsearch(self, mock_sqs):
-        mock_return = mock.Mock()
-        mock_return.part = '1002'
-        mock_return.text = ('Now is the time for all good men to come to the '
-                            'aid of their country.')
-        mock_return.highlighted = ['Now is the time for all good men',
-                                   'to come to the aid of their country.']
-        mock_return.paragraph_id = 'a'
-        mock_return.title = 'Section 1002.1 Now is the time.'
-        mock_return.section_label = '1'
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_sqs.return_value = mock_queryset
-        response = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            {'q': 'disclosure', 'regs': '1002', 'order': 'regulation'})
-        self.assertEqual(mock_sqs.call_count, 3)
-        self.assertEqual(response.status_code, 200)
-        response2 = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            QueryDict(query_string=(
-                'q=disclosure&regs=1002&regs=1003&order=regulation')))
-        self.assertEqual(response2.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 6)
-
-    @override_settings(FLAGS={
-        "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", True)]})
     @mock.patch.object(SectionParagraphDocument, 'search')
-    def test_routable_search_page_calls_elasticsearch7(self, mock_search):
+    def test_routable_search_page_calls_elasticsearch(self, mock_search):
         mock_hit = mock.Mock()
         mock_hit.text = (
             'i. Mortgage escrow accounts for collecting taxes',
@@ -452,10 +421,8 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
 
-    @override_settings(FLAGS={
-        "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", True)]})
     @mock.patch.object(SectionParagraphDocument, 'search')
-    def test_routable_search_page_handles_null_highlights_es7(self, mock_search):  # noqa: E501
+    def test_routable_search_page_handles_null_highlights(self, mock_search):  # noqa: E501
         mock_hit = mock.Mock()
         mock_hit.text = (
             'i. Mortgage escrow accounts for collecting',
@@ -486,10 +453,8 @@ class RegModelTests(DjangoTestCase):
         self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
 
-    @override_settings(FLAGS={
-        "ELASTICSEARCH_DSL_REGULATIONS": [("boolean", True)]})
     @mock.patch.object(SectionParagraphDocument, 'search')
-    def test_search_page_refuses_single_character_search_elasticsearch7(self, mock_search):  # noqa: E501
+    def test_search_page_refuses_single_character_search_elasticsearch(self, mock_search):  # noqa: E501
         response = self.client.get(
             self.reg_search_page.url +
             self.reg_search_page.reverse_subpage(
@@ -497,51 +462,6 @@ class RegModelTests(DjangoTestCase):
             {'q': '%21', 'regs': '1002', 'order': 'regulation'})
         self.assertEqual(mock_search.call_count, 0)
         self.assertEqual(response.status_code, 200)
-
-    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
-    def test_routable_search_page_handles_null_highlights(self, mock_sqs):
-        mock_return = mock.Mock()
-        mock_return.part = '1002'
-        mock_return.text = ''
-        mock_return.highlighted = None
-        mock_return.paragraph_id = 'a'
-        mock_return.title = 'Section 1002.1 Now is the time.'
-        mock_return.section_label = '1'
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_sqs.return_value = mock_queryset
-        response = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            {'q': 'disclosure', 'regs': '1002', 'order': 'regulation'})
-        self.assertEqual(mock_sqs.call_count, 3)
-        self.assertEqual(response.status_code, 200)
-        response2 = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            QueryDict(query_string=(
-                'q=disclosure&regs=1002&regs=1003&order=regulation')))
-        self.assertEqual(response2.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 6)
-
-    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
-    def test_search_page_refuses_single_character_search(self, mock_sqs):
-        response = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            {'q': '%21', 'regs': '1002', 'order': 'regulation'})
-        self.assertEqual(mock_sqs.call_count, 0)
-        self.assertEqual(response.status_code, 200)
-
-    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
-    def test_routable_search_page_reg_only(self, mock_sqs):
-        response = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            QueryDict(query_string='regs=1002'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 0)
 
     def test_get_breadcrumbs_section(self):
         crumbs = self.reg_page.get_breadcrumbs(

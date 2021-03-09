@@ -53,7 +53,9 @@ describe( 'MegaMenu', () => {
          In a future JSDom update this should be revisited.
          See https://github.com/jsdom/jsdom/issues/1781
       */
-      firstContent.dispatchEvent( new Event( 'transitionend' ) );
+      const event = new Event( 'transitionend' );
+      event.propertyName = 'transform';
+      firstContent.dispatchEvent( event );
 
       window.setTimeout( resolveClick, 1000 );
     } );

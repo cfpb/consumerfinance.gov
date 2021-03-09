@@ -1,4 +1,6 @@
 # Based on https://github.com/django-es/django-elasticsearch-dsl/blob/master/tests/test_documents.py  # noqa
+from unittest.mock import patch
+
 from django.apps import apps
 from django.db import models
 from django.test import TestCase
@@ -8,7 +10,6 @@ from wagtail.core.models import Site
 from django_elasticsearch_dsl import fields
 from django_elasticsearch_dsl.documents import DocType
 from django_elasticsearch_dsl.exceptions import ModelFieldNotMappedError
-from mock import patch
 from model_bakery import baker
 
 from ask_cfpb.documents import AnswerPageDocument
@@ -145,7 +146,7 @@ class AnswerPageDocumentTest(TestCase):
             AnswerPageDocument._doc_type.mapping.to_dict(), {
                 'properties': {
                     'autocomplete': {
-                        'analyzer': 'label_autocomplete', 'type': 'text'
+                        'analyzer': 'ngram_tokenizer', 'type': 'text'
                     },
                     'language': {'type': 'text'},
                     'portal_categories': {'type': 'text'},
@@ -179,7 +180,7 @@ class AnswerPageDocumentTest(TestCase):
                 'portal_topics': self.doc.prepare_portal_topics(self.en_page),
                 'preview': '',
                 'search_tags': self.doc.prepare_search_tags(self.en_page),
-                'text': '\n\n \n\nTest English question',
+                'text': 'Test English question\n\n\n\n',
                 'url': self.doc.prepare_url(self.en_page),
             }
         )
@@ -198,7 +199,7 @@ class AnswerPageDocumentTest(TestCase):
                 'portal_topics': self.doc.prepare_portal_topics(self.es_page),
                 'preview': '',
                 'search_tags': self.doc.prepare_search_tags(self.es_page),
-                'text': '\n\n \n\nTest Spanish question',
+                'text': 'Test Spanish question\n\n\n\n',
                 'url': self.doc.prepare_url(self.es_page),
             }
         )

@@ -48,7 +48,6 @@ class BrowsePage(CFGOVPage):
         ('mortgage_downloads_block', MortgageDataDownloads()),
         ('data_snapshot', organisms.DataSnapshot()),
         ('job_listing_table', JobListingTable()),
-        ('bureau_structure', organisms.BureauStructure()),
         ('yes_checklist', YESChecklist()),
     ], blank=True)
 

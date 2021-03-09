@@ -5,13 +5,13 @@
 // polyfill for ie9 compatibility
 require( 'classlist-polyfill' );
 
-const closest = require( '@cfpb/cfpb-atomic-component/src/utilities/dom-closest' ).closest;
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
-const Events = require( '@cfpb/cfpb-atomic-component/src/mixins/Events.js' );
-const Organism = require( '@cfpb/cfpb-atomic-component/src/components/Organism' );
-const ExpandableFacetTransition = require( './ExpandableFacetTransition' );
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import AtomicComponent from '@cfpb/cfpb-atomic-component/src/components/AtomicComponent.js';
+import ExpandableFacetTransition from './ExpandableFacetTransition';
 
-const ExpandableFacets = Organism.extend( {
+const ExpandableFacets = AtomicComponent.extend( {
   ui: {
     base:           '.o-expandable-facets',
     target:         '.o-expandable-facets_target',
@@ -24,8 +24,7 @@ const ExpandableFacets = Organism.extend( {
   classes: {
     targetExpanded:  'is-open',
     targetCollapsed: 'is-closed',
-    group:           'o-expandable-group',
-    groupAccordion:  'o-expandable-group__accordion'
+    group:           'o-expandable-group'
   },
 
   events: {
@@ -33,8 +32,6 @@ const ExpandableFacets = Organism.extend( {
   },
 
   transition:       null,
-  isAccordionGroup: false,
-  activeAccordion:  false,
 
   initialize:             initialize,
   expandableClickHandler: expandableClickHandler,
@@ -63,35 +60,10 @@ function initialize() {
     this.ui.target.classList.add( this.classes.targetCollapsed );
   }
 
-  const expandableGroup = closest(
-    this.ui.target, '.' + this.classes.group
-  );
-
-  this.isAccordionGroup = expandableGroup !== null &&
-    expandableGroup.classList.contains( this.classes.groupAccordion );
-
-  if ( this.isAccordionGroup ) {
-    Events.on(
-      'accordionActivated',
-      _accordionActivatedHandler.bind( this )
-    );
-  }
-
   if ( this.ui.facetCheckbox.hasAttribute( 'checked' ) ||
     this.ui.facetLabel.classList.contains( 'indeterminate' ) ) {
     this.transition.toggleExpandable();
     this.toggleTargetState( this.ui.target );
-  }
-}
-
-/**
- * Event handler for when an accordion is activated
- */
-function _accordionActivatedHandler() {
-  if ( this.activeAccordion ) {
-    this.transition.toggleExpandable();
-    this.toggleTargetState( this.ui.target );
-    this.activeAccordion = false;
   }
 }
 
@@ -101,15 +73,6 @@ function _accordionActivatedHandler() {
 function expandableClickHandler() {
   this.transition.toggleExpandable();
   this.toggleTargetState( this.ui.target );
-
-  if ( this.isAccordionGroup ) {
-    if ( this.activeAccordion ) {
-      this.activeAccordion = false;
-    } else {
-      Events.trigger( 'accordionActivated', { target: this } );
-      this.activeAccordion = true;
-    }
-  }
 }
 
 /**
@@ -126,7 +89,7 @@ function toggleTargetState( element ) {
   }
 }
 
-module.exports = ExpandableFacets;
+export default ExpandableFacets;
 
 /**
  * Find .o-expandable-facets, add `is-open` class.

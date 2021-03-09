@@ -4,9 +4,19 @@ of college, grants, loans, etc. It also includes debt calculations
 based on these costs.
 */
 
-import { getConstantsValue, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { initializeFinancialValues, recalculateExpenses } from '../dispatchers/update-models.js';
-import { updateAffordingChart, updateCostOfBorrowingChart, updateFinancialView, updateFinancialViewAndFinancialCharts, updateMakePlanChart, updateMaxDebtChart, updateUrlQueryString } from '../dispatchers/update-view.js';
+import {
+  getConstantsValue,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import {
+  initializeFinancialValues,
+  recalculateExpenses
+} from '../dispatchers/update-models.js';
+import {
+  updateFinancialViewAndFinancialCharts,
+  updateUrlQueryString
+} from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { debtCalculator } from '../util/debt-calculator.js';
 import { enforceRange, stringToNum } from '../util/number-utils.js';
@@ -58,6 +68,7 @@ const financialModel = {
         Math.abs( financialModel.values.debt_totalAtGrad - financialModel.values.salary_annual );
 
     financialModel._updateStateWithFinancials();
+
   },
 
   /**
@@ -180,15 +191,13 @@ const financialModel = {
       financialModel.values.fellowAssist_fellowship = 0;
       financialModel.values.fellowAssist_assistantship = 0;
 
-      if ( getStateValue( 'programStudentType' ) === 'independent' ) {
-        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' ).yearOne -
-          financialModel.values.fedLoan_directSub );
-
+      if ( getStateValue( 'programDependency' ) === 'independent' ) {
+        unsubCap = Math.max( 0, getConstantsValue( 'totalIndepCaps' ).yearOne );
       } else {
-        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' ).yearOne -
-          financialModel.values.fedLoan_directSub );
+        unsubCap = Math.max( 0, getConstantsValue( 'totalCaps' ).yearOne );
       }
     }
+
     // enforce unsub range
     const unsubResult = enforceRange( financialModel.values.fedLoan_directUnsub,
       0,

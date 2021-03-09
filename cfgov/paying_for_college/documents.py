@@ -4,13 +4,15 @@ from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
 from paying_for_college.models import School
-from search.elasticsearch_helpers import label_autocomplete
+from search.elasticsearch_helpers import (
+    environment_specific_index, ngram_tokenizer
+)
 
 
 @registry.register_document
 class SchoolDocument(Document):
 
-    autocomplete = fields.TextField(analyzer=label_autocomplete)
+    autocomplete = fields.TextField(analyzer=ngram_tokenizer)
     text = fields.TextField(attr='primary_alias', boost=10)
     url = fields.TextField()
     nicknames = fields.TextField()
@@ -34,7 +36,7 @@ class SchoolDocument(Document):
                        args=[instance.school_id])
 
     class Index:
-        name = 'paying-for-college'
+        name = environment_specific_index('paying-for-college')
         settings = {'number_of_shards': 1,
                     'number_of_replicas': 0}
 

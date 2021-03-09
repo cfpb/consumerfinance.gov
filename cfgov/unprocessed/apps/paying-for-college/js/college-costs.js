@@ -11,11 +11,8 @@ import { financialModel } from './models/financial-model.js';
 import { financialView } from './views/financial-view.js';
 import { getQueryVariables } from './util/url-parameter-utils.js';
 import { navigationView } from './views/navigation-view.js';
-import { schoolModel } from './models/school-model.js';
 import { schoolView } from './views/school-view.js';
-import { stateModel } from './models/state-model.js';
-import { updateModelsFromQueryString, updateSchoolData } from './dispatchers/update-models.js';
-import { updateState } from './dispatchers/update-state.js';
+import { updateModelsFromQueryString } from './dispatchers/update-models.js';
 
 
 /**
@@ -29,7 +26,7 @@ const init = function() {
 
   schoolView.init( body );
   expensesView.init( body );
-  financialView.init( body );
+  financialView.init();
   navigationView.init( body );
   chartView.init( body );
   appView.init();
@@ -38,7 +35,7 @@ const init = function() {
   updateModelsFromQueryString( getQueryVariables() );
 
   financialView.updateFinancialItems();
-
+  appView.updateUI();
 };
 
 window.addEventListener( 'load', init );

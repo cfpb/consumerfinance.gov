@@ -1,6 +1,5 @@
 import Analytics from '../../../js/modules/Analytics';
-import { closest, queryOne } from '../../../js/modules/util/dom-traverse';
-import { bindEvent } from '../../../js/modules/util/dom-events';
+import { closest, queryOne } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 /* eslint-disable consistent-return */
 
@@ -289,20 +288,11 @@ const handleFetchSearchResults = ( searchTerm, sendEventMethod ) => {
 const bindAnalytics = sendEventMethod => {
   const searchContent = queryOne( '#tdp-search-facets-and-results' );
   if ( searchContent ) {
-    bindEvent( searchContent, {
-      click: event => handleExpandableClick( event, sendEventMethod )
-    } );
-
-    bindEvent( searchContent, {
-      click: event => handleFilterClick( event, sendEventMethod )
-    } );
-
-    bindEvent( searchContent, {
-      click: event => handleClearFilterClick( event, sendEventMethod )
-    } );
-
-    bindEvent( searchContent, {
-      click: event => handlePaginationClick( event, sendEventMethod )
+    searchContent.addEventListener( 'click', event => {
+      handleExpandableClick( event, sendEventMethod );
+      handleFilterClick( event, sendEventMethod );
+      handleClearFilterClick( event, sendEventMethod );
+      handlePaginationClick( event, sendEventMethod );
     } );
   }
 };

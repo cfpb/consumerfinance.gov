@@ -17,6 +17,8 @@ We support both a headless docker container to execute our cypress tests as well
 
 * To run the tests from the commandline you can also invoke them via `yarn run cypress run`. You can read more about different command line arguments in the [Command-Line Documentation](https://docs.cypress.io/guides/guides/command-line.html#Options) provided by Cypress.
 
+* To run the tests against a server other than `http://localhost:8000`, you can pass in an override for the `baseUrl` config value; for example:`yarn run cypress open --config baseUrl=http://staging_url`.
+
 ## Writing Cypress Tests
 
 When developing new tests for Cypress it is important to consider what the test is trying to accomplish. We want to ensure that we are not polluting our cypress tests with things that can be tested at another level, we are seeking to only test the integration aspect of our UI hosted via Wagtail/Django and custom python code within our backend.

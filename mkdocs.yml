@@ -20,6 +20,7 @@ nav:
 - Supporting Features:
     - Caching: caching.md
     - Feature Flags: feature-flags.md
+    - Search: search.md
     - Split Testing: split-testing.md
     - Translation: translation.md
 - Testing:

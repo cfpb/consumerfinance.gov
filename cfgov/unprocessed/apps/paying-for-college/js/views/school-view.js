@@ -1,128 +1,34 @@
 /* schoolView specifically covers the school search and associated fields, such as
    program length and living situation. */
-import { closest } from '../../../../js/modules/util/dom-traverse';
-import { decimalToPercentString } from '../util/number-utils.js';
+import {
+  getProgramList,
+  getSchoolValue,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import {
+  refreshExpenses,
+  updateFinancial,
+  updateSchoolData
+} from '../dispatchers/update-models.js';
+import {
+  updateFinancialView,
+  updateGradMeterChart,
+  updateRepaymentMeterChart
+} from '../dispatchers/update-view.js';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+import { decimalToPercentString, stringToNum } from '../util/number-utils.js';
 import { schoolSearch } from '../dispatchers/get-api-values';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { refreshExpenses, updateFinancial, updateSchoolData } from '../dispatchers/update-models.js';
 import { updateState } from '../dispatchers/update-state.js';
-import { getProgramList, getSchoolValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { updateFinancialView, updateGradMeterChart, updateRepaymentMeterChart } from '../dispatchers/update-view.js';
-
 
 const schoolView = {
   _searchSection: null,
   _searchBox: null,
   _searchResults: null,
-  _keyupDelay: null,
   _programRadios: null,
   _schoolInfo: null,
   _schoolItems: [],
   _stateItems: [],
   _programSelect: null,
-
-  /**
-   * Add all event listeners for school search view
-   */
-  _addListeners: () => {
-    const searchEvents = {
-      keyup: schoolView._handleInputChange
-    };
-    bindEvent( schoolView._searchBox, searchEvents );
-
-    const searchResultsEvent = {
-      click: schoolView._handleResultButtonClick
-    };
-    bindEvent( schoolView._searchResults, searchResultsEvent );
-
-    const radioEvents = {
-      click: schoolView._handleProgramRadioClick
-    };
-    schoolView._programRadios.forEach( elem => {
-      bindEvent( elem, radioEvents );
-    } );
-
-    const programSelectEvents = {
-      change: schoolView._handleProgramSelectChange
-    };
-    bindEvent( schoolView._programSelect, programSelectEvents );
-  },
-
-  _formatSearchResults: function( responseText ) {
-    const obj = JSON.parse( responseText );
-    let html = '<ul>';
-    for ( const key in obj ) {
-      const school = obj[key];
-      html += '\n<li><button role="button" data-school_id="' + school.id + '"><strong>' + school.schoolname + '</strong>';
-      html += '<p><em>' + school.city + ', ' + school.state + '</em></p></button></li>';
-    }
-    html += '</li>';
-    this._searchResults.innerHTML = html;
-    this._searchResults.classList.add( 'active' );
-  },
-
-  _handleInputChange: function( event ) {
-    clearTimeout( this._keyupDelay );
-    schoolView._keyupDelay = setTimeout( function() {
-      const searchTerm = schoolView._searchBox.value;
-      // TODO - clean up searchbox text, remove non-alphanumeric characters
-      schoolSearch( searchTerm )
-        .then( resp => {
-          schoolView._formatSearchResults( resp.responseText );
-        }, error => {
-          console.log( error );
-        } );
-    }, 500 );
-  },
-
-  _handleProgramSelectChange: function( event ) {
-    const target = event.target;
-    const salary = target.options[target.selectedIndex].dataset.programSalary;
-    const programName = target.options[target.selectedIndex].innerText;
-    let pid = target.value;
-    if ( pid === 'null' ) {
-      pid = false;
-    }
-    updateState.byProperty( 'pid', pid );
-    updateState.byProperty( 'programName', programName );
-    updateFinancial( 'salary_annual', salary );
-    refreshExpenses();
-  },
-
-  _handleResultButtonClick: function( event ) {
-    const target = event.target;
-    let button;
-    // Find the button in the clickable area
-    if ( target.tagName === 'BUTTON' ) {
-      button = target;
-    } else {
-      button = closest( target, 'BUTTON' );
-    }
-
-    // Clear pid from state
-    updateState.byProperty( 'pid', false );
-
-    // If there's a school_id, then proceed with schoolInfo
-    if ( typeof button.dataset.school_id !== 'undefined' ) {
-      const iped = button.dataset.school_id;
-
-      // Add schoolData to schoolModel
-      updateSchoolData( iped );
-    }
-  },
-
-  _handleProgramRadioClick: function( event ) {
-    const container = closest( event.target, '.m-form-field' );
-    const input = container.querySelector( 'input' );
-
-    // Update the model with program info
-    const prop = input.getAttribute( 'name' );
-    const value = input.value;
-    updateState.byProperty( prop, value );
-    if ( prop === 'programType' ) {
-      schoolView._updateProgramList();
-    }
-  },
 
   updateSchoolView: () => {
     updateFinancialView();
@@ -163,11 +69,28 @@ const schoolView = {
 
   },
 
+  /**
+   * updateViewWithErrors - updates form fields with classes to show error states.
+   * NOTE: The appearance of error messages is mostly found in the state-based.less rules
+   */
+  updateViewWithErrors: () => {
+    const errorChecks = [ 'programType', 'programLength', 'programLevel', 'programRate',
+      'programHousing', 'programDependency' ];
+
+    const searchBox = document.querySelector( '#search__school-input' );
+    if ( getStateValue( 'schoolSelected' ) === false ) {
+      searchBox.classList.add( 'a-text-input__warning' );
+    } else {
+      searchBox.classList.remove( 'a-text-input__warning' );
+    }
+  },
+
   _updateProgramList: () => {
     let level = 'undergrad';
     if ( getStateValue( 'programType' ) === 'graduate' ) {
       level = 'graduate';
     }
+
     const list = getProgramList( level );
     if ( list.length > 0 ) {
       updateState.byProperty( 'schoolHasPrograms', 'yes' );
@@ -194,10 +117,7 @@ const schoolView = {
   },
 
   _updateSchoolRadioButtons: () => {
-    const campus = getSchoolValue( 'onCampusAvail' );
-    const control = getSchoolValue( 'Public' );
-    const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programStudentType' ];
-
+    const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programDependency' ];
 
     schoolView._searchResults.classList.remove( 'active' );
     schoolView._searchBox.value = getSchoolValue( 'school' );
@@ -234,10 +154,126 @@ const schoolView = {
     schoolView._stateItems = document.querySelectorAll( '[data-state-item]' );
 
     // Initialize listeners
-    schoolView._addListeners();
+    _addListeners();
+  }
+};
+
+/**
+ * Add all event listeners for school search view
+ */
+function _addListeners() {
+  schoolView._searchBox.addEventListener( 'keyup', _handleInputChange );
+  schoolView._searchResults.addEventListener( 'click', _handleResultButtonClick );
+
+  schoolView._programRadios.forEach( elem => {
+    elem.addEventListener( 'click', _handleProgramRadioClick );
+  } );
+
+  schoolView._programSelect.addEventListener( 'change', _handleProgramSelectChange );
+}
+
+/**
+ * Convert JSON string of school search results into markup.
+ * @param {string} responseText - JSON string of school info.
+ */
+function _formatSearchResults( responseText ) {
+  const obj = JSON.parse( responseText );
+  let html = '<ul>';
+  for ( const key in obj ) {
+    const school = obj[key];
+    html += '\n<li><button role="button" data-school_id="' + school.id + '"><strong>' + school.schoolname + '</strong>';
+    html += '<p><em>' + school.city + ', ' + school.state + '</em></p></button></li>';
+  }
+  html += '</li>';
+  schoolView._searchResults.innerHTML = html;
+  schoolView._searchResults.classList.add( 'active' );
+}
+
+let _keyupDelay;
+
+/**
+ * Text has been entered in the school search input.
+ * @param {KeyboardEvent} event - keyup event object.
+ */
+function _handleInputChange( event ) {
+  clearTimeout( _keyupDelay );
+  _keyupDelay = setTimeout( function() {
+    const searchTerm = schoolView._searchBox.value;
+    // TODO - clean up searchbox text, remove non-alphanumeric characters
+    schoolSearch( searchTerm )
+      .then( resp => {
+        _formatSearchResults( resp.responseText );
+      }, error => {
+        console.log( error );
+      } );
+  }, 500 );
+}
+
+/**
+ * Graduate program selection has changed.
+ * @param {Event} event - change event object.
+ */
+function _handleProgramSelectChange( event ) {
+  const target = event.target;
+  const salary = target.options[target.selectedIndex].dataset.programSalary;
+  let programName = target.options[target.selectedIndex].innerText;
+  let pid = target.value;
+  if ( pid === 'null' ) {
+    pid = false;
+    programName = '';
+  }
+  updateState.byProperty( 'pid', pid );
+  updateState.byProperty( 'programName', programName );
+  if ( salary ) {
+    updateFinancial( 'salary_annual', salary );
+  } else {
+    updateFinancial( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
+  }
+  refreshExpenses();
+}
+
+/**
+ * An item in the search results box was clicked.
+ * @param {MouseEvent} event - click event object.
+ */
+function _handleResultButtonClick( event ) {
+  const target = event.target;
+  let button;
+  // Find the button in the clickable area
+  if ( target.tagName === 'BUTTON' ) {
+    button = target;
+  } else {
+    button = closest( target, 'BUTTON' );
   }
 
-};
+  // Clear pid from state
+  updateState.byProperty( 'pid', false );
+
+  // If there's a school_id, then proceed with schoolInfo
+  if ( typeof button.dataset.school_id !== 'undefined' ) {
+    const iped = button.dataset.school_id;
+
+    // Add schoolData to schoolModel
+    updateSchoolData( iped );
+  }
+}
+
+/**
+ * A school program selection radio button was clicked.
+ * @param {MouseEvent} event - click event object.
+ */
+function _handleProgramRadioClick( event ) {
+  const container = closest( event.target, '.m-form-field' );
+  const input = container.querySelector( 'input' );
+
+  // Update the model with program info
+  const prop = input.getAttribute( 'name' );
+  const value = input.value;
+  updateState.byProperty( prop, value );
+  if ( prop === 'programType' ) {
+    schoolView._updateProgramList();
+  }
+}
 
 export {
   schoolView

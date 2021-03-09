@@ -1,4 +1,5 @@
 import json
+from unittest import mock
 
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -8,8 +9,6 @@ from django.test.client import RequestFactory
 
 from wagtail.core import blocks
 from wagtail.core.models import Site
-
-import mock
 
 from v1.models import (
     AbstractFilterPage, BrowsePage, CFGOVPage, LandingPage, SublandingPage
@@ -587,6 +586,33 @@ class TestCFGOVPageMediaProperty(TestCase):
         # The page media should only include the default BrowsePae media, and
         # shouldn't add any additional files because of the FullWithText.
         self.assertEqual(page.media, ['secondary-navigation.js'])
+
+
+class TestCFGOVPageCopy(TestCase):
+
+    def setUp(self):
+        self.site = Site.objects.first()
+        self.root_page = self.site.root_page
+        self.page_with_tags = CFGOVPage(
+            title='Tagged',
+            slug='tagged',
+            live=True
+        )
+        save_new_page(self.page_with_tags, root=self.root_page)
+        self.page_with_tags.tags.add('tag1')
+        self.page_with_tags.authors.add('author1')
+        self.page_with_tags.save()
+
+    def check_tagged_page_copies_without_error(self):
+        test_page = self.page_with_tags
+        new_page = test_page.copy(
+            update_attrs={
+                "slug": f"{test_page.slug}-copy",
+                "title": f"{test_page.title} COPY"
+            }
+        )
+        self.assertEqual(
+            new_page.title, "Tagged COPY")
 
 
 class TestCFGOVPageBreadcrumbs(TestCase):

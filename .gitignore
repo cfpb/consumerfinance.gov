@@ -123,6 +123,7 @@ nosetests.xml
 coverage.xml
 .snyk
 protractorFailuresReport/
+test/cypress/screenshots/
 
 # Temp data backups #
 ###############
@@ -137,6 +138,9 @@ local-storage.json
 # Auto-generated service workers #
 ##################################
 cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js
+cfgov/regulations3k/jinja2/regulations3k/regulations3k-service-worker.js.map
+cfgov/regulations3k/jinja2/regulations3k/workbox-*.js
+cfgov/regulations3k/jinja2/regulations3k/workbox-*.js.map
 
 # Apache #
 ##########

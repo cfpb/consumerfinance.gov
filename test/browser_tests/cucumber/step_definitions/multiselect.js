@@ -1,4 +1,4 @@
-const MultiSelect = require( '../../shared_objects/multiselect' );
+const MultiSelect = require( '../../shared_objects/multiselect.js' );
 const { Then, When, Before } = require( 'cucumber' );
 const chai = require( 'chai' );
 const expect = chai.expect;
@@ -134,23 +134,23 @@ Then( 'the first option should be highlighted',
 
       return multiSelect.getDropDownLabelElements()
         .first()
-        .getText();
+        .getAttribute( 'for' );
     }
 
-    function _getActiveElementValue() {
+    function _getActiveElementId() {
 
       return browser
         .driver
         .switchTo()
         .activeElement()
-        .getAttribute( 'value' );
+        .getAttribute( 'id' );
     }
 
-    return Promise.all( [ _getfirstElementText(), _getActiveElementValue() ] )
-      .then( function( [ firstElementText, activeElementValue ] ) {
+    return Promise.all( [ _getfirstElementText(), _getActiveElementId() ] )
+      .then( function( [ firstElementText, activeElementId ] ) {
 
         return expect( firstElementText )
-          .to.equal( activeElementValue );
+          .to.equal( activeElementId );
       } );
   }
 );

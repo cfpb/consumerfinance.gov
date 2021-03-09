@@ -49,3 +49,9 @@ Then( /I should see (.*) page results/,
     return expect( resultsCount ).to.equal( numPageResults );
   }
 );
+
+Then( 'I should not see filtered results', function() {
+  () => element( by.css( '.o-filterable-list-controls .m-notification' ) )
+    .isDisplayed().then( displayed => expect( displayed ).to.be.false );
+} );
+

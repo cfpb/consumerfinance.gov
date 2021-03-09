@@ -5,7 +5,7 @@ export class FilterableList {
   }
 
   showFilters() {
-    cy.get( '#o-filterable-list-controls' ).find( 'button' ).click();
+    cy.get( '#o-filterable-list-controls' ).find( 'button' ).first().click();
   }
 
   filterForm() {
@@ -43,7 +43,7 @@ export class FilterableList {
 
   selectTopic( topic ) {
     const id = topic.split( ' ' ).join( '-' ).toLowerCase();
-    cy.get( `#${ id }` ).check( { force: true } );
+    cy.get( `#topics-${ id }` ).check( { force: true } );
   }
 
   selectedTopics() {

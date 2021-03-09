@@ -2,12 +2,9 @@
  * The file interfaces between our application and the studentDebtCalculator package
  */
 
-import studentDebtCalculator from 'student-debt-calc';
 import { calcInterestAtGrad, calcMonthlyPayment } from './debt-utils.js';
-import { getConstantsValue, getFinancialValue, getStateValue } from '../dispatchers/get-model-values.js';
-import { constantsModel } from '../models/constants-model.js';
+import { getConstantsValue, getStateValue } from '../dispatchers/get-model-values.js';
 import { financialModel } from '../models/financial-model.js';
-import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/update-models.js';
 
 // Please excuse some uses of underscore for code/HTML property clarity!
 /* eslint camelcase: ["error", {properties: "never"}] */
@@ -23,7 +20,7 @@ import { updateFinancial, updateFinancialsFromSchool } from '../dispatchers/upda
  */
 function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLength ) {
   const level = getStateValue( 'programLevel' );
-  const dependency = getStateValue( 'programStudentType' );
+  const dependency = getStateValue( 'programDependency' );
   let percentSub = 1;
   let percentUnsub = 1;
   let subPrincipal = 0;

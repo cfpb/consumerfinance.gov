@@ -1,6 +1,6 @@
 export class AdminPage {
   open() {
-    cy.visit( '/admin' );
+    cy.visit( '/login/' );
   }
 
   login() {
@@ -126,14 +126,8 @@ export class AdminPage {
     cy.get( '.c-explorer__item__link' ).contains( name ).click();
   }
 
-  openCFGovPage() {
-    this.openNavigationTab( 'Pages' );
-    this.openPage( 'CFGov' );
-  }
-
   addBlogChildPage() {
-    cy.get( 'a' ).contains( 'Add child page' ).click();
-    cy.get( 'a' ).contains( 'Blog page' ).click();
+    cy.visit( '/admin/pages/add/v1/blogpage/319/' );
   }
 
   addFullWidthTextElement() {
@@ -181,7 +175,8 @@ export class AdminPage {
 
   searchBlocks() {
     cy.get( '#id_form-0-block' ).select( 'ask_cfpb.models.blocks.AskContent' );
-    cy.get( 'form[action="/admin/inventory/"]' ).submit(); // This form doesn't follow the standard Wagtail Format
+    // This form doesn't follow the standard Wagtail Format
+    cy.get( 'form[action="/admin/inventory/"]' ).submit();
   }
 
   searchResults() {
@@ -219,6 +214,10 @@ export class AdminPage {
     cy.get( '.action-add-block-table_block' ).click();
   }
 
+  getFirstTableCell() {
+    return cy.get( '.htCore' ).find( 'td' ).first();
+  }
+
   selectFirstTableCell() {
     cy.get( '.htCore' ).find( 'td' ).first().click().click();
   }
@@ -227,18 +226,28 @@ export class AdminPage {
     cy.get( '.modal-body' ).find( `[name="${ name }"]` ).click();
   }
 
+  searchFirstTableCell( text ) {
+    return cy.get( '.htCore' ).find( 'td' ).first().contains( text );
+  }
+
   saveTableEditor() {
-    // wait 1 second because editor has lag between input and appearing in editor
+    // Wait for editor to register entered text before saving.
     cy.wait( 1000 );
     cy.get( '#table-block-save-btn' ).click();
   }
 
   selectTableEditorTextbox() {
-    return cy.get( '.modal-body' ).find( '.public-DraftEditor-content' ).click();
+    return cy.get( '.table-block-modal .public-DraftEditor-content' ).click();
   }
 
   typeTableEditorTextbox( text ) {
-    return cy.get( '.modal-body' ).find( '.DraftEditor-editorContainer' ).type( text );
+    // Wait for Wagtail JS to finish initializing. If we don't, it interrupts the typing.
+    cy.wait( 500 );
+    return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( text );
+  }
+
+  backspaceTableEditorTextbox( ) {
+    return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( '{backspace}' );
   }
 
   selectInternalLink( text ) {

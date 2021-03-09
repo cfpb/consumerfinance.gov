@@ -9,7 +9,7 @@ export default class Chart {
   constructor( chartOptions ) {
     this.chartOptions = chartOptions;
 
-    fetch( chartOptions.source )
+    window.fetch( chartOptions.source )
       .then( response => response.json() )
       .then( data => {
         data = data.map( o => {

@@ -5,7 +5,8 @@
     "fields": {
         "contacts": "contact1@example.com",
         "endpoint": "https://example.com",
-        "name": "EDMC"
+        "name": "EDMC",
+        "internal_note": ""
     }
 },
 {
@@ -14,7 +15,28 @@
     "fields": {
         "contacts": "contact2@example.com",
         "endpoint": "https://example.com",
-        "name": "Bridgepoint Education"
+        "name": "Bridgepoint Education",
+        "internal_note": ""
+    }
+},
+{
+    "model": "paying_for_college.contact",
+    "pk": 4,
+    "fields": {
+        "contacts": "contact3@example.com",
+        "endpoint": "https://example.com",
+        "name": "South University",
+        "internal_note": ""
+    }
+},
+{
+    "model": "paying_for_college.contact",
+    "pk": 5,
+    "fields": {
+        "contacts": "contact4@example.com",
+        "endpoint": "https://example.com",
+        "name": "Art Institutes",
+        "internal_note": ""
     }
 }
 ]

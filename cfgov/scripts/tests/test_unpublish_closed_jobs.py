@@ -1,10 +1,10 @@
 import json
 from datetime import date
+from unittest.mock import Mock, patch
 
 from django.test import TestCase
 
 import requests
-from mock import Mock, patch
 
 from jobmanager.models.django import ApplicantType, JobCategory
 from jobmanager.models.pages import JobListingPage

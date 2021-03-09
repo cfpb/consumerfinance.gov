@@ -1,10 +1,9 @@
-import {
-  scrollIntoView,
-  scrollTo
-} from '../../../js/modules/util/scroll';
+import { scrollIntoView } from '../../../js/modules/util/scroll';
 import DT from '../../owning-a-home/js/form-explainer/dom-tools';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import { assign } from '../../../js/modules/util/assign';
-import { closest } from '../../../js/modules/util/dom-traverse';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+
 
 const CSS = {
   HAS_ATTENTION:         'has-attention',
@@ -69,7 +68,7 @@ class FormExplainer {
     );
 
     // eslint-disable-next-line global-require
-    require( '@cfpb/cfpb-expandables/src/Expandable' ).init();
+    Expandable.init();
   }
 
 

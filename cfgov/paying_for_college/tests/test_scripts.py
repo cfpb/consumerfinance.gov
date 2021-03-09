@@ -655,11 +655,11 @@ class TestScripts(django.test.TestCase):
         mock_post.return_value = mock_return
         resp1 = send_test_notifications()
         self.assertTrue('OK' in resp1)
-        self.assertTrue(mock_post.call_count == 2)
+        self.assertEqual(mock_post.call_count, 3)
         mock_post.side_effect = requests.exceptions.ConnectTimeout
         resp2 = send_test_notifications(url='example.com')
         self.assertTrue('timed out' in resp2)
-        self.assertTrue(mock_post.call_count == 3)
+        self.assertEqual(mock_post.call_count, 4)
 
     def test_calculate_percent(self):
         percent = api_utils.calculate_group_percent(100, 900)

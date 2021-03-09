@@ -3,7 +3,6 @@ import { financialModel } from '../models/financial-model.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 
-
 const urlParameters = {
   'iped': 'schoolModel.schoolID',
   'oid': 'schoolModel.oid',
@@ -13,7 +12,7 @@ const urlParameters = {
   'typp': 'stateModel.programType',
   'lenp': 'stateModel.programLength',
   'ratp': 'stateModel.programRate',
-  'depp': 'stateModel.programStudentType',
+  'depp': 'stateModel.programDependency',
   'cobs': 'stateModel.costsQuestion',
   'regs': 'stateModel.expensesRegion',
   'iqof': 'stateModel.impactOffer',
@@ -21,6 +20,7 @@ const urlParameters = {
   'utm_source': 'stateModel.utmSource',
   'utm_medium': 'stateModel.utm_medium',
   'utm_campaign': 'stateModel.utm_campaign',
+  'inpp': 'stateModel.includeParentPlus',
 
   'tuit': 'financialModel.dirCost_tuition',
   'hous': 'financialModel.dirCost_housing',
@@ -33,9 +33,10 @@ const urlParameters = {
 
   'pelg': 'financialModel.grant_pell',
   'seog': 'financialModel.grant_seog',
-  'fedg': 'financialModel.grant_federal',
+  'fedg': 'financialModel.grant_otherFederal',
   'stag': 'financialModel.grant_state',
   'schg': 'financialModel.grant_school',
+  'tuig': 'financialModel.grant_tuition',
   'othg': 'financialModel.grant_other',
 
   'mta': 'financialModel.grant_mta',
@@ -141,7 +142,7 @@ function buildUrlQueryString() {
     const value = model[variable.split( '.' )[1]];
 
     if ( typeof value !== 'undefined' && value !== 0 && value !== null &&
-          value !== false ) {
+          value !== false && value !== 'not-selected' ) {
       if ( query.length > 1 ) query += '&';
       query += key + '=' + value;
     }

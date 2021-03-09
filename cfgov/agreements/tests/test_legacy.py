@@ -1,11 +1,10 @@
 import random
+from unittest.mock import patch
 
 from django.core.paginator import Page
 from django.http import HttpResponse
 from django.test import TestCase
 from django.urls import reverse
-
-from mock import patch
 
 from agreements import models
 

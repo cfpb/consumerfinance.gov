@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import * as complaints from '../../../mocks/complaints';
 import * as sut from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap.js';
 import Analytics from '../../../../../cfgov/unprocessed/js/modules/Analytics';

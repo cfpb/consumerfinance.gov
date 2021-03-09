@@ -1,4 +1,4 @@
-import { closest } from '../../../js/modules/util/dom-traverse';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 // Array that tracks paragraph positions
 let paragraphPositions;

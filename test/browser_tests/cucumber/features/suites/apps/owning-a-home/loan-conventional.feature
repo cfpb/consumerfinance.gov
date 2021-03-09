@@ -1,12 +1,12 @@
 # Navigational links: open in same tab
 # Non-Navigational links: open in new tab
 Feature: Verify the Conventional Loan page works according to requirements
-  As a first time visitor to the Buying a House page
+  As a first time visitor to the Owning a Home page
   I want to navigate the Conventional Loan page
   So that I can find the information I'm looking for
 
 Background:
-   Given I navigate to the "Conventional Loan" page
+  Given I navigate to the "Conventional Loan" page
 
 @smoke_testing @loan_options
 Scenario Outline: Test Navigational links in the Conventional Loan page open is same tab
@@ -15,10 +15,10 @@ Scenario Outline: Test Navigational links in the Conventional Loan page open is 
     And I should see "<page_title>" displayed in the page title
 
 Examples:
-| link_name                  | relative_url                                         | page_title     |
-| Buying a House             | /                                                    | Buying a House |
-| Understand loan options    | /loan-options/                                       | Loan Options   |
-| More on mortgage insurance | /loan-options/conventional-loans/#mortgage-insurance | Loan Options   |
+| link_name                  | relative_url                                         | page_title    |
+| Owning a Home              | /                                                    | Owning a Home |
+| Understand loan options    | /loan-options/                                       | Loan Options  |
+| More on mortgage insurance | /loan-options/conventional-loans/#mortgage-insurance | Loan Options  |
 
 @smoke_testing @loan_options
 Scenario Outline: Test NON-Navigational links in the Conventional Loan page open in new tab

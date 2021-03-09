@@ -3,7 +3,7 @@ Feature: Header
   I should be able to use the Header
 
 Background:
-  Given I goto a browse filterable page
+  Given I goto URL "/"
 
 Scenario: Desktop, at page load
   Then the header organism should display the header

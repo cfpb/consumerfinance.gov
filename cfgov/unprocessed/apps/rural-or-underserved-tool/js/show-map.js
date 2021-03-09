@@ -1,10 +1,9 @@
 import DT from './dom-tools';
 
-// See API docs at https://docs.mapbox.com/mapbox.js/api/v3.2.0/l-mapbox-map
-const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.js';
-const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css';
+const MAPBOX_JS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js';
+const MAPBOX_CSS_URL = 'https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css';
 const mapboxAccessToken = 'pk.eyJ1IjoiY2ZwYiIsImEiOiJodmtiSk5zIn0.VkCynzmVYcLBxbyHzlvaQw';
-const mapIdString = 'cfpb.k55b27gd';
+const mapIdString = 'mapbox://styles/mapbox/streets-v11';
 
 let map;
 const marker_array = [];
@@ -92,11 +91,9 @@ resultsMapDom.addEventListener( 'click', function( evt ) {
 
         DT.nextFrame( function() {
           const latlng = window.L.latLng( lon, lat );
-          const map = window.L.mapbox.map(
-            id,
-            mapIdString,
-            { center: latlng }
-          ).setView( latlng, 12 );
+          const map = window.L.mapbox.map( id )
+            .setView( latlng, 12 )
+            .addLayer( window.L.mapbox.styleLayer( mapIdString ) );
           map.dragging.disable();
           map.touchZoom.disable();
           map.doubleClickZoom.disable();

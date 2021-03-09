@@ -708,5 +708,16 @@
         },
         "model": "teachers_digital_platform.activitybuildingblock",
         "pk": 3
+    },
+    {
+        "model": "wagtaildocs.document",
+        "pk": 8335,
+        "fields": {
+            "title": "Storing my savings (guide)",
+            "file": "documents/cfpb_building_block_activities_storing-my-savings_guide.pdf",
+            "created_at": "2020-01-09T22:07:29.625Z",
+            "file_size": null,
+            "file_hash": ""
+        }
     }
 ]

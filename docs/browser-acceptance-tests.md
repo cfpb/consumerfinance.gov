@@ -2,15 +2,10 @@
 
 ## Browser testing
 
-Our current browser tests (also called acceptance tests) are organized into
+Our browser tests (also called acceptance tests) are organized into
 suites under the
-[`test/browser_tests/cucumber-new/features`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber-new/features)
-directory.
-
-Our legacy browser tests are all in the
 [`test/browser_tests/cucumber/features`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/features)
-directory. We're in the process of getting rid of these tests and replacing them
-with the tests in `cucumber-new`.
+directory.
 
 ### Running the current browser tests locally
 
@@ -21,48 +16,16 @@ with the tests in `cucumber-new`.
 3. Get your local version of cf.gov running at http://localhost:8000:
     - If you use Docker: `docker-compose up`
     - If you use a virtual environment locally: `./runserver.sh`
-4. Run the browser tests against your localhost: `gulp test:acceptance:new`
+4. Run the browser tests against your localhost: `gulp test:acceptance`
 
 There are several options you can pass to run a particular suite of tests or to
 run a particular list of features:
 
 ```sh
-gulp test:acceptance:new --suite=wagtail-admin ( runs just the wagtail-admin suite )
-gulp test:acceptance:new --specs=multi-select.feature ( runs just the multi-select feature )
-gulp test:acceptance:new --tags=@mobile ( runs all scenarios tagged with @mobile )
-```
-
-### Running the legacy browser tests locally (with a Tox server)
-
-To run browser tests, open a new Terminal window or tab and change to the project directory,
-then tell gulp to start the tests:
-
-```sh
-gulp build
-gulp test:acceptance ( tox -e acceptance can be run as well )
-```
-
-There are several options you can pass to run a particular suite of tests,
-to run a particular list of features,
-and/or to run it in "fast" mode:
-
-```sh
 gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin suite )
-gulp test:acceptance --specs=multi-select.feature ( runs just the multi-select feature )
+gulp test:acceptance --specs=multiselect.feature ( runs just the multiselect feature )
 gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )
-gulp test:acceptance --recreate ( runs the tests and recreates the virtual environment )
 ```
-
-The same options can be used with tox (--omitted):
-
-```sh
-tox -e acceptance suite=wagtail-admin
-tox -e acceptance specs=multi-select.feature
-tox -e acceptance tags=@mobile
-```
-
-These tests will run on their own server; you do not need to be running your development server.
-
 
 ### Running the legacy browser tests in Sauce Labs
 
@@ -86,13 +49,10 @@ Sauce Labs can be used to run the legacy browser tests remotely in the cloud.
 
 Any new tests should be added to an existing suite (e.g. "default"), or placed
 into a new suite directory, in
-[`test/browser_tests/cucumber-new/features/suites`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber-new/features/suites).
+[`test/browser_tests/cucumber/features/suites`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/features/suites).
 All tests start with writing a `.feature` spec in one of these suites,
 and then adding corresponding step definitions, found in
-[`test/browser_tests/cucumber-new/step_definitions`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber-new/step_definitions).
-
-**Do not** add new tests to the old `test/browser_tests/cucumber` directory.
-Those are all of our legacy tests and are in the process of being removed.
+[`test/browser_tests/cucumber/step_definitions`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/step_definitions).
 
 #### Cucumber + Gherkin: tools for running automated tests written in plain language
 
@@ -196,16 +156,6 @@ tab to run a performance audit.
 Run the acceptance tests with an `--a11y` flag (i.e. `gulp test:acceptance --a11y`)
 to check every webpage for WCAG and Section 508 compliancy using Protractor's
 [accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
-
-If you'd like to audit a specific page, use `gulp audit:a11y`:
-
-  1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
-     Get a free [AChecker API ID](https://achecker.ca/register.php) for the value.
-  2. Reload your `.env` with `source ./.env` while in the project root directory.
-  3. Run `gulp audit:a11y` to run an audit on the homepage.
-  4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
-     For example, `gulp audit:a11y --u=contact-us`
-     or `gulp audit:a11y --u=the-bureau/bureau-structure/`.
 
 ## Source code linting
 

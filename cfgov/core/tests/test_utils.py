@@ -1,10 +1,21 @@
+import re
 import unittest
 
 from django.test import TestCase
 
 from core.utils import (
-    extract_answers_from_request, format_file_size, get_body_html,
-    get_link_tags
+    add_link_markup, extract_answers_from_request, format_file_size,
+    get_body_html, get_link_tags
+)
+
+
+VALID_LINK_MARKUP = re.compile(
+r'<a class="a-link a-link__icon" '  # noqa: E122
+   r'data-orig-href="https://example.com(/[\w\.]+)?" '  # noqa: E121
+   r'href="/external-site/\?ext_url=https%3A%2F%2Fexample.com(%2F[\w\.]+)?&amp;signature=\w+">'  # noqa: E501
+    r'<span class="a-link_text">foo</span> '  # noqa: E131
+    r'<svg class="cf-icon-svg".*>.+</svg>'  # noqa: E501
+r'\n?</a>'  # noqa: E122
 )
 
 
@@ -102,4 +113,44 @@ class LinkUtilsTests(TestCase):
         self.assertEqual(
             get_link_tags('outer <a  >inner</a>'),
             ['<a  >inner</a>', ]
+        )
+
+    def test_add_link_markup_invalid(self):
+        tag = 'not a valid tag'
+        path = '/about-us/blog/'
+        self.assertEqual(
+            add_link_markup(tag, path),
+            None
+        )
+
+    def test_add_link_markup_anchor(self):
+        tag = '<a href="/about-us/blog/#anchor">bar</a>'
+        path = '/about-us/blog/'
+        self.assertEqual(
+            add_link_markup(tag, path),
+            '<a class="" href="#anchor">bar</a>'
+        )
+
+    def test_add_link_markup_external(self):
+        tag = '<a href="/external-site/?ext_url=https%3A%2F%2Fexample.com">foo</a>'  # noqa: E501
+        path = '/about-us/blog/'
+        self.assertRegex(
+            add_link_markup(tag, path),
+            VALID_LINK_MARKUP
+        )
+
+    def test_add_link_markup_non_cfpb(self):
+        tag = '<a href="https://example.com">foo</a>'
+        path = '/about-us/blog/'
+        self.assertRegex(
+            add_link_markup(tag, path),
+            VALID_LINK_MARKUP
+        )
+
+    def test_add_link_markup_download(self):
+        tag = '<a href="https://example.com/file.pdf">foo</a>'
+        path = '/about-us/blog/'
+        self.assertRegex(
+            add_link_markup(tag, path),
+            VALID_LINK_MARKUP
         )

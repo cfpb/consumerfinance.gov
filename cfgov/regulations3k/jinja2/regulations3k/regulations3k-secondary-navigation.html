@@ -69,7 +69,7 @@
             } %}
             {% call() expandable(sec_nav_settings) %}
             {% for section in nav_items[subpart].sections %}
-                {{ nav_link.render(section.title, section.url, true, section.active, true) }}
+                {{ nav_link.render(section.title, section.url, true, section.active) }}
             {%- endfor %}
             {% endcall %}
         {%- endfor %}

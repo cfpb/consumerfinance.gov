@@ -11,25 +11,36 @@
 
    sidebar_header - CharField, defaults to Action Details
    court - CharField
-   institution_type - CharField, with choices: Nonbank & Bank
+   defendant_type - CharField, with choices: Nonbank, Bank, Individual
    statuses - relation of EnforcementActionStatus, which each have:
         institution (CharField), status (CharField with choices)
    docket_numbers - relation of EnforcementActionDocket, which each have:
         docket_number (CharField)
 
+   The context has been updated with the following:
+   total_consumer_relief - Decimal - sum of consumer relief for each
+       final disposition associated with this action
+   total_cmp - Decimal - sum of civil money penalties for each
+       final disposition associated with this action
+   statutes - list of strings - Deduped statutes violated in this action
+   products - list of strings - Products at issue in this action
+   at_risk_groups - list of strings - Specific consumer groups affected
+       by this action
+
    ========================================================================== #}
 
 {% macro render() %}
 
+{% set show_enf_data = False %}
 <div class="m-related-metadata block block__flush-top">
     <header class="m-slug-header">
         <h2 class="a-heading">
-            {{ page.sidebar_header }}
+          Action Details
         </h2>
     </header>
     <div class="m-related-metadata_item-container">
         <h3 class="h4">
-          Category
+          Forum
         </h3>
         {{_categories(page.categories)}}
     </div>
@@ -38,54 +49,81 @@
             <h3 class="h4">
               Court
             </h3>
-            {{_text(page.court)}}
+            {{page.court}}
         </div>
     {% endif %}
     <div class="m-related-metadata_item-container">
         <h3 class="h4">
-          Institution type
+          Docket number
         </h3>
-        {{_text(page.institution_type)}}
+        {% for docket in page.docket_numbers.all() %}
+            <p>{{docket.docket_number}}</p>
+        {% endfor %}
     </div>
+    {% if page.initial_filing_date %}
+    <div class="m-related-metadata_item-container">
+        <h3 class="h4">
+          Initial filing date
+        </h3>
+        {{_date(page.initial_filing_date)}}
+    </div>
+    {% endif %}
     <div class="m-related-metadata_item-container m-related-metadata_status">
         <h3 class="h4">
           Status
         </h3>
         {% for action_status in page.statuses.all() %}
             <div>
-                <h6>{{_text(action_status.institution)}}</h6>
-                {{_text(action_status.get_status_display())}}
+                {{action_status.get_status_display()}}
             </div>
         {% endfor %}
         <a
           class="status-definitions"
-          href="/policy-compliance/enforcement/actions/enforcement-action-definitions/"
+          href="/enforcement/actions/enforcement-action-definitions/"
           target="_blank"
           rel="noopener referrer"
         >See status definitions</a>
     </div>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Docket number
-        </h3>
-        {% for docket in page.docket_numbers.all() %}
-            <p>{{_text(docket.docket_number)}}</p>
-        {% endfor %}
-    </div>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Topics
-        </h3>
-        {{_topics(page.tags)}}
-    </div>
-    <div class="m-related-metadata_item-container">
-        <h3 class="h4">
-          Date filed
-        </h3>
-        {% if page.date_filed %}
-            {{_date(page.date_filed)}}
-        {% endif %}
-    </div>
+    {% if show_enf_data and statutes|length > 0 %}
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            Statutes
+          </h3>
+          {{_list(statutes)}}
+      </div>
+    {% endif %}
+    {{_dispositions(page.enforcement_dispositions.all())}}
+    {% if show_enf_data and defendant_types|length > 0 %}
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            Defendant/Respondent type
+          </h3>
+          {% for dt in defendant_types %}
+              <p>{{dt}}</p>
+          {% endfor %}
+          <div>
+          </div>
+      </div>
+    {% endif %}
+    {% if show_enf_data and products|length > 0 %}
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            Products
+          </h3>
+          {{_list(products)}}
+      </div>
+    {% endif %}
+
+    {% if show_enf_data and at_risk_groups|length > 0 %}
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            At Risk Groups
+          </h3>
+          {{_list(at_risk_groups)}}
+      </div>
+    {% endif %}
+
+
 </div>
 {% endmacro %}
 
@@ -110,16 +148,10 @@
 <ul class="m-list
            m-list__unstyled
            m-list__links
-           {{ 'm-related-metadata_topics' if is_related_topics else '' }} ">
-    {% for link in list.links %}
+           m-related-metadata_topics">
+    {% for item in list %}
     <li class="m-list_item">
-        {% if link.url %}
-            <a href="{{ link.url }}" class="m-list_link">
-                {{ link.text }}
-            </a>
-        {% else %}
-            <span class="m-list_link">{{ link.text }}</span>
-        {% endif %}
+        <span class="m-list_link">{{item}}</span>
     </li>
     {% endfor %}
 </ul>
@@ -146,41 +178,41 @@
 </p>
 {% endmacro %}
 
+
 {# ==========================================================================
 
-   _text()
+   _dispositions(dispositions)
 
    ==========================================================================
 
    Description:
 
-   Creates related metadata text markup when given:
+   Renders metadata side based on list of dispositions
 
-   text: A string representing text.
-
-   ========================================================================== #}
-
-{% macro _text(text) %}
-    {{ text | safe }}
-{% endmacro %}
-
-{# ==========================================================================
-
-   _topics()
-
-   ==========================================================================
-
-   Description:
-
-   Creates related metadata related topics markup
-
-   list: An object holding the tag information.
+   dispositions: List of dispositions associated with an enforcement page
 
    ========================================================================== #}
-
-{% macro _topics(list) %}
-    {{ _list( page.related_metadata_tags(), true ) }}
+{% macro _dispositions(dispositions) %}
+    {% if show_enf_data and dispositions|length > 0 %}
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            Total consumer relief
+          </h3>
+          <div>
+            ${{'{:,}'.format(total_consumer_relief)}}
+          </div>
+      </div>
+      <div class="m-related-metadata_item-container">
+          <h3 class="h4">
+            Total civil money penalties
+          </h3>
+          <div>
+            ${{'{:,}'.format(total_cmp)}}
+          </div>
+      </div>
+    {% endif %}
 {% endmacro %}
+
 
 {# ==========================================================================
 

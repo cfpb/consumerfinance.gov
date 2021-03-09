@@ -67,12 +67,19 @@ def import_agreements_data(agreements_data):
         product = PrepaidProduct.objects.get(pk=product_id)
         url = S3_PATH + item['agreements_files_location']
 
+        if "_" in product.name:
+            bulk_path = item['path'].split("/")[2]
+            bulk_download_path = \
+                product.issuer_name + '/' + product.name + '/' + bulk_path
+        else:
+            bulk_download_path = item['path'].replace("_", " ")
+
         PrepaidAgreement.objects.update_or_create(pk=pk, defaults={
             'product': product,
             'created_time': created_time,
             'effective_date': effective_date,
             'compressed_files_url': url,
-            'bulk_download_path': item['path'],
+            'bulk_download_path': bulk_download_path,
             'filename': item['agreements_files_location']
         })
 

@@ -1,5 +1,5 @@
 import Analytics from '../../../js/modules/Analytics';
-import { closest } from '../../../js/modules/util/dom-traverse';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 /* eslint-disable consistent-return */
 

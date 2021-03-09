@@ -1,11 +1,11 @@
 version: "3.4"
 
-volumes: 
+volumes:
   cypress:
 
 services:
   e2e:
-    image: cypress/included:4.10.0
+    image: cypress/included:6.5.0
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000

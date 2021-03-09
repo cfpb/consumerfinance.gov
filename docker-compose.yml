@@ -9,25 +9,25 @@ services:
             context: ./
             dockerfile: ./docker/elasticsearch/Dockerfile
         ports:
-            - "9000:9200"
-            - "9100:9300"
+            - 127.0.0.1:9000:9200
+            - 127.0.0.1:9100:9300
     elasticsearch:
         build:
             context: ./
-            dockerfile: ./docker/elasticsearch/7.7/Dockerfile
-        ports: 
-            - "9200:9200"
-            - "9300:9300"
+            dockerfile: ./docker/elasticsearch/7/Dockerfile
+        ports:
+            - 127.0.0.1:9200:9200
+            - 127.0.0.1:9300:9300
         environment:
             discovery.type: single-node
         volumes:
             - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
     kibana:
-        image: blacktop/kibana:7.7
+        image: blacktop/kibana:7.10.1
         depends_on:
             - elasticsearch
         ports:
-            - "5601:5601"
+            - 127.0.0.1:5601:5601
     postgres:
         image: postgres:10-alpine
         user: postgres
@@ -39,7 +39,7 @@ services:
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
         ports:
-            - "5432:5432"
+            - 127.0.0.1:5432:5432
 
     python:
         build:
@@ -63,7 +63,7 @@ services:
             context: ./
             dockerfile: ./docker/docs/Dockerfile
         ports:
-            - "8888:8888"
+            - 127.0.0.1:8888:8888
         environment:
             LANG: en_US.utf8
             LC_ALL: en_US.utf8

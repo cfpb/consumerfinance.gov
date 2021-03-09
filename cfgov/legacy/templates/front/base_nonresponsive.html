@@ -1,10 +1,6 @@
 {% load base_elements %}
 {% load i18n %}
 {% load static from staticfiles %}
-{% load staticversions %}
-{% load remit_var %}
-
-{% is_remit as IS_REMIT %}
 
 <!DOCTYPE html>
 <!--
@@ -162,7 +158,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   </script>
 <!--[if gt IE 8]><!-->
-<script type="text/javascript" src="{% static "js/atomic/header.nonresponsive.js" %}"></script>
+<script src="{% static "js/atomic/header.nonresponsive.js" %}"></script>
 <!--<![endif]-->
 </body>
 </html>

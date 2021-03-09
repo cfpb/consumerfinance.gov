@@ -97,7 +97,7 @@
                         'label': 'Additional financial obligations',
                         'id': 'plan__otherIndirect',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="indiCost_otherIndirect"'
+                        'data_attribute': 'data-financial-item="otherCost_additional"'
                     })
                 }}
             {% endcall %}
@@ -149,6 +149,14 @@
                         'id': 'plan__schoolGrants',
                         'value': '0',
                         'data_attribute': 'data-financial-item="grant_school"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Tuition waiver',
+                        'id': 'plan__tuitionGrants',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_tuition"'
                     })
                 }}
                 {{
@@ -282,7 +290,7 @@
                         'label': 'Estimated off-campus job income',
                         'id': 'plan__jobIncome',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="income_job"'
+                        'data_attribute': 'data-financial-item="income_jobOffCampus"'
                     })
                 }}
                 {{
@@ -290,7 +298,7 @@
                         'label': 'Estimated on-campus job income (not work-study)',
                         'id': 'plan__onCampusJob',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="income_onCampusJob"'
+                        'data_attribute': 'data-financial-item="income_jobOnCampus"'
                     })
                 }}
                 {{
@@ -298,7 +306,7 @@
                         'label': 'Employer tuition assistance or reimbursement',
                         'id': 'plan__employerAssistance',
                         'value': '0',
-                        'data_attribute': 'data-financial-item="income_employerAssistance"'
+                        'data_attribute': 'data-financial-item="income_employerAssist"'
                     })
                 }} 
                 {{
@@ -404,7 +412,7 @@
                             'label': 'Loan fee (%)',
                             'id': 'plan__stateLoanFee',
                             'value': '0',
-                            'data_attribute': 'data-financial-item="fee_stateLoan"'
+                            'data_attribute': 'data-financial-item="fee_state"'
                         })
                     }}
                 </div>
@@ -510,7 +518,7 @@
                                     'label': 'Interest rate (%)',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="rate_gradPlus"',
-                                    'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
+                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'
                                 })
                             }}
                             {{
@@ -518,7 +526,7 @@
                                     'label': 'Loan fee (%)',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="fee_gradPlus"',
-                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
+                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
                                 })
                             }}
                         </div>
@@ -552,7 +560,7 @@
                                     'label': 'Interest rate (%)',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="rate_parentPlus"',
-                                    'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
+                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'
                                 })
                             }}
                             {{
@@ -560,7 +568,7 @@
                                     'label': 'Loan fee (%)',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="fee_parentPlus"',
-                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
+                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
                                 })
                             }}
                             <div class="u-mt30">
@@ -606,7 +614,7 @@
                                     'id': 'plan__privateLoan1Rate',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="rate_privateLoan1"',
-                                    'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the intial interest rate from your offer here.'
+                                    'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the initial interest rate from your offer here.'
                                 })
                             }}
                             {{
@@ -615,7 +623,7 @@
                                     'id': 'plan__privateLoan1Fee',
                                     'value': '0',
                                     'data_attribute': 'data-financial-item="fee_privateLoan1"',
-                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school.'
+                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
                                 })
                             }}
                             <div class="undergrad-content u-mt30">

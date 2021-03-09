@@ -19,8 +19,7 @@ from wagtailautocomplete.urls.admin import (
 )
 
 from ask_cfpb.views import (
-    ask_autocomplete, ask_autocomplete_es7, ask_search, ask_search_es7,
-    redirect_ask_search, view_answer
+    ask_autocomplete, ask_search, redirect_ask_search, view_answer
 )
 from core.views import (
     ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment
@@ -151,21 +150,6 @@ urlpatterns = [
         template_name='fair-lending/index.html'),
         name='fair-lending'),
 
-    re_path(
-        r'^practitioner-resources/students/knowbeforeyouowe/$',
-        TemplateView.as_view(
-            template_name='students/knowbeforeyouowe/index.html'),
-        name='students-knowbeforeyouowe'
-    ),
-    re_path(
-        r'^practitioner-resources/students/'
-        'helping-borrowers-find-ways-to-stay-afloat/$',
-        TemplateView.as_view(
-            template_name='students/helping-borrowers-find-'
-            'ways-to-stay-afloat/index.html'),
-        name='students-helping-borrowers'
-    ),
-
     re_path(r'^parents/(?P<path>.*)$', RedirectView.as_view(
         url='/money-as-you-grow/%(path)s', permanent=True)),
     re_path(r'^blog/(?P<path>.*)$', RedirectView.as_view(
@@ -273,21 +257,21 @@ urlpatterns = [
     re_path(
         r'^paying-for-college/choose-a-student-loan/$',
         TemplateView.as_view(
-            template_name='comparisontool/choose_a_loan.html'
+            template_name='paying-for-college/choose_a_loan.html'
         ),
         name='pfc-choose'
     ),
     re_path(
         r'^paying-for-college/manage-your-college-money/$',
         TemplateView.as_view(
-            template_name='comparisontool/manage_your_money.html'
+            template_name='paying-for-college/manage_your_money.html'
         ),
         name='pfc-manage'
     ),
     re_path(
         r'^paying-for-college/repay-student-debt/$',
         TemplateView.as_view(
-            template_name='comparisontool/repay_student_debt.html'
+            template_name='paying-for-college/repay_student_debt.html'
         ),
         name='pfc-repay'
     ),
@@ -352,14 +336,6 @@ urlpatterns = [
         url='/data-research/research-reports/%(path)s',
         permanent=True)),
 
-    re_path(r'^jobs/supervision/$', TemplateView.as_view(
-        template_name='jobmanager/supervision.html'),
-        name='jobs_supervision'),
-
-    re_path(r'^jobs/technology-innovation-fellows/$', TemplateView.as_view(
-        template_name='jobmanager/technology-innovation-fellows.html'),
-        name='technology_innovation_fellows'),
-
     # Form csrf token provider for JS form submission
     re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
@@ -370,22 +346,8 @@ urlpatterns = [
     ),
 
     # educational resources
-    re_path(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
-        url='/practitioner-resources/%(path)s', permanent=True)),
     re_path(
-        r'^practitioner-resources/resources-for-older-adults/managing-someone-elses-money/(?P<path>.*)$',  # noqa: E501
-        RedirectView.as_view(
-            url='/consumer-tools/managing-someone-elses-money/%(path)s',  # noqa: E501
-            permanent=True)
-    ),
-    re_path(
-        r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
-        RedirectView.as_view(
-            url='/consumer-tools/money-as-you-grow/%(path)s',
-            permanent=True)
-    ),
-    re_path(
-        r'^practitioner-resources/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
+        r'^consumer-tools/educator-tools/resources-youth-employment-programs/transportation-tool/$',  # noqa: E501
         FlaggedTemplateView.as_view(
             flag_name='YOUTH_EMPLOYMENT_SUCCESS',
             template_name='youth_employment_success/index.html'
@@ -400,12 +362,12 @@ urlpatterns = [
 
     # empowerment redirects
     re_path(r'^empowerment/$', RedirectView.as_view(
-            url='/practitioner-resources/economically-vulnerable/',
+            url='/consumer-tools/educator-tools/economically-vulnerable/',
             permanent=True)),
 
     # students redirects
     re_path(r'^students/(?P<path>.*)$', RedirectView.as_view(
-            url='/practitioner-resources/students/%(path)s',
+            url='/consumer-tools/educator-tools/students/%(path)s',
             permanent=True)),
 
     # ask-cfpb
@@ -446,51 +408,36 @@ urlpatterns = [
         name='ask-spanish-answer'
     ),
 
-    # If 'ELASTICSEARCH_DSL_ASK' is True, use elasticsearch7.
-    flagged_re_path(
-        'ELASTICSEARCH_DSL_ASK',
+    re_path(
         r'^(?P<language>es)/obtener-respuestas/buscar/$',
-        ask_search_es7,
-        fallback=ask_search,
+        ask_search,
         name='ask-search-es'
     ),
-    flagged_re_path(
-        'ELASTICSEARCH_DSL_ASK',
+    re_path(
         r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-        ask_search_es7,
-        fallback=ask_search,
+        ask_search,
         name='ask-search-es-json'
     ),
-    flagged_re_path(
-        'ELASTICSEARCH_DSL_ASK',
+    re_path(
         r'^ask-cfpb/search/$',
-        ask_search_es7,
-        fallback=ask_search,
+        ask_search,
         name='ask-search-en'
     ),
-    flagged_re_path(
-        'ELASTICSEARCH_DSL_ASK',
+    re_path(
         r'^ask-cfpb/search/(?P<as_json>json)/$',
-        ask_search_es7,
-        fallback=ask_search,
+        ask_search,
         name='ask-search-en-json'
     ),
-    flagged_re_path(
-        'ELASTICSEARCH_DSL_ASK',
+    re_path(
         r'^ask-cfpb/api/autocomplete/$',
-        ask_autocomplete_es7,
-        fallback=ask_autocomplete,
+        ask_autocomplete,
         name='ask-autocomplete-en'
     ),
-    flagged_re_path(
-        'ELASTICSEARCH_DSL_ASK',
+    re_path(
         r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete_es7,
-        fallback=ask_autocomplete,
+        ask_autocomplete,
         name='ask-autocomplete-es'
     ),
-
-    re_path(r'^_status/', include('watchman.urls')),
 
     re_path(
         r'^consumer-tools/financial-well-being/',
@@ -509,12 +456,12 @@ urlpatterns = [
         'SEARCH_DOTGOV_API', r'^search/', include('search.urls')),
 
     re_path(
-        r'^practitioner-resources/youth-financial-education/',
+        r'^consumer-tools/educator-tools/youth-financial-education/',
         include('teachers_digital_platform.urls')
     ),
 
     re_path(
-        r'^practitioner-resources/youth-financial-education/curriculum-review/',  # noqa: E501
+        r'^consumer-tools/educator-tools/youth-financial-education/curriculum-review/',  # noqa: E501
         include('crtool.urls')
     ),
 
@@ -733,6 +680,11 @@ if settings.ALLOW_ADMIN_URL:
     ]
 
     urlpatterns = patterns + urlpatterns
+
+if settings.WATCHMAN_TOKENS is not None:
+    urlpatterns.append(
+        re_path(r'^_status/', include('watchman.urls')),
+    )
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

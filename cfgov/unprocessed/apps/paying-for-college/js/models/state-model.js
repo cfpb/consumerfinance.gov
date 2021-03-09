@@ -3,14 +3,22 @@
  * which tracks the current app state and allows the views to update based on
  * state.
 */
-import { getProgramInfo } from '../dispatchers/get-model-values.js';
-import { recalculateFinancials, updateFinancial } from '../dispatchers/update-models.js';
-import { updateFinancialViewAndFinancialCharts, updateNavigationView, updateSchoolItems, updateStateInDom, updateUrlQueryString } from '../dispatchers/update-view.js';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
+import { getSchoolValue } from '../dispatchers/get-model-values.js';
+import {
+  recalculateFinancials,
+  updateFinancial
+} from '../dispatchers/update-models.js';
+import {
+  updateFinancialViewAndFinancialCharts,
+  updateNavigationView,
+  updateSchoolItems,
+  updateStateInDom,
+  updateUrlQueryString
+} from '../dispatchers/update-view.js';
 
 const urlVals = [
   'pid', 'programHousing', 'programType', 'programLength',
-  'programRate', 'programStudentType', 'costsQuestion', 'expensesRegion',
+  'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
   'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign'
 ];
 
@@ -19,16 +27,18 @@ const stateModel = {
   values: {
     activeSection: false,
     constantsLoaded: false,
+    showSchoolErrors: false,
     schoolSelected: false,
     gotStarted: false,
     gradMeterCohort: 'cohortRankByHighestDegree',
     gradMeterCohortName: 'U.S.',
     costsQuestion: false,
-    programType: false,
-    programLength: false,
-    programLevel: false,
-    programRate: false,
-    programHousing: false,
+    programType: 'not-selected',
+    programLength: 'not-selected',
+    programLevel: 'not-selected',
+    programRate: 'not-selected',
+    programHousing: 'not-selected',
+    programDependency: 'not-selected',
     repayMeterCohort: 'cohortRankByHighestDegree',
     repayMeterCohortName: 'U.S.'
   },
@@ -78,6 +88,119 @@ const stateModel = {
   ],
 
   /**
+  * Check whether required fields are selected
+  * @returns {Boolean} false if the school form is incomplete, true otherwise
+  */
+  _checkRequiredFields: function() {
+    // Don't check required fields until the
+    if ( stateModel.showSchoolErrors === false ) {
+      return false;
+    }
+    const smv = stateModel.values;
+    const control = getSchoolValue( 'control' );
+    stateModel.values.schoolErrors = 'no';
+    updateStateInDom( 'schoolErrors', 'no' );
+
+    const displayErrors = {
+      // These are true if the error should be shown, false otherwise
+      schoolSelected: getSchoolValue( 'schoolID' ) === false,
+      programTypeSelected: smv.programType === 'not-selected',
+      programLengthSelected: smv.programLength === 'not-selected',
+      rateSelected: smv.programRate === 'not-selected' && control === 'Public',
+      housingSelected: smv.programHousing === 'not-selected',
+      dependencySelected:  smv.programLevel === 'undergrad' && smv.programDependency === 'not-selected'
+    };
+
+    // Change values to "required" which triggers error notification CSS rules
+    for ( const key in displayErrors ) {
+      if ( displayErrors[key] === true ) {
+        stateModel.values[key] = 'required';
+        updateStateInDom( key, 'required' );
+        stateModel.values.schoolErrors = 'yes';
+        updateStateInDom( 'schoolErrors', 'yes' );
+      } else {
+        stateModel.values[key] = false;
+        updateStateInDom( key, false );
+      }
+    }
+
+    if ( stateModel.values.schoolErrors === 'no' ) {
+      stateModel.values.showSchoolErrors = false;
+      updateStateInDom( 'showSchoolErrors', false );
+    }
+
+    return true;
+  },
+
+  /**
+   * set the salaryAvailable property based on other values
+   */
+  _setSalaryAvailable: () => {
+    let available = 'yes';
+    const smv = stateModel.values;
+    if ( smv.programLevel === 'graduate' && smv.pid === false ) {
+      available = 'no';
+    }
+    stateModel.values.salaryAvailable = available;
+    updateStateInDom( 'salaryAvailable', available );
+  },
+
+  /**
+   * set programLevel property based on programType
+   */
+  _setProgramLevel: () => {
+    const programType = stateModel.values.programType;
+    let programLevel = 'undergrad';
+    if ( programType === 'graduate' ) {
+      programLevel = 'graduate';
+    }
+
+    stateModel.values.programLevel = programLevel;
+    updateStateInDom( 'programLevel', programLevel );
+  },
+
+  /**
+   * update the application state based on the 'property' parameter.
+   * @param {string} property  What property to update based on
+   */
+  _updateApplicationState: property => {
+    const urlParams = [ 'pid', 'programHousing', 'programType', 'programLength',
+      'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
+      'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign' ];
+
+    const finUpdate = [ 'programType', 'programRate', 'programDependency',
+      'programLength', 'programHousing' ];
+
+    // Properties which require a URL querystring update:
+    if ( urlParams.indexOf( property ) > 0 ) {
+      updateUrlQueryString();
+    }
+
+    // Properties which require a financialModel and financialView update:
+    if ( finUpdate.indexOf( property ) > 0 ) {
+      recalculateFinancials();
+      updateFinancialViewAndFinancialCharts();
+    }
+
+    if ( stateModel.textVersions.hasOwnProperty( property ) ) {
+      const value = stateModel.values[property];
+      const key = property + 'Text';
+      stateModel.values[key] = stateModel.textVersions[property][value];
+      updateSchoolItems();
+    }
+
+    // When the meter buttons are clicked, updateSchoolItems
+    if ( property.indexOf( 'MeterThird' ) > 0 ) {
+      updateSchoolItems();
+    }
+
+    // Update state values which are based on other values
+    stateModel._setProgramLevel();
+    stateModel._setSalaryAvailable();
+    stateModel._checkRequiredFields();
+  },
+
+  /**
    * pushStateToHistory - Push current application state to window.history
    */
   pushStateToHistory: () => {
@@ -106,42 +229,14 @@ const stateModel = {
    * @param {Boolean} updateURL - whether or not to update the URL
    */
   setValue: function( name, value, updateURL ) {
-    updateStateInDom( name, value );
+    // In case this method gets used to update activeSection...
     if ( name === 'activeSection' ) {
-      // In case this method gets used to update activeSection...
       stateModel.setActiveSection( value );
-    } else {
-      stateModel.values[name] = value;
-      if ( updateURL !== false && urlVals.indexOf( name ) > -1 ) {
-        updateUrlQueryString();
-      }
     }
-    if ( stateModel.textVersions.hasOwnProperty( name ) ) {
-      const key = name + 'Text';
-      stateModel.values[key] = stateModel.textVersions[name][value];
-      updateSchoolItems();
-    }
+    stateModel.values[name] = value;
+    updateStateInDom( name, value );
 
-    // When the meter buttons are clicked, updateSchoolItems
-    if ( name.indexOf( 'MeterThird' ) > 0 ) {
-      updateSchoolItems();
-    }
-
-    // When program values are updated, recalculate, updateView
-    if ( name.indexOf( 'program' ) === 0 ) {
-      if ( name === 'programType' && value === 'graduate' ) {
-        stateModel.setValue( 'programLevel', 'graduate' );
-      } else if ( name === 'programType' ) {
-        stateModel.setValue( 'programLevel', 'undergrad' );
-      }
-
-      if ( name === 'programLength' ) {
-        updateFinancial( 'other_programLength', value );
-      }
-
-      recalculateFinancials();
-      updateFinancialViewAndFinancialCharts();
-    }
+    stateModel._updateApplicationState( name );
   },
 
   /**

@@ -256,8 +256,14 @@
         ) }}
     {% endblock header %}
 
-    {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
-    {{ wagtailuserbar() }}
+    {% block wagtailuserbar %}
+        {#
+          WAGTAILUSERBAR IN-PAGE VIEW CONTROLS
+          If you _don't_ want this to show up in a particular template,
+          add an empty wagtailuserbar block to that template.
+        #}
+        {{ wagtailuserbar() }}
+    {% endblock %}
 
     {% block banner_top %}
         {% if page and page.archived %}
@@ -337,9 +343,6 @@
           {% if js_source | length > 0 %}
             s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
           {% endif %}
-          {% if flag_enabled('TURBOLINKS') %}
-            s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
-          {% endif %}
           {# Pass scripts to JavaScript loader. #}
           jsl(s);
         }();
@@ -366,15 +369,24 @@
     {% block font_tracker %}
     <!--[if gt IE 8]><!-->
     {#
-        The invalid media attribute is intentional. It forces the browser to
-        download the stylesheet without blocking rendering and is updated after
-        the stylesheet is downloaded.
+      Media type (print) doesn't match the current environment,
+      so browser decides it's not that important and loads the stylesheet
+      asynchronously (without delaying page rendering).
+      On load, we change media type so that the stylesheet
+      gets applied to screens.
+
+      See https://stackoverflow.com/questions/32759272/how-to-load-css-asynchronously/46750893#46750893
     #}
     <link rel="stylesheet"
           href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50"
-          media="none"
-          onload="media='all'">
-    <noscript><link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
+          media="print"
+          onload="this.media='all'">
+    {#
+      Fallback that only gets inserted when JavaScript is disabled,
+      in which case we can't load CSS asynchronously.
+    #}
+    <noscript>
+      <link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
     </noscript>
     <!--<![endif]-->
     {% endblock font_tracker %}

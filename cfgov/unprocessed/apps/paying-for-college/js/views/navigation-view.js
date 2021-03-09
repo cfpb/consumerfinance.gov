@@ -1,10 +1,12 @@
 // This file contains the 'view' of all financial info, including costs, loans, etc
 
-import { closest } from '../../../../js/modules/util/dom-traverse';
-import { replaceStateInHistory, updateState } from '../dispatchers/update-state.js';
-import { bindEvent } from '../../../../js/modules/util/dom-events';
-import { getAllStateValues, getStateValue } from '../dispatchers/get-model-values.js';
+import {
+  getAllStateValues,
+  getStateValue
+} from '../dispatchers/get-model-values.js';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { sendAnalyticsEvent } from '../util/analytics.js';
+import { updateState } from '../dispatchers/update-state.js';
 
 const navigationView = {
   _contentSidebar: null,
@@ -20,61 +22,6 @@ const navigationView = {
   _affordingChoices: null,
 
   /**
-   * _addButtonListeners - Add event listeners for nav buttons
-   */
-  _addButtonListeners: function( ) {
-    navigationView._navButtons.forEach( elem => {
-      const events = {
-        click: this._handleNavButtonClick
-      };
-      bindEvent( elem, events );
-    } );
-
-    navigationView._affordingChoices.forEach( elem => {
-      const events = {
-        click: this._handleAffordingChoicesClick
-      };
-      bindEvent( elem, events );
-    } );
-
-    bindEvent( navigationView._nextButton, { click: this._handleNextButtonClick } );
-    bindEvent( navigationView._getStartedBtn, { click: this._handleGetStartedBtnClick } );
-  },
-
-  /**
-   * _addPopStateListener - Add a listener for "popstate" events
-   */
-  _addPopStateListener: function() {
-    const events = {
-      popstate: navigationView._handlePopState
-    };
-    bindEvent( window, events );
-  },
-
-  /**
-   * _handleAffordingChoicesClick - Handle clicks on Affording Payment choices
-   * @param {Object} event - The click event
-   */
-  _handleAffordingChoicesClick: function( event ) {
-    const parent = closest( event.target, '.m-form-field' );
-    const input = parent.querySelector( 'input[name="affording-display-radio"]' );
-    updateState.byProperty( 'expensesChoice', input.value );
-  },
-
-  /**
-   * _handleGetStartedBtnClick - Handle the click of the "Get Started" button
-   * @param {Object} event - the click event
-   */
-  _handleGetStartedBtnClick: function( event ) {
-    updateState.getStarted( true );
-    updateState.activeSection( 'school-info' );
-    navigationView.updateView();
-
-    // The user should be sent back to the top of the P4C content
-    window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
-  },
-
-  /**
    * _handlePopState - handle popstate events
    * @param {Object} event - the popstate event
    */
@@ -85,34 +32,6 @@ const navigationView = {
       updateState.replaceStateInHistory( window.location.search );
       updateState.activeSection( values.activeSection, true );
     }
-  },
-
-  /**
-   * _handleNavButtonClick - Handle click event for secondary nav
-   * @param {Object} event - click event
-   */
-  _handleNavButtonClick: function( event ) {
-    event.preventDefault();
-    const target = event.target;
-    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText );
-
-    if ( typeof target.dataset.nav_item !== 'undefined' ) {
-      updateState.activeSection( target.dataset.nav_item );
-    } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
-      closest( target, '[data-nav-is-open]' ).setAttribute( 'data-nav-is-open', 'True' );
-    }
-
-  },
-
-  /**
-   * _handleNextButtonClick - handle the click event for the "Next" button
-   * @param {Object} event - click event
-   */
-  _handleNextButtonClick: function( event ) {
-    // TODO: Track time between Next button clicks for analytics
-    sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
-    updateState.nextSection();
-    window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
   },
 
   /**
@@ -131,7 +50,7 @@ const navigationView = {
 
     const navItem = document.querySelector( '[data-nav_item="' + activeName + '"]' );
     const activeElem = closest( navItem, 'li' );
-    const activeParent = closest( activeElem, 'li' );
+    const activeParent = closest( activeElem, '.m-list_item__parent' );
 
     this._navListItems.forEach( elem => {
       elem.setAttribute( 'data-nav-is-active', 'False' );
@@ -170,8 +89,8 @@ const navigationView = {
    */
   updateView: function() {
     const started = getStateValue( 'gotStarted' );
-    if ( started ) {
-      const activeName = getStateValue( 'activeSection' );
+    const activeName = getStateValue( 'activeSection' );
+    if ( started && activeName ) {
       this._updateSideNav( activeName );
       this._showAndHideSections( activeName );
     }
@@ -210,14 +129,89 @@ const navigationView = {
     this._stateDomElem = document.querySelector( 'main.college-costs' );
     this._affordingChoices = document.querySelectorAll( '.affording-loans-choices .m-form-field' );
 
-    this._addButtonListeners();
+    _addButtonListeners();
     this.updateView();
 
     updateState.replaceStateInHistory( window.location.search );
-    this._addPopStateListener();
+    window.addEventListener( 'popstate', navigationView._handlePopState );
   }
-
 };
+
+/**
+ * _addButtonListeners - Add event listeners for nav buttons
+ */
+function _addButtonListeners() {
+  navigationView._navButtons.forEach( elem => {
+    elem.addEventListener( 'click', _handleNavButtonClick );
+  } );
+
+  navigationView._affordingChoices.forEach( elem => {
+    elem.addEventListener( 'click', _handleAffordingChoicesClick );
+  } );
+
+  navigationView._nextButton.addEventListener( 'click', _handleNextButtonClick );
+  navigationView._getStartedBtn.addEventListener( 'click', _handleGetStartedBtnClick );
+}
+
+/**
+ * _handleAffordingChoicesClick - Handle clicks on Affording Payment choices.
+ * @param {MouseEvent} event - The click event object.
+ */
+function _handleAffordingChoicesClick( event ) {
+  const parent = closest( event.target, '.m-form-field' );
+  const input = parent.querySelector( 'input[name="affording-display-radio"]' );
+  updateState.byProperty( 'expensesChoice', input.value );
+}
+
+/**
+ * _handleGetStartedBtnClick - Handle the click of the "Get Started" button.
+ * @param {MouseEvent} event - the click event object.
+ */
+function _handleGetStartedBtnClick( event ) {
+  updateState.getStarted( true );
+  updateState.activeSection( 'school-info' );
+  navigationView.updateView();
+
+  // The user should be sent back to the top of the P4C content
+  window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
+}
+
+/**
+ * _handleNavButtonClick - Handle click event for secondary nav.
+ * @param {MouseEvents} event - click event object.
+ */
+function _handleNavButtonClick( event ) {
+  event.preventDefault();
+  if ( getStateValue( 'schoolErrors' ) === 'yes' ) {
+    updateState.byProperty( 'showSchoolErrors', 'yes' );
+    window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
+  } else {
+    const target = event.target;
+    sendAnalyticsEvent( 'Secondary nav click', event.target.innerText );
+
+    if ( typeof target.dataset.nav_item !== 'undefined' ) {
+      updateState.activeSection( target.dataset.nav_item );
+    } else if ( typeof target.dataset.nav_section !== 'undefined' ) {
+      closest( target, '[data-nav-is-open]' ).setAttribute( 'data-nav-is-open', 'True' );
+    }
+  }
+}
+
+/**
+ * _handleNextButtonClick - handle the click event for the "Next" button.
+ * @param {MouseEvent} event - click event object.
+ */
+function _handleNextButtonClick( event ) {
+  // Check if there are missing form fields
+  if ( getStateValue( 'schoolErrors' ) === 'yes' ) {
+    updateState.byProperty( 'showSchoolErrors', 'yes' );
+  } else {
+    // TODO: Track time between Next button clicks for analytics
+    sendAnalyticsEvent( 'next step - ' + getStateValue( 'activeSection' ), 'time-to-click' );
+    updateState.nextSection();
+    window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
+  }
+}
 
 export {
   navigationView

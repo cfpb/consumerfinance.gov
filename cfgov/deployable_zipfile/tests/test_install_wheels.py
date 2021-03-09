@@ -1,9 +1,7 @@
 import os
 import shutil
 import tempfile
-from unittest import TestCase
-
-import mock
+from unittest import TestCase, mock
 
 from deployable_zipfile.install_wheels import install_wheels
 

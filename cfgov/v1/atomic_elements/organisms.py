@@ -16,7 +16,6 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.rich_text import expand_db_html
-from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images import blocks as images_blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.utils.widgets import WidgetWithScript
@@ -413,43 +412,6 @@ class MainContactInfo(blocks.StructBlock):
 class SidebarContactInfo(MainContactInfo):
     class Meta:
         template = '_includes/organisms/sidebar-contact-info.html'
-
-
-class BureauStructurePosition(blocks.StructBlock):
-    name = blocks.CharBlock()
-    title = blocks.TextBlock(required=False)
-
-
-class BureauStructureOffice(blocks.StructBlock):
-    name = blocks.CharBlock()
-    leads = blocks.ListBlock(BureauStructurePosition())
-
-
-class BureauStructureOffices(BureauStructureOffice):
-    offices = blocks.ListBlock(BureauStructureOffice())
-
-
-class BureauStructureDivision(BureauStructureOffices):
-    overview_page = blocks.CharBlock()
-
-
-class BureauStructure(blocks.StructBlock):
-    last_updated_date = blocks.DateBlock(required=False)
-    download_image = DocumentChooserBlock(icon='image', required=False)
-    director = blocks.CharBlock()
-    divisions = blocks.ListBlock(BureauStructureDivision())
-    office_of_the_director = blocks.ListBlock(
-        BureauStructureOffices(),
-        label='Office of the Director'
-    )
-
-    class Meta:
-        icon = None
-        template = '_includes/organisms/bureau-structure.html'
-        icon = "table"
-
-    class Media:
-        js = ['bureau-structure.js']
 
 
 class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
@@ -1088,7 +1050,7 @@ class FeaturedContentStructValue(blocks.StructValue):
 
 class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock()
-    body = blocks.RichTextBlock()
+    body = blocks.TextBlock(help_text="Line breaks will be ignored.")
 
     post = blocks.PageChooserBlock(required=False)
     show_post_link = blocks.BooleanBlock(required=False,

@@ -1,16 +1,17 @@
+import importlib
 import logging
 import os
 import shutil
-import subprocess
-import sys
 from contextlib import redirect_stdout
 from io import StringIO
 
+from django.apps import apps
 from django.conf import settings
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.db import connection
+from django.db.migrations.loader import MigrationLoader
 from django.test.runner import DiscoverRunner
 
-from scripts import initial_data, test_data
+from scripts import initial_data
 
 
 class TestRunner(DiscoverRunner):
@@ -34,8 +35,8 @@ class TestRunner(DiscoverRunner):
         )
 
         for p in PLACEHOLDER_FILES:
-            filename = settings.PROJECT_ROOT.child(*p.split(os.sep))
-            filename.parent.mkdir(parents=True)
+            filename = settings.PROJECT_ROOT.joinpath(*p.split(os.sep))
+            filename.parent.mkdir(parents=True, exist_ok=True)
 
             if not filename.exists():
                 with open(filename, 'w') as f:
@@ -61,66 +62,51 @@ class TestRunner(DiscoverRunner):
     def setup_databases(self, **kwargs):
         dbs = super(TestRunner, self).setup_databases(**kwargs)
 
+        # Ensure that certain key data migrations are always run even if
+        # tests are being run with most migrations disabled (e.g. using
+        # settings.MIGRATION_MODULES).
+        self.run_required_data_migrations()
+
         # Set up additional required test data that isn't contained in data
         # migrations, for example an admin user.
         initial_data.run()
 
         return dbs
 
+    def run_required_data_migrations(self):
+        if not settings.MIGRATION_MODULES:
+            return
+
+        migration_methods = (
+            (
+                'wagtailcore',
+                'wagtail.core.migrations.0054_initial_locale',
+                'initial_locale'
+            ),
+            (
+                'wagtailcore',
+                'wagtail.core.migrations.0002_initial_data',
+                'initial_data'
+            ),
+            (
+                'wagtailcore',
+                'wagtail.core.migrations.0025_collection_initial_data',
+                'initial_data'
+            ),
+        )
+
+        loader = MigrationLoader(connection)
+
+        for app_name, migration, method in migration_methods:
+            if not self.is_migration_applied(loader, app_name, migration):
+                print('applying migration {}'.format(migration))
+                module = importlib.import_module(migration)
+                getattr(module, method)(apps, None)
+
     @staticmethod
-    def is_migration_applied(loader, migration):
-        parts = migration.split('.')
-        migration_tuple = (parts[-3], parts[-1])
-        return migration_tuple in loader.applied_migrations
-
-
-class AcceptanceTestRunner(TestRunner):
-    def run_suite(self, **kwargs):
-        gulp_command = ['gulp', 'test:acceptance:protractor']
-        protractor_args = sys.argv[2:]
-
-        if protractor_args:
-            for arg in protractor_args:
-                gulp_command.append('--' + arg)
-
-        try:
-            subprocess.check_call(gulp_command)
-        except subprocess.CalledProcessError:
-            sys.exit(1)
-        finally:
-            self.teardown()
-
-    def set_env_test_url(self):
-        server_thread = StaticLiveServerTestCase.server_thread
-        os.environ['TEST_HTTP_HOST'] = server_thread.host
-        os.environ['DJANGO_HTTP_PORT'] = str(server_thread.port)
-
-    def setup_databases(self, **kwargs):
-        dbs = super(AcceptanceTestRunner, self).setup_databases(**kwargs)
-        test_data.run()
-        return dbs
-
-    def teardown(self):
-        self.teardown_databases(self.dbs)
-        self.teardown_test_environment()
-        StaticLiveServerTestCase.tearDownClass()
-
-    def run_tests(self, test_labels, extra_tests=None, **kwargs):
-        # Disable logging below CRITICAL during tests.
-        logging.disable(logging.CRITICAL)
-
-        self.setup_test_environment()
-        self.dbs = self.setup_databases()
-
-        # Create a static server, it should start immediately.
-        StaticLiveServerTestCase.setUpClass()
-
-        # Set the environment variables used by Protractor.
-        self.set_env_test_url()
-
-        self.run_suite()
-
-        return
+    def is_migration_applied(loader, app_name, migration):
+        migration_name = migration.split('.')[-1]
+        return (app_name, migration_name) in loader.applied_migrations
 
 
 class StdoutCapturingTestRunner(TestRunner):

@@ -5,7 +5,7 @@ from django.test import TestCase
 from wagtail.core.models import Page, Site
 
 from scripts.export_enforcement_actions import assemble_output
-from v1.models.learn_page import EnforcementActionPage
+from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
 
@@ -29,7 +29,6 @@ class TestExportEnforcementActions(TestCase):
 
         self.test_all_data_page = EnforcementActionPage(
             title="Great Test Page",
-            institution_type="Bank",
             live=True,
             preview_description='This is a great test page.'
         )
@@ -86,7 +85,6 @@ class TestExportEnforcementActions(TestCase):
 
         self.test_no_data_page = EnforcementActionPage(
             title="Terrible Test Page",
-            institution_type="Bank",
             live=False,
             preview_description='This is a terrible test page.'
         )
@@ -94,7 +92,6 @@ class TestExportEnforcementActions(TestCase):
 
         self.test_wrong_page = EnforcementActionPage(
             title="Wrong Test Page",
-            institution_type="Bank",
             live=True,
             preview_description='This is the wrong test page.'
         )

@@ -1,7 +1,7 @@
 """Test the deployment http and static resource smoke tests."""
 import unittest
+from unittest import mock
 
-import mock
 import requests
 
 from scripts import static_asset_smoke_test
@@ -13,8 +13,8 @@ from scripts.http_smoke_test import (
 class StaticAssetTests(unittest.TestCase):
     """Tests for the static assets smoke tests."""
 
-    mock_links = '<script type="text/javascript" src="/static/js/atomic/header.97504b419ce4.js"></script>\n\
-                  <script type="text/javascript" src="static/js/atomic/header.97504b419ce4.js"></script>'  # noqa: E501
+    mock_links = '<script src="/static/js/atomic/header.97504b419ce4.js"></script>\n\
+                  <script src="static/js/atomic/header.97504b419ce4.js"></script>'  # noqa: E501
 
     @mock.patch('scripts.static_asset_smoke_test.requests.get')
     def test_home_page_test_success(self, mock_get):

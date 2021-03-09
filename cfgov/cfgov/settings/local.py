@@ -3,8 +3,6 @@ import warnings
 
 import django
 
-from unipath import DIRS
-
 from .base import *
 
 
@@ -25,7 +23,7 @@ INSTALLED_APPS += (
     "wagtail.contrib.styleguide",
 )
 
-STATIC_ROOT = REPOSITORY_ROOT.child("collectstatic")
+STATIC_ROOT = REPOSITORY_ROOT.joinpath("collectstatic")
 
 ALLOW_ADMIN_URL = DEBUG or os.environ.get("ALLOW_ADMIN_URL", False)
 

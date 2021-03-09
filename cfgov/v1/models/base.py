@@ -17,9 +17,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core import hooks
 from wagtail.core.fields import StreamField
-from wagtail.core.models import (
-    Orderable, Page, PageManager, PageQuerySet, Site
-)
+from wagtail.core.models import Page, PageManager, PageQuerySet, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
@@ -186,6 +184,11 @@ class CFGOVPage(Page):
         ObjectList(sidefoot_panels, heading='Sidebar/Footer'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
+
+    default_exclude_fields_in_copy = Page.default_exclude_fields_in_copy + [
+        'tags',
+        'authors'
+    ]
 
     def clean(self):
         super(CFGOVPage, self).clean()
@@ -442,9 +445,12 @@ class CFGOVPage(Page):
         return False
 
 
-class CFGOVPageCategory(Orderable):
+class CFGOVPageCategory(models.Model):
     page = ParentalKey(CFGOVPage, related_name='categories')
     name = models.CharField(max_length=255, choices=ref.categories)
+
+    class Meta:
+        ordering = ['name']
 
     panels = [
         FieldPanel('name'),

@@ -13,9 +13,7 @@ export class AskCfpbSearch {
   }
 
   search() {
-    cy.get( 'form[action="/ask-cfpb/search/"]' ).first().within( () => {
-      cy.get( '.a-btn' ).click();
-    } );
+    cy.get( '.o-search-bar .a-btn' ).click();
   }
 
   resultsSection() {

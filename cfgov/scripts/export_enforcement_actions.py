@@ -6,7 +6,7 @@ import re
 from django.http import HttpResponse
 from django.utils import html as html_util
 
-from v1.models.learn_page import EnforcementActionPage
+from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.util.migrations import get_stream_data
 
 

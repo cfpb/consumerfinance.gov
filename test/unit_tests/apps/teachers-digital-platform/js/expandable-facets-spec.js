@@ -1,16 +1,14 @@
 import { simulateEvent } from '../../../../util/simulate-event';
-const ExpandableFacets = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js' );
+import ExpandableFacets from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
 
 let ef;
 let efLabel;
 let efTarget;
 let efHeader;
 let efBody;
-let facets;
 let expandableFacet;
 
 const HTML_SNIPPET = `
-
   <ul class="m-list m-list__unstyled u-mt15">
     <li class="o-expandable-facets" data-bound="true">
       <div class="m-form-field m-form-field__checkbox">
@@ -67,6 +65,7 @@ describe( 'Expandable facets', () => {
 
     ef = document.querySelector( '.o-expandable-facets' );
     expandableFacet = new ExpandableFacets( ef );
+    expandableFacet.init();
     efLabel = document.querySelector( '.o-expandable-facets_checkbox ~ .a-label' );
     efTarget = document.querySelector( '.o-expandable-facets_target' );
     efHeader = document.querySelector( '.o-expandable_header' );

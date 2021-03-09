@@ -17,7 +17,7 @@
     "node": ">=12.x"
   },
   "dependencies": {
-    "workbox-build": "^3.4.1"
+    "workbox-build": "6.0.2"
   },
   "devDependencies": {}
 }

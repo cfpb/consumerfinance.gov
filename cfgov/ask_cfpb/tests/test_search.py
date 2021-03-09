@@ -1,17 +1,15 @@
 import json
 import unittest
+from unittest import mock
 
 from django.apps import apps
 from django.http import Http404, HttpRequest, QueryDict
 from django.test import TestCase, override_settings
-from django.urls import NoReverseMatch, reverse
-
-import mock
+from django.urls import reverse
 
 from ask_cfpb.documents import AnswerPageDocument
 from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
-from ask_cfpb.models.search import AnswerPageSearch, SearchQuerySet, make_safe
-from ask_cfpb.tests.models.test_pages import mock_queryset
+from ask_cfpb.models.search import AnswerPageSearch, make_safe
 from ask_cfpb.views import ask_search, redirect_ask_search
 from v1.util.migrations import get_or_create_page
 
@@ -22,209 +20,6 @@ class AskSearchSafetyTestCase(unittest.TestCase):
         self.assertEqual(
             make_safe(test_phrase), "Would you like green eggs and ?"
         )
-
-
-class AskSearchTestCase(TestCase):
-    def test_en_search_results_page_not_created(self):
-        response = self.client.get(reverse("ask-search-en"), {"q": "payday"})
-        self.assertEqual(response.status_code, 404)
-
-
-class AskSearchTest(TestCase):
-    def setUp(self):
-        from v1.models import HomePage
-
-        self.ROOT_PAGE = HomePage.objects.get(slug="cfgov")
-        self.english_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Ask CFPB",
-            ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
-            language="en",
-            live=True,
-        )
-        self.spanish_parent_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerLandingPage",
-            "Obtener respuestas",
-            SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
-            language="es",
-            live=True,
-        )
-        self.en_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerResultsPage",
-            "Mock results page",
-            "ask-cfpb-search-results",
-            self.english_parent_page,
-            language="en",
-            live=True,
-        )
-        self.es_page = get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerResultsPage",
-            "Mock Spanish results page",
-            "respuestas",
-            self.spanish_parent_page,
-            language="es",
-            live=True,
-        )
-
-    def test_bad_language_search(self):
-        with self.assertRaises(NoReverseMatch):
-            self.client.get(
-                reverse("ask-search-en", kwargs={"language": "zz"}),
-                {"q": "payday"},
-            )
-
-    @mock.patch("ask_cfpb.views.AskSearch")
-    def test_en_search(self, mock_ask_search):
-        mock_ask_search.queryset = mock_queryset(count=3)
-        mock_ask_search.suggestion = None
-        mock_ask_search.search_term = "payday"
-        response = self.client.get(reverse("ask-search-en"), {"q": "payday"})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context_data["page"], self.en_page)
-        self.assertEqual(mock_ask_search.call_count, 1)
-        self.assertTrue(
-            mock_ask_search.called_with(language="en", search_term="payday")
-        )
-
-    @mock.patch("ask_cfpb.views.AskSearch")
-    def test_en_search_no_term(self, mock_ask_search):
-        mock_ask_search.queryset = mock_queryset()
-        response = self.client.get(reverse("ask-search-en"), {"q": ""})
-        self.assertEqual(response.status_code, 200)
-        response_page = response.context_data["page"]
-        self.assertEqual(response_page, self.en_page)
-        self.assertEqual(response_page.query, "")
-        self.assertEqual(response_page.result_query, "")
-
-    @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
-    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
-    @mock.patch.object(SearchQuerySet, 'filter')
-    def test_en_search_suggestion(self, mock_filter, mock_suggestion):
-        # AskSearch.suggest flips search_term and suggestion when called
-        mock_filter.return_value = mock_queryset(count=0)
-        mock_suggestion.return_value = "payday"
-        response = self.client.get(reverse("ask-search-en"), {"q": "paydya"})
-        self.assertEqual(response.status_code, 200)
-        response_page = response.context_data["page"]
-        self.assertEqual(response_page, self.en_page)
-        self.assertEqual(response_page.result_query, "payday")
-        self.assertEqual(response_page.query, "paydya")
-
-    @mock.patch("ask_cfpb.views.AskSearch")
-    def test_es_search(self, mock_ask_search):
-        mock_ask_search.queryset = mock_queryset(count=1)
-        mock_ask_search.suggestion = None
-        mock_ask_search.search_term = "payday"
-        response = self.client.get(
-            reverse("ask-search-es", kwargs={"language": "es"}),
-            {"q": "payday"},
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context_data["page"], self.es_page)
-        self.assertEqual(mock_ask_search.call_count, 1)
-        self.assertTrue(
-            mock_ask_search.called_with(language="es", search_term="payday")
-        )
-
-    @mock.patch("ask_cfpb.views.AskSearch")
-    def test_search_page_en_selection(self, mock_search):
-        mock_search.search_term = "tuition"
-        mock_search.queryset = mock_queryset(count=1)
-        response = self.client.get(reverse("ask-search-en"), {"q": "tuition"})
-        self.assertEqual(mock_search.call_count, 1)
-        self.assertEqual(response.context_data.get("page").language, "en")
-        self.assertEqual(
-            self.en_page.get_template(HttpRequest()),
-            "ask-cfpb/answer-search-results.html",
-        )
-
-    @mock.patch("ask_cfpb.views.AskSearch")
-    def test_search_page_es_selection(self, mock_search):
-        mock_search.search_term = "hipotecas"
-        mock_search.queryset = mock_queryset(count=5)
-        response = self.client.get(
-            reverse("ask-search-es", kwargs={"language": "es"}),
-            {"q": "hipotecas"},
-        )
-        self.assertEqual(self.es_page.answers, [])
-        self.assertEqual(mock_search.call_count, 1)
-        self.assertEqual(response.context_data["page"].language, "es")
-        self.assertEqual(
-            self.es_page.get_template(HttpRequest()),
-            "ask-cfpb/answer-search-results.html",
-        )
-
-    @mock.patch.object(SearchQuerySet, 'spelling_suggestion')
-    @mock.patch.object(SearchQuerySet, 'filter')
-    def test_json_response(self, mock_filter, mock_suggestion):
-        get_or_create_page(
-            apps,
-            "ask_cfpb",
-            "AnswerResultsPage",
-            "Mock results page",
-            "ask-cfpb-search-results",
-            self.english_parent_page,
-            language="en",
-            live=True,
-        )
-        mock_suggestion.return_value = "tuition"
-        mock_filter.count.return_value = 5
-        mock_filter.return_value = mock_queryset(count=5)
-        response = self.client.get(
-            reverse("ask-search-en-json", kwargs={"as_json": "json"}),
-            {"q": "tuition"},
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_filter.call_count, 1)
-        self.assertEqual(json.loads(response.content)["query"], "tuition")
-
-    def test_autocomplete_en_blank_term(self):
-        result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
-        self.assertEqual(json.loads(result.content), [])
-
-    def test_autocomplete_es_blank_term(self):
-        result = self.client.get(
-            reverse("ask-autocomplete-es", kwargs={"language": "es"}),
-            {"term": ""},
-        )
-        self.assertEqual(json.loads(result.content), [])
-
-    @mock.patch.object(SearchQuerySet, 'autocomplete')
-    def test_autocomplete_en(self, mock_autocomplete):
-        mock_search_result = mock.Mock()
-        mock_search_result.autocomplete = "question"
-        mock_search_result.url = "url"
-        mock_autocomplete.return_value = [mock_search_result]
-        result = self.client.get(
-            reverse("ask-autocomplete-en"), {"term": "question"}
-        )
-        self.assertEqual(mock_autocomplete.call_count, 1)
-        output = json.loads(result.content)
-        self.assertEqual(sorted(output[0].keys()), ["question", "url"])
-
-    @mock.patch.object(SearchQuerySet, 'autocomplete')
-    def test_autocomplete_es(self, mock_autocomplete):
-        mock_search_result = mock.Mock()
-        mock_search_result.autocomplete = "question"
-        mock_search_result.url = "url"
-        mock_autocomplete.return_value = [mock_search_result]
-        result = self.client.get(
-            reverse("ask-autocomplete-es", kwargs={"language": "es"}),
-            {"term": "question"},
-        )
-        self.assertEqual(mock_autocomplete.call_count, 1)
-        output = json.loads(result.content)
-        self.assertEqual(sorted(output[0].keys()), ["question", "url"])
 
 
 class AnswerPageSearchTest(TestCase):
@@ -273,7 +68,6 @@ class AnswerPageSearchTest(TestCase):
             live=True,
         )
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
     def test_ask_search_en(self, mock_search):
         term = "payday"
@@ -293,7 +87,6 @@ class AnswerPageSearchTest(TestCase):
             mock_search.called_with(language="en", search_term=term)
         )
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
     def test_ask_search_en_no_term(self, mock_search):
         term = ""
@@ -308,7 +101,6 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(response_page.result_query, term)
 
     @override_settings(FLAGS={"ASK_SEARCH_TYPOS": [("boolean", True)]})
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
     def test_ask_search_en_suggestion(self, mock_search):
         term = "paydya"
@@ -334,7 +126,6 @@ class AnswerPageSearchTest(TestCase):
             mock_search.called_with(language="en", search_term=term)
         )
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_ask_search_es(self, mock_search):
         term = "payday"
@@ -357,7 +148,6 @@ class AnswerPageSearchTest(TestCase):
             mock_search.called_with(language="es", search_term=term)
         )
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_ask_search_en_page_selection(self, mock_search):
         term = "tuition"
@@ -372,7 +162,6 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(mock_search.call_count, 2)
         self.assertEqual(response.context_data.get("page").language, "en")
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_ask_search_es_page_selection(self, mock_search):
         term = "hipotecas"
@@ -390,7 +179,6 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(mock_search.call_count, 2)
         self.assertEqual(response.context_data["page"].language, "es")
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch("ask_cfpb.views.AnswerPageSearch")
     def test_ask_search_en_json_response(self, mock_search):
         term = "tuition"
@@ -423,13 +211,11 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(mock_search.call_count, 1)
         self.assertEqual(json.loads(response.content)["query"], term)
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageSearch, 'autocomplete')
     def test_ask_autocomplete_en_blank_term(self, mock_autocomplete):
         result = self.client.get(reverse("ask-autocomplete-en"), {"term": ""})
         self.assertEqual(json.loads(result.content), [])
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageSearch, 'autocomplete')
     def test_ask_autocomplete_es_blank_term(self, mock_autocomplete):
         result = self.client.get(
@@ -438,7 +224,6 @@ class AnswerPageSearchTest(TestCase):
         )
         self.assertEqual(json.loads(result.content), [])
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
     def test_ask_autocomplete_en(self, mock_autocomplete):
         mock_search_result = mock.Mock()
@@ -451,7 +236,6 @@ class AnswerPageSearchTest(TestCase):
         self.assertEqual(mock_autocomplete.call_count, 1)
         self.assertEqual(result.status_code, 200)
 
-    @override_settings(FLAGS={"ELASTICSEARCH_DSL_ASK": [("boolean", True)]})
     @mock.patch.object(AnswerPageDocument, 'search')
     def test_ask_autocomplete_es(self, mock_autocomplete):
         mock_search_result = mock.Mock()
@@ -464,6 +248,17 @@ class AnswerPageSearchTest(TestCase):
         )
         self.assertEqual(mock_autocomplete.call_count, 1)
         self.assertEqual(result.status_code, 200)
+
+    @mock.patch.object(AnswerPageDocument, 'search')
+    def test_ask_suggest_no_suggestions(self, mock_search):
+        term = 'zelle'
+        mock_response = mock.MagicMock()
+        mock_response.suggest.suggestion.__getitem__.side_effect = IndexError
+        mock_search().filter().suggest() \
+            .execute.return_value = mock_response
+        answer_search = AnswerPageSearch(search_term=term)
+        response = answer_search.suggest()
+        self.assertEqual(response.get('suggestion'), None)
 
 
 class RedirectAskSearchTestCase(TestCase):

@@ -4,7 +4,6 @@ from urllib.parse import urljoin
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.defaultfilters import slugify
-from haystack.query import SearchQuerySet
 
 from wagtail.core.models import Site
 from wagtailsharing.models import SharingSite
@@ -12,9 +11,7 @@ from wagtailsharing.views import ServeView
 
 from bs4 import BeautifulSoup as bs
 
-from ask_cfpb.models import (
-    AnswerPage, AnswerPageSearch, AnswerResultsPage, AskSearch
-)
+from ask_cfpb.models import AnswerPage, AnswerPageSearch, AnswerResultsPage
 from ask_cfpb.models.search import make_safe
 
 
@@ -96,58 +93,6 @@ def ask_search(request, language='en', as_json=False):
         results_page.result_query = ''
         return results_page.serve(request)
 
-    search = AskSearch(search_term=search_term, language=language)
-    if search.queryset.count() == 0:
-        search.suggest(request=request)
-
-    if as_json:
-        payload = {
-            'query': search_term,
-            'result_query': search.search_term,
-            'suggestion': search.suggestion,
-            'results': [
-                {
-                    'question': result.autocomplete,
-                    'url': result.url,
-                    'text': result.text,
-                    'preview': result.preview,
-                }
-                for result in search.queryset
-            ]
-        }
-        json_results = json.dumps(payload)
-        return HttpResponse(json_results, content_type='application/json')
-
-    results_page.query = search_term
-    results_page.result_query = search.search_term
-    results_page.suggestion = search.suggestion
-    results_page.answers = [
-        (result.url, result.autocomplete, result.preview)
-        for result in search.queryset
-    ]
-    return results_page.serve(request)
-
-
-def ask_search_es7(request, language='en', as_json=False):
-    if 'selected_facets' in request.GET:
-        return redirect_ask_search(request, language=language)
-    language_map = {
-        'en': 'ask-cfpb-search-results',
-        'es': 'respuestas'
-    }
-    results_page = get_object_or_404(
-        AnswerResultsPage,
-        language=language,
-        slug=language_map[language]
-    )
-
-    # If there's no query string, don't search
-    search_term = request.GET.get('q', '')
-    if not search_term:
-        results_page.query = ''
-        results_page.result_query = ''
-        return results_page.serve(request)
-
     page = AnswerPageSearch(search_term, language=language)
     response = page.search()
 
@@ -190,32 +135,13 @@ def ask_search_es7(request, language='en', as_json=False):
 
 
 def ask_autocomplete(request, language='en'):
-    term = request.GET.get(
-        'term', '').strip().replace('<', '')
-    if not term:
-        return JsonResponse([], safe=False)
-
-    try:
-        sqs = SearchQuerySet().models(AnswerPage)
-        sqs = sqs.autocomplete(
-            autocomplete=term,
-            language=language
-        )
-        results = [{'question': result.autocomplete,
-                    'url': result.url}
-                   for result in sqs[:20]]
-        return JsonResponse(results, safe=False)
-    except IndexError:
-        return JsonResponse([], safe=False)
-
-
-def ask_autocomplete_es7(request, language='en'):
     term = request.GET.get('term', '')
     safe_term = make_safe(term)
     if not safe_term:
         return JsonResponse([], safe=False)
     try:
-        results = AnswerPageSearch(search_term=safe_term).autocomplete()
+        results = AnswerPageSearch(
+            search_term=safe_term, language=language).autocomplete()
         return JsonResponse(results, safe=False)
     except IndexError:
         return JsonResponse([], safe=False)
