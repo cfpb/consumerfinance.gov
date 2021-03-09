@@ -14,6 +14,7 @@
   "private": "true",
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
-    "format-usd": "1.0.1"
+    "format-usd": "1.0.1",
+    "jquery": "3.5.1"
   }
 }
