@@ -76,6 +76,7 @@ const appView = {
   updateUI: () => {
     appView._includeParentPlusBtn.checked = getStateValue( 'includeParentPlus' ) ? true : false;
   },
+
   /**
    * Replaces current state, adding the formatted querystring as the URL
    */
