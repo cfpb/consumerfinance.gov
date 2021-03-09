@@ -1,14 +1,9 @@
-from html import unescape
-
-from django.core.exceptions import FieldDoesNotExist
-from django.utils.html import strip_tags
-
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-from elasticsearch_dsl import analyzer, token_filter, tokenizer
-from elasticsearch_dsl.query import MultiMatch
 
-from search.elasticsearch_helpers import environment_specific_index
+from search.elasticsearch_helpers import (
+    environment_specific_index, ngram_tokenizer
+)
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import (
@@ -17,24 +12,11 @@ from v1.models.learn_page import (
 from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
 
 
-ngram_tokenizer = analyzer(
-    'filterable_ngram_tokenizer',
-    tokenizer=tokenizer(
-        'filterable_tokenizer',
-        'ngram',
-        min_gram=1,
-        max_gram=16,
-        token_chars=["letter", "digit", "symbol"]
-    ),
-    filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
-)
-
 @registry.register_document
 class FilterablePagesDocument(Document):
 
     tags = fields.ObjectField(properties={
-        'slug': fields.KeywordField(),
-        'name': fields.TextField(boost=10)
+        'slug': fields.KeywordField()
     })
     categories = fields.ObjectField(properties={
         'name': fields.KeywordField()
@@ -43,7 +25,7 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
-    title = fields.TextField(attr='title', analyzer=ngram_tokenizer, boost=10)
+    title = fields.TextField(attr='title', analyzer=ngram_tokenizer)
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
@@ -52,9 +34,6 @@ class FilterablePagesDocument(Document):
     statuses = fields.KeywordField()
     initial_filing_date = fields.DateField()
     model_class = fields.KeywordField()
-    preview_description = fields.TextField()
-    content = fields.TextField()
-
 
     def get_queryset(self):
         return AbstractFilterPage.objects.live().public().specific()
@@ -80,25 +59,6 @@ class FilterablePagesDocument(Document):
 
     def prepare_model_class(self, instance):
         return instance.__class__.__name__
-
-    def prepare_preview_description(self, instance):
-        return unescape(strip_tags(instance.preview_description))
-
-    def prepare_content(self, instance):
-        try:
-            content_field = instance._meta.get_field('content')
-            value = content_field.value_from_object(instance)
-            content = content_field.get_searchable_content(value)
-            content = content.pop()
-            return content
-        except FieldDoesNotExist:
-            return None
-        except IndexError:
-            return None
-
-
-    def should_index_object(self, obj):
-        return obj.live
 
     def get_instances_from_related(self, related_instance):
         # Related instances all inherit from AbstractFilterPage.
@@ -155,13 +115,14 @@ class FilterablePagesDocumentSearch:
     def filter_archived(self, search):
         return search.filter("terms", is_archived=self.archived)
 
-    def search_term(self, search):
-        query = MultiMatch(query=self.title, fields=['title', 'preview_description', 'tags.name', 'content'], operator="AND")
-        return search.query(query)
+    def search_title(self, search):
+        return search.query(
+            "match", title={"query": self.title, "operator": "AND"}
+        )
 
     def order_results(self, search):
         total_results = search.count()
-        return search.sort('-_score').sort('-date_published')[0:total_results]
+        return search.sort('-date_published')[0:total_results]
 
     def has_dates(self):
         return self.to_date is not None and self.from_date is not None
@@ -184,10 +145,9 @@ class FilterablePagesDocumentSearch:
         if self.archived is not None:
             search = self.filter_archived(search)
         if self.title not in ([], '', None):
-            search = self.search_term(search)
+            search = self.search_title(search)
 
         search = self.apply_specific_filters(search)
-        print(search.to_dict())
         results = self.order_results(search)
         return results.to_queryset()
 
