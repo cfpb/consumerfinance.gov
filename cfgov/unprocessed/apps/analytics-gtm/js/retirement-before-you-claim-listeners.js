@@ -146,6 +146,7 @@ const BYCAnalytics = ( function() {
 
   const benefitsRadios = document.querySelectorAll( 'input[name="benefits-display"]' );
   for ( let i = 0, len = benefitsRadios.length; i < len; i++ ) {
+    // eslint-disable-next-line no-loop-func
     benefitsRadios[i].addEventListener( 'click', function( event ) {
       if ( stepOneSubmitted ) {
         const val = event.currentTarget.value;
@@ -159,7 +160,7 @@ const BYCAnalytics = ( function() {
   }
 
   document.querySelector( '#retirement-age-selector' ).addEventListener( 'change', function( event ) {
-    const target = event.currentTarget
+    const target = event.currentTarget;
     const val = target[target.selectedIndex].value;
     track(
       'Before You Claim Interaction',
