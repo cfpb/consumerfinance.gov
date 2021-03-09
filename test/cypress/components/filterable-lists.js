@@ -38,7 +38,7 @@ export class FilterableList {
   }
 
   openTopics() {
-    cy.get( '#topics' ).click();
+    cy.get( '#o-filterable-list-controls_topics' ).click();
   }
 
   selectTopic( topic ) {
