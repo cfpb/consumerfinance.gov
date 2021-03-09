@@ -26,4 +26,4 @@ class Command(BaseCommand):
             data = menu.submenus.stream_data
         else:
             data = menu.submenus.raw_data
-        json.dump(data, options['filename'], indent=4)
+        json.dump(list(data), options['filename'], indent=4)
