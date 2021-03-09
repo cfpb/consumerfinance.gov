@@ -7,13 +7,11 @@ from unittest.mock import patch
 
 from django.conf import settings
 from django.core.management import call_command
-from django.db import models
 
 from wagtail.core.signals import (
     page_published, page_unpublished, post_page_move, pre_page_move
 )
 
-from django_elasticsearch_dsl import Document
 from django_elasticsearch_dsl.registries import registry
 from django_elasticsearch_dsl.signals import BaseSignalProcessor
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
@@ -165,7 +163,7 @@ class WagtailSignalProcessor(BaseSignalProcessor):
         """Handle delete.
         Given an individual model instance, delete the object from index.
         """
-        # Due to the inheritance used with Filterable Lists 
+        # Due to the inheritance used with Filterable Lists
         # this allows us to actually delete the instance.
         if issubclass(instance.specific_class().__class__, AbstractFilterPage):
             instance_to_delete = AbstractFilterPage.objects.get(pk=instance.id)
@@ -173,30 +171,14 @@ class WagtailSignalProcessor(BaseSignalProcessor):
         else:
             registry.delete(instance, raise_on_error=False)
 
-
     def setup(self):
-        # Listen to all model saves.
-        # models.signals.post_save.connect(self.handle_save)
-        # models.signals.post_delete.connect(self.handle_delete)
-
-        # # Use to manage related objects update
-        # models.signals.m2m_changed.connect(self.handle_m2m_changed)
-        # models.signals.pre_delete.connect(self.handle_pre_delete)
-
         # Wagtail Specific Events
         page_published.connect(self.handle_save)
         page_unpublished.connect(self.handle_delete)
         pre_page_move.connect(self.handle_delete)
         post_page_move.connect(self.handle_save)
 
-
     def teardown(self):
-        # Listen to all model saves.
-        # models.signals.post_save.disconnect(self.handle_save)
-        # models.signals.post_delete.disconnect(self.handle_delete)
-        # models.signals.m2m_changed.disconnect(self.handle_m2m_changed)
-        # models.signals.pre_delete.disconnect(self.handle_pre_delete)
-
         # Wagtail Specific Events
         page_published.disconnect(self.handle_save)
         page_unpublished.disconnect(self.handle_delete)
