@@ -132,7 +132,7 @@ If you have a variable that will be translated in a template later using the var
 ```python
 from django.utils.translation import gettext_noop
 
-mystring = _("Hello World!")
+mystring = gettext_noop("Hello World!")
 ```
 
 ```jinja

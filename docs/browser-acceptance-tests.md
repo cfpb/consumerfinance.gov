@@ -157,16 +157,6 @@ Run the acceptance tests with an `--a11y` flag (i.e. `gulp test:acceptance --a11
 to check every webpage for WCAG and Section 508 compliancy using Protractor's
 [accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
 
-If you'd like to audit a specific page, use `gulp audit:a11y`:
-
-  1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
-     Get a free [AChecker API ID](https://achecker.ca/register.php) for the value.
-  2. Reload your `.env` with `source ./.env` while in the project root directory.
-  3. Run `gulp audit:a11y` to run an audit on the homepage.
-  4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
-     For example, `gulp audit:a11y --u=contact-us`
-     or `gulp audit:a11y --u=about-us/blog/`.
-
 ## Source code linting
 
 The default test task includes linting of the JavaScript source, build,
