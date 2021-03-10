@@ -68,9 +68,10 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
-RUN yum install -y gcc-c++ make && \
-    curl -sL https://rpm.nodesource.com/setup_15.x | sudo -E bash - && \
-    yum install yarn && \
+RUN yum -y install yarn && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash && \
+    source ~/.bashrc && \
+    nvm install v15.6.0
     ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
