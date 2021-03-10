@@ -68,7 +68,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
-RUN yum -y install nodejs yarn && \
+RUN yum -y install nodejs14 yarn && \
     ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
