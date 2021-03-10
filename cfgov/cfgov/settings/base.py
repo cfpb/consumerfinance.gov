@@ -101,7 +101,6 @@ INSTALLED_APPS = (
     "django_elasticsearch_dsl",
 
     # Satellites
-    "comparisontool",
     "retirement_api",
     "ratechecker",
     "countylimits",

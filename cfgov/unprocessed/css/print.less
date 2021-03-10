@@ -29,12 +29,13 @@
 */
 
 .respond-to-print({
-    .a-link__icon .a-link_text {
-        border-bottom-style: solid;
+    a {
         font-weight: 500;
     }
 
     a:after {
+        border-bottom: 1px solid @white;
+        font-weight: 300;
         word-break: break-all;
     }
 
@@ -74,6 +75,11 @@
         display: none !important;
     }
 
+    .a-tagline {
+        // Force the tagline's background image to be visible when printing
+        color-adjust: exact;
+    }
+
     .o-video-player::after {
         content: "Watch the video at https://www.youtube.com/watch?v=" attr(data-id);
     }
@@ -81,7 +87,9 @@
     .m-global-eyebrow,
     .join-the-conversation,
     .o-email-signup,
-    .rss-subscribe {
+    .rss-subscribe,
+    .o-feedback,
+    .o-search-bar {
         display: none;
     }
 
