@@ -68,7 +68,9 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
-RUN yum -y install nodejs14 yarn && \
+RUN yum install -y gcc-c++ make && \
+    curl -sL https://rpm.nodesource.com/setup_15.x | sudo -E bash - && \
+    yum install yarn && \
     ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
