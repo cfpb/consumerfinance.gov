@@ -1,30 +1,30 @@
 <section class="college-costs_tool-section" data-tool-section="action-plan">
-    <h2 tabindex="-1">What to do next</h2>
+    <fieldset>
+        <h2 tabindex="-1">What to do next</h2>
 
-    <p>Your next steps depend on whether you want to use this plan to pay for attending this school.</p>
+        <p><legend>Your next steps depend on whether you want to use this plan to pay for attending this school.</legend></p>
 
-    <p>Do you want to put this plan into action or consider other options?</p>
-
-    <div class="action-plan_choices block block__sub">
-        {{
-            radio.render({
-              'name':  "action-plan-radio",
-              'label': 'How to put this plan into action',
-              'value': 'action',
-              'id': 'action-plan_put-into-action',
-              'class': 'm-form-field__lg-target'
-            })
-        }}
-         {{
-            radio.render({
-              'name':  "action-plan-radio",
-              'label': 'Consider other options',
-              'value': 'consider',
-              'id': 'action-plan_consider',
-              'class': 'm-form-field__lg-target'
-            })
-        }}
-    </div>
+        <div class="action-plan_choices block block__sub">
+            {{
+                radio.render({
+                  'name':  "action-plan-radio",
+                  'label': 'How to put this plan into action',
+                  'value': 'action',
+                  'id': 'action-plan_put-into-action',
+                  'class': 'm-form-field__lg-target'
+                })
+            }}
+             {{
+                radio.render({
+                  'name':  "action-plan-radio",
+                  'label': 'Consider other options',
+                  'value': 'consider',
+                  'id': 'action-plan_consider',
+                  'class': 'm-form-field__lg-target'
+                })
+            }}
+        </div>
+    </fieldset>
 
     <div class="block block__sub action-plan_steps" data-state-based-visibility="put-into-action">
         <h3>How to put this plan into action</h3>

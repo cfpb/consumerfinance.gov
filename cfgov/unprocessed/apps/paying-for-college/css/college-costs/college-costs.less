@@ -1,8 +1,15 @@
 
 .college-costs {
-  // remove border between sidebar and main content
-  & .content_main {
-    position: relative;
+
+	fieldset {
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+	// remove border between sidebar and main content
+	& .content_main {
+		position: relative;
 
     &:after {
       content: none;
