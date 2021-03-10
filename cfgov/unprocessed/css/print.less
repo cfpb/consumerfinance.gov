@@ -68,6 +68,19 @@
         border-bottom-width: 0;
     }
 
+    a.a-btn {
+        &:link,
+        &:visited {
+            // Undo all button stylings and make it look like a standard link
+            all: unset;
+            border-bottom: 1px dotted @link-underline;
+            color: @link-text;
+            display: inline-block;
+            font-weight: 500;
+            text-decoration: none;
+        }
+    }
+
     .o-video-player_play-btn {
         // !important used here to avoid being overriden by a much more specific
         // selector that sets the display property for this element
