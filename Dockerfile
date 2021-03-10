@@ -25,7 +25,7 @@ RUN yum -y install \
         centos-release-scl \
         epel-release && \
     rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
-    curl -sL https://rpm.nodesource.com/setup_12.x | bash - && \
+    curl -sL https://rpm.nodesource.com/setup_15.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum -y update && \
     yum -y install \
@@ -68,10 +68,7 @@ ENV ALLOWED_HOSTS '["*"]'
 # See .dockerignore for details on which files are included
 COPY . .
 
-RUN yum -y install yarn && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh && \
-    source ~/.bashrc && \
-    nvm install v15.6.0 && \
+RUN yum -y install nodejs yarn && \
     ./frontend.sh production && \
     cfgov/manage.py collectstatic && \
     yarn cache clean && \
