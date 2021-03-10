@@ -69,7 +69,7 @@ ENV ALLOWED_HOSTS '["*"]'
 COPY . .
 
 RUN yum -y install yarn && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh && \
     source ~/.bashrc && \
     nvm install v15.6.0 && \
     ./frontend.sh production && \
