@@ -68,14 +68,17 @@
         border-bottom-width: 0;
     }
 
-    a.a-btn {
+    a.a-btn,
+    a.a-link__jump,
+    a.m-list_link {
+        // These pseudo-classes are needed to guarantee specificity
         &:link,
         &:visited {
-            // Undo all button stylings and make it look like a standard link
+            // Undo all button and stand-alone link stylings and make them look like a standard link
             all: unset;
             border-bottom: 1px dotted @link-underline;
             color: @link-text;
-            display: inline-block;
+            display: inline;
             font-weight: 500;
             text-decoration: none;
         }
