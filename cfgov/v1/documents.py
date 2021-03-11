@@ -7,6 +7,7 @@ from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 from elasticsearch_dsl.query import MultiMatch
+from flags.state import flag_enabled
 
 from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
@@ -153,11 +154,16 @@ class FilterablePagesDocumentSearch:
         return search.filter("terms", is_archived=self.archived)
 
     def search_title(self, search):
-        query = MultiMatch(
-            query=self.title,
-            fields=['title', 'tags.name', 'content', 'preview_description'],
-            operator="AND")
-        return search.query(query)
+        if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
+            query = MultiMatch(
+                query=self.title,
+                fields=['title', 'tags.name', 'content', 'preview_description'],
+                operator="AND")
+            return search.query(query)
+        else:
+            return search.query(
+                "match", title={"query": self.title, "operator": "AND"}
+            )
 
     def order_results(self, search):
         total_results = search.count()

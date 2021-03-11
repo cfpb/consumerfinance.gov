@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from io import StringIO
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from wagtail.core.models import Site
 
@@ -247,7 +247,8 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
             archived=None).search()
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
 
-    def test_search_title_multimatch(self):
+    @override_settings(FLAGS={"EXPAND_FILTERABLE_LIST_SEARCH": [("boolean", True)]})
+    def test_search_title_multimatch_enabled(self):
         results = FilterablePagesDocumentSearch(
             prefix='/',
             topics=[],
@@ -261,3 +262,19 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         self.assertTrue(results.filter(title=self.blog_content_match.title).exists())
         self.assertTrue(results.filter(title=self.blog_preview_match.title).exists())
         self.assertTrue(results.filter(title=self.blog_topic_match.title).exists())
+
+    @override_settings(FLAGS={"EXPAND_FILTERABLE_LIST_SEARCH": [("boolean", False)]})
+    def test_search_title_multimatch_disabled(self):
+        results = FilterablePagesDocumentSearch(
+            prefix='/',
+            topics=[],
+            categories=[],
+            authors=[],
+            to_date=None,
+            from_date=None,
+            title="Foo",
+            archived=None).search()
+        self.assertTrue(results.filter(title=self.blog_title_match).exists())
+        self.assertFalse(results.filter(title=self.blog_content_match.title).exists())
+        self.assertFalse(results.filter(title=self.blog_preview_match.title).exists())
+        self.assertFalse(results.filter(title=self.blog_topic_match.title).exists())
