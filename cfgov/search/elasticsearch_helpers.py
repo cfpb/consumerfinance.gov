@@ -8,9 +8,16 @@ from unittest.mock import patch
 from django.conf import settings
 from django.core.management import call_command
 
+from wagtail.core.signals import (
+    page_published, page_unpublished, post_page_move, pre_page_move
+)
+
+from django_elasticsearch_dsl.registries import registry
+from django_elasticsearch_dsl.signals import BaseSignalProcessor
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
+from v1.models.learn_page import AbstractFilterPage
 
 
 def strip_html(markup):
@@ -148,3 +155,32 @@ class ElasticsearchTestsMixin:
             models=models,
             stdout=stdout
         )
+
+
+class WagtailSignalProcessor(BaseSignalProcessor):
+
+    def handle_delete(self, sender, instance, **kwargs):
+        """Handle delete.
+        Given an individual model instance, delete the object from index.
+        """
+        # Due to the inheritance used with Filterable Lists
+        # this allows us to actually delete the instance.
+        if issubclass(instance.specific_class().__class__, AbstractFilterPage):
+            instance_to_delete = AbstractFilterPage.objects.get(pk=instance.id)
+            registry.delete(instance_to_delete, raise_on_error=False)
+        else:
+            registry.delete(instance, raise_on_error=False)
+
+    def setup(self):
+        # Wagtail Specific Events
+        page_published.connect(self.handle_save)
+        page_unpublished.connect(self.handle_delete)
+        pre_page_move.connect(self.handle_delete)
+        post_page_move.connect(self.handle_save)
+
+    def teardown(self):
+        # Wagtail Specific Events
+        page_published.disconnect(self.handle_save)
+        page_unpublished.disconnect(self.handle_delete)
+        pre_page_move.disconnect(self.handle_delete)
+        post_page_move.disconnect(self.handle_save)
