@@ -43,7 +43,8 @@ class FilterablePagesDocumentTest(TestCase):
             [
                 'tags', 'categories', 'authors', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
-                'statuses', 'initial_filing_date', 'model_class'
+                'statuses', 'initial_filing_date', 'model_class',
+                'content', 'preview_description'
             ]
         )
 
@@ -73,6 +74,18 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
+
+        content = json.dumps([
+                {
+                    'type': 'full_width_text',
+                    'value': [
+                        {
+                            'type':'content',
+                            'value': 'Foo Test Content'
+                    }]
+                }
+            ])
+
         event = EventPage(
             title='Event Test',
             start_dt=datetime(2021, 2, 16, tzinfo=timezone('UTC')),
@@ -94,9 +107,37 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
             title="Blog Page"
         )
         publish_page(blog)
+
+        blog_title_match = BlogPage(
+            title="Foo Bar"
+        )
+        publish_page(blog_title_match)
+
+        blog_preview_match = BlogPage(
+            title="Random Title",
+            preview_description="Foo blog"
+        )
+        publish_page(blog_preview_match)
+
+        blog_content_match = BlogPage(
+            title="Some Title",
+            content=content
+        )
+        publish_page(blog_content_match)
+
+        blog_topic_match = BlogPage(
+            title="Another Blog Post"
+        )
+        blog_topic_match.tags.add("Foo Tag")
+        publish_page(blog_topic_match)
+
         cls.event = event
         cls.enforcement = enforcement
         cls.blog = blog
+        cls.blog_title_match = blog_title_match
+        cls.blog_preview_match = blog_preview_match
+        cls.blog_content_match = blog_content_match
+        cls.blog_topic_match = blog_topic_match
 
         cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
@@ -169,3 +210,18 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
             statuses=[],
             archived=None).search()
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
+
+    def test_search_title_multimatch(self):
+        results = FilterablePagesDocumentSearch(
+            prefix='/',
+            topics=[],
+            categories=[],
+            authors=[],
+            to_date=None,
+            from_date=None,
+            title="Foo",
+            archived=None).search()
+        self.assertTrue(results.filter(title=self.blog_title_match).exists())
+        self.assertTrue(results.filter(title=self.blog_content_match.title).exists())
+        self.assertTrue(results.filter(title=self.blog_preview_match.title).exists())
+        self.assertTrue(results.filter(title=self.blog_topic_match.title).exists())

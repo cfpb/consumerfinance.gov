@@ -1,6 +1,12 @@
+from html import unescape
+
+from django.core.exceptions import FieldDoesNotExist
+from django.utils.html import strip_tags
+
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
+from elasticsearch_dsl.query import MultiMatch
 
 from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
@@ -28,7 +34,8 @@ ngram_tokenizer = analyzer(
 class FilterablePagesDocument(Document):
 
     tags = fields.ObjectField(properties={
-        'slug': fields.KeywordField()
+        'slug': fields.KeywordField(),
+        'name': fields.TextField()
     })
     categories = fields.ObjectField(properties={
         'name': fields.KeywordField()
@@ -46,6 +53,8 @@ class FilterablePagesDocument(Document):
     statuses = fields.KeywordField()
     initial_filing_date = fields.DateField()
     model_class = fields.KeywordField()
+    content = fields.TextField()
+    preview_description = fields.TextField()
 
     def get_queryset(self):
         return AbstractFilterPage.objects.live().public().specific()
@@ -71,6 +80,21 @@ class FilterablePagesDocument(Document):
 
     def prepare_model_class(self, instance):
         return instance.__class__.__name__
+
+    def prepare_content(self, instance):
+        try:
+            content_field = instance._meta.get_field('content')
+            value = content_field.value_from_object(instance)
+            content = content_field.get_searchable_content(value)
+            content = content.pop()
+            return content
+        except FieldDoesNotExist:
+            return None
+        except IndexError:
+            return None
+
+    def prepare_preview_description(self, instance):
+        return unescape(strip_tags(instance.preview_description))
 
     def get_instances_from_related(self, related_instance):
         # Related instances all inherit from AbstractFilterPage.
@@ -129,9 +153,11 @@ class FilterablePagesDocumentSearch:
         return search.filter("terms", is_archived=self.archived)
 
     def search_title(self, search):
-        return search.query(
-            "match", title={"query": self.title, "operator": "AND"}
-        )
+        query = MultiMatch(
+            query=self.title,
+            fields=['title', 'tags.name', 'content', 'preview_description'],
+            operator="AND")
+        return search.query(query)
 
     def order_results(self, search):
         total_results = search.count()
