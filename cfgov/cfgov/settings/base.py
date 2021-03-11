@@ -444,6 +444,8 @@ else:
         "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
     }
 
+ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'search.elasticsearch_helpers.WagtailSignalProcessor'
+
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_LOCATION = "f"  # A path prefix that will be prepended to all uploads
