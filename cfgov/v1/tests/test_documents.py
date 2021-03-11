@@ -68,6 +68,42 @@ class FilterablePagesDocumentTest(TestCase):
         prepared_data = doc.prepare(enforcement)
         self.assertEqual(prepared_data['statuses'], ['expired-terminated-dismissed'])
 
+    def test_prepare_content_no_content_defined(self):
+        event = EventPage(
+            title='Event Test',
+            start_dt=datetime.now(timezone('UTC'))
+        )
+        doc = FilterablePagesDocument()
+        prepared_data = doc.prepare(event)
+        self.assertIsNone(prepared_data['content'])
+
+    def test_prepare_content_exists(self):
+        blog = BlogPage(
+            title='Test Blog',
+            content=json.dumps([
+                {
+                    'type': 'full_width_text',
+                    'value': [
+                        {
+                            'type':'content',
+                            'value': 'Blog Text'
+                    }]
+                }
+            ])
+        )
+        doc = FilterablePagesDocument()
+        prepared_data = doc.prepare(blog)
+        self.assertEqual(prepared_data['content'], 'Blog Text')
+
+    def test_prepare_content_empty(self):
+        blog = BlogPage(
+            title='Test Blog',
+            content=json.dumps([])
+        )
+        doc = FilterablePagesDocument()
+        prepared_data = doc.prepare(blog)
+        self.assertIsNone(prepared_data['content'])
+
 
 class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
 
