@@ -31,6 +31,7 @@ class AbstractFilterPage(CFGOVPage):
         ('article_subheader', blocks.RichTextBlock(icon='form')),
         ('text_introduction', molecules.TextIntroduction()),
         ('item_introduction', organisms.ItemIntroduction()),
+        ('notification', molecules.Notification()),
     ], blank=True)
     preview_title = models.CharField(max_length=255, null=True, blank=True)
     preview_subheading = models.CharField(
@@ -106,6 +107,7 @@ class AbstractFilterPage(CFGOVPage):
 
 
 class LearnPage(AbstractFilterPage):
+
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
