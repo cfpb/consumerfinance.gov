@@ -157,7 +157,7 @@ class FilterablePagesDocumentSearch:
         if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
             query = MultiMatch(
                 query=self.title,
-                fields=['title', 'tags.name', 'content', 'preview_description'],
+                fields=['title', 'tags.name', 'content', 'preview_description'],  # noqa: E501
                 operator="AND")
             return search.query(query)
         else:
