@@ -1,16 +1,14 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
+from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
-from search.elasticsearch_helpers import (
-    environment_specific_index
-)
+from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import (
     AbstractFilterPage, DocumentDetailPage, EventPage, LearnPage
 )
 from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
-from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 
 ngram_tokenizer = analyzer(
@@ -24,6 +22,7 @@ ngram_tokenizer = analyzer(
     ),
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
 )
+
 
 @registry.register_document
 class FilterablePagesDocument(Document):

@@ -6,17 +6,19 @@ from unittest import SkipTest
 from unittest.mock import patch
 
 from django.conf import settings
-from django.db import models
 from django.core.management import call_command
-from django_elasticsearch_dsl import Document
-from django_elasticsearch_dsl.signals import BaseSignalProcessor
-from django_elasticsearch_dsl.registries import registry
 
+from wagtail.core.signals import (
+    page_published, page_unpublished, post_page_move, pre_page_move
+)
+
+from django_elasticsearch_dsl.registries import registry
+from django_elasticsearch_dsl.signals import BaseSignalProcessor
 from elasticsearch_dsl import analyzer, token_filter, tokenizer
 
 from search.models import Synonym
-from wagtail.core.signals import page_published, page_unpublished, pre_page_move, post_page_move
 from v1.models.learn_page import AbstractFilterPage
+
 
 def strip_html(markup):
     """
@@ -154,15 +156,6 @@ class ElasticsearchTestsMixin:
             stdout=stdout
         )
 
-class CFGovDocument(Document):
-
-    def _get_actions(self, object_list, action):
-        for object_instance in object_list:
-            # if self.should_index_object(object_instance):
-            yield self._prepare_action(object_instance, action)
-    
-    def should_index_object(self, obj):
-        return True
 
 class WagtailSignalProcessor(BaseSignalProcessor):
 
@@ -170,14 +163,13 @@ class WagtailSignalProcessor(BaseSignalProcessor):
         """Handle delete.
         Given an individual model instance, delete the object from index.
         """
-        # Due to the inheritance used with Filterable Lists 
+        # Due to the inheritance used with Filterable Lists
         # this allows us to actually delete the instance.
         if issubclass(instance.specific_class().__class__, AbstractFilterPage):
             instance_to_delete = AbstractFilterPage.objects.get(pk=instance.id)
             registry.delete(instance_to_delete, raise_on_error=False)
         else:
             registry.delete(instance, raise_on_error=False)
-
 
     def setup(self):
         # Listen to all model saves.
@@ -193,7 +185,6 @@ class WagtailSignalProcessor(BaseSignalProcessor):
         page_unpublished.connect(self.handle_delete)
         pre_page_move.connect(self.handle_delete)
         post_page_move.connect(self.handle_save)
-
 
     def teardown(self):
         # Listen to all model saves.
