@@ -843,9 +843,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cfpb/browserslist-config@https://gitpkg.now.sh/cfpb/cfpb-analytics/packages/browserslist-config?main":
+"@cfpb/browserslist-config@0.0.1":
   version "0.0.1"
-  resolved "https://gitpkg.now.sh/cfpb/cfpb-analytics/packages/browserslist-config?main#6ce7be6aa6f918d84db90e56be93a8fd7528e1cb"
+  resolved "https://registry.yarnpkg.com/@cfpb/browserslist-config/-/browserslist-config-0.0.1.tgz#8f80636e5ba2cd01bcc99cb6563acfa05b325a26"
+  integrity sha512-NJWL07m0VRqu52Q8fQAH9ciy1GIX2IsdK46Nge2QaRnhefYBAybXhkkJrxo9TT5Ozeuv47rqJ9CsMQwqoiXsgw==
 
 "@cfpb/cfpb-atomic-component@0.7.9", "@cfpb/cfpb-atomic-component@^0.7.9":
   version "0.7.9"
