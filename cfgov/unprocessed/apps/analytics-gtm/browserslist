@@ -6,6 +6,6 @@
 # is the "my stats" file and is generated via the command `npx browserslist-ga`.
 # See https://github.com/browserslist/browserslist-ga
 
-> 0.5% in my stats # Sets a threshold to cut off extreme edge case browsers.
-> 5% in US         # Sets a threshold for possible future users.
-Explorer >= 9      # Explicitly sets IE9 and above support.
+> 0.5% in @cfpb/browserslist-config stats # Sets a threshold to cut off extreme edge case browsers.
+> 5% in US                                # Sets a threshold for possible future users.
+Explorer >= 9                             # Explicitly sets IE9 and above support.
