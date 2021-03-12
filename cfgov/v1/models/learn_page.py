@@ -107,7 +107,6 @@ class AbstractFilterPage(CFGOVPage):
 
 
 class LearnPage(AbstractFilterPage):
-
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
