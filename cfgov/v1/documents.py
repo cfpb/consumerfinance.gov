@@ -23,8 +23,8 @@ ngram_tokenizer = analyzer(
     tokenizer=tokenizer(
         'filterable_tokenizer',
         'ngram',
-        min_gram=1,
-        max_gram=16,
+        min_gram=3,
+        max_gram=8,
         token_chars=["letter", "digit", "symbol"]
     ),
     filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
@@ -45,7 +45,7 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
-    title = fields.TextField(attr='title')
+    title = fields.TextField(attr='title', analyzer=ngram_tokenizer)
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
