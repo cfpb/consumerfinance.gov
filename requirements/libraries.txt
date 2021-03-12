@@ -35,7 +35,7 @@ urllib3==1.25.2
 wagtail-flags==5.1.0
 wagtail-inventory==1.2.0
 wagtail-placeholder-images==0.1.1
-wagtail-sharing==2.4.0
+wagtail-sharing==2.5.1
 wagtail-treemodeladmin==1.4.0
 wagtailmedia==0.6.0
 
