@@ -169,6 +169,9 @@ pipeline {
                     expression { return params.DEPLOY }
                 }
             }
+            // agent {
+            //     docker { image '${env.CYPRESS_REPO}' }
+            // }
             steps {
                 postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
 
@@ -179,8 +182,10 @@ pipeline {
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                     env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
                     timeout(time: 25, unit: 'MINUTES') {
-                        dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                        // sh "docker-compose -f docker-compose.e2e.yml up ${env.CYPRESS_ENV} ${env.CYPRESS_VOLUMES}"
+                        docker.image('${env.CYPRESS_REPO}').withRun('${env.CYPRESS_ENV} ${env.CYPRESS_VOLUMES} -w /app') {
+                           sh 'npx cypress run -b chrome --headless'
+                        }
+                        // sh "pip install -U pip -i https://pypi.org/simple/;pip install --no-cache-dir -U docker-compose;docker-compose -f docker-compose.e2e.yml up ${env.CYPRESS_ENV} ${env.CYPRESS_VOLUMES}"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
