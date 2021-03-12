@@ -41,6 +41,7 @@ enforcement_products = [
     ('Debt Relief', 'Debt Relief'),
     ('Deposits', 'Deposits'),
     ('Furnishing', 'Furnishing'),
+    ('Fair Lending', 'Fair Lending'),
     ('Mortgage Origination', 'Mortgage Origination'),
     ('Mortgage Servicing', 'Mortgage Servicing'),
     ('Payments', 'Payments'),
