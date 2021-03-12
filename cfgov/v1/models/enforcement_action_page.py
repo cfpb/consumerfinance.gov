@@ -41,6 +41,7 @@ enforcement_products = [
     ('Debt Relief', 'Debt Relief'),
     ('Deposits', 'Deposits'),
     ('Furnishing', 'Furnishing'),
+    ('Fair Lending', 'Fair Lending'),
     ('Mortgage Origination', 'Mortgage Origination'),
     ('Mortgage Servicing', 'Mortgage Servicing'),
     ('Payments', 'Payments'),
@@ -280,24 +281,6 @@ class EnforcementActionPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('content')
     ]
-
-    @classmethod
-    def all_actions(cls):
-        # Return the collection of all Enforcement Action Pages.
-        # Exclude any pages in the Trash or otherwise not a child of the
-        # EnforcementActionsFilterPage.
-        try:
-            # TODO: find a less hacky way to get only the pages in the
-            # correct part of the page tree
-            pg_id = 1327
-            parent_page = Page.objects.get(id=pg_id)
-            query = cls.objects.child_of(parent_page)
-        except(Page.DoesNotExist):
-            query = cls.objects
-
-        query = query.filter(initial_filing_date__isnull=False)
-        query = query.live().order_by('-initial_filing_date')
-        return query
 
     def get_context(self, request):
         context = super(EnforcementActionPage, self).get_context(request)

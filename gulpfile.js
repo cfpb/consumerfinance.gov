@@ -20,7 +20,6 @@ let ignoreTasks = [];
 
 if ( envvars.NODE_ENV === 'production' ) {
   ignoreTasks = [
-    TASK_PATH + 'audit.js',
     TASK_PATH + 'docs.js',
     TASK_PATH + 'lint.js',
     TASK_PATH + 'test-acceptance.js',
