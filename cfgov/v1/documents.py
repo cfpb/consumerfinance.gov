@@ -45,7 +45,7 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
-    title = fields.TextField(attr='title', analyzer=ngram_tokenizer)
+    title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
