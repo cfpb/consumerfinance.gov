@@ -34,7 +34,7 @@ def assemble_output():
         if not page.live:
             continue
         url = 'https://consumerfinance.gov' + page.get_url()
-        if 'policy-compliance/enforcement/actions' not in url:
+        if 'enforcement/actions' not in url:
             continue
         page_categories = ','.join(
             c.get_name_display() for c in page.categories.all())
