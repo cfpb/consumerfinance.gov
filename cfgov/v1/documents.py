@@ -158,7 +158,8 @@ class FilterablePagesDocumentSearch:
             query = MultiMatch(
                 query=self.title,
                 fields=['title', 'tags.name', 'content', 'preview_description'],  # noqa: E501
-                operator="AND")
+                operator="AND",
+                type="bool_prefix")
             return search.query(query)
         else:
             return search.query(
