@@ -59,6 +59,9 @@ pipeline {
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES2_LOCAL = "${env.IMAGE_ES2_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
+                    env.CYPRESS_PATH = "test/cypress/integration"
+                    env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
+                    env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                 }
                 sh 'env | sort'
             }
@@ -170,16 +173,16 @@ pipeline {
                 }
             }
             // agent {
-            //     docker { image '${CYPRESS_REPO}' }
+            //     docker {
+            //         image '${CYPRESS_REPO}'
+            //         args '${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app'
+            //     }
             // }
             steps {
                 postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    env.CYPRESS_PATH = 'test/cypress/integration'
-                    env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1"
-                    env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                     env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
                     timeout(time: 25, unit: 'MINUTES') {
                         // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
