@@ -32,6 +32,7 @@ class FilterablePagesDocument(Document):
     start_dt = fields.DateField()
     end_dt = fields.DateField()
     statuses = fields.KeywordField()
+    products = fields.KeywordField()
     initial_filing_date = fields.DateField()
     model_class = fields.KeywordField()
 
@@ -51,6 +52,13 @@ class FilterablePagesDocument(Document):
         statuses = getattr(instance, 'statuses', None)
         if statuses is not None:
             return [status.status for status in statuses.all()]
+        else:
+            return None
+
+    def prepare_products(self, instance):
+        products = getattr(instance, 'products', None)
+        if products is not None:
+            return [p.product for p in products.all()]
         else:
             return None
 
@@ -168,6 +176,7 @@ class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSear
 
     def __init__(self, **kwargs):
         self.statuses = kwargs.pop('statuses')
+        self.products = kwargs.pop('products')
         super().__init__(**kwargs)
 
     def filter_date(self, search):
@@ -179,7 +188,9 @@ class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSear
     def apply_specific_filters(self, search):
         search = search.filter("term", model_class="EnforcementActionPage")
         if self.statuses != []:
-            return search.filter("terms", statuses=self.statuses)
+            search = search.filter("terms", statuses=self.statuses)
+        if self.products != []:
+            search = search.filter("terms", products=self.products)
 
         return search
 
