@@ -49,9 +49,10 @@
         content: " (cfpb.gov" attr(href) ")";
     }
 
+    a[href^="/ask-cfpb"]:after,
     a[href^="/external-site"]:after {
         // Output original href for links with external site interstitial.
-        content: " (" attr(data-orig-href) ")";
+        content: " (" attr(data-pretty-href) ")";
     }
 
     a[href="/"]:after,
