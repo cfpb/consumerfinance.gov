@@ -182,16 +182,12 @@ pipeline {
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                     env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
                     timeout(time: 25, unit: 'MINUTES') {
-                        shell(
-                            commonConfig.py3Setup + '''
-                            set -e
-                            pip install --no-cache-dir -U docker-compose
-                            docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}
-                            '''.stripIndent()
-                        )
                         // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
                         //     sh 'cypress run -b chrome --headless'
                         // }
+                        // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
+                        sh "docker stack deploy -c docker-compose.e2e.yml ${env.STACK_NAME}"
+                        // sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
