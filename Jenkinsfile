@@ -183,7 +183,7 @@ pipeline {
                     env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
                     timeout(time: 25, unit: 'MINUTES') {
                         docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
-                           sh 'npx cypress run -b chrome --headless'
+                           sh 'cypress run -b chrome --headless'
                         }
                         // sh "pip install -U pip -i https://pypi.org/simple/;pip install --no-cache-dir -U docker-compose;docker-compose -f docker-compose.e2e.yml up ${env.CYPRESS_ENV} ${env.CYPRESS_VOLUMES}"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
