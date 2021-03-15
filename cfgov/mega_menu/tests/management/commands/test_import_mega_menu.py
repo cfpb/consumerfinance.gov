@@ -42,7 +42,7 @@ class ImportMegaMenuTests(TestCase):
         )
 
         menu = Menu.objects.get(language='en')
-        if wagtail.VERSION < (2, 12):
+        if wagtail.VERSION < (2, 12):  # pragma: no cover
             self.assertEqual(menu.submenus.stream_data, submenus)
         else:
             self.assertSequenceEqual(menu.submenus.raw_data, submenus)

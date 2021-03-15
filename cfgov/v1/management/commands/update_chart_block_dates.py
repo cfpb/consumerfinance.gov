@@ -47,7 +47,7 @@ class Command(BaseCommand):
         """ Update date_published on all chart blocks """
 
         for page in BrowsePage.objects.all():
-            if wagtail.VERSION < (2, 12):
+            if wagtail.VERSION < (2, 12):  # pragma: no cover
                 data = page.specific.content.stream_data
             else:
                 data = page.specific.content.raw_data

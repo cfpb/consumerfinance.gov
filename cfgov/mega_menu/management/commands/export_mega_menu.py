@@ -22,7 +22,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         menu = Menu.objects.get(language=options['language'])
-        if wagtail.VERSION < (2, 12):
+        if wagtail.VERSION < (2, 12):  # pragma: no cover
             data = menu.submenus.stream_data
         else:
             data = menu.submenus.raw_data

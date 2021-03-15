@@ -63,7 +63,7 @@ def assemble_output():
         output['Language'] = page['language']
         output['RelatedResource'] = page['related_resource__title']
         output['Question'] = page['question'].replace('\x81', '')
-        if wagtail.VERSION < (2, 12):
+        if wagtail.VERSION < (2, 12):  # pragma: no cover
             answer_streamfield = page['answer_content'].stream_data
         else:
             answer_streamfield = page['answer_content'].raw_data

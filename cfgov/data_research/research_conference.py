@@ -24,7 +24,7 @@ def get_conference_details_from_page(page_id):
     page = Page.objects.get(pk=page_id).specific
 
     if hasattr(page, 'content'):
-        if wagtail.VERSION < (2, 12):
+        if wagtail.VERSION < (2, 12):  # pragma: no cover
             data = page.content.stream_data
         else:
             data = page.content.raw_data

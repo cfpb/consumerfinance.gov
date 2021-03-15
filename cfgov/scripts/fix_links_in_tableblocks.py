@@ -16,7 +16,7 @@ def get_tableblocks(page):
     or in a FullWidthText item. So we must check both.
     """
     try:
-        if wagtail.VERSION < (2, 12):
+        if wagtail.VERSION < (2, 12):  # pragma: no cover
             data = page.specific.content.stream_data
         else:
             data = page.specific.content.raw_data

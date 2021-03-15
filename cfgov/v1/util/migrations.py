@@ -74,7 +74,7 @@ def get_data(page_or_revision, field_name):
     revision """
     if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
-        if wagtail.VERSION < (2, 12):
+        if wagtail.VERSION < (2, 12):  # pragma: no cover
             return field.stream_data
         else:
             return field.raw_data

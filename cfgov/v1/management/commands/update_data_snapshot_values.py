@@ -39,7 +39,7 @@ class Command(BaseCommand):
         """
         snapshots = []
         for page in BrowsePage.objects.all():
-            if wagtail.VERSION < (2, 12):
+            if wagtail.VERSION < (2, 12):  # pragma: no cover
                 data = page.content.stream_data
             else:
                 data = page.content.raw_data
