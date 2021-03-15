@@ -6,7 +6,6 @@ volumes:
 services:
   admin-tests:
     image: cypress/included:6.6.0
-    container_name: admin-tests
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -18,7 +17,6 @@ services:
       - ./cypress.json:/app/cypress.json
   component-tests:
     image: cypress/included:6.6.0
-    container_name: component-tests
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -30,7 +28,6 @@ services:
       - ./cypress.json:/app/cypress.json
   consumer-tools-tests:
     image: cypress/included:6.6.0
-    container_name: consumer-tools-tests
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -42,7 +39,6 @@ services:
       - ./cypress.json:/app/cypress.json
   data-research-tests:
     image: cypress/included:6.6.0
-    container_name: data-research-tests
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -54,7 +50,6 @@ services:
       - ./cypress.json:/app/cypress.json
   paying-for-college-tests:
     image: cypress/included:6.6.0
-    container_name: paying-for-college-tests
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -66,7 +61,6 @@ services:
       - ./cypress.json:/app/cypress.json
   rules-policy-tests:
     image: cypress/included:6.6.0
-    container_name: rules-policy-tests
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
