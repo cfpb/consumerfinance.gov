@@ -170,7 +170,7 @@ pipeline {
                 }
             }
             // agent {
-            //     docker { image '${env.CYPRESS_REPO}' }
+            //     docker { image '${CYPRESS_REPO}' }
             // }
             steps {
                 postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
@@ -182,10 +182,16 @@ pipeline {
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                     env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
                     timeout(time: 25, unit: 'MINUTES') {
-                        docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
-                           sh 'cypress run -b chrome --headless'
-                        }
-                        // sh "pip install -U pip -i https://pypi.org/simple/;pip install --no-cache-dir -U docker-compose;docker-compose -f docker-compose.e2e.yml up ${env.CYPRESS_ENV} ${env.CYPRESS_VOLUMES}"
+                        shell(
+                            commonConfig.py3Setup + '''
+                            set -e
+                            pip install --no-cache-dir -U docker-compose
+                            docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}
+                            '''.stripIndent()
+                        )
+                        // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
+                        //     sh 'cypress run -b chrome --headless'
+                        // }
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
