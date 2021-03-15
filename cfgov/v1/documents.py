@@ -23,7 +23,7 @@ ngram_tokenizer = analyzer(
     tokenizer=tokenizer(
         'filterable_tokenizer',
         'ngram',
-        min_gram=3,
+        min_gram=1,
         max_gram=8,
         token_chars=["letter", "digit", "symbol"]
     ),
@@ -45,7 +45,7 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
-    title = fields.TextField(attr='title', analyzer=ngram_tokenizer)
+    title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
@@ -54,8 +54,8 @@ class FilterablePagesDocument(Document):
     statuses = fields.KeywordField()
     initial_filing_date = fields.DateField()
     model_class = fields.KeywordField()
-    content = fields.TextField(analyzer=ngram_tokenizer)
-    preview_description = fields.TextField(analyzer=ngram_tokenizer)
+    content = fields.TextField()
+    preview_description = fields.TextField()
 
     def get_queryset(self):
         return AbstractFilterPage.objects.live().public().specific()
@@ -158,8 +158,8 @@ class FilterablePagesDocumentSearch:
             query = MultiMatch(
                 query=self.title,
                 fields=['title', 'tags.name', 'content', 'preview_description'],  # noqa: E501
-                operator="AND",
-                type="phrase_prefix")
+                type="phrase_prefix",
+                slop=4)
             return search.query(query)
         else:
             return search.query(
