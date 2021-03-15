@@ -19,7 +19,7 @@ from v1.documents import (
 from v1.models.base import CFGOVPageCategory
 from v1.models.blog_page import BlogPage
 from v1.models.enforcement_action_page import (
-    EnforcementActionPage, EnforcementActionStatus
+    EnforcementActionPage, EnforcementActionProduct, EnforcementActionStatus
 )
 from v1.models.learn_page import AbstractFilterPage, EventPage
 from v1.tests.wagtail_pages.helpers import publish_page
@@ -43,7 +43,7 @@ class FilterablePagesDocumentTest(TestCase):
             [
                 'tags', 'categories', 'authors', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
-                'statuses', 'initial_filing_date', 'model_class',
+                'statuses', 'products', 'initial_filing_date', 'model_class',
                 'content', 'preview_description'
             ]
         )
@@ -104,6 +104,18 @@ class FilterablePagesDocumentTest(TestCase):
         prepared_data = doc.prepare(blog)
         self.assertIsNone(prepared_data['content'])
 
+    def test_prepare_products(self):
+        enforcement = EnforcementActionPage(
+            title="Great Test Page",
+            preview_description='This is a great test page.',
+            initial_filing_date=datetime.now(timezone('UTC'))
+        )
+        product = EnforcementActionProduct(product='Fair Lending')
+        enforcement.products.add(product)
+        doc = FilterablePagesDocument()
+        prepared_data = doc.prepare(enforcement)
+        self.assertEqual(prepared_data['products'], ['Fair Lending'])
+
 
 class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
 
@@ -138,6 +150,8 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         )
         status = EnforcementActionStatus(status='expired-terminated-dismissed')
         enforcement.statuses.add(status)
+        product = EnforcementActionProduct(product='Debt Collection')
+        enforcement.products.add(product)
         publish_page(enforcement)
         blog = BlogPage(
             title="Blog Page"
@@ -226,6 +240,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
             from_date=from_date,
             title=None,
             statuses=['expired-terminated-dismissed'],
+            products=['Debt Collection'],
             archived=None).search()
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
 
@@ -244,6 +259,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
             from_date=from_date,
             title=None,
             statuses=[],
+            products=[],
             archived=None).search()
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
 
