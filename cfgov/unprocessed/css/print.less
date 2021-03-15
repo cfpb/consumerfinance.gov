@@ -68,9 +68,7 @@
         border-bottom-width: 0;
     }
 
-    a.a-btn,
-    a.a-link__jump,
-    a.m-list_link {
+    a.a-btn {
         // These pseudo-classes are needed to guarantee specificity
         &:link,
         &:visited {
@@ -81,6 +79,17 @@
             display: inline;
             font-weight: 500;
             text-decoration: none;
+        }
+    }
+
+    a.a-link__jump,
+    a.m-list_link {
+        // These pseudo-classes are needed to guarantee specificity
+        &:link,
+        &:visited {
+            border: 0;
+            padding-top: unit( 5px / @base-font-size-px, em );
+            padding-bottom: unit( 5px / @base-font-size-px, em );
         }
     }
 
