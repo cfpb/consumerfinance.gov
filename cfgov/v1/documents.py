@@ -159,7 +159,7 @@ class FilterablePagesDocumentSearch:
                 query=self.title,
                 fields=['title', 'tags.name', 'content', 'preview_description'],  # noqa: E501
                 operator="AND",
-                type="bool_prefix")
+                type="phrase_prefix")
             return search.query(query)
         else:
             return search.query(
