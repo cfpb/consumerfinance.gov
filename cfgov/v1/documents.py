@@ -36,7 +36,7 @@ class FilterablePagesDocument(Document):
 
     tags = fields.ObjectField(properties={
         'slug': fields.KeywordField(),
-        'name': fields.TextField()
+        'name': fields.TextField(analyzer=ngram_tokenizer)
     })
     categories = fields.ObjectField(properties={
         'name': fields.KeywordField()
@@ -54,8 +54,8 @@ class FilterablePagesDocument(Document):
     statuses = fields.KeywordField()
     initial_filing_date = fields.DateField()
     model_class = fields.KeywordField()
-    content = fields.TextField()
-    preview_description = fields.TextField()
+    content = fields.TextField(analyzer=ngram_tokenizer)
+    preview_description = fields.TextField(analyzer=ngram_tokenizer)
 
     def get_queryset(self):
         return AbstractFilterPage.objects.live().public().specific()
