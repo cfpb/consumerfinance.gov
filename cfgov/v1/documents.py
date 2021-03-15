@@ -36,7 +36,7 @@ class FilterablePagesDocument(Document):
 
     tags = fields.ObjectField(properties={
         'slug': fields.KeywordField(),
-        'name': fields.TextField(analyzer=ngram_tokenizer)
+        'name': fields.TextField()
     })
     categories = fields.ObjectField(properties={
         'name': fields.KeywordField()
