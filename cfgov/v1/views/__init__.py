@@ -130,10 +130,14 @@ def check_permissions(request):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
+    if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
+        redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+
     if not request.user.is_authenticated:
         return HttpResponseRedirect(
             "%s?%s=%s" % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, redirect_to)
         )
+
     view, args, kwargs = resolve(redirect_to)
     kwargs['request'] = request
     try:
