@@ -70,7 +70,6 @@ class FilterableListForm(forms.Form):
         widget=forms.TextInput(attrs={
             'id': 'o-filterable-list-controls_title',
             'class': 'a-text-input a-text-input__full',
-            'placeholder': 'Search for a specific word in item title',
         })
     )
     from_date = FilterableDateField(
