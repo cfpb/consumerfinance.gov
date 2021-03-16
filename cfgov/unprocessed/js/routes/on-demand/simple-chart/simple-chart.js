@@ -479,17 +479,21 @@ function isDateFilter( filters, xAxisData ) {
  */
 function attachDateFilters( startNode, endNode, chart ) {
   startNode.addEventListener( 'change', () => {
-    chart.xAxis[0].setExtremes(
-      new Date( Number( startNode.value ) ),
-      new Date( Number( endNode.value ) )
-    );
+    if ( startNode.value < endNode.value ) {
+      chart.xAxis[0].setExtremes(
+        new Date( Number( startNode.value ) ),
+        new Date( Number( endNode.value ) )
+      );
+    }
   } );
 
   endNode.addEventListener( 'change', () => {
-    chart.xAxis[0].setExtremes(
-      new Date( Number( startNode.value ) ),
-      new Date( Number( endNode.value ) )
-    );
+    if ( startNode.value < endNode.value ) {
+      chart.xAxis[0].setExtremes(
+        new Date( Number( startNode.value ) ),
+        new Date( Number( endNode.value ) )
+      );
+    }
   } );
 }
 

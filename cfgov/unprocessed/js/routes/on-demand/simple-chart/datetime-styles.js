@@ -6,7 +6,8 @@ const datetime = {
   chart: {
     ...styles.chart,
     spacingTop: 0,
-    spacingBottom: 0
+    spacingBottom: 0,
+    marginTop: 70
   },
   xAxis: {
     ...styles.xAxis,
