@@ -5,8 +5,6 @@ import html
 from django.http import HttpResponse
 from django.utils import html as html_util
 
-import wagtail
-
 from ask_cfpb.models.answer_page import AnswerPage
 
 
@@ -63,10 +61,7 @@ def assemble_output():
         output['Language'] = page['language']
         output['RelatedResource'] = page['related_resource__title']
         output['Question'] = page['question'].replace('\x81', '')
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            answer_streamfield = page['answer_content'].stream_data
-        else:
-            answer_streamfield = page['answer_content'].raw_data
+        answer_streamfield = page['answer_content'].raw_data
         answer_text = list(filter(
             lambda item: item['type'] == 'text', answer_streamfield))
         if answer_text:

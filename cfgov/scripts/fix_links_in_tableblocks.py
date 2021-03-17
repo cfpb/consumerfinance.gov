@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 
-import wagtail
 from wagtail.core.models import Page
 from wagtail.documents import get_document_model
 
@@ -16,10 +15,7 @@ def get_tableblocks(page):
     or in a FullWidthText item. So we must check both.
     """
     try:
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            data = page.specific.content.stream_data
-        else:
-            data = page.specific.content.raw_data
+        data = page.specific.content.raw_data
     except Exception:
         return []
     tableblocks = list(

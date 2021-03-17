@@ -31,7 +31,9 @@ from v1.models import (
     CFGOVImage, HomePage, PortalCategory, PortalTopic, SublandingPage
 )
 from v1.tests.wagtail_pages import helpers
-from v1.util.migrations import get_free_path, get_or_create_page, set_data
+from v1.util.migrations import (
+    get_free_path, get_or_create_page, set_streamfield_data
+)
 
 
 now = timezone.now()
@@ -782,7 +784,7 @@ class AnswerPageTest(TestCase):
                 },
             },
         ]
-        set_data(page, "answer_content", data)
+        set_streamfield_data(page, "answer_content", data)
         self.assertTrue(
             page.answer_content_preview().endswith("word word ...")
         )
@@ -823,7 +825,7 @@ class AnswerPageTest(TestCase):
                 },
             },
         ]
-        set_data(page, "answer_content", data)
+        set_streamfield_data(page, "answer_content", data)
         self.assertTrue(page.answer_content_preview().endswith(" ..."))
 
     def test_english_page_context(self):
@@ -874,7 +876,7 @@ class AnswerPageTest(TestCase):
                 },
             },
         ]
-        set_data(page, "answer_content", data)
+        set_streamfield_data(page, "answer_content", data)
         self.assertTrue(page.get_meta_description().endswith("word word ..."))
 
         # First fallback is the short_answer

@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.utils import html as html_util
 
 from v1.models.enforcement_action_page import EnforcementActionPage
-from v1.util.migrations import get_data
+from v1.util.migrations import get_streamfield_data
 
 
 HEADINGS = [
@@ -44,7 +44,7 @@ def assemble_output():
             'Category': page_categories,
             'Preview text': clean_and_strip(page.preview_description)
         }
-        data = get_data(page, 'sidefoot')
+        data = get_streamfield_data(page, 'sidefoot')
         for field in data:
             if field['type'] == 'related_metadata':
                 field_content = field['value']['content']
@@ -57,7 +57,7 @@ def assemble_output():
                     elif block['value'].get('heading', '') == 'File number':
                         row['File number'] = strip_tags.sub(
                             '', block['value'].get('blob', ''))
-        data_content = get_data(page, 'content')
+        data_content = get_streamfield_data(page, 'content')
         for field in data_content:
             if field['type'] == 'full_width_text':
                 field_full_width_text = field['value']

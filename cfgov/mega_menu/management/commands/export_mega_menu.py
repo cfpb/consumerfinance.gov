@@ -3,8 +3,6 @@ import json
 
 from django.core.management.base import BaseCommand
 
-import wagtail
-
 from mega_menu.models import Menu
 
 
@@ -22,8 +20,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         menu = Menu.objects.get(language=options['language'])
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            data = menu.submenus.stream_data
-        else:
-            data = menu.submenus.raw_data
-        json.dump(list(data), options['filename'], indent=4)
+        json.dump(
+            list(menu.submenus.raw_data), options['filename'], indent=4
+        )

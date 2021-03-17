@@ -4,7 +4,6 @@ from django.core.mail import EmailMessage
 from django.template import loader
 from django.utils.functional import cached_property
 
-import wagtail
 from wagtail.core.models import Page
 
 from openpyxl import Workbook
@@ -24,11 +23,7 @@ def get_conference_details_from_page(page_id):
     page = Page.objects.get(pk=page_id).specific
 
     if hasattr(page, 'content'):
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            data = page.content.stream_data
-        else:
-            data = page.content.raw_data
-        for block in data:
+        for block in page.content.raw_data:
             if 'conference_registration_form' == block['type']:
                 return {
                     key: block['value'][key]

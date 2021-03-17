@@ -3,7 +3,7 @@ from django.test import TestCase
 from scripts import _atomic_helpers as atomic
 from v1.models import BlogPage, LearnPage, NewsroomPage, SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_changes, publish_page
-from v1.util.migrations import set_data
+from v1.util.migrations import set_streamfield_data
 
 
 class TestEmailSignup(TestCase):
@@ -11,7 +11,7 @@ class TestEmailSignup(TestCase):
         page = page_cls(slug='slug', title='title')
         publish_page(child=page)
 
-        set_data(page, field, [atomic.email_signup])
+        set_streamfield_data(page, field, [atomic.email_signup])
         publish_changes(child=page)
 
         response = self.client.get('/slug/')

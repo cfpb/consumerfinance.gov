@@ -1,7 +1,7 @@
 import csv
 
 from v1.models import DocumentDetailPage
-from v1.util.migrations import get_data, set_data
+from v1.util.migrations import get_streamfield_data, set_streamfield_data
 
 
 sByURL = {}
@@ -19,7 +19,7 @@ def update_oaa():
         url = 'https://www.consumerfinance.gov' + page.get_url()
         if 'administrative-adjudication-docket' not in url:
             continue
-        data = get_data(page, 'sidefoot')
+        data = get_streamfield_data(page, 'sidefoot')
         for field in data:
             if field['type'] == 'related_metadata':
                 field_content = field['value']['content']
@@ -28,7 +28,7 @@ def update_oaa():
                         if sByURL.get(url):
                             block['value']['blob'] = sByURL[url]
             break
-        set_data(page.specific, 'sidefoot', data)
+        set_streamfield_data(page.specific, 'sidefoot', data)
 
 
 def run():

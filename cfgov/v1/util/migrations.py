@@ -3,7 +3,6 @@ import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
-import wagtail
 from wagtail.core.blocks import StreamValue
 
 from treebeard.mp_tree import MP_Node
@@ -69,23 +68,20 @@ def is_page(page_or_revision):
     return not hasattr(page_or_revision, 'content_json')
 
 
-def get_data(page_or_revision, field_name):
-    """ Get the field data for a given field name on a page or a
+def get_streamfield_data(page_or_revision, field_name):
+    """ Get the streamfield data for a given field name on a page or a
     revision """
     if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            return field.stream_data
-        else:
-            return field.raw_data
+        return field.raw_data
     else:
         revision_content = json.loads(page_or_revision.content_json)
         field = revision_content.get(field_name, "[]")
         return json.loads(field)
 
 
-def set_data(page_or_revision, field_name, data, commit=True):
-    """ Set the field data for a given field name on a page or a
+def set_streamfield_data(page_or_revision, field_name, data, commit=True):
+    """ Set the streamfield data for a given field name on a page or a
     revision. If commit is True (default) save() is called on the
     page_or_revision object. """
     if is_page(page_or_revision):
@@ -185,7 +181,7 @@ def migrate_listblock(page_or_revision, block_path, block, mapper):
     return block, migrated
 
 
-def migrate_data(page_or_revision, block_path, data, mapper):
+def migrate_streamfield_data(page_or_revision, block_path, data, mapper):
     if not block_path:
         return data, False
 
@@ -201,14 +197,14 @@ def migrate_data(page_or_revision, block_path, data, mapper):
 
 def migrate_stream_field(page_or_revision, field_name, block_path, mapper):
     """ Run mapper on blocks within a StreamField on a page or revision. """
-    data = get_data(page_or_revision, field_name)
+    data = get_streamfield_data(page_or_revision, field_name)
 
-    data, migrated = migrate_data(
+    data, migrated = migrate_streamfield_data(
         page_or_revision, block_path, data, mapper
     )
 
     if migrated:
-        set_data(page_or_revision, field_name, data)
+        set_streamfield_data(page_or_revision, field_name, data)
 
 
 @transaction.atomic

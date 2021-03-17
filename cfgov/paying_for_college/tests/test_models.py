@@ -17,7 +17,7 @@ from paying_for_college.models import (
     StudentLoanQuizPage, get_region, make_divisible_by_6
 )
 from v1.models import HomePage
-from v1.util.migrations import set_data
+from v1.util.migrations import set_streamfield_data
 
 
 class MakeDivisibleTest(TestCase):
@@ -81,7 +81,7 @@ class PageModelsTest(TestCase):
             'value': {
                 'question': '?',
                 'answer': 'huh?'}}]
-        set_data(page, 'content', data)
+        set_streamfield_data(page, 'content', data)
         self.assertEqual(
             page.get_template(HttpRequest()),
             'paying-for-college/choose-a-student-loan.html')
