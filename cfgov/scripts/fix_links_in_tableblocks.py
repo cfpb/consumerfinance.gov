@@ -35,7 +35,7 @@ def get_tableblocks(page):
 
 
 def convert_links(links):
-    """ Adds a href to the link with the reative path if a
+    """ Adds a href to the link with the relative path if a
     document ID or page ID is stored
     """
     updated = False
