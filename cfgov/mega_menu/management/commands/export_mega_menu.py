@@ -21,5 +21,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         menu = Menu.objects.get(language=options['language'])
         json.dump(
-            list(menu.submenus.raw_data), options['filename'], indent=4
+            list(menu.submenus.raw_data),
+            options['filename'],
+            indent=4
         )
