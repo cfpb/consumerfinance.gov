@@ -65,6 +65,13 @@ class LoginViewsTestCase(TestCase):
         response = self.client.get('/login/check_permissions/?next=/badurl/')
         self.assertRedirects(response, '/admin/')
 
+    def test_check_permissions_next_url_unsafe(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(
+            '/login/check_permissions/?next=https://google.com/'
+        )
+        self.assertRedirects(response, '/admin/')
+
     def test_check_permissions_next_permissions_problem(self):
         User.objects.create_user(
             username='noperm', email='', password='noperm'

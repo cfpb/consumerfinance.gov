@@ -6,6 +6,12 @@ set -e
 # Echo commands.
 set -x
 
+# Set GIT_COMMITTER_NAME to enable us to `pip -e` from git URLs
+# git < 2.6.5 requires either these variables to be set or the user to exist 
+# in passwd file.
+export GIT_COMMITTER_NAME="cf.gov build user"
+export GIT_COMMITTER_EMAIL="tech@cfpb.gov"
+
 build_artifact_name=cfgov_current_build
 build_artifact="$build_artifact_name.zip"
 cfgov_refresh_volume=/cfgov
