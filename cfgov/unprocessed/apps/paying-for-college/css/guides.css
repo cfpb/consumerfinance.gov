@@ -143,7 +143,6 @@ td, .smlr-text{font-family: Georgia;font-size: 14px;line-height: 20px;font-weigh
 .slate-blue-light {color:#3B7187;}
 .slate-blue-light-bg {background-color:#3B7187; border-color:#3B7187; color:#FFFFFF;}
 .well.slate-blue-light {border-color:#3B7187;color:#212121;}
-a {color:#3B7187;}
 section,header {border-color:#3B7187;}
 
 /* slate blue lighter */
@@ -483,12 +482,6 @@ This just the hero for the Comparison Tool.
     }
 };
 
-.pfc-hero-wrapper a {
-    background-color: transparent;
-    border-bottom: 1px dashed #101820;
-    color: #101820;
-}
-
 .pfc-hero-wrapper a:hover,
 .pfc-hero-wrapper a:active,
 .pfc-hero-wrapper a:focus {
@@ -503,7 +496,6 @@ This just the hero for the Comparison Tool.
 .breadcrumbs a {
     background-color: transparent;
     border-bottom: none;
-    color: #328ed8;
     padding-left: 0.5em;
 }
 
@@ -529,6 +521,12 @@ This just the hero for the Comparison Tool.
     min-height: 155px;
     padding: 1em;
     width: 35%;
+}
+
+.pfc-hero-content .breadcrumbs {
+    border: none;
+    padding: 0;
+    margin-bottom: 15px;
 }
 
 .pfc-hero-content p {
