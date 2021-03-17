@@ -22,7 +22,11 @@
                 <div class="m-form-field">
                     <label class="a-label a-label__heading"
                            for="{{ form.title.id_for_label }}">
-                        Search by keyword(s)
+                        {% if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH') %}
+                            Search by keyword(s)
+                        {% else %}
+                            Item name
+                        {% endif %}
                     </label>
                     {{ form.title }}
                 </div>
