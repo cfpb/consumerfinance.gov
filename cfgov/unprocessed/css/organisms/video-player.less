@@ -88,7 +88,7 @@
 
     // Using the default CFPB cover card image.
     &[src^="/static/img/cfpb_video_cover_card_954x200"] {
-        padding: 10px;
+        padding: unit( 60px / @base-font-size-px, em );
         box-sizing: border-box;
         align-self: center;
 
@@ -96,6 +96,7 @@
         &.o-featured-content-module_img {
             max-width: 100%;
             height: auto;
+            padding: unit( 15px / @base-font-size-px, em );
             left: 0;
             transform: none;
         }
