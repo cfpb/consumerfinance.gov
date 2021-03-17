@@ -30,26 +30,18 @@
 
 {% macro render(type, is_visible, message, explanation=none, links=[]) %}
 
+  {# Lookup table for the CSS class and icon for each notification type. #}
   {% set type_lookup = {
-        'default':    'information-round',
-        'success':    'approved-round',
-        'warning':    'warning-round',
-        'error':      'error-round',
-        'money-tips': 'dollar-round',
-        'caution':   'information-round'
+        'default':    ['', 'information-round'],
+        'success':    [' m-notification__success', 'approved-round'],
+        'warning':    [' m-notification__warning', 'warning-round'],
+        'error':      [' m-notification__error', 'error-round'],
+        'money-tips': [' m-notification__success', 'dollar-round'],
+        'caution':    [' m-notification__error', 'information-round']
       }
   %}
-  {% set icon = type_lookup[type | default( 'default' )] %}
-
-  {% if type == 'money-tips' %}
-    {% set type = ' m-notification__success' %}
-  {% elif type == 'caution' %}
-    {% set type = ' m-notification__error' %}
-  {% elif type %}
-    {% set type = ' m-notification__' + type | string %}
-  {% else %}
-    {% set type = '' %}
-  {% endif %}
+  {% set icon = type_lookup[type | default( 'default' )][1] %}
+  {% set type = type_lookup[type | default( 'default' )][0] %}
 
   <div class="m-notification
               {{- type -}}
