@@ -5,8 +5,6 @@ from io import StringIO
 from django.core.management import call_command
 from django.test import TestCase
 
-import wagtail
-
 from mega_menu.models import Menu
 
 
@@ -42,7 +40,4 @@ class ImportMegaMenuTests(TestCase):
         )
 
         menu = Menu.objects.get(language='en')
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            self.assertEqual(menu.submenus.stream_data, submenus)
-        else:
-            self.assertSequenceEqual(menu.submenus.raw_data, submenus)
+        self.assertSequenceEqual(menu.submenus.raw_data, submenus)

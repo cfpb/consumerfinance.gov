@@ -3,7 +3,6 @@ from unittest import mock
 from django.apps import apps
 from django.test import SimpleTestCase, TestCase
 
-import wagtail
 from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.tests.testapp.models import StreamPage
@@ -63,11 +62,7 @@ class MigrationsUtilTestCase(TestCase):
         given page and saves the page. """
         new_data = [{'type': 'text', 'value': 'new text'}]
         set_streamfield_data(self.page, 'body', new_data)
-
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            data = self.page.body.stream_data
-        else:
-            data = self.page.body.raw_data
+        data = self.page.body.raw_data
         self.assertEqual(data[0]['value'], 'new text')
 
     def test_set_streamfield_data_revision(self):
@@ -75,11 +70,7 @@ class MigrationsUtilTestCase(TestCase):
         given revision and saves the page. """
         new_data = [{'type': 'text', 'value': 'new text'}]
         set_streamfield_data(self.revision, 'body', new_data)
-
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            data = self.revision.as_page_object().body.stream_data
-        else:
-            data = self.revision.as_page_object().body.raw_data
+        data = self.revision.as_page_object().body.raw_data
         self.assertEqual(data[0]['value'], 'new text')
 
     def test_set_streamfield_data_page_without_committing(self):
@@ -103,10 +94,7 @@ class MigrationsUtilTestCase(TestCase):
         migrate_stream_field(self.page, 'body', 'text', mapper)
 
         mapper.assert_called_with(self.page, 'some text')
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            data = self.page.body.stream_data
-        else:
-            data =self.page.body.raw_data
+        data =self.page.body.raw_data
         self.assertEqual(data[0]['value'], 'new text')
 
     def test_migrate_stream_field_revision(self):
@@ -120,10 +108,7 @@ class MigrationsUtilTestCase(TestCase):
         migrate_stream_field(self.revision, 'body', 'text', mapper)
 
         mapper.assert_called_with(self.revision, 'some text')
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            data = self.revision.as_page_object().body.stream_data
-        else:
-            data = self.revision.as_page_object().body.raw_data
+        data = self.revision.as_page_object().body.raw_data
         self.assertEqual(data[0]['value'], 'new text')
 
     @mock.patch('v1.util.migrations.set_streamfield_data')
@@ -199,10 +184,7 @@ class MigrateDataTests(SimpleTestCase):
 
         self.block = TestStreamBlock()
         self.value = self.block.to_python(self.original_data)
-        if wagtail.VERSION < (2, 12):  # pragma: no cover
-            self.data = self.value.stream_data
-        else:
-            self.data = self.value.raw_data
+        self.data = self.value.raw_data
 
     @staticmethod
     def mapper(page_or_revision, data):
