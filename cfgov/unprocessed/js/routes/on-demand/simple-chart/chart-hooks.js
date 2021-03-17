@@ -1,38 +1,19 @@
+/* eslint camelcase: [0] */
 const hooks = {
+  filter( data, filterProp, filterVal ) {
+    if ( !filterVal ) return data;
+    return data.filter( d => {
+      const match = d[filterProp];
+      if ( Array.isArray( match ) ) return match.indexOf( filterVal ) >= 0;
+      return match === filterVal;
+    } );
+  },
+  // Example transform
   monotonicY( data ) {
     return data.map( ( item, i ) => ( {
       ...item,
       y: i + 1
     } ) );
-  },
-
-  enforcement_barCount( data ) {
-    const years = {};
-    data.forEach( d => {
-      const year = new Date( d.x ).getFullYear();
-      if ( years[year] ) years[year]++;
-      else years[year] = 1;
-    } );
-    return Object.keys( years )
-      .sort()
-      .map( k => ( { name: k, y: years[k] } ) );
-  },
-
-  enforcement_reliefCount( data ) {
-    const years = {};
-    data.forEach( d => {
-      const year = new Date( d.x ).getFullYear();
-      const relief = Number( d.relief.replace( /[,\.]/g, '' ) ) / 100;
-      if ( years[year] ) years[year] += relief;
-      else years[year] = relief;
-    } );
-    return Object.keys( years )
-      .sort()
-      .map( k => ( { name: k, y: years[k] } ) );
-  },
-
-  enforcement_barCategories( data ) {
-    return data.map( d => d.name );
   },
 
   enforcement_yAxisLabelsFormatter() {
