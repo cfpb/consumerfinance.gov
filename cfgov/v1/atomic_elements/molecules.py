@@ -163,6 +163,10 @@ class JumboHero(AbstractHero):
 
 
 class Notification(blocks.StructBlock):
+    type = blocks.ChoiceBlock(choices=[
+        ('default', 'Information'),
+        ('warning', 'Warning'),
+    ], required=True, default='warning')
     message = blocks.CharBlock(
         required=True,
         help_text='The main notification message to display.'

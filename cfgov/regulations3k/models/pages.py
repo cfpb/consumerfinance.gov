@@ -19,6 +19,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core.fields import StreamField
 from wagtail.core.models import PageManager
+from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests
 from jinja2 import Markup
@@ -142,7 +143,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             context)
 
 
-class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
+class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
     """Landing page for eregs."""
 
     header = StreamField([
@@ -171,7 +172,7 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
     template = 'regulations3k/landing-page.html'
 
     def get_context(self, request, *args, **kwargs):
-        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
         context.update({
             'get_secondary_nav_items': get_secondary_nav_items,
         })
@@ -197,7 +198,9 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
         return JsonResponse(response.json())
 
 
-class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
+class RegulationPage(
+    ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
+):
     """A routable page for serving an eregulations page by Section ID."""
 
     objects = PageManager()
@@ -290,9 +293,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
 
     def get_context(self, request, *args, **kwargs):
-        context = super(RegulationPage, self).get_context(
-            request, *args, **kwargs
-        )
+        context = super().get_context(request, *args, **kwargs)
         context.update({
             'regulation': self.regulation,
             'current_version': self.get_effective_version(request),
@@ -307,7 +308,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         return context
 
     def get_breadcrumbs(self, request, section=None, **kwargs):
-        crumbs = super(RegulationPage, self).get_breadcrumbs(request)
+        crumbs = super().get_breadcrumbs(request)
 
         if section is not None:
             crumbs = crumbs + [
