@@ -18,7 +18,7 @@ pipeline {
     }
 
     environment {
-        CYPRESS_REPO = 'cypress/included:6.6.0'
+        CYPRESS_REPO = 'cypress/included:6.7.1'
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
@@ -188,7 +188,7 @@ pipeline {
                     //     sh 'cypress run -b chrome --headless'
                     // }
                     // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                    sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
+                    // sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
                     sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                     sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                     sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
