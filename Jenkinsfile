@@ -64,7 +64,7 @@ pipeline {
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                 }
                 sh 'env | sort'
-                sh 'sudo rm -rf ./'
+                sh 'rm -rf ./'
             }
         }
 
