@@ -1,6 +1,7 @@
 const styles = {
   accessibility: {},
   chart: {
+    height: 500,
     style: {
       fontFamily: '"Avenir Next", Arial, sans-serif',
       fontSize: '16px',
@@ -14,7 +15,20 @@ const styles = {
   scrollbar: {
     enabled: false
   },
-  legend: { enabled: false },
+  legend: {
+    enabled: false,
+    symbolWidth: 45,
+    floating: true,
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'top',
+    itemMarginBottom: 4,
+    itemStyle: {
+      color: '#5a5d61',
+      fontFamily: "'Avenir Next', Arial, sans-serif",
+      fontSize: 16
+    }
+  },
   plotOptions: {
     series: {
       animation: {

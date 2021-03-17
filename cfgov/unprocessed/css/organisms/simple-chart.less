@@ -22,12 +22,11 @@
 
   .select-wrapper {
     .grid_column(1,2);
-    margin-bottom: 2.8125em;
+    margin-bottom: 0.9375em;
     border-width: 0 30px 0 0;
     .respond-to-max( @bp-xs-max, {
       display: block;
       width: 100%;
-      margin-bottom: 0.9375em;
     })
   }
 
@@ -95,6 +94,9 @@
         display:none;
       }
     }
+  }
+  .highcharts-navigator-mask-inside{
+    fill: @gray-30;
   }
   .highcharts-tooltip-box{
     background-color: #f7f8f9;

@@ -8,7 +8,7 @@ const datetime = {
     ...styles.chart,
     spacingTop: 0,
     spacingBottom: 0,
-    marginTop: 70
+    marginTop: 100
   },
   xAxis: {
     ...styles.xAxis,
@@ -34,14 +34,7 @@ const datetime = {
       }
     }
   },
-  legend: {
-    enabled: false,
-    symbolWidth: 45,
-    floating: true,
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'top'
-  },
+
   rangeSelector: {
     inputEnabled: false,
     floating: true,
@@ -84,6 +77,10 @@ const datetime = {
   },
   navigator: {
     enabled: true,
+    outlineColor: '#b4b5b6',
+    height: 45,
+    maskFill: 'black',
+    series: { color: '#b4b5b6' },
     handles: {
       height: 20,
       width: 10
@@ -97,9 +94,6 @@ const datetime = {
           maxWidth: 600
         },
         chartOptions: {
-          chart: {
-            marginTop: 100
-          },
           xAxis: {
             labels: {
               step: 2
