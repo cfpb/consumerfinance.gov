@@ -78,11 +78,6 @@ const styles = {
           chart: {
             spacingLeft: 0
           },
-          xAxis: {
-            labels: {
-              step: 2
-            }
-          },
           yAxis: {
             title: {
               x: 0,
