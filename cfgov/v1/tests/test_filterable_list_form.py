@@ -407,7 +407,7 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
             filterable_categories=None
         )
         form.is_bound = True
-        form.cleaned_data = {'categories': [], 'statuses': []}
+        form.cleaned_data = {'categories': [], 'statuses': [], 'products': []}
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.enforcement)
@@ -421,7 +421,7 @@ class TestEnforcementActionsFilterForm(ElasticsearchTestsMixin, TestCase):
             filterable_categories=None
         )
         form.is_bound = True
-        form.cleaned_data = {'categories': [], 'statuses': []}
+        form.cleaned_data = {'categories': [], 'statuses': [], 'products': []}
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.enforcement)
