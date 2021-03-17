@@ -184,20 +184,17 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
-                    timeout(time: 25, unit: 'MINUTES') {
-                        // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
-                        //     sh 'cypress run -b chrome --headless'
-                        // }
-                        dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                        // sh "docker stack deploy -c docker-compose.e2e.yml ${env.STACK_NAME}"
-                        // sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/*'"
-                    }
+                    // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
+                    //     sh 'cypress run -b chrome --headless'
+                    // }
+                    // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
+                    sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
+                    sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
+                    sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
+                    sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
+                    sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
+                    sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
+                    sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/*'"
                 }
 
                 postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
