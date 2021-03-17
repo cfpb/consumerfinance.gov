@@ -167,7 +167,7 @@ class FilterablePagesDocumentSearch:
                 query=self.title,
                 fields=['title', 'tags.name', 'content', 'preview_description'],  # noqa: E501
                 type="phrase_prefix",
-                slop=4)
+                slop=2)
             return search.query(query)
         else:
             return search.query(
