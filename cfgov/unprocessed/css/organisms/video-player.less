@@ -65,8 +65,9 @@
         margin-left: -1px;
         float: left;
         height: 0;
-        // 1280px / 720px (16/9) aspect ratio.
-        padding-top: 720px / 1280px * 100%;
+        // Calculate padding to set the height of the container proportionally
+        // so that we end up with a 16:9 aspect ratio.
+        padding-top: 9 / 16 * 100%;
     }
 
     // To clear float.
