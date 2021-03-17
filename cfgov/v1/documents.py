@@ -162,7 +162,13 @@ class FilterablePagesDocumentSearch:
 
     def order_results(self, search):
         total_results = search.count()
-        return search.sort('-date_published')[0:total_results]
+        if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
+            if self.title:
+                return search.sort('_score')[0:total_results]
+            else:
+                return search.sort('-date_published')[0:total_results]
+        else:
+            return search.sort('-date_published')[0:total_results]
 
     def has_dates(self):
         return self.to_date is not None and self.from_date is not None
