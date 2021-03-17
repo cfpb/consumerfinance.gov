@@ -9,7 +9,8 @@
    Builds notification markup when given:
 
    type:        The type of notification to display.
-                Values may be: 'success', 'error', 'warning', 'default',
+                Values may be: 'information',
+                'success', 'error', 'warning',
                 'money-tips', or 'caution'.
 
    is_visible:  Whether the notification is initially shown or not.
@@ -32,16 +33,16 @@
 
   {# Lookup table for the CSS class and icon for each notification type. #}
   {% set type_lookup = {
-        'default':    ['', 'information-round'],
-        'success':    [' m-notification__success', 'approved-round'],
-        'warning':    [' m-notification__warning', 'warning-round'],
-        'error':      [' m-notification__error', 'error-round'],
-        'money-tips': [' m-notification__success', 'dollar-round'],
-        'caution':    [' m-notification__error', 'information-round']
+        'information': ['', 'information-round'],
+        'success':     [' m-notification__success', 'approved-round'],
+        'warning':     [' m-notification__warning', 'warning-round'],
+        'error':       [' m-notification__error', 'error-round'],
+        'money-tips':  [' m-notification__success', 'dollar-round'],
+        'caution':     [' m-notification__error', 'information-round']
       }
   %}
-  {% set icon = type_lookup[type | default( 'default' )][1] %}
-  {% set type = type_lookup[type | default( 'default' )][0] %}
+  {% set icon = type_lookup[type | default( 'information' )][1] %}
+  {% set type = type_lookup[type | default( 'information' )][0] %}
 
   <div class="m-notification
               {{- type -}}
