@@ -24,10 +24,6 @@
 
 {# BODY items #}
 
-{% block body_classes %}
-    {{ super() }}
-{% endblock body_classes %}
-
 {% block hero -%}
     {% for block in page.header -%}
         {{ render_block.render(block, loop.index) }}
