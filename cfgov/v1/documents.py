@@ -5,7 +5,6 @@ from django.utils.html import strip_tags
 
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-from elasticsearch_dsl import analyzer, token_filter, tokenizer
 from elasticsearch_dsl.query import MultiMatch
 from flags.state import flag_enabled
 
@@ -16,19 +15,6 @@ from v1.models.learn_page import (
     AbstractFilterPage, DocumentDetailPage, EventPage, LearnPage
 )
 from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
-
-
-ngram_tokenizer = analyzer(
-    'filterable_ngram_tokenizer',
-    tokenizer=tokenizer(
-        'filterable_tokenizer',
-        'ngram',
-        min_gram=1,
-        max_gram=8,
-        token_chars=["letter", "digit", "symbol"]
-    ),
-    filter=['lowercase', token_filter('ascii_fold', 'asciifolding')]
-)
 
 
 @registry.register_document
