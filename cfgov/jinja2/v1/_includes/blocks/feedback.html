@@ -20,10 +20,10 @@
         <div class="u-mb15">
             {% if get_messages(request) %}
             {% for message in get_messages(request) %}
-                {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
+                {{ notification.render( message.tags.split(' ')[0], true, message.message ) }}
             {% endfor %}
             {% else %}
-                {{ notification.render('default', false, '') }}
+                {{ notification.render( 'information', false, '' ) }}
             {% endif %}
         </div>
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
