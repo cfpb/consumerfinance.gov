@@ -184,6 +184,7 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 60, unit: 'MINUTES') {
+                        env.HOST_UID_GID = $(id -u):$(id -g)
                         env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
                         // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
                         //     sh 'cypress run -b chrome --headless'
