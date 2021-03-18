@@ -154,7 +154,9 @@ class FilterableListForm(forms.Form):
                 to_date=self.cleaned_data.get('to_date'),
                 from_date=self.cleaned_data.get('from_date'),
                 title=self.cleaned_data.get('title'),
-                archived=self.cleaned_data.get('archived')).search()
+                archived=self.cleaned_data.get('archived'),
+                order_by=self.wagtail_block.value.get(
+                    'order_by', '-date_published')).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(
@@ -361,7 +363,9 @@ class EventArchiveFilterForm(FilterableListForm):
                 authors=self.cleaned_data.get('authors'),
                 to_date=self.cleaned_data.get('to_date'),
                 from_date=self.cleaned_data.get('from_date'),
-                title=self.cleaned_data.get('title')).search()
+                title=self.cleaned_data.get('title'),
+                order_by=self.wagtail_block.value.get(
+                    'order_by', '-date_published')).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(
