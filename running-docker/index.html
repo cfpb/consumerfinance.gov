@@ -332,9 +332,16 @@ and rebuild the Python container using:</p>
 <p>If you have inserted a <a href="https://docs.python.org/3/library/pdb.html">PDB breakpoint</a> in your code
 and need to interact with the running Django process when the breakpoint is reached
 you can run <a href="https://docs.docker.com/engine/reference/commandline/attach/"><code>docker attach</code></a>:</p>
-<pre class="highlight"><code class="language-bash">docker attach consumerfinance.gov_python_1</code></pre>
+<pre class="highlight"><code class="language-bash">docker attach consumerfinancegov_python_1</code></pre>
 
 <p>When you're done, you can detach with <code>Ctrl+P Ctrl+Q</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>docker attach</code> takes the specific container name or ID. 
+Yours may or may not be <code>consumerfinancegov_python_1</code>. 
+To verify, use <code>docker container ls</code> 
+to get the Python container's full name or ID.</p>
+</div>
 <h2 id="useful-docker-commands">Useful Docker commands<a class="headerlink" href="#useful-docker-commands" title="Permanent link">¶</a></h2>
 <p>For <code>docker-compose</code> commands,
 <code>[SERVICE]</code> is the service name that is defined in <code>docker-compose.yml</code>.</p>
