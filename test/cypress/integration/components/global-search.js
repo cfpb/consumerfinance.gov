@@ -1,4 +1,4 @@
-import { GlobalSearch } from '../../components/global-search';
+  import { GlobalSearch } from '../../components/global-search';
 
 const search = new GlobalSearch();
 
@@ -28,7 +28,7 @@ describe( 'Global Search molecule to search for content on the site', () => {
     // Then I click on the search molecule
     search.trigger().click( { force: true } );
     // When I enter "test" in the search molecule
-    search.input().type( 'test' );
+    search.input().type( 'test', { force: true } );
     // Then I should navigate to search portal
     /*  const portalUrl = 'https://search.consumerfinance.gov/' +
                           'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
