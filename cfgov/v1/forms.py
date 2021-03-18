@@ -133,6 +133,12 @@ class FilterableListForm(forms.Form):
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
+    def get_order_by(self):
+        if self.wagtail_block is not None:
+            return self.wagtail_block.value.get('order_by', '-date_published')
+        else:
+            return '-date_published'
+
     def get_page_set(self):
         if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
             categories = self.cleaned_data.get('categories')
@@ -155,8 +161,7 @@ class FilterableListForm(forms.Form):
                 from_date=self.cleaned_data.get('from_date'),
                 title=self.cleaned_data.get('title'),
                 archived=self.cleaned_data.get('archived'),
-                order_by=self.wagtail_block.value.get(
-                    'order_by', '-date_published')).search()
+                order_by=self.get_order_by()).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(
@@ -364,8 +369,7 @@ class EventArchiveFilterForm(FilterableListForm):
                 to_date=self.cleaned_data.get('to_date'),
                 from_date=self.cleaned_data.get('from_date'),
                 title=self.cleaned_data.get('title'),
-                order_by=self.wagtail_block.value.get(
-                    'order_by', '-date_published')).search()
+                order_by=self.get_order_by()).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(
