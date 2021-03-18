@@ -111,8 +111,10 @@ def get_link_tags(html):
 def add_link_markup(tag, request_path):
     """Add necessary markup to the given link and return if modified.
 
-    Add an external link icon if the input is not a CFPB (internal) link.
-    Add an external link redirect if the input is not a gov link.
+    If it's a jump link, return the tag with the page's path removed.
+    If it's an Ask CFPB link, return the tag with the shortened Ask URL.
+    If it's an external link, add an external icon and sign the redirect.
+    If it's a non-CFPB govt link, add external icon and sign the redirect.
     If it contains a descendent that should not get an icon, return the link.
     If not, add a download icon if the input is a file.
     Otherwise (internal link that is not a file), return None.

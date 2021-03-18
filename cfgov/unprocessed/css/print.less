@@ -50,7 +50,9 @@
     }
 
     a[href^="/ask-cfpb"]:after,
-    a[href^="/external-site"]:after {
+    a[href^="/external-site"]:after,
+    a[href*="consumerfinance.gov/ask-cfpb"]:after,
+    a[href*="consumerfinance.gov/external-site"]:after {
         // Output original href for links with external site interstitial.
         content: " (" attr(data-pretty-href) ")";
     }
