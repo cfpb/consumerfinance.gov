@@ -62,6 +62,7 @@ pipeline {
                     env.CYPRESS_PATH = "test/cypress/integration"
                     env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
+                    sh 'pip install --no-cache-dir --upgrade pip docker-compose'
                 }
                 sh 'env | sort'
             }
@@ -189,7 +190,7 @@ pipeline {
                         //     sh 'cypress run -b chrome --headless'
                         // }
                         // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                        sh "pip install --no-cache-dir --upgrade pip docker-compose; docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
+                        sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
