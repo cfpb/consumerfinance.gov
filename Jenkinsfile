@@ -194,7 +194,7 @@ pipeline {
                         sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
                         sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
                         sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
-                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/*'"
+                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/*'"
                         // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
                         sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose"
                         sh "chmod +x /usr/local/bin/docker-compose"
