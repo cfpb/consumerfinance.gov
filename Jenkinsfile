@@ -18,7 +18,7 @@ pipeline {
     }
 
     environment {
-        CYPRESS_REPO = 'cypress/included:6.7.1'
+        CYPRESS_REPO = 'cypress/included:6.8.0'
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'

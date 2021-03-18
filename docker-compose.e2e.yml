@@ -5,7 +5,7 @@ volumes:
 
 services:
   admin-tests:
-    image: cypress/included:6.7.1
+    image: cypress/included:6.8.0
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -16,7 +16,7 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   component-tests:
-    image: cypress/included:6.7.1
+    image: cypress/included:6.8.0
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -27,7 +27,7 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   consumer-tools-tests:
-    image: cypress/included:6.7.1
+    image: cypress/included:6.8.0
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -38,7 +38,7 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   data-research-tests:
-    image: cypress/included:6.7.1
+    image: cypress/included:6.8.0
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -49,7 +49,7 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   paying-for-college-tests:
-    image: cypress/included:6.7.1
+    image: cypress/included:6.8.0
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
@@ -60,7 +60,7 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   rules-policy-tests:
-    image: cypress/included:6.7.1
+    image: cypress/included:6.8.0
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://python:8000
