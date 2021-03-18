@@ -27,7 +27,7 @@ pipeline {
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
         DEPLOY_SUCCESS = false
-        HOST_UID_GID = '$(id -u):$(id -g)'
+        HOST_UID_GID = "$(id -u):$(id -g)"
     }
 
     parameters {
