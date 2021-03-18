@@ -52,6 +52,10 @@ pipeline {
     stages {
         stage('Init') {
             steps {
+                shell(commonConfig.py3Setup + '''
+                    set -x
+                    pip install docker-compose
+                    '''.stripIndent())
                 script {
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
                     env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
@@ -64,13 +68,6 @@ pipeline {
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                 }
                 sh 'env | sort'
-                shell(
-                    commonConfig.py3Setup + '''
-                    set -e
-                    pip install --no-cache-dir -U pip
-                    pip install --no-cache-dir -U docker-compose
-                    '''.stripIndent()
-                )
             }
         }
 
