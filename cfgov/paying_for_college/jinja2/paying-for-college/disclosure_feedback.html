@@ -1,0 +1,59 @@
+{% extends 'layout-full.html' %}
+
+{% block title %}Paying for College - Compare financial aid and college cost{% endblock %}
+
+{% block content_main %}
+
+<header class="block block__flush-top">
+    <h1>Paying for College</h1>
+    <p class="lead-paragraph">Understanding your financial aid offer</p>
+</header>
+
+<hr>
+
+<section class="block">
+    <header>
+        <h2 class="h4">What do you think about this tool?</h2>
+    </header>
+    <div>
+        <p>
+            The Consumer Financial Protection Bureau is a 21st century agency
+            committed to using technology to empower consumers to take control
+            over their economic lives.
+        </p>
+        <p>
+            With your help, you can help us design a tool that makes that
+            process a little bit less daunting &ndash; helping families make
+            smarter choices about student debt.
+        </p>
+        <form method="post" id="feedback-container" class="block">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <p>
+                <label for="id_message"><strong>Enter your comments here</strong></label>
+            </p>
+            <p>
+                {{ form.message }}
+            </p>
+            <p>
+                <button class="a-btn">Submit your feedback</button>
+            </p>
+        </form>
+    </div>
+</section>
+
+{% endblock content_main %}
+
+{% block javascript scoped %}
+    {{ super() }}
+    <script async>
+      if ( document.body.parentElement.className.indexOf( 'no-js' ) === -1 ) {
+        !function(){
+          {# Include site-wide JavaScript. #}
+          var s = [
+            '{{ static('apps/paying-for-college/js/disclosure-feedback.js') }}'
+          ];
+          jsl(s);
+        }()
+      }
+    </script>
+{% endblock javascript %}
