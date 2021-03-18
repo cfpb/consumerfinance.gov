@@ -1,5 +1,6 @@
 /* eslint complexity: ["error", 10] */
 import styles from './line-styles.js';
+const msYear = 365 * 24 * 60 * 60 * 1000;
 
 const datetime = {
   ...styles,
@@ -7,39 +8,33 @@ const datetime = {
     ...styles.chart,
     spacingTop: 0,
     spacingBottom: 0,
-    marginTop: 70
+    marginTop: 100
   },
   xAxis: {
     ...styles.xAxis,
     type: 'datetime',
-    minRange: 30 * 24 * 3600 * 1000,
     startOnTick: true,
     labels: {
-      ...styles.xAxis.labels,
-      format: 'Jan<br/>{value:%Y}'
+      ...styles.xAxis.labels
     },
-    tickInterval: 365 * 24 * 3600 * 1000,
     events: {
       afterSetExtremes: function( evt ) {
+        const dayOffset = evt.trigger === 'rangeSelectorButton' ?
+          86400000 :
+          0;
         const selects = document.querySelectorAll( '.o-simple-chart .select-wrapper select' );
         if ( !selects.length || !evt.userMin ) return;
-        const min = Number( evt.userMin < evt.dataMin ?
-          evt.dataMin : evt.userMin );
+        const min = Number( evt.userMin <= evt.dataMin ?
+          evt.dataMin + dayOffset : evt.userMin );
         const max = Number( evt.userMax > evt.dataMax ?
           evt.dataMax : evt.userMax );
-        selects[0].value = Number( min );
+
+        selects[0].value = Number( min ) - dayOffset;
         selects[1].value = Number( max );
       }
     }
   },
-  legend: {
-    enabled: false,
-    symbolWidth: 45,
-    floating: true,
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'top'
-  },
+
   rangeSelector: {
     inputEnabled: false,
     floating: true,
@@ -57,20 +52,20 @@ const datetime = {
       r: 5
     },
     buttons: [ {
-      type: 'year',
-      count: 1,
+      type: 'millisecond',
+      count: msYear,
       text: '1y',
       title: 'View 1 year'
     },
     {
-      type: 'year',
-      count: 3,
+      type: 'millisecond',
+      count: 3 * msYear,
       text: '3y',
       title: 'View 3 year'
     },
     {
-      type: 'year',
-      count: 5,
+      type: 'millisecond',
+      count: ( 5 * msYear ) + 86400000,
       text: '5y',
       title: 'View 5 years'
     },
@@ -82,6 +77,10 @@ const datetime = {
   },
   navigator: {
     enabled: true,
+    outlineColor: '#b4b5b6',
+    height: 45,
+    maskFill: 'black',
+    series: { color: '#b4b5b6' },
     handles: {
       height: 20,
       width: 10
@@ -95,12 +94,14 @@ const datetime = {
           maxWidth: 600
         },
         chartOptions: {
-          chart: {
-            marginTop: 100
+          xAxis: {
+            labels: {
+              step: 2
+            }
           },
           rangeSelector: {
             buttonPosition: {
-              x: -24,
+              x: -23,
               y: -85
             }
           },
