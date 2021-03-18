@@ -58,6 +58,7 @@ pipeline {
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES2_LOCAL = "${env.IMAGE_ES2_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
+                    env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"')
                 }
                 sh 'env | sort'
             }
@@ -175,7 +176,7 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 60, unit: 'MINUTES') {
                         // sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
-                        sh "docker run -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:6.7.1 npx cypress run -b chrome --headless"
+                        sh "docker run -u $HOST_UID_GID} -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:6.7.1 npx cypress run -b chrome --headless"
                     }
                 }
 
