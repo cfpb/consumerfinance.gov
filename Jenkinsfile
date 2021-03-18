@@ -185,8 +185,8 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 60, unit: 'MINUTES') {
-                        env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
-                        // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
+                        env.CYPRESS_E2E = "-u ${HOST_UID_GID} ${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
+                        // docker.image('${CYPRESS_REPO}').withRun('-u ${HOST_UID_GID} ${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
                         //     sh 'cypress run -b chrome --headless'
                         // }
                         sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
@@ -196,8 +196,8 @@ pipeline {
                         sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
                         // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                        sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose"
-                        sh "chmod +x /usr/local/bin/docker-compose"
+                        sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
+                        sh "chmod +x docker-compose"
                         // virtualenv -p /var/lib/jenkins/.pyenv/versions/3.6.8/bin/python .env
                         sh "virtualenv -p python36 .env;. .env/bin/activate;pip install -U pip"
                         // sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
