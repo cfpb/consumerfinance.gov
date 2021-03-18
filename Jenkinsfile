@@ -53,10 +53,6 @@ pipeline {
         stage('Init') {
             steps {
                 script {
-                    shell(commonConfig.py3Setup + '''
-                        set -x
-                        pip install docker-compose
-                        '''.stripIndent())
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
                     env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
@@ -192,8 +188,8 @@ pipeline {
                         // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
                         //     sh 'cypress run -b chrome --headless'
                         // }
-                        // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                        sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
+                        dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
+                        // sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
