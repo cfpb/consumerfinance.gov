@@ -52,11 +52,11 @@ pipeline {
     stages {
         stage('Init') {
             steps {
-                shell(commonConfig.py3Setup + '''
-                    set -x
-                    pip install docker-compose
-                    '''.stripIndent())
                 script {
+                    shell(commonConfig.py3Setup + '''
+                        set -x
+                        pip install docker-compose
+                        '''.stripIndent())
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
                     env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
