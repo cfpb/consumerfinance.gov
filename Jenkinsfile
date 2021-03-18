@@ -188,14 +188,14 @@ pipeline {
                         // docker.image('${CYPRESS_REPO}').withRun('${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
                         //     sh 'cypress run -b chrome --headless'
                         // }
-                        dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
+                        // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
                         // sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/*'"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
+                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/*'"
                     }
                 }
 
