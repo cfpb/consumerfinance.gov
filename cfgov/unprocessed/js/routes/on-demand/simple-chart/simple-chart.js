@@ -235,11 +235,11 @@ function makeChartOptions(
   }
   if ( defaultObj.series.length > 1 ) {
     const len = defaultObj.series.length;
-    let marg = len * 20;
+    let marg = ( len * 23 ) + 35;
     let y = 0;
-    if ( marg < 70 ) {
-      marg = 70;
-      y = 7 * ( 4 - len );
+    if ( marg < 100 ) {
+      marg = 100;
+      y = 19;
     }
     defaultObj.legend.enabled = true;
     defaultObj.chart.marginTop = marg;
