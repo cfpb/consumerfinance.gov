@@ -27,7 +27,6 @@ pipeline {
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
         DEPLOY_SUCCESS = false
-        HOST_UID_GID = "$(id -u):$(id -g)"
     }
 
     parameters {
@@ -63,6 +62,7 @@ pipeline {
                     env.CYPRESS_PATH = "test/cypress/integration"
                     env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
+                    env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)')
                 }
                 sh 'env | sort'
             }
@@ -198,6 +198,8 @@ pipeline {
                         // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
                         sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose"
                         sh "chmod +x /usr/local/bin/docker-compose"
+                        // virtualenv -p /var/lib/jenkins/.pyenv/versions/3.6.8/bin/python .env
+                        sh "virtualenv -p python36 .env;. .env/bin/activate;pip install -U pip"
                         // sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
                     }
                 }
