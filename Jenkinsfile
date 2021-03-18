@@ -62,7 +62,7 @@ pipeline {
                     env.CYPRESS_PATH = "test/cypress/integration"
                     env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
-                    env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)')
+                    env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"')
                 }
                 sh 'env | sort'
             }
