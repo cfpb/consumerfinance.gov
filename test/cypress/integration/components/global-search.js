@@ -1,4 +1,4 @@
-  import { GlobalSearch } from '../../components/global-search';
+import { GlobalSearch } from '../../components/global-search';
 
 const search = new GlobalSearch();
 
