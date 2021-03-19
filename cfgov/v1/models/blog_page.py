@@ -51,6 +51,7 @@ class LegacyBlogPage(AbstractFilterPage):
             help_text='Content from WordPress unescaped.'
         )),
         ('feedback', v1_blocks.Feedback()),
+        ('reusable_text', v1_blocks.ReusableTextChooserBlock('v1.ReusableText')),
     ])
     objects = CFGOVPageManager()
     edit_handler = AbstractFilterPage.generate_edit_handler(
