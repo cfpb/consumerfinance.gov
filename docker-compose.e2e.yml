@@ -8,7 +8,7 @@ services:
     image: cypress/included:6.8.0
     environment:
       - CI=1
-      - CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}
+      - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
       - NO_COLOR=1
     command: npx cypress run -b chrome --headless --spec 'test/cypress/integration/pages/admin.js'
     working_dir: /app
@@ -19,7 +19,7 @@ services:
     image: cypress/included:6.8.0
     environment:
       - CI=1
-      - CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}
+      - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
       - NO_COLOR=1
     command: npx cypress run -b chrome --headless --spec 'test/cypress/integration/components/**/*'
     working_dir: /app
@@ -30,7 +30,7 @@ services:
     image: cypress/included:6.8.0
     environment:
       - CI=1
-      - CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}
+      - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
       - NO_COLOR=1
     command: npx cypress run -b chrome --headless --spec 'test/cypress/integration/pages/consumer-tools/*'
     working_dir: /app
@@ -41,7 +41,7 @@ services:
     image: cypress/included:6.8.0
     environment:
       - CI=1
-      - CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}
+      - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
       - NO_COLOR=1
     command: npx cypress run -b chrome --headless --spec 'test/cypress/integration/pages/data-research/*'
     working_dir: /app
@@ -52,7 +52,7 @@ services:
     image: cypress/included:6.8.0
     environment:
       - CI=1
-      - CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}
+      - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
       - NO_COLOR=1
     command: npx cypress run -b chrome --headless --spec 'test/cypress/integration/pages/paying-for-college/*'
     working_dir: /app
@@ -63,7 +63,7 @@ services:
     image: cypress/included:6.8.0
     environment:
       - CI=1
-      - CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}
+      - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
       - NO_COLOR=1
     command: npx cypress run -b chrome --headless --spec 'test/cypress/integration/pages/rules-policy/*'
     working_dir: /app
