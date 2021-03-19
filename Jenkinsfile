@@ -65,7 +65,7 @@ pipeline {
                     env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
                 }
                 sh 'env | sort'
-                sh 'virtualenv -p \$JENKINS_HOME/.pyenv/versions/3.9-latest/bin/python .venv39; . .venv39/bin/activate;pip install -U pip docker-compose'
+                sh 'virtualenv -p \$JENKINS_HOME/.pyenv/versions/3.9-latest/bin/python .venv39; . .venv39/bin/activate;pip install --no-cache-dir --upgrade pip'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                 sh "chmod +x docker-compose"
                 sh "./docker-compose -f docker-compose.e2e.yml config"
