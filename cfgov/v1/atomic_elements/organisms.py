@@ -841,7 +841,15 @@ class FilterableList(BaseExpandable):
         required=True,
         help_text='Whether to include a dropdown in the filter controls '
                   'for "Topics"')
-
+    order_by = blocks.ChoiceBlock(
+        choices=[
+            ('-date_published', 'Date Published'),
+            ('_score', 'Relevance')
+        ],
+        required=True,
+        help_text='How to order results',
+        default='-date_published'
+    )
     statuses = blocks.BooleanBlock(default=False, required=False,
                                    label='Filter Enforcement Statuses')
     products = blocks.BooleanBlock(default=False, required=False,
