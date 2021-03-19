@@ -65,6 +65,7 @@ pipeline {
                     env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"')
                 }
                 sh 'env | sort'
+                sh 'virtualenv -p /var/lib/jenkins/.pyenv/versions/3.6.8/bin/python .env;. .env/bin/activate;pip install -U pip'
             }
         }
 
@@ -189,18 +190,16 @@ pipeline {
                         // docker.image('${CYPRESS_REPO}').withRun('-u ${HOST_UID_GID} ${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
                         //     sh 'cypress run -b chrome --headless'
                         // }
-                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
-                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
-                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
-                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
-                        sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
                         // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
                         sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                         sh "chmod +x docker-compose"
-                        // virtualenv -p /var/lib/jenkins/.pyenv/versions/3.6.8/bin/python .env
-                        sh "virtualenv -p python36 .env;. .env/bin/activate;pip install -U pip"
-                        // sh "docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
+                        sh "./docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
+                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
+                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
+                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
+                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
+                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
+                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
                     }
                 }
 
