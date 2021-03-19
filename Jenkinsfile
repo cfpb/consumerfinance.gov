@@ -18,7 +18,6 @@ pipeline {
     }
 
     environment {
-        CYPRESS_REPO = 'cypress/included:6.8.0'
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
@@ -59,16 +58,10 @@ pipeline {
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES2_LOCAL = "${env.IMAGE_ES2_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
-                    env.CYPRESS_PATH = "test/cypress/integration"
-                    env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
-                    env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                     env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
                 }
                 sh 'env | sort'
                 sh 'virtualenv -p \$JENKINS_HOME/.pyenv/versions/3.9-latest/bin/python .venv39; . .venv39/bin/activate;pip install --no-cache-dir --upgrade pip'
-                sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
-                sh "chmod +x docker-compose"
-                sh "./docker-compose -f docker-compose.e2e.yml config"
             }
         }
 
@@ -183,16 +176,21 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 60, unit: 'MINUTES') {
-                        env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
+                        env.CYPRESS_REPO = 'cypress/included:6.8.0'
+                        env.CYPRESS_PATH = "test/cypress/integration"
+                        env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
+                        env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
+                        env.CYPRESS_CMD = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${env.CYPRESS_REPO} npx cypress run -b chrome --headless"
                         sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                         sh "chmod +x docker-compose"
+                        sh "docker network create cfgov"
                         sh "./docker-compose -f docker-compose.e2e.yml up"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
-                        // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
+                        // sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/components/**/*'"
+                        // sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
+                        // sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
+                        // sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
+                        // sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
+                        // sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
                     }
                 }
 
