@@ -62,10 +62,12 @@ pipeline {
                     env.CYPRESS_PATH = "test/cypress/integration"
                     env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
-                    env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"')
+                    env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
                 }
                 sh 'env | sort'
-                sh 'virtualenv -p /var/lib/jenkins/.pyenv/versions/3.6.8/bin/python .env;. .env/bin/activate;pip install -U pip'
+                sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
+                sh "chmod +x docker-compose"
+                sh "docker-compose -f docker-compose.e2e.yml config"
             }
         }
 
@@ -174,12 +176,6 @@ pipeline {
                     expression { return params.DEPLOY }
                 }
             }
-            // agent {
-            //     docker {
-            //         image '${CYPRESS_REPO}'
-            //         args '${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app'
-            //     }
-            // }
             steps {
                 postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
 
@@ -187,13 +183,9 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 60, unit: 'MINUTES') {
                         env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
-                        // docker.image('${CYPRESS_REPO}').withRun('-u ${HOST_UID_GID} ${CYPRESS_ENV} ${CYPRESS_VOLUMES} -w /app') {
-                        //     sh 'cypress run -b chrome --headless'
-                        // }
                         // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                        sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
-                        sh "chmod +x docker-compose"
-                        sh "./docker-compose -f docker-compose.e2e.yml up ${CYPRESS_ENV} ${CYPRESS_VOLUMES}"
+                        sh 'virtualenv -p /var/lib/jenkins/.pyenv/versions/3.6.8/bin/python .env;. .env/bin/activate;pip install -U pip docker-compose'
+                        // sh "docker-compose -f docker-compose.e2e.yml run"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
