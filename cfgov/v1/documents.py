@@ -129,6 +129,9 @@ class FilterablePagesDocumentSearch:
 
     def order_results(self, search):
         total_results = search.count()
+        # Marching on title is the only time we see an actual
+        # impact on scoring, so we should only look to alter the order
+        # if there is a title provided as part of the search.
         if not self.title:
             return search.sort('-date_published')[0:total_results]
         else:
