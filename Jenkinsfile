@@ -184,8 +184,9 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     timeout(time: 60, unit: 'MINUTES') {
                         env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
-                        // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                        // sh "./docker-compose -f docker-compose.e2e.yml run"
+                        sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
+                        sh "chmod +x docker-compose"
+                        sh "./docker-compose -f docker-compose.e2e.yml run -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
