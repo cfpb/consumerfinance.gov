@@ -81,6 +81,20 @@
                         </div>
                     </div>
                 {% endif %}
+                {% if value.products %}
+                    <div class="content-l_col
+                                content-l_col-1-2">
+                        <div class="o-form_group">
+                            <div class="m-form-field">
+                                <label class="a-label a-label__heading"
+                                       for="{{ form.products.id_for_label }}">
+                                    Product
+                                </label>
+                                {{ form.products }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
                 {% if value.authors %}
                     <div class="content-l_col
                                 content-l_col-1-2">

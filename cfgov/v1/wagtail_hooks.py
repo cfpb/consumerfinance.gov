@@ -422,11 +422,6 @@ def register_span_feature(features):
     features.default_features.append('span')
 
 
-@hooks.register('before_serve_shared_page')
-def set_served_by_wagtail_sharing(page, request, args, kwargs):
-    setattr(request, 'served_by_wagtail_sharing', True)
-
-
 @hooks.register('register_permissions')
 def add_export_feedback_permission_to_wagtail_admin_group_view():
     return Permission.objects.filter(

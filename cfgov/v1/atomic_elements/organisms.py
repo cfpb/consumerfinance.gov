@@ -560,6 +560,7 @@ class SimpleChart(blocks.StructBlock):
             ('bar', 'Bar'),
             ('datetime', 'Datetime'),
             ('line', 'Line'),
+            ('tilemap', 'Tilemap')
         ],
         default='datetime',
         required=True
@@ -568,6 +569,19 @@ class SimpleChart(blocks.StructBlock):
     data_source = blocks.TextBlock(
         required=True,
         help_text='URL of the chart\'s data source or an array of JSON data'
+    )
+
+    data_series = blocks.TextBlock(
+        required=False,
+        help_text='A string or array of keys (JSON) or headers (CSV) to '
+        'include as data in the chart. Labels may be included via: '
+        '{"key": <key>, "label": <label>}'
+    )
+
+    x_axis_data = blocks.TextBlock(
+        required=False,
+        help_text='A string for a key/column or data array to include as '
+        'categories or x values, depending on chart type.'
     )
 
     description = blocks.CharBlock(
@@ -589,6 +603,12 @@ class SimpleChart(blocks.StructBlock):
         required=False,
         help_text='Name of the javascript function in chart-hooks.js to run '
         'on the provided data before handing it to the chart'
+    )
+
+    filters = blocks.CharBlock(
+        required=False,
+        help_text='Array of JSON objects of the form {"key": <key>, '
+        '"label": <label>} to filter the underlying chart data on'
     )
 
     style_overrides = blocks.TextBlock(
@@ -821,9 +841,19 @@ class FilterableList(BaseExpandable):
         required=True,
         help_text='Whether to include a dropdown in the filter controls '
                   'for "Topics"')
-
+    order_by = blocks.ChoiceBlock(
+        choices=[
+            ('-date_published', 'Date Published'),
+            ('_score', 'Relevance')
+        ],
+        required=True,
+        help_text='How to order results',
+        default='-date_published'
+    )
     statuses = blocks.BooleanBlock(default=False, required=False,
                                    label='Filter Enforcement Statuses')
+    products = blocks.BooleanBlock(default=False, required=False,
+                                   label='Filter Enforcement Products')
     authors = blocks.BooleanBlock(default=True, required=False,
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
