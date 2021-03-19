@@ -1,9 +1,7 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
-from search.elasticsearch_helpers import (
-    environment_specific_index, ngram_tokenizer
-)
+from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import (
@@ -25,7 +23,7 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
-    title = fields.TextField(attr='title', analyzer=ngram_tokenizer)
+    title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
@@ -95,7 +93,7 @@ class FilterablePagesDocumentSearch:
     def __init__(self,
                  prefix='/', topics=[], categories=[],
                  authors=[], to_date=None, from_date=None,
-                 title='', archived=None):
+                 title='', archived=None, order_by='-date_published'):
         self.prefix = prefix
         self.topics = topics
         self.categories = categories
@@ -104,6 +102,7 @@ class FilterablePagesDocumentSearch:
         self.from_date = from_date
         self.title = title
         self.archived = archived
+        self.order_by = order_by
 
     def filter_topics(self, search):
         return search.filter("terms", tags__slug=self.topics)
@@ -130,7 +129,13 @@ class FilterablePagesDocumentSearch:
 
     def order_results(self, search):
         total_results = search.count()
-        return search.sort('-date_published')[0:total_results]
+        # Marching on title is the only time we see an actual
+        # impact on scoring, so we should only look to alter the order
+        # if there is a title provided as part of the search.
+        if not self.title:
+            return search.sort('-date_published')[0:total_results]
+        else:
+            return search.sort(self.order_by)[0:total_results]
 
     def has_dates(self):
         return self.to_date is not None and self.from_date is not None
