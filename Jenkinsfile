@@ -65,9 +65,10 @@ pipeline {
                     env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
                 }
                 sh 'env | sort'
+                sh 'virtualenv -p \$JENKINS_HOME/.pyenv/versions/3.9-latest/bin/python .venv39; . .venv39/bin/activate;pip install -U pip docker-compose'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                 sh "chmod +x docker-compose"
-                sh "docker-compose -f docker-compose.e2e.yml config"
+                sh "./docker-compose -f docker-compose.e2e.yml config"
             }
         }
 
@@ -184,8 +185,7 @@ pipeline {
                     timeout(time: 60, unit: 'MINUTES') {
                         env.CYPRESS_E2E = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} ${CYPRESS_REPO} npx cypress run -b chrome --headless"
                         // dockerStack.deploy(env.STACK_NAME, 'docker-compose.e2e.yml')
-                        sh 'virtualenv -p /var/lib/jenkins/.pyenv/versions/3.6.8/bin/python .env;. .env/bin/activate;pip install -U pip docker-compose'
-                        // sh "docker-compose -f docker-compose.e2e.yml run"
+                        // sh "./docker-compose -f docker-compose.e2e.yml run"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/components/**/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                         // sh "docker run ${env.CYPRESS_E2E} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
