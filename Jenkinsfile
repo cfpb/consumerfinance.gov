@@ -176,7 +176,7 @@ pipeline {
                     timeout(time: 60, unit: 'MINUTES') {
                         sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                         sh "chmod +x docker-compose"
-                        sh "docker network create cfgov"
+                        sh """if [ "$(docker network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi"""
                         sh "./docker-compose -f docker-compose.e2e.yml up"
                         // sh "./docker-compose -f docker-compose.e2e.yml run component-tests"
                     }
