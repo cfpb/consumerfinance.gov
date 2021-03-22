@@ -29,7 +29,7 @@
                 'data_attribute': 'data-financial-item="savings_collegeSavings"'
             })
         }}
-        
+
         {{
             input.render({
                 'label': 'Estimated income from off-campus job',
@@ -74,11 +74,11 @@
 
     <div class="costs-not-covered-notification">
         {{ notification.render(
-                'caution',
-                true,
-                '',
-                '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
-        ) }} 
+            'caution',
+            true,
+            '',
+            '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
+        ) }}
     </div>
 
     {{ notification.render(
@@ -86,7 +86,7 @@
         true,
         'Money saving tips',
         '<ul>
-            <li>Some states offer grants and funding for specific costs related to education, like child care. Ask the financial aid office or <a href="https://childcare.gov/state-resources-home/" target="_blank" rel="noreferrer noopener">your state or territory\'s child care fund</a>.</li> 
+            <li>Some states offer grants and funding for specific costs related to education, like child care. Ask the financial aid office or <a href="https://childcare.gov/state-resources-home/" target="_blank" rel="noreferrer noopener">your state or territory\'s child care fund</a>.</li>
             <li> Depending on your circumstances, including state and local regulations, you may be eligible for government benefits like TANF (welfare), SNAP (food stamps), Medicaid, and subsidized housing. Reach out to the financial aid office if you are struggling to afford necessities.</li>
         </ul>' | safe
     ) }}
