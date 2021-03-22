@@ -55,11 +55,11 @@
                 {% import 'molecules/notification.html' as notification %}
                 <div class="u-mb15">
                     {% for error in form.non_field_errors() %}
-                        {{- notification.render('error', true, error | richtext ) }}
+                        {{- notification.render( 'error', true, error | richtext ) }}
                     {% endfor %}
                     {% for field in form %}
                         {% for error in field.errors %}
-                            {{- notification.render('error', true, error) }}
+                            {{- notification.render( 'error', true, error ) }}
                         {% endfor %}
                     {% endfor %}
                 </div>

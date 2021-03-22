@@ -31,6 +31,7 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
+
     title = fields.TextField(attr='title', boost=10)
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
@@ -119,7 +120,7 @@ class FilterablePagesDocumentSearch:
     def __init__(self,
                  prefix='/', topics=[], categories=[],
                  authors=[], to_date=None, from_date=None,
-                 title='', archived=None):
+                 title='', archived=None, order_by='-date_published'):
         self.prefix = prefix
         self.topics = topics
         self.categories = categories
@@ -128,6 +129,7 @@ class FilterablePagesDocumentSearch:
         self.from_date = from_date
         self.title = title
         self.archived = archived
+        self.order_by = order_by
 
     def filter_topics(self, search):
         return search.filter("terms", tags__slug=self.topics)
@@ -162,14 +164,13 @@ class FilterablePagesDocumentSearch:
 
     def order_results(self, search):
         total_results = search.count()
-        print(search.to_dict())
-        if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
-            if self.title:
-                return search.sort('_score')[0:total_results]
-            else:
-                return search.sort('-date_published')[0:total_results]
-        else:
+        # Marching on title is the only time we see an actual
+        # impact on scoring, so we should only look to alter the order
+        # if there is a title provided as part of the search.
+        if not self.title:
             return search.sort('-date_published')[0:total_results]
+        else:
+            return search.sort(self.order_by)[0:total_results]
 
     def has_dates(self):
         return self.to_date is not None and self.from_date is not None

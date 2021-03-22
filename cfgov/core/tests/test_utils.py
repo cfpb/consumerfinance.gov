@@ -11,7 +11,7 @@ from core.utils import (
 
 VALID_LINK_MARKUP = re.compile(
 r'<a class="a-link a-link__icon" '  # noqa: E122
-   r'data-orig-href="https://example.com(/[\w\.]+)?" '  # noqa: E121
+   r'data-pretty-href="https://example.com(/[\w\.]+)?" '  # noqa: E121
    r'href="/external-site/\?ext_url=https%3A%2F%2Fexample.com(%2F[\w\.]+)?&amp;signature=\w+">'  # noqa: E501
     r'<span class="a-link_text">foo</span> '  # noqa: E131
     r'<svg class="cf-icon-svg".*>.+</svg>'  # noqa: E501
@@ -154,3 +154,30 @@ class LinkUtilsTests(TestCase):
             add_link_markup(tag, path),
             VALID_LINK_MARKUP
         )
+
+    def test_ask_short_url(self):
+        # Valid Ask CFPB URLs
+        urls = [
+            '/ask-cfpb/what-is-a-construction-loan-en-108/',
+            'https://cfpb.gov/ask-cfpb/what-is-a-construction-loan-en-108/',
+            'https://consumerfinance.gov/ask-cfpb/what-is-a-construction-loan-en-108/',  # noqa: E501
+            'https://www.consumerfinance.gov/ask-cfpb/what-is-a-construction-loan-en-108/'  # noqa: E501
+        ]
+        path = '/'
+        for url in urls:
+            tag = ("<a href='{}'>foo</a>".format(url))
+            self.assertIn(
+                'data-pretty-href="cfpb.gov/askcfpb/108"',
+                add_link_markup(tag, path)
+            )
+
+        # Invalid Ask CFPB URLs
+        urls = [
+            '/ask-cfpb/not-a-valid-link/',
+            '/askcfpb/123',
+            'https://consumerfinance.gov/ask-cfpb-in-the-url',
+            'https://consumerfinance.gov/ask-cfpb-in-the-url/123'
+        ]
+        for url in urls:
+            tag = ("<a href='{}'>foo</a>".format(url))
+            self.assertIsNone(add_link_markup(tag, path))

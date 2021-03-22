@@ -134,7 +134,7 @@
                         'data_attribute': 'data-financial-item="grant_otherFederal"'
                     })
                 }}
-                
+
                 {{
                     input.render({
                         'label': 'State grant(s)',
@@ -183,7 +183,7 @@
                         'data_attribute': 'data-financial-item="grant_gibill"'
                     })
                 }}
-                
+
                 {{
                     input.render({
                         'label': 'Other servicemember benefits',
@@ -308,7 +308,7 @@
                         'value': '0',
                         'data_attribute': 'data-financial-item="income_employerAssist"'
                     })
-                }} 
+                }}
                 {{
                     input.render({
                         'label': 'Other funding',
@@ -316,7 +316,7 @@
                         'value': '0',
                         'data_attribute': 'data-financial-item="income_otherFunding"'
                     })
-                }}                     
+                }}
             {% endcall %}
 
             {% set expandable_settings = {
@@ -363,7 +363,7 @@
                             'value': '0',
                             'data_attribute': 'data-financial-item="fedLoan_directUnsub"'
                         })
-                    }} 
+                    }}
                     {{
                         text_item.render({
                             'label': 'Interest rate (%)',
@@ -424,7 +424,7 @@
                             'value': '0',
                             'data_attribute': 'data-financial-item="publicLoan_institutional"'
                         })
-                    }} 
+                    }}
                     {{
                         input.render({
                             'label': 'Interest rate (%)',
@@ -477,7 +477,7 @@
 
                     <li class="graduate-content"><strong>Direct PLUS loan (aka Grad PLUS)</strong>: Graduate students can apply for a Direct PLUS loan from the U.S. Department of Education.</li>
 
-                    <li><strong>Private student loan</strong>: You or a family member can apply for a private student loan from a bank or credit union. Students without credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>  
+                    <li><strong>Private student loan</strong>: You or a family member can apply for a private student loan from a bank or credit union. Students without credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>
                 </ul>
                 {{ notification.render(
                     'warning',
@@ -495,7 +495,7 @@
                         <li><strong>Further guidance</strong>: <a href="https://studentaid.gov/understand-aid/types/loans/federal-vs-private/" target="_blank" class="external-link" rel="noreferrer noopener">Visit the U.S. Department of Education for a detailed discussion of loan options.</a> You can also contact the school’s financial aid office.</li>
                     </ul>' | safe
                 ) }}
-               
+
                 <div class="plus-loan-expandable graduate-content">
                     {% set expandable_settings = {
                         'label': 'Direct PLUS (Grad PLUS) loan' | safe,
@@ -531,7 +531,7 @@
                             }}
                         </div>
                        {{ notification.render(
-                            'default',
+                            'information',
                             true,
                             '',
                             'More details about Direct PLUS (Grad PLUS) loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/grad" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>' | safe
@@ -578,11 +578,11 @@
                                         'label': 'Although parent PLUS loans are made to parents only—not students—some students take responsibility for repaying parent PLUS loans. Click here if you plan to repay your parent’s PLUS loans, and this loan amount will be added to your projected debt total.',
                                   })
                                 }}
-                                
+
                             </div>
                         </div>
                        {{ notification.render(
-                            'default',
+                            'information',
                             true,
                             '',
                             'More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a></span>' | safe
