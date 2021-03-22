@@ -10,6 +10,7 @@ const urlParameters = {
   'pid': 'stateModel.pid',
   'houp': 'stateModel.programHousing',
   'typp': 'stateModel.programType',
+  'prop': 'stateModel.programProgress',
   'lenp': 'stateModel.programLength',
   'ratp': 'stateModel.programRate',
   'depp': 'stateModel.programDependency',

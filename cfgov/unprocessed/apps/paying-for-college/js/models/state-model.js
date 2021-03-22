@@ -17,7 +17,7 @@ import {
 } from '../dispatchers/update-view.js';
 
 const urlVals = [
-  'pid', 'programHousing', 'programType', 'programLength',
+  'pid', 'programHousing', 'programType', 'programProgress', 'programLength',
   'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
   'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign'
 ];
@@ -166,9 +166,10 @@ const stateModel = {
    * @param {string} property  What property to update based on
    */
   _updateApplicationState: property => {
-    const urlParams = [ 'pid', 'programHousing', 'programType', 'programLength',
-      'programRate', 'programDependency', 'costsQuestion', 'expensesRegion',
-      'impactOffer', 'impactLoans', 'utmSource', 'utm_medium', 'utm_campaign' ];
+    const urlParams = [ 'pid', 'programHousing', 'programType', 'programProgress',
+      'programLength', 'programRate', 'programDependency', 'costsQuestion',
+      'expensesRegion', 'impactOffer', 'impactLoans', 'utmSource', 'utm_medium',
+      'utm_campaign' ];
 
     const finUpdate = [ 'programType', 'programRate', 'programDependency',
       'programLength', 'programHousing' ];

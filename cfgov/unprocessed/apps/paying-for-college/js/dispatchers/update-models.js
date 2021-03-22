@@ -6,6 +6,7 @@ import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
 import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
+import { navigationView } from '../views/navigation-view.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { isNumeric, stringToNum } from '../util/number-utils.js';
@@ -14,6 +15,7 @@ import {
   getSchoolValue,
   getStateValue
 } from '../dispatchers/get-model-values.js';
+import { updateState } from './update-state.js';
 import { updateSchoolView } from './update-view.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
@@ -195,6 +197,14 @@ function updateModelsFromQueryString( queryObj ) {
   if ( queryObj.hasOwnProperty( 'oid' ) ) {
     queryObj.cobs = 'o';
   }
+
+  // If there's an iped, skip the intro page
+  if ( queryObj.hasOwnProperty( 'iped' ) ) {
+    updateState.getStarted( true );
+    updateState.activeSection( 'school-info' );
+    navigationView.updateView();
+  }
+
   // If we have no cobs, check if there are costs values
   if ( !queryObj.hasOwnProperty( 'cobs' ) ) {
     const costKeys = [ 'tuit', 'hous', 'diro', 'book', 'indo', 'nda', 'tran' ];
