@@ -223,7 +223,7 @@ export class AdminPage {
   }
 
   selectTableEditorButton( name ) {
-    cy.get( '.modal-body' ).find( `[name="${ name }"]` ).click();
+    cy.get( '.modal-body' ).find( `[name="${ name }"]` ).click( { force: true } );
   }
 
   searchFirstTableCell( text ) {
@@ -242,7 +242,7 @@ export class AdminPage {
 
   typeTableEditorTextbox( text ) {
     // Wait for Wagtail JS to finish initializing. If we don't, it interrupts the typing.
-    cy.wait( 500 );
+    cy.wait( 1000 );
     return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( text );
   }
 
