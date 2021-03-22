@@ -44,6 +44,7 @@ const financialView = {
         const prop = elem.dataset.financialItem;
         const isRate = prop.substr( 0, 5 ) === 'rate_';
         const isFee = prop.substr( 0, 4 ) === 'fee_';
+        const isHours = prop.substr( -5, 5) === 'Hours';
         const isNumber = elem.dataset.isNumber === 'true';
         let val = getFinancialValue( prop );
 
@@ -55,6 +56,8 @@ const financialView = {
           val = decimalToPercentString( val, 2 );
         } else if ( isNumber ) {
           val = Math.round( val * 100 ) / 100;
+        } else if ( isHours ) {
+          val = ( Math.round( val * 10 ) / 10 ) + ' hours';
         } else {
           val = numberToMoney( { amount: val, decimalPlaces: 0 } );
         }

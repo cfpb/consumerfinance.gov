@@ -45,8 +45,7 @@
                 text_item.render({
                     'label': 'Divided by $15 an hour after taxes',
                     'value': '&divide; $15',
-                    'type': 'text',
-                    'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
+                    'type': 'text'
                 })
             }}            
         </div>
@@ -56,11 +55,11 @@
                 'label': 'Work needed to cover payment',
                 'value': '$0',
                 'type': 'text',
-                'data_attribute': 'data-state-item="debt_repayHours"'
+                'data_attribute': 'data-financial-item="debt_repayHours"'
             })
         }}
 
-        <h3>About your estimated payment</h3>
+        <h3 class="affording-loans-choices_about">About your estimated payment</h3>
 
         <p>Your actual payment will depend on how much you actually borrow and which repayment plan you choose for federal loans. This estimate assumes a standard repayment plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments are available, but the total costs of borrowing will be higher.</p>
 
@@ -134,7 +133,7 @@
         </div>
         <div data-state-based-visibility='expenses-surplus'>
             {{ notification.render(
-            'default',
+            'information',
             true,
             '',
             'The estimate leaves you with a surplus of <span class="gap" data-expenses-item="total_remainder">$373</span>, increasing your savings.' | safe
