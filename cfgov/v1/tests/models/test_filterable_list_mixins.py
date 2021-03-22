@@ -4,7 +4,7 @@ from unittest import mock
 from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
-from wagtail.core.models import Site, Page
+from wagtail.core.models import Page, Site
 
 from scripts._atomic_helpers import filter_controls
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
@@ -161,9 +161,7 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
 
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
         self.root = Site.objects.get(is_default_site=True).root_page
-        self.home_page = Page(title="Home")
-        self.root.add_child(instance=self.home_page)
-        self.home_page.add_child(instance=self.filterable_page)
+        self.root.add_child(instance=self.filterable_page)
 
         self.set_filterable_controls(filter_controls)
 
@@ -192,17 +190,15 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
 
     def test_get_filterable_children_pages(self):
         filter_controls['value']['filter_children'] = True
-        filter_controls['value']['filter_siblings'] = False
         self.set_filterable_controls(self.filter_controls)
 
         qs = self.filterable_page.get_filterable_queryset()
         self.assertEqual(qs.count(), 1)
         self.assertEqual(qs[0].pk, self.child_page.pk)
-        self.assertEqual("/home/", self.filterable_page.get_filterable_root())
+        self.assertEqual("/test/", self.filterable_page.get_filterable_root())
 
     def test_get_filterable_root_site_wide(self):
         filter_controls['value']['filter_children'] = False
-        filter_controls['value']['filter_siblings'] = False
         self.set_filterable_controls(self.filter_controls)
 
         root = self.filterable_page.get_filterable_root()
