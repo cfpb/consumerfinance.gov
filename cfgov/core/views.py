@@ -167,14 +167,11 @@ class ExternalURLNoticeView(FormMixin, TemplateView):
         form = self.get_form()
 
         if not form.is_valid():
-            return self.raise_404()
+            raise Http404(
+                'URL invalid, not whitelisted, or signature validation failed'
+            )
 
         return super(ExternalURLNoticeView, self).get(request)
-
-    def raise_404(self):
-        raise Http404(
-            'URL invalid, not whitelisted, or signature validation failed'
-        )
 
 
 class TranslatedTemplateView(TemplateView):
