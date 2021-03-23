@@ -12,5 +12,13 @@ Disallow: /ask-cfpb/search/
 Disallow: /ask-cfpb/search-by-tag/
 Disallow: /es/obtener-respuestas/buscar/
 Disallow: /es/obtener-respuestas/buscar-por-etiqueta/
+Disallow: *&authors
+Disallow: *?authors
+Disallow: *&categories
+Disallow: *?categories
+Disallow: *&from_date
+Disallow: *&to_date
+Disallow: *?from_date
+Disallow: *?to_date
 
 sitemap: https://www.consumerfinance.gov/sitemap.xml
