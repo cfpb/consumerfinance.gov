@@ -123,6 +123,7 @@ export class AdminPage {
   }
 
   openPage( name ) {
+    this.openNavigationTab( 'Pages' );
     cy.get( '.c-explorer__item__link' ).contains( name ).click();
   }
 
@@ -219,7 +220,7 @@ export class AdminPage {
   }
 
   selectFirstTableCell() {
-    cy.get( '.htCore' ).find( 'td' ).first().click().click();
+    this.getFirstTableCell().click().click();
   }
 
   selectTableEditorButton( name ) {
@@ -227,7 +228,7 @@ export class AdminPage {
   }
 
   searchFirstTableCell( text ) {
-    return cy.get( '.htCore' ).find( 'td' ).first().contains( text );
+    return this.getFirstTableCell().contains( text );
   }
 
   saveTableEditor() {
@@ -237,13 +238,17 @@ export class AdminPage {
   }
 
   selectTableEditorTextbox() {
-    return cy.get( '.table-block-modal .public-DraftEditor-content' ).click();
+    return cy.get( '.table-block-modal' ).within( () => {
+      cy.get( '.public-DraftEditor-content' ).click();
+    } );
   }
 
   typeTableEditorTextbox( text ) {
     // Wait for Wagtail JS to finish initializing. If we don't, it interrupts the typing.
     cy.wait( 1000 );
-    return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( text );
+    return cy.get( '.table-block-modal' ).within( () => {
+      cy.get( '.public-DraftEditor-content' ).type( text );
+    } );
   }
 
   selectInternalLink( text ) {
