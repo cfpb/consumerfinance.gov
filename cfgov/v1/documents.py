@@ -32,7 +32,7 @@ class FilterablePagesDocument(Document):
         'slug': fields.KeywordField()
     })
 
-    title = fields.TextField(attr='title', boost=10)
+    title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
@@ -153,7 +153,7 @@ class FilterablePagesDocumentSearch:
         if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
             query = MultiMatch(
                 query=self.title,
-                fields=['title', 'tags.name', 'content', 'preview_description'],  # noqa: E501
+                fields=['title^10', 'tags.name^10', 'content', 'preview_description'],  # noqa: E501
                 type="phrase_prefix",
                 slop=2)
             return search.query(query)
@@ -170,6 +170,7 @@ class FilterablePagesDocumentSearch:
         if not self.title:
             return search.sort('-date_published')[0:total_results]
         else:
+            print(search.to_dict())
             return search.sort(self.order_by)[0:total_results]
 
     def has_dates(self):
