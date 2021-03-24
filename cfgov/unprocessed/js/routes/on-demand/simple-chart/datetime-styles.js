@@ -115,11 +115,6 @@ const datetime = {
               step: 2
             }
           },
-          xAxis: {
-            labels: {
-              step: 2
-            }
-          },
           rangeSelector: {
             buttonPosition: {
               x: -23,
