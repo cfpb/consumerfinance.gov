@@ -22,13 +22,16 @@
 
    value.data_attribute:  Data attribute for value element.
 
+   value.additional_attributes: Additional attributes for main element.
+
    ========================================================================== #}
 
 
 {% macro render( value ) -%}
 <div class="financial-item
             {{ 'financial-item__' + ( value.type if value.type else 'text' ) }}
-            {% if value.status %} {{ 'financial-item__' + value.status }} {% endif %}">
+            {% if value.status %} {{ 'financial-item__' + value.status }} {% endif %}"
+            {% if value.additional_attributes %} {{ value.additional_attributes | safe }} {% endif %}>
     <div class="financial-item_label">
         <div>{{ value.label | safe }}</div>
         {%- if value.helper_text -%}

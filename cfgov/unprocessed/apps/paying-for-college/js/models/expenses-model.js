@@ -117,11 +117,15 @@ const expensesModel = {
 
     for ( const key in propertyTranslator ) {
       if ( propertyTranslator.hasOwnProperty( key ) ) {
-        let value = stringToNum(
-          expensesModel.rawData[key][region][salaryRange]
-        );
-        value = Math.round( value / 12 );
-        expensesModel.values[propertyTranslator[key]] = value;
+        const data = expensesModel.rawData[key];
+        if ( data ) {
+          let value = stringToNum(
+            expensesModel.rawData[key][region][salaryRange]
+          );
+          value = Math.round( value / 12 );
+          expensesModel.values[propertyTranslator[key]] = value;
+        }
+        
       }
     }
 
