@@ -10,7 +10,7 @@ export class AdminPage {
   }
 
   openMostRecentPage() {
-    cy.get( '.listing-page' ).find( 'a' ).first().click();
+    cy.get( '.listing-page a' ).first().click();
   }
 
   publishPage() {
@@ -120,7 +120,7 @@ export class AdminPage {
   }
 
   clickBlock( name ) {
-    cy.get( `.action-add-block-${ name }` ).click();
+    cy.get( `.action-add-block-${ name }`, { timeout: 60000 } ).click();
   }
 
   addFullWidthTextElement() {
@@ -208,21 +208,21 @@ export class AdminPage {
   }
 
   getFirstTableCell() {
-    return cy.get( '.htCore' ).find( 'td' ).first()
+    return cy.get( '.htCore td' ).first()
   }
 
-  getModalBody() {
-    cy.get( '.modal-body', { timeout: 60000 } ).as( 'modalBody' );
+  getTableModal() {
+    cy.get( '.table-block-modal', { timeout: 60000 } ).as( 'tableModal' );
   }
 
   selectFirstTableCell() {
     cy.get( '.htCore td' ).first().as( 'firstTableCell' );
     cy.get( '@firstTableCell' ).click().click();
-    this.getModalBody();
+    this.getTableModal();
   }
 
   selectTableEditorButton( name ) {
-    cy.get( '@modalBody' ).find( `[name="${ name }"]` )
+    cy.get( '@tableModal' ).find( `[name="${ name }"]` )
       .click( { force: true } );
   }
 
@@ -237,11 +237,11 @@ export class AdminPage {
   saveTableEditor() {
     // Wait for editor to register entered text before saving.
     cy.wait( 1000 );
-    cy.get( '@modalBody' ).find( '#table-block-save-btn' ).click();
+    cy.get( '@tableModal' ).find( '#table-block-save-btn' ).click();
   }
 
   selectTableEditorTextbox() {
-    return cy.get( '@modalBody' ).find( '.public-DraftEditor-content' ).click();
+    return cy.get( '@tableModal' ).find( '.public-DraftEditor-content' ).click();
   }
 
   typeTableEditorTextbox( text ) {

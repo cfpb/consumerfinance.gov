@@ -157,7 +157,7 @@ describe( 'Admin', () => {
     it( 'should be able to save an empty cell', () => {
       // cy.focused().clear();
       admin.typeTableEditorTextbox( '{selectall}{backspace}' );
-      admin.getModalBody();
+      admin.getTableModal();
       admin.saveTableEditor();
       admin.getFirstTableCell().should( 'be.empty' );
       admin.closeTableEditor();
