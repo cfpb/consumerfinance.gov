@@ -60,6 +60,9 @@ pipeline {
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
+                sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
+                sh "chmod +x docker-compose"
+                sh '''if [ "$(docker network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
             }
         }
 
@@ -168,21 +171,55 @@ pipeline {
                     expression { return params.DEPLOY }
                 }
             }
-            steps {
-                postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
-
-                script {
-                    LAST_STAGE = env.STAGE_NAME
-                    timeout(time: 60, unit: 'MINUTES') {
-                        sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
-                        sh "chmod +x docker-compose"
-                        sh '''if [ "$(docker network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
-                        sh "./docker-compose -f docker-compose.e2e.yml up"
-                        // sh "./docker-compose -f docker-compose.e2e.yml run component-tests"
+            parallel {
+                stage('Cypress admin tests') {
+                    agent {
+                        label "cypress-admin-tests"
+                    }
+                    steps {
+                        sh "./docker-compose -f docker-compose.e2e.yml run admin-tests"
                     }
                 }
-
-                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
+                stage('Cypress component tests') {
+                    agent {
+                        label "cypress-component-tests"
+                    }
+                    steps {
+                        sh "./docker-compose -f docker-compose.e2e.yml run component-tests"
+                    }
+                }
+                stage('Cypress consumer tools tests') {
+                    agent {
+                        label "cypress-consumer-tools-tests"
+                    }
+                    steps {
+                        sh "./docker-compose -f docker-compose.e2e.yml run consumer-tools-tests"
+                    }
+                }
+                stage('Cypress data research tests') {
+                    agent {
+                        label "cypress-data-research-tests"
+                    }
+                    steps {
+                        sh "./docker-compose -f docker-compose.e2e.yml run data-research-tests"
+                    }
+                }
+                stage('Cypress paying for college tests') {
+                    agent {
+                        label "cypress-paying-for-college-tests"
+                    }
+                    steps {
+                        sh "./docker-compose -f docker-compose.e2e.yml run paying-for-college-tests"
+                    }
+                }
+                stage('Cypress rules-policy tests') {
+                    agent {
+                        label "cypress-rules-policy-tests"
+                    }
+                    steps {
+                        sh "./docker-compose -f docker-compose.e2e.yml run rules-policy-tests"
+                    }
+                }
             }
         }
     }
