@@ -1,64 +1,40 @@
 <section class="college-costs_tool-section college-costs_tool-section__summary" data-tool-section="summary">
-    <h2>Review your plan and projected outcomes</h2>
+    <div class="block block__flush-top">
+        <h2>Review your plan and projected outcomes</h2>
 
-    <p>Here is an overview of this school’s costs, your plan for covering them, the debt you are considering, and the school’s results on a few key metrics. As you look over these numbers again, think about whether you are feeling good about going to this school with this financial plan. If you have multiple offers, use this summary to compare them.</p>
+        <p>Here is an overview of this school’s costs, your plan for covering them, the debt you are considering, and the school’s results on a few key metrics. As you look over these numbers again, think about whether you are feeling good about going to this school with this financial plan. If you have multiple offers, use this summary to compare them.</p>
 
-    <div data-state-based-visibility="none">
-        <button class="a-btn">Print summary</button>
-        <button class="a-btn a-btn__secondary">Save as a link</button>
-        <p class="u-mt15"><small>You will also have a chance to print all documents at the end.</small></p>
+        <p class="u-right">
+            <a class="a-link
+                      a-link__icon"
+               href="javascript:window.print()">
+                {{ svg_icon('print') }}
+                <span class="a-link_text">Print</span>
+            </a>
+        </p>
+        <div data-state-based-visibility="none">
+            <button class="a-btn">Print summary</button>
+            <button class="a-btn a-btn__secondary">Save as a link</button>
+            <p class="u-mt15"><small>You will also have a chance to print all documents at the end.</small></p>
+        </div>
     </div>
 
     <div class="block block__mid school-summary">
         <h3 class="summary_header">School and living situation</h3>
-        {{
-            text_item.render({
-                'label': 'School:',
-                'value': '[school name]',
-                'type': 'text',
-                'data_attribute': 'data-school-item="school"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Program type:',
-                'value': '[program type]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programTypeText"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Program name:',
-                'value': '[program name]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programName"',
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Number of years:',
-                'value': '[program length]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programLengthText"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Tuition type:',
-                'value': '[program rate]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programRateText"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Where do you plan to live?',
-                'value': '[housing]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programHousingText"'
-            })
-        }}
+        <dl>
+            <dt>School:</dt>
+            <dd><span data-school-item="school"></span></dd>
+            <dt>Program type:</dt>
+            <dd><span data-state-item="programTypeText"></span></dd>
+            <dt>Program name:</dt>
+            <dd><span data-state-item="programName"></span></dd>
+            <dt>Number of years:</dt>
+            <dd><span data-state-item="programLengthText"></span></dd>
+            <dt>Tuition type:</dt>
+            <dd><span data-state-item="programRateText"></span></dd>
+            <dt>Where do you plan to live?</dt>
+            <dd><span data-state-item="programHousingText"></span></dd>
+        </dl>
     </div>
 
     <div class="block block__mid m-full-width-text">
@@ -202,7 +178,7 @@
                     <td><p data-state-item="repayParentPlus"></p></td>
                 </tr>
                 <tr class="indented-row">
-                    <td><p>Prior student debt</p></td>
+                    <td><p>Current student debt from prior schooling</p></td>
                     <td><p></p></td>
                 </tr>
                 <tr>

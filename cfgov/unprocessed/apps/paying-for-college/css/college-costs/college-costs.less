@@ -97,8 +97,20 @@
 			}
 
 			.financial-item + .financial-item {
-				margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );;
+				margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
 			}
+
+			dl {
+				dt {
+			        font-size: inherit;
+			    	text-transform: none;
+			    	letter-spacing: normal;
+			    	margin-bottom: 0;
+		    	}
+		    	dd:after {
+		    		height: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+		    	}
+		    }
 		}
 
 		.other-borrowing-btns {
@@ -174,9 +186,5 @@
     	.subtotal-row {
         	font-weight: 600;
     	}
-    	tr th:last-child,
-    	tr td:last-child {
-            text-align: right;
-        }
     }
 }
