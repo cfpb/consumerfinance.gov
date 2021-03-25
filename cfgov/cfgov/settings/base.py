@@ -839,6 +839,9 @@ PARSE_LINKS_EXCLUSION_LIST = [
     r"^/policy-compliance/rulemaking/regulations/\d+/",
     # DjangoRestFramework API pages where link icons are intrusive
     r"^/oah-api/",
+    # External site interstitial (if we're here, the links have already been
+    # parsed)
+    r"^/external-site/",
 ]
 
 # Required by django-extensions to determine the execution directory used by
