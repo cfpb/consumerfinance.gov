@@ -9,12 +9,8 @@ export class AdminPage {
     cy.get( 'form' ).submit();
   }
 
-  pageList() {
-    return cy.get( '.listing-page' );
-  }
-
   openMostRecentPage() {
-    this.pageList().find( 'a' ).first().click();
+    cy.get( '.listing-page' ).find( 'a' ).first().click();
   }
 
   publishPage() {
@@ -57,26 +53,16 @@ export class AdminPage {
     this.submitForm();
   }
 
-  openMortgageConstants() {
-    this.openNavigationTab( 'Data Research' );
-    this.selectSubMenu( 'Mortgage performance constants' );
-  }
-
-  addMortgageConstant() {
-    cy.get( 'a[href="/admin/data_research/mortgagedataconstant/create/"]' ).click();
+  addMortgageData( name ) {
+    cy.get( `a[href="/admin/data_research/mortgage${ name }/create/"]` )
+      .click();
     cy.get( '#id_name' ).type( 'test' );
     this.submitForm();
   }
 
-  openMortgageMetadata() {
+  openMortgageData( name ) {
     this.openNavigationTab( 'Data Research' );
-    this.selectSubMenu( 'Mortgage metadata' );
-  }
-
-  addMortgageMetadata() {
-    cy.get( 'a[href="/admin/data_research/mortgagemetadata/create/"]' ).click();
-    cy.get( '#id_name' ).type( 'Test' );
-    this.submitForm();
+    this.selectSubMenu( `Mortgage ${ name }` );
   }
 
   openNavigationTab( name ) {
@@ -93,24 +79,25 @@ export class AdminPage {
 
   editRegulation() {
     this.getFirstTableRow().trigger( 'mouseover' );
-    cy.get( 'a[href="/admin/regulations3k/part/edit/1/"]' ).click( { force: true } );
+    cy.get( 'a[href="/admin/regulations3k/part/edit/1/"]' )
+      .click( { force: true } );
     this.submitForm();
   }
 
   copyRegulation() {
     this.getFirstTableRow().find( '.children' ).click();
     this.getFirstTableRow().contains( 'Copy' ).click( { force: true } );
-    this.setRegulationEffectiveDate();
+    this.setRegulationEffectiveDate( '2020-01-01' );
     this.submitForm();
   }
 
   cleanUpRegulations() {
-    cy.get( 'table' ).find( 'tr' ).last().contains( 'Delete' ).click( { force: true } );
+    cy.get( 'table tr' ).last().contains( 'Delete' ).click( { force: true } );
     this.submitForm();
   }
 
-  setRegulationEffectiveDate() {
-    cy.get( '#id_effective_date' ).clear().type( '2020-01-01' );
+  setRegulationEffectiveDate( name ) {
+    cy.get( '#id_effective_date' ).clear().type( name );
   }
 
   openMegaMenu() {
@@ -124,15 +111,20 @@ export class AdminPage {
 
   openPage( name ) {
     this.openNavigationTab( 'Pages' );
-    cy.get( '.c-explorer__item__link' ).contains( name ).click();
+    cy.get( '.c-explorer__item__link' ).contains( name )
+      .click( { force: true } );
   }
 
   addBlogChildPage() {
     cy.visit( '/admin/pages/add/v1/blogpage/319/' );
   }
 
+  clickBlock( name ) {
+    cy.get( `.action-add-block-${ name }` ).click();
+  }
+
   addFullWidthTextElement() {
-    cy.get( '.action-add-block-full_width_text' ).click();
+    this.clickBlock( 'full_width_text' );
   }
 
   openBuildingBlockActivity() {
@@ -212,43 +204,51 @@ export class AdminPage {
   }
 
   addTable() {
-    cy.get( '.action-add-block-table_block' ).click();
+    this.clickBlock( 'table_block' );
   }
 
   getFirstTableCell() {
-    return cy.get( '.htCore' ).find( 'td' ).first();
+    return cy.get( '.htCore' ).find( 'td' ).first()
+  }
+
+  getModalBody() {
+    cy.get( '.modal-body', { timeout: 60000 } ).as( 'modalBody' );
   }
 
   selectFirstTableCell() {
-    this.getFirstTableCell().click().click();
+    cy.get( '.htCore td' ).first().as( 'firstTableCell' );
+    cy.get( '@firstTableCell' ).click().click();
+    this.getModalBody();
   }
 
   selectTableEditorButton( name ) {
-    cy.get( '.modal-body' ).find( `[name="${ name }"]` ).click( { force: true } );
+    cy.get( '@modalBody' ).find( `[name="${ name }"]` )
+      .click( { force: true } );
   }
 
-  searchFirstTableCell( text ) {
-    return this.getFirstTableCell().contains( text );
+  searchFirstTableCell( name ) {
+    return cy.get( '@firstTableCell' ).contains( name );
+  }
+
+  closeTableEditor() {
+    cy.get( '#close-table-block-modal-btn' ).click( {force: true} );
   }
 
   saveTableEditor() {
     // Wait for editor to register entered text before saving.
     cy.wait( 1000 );
-    cy.get( '#table-block-save-btn' ).click();
+    cy.get( '@modalBody' ).find( '#table-block-save-btn' ).click();
   }
 
   selectTableEditorTextbox() {
-    return cy.get( '.table-block-modal' ).within( () => {
-      cy.get( '.public-DraftEditor-content' ).click();
-    } );
+    return cy.get( '@modalBody' ).find( '.public-DraftEditor-content' ).click();
   }
 
   typeTableEditorTextbox( text ) {
-    // Wait for Wagtail JS to finish initializing. If we don't, it interrupts the typing.
-    cy.wait( 1000 );
-    return cy.get( '.table-block-modal' ).within( () => {
-      cy.get( '.public-DraftEditor-content' ).type( text );
-    } );
+    /* Wait for Wagtail JS to finish initializing.
+       If we don't, it interrupts the typing. */
+    return cy.get( '.public-DraftEditor-content' )
+      .last().type( text, { force: true } );
   }
 
   selectInternalLink( text ) {
