@@ -173,48 +173,48 @@ pipeline {
             }
             parallel {
                 stage('Cypress admin tests') {
-                    agent {
-                        label "cypress-admin-tests"
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
                         sh "./docker-compose -f docker-compose.e2e.yml run admin-tests"
                     }
                 }
                 stage('Cypress component tests') {
-                    agent {
-                        label "cypress-component-tests"
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
                         sh "./docker-compose -f docker-compose.e2e.yml run component-tests"
                     }
                 }
                 stage('Cypress consumer tools tests') {
-                    agent {
-                        label "cypress-consumer-tools-tests"
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
                         sh "./docker-compose -f docker-compose.e2e.yml run consumer-tools-tests"
                     }
                 }
                 stage('Cypress data research tests') {
-                    agent {
-                        label "cypress-data-research-tests"
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
                         sh "./docker-compose -f docker-compose.e2e.yml run data-research-tests"
                     }
                 }
                 stage('Cypress paying for college tests') {
-                    agent {
-                        label "cypress-paying-for-college-tests"
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
                         sh "./docker-compose -f docker-compose.e2e.yml run paying-for-college-tests"
                     }
                 }
                 stage('Cypress rules-policy tests') {
-                    agent {
-                        label "cypress-rules-policy-tests"
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
                         sh "./docker-compose -f docker-compose.e2e.yml run rules-policy-tests"
