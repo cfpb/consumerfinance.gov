@@ -28,7 +28,6 @@ from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
 from legacy.views import token_provider
-from legacy.views.complaint import ComplaintLandingView
 from regulations3k.views import redirect_eregs
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
