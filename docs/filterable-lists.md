@@ -35,9 +35,9 @@ As of our initial release, our filterable forms can be broken into three specifi
 
 This is the base form that the vast majority of cf.gov uses for filterable lists. It defines the core fields that are visible on the form as well as functions to assist in setting initial data and sanitizing form input. The import information regarding FilterableListForm is that it defines the function `get_page_set` which is responsible for invoking a search query. The logic regarding how to pass categories into the search object is due to the previously mentioned `CategoryFilterableListMixin` which modifies the initial search parameters to enforce a category search if and only if the `filterable_categories` list is passed into the form when initialized.
 
-#### EnforcementActionsFilterableListForm
+#### EnforcementActionsFilterForm
 
-The EnforcementActionsFilterableListForm is an extension of FilterableListForm, adding on two fields specific to Enforcement Actions, and using a refined search class to provide search functionality against the new fields and a proper ordering by initial filing date.
+The EnforcementActionsFilterForm is an extension of FilterableListForm, adding on two fields specific to Enforcement Actions, and using a refined search class to provide search functionality against the new fields and a proper ordering by initial filing date.
 
 #### EventArchiveFilterForm
 
