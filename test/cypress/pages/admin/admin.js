@@ -208,7 +208,7 @@ export class AdminPage {
   }
 
   getFirstTableCell() {
-    return cy.get( '.htCore td' ).first()
+    return cy.get( '.htCore td' ).first();
   }
 
   getTableModal() {
