@@ -117,10 +117,12 @@ export class AdminPage {
 
   addBlogChildPage() {
     cy.visit( '/admin/pages/add/v1/blogpage/319/' );
+    cy.url().should( 'include', 'blogpage' );
   }
 
   clickBlock( name ) {
-    cy.get( `.action-add-block-${ name }`, { timeout: 60000 } ).click();
+    return cy.get( `.action-add-block-${ name }` )
+      .should('be.visible').click();
   }
 
   addFullWidthTextElement() {
@@ -194,7 +196,7 @@ export class AdminPage {
   }
 
   getFirstTableRow() {
-    return cy.get( '.listing' ).find( 'tr' ).eq( 1 );
+    return cy.get( '.listing tr' ).eq( 1 );
   }
 
   getPageMetadataReports() {
@@ -212,7 +214,9 @@ export class AdminPage {
   }
 
   getTableModal() {
-    cy.get( '.table-block-modal', { timeout: 60000 } ).as( 'tableModal' );
+    cy.get( '.table-block-modal', { timeout: 60000 } )
+      .should('be.visible')
+      .as( 'tableModal' );
   }
 
   selectFirstTableCell() {
@@ -237,7 +241,10 @@ export class AdminPage {
   saveTableEditor() {
     // Wait for editor to register entered text before saving.
     cy.wait( 1000 );
-    cy.get( '@tableModal' ).find( '#table-block-save-btn' ).click();
+    cy.get( '@tableModal', { timeout: 60000 } )
+      .should('be.visible')
+      .find( '#table-block-save-btn' )
+      .click();
   }
 
   selectTableEditorTextbox() {
