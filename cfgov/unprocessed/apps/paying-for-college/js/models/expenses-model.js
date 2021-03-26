@@ -125,7 +125,6 @@ const expensesModel = {
           value = Math.round( value / 12 );
           expensesModel.values[propertyTranslator[key]] = value;
         }
-        
       }
     }
 
