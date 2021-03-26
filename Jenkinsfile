@@ -178,7 +178,6 @@ pipeline {
                     expression { return params.DEPLOY }
                 }
             }
-            LAST_STAGE = env.STAGE_NAME
             parallel {
                 stage('admin-tests') {
                     agent {
