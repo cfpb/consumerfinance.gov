@@ -1,9 +1,7 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
-from search.elasticsearch_helpers import (
-    environment_specific_index, ngram_tokenizer
-)
+from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import (
@@ -25,13 +23,14 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
-    title = fields.TextField(attr='title', analyzer=ngram_tokenizer)
+    title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
     start_dt = fields.DateField()
     end_dt = fields.DateField()
     statuses = fields.KeywordField()
+    products = fields.KeywordField()
     initial_filing_date = fields.DateField()
     model_class = fields.KeywordField()
 
@@ -51,6 +50,13 @@ class FilterablePagesDocument(Document):
         statuses = getattr(instance, 'statuses', None)
         if statuses is not None:
             return [status.status for status in statuses.all()]
+        else:
+            return None
+
+    def prepare_products(self, instance):
+        products = getattr(instance, 'products', None)
+        if products is not None:
+            return [p.product for p in products.all()]
         else:
             return None
 
@@ -87,7 +93,7 @@ class FilterablePagesDocumentSearch:
     def __init__(self,
                  prefix='/', topics=[], categories=[],
                  authors=[], to_date=None, from_date=None,
-                 title='', archived=None):
+                 title='', archived=None, order_by='-date_published'):
         self.prefix = prefix
         self.topics = topics
         self.categories = categories
@@ -96,6 +102,7 @@ class FilterablePagesDocumentSearch:
         self.from_date = from_date
         self.title = title
         self.archived = archived
+        self.order_by = order_by
 
     def filter_topics(self, search):
         return search.filter("terms", tags__slug=self.topics)
@@ -122,7 +129,13 @@ class FilterablePagesDocumentSearch:
 
     def order_results(self, search):
         total_results = search.count()
-        return search.sort('-date_published')[0:total_results]
+        # Marching on title is the only time we see an actual
+        # impact on scoring, so we should only look to alter the order
+        # if there is a title provided as part of the search.
+        if not self.title:
+            return search.sort('-date_published')[0:total_results]
+        else:
+            return search.sort(self.order_by)[0:total_results]
 
     def has_dates(self):
         return self.to_date is not None and self.from_date is not None
@@ -168,6 +181,7 @@ class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSear
 
     def __init__(self, **kwargs):
         self.statuses = kwargs.pop('statuses')
+        self.products = kwargs.pop('products')
         super().__init__(**kwargs)
 
     def filter_date(self, search):
@@ -179,7 +193,9 @@ class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSear
     def apply_specific_filters(self, search):
         search = search.filter("term", model_class="EnforcementActionPage")
         if self.statuses != []:
-            return search.filter("terms", statuses=self.statuses)
+            search = search.filter("terms", statuses=self.statuses)
+        if self.products != []:
+            search = search.filter("terms", products=self.products)
 
         return search
 

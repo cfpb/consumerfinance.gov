@@ -23,6 +23,7 @@ class BrowsePage(CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', organisms.FeaturedContent()),
+        ('notification', molecules.Notification()),
     ], blank=True)
 
     content = StreamField([

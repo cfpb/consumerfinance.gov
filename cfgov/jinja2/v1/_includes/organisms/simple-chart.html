@@ -13,11 +13,7 @@
   {% if download_text %}
     {{download_text}}
   {% else %}
-    {% if download_source.endswith('json') %}
-      JSON file
-    {% else %}
-      CSV file
-    {% endif %}
+    {{download_source}}
   {% endif %}
 {%- endmacro %}
 
@@ -27,35 +23,42 @@
     {% endif %}
 
     {% if value.title %}
-    <h3>{{ value.title }}</h3>
+    <h2>{{ value.title }}</h2>
     {% endif %}
 
     {% if value.subtitle %}
     <p>{{ value.subtitle }}</p>
     {% endif %}
 
+    <div data-title="{{value.title}}" class="chart-selects"></div>
+
     <div class="simple-chart-target"
          data-chart-type="{{ value.chart_type }}"
-         data-source="{{ value.data_source }}"
+         data-source='{{ value.data_source }}'
+         data-series='{{ value.data_series }}'
+         data-x-axis-data='{{ value.x_axis_data }}'
          data-description="{{ value.description }}"
          data-y-axis-label="{{ value.y_axis_label }}"
          {% if value.x_axis_label %}
               data-x-axis-label="{{ value.x_axis_label }}"
          {% endif %}
          {% if value.transform %}data-transform="{{ value.transform }}"{% endif %}
+         {% if value.filters %}data-filters='{{ value.filters }}'{% endif %}
          {% if value.style_overrides %}data-style-overrides='{{ value.style_overrides }}'{% endif %}
          >
     </div>
 
-    {% set download_source = value.download_file or value.data_source %}
+    {% set download_source = value.download_file %}
 
     <p class="m-chart-footnote block__sub block__border-top block short-desc">
         {% if value.credits %}<strong>Source:</strong> {{value.credits}}<br>{% endif %}
         {% if value.date_published %}<strong>Date Published:</strong> {{value.date_published}}<br>{% endif %}
-        <strong>Download:</strong>
-        <a class="icon-link icon-link__download"
-           href="{{ download_source }}">
-          <span class="icon-link_text">{{make_download_name(download_source, value.download_text)}}</span></a><br>
+        {% if download_source %}
+          <strong>Download:</strong>
+          <a class="icon-link icon-link__download"
+             href="{{ download_source }}">
+            <span class="icon-link_text">{{make_download_name(download_source, value.download_text)}}</span></a><br>
+        {% endif %}
         {% if value.notes%}<strong>Notes:</strong> {{value.notes}}{% endif %}
     </p>
 </div>

@@ -1,6 +1,8 @@
 {% extends "front/base_update.html" %}
 {% load staticfiles %}
-{% block title %}Understanding your financial aid offer{% endblock %}
+{% block title %}
+    Understanding your financial aid offer | Consumer Financial Protection Bureau
+{% endblock %}
 
 {% block page_meta %}
 <meta charset="UTF-8" />
@@ -1097,6 +1099,6 @@
 {% block share_box %}
 {% endblock %}
 
-{% block app_js %}
-<script src="{% static "paying_for_college/js/main.js" %}"></script>
+{% block page_js %}
+<script src="{% static 'apps/paying-for-college/js/disclosure-main.js' %}"></script>
 {% endblock %}
