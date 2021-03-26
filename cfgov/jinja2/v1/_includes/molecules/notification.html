@@ -9,7 +9,9 @@
    Builds notification markup when given:
 
    type:        The type of notification to display.
-                Values may be: 'success', 'error', or 'warning'.
+                Values may be: 'information',
+                'success', 'error', 'warning',
+                'money-tips', or 'caution'.
 
    is_visible:  Whether the notification is initially shown or not.
                 Default is false.
@@ -29,15 +31,18 @@
 
 {% macro render(type, is_visible, message, explanation=none, links=[]) %}
 
+  {# Lookup table for the CSS class and icon for each notification type. #}
   {% set type_lookup = {
-        'default': 'information-round',
-        'success': 'approved-round',
-        'warning': 'warning-round',
-        'error':   'error-round',
+        'information': ['', 'information-round'],
+        'success':     [' m-notification__success', 'approved-round'],
+        'warning':     [' m-notification__warning', 'warning-round'],
+        'error':       [' m-notification__error', 'error-round'],
+        'money-tips':  [' m-notification__success', 'dollar-round'],
+        'caution':     [' m-notification__error', 'information-round']
       }
   %}
-  {% set icon = type_lookup[type | default( 'default' )] %}
-  {% set type = (' m-notification__' + type | string) if type else '' %}
+  {% set icon = type_lookup[type | default( 'information' )][1] %}
+  {% set type = type_lookup[type | default( 'information' )][0] %}
 
   <div class="m-notification
               {{- type -}}
@@ -45,9 +50,11 @@
       {{ svg_icon(icon) }}
       <div class="m-notification_content"
           {{ 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
+          {%- if message %}
           <div class="h4 m-notification_message">{{ message }}</div>
+          {% endif -%}
           {%- if explanation %}
-              <p class="m-notification_explanation">{{ explanation }}</p>
+              <div class="m-notification_explanation">{{ explanation }}</div>
           {% endif -%}
           {% for link in links %}
               {% if link.text %}

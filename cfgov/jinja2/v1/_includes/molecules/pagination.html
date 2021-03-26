@@ -30,7 +30,7 @@
 
     <nav class="m-pagination"
          role="navigation"
-         aria-label="Pagination">
+         aria-label="{{ _('Pagination') }}">
         {%- if current_page > 1 %}
         <a class="a-btn
                   m-pagination_btn-prev"
@@ -72,12 +72,14 @@
                     {{ current_page }} out of {{ total_pages }} total pages
                 </span>
             </label>
-            {% for (key, value) in request.GET.items() %}
-                {% if value != '' %}
-                    <input type="hidden"
-                           name="{{ key }}"
-                           value="{{ value }}">
-                {% endif %}
+            {% for (key, value_as_list) in request.GET.lists() %}
+                {% for list_item in value_as_list %}
+                    {% if list_item != '' and key != 'page' %}
+                        <input type="hidden"
+                               name="{{ key }}"
+                               value="{{ list_item }}">
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
             <input id="m-pagination_current-page-{{ index | string }}"
                    class="m-pagination_current-page"

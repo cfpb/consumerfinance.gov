@@ -1,10 +1,8 @@
-from __future__ import unicode_literals
-
+import csv
 import datetime
 import logging
-from six import BytesIO
+from io import StringIO
 
-import unicodecsv
 from dateutil import parser
 
 from core.utils import format_file_size
@@ -107,8 +105,9 @@ def fill_nation_row_date_values(date_set):
 
 def export_downloadable_csv(geo_type, late_value):
     """
-    Export a dataset to S3 as a UTF-8 CSV file, adding single quotes
-    to FIPS codes so that Excel doesn't strip leading zeros.
+    Export a dataset to S3 as a UTF-8 CSV file.
+
+    We add single quotes to FIPS codes so Excel doesn't strip leading zeros.
 
     geo_types are County, MetroArea or State.
     late_values are percent_30_60 or percent_90.
@@ -117,7 +116,7 @@ def export_downloadable_csv(geo_type, late_value):
     Each CSV is to start with a National row for comparison.
 
     CSVs are posted at
-    https://files.consumerfinance.gov/data/mortgage-performance/downloads/  # noqa: E501
+    https://files.consumerfinance.gov/data/mortgage-performance/downloads/
 
     The script also stores URLs and file sizes for use in page footnotes.
     """
@@ -158,8 +157,8 @@ def export_downloadable_csv(geo_type, late_value):
         geo_type, LATE_VALUE_TITLE[late_value], thru_month)
     _map = geo_dict.get(geo_type)
     fips_list = _map['fips_list']
-    csvfile = BytesIO()
-    writer = unicodecsv.writer(csvfile)
+    csvfile = StringIO()
+    writer = csv.writer(csvfile)
     writer.writerow(_map['headings'] + date_list)
     nation_starter = [NATION_STARTER[heading]
                       for heading in _map['headings']]

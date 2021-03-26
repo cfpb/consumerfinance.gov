@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
@@ -28,22 +26,34 @@ class TestConfRegFormBlockValidation(TestCase):
             'at_capacity_message': 'At capacity message',
             'failure_message': 'Failure message'
         })
-
-        try:
-            block.clean(value)
-        except ValidationError:
-            self.fail('no question and no answer should not fail validation')
+        self.assertTrue(block.clean(value))
 
     def test_conf_reg_block_with_question_but_no_answer_fails_validation(self):
         block = ConferenceRegistrationForm()
-        value = block.to_python({'govdelivery_question_id': '12345'})
+        value = block.to_python({
+            'govdelivery_code': 'USCFPB_999',
+            'govdelivery_question_id': '12345',
+            'govdelivery_answer_id': '',
+            'capacity': 123,
+            'success_message': 'Success message',
+            'at_capacity_message': 'At capacity message',
+            'failure_message': 'Failure message'
+        })
 
         with self.assertRaises(ValidationError):
             block.clean(value)
 
     def test_conf_reg_block_with_answer_but_no_question_fails_validation(self):
         block = ConferenceRegistrationForm()
-        value = block.to_python({'govdelivery_answer_id': '67890'})
+        value = block.to_python({
+            'govdelivery_code': 'USCFPB_999',
+            'govdelivery_question_id': '',
+            'govdelivery_answer_id': '67890',
+            'capacity': 123,
+            'success_message': 'Success message',
+            'at_capacity_message': 'At capacity message',
+            'failure_message': 'Failure message'
+        })
 
         with self.assertRaises(ValidationError):
             block.clean(value)
@@ -59,8 +69,4 @@ class TestConfRegFormBlockValidation(TestCase):
             'at_capacity_message': 'At capacity message',
             'failure_message': 'Failure message'
         })
-
-        try:
-            block.clean(value)
-        except ValidationError:
-            self.fail('question with answer should not fail validation')
+        self.assertTrue(block.clean(value))

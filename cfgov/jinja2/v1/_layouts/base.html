@@ -1,7 +1,12 @@
-{% set language = page.language if page and page.language else 'en' %}
-
+{%- if current_language -%}
+  {% set language = current_language %}
+{%- elif page and page.language -%}
+  {% set language = page.language %}
+{%- else -%}
+  {% set language = 'en' %}
+{% endif -%}
 <!DOCTYPE html>
-{% if flag_enabled('CFPB_RECRUITING', request) %}
+{% if flag_enabled('CFPB_RECRUITING') %}
 <!--
     ============================================================================
 
@@ -55,9 +60,7 @@
     <meta name="description"
           content="
             {%- block desc -%}
-                {{- page.search_description if page and page.search_description
-                    else 'Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.'
-                -}}
+                {{- meta_description if page else '' -}}
             {%- endblock -%}
           ">
     <link rel="canonical" href="{{ request.build_absolute_uri() | lower }}">
@@ -157,6 +160,13 @@
   the head, then file an issue or PR to discuss including it.
 #}
 
+    {# Schema data in JSON-LD format #}
+    {% if schema_json %}
+    <script type="application/ld+json">
+{{ schema_json | tojson(indent=2) }}
+    </script>
+    {% endif %}
+
     {% block javascript_loader %}
     <script>
       {# Minified dynamic JavaScript loader that injects a script tag in the head of the page. #}
@@ -166,7 +176,7 @@
     </script>
     {% endblock javascript_loader %}
 
-    {% if flag_enabled('AB_TESTING', request) %}
+    {% if flag_enabled('AB_TESTING') %}
     {# Google Optimize page-hiding snippet #}
     <style>
         .optimize-loading { opacity: 0 !important; }
@@ -207,7 +217,7 @@
     {% include "v1/modernizr.html" %}
 </head>
 
-<body{% block body_classes %}{% endblock body_classes %}>
+<body{% block body_classes %}{% if page and page.archived %} class="archived-page" {% endif %}{% endblock body_classes %}>
 
 {#
   =========
@@ -239,13 +249,26 @@
 
     {% block header %}
         {% import 'organisms/header.html' as o_header with context %}
-        {{ o_header.render( true, language ) }}
+        {{ o_header.render(
+            show_banner=true,
+            show_mega_menu=true,
+            language=language
+        ) }}
     {% endblock header %}
 
-    {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
-    {{ wagtailuserbar() }}
+    {% block wagtailuserbar %}
+        {#
+          WAGTAILUSERBAR IN-PAGE VIEW CONTROLS
+          If you _don't_ want this to show up in a particular template,
+          add an empty wagtailuserbar block to that template.
+        #}
+        {{ wagtailuserbar() }}
+    {% endblock %}
 
     {% block banner_top %}
+        {% if page and page.archived %}
+            {% include 'molecules/archived-banner.html' %}
+        {% endif %}
     {% endblock %}
 
     {# PRIMARY CONTENT #}
@@ -320,9 +343,6 @@
           {% if js_source | length > 0 %}
             s.push( '{{ static('js/routes/' + app_page_url(request) + 'index.js') }}' );
           {% endif %}
-          {% if flag_enabled('TURBOLINKS', request) %}
-            s.push( '{{ static('js/routes/on-demand/turbolinks.js') }}' );
-          {% endif %}
           {# Pass scripts to JavaScript loader. #}
           jsl(s);
         }();
@@ -331,20 +351,42 @@
 
     {% include '_includes/snippets/search_gov.html' %}
 
+    {# Qualtrics website feedback snippet for the FY2020 Q4 Ask CFPB survey #}
+    {% if flag_enabled('ASK_SURVEY_INTERCEPT') %}
+        <script type='text/javascript'>
+        (function(){var g=function(e,h,f,g){
+        this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++){for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};
+        this.set=function(a,c){var b="",b=new Date;b.setTime(b.getTime()+6048E5);b="; expires="+b.toGMTString();document.cookie=a+"="+c+b+"; path=/; "};
+        this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"v"==h&&(e=Math.random()>=e/100?0:100),a=[h,e,0],this.set(f,a.join(":"));else return!0;var c=a[1];if(100==c)return!0;switch(a[0]){case "v":return!1;case "r":return c=a[2]%Math.floor(100/c),a[2]++,this.set(f,a.join(":")),!c}return!0};
+        this.go=function(){if(this.check()){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)}};
+        this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
+        try{(new g(100,"r","QSI_S_ZN_6Ka36KPDI3e9I21","https://zn6ka36kpdi3e9i21-cfpbfedramp.gov1.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_6Ka36KPDI3e9I21")).start()}catch(i){}})();
+        </script><div id='ZN_6Ka36KPDI3e9I21'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+    {% endif %}
+
     {% endblock javascript %}
 
     {% block font_tracker %}
     <!--[if gt IE 8]><!-->
     {#
-        The invalid media attribute is intentional. It forces the browser to
-        download the stylesheet without blocking rendering and is updated after
-        the stylesheet is downloaded.
+      Media type (print) doesn't match the current environment,
+      so browser decides it's not that important and loads the stylesheet
+      asynchronously (without delaying page rendering).
+      On load, we change media type so that the stylesheet
+      gets applied to screens.
+
+      See https://stackoverflow.com/questions/32759272/how-to-load-css-asynchronously/46750893#46750893
     #}
     <link rel="stylesheet"
           href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50"
-          media="none"
-          onload="media='all'">
-    <noscript><link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
+          media="print"
+          onload="this.media='all'">
+    {#
+      Fallback that only gets inserted when JavaScript is disabled,
+      in which case we can't load CSS asynchronously.
+    #}
+    <noscript>
+      <link rel="stylesheet" href="//fast.fonts.net/t/1.css?apiType=css&projectid=44e8c964-4684-44c6-a6e3-3f3da8787b50">
     </noscript>
     <!--<![endif]-->
     {% endblock font_tracker %}

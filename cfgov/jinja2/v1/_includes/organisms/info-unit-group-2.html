@@ -17,15 +17,8 @@
                                   'render_block.html' to modify classes on
                                   wrapper '.block' div.
 
-   value.heading:                 (Optional) An object containing:
-
-   value.heading.text             The text of a heading.
-
-   value.heading.level:           The heading level (H2, H3, H4). Default: H3
-
-   value.heading.icon:            (Optional) A string containing cf-icon name
-                                  that triggers the insertion of an icon before
-                                  the heading.
+   value.heading:                (Optional) A heading object.
+                                 See _includes/blocks/heading.html.
 
    value.intro:                   An introduction for the info unit group.
                                   If not empty, a heading is required.
@@ -44,21 +37,17 @@
 
    ========================================================================== #}
 
+{%- from 'blocks/heading.html' import heading without context %}
 {%- from 'molecules/info-unit-2.html' import info_unit with context %}
 
 <div class="o-info-unit-group"
-     {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading.text else ' ' -}}>
+     {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading and value.heading.text else ' ' -}}>
 
 {% if value.heading and value.heading.text %}
-    <{{ value.heading.level }}>
-        {%- if value.heading.icon %}
-            {{ svg_icon(value.heading.icon) }}
-        {% endif -%}
-        {{ value.heading.text | safe }}
-    </{{ value.heading.level }}>
+    {{ heading( value.heading ) }}
 {% endif -%}
 
-{%- if value.intro %}
+{%- if value.intro and not ( value.intro | richtext_isempty ) %}
     {{ value.intro | safe }}
 {%- endif %}
 

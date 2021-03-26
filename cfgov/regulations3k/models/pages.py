@@ -1,12 +1,10 @@
-from __future__ import absolute_import, unicode_literals
-
 import logging
 import re
+import urllib
 from collections import OrderedDict
 from datetime import date
 from functools import partial
-from six.moves import urllib
-from six.moves.urllib.parse import urljoin
+from urllib.parse import urljoin
 
 from django.core.paginator import InvalidPage, Paginator
 from django.db import models
@@ -14,14 +12,14 @@ from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.template.response import TemplateResponse
-from haystack.query import SearchQuerySet
 
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.core.fields import StreamField
+from wagtail.core.models import PageManager
+from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests
 from jinja2 import Markup
@@ -29,7 +27,9 @@ from regdown import regdown
 
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
-from regulations3k.models import Part, Section, SectionParagraph
+from regulations3k.documents import SectionParagraphDocument
+from regulations3k.forms import SearchForm
+from regulations3k.models import Part, Section, label_re_str
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
 from v1.models import CFGOVPage, CFGOVPageManager
@@ -63,55 +63,64 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         all_regs = Part.objects.order_by('part_number')
         regs = validate_regs_list(request)
         order = validate_order(request)
-        search_query = request.GET.get('q', '').strip()
+
         payload = {
-            'search_query': search_query,
+            'search_query': '',
             'results': [],
             'total_results': 0,
             'regs': regs,
             'all_regs': [],
         }
-        if not search_query or len(urllib.parse.unquote(search_query)) == 1:
+
+        search_form = SearchForm(request.GET)
+        if (
+            not search_form.is_valid() or
+            len(urllib.parse.unquote(search_form.cleaned_data['q'])) == 1
+        ):
             self.results = payload
             return TemplateResponse(
                 request,
                 self.get_template(request),
                 self.get_context(request))
-        sqs = SearchQuerySet().filter(content=search_query)
+
+        search_query = search_form.cleaned_data['q']
+        payload['search_query'] = search_query
+
+        search = SectionParagraphDocument.search().query(
+            'match', text={"query": search_query, "operator": "AND"})
+        search = search.highlight(
+            'text', pre_tags="<strong>", post_tags="</strong>")
+        total_results = search.count()
+        all_regs = [{
+                    'short_name': reg.short_name,
+                    'id': reg.part_number,
+                    'num_results': search.filter(
+                        'term', part=reg.part_number).count(),
+                    'selected': reg.part_number in regs}
+                    for reg in all_regs
+                    ]
         payload.update({
-            'all_regs': [{
-                'short_name': reg.short_name,
-                'id': reg.part_number,
-                'num_results': sqs.filter(
-                    part=reg.part_number).models(SectionParagraph).count(),
-                'selected': reg.part_number in regs}
-                for reg in all_regs]
+            'all_regs': all_regs,
+            'total_count': total_results
         })
-        payload.update({'total_count': sum(
-            [reg['num_results'] for reg in payload['all_regs']])})
-        if len(regs) == 1:
-            sqs = sqs.filter(part=regs[0])
-        elif regs:
-            sqs = sqs.filter(part__in=regs)
+        if regs:
+            search = search.filter('terms', part=regs)
         if order == 'regulation':
-            sqs = sqs.order_by('part', 'section_order')
-        sqs = sqs.highlight(
-            pre_tags=['<strong>'],
-            post_tags=['</strong>']).models(SectionParagraph)
-        for hit in sqs:
+            search = search.sort('part', 'section_order')
+        search = search[0:total_results]
+        response = search.execute()
+        for hit in response[0:total_results]:
             try:
-                snippet = Markup(" ".join(hit.highlighted))
+                snippet = Markup("".join(hit.meta.highlight.text[0]))
             except TypeError as e:
                 logger.warning(
                     "Query string {} produced a TypeError: {}".format(
                         search_query, e))
                 continue
-
-            short_name = all_regs.get(part_number=hit.part).short_name
             hit_payload = {
                 'id': hit.paragraph_id,
                 'part': hit.part,
-                'reg': short_name,
+                'reg': hit.short_name,
                 'label': hit.title,
                 'snippet': snippet,
                 'url': "{}{}/{}/#{}".format(
@@ -120,7 +129,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             }
             payload['results'].append(hit_payload)
 
-        payload.update({'current_count': sqs.count()})
+        payload.update({'current_count': search.count()})
         self.results = payload
         context = self.get_context(request)
         num_results = validate_num_results(request)
@@ -144,7 +153,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             context)
 
 
-class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
+class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
     """Landing page for eregs."""
 
     header = StreamField([
@@ -173,7 +182,7 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
     template = 'regulations3k/landing-page.html'
 
     def get_context(self, request, *args, **kwargs):
-        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
         context.update({
             'get_secondary_nav_items': get_secondary_nav_items,
         })
@@ -199,7 +208,9 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
         return JsonResponse(response.json())
 
 
-class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
+class RegulationPage(
+    ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
+):
     """A routable page for serving an eregulations page by Section ID."""
 
     objects = PageManager()
@@ -292,9 +303,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
 
     def get_context(self, request, *args, **kwargs):
-        context = super(RegulationPage, self).get_context(
-            request, *args, **kwargs
-        )
+        context = super().get_context(request, *args, **kwargs)
         context.update({
             'regulation': self.regulation,
             'current_version': self.get_effective_version(request),
@@ -309,7 +318,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         return context
 
     def get_breadcrumbs(self, request, section=None, **kwargs):
-        crumbs = super(RegulationPage, self).get_breadcrumbs(request)
+        crumbs = super().get_breadcrumbs(request)
 
         if section is not None:
             crumbs = crumbs + [
@@ -398,7 +407,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
             context
         )
 
-    @route(r'^versions/(?:(?P<section_label>[0-9A-Za-z-]+)/)?$',
+    @route(r'^versions/(?:(?P<section_label>' + label_re_str + r')/)?$',
            name="versions")
     def versions_page(self, request, section_label=None):
         section_query = self.get_section_query(request=request)
@@ -432,7 +441,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
 
     @route(r'^(?:(?P<date_str>[0-9]{4}-[0-9]{2}-[0-9]{2})/)?'
-           r'(?P<section_label>[0-9A-Za-z-]+)/$',
+           r'(?P<section_label>' + label_re_str + r')/$',
            name="section")
     def section_page(self, request, date_str=None, section_label=None):
         """ Render a section of the currently effective regulation """

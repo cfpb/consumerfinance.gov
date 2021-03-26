@@ -14,11 +14,21 @@
 <script>
   {% include '/js/modernizr.min.js' %}
 
+  /**
+   * Check for support for element.innerText.
+   */
+  function isInnerTextSupported() {
+    return 'innerText' in document.createElement( 'a' );
+  }
+
   !function(){
     var modernizr = window.Modernizr;
-    if ( !( typeof modernizr !== 'undefined' &&
-            modernizr.es5 &&
-            !!( window.Map ) ) ) {
+    if ( !(
+      typeof modernizr !== 'undefined' &&
+      modernizr.es5 &&
+      !!( window.Map ) &&
+      !!( isInnerTextSupported() )
+    ) ) {
       var docElement = document.documentElement;
       docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
     }

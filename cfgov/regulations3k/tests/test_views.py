@@ -1,10 +1,8 @@
-from __future__ import unicode_literals
-
 import datetime
 
 from django.test import RequestFactory, TestCase, override_settings
 
-from model_mommy import mommy
+from model_bakery import baker
 
 from regulations3k.models import EffectiveVersion, Part
 from regulations3k.views import get_version_date, redirect_eregs
@@ -16,33 +14,33 @@ class RedirectRegulations3kTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
 
-        self.test_reg_1002 = mommy.make(
+        self.test_reg_1002 = baker.make(
             Part,
             part_number='1002')
 
-        self.test_reg_1005 = mommy.make(
+        self.test_reg_1005 = baker.make(
             Part,
             part_number='1005')
 
-        self.test_version_1002 = mommy.make(
+        self.test_version_1002 = baker.make(
             EffectiveVersion,
             part=self.test_reg_1002,
             effective_date=datetime.date(2016, 7, 11),
             draft=False)
 
-        self.test_version_1002_2011 = mommy.make(
+        self.test_version_1002_2011 = baker.make(
             EffectiveVersion,
             part=self.test_reg_1002,
             effective_date=datetime.date(2011, 12, 30),
             draft=False)
 
-        self.test_version_1002_not_live = mommy.make(
+        self.test_version_1002_not_live = baker.make(
             EffectiveVersion,
             part=self.test_reg_1002,
             effective_date=datetime.date(2014, 1, 10),
             draft=True)
 
-        self.test_version_1005 = mommy.make(
+        self.test_version_1005 = baker.make(
             EffectiveVersion,
             part=self.test_reg_1005,
             effective_date=datetime.date(2013, 3, 26),
@@ -76,6 +74,16 @@ class RedirectRegulations3kTestCase(TestCase):
             response.get('location'),
             '/policy-compliance/rulemaking/regulations/'
             'search-regulations/results/?regs=1002&q=california')
+
+    def test_redirect_search_invalid(self):
+        request = self.factory.get(
+            '/eregulations/search/1002',
+        )
+        response = redirect_eregs(request)
+        self.assertEqual(
+            response.get('location'),
+            '/policy-compliance/rulemaking/regulations/'
+            'search-regulations/results/?regs=1002&q=')
 
     def test_redirect_invalid_part(self):
         request = self.factory.get(

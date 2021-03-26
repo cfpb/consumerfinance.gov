@@ -5,9 +5,11 @@ from wagtail.contrib.modeladmin.options import (
 )
 from wagtail.contrib.modeladmin.views import CreateView, EditView, InspectView
 
+from jobmanager import template_debug
 from jobmanager.models import (
     ApplicantType, Grade, JobCategory, JobLength, Office, Region, ServiceType
 )
+from v1.template_debug import register_template_debug
 
 
 class ApplicantTypeModelAdmin(ModelAdmin):
@@ -64,7 +66,7 @@ class JobRegionModelAdmin(ModelAdmin):
         return ", ".join(str(state) for state in self.states.all())
 
     def major_cities(self):
-        return "; ".join(str(city) for city in self.cities.all())
+        return "; ".join(str(city) for city in self.major_cities.all())
 
     list_display = ('abbreviation', 'name', states_in_region, major_cities)
 
@@ -73,7 +75,7 @@ class JobOfficeModelAdmin(ModelAdmin):
     model = Office
     menu_label = 'Offices'
     menu_icon = 'site'
-    list_display = ('abbreviation', 'name')
+    list_display = ('abbreviation', '__str__')
 
 
 class ServiceTypeModelAdmin(ModelAdmin):
@@ -100,4 +102,17 @@ class MyModelAdminGroup(ModelAdminGroup):
         JobLengthModelAdmin,
         JobOfficeModelAdmin,
         JobRegionModelAdmin
+    )
+
+
+for _debug_template_name in (
+    'job_listing_details',
+    'job_listing_list',
+    'job_listing_table',
+):
+    register_template_debug(
+        'jobmanager',
+        _debug_template_name,
+        f'jobmanager/{_debug_template_name}.html',
+        getattr(template_debug, f'{_debug_template_name}_test_cases')
     )

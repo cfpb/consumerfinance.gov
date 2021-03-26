@@ -18,6 +18,7 @@
 
    value.date:             A datetime for the post.
    value.has_social:       Whether to show the share icons or not.
+   value.social_options:   An object with options for the share icons
 
    ========================================================================== #}
 
@@ -31,6 +32,7 @@
 {% set filter_page_url = pageurl(filter_page) if filter_page else none %}
 {% set published_date = value.date %}
 {% set has_authors = page.authors.exists() %}
+{% set social_options = value.social_options or {} %}
 
 <div class="o-item-introduction">
     {% if filter_page_url and page.categories.count() > 0 and value.show_category %}
@@ -48,11 +50,10 @@
         {% if filter_page_url and has_authors %}
             <span class="byline">
             {%- for author in page.get_authors() -%}
-                {{- 'By ' if loop.index == 1 else ' and ' }}
-                <a href="{{ filter_page_url }}?authors={{ author.slug }}">
-                    {{ author.name }}
-                </a>
-            {%- endfor -%}
+                {% if loop.first %}By {% elif loop.last %}and {% endif %}
+                <a href="{{ filter_page_url }}?authors={{ author.slug }}">{{ author.name }}</a>
+                {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
+            {% endfor %}
                 &ndash;
             </span>
         {% endif %}
@@ -67,7 +68,7 @@
     {% endif %}
 
     {% if value.has_social %}
-        {{ social_media.render() }}
+        {{ social_media.render(social_options) }}
     {% endif %}
 </div>
 

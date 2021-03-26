@@ -1,10 +1,16 @@
-import { closest } from './dom-traverse';
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 
 /**
  * FormModel
  * @class
  *
  * @classdesc Initializes a new FormModel utility.
+ * This class represents a form as a collection (Map) of the various input
+ * fields and their attributes.
+ *
+ *  It organizes them into the following sets:
+ *  - all the field elements
+ *  - an array of field elements that should be subject to validation
  *
  * @param {HTMLNode} form - The HTML form to model.
  * @returns {FormModel} An instance.
@@ -48,7 +54,6 @@ function FormModel( form ) {
   function _cacheFields() {
     const rawElements = _form.elements;
     const validateableElements = [];
-    const fieldGroups = [];
 
     let element;
     let type;
@@ -57,9 +62,8 @@ function FormModel( form ) {
     let isInGroup;
     let groupName;
     let isRequired;
-    let shouldValidate;
 
-    // Build array from HTMLFormControlsCollection.
+    // Build validateable array from HTMLFormControlsCollection.
     for ( let i = 0, len = rawElements.length; i < len; i++ ) {
       element = rawElements[i];
       type = _getElementType( element );
@@ -79,17 +83,6 @@ function FormModel( form ) {
       isRequired = element.getAttribute( 'data-required' ) !== null ||
                    element.getAttribute( 'required' ) !== null;
 
-      let shouldValidate = !isDisabled && !isIgnored;
-      if ( shouldValidate && isInGroup ) {
-        const groupExists = fieldGroups.indexOf( groupName ) > -1;
-
-        if ( groupExists || isRequired === false ) {
-          shouldValidate = false;
-        } else {
-          fieldGroups.push( groupName );
-        }
-      }
-
       _fieldCache.set(
         element,
         {
@@ -99,9 +92,9 @@ function FormModel( form ) {
         }
       );
     }
+
     _fieldCache.set( 'elements', rawElements );
     _fieldCache.set( 'validateableElements', validateableElements );
-    _fieldCache.set( 'fieldGroups', fieldGroups );
   }
 
   /**
@@ -124,6 +117,9 @@ function FormModel( form ) {
       labelDom = _form.querySelector( selector );
     }
 
+    /* TODO: Refactor to support multiselects.
+             Multiselects contain a fieldset, but don't have an associated
+             legend inside the fieldset, so the label here ends up empty. */
     if ( labelDom ) {
       labelText = labelDom.textContent.trim();
     }
@@ -134,7 +130,7 @@ function FormModel( form ) {
   /**
    * Retrieve a string representing the type of an element.
    * May be a custom data-type attribute, the type attribute (of INPUT elements)
-   * or the lowercased tagname.
+   * or the lowercased HTML tag name.
    * @param {HTMLNode} elem - The HTML element to check. An input usually.
    * @returns {string} A type string for the element.
    */

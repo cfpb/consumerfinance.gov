@@ -1,10 +1,8 @@
 import zipfile
-from six import BytesIO, StringIO
+from io import BytesIO, StringIO
 
 from django import forms
 from django.core.management import call_command
-
-from wagtail.wagtailcore.models import Page
 
 
 class CacheInvalidationForm(forms.Form):
@@ -26,7 +24,8 @@ class ExportFeedbackForm(forms.Form):
         'bah': ('owning-a-home',),
     }
 
-    def get_filename_dates(self):
+    @property
+    def filename_dates(self):
         return '{}_to_{}'.format(*(
             self.cleaned_data[k].strftime('%Y%m%d')
             for k in ('from_date', 'to_date')
@@ -49,40 +48,25 @@ class ExportFeedbackForm(forms.Form):
         all_pages = []
 
         for name, page_slugs in self.export_files.items():
-            pages = self._get_pages_from_slugs(page_slugs)
-
             # Generate one CSV for each entry in export_files defined above.
-            yield self.generate_zipfile_csv(name, pages)
+            yield self.generate_zipfile_csv(name, page_slugs)
 
-            all_pages.extend(pages)
+            all_pages.extend(page_slugs)
 
         # Generate a final CSV containing all pages not already exported.
         yield self.generate_zipfile_csv('other', all_pages, exclude=True)
 
-    @staticmethod
-    def _get_pages_from_slugs(page_slugs):
-        pages = []
-
-        for page_slug in page_slugs:
-            try:
-                pages.append(Page.objects.get(slug=page_slug))
-            except (Page.DoesNotExist, Page.MultipleObjectsReturned):
-                continue
-
-        return pages
-
     def generate_zipfile_csv(self, name, pages, exclude=False):
         csv_contents = StringIO()
+        csv_filename = f'feedback_{name}_{self.filename_dates}.csv'
 
         call_command(
             'export_feedback',
-            pages=pages,
+            *pages,
             exclude=exclude,
             from_date=self.cleaned_data['from_date'],
             to_date=self.cleaned_data['to_date'],
             stdout=csv_contents
         )
-
-        csv_filename = 'feedback_%s_%s.csv' % (name, self.get_filename_dates())
 
         return csv_filename, csv_contents.getvalue()

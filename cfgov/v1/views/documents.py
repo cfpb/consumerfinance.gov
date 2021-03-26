@@ -1,10 +1,10 @@
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View
 
-from wagtail.wagtaildocs.models import get_document_model
-from wagtail.wagtaildocs.views.serve import serve as wagtail_serve
+from wagtail.documents import get_document_model
+from wagtail.documents.views.serve import serve as wagtail_serve
 
 
 class DocumentServeView(View):

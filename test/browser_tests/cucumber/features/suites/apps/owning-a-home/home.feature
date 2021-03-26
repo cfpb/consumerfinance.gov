@@ -1,10 +1,11 @@
-Feature: verify the Home page works according to requirements
-As a first time visitor to the Buying a House page
+Feature: Verify the Home page works according to requirements
+As a first time visitor to the Owning a Home page
 I want to navigate the home page
 So that I can find the information I'm looking for
 
 Background:
-   Given I navigate to the BAH Landing page
+  Given I navigate to the OAH Landing page
+
 
 @smoke_testing @landing_page @email_signup
 Scenario: Testing valid email signup
@@ -22,6 +23,7 @@ Scenario: Testing multiple validation messages
     And I click the Signup button again
   Then I should NOT see multiple "Thanks, we’ll be in touch!" messages displayed
 
+
 @landing_page @email_signup
 Scenario Outline: Testing invalid email address
   When I enter "<email_address>"
@@ -29,8 +31,8 @@ Scenario Outline: Testing invalid email address
   Then I should NOT see "Thanks, we’ll be in touch!" displayed
 
 Examples:
-  | email_address         |
-  | testyahoo.com         |
-  | 11@                   |
-  | @@                    |
-  | 11.com                |
+| email_address |
+| testyahoo.com |
+| 11@           |
+| @@            |
+| 11.com        |

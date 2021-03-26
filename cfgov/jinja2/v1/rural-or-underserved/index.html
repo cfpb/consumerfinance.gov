@@ -3,7 +3,10 @@
 {% set page={"search_description":"Use this tool throughout your homebuying process to see how your credit score, home price, down payment, and more can affect mortgage interest rates."} %}
 {% set active_page = "explore-rates" %}
 {% set page_js = "explore-rates" %}
-{% block title %}Rural and underserved areas tool > Consumer Financial Protection Bureau{% endblock title %}
+
+{% block title -%}
+    Rural and underserved areas tool | Consumer Financial Protection Bureau
+{%- endblock %}
 
 {% block metadescription %}
 Use this tool throughout your homebuying process to see how your credit score,
@@ -107,7 +110,8 @@ home price, down payment, and more can affect mortgage interest rates.
                                         <option value="2016">2016</option>
                                         <option value="2017">2017</option>
                                         <option value="2018">2018</option>
-                                        <option selected value="2019">2019</option>
+                                        <option value="2019">2019</option>
+                                        <option selected value="2020">2020</option>
                                     </select>
                                 </div>
                             </div>
@@ -161,8 +165,7 @@ home price, down payment, and more can affect mortgage interest rates.
                                 To check on more than one loan, upload a Comma Separated Values (CSV) file with addresses for up to 250 properties. The file must use our CSV template:
                                 <a href="https://files.consumerfinance.gov/rural-or-underserved-tool/csv-template.csv"
                                    title="Download CSV template">
-                                    Download CSV template
-                                </a>.
+                                    Download CSV template</a>.
                             </p>
 
                             <p>
@@ -276,7 +279,7 @@ home price, down payment, and more can affect mortgage interest rates.
                 <p class="content-l_col content-l_col-1">
                     <a class="margin-right-quarter" href="#" id="print" title="Print results">Print results</a>
                     |
-                    <a class="download-link margin-left-quarter" href="#" id="download" title="Download results"><span>Download results</span>&nbsp;</a>
+                    <a class="download-link margin-left-quarter" href="#" id="download" title="Download results"><span>Download results</span></a>
                 </p>
 
                 {# Not a paragraph so that it is full-width. #}

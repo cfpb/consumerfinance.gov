@@ -13,8 +13,8 @@
 
    ========================================================================== #}
 
-{% macro render(breadcrumbs) %}
-    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+{% macro render( breadcrumbs ) %}
+    <nav class="breadcrumbs" aria-label="{{ _('Breadcrumbs') }}">
         {{ svg_icon('left') }}
         {% for crumb in breadcrumbs %}
             {% if crumb.href or crumb.live %}
@@ -25,5 +25,8 @@
                 <span class="breadcrumbs_text">{{ crumb.title | e }}</span>
             {% endif %}
         {% endfor %}
+        {% if page and page.archived %}
+          <span class="breadcrumbs_link">Archive</span>
+        {% endif %}
     </nav>
 {% endmacro %}

@@ -1,7 +1,7 @@
 {% from 'atoms/radio-button.html' import render with context %}
 {% import 'alert.html' as alert with context %}
 {% from 'route/route-details.html' import route_details with context %}
-{% set labels = ['Walk', 'Drive', 'Bike', 'Public transit', 'Rideshare or cab', 'Get dropped off'] %}
+{% set labels = ['Walk', 'Drive', 'Public transportation', 'Bike or scooter', 'Rideshare or cab', 'Get dropped off'] %}
 
 <form class="o-yes-route-option" autocomplete="new-password">
   <span class="a-label__heading u-mb0">
@@ -40,7 +40,9 @@
     <div class="block block__sub-micro">
       {% include "money-icon.html" %}
       <span>TIP</span>
-      <p>Ask about transportation discounts that your program, employer, or school might offer such as bus passes, gas cards, rideshare credits, or other reduced-fare cards. You might also receive benefits as a military servicemember or veteran.</p>  
+      <p>
+          Ask about transportation discounts that your program, employer, or school might offer such as bus passes, gas cards, rideshare credits, or other reduced-fare cards. You might also receive benefits as a senior, military servicemember, or veteran.
+      </p>
     </div>
     <div class="content_line"></div>
   </div>

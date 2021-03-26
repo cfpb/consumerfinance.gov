@@ -11,18 +11,25 @@
       {{ page.title }}
     </h1>
     {% if page.glossary_terms %}
-        <div class="terms">
+        <dl class="terms" itemscope itemtype="http://schema.org/DefinedTermSet">
         {% for term in page.glossary_terms %}
             <div class="term {{'' if loop.index == 1 else 'block block__border-top block__padded-top'}}"
-                 id="{{ term.anchor(page.language) }}">
-            <h2>{{ term.name(page.language) }}</h2>
-                {{ term.definition(page.language) | richtext }}
-                {% if term.answer_page_en %}
-                    <p class="term-link"><a href="{{ term.answer_page_url(page.language) }}"> {{ _('Read more') }} </a></p>
-                {% endif %}
+                 id="{{ term.anchor(page.language) }}"
+                 itemscope
+                 itemtype="http://schema.org/DefinedTerm">
+                <dt class="term_name" itemprop="name">
+                    {{ term.name(page.language) }}
+                    <link itemprop="url" href="{{ page.full_url }}{{ page.category_slug }}/#{{ term.anchor(page.language) }}">
+                </dt>
+                <dd class="term_definition" itemprop="description">
+                    {{ term.definition(page.language) | richtext }}
+                    {% if term.answer_page_en -%}
+                        <a class="term_link" href="{{ term.answer_page_url(page.language) }}">{{ _('Read more') }}</a>
+                    {%- endif %}
+                </dd>
             </div>
         {% endfor %}
-        </div>
+        </dl>
     {% else %}
         {% if not page.portal_category %}
         <p class="lead-paragraph u-mt0">
@@ -38,7 +45,7 @@
                     <input
                         class="a-text-input a-text-input__full"
                         type="text"
-                        aria-label="Search term"
+                        aria-label="{{ _('Search term') }}"
                         name="search_term"
                         value="{{ search_term }}">
                         <button class="a-btn" id="ask-search" type="submit">

@@ -1,12 +1,10 @@
-from __future__ import unicode_literals
-
+import csv
 import datetime
 import logging
 import os
 import sys
-from six.moves import cStringIO as StringIO
+from io import StringIO
 
-import unicodecsv
 from dateutil import parser
 
 from data_research.models import (
@@ -41,8 +39,8 @@ def dump_as_csv(rows_out, dump_slug):
     Sample output row:
     1,01001,2008-01-01,268,260,4,1,0,3,2891
     """
-    with open('{}.csv'.format(dump_slug), 'wb') as f:
-        writer = unicodecsv.writer(f)
+    with open('{}.csv'.format(dump_slug), 'w') as f:
+        writer = csv.writer(f)
         for row in rows_out:
             writer.writerow(row)
 

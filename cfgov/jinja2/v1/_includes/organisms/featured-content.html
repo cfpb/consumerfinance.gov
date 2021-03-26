@@ -6,94 +6,56 @@
 
    Description:
 
-   See [GHE]/CFPB/hubcap/wiki/Featured-Content-Module
+   See https://cfpb.github.io/design-system/patterns/featured-content-module
 
    Create a featured content molecule when given:
 
-   value:                 Object defined from a StreamField block.
+   value.heading:   Heading text.
 
-   value.heading:         Heading text.
+   value.body:      Body text.
 
-   value.body:            Body text.
+   value.links:     List of links to render with:
 
-   value.post:            (Optional) Page being featured.
+        link.url:       Link URL.
 
-   value.show_post_link:  Boolean flag for whether to render the post link.
+        link.text:      (Optional) Link text.
 
-   value.post_link_text:  String for the link text of the displayed post.
+   value.image:     (Optional) An ImageBasic atom.
 
-   value.image:           (Optional) An ImageBasic atom object containing:
-
-   value.image.upload:    A CFGOVImage object.
-
-   value.image.alt:       String for alt text for screenreaders.
-
-   value.links:           If the FCM is rendered in wagtail,
-                          this returns the array of links.
-
-   value.links[i].url:    String for URL of the link.
-
-   value.links[i].text:   String for text of the link.
-
-   value.video:           (Optional)
-                          This object gets passed to macros/video-player.html.
-                          By default, the following values should exist:
-                            'is_fcm': true,
-                            'height': '320',
-                            'width':  '568'
-                          Wagtail should set the following values:
-                            'id', 'url'
-
-   value.video.url:       A String used to denote the url of the video.
-
-   value.video.id:        A String used to denote the id of the video.
-
+   value.video:     (Optional) A VideoPlayer organism.
 
    ========================================================================== #}
-
-{% import 'macros/category-icon.html' as category_icon %}
 
 <section class="o-featured-content-module
                 o-featured-content-module__center">
     <div class="o-featured-content-module_text">
         <h2 class="h3">{{ value.heading }}</h2>
-        {{ value.body | safe }}
-        {% if (value.show_post_link and value.post)
-           or (value.links[0] and value.links[0].text and value.links[0].url) %}
-            <ul class="m-list m-list__links">
-                {% if value.show_post_link and value.post_link_text and value.post %}
-                    <li class="m-list_item">
-                        <a href="{{ pageurl(value.post) }}">
-                            {{ value.post_link_text }}
-                        </a>
-                    </li>
-                {% endif %}
-                {% if value.links[0] and value.links[0].text and value.links[0].url %}
-                    {% for link in value.links %}
-                        {% if link.text and link.url %}
-                            <li class="m-list_item">
-                                <a href="{{ link.url }}">
-                                    {{ link.text }}
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </ul>
+
+        <p>{{ value.body }}</p>
+
+        {% if value.links %}
+        <ul class="m-list m-list__links">
+            {% for link in value.links %}
+                <li class="m-list_item">
+                    <a class="m-list_link" href="{{ link.url }}">
+                        {{- link.text | default( link.url ) -}}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
         {% endif %}
     </div>
 
-    {% if value.video.url and
-          value.video.id %}
-        {% import 'macros/video-player.html' as video_player with context %}
-        {% do value.video.update({'is_fcm': true}) %}
-        {{ video_player.render(value) }}
-    {% elif value.image.upload %}
+    {% if value.video and value.video.video_id %}
+        {% with value = value.video %}
+            {% do value.update( { 'is_fcm': true } ) %}
+            {% include 'organisms/video-player.html' %}
+        {% endwith %}
+    {% elif value.image and value.image.url %}
         <div class="o-featured-content-module_visual">
-            {% set photo = image(value.image.upload, 'original') %}
             <img class="o-featured-content-module_img"
-                 src="{{ photo.url }}"
-                 alt="{{ image_alt_value(value.image) }}">
+                 src="{{ value.image.url }}"
+                 alt="{{ value.image.alt_text }}">
         </div>
     {% endif %}
 </section>

@@ -1,0 +1,194 @@
+<section class="college-costs_tool-section college-costs_tool-section__school-results" data-tool-section="school-results">
+    <h2>Compare this school to others like it</h2>
+
+    <div class="graduate-content">
+        <p>Now that you understand how much debt you’re considering, make sure to research how well the school serves students. You’re investing a lot—make sure it pays off.</p>
+        <p>Ask the school to provide the metrics you care about, such as:</p>
+        <ul>
+            <li>On-time completion rate</li>
+            <li>Job placement rate</li>
+            <li>Loan default rate</li>
+            <li>Loan repayment rate</li>
+            <li>Persistence and retention rate</li>
+        </ul>
+        <p>You should consider asking multiple schools for this information, so you can compare this school’s results.</p>
+    </div>
+
+    <div class="undergrad-content">
+        <p>Now that you understand how much debt you’re considering, let’s look at some statistics that indicate how well the school serves students. You’re investing a lot—make sure it pays off.</p>
+
+        <h3 class="u-border-bottom"><span data-school-item="school">Example University</span></h3>
+        <div class="content-l">
+            <div class="content-l_col content-l_col-1-2">
+                <div class="school-fact">
+                    <strong>Location:</strong>
+                    <span data-school-item="city">City</span>, <span data-school-item="state">State</span>
+                </div>
+                <div>
+                    <strong>Type:</strong>
+                    <span data-school-item="control">Type</span>
+                </div>
+                <div>
+                    <strong>Student Body:</strong>
+                    <span data-school-item="enrollment">1</span>
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <div>
+                    <strong>Highest degree offered:</strong>
+                    <span data-school-item="highestDegree">degree</span>
+                </div>
+                <div>
+                    <strong>Number of programs:</strong>
+                    <span data-school-item="programCount">1</span>
+                </div>
+                <div>
+                    <strong>Most popular programs:</strong>
+                    <span data-school-item="programsTopThree">Programs</span>
+                </div>
+            </div>
+        </div>
+
+        {{ notification.render(
+            'warning',
+            false,
+            '',
+            'This school is under Heightened Cash Monitoring by the U.S. Department of Education. <a href="https://studentaid.gov/data-center/school/htm" target="_blank" class="external-link" rel="noreferrer noopener">Find out more.</a>' | safe
+        ) }}
+
+        <div class="undergrad-content">
+            <div class="block block__mid school-results_comparison-section school-results_comparison-section__grad-rate">
+                <h4>Graduation rate</h4>
+                <p>The proportion of full-time, first-time, degree/certificate-seeking undergraduates who completed a degree or certificate within 150% of normal time. For bachelor's degrees, 150% of normal time is typically 6 years. For associate's degrees, 150% of normal time is 3 years. For certificate programs it varies by length; for example, 150% of a typically 6-month program is 9 months.</p>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="rateGraduation" data-number-display="percentage"></span></div>
+                    <div><span data-school-item="school"></span>'s graduation rate is <strong><span data-school-item="rateGraduation" data-number-display="percentage"></span></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
+                </div>
+                <fieldset class="o-form_fieldset school-results_cohort-buttons">
+                    <legend>
+                        Compare <span data-school-item="school"></span>'s rate to other <span class="community-college">2</span><span class="four-year-college">4</span> year schools that are also:
+                    </legend>
+                    {{
+                        radio.render({
+                          'name':  "graduation-rate-meter-selector",
+                          'label': 'in the U.S.',
+                          'value': 'cohortRankByHighestDegree',
+                          'id': 'graduation-rate_us',
+                          'class': 'm-form-field__lg-target btn__cohort'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "graduation-rate-meter-selector",
+                          'label': '<span>in <span data-school-item="stateName"></span></span>' | safe,
+                          'value': 'cohortRankByState',
+                          'id': 'graduation-rate_state',
+                          'class': 'm-form-field__lg-target btn__cohort'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "graduation-rate-meter-selector",
+                          'label': '<span data-school-item="control"></span>',
+                          'value': 'cohortRankByControl',
+                          'id': 'graduation-rate_school-type',
+                          'class': 'm-form-field__lg-target btn__cohort'
+                        })
+                    }}
+                </fieldset>
+
+                <div id="school-results_grad-meter" class="college-costs_meter-graph"></div>
+                <p><span data-school-item="school"></span>'s graduation rate falls in the <strong><span data-state-item="gradMeterThird"></span></strong> of all <span data-state-item="gradMeterCohortName"></span> schools granting <span class="community-college">2</span><span class="four-year-college">4</span>-year degrees.</p>
+            </div>
+
+            <div class="block block__mid community-college-content school-results_comparison-section school-results_comparison-section__transfer-rate" data-state-based-visibility="transfer-to-graduation-rate">
+                <h4>Transfer to graduation rate</h4>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="??"></span></div>
+                    <div><span data-school-item="school"></span>'s transfer to graduation rate is <strong><span data-school-item="" data-number-display="percentage"></span></strong>. If you are going to school to earn more money, you need to complete your degree to get that payoff.</div>
+                </div>
+                <fieldset class="o-form_fieldset school-results_cohort-buttons">
+                    <legend>
+                        Compare <span data-school-item="school"></span>'s rate to other 2 year schools that are also:
+                    </legend>
+                    {{
+                        radio.render({
+                          'name':  "transfer-to-graduation-rate",
+                          'label': 'in the U.S.',
+                          'value': 'cohortRankByHighestDegree',
+                          'id': 'transfer-to-graduation-rate_us',
+                          'class': 'm-form-field__lg-target btn__cohort'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "transfer-to-graduation-rate",
+                          'label': '<span>in <span data-school-item="stateName"></span></span>' | safe,
+                          'value': 'cohortRankByState',
+                          'id': 'transfer-to-graduation-rate_state',
+                          'class': 'm-form-field__lg-target btn__cohort'
+                        })
+                    }}
+                </fieldset>
+                <div id="school-results_transfer-to-grad-meter" class="college-costs_meter-graph"></div>
+                <p><span data-school-item="school"></span>'s transfer to graduation rate is [2% higher] than the median of all US community colleges. It falls in the <strong>[middle third]</strong> of these schools.</p>
+            </div>
+
+            <div class="block block__mid school-results_comparison-section school-results_comparison-section__default-rate">
+                <h4>Loan default rate</h4>
+                <p>The 3-year default rate is the proportion of student borrowers who defaulted on their federal loans within 3 years of starting to repay them, as a result of missing several monthly payments in a row (typically 9 for federal loans). It does not include defaults on private student loans.</p>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="defaultRate" data-number-display="percentage"></span></div>
+                    <div><span data-school-item="school"></span>'s default rate is <strong><span data-school-item="defaultRate" data-number-display="percentage"></span></strong>. This is a sign of how many student borrowers experienced financial distress while repaying their student debt.</div>
+                </div>
+            </div>
+
+            <div class="block block__mid school-results_comparison-section school-results_comparison-section__repayment-rate" data-status="min">
+                <h4>Loan repayment rate</h4>
+                <p>The repayment rate is the proportion of student borrowers who have reduced the original principal balance of their federal student debt by at least $1 within 3 years of entering repayment. </p>
+                <div class="school-results_rank-display">
+                    <div class="big-percentile"><span data-school-item="repay3yr" data-number-display="percentage"></span></div>
+                    <div><span data-school-item="school"></span>'s repayment rate is <strong><span data-school-item="repay3yr" data-number-display="percentage"></span></strong>. This tells you how many student borrowers have earned enough money to start paying down their debt.</div>
+                </div>
+                <fieldset class="o-form_fieldset school-results_cohort-buttons">
+                    <legend>
+                        Compare <span data-school-item="school"></span>'s rate to other <span class="community-college">2</span><span class="four-year-college">4</span> year schools that are also:
+                    </legend>
+                    {{
+                        radio.render({
+                          'name':  "repayment-rate-meter-selector",
+                          'label': 'in the U.S.',
+                          'value': 'cohortRankByHighestDegree',
+                          'id': 'repayment-rate_us',
+                          'class': 'm-form-field__lg-target btn__cohort'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "repayment-rate-meter-selector",
+                          'label': '<span>in <span data-school-item="stateName"></span></span>' | safe,
+                          'value': 'cohortRankByState',
+                          'id': 'repayment-rate_state',
+                          'class': 'm-form-field__lg-target btn__cohort'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "repayment-rate-meter-selector",
+                          'label': '<span data-school-item="control"></span>',
+                          'value': 'cohortRankByControl',
+                          'id': 'repayment-rate_school-type',
+                          'class': 'm-form-field__lg-target btn__cohort'
+                        })
+                    }}
+                </fieldset>
+                <div id="school-results_repayment-meter" class="college-costs_meter-graph"></div>
+                <p><span data-school-item="school"></span>'s repayment rate falls in the <strong><span data-state-item="repayMeterThird"></span></strong> of all <span data-state-item="repayMeterCohortName"></span> schools granting <span class="community-college">2</span><span class="four-year-college">4</span>-year degrees.</p>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</section>

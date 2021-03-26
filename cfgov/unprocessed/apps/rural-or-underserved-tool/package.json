@@ -9,19 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cfpb/cfgov-refresh.git"
+    "url": "https://github.com/cfpb/consumerfinance.gov.git"
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.x"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "0.21.1",
     "es6-promise": "^4.2.6",
     "fastdom": "^1.0.6",
     "jsonp-p": "^2.0.0",
     "normalize.css": "8.0.1",
     "object-keys": "1.1.1",
-    "papaparse": "^4.1.2"
+    "papaparse": "5.3.0"
   }
 }

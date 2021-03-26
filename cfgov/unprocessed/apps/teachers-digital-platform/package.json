@@ -1,0 +1,24 @@
+{
+  "name": "teachers-digital-platform",
+  "description": "Youth financial education activity search and building blocks journey tool",
+  "homepage": "https://www.consumerfinance.gov/practitioner-resources/youth-financial-education/",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfpb/consumerfinance.gov.git"
+  },
+  "license": "SEE LICENSE IN TERMS.md",
+  "engines": {
+    "node": ">=10.x"
+  },
+  "dependencies": {
+    "aos": "3.0.0-beta.6",
+    "classlist-polyfill": "1.2.0",
+    "smoothscroll-polyfill": "0.4.4",
+    "stickyfilljs": "2.1.0"
+  }
+}

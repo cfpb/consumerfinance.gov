@@ -2,9 +2,7 @@
 
 {% macro route_details() %}
 <div class="content-l u-mb0 yes-route-details">
-  <div class="content-l_col content-l_col-1 u-js-only u-js-only block block__sub-micro block__flush-top">
-    <div class="js-route-notification block block__sub-micro block__flush-top u-hidden"></div>
-  </div>
+  <div class="content-l_col content-l_col-1 block block__sub-micro block__flush-top js-route-notification u-hidden u-js-only"></div>
   <div class="content-l_col content-l_col-1">
     <p class="h5 u-mt0 u-mb0">
       Totals for <span class="js-transportation-type"></span>
@@ -20,7 +18,7 @@
       }}
       {{
         line_item.render({
-          'helperText': '<span class="js-average-cost-helper"><br/><small class="a-label a-label_helper">Based on <span class="js-days-per-week"></span> days a week you will make this trip</small></span>',
+          'helperText': '<span class="js-average-cost-helper"><br/><small class="a-label a-label_helper">Based on <span class="js-days-per-week"></span> days a week you plan to make this trip</small></span>',
           'label': 'Average monthly cost of <span class="js-transportation-type"></span>',
           'target': 'js-total-cost'
         })
@@ -44,10 +42,10 @@
         <p class="content-l_col content-l_col-2-3 h4 m-hours_container">Total time to get to work</p>
         <div class="content-l_col content-l_col-1-3 u-align-right m-hours_container">
           <p class="content-l_col content-l_col-1-2 m-hours_data">
-            <span class="js-time-hours">-</span> hours
+            <span class="js-time-hours">&mdash;</span> hours
           </p>
           <p class="content-l_col content-l_col-1-2 m-minutes_data">
-            <span class="js-time-minutes">-</span> minutes
+            <span class="js-time-minutes">&mdash;</span> minutes
           </p>
         </div>
       </div>

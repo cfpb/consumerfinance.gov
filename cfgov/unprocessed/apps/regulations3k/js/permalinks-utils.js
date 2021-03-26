@@ -1,3 +1,5 @@
+import { closest } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
+
 // Array that tracks paragraph positions
 let paragraphPositions;
 const regs3kMainContent = document.querySelector( '.regulations3k' );
@@ -122,6 +124,12 @@ const getCommentMarker = label => {
   let commentParagraphID = '';
 
   const splitCurrentParagraph = label.split( 'Interp' );
+
+  /* A guard clause just in case any comment paragraphs have an invalid ID that
+     doesn't have 'Interp' in it */
+  if ( splitCurrentParagraph.length < 2 ) {
+    return '';
+  }
   if ( splitCurrentParagraph !== null ) {
     commentedParagraphID = splitCurrentParagraph[0]
       .split( '-' );
@@ -237,7 +245,15 @@ const updateWayfinder = function( scroll, wayfinder, mainContent ) {
  */
 const updateParagraphPositions = () => {
   const paragraphs = document.querySelectorAll( '.regdown-block' );
-  paragraphPositions = getParagraphPositions( paragraphs );
+  const visibleParagraphs = [];
+  // IE doesn't support `forEach` w/ node lists
+  for ( let i = 0; i < paragraphs.length; i++ ) {
+    const hiddenParagraphContainer = closest( paragraphs[i], '.u-hidden' );
+    if ( !hiddenParagraphContainer ) {
+      visibleParagraphs.push( paragraphs[i] );
+    }
+  }
+  paragraphPositions = getParagraphPositions( visibleParagraphs );
   return paragraphPositions;
 };
 
@@ -261,7 +277,7 @@ const debounce = ( event, delay, cb ) => {
   return timeout;
 };
 
-module.exports = {
+export {
   debounce,
   getCommentMarker,
   getWayfinderInfo,

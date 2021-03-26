@@ -1,0 +1,37 @@
+//
+// Hide on screen sizes or print
+//
+
+.u-hide-on-xs {
+    .respond-to-max(@bp-xs-max, {
+        display: none !important;
+    });
+}
+
+.u-hide-on-sm {
+    .respond-to-range(@bp-sm-min, @bp-sm-max, {
+        display: none !important;
+    });
+}
+
+.u-hide-on-med {
+    .respond-to-range(@bp-med-min, @bp-med-max, {
+        display: none !important;
+    });
+}
+
+.u-hide-on-lg {
+    .respond-to-range(@bp-lg-min, @bp-lg-max, {
+        display: none !important;
+    });
+}
+
+.u-hide-on-xl {
+    .respond-to-min(@bp-xl-min, {
+        display: none !important;
+    });
+}
+
+html.js .u-hide-on-js {
+    display: none !important;
+}

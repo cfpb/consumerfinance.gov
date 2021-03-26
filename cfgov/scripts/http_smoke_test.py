@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import argparse
 import logging
 import sys
@@ -18,10 +19,11 @@ parser.add_argument(
     help="choose a server base other than www.consumerfinance.gov"
 )
 parser.add_argument(
-    "--full",
-    action="store_true",
-    help=("If --full is used, the script will check all urls in our main nav, "
-          "plus a selection of our most-visited pages.")
+    "--url_list",
+    type=str,
+    nargs='+',
+    help=("You can provide a space-separated custom list "
+          "of relative URLs to check.")
 )
 parser.add_argument(
     "-v", "--verbose",
@@ -38,57 +40,80 @@ TIMEOUT = 30
 ALLOWED_TIMEOUTS = 1
 FULL = False
 BASE = 'https://www.consumerfinance.gov'
+S3_URI = 'https://files.consumerfinance.gov/build/smoketests/smoketest_urls.json'  # noqa: E501
 
-# These are URL's that exist in a fresh copy of the site
-# after migrations and initial_data are run
-SHORT_RUN = [
-    '/',
-    '/your-story/',
+# Fall-back list of top 25 URLs, as of July 2, 2020, from hubcap/wiki
+# All URLs in the list should be canonical locations of the given pages,
+# not redirects.
+TOP = [
+    '/',  # home page
+    '/about-us/blog/guide-covid-19-economic-stimulus-checks/',
+    '/about-us/blog/guide-coronavirus-mortgage-relief-options/',
     '/find-a-housing-counselor/',
-    '/know-before-you-owe/',
-    '/fair-lending/',
-    '/data-research/consumer-complaints/',
+    '/complaint/',
+    '/learnmore/',
+    '/ask-cfpb/what-is-the-best-way-to-negotiate-a-settlement-with-a-debt-collector-en-1447/',  # noqa: E501
+    '/coronavirus/',
+    '/about-us/blog/guide-covid-19-economic-stimulus-checks/#qualify/',
+    '/consumer-tools/prepaid-cards/',
+    '/coronavirus/cares-act-mortgage-forbearance-what-you-need-know/',
+    '/about-us/blog/economic-impact-payment-prepaid-card/',
+    '/about-us/blog/what-you-need-to-know-about-student-loans-and-coronavirus-pandemic/',  # noqa: E501
+    '/complaint/getting-started/',
+    '/coronavirus/mortgage-and-housing-assistance/',
+    '/ask-cfpb/what-is-forbearance-en-289/',
+    '/about-us/blog/guide-covid-19-economic-stimulus-checks/#when/',
+    '/ask-cfpb/what-should-i-do-when-a-debt-collector-contacts-me-en-1695/',
+    '/about-us/blog/protect-yourself-financially-from-impact-of-coronavirus/',
+    '/about-us/contact-us/',
+    '/about-us/blog/guide-coronavirus-mortgage-relief-options/#relief-options/',  # noqa: E501
+    '/coronavirus/managing-your-finances/economic-impact-payment-prepaid-debit-cards/',  # noqa: E501
+    '/ask-cfpb/how-can-i-tell-who-owns-my-mortgage-en-214/',
+    '/rules-policy/regulations/',
+    '/ask-cfpb/what-is-a-debt-to-income-ratio-why-is-the-43-debt-to-income-ratio-important-en-1791/',  # noqa: E501
 ]
 
-# These are URL's that are expected to be present in production
-# or a site running a recent dump of production data
-FULL_RUN = [
-    '/es/',
-    ('/es/obtener-respuestas/buscar'
-     '?selected_facets=category_exact:enviar-dinero'),
-    '/learnmore/',
-    '/complaint/',
-    '/complaint/getting-started/',
+# URLs for cfgov sub-apps that are expected to be present
+# All URLs in the list should be canonical locations of the given pages,
+# not redirects.
+APPS = [
+    '/about-us/budget-strategy/',
+    '/enforcement/payments-harmed-consumers/',
+    '/about-us/blog/',
+    '/about-us/newsroom/',
+    '/about-us/events/',
+    '/about-us/careers/',
+    '/about-us/careers/current-openings/',
+    '/about-us/doing-business-with-us/',
+    '/rules-policy/innovation/',
+    '/activity-log/',
     '/ask-cfpb/',
-    '/askcfpb/1017/',
-    '/askcfpb/135/',
-    '/askcfpb/1447/',
-    '/askcfpb/1695/',
-    '/askcfpb/1791/',
-    '/askcfpb/316/',
-    '/askcfpb/44/',
+    '/your-story/',
+    '/es/',
+    '/es/obtener-respuestas/',
     '/students/',
-    '/servicemembers/',
-    '/consumer-tools/auto-loans/',
+    '/consumer-tools/educator-tools/servicemembers/',
+    '/know-before-you-owe/',
+    '/fair-lending/',
     '/paying-for-college/',
-    ('/paying-for-college2/understanding-your-financial-aid-offer/'
-     'about-this-tool/'),
-    '/owning-a-home/',
+    '/paying-for-college2/understanding-your-financial-aid-offer/about-this-tool/',  # noqa: E501
     '/retirement/before-you-claim/',
     '/retirement/before-you-claim/es/',
+    '/consumer-tools/auto-loans/',
     '/consumer-tools/credit-reports-and-scores/',
     '/consumer-tools/debt-collection/',
     '/consumer-tools/prepaid-cards/',
+    '/consumer-tools/sending-money/',
     '/mortgagehelp/',
-    '/sending-money/',
-    '/practitioner-resources/your-money-your-goals/',
-    '/adult-financial-education/',
-    '/practitioner-resources/youth-financial-education/',
-    '/practitioner-resources/library-resources/',
-    '/practitioner-resources/resources-for-tax-preparers/',
+    '/consumer-tools/educator-tools/your-money-your-goals/',
+    '/consumer-tools/educator-tools/adult-financial-education/',
+    '/consumer-tools/educator-tools/youth-financial-education/',
+    '/consumer-tools/educator-tools/library-resources/',
+    '/consumer-tools/educator-tools/resources-for-tax-preparers/',
     '/consumer-tools/money-as-you-grow/',
     '/empowerment/',
-    '/practitioner-resources/resources-for-older-adults/',
+    '/consumer-tools/educator-tools/resources-for-older-adults/',
+    '/consumer-tools/educator-tools/youth-financial-education/',  # TDP
     '/data-research/',
     '/data-research/research-reports/',
     '/data-research/cfpb-research-conference/',
@@ -98,49 +123,61 @@ FULL_RUN = [
     '/data-research/consumer-credit-trends/',
     '/data-research/credit-card-data/',
     '/data-research/cfpb-researchers/',
+    '/data-research/mortgage-performance-trends/',
     '/policy-compliance/',
-    '/policy-compliance/rulemaking/',
-    '/policy-compliance/guidance/',
-    '/policy-compliance/guidance/implementation-guidance/',
-    '/policy-compliance/enforcement/',
-    '/policy-compliance/notice-opportunities-comment/',
-    '/policy-compliance/amicus/',
-    '/policy-compliance/guidance/implementation-guidance/hmda-implementation/',
-    '/policy-compliance/guidance/implementation-guidance/mortserv/',
-    '/policy-compliance/guidance/implementation-guidance/tila-respa-disclosure-rule/',  # noqa: E501
-    '/about-us/',
-    '/about-us/the-bureau/',
-    '/about-us/budget-strategy/',
-    '/about-us/payments-harmed-consumers/',
-    '/about-us/blog/',
-    '/about-us/newsroom/',
-    '/about-us/events/',
-    '/activity-log/',
-    '/about-us/careers/',
-    '/about-us/careers/current-openings/',
-    '/about-us/doing-business-with-us/',
-    '/about-us/innovation/',
-    '/about-us/contact-us/',
-    '/eregulations/',
-    '/eregulations/1026',
+    '/rules-policy/',
+    '/compliance/',
+    '/compliance/implementation-guidance/',
+    '/enforcement/',
+    '/rules-policy/notice-opportunities-comment/',
+    '/compliance/amicus/',
+    '/compliance/implementation-guidance/hmda-implementation/',
+    '/compliance/implementation-guidance/mortserv/',
+    '/compliance/implementation-guidance/tila-respa-disclosure-rule/'
 ]
 
+# call `set` on the combined list to weed out dupes
+FALLBACK_URLS = sorted(set(TOP + APPS))
 
-def check_urls(base, full=False):
+
+def get_full_list():
+    """Fetch a list of URLs to test from s3, or fall back to local default."""
+    try:
+        url_data = requests.get(S3_URI).json()
+    except Exception as e:
+        logger.warning(
+            'Using fallback because request for S3 list failed: {}'.format(e))
+        url_list = FALLBACK_URLS
+    else:
+        url_list = sorted(set(url_data.get('top') + url_data.get('apps')))
+    return url_list
+
+
+def check_urls(base, url_list=None):
     """
     A smoke test to make sure the main cfgov URLs are returning status 200.
 
-    The full option tests every link in the main nav, plus most popular pages.
-    """
+    Providing no `url_list` will test a standard list of important site URLs,
+    which includes megamenu links, main apps, and our 25 most popular pages.
 
+    Passing no base value will run the tests against production.
+
+    To run the full suite against production, and see its progress:
+
+    ./cfgov/scripts/http_smoke_test.py -v
+
+    You can test a custom set of URLs by passing relative URL strings
+    (relative to the provided base) as the `url_list` value.
+    This example tests two URLs against a local cfgov instance:
+
+    ./cfgov/scripts/http_smoke_test.py -v --base 'http://localhost:8000' --url_list '/' '/retirement/before-you-claim/'  # noqa: E501
+    """
     count = 0
     timeouts = []
     failures = []
     starter = time.time()
-    if full:
-        url_list = SHORT_RUN + FULL_RUN
-    else:
-        url_list = SHORT_RUN
+    if not url_list:
+        url_list = get_full_list()
     for url_suffix in url_list:
         logger.info(url_suffix)
         count += 1
@@ -151,8 +188,7 @@ def check_urls(base, full=False):
             if code == 200:
                 pass
             else:
-                logger.info("{} failed with status code "
-                            "'{}'".format(url, code))
+                logger.info("{} failed with status code {}".format(url, code))
                 failures.append((url, code))
         except requests.exceptions.Timeout:
             logger.info('{} timed out'.format(url))
@@ -195,15 +231,16 @@ def check_urls(base, full=False):
     return True
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: nocover
+    url_list = None
     args = parser.parse_args()
     if args.verbose:
         logger.setLevel(logging.INFO)
     if args.base:
         BASE = args.base
-    if args.full:
-        FULL = True
+    if args.url_list:
+        url_list = args.url_list
     if args.timeout:
         TIMEOUT = int(args.timeout)
-    if not check_urls(BASE, full=FULL):
+    if not check_urls(BASE, url_list=url_list):
         sys.exit(1)

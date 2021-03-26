@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.test import SimpleTestCase, TestCase, override_settings
 
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from core.feature_flags import (
     environment_is, environment_is_not, in_split_testing_cluster

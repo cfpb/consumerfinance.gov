@@ -1,7 +1,5 @@
-const simulateEvent = require( '../../../../util/simulate-event' ).simulateEvent;
+import { simulateEvent } from '../../../../util/simulate-event';
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
-
-const app = require( `${ BASE_JS_PATH }/js/recent-notices.js` );
 
 const HTML_SNIPPET = `
   <ul id="regs3k-notices"></ul>
@@ -26,16 +24,26 @@ const TEST_DATA = {
 
 // Back up global xhr
 const xhr = global.XMLHttpRequest;
+
 // Mock console logging
+delete global.console;
 global.console = { error: jest.fn(), log: jest.fn() };
+
+// Reference to the script recent-notices.js
+let app;
 
 describe( 'The Regs3K search page', () => {
 
   beforeEach( () => {
-    // Reset global XHR
-    global.XMLHttpRequest = xhr;
+    app = require( `${ BASE_JS_PATH }/js/recent-notices.js` );
+
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
+  } );
+
+  afterEach( () => {
+    // Reset global XHR
+    global.XMLHttpRequest = xhr;
   } );
 
   it( 'should process a notice', () => {
@@ -75,10 +83,10 @@ describe( 'The Regs3K search page', () => {
       responseText: JSON.stringify( TEST_DATA )
     };
     global.XMLHttpRequest = jest.fn( () => mockXHR );
+
     // Fire `load` event
-    const event = document.createEvent( 'Event' );
-    event.initEvent( 'load', true, true );
-    window.dispatchEvent( event );
+    simulateEvent( 'load', window, { currentTarget: window } );
+
     // Complete XHR
     mockXHR.onreadystatechange();
 
@@ -97,10 +105,10 @@ describe( 'The Regs3K search page', () => {
       responseText: 'Server error!'
     };
     global.XMLHttpRequest = jest.fn( () => mockXHR );
+
     // Fire `load` event
-    const event = document.createEvent( 'Event' );
-    event.initEvent( 'load', true, true );
-    window.dispatchEvent( event );
+    simulateEvent( 'load', window, { currentTarget: window } );
+
     // Complete XHR
     mockXHR.onreadystatechange();
 

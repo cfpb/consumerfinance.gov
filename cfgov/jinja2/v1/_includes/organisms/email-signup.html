@@ -6,7 +6,7 @@
 
    Description:
 
-   See http://cfpb.github.io/design-manual/page-components/email-sign-up.html
+   See https://cfpb.github.io/design-system/patterns/e-mail-signup-forms
 
    Creates an email sign up form when given:
 
@@ -20,7 +20,7 @@
 
    ========================================================================== #}
 
-{% set form_id = get_unique_id() %}
+{% set form_id = unique_id_in_context() %}
 
 {% set disclaimer_url = '/privacy/email-sign-privacy-act-statement/'
    if not value.disclaimer_url
@@ -46,7 +46,7 @@
           action="/subscriptions/new/"
           enctype="application/x-www-form-urlencoded">
         {% import 'molecules/notification.html' as notification with context %}
-        {{ notification.render('default', false, '') }}
+        {{ notification.render( 'information', false, '' ) }}
 
         <div class="m-form-field">
             <label class="a-label a-label__heading" for="{{ 'email_' ~ form_id }}">

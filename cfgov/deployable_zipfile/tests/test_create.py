@@ -1,12 +1,10 @@
 import os
 import shutil
-import six
 import sys
 import tempfile
-from unittest import TestCase
+from unittest import TestCase, mock
 from zipfile import ZipFile
 
-import mock
 from deployable_zipfile.create import create_zipfile, save_wheels
 
 
@@ -72,8 +70,7 @@ class TestCreateDeployableZip(TestCase):
         self.assertEqual(zipfile_filename, '%s.zip' % zipfile_basename)
 
         archive = ZipFile(zipfile_filename)
-        six.assertCountEqual(
-            self,
+        self.assertCountEqual(
             archive.namelist(),
             [
                 '__main__.py',

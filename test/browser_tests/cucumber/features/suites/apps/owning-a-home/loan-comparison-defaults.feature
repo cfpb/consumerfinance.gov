@@ -1,5 +1,5 @@
 Feature: Test the default values in the Loan Comparison page
-  As a first time visitor to the Buying a House page
+  As a first time visitor to the Owning a Home page
   I want to have fields pre-poluated
   So that I can compare loan costs easily
 
@@ -156,4 +156,3 @@ Scenario: First time Desktop visitor should see default Discount point and credi
   When I click Add another loan
     And I click Add another loan again
   Then I should see "0" as default Discount point and credits for "Loan C"
-

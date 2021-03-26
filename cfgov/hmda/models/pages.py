@@ -1,4 +1,4 @@
-from wagtail.wagtailcore.models import PageManager
+from wagtail.core.models import PageManager
 
 from hmda.models.forms import HmdaFilterableForm
 from hmda.resources.hmda_data_options import (

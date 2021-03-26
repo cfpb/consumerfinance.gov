@@ -86,7 +86,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 
 STATIC_ROOT = os.environ['DJANGO_STATIC_ROOT']
 
-CACHES.update({
+CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/tmp/eregs_cache',
@@ -96,7 +96,7 @@ CACHES.update({
         'LOCATION': 'post_preview_cache',
         'TIMEOUT': None,
     }
-})
+}
 
 # ALLOWED_HOSTS should be defined as a JSON list in the ALLOWED_HOSTS
 # environment variable.
@@ -107,6 +107,3 @@ except (TypeError, ValueError):
         "Environment variable ALLOWED_HOSTS is either not defined or is "
         "not valid JSON. Expected a JSON array of allowed hostnames."
     )
-
-# Used in legacy.views.complaint.ComplaintLandingView
-COMPLAINT_LANDING_STATS_SOURCE = "https://files.consumerfinance.gov/ccdb/narratives.json"

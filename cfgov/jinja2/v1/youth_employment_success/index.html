@@ -5,18 +5,20 @@
   <link rel="stylesheet" href="{{ static('apps/youth-employment-success/css/main.css') }}">
 {%- endblock css %}
 
+{% block title -%}
+  Planning how you’ll get to work | {{ _('Consumer Financial Protection Bureau') }}
+{%- endblock %}
+
+{%- block desc -%}
+  This tool helps youth plan how to get to work, budget for transportation costs, and identify a backup plan. 
+{% endblock %}
+
+
 {% block content %}
 
 <main class="content content__1-3 yes-transit-tool" role="main">
   <div class="content_wrapper">
-    <nav class="breadcrumbs" aria-label="Breadcrumbs">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 559.6 1200" class="cf-icon-svg">
-        <path d="M494.5 1090.7c-17.3 0-33.8-6.8-46-19L19 642.1c-25.4-25.4-25.4-66.5 0-91.9l429.5-429.5c25.6-25.1 66.8-24.8 91.9.8 24.8 25.3 24.8 65.8 0 91.1L156.9 596.2l383.6 383.6c25.4 25.4 25.4 66.5.1 91.9-12.3 12.2-28.8 19-46.1 19z"></path>
-      </svg>
-      <a class="breadcrumbs_link" href="/practitioner-resources/resources-youth-employment-programs/">
-        Resources for Youth Employment Programs
-      </a>
-    </nav>
+    {% include "breadcrumbs.html" %}
   </div>
   <div class="wrapper content_wrapper">
     {% include "side-nav.html" %}
@@ -26,9 +28,14 @@
         {% include "goals.html" %}      
         {% include "budget-form.html" %}
         <div class="block block__sub">
-          <h2>How do your transportation options fit in your budget, schedule, and lifestyle?</h2>        
+          <h2>
+            How do your transportation options fit your budget, schedule, and lifestyle?
+          </h2>
+          <p>
+            There are many ways you could get to work &mdash; some options are faster, cheaper, or more convenient.
+          </p>
           <p class="u-mb0">
-            There are many ways you could get to work—some options are faster, cheaper, or more convenient. You’ll be able to choose a type of transportation and enter how much it costs. If you’re unsure about any of the specifics, don’t worry — you can select, “I’m not sure,” and the item will be added to your to-do list, which you’ll receive at the end of the tool. Once you finish your first option, you can compare it to other options to help you figure out the best choice for you.
+            You'll be able to choose a type of transportation and enter how much it costs. If you're unsure about the specifics, don't worry &mdash; you can select "I'm not sure" and the item will be added to your to-do list, which you'll receive at the end. Once you finish your first transportation option, you can compare it to other options to help you figure out the best first choice and backup plan.
           </p>
           {% include "route/index.html" %}
         </div>

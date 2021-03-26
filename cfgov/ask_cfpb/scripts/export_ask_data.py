@@ -1,17 +1,12 @@
-from __future__ import unicode_literals
-
+import csv
 import datetime
-from six.moves import html_parser as HTMLParser
+import html
 
 from django.http import HttpResponse
-from django.utils import html
+from django.utils import html as html_util
 
-import unicodecsv
+from ask_cfpb.models.answer_page import AnswerPage
 
-from ask_cfpb.models.pages import AnswerPage
-
-
-html_parser = HTMLParser.HTMLParser()
 
 HEADINGS = [
     'ASK_ID',
@@ -21,6 +16,7 @@ HEADINGS = [
     'Answer',
     'URL',
     'Live',
+    'LastEdited',
     'Redirect',
     'PortalTopics',
     'PortalCategories',
@@ -31,8 +27,8 @@ HEADINGS = [
 
 
 def clean_and_strip(data):
-    unescaped = html_parser.unescape(data)
-    return html.strip_tags(unescaped).strip()
+    unescaped = html.unescape(data)
+    return html_util.strip_tags(unescaped).strip()
 
 
 def assemble_output():
@@ -42,10 +38,13 @@ def assemble_output():
         'portal_topic__heading',
         'portal_category__heading')
     answer_pages = list(AnswerPage.objects.prefetch_related(
-        *prefetch_fields).order_by('language', '-answer_base__id').values(
-            'id', 'answer_base__id', 'question', 'short_answer',
-            'answer_content', 'url_path', 'live', 'redirect_to_page_id',
-            'related_resource__title', 'language', *prefetch_fields))
+        *prefetch_fields
+    ).order_by('language', '-answer_base__id').values(
+        'id', 'answer_base__id', 'question', 'short_answer',
+        'answer_content', 'url_path', 'live', 'last_edited',
+        'redirect_to_page_id', 'related_resource__title', 'language',
+        *prefetch_fields
+    ))
     output_rows = []
     seen = []
 
@@ -71,15 +70,23 @@ def assemble_output():
             # If no text block is found,
             # there is either a HowTo or FAQ schema block.
             # Both define a description field, so we'll use that here.
-            answer_schema = filter(
-                lambda item: item['type'] == 'how_to_schema' or
-                item['type'] == 'faq_schema', answer_streamfield)
+            answer_schema = list(
+                filter(
+                    lambda item: item['type'] == 'how_to_schema' or
+                    item['type'] == 'faq_schema', answer_streamfield
+                )
+            )
             if answer_schema:
                 answer = answer_schema[0].get('value').get('description')
+            else:
+                # This is a question with no answer, possibly a new draft.
+                answer = ''
+
         output['Answer'] = clean_and_strip(answer).replace('\x81', '')
         output['ShortAnswer'] = clean_and_strip(page['short_answer'])
         output['URL'] = page['url_path'].replace('/cfgov', '')
         output['Live'] = page['live']
+        output['LastEdited'] = page['last_edited']
         output['Redirect'] = page['redirect_to_page_id']
 
         # Group the ManyToMany fields together:
@@ -103,21 +110,18 @@ def assemble_output():
         output['RelatedQuestions'] = " | ".join(related_questions)
         output['PortalTopics'] = " | ".join(portal_topics)
         output['PortalCategories'] = " | ".join(portal_categories)
+
         output_rows.append(output)
+
     return output_rows
 
 
 def export_questions(path='/tmp', http_response=False):
     """
-    A script for exporting Ask CFPB Answer content
-    to a CSV that can be opened easily in Excel.
+    A script for exporting Ask CFPB Answer content to an Excel-friendly CSV.
 
-    Run from within cfgov-refresh with:
+    Run from within consumerfinance.gov with:
     `python cfgov/manage.py runscript export_ask_data`
-
-    CEE staffers use a version of Excel that can't easily import UTF-8
-    non-ascii encodings. So we throw in the towel and encode the CSV
-    with windows-1252.
 
     By default, the script will dump the file to `/tmp/`,
     unless a path argument is supplied,
@@ -125,7 +129,6 @@ def export_questions(path='/tmp', http_response=False):
     A command that passes in path would look like this:
     `python cfgov/manage.py runscript export_ask_data --script-args [PATH]`
     """
-
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     slug = 'ask-cfpb-{}.csv'.format(timestamp)
     if http_response:
@@ -134,12 +137,12 @@ def export_questions(path='/tmp', http_response=False):
         write_questions_to_csv(response)
         return response
     file_path = '{}/{}'.format(path, slug).replace('//', '/')
-    with open(file_path, 'w') as f:
+    with open(file_path, 'w', encoding='windows-1252') as f:
         write_questions_to_csv(f)
 
 
 def write_questions_to_csv(csvfile):
-    writer = unicodecsv.writer(csvfile, encoding='windows-1252')
+    writer = csv.writer(csvfile)
     writer.writerow(HEADINGS)
     for row in assemble_output():
         writer.writerow([row.get(key) for key in HEADINGS])

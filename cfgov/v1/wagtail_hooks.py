@@ -1,33 +1,43 @@
 import logging
 
 from django.conf import settings
-from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.html import format_html_join
 
+from wagtail.admin.menu import MenuItem
+from wagtail.admin.rich_text.converters.editor_html import (
+    WhitelistRule as AllowlistRule
+)
+from wagtail.contrib.modeladmin.mixins import ThumbnailMixin
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register
 )
-from wagtail.wagtailadmin.menu import MenuItem
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.whitelist import attribute_rule
+from wagtail.core import hooks
+from wagtail.core.whitelist import attribute_rule
 
+from ask_cfpb.models.snippets import GlossaryTerm
 from scripts import export_enforcement_actions
-
 from v1.admin_views import ExportFeedbackView, manage_cdn
-from v1.models.menu_item import MenuItem as MegaMenuItem
+from v1.models.banners import Banner
 from v1.models.portal_topics import PortalCategory, PortalTopic
 from v1.models.resources import Resource
-from v1.models.snippets import (
-    Contact, GlossaryTerm, RelatedResource, ReusableText
+from v1.models.snippets import Contact, RelatedResource, ReusableText
+from v1.template_debug import (
+    featured_content_test_cases, heading_test_cases, notification_test_cases,
+    register_template_debug, video_player_test_cases
 )
 from v1.util import util
+from v1.views.reports import PageMetadataReportView
+
+
+try:
+    from django.urls import re_path
+except ImportError:
+    from django.conf.urls import url as re_path
 
 
 logger = logging.getLogger(__name__)
@@ -43,7 +53,7 @@ def export_data(request):
 def register_export_menu_item():
     return MenuItem(
         'Enforcement actions',
-        reverse('export-enforcement-actions'),
+        reverse("export-enforcement-actions"),
         classnames='icon icon-download',
         order=99999,
     )
@@ -51,7 +61,7 @@ def register_export_menu_item():
 
 @hooks.register('register_admin_urls')
 def register_export_url():
-    return [url(
+    return [re_path(
         'export-enforcement-actions',
         export_data,
         name='export-enforcement-actions')]
@@ -80,9 +90,21 @@ def log_page_deletion(request, page):
 
 @hooks.register('insert_editor_js')
 def editor_js():
-    js_files = [
-        'js/table-block.js',
-    ]
+    js_files = ['js/admin/table-block.js']
+
+    js_includes = format_html_join(
+        '\n',
+        '<script src="{0}{1}"></script>',
+        ((settings.STATIC_URL, filename) for filename in js_files)
+    )
+
+    return js_includes
+
+
+@hooks.register('insert_global_admin_js')
+def global_admin_js():
+    js_files = ['js/admin/global.js']
+
     js_includes = format_html_join(
         '\n',
         '<script src="{0}{1}"></script>',
@@ -95,12 +117,29 @@ def editor_js():
 @hooks.register('insert_editor_css')
 def editor_css():
     css_files = [
-        'css/bureau-structure.css',
-        'css/deprecated-blocks.css',
+        'css/form-explainer.css',
         'css/general-enhancements.css',
         'css/heading-block.css',
+        'css/model-admin.css',
         'css/table-block.css',
     ]
+
+    css_includes = format_html_join(
+        '\n',
+        '<link rel="stylesheet" href="{0}{1}">',
+        ((settings.STATIC_URL, filename) for filename in css_files)
+    )
+
+    return css_includes
+
+
+@hooks.register('insert_global_admin_css')
+def global_admin_css():
+    css_files = [
+        'css/model-admin.css',
+        'css/global.css',
+    ]
+
     css_includes = format_html_join(
         '\n',
         '<link rel="stylesheet" href="{0}{1}">',
@@ -143,11 +182,13 @@ def form_module_handlers(page, request, context, *args, **kwargs):
 
 
 class PermissionCheckingMenuItem(MenuItem):
-    """MenuItem that only displays if the user has a certain permission.
+    """
+    MenuItem that only displays if the user has a certain permission.
 
     This subclassing approach is recommended by the Wagtail documentation:
-    https://docs.wagtail.io/en/v1.13.4/reference/hooks.html#register-admin-menu-item
+    https://docs.wagtail.io/en/stable/reference/hooks.html#register-admin-menu-item
     """
+
     def __init__(self, *args, **kwargs):
         self.permission = kwargs.pop('permission')
         super(PermissionCheckingMenuItem, self).__init__(*args, **kwargs)
@@ -160,7 +201,7 @@ class PermissionCheckingMenuItem(MenuItem):
 def register_export_feedback_menu_item():
     return PermissionCheckingMenuItem(
         'Export feedback',
-        reverse('export-feedback'),
+        reverse("export-feedback"),
         classnames='icon icon-download',
         order=99999,
         permission='v1.export_feedback'
@@ -171,7 +212,7 @@ def register_export_feedback_menu_item():
 def register_django_admin_menu_item():
     return MenuItem(
         'Django Admin',
-        reverse('admin:index'),
+        reverse("admin:index"),
         classnames='icon icon-redirect',
         order=99999
     )
@@ -180,7 +221,7 @@ def register_django_admin_menu_item():
 @hooks.register('register_admin_menu_item')
 def register_frank_menu_item():
     return MenuItem('CDN Tools',
-                    reverse('manage-cdn'),
+                    reverse("manage-cdn"),
                     classnames='icon icon-cogs',
                     order=10000)
 
@@ -188,10 +229,10 @@ def register_frank_menu_item():
 @hooks.register('register_admin_urls')
 def register_admin_urls():
     return [
-        url(r'^cdn/$', manage_cdn, name='manage-cdn'),
-        url(r'^export-feedback/$',
-            ExportFeedbackView.as_view(),
-            name='export-feedback'),
+        re_path(r'^cdn/$', manage_cdn,
+                name='manage-cdn'),
+        re_path(r'^export-feedback/$', ExportFeedbackView.as_view(),
+                name='export-feedback'),
     ]
 
 
@@ -204,25 +245,25 @@ def serve_latest_draft_page(page, request, args, kwargs):
         return response
 
 
-@hooks.register('before_serve_shared_page')
-def before_serve_shared_page(page, request, args, kwargs):
-    request.show_draft_megamenu = True
+@hooks.register('register_reports_menu_item')
+def register_page_metadata_report_menu_item():
+    return MenuItem(
+        "Page Metadata",
+        reverse('page_metadata_report'),
+        classnames='icon icon-' + PageMetadataReportView.header_icon,
+        order=700
+    )
 
 
-class MegaMenuModelAdmin(ModelAdmin):
-    model = MegaMenuItem
-    menu_label = 'Mega Menu'
-    menu_icon = 'cog'
-    list_display = ('link_text', 'order')
-
-
-modeladmin_register(MegaMenuModelAdmin)
-
-
-@receiver(post_save, sender=MegaMenuItem)
-def clear_mega_menu_cache(sender, instance, **kwargs):
-    from django.core.cache import caches
-    caches['default_fragment_cache'].delete('mega_menu')
+@hooks.register('register_admin_urls')
+def register_page_metadata_report_url():
+    return [
+        re_path(
+            r'^reports/page-metadata/$',
+            PageMetadataReportView.as_view(),
+            name='page_metadata_report'
+        ),
+    ]
 
 
 def get_resource_tags():
@@ -266,14 +307,26 @@ class ResourceTagsFilter(admin.SimpleListFilter):
                 return queryset.filter(tags__slug__iexact=tag[0])
 
 
-class ResourceModelAdmin(ModelAdmin):
+class ResourceModelAdmin(ThumbnailMixin, ModelAdmin):
     model = Resource
     menu_label = 'Resources'
     menu_icon = 'snippet'
-    list_display = ('title', 'desc', 'order', 'thumbnail')
+    list_display = ('title', 'desc', 'order', 'admin_thumb')
+    thumb_image_field_name = 'thumbnail'
+    thumb_image_filter_spec = 'width-100'
+    thumb_image_width = None
     ordering = ('title',)
     list_filter = (ResourceTagsFilter,)
     search_fields = ('title',)
+
+
+@modeladmin_register
+class BannerModelAdmin(ModelAdmin):
+    model = Banner
+    menu_icon = 'warning'
+    list_display = ('title', 'url_pattern', 'enabled')
+    ordering = ('title',)
+    search_fields = ('title', 'url_pattern', 'content')
 
 
 class ContactModelAdmin(ModelAdmin):
@@ -345,29 +398,28 @@ modeladmin_register(SnippetModelAdminGroup)
 @hooks.register('construct_main_menu')
 def hide_snippets_menu_item(request, menu_items):
     menu_items[:] = [item for item in menu_items
-                     if item.url != reverse('wagtailsnippets:index')]
+                     if item.url != reverse("wagtailsnippets:index")]
 
 
-# Override list of allowed tags in a RichTextField
-@hooks.register('construct_whitelister_element_rules')
-def whitelister_element_rules():
+# The construct_whitelister_element_rules was depricated in Wagtail 2,
+# so we'll use register_rich_text_features instead.
+# Only applies to Hallo editors, which only remain in our custom
+# AtomicTableBlock table cells.
+@hooks.register('register_rich_text_features')
+def register_span_feature(features):
     allow_html_class = attribute_rule({
         'class': True,
-        'itemprop': True,
-        'itemscope': True,
-        'itemtype': True,
+        'id': True,
     })
 
-    allowed_tags = ['aside', 'h4', 'h3', 'p', 'span',
-                    'table', 'tr', 'th', 'td', 'tbody', 'thead', 'tfoot',
-                    'col', 'colgroup']
+    # register a feature 'span'
+    # which allowlists the <span> element
+    features.register_converter_rule('editorhtml', 'span', [
+        AllowlistRule('span', allow_html_class),
+    ])
 
-    return {tag: allow_html_class for tag in allowed_tags}
-
-
-@hooks.register('before_serve_shared_page')
-def set_served_by_wagtail_sharing(page, request, args, kwargs):
-    setattr(request, 'served_by_wagtail_sharing', True)
+    # add 'span' to the default feature set
+    features.default_features.append('span')
 
 
 @hooks.register('register_permissions')
@@ -376,3 +428,37 @@ def add_export_feedback_permission_to_wagtail_admin_group_view():
         content_type__app_label='v1',
         codename='export_feedback'
     )
+
+
+register_template_debug(
+    'v1',
+    'featured_content',
+    '_includes/organisms/featured-content.html',
+    featured_content_test_cases,
+    extra_js=['featured-content-module.js']
+)
+
+
+register_template_debug(
+    'v1',
+    'heading',
+    '_includes/blocks/heading.html',
+    heading_test_cases
+)
+
+
+register_template_debug(
+    'v1',
+    'notification',
+    '_includes/molecules/notification.html',
+    notification_test_cases
+)
+
+
+register_template_debug(
+    'v1',
+    'video_player',
+    '_includes/organisms/video-player.html',
+    video_player_test_cases,
+    extra_js=['video-player.js']
+)

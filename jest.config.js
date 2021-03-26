@@ -22,5 +22,12 @@ module.exports = {
   moduleNameMapper: {
     '\\.(svg)$': '<rootDir>/test/unit_tests/mocks/fileMock.js'
   },
-  testURL: 'http://localhost'
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/develop-apps/'
+  ],
+  testURL: 'http://localhost',
+  transformIgnorePatterns: [
+    '<rootDir>/cfgov/unprocessed/apps/ccdb-landing-map/node_modules/cfpb-chart-builder/src/js/get-tile-map-state.js'
+  ]
 };

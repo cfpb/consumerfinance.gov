@@ -1,0 +1,647 @@
+{% import "atoms/checkbox.html" as checkbox with context %}
+
+<section class="college-costs_tool-section college-costs_tool-section__make-a-plan" data-tool-section="make-a-plan">
+    <h2>Make a plan to cover this year's costs</h2>
+
+    <p>Thank you for entering all that info! This page will help you determine whether you have enough funding to cover the cost of attending this particular school. If you have a gap, it will help you come up with a plan.</p>
+
+    <div data-state-based-visibility="uncovered-costs">
+        {{ notification.render(
+            'caution',
+            true,
+            '',
+            'You have <span class="make-a-plan_gap" data-financial-item="total_gap">$XX,XXX</span> of uncovered costs for this year of schooling. Make a plan to get this down to $0.' | safe,
+            'data-state_uncovered_costs="true"' | safe
+        ) }}
+    </div>
+
+    <div data-state-based-visibility="excesss-funding">
+        {{ notification.render(
+            'caution',
+            true,
+            '',
+            'You have <span class="make-a-plan_gap" data-financial-item="total_excessFunding">$XX,XXX</span> of excess funding for this year. Consider reducing your borrowing, starting with the highest interest loans.' | safe,
+            'data-state_excess_funding="true"' | safe
+        ) }}
+    </div>
+
+    <h3 class="h4 header_border-bottom">Costs vs. funding</h3>
+
+    <div id="make-a-plan_chart"></div>
+
+    <div class="block block__mid">
+        <h3>Get your uncovered costs down to $0</h3>
+
+        <p>From cheapest to most expensive, here are your options for closing that gap:</p>
+
+        <div class="o-expandable-group">
+            {% set expandable_settings = {
+                'label': 'Costs',
+                'value': '$0',
+                'is_editable': 'True',
+                'status': 'warning',
+                'data_attribute': 'data-financial-item="total_costs"',
+                'note': '<strong>Minimize indirect costs:</strong> Can you reduce your indirect costs by living at home or buying a refurbished laptop?' | safe
+            } %}
+            {% call() expandable(expandable_settings) %}
+                {{
+                    input.render({
+                        'label': 'Tuition and fees',
+                        'id': 'plan__tuition',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="dirCost_tuition"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Housing and meals',
+                        'id': 'plan__room-board',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="dirCost_housing"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Other direct costs',
+                        'id': 'plan__otherDirectCosts',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="dirCost_other"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Books and supplies',
+                        'id': 'plan__books',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="indiCost_books"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Transportation',
+                        'id': 'plan__transportation',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="indiCost_transportation"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Personal/other/miscellaneous expenses',
+                        'id': 'plan__other',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="indiCost_other"'
+                    })
+                }}
+                {{
+                input.render({
+                        'label': 'Additional financial obligations',
+                        'id': 'plan__otherIndirect',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="otherCost_additional"'
+                    })
+                }}
+            {% endcall %}
+
+            {% set expandable_settings = {
+                'label': 'Grants & scholarships',
+                'value': '$99,999',
+                'is_editable': 'True',
+                'data_attribute': 'data-financial-item="total_grantsScholarships"',
+                'note': '<strong>Apply for additional grants and scholarships:</strong> Ask the financial aid office and your school counselor (if you’re currently in high school) for help. <a href="https://studentaid.gov/understand-aid/types/scholarships" target="_blank" class="external-link" rel="noreferrer noopener">The Department of Education has more ideas here.</a>' | safe
+            } %}
+            {% call() expandable(expandable_settings) %}
+                {{
+                    input.render({
+                        'label': 'Federal Pell Grants',
+                        'id': 'plan__pellGrants',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_pell"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Federal SEOG grant',
+                        'id': 'plan__seog',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_seog"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Other federal grants',
+                        'id': 'plan__other-federal',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_otherFederal"'
+                    })
+                }}
+
+                {{
+                    input.render({
+                        'label': 'State grant(s)',
+                        'id': 'plan__stateGrants',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_state"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'School grant(s)',
+                        'id': 'plan__schoolGrants',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_school"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Tuition waiver',
+                        'id': 'plan__tuitionGrants',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_tuition"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Other grant(s)',
+                        'id': 'plan__grant-other',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_other"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Military Tuition Assistance',
+                        'id': 'plan__mta',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_mta"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'GI Bill',
+                        'id': 'plan__gibill',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_gibill"'
+                    })
+                }}
+
+                {{
+                    input.render({
+                        'label': 'Other servicemember benefits',
+                        'id': 'plan__serviceMemberOther',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_servicememberOther"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'State scholarship(s)',
+                        'id': 'plan__stateScholarships',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="scholarship_state"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'School scholarship(s)',
+                        'id': 'plan__schoolScholarships',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="scholarship_school"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Other scholarship(s)',
+                        'id': 'plan__otherScholarships',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="scholarship_other"'
+                    })
+                }}
+            {% endcall %}
+            {% set expandable_settings = {
+                'label': 'Work-study<span class="graduate-content">, fellowships, and assistantships</span>' | safe,
+                'value': '$99,999',
+                'is_editable': 'True',
+                'data_attribute': 'data-financial-item="total_workStudyFellowAssist"',
+                'note': '<strong>Pursue a work-study position:</strong> Working can reduce borrowing and provide other benefits, as long as it doesn’t interfere with academic progress.' | safe
+            } %}
+            {% call() expandable(expandable_settings) %}
+                {{
+                    input.render({
+                        'label': 'Work-study',
+                        'id': 'plan__workStudy',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="workStudy_workStudy"'
+                    })
+                }}
+                <div class="graduate-content">
+                {{
+                    input.render({
+                        'label': 'Fellowship funding',
+                        'id': 'plan__fellowship',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="fellowAssist_fellowship"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Assistantship funding',
+                        'id': 'plan__assistantship',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="fellowAssist_assistantship"'
+                    })
+                }}
+                </div>
+            {% endcall %}
+
+            {% set expandable_settings = {
+                'label': 'Other resources',
+                'value': '$99,999',
+                'is_editable': 'True',
+                'data_attribute': 'data-financial-item="total_otherResources"',
+                'note': '<span><strong>Find more cash:</strong> Can you contribute more from savings or work? Can anyone in your family help you?</span><span><strong>Ask about tuition payment plans:</strong> If the school offers a no-cost or low-cost installment plan, you and your family may be able to budget for paying your tuition gradually over time. Ask the financial aid office. </span>' | safe
+            } %}
+            {% call() expandable(expandable_settings) %}
+                {{
+                    input.render({
+                        'label': 'Personal funds',
+                        'id': 'plan__personalSavings',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="savings_personal"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'College savings plan (like 529 plans)',
+                        'id': 'plan__collegeSavingsPlan',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="savings_collegeSavings"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Family contribution',
+                        'id': 'plan__familySavings',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="savings_family"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Estimated off-campus job income',
+                        'id': 'plan__jobIncome',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="income_jobOffCampus"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Estimated on-campus job income (not work-study)',
+                        'id': 'plan__onCampusJob',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="income_jobOnCampus"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Employer tuition assistance or reimbursement',
+                        'id': 'plan__employerAssistance',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="income_employerAssist"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Other funding',
+                        'id': 'plan__otherFunding',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="income_otherFunding"'
+                    })
+                }}
+            {% endcall %}
+
+            {% set expandable_settings = {
+                'label': 'Federal loans (minus loan fees)',
+                'value': '$99,999',
+                'is_editable': 'True',
+                'data_attribute': 'data-financial-item="total_fedLoans"',
+                'note': '<strong>Take out more federal loans:</strong> Generally, your financial aid offer includes the maximum amount of Direct Loans available to you. Contact the financial aid office to find out more.' | safe
+            } %}
+            {% call() expandable(expandable_settings) %}
+                <div class="block block__mid block__flush-top financial-item-group undergrad-content">
+                    {{
+                        input.render({
+                            'label': 'Direct Subsidized Loan',
+                            'id': 'plan__directSubsidized',
+                            'help_text': 'Interest starts accumulating 6 months after you leave school',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fedLoan_directSub"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Interest rate (%)',
+                            'value': '4.53%',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="rate_directSub"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Loan fee (%)',
+                            'value': '1.062%',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="fee_directSub"'
+                        })
+                    }}
+                </div>
+                <div class="block block__mid block__flush-bottom financial-item-group">
+                    {{
+                        input.render({
+                            'label': 'Direct Unsubsidized Loans',
+                            'id': 'plan__directUnsub',
+                            'helper_text': 'Interest starts accumulating 6 months after you leave school',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fedLoan_directUnsub"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Interest rate (%)',
+                            'value': '9.99%',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="rate_directUnsub"'
+                        })
+                    }}
+                    {{
+                        text_item.render({
+                            'label': 'Loan fee (%)',
+                            'value': '9.99%',
+                            'type': 'text',
+                            'data_attribute': 'data-financial-item="fee_directUnsub"'
+                        })
+                    }}
+                </div>
+            {% endcall %}
+            {% set expandable_settings = {
+                'label': 'Other loans (minus loan fees)' | safe,
+                'value': '$99,999',
+                'is_editable': 'True',
+                'data_attribute': 'data-financial-item="total_publicLoans"',
+                'note': '<strong>Borrow more from the school:</strong> Contact the financial aid office to find out more. Remember, these loans may not offer the same protections as federal student loans.' | safe
+            } %}
+            {% call() expandable(expandable_settings) %}
+                <div class="block block__mid block__flush-top financial-item-group">
+                    {{
+                        input.render({
+                            'label': 'Loan from your state',
+                            'id': 'plan__stateLoan',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="publicLoan_state"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Interest rate (%)',
+                            'id': 'plan__stateLoanRate',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="rate_state"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Loan fee (%)',
+                            'id': 'plan__stateLoanFee',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fee_state"'
+                        })
+                    }}
+                </div>
+                <div class="block block__mid financial-item-group">
+                    {{
+                        input.render({
+                            'label': 'Loan from this school',
+                            'id': 'plan__schoolLoan',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="publicLoan_institutional"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Interest rate (%)',
+                            'id': 'plan__schoolLoanRate',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="rate_institutional"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Loan fee (%)',
+                            'id': 'plan__schoolLoanFee',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fee_institutional"'
+                        })
+                    }}
+                </div>
+                <div class="block block__mid block__flush-bottom financial-item-group">
+                    {{
+                        input.render({
+                            'label': 'Loan from a non-profit',
+                            'id': 'plan__nonprofitLoan',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="publicLoan_nonprofit"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Interest rate (%)',
+                            'id': 'plan__nonprofitLoanRate',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="rate_nonprofit"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Loan fee (%)',
+                            'id': 'plan__nonprofitLoanFee',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="fee_nonprofit"'
+                        })
+                    }}
+                </div>
+            {% endcall %}
+            <div class="block block__mid">
+                <h3 class="other-loan-options">Additional loan options</h3>
+                <p> If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider: </p>
+                <ul>
+                    <li class="undergrad-content"><strong>Federal Parent PLUS loan</strong>: For dependent students at participating schools, parents and stepparents may be able to apply for a Parent PLUS loan from the U.S. Department of Education. Check with the financial aid office before including this in your plan.</li>
+
+                    <li class="graduate-content"><strong>Direct PLUS loan (aka Grad PLUS)</strong>: Graduate students can apply for a Direct PLUS loan from the U.S. Department of Education.</li>
+
+                    <li><strong>Private student loan</strong>: You or a family member can apply for a private student loan from a bank or credit union. Students without credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>
+                </ul>
+                {{ notification.render(
+                    'warning',
+                    true,
+                    'Know before you go',
+                    '<ul>
+                        <li><strong>Accessibility</strong>: <span class="undergrad-content">Parent</span><span class="graduate-content">Grad</span> PLUS Loans are typically easier to qualify for than private loans. All borrowers can save money by comparison shopping—apply to multiple lenders to get the best terms.</li>
+
+                        <li><strong>Cost</strong>: For borrowers and cosigners with strong credit, private loans may offer lower interest rates than <span class="undergrad-content">Parent</span> <span class="graduate-content">Grad</span> PLUS loans — but watch out for variable interest rates, which can increase in the future. Any borrower can save money on interest by starting repayment as soon as possible.</li>
+
+                        <li><strong>Protections</strong>: <span class="undergrad-content">Parent PLUS loans offer some, but not all, of the protections as Federal Direct Loans to students.</span> Private loans are not legally required to offer the same borrower protections and repayment options as any federal loans.</li>
+
+                        <li><strong>Risks</strong>: With both types of loans, borrowers and cosigners risk harm to their credit score if the debt is not repaid on time. Defaulting on a <span class="undergrad-content">federal</span> <span class="graudate-content">PLUS</span> loan can lead to garnishment of federal tax refunds and Social Security payments. Parents and other family members should consider whether they have saved enough for emergencies and retirement when deciding whether to borrow money for their student’s education.</li>
+
+                        <li><strong>Further guidance</strong>: <a href="https://studentaid.gov/understand-aid/types/loans/federal-vs-private/" target="_blank" class="external-link" rel="noreferrer noopener">Visit the U.S. Department of Education for a detailed discussion of loan options.</a> You can also contact the school’s financial aid office.</li>
+                    </ul>' | safe
+                ) }}
+
+                <div class="plus-loan-expandable graduate-content">
+                    {% set expandable_settings = {
+                        'label': 'Direct PLUS (Grad PLUS) loan' | safe,
+                        'value': '$0',
+                        'is_editable': 'True',
+                        'data_attribute': 'data-financial-item="total_plusLoans"'
+                    } %}
+                    {% call() expandable(expandable_settings) %}
+                        <div class="plus-loan-form" >
+                            {{
+                                input.render({
+                                    'label': 'Loan amount',
+                                    'id': 'plan__gradPlus',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="plusLoan_gradPlus"'
+                                })
+                            }}
+                            {{
+                                text_item.render({
+                                    'label': 'Interest rate (%)',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="rate_gradPlus"',
+                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'
+                                })
+                            }}
+                            {{
+                                text_item.render({
+                                    'label': 'Loan fee (%)',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="fee_gradPlus"',
+                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
+                                })
+                            }}
+                        </div>
+                       {{ notification.render(
+                            'information',
+                            true,
+                            '',
+                            'More details about Direct PLUS (Grad PLUS) loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/grad" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a>' | safe
+                        ) }}
+                    {% endcall %}
+                </div>
+                <div class="plus-loan-expandable undergrad-content">
+                    {% set expandable_settings = {
+                        'label': 'Parent PLUS loan' | safe,
+                        'value': '$0',
+                        'is_editable': 'True',
+                        'data_attribute': 'data-financial-item="total_plusLoans"'
+                    } %}
+                    {% call() expandable(expandable_settings) %}
+                         <div class="plus-loan-form">
+                            {{
+                                input.render({
+                                    'label': 'Loan amount',
+                                    'id': 'plan__parentPlus',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="plusLoan_parentPlus"'
+                                })
+                            }}
+                            {{
+                                text_item.render({
+                                    'label': 'Interest rate (%)',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="rate_parentPlus"',
+                                    'helper_text': 'Interest starts accumulating as soon as the money is sent to your school. The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.'
+                                })
+                            }}
+                            {{
+                                text_item.render({
+                                    'label': 'Loan fee (%)',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="fee_parentPlus"',
+                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
+                                })
+                            }}
+                            <div class="u-mt30">
+                                {{
+                                    checkbox.render({
+                                        'id': 'plan__parentPlusFeeRepay',
+                                        'label': 'Although parent PLUS loans are made to parents only—not students—some students take responsibility for repaying parent PLUS loans. Click here if you plan to repay your parent’s PLUS loans, and this loan amount will be added to your projected debt total.',
+                                  })
+                                }}
+
+                            </div>
+                        </div>
+                       {{ notification.render(
+                            'information',
+                            true,
+                            '',
+                            'More details about parent PLUS loans can be found on the <a href="https://studentaid.gov/understand-aid/types/loans/plus/parent" target="_blank" class="external-link" rel="noreferrer noopener">Federal Student Aid website.</a></span>' | safe
+                        ) }}
+                    {% endcall %}
+                </div>
+                 <div class="private-loan-expandable">
+                    {% set expandable_settings = {
+                        'label': 'Private loans',
+                        'value': '$0',
+                        'is_editable': 'True',
+                        'data_attribute': 'data-financial-item="total_privateLoans"',
+                        'note': 'If you need a private loan, you\'ll have to apply directly to lenders. Shop around for the lowest interest rates and loan fees. Private lenders typically require a cosigner for these loans.'
+                    } %}
+                    {% call() expandable(expandable_settings) %}
+                        <div class="private-loan-form">
+                            <h4>Private Loan</h4>
+                            {{
+                                input.render({
+                                    'label': 'Loan amount',
+                                    'id': 'plan__privateLoan1',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="privLoan_privateLoan1"'
+                                })
+                            }}
+                            {{
+                                input.render({
+                                    'label': 'Interest rate (%)',
+                                    'id': 'plan__privateLoan1Rate',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="rate_privateLoan1"',
+                                    'helper_text': 'If you are offered a fixed interest rate, it will not change throughout the life of the loan. If you are offered a variable interest rate, it might change. Enter the initial interest rate from your offer here.'
+                                })
+                            }}
+                            {{
+                                input.render({
+                                    'label': 'Loan fee (%)',
+                                    'id': 'plan__privateLoan1Fee',
+                                    'value': '0',
+                                    'data_attribute': 'data-financial-item="fee_privateLoan1"',
+                                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive.'
+                                })
+                            }}
+                            <div class="undergrad-content u-mt30">
+                                {{
+                                    checkbox.render({
+                                        'id': 'plan__privateLoan1Repay',
+                                        'label': 'Click here if you plan to repay this private loan, and this loan amount will be added to your projected debt total.',
+                                  })
+                                }}
+                            </div>
+                        </div>
+
+                        <button data-state-based-visibility="none" class="a-btn a-btn__link u-mt30">{{ svg_icon('plus-round') }} Add another Private Loan</button>
+                    {% endcall %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>

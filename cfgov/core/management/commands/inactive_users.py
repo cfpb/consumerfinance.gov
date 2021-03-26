@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from datetime import timedelta
 
 from django.conf import settings
@@ -10,7 +8,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.formats import date_format
 
-from wagtail.wagtailcore.models import PageRevision
+from wagtail.core.models import PageRevision
 
 
 User = get_user_model()

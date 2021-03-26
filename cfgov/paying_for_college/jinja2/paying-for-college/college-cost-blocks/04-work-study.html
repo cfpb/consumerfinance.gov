@@ -1,0 +1,90 @@
+<section class="college-costs_tool-section" data-tool-section="work-study">
+    <h2>Work-study</h2>
+    <p>Work-study programs are part-time jobs on campus. If your offer includes work-study, that means you are eligible to apply for work-study jobs — a job will not be lined up for you. The work-study amount in your offer is the maximum you can earn. It is estimated and <strong>not guaranteed.</strong></p>
+
+    <div class="block block__mid">
+        {{
+            input.render({
+                'label': 'Maximum, estimated work-study income',
+                'id': 'workStudy__workStudy',
+                'value': '0',
+                'data_attribute': 'data-financial-item="workStudy_workStudy"'
+            })
+        }}
+        {{
+            text_item.render({
+                'label': 'Maximum, estimated work-study income',
+                'value': '$99,999',
+                'type': 'total',
+                'data_attribute': 'data-financial-item="total_workStudy"'
+            })
+        }}
+        {{ notification.render(
+            'money-tips',
+            true,
+            'Money saving tips',
+            '<ul>
+                <li> Ask if there is help available for finding a work-study job (like a student employment service). You may be able to use your work-study to compete for student jobs that are not labeled work-study.</li>
+                <li> There can be long-term benefits to work-study (besides reducing the amount you need to borrow), like exposure to new types of work or building relationships with professors who can help you apply for scholarships, internships, and other opportunities.</li>
+            </ul>' | safe
+        ) }}
+
+        {{ notification.render(
+            'warning',
+            true,
+            'Know before you go',
+            '<ul>
+                <li>If you do not find a work-study job in the first term, you may lose your eligibility in the future.</li>
+                <li>Ask the financial aid office about the options for getting paid for work-study. At most schools, work-study money cannot be used to cover direct costs (like tuition, on-campus housing, and meal plans), because you must pay those bills <strong>before</strong> you earn the work-study funds.</li>
+            </ul>' | safe
+        ) }}
+    </div>
+
+    <div class="block block__mid grants-scholarships_grad-fellowships graduate-content">
+        <h3>Fellowships and assistantships</h3>
+        <p>In addition to work-study, graduate students may be eligible to earn additional funding from fellowships and/or assistantships.</p>
+        {{
+            input.render({
+                'label': 'Fellowship funding',
+                'id': 'fellowAssist__fellowship',
+                'value': '0',
+                'data_attribute': 'data-financial-item="fellowAssist_fellowship"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Assistantship funding',
+                'id': 'fellowAssist__assistantship',
+                'value': '0',
+                'data_attribute': 'data-financial-item="fellowAssist_assistantship"'
+            })
+        }}
+        {{
+            text_item.render({
+                'label': 'Total fellowship and assistantship funding',
+                'value': '$99,999',
+                'type': 'total',
+                'data_attribute': 'data-financial-item="total_fellowAssist"'
+            })
+        }}
+
+        <div class="costs-not-covered-notification">
+            {{ notification.render(
+                'caution',
+                true,
+                '',
+                '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
+            ) }}
+        </div>
+
+        {{ notification.render(
+            'money-tips',
+            true,
+            'Money saving tips',
+            '<ul>
+                <li>The IRS has different rules for fellowships and assistantships. Ask the financial aid office about the tax implications of your funding.</li>
+                <li>Depending on your field of study, you may be able to apply for fellowship funding from outside the school.</li>
+            </ul>' | safe
+        ) }}
+    </div>
+</section>

@@ -1,23 +1,26 @@
-import Expandable from 'cf-expandables/src/Expandable';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
+import {
+  averageCostView,
+  daysPerWeekView,
+  drivingCostEstimateView,
+  milesView,
+  transitTimeView
+} from './views/route/form-questions';
 import { addRouteOptionAction } from './reducers/route-option-reducer';
 import { toArray } from './util';
-import averageCostView from './views/average-cost';
-import budgetFormView from './budget-form-view';
-import createRoute from './route.js';
-import daysPerWeekView from './views/days-per-week';
-import drivingCostEstimateView from './views/driving-cost-estimate';
+import budgetFormView from './views/budget';
+import createRoute from './models/route';
 import expandableView from './views/expandable';
 import goalsView from './views/goals';
-import milesView from './views/miles';
 import printButton from './views/print-button';
 import reviewChoiceView from './views/review/choice';
 import reviewDetailsView from './views/review/details';
 import reviewGoalsView from './views/review/goals';
-import routeDetailsView from './views/route-details';
-import routeOptionFormView from './route-option-view';
-import routeOptionToggleView from './route-option-toggle-view';
+import routeDetailsView from './views/route/details';
+import routeOptionFormView from './views/route/option-form';
+import routeOptionToggleView from './views/route/option-toggle';
 import store from './store';
-import transitTimeView from './views/transit-time';
+
 
 toArray(
   document.querySelectorAll( 'input, textarea' )

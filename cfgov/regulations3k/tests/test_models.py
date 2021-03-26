@@ -1,10 +1,7 @@
-from __future__ import unicode_literals
-
 import datetime
-import sys
 import unittest
+from unittest import mock
 
-# from django.core.urlresolvers import reverse
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
@@ -13,15 +10,15 @@ from django.test import (
     RequestFactory, TestCase as DjangoTestCase, override_settings
 )
 
-from wagtail.wagtailcore.models import Site
+from wagtail.core.models import Site
 
-import mock
-from model_mommy import mommy
+from model_bakery import baker
 
 from core.testutils.mock_cache_backend import CACHE_PURGED_URLS
+from regulations3k.documents import SectionParagraphDocument
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, SectionParagraph, Subpart,
-    effective_version_saved, section_saved, sortable_label
+    effective_version_saved, section_saved, sortable_label, validate_label
 )
 from regulations3k.models.pages import (
     RegulationLandingPage, RegulationPage, RegulationsSearchPage,
@@ -46,7 +43,7 @@ class RegModelTests(DjangoTestCase):
             title='Reg Landing', slug='reg-landing')
         self.ROOT_PAGE.add_child(instance=self.landing_page)
 
-        self.part_1002 = mommy.make(
+        self.part_1002 = baker.make(
             Part,
             cfr_title_number=12,
             part_number='1002',
@@ -54,7 +51,7 @@ class RegModelTests(DjangoTestCase):
             short_name='Regulation B',
             chapter='X'
         )
-        self.part_1030 = mommy.make(
+        self.part_1030 = baker.make(
             Part,
             cfr_title_number=12,
             part_number='1030',
@@ -63,58 +60,58 @@ class RegModelTests(DjangoTestCase):
             chapter='X'
         )
 
-        self.effective_version = mommy.make(
+        self.effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2014, 1, 18),
             part=self.part_1002
         )
-        self.old_effective_version = mommy.make(
+        self.old_effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2011, 1, 1),
             part=self.part_1002,
         )
-        self.draft_effective_version = mommy.make(
+        self.draft_effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2020, 1, 1),
             part=self.part_1002,
             draft=True,
         )
 
-        self.subpart = mommy.make(
+        self.subpart = baker.make(
             Subpart,
             label='Subpart General',
             title='Subpart A - General',
             subpart_type=Subpart.BODY,
             version=self.effective_version
         )
-        self.subpart_appendices = mommy.make(
+        self.subpart_appendices = baker.make(
             Subpart,
             label='Appendices',
             title='Appendices',
             subpart_type=Subpart.APPENDIX,
             version=self.effective_version
         )
-        self.subpart_interps = mommy.make(
+        self.subpart_interps = baker.make(
             Subpart,
             label='Official Interpretations',
             title='Supplement I to Part 1002',
             subpart_type=Subpart.INTERPRETATION,
             version=self.effective_version
         )
-        self.subpart_orphan = mommy.make(
+        self.subpart_orphan = baker.make(
             Subpart,
             label='General Mistake',
             title='An orphan subpart with no sections for testing',
             version=self.effective_version
         )
-        self.old_subpart = mommy.make(
+        self.old_subpart = baker.make(
             Subpart,
             label='Subpart General',
             title='General',
             subpart_type=Subpart.BODY,
             version=self.old_effective_version
         )
-        self.section_num4 = mommy.make(
+        self.section_num4 = baker.make(
             Section,
             label='4',
             title='\xa7\xa01002.4 General rules.',
@@ -128,27 +125,27 @@ class RegModelTests(DjangoTestCase):
             ),
             subpart=self.subpart,
         )
-        self.graph_to_keep = mommy.make(
+        self.graph_to_keep = baker.make(
             SectionParagraph,
             section=self.section_num4,
             paragraph_id='d',
             paragraph=(
                 '(1) General rule. A creditor that provides in writing.')
         )
-        self.graph_to_delete = mommy.make(
+        self.graph_to_delete = baker.make(
             SectionParagraph,
             section=self.section_num4,
             paragraph_id='x',
             paragraph='(x) Non-existent graph that should get deleted.'
         )
-        self.section_num15 = mommy.make(
+        self.section_num15 = baker.make(
             Section,
             label='15',
             title='\xa7\xa01002.15 Rules concerning requests for information.',
             contents='regdown content.',
             subpart=self.subpart,
         )
-        self.section_alpha = mommy.make(
+        self.section_alpha = baker.make(
             Section,
             label='A',
             title=('Appendix A to Part 1002-Federal Agencies '
@@ -156,21 +153,21 @@ class RegModelTests(DjangoTestCase):
             contents='regdown content.',
             subpart=self.subpart_appendices,
         )
-        self.section_beta = mommy.make(
+        self.section_beta = baker.make(
             Section,
             label='B',
             title=('Appendix B to Part 1002-Errata'),
             contents='regdown content.',
             subpart=self.subpart_appendices,
         )
-        self.section_interps = mommy.make(
+        self.section_interps = baker.make(
             Section,
             label='Interp-A',
             title=('Official interpretations for Appendix A to Part 1002'),
             contents='interp content.',
             subpart=self.subpart_interps,
         )
-        self.old_section_num4 = mommy.make(
+        self.old_section_num4 = baker.make(
             Section,
             label='4',
             title='\xa7\xa01002.4 General rules.',
@@ -196,7 +193,6 @@ class RegModelTests(DjangoTestCase):
 
     def get_request(self, path='', data={}):
         request = self.factory.get(path, data=data)
-        request.site = self.site
         request.user = AnonymousUser()
         return request
 
@@ -218,17 +214,16 @@ class RegModelTests(DjangoTestCase):
     def test_subpart_string_method(self):
         self.assertEqual(
             self.subpart.__str__(),
-            'Subpart A - General')
+            '12 CFR Part 1002 (Regulation B), Effective on 2014-01-18, '
+            'Subpart A - General'
+        )
 
     def test_section_string_method(self):
-        if sys.version_info >= (3, 0):  # pragma: no cover
-            self.assertEqual(
-                self.section_num4.__str__(),
-                '\xa7\xa01002.4 General rules.')
-        else:  # pragma: no cover
-            self.assertEqual(
-                self.section_num4.__str__(),
-                '\xa7\xa01002.4 General rules.'.encode('utf8'))
+        self.assertEqual(
+            self.section_num4.__str__(),
+            '12 CFR Part 1002 (Regulation B), Effective on 2014-01-18, '
+            'Subpart A - General, \xa7\xa01002.4 General rules.'
+        )
 
     def test_section_export_graphs(self):
         test_counts = self.section_num4.extract_graphs()
@@ -246,10 +241,16 @@ class RegModelTests(DjangoTestCase):
         for each in Subpart.objects.all():
             self.assertEqual(each.subpart_heading, '')
 
+    def test_type(self):
+        self.assertEqual(self.section_num15.subpart.type, 'Regulation Body')
+        self.assertEqual(self.section_alpha.subpart.type, 'Appendix')
+        self.assertEqual(self.section_interps.subpart.type, 'Interpretation')
+
     def test_effective_version_string_method(self):
         self.assertEqual(
             self.effective_version.__str__(),
-            'Effective on 2014-01-18')
+            '12 CFR Part 1002 (Regulation B), Effective on 2014-01-18'
+        )
 
     def test_live_version_true(self):
         self.assertTrue(self.effective_version.live_version)
@@ -388,79 +389,79 @@ class RegModelTests(DjangoTestCase):
             'Appendix B to Part 1002-Errata'
         )
 
-    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
-    def test_routable_search_page_calls_elasticsearch(self, mock_sqs):
-        mock_return = mock.Mock()
-        mock_return.part = '1002'
-        mock_return.text = ('Now is the time for all good men to come to the '
-                            'aid of their country.')
-        mock_return.highlighted = ['Now is the time for all good men',
-                                   'to come to the aid of their country.']
-        mock_return.paragraph_id = 'a'
-        mock_return.title = 'Section 1002.1 Now is the time.'
-        mock_return.section_label = '1'
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_sqs.return_value = mock_queryset
+    @mock.patch.object(SectionParagraphDocument, 'search')
+    def test_routable_search_page_calls_elasticsearch(self, mock_search):
+        mock_hit = mock.Mock()
+        mock_hit.text = (
+            'i. Mortgage escrow accounts for collecting taxes',
+            'and property insurance premiums.')
+        mock_hit.title = 'Comment for 1030.2 - Definitions'
+        mock_hit.part = '1030'
+        mock_hit.date = datetime.datetime(2011, 12, 30, 0, 0)
+        mock_hit.section_order = 'interp-0002'
+        mock_hit.section_label = 'Interp-2'
+        mock_hit.short_name = 'Regulation DD'
+        mock_hit.paragraph_id = '2-a-Interp-2-i'
+        mock_hit.meta.highlight.text = ["<strong>Mortgage</strong> highlight"]
+        mock_search().query() \
+            .highlight().filter().sort() \
+            .__getitem__().execute.return_value = [mock_hit]
+        mock_count = mock.Mock(return_value=1)
+        mock_search().query().highlight().count = mock_count
+        mock_search().query() \
+            .highlight().filter().sort() \
+            .__getitem__().count = mock_count
         response = self.client.get(
             self.reg_search_page.url + self.reg_search_page.reverse_subpage(
                 'regulation_results_page'),
-            {'q': 'disclosure', 'regs': '1002', 'order': 'regulation'})
-        self.assertEqual(mock_sqs.call_count, 3)
+            {'q': 'mortgage',
+             'regs': '1030',
+             'order': 'regulation',
+             'results': '50'})
+        self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
-        response2 = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            QueryDict(query_string=(
-                'q=disclosure&regs=1002&regs=1003&order=regulation')))
-        self.assertEqual(response2.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 6)
 
-    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
-    def test_routable_search_page_handles_null_highlights(self, mock_sqs):
-        mock_return = mock.Mock()
-        mock_return.part = '1002'
-        mock_return.text = ''
-        mock_return.highlighted = None
-        mock_return.paragraph_id = 'a'
-        mock_return.title = 'Section 1002.1 Now is the time.'
-        mock_return.section_label = '1'
-        mock_queryset = mock.Mock()
-        mock_queryset.__iter__ = mock.Mock(return_value=iter([mock_return]))
-        mock_queryset.count.return_value = 1
-        mock_sqs.return_value = mock_queryset
+    @mock.patch.object(SectionParagraphDocument, 'search')
+    def test_routable_search_page_handles_null_highlights(self, mock_search):  # noqa: E501
+        mock_hit = mock.Mock()
+        mock_hit.text = (
+            'i. Mortgage escrow accounts for collecting',
+            ' taxes and property insurance premiums.')
+        mock_hit.title = 'Comment for 1030.2 - Definitions'
+        mock_hit.part = '1030'
+        mock_hit.date = datetime.datetime(2011, 12, 30, 0, 0)
+        mock_hit.section_order = 'interp-0002'
+        mock_hit.section_label = 'Interp-2'
+        mock_hit.short_name = 'Regulation DD'
+        mock_hit.paragraph_id = '2-a-Interp-2-i'
+        mock_search().query() \
+            .highlight().filter().sort() \
+            .__getitem__().execute.return_value = [mock_hit]
+        mock_count = mock.Mock(return_value=1)
+        mock_search().query().highlight().count = mock_count
+        mock_search().query() \
+            .highlight().filter().sort() \
+            .__getitem__().count = mock_count
         response = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+            self.reg_search_page.url +
+            self.reg_search_page.reverse_subpage(
                 'regulation_results_page'),
-            {'q': 'disclosure', 'regs': '1002', 'order': 'regulation'})
-        self.assertEqual(mock_sqs.call_count, 3)
+            {'q': 'mortgage',
+             'regs': '1030',
+             'order': 'regulation',
+             'results': '50'})
+        self.assertEqual(mock_search.call_count, 4)
         self.assertEqual(response.status_code, 200)
-        response2 = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            QueryDict(query_string=(
-                'q=disclosure&regs=1002&regs=1003&order=regulation')))
-        self.assertEqual(response2.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 6)
 
-    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
-    def test_search_page_refuses_single_character_search(self, mock_sqs):
+    @mock.patch.object(SectionParagraphDocument, 'search')
+    def test_search_page_refuses_single_character_search_elasticsearch(self, mock_search):  # noqa: E501
         response = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
+            self.reg_search_page.url +
+            self.reg_search_page.reverse_subpage(
                 'regulation_results_page'),
             {'q': '%21', 'regs': '1002', 'order': 'regulation'})
-        self.assertEqual(mock_sqs.call_count, 0)
+        self.assertEqual(mock_search.call_count, 0)
         self.assertEqual(response.status_code, 200)
-
-    @mock.patch('regulations3k.models.pages.SearchQuerySet.models')
-    def test_routable_search_page_reg_only(self, mock_sqs):
-        response = self.client.get(
-            self.reg_search_page.url + self.reg_search_page.reverse_subpage(
-                'regulation_results_page'),
-            QueryDict(query_string='regs=1002'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(mock_sqs.call_count, 0)
 
     def test_get_breadcrumbs_section(self):
         crumbs = self.reg_page.get_breadcrumbs(
@@ -588,7 +589,7 @@ class RegModelTests(DjangoTestCase):
         )
 
     def test_effective_version_date_unique(self):
-        new_effective_version = mommy.make(
+        new_effective_version = baker.make(
             EffectiveVersion,
             effective_date=datetime.date(2020, 1, 1),
             part=self.part_1002,
@@ -676,6 +677,21 @@ class RegModelTests(DjangoTestCase):
             response.context_data['next_version'],
             self.effective_version
         )
+
+    def test_validate_label(self):
+        with self.assertRaises(ValidationError):
+            validate_label('label with spaces')
+
+        with self.assertRaises(ValidationError):
+            validate_label('')
+
+        with self.assertRaises(ValidationError):
+            validate_label('-')
+
+        validate_label('a')
+        validate_label('a-good-label')
+        validate_label('Interp-2')
+        validate_label('ünicode-labels')
 
 
 class SectionNavTests(unittest.TestCase):

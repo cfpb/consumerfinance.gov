@@ -3,11 +3,6 @@
    ========================================================================== */
 
 import FeaturedContentModule from '../../organisms/FeaturedContentModule';
+import { instantiateAll } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
-const featuredContentModuleDom = document.querySelector(
-  `.${ FeaturedContentModule.BASE_CLASS }`
-);
-const featuredContentModule = new FeaturedContentModule(
-  featuredContentModuleDom
-);
-featuredContentModule.init();
+instantiateAll( `.${ FeaturedContentModule.BASE_CLASS }`, FeaturedContentModule );

@@ -46,7 +46,7 @@ function _chooseSuite( params ) {
     const windowSize = `--window-size=${ windowWidthPx }x${ windowHeightPx }`;
     capabilities[0].chromeOptions.args.push( windowSize );
 
-    if ( envvars.TRAVIS ) {
+    if ( envvars.CI ) {
       capabilities[0].chromeOptions.args.push( '--no-sandbox' );
     }
   } else if ( paramsAreNotSet && _useSauceLabs() ) {
@@ -165,8 +165,7 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 
   for ( let i = 0, len = capabilities.length; i < len; i++ ) {
     capability = capabilities[i];
-    let p;
-    for ( p in injectParams ) {
+    for ( const p in injectParams ) {
       if ( injectParams.hasOwnProperty( p ) ) {
         capability[p] = injectParams[p];
       }
@@ -249,7 +248,7 @@ function _onPrepare() {
 const config = {
   baseUrl:                  environmentTest.baseUrl,
   cucumberOpts: {
-    'require':   'cucumber/step_definitions/*.js',
+    'require':   'cucumber/step_definitions/**/*.js',
     'tags':      [ '~@mobile', '~@skip', '~@undefined' ],
     'profile':   false,
     'no-source': true,

@@ -37,7 +37,7 @@ This condition takes the following arguments:
 - `page`: An instance of a Wagtail page that we want to look for in the
   cluster group
 - `clusters`: A dictionary containing one or more named `cluster_group`s –
-  by default, this points to a dictionary defined in our master cluster
+  by default, this points to a dictionary defined in our main cluster
   definition file (see ["Defining clusters"](#defining-clusters) below)
 
 If the `page`'s `id` property is found in the `cluster_group`,
@@ -50,7 +50,7 @@ You do not need to modify anything in this file to set up a new experiment.
 ### Defining clusters
 
 To run a split test we first have to know what pages we're testing.
-Split testing clusters are typically defined in our master cluster definition
+Split testing clusters are typically defined in our main cluster definition
 file at `cfgov/core/split_testing_clusters.py`.
 
 Create a new dictionary with a meaningful name

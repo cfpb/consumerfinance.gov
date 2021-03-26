@@ -1,0 +1,723 @@
+[
+    {
+        "fields": {
+            "weight": 0,
+            "title": "CTE (Career and Technical Education)"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Fine arts and performing arts"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "English or language arts"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Math"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Physical education or health"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Science"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Social studies or history"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "World languages"
+        },
+        "model": "teachers_digital_platform.activityschoolsubject",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "rght": 10,
+            "parent": null,
+            "weight": 0,
+            "title": "Earn",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 1
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "rght": 7,
+            "parent": 1,
+            "weight": 0,
+            "title": "Making Money",
+            "level": 1,
+            "lft": 6,
+            "tree_id": 1
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 1,
+            "weight": 0,
+            "title": "Increasing earnings",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 1
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 1,
+            "weight": 0,
+            "title": "Getting paid",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 1
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "rght": 9,
+            "parent": 1,
+            "weight": 0,
+            "title": "Paying taxes",
+            "level": 1,
+            "lft": 8,
+            "tree_id": 1
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "rght": 14,
+            "parent": null,
+            "weight": 1,
+            "title": "Save and Invest",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 2
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 6,
+            "weight": 0,
+            "title": "Choosing how to save",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 2
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 6,
+            "weight": 0,
+            "title": "Building emergency savings",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 2
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "rght": 9,
+            "parent": 6,
+            "weight": 0,
+            "title": "Saving for college",
+            "level": 1,
+            "lft": 8,
+            "tree_id": 2
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "rght": 11,
+            "parent": 6,
+            "weight": 0,
+            "title": "Saving for long-term goals",
+            "level": 1,
+            "lft": 10,
+            "tree_id": 2
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "rght": 13,
+            "parent": 6,
+            "weight": 0,
+            "title": "Saving for short-term goals",
+            "level": 1,
+            "lft": 12,
+            "tree_id": 2
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "rght": 7,
+            "parent": 6,
+            "weight": 0,
+            "title": "Investing",
+            "level": 1,
+            "lft": 6,
+            "tree_id": 2
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "rght": 6,
+            "parent": null,
+            "weight": 2,
+            "title": "Protect",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 3
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 13,
+            "weight": 0,
+            "title": "Managing risk",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 3
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 13,
+            "weight": 0,
+            "title": "Preventing fraud and identity theft",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 3
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "rght": 10,
+            "parent": null,
+            "weight": 3,
+            "title": "Spend",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 4
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 16,
+            "weight": 0,
+            "title": "Budgeting",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 4
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 16,
+            "weight": 0,
+            "title": "Buying things",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 4
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "rght": 7,
+            "parent": 16,
+            "weight": 0,
+            "title": "Paying bills",
+            "level": 1,
+            "lft": 6,
+            "tree_id": 4
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 19
+    },
+    {
+        "fields": {
+            "rght": 9,
+            "parent": 16,
+            "weight": 0,
+            "title": "Paying for college",
+            "level": 1,
+            "lft": 8,
+            "tree_id": 4
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 20
+    },
+    {
+        "fields": {
+            "rght": 6,
+            "parent": null,
+            "weight": 4,
+            "title": "Borrow",
+            "level": 0,
+            "lft": 1,
+            "tree_id": 5
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 21
+    },
+    {
+        "fields": {
+            "rght": 3,
+            "parent": 21,
+            "weight": 0,
+            "title": "Getting loans",
+            "level": 1,
+            "lft": 2,
+            "tree_id": 5
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 22
+    },
+    {
+        "fields": {
+            "rght": 5,
+            "parent": 21,
+            "weight": 0,
+            "title": "Managing credit",
+            "level": 1,
+            "lft": 4,
+            "tree_id": 5
+        },
+        "model": "teachers_digital_platform.activitytopic",
+        "pk": 23
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "High school (9-10)"
+        },
+        "model": "teachers_digital_platform.activitygradelevel",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "High school (11-12)"
+        },
+        "model": "teachers_digital_platform.activitygradelevel",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "13-15"
+        },
+        "model": "teachers_digital_platform.activityagerange",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "16-19"
+        },
+        "model": "teachers_digital_platform.activityagerange",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "English language learners"
+        },
+        "model": "teachers_digital_platform.activitystudentcharacteristics",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Low income"
+        },
+        "model": "teachers_digital_platform.activitystudentcharacteristics",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 3,
+            "title": "Rural"
+        },
+        "model": "teachers_digital_platform.activitystudentcharacteristics",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Special education"
+        },
+        "model": "teachers_digital_platform.activitystudentcharacteristics",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 4,
+            "title": "Urban"
+        },
+        "model": "teachers_digital_platform.activitystudentcharacteristics",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Individual"
+        },
+        "model": "teachers_digital_platform.activitytype",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Small group"
+        },
+        "model": "teachers_digital_platform.activitytype",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Whole class"
+        },
+        "model": "teachers_digital_platform.activitytype",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Blended learning"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Competency-based learning"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Cooperative learning"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Direct instruction"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Gamification"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Personalized instruction"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Project-based learning"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Simulation"
+        },
+        "model": "teachers_digital_platform.activityteachingstrategy",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Remember"
+        },
+        "model": "teachers_digital_platform.activitybloomstaxonomylevel",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Understand"
+        },
+        "model": "teachers_digital_platform.activitybloomstaxonomylevel",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Apply"
+        },
+        "model": "teachers_digital_platform.activitybloomstaxonomylevel",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 3,
+            "title": "Analyze"
+        },
+        "model": "teachers_digital_platform.activitybloomstaxonomylevel",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 4,
+            "title": "Evaluate"
+        },
+        "model": "teachers_digital_platform.activitybloomstaxonomylevel",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 5,
+            "title": "Create"
+        },
+        "model": "teachers_digital_platform.activitybloomstaxonomylevel",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "15-20 minutes"
+        },
+        "model": "teachers_digital_platform.activityduration",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Class period"
+        },
+        "model": "teachers_digital_platform.activityduration",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Spending and saving"
+        },
+        "model": "teachers_digital_platform.activityjumpstartcoalition",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Credit and debt"
+        },
+        "model": "teachers_digital_platform.activityjumpstartcoalition",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Employment and income"
+        },
+        "model": "teachers_digital_platform.activityjumpstartcoalition",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 3,
+            "title": "Investing"
+        },
+        "model": "teachers_digital_platform.activityjumpstartcoalition",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 4,
+            "title": "Risk management and insurance"
+        },
+        "model": "teachers_digital_platform.activityjumpstartcoalition",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 5,
+            "title": "Financial decision-making"
+        },
+        "model": "teachers_digital_platform.activityjumpstartcoalition",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Standard I. Earning Income"
+        },
+        "model": "teachers_digital_platform.activitycouncilforeconed",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Standard II. Buying goods and services"
+        },
+        "model": "teachers_digital_platform.activitycouncilforeconed",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Standard III. Saving"
+        },
+        "model": "teachers_digital_platform.activitycouncilforeconed",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "weight": 3,
+            "title": "Standard IV. Using credit"
+        },
+        "model": "teachers_digital_platform.activitycouncilforeconed",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "weight": 4,
+            "title": "Standard V. Financial investing"
+        },
+        "model": "teachers_digital_platform.activitycouncilforeconed",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "weight": 5,
+            "title": "Standard VI. Protecting and insuring"
+        },
+        "model": "teachers_digital_platform.activitycouncilforeconed",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "weight": 0,
+            "title": "Executive function",
+            "svg_icon": "settings"
+        },
+        "model": "teachers_digital_platform.activitybuildingblock",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "weight": 1,
+            "title": "Financial habits and norms",
+            "svg_icon": "split"
+        },
+        "model": "teachers_digital_platform.activitybuildingblock",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "weight": 2,
+            "title": "Financial knowledge and decision-making skills",
+            "svg_icon": "piggy-bank-check"
+        },
+        "model": "teachers_digital_platform.activitybuildingblock",
+        "pk": 3
+    },
+    {
+        "model": "wagtaildocs.document",
+        "pk": 8335,
+        "fields": {
+            "title": "Storing my savings (guide)",
+            "file": "documents/cfpb_building_block_activities_storing-my-savings_guide.pdf",
+            "created_at": "2020-01-09T22:07:29.625Z",
+            "file_size": null,
+            "file_hash": ""
+        }
+    }
+]

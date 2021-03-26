@@ -1,0 +1,125 @@
+{# ==========================================================================
+
+   carousel.render( value )
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for a Carousel organism, which displays a set of
+   blocks of content that can be navigated through sequentially.
+
+   value:                       List of carousel content panels.
+
+   item.title:                  Panel title.
+
+   item.body:                   Panel body text.
+
+   item.link_text:              Panel link text.
+
+   item.link_url:               Panel link URL.
+
+   item.image:                  Panel Wagtail image.
+
+   ========================================================================== #}
+
+{% macro render_carousel_item( item ) %}
+<section class="o-carousel_item">
+    <div class="o-carousel_item-wrapper">
+        <div class="o-carousel_item-text">
+            <h3 class="h2">{{ item.title }}</h3>
+            <p>{{ item.body }}</p>
+            <a class="a-link a-link__jump" href="{{ item.link_url }}">
+                <span class="a-link_text">{{ item.link_text }}</span>
+            </a>
+        </div>
+        <a href="{{ item.link_url }}" class="o-carousel_item-visual">
+            <span class="u-visually-hidden">{{ item.link_text }}</span>
+            <div class="o-carousel_item-visual-wrapper">
+                    {% set rendition = image( item.image, 'original' ) %}
+                    <img class="o-carousel_item-img"
+                        src="{{ rendition.url }}"
+                        alt="{{ item.image.alt }}">
+            </div>
+        </a>
+    </div>
+</section>
+{% endmacro %}
+
+{% macro render_carousel_thumbnail( item, is_selected=false ) %}
+<button class="o-carousel_thumbnail{% if is_selected %} o-carousel_thumbnail-selected{%endif%}">
+    <span class="o-carousel_thumbnail-layout">
+        <span class="o-carousel_thumbnail-visual">
+            {% set rendition = image( item.image, 'fill-48x48' ) %}
+            <img class="o-carousel_thumbnail-img"
+                 src="{{ rendition.url }}"
+                 alt="{{ item.image.alt }}">
+        </span>
+        <span class="o-carousel_thumbnail-text">
+            {{ item.title }}
+        </span>
+    </span>
+</button>
+{% endmacro %}
+
+{#
+    Since desktop uses a button and mobile uses links,
+    we duplicate the markup here but use a link instead of a button.
+#}
+{% macro render_carousel_thumbnail_mobile( item ) %}
+<a class="o-carousel_thumbnail" href="{{ item.link_url }}" title="{{ item.title }}">
+    <div class="o-carousel_thumbnail-layout">
+        <span class="o-carousel_thumbnail-visual">
+            {% set rendition = image( item.image, 'fill-48x48' ) %}
+            <img class="o-carousel_thumbnail-img"
+                    src="{{ rendition.url }}"
+                    alt="{{ item.title }}"
+                    aria-hidden="true">
+        </span>
+        <span class="o-carousel_thumbnail-text">
+            {{ item.title }}
+        </span>
+    </div>
+</a>
+{% endmacro %}
+
+{% macro render( value ) %}
+<div class="o-carousel u-hidden" aria-labelledby="o-carousel_heading">
+    <h2 class="h5" id="o-carousel_heading"
+        aria-label="{{ _('Featured content') }}">
+        {{ _('Featured') }}
+    </h2>
+    <div class="o-carousel_navigator">
+
+        <button class="o-carousel_btn o-carousel_btn-prev a-btn"
+            aria-label="{{ _('Previous featured content item') }}">
+            {{- svg_icon( 'left' ) -}}
+        </button>
+        <button class="o-carousel_btn o-carousel_btn-next a-btn"
+            aria-label="{{ _('Next featured content item') }}">
+            {{- svg_icon( 'right' ) -}}
+        </button>
+
+        <div class="o-carousel_items-container">
+            <div class="o-carousel_items">
+                {% for item in value %}
+                    {{ render_carousel_item( item ) }}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="o-carousel_thumbnails o-carousel_thumbnails__desktop">
+        {% for item in value %}
+            {{ render_carousel_thumbnail( item, loop.first ) }}
+        {% endfor %}
+    </div>
+
+    <div class="o-carousel_thumbnails o-carousel_thumbnails__mobile">
+        {% for item in value %}
+            {{ render_carousel_thumbnail_mobile( item ) }}
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}

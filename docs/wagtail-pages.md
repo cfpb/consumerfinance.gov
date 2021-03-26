@@ -1,12 +1,12 @@
 # Wagtail pages
 
-[Wagtail pages](http://docs.wagtail.io/en/v1.13.4/topics/pages.html) are 
+[Wagtail pages](http://docs.wagtail.io/en/stable/topics/pages.html) are 
 [Django models](https://docs.djangoproject.com/en/1.11/topics/db/models/) 
 that are constructed of 
 [fields](#fields), [StreamFields](#streamfields), and [panels](#panels) 
 that are rendered in a standard way. 
 All CFPB Wagtail pages should inherit from the 
-[`v1.models.base.CFGOVPage` class](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py).
+[`v1.models.base.CFGOVPage` class](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/base.py).
 
 !!! note
     Before creating a new Wagtail page type 
@@ -27,7 +27,7 @@ Database fields in Wagtail pages work exactly the same as in
 and Wagtail pages can use any [Django model field](https://docs.djangoproject.com/en/1.11/ref/models/fields/). 
 
 For example, our `BrowsePage` 
-[includes a standard Django `BooleanField`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py) 
+[includes a standard Django `BooleanField`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/browse_page.py) 
 that allows content editors to toggle secondary navigation sibling pages:
 
 ```python
@@ -43,18 +43,18 @@ class BrowsePage(CFGOVPage):
 ## StreamFields
 
 StreamFields are special Django model fields provided by Wagtail for 
-[freeform page content](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html). 
+[freeform page content](https://docs.wagtail.io/en/stable/topics/streamfield.html). 
 They allow a content editor to pick any number number of optional components
 and place them in any order within their StreamField. 
 In practice, this provides the flexibility of
 [a large rich text field, with the structure of individual components](https://torchbox.com/blog/rich-text-fields-and-faster-horses/).
 
 For example, our `LandingPage` page model 
-[includes a `header` StreamField](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py) 
+[includes a `header` StreamField](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/landing_page.py) 
 that can have a hero and/or a text introduction:
 
 ```python
-from wagtail.wagtailcore.fields import StreamField
+from wagtail.core.fields import StreamField
 
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage
@@ -69,14 +69,14 @@ class LandingPage(CFGOVPage):
 ```
 
 The specifics of StreamField block components can be found in 
-[Creating and Editing Wagtail Components](https://cfpb.github.io/cfgov-refresh/editing-components/).
+[Creating and Editing Wagtail Components](https://cfpb.github.io/consumerfinance.gov/editing-components/).
 
 ## Panels
 
 Editor panels define how the page's [fields](#fields) and [StreamFields](#streamfields) will be organized for content editors;
 they correspond to the tabs that appear across the top of the edit view for a page in the Wagtail admin.
 
-The base Wagtail `Page` class and the [`CFGOVPage` subclass of it](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py) 
+The base Wagtail `Page` class and the [`CFGOVPage` subclass of it](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/base.py) 
 define specific sets of panels to which all fields should be added:
 
 - `content_panels`:
@@ -91,15 +91,15 @@ define specific sets of panels to which all fields should be added:
 
 Most fields will simply require a `FieldPanel` to be added to one of the sets of panels above. 
 StreamFields will require a `StreamFieldPanel`. 
-See the [Wagtail documentation for additional, more complex panel options](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#editor-panels).
+See the [Wagtail documentation for additional, more complex panel options](https://docs.wagtail.io/en/stable/topics/pages.html#editor-panels).
 
 For example, in our `BrowsePage` (used in the [database fields example above](#fields)),
 the `secondary_nav_exclude_sibling_pages` `BooleanField` 
-[is added to the `sidefoot_panels` as a `FieldPanel`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/browse_page.py):
+[is added to the `sidefoot_panels` as a `FieldPanel`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/browse_page.py):
 
 ```python
 from django.db import models
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
+from wagtail.admin.edit_handlers import FieldPanel
 
 from v1.models.base import CFGOVPage
 
@@ -120,11 +120,11 @@ Checking or unchecking that checkbox will set the value of `secondary_nav_exclud
 
 In our `LandingPage` (used in the [StreamFields example above](#streamfields)), 
 the `header` StreamField 
-[is added to the `content_panels` as a `StreamFieldPanel`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/landing_page.py#L31):
+[is added to the `content_panels` as a `StreamFieldPanel`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/landing_page.py#L31):
 
 ```python
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
-from wagtail.wagtailcore.fields import StreamField
+from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.core.fields import StreamField
 
 from v1.atomic_elements import molecules
 from v1.models import CFGOVPage
@@ -147,13 +147,13 @@ class LandingPage(CFGOVPage):
 ## Parent / child page relationships
 
 Wagtail provides two attributes to page models that enable 
-[restricting the types of subpages or parent pages](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#parent-page-subpage-type-rules) 
+[restricting the types of subpages or parent pages](https://docs.wagtail.io/en/stable/topics/pages.html#parent-page-subpage-type-rules) 
 a particular page model can have. On any page model:
 
 - `parent_page_types` limits which page types this type can be created under.
 - `subpage_types` limits which page types can be created under this type.
 
-For example, in our [interactive regulations page models](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py#L138) 
+For example, in our [interactive regulations page models](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/regulations3k/models/pages.py#L138) 
 we have a `RegulationLandingPage` that can be created anywhere in the page tree. 
 `RegulationLandingPage`, however, can only have two types of pages created within it: 
 `RegulationPage` and `RegulationSearchPage`. 
@@ -186,10 +186,10 @@ class RegulationPage(CFGOVPage):
 ## Template rendering
 
 New Wagtail page types will usually need to make customizations to their base template 
-[when rendering the page](https://docs.wagtail.io/en/v1.13.4/topics/pages.html#template-rendering).
+[when rendering the page](https://docs.wagtail.io/en/stable/topics/pages.html#template-rendering).
 This is done by overriding the `template` attribute on the page model.
 
-For example, the [interactive regulations landing page](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/models/pages.py) 
+For example, the [interactive regulations landing page](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/regulations3k/models/pages.py) 
 includes a customized list of recently issued notices that gets loaded dynamically from the Federal Register. 
 To do this it provides its own template that inherits from our base templates 
 and overrides the `content_sidebar` block to include a separate `recent_notices` template:
@@ -202,7 +202,7 @@ class RegulationLandingPage(CFGOVPage):
     template = 'regulations3k/landing-page.html'
 ```
 
-And in [`regulations3k/landing-page.html`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/jinja2/regulations3k/landing-page.html):
+And in [`regulations3k/landing-page.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/regulations3k/jinja2/regulations3k/landing-page.html):
 
 ```jinja2
 {% extends 'layout-2-1-bleedbar.html' %}

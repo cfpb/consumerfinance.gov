@@ -1,8 +1,8 @@
 # Feature flags
 
-Feature flags are implemented using our [Django-Flags](https://github.com/cfpb/django-flags) and [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) apps. The [Django-Flags documentation](https://cfpb.github.io/django-flags) contains an overview of feature flags and how to use them and the [Wagtail-Flags README](https://github.com/cfpb/wagtail-flags/blob/master/README.md) describes how to add feature flag conditions in the Wagtail admin.
+Feature flags are implemented using our [Django-Flags](https://github.com/cfpb/django-flags) and [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) apps. The [Django-Flags documentation](https://cfpb.github.io/django-flags) contains an overview of feature flags and how to use them and the [Wagtail-Flags README](https://github.com/cfpb/wagtail-flags/blob/main/README.md) describes how to add feature flag conditions in the Wagtail admin.
 
-This document covers how to add and use feature flags with cfgov-refresh and the conventions we have around their use.
+This document covers how to add and use feature flags with consumerfinance.gov and the conventions we have around their use.
 
 - [Adding a flag](#adding-a-flag)
 - [Checking a flag](#checking-a-flag)
@@ -19,7 +19,7 @@ This document covers how to add and use feature flags with cfgov-refresh and the
 
 ## Adding a flag
 
-Feature flags are defined in code in the [`cfgov/settings/base.py`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/cfgov/settings/base.py#L562) file as part of the `FLAGS` setting. Each flag consists of a single string and a Python list of its hard-coded conditions (see [Enabling a flag](#enabling-a-flag) below).
+Feature flags are defined in code in the [`cfgov/settings/base.py`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/cfgov/settings/base.py#L562) file as part of the `FLAGS` setting. Each flag consists of a single string and a Python list of its hard-coded conditions (see [Enabling a flag](#enabling-a-flag) below).
 
 ```python
 FLAGS = {
@@ -34,13 +34,13 @@ By convention our flag names are all uppercase, with underscores instead of whit
 
 ## Checking a flag
 
-Flags can be checked either in Python code or in Django or Jinja2 template files. See the full [Wagtail Flags API is documented ](https://github.com/cfpb/wagtail-flags/blob/master/README.md#api) for more information.
+Flags can be checked either in Python code or in Django or Jinja2 template files. See the full [Wagtail Flags API is documented ](https://github.com/cfpb/wagtail-flags/blob/main/README.md#api) for more information.
 
 ### In templates
 
 #### Jinja2
 
-Most of cfgov-refresh's templates are Jinja2. In these templates, two template functions are provided, `flag_enabled` and `flag_disabled`. Each takes a flag name as its first argument and request` object as the second.
+Most of consumerfinance.gov's templates are Jinja2. In these templates, two template functions are provided, `flag_enabled` and `flag_disabled`. Each takes a flag name as its first argument and request` object as the second.
 
 `flag_enabled('MY_FLAG')` will return `True` if the conditions under which `MY_FLAG` is enabled **are** met.
 
@@ -48,7 +48,7 @@ Most of cfgov-refresh's templates are Jinja2. In these templates, two template f
 
 See [Enabling a flag](#enabling-a-flag) below for more on flag conditions.
 
-An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56):
+An example is [the `BETA_NOTICE flag` as implemented in `header.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_includes/organisms/header.html#L21-L56):
 
 ```jinja
 {% if flag_enabled('BETA_NOTICE') and show_banner %}
@@ -117,9 +117,9 @@ There are two ways to flag Django URL patterns in `urls.py`: with `flagged_url()
 
 `flagged_url(flag_name, regex, view, kwargs=None, name=None, state=True, fallback=None)` works exactly like `url()` except it takes a flag name as its first argument. If the flag's state matches the given `state`, the URL pattern will be served from the given `view`; if not, and `fallback` is given, the `fallback` will be used.
 
-An example is [our `WAGTAIL_ABOUT_US` flag](https://github.com/cfpb/cfgov-refresh/blob/4c3521e967abc5a35fc42566ae409d6ba008f81e/cfgov/cfgov/urls.py#L204-L210):
+An example is [our `WAGTAIL_ABOUT_US` flag](https://github.com/cfpb/consumerfinance.gov/blob/4c3521e967abc5a35fc42566ae409d6ba008f81e/cfgov/cfgov/urls.py#L204-L210):
 
-```python    
+```python
 flagged_url('WAGTAIL_ABOUT_US',
             r'^about-us/$',
             lambda req: ServeView.as_view()(req, req.path),
@@ -134,7 +134,7 @@ If you need to flag multiple URLs with the same flag, you can use the `flagged_u
 
 `with flagged_urls(flag_name, state=True, fallback=None) as url` provides a context in which the returned `url()` function can be used in place of the Django `url()` function in patterns and those patterns will share the same feature flag, state, and fallback.
 
-An example is [our `WAGTAIL_ASK_CFPB` flag](https://github.com/cfpb/cfgov-refresh/blob/3cd79689aac7e22e3c2f07373a7db7f2fbbed304/cfgov/cfgov/urls.py#L405-L433):
+An example is [our `WAGTAIL_ASK_CFPB` flag](https://github.com/cfpb/consumerfinance.gov/blob/3cd79689aac7e22e3c2f07373a7db7f2fbbed304/cfgov/cfgov/urls.py#L405-L433):
 
 ```python
 with flagged_urls('WAGTAIL_ASK_CFPB') as url:
@@ -162,7 +162,7 @@ Wagtail views in `flagged_url` with a Django view as fallback (or vice-versa) ca
 lambda req: ServeView.as_view()(req, req.path)
 ```
 
-This lambda takes the request and calls the [Wagtail-Sharing](https://github.com/cfpb/wagtail-sharing) `ServeView` (which we're using in place of `wagtail.wagtailcore.views.serve`).
+This lambda takes the request and calls the [Wagtail-Sharing](https://github.com/cfpb/wagtail-sharing) `ServeView` (which we're using in place of `wagtail.core.views.serve`).
 
 ## Enabling a flag
 
@@ -173,7 +173,7 @@ Feature flags are enabled based on a set of conditions that are given either in 
 
 ### Hard-coded conditions
 
-Conditions that are defined in the Django settings are hard-coded, and require a change to files in cfgov-refresh, a new tagged release, and new deployment to change. These conditions should be used for flags that are relatively long-lasting and that can require a round-trip through the release and deployment process to change.
+Conditions that are defined in the Django settings are hard-coded, and require a change to files in consumerfinance.gov, a new tagged release, and new deployment to change. These conditions should be used for flags that are relatively long-lasting and that can require a round-trip through the release and deployment process to change.
 
 When [adding a flag](#adding-a-flag) to the Django settings the flag's dictionary of conditions can contain a condition name and value that must be satisfied for the flag to be enabled. The nature of that value changes depending on the condition type. [See the Django-Flags conditions documentation](https://cfpb.github.io/django-flags/conditions/) for more on individual conditions.
 
@@ -186,7 +186,7 @@ FLAGS = {
     # "This beta site is a work in progress."
     'BETA_NOTICE': [
         {
-            'condition': 'boolean', 
+            'condition': 'boolean',
             'value': True,
         },
     ],
@@ -201,11 +201,15 @@ To view, delete, and add database conditions, navigate to "Settings > Flags" in 
 
 ![settings, flags](img/settings_flags.gif)
 
-Once in the flag settings, you'll have a list of all flags and their conditions..
+Once in the flag settings, you'll have a list of all flags and their statuses.
 
 ![flag list](img/flags_list.png)
 
-Database conditions can be deleted with the trash can button on the right.
+Select a flag to see its conditions.
+
+![flag details](img/flag_details.png)
+
+Existing database conditions can be edited or deleted here.
 
 To create a new database condition, select "Add a condition". As with [hard-coded conditions](#hard-coded-conditions), to create a database condition you must select which condition type you would like to use and give it a value that must be satisfied for the flag to be enabled.
 
@@ -215,7 +219,7 @@ Database conditions can only be set for flags that exist in the Django settings.
 
 ## Satellite apps
 
-Feature flags can be used in satellite apps in exactly the same way they are used in cfgov-refresh. An example is [the use of a feature flagged template choice in the complaintdatabase app](https://github.com/cfpb/complaint/blob/9985b4ea4ce5c6e9b55d57228520a92a26152565/complaintdatabase/views.py#L31-L36).
+Feature flags can be used in satellite apps in exactly the same way they are used in consumerfinance.gov. An example is [the use of a feature flagged template choice in the complaintdatabase app](https://github.com/cfpb/complaint/blob/9985b4ea4ce5c6e9b55d57228520a92a26152565/complaintdatabase/views.py#L31-L36).
 
 ## Hygiene
 

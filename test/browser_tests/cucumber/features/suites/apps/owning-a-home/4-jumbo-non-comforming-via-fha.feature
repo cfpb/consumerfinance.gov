@@ -9,7 +9,7 @@ Background:
 @jumbo
 Scenario Outline: Trigger conforming jumbo loan
   When I select "<state_name>" as State
-	  And I select "FHA" Loan Type
+    And I select "FHA" Loan Type
     And I enter "20" as Down Payment percent
     And I enter $"550,000" as House Price amount
   Then I should see the chart faded out to indicate the data is out of date
@@ -17,13 +17,13 @@ Scenario Outline: Trigger conforming jumbo loan
     And I should see the County field highlighted
 
 Examples:
-| state_name    |
-| Kansas        |
-| Louisiana     |
-| Michigan      |
-| New Mexico    |
-| North Dakota  |
-| Oklahoma      |
+| state_name   |
+| Kansas       |
+| Louisiana    |
+| Michigan     |
+| New Mexico   |
+| North Dakota |
+| Oklahoma     |
 
 @jumbo
 Scenario Outline: Trigger non-conforming jumbo loan
@@ -40,10 +40,10 @@ Scenario Outline: Trigger non-conforming jumbo loan
     But I should NOT see the County field highlighted
 
 Examples:
-| state_name    | county_name       | FHA_max_loan_amount |
-| Kansas        | Sherman County    | $275,665            |
-| Louisiana     | Iberville Parish  | $275,665            |
-| Michigan      | Kalamazoo County  | $275,665            |
-| New Mexico    | Los Alamos County | $380,650            |
-| North Dakota  | Billings County   | $339,250            |
-| Oklahoma      | Cotton County     | $275,665            |
+| state_name   | county_name       | FHA_max_loan_amount |
+| Kansas       | Sherman County    | $275,665            |
+| Louisiana    | Iberville Parish  | $275,665            |
+| Michigan     | Kalamazoo County  | $275,665            |
+| New Mexico   | Los Alamos County | $380,650            |
+| North Dakota | Billings County   | $339,250            |
+| Oklahoma     | Cotton County     | $275,665            |

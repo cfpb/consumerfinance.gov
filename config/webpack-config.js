@@ -2,7 +2,6 @@
    Settings for webpack JavaScript bundling system.
    ========================================================================== */
 
-const BROWSER_LIST = require( '../config/browser-list-config' );
 const envvars = require( '../config/environment' ).envvars;
 const webpack = require( 'webpack' );
 const TerserPlugin = require( 'terser-webpack-plugin' );
@@ -10,39 +9,47 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 // Constants
 const COMMON_BUNDLE_NAME = 'common.js';
 
+/* This sets the default mode for webpack configurations to satisfy the need
+   of webpack to have a `mode` set.
+   This value gets overridden when NODE_ENV=development.
+   See the `if ( envvars.NODE_ENV === 'development' )` block below. */
+const WEBPACK_MODE_DEFAULT = 'production';
+
 /* Commmon webpack 'module' option used in each configuration.
    Runs code through Babel and uses global supported browser list. */
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
 
-    /* The `exclude` rule is a double negative.
-       It excludes all of `node_modules/` but it then un-excludes modules that
-       start with `cf-` and `cfpb-` (CF components and cfpb-chart-builder).
-       Regex test: https://regex101.com/r/zizz3V/5 */
-    exclude: {
-      test: /node_modules/,
-      exclude: /node_modules\/(?:cf-.+|cfpb-.+)/
-    },
+    /* Exclude modules from transpiling.
+       The below regex will match and exclude all node modules
+       except those that start with `@cfpb/` or `cfpb-`.
+       Regex test: https://regex101.com/r/zizz3V/9 */
+    exclude: /node_modules\/(?!(?:@cfpb\/.+|cfpb\-.+)).+/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
         presets: [ [ '@babel/preset-env', {
-          targets: {
-            browsers: BROWSER_LIST.LAST_2_IE_11_UP
-          },
+
+          /* Use useBuiltIns: 'usage' and set `debug: true` to see what
+             scripts require polyfilling. */
+          useBuiltIns: false,
           debug: false
         } ] ]
       }
     }
+  },
+  {
+    test: /\.svg$/,
+    loader: 'svg-inline-loader'
   } ]
 };
 
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
-  cache: true,
   parallel: true,
+  extractComments: false,
   terserOptions: {
     ie8: false,
     ecma: 5,
@@ -67,8 +74,8 @@ const STATS_CONFIG = {
 
 const commonConf = {
   cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: '[name]'
   },
@@ -85,8 +92,8 @@ const commonConf = {
 
 const externalConf = {
   cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: 'external-site.js'
   },
@@ -103,7 +110,7 @@ const externalConf = {
 
 const modernConf = {
   cache: true,
-  mode: 'production',
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
   output: {
     filename: '[name]'
@@ -123,6 +130,7 @@ const modernConf = {
 };
 
 const onDemandHeaderRawConf = {
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
   resolve: {
     symlinks: false
@@ -131,11 +139,10 @@ const onDemandHeaderRawConf = {
 
 const appsConf = {
   cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
-    filename: '[name]',
-    jsonpFunction: 'apps'
+    filename: '[name]'
   },
   plugins: [
     COMMON_CHUNK_CONFIG
@@ -153,8 +160,8 @@ const appsConf = {
 
 const spanishConf = {
   cache: true,
+  mode: WEBPACK_MODE_DEFAULT,
   module: COMMON_MODULE_CONFIG,
-  mode: 'production',
   output: {
     filename: 'spanish.js'
   },

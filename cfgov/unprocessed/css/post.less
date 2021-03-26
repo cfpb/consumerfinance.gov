@@ -1,5 +1,5 @@
 /* ==========================================================================
-   cfgov-refresh
+   consumerfinance.gov
    cfgov-post
    ========================================================================== */
 
@@ -34,27 +34,23 @@
                 </div>
                 <ul class="m-list m-list__horizontal">
                     <li class="m-list_item">
-                        <a href="#">
+                        <a href="#" aria-label="Share by email">
                             {{ svg_icon('email-social-square') }}
-                            <span class="u-visually-hidden">Share by email</span>
                         </a>
                     </li>
                     <li class="m-list_item">
-                        <a href="#">
+                        <a href="#" aria-label="Share on Facebook">
                             {{ svg_icon('facebook-square') }}
-                            <span class="u-visually-hidden">Share on Facebook</span>
                         </a>
                     </li>
                     <li class="m-list_item">
-                        <a href="#">
+                        <a href="#" aria-label="Share on Twitter">
                             {{ svg_icon('twitter-square') }}
-                            <span class="u-visually-hidden">Share on Twitter</span>
                         </a>
                     </li>
                     <li class="m-list_item">
-                        <a href="#">
+                        <a href="#" aria-label="Share on LinkedIn">
                             {{ svg_icon('linkedin-square') }}
-                            <span class="u-visually-hidden">Share on LinkedIn</span>
                         </a>
                     </li>
                 </ul>
@@ -392,7 +388,7 @@
 .post_body {
     .u-clearfix();
     margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-    color: @dark-gray;
+    color: @gray-dark;
 
     // Spacing has been eyeballed to be 30px.
     p ~ h1, p ~ .h1 {

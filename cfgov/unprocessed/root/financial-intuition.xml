@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Financial inTuition</title>
+        <link>https://www.consumerfinance.gov/practitioner-resources/students/financial-intuition/</link>
+        <language>en-us</language>
+        <itunes:author>Consumer Financial Protection Bureau</itunes:author>
+        <description>Learn tips and strategies on how to make more informed financial decisions around managing money, saving and paying for higher education, and repaying student loan debt. Our team will share interviews with financial practitioners, students and recent graduates, family members and young adults that have successfully managed their money and repaid their student loan debt.</description>
+        <itunes:type>episodic</itunes:type>
+        <itunes:owner>
+            <itunes:name>Section for Students and Young Consumers</itunes:name>
+            <itunes:email>CFPB_Students@cfpb.gov</itunes:email>
+        </itunes:owner>
+        <itunes:image
+            href="https://files.consumerfinance.gov/f/images/cfpb-financial-intuition-podcast-cover-art.original.png"
+        />
+        <itunes:category text="Education"></itunes:category>
+        <itunes:explicit>false</itunes:explicit>
+        <item>
+            <title>Managing Your Student Loans, Part 3: Postgraduate Degree Repayment Options</title>
+            <link>https://www.consumerfinance.gov/consumer-tools/educator-tools/students/financial-intuition/managing-your-student-loans-part-3/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>6</itunes:episode>
+            <description>For the third and final episode of this series, we spoke with Dr. Bridget Peters, a family medicine resident, about tips and best practices for managing money and postgraduate student loan debt as a young professional.</description>
+            <enclosure
+                length="9383272"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/cfpb_financial-intuition-podcast_managing-your-student-loans_episode-3.mp3"
+            />
+            <pubDate>Tue, 15 Dec 2020 16:00:02 EST</pubDate>
+            <itunes:duration>1547</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+        <item>
+            <title>Managing Your Student Loans, Part 2: Discussing the Veterans Benefits Administration’s (VBA) GI Bill® Comparison Tool and CFPB’s Your Financial Path to Graduation Tool</title>
+            <link>https://www.consumerfinance.gov/consumer-tools/educator-tools/students/financial-intuition/managing-your-student-loans-part-2/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>5</itunes:episode>
+            <description>During the second episode in this series, we met with Charmain Bogue, Executive Director of Education Service for the Veterans Benefits Administration, to discuss tools to help veterans, servicemembers, and their qualified family members with making decisions about financing their education and selecting an educational institution to attend.</description>
+            <enclosure
+                length="8634851"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/cfpb_financial-intuition-podcast_managing-your-student-loans_episode-2.mp3"
+            />
+            <pubDate>Tue, 15 Dec 2020 16:00:01 EST</pubDate>
+            <itunes:duration>1422</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+        <item>
+            <title>Managing Your Student Loans, Part 1: Managing Student Loans and Money while in College</title>
+            <link>https://www.consumerfinance.gov/consumer-tools/educator-tools/students/financial-intuition/managing-your-student-loans-part-1/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>4</itunes:episode>
+            <description>For this episode, we spoke with Aaron Satyanarayana, an undergraduate student, about how he manages money while working towards graduation. This episode discusses tips and tools to help make good decisions around paying for college and managing money while enrolled as a student.</description>
+            <enclosure
+                length="7912304"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/cfpb_financial-intuition-podcast_managing-your-student-loans_episode-1.mp3"
+            />
+            <pubDate>Tue, 15 Dec 2020 16:00:00 EST</pubDate>
+            <itunes:duration>1302</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+        <item>
+            <title>Managing Your Money, Part 3: Understanding and Protecting Your Credit</title>
+            <link>https://www.consumerfinance.gov/practitioner-resources/students/financial-intuition/managing-your-money-part-3/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>3</itunes:episode>
+            <description>For the third and final episode of this series, we spoke with Melinda Croes, Training Institute manager for the Credit Builders Alliance, about understanding and protecting your credit along with the function of nationwide credit bureaus and credit reports, how credit scores are calculated, how to build credit and more.</description>
+            <enclosure
+                length="8251360"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/CFPB_Financial_Intuition_Podcast__Managing_Your_Money_Episode_3.mp3"
+            />
+            <pubDate>Thu, 03 Sep 2020 12:00:02 EDT</pubDate>
+            <itunes:duration>1359</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+        <item>
+            <title>Managing Your Money, Part 2: Managing Money as a Young Adult</title>
+            <link>https://www.consumerfinance.gov/practitioner-resources/students/financial-intuition/managing-your-money-part-2/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>2</itunes:episode>
+            <description>During part two of the “Managing Your Money” podcast series, we met with Ryan Law, AFC®, CFP®, to discuss tips and tools for managing your finances while in school, budgeting, opening a checking and saving account, compound interest, and more.</description>
+            <enclosure
+                length="8385655"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/CFPB_Financial_Intuition_Podcast__Managing_Your_Money_Episode_2.mp3"
+            />
+            <pubDate>Thu, 03 Sep 2020 12:00:01 EDT</pubDate>
+            <itunes:duration>1381</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+        <item>
+            <title>Managing Your Money, Part 1: Financing Your Future and How to Pay for Higher Education</title>
+            <link>https://www.consumerfinance.gov/practitioner-resources/students/financial-intuition/managing-your-money-part-1/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>1</itunes:episode>
+            <description>During this episode, we spoke with Susan Bistransin, a National Board-Certified teacher of family and consumer sciences from Prince George’s County, Maryland with 34 years of teaching experience, including 24 years of teaching financial literacy, to discuss how students can prepare for life after high school. This episode includes tips for creating a plan to pay for higher education, finding a school that is the right fit, alternatives to going to college, and more.</description>
+            <enclosure
+                length="10656438"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/CFPB_Financial_Intuition_Podcast__Managing_Your_Money_Episode_1.mp3"
+            />
+            <pubDate>Thu, 03 Sep 2020 12:00:00 EDT</pubDate>
+            <itunes:duration>1760</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+    </channel>
+</rss>

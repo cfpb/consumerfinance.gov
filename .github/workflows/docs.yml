@@ -1,0 +1,33 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  publish:
+    name: build and publish docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --no-tags --prune --depth=1 origin gh-pages
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements/docs.txt
+
+      - name: Build docs
+        run: mkdocs build
+
+      - name: Publish docs
+        run: mkdocs gh-deploy

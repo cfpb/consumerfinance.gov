@@ -1,8 +1,8 @@
 from django.core.files.base import ContentFile
 from django.test import TestCase, override_settings
 
-from wagtail.wagtaildocs.models import Document
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+from wagtail.documents.models import Document
+from wagtail.images.tests.utils import get_test_image_file
 
 import boto3
 import moto
@@ -38,9 +38,9 @@ class TestAkamaiBackend(TestCase):
             'ACCESS_TOKEN': 'access token',
         }
         akamai_backend = AkamaiBackend(credentials)
-        self.assertEquals(akamai_backend.client_token, 'token')
-        self.assertEquals(akamai_backend.client_secret, 'secret')
-        self.assertEquals(akamai_backend.access_token, 'access token')
+        self.assertEqual(akamai_backend.client_token, 'token')
+        self.assertEqual(akamai_backend.client_secret, 'secret')
+        self.assertEqual(akamai_backend.access_token, 'access token')
 
 
 @override_settings(

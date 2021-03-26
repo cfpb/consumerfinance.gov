@@ -5,9 +5,9 @@ archives to deploy the site to a Linux server.
 # Generating a deployment artifact
 
 Running the script at `./docker/deployable-zipfile/build.sh` will start a CentOS 6
-container, generate the artifact(via
-[this script](https://github.com/cfpb/cfgov-refresh/blob/master/docker/deployable-zipfile/_build.sh))
-, and save it to `./cfgov_current_build.zip`.
+container, generate the artifact (via
+[this script](https://github.com/cfpb/consumerfinance.gov/blob/main/docker/deployable-zipfile/_build.sh)),
+and save it to `./cfgov_current_build.zip`.
 
 We use CentOS 6 here, so that the Python modules that include compiled code, will
 be compiled for the same environment they will be run in.
@@ -35,7 +35,7 @@ cfgov/...
 ```
 
 The `__main__.py` file contains [the code that runs when the zip file is invoked
-as a Python module](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/deployable_zipfile/extract.py).
+as a Python module](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/deployable_zipfile/extract.py).
 
 The `wheels/` directory contains all of our python dependencies, while
 `bootstrap_wheels/` contains modules needed at deployment time, to install

@@ -79,13 +79,6 @@
     .respond-to-min( @bp-lg-min, {
         min-width: @bp-lg-min;
     } );
-
-    .respond-to-min( @bp-med-min, {
-        // Setting the minimum height allocates room for the mega menu
-        // so the header height doesn't change when it loads in.
-        min-height: 172px;
-    } );
-
     &_content {
         position: relative;
 
@@ -118,8 +111,10 @@
                     float: right;
                 }
 
-                > .m-global-search {
-                    min-width: 340px;
+                html.js & > .m-global-search {
+                    // Width should visually be 370px, plus 3px to accommodate
+                    // the focus state.
+                    min-width: 373px;
                 }
             }
         } );
@@ -146,17 +141,6 @@
 
     &_logo {
 
-        // Tablet/mobile sizes.
-        .respond-to-max( @bp-sm-max, {
-            .js & {
-                // Offset logo by width of mega menu trigger + 15px gap.
-                // The margin-left starts inside the 15px padding of the page
-                // already, so a value that matches the width of the trigger
-                // will give it the desired spacing to the right of the trigger.
-                margin-left: @mobile_trigger_ht__px;
-            }
-        } );
-
         &-img {
             // Size is to fit 320px minimum width for older iPhones, etc.
             height: @mobile_trigger_ht__px - 20px;
@@ -174,7 +158,32 @@
             } );
         }
     }
+
+    &__mega-menu {
+
+        // Setting the minimum height allocates room for the mega menu
+        // so the header height doesn't change when it loads in.
+        .respond-to-min( @bp-med-min, {
+            min-height: 167px;
+        } );
+
+    }
+
+    &__mega-menu &_logo  {
+
+        // Tablet/mobile sizes.
+        .respond-to-max( @bp-sm-max, {
+            .js & {
+                // Offset logo by width of mega menu trigger + 15px gap.
+                // The margin-left starts inside the 15px padding of the page
+                // page already, so a value that matches the width of the trigger
+                // will give it the desired spacing to the right of the trigger.
+                margin-left: @mobile_trigger_ht__px;
+            }
+        } );
+    }
 }
+
 
 // Used on /external-site/ template, where the header has no nav and eyebrow.
 .o-header__no-nav {

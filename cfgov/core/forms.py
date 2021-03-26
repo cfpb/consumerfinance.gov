@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import re
 
 from django import forms
@@ -9,9 +7,9 @@ from django.core.signing import BadSignature, Signer
 from django.utils.translation import ugettext_lazy as _
 
 
-EXTERNAL_URL_WHITELIST_RAW = getattr(settings, 'EXTERNAL_URL_WHITELIST', ())
-EXTERNAL_URL_WHITELIST = [re.compile(regex)
-                          for regex in EXTERNAL_URL_WHITELIST_RAW]
+EXTERNAL_URL_ALLOWLIST_RAW = getattr(settings, 'EXTERNAL_URL_ALLOWLIST', ())
+EXTERNAL_URL_ALLOWLIST = [re.compile(regex)
+                          for regex in EXTERNAL_URL_ALLOWLIST_RAW]
 
 
 class ExternalURLForm(forms.Form):
@@ -28,7 +26,7 @@ class ExternalURLForm(forms.Form):
 
         url = cleaned_data['ext_url']
         matched_whitelist = any((regex.match(url)
-                                 for regex in EXTERNAL_URL_WHITELIST))
+                                 for regex in EXTERNAL_URL_ALLOWLIST))
 
         if matched_whitelist:
             cleaned_data['validated_url'] = url
@@ -42,6 +40,6 @@ class ExternalURLForm(forms.Form):
                                       code='invalid')
         else:
             raise ValidationError(_('URL must either be allowed by '
-                                    'settings.EXTERNAL_URL_WHITELIST '
+                                    'settings.EXTERNAL_URL_ALLOWLIST '
                                     'or have a valid signature'),
                                   code='invalid')

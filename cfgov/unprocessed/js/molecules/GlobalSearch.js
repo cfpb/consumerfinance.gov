@@ -1,11 +1,11 @@
 // Required modules.
-import * as breakpointState from '../modules/util/breakpoint-state';
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import ClearableInput from '../modules/ClearableInput';
-import EventObserver from '../modules/util/EventObserver';
-import FlyoutMenu from '../modules/behavior/FlyoutMenu';
-import MoveTransition from '../modules/transition/MoveTransition';
-import TabTrigger from '../modules/TabTrigger';
+import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import ClearableInput from '../modules/ClearableInput.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
+import TabTrigger from '../modules/TabTrigger.js';
 
 /**
  * GlobalSearch
@@ -21,7 +21,14 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
 
   const BASE_CLASS = 'm-global-search';
   const _dom = checkDom( element, BASE_CLASS );
-  const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  const _contentDom = _dom.querySelector( `.${ BASE_CLASS }_content` );
+  const _triggerDom = _dom.querySelector( `.${ BASE_CLASS }_trigger` );
+  const _triggerCloseLabelText = _triggerDom.querySelector(
+    `.${ BASE_CLASS }_trigger-close-label`
+  ).innerText.trim();
+  const _triggerOpenLabelText = _triggerDom.querySelector(
+    `.${ BASE_CLASS }_trigger-open-label`
+  ).innerText.trim();
   const _flyoutMenu = new FlyoutMenu( _dom );
   let _searchInputDom;
   let _searchBtnDom;
@@ -86,7 +93,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   function _handleBodyClick( event ) {
     const target = event.target;
 
-    const isInDesktop = breakpointState.isInDesktop();
+    const isInDesktop = viewportIsIn( DESKTOP );
     if ( isInDesktop && !_isDesktopTarget( target ) ||
          !isInDesktop && !_isMobileTarget( target ) ) {
       collapse();
@@ -140,6 +147,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
 
     _searchInputDom.select();
 
+    _triggerDom.setAttribute( 'aria-label', _triggerCloseLabelText );
+
     document.body.addEventListener( 'mousedown', _handleBodyClick );
   }
 
@@ -148,6 +157,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * Use this to perform post-collapseBegin actions.
    */
   function _handleCollapseBegin() {
+    _triggerDom.setAttribute( 'aria-label', _triggerOpenLabelText );
     document.body.removeEventListener( 'mousedown', _handleBodyClick );
   }
 

@@ -1,44 +1,61 @@
-
 {# ==========================================================================
 
-   How To block
+   HowTo block
 
    ==========================================================================
 
    Description:
 
-   Implements Google's recommended elements of HowTo schema when given:
+   Implements Google's recommended elements of HowTo schema
+   (see https://developers.google.com/search/docs/data-types/how-to)
+   when given:
 
-   value: Object defined from a Streamfield block.
+   value:                         Object defined from a Streamfield block.
 
-   value.description: 			  Text overview of how to.
+   value.title:                   Main title for the HowTo. Marked up as the
+                                  HowTo's `name` field.
 
-   value.steps: 	  			    List of steps
+   value.description:             Text overview of the HowTo. Marked up as the
+                                  HowTo's `description` field.
 
-   value.step.title:  			  Title of step
+   value.steps:                   List of steps in the HowTo. Marked up as
+                                  HowToStep objects.
 
-   value.step.step_contents  	Output of streamblock
+   value.steps.step.title:        Title of an individual step. Marked up as the
+                                  HowToStep's `name` field.
+
+   value.steps.step.step_content: StreamBlock containing the step content.
+                                  Marked up as the HowToStep's `text` field.
 
    ========================================================================== #}
 
 
-<div class="schema-block schema-block__how-to">
-    {% if value.description %}
-  	<div itemprop="description" class="schema-block_description">
-  		{{ value.description | richtext }}
-  	</div>
-    {% endif %}
-  	{% for step in value.steps %}
-  		<div itemprop="step"
-           itemscope itemtype="http://schema.org/HowToStep"
-           class="schema-block_item">
-    		<h2 itemprop="name">{{ step.title }}</h2>
-    		<div itemprop="text">
-            {% include_block step.step_content %}
-    		</div>
-  		</div>
-  {% endfor %}
+<div itemscope
+     itemtype="http://schema.org/HowTo"
+     class="schema-block schema-block__how-to">
+{%- if value.title %}
+    <h2 itemprop="name" class="schema-block_title">
+        {{ value.title }}
+    </h2>
+{% endif -%}
+
+{%- if value.description %}
+    <div itemprop="description" class="schema-block_description">
+        {{ value.description | richtext }}
+    </div>
+{% endif -%}
+
+    <ol>
+    {% for step in value.steps %}
+        <li itemprop="step"
+            itemscope
+            itemtype="http://schema.org/HowToStep"
+            class="schema-block_item">
+            <h3 itemprop="name" class="h4">{{ step.title }}</h3>
+            <div itemprop="text">
+                {% include_block step.step_content %}
+            </div>
+        </li>
+    {% endfor %}
+    </ol>
 </div>
-
-
-

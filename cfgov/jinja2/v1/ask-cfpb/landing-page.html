@@ -4,6 +4,8 @@
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'organisms/ask-search.html' as ask_search with context %}
 
+{% set read_answer_text = _('Read answer') %}
+
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__landing
 {%- endblock %}
@@ -16,8 +18,12 @@
 
 {% block content_main %}
     <div class="content-l">
+        <section class="ask-search block__sub block__flush-top">
+            {{ ask_search.render( language=page.language, is_subsection=False ) }}
+        </section>
+
         <section class="ask-categories">
-            <h2 class="u-show-on-mobile u-mt30">
+            <h2 class="u-show-on-mobile u-mt45">
                 {{ _('Browse questions by category') }}
             </h2>
             <ul class="u-show-on-mobile category_list m-list m-list__links u-mb0">
@@ -27,7 +33,7 @@
                                   a-link
                                   a-link__jump
                                   a-link__icon-after-text"
-                            href="{{ portal.url }} "
+                            href="{{ portal.url }} ">
                             <span class="a-link_text">
                                 {{ portal.title }}
                             </span>
@@ -37,59 +43,53 @@
                 {% endfor %}
             </ul>
 
-            <div class="question-categories">
-                <div class="u-hide-on-mobile">
+            <div class="u-hide-on-mobile question-categories u-mb15">
 
-                    <div class="content-l content-l__equal-height">
+                {#
+                    TODO: This can use the standard card-group.html template
+                          if the partially styled links are removed.
+                #}
+                <div class="o-card-group o-card-group__column-2">
+                    <div class="o-card-group_cards">
 
-                        {% for portal in portal_cards %}
-                            <div class="content-l_col content-l_col-1-2 content-l_col__equal-height">
-                                <article class="m-card content-l_body__equal-height">
-                                    <h2>
-                                        <a href="{{ portal.url }}">
-                                        <span>{{ category_icon.render( portal.topic ) }}</span>
-                                        <span>{{ portal.title }}</span>
-                                        </a>
-                                    </h2>
+                    {% for portal in portal_cards %}
+                        <article class="m-card">
+                            <h2 class="m-card_heading">
+                                <a href="{{ portal.url }}">
+                                    <span class="m-card_icon">{{ category_icon.render( portal.topic ) }}</span>
+                                    <span>{{ portal.title }}</span>
+                                </a>
+                            </h2>
 
-                                    <ul class="m-list question_list m-list__flush-left u-mt10 u-mb30">
-                                        {% for page in portal.featured_answers %}
-                                            <li class="m-list_item">
-                                            {{ partially_styled_link.render({
-                                                'plain_text': page.question,
-                                                'underlined_text': _('Read answer'),
-                                                'url': page.url })
-                                            }}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                            <ul class="m-list
+                                       m-list__flush-left
+                                       question_list
+                                       u-mt10
+                                       u-mb30">
+                                {% for page in portal.featured_answers %}
+                                    <li class="m-list_item">
+                                    {{ partially_styled_link.render({
+                                        'plain_text': page.question,
+                                        'underlined_text': read_answer_text,
+                                        'url': page.url })
+                                    }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
 
-                                    <div class="content-l_footer__equal-height">
-                                        <p class="short-desc u-mb0">
-                                            <a href="{{ portal.url }}">
-                                               {{ _('Learn more about') }} {{ portal.title|lower }}
-                                            </a>
-                                        </p>
-                                    </div>
-
-                                </article>
+                            <div class="m-card_footer">
+                                <a href="{{ portal.url }}">
+                                {{ _('Learn more about') }} {{ portal.title|lower }}
+                                </a>
                             </div>
 
-                        {% endfor %}
-
+                        </article>
+                    {% endfor %}
                     </div>
-
                 </div>
 
             </div>
         </section>
-
-        <section class="ask-search block block__sub block__flush-bottom">
-            <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
-            {{ ask_search.render( language=page.language ) }}
-        </section>
-
-
     </div>
 
 {% endblock %}

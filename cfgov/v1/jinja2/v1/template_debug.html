@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Debugging template {{ debug_template_name }}{% endblock %}
+
+{% block css %}
+{{ super() }}
+<style>
+.test-case {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.test-case_link {
+    display: none;
+    font-size: 18px;
+}
+
+.test-case h2:hover .test-case_link {
+    display: inline-block;
+}
+
+.test-case_render {
+    border: 1px #b4b5b6 dotted;
+}
+</style>
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div class="wrapper content_wrapper">
+    <div class="content_main">
+        <h1>{{ debug_template_name }}</h1>
+
+        {% if debug_test_cases %}
+        <ul>
+            {% for name in debug_test_cases.keys() %}
+            <li><a href="#{{ name | slugify }}">{{ name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% for name, rendered in debug_test_cases.items() %}
+        <div class="content_line"></div>
+        <div id="{{ name | slugify }}" class="test-case">
+            <h2>
+                {{ name }}
+                <a class="test-case_link" href="#{{ name | slugify }}">#</a>
+            </h2>
+            <div class="test-case_render">
+            {{ rendered | safe }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block wagtailuserbar %}{% endblock %}
+
+{% block footer %}{% endblock %}

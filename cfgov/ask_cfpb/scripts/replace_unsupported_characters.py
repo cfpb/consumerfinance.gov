@@ -1,10 +1,8 @@
-from __future__ import unicode_literals
-
 import os
 
 from django.contrib.auth.models import User
 
-from ask_cfpb.models.pages import AnswerPage
+from ask_cfpb.models.answer_page import AnswerPage
 
 
 # A dictionary for swapping misencodings with valid unicode code points

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   cfgov-refresh
+   consumerfinance.gov
    misc
    ========================================================================== */
 
@@ -236,7 +236,7 @@
     display: block;
     margin-bottom: unit(15px / 14px, em);
 
-    color: @dark-gray;
+    color: @gray-dark;
     font-size: 14px; // fallback for browsers that don't support rem units
     // rem units needed because the main use case for this is within a heading
     font-size: unit(14px / @base-font-size-px, rem);
@@ -268,6 +268,15 @@
         // Whitespace in content so element can have dimensions set.
         content: '';
         opacity: 0.2;
+    }
+}
+
+.archived-page main {
+    img,
+    .m-hero,
+    .m-info-unit_image,
+    .embed-container {
+        filter: grayscale();
     }
 }
 

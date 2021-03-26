@@ -1,0 +1,142 @@
+# Docker Swarm compatible Compose file.  Intended for use
+# with this repo's Jenkinsfile, not local development.
+version: "3.7"
+
+services:
+  elasticsearch2:
+    image: ${CFGOV_ES2_IMAGE}
+    deploy:
+      placement:
+        constraints:
+          - node.role!=manager
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - app
+  elasticsearch:
+    image: ${CFGOV_ES_IMAGE}
+    environment:
+      discovery.type: single-node
+    deploy:
+      placement:
+        constraints:
+          - node.role!=manager
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - app
+  postgres:
+    image: postgres:10-alpine
+    user: postgres
+    deploy:
+      placement:
+        constraints:
+          - node.role!=manager
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+    environment:
+      POSTGRES_USER: cfpb
+      POSTGRES_PASSWORD_FILE: /var/run/secrets/PGPASSWORD
+      POSTGRES_DB: cfgov
+    ports:
+      - 5432
+    networks:
+      - app
+    secrets:
+      - PGPASSWORD
+
+  python:
+    image: ${CFGOV_PYTHON_IMAGE}
+    environment:
+      ALLOW_ADMIN_URL: "True"
+      APACHE_PORT: 8000
+      APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
+      DATABASE_URL: postgres://cfpb@postgres/cfgov
+      DJANGO_ADMIN_USERNAME: admin
+      ES_PORT: 9200
+      ES_HOST: elasticsearch2
+      ES7_HOST: elasticsearch
+      GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
+      GOVDELIVERY_ACCOUNT_CODE: USCFPB
+      MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
+      REFRESH_DB: ${REFRESH_DB}
+    ports:
+      - 8000
+    networks:
+      - app
+      - lb
+    secrets:
+      - CFGOV_PROD_DB_LOCATION
+      - DJANGO_ADMIN_PASSWORD
+      - GOVDELIVERY_USER
+      - GOVDELIVERY_PASSWORD
+      - PGPASSWORD
+      - SECRET_KEY
+      - MAPBOX_ACCESS_TOKEN
+    deploy:
+      placement:
+        constraints:
+          - node.role!=manager
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      labels:
+        - com.docker.lb.hosts=${CFGOV_HOSTNAME}
+        - com.docker.lb.port=8000
+        - com.docker.lb.network=${LB_NETWORK}
+    command: >
+                bash -c "
+
+                psql $${DATABASE_URL} -c 'SELECT COUNT(*) FROM auth_user'
+
+                django_tables_exist=$$?
+
+                if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
+                    ./refresh-data.sh 
+                fi
+
+                ./cfgov/manage.py update_index
+                
+                ./cfgov/manage.py search_index --rebuild -f --parallel
+
+                httpd -d cfgov/apache -D FOREGROUND"
+
+networks:
+  app:
+  lb:
+    name: ${LB_NETWORK}
+    external: True
+
+secrets:
+  CFGOV_PROD_DB_LOCATION:
+    name: cfgov_prod_db_location
+    external: True
+  DJANGO_ADMIN_PASSWORD:
+    name: cfgov_django_admin_password
+    external: True
+  PGPASSWORD:
+    name: cfgov_postgres_password
+    external: True
+  SECRET_KEY:
+    name: cfgov_django_secret_key
+    external: True
+  GOVDELIVERY_USER:
+    name: staging_govdelivery_user
+    external: True
+  GOVDELIVERY_PASSWORD:
+    name: staging_govdelivery_password
+    external: True
+  MAPBOX_ACCESS_TOKEN:
+    name: mapbox_access_token
+    external: True

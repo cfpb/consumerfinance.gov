@@ -1,7 +1,7 @@
 // Required modules.
-import * as treeTraversal from '../modules/util/tree-traversal';
-import EventObserver from '../modules/util/EventObserver';
-import MoveTransition from '../modules/transition/MoveTransition';
+import * as treeTraversal from '../modules/util/tree-traversal.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
 
 /**
  * MegaMenuMobile
@@ -59,12 +59,12 @@ function MegaMenuMobile( menus ) {
    */
   function _handleBodyClick( event ) {
     const target = event.target;
-    if ( _activeMenu.getDom().trigger === target ) {
+    if ( _activeMenu.getDom().trigger[0] === target ) {
       return;
     }
 
     if ( !_rootMenu.getDom().container.contains( target ) ) {
-      _rootMenu.getDom().trigger.click();
+      _rootMenu.getDom().trigger[0].click();
     }
   }
 
@@ -192,7 +192,7 @@ function MegaMenuMobile( menus ) {
     const level = menuNode.level;
 
     if ( level >= 1 ) {
-      menuDom.altTrigger.focus();
+      menuDom.trigger[1].focus();
     }
 
     menuDom.content.classList.remove( 'u-is-animating' );
@@ -238,7 +238,7 @@ function MegaMenuMobile( menus ) {
     }
 
     if ( level >= 1 ) {
-      menuDom.trigger.focus();
+      menuDom.trigger[0].focus();
     }
 
     menuDom.content.classList.remove( 'u-is-animating' );
@@ -250,7 +250,7 @@ function MegaMenuMobile( menus ) {
    */
   function collapse() {
     if ( _rootMenu.isExpanded() ) {
-      _rootMenu.getDom().trigger.click();
+      _rootMenu.getDom().trigger[0].click();
     }
 
     return this;

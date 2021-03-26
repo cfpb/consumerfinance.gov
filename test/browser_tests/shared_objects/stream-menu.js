@@ -9,7 +9,7 @@ function _getContentElement( selector ) {
 const content = {
   callToActionBtn:      _getContentElement( '.action-add-block-call_to_action' ),
   contentBtn:           _getContentElement( '.action-add-block-content' ),
-  contentWithAnchorBtn: _getContentElement( '.action-add-block-image_text_25_75_group' ),
+  contentWithAnchorBtn: _getContentElement( '.action-add-block-content_with_anchor' ),
   emailSignupBtn:       _getContentElement( '.action-add-block-email_signup' ),
   expandableBtn:        _getContentElement( '.action-add-block-expandable' ),
   expandableGroupBtn:   _getContentElement( '.action-add-block-expandable_group' ),

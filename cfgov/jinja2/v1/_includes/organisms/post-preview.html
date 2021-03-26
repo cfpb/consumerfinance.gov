@@ -17,7 +17,7 @@
    post.specific.venue_city:      A string with the event venue city.
    post.specific.venue_state:     A string with the event venue state.
    post.specific.venue_name:      A string with the event venue name.
-   post.specific.live_stream_url: URL for the live stream.
+   post.specific.live_video_id:   YouTube video ID for the event live stream.
 
    post.date_published:           A date timestamp to format.
    post.categories:               An array with the categories for the post.
@@ -63,6 +63,7 @@
    ========================================================================== #}
 
 {% import 'macros/time.html' as time %}
+{% import 'molecules/archived-pill.html' as archived_pill %}
 
 {% macro render(
     post,
@@ -102,6 +103,8 @@
                     {{ date_desc }}
                     {% if 'EventPage' in post.specific_class.__name__ %}
                         {{ time.render(post.specific.start_dt, {'date':true}) }}
+                    {% elif 'EnforcementAction' in post.specific_class.__name__ and post.specific.initial_filing_date %}
+                        {{ time.render(post.specific.initial_filing_date, {'date':true}) }}
                     {% else %}
                         {{ time.render(post.date_published, {'date':true}) }}
                     {% endif %}
@@ -129,7 +132,7 @@
                     {% endif %}
                 </div>
             {% endif %}
-        {% elif post.preview_image %}
+        {% elif post.preview_image and not post.archived %}
             {% set photo = image(post.preview_image, 'original') %}
             <div class="o-post-preview_image-container">
                 <img class="o-post-preview_image"
@@ -145,8 +148,8 @@
                 <time class="calendar-icon"
                       data-month="{{ event.start_dt | date('%b') }}"
                       data-day="{{ event.start_dt | date('%-d') }}"
-                      datetime="{{ event.start_dt | date('%c') }}">
-                    <span class="u-visually-hidden">{{ event.start_dt | date('%b %-d, %Y') }}</span>
+                      datetime="{{ event.start_dt | date('%c') }}"
+                      aria-hidden="true">
                 </time>
             {% endif %}
         {% endif %}
@@ -154,6 +157,7 @@
             <h3 class="o-post-preview_title">
                 <a href="{{ post_url }}">
                     {{ post.preview_title | safe if post.preview_title else post.title }}
+                    {{ archived_pill.render( post ) }}
                 </a>
             </h3>
 
@@ -165,7 +169,7 @@
                         {{ event.venue_city }}, {{ event.venue_state }}
                     {% endif %}
                             {{ event.venue_name if event.venue_name else '' }}
-                    {{ 'Livecast' if event.live_stream_url else '' }}
+                    {{ 'Livecast' if event.live_video_id else '' }}
                      -
                     {{ time.render(event.start_dt) }}
                     </div>
@@ -189,19 +193,9 @@
             {% if post.get_authors() %}
                 <div class="o-post-preview_byline-group">
                 {% for author in post.get_authors() %}
-                    {% if loop.index == 1  %}
-                        By <a href="{{ url }}?authors={{ author.slug }}">
-                           {{ author.name }}
-                           </a>
-                    {% elif loop.last == true %}
-                        and <a href="{{ url }}?authors={{ author.slug }}">
-                            {{ author.name }}
-                            </a>
-                    {% else %}
-                        , <a href="{{ url }}?authors={{ author.slug }}">
-                          {{ author.name }}
-                          </a>
-                    {% endif %}
+                    {% if loop.first %}By {% elif loop.last %}and {% endif %}
+                    <a href="{{ url }}?authors={{ author.slug }}">{{ author.name }}</a>
+                    {%- if loop.length > 2 and loop.index < loop.length %}, {% endif %}
                 {% endfor %}
                 </div>
             {% endif %}

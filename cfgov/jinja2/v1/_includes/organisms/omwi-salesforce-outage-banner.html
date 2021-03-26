@@ -1,0 +1,29 @@
+{# ==========================================================================
+
+   OMWI Salesforce outage banner
+
+   ==========================================================================
+
+   Description:
+
+   Banner that displays in the event of a Salesforce system outage.
+   Should only be included on pages that prominently feature the diversity
+   assessment form or the inclusivity portal.
+
+   ========================================================================== #}
+
+{% import 'molecules/notification.html' as notification %}
+<div class="m-global-banner">
+    <div class="wrapper
+                wrapper__match-content">
+        {{ notification.render(
+            'warning',
+            true,
+            'We are experiencing technical difficulties with the Office of
+             Minority and Women Inclusion (OMWI) assessment form and inclusivity
+             portal.',
+            'We are working on the issue. Please check back later to submit or
+             view the status of an OMWI assessment.'
+         ) }}
+    </div>
+</div>

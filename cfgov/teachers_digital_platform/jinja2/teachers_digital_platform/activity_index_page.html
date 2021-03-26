@@ -1,0 +1,91 @@
+{% extends 'layout-full.html' %}
+
+{% import 'templates/render_block.html' as render_block with context %}
+
+{% block css -%}
+    {{ super() }}
+
+    <link rel="stylesheet" href="{{ static('apps/teachers-digital-platform/css/main.css') }}">
+{%- endblock css %}
+
+{% block pre_content scoped -%}
+    {# TODO: Remove non-wagtail logic once old pages have been converted #}
+    {% if page %}
+        {% if not breadcrumb_items %}
+        {% set breadcrumb_items = page.get_breadcrumbs(request) %}
+        {% endif %}
+        {% if breadcrumb_items | length > 0 %}
+            <div class="content_wrapper">
+                {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
+                {{ breadcrumbs.render(breadcrumb_items) }}
+            </div>
+        {% endif %}
+    {% else %}
+        {% if breadcrumb_items | length > 0 %}
+            <div class="content_wrapper">
+                {%- import 'breadcrumbs.html' as breadcrumbs -%}
+                {{ breadcrumbs.render(breadcrumb_items, 'breadcrumbs__main-first') }}
+            </div>
+        {% endif %}
+    {% endif %}
+{%- endblock %}
+
+{% block body_content scoped %}
+<div class="tdp-activity-search wrapper content_wrapper {% block content_wrapper_modifiers -%}{%- endblock %}">
+    <div class="content_main content__1-3">
+        <section class="m-search-hero">
+            <div class="m-search-hero_text">
+                {% for block in page.header -%}
+                    {% if block.block_type != 'hero' %}
+                        {{ render_block.render(block, loop.index) }}
+                    {% endif %}
+                {%- endfor %}
+            </div>
+            <div class="m-search-hero_image-wrapper">
+                {% for block in page.header_sidebar -%}
+                    {% include_block block %}
+                {%- endfor %}
+            </div>
+        </section>
+        <div class="block block__padded-top block__flush-top u-mb30">
+            <h2>Search for activities</h2>
+            <form class="u-mt30" method="get" action="." data-js-hook="behavior_submit-search">
+                <div class="o-form__input-w-btn">
+                    <div class="o-form__input-w-btn_input-container">
+                        <div class="m-btn-inside-input input-contains-label">
+                            <label for="search-text" class="input-contains-label_before input-contains-label_before__search">
+                                {{ svg_icon('search') }}
+                                <span class="u-visually-hidden">The term to search for</span>
+                            </label>
+                            <input id="search-text" type="text" autocomplete="off" class="a-text-input" name="q"
+                                    placeholder="Enter your search term(s)"
+                                    value="{% if page.results.search_query: %}{{ page.results.search_query }}{% endif %}">
+                            <label for="search-text"
+                                  class="input-contains-label_after
+                                         input-contains-label_after__clear
+                                         u-hidden" data-js-hook="behavior_clear-search">
+                                Clear {{ svg_icon('delete') }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="o-form__input-w-btn_btn-container">
+                        <button class="a-btn">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="tdp-search-facets-and-results">
+            {% include 'activity_search_facets_and_results.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+
+    {# Conditional comment used to block IE8 and under from receiving JS #}
+    <!--[if gt IE 8]><!-->
+        <script src="{{ static('apps/teachers-digital-platform/js/index.js') }}"></script>
+    <!--<![endif]-->
+{% endblock javascript %}

@@ -4,11 +4,11 @@
 
 We use the term "satellite apps" to refer to other CFPB-maintained Python
 source code repositories and packages that provide functionality or content
-for https://www.consumerfinance.gov but are not included in cfgov-refresh.
+for https://www.consumerfinance.gov but are not included in consumerfinance.gov.
 Most but not all of these repositories can be run or tested without needing to
 set up the full website.
 
-We have six satellite apps that are maintained outside of the cfgov-refresh codebase:
+We have six satellite apps that are maintained outside of the consumerfinance.gov codebase:
 
 - [ccdb5-api](https://github.com/cfpb/ccdb5-api)
 - [ccdb5-ui](https://github.com/cfpb/ccdb5-ui)
@@ -17,13 +17,13 @@ We have six satellite apps that are maintained outside of the cfgov-refresh code
 - [retirement](https://github.com/cfpb/retirement)
 - [teachers-digital-platform](https://github.com/cfpb/teachers-digital-platform)
 
-These satellite apps are imported into cfgov-refresh as part of the project
-[requirements files](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/libraries.txt).
+These satellite apps are imported into consumerfinance.gov as part of the project
+[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt).
 
 !!! note "Thinking about making a new satellite app?"
     Satellite apps were originally built to be imported into the
     consumerfinance.gov website before we started using Wagtail to manage site
-    content. We now prefer to build projects as apps inside the cfgov-refresh
+    content. We now prefer to build projects as apps inside the consumerfinance.gov
     repo. For more info, refer to the "Setting up new project code for
     consumerfinance.gov" page on the CFGOV/platform wiki on GHE.
 
@@ -44,14 +44,14 @@ These include:
 The [cfpb/development](https://github.com/cfpb/development/) repository
 contains the CFPB development guidelines used on these projects.
 
-## Developing Python packages with cfgov-refresh
+## Developing Python packages with consumerfinance.gov
 
 Developers working on changes to satellite apps or other Python packages often
-want or need to test their work as part of the larger cfgov-refresh project.
+want or need to test their work as part of the larger consumerfinance.gov project.
 
-The standard [installation](../installation/) process for cfgov-refresh
+The standard [installation](../installation/) process for consumerfinance.gov
 includes whatever versions of these packages are specified in project 
-[requirements files](https://github.com/cfpb/cfgov-refresh/blob/master/requirements/libraries.txt).
+[requirements files](https://github.com/cfpb/consumerfinance.gov/blob/main/requirements/libraries.txt).
 Developers may want to temporarily or permanently replace those with a local
 copy of package source code.
 
@@ -67,14 +67,14 @@ mode, replacing the satellite app version installed from requirements files
 with your local copy:
 
 ```sh
-# In a local virtual environment, after installing cfgov-refresh.
+# In a local virtual environment, after installing consumerfinance.gov.
 # Python packages have been installed from requirements files.
 # This includes, for example, the retirement satellite app:
-(cfgov-refresh) $ pip freeze | grep retirement
+(consumerfinance.gov) $ pip freeze | grep retirement
 retirement==0.10.0
 
 # Replace this version with an editable install pointing to your local copy.
-(cfgov-refresh) $ pip install -e ../retirement/
+(consumerfinance.gov) $ pip install -e ../retirement/
 ...
 Installing collected packages: retirement
   Found existing installation: retirement 0.10.0
@@ -84,7 +84,7 @@ Installing collected packages: retirement
 Successfully installed retirement
 
 # The Python environment is now using the local copy.
-(cfgov-refresh) $ pip freeze | grep retirement
+(consumerfinance.gov) $ pip freeze | grep retirement
 -e git+git@github.com:myfork/retirement.git@7d2b8eca86ed33d90b5cd7782e1f90b7ac89f6f9#egg=retirement
 ```
 
@@ -96,7 +96,7 @@ of a local copy, you can manually install the version specified in the
 requirements files:
 
 ```sh
-(cfgov-refresh) $ pip install retirement==0.10.0
+(consumerfinance.gov) $ pip install retirement==0.10.0
 ```
 
 Re-running the full virtual environment
@@ -106,13 +106,13 @@ will do the same thing.
 ### Using Docker
 
 Working on Python packages requires a different approach when running
-cfgov-refresh locally with [its Docker setup](../running-docker/).
-This is because while your local `cfgov-refresh` directory is exposed to the
+consumerfinance.gov locally with [its Docker setup](../running-docker/).
+This is because while your local `consumerfinance.gov` directory is exposed to the
 container, sibling directories or other locations where you might clone
 other repositories are not.
 
 For this reason, the Docker setup provides the ability to use the local
-[`cfgov-refresh/develop-apps`](https://github.com/cfpb/cfgov-refresh/tree/master/develop-apps)
+[`consumerfinance.gov/develop-apps`](https://github.com/cfpb/consumerfinance.gov/tree/main/develop-apps)
 subdirectory as place to put local copies of Python packages.
 
 Any packages put there (e.g. via a `git clone` of a satellite apps' repo)
@@ -140,21 +140,11 @@ cd retirement
 ```
 
 If the satellite app needs any Python requirements that are not specified in 
-[the cfgov-refresh requirements](https://github.com/cfpb/cfgov-refresh/tree/master/requirements/), 
-they will need to be installed seperately by 
-[accessing the Python containers' shell](#access-the-containers-shell) 
+[the consumerfinance.gov requirements](https://github.com/cfpb/consumerfinance.gov/tree/main/requirements/), 
+they will need to be installed seperately by accessing the Python container shell
 and using `pip`:
 
-Python 2.7:
-
 ```bash
-docker-compose exec python2 bash
-pip install [PACKAGE NAME]
-```
-
-Python 3.6:
-
-```bash
-docker-compose exec python3 bash
+docker-compose exec python bash
 pip install [PACKAGE NAME]
 ```

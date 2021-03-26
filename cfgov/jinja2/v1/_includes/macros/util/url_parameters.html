@@ -17,7 +17,7 @@
     {%- for key in parameters.keys() -%}
         {% if parameters.getlist(key) and key not in ignored_params -%}
             {%- for value in parameters.getlist(key, []) -%}
-                &{{ key }}={{ value }}
+                &amp;{{ key }}={{ value }}
             {%- endfor -%}
         {%- endif %}
     {%- endfor -%}

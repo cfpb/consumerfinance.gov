@@ -1,9 +1,12 @@
+from datetime import datetime
+
 from django.test import TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
+from wagtail.core.blocks import StreamValue
+
+from pytz import timezone
 
 from scripts._atomic_helpers import filter_controls as controls
-
 from v1.atomic_elements.organisms import FilterableList
 from v1.models import BlogPage, BrowseFilterablePage
 from v1.models.learn_page import AbstractFilterPage, EventPage
@@ -23,7 +26,10 @@ class TestFilterableList(TestCase):
         page1 = BlogPage(title='test page 1')
         page1.tags.add(u'C-tag-3-instances')
 
-        page2 = EventPage(title='test page 2')
+        page2 = EventPage(
+            title='test page 2',
+            start_dt=datetime.now(timezone('UTC'))
+        )
         page2.tags.add(u'B-tag-2-instances')
         page2.tags.add(u'C-tag-3-instances')
 
@@ -43,7 +49,7 @@ class TestFilterableList(TestCase):
         self.page = BrowseFilterablePage(title='Browse filterable page')
         self.page.content = StreamValue(self.page.content.stream_block, [value], True)
         helpers.publish_page(child=self.page)
-        self.block = self.page.filterable_list_wagtail_block()
+        self.block = self.page.get_filterable_list_wagtail_block()
 
     def test_get_filterable_topics_sort_by_frequency(self):
         self.set_up_filterable_list_page(self.topics_by_frequency())

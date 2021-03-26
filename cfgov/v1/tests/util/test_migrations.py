@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from unittest import mock
 
 from django.apps import apps
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 
+from wagtail.core import blocks
+from wagtail.core.models import Page
 from wagtail.tests.testapp.models import StreamPage
-from wagtail.wagtailcore.models import Page, PageRevision
-
-import mock
 
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import (
@@ -87,54 +86,6 @@ class MigrationsUtilTestCase(TestCase):
 
         self.assertEqual(self.page.save.mock_calls, [])
 
-    def test_migrate_stream_data_recursion(self):
-        mapper = mock.Mock(return_value='new text')
-        stream_data = [
-            {
-                'type': 'not-migratory',
-                'value': [
-                    {
-                        'type': 'migratory',
-                        'value': 'old text',
-                    },
-                ]
-            },
-            {
-                'type': 'not-migratory',
-                'value': []
-            },
-        ]
-        result, migrated = migrate_stream_data(
-            self.page, ['not-migratory', 'migratory'], stream_data, mapper
-        )
-        self.assertTrue(migrated)
-        self.assertEquals(result[0]['value'][0]['value'], 'new text')
-
-    def test_migrate_stream_data_flat(self):
-        mapper = mock.Mock(return_value='new text')
-        stream_data = [
-            {
-                'type': 'not-migratory',
-                'value': 'old text',
-            },
-            {
-                'type': 'migratory',
-                'value': 'old text',
-            },
-        ]
-        result, migrated = migrate_stream_data(
-            self.page, ['migratory', ], stream_data, mapper
-        )
-        self.assertTrue(migrated)
-        self.assertEquals(result[1]['value'], 'new text')
-
-    def test_migrate_stream_data_empty_block_path(self):
-        mapper = mock.Mock(return_value='new text')
-        result, migrated = migrate_stream_data(
-            self.page, [], {}, mapper
-        )
-        self.assertFalse(migrated)
-
     def test_migrate_stream_field_page(self):
         """ Test that the migrate_stream_field function correctly gets
         old data, calls the mapper function, and stores new data
@@ -208,3 +159,148 @@ class MigrationsUtilTestCase(TestCase):
                                                   'body',
                                                   'text',
                                                   mapper)
+
+
+class ChildStructBlock(blocks.StructBlock):
+    text = blocks.CharBlock()
+
+class ChildStreamBlock(blocks.StreamBlock):
+    text = blocks.CharBlock()
+
+class TestStreamBlock(blocks.StreamBlock):
+    text = blocks.CharBlock()
+    texts = blocks.ListBlock(blocks.CharBlock())
+    struct = ChildStructBlock()
+    stream = ChildStreamBlock()
+
+
+class MigrateStreamDataTests(SimpleTestCase):
+    def setUp(self):
+        self.page = 'mock'
+
+        self.original_stream_data = [
+            {'type': 'text', 'value': 'foo'},
+            {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
+            {'type': 'struct', 'value': {'text': 'bar'}},
+            {'type': 'stream', 'value': [
+                {'type': 'text', 'value': 'foo'},
+                {'type': 'text', 'value': 'bar'},
+            ]},
+        ]
+
+        self.block = TestStreamBlock()
+        self.value = self.block.to_python(self.original_stream_data)
+
+    @staticmethod
+    def mapper(page_or_revision, data):
+        return 'mapped'
+
+    def test_migrate_stream_data_empty_block_path(self):
+        modified_data, migrated = migrate_stream_data(
+            self.page, '', self.value.stream_data, self.mapper
+        )
+        self.assertFalse(migrated)
+        self.assertEqual(modified_data, self.original_stream_data)
+
+    def test_migrate_stream_data_invalid_block_path(self):
+        modified_data, migrated = migrate_stream_data(
+            self.page, 'invalid', self.value.stream_data, self.mapper
+        )
+        self.assertFalse(migrated)
+        self.assertEqual(modified_data, self.original_stream_data)
+
+    def test_migrate_stream_data_raises_valueerror_on_bad_data(self):
+        with self.assertRaises(ValueError):
+            migrate_stream_data(
+                self.page,
+                ('parent', 'child'),
+                [{'type': 'parent', 'value': 'invalid'}],
+                self.mapper
+            )
+
+    def test_migrate_stream_data_top_level_block(self):
+        modified_data, migrated = migrate_stream_data(
+            self.page, 'text', self.value.stream_data, self.mapper
+        )
+        self.assertTrue(migrated)
+        self.assertEqual(modified_data, [
+            {'type': 'text', 'value': 'mapped'},
+            {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
+            {'type': 'struct', 'value': {'text': 'bar'}},
+            {'type': 'stream', 'value': [
+                {'type': 'text', 'value': 'foo'},
+                {'type': 'text', 'value': 'bar'},
+            ]},
+        ])
+
+    def test_migrate_stream_data_listblock(self):
+        modified_data, migrated = migrate_stream_data(
+            self.page, 'texts', self.value.stream_data, self.mapper
+        )
+        self.assertTrue(migrated)
+        self.assertEqual(modified_data, [
+            {'type': 'text', 'value': 'foo'},
+            {'type': 'texts', 'value': ['mapped', 'mapped', 'mapped']},
+            {'type': 'struct', 'value': {'text': 'bar'}},
+            {'type': 'stream', 'value': [
+                {'type': 'text', 'value': 'foo'},
+                {'type': 'text', 'value': 'bar'},
+            ]},
+        ])
+
+    def test_migrate_stream_data_structblock(self):
+        modified_data, migrated = migrate_stream_data(
+            self.page, 'struct', self.value.stream_data, self.mapper
+        )
+        self.assertTrue(migrated)
+        self.assertEqual(modified_data, [
+            {'type': 'text', 'value': 'foo'},
+            {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
+            {'type': 'struct', 'value': 'mapped'},
+            {'type': 'stream', 'value': [
+                {'type': 'text', 'value': 'foo'},
+                {'type': 'text', 'value': 'bar'},
+            ]},
+        ])
+
+    def test_migrate_stream_data_structblock_child(self):
+        modified_data, migrated = migrate_stream_data(
+            self.page, ('struct', 'text'), self.value.stream_data, self.mapper
+        )
+        self.assertTrue(migrated)
+        self.assertEqual(modified_data, [
+            {'type': 'text', 'value': 'foo'},
+            {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
+            {'type': 'struct', 'value': {'text': 'mapped'}},
+            {'type': 'stream', 'value': [
+                {'type': 'text', 'value': 'foo'},
+                {'type': 'text', 'value': 'bar'},
+            ]},
+        ])
+
+    def test_migrate_stream_data_streamblock(self):
+        modified_data, migrated = migrate_stream_data(
+            self.page, 'stream', self.value.stream_data, self.mapper
+        )
+        self.assertTrue(migrated)
+        self.assertEqual(modified_data, [
+            {'type': 'text', 'value': 'foo'},
+            {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
+            {'type': 'struct', 'value': {'text': 'bar'}},
+            {'type': 'stream', 'value': 'mapped'},
+        ])
+
+    def test_migrate_stream_data_streamblock_child(self):
+        modified_data, migrated = migrate_stream_data(
+            self.page, ('stream', 'text'), self.value.stream_data, self.mapper
+        )
+        self.assertTrue(migrated)
+        self.assertEqual(modified_data, [
+            {'type': 'text', 'value': 'foo'},
+            {'type': 'texts', 'value': ['foo', 'bar', 'baz']},
+            {'type': 'struct', 'value': {'text': 'bar'}},
+            {'type': 'stream', 'value': [
+                {'type': 'text', 'value': 'mapped'},
+                {'type': 'text', 'value': 'mapped'},
+            ]},
+        ])

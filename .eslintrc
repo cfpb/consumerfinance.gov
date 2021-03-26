@@ -1,5 +1,7 @@
 # Environments.
 
+root: true
+
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
@@ -40,7 +42,7 @@ env:
   greasemonkey: false
 
 # globals:
-# No globals outside of env settings.
+# No globals outside of env settings
 
 # Linting rules for ESLint.
 # 0's ignore a rule, 1's produce a warning, and 2's throw an error.
@@ -685,7 +687,7 @@ rules:
     - 0
     - consistent
 
-  # Blacklist certain identifiers to prevent them being used.
+  # Block certain identifiers to prevent them being used.
   id-blacklist:
     - 1
     - e
@@ -1265,7 +1267,7 @@ rules:
 
   # Sort import declarations within module.
   sort-imports:
-    - 1
+    - 0
     -
       ignoreCase: false
       ignoreMemberSort: false

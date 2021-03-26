@@ -18,16 +18,12 @@
    current: Adds a current modifier to the link.
             Defaults to false.
 
-   turbolinks: Adds an attribute instructing the link to load via turbolinks.
-               Defaults to false.
-
    ========================================================================= #}
-{% macro render(text, href, parent=true, current=false, turbolinks=false) %}
+{% macro render(text, href, parent=true, current=false) %}
 <a class="m-nav-link
           {{ 'm-nav-link__parent' if parent else '' }}
           {{ 'm-nav-link__current' if current else '' }}"
-   {{ 'data-turbolinks=true' if turbolinks else '' }}
-   href="{{ href | e }}">
+   {{ 'href=' ~ href | e if not current else '' }}>
     {{ text | e }}
 </a>
 {% endmacro %}

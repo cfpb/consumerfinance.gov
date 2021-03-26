@@ -1,0 +1,18 @@
+{% extends 'wagtailadmin/reports/base_page_report.html' %}
+{% load i18n wagtailadmin_tags %}
+
+{% block actions %}
+    {% if view.list_export %}
+        <div class="actionbutton">
+            <a href="{{ view.csv_export_url }}" class="button bicolor button--icon">{% icon name="download" wrapped=1 %}{% trans 'Download CSV' %}</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block listing %}
+    {% include 'v1/_list_page_metadata.html' %}
+{% endblock %}
+
+{% block no_results %}
+    <p>No pages with metadata.</p>
+{% endblock %}

@@ -1,6 +1,6 @@
 import logging
 
-from wagtail.wagtailcore.signals import page_published
+from wagtail.core.signals import page_published
 
 import requests
 from flags.state import flag_enabled

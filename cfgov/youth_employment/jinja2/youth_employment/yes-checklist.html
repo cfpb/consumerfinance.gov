@@ -16,16 +16,65 @@
 
    ========================================================================== #}
 
-<script id="car-buying-guide-json">
-    {{ value.checklist | tojson }}
-</script>
-<div class="m-checklist-group">
-{% for block in value.checklist | batch(2) %}
-    <div class="content-l block block__sub u-mt15 u-mb15">
-        {% include_block block[0] %}
-        {% if block[1] %}
-            {% include_block block[1] %}
-        {% endif %}
+<div class="cbg-checklist">
+  <div class="block block__sub u-hidden cbg-checklist-error">
+    <div class="m-notification
+                m-notification__visible
+                m-notification__error">
+              {% include "icons/error-round.svg" %}
+      <div class="m-notification_content">
+        <div class="h4 m-notification_message">Choose at least one goal.</div>
+      </div>
     </div>
-{% endfor %}
+  </div>
+
+  <div class="m-checklist-group">
+  {% for block in value.checklist | batch(2) %}
+    <div class="content-l u-mt15 u-mb15">
+      {% include_block block[0] %}
+      {% if block[1] %}
+          {% include_block block[1] %}
+      {% endif %}
+    </div>
+  {% endfor %}
+  </div>
+
+  <button class="u-mt15 u-mb30 a-btn js-cbg-print">Print my checklist</button>
+  <div class="content_line"></div>
 </div>
+
+<div class="cbg-print-paper u-hidden">
+  <h2>My Car-Buying Checklist</h2>
+  <p>
+    There’s a lot to consider when buying a car. Focus on a few goals first, and once you’ve had a chance to complete these goals, revisit the original checklist and decide what you’d like to focus on next.
+  </p>
+  <div class="block block__sub">
+    <h3>I'm working on these goals first:</h3>
+    <table class="block block__sub cbg-print-goals" width="100%">
+      <thead>
+        <tr>
+          <th>Goals</th>
+          <th>Things to keep in mind</th>
+        </tr>
+      </thead>
+      <tbody class="cbg-print-goals-body"></tbody>
+    </table>
+  </div>
+  
+  <div class="block block__flush-bottom">
+    <h3>I’ll consider these goals next:</h3>
+
+    <table class="block block__sub cbg-print-next-steps" width="100%">
+      <thead>
+        <tr>
+          <th>Goals to consider next:</th>
+        </tr>
+      </thead>
+      <tbody class="cbg-next-steps-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<link rel="stylesheet" 
+      href="{{ static('css/on-demand/car-buying-guide.css') }}"
+      media="print">

@@ -1,11 +1,8 @@
-from __future__ import absolute_import
-
 from django.db import models
 from django.utils.http import urlquote
-from django.utils.six import python_2_unicode_compatible
 
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
-from wagtail.wagtailcore.models import Orderable
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.models import Orderable
 
 from modelcluster.fields import ParentalKey
 
@@ -42,6 +39,7 @@ class USAJobsApplicationLink(Orderable, models.Model):
     url = models.URLField(max_length=255)
     applicant_type = models.ForeignKey(
         ApplicantType,
+        on_delete=models.CASCADE,
         related_name='usajobs_application_links',
     )
 
@@ -57,10 +55,15 @@ class USAJobsApplicationLink(Orderable, models.Model):
     ]
 
 
-@python_2_unicode_compatible
 class GradePanel(Orderable, models.Model):
-    grade = models.ForeignKey(Grade, related_name='grade_panels')
+    grade = models.ForeignKey(
+        Grade,
+        on_delete=models.CASCADE,
+        related_name='grade_panels')
     job_listing = ParentalKey(JobListingPage, related_name='grades')
+
+    def __str__(self):
+        return str(self.grade)
 
     class Meta:
         ordering = ('grade',)
@@ -68,6 +71,3 @@ class GradePanel(Orderable, models.Model):
     panels = [
         FieldPanel('grade'),
     ]
-
-    def __str__(self):
-        return self.grade.grade

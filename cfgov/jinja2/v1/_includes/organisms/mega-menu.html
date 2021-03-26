@@ -1,11 +1,10 @@
-{% import 'molecules/featured-menu-content.html' as featured_menu_content with context %}
 {% set base_class = 'o-mega-menu' %}
 
-{# ==========================================================================
+{# =============================================================================
 
-   _classes()
+   _content_classes()
 
-   ==========================================================================
+   =============================================================================
 
    Description:
 
@@ -14,78 +13,89 @@
    nav_depth: Level of menu nesting. 1 equals the root menu.
 
    suffix:    Suffix to add to the classes.
-              Default is ''.
-
-   additional_suffix: Optional additional class suffix.
+              Default is an empty string.
 
    ========================================================================== #}
 
 {# TODO: Move to external macro so it can be shared with secondary nav. #}
-{%- macro _classes( nav_depth, suffix='', additional_suffix='' ) -%}
-{%- set general_class = base_class ~ '_content' -%}
-{%- set depth_class = general_class ~ '-' ~ nav_depth -%}
-{%- set additional_class = depth_class ~ suffix ~ '__' ~  additional_suffix if additional_suffix else '' -%}
+{%- macro _content_classes( nav_depth, suffix='' ) -%}
+    {%- set general_class = base_class ~ '_content' ~ suffix -%}
+    {%- set depth_class = base_class ~ '_content' ~ '-' ~ nav_depth ~ suffix -%}
 
-{{ general_class ~ suffix ~ ' ' ~ depth_class ~ suffix ~ ' ' ~ additional_class }}
+    {{ general_class ~ ' ' ~ depth_class ~ ' ' }}
 {%- endmacro -%}
 
 
-{# ==========================================================================
+{# =============================================================================
 
    _nav_list()
 
-   ==========================================================================
+   =============================================================================
 
    Description:
 
    Creates a mega menu sub menu list markup when given:
 
-   nav_depth: Level of menu nesting. 1 equals the root menu.
+   nav_depth:  Level of menu nesting. 1 equals the root menu.
 
    nav_groups: List of nav item groups.
 
+   nav_title: Title of the nav section.
+
+   language:   The page's language. Defaults to English.
+
    ========================================================================== #}
 
-{% macro _nav_list( nav_depth, nav_groups ) %}
-<div class="{{ _classes( nav_depth, '-lists' ) }}">
-    {% for nav_group in nav_groups %}
-    {% set group = nav_group.value %}
-    <div class="{{ _classes( nav_depth, '-list' ) }}">
+{% macro _nav_list( nav_depth, nav_groups, nav_title='', language='en' ) %}
+    {% for group in nav_groups %}
+    <div class="{{ _content_classes( nav_depth, '-list-group' ) }}">
+        <div class="{{ _content_classes( nav_depth, '-list' ) }}">
 
-        {% if group.group_title %}
-        <h4 class="h5
-                  {{ base_class ~ '_group-heading' }}
-                  {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_group_title else ''}}"
-            {% if group.hide_group_title %} aria-hidden="true" {% endif %}>
-            {{ group.group_title | safe }}
-        </h4>
-        {% endif %}
-        <ul class="m-list m-list__unstyled">
-            {% if nav_depth == 1 -%}
-            <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
-                {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-                {{ global_header_cta.render() }}
-            </li>
-            {%- endif %}
-            {%- for item in group.nav_items %}
-                {% if ( request.show_draft_megamenu and item.state != 'live' ) or ( not request.show_draft_megamenu and item.state != 'draft' ) %}
-                    {{ _nav_item( nav_depth, item ) }}
-                {% endif %}
-            {%- endfor %}
-        </ul>
+            {% if group.title %}
+            {% set aria_group_title = group.title ~ ' continued' if group.title_hidden else group.title %}
+            <div role="heading"
+                 aria-level="3"
+                 aria-label="{{ aria_group_title }}"
+                 class="h5
+                    {{ base_class ~ '_group-heading' }}
+                    {{ base_class ~ '_group-heading__hidden' if group.title_hidden else ''}}"
+                 id="{{ aria_group_title | slugify ~ '-menu' }}">
+                 {{ group.title }}
+            </div>
+            {% endif %}
+            <ul
+                {% if aria_group_title %}
+                aria-labelledby="{{ aria_group_title | slugify ~ '-menu' }}"
+                {% elif nav_title %}
+                aria-label="{{ nav_title | safe }}"
+                {% endif %}>
+                {% if nav_depth == 1 -%}
+                    {% set complaint_url = '/es/enviar-una-queja/' if language == 'es' else '/complaint/' %}
+                    {% set complaint_item = {
+                        'text': 'Submit a Complaint',
+                        'url': complaint_url,
+                        'icon_pre': 'complaint'
+                    }
+                    %}
+                    {{ _nav_item( nav_depth, complaint_item, language ) }}
+                {%- endif %}
+                {%- for item in group.nav_items %}
+                    {{ _nav_item( nav_depth, item, language ) }}
+                {%- endfor %}
+            </ul>
+
+        </div>
     </div>
-
     {% endfor %}
-</div>
 
 {% endmacro %}
 
 
-{# ==========================================================================
+{# =============================================================================
 
    _nav_level()
 
-   ==========================================================================
+   =============================================================================
 
    Description:
 
@@ -99,83 +109,118 @@
 
    nav_overview_text:  A string used for a sub nav overview title.
 
-   language:           The page's language (passed to global_eyebrow macro). 
+   language:           The page's language (passed to global_eyebrow macro).
                        Defaults to English.
 
 
    ========================================================================== #}
 
-{% macro _nav_level( nav_depth, nav_item, nav_overview_url, nav_overview_text, language='en' ) %}
-<section class="{{- _classes( nav_depth ) -}} u-hidden-overflow"
+{% macro _nav_level( nav_depth, nav_item, overview_link=none, language='en' ) %}
+<div class="{{- _content_classes( nav_depth ) -}}"
      aria-expanded="false"
+     role="navigation"
      data-js-hook="behavior_flyout-menu_content">
-    <div class="{{- _classes( nav_depth, '-wrapper' ) -}}">
-        {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
-        {# Open wrapper if needed #}
-        {% if nav_depth > 1 %}
-        <button class="{{- _classes( nav_depth, '-alt-trigger' ) -}}"
-                data-js-hook="behavior_flyout-menu_alt-trigger">
-            {{ svg_icon('left') }}
-            Back
-        </button>
+
+    {# Create "back" button in mobile menu. #}
+    {% if nav_depth > 1 %}
+    <button class="{{- _content_classes( nav_depth, '-alt-trigger' ) -}}"
+            data-js-hook="behavior_flyout-menu_trigger">
+        {{ svg_icon('left') }}
+        Back
+    </button>
+    {% endif %}
+
+    <div class="{{- _content_classes( nav_depth, '-wrapper' ) -}}">
+
+        {% if overview_link and overview_link.url %}
+        <div class="{{ _content_classes( nav_depth, '-overview' ) }}
+                    {{ _content_classes( nav_depth, '-overview-heading' ) }}">
+            <a class="{{ _content_classes( nav_depth, '-overview-link' ) }}
+                        {{ _content_classes( nav_depth, '-overview-link__current' ) if overview_link.selected else '' }}"
+               href="{{ overview_link.url }}">
+                {{ overview_link.text ~ ' Overview' }}
+            </a>
+        </div>
         {% endif %}
-        <div class="{{- _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) -}}">
 
-            {% if nav_depth > 1 %}
-            <h3 class="{{ _classes( nav_depth, '-overview' ) }}
-                       {{ _classes( nav_depth, '-overview-heading' ) }}
-            ">
-                {# TODO: Remove the check for '#' when real overview pages
-                       are added for the Consumer Resources and Education
-                       pages. #}
-                {% if nav_overview_url %}
-                    {% if nav_overview_url == '#' %}
+        {# TODO: Make the following menu markup use the _nav_item macro. #}
+        {% if nav_item.nav_items %}
+            {% set temp = nav_item.update({'nav_groups': [{'nav_items': nav_item.nav_items}]}) %}
+        {% endif %}
 
-                    {# only use a link element when there is an overview page to link to, otherwise we use regular heading text for context #}
+        {% if nav_item.nav_groups %}
+        <div class="{{ _content_classes( nav_depth, '-lists' ) }}">
+            {{ _nav_list( nav_depth, nav_item.nav_groups, overview_link.text, language=language ) }}
 
-                    <span class="{{ _classes( nav_depth, '-overview-heading-text' ) }}">{{ nav_overview_text }}</span>
+            {% if nav_item.featured_items or nav_item.other_items %}
 
-                    {% else %}
+            <div class="{{ _content_classes( nav_depth, '-list-group' ) }}">
 
-                    <a class="{{ _classes( nav_depth, '-overview-link' ) }}
-                              {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                              {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
-                        {{ nav_overview_text ~ ' Overview' }}
-                    </a>
-
-                    {% endif %}
+                {% if nav_item.featured_items %}
+                <div class="{{ _content_classes( nav_depth, '-list' ) }}
+                            {{ _content_classes( nav_depth, '-list__featured' ) }}">
+                    <div role="heading"
+                         aria-level="3"
+                         class="h5 {{ base_class ~ '_group-heading' }}">
+                        Featured
+                    </div>
+                    <ul aria-label="{{ _('Featured') }}">
+                        {% for link in nav_item.featured_items | default( [], true ) %}
+                        <li class="{{ _content_classes( nav_depth, '-item' ) }}
+                                    {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
+                            <a class="{{ _content_classes( nav_depth, '-link' ) }}"
+                                href="{{ link.url }}">
+                                {{ svg_icon( 'favorite' ) }}
+                                <span><span class="a-link_text">{{ link.text }}</span></span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
                 {% endif %}
-            </h3>
-            {% endif %}
-            {% if nav_item.nav_items %}
-                {% set temp = nav_item.update({'nav_groups': [{'value': {'nav_items': nav_item.nav_items}}]}) %}
-            {% endif %}
-            {% if nav_item.nav_groups %}
-                {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
-            {% endif %}
-            {% if nav_item.footer %}
-            <div class="{{ base_class ~ '_footer' }}">
-                {{ nav_item.footer | safe }}
+
+                {% if nav_item.other_items %}
+                <div class="{{ _content_classes( nav_depth, '-list' ) }}">
+                    <div role="heading"
+                         aria-level="3"
+                         class="h5 {{ base_class ~ '_group-heading' }}">
+                        Additional Resources
+                    </div>
+                    <ul aria-label="Additional Resources">
+                        {% for link in nav_item.other_items | default( [], true ) %}
+                        <li class="{{ _content_classes( nav_depth, '-item' ) }}
+                                    {{ _content_classes( nav_depth, '-item__has-icon' ) }}">
+                            <a class="a-link
+                                      {{ _content_classes( nav_depth, '-link' ) }}
+                                      {{ _content_classes( nav_depth, '-link__current' ) if link.selected else '' }}"
+                            href="{{ link.url }}">
+                                {{ svg_icon( link.icon ) }}
+                                <span><span class="a-link_text">{{ link.text }}</span></span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
             </div>
             {% endif %}
         </div>
-        {{ featured_menu_content.render(nav_item.featured_content.value) if nav_item.featured_content else ''}}
-        {# Close Wrapper if needed #}
-        {{ '</div>' | safe if nav_depth > 1 else '' }}
+        {% endif %}
     </div>
 
     {% if nav_depth == 1 %}
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render( language=language ) }}
     {% endif %}
-</section>
+</div>
 {% endmacro %}
 
-{# ==========================================================================
+{# =============================================================================
 
    _nav_item()
 
-   ==========================================================================
+   =============================================================================
 
    Description:
 
@@ -183,75 +228,89 @@
 
    nav_depth: Level of menu nesting. 1 equals the root menu.
 
-   nav_item: A nav menu item.
+   nav_item:  A nav menu item.
+
+   language:  The page's language. Defaults to English.
 
    ========================================================================== #}
 
-{% macro _nav_item( nav_depth, nav_item ) %}
-{% set link = nav_item.link if nav_item.link else nav_item %}
-{% if link %}
-    {% set url = pageurl(link.page_link) if link.page_link else link.external_link | default('#') %}
-    {% set text = link.link_text %}
-    {% set has_children = nav_item.nav_groups | count > 0 or nav_item.nav_items | count > 0 %}
+{% macro _nav_item( nav_depth, nav_item, language='en' ) %}
+{% set has_children = nav_item.nav_groups or nav_item.nav_items %}
+{% set link = nav_item.overview if nav_item.overview else nav_item %}
+<li class="{{ _content_classes( nav_depth, '-item' ) }}
+           {{- _content_classes( nav_depth, '-item__has-icon' ) if link.icon_pre else '' -}}"
+    {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
 
-    <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
-        {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
-        <a class="{{- 'u-link__disabled' if url == '' else '' -}}
-                  {{- _classes( nav_depth, '-link' ) -}}
-                  {{- _classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
-                  {{- _classes( nav_depth, '-link__current' ) if url == request.path else '' -}}"
-           {{ '' if url == '' else 'href=' + url | e }}
-           {{
-             'data-js-hook=behavior_flyout-menu_trigger
-              aria-haspopup=menu'
-             if has_children else ''
-           }}>
-              {{ text }}
-              {{ svg_icon('right') }}
-        </a>
-        {% if has_children %}
-            {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
+    <a class="{{- _content_classes( nav_depth, '-link' ) -}}
+              {{- _content_classes( nav_depth, '-link__has-children' ) if has_children else '' -}}
+              {{- _content_classes( nav_depth, '-link__current' ) if nav_item.selected else '' -}}"
+       href="{{ link.url | default( '#' ) }}"
+       {{
+         'data-js-hook=behavior_flyout-menu_trigger
+          aria-haspopup=menu'
+         if has_children else ''
+       }}>
+        {% if nav_depth == 1 %}
+        <div role="heading" aria-level="2">
         {% endif %}
-    </li>
-{% endif %}
+
+        {% if link.icon_pre %}
+        <span class="{{- _content_classes( nav_depth, '-link-icon-pre' ) -}}">{{ svg_icon( link.icon_pre ) }}</span>
+        {% endif %}
+
+        {{ link.text }}
+
+        {% if has_children %}
+        <span class="{{- _content_classes( nav_depth, '-link-icon-post' ) -}}">{{ svg_icon('right') }}</span>
+        <span class="{{- _content_classes( nav_depth, '-link-icon-closed' ) -}}">{{ svg_icon( 'down' ) }}</span>
+        <span class="{{- _content_classes( nav_depth, '-link-icon-open' ) -}}">{{ svg_icon( 'up' ) }}</span>
+        {% endif %}
+
+        {% if nav_depth == 1 %}
+        </div>
+        {% endif %}
+    </a>
+
+    {% if has_children %}
+        {{ _nav_level( nav_depth + 1, nav_item, link, language ) }}
+    {% endif %}
+</li>
 {% endmacro %}
 
 
-{# ==========================================================================
+{# =============================================================================
 
    Mega Menu
 
-   ==========================================================================
+   =============================================================================
 
    Description:
 
    Creates a mega menu primary navigation menu.
 
+   language: The page's language. Defaults to English.
+
    ========================================================================== #}
 {% macro mega_menu( menu_items, language='en' ) %}
 <nav class="{{ base_class }}
             u-hidden"
-    data-js-hook="behavior_flyout-menu"
-    aria-label="main menu">
-    <h2 class="{{ base_class ~ '_heading' }}">
-        <button class="{{ base_class ~ '_trigger' }}"
-               data-js-hook="behavior_flyout-menu_trigger"
-               aria-haspopup="menu">
-            <span class="{{ base_class ~ '_trigger-open' }}">
-                {{ svg_icon('menu') }}
-            </span>
-            <span class="{{ base_class ~ '_trigger-close' }}">
-                {{ svg_icon('close') }}
-            </span>
-            <span class="u-visually-hidden">
-                Main menu
-            </span>
-        </button>
-    </h2>
+     data-js-hook="behavior_flyout-menu"
+     aria-label="{{ _('Main menu') }}">
+    <button class="{{ base_class ~ '_trigger' }}"
+            data-js-hook="behavior_flyout-menu_trigger"
+            aria-haspopup="menu">
+        <span class="{{ base_class ~ '_trigger-open' }}">
+            {{ svg_icon('menu') }}
+        </span>
+        <span class="{{ base_class ~ '_trigger-close' }}">
+            {{ svg_icon('close') }}
+        </span>
+        <span class="u-visually-hidden">
+            Main menu
+        </span>
+    </button>
    {# Create a root menu at depth one.
       This is the 1st level of a 3-level menu. #}
-   {{ _nav_level( 1, {'nav_groups': [{'value': {'nav_items': menu_items}}]}, language=language ) }}
+    {{ _nav_level( 1, {'nav_groups': [{'nav_items': menu_items}]}, language=language ) }}
 </nav>
-
 {% endmacro %}

@@ -1,15 +1,24 @@
 {% extends "front/base_update.html" %}
 {% load staticfiles %}
 
-{% block title %}Consumer Complaint Database{% endblock %}
+{% block title %}
+  Consumer Complaint Database | Consumer Financial Protection Bureau
+{% endblock %}
 
 {% block page_css %}
 <!-- The CSS file below was generated using LESS files from github.com/cfpb/complaint -->
-    <link rel="stylesheet" href="{% static 'complaint/css/main.min.css' %}">
+    <link rel="stylesheet" href="/static/apps/ccdb-landing-map/css/main.css">
 {% endblock %}
 
 {% block page_viewport %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock %}
+
+{% block page_meta %}
+    <meta property="og:title" content="Consumer Complaint Database | Consumer Financial Protection Bureau">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:description" content="The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response.">
+    <meta name="description" content="The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response.">
 {% endblock %}
 
 {% block content %}
@@ -30,7 +39,6 @@
     </div>
   </div>
 
-
   <section class="hero">
     <div class="hero_wrapper wrapper wrapper__match-content">
       <div class="hero_text">
@@ -42,7 +50,7 @@
   </section>
   <div class="wrapper wrapper__match-content content_wrapper">
     <div class="content_full">
-      <div class="block block__bg block__flush-bottom block__border-top block__border-bottom">
+      <div class="block block__bg block__border-top block__border-bottom ">
         <div class="content-l">
           <div class="content-l_col content-l_col-2-3">
             <h2 class="h3">
@@ -69,27 +77,55 @@
           </div>
         </div>
       </div>
+
+      <div class="block block__flush-top">
+        <h2 class="h3">Map complaints by state</h3>
+        <p>
+          Our interactive map shows complaints submitted during the last three years. You can switch between the total complaints submitted or complaints submitted per 1,000 population (the total number of complaints in the geographic area per 1,000 persons living in that area, based on the 2017 American Community Survey (ACS) data).</p>
+
+        <p>
+          Selecting a state takes you to the Consumer Complaint Database where you can apply more filters or change the time period.
+          <a href="search/">View interactive map</a>
+        </p>
+      </div>
+
+      <div class="block block__flush-top">
+        <div class="layout-row refine">
+            <div class="per-capita m-btn-group">
+                <p>Map shading</p>
+                <button class="a-btn raw selected">Complaints</button>
+                <button class="a-btn capita a-btn__disabled">Complaints per 1,000 <span>population</span></button>
+            </div>
+        </div>
+      </div>
+
+      <div class="block block__border-bottom">
+        <div id="landing-map" class="cfpb-chart">
+             Complaints by state the last 3 years
+        </div>
+      </div>
+
       <div class="block">
         <div class="section-one ccdb-landing_section content-l">
           <div class="content-l_col content-l_col-1-3">
-            <img class="isocon" alt="Complaint data" src="{% static 'complaint/img/view.png' %}">
+            <img class="isocon" alt="" src="{% static 'complaint/img/icons_complaintData.png' %}">
             <p>View, sort, and filter data right in your browser.</p>
             <div class="btn-holder">
               <p><a href="/data-research/consumer-complaints/search/" class="btn">View complaint data</a></p>
             </div>
           </div>
           <div class="content-l_col content-l_col-1-3">
-            <img class="isocon" alt="Download data and access the API" src="{% static 'complaint/img/download.png' %}">
+            <img class="isocon" alt="" src="{% static 'complaint/img/icons_API.png' %}">
             <p>All complaint data we publish is freely available for anyone to use, analyze, and build on.</p>
             <div class="btn-holder">
               <p><a href="#download-the-data" class="btn">Download options and API</a></p>
             </div>
           </div>
           <div class="content-l_col content-l_col-1-3">
-            <img class="isocon" alt="Consumer narratives" src="{% static 'complaint/img/analyze.png' %}">
-            <p>We publish reports on complaints and share information with state and federal agencies.</p>
+            <img class="isocon" alt="Annual Report" src="{% static 'complaint/img/icons_annualReport.png' %}">
+            <p>Every spring, we report to Congress about trends observed in the complaints we received the prior year in our Consumer Response Annual Report.</p>
             <div class="btn-holder">
-              <p><a href="/data-research/research-reports/?title=&categories=consumer-complaint" class="btn">Read complaint reports</a></p>
+              <p><a href="/data-research/research-reports/2020-consumer-response-annual-report/" class="btn">Read our annual report</a></p>
             </div>
           </div>
         </div>
@@ -99,7 +135,7 @@
           <div class="content-l_col content-l_col-2-3">
             <h2 id="about-the-database">About the database</h2>
             <div class="db-numbers callouts-small">
-              <p class="callout"><span class="numeric-callout percent-timely">97%</span> of complaints sent to companies get timely responses</p>
+              <p class="callout"><span class="numeric-callout percent-timely">98%</span> of complaints sent to companies get timely responses</p>
             </div>
             <p>The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database. The database generally updates daily.</p>
             <p>
@@ -129,9 +165,8 @@
             <h2>How we use complaint data</h2>
             <p>
               Complaints can give us insights into problems people are experiencing in the marketplace and help us regulate consumer financial products and services under existing federal consumer financial laws, enforce those laws judiciously, and educate and empower consumers to make informed financial decisions. We also report on complaint trends annually in
-              <a href="/data-research/research-reports/2018-consumer-response-annual-report/">
-                Consumer Response’s Annual Report to Congress
-              </a>.
+              <a href="/data-research/research-reports/2020-consumer-response-annual-report/">
+                Consumer Response’s Annual Report to Congress</a>.
             </p>
             <p>
               <a href="/complaint/data-use/">
@@ -140,7 +175,7 @@
             </p>
           </div>
           <div class="content-l_col content-l_col-1-3 db-numbers callouts-large">
-            <p class="callout"><span class="numeric-callout percent-timely">97%</span> of complaints sent to companies get timely responses</p>
+            <p class="callout"><span class="numeric-callout percent-timely">98%</span> of complaints sent to companies get timely responses</p>
           </div>
         </div>
       </div>
@@ -174,16 +209,16 @@
         <div class="section-five ccdb-landing_section">
           <h2 id="download-the-data">Download the data</h2>
           <p class="download-text">Our reports highlight some of what we’re seeing in the complaints we handle, but know there are more ways to use, analyze and build on the data. That’s why we make it possible for you to download the data, once we have taken steps to remove personal information.</p>
-          <p class="download-text">You can download all complaint data as either a CSV of JSON file here, or you can download a subset of the data—such as all complaints for a specific product—by filtering the full data set and exporting your results.</p>
+          <p class="download-text">You can download all complaint data as either a CSV or JSON file here, or you can download a subset of the data—such as all complaints for a specific product—by filtering the full data set and exporting your results.</p>
           <ul class="m-list m-list__links">
             <li class="m-list_item">
-              <a class="a-link a-link__icon" href="https://data.consumerfinance.gov/api/views/s6ew-h6mp/rows.csv?accessType=DOWNLOAD">
+              <a class="a-link a-link__icon" href="http://files.consumerfinance.gov/ccdb/complaints.csv.zip">
                 <span class="a-link_text">Download all complaint data | CSV</span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 651.7 1200" class="cf-icon-svg"><path d="M507.1 692.8c-15.6-15.6-40.9-15.6-56.6 0l-85.1 85.1V466.6c0-22.1-17.9-40-40-40s-40 17.9-40 40V778l-85.1-85.1c-15.6-15.6-40.9-15.6-56.6 0-15.6 15.6-15.6 40.9 0 56.6L297 902.9c7.5 7.5 17.7 11.7 28.3 11.7s20.8-4.2 28.3-11.7l153.3-153.4c15.8-15.7 15.8-41 .2-56.7z"/><path d="M30 161c-16.5 0-30 13.5-30 30v827.8c0 16.5 13.5 30 30 30h591.7c16.5 0 30-13.5 30-30V343.7L469 161H30zm389.6 60v134.8c0 19.9 16.3 36.2 36.2 36.2h135.9V988.8H60V221h359.6z"/></svg>
               </a>
             </li>
             <li class="m-list_item">
-              <a class="a-link a-link__icon" href="https://data.consumerfinance.gov/api/views/s6ew-h6mp/rows.json?accessType=DOWNLOAD">
+              <a class="a-link a-link__icon" href="http://files.consumerfinance.gov/ccdb/complaints.json.zip">
                 <span class="a-link_text">Download all complaint data | JSON</span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 651.7 1200" class="cf-icon-svg"><path d="M507.1 692.8c-15.6-15.6-40.9-15.6-56.6 0l-85.1 85.1V466.6c0-22.1-17.9-40-40-40s-40 17.9-40 40V778l-85.1-85.1c-15.6-15.6-40.9-15.6-56.6 0-15.6 15.6-15.6 40.9 0 56.6L297 902.9c7.5 7.5 17.7 11.7 28.3 11.7s20.8-4.2 28.3-11.7l153.3-153.4c15.8-15.7 15.8-41 .2-56.7z"/><path d="M30 161c-16.5 0-30 13.5-30 30v827.8c0 16.5 13.5 30 30 30h591.7c16.5 0 30-13.5 30-30V343.7L469 161H30zm389.6 60v134.8c0 19.9 16.3 36.2 36.2 36.2h135.9V988.8H60V221h359.6z"/></svg>
               </a>
@@ -195,7 +230,7 @@
               </li>
           </ul>
         </div>
-      </div>
+        <br/>
       <div class="block block__border-top block__padded-top">
         <div class="section-six ccdb-landing_section">
           <div class="content-l">
@@ -204,9 +239,9 @@
               <p>Looking to export our data and have more control over it? Use our Open Data API.</p>
               <ul class="m-list m-list__links">
                 <li class="m-list_item">
-                  <a class="a-link api-documentation" href="https://dev.socrata.com/foundry/#/data.consumerfinance.gov/jhzv-w97w">
+                  <a class="a-link api-documentation" href="https://cfpb.github.io/api/ccdb/">
                     <span class="a-link_text">
-                      For instructions and examples, refer to Socrata’s API documentation
+                      For instructions and examples, refer to our API documentation
                     </span>
                   </a>
                 </li>
@@ -250,3 +285,8 @@
   </div>
 </div>
 {% endblock %}
+
+{% block page_js %}
+  <script src="https://files.consumerfinance.gov/ccdb/metadata.js"></script>
+  <script src="/static/apps/ccdb-landing-map/js/index.js"></script>
+{% endblock page_js %}

@@ -1,15 +1,15 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% block title -%}
-    Find out your financial well-being
+    {{ _('Find out your financial well-being') }} | {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
 {% block desc -%}
-    Answer ten questions to measure your own current financial well-being and see steps you can take to improve it.
+    {{ _('Answer ten questions to measure your current financial well-being and see steps you can take to improve it.') }}
 {%- endblock %}
 
 {% block og_desc -%}
-    Find out your financial well-being by answering ten questions, and then see steps you can take to improve it.
+    {{ _('Find out your financial well-being by answering ten questions, and then see steps you can take to improve it.') }}
 {%- endblock %}
 
 {% block og_image %}
@@ -42,11 +42,10 @@
                     block__flush-bottom">
         <div class="m-hero_wrapper wrapper">
             <div class="m-hero_text">
-                <h1 class="m-hero_heading">Find out your financial well-being</h1>
+                <h1 class="m-hero_heading">{{ _('Find out your financial well-being') }}</h1>
                 <div class="m-hero_subhead">
                     <p>
-                        Answer ten questions to measure your current financial
-                        well-being and see steps you can take to improve it.
+                        {{ _('Answer ten questions to measure your current financial well-being and see steps you can take to improve it.') }}
                     </p>
                 </div>
             </div>
@@ -58,23 +57,30 @@
 {%- endblock %}
 
 {% block content_main -%}
-    <h2>Here’s how it works:</h2>
 
     <p>
-        <b>Answer the questions and get your score.</b>
-        You won’t be asked about any personal financial data—it’s
-        not that kind of questionnaire.
-        <a href="{{ url('fwb_about') }}">See how and why we developed it.</a>
+      {% if (current_language == 'en') %}
+      <a href="{{ url('fwb_home_es') }}" hreflang="es" lang="es">Ver página en español</a>
+      {% else %}
+      <a href="{{ url('fwb_home_en') }}" hreflang="en" lang="en">View page in English</a>
+      {% endif %}
+    </p>
+
+    <h2>{{ _('Here’s how it works:') }}</h2>
+
+    <p>
+        <b>{{ _('Answer the questions and get your score.') }}</b>
+        {{ _('You won’t be asked about any personal financial data—it’s not that kind of questionnaire.') }}
+        <a href="{{ url('fwb_about_' + current_language) }}">{{ _('See how and why we developed it.') }}</a>
+    </p>
+    <p>
+        <b>{{ _('Review steps you can take') }}</b>
+        {{ _('if you want to be able to answer the questions differently.') }}
     </p>
 
     <p>
-        <b>Review steps you can take</b>
-        if you want to be able to answer the questions differently.
-    </p>
-
-    <p>
-        <b>See how your score compares</b>
-        to other U.S. adults from our national survey.
+        <b>{{ _('See how your score compares') }}</b>
+        {{ _('to other U.S. adults from our national survey.') }}
     </p>
 
     <div class="m-notification
@@ -83,28 +89,28 @@
         {{ svg_icon('warning-round') }}
         <div class="m-notification_content">
             <p class="h4 m-notification_message">
-                We never collect or store the answers you provide.
+                {{ _('We never collect or store the answers you provide.') }}
             </p>
             <ul class="m-list m-list__links">
                 <li class="m-list_item">
                     <a class="m-list_link"
                        href="/privacy/website-privacy-policy/">
-                        See how your privacy is protected.
+                        {{ _('See how your privacy is protected.') }}
                     </a>
                 </li>
             </ul>
         </div>
     </div>
 
-    <form id="quiz-form" action="{{ url('fwb_results') }}" method="POST">
+    <form id="quiz-form" action="{{ url('fwb_results_' + current_language) }}" method="POST">
         <div class="block">
-            <h2>Part 1: How well does this statement describe you or your situation?</h2>
+            <h2>{{ _('Part 1: How well does this statement describe you or your situation?') }}</h2>
             <div class="o-well">
                 <fieldset class="o-form_fieldset o-scale" id="question_1">
                     <h3 class="a-legend">
-                        I could handle a major unexpected expense
+                        {{ _('I could handle a major unexpected expense') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement describes me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement describes me') }}</div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -116,7 +122,7 @@
                                    data-gtm-label="I could handle a major unexpected expense"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_1-completely">
-                                Completely
+                                {{ _('Completely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -129,7 +135,7 @@
                                    data-gtm-label="I could handle a major unexpected expense"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_1-very-well">
-                                Very well
+                                {{ _('Very well') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -142,7 +148,7 @@
                                    data-gtm-label="I could handle a major unexpected expense"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_1-somewhat">
-                                Somewhat
+                                {{ _('Somewhat') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -155,7 +161,7 @@
                                    data-gtm-label="I could handle a major unexpected expense"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_1-very-little">
-                                Very little
+                                {{ _('Very little') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -168,16 +174,16 @@
                                    data-gtm-label="I could handle a major unexpected expense"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_1-not-at-all">
-                                Not at all
+                                {{ _('Not at all') }}
                             </label>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="o-form_fieldset o-scale" id="question_2">
                     <h3 class="a-legend">
-                        I am securing my financial future
+                        {{ _('I am securing my financial future') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement describes me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -189,7 +195,7 @@
                                    data-gtm-label="I am securing my financial future"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_2-completely">
-                                Completely
+                                {{ _('Completely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -202,7 +208,7 @@
                                    data-gtm-label="I am securing my financial future"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_2-very-well">
-                                Very well
+                                {{ _('Very well') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -215,7 +221,7 @@
                                    data-gtm-label="I am securing my financial future"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_2-somewhat">
-                                Somewhat
+                                {{ _('Somewhat') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -228,7 +234,7 @@
                                    data-gtm-label="I am securing my financial future"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_2-very-little">
-                                Very little
+                                {{ _('Very little') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -241,16 +247,16 @@
                                    data-gtm-label="I am securing my financial future"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_2-not-at-all">
-                                Not at all
+                                {{ _('Not at all') }}
                             </label>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="o-form_fieldset o-scale" id="question_3">
                     <h3 class="a-legend">
-                        Because of my money situation, I feel like I will never have the things I want in life
+                        {{ _('Because of my money situation, I feel like I will never have the things I want in life') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement describes me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -262,7 +268,7 @@
                                    data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_3-completely">
-                                Completely
+                                {{ _('Completely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -275,7 +281,7 @@
                                    data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_3-very-well">
-                                Very well
+                                {{ _('Very well') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -288,7 +294,7 @@
                                    data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_3-somewhat">
-                                Somewhat
+                                {{ _('Somewhat') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -301,7 +307,7 @@
                                    data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_3-very-little">
-                                Very little
+                                {{ _('Very little') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -314,16 +320,16 @@
                                    data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_3-not-at-all">
-                                Not at all
+                                {{ _('Not at all') }}
                             </label>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="o-form_fieldset o-scale" id="question_4">
                     <h3 class="a-legend">
-                        I can enjoy life because of the way I’m managing my money
+                        {{ _('I can enjoy life because of the way I’m managing my money') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement describes me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -335,7 +341,7 @@
                                    data-gtm-label="I can enjoy life because of the way I’m managing my money"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_4-completely">
-                                Completely
+                                {{ _('Completely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -348,7 +354,7 @@
                                    data-gtm-label="I can enjoy life because of the way I’m managing my money"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_4-very-well">
-                                Very well
+                                {{ _('Very well') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -361,7 +367,7 @@
                                    data-gtm-label="I can enjoy life because of the way I’m managing my money"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_4-somewhat">
-                                Somewhat
+                                {{ _('Somewhat') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -374,7 +380,7 @@
                                    data-gtm-label="I can enjoy life because of the way I’m managing my money"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_4-very-little">
-                                Very little
+                                {{ _('Very little') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -387,16 +393,16 @@
                                    data-gtm-label="I can enjoy life because of the way I’m managing my money"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_4-not-at-all">
-                                Not at all
+                                {{ _('Not at all') }}
                             </label>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="o-form_fieldset o-scale" id="question_5">
                     <h3 class="a-legend">
-                        I am just getting by financially
+                        {{ _('I am just getting by financially') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement describes me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -408,7 +414,7 @@
                                    data-gtm-label="I am just getting by financially"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_5-completely">
-                                Completely
+                                {{ _('Completely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -421,7 +427,7 @@
                                    data-gtm-label="I am just getting by financially"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_5-very-well">
-                                Very well
+                                {{ _('Very well') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -434,7 +440,7 @@
                                    data-gtm-label="I am just getting by financially"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_5-somewhat">
-                                Somewhat
+                                {{ _('Somewhat') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -447,7 +453,7 @@
                                    data-gtm-label="I am just getting by financially"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_5-very-little">
-                                Very little
+                                {{ _('Very little') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -460,16 +466,16 @@
                                    data-gtm-label="I am just getting by financially"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_5-not-at-all">
-                                Not at all
+                                {{ _('Not at all') }}
                             </label>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="o-form_fieldset o-scale" id="question_6">
                     <h3 class="a-legend">
-                        I am concerned that the money I have or will save won’t last
+                        {{ _('I am concerned that the money I have or will save won’t last') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement describes me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement describes me') }} </div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -481,7 +487,7 @@
                                    data-gtm-label="I am concerned that the money I have or will save won’t last"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_6-completely">
-                                Completely
+                                {{ _('Completely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -494,7 +500,7 @@
                                    data-gtm-label="I am concerned that the money I have or will save won’t last"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_6-very-well">
-                                Very well
+                                {{ _('Very well') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -507,7 +513,7 @@
                                    data-gtm-label="I am concerned that the money I have or will save won’t last"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_6-somewhat">
-                                Somewhat
+                                {{ _('Somewhat') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -520,7 +526,7 @@
                                    data-gtm-label="I am concerned that the money I have or will save won’t last"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_6-very-little">
-                                Very little
+                                {{ _('Very little') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -533,7 +539,7 @@
                                    data-gtm-label="I am concerned that the money I have or will save won’t last"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_6-not-at-all">
-                                Not at all
+                                {{ _('Not at all') }}
                             </label>
                         </div>
                     </div>
@@ -541,13 +547,13 @@
             </div>
         </div>
         <div class="block">
-            <h2>Part 2: How often does this statement apply to you?</h2>
+            <h2>{{ _('Part 2: How often does this statement apply to you?') }}</h2>
             <div class="o-well">
                 <fieldset class="o-form_fieldset o-scale" id="question_7">
                     <h3 class="a-legend">
-                        Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month
+                        {{ _('Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement applies to me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement applies to me') }}</div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -559,7 +565,7 @@
                                    data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_7-always">
-                                Always
+                                {{ _('Always') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -572,7 +578,7 @@
                                    data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_7-often">
-                                Often
+                                {{ _('Often') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -585,7 +591,7 @@
                                    data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_7-sometimes">
-                                Sometimes
+                                {{ _('Sometimes') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -598,7 +604,7 @@
                                    data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_7-rarely">
-                                Rarely
+                                {{ _('Rarely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -611,16 +617,16 @@
                                    data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_7-never">
-                                Never
+                                {{ _('Never') }}
                             </label>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="o-form_fieldset o-scale" id="question_8">
                     <h3 class="a-legend">
-                        I have money left over at the end of the month
+                        {{ _('I have money left over at the end of the month') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement applies to me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement applies to me') }}</div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -631,7 +637,7 @@
                                    data-gtm-action="Questionnaire Radio Button Clicked"
                                    data-gtm-label="I have money left over at the end of the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction"> <label class="a-label" for="question_8-always">
-                                Always
+                                {{ _('Always') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -644,7 +650,7 @@
                                    data-gtm-label="I have money left over at the end of the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_8-often">
-                                Often
+                                {{ _('Often') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -657,7 +663,7 @@
                                    data-gtm-label="I have money left over at the end of the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_8-sometimes">
-                                Sometimes
+                                {{ _('Sometimes') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -670,7 +676,7 @@
                                    data-gtm-label="I have money left over at the end of the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_8-rarely">
-                                Rarely
+                                {{ _('Rarely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -683,16 +689,16 @@
                                    data-gtm-label="I have money left over at the end of the month"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_8-never">
-                                Never
+                                {{ _('Never') }}
                             </label>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="o-form_fieldset o-scale" id="question_9">
                     <h3 class="a-legend">
-                        I am behind with my finances
+                        {{ _('I am behind with my finances') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement applies to me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement applies to me') }}</div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -704,7 +710,7 @@
                                    data-gtm-label="I am behind with my finances"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_9-always">
-                                Always
+                                {{ _('Always') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -717,7 +723,7 @@
                                    data-gtm-label="I am behind with my finances"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_9-often">
-                                Often
+                                {{ _('Often') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -730,7 +736,7 @@
                                    data-gtm-label="I am behind with my finances"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_9-sometimes">
-                                Sometimes
+                                {{ _('Sometimes') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -743,7 +749,7 @@
                                    data-gtm-label="I am behind with my finances"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_9-rarely">
-                                Rarely
+                                {{ _('Rarely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -756,16 +762,16 @@
                                    data-gtm-label="I am behind with my finances"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_9-never">
-                                Never
+                                {{ _('Never') }}
                             </label>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="o-form_fieldset o-scale" id="question_10">
                     <h3 class="a-legend">
-                        My finances control my life
+                        {{ _('My finances control my life') }}
                     </h3>
-                    <div class="o-scale_answer-prefix">This statement applies to me</div>
+                    <div class="o-scale_answer-prefix">{{ _('This statement applies to me') }}</div>
                     <div class="o-scale_answer-options">
                         <div class="m-form-field m-form-field__radio">
                             <input class="a-radio"
@@ -777,7 +783,7 @@
                                    data-gtm-label="My finances control my life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_10-always">
-                                Always
+                                {{ _('Always') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -790,7 +796,7 @@
                                    data-gtm-label="My finances control my life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_10-often">
-                                Often
+                                {{ _('Often') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -803,7 +809,7 @@
                                    data-gtm-label="My finances control my life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_10-sometimes">
-                                Sometimes
+                                {{ _('Sometimes') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -816,7 +822,7 @@
                                    data-gtm-label="My finances control my life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_10-rarely">
-                                Rarely
+                                {{ _('Rarely') }}
                             </label>
                         </div>
                         <div class="m-form-field m-form-field__radio">
@@ -829,7 +835,7 @@
                                    data-gtm-label="My finances control my life"
                                    data-gtm-category="Financial Well-Being Tool Interaction">
                             <label class="a-label" for="question_10-never">
-                                Never
+                                {{ _('Never') }}
                             </label>
                         </div>
                     </div>
@@ -837,12 +843,12 @@
             </div>
         </div>
         <div class="block u-mb30">
-            <h2>About you</h2>
+            <h2>{{ _('About you') }}</h2>
             <div class="o-well">
                 <div class="o-form_group">
                     <fieldset class="o-form_fieldset" id="age">
                         <h3 class="a-legend">
-                            Select your age group. This changes the scoring calculation.
+                            {{ _('Select your age group. This changes the scoring calculation.') }}
                         </h3>
                         <ul class="m-list m-list__unstyled content-l">
                             <li class="content-l_col content-l_col-1-2">
@@ -881,7 +887,7 @@
                 <div>
                     <fieldset class="o-form_fieldset" id="method">
                         <h3 class="a-legend">
-                            Select how you completed the questionnaire. This changes the scoring calculation.
+                            {{ _('Select how you completed the questionnaire. This changes the scoring calculation.') }}
                         </h3>
                         <ul class="m-list m-list__unstyled content-l">
                             <li class="content-l_col content-l_col-1-2">
@@ -896,7 +902,7 @@
                                            data-gtm-category="Financial Well-Being Tool Interaction"
                                            checked>
                                     <label class="a-label" for="read-self">
-                                        I read and answered the questions myself
+                                        {{ _('I read and answered the questions myself') }}
                                     </label>
                                 </div>
                             </li>
@@ -911,7 +917,7 @@
                                            data-gtm-label="Select how you completed the questionnaire: I read the questions to someone else and recorded their answers"
                                            data-gtm-category="Financial Well-Being Tool Interaction">
                                     <label class="a-label" for="read-to-me">
-                                        I read the questions to someone else and recorded their answers
+                                        {{ _('I read the questions to someone else and recorded their answers') }}
                                     </label>
                                 </div>
                             </li>
@@ -927,7 +933,7 @@
             <input class="submit-quiz a-btn"
                    id="submit-quiz"
                    type="submit"
-                   value="Get my score"
+                   value="{{ _('Get my score') }}"
                    title="Please answer all questions to get your score"
                    data-gtm-action="Questionnaire Submitted"
                    data-gtm-label="Get my score"
@@ -938,32 +944,30 @@
 
 {% block content_sidebar -%}
     <div class="block block__flush-top">
-        <h3>About us</h3>
+        <h3>{{ _('About us') }}</h3>
         <p>
-            We're the Consumer Financial Protection Bureau (CFPB),
-            a U.S. government agency that makes sure banks, lenders,
-            and other financial companies treat you fairly.
+            {{ _('We&#39;re the Consumer Financial Protection Bureau (CFPB),') }}
+            {{ _('a U.S. government agency that makes sure banks, lenders, and other financial companies treat you fairly.') }}
         </p>
         <a class="a-link a-link__jump" href="/about-us/the-bureau/">
-            <span class="a-link_text">Learn how the CFPB can help you</span>
+            <span class="a-link_text">{{ _('Learn how the CFPB can help you') }}</span>
         </a>
     </div>
 
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="a-heading">About this questionnaire</h2>
+            <h2 class="a-heading">{{ _('About this questionnaire') }}</h2>
         </header>
         <p>
-            CFPB researchers developed the questionnaire and a way to score it,
-            as a tool to help measure your current financial well-being—that is,
-            how well your current money situation is providing you with
-            financial security and freedom of choice, today and for the future.
+            {{ _('CFPB researchers developed the questionnaire and a way to score it, as a tool to help measure your current financial well-being—') }}
+            {{ _('that is, how well your current money situation is providing you with financial security and freedom of choice, today and for the future.') }}
         </p>
-        <a class="a-link a-link__jump" href="{{ url('fwb_about') }}">
-            <span class="a-link_text">See more background</span>
+        <a class="a-link a-link__jump" href="{{ url('fwb_about_' + current_language) }}">
+            <span class="a-link_text">{{ _('See more background') }}</span>
         </a>
     </div>
 
+    {% if (current_language == 'en') %}
     <div class="block">
         <header class="m-slug-header">
             <h2 class="a-heading">
@@ -1027,20 +1031,19 @@
 
         </div>
     </div>
+    {% endif %}
 
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="a-heading">Legal disclaimer</h2>
+            <h2 class="a-heading">{{ _('Legal disclaimer') }}</h2>
         </header>
         <p>
-            The content on this page provides general consumer information.
-            It is not legal advice or regulatory guidance.
-            The CFPB updates this information periodically.
-            This information may include links or references
-            to third-party resources or content.
-            We do not endorse the third-party or guarantee
-            the accuracy of this third-party information.
-            There may be other resources that also serve your needs.
+            {{ _('The content on this page provides general consumer information.') }}
+            {{ _('It is not legal advice or regulatory guidance.') }}
+            {{ _('The CFPB updates this information periodically.') }}
+            {{ _('This information may include links or references to third-party resources or content.') }}
+            {{ _('We do not endorse the third-party or guarantee the accuracy of this third-party information.') }}
+            {{ _('There may be other resources that also serve your needs.') }}
         </p>
     </div>
 {%- endblock %}

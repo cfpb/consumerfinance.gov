@@ -3,18 +3,17 @@ import os
 import re
 from collections import OrderedDict
 
-from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views.generic import TemplateView, View
-from haystack.query import SearchQuerySet
 
 from paying_for_college.disclosures.scripts import nat_stats
 from paying_for_college.forms import FeedbackForm
 from paying_for_college.models import (
     ConstantCap, ConstantRate, Feedback, Notification, Program, School
 )
+from paying_for_college.models.search import SchoolSearch
 
 
 BASEDIR = os.path.dirname(__file__)
@@ -35,8 +34,10 @@ def get_json_file(filename):
 
 def validate_oid(oid):
     """
-    make sure an oid contains only hex values 0-9 a-f A-F and is 40 characters
-    return True if the oid is valid
+    Make sure an offer ID is valid according to our specifications.
+
+    An offer ID can contain only case-insensitive hex values 0-9 and a-f
+    and must be between 40 and 128 characters long.
     """
     find_illegal = re.search('[^0-9a-fA-F]+', oid)
     if find_illegal:
@@ -290,21 +291,22 @@ class ConstantsRepresentation(View):
                             content_type='application/json')
 
 
-def school_search_api(request):
-    sqs = SearchQuerySet().models(School)
-    sqs = sqs.autocomplete(autocomplete=request.GET.get('q', ''))
+def school_autocomplete(request):
+    document = []
+    search_term = request.GET.get('q', '').strip()
+    if search_term:
+        response = SchoolSearch(search_term).autocomplete()
 
-    document = [{'schoolname': school.text,
-                 'id': school.school_id,
-                 'city': school.city,
-                 'nicknames': school.nicknames,
-                 'state': school.state,
-                 'url': reverse('paying_for_college:disclosures:school-json',
-                                args=[school.school_id])}
-                for school in sqs]
-    json_doc = json.dumps(document)
+        document = [{'schoolname': school.text,
+                     'id': school.school_id,
+                     'city': school.city,
+                     'nicknames': school.nicknames,
+                     'state': school.state,
+                     'zip5': school.zip5,
+                     'url': school.url}
+                    for school in response.get('results')]
 
-    return HttpResponse(json_doc, content_type='application/json')
+    return JsonResponse(document, safe=False)
 
 
 class VerifyView(View):

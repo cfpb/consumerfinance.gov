@@ -3,10 +3,11 @@ from time import time
 from django.apps import apps
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
+from django.urls import resolve
 
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from wagtail.core.blocks.stream_block import StreamValue
+from wagtail.core.models import Site
 
 
 # These messages are manually mirrored on the
@@ -28,7 +29,7 @@ def get_unique_id(prefix='', suffix=''):
 
 
 def instanceOfBrowseOrFilterablePages(page):
-    from ..models import BrowsePage, BrowseFilterablePage
+    from ..models import BrowseFilterablePage, BrowsePage
     pages = (BrowsePage, BrowseFilterablePage)
     return isinstance(page, pages)
 
@@ -64,6 +65,8 @@ def get_secondary_nav_items(request, current_page):
             page.get_appropriate_siblings()
         )
 
+    site = Site.find_for_request(request)
+
     nav_items = []
     for sibling in pages:
         if page.id == sibling.id:
@@ -76,7 +79,7 @@ def get_secondary_nav_items(request, current_page):
         item = {
             'title': sibling.title,
             'slug': sibling.slug,
-            'url': sibling.relative_url(request.site),
+            'url': sibling.relative_url(site),
             'children': [],
             'active': item_selected,
             'expanded': item_selected,
@@ -101,7 +104,7 @@ def get_secondary_nav_items(request, current_page):
                     item['children'].append({
                         'title': child.title,
                         'slug': child.slug,
-                        'url': child.relative_url(request.site),
+                        'url': child.relative_url(site),
                         'active': child_selected,
                     })
 
@@ -117,7 +120,7 @@ def get_secondary_nav_items(request, current_page):
         '/owning-a-home/close',
         '/owning-a-home/sources',
     )
-    if current_page.relative_url(request.site).startswith(journey_urls):
+    if current_page.relative_url(site).startswith(journey_urls):
         for item in nav_items:
             item['url'] = item['url'].replace(
                 'owning-a-home', 'owning-a-home/process')

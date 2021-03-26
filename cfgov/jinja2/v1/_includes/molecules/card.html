@@ -1,17 +1,34 @@
 {# ==========================================================================
 
-   Card
+   card.render( value )
 
    ==========================================================================
 
    Description:
 
-   Creates a card with header and body text.
+   Creates markup for a Card molecule, which displays an icon, some text,
+   and a link.
+
+   value.text:                  Card body text.
+
+   value.link_text:             Card link text.
+
+   value.link_url:              Card link URL.
 
    ========================================================================== #}
 
-{# TODO: This is a prototype and needs to change the text via parameters. #}
-<div class="m-card">
-    <h3 class="h1 m-card_heading">Card Heading</h3>
-    <p class="m-card_body">Card text</p>
-</div>
+{% macro render( value ) %}
+{# We want to make the whole card clickable. #}
+<article class="m-card m-card__featured">
+    <a href="{{ value.link_url }}">
+        <h2 class="m-card_heading">
+            <span class="m-card_icon">{{ svg_icon( value.icon ) }}</span>
+            <span class="u-visually-hidden">{{ value.link_text }}</span>
+        </h2>
+        <p>{{ value.text }}</p>
+        <div class="m-card_footer">
+            <span>{{ value.link_text }}</span>
+        </div>
+    </a>
+</article>
+{% endmacro %}

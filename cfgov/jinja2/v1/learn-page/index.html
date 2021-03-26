@@ -21,6 +21,10 @@
     {% for block in page.content -%}
         {% if block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
+        {% elif block.block_type == 'contact_expandable_group' %}
+            <div class="block">
+                {% include_block block %}
+            </div>
         {% else %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}

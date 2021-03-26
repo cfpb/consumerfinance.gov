@@ -49,6 +49,8 @@
 .m-inset {
     width: 100%;
     clear: right;
+    margin-left: auto;
+    margin-right: auto;
 
     &__bottom-rule {
         padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -59,23 +61,40 @@
         margin-top: unit( 15px / @base-font-size-px, em );
     }
 
-    .respond-to-min( @bp-sm-min, {
-        float: right;
+    &__bordered { // Styling for "Tip" insets, most commonly used in Ask CFPB
+        border-top: 4px solid @teal-60;
+        border-bottom: 2px solid @teal-40;
+        padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
+        margin-bottom: unit( @grid_gutter-width /2 / @base-font-size-px, em );
+
+        .respond-to-min(@bp-sm-min, {
+            margin: unit( 3px / @base-font-size-px, em )
+                    0
+                    unit( @grid_gutter-width / @base-font-size-px, em )
+                    unit( @grid_gutter-width / @base-font-size-px, em );
+            padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+        } );
+    }
+
+    &.m-inset__170 {
+        // Ensure that 170px inset images are that same size on XS screens
+        width: unit( 170px / @base-font-size-px, em );
+    }
+
+    &__270 {
+        // Ensure that 270px inset images are that same size on XS screens
         width: unit( 270px / @base-font-size-px, em );
-    } );
+    }
 
     .respond-to-min( @bp-sm-min, {
-        &__image {
-            width: unit( 270px / @base-font-size-px, em );
-        }
+        // Default anything with just an .m-inset class to 270px floating right,
+        // e.g., quote and related links blocks.
+        float: right;
+        width: unit( 270px / @base-font-size-px, em );
 
         &__left {
             float: left;
             clear: left;
-        }
-
-        &__170 {
-            width: unit( 170px / @base-font-size-px, em );
         }
 
         .m-call-to-action {

@@ -1,11 +1,9 @@
-from __future__ import absolute_import, unicode_literals
-
 from unittest import TestCase
+from unittest.mock import patch
 
 from django.test import SimpleTestCase, override_settings
 
 import requests
-from mock import patch
 
 from core.govdelivery import (
     ExceptionMockGovDelivery, LoggingMockGovDelivery, MockGovDelivery,

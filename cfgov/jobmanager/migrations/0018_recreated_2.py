@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import migrations, models
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.wagtailcore.fields
+from wagtail.core import fields as core_fields
 
 
 class Migration(migrations.Migration):
@@ -30,27 +28,27 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('jobmanager', '0017_recreated'),
-        ('v1', '0102_recreated'),
+        ('v1', '0198_recreated'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='JobListingPage',
             fields=[
-                ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
-                ('description', wagtail.wagtailcore.fields.RichTextField(verbose_name=b'Summary')),
-                ('open_date', models.DateField(verbose_name=b'Open date')),
-                ('close_date', models.DateField(verbose_name=b'Close date')),
-                ('salary_min', models.DecimalField(verbose_name=b'Minimum salary', max_digits=11, decimal_places=2)),
-                ('salary_max', models.DecimalField(verbose_name=b'Maximum salary', max_digits=11, decimal_places=2)),
-                ('allow_remote', models.BooleanField(default=False, help_text=b'Adds remote option to jobs with office locations.', verbose_name=b'Location can also be remote')),
-                ('responsibilities', wagtail.wagtailcore.fields.RichTextField(null=True, verbose_name=b'Responsibilities', blank=True)),
-                ('travel_required', models.BooleanField(default=False, help_text=b'Optional: Check to add a "Travel required" section to the job description. Section content defaults to "Yes".')),
-                ('travel_details', wagtail.wagtailcore.fields.RichTextField(help_text=b'Optional: Add content for "Travel required" section.', null=True, blank=True)),
-                ('additional_section_title', models.CharField(help_text=b'Optional: Add title for an additional section that will display at end of job description.', max_length=255, null=True, blank=True)),
-                ('additional_section_content', wagtail.wagtailcore.fields.RichTextField(help_text=b'Optional: Add content for an additional section that will display at end of job description.', null=True, blank=True)),
+                ('cfgovpage_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
+                ('description', core_fields.RichTextField(verbose_name='Summary')),
+                ('open_date', models.DateField(verbose_name='Open date')),
+                ('close_date', models.DateField(verbose_name='Close date')),
+                ('salary_min', models.DecimalField(verbose_name='Minimum salary', max_digits=11, decimal_places=2)),
+                ('salary_max', models.DecimalField(verbose_name='Maximum salary', max_digits=11, decimal_places=2)),
+                ('allow_remote', models.BooleanField(default=False, help_text='Adds remote option to jobs with office locations.', verbose_name='Location can also be remote')),
+                ('responsibilities', core_fields.RichTextField(null=True, verbose_name='Responsibilities', blank=True)),
+                ('travel_required', models.BooleanField(default=False, help_text='Optional: Check to add a "Travel required" section to the job description. Section content defaults to "Yes".')),
+                ('travel_details', core_fields.RichTextField(help_text='Optional: Add content for "Travel required" section.', null=True, blank=True)),
+                ('additional_section_title', models.CharField(help_text='Optional: Add title for an additional section that will display at end of job description.', max_length=255, null=True, blank=True)),
+                ('additional_section_content', core_fields.RichTextField(help_text='Optional: Add content for an additional section that will display at end of job description.', null=True, blank=True)),
                 ('division', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='jobmanager.JobCategory', null=True)),
-                ('job_length', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name=b'Position length', blank=True, to='jobmanager.JobLength', null=True)),
+                ('job_length', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name='Position length', blank=True, to='jobmanager.JobLength', null=True)),
             ],
             options={
                 'abstract': False,
@@ -94,7 +92,7 @@ class Migration(migrations.Migration):
                 ('sort_order', models.IntegerField(null=True, editable=False, blank=True)),
                 ('announcement_number', models.CharField(max_length=128)),
                 ('url', models.URLField(max_length=255)),
-                ('applicant_type', models.ForeignKey(related_name='usajobs_application_links', to='jobmanager.ApplicantType')),
+                ('applicant_type', models.ForeignKey(related_name='usajobs_application_links', to='jobmanager.ApplicantType', on_delete=models.CASCADE)),
                 ('job_listing', modelcluster.fields.ParentalKey(related_name='usajobs_application_links', to='jobmanager.JobListingPage')),
             ],
             options={
@@ -105,7 +103,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Office',
             fields=[
-                ('joblocation_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='jobmanager.JobLocation')),
+                ('joblocation_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='jobmanager.JobLocation')),
             ],
             options={
                 'abstract': False,
@@ -115,7 +113,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Region',
             fields=[
-                ('joblocation_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='jobmanager.JobLocation')),
+                ('joblocation_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='jobmanager.JobLocation')),
             ],
             options={
                 'abstract': False,
@@ -135,7 +133,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='gradepanel',
             name='grade',
-            field=models.ForeignKey(related_name='grade_panels', to='jobmanager.Grade'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='grade_panels', to='jobmanager.Grade'),
         ),
         migrations.AddField(
             model_name='gradepanel',
@@ -155,7 +153,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='city',
             name='state',
-            field=models.ForeignKey(related_name='cities', default=None, to='jobmanager.State'),
+            field=models.ForeignKey(on_delete=models.CASCADE, related_name='cities', default=None, to='jobmanager.State'),
         ),
         migrations.AddField(
             model_name='state',

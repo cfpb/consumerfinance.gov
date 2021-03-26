@@ -4,7 +4,10 @@
 {% set active_page = "loan-estimate" %}
 {% set page_js = "loan-estimate" %}
 
-{% block title %}Loan Estimate Explainer{% endblock title %}
+{% block title -%}
+    Loan Estimate Explainer | Consumer Financial Protection Bureau
+{%- endblock %}
+
 {% block metadescription %}Use the CFPB's tool to review your Loan Estimate to make sure it reflects what you discussed with the lender.{% endblock metadescription %}
 
 {% block banner_top %}
@@ -92,20 +95,23 @@
     {% set footer_links = [
     {
         "img": static("apps/owning-a-home/img/footer_offers.png"),
-        "text": "Ready to request Loan Estimates? ",
-        "label": "Learn what comes next",
+        "intro": "Ready to request Loan Estimates? ",
+        "text": "Learn what comes next",
+        "label": "Comparing loan offers",
         "url": "/owning-a-home/process/compare/",
         "is_jump_link": false
     }, {
         "img": static("apps/owning-a-home/img/footer_chart.png"),
-        "text": "Is your interest rate competitive?",
+        "intro": "Is your interest rate competitive?",
+        "text": "Explore interest rates",
         "label": "Explore interest rates",
         "url": "/owning-a-home/explore-rates/",
         is_jump_link: true
     }, {
         "img": static("apps/owning-a-home/img/footer_options.png"),
-        "text": "Your loan choices affect your costs.",
-        "label": "Learn how",
+        "intro": "Your loan choices affect your costs.",
+        "text": "Learn how",
+        "label": "Understand loan options",
         "url": "/owning-a-home/loan-options/",
         is_jump_link: true
     }

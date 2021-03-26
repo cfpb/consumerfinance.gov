@@ -1,6 +1,6 @@
-from django.test import TestCase
+from unittest import mock
 
-import mock
+from django.test import TestCase
 
 from search.dotgov import search, typeahead
 
@@ -17,7 +17,7 @@ class SearchDotGovTestCase(TestCase):
     def test_search_query_bad_upstream_response(self, mock_get):
         mock_get.return_value.ok = False
         result = search('')
-        self.assertEquals(result, {})
+        self.assertEqual(result, {})
 
     def test_search_limit_out_of_bounds(self):
         with self.assertRaises(ValueError):

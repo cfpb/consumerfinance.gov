@@ -5,7 +5,7 @@
 # The code is based on this StackOverflow question and answer:
 # https://stackoverflow.com/questions/2090717/getting-translation-strings-for-jinja2-templates-integrated-with-django-1-x
 # And the Django docs:
-# https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#customizing-the-makemessages-command
+# https://docs.djangoproject.com/en/stable/topics/i18n/translation/#customizing-the-makemessages-command
 
 import re
 

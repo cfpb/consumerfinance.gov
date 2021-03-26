@@ -1,4 +1,4 @@
-import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/route';
+import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
 import routeOptionReducer, {
   addRouteOptionAction,
   clearAverageCostAction,
@@ -214,6 +214,26 @@ describe( 'routeOptionReducer', () => {
       expect( todos[0] ).toBe( PLAN_TYPES.MILES );
     } );
 
+    it( 'reduces the state of actionPlanItems when a mismatching type is supplied', () => {
+      const state = routeOptionReducer(
+        {
+          routes: [
+            createRoute( {
+              actionPlanItems: [ PLAN_TYPES.TIME ]
+            } )
+          ]
+        },
+        updateMilesToActionPlan( {
+          routeIndex: 0,
+          value: false } )
+      );
+
+      const todos = routeSelector( state, 0 ).actionPlanItems;
+
+      expect( todos.length ).toBe( 1 );
+      expect( todos[0] ).toBe( PLAN_TYPES.TIME );
+    } );
+
     it( 'reduces the .updateTimeToActionPlan action', () => {
       const state = routeOptionReducer(
         initial,
@@ -358,7 +378,7 @@ describe( 'routeOptionReducer', () => {
 
       state = routeOptionReducer(
         state,
-        clearDaysPerWeekAction( { routeIndex } )
+        clearDaysPerWeekAction( { routeIndex, value: false } )
       );
 
       currRoute = routeSelector( state, routeIndex );

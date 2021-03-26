@@ -9,6 +9,14 @@
     {{ product.name }} | Consumer Financial Protection Bureau
 {%- endblock title %}
 
+{% block desc -%}
+    Download the prepaid product agreement files for the {{ product.name }} issued by {{ product.issuer_name }}.
+{%- endblock desc %}
+
+{% block og_desc -%}
+    {{ self.desc() }}
+{%- endblock og_desc %}
+
 {% block hero %}
 <div class="wrapper content_wrapper">
 
@@ -77,8 +85,8 @@
                 {% endif %}
             {% else %}
                 {{ default_text }}
-            {% endif %}    
-            </dd>         
+            {% endif %}
+            </dd>
         </dl>
 
 {% set agreements = product.agreements.all() %}

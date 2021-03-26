@@ -1,16 +1,16 @@
-from __future__ import unicode_literals
-
 import datetime as dt
 import re
 
 from django.test import RequestFactory, TestCase
 
-from wagtail.wagtailcore.models import Page, Site
+from wagtail.core.models import Page, Site
+
+from pytz import timezone
 
 from v1.atomic_elements.organisms import RelatedPosts
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.blog_page import BlogPage
-from v1.models.learn_page import AbstractFilterPage, EventPage
+from v1.models.learn_page import EventPage
 from v1.models.newsroom_page import NewsroomPage
 from v1.tests.wagtail_pages import helpers
 
@@ -96,12 +96,16 @@ class RelatedPostsTestCase(TestCase):
         )
 
         self.events_child1 = EventPage(
-            title='events child 1', date_published=dt.date(2016, 9, 7)
+            title='events child 1',
+            date_published=dt.date(2016, 9, 7),
+            start_dt=dt.datetime.now(timezone('UTC'))
         )
         self.events_child1.tags.add('tag 1')
 
         self.events_child2 = EventPage(
-            title='events child 2', date_published=dt.date(2016, 9, 5)
+            title='events child 2',
+            date_published=dt.date(2016, 9, 5),
+            start_dt=dt.datetime.now(timezone('UTC'))
         )
         self.events_child2.tags.add('tag 2')
 

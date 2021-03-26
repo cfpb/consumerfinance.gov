@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import json
+from unittest.mock import patch
 
 from django.test import TestCase
-
-from mock import patch
 
 from alerts.mattermost_alert import MattermostAlert
 
@@ -24,7 +22,9 @@ class TestMattermostAlert(TestCase):
         MattermostAlert(credentials, icon_url=icon).post(text)
         mock.assert_called_once_with(
             webhook_url,
-            data=json.dumps({'text': text,
-                             'username': username,
-                             'icon_url': icon})
+            json={
+                'text': text,
+                'username': username,
+                'icon_url': icon
+            }
         )

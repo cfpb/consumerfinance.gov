@@ -17,6 +17,10 @@
    value.is_share_view:     Whether the "Share this" heading is shown.
                             Default is true.
 
+   value.is_printable:      Whether the molecule is on a page meant to be
+                            printed and should thus show the print link.
+                            Default is false.
+
    value.email_title        Sets subject for email
 
    value.email_text         Sets body for email
@@ -46,12 +50,16 @@
 
 {% macro render( value={} ) %}
 
-{% set blurb = (value.blurb or (page.seo_title if page) or value.title or
-                'Look what I found on the CFPB’s site!') %}
+{% set default_blurb = _('Look what I found on the CFPB\'s site!') %}
+{% set blurb = value.blurb or (page.seo_title if page) or value.title or default_blurb %}
+
 {% set parsed_url = request.build_absolute_uri() | urlencode %}
 {% set is_share_view = value.is_share_view | default( true ) %}
+{% set is_printable = value.is_printable | default( false ) %}
+
 {% set email_title = value.email_title or blurb %}
-{% set email_text = value.email_text or 'Check out this page from the CFPB - ' %}
+{% set default_email_text = _("Check out this page from the CFPB") %}
+{% set email_text = value.email_text or ( default_email_text ~ ' - ' ) %}
 {% set email_signature = ' ' + value.email_signature if value.email_signature else '' %}
 {% set email_share_url = 'mailto:?subject=' ~ email_title | urlencode ~ '&body=' ~ email_text | urlencode ~ '%20' ~ parsed_url ~ email_signature | urlencode %}
 
@@ -62,8 +70,13 @@
 <div class="m-social-media
             m-social-media__{{ 'share' if is_share_view else 'follow' }}">
     {% if is_share_view %}
-        <div class="h5 m-social-media_heading">Share this</div>
-        <div class="h5 m-social-media_heading m-social-media_heading__es">Compartir</div>
+        <div class="h5 m-social-media_heading">
+            {% if is_printable -%}
+                {{ _('Share & print') }}
+            {%- else -%}
+                {{ _('Share this') }}
+            {%- endif %}
+        </div>
     {% endif %}
 
     <ul class="m-list
@@ -71,24 +84,26 @@
                m-list__horizontal
                m-social-media_icons">
 
+        {% set facebook_homepage = _('https://www.facebook.com/CFPB') %}
         {% set facebook_info = {
             'name': 'Facebook',
-            'homepage': unsigned_redirect('https://facebook.com/cfpb'),
-            'share_url': signed_redirect('https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url),
+            'homepage': facebook_homepage,
+            'share_url': 'https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url,
             'icon': 'facebook'
         } %}
 
+        {% set twitter_homepage = _('https://twitter.com/CFPB') %}
         {% set twitter_info = {
             'name': 'Twitter',
-            'homepage': unsigned_redirect('https://twitter.com/cfpb'),
-            'share_url': signed_redirect(_share_twitter_url(parsed_url, twitter_text, value)|trim),
+            'homepage': twitter_homepage,
+            'share_url': _share_twitter_url(parsed_url, twitter_text, value) | trim,
             'icon': 'twitter'
         } %}
 
         {% set linkedin_info = {
             'name': 'LinkedIn',
-            'homepage': unsigned_redirect('https://www.linkedin.com/company/consumer-financial-protection-bureau'),
-            'share_url': signed_redirect('https://www.linkedin.com/shareArticle?mini=true&url=' ~ parsed_url ~ '&title=' ~ linkedin_title ~ '&summary=' ~ linkedin_text),
+            'homepage': 'https://www.linkedin.com/company/consumer-financial-protection-bureau',
+            'share_url': 'https://www.linkedin.com/shareArticle?mini=true&url=' ~ parsed_url ~ '&title=' ~ linkedin_title ~ '&summary=' ~ linkedin_text,
             'icon': 'linkedin'
         } %}
 
@@ -100,14 +115,21 @@
 
         {% set youtube_info = {
             'name': 'YouTube',
-            'homepage': unsigned_redirect('https://www.youtube.com/user/cfpbvideo'),
+            'homepage': 'https://www.youtube.com/user/cfpbvideo',
             'icon': 'youtube'
         } %}
 
         {% set flickr_info = {
             'name': 'Flickr',
-            'homepage': unsigned_redirect('https://www.flickr.com/photos/cfpbphotos'),
+            'homepage': 'https://www.flickr.com/photos/cfpbphotos',
             'icon': 'flickr'
+        } %}
+
+        {% set print_this_page = _('Print this page') %}
+        {% set print_info = {
+            'name': print_this_page,
+            'share_url': 'window.print();',
+            'icon': 'print'
         } %}
 
         {% if is_share_view %}
@@ -133,21 +155,32 @@
                 <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
-                       {{ 'target="_blank" rel="noopener noreferrer"' | safe if link.name != 'email' else '' }}>
+                       {{ 'target="_blank" rel="noopener noreferrer"' | safe if link.name != 'email' else '' }}
+                       aria-label="{{ _('Share on') }} {{ link.name }}">
                         {{ svg_icon(link.icon ~ '-square') }}
-                        <span class="u-visually-hidden">Share on {{ link.name }}</span>
                     </a>
                 </li>
             {% else %}
                 <li class="m-list_item">
                     <a class="m-social-media_icon"
-                       href="{{ link.homepage | trim }}">
+                       href="{{ link.homepage | trim }}"
+                       aria-label="{{ _('Visit us on') }} {{ link.name }}">
                         {{ svg_icon(link.icon ~ '-square') }}
-                        <span class="u-visually-hidden">Visit us on {{ link.name }}</span>
                     </a>
                 </li>
             {% endif %}
         {% endfor %}
+
+        {% if is_share_view and is_printable %}
+            <li class="m-list_item m-social-media_print">
+                <button class="a-btn a-btn__link m-social-media_icon"
+                   onclick="{{ print_info.share_url }}"
+                   aria-label="{{ print_info.name }}"
+                   type="button">
+                    {{ svg_icon(print_info.icon) }}
+                </button>
+            </li>
+        {% endif %}
 
     </ul>
 </div>

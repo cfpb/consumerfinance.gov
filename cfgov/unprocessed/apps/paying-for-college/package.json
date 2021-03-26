@@ -1,0 +1,20 @@
+{
+  "name": "paying-for-college",
+  "description": "The consumerfinance.gov/paying-for-college website",
+  "homepage": "https://www.consumerfinance.gov/paying-for-college/",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfpb/consumerfinance.gov.git"
+  },
+  "private": "true",
+  "license": "SEE LICENSE IN TERMS.md",
+  "dependencies": {
+    "format-usd": "1.0.1",
+    "jquery": "3.5.1"
+  }
+}

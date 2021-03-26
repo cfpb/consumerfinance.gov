@@ -46,7 +46,7 @@
 
 {% if not has_unfiltered_results and value.no_posts_message %}
     {{ notification.render(
-        'default',
+        'information',
         true,
         value.no_posts_message,
         value.no_posts_explanation
@@ -144,20 +144,12 @@
                     {{ activity_list.render(posts) }}
                 {% elif value.output_5050 %}
                     {% from 'molecules/info-unit-2.html' import info_unit with context %}
-                    <div class="o-info-unit-group u-mb30" data-qa-hook="image-text-50-50">
+                    <div class="o-info-unit-group u-mb30">
                         <div class="content-l">
                             {% for post in posts %}
                             <div class="content-l_col
                                         content-l_col-1-2">
                                 {% set post_url = pageurl(post) %}
-                                {% set heading = '<a href="' ~ post_url ~ '"><h2 class="h3">' ~
-                                                post.preview_title ~
-                                                '</h2></a>'
-                                if post.preview_title else null %}
-                                {% set sub_heading = '<a href="' ~ post_url ~ '"><h2 class="h4">' ~
-                                                    post.preview_subheading ~
-                                                    '</h2></a>'
-                                if post.preview_subheading else null %}
                                 {% if post.secondary_link_url and post.secondary_link_text %}
                                     {% set links = [
                                         {
@@ -166,17 +158,24 @@
                                         }
                                     ] %}
                                 {% endif %}
-                                {{ info_unit( {
-                                    'image': {
-                                        'upload': post.preview_image,
-                                        'alt': post.preview_image.alt if post.preview_image.alt else '',
-                                    } if post.preview_image else {},
-                                    'heading': heading,
-                                    'sub_heading': sub_heading,
-                                    'body': post.preview_description,
-                                    'links': links or null,
-                                    'link_image_and_heading': value.link_image_and_heading
-                                } ) }}
+
+                                {{ info_unit(
+                                    {
+                                        'image': {
+                                            'upload': post.preview_image,
+                                            'alt': post.preview_image.alt if post.preview_image.alt else ''
+                                        } if post.preview_image else {},
+                                        'heading': {
+                                            'text': post.preview_title,
+                                            'level': 'h2',
+                                            'level_class': 'h3'
+                                        } if post.preview_title else null,
+                                        'body': post.preview_description,
+                                        'links': links or null,
+                                    },
+                                    '50-50',
+                                    value.link_image_and_heading
+                                 ) }}
                             </div>
                             {% endfor %}
                         </div>

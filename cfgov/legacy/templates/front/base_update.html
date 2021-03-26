@@ -1,11 +1,6 @@
 {% load base_elements %}
 {% load i18n %}
-{% load remit_var %}
 {% load static from staticfiles %}
-{% load staticversions %}
-
-{% is_remit as IS_REMIT %}
-{% get_static_version as STATIC_VERSION %}
 
 <!DOCTYPE html>
 <!--
@@ -85,7 +80,6 @@
 
     <!-- Feeds -->
     <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Feed" href="/feed/" />
-    <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Comments Feed" href="/comments/feed/" />
     {% block page_feeds %}
     {% endblock %}
 
@@ -104,9 +98,6 @@
     <!--[if gt IE 8]><!-->
         <link rel="stylesheet" href="{% static 'nemo/_/c/woff.css' %}">
     <!--<![endif]-->
-    <!--[if lt IE 9]>
-    <link rel="stylesheet" href="{% static 'nemo/_/c/eot.css' %}">
-    <![endif]-->
     <link rel="stylesheet" href="{% static 'nemo/_/c/styles.css' %}">
 
     {% endblock %}
@@ -152,8 +143,6 @@
     <script src="{% static 'nemo/_/js/html5shim.js' %}"></script>
     <![endif]-->
 
-    <script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
-
     {% block analytics_js %}
     {% endblock %}
 
@@ -162,72 +151,45 @@
 
 <body class="{% block body_class %}page{% endblock %}" data-lang="{% trans "en" %}">
 {% block gtm_js %}
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 {% endblock %}
 
     {% include_header %}
+
     <div id="page">
         {% block app_notification %}
         {% endblock %}
         <div id="wrapper">
         <section id="maincontent">
-            <ul class="bread meta">
-                {% block breadcrumbs %}
-                {% endblock %}
-            </ul> <!-- /class=bread -->
-                {% block content %}
-                {% endblock %}
-                {% block share_box %}
-            {% include "front/share_box.html" %}
-                {% endblock %}
+            {% block content %}
+            {% endblock %}
+
+            {% block share_box %}
+                {% include "front/share_box.html" %}
+            {% endblock %}
         </section><!--/main_content-->
         </div><!-- /wrapper -->
 
 
     </div><!-- /#page -->
+
     {% include_footer %}
 
     {% block app_modal %}
     {% endblock %}
 
-{% block nemo_js %}
-<script src="{% static 'nemo/_/js/functions.js' %}"></script>
-<script type="text/javascript" src="{% static 'agreements/js/chosen.jquery.js' %}"></script>
-{% endblock %}
+    {% block app_js %}
+    {% endblock %}
 
-{% block app_js %}
-{% endblock %}
+    {% block page_js %}
+    {% endblock %}
 
-{% block page_js %}
-{% endblock %}
-
-<!-- for search.usa.gov indexing -->
-<script type="text/javascript">
-  //<![CDATA[
-    var aid = 'cfpb';
-    var script = document.createElement( 'script' );
-    script.type = 'text/javascript';
-    script.src = 'https://search.usa.gov/javascripts/stats.js';
-    document.getElementsByTagName( 'head' )[0].appendChild( script );
-  //]]>
-</script>
-
-<script type="text/javascript">
-    // If there are no breadcrumbs on this page, remove the ul tag so that screen
-    // readers don't read it (since the ul has nothing in it).
-    $(function(){
-        var numBreadCrumbs = $( 'ul.bread' ).children( 'li' ).length;
-        if( numBreadCrumbs === 0 ) {
-           $( 'ul.bread' ).remove();
-        }
-    });
-</script>
-<!--[if gt IE 8]><!-->
-<script type="text/javascript" src="{% static "js/atomic/header.js" %}"></script>
-<script type="text/javascript" src="{% static "js/atomic/footer.js" %}"></script>
-<!--<![endif]-->
+    <!--[if gt IE 8]><!-->
+    <script src="{% static "js/atomic/header.js" %}"></script>
+    <script src="{% static "js/atomic/footer.js" %}"></script>
+    <!--<![endif]-->
 </body>
 </html>

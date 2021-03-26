@@ -1,0 +1,284 @@
+/* ==========================================================================
+   "Form explainer" custom styles
+   ========================================================================== */
+
+.form-explainer {
+    .u-right-on-desktop {
+        .respond-to-min( 801px, {
+            text-align: right;
+        } );
+    }
+
+    .page-intro {
+        padding-bottom: 36px;
+    }
+
+    .illustration {
+        display: block;
+        width: 200px;
+        padding-top: 1em;
+        margin: 0 auto;
+
+        .respond-to-max( 719px, {
+            display: none;
+        } );
+    }
+
+    .image-map {
+        display: block;
+        box-sizing: border-box;
+        margin-bottom: unit( 30px / @base-font-size-px, em );
+        .u-clearfix();
+    }
+
+    .image-map_wrapper {
+        position: relative;
+        float: left;
+    }
+
+    .image-map_image {
+        display: block;
+        box-sizing: border-box;
+        border: 1px solid @black;
+    }
+
+    .image-map_overlay {
+        position: absolute;
+        box-sizing: border-box;
+        border: 2px solid transparent;
+        background: transparent;
+        transition: border 100ms ease-out;
+    }
+
+    .image-map_overlay__category-1 {
+        & {
+            background: rgba( 255, 147, 27, 0.2 );
+        }
+
+        &:hover,
+        &.hover-has-attention {
+            border-color: @gold-80;
+        }
+
+        &:focus,
+        &.has-attention {
+            border-color: @gold-80;
+            background: rgba( 255, 147, 27, 0.5 );
+        }
+
+        &:focus {
+            outline: 1px dotted @gold;
+            outline-offset: 1px;
+        }
+    }
+
+    .image-map_overlay__category-2 {
+        & {
+            background: rgba( 0, 94, 93, 0.2 );
+        }
+
+        &:hover,
+        &.hover-has-attention {
+            border-color: @teal;
+        }
+
+        &:focus,
+        &.has-attention {
+            border-color: @teal;
+            background: rgba( 0, 94, 93, 0.5 );
+        }
+
+        &:focus {
+            outline: 1px dotted @teal-dark;
+            outline-offset: 1px;
+        }
+    }
+
+    // Expandable overrides
+
+    .o-expandable-group .o-expandable {
+        border: 4px solid transparent;
+        box-sizing: border-box;
+        transition: transform 100ms ease-out;
+        margin-bottom: 5px;
+
+        &:first-child {
+            border-top: 4px solid transparent;
+        }
+
+        &.has-attention {
+            transform: translateX( -15px );
+
+            .o-expandable_link {
+                color: @black;
+            }
+        }
+
+        .o-expandable_content__expanded:before {
+            border: none;
+        }
+
+        .o-expandable_label {
+            font-size: unit( 16 / @base-font-size-px, em );
+        }
+
+        &.o-expandable__form-explainer-category-1 {
+            background-color: @gold-20;
+
+            &.has-attention,
+            &:hover {
+                border-color: @gold-80;
+            }
+
+            &.has-attention {
+                .o-expandable_target {
+                    background-color: @gold-80;
+                }
+
+                .o-expandable_label .cf-icon-svg {
+                    color: @black;
+                }
+            }
+
+            .o-expandable_label .cf-icon-svg {
+                color: @gold-80;
+            }
+        }
+
+
+        &.o-expandable__form-explainer-category-2 {
+            background-color: @teal-20;
+
+            &.has-attention,
+            &:hover {
+                border-color: @teal-80;
+            }
+
+            &.has-attention {
+                .o-expandable_target {
+                    background-color: @teal-80;
+                }
+
+                .o-expandable_label .cf-icon-svg {
+                    color: @black;
+                }
+            }
+
+            .o-expandable_label .cf-icon-svg {
+                color: @teal-80;
+            }
+        }
+    }
+
+    .o-expandable_header-left {
+        max-width: 80%;
+    }
+
+    .o-expandable_header-right {
+        display: block;
+        width: 20%;
+        text-align: right;
+    }
+
+    .o-expandable_link {
+        color: @gray-80;
+    }
+
+    .explain {
+        margin: 0 auto unit( 60px / @base-font-size-px, em );
+
+        .respond-to-min( 600px, {
+            .grid_nested-col-group();
+
+            &_image-map {
+                .grid_column(8);
+            }
+
+            &_terms {
+                .grid_column(4);
+                border-left-width: @grid_gutter-width;
+            }
+
+            &_pagination {
+                .grid_column(8);
+            }
+        } );
+    }
+
+    .explain_page {
+        // Position is needed to allow .explain_image-map
+        // to stick to the bottom of .explain_page.
+        .respond-to-min( 600px, {
+            position: relative;
+        } );
+
+        &__fixed {
+            position: fixed;
+            top: 30px;
+        }
+
+        &__absolute {
+            position: absolute;
+            bottom: 30px;
+        }
+    }
+
+    .explain_pagination {
+        margin-top: unit( 15px / @base-font-size-px, em );
+    }
+
+    .explain_pagination .pagination_form {
+        padding-top: unit( 11px / @base-font-size-px, em );
+        padding-bottom: unit( 10px / @base-font-size-px, em );
+    }
+
+    .form-explainer_page-buttons {
+        button {
+            position: absolute;
+            top: 45%;
+            padding-left: unit( 10px / @btn-font-size, em );
+            padding-right: unit( 10px / @btn-font-size, em );
+            &.prev {
+                left: -16px;
+            }
+
+            &.next {
+                right: -16px;
+            }
+        }
+    }
+
+    .form-explainer_nav-label {
+        float: left;
+    }
+
+    .form-explainer_page-links {
+        margin-bottom: unit( 10px / @base-font-size-px, em ) !important;
+        float: left;
+        li {
+            float: left;
+            a {
+                float: left;
+                display: block;
+                padding: 0 @grid_gutter-width/2;
+                cursor: pointer;
+
+                .respond-to-min( 600px, {
+                    padding: 0;
+                    border-bottom-width: 1px;
+                    margin: 0 @grid_gutter-width/2;
+                } );
+
+                &.current-page {
+                    &,
+                    &:focus,
+                    &:hover,
+                    &:active {
+                        color: @black;
+                        border-bottom-width: 0;
+                    }
+                }
+            }
+        }
+    }
+}

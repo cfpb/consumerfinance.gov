@@ -8,19 +8,24 @@
 
    Creates markup for Header organism.
 
-   show_banner: Whether the global banner molecule is included.
-                Default is true.
+   show_banner:     Whether the global banner molecule is included.
+                    Default is false.
 
-   language:    The page's language value (used to display different
-                information on Spanish pages). Defaults to English.
+   show_mega_menu:  Whether the mega menu is included. Default is true.
+
+   language:        The page's language value (used to display different
+                    information on Spanish pages). Defaults to 'en' for
+                    English.
 
    ========================================================================== #}
 
-{% macro render( show_banner=false, language='en' ) %}
+{% macro render( show_banner=false, show_mega_menu=true, language='en' ) %}
 
-<header class="o-header">
+{% set mega_menu_content = show_mega_menu and get_mega_menu_content() %}
 
-    {% if flag_enabled('BETA_NOTICE', request) and show_banner %}
+<header class="o-header{% if mega_menu_content %} o-header__mega-menu{% endif %}">
+
+    {% if flag_enabled('BETA_NOTICE') and show_banner %}
     {% import 'molecules/notification.html' as notification with context %}
     <div class="m-global-banner">
       <div class="wrapper
@@ -28,25 +33,38 @@
             {{ notification.render(
                 'warning',
                 true,
-                'This beta site is a work in progress.',
-                'We’re prototyping new designs. Things may not work as expected.
-                Our regular site continues to be at
+                'This beta site is a work in progress. Our regular site continues to be
                 <a href="https://www.consumerfinance.gov/">www.consumerfinance.gov</a>.' | safe
             ) }}
         </div>
     </div>
     {% endif %}
 
-    {% if flag_enabled('HMDA_OUTAGE', request) %}
-        {{ hmda_outage_banner(request) }}
+    {% if banners %}
+        {% for banner in banners %}
+            <div class="m-global-banner">
+                <div class="wrapper
+                          wrapper__match-content">
+                    {% include_block banner.content %}
+                </div>
+            </div>
+        {% endfor %}
     {% endif %}
 
-    {% if flag_enabled('COMPLAINT_INTAKE_TECHNICAL_ISSUES', request) %}
+    {% if flag_enabled('COLLECT_OUTAGE') %}
+        {{ collect_outage_banner(request) }}
+    {% endif %}
+
+    {% if flag_enabled('COMPLAINT_INTAKE_TECHNICAL_ISSUES') %}
         {{ complaint_issue_banner(request) }}
     {% endif %}
 
-    {% if flag_enabled('COMPLAINT_INTAKE_MAINTENANCE', request) %}
+    {% if flag_enabled('COMPLAINT_INTAKE_MAINTENANCE') %}
         {{ complaint_maintenance_banner(request) }}
+    {% endif %}
+
+    {% if flag_enabled('OMWI_SALESFORCE_OUTAGE') %}
+        {{ omwi_salesforce_outage_banner(request) }}
     {% endif %}
 
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
@@ -55,12 +73,6 @@
     <div class="o-header_content no-js">
 
         <div class="wrapper wrapper__match-content">
-            {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-            {{ global_header_cta.render( true ) }}
-
-            {% import 'molecules/global-search.html' as global_search with context %}
-            {{ global_search.render() }}
-
             {% if language == 'es' %}
             <a class="o-header_logo" href="/es/">
                 <img class="o-header_logo-img"
@@ -91,17 +103,16 @@
             </a>
             {% endif %}
 
-            {% block primary_nav %}
+            {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
+            {{ global_header_cta.render( language ) }}
+
+            {% import 'molecules/global-search.html' as global_search with context %}
+            {{ global_search.render( language ) }}
+
+            {% if mega_menu_content %}
                 {% from 'organisms/mega-menu.html' import mega_menu with context %}
-                {% if language == 'es' %}
-                    {% import '_vars-mega-menu-spanish.html' as vars with context %}
-                    {{ mega_menu(vars.menu_items) }}
-                {% else %}
-                    {% cache 'mega_menu', 'default_fragment_cache' %}
-                        {{ mega_menu(get_menu_items(request)) }}
-                    {% endcache %}
-                {% endif %}
-            {% endblock primary_nav %}
+                {{ mega_menu ( mega_menu_content, language=language ) }}
+            {% endif %}
         </div>
 
     </div>

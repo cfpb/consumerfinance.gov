@@ -277,6 +277,50 @@
  }
 
 
+// Fix hero padding on medium screens to spec in Design System
+.respond-to-min( @bp-sm-min, {
+    .m-hero_wrapper {
+        padding-right: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+    }
+} );
+
+
+// Jumbo hero for CampaignPages and the HomePage
+.m-hero__jumbo {
+    .m-hero_subhead {
+        .lead-paragraph();
+    }
+
+    .respond-to-min( @bp-sm-min, {
+        // margin-top: unit( ( -@grid_gutter-width * 1.5 ) / @base-font-size-px, em);
+        // margin-right: unit( -@grid_gutter-width / @base-font-size-px, em);
+        // margin-left: unit( -@grid_gutter-width / @base-font-size-px, em);
+
+        > .m-hero_wrapper {
+            height: 290px;
+        }
+
+        .m-hero_heading {
+            .heading-1();
+        }
+
+        .m-hero_subhead {
+            .heading-3();
+        }
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        .m-hero_heading {
+            .superheading();
+        }
+        .m-hero_subhead {
+            .heading-2();
+        }
+    } );
+}
+
+
 /* topdoc
   name: EOF
   eof: true

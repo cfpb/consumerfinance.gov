@@ -1,11 +1,7 @@
-from __future__ import unicode_literals
-
-import six
-from unittest import skipIf
+# -*- coding: utf-8 -*-
+from unittest import mock
 
 from django.test import RequestFactory, TestCase
-
-import mock
 
 from v1.handlers.blocks.feedback import FeedbackHandler, get_feedback_type
 from v1.models import CFGOVPage, Feedback
@@ -28,31 +24,20 @@ class TestFeedbackHandler(TestCase):
                                         'radio_intro': None}
         )
 
-    # I'm not even sure how this is going to work with Python3's
-    # unicode-by-default approach. Punting.
-    @skipIf(six.PY3, 'we need to rework the encoding handling for Python 3')
-    def test_sanitize_referrer(self):
+    def test_sanitize_non_ascii_referrer(self):
         """Make sure referrers with non-ascii characters are handled."""
         page = mock.Mock()
         page.url = '/es/obtener-respuestas/'
         page.language = 'es'
-        non_ascii_referrers = [
-            (b'http://localhost:8000/es/obtener-respuestas/'
-             b'buscar-por-etiqueta/rescisi\xc3\xb3n/'),
-            (b'https://www.consumerfinance.gov/es/obtener-respuestas/'
-             b'buscar-por-etiqueta/l\xc3\xadnea_de_cr\xc3\xa9dito_personal/')]
-        for referrer in non_ascii_referrers:
-            request = self.factory.get('/')
-            request.META = {'HTTP_REFERER': referrer}
-            handler = FeedbackHandler(page, request, block_value={})
-            sanitized = handler.sanitize_referrer()
-            self.assertNotIn('\xc3', sanitized)
-        misencoded_string = b'https://fake.com/cr\xc3\xb3dito'
+        non_ascii_referrer = (
+            'https://www.consumerfinance.gov/es/obtener-respuestas/'
+            'buscar-por-etiqueta/línea_de_crédito_personal/'
+        )
         request = self.factory.get('/')
-        request.META = {'HTTP_REFERER': misencoded_string}
+        request.META = {'HTTP_REFERER': non_ascii_referrer}
         handler = FeedbackHandler(page, request, block_value={})
         sanitized = handler.sanitize_referrer()
-        self.assertEqual(sanitized, '')
+        self.assertIn('é', sanitized)
 
     @mock.patch('v1.handlers.blocks.feedback.FeedbackHandler.get_response')
     def test_process_calls_handler_get_response(self, mock_get_response):
@@ -212,15 +197,18 @@ class TestFeedbackHandler(TestCase):
         block_value = None
         self.assertEqual(get_feedback_type(block_value), 'helpful')
 
-    def _post_feedback(self, page=None, referrer=None, is_helpful=None):
+    def _post_feedback(self, page=None, referrer='None', is_helpful='None'):
         page = page or CFGOVPage.objects.first()
+
+        post_data = {}
+        if referrer is not None:
+            post_data['referrer'] = referrer
+        if is_helpful is not None:
+            post_data['is_helpful'] = is_helpful
 
         request = self.factory.post(
             '/',
-            {
-                'referrer': referrer,
-                'is_helpful': is_helpful,
-            },
+            post_data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
 
@@ -244,7 +232,7 @@ class TestFeedbackHandler(TestCase):
         feedback = self._post_feedback(is_helpful=False)
         self.assertFalse(feedback.is_helpful)
 
-        feedback = self._post_feedback(is_helpful=None)
+        feedback = self._post_feedback(is_helpful='None')
         self.assertIsNone(feedback.is_helpful)
 
     def test_referrer_gets_saved_with_feedback(self):

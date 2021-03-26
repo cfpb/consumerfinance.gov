@@ -5,29 +5,23 @@ volumes:
 
 services:
 
-    python2:
+    python:
         build:
             target: cfgov-prod
-        environment: &python_env
+        environment:
             ALLOW_ADMIN_URL: 'True'
-            APACHE_UPLOADS_F_ALIAS: /src/cfgov-refresh/cfgov/f/
+            APACHE_PORT: 8000
+            APACHE_UPLOADS_F_ALIAS: /src/consumerfinance.gov/cfgov/f/
             DATABASE_URL: postgres://cfpb@postgres/cfgov
             DJANGO_ADMIN_USERNAME: admin
             DJANGO_ADMIN_PASSWORD: admin
             SECRET_KEY: abcdefghijklmnopqrstuvwxyz
-            MEDIA_ROOT: /src/cfgov-refresh/cfgov/f/
+            MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
             PGPASSWORD: cfpb
+            WATCHMAN_TOKENS: "token"
         ports:
-            - "8000:80" # Apache
-        volumes: &python_volumes
-            - ./cfgov/apache/conf/:/src/cfgov-refresh/cfgov/apache/conf/
-            - ./cfgov/apache/conf.d/:/src/cfgov-refresh/cfgov/apache/conf.d/
-            - ./cfgov/apache/conf.modules.d/:/src/cfgov-refresh/cfgov/apache/conf.modules.d/
-
-    python3:
-        build:
-            target: cfgov-prod
-        environment: *python_env
-        ports:
-            - "8333:80" # Apache
-        volumes: *python_volumes
+            - "8000:8000"
+        volumes:
+            - ./cfgov/apache/conf/:/src/consumerfinance.gov/cfgov/apache/conf/
+            - ./cfgov/apache/conf.d/:/src/consumerfinance.gov/cfgov/apache/conf.d/
+            - ./cfgov/apache/conf.modules.d/:/src/consumerfinance.gov/cfgov/apache/conf.modules.d/

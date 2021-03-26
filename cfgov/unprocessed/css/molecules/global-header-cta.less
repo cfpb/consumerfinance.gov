@@ -4,51 +4,29 @@
   patterns:
     - name: Horizontal layout example
       markup: |
-        <div class="m-global-header-cta
-                    m-global-header-cta__horizontal">
+        <div class="m-global-header-cta">
             <a href="#">Submit a Complaint</a>
         </div>
       codenotes:
         - |
           Structural cheat sheet:
           -----------------------
-          .m-global-header-cta.m-global-header-cta__horizontal
-            a
-    - name: List item example
-      markup: |
-        <div class="m-global-header-cta
-                    m-global-header-cta__list">
-            <a href="#">Submit a Complaint</a>
-        </div>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .m-global-header-cta.m-global-header-cta__list
+          .m-global-header-cta
             a
   tags:
     - cfgov-molecules
 */
 
 .m-global-header-cta {
+    border-left: 1px solid @gray-40;
+    padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    padding-top: 13px;
+    padding-bottom: 11px;
 
     a {
         // Colors for :link, :visited, :hover, :focus, :active.
-        .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
+        .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @navy-dark );
         font-weight: 500;
-    }
-
-    &__horizontal {
-        border-left: 1px solid @gray-40;
-        padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        padding-top: 13px;
-        padding-bottom: 11px;
-    }
-
-    &__list a {
-        display: block;
-        padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
     }
 }
 

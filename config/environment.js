@@ -16,9 +16,7 @@ const envvars = {
   SAUCE_SELENIUM_URL:      process.env.SAUCE_SELENIUM_URL,
   SAUCE_USERNAME:          process.env.SAUCE_USERNAME,
   SAUCE_ACCESS_KEY:        process.env.SAUCE_ACCESS_KEY,
-  ACHECKER_ID:             process.env.ACHECKER_ID,
-  SAUCE_TUNNEL:            process.env.SAUCE_TUNNEL,
-  TRAVIS:                  process.env.TRAVIS
+  SAUCE_TUNNEL:            process.env.SAUCE_TUNNEL
   /* eslint-enable no-process-env */
 };
 
@@ -28,7 +26,6 @@ const envvars = {
 const paths = {
   unprocessed: './cfgov/unprocessed',
   processed:   './cfgov/static_built',
-  legacy:      './cfgov/legacy/static',
   modules:     './node_modules',
   test:        './test'
 };

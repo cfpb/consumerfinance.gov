@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-import six
 from datetime import timedelta
-from six.moves import cStringIO as StringIO
+from io import StringIO
 
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -76,10 +73,7 @@ class InactiveUsersTestCase(TestCase):
         self.stdout = StringIO()
 
     def get_stdout(self):
-        if six.PY2:  # pragma: no cover
-            return self.stdout.getvalue().decode('utf-8')
-        else:  # pragma: no cover
-            return self.stdout.getvalue()
+        return self.stdout.getvalue()
 
     def test_format_inactive_users_last_login(self):
         short_date = date_format(self.user_1.last_login,

@@ -1,0 +1,154 @@
+<section class="college-costs_tool-section" data-tool-section="action-plan">
+    <h2>What to do next</h2>
+
+    <p>Your next steps depend on whether you want to use this plan to pay for attending this school.</p>
+
+    <p>Do you want to put this plan into action or consider other options?</p>
+
+    <div class="action-plan_choices block block__sub">
+        {{
+            radio.render({
+              'name':  "action-plan-radio",
+              'label': 'How to put this plan into action',
+              'value': 'action',
+              'id': 'action-plan_put-into-action',
+              'class': 'm-form-field__lg-target' 
+            })
+        }}
+         {{
+            radio.render({
+              'name':  "action-plan-radio",
+              'label': 'Consider other options',
+              'value': 'consider',
+              'id': 'action-plan_consider',
+              'class': 'm-form-field__lg-target' 
+            })
+        }}  
+    </div>
+
+    <div class="block block__sub action-plan_steps" data-state-based-visibility="put-into-action">
+        <h3>How to put this plan into action</h3>
+        <div data-state-based-visibility="none">
+            <button class="a-btn">Print summary</button>
+            <button class="a-btn a-btn__secondary">Save as a link</button>
+            <p class="u-mt15"><small>You will also have a chace to print all documents at the end.</small></p>
+        </div>
+
+        <div class="block block__sub">
+            <h4>Ask the financial aid office any questions you still have.</h4>
+            <p>It’s first on this list, but you should do it whenever you’re confused or unsure of what to do next. They want to help you (and it’s their job)! You will not jeopardize your funding by asking too many questions.</p>
+        </div>
+
+        <div class="block block__sub">
+            <h4>Find out what it takes to enroll.</h4>
+            <p>How much is the deposit? What paperwork do you need to send in? When are the deposit and any other paperwork due?</p>
+        </div>
+
+        <div class="block block__sub undergrad-content associates-content">
+            <h4>Research the details of your grants and scholarships.</h4>
+            <p>Read or ask about the requirements of each grant and scholarship. Ask if they are renewable for following years—if not, you’ll need to find replacement funding next year. </p>
+        </div>
+
+        <div class="block block__sub graduate-content">
+            <h4>Research the details of your grants, scholarships, fellowships, and assistantships.</h4>
+            <p>Read or ask about the requirements of each grant and scholarship. Ask if they are renewable for following years—if not, you’ll need to find replacement funding next year. </p>
+        </div>
+
+        <div class="block block__sub">
+            <h4>Make a budget.</h4>
+            <p><a href="https://files.consumerfinance.gov/f/documents/cfpb_your-money-your-goals_cash_flow_budget_tool_2018-11_ADA.pdf" target="_blank" class="external-link" rel="noreferrer noopener">Use this cashflow budget</a> to plan out when you’ll get money and when you’ll have to pay it.</p> 
+        </div>
+
+        <div class="block block__sub">
+            <h4>Double check that you’ll have enough money when you need it.</h4>
+            <p>If you have uncovered upfront costs, talk to the financial aid office about options to reduce the amount due at the beginning of the school year, like tuition installment plans. Or can you (or your family) start saving for these now? </p>
+        </div>
+
+        <div class="block block__sub">
+            <h4>Accept the loans you want.</h4>
+            <p> More paperwork ahead! You’ll also need to do entrance counseling for federal loans. Remember, you don’t need to accept all the loans you’re offered or the full amount.</p>
+        </div>
+
+        <div class="block block__sub">
+            <h4>Put a reminder in your calendar to fill out FAFSA on October 1.</h4>
+            <p>If you’ll be in school next year, you’ll need to start this process again in a few months.</p>
+        </div>
+
+        <div class="block block__sub">
+            <h4>Set another reminder to visit the financial aid office every term.</h4>
+            <p>Ask about new opportunities for funding. For example, some scholarships are only open to certain majors or only for upperclassmen.</p>
+        </div>
+
+        <div class="block block__sub undergrad-content associates-content">
+            <h4>Know how many credits you already have and plan to graduate on time.</h4>
+            <p> Make sure you get credit for your AP, IB, dual-enrollment, and transfer courses. Work with an academic adviser to stay on track for on-time graduation.</p>
+        </div>
+
+        <div class="block block__sub undergrad-content">
+            <h4>Ask about getting credits from a more affordable school.</h4>
+            <p>Reach out to your academic advisor about taking core requirements at community college. (But be strategic about when you take them – if you start school with enough credits to count as a second- or third-year student, you may be disqualified from grants and scholarships for first-year students.)</p>
+        </div>
+
+        <div class="block block__sub graduate-content">
+            <h4>Ask about getting credits from a more affordable school.</h4>
+            <p>Graduate programs may allow you to transfer credits.</p>
+        </div>
+
+        <div class="block block__sub undergrad-content associates-content">
+            <h4>Apply for additional institutional or private student loans.</h4>
+            <p>To get the best deal for your situation, read the fine print and shop around for the lowest interest rates and fees. You’ll probably need a cosigner.</p>
+        </div>
+
+        <div class="block block__sub graduate-content">
+            <h4>Apply for additional loans, including Grad PLUS and private options.</h4>
+            <p>To get the best deal for your situation, read the fine print and shop around for the lowest interest rates and fees. You’ll probably need a cosigner.</p>
+        </div>
+        
+    </div>
+
+    <div class="block block__sub action-plan_steps" data-state-based-visibility="consider-other-options">
+        <h3>Consider other options</h3>
+
+        <div class="block block__sub">
+            <h4>Reduce your living costs.</h4>
+            <p>Can you live at home? Stick to public transit?</p>
+        </div>
+
+        <div class="block block__sub undergrad-content">
+            <h4>Ask about getting credits from a more affordable school.</h4>
+            <p>Reach out to your academic advisor about taking core requirements at community college. (But be strategic about when you take them – if you start school with enough credits to count as a second- or third-year student, you may be disqualified from grants and scholarships for first-year students.)</p>
+        </div>
+
+        <div class="block block__sub">
+            <h4>Look for more grants and scholarships.</h4>
+            <p>There are always more available, even if school starts soon! <a href="https://www.careeronestop.org/Toolkit/Training/find-scholarships.aspx" target="_blank" class="external-link" rel="noreferrer noopener">Scholarship Finder</a> is one place to look.</p>
+        </div>
+
+        <div class="block block__sub associates-content">
+            <h4>Consider working.</h4>
+            <p>A job can reduce your borrowing and provide other benefits, but working more than 20 hours a week is associated with lower grades.</p>
+        </div>
+
+        <div class="block block__sub undergrad-content graduate-content">
+            <h4>Consider working.</h4>
+            <p>While working can reduce borrowing and provide enriching experiences, remember that over 20 hours a week is associated with lower grades.</p>
+        </div>
+
+        <div class="block block__sub undergrad-content associates-content">
+            <h4>Think about other programs at this school.</h4>
+            <p> You might want to consider choosing a major that will open the door to more lucrative career fields.</p>
+        </div>
+
+        <div class="block block__sub undergrad-content">
+            <h4>Explore other schools.</h4>
+            <p>Even if this is the only school you applied to this year, it’s not your only option. For example, if you are pursuing a bachelor's degree, you can always start att community college this year and apply to transfer to another school next year.</p>
+        </div>
+        
+        <div class="block block__sub graduate-content">
+            <h4>Explore other schools.</h4>
+            <p>Even if this is the only school you applied to this year, it’s not your only option. Take this year to work, save money, and pursue enrichment opportunities in your field while preparing to apply again next year.</p>
+        </div>
+
+    </div>          
+
+</section>

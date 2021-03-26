@@ -1,8 +1,18 @@
 import { assign } from './assign';
 import throttle from 'lodash.throttle';
+import webStorageProxy from './web-storage-proxy';
+
+// If cookies are turned off, we set localStorage variables to an empty object.
+let _localStorage;
+
+try {
+  _localStorage = window.localStorage;
+} catch ( err ) {
+  _localStorage = null;
+}
 
 /**
- * Stores/retrieves email signup data in localStorage
+ * Stores/retrieves email signup data in localStorage.
  *
  * After the first time a user sees a popup, the popup won't be displayed for
  * another 4 days. After the second time, it'll be another 30 days, then 60
@@ -47,12 +57,12 @@ function recordEmailPopupView( popupLabel ) {
   const countKey = _getCountKey( popupLabel );
   const nextShowKey = _getNextShowKey( popupLabel );
 
-  let count = Number( localStorage.getItem( countKey ) ) || 0;
+  let count = Number( webStorageProxy.getItem( countKey, _localStorage ) ) || 0;
   const max = POPUP_WAIT_PERIOD.length - 1;
   count = count >= max ? max : count;
   const days = POPUP_WAIT_PERIOD[count];
-  localStorage.setItem( countKey, count + 1 );
-  localStorage.setItem( nextShowKey, _getFutureDate( days ) );
+  webStorageProxy.setItem( countKey, count + 1, _localStorage );
+  webStorageProxy.setItem( nextShowKey, _getFutureDate( days ), _localStorage );
 }
 
 /**
@@ -65,8 +75,8 @@ function recordEmailPopupClosure( popupLabel ) {
 
   const count = POPUP_WAIT_PERIOD.length - 1;
   const days = POPUP_WAIT_PERIOD[count];
-  localStorage.setItem( countKey, count );
-  localStorage.setItem( nextShowKey, _getFutureDate( days ) );
+  webStorageProxy.setItem( countKey, count, _localStorage );
+  webStorageProxy.setItem( nextShowKey, _getFutureDate( days ), _localStorage );
 }
 
 /**
@@ -76,7 +86,11 @@ function recordEmailPopupClosure( popupLabel ) {
 function recordEmailRegistration( popupLabel ) {
   const nextShowKey = _getNextShowKey( popupLabel );
 
-  localStorage.setItem( nextShowKey, _getFutureDate( FOREVER ) );
+  webStorageProxy.setItem(
+    nextShowKey,
+    _getFutureDate( FOREVER ),
+    _localStorage
+  );
 }
 
 /**
@@ -88,7 +102,9 @@ function recordEmailRegistration( popupLabel ) {
 function showEmailPopup( popupLabel ) {
   const nextShowKey = _getNextShowKey( popupLabel );
   const today = new Date().getTime();
-  const nextDisplayDate = Number( localStorage.getItem( nextShowKey ) ) || 0;
+  const nextDisplayDate = Number(
+    webStorageProxy.getItem( nextShowKey, _localStorage )
+  ) || 0;
   return today > nextDisplayDate;
 }
 

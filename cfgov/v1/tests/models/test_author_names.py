@@ -1,8 +1,6 @@
-from __future__ import unicode_literals
+from unittest.mock import patch
 
 from django.test import TestCase
-
-from mock import patch
 
 from v1.models.base import CFGOVPage
 
@@ -19,25 +17,25 @@ class TestAuthorNames(TestCase):
         page.authors.add('Ross Karchner', 'Richa Agarwal', 'Andy Chosak', 'Will Barton')
         expected_result = ['Richa Agarwal', 'Will Barton', 'Andy Chosak', 'Ross Karchner']
         author_names = [a.name for a in page.alphabetize_authors()]
-        self.assertEquals(author_names, expected_result)
+        self.assertEqual(author_names, expected_result)
     
     def test_no_authors(self):
         page = CFGOVPage()
-        self.assertEquals(page.alphabetize_authors(), [])
+        self.assertEqual(page.alphabetize_authors(), [])
 
     def test_author_with_middle_name(self):
         page = CFGOVPage()
         page.authors.add('Jess Schafer', 'Richa Something Agarwal', 'Sarah Simpson')
         expected_result = ['Richa Something Agarwal', 'Jess Schafer', 'Sarah Simpson']
         author_names = [a.name for a in page.alphabetize_authors()]
-        self.assertEquals(author_names, expected_result)
+        self.assertEqual(author_names, expected_result)
 
     def test_same_last_names(self):
         page = CFGOVPage()
         page.authors.add('Mary Smith', 'Vic Kumar', 'John Smith')
         expected_result = ['Vic Kumar', 'John Smith', 'Mary Smith']
         author_names = [a.name for a in page.alphabetize_authors()]
-        self.assertEquals(author_names, expected_result)
+        self.assertEqual(author_names, expected_result)
 
 
 if __name__ == '__main__':

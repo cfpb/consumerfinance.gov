@@ -1,7 +1,7 @@
 @import (less) '../enhancements/typography.less';
 
 /* ==========================================================================
-   cfgov-refresh
+   consumerfinance.gov
    footer
    ========================================================================== */
 
@@ -75,7 +75,7 @@
         .m-list__links();
 
         .m-list_link {
-            .u-link__colors( @dark-gray );
+            .u-link__colors( @gray-dark );
         }
     }
 
@@ -150,9 +150,16 @@
 
             }
         } );
+
+        .respond-to-print({
+            // !important used here to avoid being overriden by a much more specific
+            // selector that sets the display property for this element
+            // and to avoid using a selector that specific here.
+            display: none !important;
+        });
     }
 
-    // TODO: Refactor to use Capital Framework Layout package.
+    // TODO: Refactor to use Design System Layout package.
     &-middle-left {
         .o-footer_list {
             margin: 0;
@@ -182,6 +189,12 @@
             }
         } );
 
+        .respond-to-print({
+            // !important used here to avoid being overriden by a much more specific
+            // selector that sets the display property for this element
+            // and to avoid using a selector that specific here.
+            display: none !important;
+        });
     }
 
     &-middle-right {
@@ -202,6 +215,13 @@
                 padding-right: @grid_gutter-width;
             }
         } );
+
+        .respond-to-print({
+            // !important used here to avoid being overriden by a much more specific
+            // selector that sets the display property for this element
+            // and to avoid using a selector that specific here.
+            display: none !important;
+        });
     }
 
     &-post {
@@ -211,14 +231,13 @@
             padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
             border-top: 1px solid @gray-40;
         } );
-    }
 
-    // Hide return to top button on print.
-    .respond-to-print( {
-        &_top-button {
-            display: none !important;
-        }
-    } );
+        .respond-to-print({
+            padding: 0;
+            border: none;
+            margin: 0;
+        });
+    }
 }
 
 /* topdoc

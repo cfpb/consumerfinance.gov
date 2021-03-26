@@ -69,18 +69,22 @@ function getElData( selector, attributeName ) {
 }
 
 function changeElText( selector, text ) {
-  return _mutate( selector, function( element ) {
+  _mutate( selector, function( element ) {
     return ( element.textContent = text );
   } );
 }
 
 function changeElHTML( selector, HTML ) {
-  return _mutate( selector, function( element ) {
+  _mutate( selector, function( element ) {
     return ( element.innerHTML = HTML );
   } );
 }
 
-// Code copied from jQuery with minimal modifications.
+/**
+ * Code copied from jQuery with minimal modifications.
+ * @param {HTMLNode} HTML - An HTML DOM node.
+ * @returns {DocumentFragment} The created document fragment node.
+ */
 function createEl( HTML ) {
   if ( isEl( HTML ) ) {
     return HTML;
@@ -102,21 +106,31 @@ function createEl( HTML ) {
   return docFrag;
 }
 
+/**
+ * @param {string} selector - A CSS selector.
+ */
 function removeEl( selector ) {
-  return _mutate( selector, function( element ) {
+  _mutate( selector, function( element ) {
     return element.parentNode.removeChild( element );
   } );
 }
 
+/**
+ * @param {string} selector - A CSS selector.
+ * @param {string} className - A CSS class to remove.
+ */
 function addClass( selector, className ) {
-  const classNames = [].slice.call( arguments ).slice( 1 );
-  return _mutate( selector, function( element ) {
-    let _classList;
-    return ( _classList = element.classList )
-      .add.apply( _classList, classNames );
+  _mutate( selector, function( element ) {
+    const _classList = element.classList;
+    return _classList.add( className );
   } );
 }
 
+/**
+ * @param {string} selector - A CSS selector.
+ * @param {string} className - A CSS class to remove.
+ * @returns {boolean} True if the element has the CSS class, false otherwise.
+ */
 function hasClass( selector, className ) {
   let _hasClass = false;
   applyAll( selector, function( element ) {
@@ -127,17 +141,23 @@ function hasClass( selector, className ) {
   return _hasClass;
 }
 
+/**
+ * @param {string} selector - A CSS selector.
+ * @param {string} className - A CSS class to remove.
+ */
 function removeClass( selector, className ) {
-  const classNames = [].slice.call( arguments ).slice( 1 );
-  return _mutate( selector, function( element ) {
-    let _classList;
-    return ( _classList = element.classList )
-      .remove.apply( _classList, classNames );
+  _mutate( selector, function( element ) {
+    const _classList = element.classList;
+    return _classList.remove( className );
   } );
 }
 
+/**
+ * @param {string} selector - A CSS selector.
+ * @param {string} className - A CSS class to remove.
+ */
 function toggleClass( selector, className ) {
-  return _mutate( selector, function( element ) {
+  _mutate( selector, function( element ) {
     return element.classList.toggle( className );
   } );
 }
@@ -158,6 +178,11 @@ function filter( element, propName, filter ) {
   return nodes;
 }
 
+/**
+ * @param {string} selector - A CSS selector.
+ * @returns {HTMLNode} An HTML node returned by the passed selector,
+ *  or the selector passed into this method.
+ */
 function getEl( selector ) {
   if ( isEl( selector ) ) {
     return selector;
@@ -165,6 +190,11 @@ function getEl( selector ) {
   return document.querySelector( selector );
 }
 
+/**
+ * @param {string} selector - A CSS selector.
+ * @returns {NodeList} A list of HTML nodes returned by the passed selector,
+ *  or the selector passed into this method.
+ */
 function getEls( selector ) {
   if ( isEl( selector ) ) {
     return selector;
@@ -205,10 +235,9 @@ function isEl( element ) {
 /**
  * Check whether something is a NodeList, HTML element, or window.
  * @param {*} selector Something, possibly a list, element or window instance.
- * @returns {Function} Mutate dom function.
  */
 function hide( selector ) {
-  return _mutate( selector, function( element ) {
+  _mutate( selector, function( element ) {
     return ( element.style.display = 'block' );
   } );
 }
@@ -216,16 +245,15 @@ function hide( selector ) {
 /**
  * Check whether something is a NodeList, HTML element, or window.
  * @param {*} selector Something, possibly a list, element or window instance.
- * @returns {Function} Mutate dom function.
  */
 function show( selector ) {
-  return _mutate( selector, function( element ) {
+  _mutate( selector, function( element ) {
     return ( element.style.display = 'block' );
   } );
 }
 
 /**
- * @param {string} selector - Selector for an element.
+ * @param {string} selector - A CSS selector for an element.
  * @param {number} time - When to call the callback.
  * @param {[Function]} callback - Function to call after delay.
  */
@@ -246,7 +274,7 @@ function fadeIn( selector, time, callback ) {
 }
 
 /**
- * @param {string} selector - Selector for an element.
+ * @param {string} selector - A CSS selector for an element.
  * @param {number} time - When to call the callback.
  * @param {[Function]} callback - Function to call after delay.
  */

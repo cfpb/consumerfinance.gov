@@ -1,23 +1,17 @@
-# cfgov-refresh
+# consumerfinance.gov
 
-[![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=master)](https://travis-ci.org/cfpb/cfgov-refresh?branch=master)
-[![codecov](https://codecov.io/gh/cfpb/cfgov-refresh/branch/master/graph/badge.svg)](https://codecov.io/gh/cfpb/cfgov-refresh)
-
-The master repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
+The primary repository for [consumerfinance.gov](https://www.consumerfinance.gov/).
 This Django project includes the front-end assets and build tools,
 [Jinja templates](https://jinja.palletsprojects.com/) for front-end rendering,
 code to configure our CMS, [Wagtail](https://wagtail.io/),
 and several standalone Django apps for specific parts of the site.
 
-![Screenshot of cfgov-refresh](homepage.png)
-
-
 ## Quickstart
 
 Full installation and usage instructions are available in
-[our documentation](https://cfpb.github.io/cfgov-refresh).
+[our documentation](https://cfpb.github.io/consumerfinance.gov).
 
-This project requires Python 2.7, Node 8, and Gulp 4.
+This project requires Python 3.6, Node 12, and Gulp 4.
 We recommend the use of [virtualenv](https://virtualenv.pypa.io/en/stable/) and
 [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 for keeping the project's Python dependencies contained.
@@ -25,14 +19,14 @@ for keeping the project's Python dependencies contained.
 Clone the repository:
 
 ```sh
-git clone git@github.com:cfpb/cfgov-refresh.git
+git clone git@github.com:cfpb/consumerfinance.gov.git
 ```
 
 Create a virtual environment for Python dependencies:
 
 ```sh
-cd cfgov-refresh
-mkvirtualenv --python=python2.7 cfgov-refresh
+cd consumerfinance.gov
+mkvirtualenv --python=python3.6 consumerfinance.gov
 ```
 
 Create and load initial environment settings:
@@ -69,7 +63,7 @@ which you can log into with the credentials `admin`/`admin`.
 ## Documentation
 
 Full documentation for this project is available in the [docs/](docs/) directory
-and [online](https://cfpb.github.io/cfgov-refresh/).
+and [online](https://cfpb.github.io/consumerfinance.gov/).
 
 If you would like to browse the documentation locally, you can do so
 with [`mkdocs`](https://www.mkdocs.org/):
@@ -85,10 +79,10 @@ Documentation will be available locally at
 
 ## Getting help
 
-Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues)
+Use the [issue tracker](https://github.com/cfpb/consumerfinance.gov/issues)
 to follow the development conversation.
 If you find a bug not listed in the issue tracker,
-please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new).
+please [file a bug report](https://github.com/cfpb/consumerfinance.gov/issues/new).
 
 
 ## Getting involved
@@ -97,7 +91,7 @@ We welcome your feedback and contributions.
 See the [contribution guidelines](CONTRIBUTING.md) for more details.
 
 Additionally, you may want to consider
-[contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
+[contributing to the Design System](https://cfpb.github.io/design-system/#help-us-make-improvements),
 which is the front-end pattern library used in this project.
 
 
@@ -110,5 +104,5 @@ which is the front-end pattern library used in this project.
 
 ## Credits and references
 
-This project uses [Capital Framework](https://github.com/cfpb/capital-framework)
+This project uses [Design System](https://github.com/cfpb/design-system)
 as the basis of its user interface and layout components.

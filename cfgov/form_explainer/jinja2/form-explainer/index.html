@@ -1,0 +1,33 @@
+{% extends 'layout-full.html' %}
+
+{% import 'form_block.html' as form_block with context %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static('apps/form-explainer/css/main.css') }}">
+{%- endblock css %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.header -%}
+        {{ render_block.render(block, loop.index) }}
+    {%- endfor %}
+    {% for block in page.content -%}
+        {% if block.block_type in ['feedback'] %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+{% endblock %}
+
+{% if page.sidefoot %}
+    <aside class="o-prefooter">
+        {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+    </aside>
+{% endif %}

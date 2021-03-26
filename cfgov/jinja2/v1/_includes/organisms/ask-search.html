@@ -8,15 +8,18 @@
 
    Output an ask search bar when given:
 
-   ask_query     The previous search query string.
+   ask_query      The previous search query string.
 
-   language:     page's language.
+   language:      page's language.
 
-   show_label:   Boolean; whether to show form label.
+   show_label:    Boolean; whether to show form label.
 
-   autocomplete: Boolean; whether to allow autocomplete.
+   autocomplete:  Boolean; whether to allow autocomplete.
 
-   placeholder: String; text to enter for the search input's placeholder value.
+   placeholder:   String; text to enter for the search input's placeholder value.
+
+   is_subsection: Boolean; whether to mark up the form label with an h3 to fit
+                  into an exisitng section or with an h2 to be its own section
 
    ========================================================================== #}
 
@@ -25,13 +28,16 @@
     language='en',
     show_label=True,
     autocomplete=True,
-    placeholder=''
+    placeholder='',
+    is_subsection=True
 ) %}
 <div class="o-search-bar">
     <form method="get" action="{{ _('/ask-cfpb/search/') }}">
         {% if show_label %}
         <label for="o-search-bar_query">
-            <h3>{{ _('Search for your question') }}</h3>
+            <{{ 'h3' if is_subsection else 'h2' }}>
+                {{ _('Search for your question') }}
+            </{{ 'h3' if is_subsection else 'h2' }}>
         </label>
         {% endif %}
 

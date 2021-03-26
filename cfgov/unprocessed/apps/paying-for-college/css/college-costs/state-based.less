@@ -1,0 +1,442 @@
+
+main.college-costs {
+	.private-loan-section,
+	.parentPlus-loan-section,
+	.undergrad-content,
+	.associates-content,
+	.graduate-content,
+	.private-loan-section,
+	.parentplus-loan-section,
+	.gradplus-loan-section,
+	.community-college,
+	.program-select {
+		display: none;
+	}
+
+	[data-state-based-visibility] {
+		display: none;
+	}
+
+	// 2 vs 4 year
+	&[data-state_communitycollege="true"] {
+		span.community-college {
+			display: inline;
+		}
+		span.four-year-college {
+			display: none;
+		}
+	}
+
+	// Grad & undergrad content control
+	&[data-state_programlevel="undergrad"] {
+		.undergrad-content {
+			display: block;
+		}
+		span.undergrad-content {
+			display: inline;
+		}
+		li.undergrad-content {
+			display: list-item;
+		}
+	}
+
+	&[data-state_pid] {
+		.no-program-selected {
+			display: none;
+		}
+	}
+
+	&[data-state_programlevel="graduate"] {
+		.graduate-content {
+			display: block;
+		}
+		span.graduate-content {
+			display: inline;
+		}
+		li.graduate-content {
+			display: list-item;
+		}
+	}
+
+	&[data-state_programtype="associates"] {
+		.associates-content {
+			display: block;
+		}
+		span.associates-content {
+			display: inline;
+		}
+		li.associates-content {
+			display: list-item;
+		}
+	}
+
+	&[data-state_programtype][data-state_schoolhasprograms="yes"] {
+		.program-select {
+			display: block;
+		}
+	}
+
+
+	// Private & Plus loans content control
+
+	&[data-state_private-loan-section="active"] {
+		.private-loan-section {
+			display: block;
+		}
+	}
+
+	&[data-state_parentplus-loan-section="active"] {
+		.parentplus-loan-section {
+			display: block;
+		}
+	}
+
+	&[data-state_gradplus-loan-section="active"] {
+		.gradplus-loan-section {
+			display: block;
+		}
+	}
+
+
+	// App 
+
+	&[data-state_gotstarted="false"] .app-container {
+		display: none;
+	}
+
+	&[data-state_gotstarted="false"] .costs-not-covered-sticky {
+		display: none;
+	}
+
+	&[data-state_gotstarted="false"] .o-college-costs-nav {
+		display: none;
+	}
+
+	&[data-state_gotstarted="true"] {
+		.college-costs_intro-segment {
+			display: none;
+		}
+
+		.college-costs_tool-section.active {
+			display: block;
+		}
+	}
+
+	// Section visibility by application state
+
+	&[data-state_activesection="grants-scholarships"],
+	&[data-state_activesection="work-study"],
+	&[data-state_activesection="federal-loans"],
+	&[data-state_activesection="school-loans"],
+	&[data-state_activesection="other-resources"],
+	&[data-state_activesection="loan-counseling"],
+	&[data-state_activesection="make-a-plan"] {
+		.respond-to-min( @bp-med-min, {
+			@supports (position: sticky) {
+			    .costs-not-covered-sticky {
+			    	display: block;
+			    }
+			    .costs-not-covered-notification {
+			    	display: none;
+			    }
+			}
+		});
+	}
+
+	// Save and finish later section visibility
+	&[data-state_save-for-later="active"] {
+		[data-state-based-visibility="save-for-later"] {
+			display: block;
+		}
+	}
+
+	// Costs button content control
+	&:not( [data-state_costsquestion] ) {
+		// Don't show the Next button on Costs page until a costs choice is made
+		&[data-state_activesection="costs"] {
+		      .college-costs_tool-section_buttons {
+		              display: none;
+		      }
+		}
+		#costs_inputs-section {
+			display: none;
+		}
+		[data-state-based-visibility="costs-question-hide"] {
+			display: block;
+		}
+	}
+
+	// Program selection visibility
+	&[data-state_schoolhasprograms="yes"] {
+		[data-state-based-visibility="school-has-programs"] {
+			display: block;
+		}
+		span[data-state-based-visibility="school-has-programs"] {
+			display: inline;
+		}
+	}
+	&[data-state_schoolhasprograms="no"] {
+		[data-state-based-visibility="school-no-programs"] {
+			display: block;
+		}
+		span[data-state-based-visibility="school-no-programs"] {
+			display: inline;
+		}
+	}
+
+	&[data-state_pid] {
+		[data-state-based-visibility="program-is-selected"] {
+			display: block;
+		}
+		span[data-state-based-visibility="program-is-selected"] {
+			display: inline;
+		}
+	}
+	
+	&[data-state_programtype="graduate"]:not( [data-state_pid] ) {
+		[data-state-based-visibility="no-program-selected"] {
+			display: block;
+		}
+		span[data-state-based-visibility="no-program-selected"] {
+			display: inline;
+		}
+
+		.college-costs_tool-section.college-costs_tool-section__affording .affording-loans-choices {
+			display: none;
+		}
+
+		[data-state-based-visibility="expenses-hourly-wages"] {
+			display: block;
+		}
+		.debt-guideline_salary-info {
+			display: none;
+		}
+	}
+
+
+	&[data-state_costsquestion] {
+		#costs_inputs-section {
+			display: block;
+		}
+		[data-state-based-visibility="costs-question-hide"] {
+			display: none;
+		}
+	}
+
+	&[data-state_costsquestion="y"],
+	&[data-state_costsquestion="o"] {
+		[data-state-based-visibility="costs-question-yes"] {
+			display: block;
+		}
+	}
+
+	&[data-state_costsquestion="n"] {
+		[data-state-based-visibility="costs-question-no"] {
+			display: block;
+		}
+	}
+
+	// Action plan choices
+	&[data-state_actionplan="action"] {
+		[data-state-based-visibility="put-into-action"] {
+			display:block;
+		}
+	}
+
+	&[data-state_actionplan="consider"] {
+		[data-state-based-visibility="consider-other-options"] {
+			display:block;
+		}
+	}
+
+	// Notification visibility controls
+	&[data-state_uncoveredcosts="true"] {
+		[data-state-based-visibility="uncovered-costs"] {
+			display:block;
+		}
+	}
+
+	&[data-state_excessfunding="true"] {
+		[data-state-based-visibility="excesss-funding"] {
+			display:block;
+		}
+	}
+
+	&[data-state_debtruleviolation="false"] {
+		span[data-state-based-visibility="debt-rule-passed"] {
+			display: inline
+		}
+	}
+
+	&[data-state_debtruleviolation="true"] {
+		[data-state-based-visibility="debt-rule-violation"] {
+			display:block;
+		}
+		span[data-state-based-visibility="debt-rule-violation"] {
+			display: inline
+		}
+	}
+
+	&[data-state_debtruleviolation="false"] {
+		[data-state-based-visibility="debt-rule-okay"] {
+			display:block;
+		}
+	}
+
+	&[data-state_expensesremainder="surplus"] {
+		[data-state-based-visibility="expenses-surplus"] {
+			display:block;
+		}
+	}
+
+	&[data-state_expensesremainder="shortage"] {
+		[data-state-based-visibility="expenses-shortage"] {
+			display:block;
+		}
+	}
+
+	&[data-state_expenseschoice="hourly"] {
+		[data-state-based-visibility="expenses-hourly-wages"] {
+			display: block;
+		}
+	}
+
+	&[data-state_expenseschoice="monthly"] {
+		[data-state-based-visibility="expenses-monthly-budget"] {
+			display: block;
+		}
+	}
+
+	&:not( [data-state_schoolcontrol="Private"] ) {
+		[data-state-based-visibility="control-nonprivate"] {
+			display: block;
+		}
+	}
+
+	// Don't show the next button on the save & finish page
+	&[data-state_activesection="save-and-finish"] {
+		.college-costs_tool-section_buttons {
+			display: none;
+		}
+	}
+
+	.school-results_comparison-section__default-rate .big-percentile {
+		border-color: @gray-20;
+	}
+
+	&[data-state_rategraduationrange="high"] {
+		.school-results_comparison-section__grad-rate .big-percentile {
+			border-color: @college-costs-chart-max;
+		}
+	}
+
+	&[data-state_rategraduationrange="medium"] {
+		.school-results_comparison-section__grad-rate .big-percentile {
+			border-color: @college-costs-chart-median;
+		}
+	}
+
+	&[data-state_rategraduationrange="low"] {
+		.school-results_comparison-section__grad-rate .big-percentile {
+			border-color: @college-costs-chart-min;
+		}
+	}
+
+	&[data-state_raterepay3yrrange="high"] {
+		.school-results_comparison-section__repayment-rate .big-percentile {
+			border-color: @college-costs-chart-max;
+		}
+	}
+
+	&[data-state_raterepay3yrrange="medium"] {
+		.school-results_comparison-section__repayment-rate .big-percentile {
+			border-color: @college-costs-chart-median;
+		}
+	}
+
+	&[data-state_raterepay3yrrange="low"] {
+		.school-results_comparison-section__repayment-rate .big-percentile {
+			border-color: @college-costs-chart-min;
+		}
+	}
+
+	&[data-state_defaultraterange="high"] {
+		.school-results_comparison-section__default-rate .big-percentile {
+			border-color: @college-costs-chart-min;
+		}
+	}
+
+	&[data-state_defaultraterange="medium"] {
+		.school-results_comparison-section__default-rate .big-percentile {
+			border-color: @college-costs-chart-median;
+		}
+	}
+
+	&[data-state_defaultraterange="low"] {
+		.school-results_comparison-section__default-rate .big-percentile {
+			border-color: @college-costs-chart-max;
+		}
+	}
+
+	&[data-state_repay3yrmissing="true"] {
+		.school-results_comparison-section__repayment-rate {
+			display: none;
+		}
+	}
+
+	&[data-state_gradratemissing="true"] {
+		.school-results_comparison-section__grad-rate {
+			display: none;
+		}
+	}
+
+	&[data-state_defaultratemissing="true"] {
+		.school-results_comparison-section__default-rate {
+			display: none;
+		}
+	}
+
+	// Error visibility
+	&[data-state_showschoolerrors="yes"] {
+		[data-state-based-visibility="school-fields-errors"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_schoolselected="required"] {
+		[data-state-based-visibility="school-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_programtypeselected="required"] {
+		[data-state-based-visibility="type-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_programlengthselected="required"] {
+		[data-state-based-visibility="length-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_rateselected="required"] {
+		[data-state-based-visibility="rate-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_housingselected="required"] {
+		[data-state-based-visibility="housing-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_dependencyselected="required"] {
+		[data-state-based-visibility="dependency-required"] {
+			display: block;
+		}
+	}
+
+}

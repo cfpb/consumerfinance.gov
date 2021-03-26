@@ -1,14 +1,12 @@
-from django.core.exceptions import ValidationError
 from django.utils.module_loading import import_string
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.text import slugify
 
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+from wagtail.core import blocks
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 from bs4 import BeautifulSoup
 
-from v1.atomic_elements import atoms
 from v1.util.util import get_unique_id
 
 
@@ -152,8 +150,8 @@ class HeadingBlock(blocks.StructBlock):
         help_text=mark_safe(
             'Input the name of an icon to appear to the left of the heading. '
             'E.g., approved, help-round, etc. '
-            '<a href="https://cfpb.github.io/capital-framework/'
-            'components/cf-icons/#the-icons">See full list of icons</a>'
+            '<a href="https://cfpb.github.io/design-system/'
+            'foundation/iconography">See full list of icons</a>'
         ),
     )
 
@@ -198,106 +196,3 @@ class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
         template = '_includes/snippets/reusable_text.html'
-
-
-class Link(blocks.StructBlock):
-    link_text = blocks.CharBlock(
-        required=True,
-        label='Text'
-    )
-    page_link = blocks.PageChooserBlock(
-        required=False,
-        help_text='Link to a page in Wagtail.',
-        label='Page'
-    )
-    external_link = blocks.CharBlock(
-        required=False,
-        max_length=1000,
-        label='Direct URL (rare)',
-        help_text='Enter url for page outside Wagtail. This will only '
-                  'be used if there is no page selected.'
-    )
-
-    def clean(self, value):
-        cleaned = super(Link, self).clean(value)
-
-        if not cleaned.get('page_link') and not cleaned.get('external_link'):
-            raise ValidationError(
-                'Validation error in link',
-                params={
-                    'page_link': [
-                        'Either page or external link is required.'
-                    ],
-                    'external_link': [
-                        'Either page or external link is required.'
-                    ]
-                }
-            )
-        return cleaned
-
-
-class NavItem(blocks.StructBlock):
-    state = blocks.ChoiceBlock(choices=[
-        ('both', 'Show always'),
-        ('live', 'Show on Production only'),
-        ('draft', 'Show on Content only')],
-        default='both',
-        help_text='Select state for this link. Test new links '
-                  'by setting them to only show on Content.')
-    link = Link(required=False)
-    nav_items = blocks.ListBlock(
-        blocks.StructBlock([
-            ('link', Link())
-        ]),
-        label='Child items (mobile only)'
-    )
-
-
-class NavGroup(blocks.StructBlock):
-    draft = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        help_text='If checked, this block will only show '
-        'on our sharing site (Content).',
-        label='Mark block as draft'
-    )
-    group_title = blocks.CharBlock(
-        required=False,
-        label='Column title')
-    hide_group_title = blocks.BooleanBlock(
-        required=False,
-        label='Hide column title',
-        help_text='If column shares title with previous column, '
-                  'enter title text above but check this box so title '
-                  'only shows in first column.')
-    nav_items = blocks.ListBlock(
-        NavItem(),
-        required=False,
-        label='Menu items')
-
-
-class NavFooter(blocks.StructBlock):
-    draft = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        help_text='If checked, this block will only show '
-        'on our sharing site (Content).',
-        label='Mark block as draft'
-    )
-    content = blocks.RichTextBlock(
-        required=False,
-        features=['link']
-    )
-
-
-class FeaturedMenuContent(blocks.StructBlock):
-    draft = blocks.BooleanBlock(
-        required=False,
-        default=False,
-        label='Mark block as draft',
-        help_text='If checked, this block will only show '
-        'on our sharing site (Content).'
-    )
-    link = Link(required=False, label="H4 link")
-    body = blocks.RichTextBlock(required=False)
-    image = atoms.ImageBasic(required=False)

@@ -1,3 +1,2 @@
 -r base.txt
--r postgres.txt
-newrelic==4.18.0.118
+newrelic==5.20.1.150

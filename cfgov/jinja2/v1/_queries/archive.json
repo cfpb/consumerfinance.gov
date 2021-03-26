@@ -1,8 +1,0 @@
-{
-  "name": "Archive",
-  "query": {
-    "doc_type": "posts,newsroom",
-    "size": 100,
-    "sort": "date:desc"
-  }
-}

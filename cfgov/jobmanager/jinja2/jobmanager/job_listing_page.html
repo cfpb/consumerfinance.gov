@@ -1,0 +1,275 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{%- import 'macros/util/format/datetime.html' as dt %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    {% set usajobs_links = page.usajobs_application_links.all() %}
+
+    {%- with value = {
+        'title': page.title,
+        'division': page.division,
+        'close_date': page.close_date,
+        'offices': offices,
+        'remote_allowed': page.allow_remote,
+        'regions': regions,
+        'grades': grades,
+        'salary_min': page.salary_min,
+        'salary_max': page.salary_max,
+        'applicant_types': usajobs_links | map( attribute='applicant_type' )
+    } %}
+        {% include 'jobmanager/job_listing_details.html' %}
+    {% endwith %}
+
+    <section class="block
+                    block__padded-top
+                    block__border-top
+                    block__flush-bottom
+                    vacancy-announcement_description">
+
+        <div class="o-summary o-summary__mobile"
+            data-js-hook="behavior_flyout-menu">
+            <div id="job-description-expandable"
+                 class="o-summary_content"
+                 data-js-hook="behavior_flyout-menu_content">
+                <h4>Summary</h4>
+                {{ page.description | safe }}
+                {% if page.responsibilities %}
+                    <div class="block block__sub">
+                        <h4>Responsibilities</h4>
+                        {{ page.responsibilities | safe }}
+                    </div>
+                {% endif %}
+
+                {% if page.travel_required %}
+                    <div class="block block__sub">
+                        <h4>Travel required</h4>
+                        {% if page.travel_details %}
+                        {{ page.travel_details | safe }}
+                        {% else %}
+                        Yes
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if page.additional_section_title and page.additional_section_content %}
+                    <div class="block block__sub">
+                        <h4>{{ page.additional_section_title }}</h4>
+                        {{ page.additional_section_content | safe }}
+                    </div>
+                {% endif %}
+
+                {% if page.service_type and page.job_length %}
+                    <div class="block block__sub">
+                        <h4>Position type</h4>
+                        {{- page.service_type }}, {{ page.job_length | lower -}}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button class="o-summary_btn u-hidden"
+                    data-js-hook="behavior_flyout-menu_trigger">
+                {{ _('Read full description') }}
+                {{ svg_icon('plus-round') }}
+            </button>
+        </div>
+
+    </section>
+
+    <section class="block
+                    block__padded-top
+                    block__border-top
+                    vacancy-announcement_apply">
+        <h2 id="interested">What to know if you apply</h2>
+        <div class="block block__sub">
+            <div class="content-l">
+                <div class="content-l_col content-l_col-1-2">
+                    <div class="u-flexible-container">
+                        <iframe class="u-flexible-container_inner"
+                                src="https://www.youtube.com/embed/XCbZnTIeTOY"
+                                frameborder="0"
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <div class="content-l_col content-l_col-1-2">
+                    <p>Put simply, federal hiring rules prioritize fairness. Our video and resources explain how the application process works, important parts to pay attention to, and what to expect after you apply.</p>
+                    <a class="a-link
+                              a-link__jump"
+                        href="/about-us/careers/application-process/">
+                        <span class="a-link_text">Learn about the job application process</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        <h2 id="interested">Apply for this position</h2>
+        <div class="block block__sub">
+            <div class="content-l">
+                {% for usajobs_link in usajobs_links %}
+                    <div class="content-l_col
+                                {{ 'content-l_col-1-2' if usajobs_links|length > 1 else 'content-l_col-1'}}">
+                        {% set applicant_type = usajobs_link.applicant_type %}
+                        <h4>{{ applicant_type.display_title if applicant_type.display_title else applicant_type }}</h4>
+                        <p>{{ applicant_type.description }}</p>
+                        <p><a class="a-btn" href="{{ usajobs_link.url }}">Apply on USAJobs</a></p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% set email_links = page.email_application_links.order_by('label') %}
+    {% for email_link in email_links %}
+    <div class="block
+                block__bg
+                block__border">
+        <h4>{{ email_link.label }}</h4>
+        {% if email_link.description %}<p>{{ email_link.description }}</p>{% endif %}
+        <p><a class="a-btn" href="{{ email_link.mailto_link | safe }}">Email us</a></p>
+    </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped  %}
+{% if about_us %}
+    <div class="block block__flush-top">
+        {{ about_us.text | safe }}
+    </div>
+{% endif %}
+<div class="block block__flush-top">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
+            Working at the CFPB
+        </h2>
+    </header>
+
+    <ul class="m-list m-list__links">
+        <li class="m-list_item">
+            <a href="/about-us/careers/working-at-cfpb" class="m-list_link">
+                Working at the CFPB
+            </a>
+        </li>
+        <li class="m-list_item">
+            <a href="/office-civil-rights/" class="m-list_link">
+                Office of Civil Rights
+            </a>
+        </li>
+    </ul>
+    <p>
+       The Consumer Financial Protection Bureau (CFPB) is an equal
+       opportunity employer and seeks to create and maintain a vibrant
+       and diverse workforce. Women, minorities, veterans, and
+       people with disabilities are encouraged to apply.
+    </p>
+</div>
+<div class="block block__flush-top">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
+            Learn more about the CFPB's work
+        </h2>
+    </header>
+    <ul class="m-list m-list__links u-mb0">
+        <li class="m-list_item">
+            <a href="/about-us/blog" class="m-list_link">
+                CFPB Blog
+            </a>
+        </li>
+        <li class="m-list_item">
+            <a href="/about-us/newsroom" class="m-list_link">
+                Newsroom
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="block block__flush-top">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
+            Follow us on LinkedIn
+        </h2>
+    </header>
+    <p data-qa-hook="info-section-desc">
+        The CFPB is one of the most searched-for agencies
+        in the federal government.
+        Connect with us to stay updated on the work
+        we do and new opportunities to be a part of it.
+    </p>
+    <a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
+       class="a-link a-link__jump a-link__external-link">
+        Follow us on LinkedIn
+    </a>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+{{ super() }}
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        "title": "{{ page.title }}",
+        "datePosted": "{{ dt.format_datetime(page.open_date) if page.close_date else '' }}",
+        "validThrough": "{{ dt.format_datetime(page.close_date) if page.close_date else '' }}",
+        "baseSalary": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": {
+                "@type": "QuantitativeValue",
+                "minValue": "{{ page.salary_min }}",
+                "maxValue": "{{ page.salary_max }}",
+                "unitText": "YEAR"
+            }
+        },
+        "description": "{{ page.description }}",
+        "responsibilities": "{{ page.responsibilities }}",
+        "hiringOrganization" : {
+            "@type" : "Organization",
+            "name" : "Consumer Financial Protection Bureau",
+            "sameAs" : "https://www.consumerfinance.gov"
+        },
+        "jobLocation" : {
+            "@type": "Place",
+            "address": [
+            {% if page.allow_remote -%}
+                {
+                    "@type": "PostalAddress",
+                    "addressCountry": "US"
+                }
+            {% else -%}
+                {%- set city_lists =
+                    regions | map( attribute='major_cities' ) | list +
+                    [ offices ]
+                -%}
+                {% for city_list in city_lists %}
+                    {% for city in city_list %}
+                        {
+                            "@type": "PostalAddress",
+                            "addressLocality": "{{ city.name }}",
+                            "addressRegion": "{{ city.state_id }}",
+                            "addressCountry": "US"
+                        }{{ ', ' if not loop.last else '' }}
+                    {%- endfor -%}
+                {%- endfor -%}
+            {% endif %}
+            ]
+        },
+        "employmentType" : "FULL_TIME"
+    }
+</script>
+
+{% endblock %}

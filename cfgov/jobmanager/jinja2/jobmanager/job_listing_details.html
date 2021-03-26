@@ -1,0 +1,135 @@
+{# ==========================================================================
+
+   Job Listing Details
+
+   ==========================================================================
+
+   Description:
+
+   Renders job details when given:
+
+   value.title:             Job title.
+
+   value.division:          Job division.
+
+   value.close_date:        Date job closes.
+
+   value.offices:           List of offices, where each office has:
+
+   office.name:             Office city name.
+
+   office.state_id:         Office state abbreviation.
+
+   value.remote_allowed:    Whether an office job supports working remotely.
+
+   value.regions:           List of regions, where each region has:
+
+   region.name:             Region name.
+
+   region.states:           List of states in region, as strings.
+
+   region.major_cities:     List of major cities in region, where each city has:
+
+   major_city.name:         Major city name.
+
+   major_city.state_id:     Major city state abbreviation.
+
+   value.grades:            List of job grades, as integers.
+
+   value.salary_min:        Minimum salary, as float.
+
+   value.salary_max:        Maximum salary, as float.
+
+   value.applicant_types:   List of applicant types, as strings.
+
+   ========================================================================== #}
+
+{%- import 'macros/time.html' as time -%}
+{% import 'macros/util/format/datetime.html' as dt -%}
+
+{%- macro city_str( city ) -%}
+{{ city.name ~ ', ' ~ city.state_id }}
+{%- endmacro -%}
+
+<section class="block
+                block__flush-top
+                block__sub
+                vacancy-announcement_details">
+    <h1>{{ value.title }}</h1>
+    <dl>
+        <dt>Division/Office:</dt>
+        <dd>{{ value.division }}</dd>
+        <dt>Closing date:</dt>
+        <dd>
+            {{- time.render( value.close_date, { 'date': true }, text_format=true ) }}
+        </dd>
+        {% if value.offices or value.regions %}
+        <dt>Location:</dt>
+        <dd>
+            {%- if value.regions -%}
+                {%- set multiple_regions = value.regions | length > 1 -%}
+                Home duty location in one of the following
+                {%- if multiple_regions %}
+                    states:
+                    <ul class="u-mt10">
+                {% endif %}
+                {%- for region in value.regions %}
+                    {%- if multiple_regions %}<li>{% endif %}
+                    {{ region.name }}
+                    {%- if not multiple_regions %} states{% endif %}:
+                    {{ region.states | join( ', ' ) }}
+                    <span class="u-hidden">
+                        Cities in this region include
+                        {%- for major_city in region.major_cities %}
+                            {%- if loop.first %} {% else %}; {% endif -%}
+                            {{- city_str( major_city ) -}}
+                        {%- endfor %}.
+                    </span>
+                    {% if multiple_regions %}</li>{% endif %}
+                {% endfor %}
+                {% if value.regions | length > 1 %}</ul>{% endif %}
+            {%- else -%}
+                {%- if value.offices | length == 2 and not value.remote_allowed -%}
+                    {{ city_str( value.offices[0] ) }} or
+                    {{- ' ' ~ city_str( value.offices[1] ) }}
+                {%- else %}
+                    {%- if value.offices | length == 1 %}
+                        {{- city_str( value.offices[0] ) -}}
+                    {%- else -%}
+                        {%- for office in value.offices[:-1] -%}
+                            {% if not loop.first %}; {% endif -%}
+                            {{- city_str( office ) -}}
+                        {%- endfor -%}
+                        {{- '; ' if value.offices | length > 1 else '' -}}
+                        {{- ' or ' if not value.remote_allowed else '' -}}
+                        {{- city_str( value.offices[-1] ) -}}
+                        {{-  '; ' if value.remote_allowed else '' -}}
+                    {% endif %}
+                    {{- ' or remote' if value.remote_allowed else '' -}}
+                {%- endif -%}
+            {%- endif -%}
+        </dd>
+        {% endif %}
+        {% if value.grades %}
+        <dt>Grade{{ value.grades | pluralize() }}:</dt>
+        <dd>
+            {{ value.grades | sort | join( ', ' ) }}
+            <a class="pay-grade-link"
+                href="/about-us/careers/pay-scales/">
+                See information on grades and base pay ranges</a>
+        </dd>
+        {% endif %}
+        <dt>Salary:</dt>
+        <dd>
+            ${{ '{:,.0f}'.format( value.salary_min ) -}}
+            {%- if value.salary_min != value.salary_max -%}
+            &ndash;
+            {{- '{:,.0f}'.format( value.salary_max ) }}
+            {%- endif %}
+        </dd>
+        {% if value.applicant_types %}
+        <dt>Who may apply:</dt>
+        <dd>{{ value.applicant_types | join( ', ' ) }}</dd>
+        {% endif %}
+    </dl>
+</section>

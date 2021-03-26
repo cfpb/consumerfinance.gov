@@ -30,7 +30,8 @@ module.exports = {
       `${ paths.unprocessed }/apps/**/js/**/*.js`,
       `!${ paths.unprocessed }/apps/**/node_modules/**`
     ],
-    test:  [
+    test: [
+      paths.test + '/cypress/**/*.js',
       paths.test + '/util/**/*.js',
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
@@ -59,34 +60,18 @@ module.exports = {
     dest:     paths.processed + '/css',
     settings: {
       paths:  globAll.sync( [
-        paths.modules + '/cf-*/src',
+        paths.modules + '/@cfpb/cfpb-*/src',
         paths.modules + '/cfpb-chart-builder/src/**',
         paths.modules + '/highcharts/css'
       ] ),
       compress: true
     },
     otherBuildTriggerFiles: [
+      paths.unprocessed + '/css/**/*.css',
       paths.unprocessed + '/css/**/*.less',
       paths.modules,
       './config/**/*.js',
       './gulp/**/*.js'
-    ],
-    otherBuildTriggerFilesNemo: [
-      paths.legacy + '/nemo/**/*.css',
-      paths.legacy + '/nemo/**/*.less'
-    ]
-  },
-  legacy: {
-    cwd: paths.legacy,
-    dest: paths.processed,
-    scripts: [
-      paths.legacy + '/nemo/_/js/jquery-1.5.1.min.js',
-      paths.legacy + '/nemo/_/js/jquery.easing.1.3.js',
-      paths.legacy + '/nemo/_/js/jquery.fitvids.min.js',
-      paths.legacy + '/nemo/_/js/appendAround.js',
-      paths.legacy + '/nemo/_/js/plugins.js',
-      paths.legacy + '/nemo/_/js/main.js',
-      paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
   }
 };

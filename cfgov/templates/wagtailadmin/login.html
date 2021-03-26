@@ -1,33 +1,31 @@
-{% overextends "wagtailadmin/login.html" %}
-{% load staticfiles i18n %}
+{% extends "wagtailadmin/login.html" %}
+{% load i18n wagtailadmin_tags %}
 
 {% block furniture %}
-    <div class="content-wrapper">
-        {% if form.non_field_errors %}
+    <main class="content-wrapper" role="main">
+        {% if messages or form.errors %}
             <div class="messages">
                 <ul>
-                    {% for error in form.non_field_errors %}
-                        <li class="error">{{ error |safe }}</li>
+                    {% if form.errors %}
+                        <li class="error">{% blocktrans %}Your {{ username_field }} and password didn't match. Please try again.{% endblocktrans %}</li>
+                    {% endif %}
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
                     {% endfor %}
                 </ul>
             </div>
         {% endif %}
 
-        {% block above_login %}
-            {% if 'build' in request.site.hostname %}
-                <h1>Log in to demo Wagtail</h1>
-            {% else %}
-                <h1>Log in to consumerfinance.gov</h1>
-            {% endif %}
-        {% endblock %}
+        {% block above_login %}{% endblock %}
 
         <form action="{% url 'cfpb_login' %}" method="post" autocomplete="off" novalidate>
             {% block login_form %}
             {% csrf_token %}
 
-            {% url 'user_welcome' as home_url %}
+            {% url 'wagtailadmin_home' as home_url %}
             <input type="hidden" name="next" value="{{ next|default:home_url }}" />
 
+            <h1>{% block branding_login %}{% trans "Sign in to Wagtail" %}{% endblock %}</h1>
 
             <ul class="fields">
                 {% block fields %}
@@ -47,9 +45,21 @@
                         </div>
                     </div>
                     {% if show_password_reset %}
-                        <p class="help"><a href="{% url 'wagtailadmin_password_reset' %}">{% trans "Forgotten it?" %}</a></p>
+                        <p class="help"><a href="{% url 'wagtailadmin_password_reset' %}" aria-label="{% trans 'Reset your password' %}">{% trans "Forgotten it?" %}</a></p>
                     {% endif %}
                 </li>
+
+                {% block extra_fields %}
+                {% for field_name, field in form.extra_fields %}gs
+                <li class="full">
+                    {{ field.label_tag }}
+                    <div class="field iconfield">
+                        {{ field }}
+                    </div>
+                </li>
+                {% endfor %}
+                {% endblock extra_fields %}
+
                 {% comment %}
                     Removed until functionality exists
                     <li class="checkbox">
@@ -61,11 +71,17 @@
                 {% endblock %}
                 <li class="submit">
                     {% block submit_buttons %}
-                    <button type="submit" class="button button-longrunning" tabindex="3" data-clicked-text="{% trans 'Signing in...' %}"><span class="icon icon-spinner"></span><em>{% trans 'Sign in' %}</em></button>
+                    <button type="submit" class="button button-longrunning" data-clicked-text="{% trans 'Signing in…' %}">{% icon name="spinner" %}<em>{% trans 'Accept and sign in' %}</em></button>
                     {% endblock %}
                 </li>
             </ul>
         {% endblock %}
         </form>
-    </div>
+
+        {% block below_login %}
+            <p>This is a Consumer Financial Protection Bureau (CFPB) information system. The CFPB is an independent agency of the United States Government. CFPB information systems are provided for the processing of official information only. Unauthorized or improper use of this system may result in administrative action, as well as civil and criminal penalties.</p>
+            <p>Because this is a CFPB information system, you have no reasonable expectation of privacy regarding any communication or data, transiting or stored, on this information system. All data contained in CFPB information systems is owned by the CFPB, and your use of the CFPB information system serves as your consent to your usage being monitored, intercepted, recorded, read, copied, captured, or otherwise audited in any manner by authorized personnel, including, but not limited to, employees, contractors, and/or agents of the United States Government.</p>
+        {% endblock %}
+
+    </main>
 {% endblock %}

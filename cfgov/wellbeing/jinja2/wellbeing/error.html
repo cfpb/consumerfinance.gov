@@ -4,18 +4,25 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% block title -%}
-    Financial well-being questionnaire submission problem
+    {{ _('Financial well-being questionnaire submission problem') }} | {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
 {% block desc -%}
-    Please go back and retake the questionnaire to receive your score.
+    {{ _('Please go back and retake the questionnaire to receive your score.') }}
 {%- endblock %}
 
 {% block content_main %}
-    <h1>There was a problem with your submission</h1>
+    <p>
+      {% if (current_language == 'en') %}
+      <a href="{{ url('fwb_error_es') }}">Ver página en español</a>
+      {% else %}
+      <a href="{{ url('fwb_error_en') }}">View page in English</a>
+      {% endif %}
+    </p>
+
+    <h1>{{ _('There was a problem with your submission') }}</h1>
 
     <p class="lead-paragraph">
-        Please use your browser’s back button to return to the questionnaire
-        and retake it to receive your score.
+        {{ _('Please use your browser’s back button to return to the questionnaire and retake it to receive your score.') }}
     </p>
 {% endblock %}

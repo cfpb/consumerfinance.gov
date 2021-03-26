@@ -2,8 +2,8 @@ import json
 
 from django.test import TestCase
 
+from wagtail.core.models import Site
 from wagtail.tests.testapp.models import SimplePage
-from wagtail.wagtailcore.models import Site
 
 from v1.atomic_elements.organisms import AtomicTableBlock, RichTextTableInput
 

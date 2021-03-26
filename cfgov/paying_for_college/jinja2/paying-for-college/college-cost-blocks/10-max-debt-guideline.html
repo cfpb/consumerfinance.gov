@@ -1,0 +1,68 @@
+<section class="college-costs_tool-section college-costs_tool-section__debt-guideline" data-tool-section="max-debt-guideline">
+    <h2>Could this be too much debt?</h2>
+    <p>A guideline that some find helpful: If you’re borrowing more than you’re likely to earn in your first year out of school, then you should consider whether you might be taking on more debt than you'll be able to afford. <span data-state-based-visibility="program-is-selected">The projected total debt shown below is just for this program and does not include prior student loans; if you have other student debt, include that in your calculations.</span></p>
+
+    {{ number_callout.render({
+            'header': 'Projected total debt',
+            'data_attribute': 'data-financial-item="debt_totalAtGrad"',
+            'additional_classes': 'number-callout__large',
+            'value': '$0'
+        })
+    }}
+
+    <p>Assuming similar borrowing each year</p>
+
+    <div data-state-based-visibility="uncovered-costs">
+    {{ notification.render(
+        'caution',
+        true,
+        '',
+        'Since you have <span data-financial-item="total_gap">$Xxxx</span> in uncovered costs, this projection may underestimate your debt.' | safe
+    ) }}
+    </div>
+
+    <div data-state-based-visibility="no-program-selected">
+        {{ notification.render(
+            'information',
+            true,
+            'Ask your school about your expected salary.',
+            'Your actual salary will depend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a>' | safe
+        ) }}
+    </div>
+    <div class="debt-guideline_salary-info">
+    {{ number_callout.render({
+                'header': 'Median salary of this <span class="no-program-selected">school\'s recent students</span><span data-state-based-visibility="program-is-selected">program\'s graduates</span>' | safe,
+                'data_attribute': 'data-financial-item="salary_annual"',
+                'additional_classes': 'number-callout__large',
+                'value': '$0'
+            })
+        }}
+
+
+        <p class="undergrad-content">Median earnings of federally-aided students working and not enrolled 6 years after starting at this school—includes students who did not graduate</p>
+        <p class="graduate-content">Median first-year earnings of federally-aided program graduates who were working and not enrolled during the first year following graduation</p>
+
+        <h4>Your projected debt vs. the median <span class="no-program-selected">salary of recent students</span><span data-state-based-visibility="program-is-selected">first-year salary of program graduates</span></h4>
+
+        <div id="max-debt-guideline_chart"></div>
+
+        <div data-state-based-visibility="debt-rule-violation">
+            {{ notification.render(
+                'caution',
+                true,
+                'Your projected total debt is more than the <span class="no=program-selected">median salary of this school\'s recent students</span><span data-state-based-visibility="program-is-selected">median first-year salary of this program\'s graduates</span>. Consider whether this plan is right for you.' | safe,
+                'Your projected total debt is <span data-financial-item="other_debtGuideDifference">$XXXX</span> higher than the <span class="no-program-selected">median salary of this school\'s recent students</span><span data-state-based-visibility="program-is-selected">median first-year salary of this program\'s graduates</span>. Your actual salary will depend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a>' | safe
+            ) }}
+        </div>
+
+        <div data-state-based-visibility="debt-rule-okay">
+            {{ notification.render(
+                'information',
+                true,
+                'Your projected total debt is not higher than the <span class="no-program-selected">median salary of this school\'s recent students</span><span data-state-based-visibility="program-is-selected">median first-year salary of this program\'s graduates</span>'  | safe,
+                'Your actual salary will depend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a>' | safe
+            ) }}
+        </div>
+    </div>
+
+</section>

@@ -1,3 +1,4 @@
+import django
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import (
@@ -7,23 +8,24 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, resolve_url
 from django.template.response import TemplateResponse
-from django.utils.encoding import force_text
+from django.urls import resolve
+from django.utils.encoding import force_str
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
-from wagtail.wagtailadmin.views import account
+from wagtail.admin.views import account
 
 from v1.auth_forms import (
     CFGOVPasswordChangeForm, CFGOVSetPasswordForm, LoginForm
 )
 from v1.util.util import all_valid_destinations_for_request
+from v1.util.wrap_password_reset import _wrap_password_reset_view
 
 
 # Overrided Wagtail Views
@@ -71,8 +73,8 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
     Displays the login form and handles the login action.
     """
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
-                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
-
+                                   request.GET.get(REDIRECT_FIELD_NAME,
+                                                   '/admin/'))
     # Redirects to https://example.com should not be allowed.
     if redirect_to:
         if '//' in redirect_to:
@@ -83,8 +85,14 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
 
         if form.is_valid():
             # Ensure the user-originating redirection url is safe.
-            if not is_safe_url(url=redirect_to, host=request.get_host()):
-                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+            if django.VERSION > (2, 0):
+                if not is_safe_url(
+                    url=redirect_to, allowed_hosts=request.get_host()
+                ):
+                    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+            else:
+                if not is_safe_url(url=redirect_to, host=request.get_host()):
+                    redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
             user = form.get_user()
             try:
@@ -97,7 +105,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
             return HttpResponseRedirect(
                 '/login/check_permissions/?next=' + redirect_to)
     else:
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return HttpResponseRedirect(
                 '/login/check_permissions/?next=' + redirect_to)
         form = LoginForm(request)
@@ -122,10 +130,14 @@ def check_permissions(request):
     redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
                                    request.GET.get(REDIRECT_FIELD_NAME, ''))
 
-    if not request.user.is_authenticated():
+    if not is_safe_url(url=redirect_to, allowed_hosts=request.get_host()):
+        redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(
             "%s?%s=%s" % (settings.LOGIN_URL, REDIRECT_FIELD_NAME, redirect_to)
         )
+
     view, args, kwargs = resolve(redirect_to)
     kwargs['request'] = request
     try:
@@ -165,7 +177,7 @@ def custom_password_reset_confirm(
 
     try:
         # urlsafe_base64_decode() decodes to bytestring on Python 3
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = UserModel._default_manager.get(pk=uid)
     except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
         user = None
@@ -196,22 +208,5 @@ def custom_password_reset_confirm(
     return TemplateResponse(request, template_name, context)
 
 
-@never_cache
-@login_required
-def welcome(request):
-    valid_destinations = all_valid_destinations_for_request(request)
-
-    if len(valid_destinations) == 1:
-        redirect_to = valid_destinations[0][1]
-        return HttpResponseRedirect(redirect_to)
-
-    else:
-        return render(
-            request,
-            'welcome.html',
-            {'destinations': valid_destinations}
-        )
-
-
-password_reset_confirm = account._wrap_password_reset_view(
+password_reset_confirm = _wrap_password_reset_view(
     custom_password_reset_confirm)

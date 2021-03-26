@@ -1,0 +1,28 @@
+{# ==========================================================================
+
+   Contact Expandable
+
+   ==========================================================================
+
+   Description:
+
+   Create an Expandable molecule when given:
+
+   value:                 ContactExpandable block StreamValue.
+
+   value.contact:         Contact snippet.
+
+   ========================================================================== #}
+{% from 'organisms/expandable.html' import expandable with context %}
+
+{% set expandable_value = { 'label': value.contact.heading } %}
+{% call() expandable( expandable_value ) %}
+{% if value.contact.body_shown_in_expandables %}
+    {{ value.contact.body | richtext }}
+{% endif %}
+{% for contact in value.contact.contact_info %}
+    <div{% if not loop.first %} class="u-mt15"{% endif %}>
+        {% include_block contact %}
+    </div>
+{% endfor %}
+{% endcall %}

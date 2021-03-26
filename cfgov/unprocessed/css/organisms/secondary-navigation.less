@@ -1,5 +1,5 @@
 /* =========================================================================
-   cfgov-refresh
+   consumerfinance.gov
    o-secondary-navigation
    ========================================================================= */
 
@@ -94,6 +94,9 @@
         }
 
         .o-expandable_content {
+            // These two !important values override basic expandable styling,
+            // because these don't function like expandables on med+ screens.
+            display: block !important;
             max-height: 100% !important;
             padding: 0;
 

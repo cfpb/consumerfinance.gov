@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from unittest import mock
 
 from django.test import TestCase
-
-import mock
 
 from regulations3k.models import Section
 from regulations3k.scripts.insert_section_links import (
@@ -20,7 +18,7 @@ class LinkScriptTestCase(TestCase):
         test_url = get_url(bad_ref)
         self.assertIs(test_url, None)
 
-    def test_part_number_not_in_whitelist(self):
+    def test_part_number_not_in_allowlist(self):
         bad_ref = '1017.5(d)(1)'
         test_url = get_url(bad_ref)
         self.assertIs(test_url, None)

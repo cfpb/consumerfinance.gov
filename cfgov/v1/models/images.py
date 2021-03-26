@@ -1,18 +1,19 @@
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.six import string_types
 
-from wagtail.wagtailimages.image_operations import (
+from wagtail.images.image_operations import (
     DoNothingOperation, MinMaxOperation, WidthHeightOperation
 )
-from wagtail.wagtailimages.models import (
+from wagtail.images.models import (
     AbstractImage, AbstractRendition, Filter, Image
 )
 
+from wagtail_placeholder_images.mixins import PlaceholderRenditionMixin
 
-class CFGOVImage(AbstractImage):
+
+class CFGOVImage(PlaceholderRenditionMixin, AbstractImage):
     alt = models.CharField(max_length=100, blank=True)
-
+    file_hash = models.CharField(max_length=40, blank=True, editable=False)
     admin_form_fields = Image.admin_form_fields + (
         'alt',
     )
@@ -39,9 +40,9 @@ class CFGOVImage(AbstractImage):
         Template tags with Wagtail size-related filters (width, height, max,
         and min), e.g. {% image image 'max-165x165' %}, will generate an
         <img> tag with appropriate size parameters, following logic from
-        wagtail.wagtailimages.image_operations.
+        wagtail.images.image_operations.
         """
-        if isinstance(rendition_filter, string_types):
+        if isinstance(rendition_filter, str):
             rendition_filter = Filter(spec=rendition_filter)
 
         width = self.width
@@ -100,7 +101,10 @@ class CFGOVImage(AbstractImage):
 
 
 class CFGOVRendition(AbstractRendition):
-    image = models.ForeignKey(CFGOVImage, related_name='renditions')
+    image = models.ForeignKey(
+        CFGOVImage,
+        on_delete=models.CASCADE,
+        related_name='renditions')
 
     @property
     def alt(self):

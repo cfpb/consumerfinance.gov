@@ -1,20 +1,19 @@
-from six.moves import html_parser as HTMLParser
+import html
 
 from django.utils.module_loading import import_string
 
 from jinja2 import Markup, contextfunction
 from jinja2.ext import Extension
 
-from hmda.templatetags.hmda_banners import hmda_outage_banner
 from v1.jinja2tags.datetimes import DatetimesExtension
 from v1.jinja2tags.fragment_cache import FragmentCacheExtension
-from v1.models import CFGOVRendition
+from v1.models.images import CFGOVRendition
 from v1.templatetags.app_urls import app_page_url, app_url
-from v1.templatetags.complaint_banners import (
-    complaint_issue_banner, complaint_maintenance_banner
+from v1.templatetags.banners import (
+    collect_outage_banner, complaint_issue_banner,
+    complaint_maintenance_banner, omwi_salesforce_outage_banner
 )
 from v1.templatetags.email_popup import email_popup
-from v1.templatetags.mega_menu import get_menu_items
 from v1.util import ref
 from v1.util.util import get_unique_id
 
@@ -39,7 +38,7 @@ def image_alt_value(image):
         return image.alt
 
     # Otherwise, if it is a block
-    if image:
+    if image and hasattr(image, 'get'):
         block_alt = image.get('alt')
         upload = image.get('upload')
 
@@ -52,6 +51,12 @@ def image_alt_value(image):
 
 
 def is_filter_selected(context, fieldname, value):
+    """Check URL query parameters to see if a filter option should be selected
+
+    Returns True if fieldname=value is found in the GET data in order to output
+    the `checked` attribute on a checkbox or radio button in the
+    _filter_selectable macro (see: filterable-list-controls.html).
+    """
     request_get = context['request'].GET
 
     query_string_values = [
@@ -60,6 +65,10 @@ def is_filter_selected(context, fieldname, value):
         request_get.getlist('filter_' + fieldname)
         if k
     ]
+
+    # Dirty hack to check the default option for the `archived` filter
+    if fieldname == 'archived' and value == 'include':
+        return True
 
     return value in query_string_values
 
@@ -83,10 +92,40 @@ def render_stream_child(context, stream_child):
         new_context['value'] = stream_child
 
     # Render the template with the context
-    html = template.render(new_context)
-    unescaped = HTMLParser.HTMLParser().unescape(html)
+    html_result = template.render(new_context)
+    unescaped = html.unescape(html_result)
     # Return the rendered template as safe html
     return Markup(unescaped)
+
+
+def unique_id_in_context(context):
+    """Return an ID that is unique within the given context
+
+    For a given request, return a unique ID each time this method is
+    called. The goal is to generate IDs to uniquely identify elements
+    in a template that are consistent between page loads.
+
+    If the context has a request object, the generated id will increment:
+
+    >>> context = {'request': request}
+    >>> unique_id_in_context(context)  # returns 1
+    >>> unique_id_in_context(context)  # returns 2
+    >>> unique_id_in_context(context)  # returns 3
+
+    If the context lacks a request, this function will return a 14-character
+    unique alphanumeric string.
+    """
+    request = context.get('request')
+    if request:
+        attribute_name = '__last_unique_id'
+        if not hasattr(request, attribute_name):
+            setattr(request, attribute_name, 0)
+        id = getattr(request, attribute_name) + 1
+        setattr(request, attribute_name, id)
+        return id
+
+    else:
+        return get_unique_id()
 
 
 class V1Extension(Extension):
@@ -97,18 +136,19 @@ class V1Extension(Extension):
             'category_label': ref.category_label,
             'choices_for_page_type': ref.choices_for_page_type,
             'email_popup': email_popup,
+            'collect_outage_banner': collect_outage_banner,
             'complaint_issue_banner': complaint_issue_banner,
             'complaint_maintenance_banner': complaint_maintenance_banner,
-            'get_menu_items': get_menu_items,
+            'omwi_salesforce_outage_banner': omwi_salesforce_outage_banner,
             'get_model': get_model,
             'get_unique_id': get_unique_id,
-            'hmda_outage_banner': hmda_outage_banner,
             'image_alt_value': image_alt_value,
             'is_blog': ref.is_blog,
             'is_event': ref.is_event,
             'is_report': ref.is_report,
             'is_filter_selected': contextfunction(is_filter_selected),
             'render_stream_child': contextfunction(render_stream_child),
+            'unique_id_in_context': contextfunction(unique_id_in_context),
             'app_url': app_url,
             'app_page_url': app_page_url,
         })

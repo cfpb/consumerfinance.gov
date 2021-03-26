@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, unicode_literals
-
 import io
-import six
+from csv import DictReader as cdr
 
 import requests
-from paying_for_college.models import Program, School, cdr
-from paying_for_college.views import validate_pid
 from rest_framework import serializers
+
+from paying_for_college.models import Program, School
+from paying_for_college.views import validate_pid
 
 
 NO_DATA_ENTRIES_LOWER = ('', 'blank', 'no grads', 'no data', 'none')
@@ -98,24 +97,8 @@ def get_school(iped):
         return (school, '')
 
 
-def read_py2(filename):  # pragma: no cover
-    try:
-        with open(filename, 'r') as f:
-            reader = cdr(f, encoding='utf-8-sig')
-            data = [row for row in reader]
-    except UnicodeDecodeError:
-        try:
-            with open(filename, 'r') as f:
-                reader = cdr(f, encoding='windows-1252')
-                data = [row for row in reader]
-        except Exception:
-            data = [{}]
-    except Exception:
-        data = [{}]
-    return data
-
-
-def read_py3(filename):  # pragma: no cover
+def read_in_data(filename):
+    """Read in a utf-8 CSV, as per our spec, or windows-1252 if we must."""
     try:
         with open(filename, newline='', encoding='utf-8-sig') as f:
             reader = cdr(f)
@@ -132,20 +115,9 @@ def read_py3(filename):  # pragma: no cover
     return data
 
 
-def read_in_data(filename):
-    """Read in a utf-8 CSV, as per our spec, or windows-1252 if we must."""
-    if six.PY2:  # pragma: no cover
-        return read_py2(filename)
-    else:  # pragma: no cover
-        return read_py3(filename)
-
-
 def read_in_s3(url):
     response = requests.get(url)
-    if six.PY2:  # pragma: no cover
-        f = io.BytesIO(response.text.encode('utf-8'))
-    else:  # pragma: no cover
-        f = io.StringIO(response.text)
+    f = io.StringIO(response.text)
     reader = cdr(f)
     data = [row for row in reader]
     return data
@@ -187,12 +159,12 @@ def clean(data):
     rate_fields = ('completion_rate', 'default_rate', 'job_placement_rate')
     # Clean string and numeric parameters
     cleaned_data = {
-        k: clean_number_as_string(v) for k, v in six.iteritems(data)
+        k: clean_number_as_string(v) for k, v in dict.items(data)
         if k in number_fields
     }
     cleaned_data.update(
         {
-            k: clean_string_as_string(v) for k, v in six.iteritems(data)
+            k: clean_string_as_string(v) for k, v in dict.items(data)
             if k not in number_fields
         }
     )
@@ -279,7 +251,7 @@ def load(source, s3=False):
             program.save()
 
         else:  # There is error
-            for key, error_list in six.iteritems(serializer.errors):
+            for key, error_list in dict.items(serializer.errors):
 
                 fail_msg = (
                     'ERROR on row {}: {}: '.format(

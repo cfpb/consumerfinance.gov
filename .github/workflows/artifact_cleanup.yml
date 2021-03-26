@@ -1,0 +1,17 @@
+# Our unittest action uses GitHub artifacts to store coverage files from the 
+# frontend and backend jobs for consumption by the coverage jobs. This cleans 
+# up old artifact files that we don't know once the coverage jobs have run.
+# https://github.com/marketplace/actions/purge-artifacts 
+name: 'Artifact cleanup'
+on:
+  schedule:
+    - cron: '0 * * * *' # every hour
+
+jobs:
+  delete-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          expire-in: 0days

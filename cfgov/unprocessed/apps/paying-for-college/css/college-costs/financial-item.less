@@ -1,0 +1,121 @@
+.financial-item {
+	margin-top: unit( 30px / @base-font-size-px, em );
+
+	&:not(&__expandable) {
+		.financial-item_label,
+		.financial-item_value {
+			display: inline-block;
+	    	border-width: 0;
+			border: solid transparent;
+			box-sizing: border-box;
+		    margin-right: -.25em;
+		    vertical-align: top;
+		    width: 50%;
+		}
+	}
+
+	input,
+	&_value {
+		text-align: right;
+	}
+
+	.a-label__heading {
+		margin-bottom: 0;
+	}
+
+	&_note {
+		display: block;
+
+		& span {
+			display: block;
+		}
+
+		.a-link_text,
+		.inline {
+			display: inline;
+		}
+	}
+
+	&__subtotal,
+	&__total {
+		.financial-item_label > :not(p),
+		.financial-item_value {
+			.heading-4();
+			margin-bottom: 0;
+		}
+	}
+
+	&__expandable {
+		margin-top: 0;
+
+		.h4 {
+			margin-bottom: 0;
+		}
+
+		.o-expandable_label {
+			width: auto;
+		}
+
+		.financial-item_note {
+			margin-top: unit( 15px / @base-font-size-px, em );
+		}
+		
+		.financial-item_value {
+			color: @black;
+		}
+	}
+
+	&.o-expandable_target {
+		&__collapsed {
+			.o-expandable_cue-close {
+				display: none;
+			}
+			.o-expandable_cue-open {
+				display: inline;
+				margin-left: unit( 5px / @base-font-size-px, em );
+			}
+		}
+
+		&.o-expandable_target__expanded {
+			.o-expandable_cue-open {
+				display: none;
+			}
+			.o-expandable_cue-close {
+				display: inline;
+				margin-left: unit( 5px / @base-font-size-px, em );
+			}
+		}
+
+		.flex-container {
+			display: flex;
+
+			.o-expandable_label {
+				flex: 1;
+			}
+		}
+	}
+
+	&__total {
+		font-size: unit( 20px / @size-iv, em );
+		border-top: 1px solid @gray-60;
+		padding-top: unit( 10px / @base-font-size-px, em );
+	}
+
+	&__warning {
+		.financial-item_value {
+			color: @red;
+		}
+	}
+
+	&__full-width {
+		div + div {
+			margin-top: unit( 5px / @base-font-size-px, em );
+		}
+	}
+}
+
+.financial-item-group {
+	.financial-item {
+		margin-top: unit( 15px / @base-font-size-px, em );
+	}
+}

@@ -1,0 +1,114 @@
+<section class="college-costs_tool-section" data-tool-section="federal-loans">
+    <h2>Federal loans</h2>
+
+    <p> Any student loan must be repaid, with interest. Federal loans include some borrower protections and repayment options <span class="undergrad-content">(including, under some circumstances, loan forgiveness) </span>that are not typically offered by private and other non-federal loans.</p>
+
+    <p class="undergrad-content">Undergraduates have access to two types of federal loans, Direct Subsidized and Direct Unsubsidized. For both, there are limits on how much you can borrow and you will start repayment 6 months after you leave school or drop below half-time enrollment. Subsidized loans are cheaper than unsubsidized loans because the government pays the accruing interest until you enter repayment. You must demonstrate financial need on your FAFSA to qualify for subsidized loans, but anyone can take out unsubsidized loans. The school figures out how much you're eligible to borrow under federal rules.</p>
+
+    <p class="graduate-content">Graduate students have access to two types of federal loans, Direct Unsubsidized and Grad PLUS. For both, there are limits on how much you can borrow. The school figures out how much you're eligible to borrow under federal rules.</p>
+
+    <p class="graduate-content">We will focus on Direct Unsubsidized here; you will have the opportunity to add Grad PLUS to your plan later.</p>
+
+    {{ notification.render(
+        'caution',
+        true,
+        '',
+        'You can borrow less than your school offers and can request more loan funds later if you need to. Only borrow what you need. Entering the amount here does not obligate you to borrow this money.'
+    ) }}
+
+    <div class="financial-items">
+        <div class="block block__mid undergrad-content">
+            {{
+                input.render({
+                    'label': 'Direct Subsidized Loan',
+                    'id': 'loans__directSub',
+                    'helper_text': 'Cheaper than unsubsidized loans because the government pays your interest until 6 months after you leave school (or drop below half-time)',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="fedLoan_directSub"'
+                })
+            }}
+            {{
+                text_item.render({
+                    'label': 'Interest rate (%)',
+                    'value': '4.53%',
+                    'helper_text': 'The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.',
+                    'data_attribute': 'data-financial-item="rate_directSub"'
+                })
+            }}
+            {{
+                text_item.render({
+                    'label': 'Loan fee (%)',
+                    'value': '1.062%',
+                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.',
+                    'data_attribute': 'data-financial-item="fee_directSub"'
+                })
+            }}
+        </div>
+        <div class="block block__mid">
+            {{
+                input.render({
+                    'label': 'Direct Unsubsidized Loan',
+                    'id': 'loans__directUnsub',
+                    'helper_text': 'You start accruing interest as soon as you receive your first loan',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="fedLoan_directUnsub"'
+                })
+            }}
+            {{
+                text_item.render({
+                    'label': 'Interest rate (%)',
+                    'value': '4.53%',
+                    'helper_text': 'The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.',
+                    'data_attribute': 'data-financial-item="rate_directUnsub"'
+                })
+            }}
+            {{
+                text_item.render({
+                    'label': 'Loan fee (%)',
+                    'value': '1.062%',
+                    'helper_text': 'This fee is deducted immediately from your loan amount, lowering the total you receive. For example, if the loan fee is 1%, then $10 will be subtracted from a $1,000 loan, so you or your school will only receive $990 but you would have to repay $1,000.',
+                    'data_attribute': 'data-financial-item="fee_directUnsub"'
+                })
+            }}
+            {{
+                text_item.render({
+                    'label': 'Total funding from federal loans (minus loan fees)',
+                    'value': '$99,999',
+                    'type': 'total',
+                    'data_attribute': 'data-financial-item="total_fedLoans"'
+                })
+            }}
+        </div>
+    </div>
+
+    <div class="costs-not-covered-notification">
+        {{ notification.render(
+            'caution',
+            true,
+            '',
+            '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
+        ) }}
+    </div>
+
+    {{ notification.render(
+        'money-tips',
+        true,
+        'Money saving tips',
+        '<ul>
+            <li>You can borrow less than your school offers and can request more loan funds later if you need to. You should borrow only what you need.</li>
+            <li> Try to budget for paying down the interest on unsubsidized loans while you’re in school. Even small payments will save you money in the long run. <a href="https://studentaid.gov/manage-loans/repayment/servicers#your-servicer" target="_blank" class="external-link" rel="noreferrer noopener">Contact your loan servicer</a> for more information.</li>
+        </ul>' | safe
+    ) }}
+
+    {{ notification.render(
+        'warning',
+        true,
+        'Know before you go',
+        '<ul>
+            <li>Your loans require that you use them only for things included in the cost of attendance. (For example, buying or leasing a new car is not a covered cost, but gas and tolls are.) Ask the financial aid office for more guidance.</li>
+            <li>As the Department of Education explains, “Just because a school participates in the federal student aid programs doesn’t mean the federal government has endorsed the quality of education the school offers. To find out whether there have been any complaints about the school, contact your local Better Business Bureau®, state higher education agency, or the consumer protection division of your state attorney general’s office. Check with the agency that licenses or accredits the school to see whether it meets required standards.”</li>
+            <li>You have to pay back your loans even if you don’t graduate.</li>
+            <li> It is very difficult to get student loans discharged in bankruptcy and you should not rely on that option.</li>
+        </ul>' | safe
+    ) }}
+</section>

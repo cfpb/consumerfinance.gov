@@ -1,0 +1,107 @@
+/* ==========================================================================
+   TEMPORARY COPY OF BUTTON-LINKS
+   Remove when https://github.com/cfpb/consumerfinance.gov/pull/3887 is
+   merged and deployed.
+   ========================================================================== */
+
+//
+// Button link
+//
+
+.a-btn__link {
+  padding: 0;
+
+  border-bottom: 1px dotted @link-underline;
+  border-radius: 0;
+
+  &,
+  &:link,
+  &:visited {
+    background-color: transparent;
+    border-bottom-color: @link-underline;
+    color: @link-text;
+  }
+
+  &:hover,
+  &.hover {
+    background-color: transparent;
+    border-bottom: 1px solid @link-underline-hover;
+    color: @link-text-hover;
+  }
+
+  &:focus,
+  &.focus {
+    border-bottom-style: solid;
+    background-color: transparent;
+    outline: 1px dotted @link-underline;
+  }
+
+  &:active,
+  &.active {
+    border-bottom: 1px solid @link-underline-active;
+    background-color: transparent;
+    color: @link-text-active;
+  }
+
+  //
+  // Secondary button link
+  //
+
+  &.a-btn__secondary {
+    &,
+    &:link,
+    &:visited {
+      border-bottom-color: @btn__secondary-bg;
+      background-color: transparent;
+      color: @btn__secondary-bg;
+    }
+
+    &:hover,
+    &.hover {
+      border-bottom-color: @btn__secondary-bg-hover;
+      color: @btn__secondary-bg-hover;
+    }
+
+    &:focus,
+    &.focus {
+      outline-color: @btn__secondary-bg;
+    }
+
+    &:active,
+    &.active {
+      border-bottom-color: @btn__secondary-bg-active;
+      color: @btn__secondary-bg-active;
+    }
+  }
+
+  //
+  // Destructive action button link
+  //
+
+  &.a-btn__warning {
+    &,
+    &:link,
+    &:visited {
+      border-bottom-color: @btn__warning-bg;
+      background-color: transparent;
+      color: @btn__warning-bg;
+    }
+
+    &:hover,
+    &.hover {
+      border-bottom-color: @btn__warning-bg-hover;
+      color: @btn__warning-bg-hover;
+    }
+
+    &:focus,
+    &.focus {
+      outline-color: @btn__warning-bg;
+    }
+
+    &:active,
+    &.active {
+      border-bottom-color: @btn__warning-bg-active;
+      color: @btn__warning-bg-active;
+    }
+  }
+}

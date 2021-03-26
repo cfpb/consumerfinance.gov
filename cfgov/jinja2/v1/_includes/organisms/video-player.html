@@ -1,23 +1,148 @@
 {# ==========================================================================
 
-   Video Player
+   video_player.render()
 
    ==========================================================================
 
    Description:
 
-   Create a video player for the Wagtail Video Player module when given:
+   Builds video player markup when given:
 
-   value: Object defined from a StreamField block.
+   video_id:        YouTube video ID, e.g. "dQw4w9WgXcQ".
 
-   value.video_url: A string containing the YouTube embed URL to use.
+   button_pos:      String used to denote the position of the play button.
+                    Possible values: 'center' (default), 'bottomRight'.
+
+   thumbnail_url:   Optional alternate image URL to show before video is played
+                    or after it is finished.
+
+   is_fcm:          Boolean. True if this video is being rendered as part of a
+                    featured content module.
 
    ========================================================================== #}
 
-{% import 'macros/video-player.html' as player with context %}
+{% macro render(
+    video_id,
+    button_pos='center',
+    thumbnail_url=none,
+    is_fcm=false
+) -%}
+    {#
+        Build video_url from the video_id.
 
-{{ player.render({
-    'video': {
-        'url': value.video_url
-    }
-}) }}
+        Excludes the origin parameter on preview views to avoid breaking video
+        playback when the preview request host (from the Wagtail Site) doesn't
+        match the URL serving the video.
+    #}
+    {% set video_url =
+        'https://www.youtube.com/embed/' ~
+        video_id ~
+        '?enablejsapi=1' ~
+        (
+            ('&origin=' ~ request.scheme ~ '://' ~ request.get_host())
+            if not request.is_preview else ''
+        )
+    -%}
+
+    <div class="o-video-player
+                o-video-player__youtube
+                {{- ' o-featured-content-module_visual' if is_fcm else '' }}"
+         data-id="{{ video_id }}"
+         data-src="{{ video_url }}"
+         {{- ' data-custom-thumbnail' if thumbnail_url else '' }}>
+        {{ caller() | safe if caller else '' }}
+        <div class="o-video-player_video-container
+                    {{- ' o-video-player_video-container__flexible' if not is_fcm else '' }}
+                    u-show-on-video-playing">
+            <div class="o-video-player_video-actions-container">
+                <div class="o-video-player_video-actions">
+                    <button class="a-btn o-video-player_close-btn"
+                        href="/"
+                        aria-label="Close video"
+                        tabindex="-1">
+                        Close {{ svg_icon('close-round') }}
+                    </button>
+                </div>
+                {% if not is_fcm %}
+                    {% import 'molecules/social-media.html' as social_media with context %}
+                    {{ social_media.render( {
+                        'is_share_view': true,
+                        'linkedin_title': 'Consumer Financial Protection Bureau',
+                        'linkedin_text': 'Check out this video from the @CFPB',
+                        'twitter_text': 'Check out this video from the @CFPB',
+                        'email_title': page.title if page else 'Consumer Financial Protection Bureau'
+                    } ) }}
+                {% endif %}
+            </div>
+            <div class="o-video-player_iframe-container">
+                <iframe class="o-video-player_iframe"
+                    width="100%"
+                    src="{{ video_url }}"
+                    frameborder="0"
+                    allow="autoplay"
+                    allowfullscreen="true"
+                    scrolling="no"
+                    tabindex="-1">
+                </iframe>
+            </div>
+        </div>
+        <div class="o-video-player_image-container
+                    u-hide-on-video-playing">
+
+            {# This link is for the default, no-JavaScript, state of the video player. #}
+            <a class="o-video-player_play-btn
+                      o-video-player_play-btn__{{ button_pos }}"
+               href="{{ video_url }}"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="{{ _('Play video on YouTube') }}">
+                {{ svg_icon('play') }}
+            </a>
+
+            {# This button plays the video inline when JavaScript is enabled. #}
+            {#
+                TODO: Figure out how to pull video title from API and put it
+                in aria-label below for screen readers.
+            #}
+            <button class="o-video-player_play-btn
+                           o-video-player_play-btn__{{ button_pos }}
+                           u-hidden"
+                    aria-label="{{ _('Play video') }}">
+                {{ svg_icon('play') }}
+            </button>
+
+            {#
+                This image gets displayed either if JavaScript is disabled or if
+                a custom video thumbnail has been specified via thumbnail_url.
+
+                If JS is disabled and no custom thumbnail has been specified,
+                a default fallback preview image is used.
+            #}
+            {%- set image_url =
+                thumbnail_url or
+                static( 'img/cfpb_video_cover_card_954x200.png' )
+            %}
+            <img class="o-video-player_image
+                        {{- ' o-video-player_image__thumbnail' if thumbnail_url else '' }}
+                        {{- ' o-featured-content-module_img' if is_fcm else '' }}"
+                 alt=""
+                 src="{{ image_url }}">
+
+            {#
+                Provide a duration timestamp in the corner of the video.
+            #}
+            <time class="o-video-player_duration u-hidden"></time>
+        </div>
+    </div>
+{%- endmacro %}
+
+
+{%- if value %}
+  {{- render(
+      value.video_id,
+      value.button_pos | default( 'center' ),
+      value.thumbnail_url | default( none ),
+      value.is_fcm | default( false )
+    )
+  }}
+{%- endif %}

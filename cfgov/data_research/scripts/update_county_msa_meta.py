@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import logging
 
 from data_research.models import County, MetroArea, MortgageMetaData, State
@@ -13,7 +11,7 @@ logger = logging.getLogger(__name__)
 NON_STATE_FIPS = NON_STATES.values()
 
 
-def update_whitelist():
+def update_allowlist():
     county_list = [county.fips for county in County.objects.filter(valid=True)]
     msa_list = [msa.fips for msa in MetroArea.objects.filter(valid=True)]
     state_list = [state.fips for state
@@ -26,9 +24,9 @@ def update_whitelist():
         + sorted(msa_list)
         + sorted(state_list)
         + sorted(non_msa_list))
-    whitelist = MortgageMetaData.objects.get(name='whitelist')
-    whitelist.json_value = final_list
-    whitelist.save()
+    allowlist = MortgageMetaData.objects.get(name='allowlist')
+    allowlist.json_value = final_list
+    allowlist.save()
 
 
 def update_state_to_geo_meta(geo):
@@ -117,7 +115,7 @@ def update_state_to_geo_meta(geo):
     for fips in fips_dict:
         _dict = fips_dict[fips]
         geo_name = _dict['name']
-        geo_valid = fips in FIPS.whitelist
+        geo_valid = fips in FIPS.allowlist
         if geo == 'msa':
             msa_state_list = []
             for county_fips in _dict['county_list']:
@@ -147,7 +145,7 @@ def update_state_to_geo_meta(geo):
             state_abbr = s_dict['abbr']
             state_name = s_dict['name']
             non_fips_name = "Non-metro area of {}".format(state_name)
-            non_valid = non_fips in FIPS.whitelist
+            non_valid = non_fips in FIPS.allowlist
             setup[state_abbr][geo_list].append(
                 {'fips': non_fips,
                  'valid': non_valid,
@@ -175,7 +173,7 @@ def update_state_to_geo_meta(geo):
 
 
 def run():
-    update_whitelist()
+    update_allowlist()
     load_fips_meta()
     for geo in ['msa', 'county']:
         update_state_to_geo_meta(geo)

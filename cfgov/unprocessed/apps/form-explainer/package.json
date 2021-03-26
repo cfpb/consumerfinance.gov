@@ -1,0 +1,18 @@
+{
+  "name": "form-explainer",
+  "description": "The consumerfinance.gov form explainer code.",
+  "homepage": "https://www.consumerfinance.gov/",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfpb/consumerfinance.gov.git"
+  },
+  "license": "SEE LICENSE IN TERMS.md",
+  "engines": {
+    "node": ">=12.x"
+  }
+}

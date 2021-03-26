@@ -29,9 +29,13 @@
       markup: |
           <div class="m-global-search">
               <button class="m-global-search_trigger">
-                  <span class="m-global-search_trigger-label">
+                  <span class="m-global-search_trigger-open-label">
                       {{ svg_icon('search') }}
                       <span class="u-hide-on-mobile">Search</span>
+                  </span>
+                  <span class="m-global-search_trigger-close-label">
+                      {{ svg_icon('delete') }}
+                      <span class="u-hide-on-mobile">Close</span>
                   </span>
               </button>
               <div class="m-global-search_content"
@@ -52,7 +56,7 @@
                                             input-contains-label_after__clear
                                             u-hidden">
                                   {{ svg_icon('delete') }}
-                                  <span class="u-visually-hidden">Close</span>
+                                  <span class="u-visually-hidden">Clear search</span>
                               </label>
                               <input type="text"
                                      class="a-text-input"
@@ -61,7 +65,7 @@
                                      placeholder="Search the CFPB">
                           </div>
                           <div class="input-with-btn_btn">
-                              <button class="btn">Search</button>
+                              <button class="a-btn">Search</button>
                           </div>
                       </div>
 
@@ -103,20 +107,21 @@
 */
 
 .m-global-search {
-    // Hide search unless we have JS or it's a desktop-ish size.
-    display: none;
-
-    .js & {
-        display: block;
-    }
 
     &_trigger {
+        // Hide search unless we have JavaScript (JS).
+        display: none;
+
+        // Only show global search if JavaScript (JS) is enabled.
+        html.js & {
+            display: block;
+        }
+
         font-weight: 500;
 
         // Resets for default button styles.
         background-color: transparent;
         border: none;
-        display: none;
 
         box-sizing: border-box;
         border-left: 1px solid transparent;
@@ -137,9 +142,9 @@
             display: none;
         }
 
-        // Only show trigger if we have JS.
-        .js & {
-            display: block;
+        // Hover state for desktop.
+        &:hover {
+            color: @gray-80;
         }
     }
 
@@ -151,18 +156,15 @@
             width: 100%;
         }
 
-        // Only add transforms if we have JS.
-        .js & {
-            &.u-invisible {
-                overflow-x: hidden;
-            }
-
-            &-form {
-                position: absolute;
-            }
+        &.u-invisible {
+            overflow-x: hidden;
         }
 
-        .js &[aria-expanded="true"] &-form {
+        &-form {
+            position: absolute;
+        }
+
+        &[aria-expanded="true"] &-form {
             display: block;
         }
 
@@ -179,6 +181,11 @@
 
     // Up to desktops.
     .respond-to-max( @bp-sm-max, {
+
+        &_fallback {
+            margin: @margin_half__em;
+        }
+
         &_trigger{
             padding-top: 5px;
             height: @mobile_trigger_ht__px;
@@ -195,6 +202,15 @@
                 .m-global-search_trigger-close-label {
                     display: block;
                 }
+            }
+
+            // Hover state for (x) close button.
+            &:hover {
+                color: @black;
+                border-left: 1px solid @gray-40;
+
+                // Important needed to override background color in expanded state.
+                background: @gray-20 !important;
             }
         }
 
@@ -228,13 +244,6 @@
 
             padding-left: unit( @grid_gutter-width / 2 / 18px, em );
             padding-right: unit( @grid_gutter-width / 2 / 18px, em );
-
-            // Show "Close" text when flyout is open.
-            &[aria-expanded="true"] {
-                .m-global-search_trigger-label:before {
-                    content: 'Close';
-                }
-            }
         }
 
         // Only show search suggestions at tablet size.
@@ -243,15 +252,27 @@
         }
     } );
 
+    // Tablet and above
+    .respond-to-min( @bp-sm-min, {
+
+        // Override for the .m-btn-inside-input class from the design system.
+        // This is needed because we don't have an icon inside the input
+        // at the desktop size (there is an icon at the mobile size).
+        .m-btn-inside-input .a-text-input {
+            padding-right: unit( 14px / @base-font-size-px, em );
+        }
+
+    } );
+
     // Desktop and above
     .respond-to-min( @bp-med-min, {
-        // Always show on desktop, even without JS.
-        display: block;
+
         // Center on the call to action (CTA) divider to right of search.
         padding-top: 6px;
         padding-bottom: 5px;
         // Match CTA offset from divider.
         padding-right: @margin_half__em;
+        position: relative;
 
         overflow: hidden;
 
@@ -264,36 +285,41 @@
             }
         }
 
-        .js & {
-            position: relative;
+        &_trigger {
+            float: right;
+        }
 
-            &_trigger {
-                float: right;
-            }
-
-            &_content {
-                right: @margin_half__em;
-                width: auto;
-            }
+        &_content {
+            right: @margin_half__em;
+            width: auto;
+            // Add margin so that the focus rectangle isn't cropped by
+            // the hidden overflow of the search container element.
+            margin-left: 3px;
         }
     } );
 
-    // TODO: Move these styles to cf-enhancements/cf-forms.
-    //       Look into removing grid styles altogether.
     // Mobile size.
     .respond-to-min( 480px, {
         &_content-form {
             // Attach button to input.
             .o-form__input-w-btn_input-container {
-                width: 70%;
+                width: 75%;
+
+                [lang="es"] & {
+                    width: 70%;
+                }
             }
             .o-form__input-w-btn_btn-container {
-                width: 30%;
+                width: 25%;
                 border-left: 0;
 
                 button {
                     border-top-left-radius: 0;
                     border-bottom-left-radius: 0;
+                }
+
+                [lang="es"] & {
+                    width: 30%;
                 }
             }
         }
@@ -314,6 +340,18 @@
             display: none !important;
         }
     } );
+
+    // Hide fallback by default.
+    &_fallback {
+        display: none;
+        padding: 8px;
+        padding-right: 0;
+
+        // Only show fallback if JavaScript (JS) is not enabled.
+        .no-js & {
+            display: block;
+        }
+    }
 }
 
 /* topdoc

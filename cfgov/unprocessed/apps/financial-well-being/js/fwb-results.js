@@ -1,5 +1,5 @@
-import Analytics from '../../../js/modules/Analytics';
-const Expandable = require( 'cf-expandables/src/Expandable' );
+import Analytics from '../../../js/modules/Analytics.js';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 
 let buttonsDom;
 

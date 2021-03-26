@@ -1,14 +1,14 @@
 // Required modules.
-import { checkDom, setInitFlag } from '../modules/util/atomic-helpers';
-import EventObserver from '../modules/util/EventObserver';
-import FlyoutMenu from '../modules/behavior/FlyoutMenu';
-import MegaMenuDesktop from '../organisms/MegaMenuDesktop';
-import MegaMenuMobile from '../organisms/MegaMenuMobile';
-import MoveTransition from '../modules/transition/MoveTransition';
-import TabTrigger from '../modules/TabTrigger';
-import Tree from '../modules/Tree';
-import { contains } from '../modules/util/data-hook';
-import { isInDesktop } from '../modules/util/breakpoint-state';
+import { checkDom, setInitFlag } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
+import EventObserver from '@cfpb/cfpb-atomic-component/src/mixins/EventObserver.js';
+import FlyoutMenu from '../modules/behavior/FlyoutMenu.js';
+import MegaMenuDesktop from '../organisms/MegaMenuDesktop.js';
+import MegaMenuMobile from '../organisms/MegaMenuMobile.js';
+import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition.js';
+import TabTrigger from '../modules/TabTrigger.js';
+import Tree from '../modules/Tree.js';
+import { contains } from '@cfpb/cfpb-atomic-component/src/utilities/data-hook.js';
+import { DESKTOP, viewportIsIn } from '../modules/util/breakpoint-state.js';
 
 /**
  * MegaMenu
@@ -67,7 +67,7 @@ function MegaMenu( element ) {
     _populateTreeFromDom( rootMenuDom, rootNode, _addMenu );
 
     // Initialize screen-size specific behaviors.
-    _desktopNav = new MegaMenuDesktop( _menus ).init();
+    _desktopNav = new MegaMenuDesktop( BASE_CLASS, _menus ).init();
     _mobileNav = new MegaMenuMobile( _menus ).init();
     _mobileNav.addEventListener(
       'rootExpandBegin',
@@ -84,7 +84,7 @@ function MegaMenu( element ) {
       window.addEventListener( 'orientationchange', _resizeHandler );
     }
 
-    if ( isInDesktop() ) {
+    if ( viewportIsIn( DESKTOP ) ) {
       _desktopNav.resume();
     } else {
       _mobileNav.resume();
@@ -150,8 +150,6 @@ function MegaMenu( element ) {
    */
   function _addEvents( menu ) {
     menu.addEventListener( 'triggerClick', _handleEvent );
-    menu.addEventListener( 'triggerOver', _handleEvent );
-    menu.addEventListener( 'triggerOut', _handleEvent );
     menu.addEventListener( 'expandBegin', _handleEvent );
     menu.addEventListener( 'expandEnd', _handleEvent );
     menu.addEventListener( 'collapseBegin', _handleEvent );
@@ -164,7 +162,7 @@ function MegaMenu( element ) {
    * @param {Object} event - A FlyoutMenu event object.
    */
   function _handleEvent( event ) {
-    const activeNav = isInDesktop() ? _desktopNav : _mobileNav;
+    const activeNav = viewportIsIn( DESKTOP ) ? _desktopNav : _mobileNav;
     activeNav.handleEvent( event );
   }
 
@@ -173,7 +171,7 @@ function MegaMenu( element ) {
    * suspends or resumes the mobile or desktop menu behaviors.
    */
   function _resizeHandler() {
-    if ( isInDesktop() ) {
+    if ( viewportIsIn( DESKTOP ) ) {
       _mobileNav.suspend();
       _desktopNav.resume();
     } else {
@@ -194,7 +192,7 @@ function MegaMenu( element ) {
    * @returns {MegaMenu} An instance.
    */
   function collapse() {
-    if ( !isInDesktop() ) {
+    if ( !viewportIsIn( DESKTOP ) ) {
       _mobileNav.collapse();
     }
 

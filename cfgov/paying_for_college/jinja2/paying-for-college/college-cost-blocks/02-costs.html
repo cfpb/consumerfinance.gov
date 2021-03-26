@@ -1,0 +1,135 @@
+<section class="college-costs_tool-section college-costs_tool-section__costs" data-tool-section="costs">
+    <h2>This year's costs</h2>
+    <div data-state-based-visibility="costs-question-hide">
+        <p>Does your financial aid offer have information about costs?</p>
+        <div class="costs_button-section">
+            <button class="a-btn" data-costs_offer-answer="y">Yes</button>
+            <button class="a-btn" data-costs_offer-answer="n">No</button>
+        </div>
+    </div>
+
+    <div class="costs_content-section costs_content-section_content block block__sub" data-state-based-visibility="costs-question-yes">
+        <p> Type in the costs listed in your offer, adding additional costs as needed. </p>
+        <p>These are estimates based on students’ reported spending. Your actual expenses will depend on which courses you take, whether you have dependents, your personal budgeting, and other factors.</p>
+        <p>The school uses these estimates to calculate how much aid you can receive. If you think you will spend more, contact the school’s financial aid office—you may be eligible for more aid.</p>
+    </div>
+    <div class="costs_content-section costs_content-section_content block block__sub" data-state-based-visibility="costs-question-no">
+        <p> This is the most recent data from the U.S. Department of Education, but it is at least one year old. Ask the financial aid office for up-to-date estimates. Your actual spending will depend on which courses you take, whether you have dependents, your personal budgeting, and other factors.</p> 
+        <p> The school uses these estimates to calculate how much aid you can receive. If you will spend more, contact the school’s financial aid office—you may be eligible for more aid.</p>
+    </div>
+
+    <div class="costs_content-section financial-items" id="costs_inputs-section">
+        <div class="block block__mid">
+            <h3 class="u-border-bottom">Direct costs</h3>
+            <p> Direct costs are what you will owe the school at the beginning of each term. Your actual bill will vary from the numbers here. </p>
+            {{
+                input.render({
+                    'label': 'Tuition and fees',
+                    'helper_text': 'Depends on which courses you take',
+                    'id': 'costs__tuition-fees',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="dirCost_tuition"'
+                })
+            }}
+            {{
+                input.render({
+                    'label': 'Housing and meals',
+                    'id': 'costs__room-board',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="dirCost_housing"'
+                })
+            }}
+            {{
+                input.render({
+                    'label': 'Other direct costs',
+                    'helper_text': 'Anything else your school will bill you for',
+                    'id': 'costs__otherDirect-board',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="dirCost_other"'
+                })
+            }}
+            {{
+                text_item.render({
+                    'label': 'Estimated direct costs',
+                    'value': '$99,999',
+                    'type': 'subtotal',
+                    'status': 'warning',
+                    'data_attribute': 'data-financial-item="total_directCosts"'
+                })
+            }}
+        </div>
+        <div class="block block__mid">
+            <h3 class="u-border-bottom">Indirect costs</h3>
+            <p> Indirect costs are other school year necessities, like childcare and traveling between home and school. Though these vary from student to student, start with the numbers in your offer and then adjust as needed.</p>
+
+            {{
+                input.render({
+                    'label': 'Books and supplies',
+                    'id': 'costs__books',
+                    'helper_text': 'If your school will charge you directly for all books and supplies, put a zero and add these costs to "Other direct costs" above.',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="indiCost_books"'
+                })
+            }}
+            {{
+                input.render({
+                    'label': 'Transportation',
+                    'id': 'costs__transportation',
+                    'helper_text': 'Public transit and personal vehicle costs (gas, tolls, maintenance) but not the purchase of a personal vehicle.',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="indiCost_transportation"'
+                })
+            }}
+            {{
+                input.render({
+                    'label': 'Personal/other/miscellaneous expenses',
+                    'id': 'costs__other',
+                    'helper_text': 'Everything else! Ask the financial aid office what they include in this number and then check if it is realistic for you. Typically includes laundry and entertainment. Can also include health insurance, childcare, laptop, and disability-related expenses.',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="indiCost_other"'
+                })
+            }}
+
+            {{  
+                text_item.render({  
+                    'label': 'Estimated indirect costs',    
+                    'value': '$99,999', 
+                    'type': 'subtotal', 
+                    'status': 'warning',    
+                    'data_attribute': 'data-financial-item="total_indirectCosts"'   
+                })  
+            }}
+            
+            {{
+                input.render({
+                    'label': 'Additional financial obligations',
+                    'helper_text': 'Expenses not related to school and not eligible for financial aid, like car payments, credit card payments, helping family with bills, etc. Ask the financial aid office if you\'re not sure if an expense qualifies for financial aid.',
+                    'id': 'costs__otherIndirect',
+                    'value': '0',
+                    'data_attribute': 'data-financial-item="otherCost_additional"'
+                })
+            }}
+
+            {{
+                text_item.render({
+                    'label': 'Your estimated costs this year',
+                    'value': '$99,999',
+                    'type': 'total',
+                    'status': 'warning',
+                    'data_attribute': 'data-financial-item="total_costs"'
+                })
+            }}
+        
+            {{ notification.render(
+                'money-tips',
+                true,
+                'Money saving tips',
+                '<ul>
+                        <li> Finish school on time. This typically requires earning 30 credits a year for an associate’s or bachelor’s. Work with your academic adviser to choose classes that add up to a degree. Graduating on time (or early) will help minimize your costs, maximize your aid eligibility, and get you into a full-time job sooner.</li>
+                        <li>Find out if this school offers block tuition (also known as flat rate tuition) &mdash; when it costs the same to take anywhere from 12 to 18 credits, for example.</li>
+                        <li data-state-based-visibility="costs-question-yes">If your costs will be higher than the school predicts, contact the financial aid office. You may be eligible for more aid. </li>
+                </ul>' | safe
+            ) }}
+        </div>
+    </div>         
+</section>

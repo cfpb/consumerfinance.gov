@@ -4,16 +4,33 @@ volumes:
     postgres_data:
 
 services:
-    elasticsearch:
+    elasticsearch2:
         build:
             context: ./
             dockerfile: ./docker/elasticsearch/Dockerfile
         ports:
-            - "9200:9200"
-            - "9300:9300"
-
+            - 127.0.0.1:9000:9200
+            - 127.0.0.1:9100:9300
+    elasticsearch:
+        build:
+            context: ./
+            dockerfile: ./docker/elasticsearch/7/Dockerfile
+        ports:
+            - 127.0.0.1:9200:9200
+            - 127.0.0.1:9300:9300
+        environment:
+            discovery.type: single-node
+        volumes:
+            - ./cfgov/search/resources/:/usr/share/elasticsearch/config/synonyms
+    kibana:
+        image: blacktop/kibana:7.10.1
+        depends_on:
+            - elasticsearch
+        ports:
+            - 127.0.0.1:5601:5601
     postgres:
-        image: postgres:10.3
+        image: postgres:10-alpine
+        user: postgres
         restart: always
         volumes:
             - postgres_data:/var/lib/postgresql/data/
@@ -21,20 +38,10 @@ services:
             POSTGRES_USER: cfpb
             POSTGRES_PASSWORD: cfpb
             POSTGRES_DB: cfgov
+        ports:
+            - 127.0.0.1:5432:5432
 
-    python2:
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                scl_python_version: python27
-        depends_on:
-            - elasticsearch
-            - postgres
-        stdin_open: true
-        tty: true
-
-    python3:
+    python:
         build:
             context: .
             dockerfile: Dockerfile
@@ -42,24 +49,33 @@ services:
                 scl_python_version: rh-python36
         depends_on:
             - elasticsearch
+            - elasticsearch2
             - postgres
         stdin_open: true
         tty: true
+        environment:
+            ES7_HOST: elasticsearch
+            ES_HOST: elasticsearch2
+            ES_PORT: 9200
 
     docs:
         build:
             context: ./
             dockerfile: ./docker/docs/Dockerfile
         ports:
-            - "8888:8888"
+            - 127.0.0.1:8888:8888
         environment:
             LANG: en_US.utf8
             LC_ALL: en_US.utf8
         volumes:
-            - ./:/src/cfgov-refresh
+            - ./:/src/consumerfinance.gov
         entrypoint:
             - sh
-            - /src/cfgov-refresh/docker/docs/entrypoint.sh
-        working_dir: /src/cfgov-refresh
+            - /src/consumerfinance.gov/docker/docs/entrypoint.sh
+        working_dir: /src/consumerfinance.gov
         stdin_open: true
         tty: true
+networks:
+    default:
+        external:
+            name: cfgov

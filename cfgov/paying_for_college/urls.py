@@ -1,8 +1,9 @@
-from django.conf.urls import include, url
+from django.urls import include, re_path
 
 
 urlpatterns = [
-    url(r'^understanding-your-financial-aid-offer/',
-        include('paying_for_college.disclosures.urls',
-                namespace='disclosures')),
+    re_path(
+        r"^understanding-your-financial-aid-offer/",
+        include("paying_for_college.disclosures.urls"),
+    ),
 ]

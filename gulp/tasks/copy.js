@@ -8,7 +8,7 @@ const paths = require( '../../config/environment' ).paths;
   which gets copied into the static directory on production
   so SVG references in CSS get resolved.
 */
-const iconSrc = `${ paths.modules }/cf-icons/src/icons/*.svg`;
+const iconSrc = `${ paths.modules }/@cfpb/cfpb-icons/src/icons/*.svg`;
 
 /**
  * Generic copy files flow from source to destination.
@@ -55,14 +55,6 @@ gulp.task( 'copy:icons:r3k', () => {
   return stream;
 } );
 
-gulp.task( 'copy:icons:prepaid', () => {
-  const stream = _genericCopy(
-    iconSrc,
-    `${ paths.processed }/apps/prepaid_agreements/icons/`
-  );
-  return stream;
-} );
-
 gulp.task( 'copy:lightbox2', () => {
   const stream = _genericCopy(
     `${ paths.modules }/lightbox2/dist/**/*`,
@@ -71,13 +63,11 @@ gulp.task( 'copy:lightbox2', () => {
   return stream;
 } );
 
-
 gulp.task( 'copy:icons',
   gulp.parallel(
     'copy:icons:main',
     'copy:icons:oah',
-    'copy:icons:r3k',
-    'copy:icons:prepaid'
+    'copy:icons:r3k'
   )
 );
 

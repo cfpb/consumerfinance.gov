@@ -1,0 +1,112 @@
+<section class="college-costs_tool-section college-costs_tool-section__finish" data-tool-section="save-and-finish">
+    <h2>Great job!</h2>
+    <div class="m-info-unit m-info-unit__inline u-mb30">
+        <div class="m-info-unit_image m-info-unit_image__square" style="background-image: url( {{ static('apps/paying-for-college/img/finish-page.png') }} );">
+        </div>
+        <div class="m-info-unit_content">
+            <p>You've made a plan to cover your school costs and graduate with as little debt as possible, and learned about the impact of loans on your future.</p>
+            <p>Copy and save this link so that you can come back and review your plan. You can also email yourself the link by providing your email. We won't store this information.</p>
+        </div>
+    </div>
+
+    <div class="o-form_group">
+        <div class="m-form-field">
+            <label class="a-label a-label__heading" for="finish_link">
+                Your link
+            </label>
+            <pre id="finish_link" name="finish_link" data-app-save-link="save-and-finish"></pre>
+        </div>
+    </div>
+    <div class="o-form_group">
+        <div class="m-form-field">
+            <label class="a-label a-label__heading" for="finish_email">
+                Email
+            </label>
+            <input type="text" class="a-text-input" id="finish_email" name="finish_email" autocomplete="off" value="">
+            <a class="a-btn u-mt15" href="mailto:" id="email-your-link">E-mail your link to yourself</a>
+        </div>
+    </div>
+    <div class="o-form_group">
+        <div class="block block__mid">
+            <fieldset class="o-form_fieldset" data-impact="impactOffer">
+                <legend>
+                    <h3>Did this tool help you understand your financial aid offer?</h3>
+                </legend>
+                {{
+                    radio.render({
+                      'name':  "save_did-it-help",
+                      'label': 'No',
+                      'value': 'n',
+                      'id': 'save_did-it-help_no',
+                      'class': 'm-form-field__lg-target'
+                    })
+                }}
+                {{
+                    radio.render({
+                      'name':  "save_did-it-help",
+                      'label': 'Somewhat',
+                      'value': 's',
+                      'id': 'save_did-it-help_somewhat',
+                      'class': 'm-form-field__lg-target'
+                    })
+                }}
+                {{
+                    radio.render({
+                      'name':  "save_did-it-help",
+                      'label': 'Yes',
+                      'value': 'y',
+                      'id': 'save_did-it-help_yes',
+                      'class': 'm-form-field__lg-target'
+                    })
+                }}
+            </fieldset>
+        </div>
+        <div class="block block__mid">
+            
+            <div class="o-form_group">
+                <fieldset class="o-form_fieldset" data-impact="impactLoans">
+                    <legend>
+                        <h3>Did this tool help you understand the potential impact of student loans?</h3>
+                    </legend>
+                    {{
+                        radio.render({
+                          'name':  "save_understand-loans",
+                          'label': 'No',
+                          'value': 'n',
+                          'id': 'save_understand-loans_no',
+                          'class': 'm-form-field__lg-target'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "save_understand-loans",
+                          'label': 'Somewhat',
+                          'value': 's',
+                          'id': 'save_understand-loans_somewhat',
+                          'class': 'm-form-field__lg-target'
+                        })
+                    }}
+                    {{
+                        radio.render({
+                          'name':  "save_understand-loans",
+                          'label': 'Yes',
+                          'value': 'y',
+                          'id': 'save_understand-loansp_yes',
+                          'class': 'm-form-field__lg-target'
+                        })
+                    }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+
+<div class="restart" data-app-button="restart">
+    <h3>Do you have another financial aid offer?</h3>
+
+    <p>If you have another financial aid offer you can click the button below to start this form over and enter in your data for the other school.</p>
+
+    <a class="a-btn" href=".">Restart</a>
+</div>
+
+</section>

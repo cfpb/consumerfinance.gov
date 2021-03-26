@@ -1,0 +1,60 @@
+<aside class="content_sidebar
+              content__flush-top-on-small
+              content__flush-sides-on-small
+              content__half-top-on-desk
+              o-college-costs-nav">
+    {% set nav_items = [
+        {
+            'title': 'Your financial aid offer',
+            'data': 'offer-letter',
+            'current': True,
+            'children': [
+                {'title': 'School & living situation', 'data': 'school-info', 'current': True},
+                {'title': 'Costs', 'data': 'costs'},
+                {'title': 'Grants & scholarships', 'data': 'grants-scholarships'},
+                {'title': 'Work-study', 'data': 'work-study'},
+                {'title': 'Federal loans', 'data': 'federal-loans'},
+                {'title': 'Other loans', 'data': 'school-loans'},
+                {'title': 'Other sources', 'data': 'other-resources'},
+            ]
+        },
+        {
+            'title': 'Covering your costs',
+            'data': 'covering-costs',
+            'current': False,
+            'children': [
+                {'title': 'Borrowing strategically', 'data': 'loan-counseling'},
+                {'title': 'Make a plan', 'data': 'make-a-plan'},
+            ]
+        },
+        {
+            'title': 'Affording your loans',
+            'data': 'affording-loans',
+            'current': False,
+            'children': [
+                {'title': 'Is this too much debt?', 'data': 'max-debt-guideline'},
+                {'title': 'What will interest cost me?', 'data': 'cost-of-borrowing'},
+                {'title': 'Can I afford my payment?', 'data': 'affording-your-loans'},
+            ]
+        },
+        {
+            'title': 'Worth your investment',
+            'data': 'worth-investment',
+            'current': False,
+            'children': [
+                {'title': 'Compare this school to others', 'data': 'school-results'},
+                {'title': 'Review your financing plan', 'data': 'summary'},
+                {'title': 'What to do next', 'data': 'action-plan'},
+            ]
+        },
+        {
+            'title': 'Save & finish',
+            'data': 'save-and-finish',
+            'current': False,
+            'children': [
+                {'title': 'Save & finish', 'data': 'save-and-finish'},
+            ]
+        },
+    ]%}
+    {{secondary_nav.render(nav_items)}}
+</aside>

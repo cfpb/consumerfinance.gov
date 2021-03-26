@@ -1,0 +1,34 @@
+{# ==========================================================================
+
+   TDP Search Hero Image
+
+   ==========================================================================
+
+   Description:
+
+   Create a TDP search hero image molecule.
+
+   value:                  Object defined from a StreamField block.
+
+   value.image:            An image object containing the image to be
+                           placed adjacent to the text.
+
+   value.small_image:      An image object containing the alternate image
+                           for smaller screens when bleeding or overlaying
+                           at larger screen sizes.
+
+   ========================================================================== #}
+
+{% set img = image(value.image, 'original') %}
+
+{% if value.small_image %}
+    {% set sm_img = image(value.small_image, 'original') %}
+{% else %}
+    {% set sm_img = image(value.image, 'original') %}
+{% endif %}
+ <img class="m-search-hero_image"
+    srcset="{{ sm_img.url }},
+        {{ img.url }} 2x"
+    src="{{ img.url }}"
+    width="498"
+    alt="{{ img.alt }}">

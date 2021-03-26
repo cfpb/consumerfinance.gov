@@ -1,7 +1,7 @@
 # Running in a Virtual Environment
 
 First, follow
-[the standalone installation instructions](installation/#stand-alone-installation)
+[the standalone installation instructions](../installation/#stand-alone-installation)
 to create your virtual environment, install required dependencies, and run
 the setup scripts.
 
@@ -10,7 +10,7 @@ which will be used for:
 
  1. **Git operations**.
     Perform Git operations and general development in the repository,
-    such as `git checkout master`.
+    such as `git checkout main`.
  2. **Elasticsearch**.
     Run an Elasticsearch (ES) instance.
     See instructions [below](#2-run-elasticsearch-optional).
@@ -23,10 +23,10 @@ What follows are the specific steps for each of these tabs.
 ### 1. Git operations
 
 From this tab you can do Git operations,
-such as checking out our master branch:
+such as checking out our main branch:
 
 ```bash
-git checkout master
+git checkout main
 ```
 
 #### Updating all dependencies
@@ -66,15 +66,15 @@ brew services start elasticsearch
 ```
 
 ### 3. Launch Site
-First, move into the `cfgov-refresh` project directory
+First, move into the `consumerfinance.gov` project directory
 and ready your environment:
 
 ```bash
-# Use the cfgov-refresh virtualenv.
-workon cfgov-refresh
+# Use the consumerfinance.gov virtualenv.
+workon consumerfinance.gov
 
 # cd into this directory (if you aren't already there)
-cd cfgov-refresh
+cd consumerfinance.gov
 ```
 
 From the project root, start the Django server:
@@ -130,5 +130,24 @@ yarn run gulp docs            # Generate JSDocs from the scripts.
 yarn run gulp test            # Run linting, unit and acceptance tests (see below).
 yarn run gulp test:unit       # Run only unit tests on source code.
 yarn run gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
-yarn run gulp audit           # Run code quality audits.
 ```
+
+### Reinstalling the virtual environment
+
+To remove an existing virtual environment for
+[a reinstall of consumerfinance.gov](../installation/#stand-alone-installation),
+first deactivate the virtual environment if it is active:
+
+```bash
+deactivate
+```
+
+Then remove the existing virtual environment:
+
+```bash
+rmvirtualenv consumerfinance.gov
+```
+
+After this, you may follow
+[the installation instructions](installation/#stand-alone-installation)
+again.

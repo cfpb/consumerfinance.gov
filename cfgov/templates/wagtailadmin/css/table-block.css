@@ -1,9 +1,3 @@
-
-.hallotoolbar,
-.table-block-modal {
-    z-index: 10000;
-}
-
 .heading-text-block,
 .heading-level-block,
 .heading-icon-block {
@@ -62,4 +56,8 @@ table[id$=sortable-input] .sortable-type-input {
     appearance: menulist !important;
     border-radius: 0;
     color: #101820;
+}
+
+.hidden {
+    display: none;
 }

@@ -33,6 +33,20 @@ const HTML_SNIPPET = `
 const xhr = global.XMLHttpRequest;
 global.console = { error: jest.fn(), log: jest.fn() };
 
+/**
+ * Create a mock for the window.location object, for testing purposes.
+ */
+function mockWindowLocation() {
+  delete window.location;
+  window.location = {
+    protocol: 'http:',
+    host: 'localhost',
+    pathname: '/',
+    href: 'http://localhost/',
+    assign: jest.fn()
+  };
+}
+
 describe( 'The Regs3K search page', () => {
 
   beforeEach( () => {
@@ -51,7 +65,7 @@ describe( 'The Regs3K search page', () => {
   } );
 
   it( 'should handle search form submissions', () => {
-    global.location.assign = jest.fn();
+    mockWindowLocation();
     const form = document.querySelector( 'form' );
 
     simulateEvent( 'submit', form );

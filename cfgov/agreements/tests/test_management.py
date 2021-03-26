@@ -1,14 +1,13 @@
+import io
 import os.path
-import six
 import unittest
 import zipfile
+from unittest import mock
 from zipfile import ZipFile
 
 from django.core import management
 from django.core.management.base import CommandError
 from django.test import TestCase
-
-import mock
 
 from agreements.management.commands import _util
 from agreements.management.commands.import_agreements import empty_folder_test
@@ -50,7 +49,7 @@ class TestDataLoad(TestCase):
         'agreements.management.commands._util.upload_to_s3'
     )
     def test_import_with_s3_calls_print_statement(self, _):
-        buf = six.StringIO()
+        buf = io.StringIO()
         management.call_command(
             'import_agreements',
             '--path=' + utf8_zip,
@@ -71,7 +70,7 @@ class TestManagementUtils(TestCase):
         expectedName = 'Visa Cardholder Agreement and Disclosures.pdf'
         raw_path = 'UTF_agreements/' + expectedName
 
-        buf = six.StringIO()
+        buf = io.StringIO()
         agreement = _util.save_agreement(
             agreements_zip,
             raw_path,
@@ -88,6 +87,6 @@ class TestManagementUtils(TestCase):
                                   'AWS_STORAGE_BUCKET_NAME': 'fake'})
     @mock.patch('boto3.client')
     def test_upload_to_s3(self, mock_upload):
-        fake_pdf = six.StringIO("Not a real PDF")
+        fake_pdf = io.StringIO("Not a real PDF")
         _util.upload_to_s3(fake_pdf, 'bank/agreement.pdf')
         mock_upload.assert_called_once()

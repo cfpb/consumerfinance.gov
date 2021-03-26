@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
+from django.utils.translation import activate, get_language
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
@@ -166,19 +167,24 @@ class ExternalURLNoticeView(FormMixin, TemplateView):
         form = self.get_form()
 
         if not form.is_valid():
-            return self.raise_404()
+            raise Http404(
+                'URL invalid, not whitelisted, or signature validation failed'
+            )
 
         return super(ExternalURLNoticeView, self).get(request)
 
-    def post(self, request):
-        form = self.get_form()
 
-        if not form.is_valid():
-            return self.raise_404()
+class TranslatedTemplateView(TemplateView):
+    """ A TemplateView that will activate a language for translation.
+    It takes a "language" argument (default: en), activates that language,
+    and adds the 'current_language' to the template context. """
 
-        return redirect(form.cleaned_data['validated_url'])
+    language = 'en'
 
-    def raise_404(self):
-        raise Http404(
-            'URL invalid, not whitelisted, or signature validation failed'
+    def get_context_data(self, **kwargs):
+        activate(self.language)
+        context = super(TranslatedTemplateView, self).get_context_data(
+            **kwargs
         )
+        context['current_language'] = get_language()
+        return context

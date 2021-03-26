@@ -7,14 +7,35 @@ import jsLoader from './util/js-loader';
 const IMAGE_URL = 'https://img.youtube.com/vi/%video_id%/maxresdefault.jpg';
 const SCRIPT_API = 'https://www.youtube.com/iframe_api';
 
+let _callbacks;
+let _scriptLoadRequested;
+let _scriptLoaded;
+
 /**
- * The "onYouTubeIframeAPIReady" function is automatically called when the
- * YouTube IFrame API is done loading.
- * See https://developers.google.com/youtube/iframe_api_reference
+ * Attach a callback to be called when the YouTube API is ready.
  * @param {Function} callback - function to call when the API is ready.
  */
 function attachAPIReadyCallback( callback ) {
-  window.onYouTubeIframeAPIReady = callback;
+  if ( _scriptLoaded ) {
+    // eslint-disable-next-line callback-return
+    callback();
+  }
+
+  _callbacks = _callbacks || [];
+  _callbacks.push( callback );
+
+  /**
+   * The "onYouTubeIframeAPIReady" function is automatically called when the
+   * YouTube IFrame API is done loading.
+   * See https://developers.google.com/youtube/iframe_api_reference
+   */
+  function onYouTubeIframeAPIReady() {
+    _scriptLoaded = true;
+    _callbacks.forEach( cb => cb() );
+    _callbacks.splice( 0 );
+  }
+
+  window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 }
 
 /**
@@ -22,14 +43,12 @@ function attachAPIReadyCallback( callback ) {
  * @param {Function} [callback] - function to call when the script is loaded.
  */
 function embedVideoScript( callback ) {
-  jsLoader.loadScript( SCRIPT_API, callback );
+  if ( !_scriptLoadRequested ) {
+    jsLoader.loadScript( SCRIPT_API, callback );
+    _scriptLoadRequested = true;
+  }
 }
 
-/**
- * Load Youtube max res image if it exists.
- * TODO: Replace this method by calling the Youtube data API.
- * https://developers.google.com/youtube/v3/getting-started#fields
- */
 /**
  * Load Youtube max res image if it exists.
  * TODO: Replace this method by calling the Youtube data API.

@@ -1,3 +1,6 @@
+{#- Part 1004 (Reg D) houses interps in Appendix A instead of Supplement I like every other reg -#}
+{%- set interp_location = 'Appendix A' if regulation and regulation.part_number == '1004' else 'Supplement I' -%}
+
 <div data-qa-hook="expandable"
      class="o-expandable
             o-expandable__padded
@@ -28,7 +31,7 @@
     <div class="o-expandable_content">
         {{ contents }}
 
-        <p><a href="{{ url }}">See interpretation of {% if section_title %}{{ section_title }}{% else %}this section{% endif %} in Supplement I</a></p>
+        <p><a href="{{ url }}">See interpretation of {% if section_title %}{{ section_title }}{% else %}this section{% endif %} in {{ interp_location }}</a></p>
     </div>
 
 </div>

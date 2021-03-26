@@ -1,13 +1,13 @@
 # Creating and Editing Wagtail Components
 
-cfgov-refresh implements a number of components
+consumerfinance.gov implements a number of components
 that editors can choose from when building a page,
 for example: Heroes, Expandable Groups, or Info Unit Groups. The
-[CFPB Design Manual](https://cfpb.github.io/design-manual/page-components/page-components.html)
+[CFPB Design System](https://cfpb.github.io/design-system/components/)
 describes the design and intended usage of many of these components.
 
 In Wagtail parlance, these are called
-["StreamField blocks"](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html)*
+["StreamField blocks"](https://docs.wagtail.io/en/stable/topics/streamfield.html)*
 (or just "blocks").
 We sometimes also refer to them as "modules", because we think that
 the terms "component" and "module" may be more obvious to non-developers.
@@ -63,15 +63,15 @@ of atoms, molecules, and organisms.
 
 A component's fields and other properties are defined in a Python class,
 typically a subclass of Wagtail's
-[`StructBlock`](http://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#structblock).
+[`StructBlock`](http://docs.wagtail.io/en/stable/topics/streamfield.html#structblock).
 These classes are located in a number of different files across the repository,
 but there are two major categories they fall into:
 
 1. Files corresponding to a general-purpose, site-wide atomic component.
    These files—`atoms.py`, `molecules.py`, and `organisms.py`—are located in
-   [`cfgov/v1/atomic_elements`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/atomic_elements).
+   [`cfgov/v1/atomic_elements`](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/atomic_elements).
 2. Files that are specific to a particular sub-app, such as regulations3k's
-   [blocks.py](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/regulations3k/blocks.py).
+   [blocks.py](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/regulations3k/blocks.py).
 
 There are other places where StreamField block classes are defined
 (particularly blocks that are only ever used as fields within another block),
@@ -95,19 +95,19 @@ class RelatedContent(blocks.StructBlock):                      # 1
 There are a few things happening here:
 
 1. The `RelatedContent` class is a subclass of
-   [Wagtail's `StructBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#structblock),
+   [Wagtail's `StructBlock`](https://docs.wagtail.io/en/stable/topics/streamfield.html#structblock),
    which allows for the combination of a fixed number of other sub-blocks
    (see previous comment about blocks being nested within other blocks)
    into a single unit (what we'd think of as a "module" in the Wagtail editor).
    This one has three sub-blocks (lines 2, 3, and 4).
 2. The `heading` field uses the basic Wagtail
-   [`CharBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#charblock),
+   [`CharBlock`](https://docs.wagtail.io/en/stable/topics/streamfield.html#charblock),
    which results in a field with a basic single-line text input.
 3. The `paragraph` field uses the basic Wagtail
-   [`RichTextBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#richtextblock),
+   [`RichTextBlock`](https://docs.wagtail.io/en/stable/topics/streamfield.html#richtextblock),
    which results in a field with a multiline WYSIWYG text input.
 4. The `links` field uses another basic Wagtail block,
-   [`ListBlock`](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#listblock),
+   [`ListBlock`](https://docs.wagtail.io/en/stable/topics/streamfield.html#listblock),
    which is a special type of block that can hold a variable number of
    some other block (the `Hyperlink` atom block, in this case).
 5. The `Meta` class defines some properties on the `RelatedContent` block
@@ -132,7 +132,7 @@ that comprise the sub-blocks that are our fields.
 
 There are two common optional things that are also used in component classes:
 
-1. [Overriding the default `get_context` method](http://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#streamfield-get-context)
+1. [Overriding the default `get_context` method](http://docs.wagtail.io/en/stable/topics/streamfield.html#streamfield-get-context)
    to pass additional data to the template
 2. [Adding component-specific JavaScript](#adding-javascript)
     via the `Media` class
@@ -143,7 +143,7 @@ Components are made available in the page editing interface
 by adding them to one of a page types's StreamFields.
 These are usually the first things in a page's class definition.
 For example, see this snippet from
-[`blog_page.py`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/blog_page.py):
+[`blog_page.py`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/blog_page.py):
 
 ```python
 class BlogPage(AbstractFilterPage):
@@ -167,7 +167,7 @@ we'd add a new entry to this list following the same format:
 
 Most page types have two StreamFields (`header` and `content`) in the
 general content area (the first tab on an editing screen), and most also share
-[a common `sidefoot` StreamField](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/models/base.py#L95-L107)
+[a common `sidefoot` StreamField](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/base.py#L95-L107)
 (so named for the fact that it appears on the right side on some page types,
 but in the footer on others) on the sidebar tab.
 
@@ -268,16 +268,15 @@ those context variables can also be output with simple Jinja2 expression tags:
 #### Adding CSS
 
 If a component needs any custom styling not already provided
-by Capital Framework or cfgov-refresh,
+by the [Design System](https://github.com/cfpb/design-system) or consumerfinance.gov,
 you can add it by creating a new
-[Less](http://lesscss.org/)
-file for the component.
+[Less](http://lesscss.org/) file for the component.
 
 !!! note
     Please be sure that you actually need new Less before creating it.
-    We have a wide array of styles already available in
-    [Capital Framework components](https://cfpb.github.io/capital-framework/components/) and
-    [here in cfgov-refresh](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/css),
+    We have a wide array of styles already available in the
+    [Design System components](https://cfpb.github.io/design-system/components/) and
+    [here in consumerfinance.gov](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/css),
     some of which could perhaps be combined to achieve your desired result.
     Also be sure that new component designs have gone through
     our internal approval process before adding them to the project.
@@ -289,11 +288,11 @@ for site-wide use, this file should live in
 Continuing the `RelatedContent` example, if it needed its own styles,
 it would live at `cfgov/unprocessed/css/molecules/related-content.less`.
 
-Newly-created Less files need to be imported into the project's master
+Newly-created Less files need to be imported into the project's main
 `main.less` file, located at `cfgov/unprocessed/css/main.less`.
 Please place them in the appropriate section for their atomic rank.
 
-Because cfgov-refresh uses `main.less` to build a single CSS file
+Because consumerfinance.gov uses `main.less` to build a single CSS file
 for almost the entire project, it is not necessary
 to tell the Python model anything about a component-specific stylesheet
 (for general-purpose, site-wide components).
@@ -308,7 +307,7 @@ That is _not_ the case with JavaScript, as we will see in the next section.
 Each atomic component may optionally be given a `Media` class that can
 list one or more JavaScript files that should be loaded when using it.
 When a page is requested via the browser,
-[code contained in `base.html`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L100-L110)
+[code contained in `base.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_layouts/base.html#L100-L110)
 will loop all atomic components for the requested page and
 load the appropriate atomic JavaScript bundles.
 
@@ -362,11 +361,11 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
    `field_name = blocks.BlockName()`.
     - Replace `field_name` with a succinct name for what data the field contains
     - Replace `BlockName` with one of the
-      [basic Wagtail block types](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
+      [basic Wagtail block types](https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types).
       Sometimes we create our own custom blocks that can be used, as well.
       See, for example, the
-      [`HeadingBlock`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/blocks.py#L147-L165),
-      [used in `InfoUnitGroup`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L54),
+      [`HeadingBlock`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/blocks.py#L147-L165),
+      [used in `InfoUnitGroup`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L54),
       among other places.
 1. Add any desired parameters:
     - `required=False` if you do _not_ want the field to be required
@@ -379,7 +378,7 @@ that includes the `RelatedContent` molecule in one of its StreamFields.
       specific default value, e.g., `True` to have a `BooleanBlock` checkbox
       default to checked.
     - Certain blocks may take other arguments, as described in the
-      [basic Wagtail blocks documentation](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#basic-block-types).
+      [basic Wagtail blocks documentation](https://docs.wagtail.io/en/stable/topics/streamfield.html#basic-block-types).
 1. [Edit the component template](#the-html-template) to do something with the
    field's data – output it, use it to trigger a CSS class, etc.
 1. [Create a schema migration.](#creating-migrations-for-streamfield-blocks)

@@ -172,7 +172,7 @@ expandable.init( _expandable.EXPANDED );
 or
 
 ```js
-const atomicHelpers = require( '../../modules/util/atomic-helpers' );
+const atomicHelpers = require( '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js' );
 const Expandable = require( '../../organisms/Expandable' );
 atomicHelpers.instantiateAll( '.o-expandable', Expandable );
 ```
@@ -186,37 +186,37 @@ HTML, Less, and JavaScript for each component are in separate directories.
 ### HTML
 
 ```
-cfgov-refresh/cfgov/jinja2/v1/_includes/atoms/
-cfgov-refresh/cfgov/jinja2/v1/_includes/molecules/
-cfgov-refresh/cfgov/jinja2/v1/_includes/organisms/
+consumerfinance.gov/cfgov/jinja2/v1/_includes/atoms/
+consumerfinance.gov/cfgov/jinja2/v1/_includes/molecules/
+consumerfinance.gov/cfgov/jinja2/v1/_includes/organisms/
 ```
 
 !!! note
     Some of our foundational components get their Less and JavaScript
-    from [Capital Framework](https://cfpb.github.io/capital-framework),
+    from the [Design System](https://cfpb.github.io/design-system/),
     but the HTML for their Wagtail block templates
     is stored in the above folders.
 
 ### CSS
 
 ```
-cfgov-refresh/cfgov/unprocessed/css/atoms/
-cfgov-refresh/cfgov/unprocessed/css/molecules/
-cfgov-refresh/cfgov/unprocessed/css/organisms/
+consumerfinance.gov/cfgov/unprocessed/css/atoms/
+consumerfinance.gov/cfgov/unprocessed/css/molecules/
+consumerfinance.gov/cfgov/unprocessed/css/organisms/
 ```
 
 ### JavaScript
 
 ```
-cfgov-refresh/cfgov/unprocessed/js/molecules/
-cfgov-refresh/cfgov/unprocessed/js/organisms/
+consumerfinance.gov/cfgov/unprocessed/js/molecules/
+consumerfinance.gov/cfgov/unprocessed/js/organisms/
 ```
 
 ### Tests
 
 ```
-cfgov-refresh/test/unit_tests/js/molecules/
-cfgov-refresh/test/unit_tests/js/organisms/
+consumerfinance.gov/test/unit_tests/js/molecules/
+consumerfinance.gov/test/unit_tests/js/organisms/
 ```
 
 
@@ -256,23 +256,23 @@ You can get more information by reading the following:
 Gulp is used as a task automation tool.
 Tasks include compiling CSS, creating a standard Webpack workflow for bundling
 scripts, minifying code, linting, running unit tests,
-and [more](https://github.com/cfpb/cfgov-refresh/tree/master/gulp).
+and [more](https://github.com/cfpb/consumerfinance.gov/tree/main/gulp).
 
 ### Webpack
 
 Wepback is used as a module bundler, although it's capable of more.
 We create page, global, and component-specific bundles.
 The configuration for the bundles is contained in
-[`config/webpack-config.js`](https://github.com/cfpb/cfgov-refresh/blob/master/config/webpack-config.js).
+[`config/webpack-config.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/config/webpack-config.js).
 An explanation for the usage of each bundle is contained in
-[`gulp/tasks/scripts.js`](https://github.com/cfpb/cfgov-refresh/blob/master/gulp/tasks/scripts.js).
+[`gulp/tasks/scripts.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/gulp/tasks/scripts.js).
 
 ### Routes
 
 Routes are used to serve JavaScript bundles to the browser based
 on the requested URL or Wagtail page's `Media` definition.
 This happens via code contained in
-[`base.html`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/jinja2/v1/_layouts/base.html#L85-L123). This file serves as the base HTML template for serving Wagtail pages.
+[`base.html`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/jinja2/v1/_layouts/base.html#L85-L123). This file serves as the base HTML template for serving Wagtail pages.
 
 ### Wagtail page `Media` class
 
@@ -283,7 +283,7 @@ loop all atomic components for the requested page and load
 the appropriate atomic JavaScript bundles.
 
 Here is an example of the `Media` class on a component,
-[the `EmailSignUp` organism](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/v1/atomic_elements/organisms.py#L223-L244):
+[the `EmailSignUp` organism](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/atomic_elements/organisms.py#L223-L244):
 
 ```python
 class Media:

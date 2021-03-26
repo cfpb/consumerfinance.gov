@@ -1,4 +1,3 @@
-import json
 import os
 
 import requests
@@ -24,6 +23,6 @@ class MattermostAlert(object):
         }
         resp = requests.post(
             self.webhook_url,
-            data=json.dumps(payload),
+            json=payload,
         )
         resp.raise_for_status()

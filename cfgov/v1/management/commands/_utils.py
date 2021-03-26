@@ -1,8 +1,9 @@
 import getpass
-from six.moves import input
 
 from django.contrib.auth import get_user_model
 from django.test import Client
+
+import input
 
 
 class WagtailClient(object):

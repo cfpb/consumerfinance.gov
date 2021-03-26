@@ -12,12 +12,18 @@
 
 
 
-{% macro render() %}
+{% macro render( language='en' ) %}
 
 <div class="m-global-search"
      data-js-hook="behavior_flyout-menu">
+    <div class="m-global-search_fallback">
+        <a href="https://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=">
+            {{ _('Search') }}
+        </a>
+    </div>
     <button class="m-global-search_trigger"
-            data-js-hook="behavior_flyout-menu_trigger">
+            data-js-hook="behavior_flyout-menu_trigger"
+            aria-label="{{ _('Search') }}">
         <span class="m-global-search_trigger-open-label">
             {{ svg_icon('search') }}
             <span class="u-hide-on-mobile">{{ _('Search') }}</span>
@@ -37,7 +43,7 @@
               method="get">
             {#
                 The following two inputs are required by the search portal.
-                See https://search.digitalgov.gov/manual/code.html
+                See: https://search.gov/manual/code.html
             #}
             <input type="hidden"
                    name="utf8"
@@ -45,7 +51,7 @@
             <input type="hidden"
                    id="affiliate"
                    name="affiliate"
-                   value="cfpb">
+                   value="{{ 'cfpb_es' if language == 'es' else 'cfpb' }}">
 
             <div class="o-form__input-w-btn">
                <div class="o-form__input-w-btn_input-container">

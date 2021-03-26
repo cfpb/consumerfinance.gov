@@ -1,6 +1,6 @@
 from django.test import RequestFactory, TestCase
 
-from model_mommy import mommy
+from model_bakery import baker
 
 from hmda.models.pages import HmdaHistoricDataPage
 
@@ -13,7 +13,7 @@ class TestHmdaHistoricDataPage(TestCase):
         self.factory = RequestFactory()
 
     def test_hmda_explorer_page_no_params(self):
-        page = mommy.prepare(HmdaHistoricDataPage)
+        page = baker.prepare(HmdaHistoricDataPage)
         test_context = page.get_context(self.factory.get('/'))
 
         self.assertEqual(test_context['title'], 'Showing nationwide records')
@@ -24,7 +24,7 @@ class TestHmdaHistoricDataPage(TestCase):
         self.assertEqual(years, self.expected_years)
 
     def test_hmda_explorer_page_with_params(self):
-        page = mommy.prepare(HmdaHistoricDataPage)
+        page = baker.prepare(HmdaHistoricDataPage)
         request = '/?geo=ny&records=all-records&field_descriptions=codes'
         test_context = page.get_context(self.factory.get(request))
 

@@ -1,11 +1,19 @@
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.timezone import localdate
+from django.utils.translation import gettext_noop  # noqa
 
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from backports import csv
+
+
+# These lines will ensure that these strings, which are entered in Wagtail,
+# get picked up for translation by makemessages, and thus do not fail the
+# check for missing/extra translations (tox -e validate-translations).
+translate_this = gettext_noop('Was this page helpful to you?')  # noqa
+translate_this_too = gettext_noop('Was this answer helpful to you?')  # noqa
 
 
 class FeedbackQuerySet(models.QuerySet):
@@ -54,7 +62,7 @@ class FeedbackQuerySet(models.QuerySet):
                 localdate(feedback.submitted_on).strftime('%Y-%m-%d')
 
             writer.writerow([
-                force_text(getattr(feedback, heading), strings_only=True)
+                force_str(getattr(feedback, heading), strings_only=True)
                 for heading in headings
             ])
 

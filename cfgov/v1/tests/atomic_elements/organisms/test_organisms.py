@@ -1,19 +1,22 @@
 from django.core.exceptions import ValidationError
-from django.test import Client, TestCase
+from django.core.files import File
+from django.core.files.base import ContentFile
+from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 
-from wagtail.wagtailcore.blocks import StreamValue
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+from wagtail.core.blocks import StreamValue
+from wagtail.core.models import Site
+from wagtail.images.tests.utils import get_test_image_file
+
+from wagtailmedia.models import Media
 
 from scripts import _atomic_helpers as atomic
-
-from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
-from v1.models.browse_page import BrowsePage
-from v1.models.images import CFGOVImage
-from v1.models.landing_page import LandingPage
-from v1.models.learn_page import LearnPage
-from v1.models.resources import Resource
-from v1.models.snippets import Contact
-from v1.models.sublanding_page import SublandingPage
+from v1.atomic_elements.organisms import (
+    AudioPlayer, FeaturedContent, InfoUnitGroup, TableBlock, VideoPlayer
+)
+from v1.models import (
+    BrowsePage, CFGOVImage, Contact, LandingPage, LearnPage, Resource,
+    SublandingPage
+)
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
@@ -186,9 +189,9 @@ class OrganismsTestCase(TestCase):
         table = TableBlock()
         html = str(table.render(table.to_python(value)))
 
-        self.assertRegexpMatches(html, 'Header One')
-        self.assertRegexpMatches(html, 'Row 1-1')
-        self.assertRegexpMatches(html, 'Row 2-1')
+        self.assertRegex(html, 'Header One')
+        self.assertRegex(html, 'Row 1-1')
+        self.assertRegex(html, 'Row 2-1')
 
         self.assertIsNone(value.get('first_row_is_table_header'), None)
         self.assertIsNone(value.get('first_col_is_header'), None)
@@ -388,6 +391,72 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'u-w40pct"')
 
 
+class FeaturedContentTests(TestCase):
+    def setUp(self):
+        self.page = Site.objects.get(is_default_site=True).root_page
+        self.image = CFGOVImage.objects.create(
+            title='test',
+            file=get_test_image_file()
+        )
+
+    def test_value_contains_single_list_of_links(self):
+        block = FeaturedContent()
+        value = block.to_python({
+            'post': self.page.pk,
+            'show_post_link': True,
+            'post_link_text': 'This is a post',
+            'links': [
+                {'text': 'A link', 'url': '/foo/'},
+                {'text': 'Another link', 'url': '/bar/'},
+            ],
+        })
+
+        self.assertEqual(value.links, [
+            {'url': self.page.url, 'text': 'This is a post'},
+            {'url': '/foo/', 'text': 'A link'},
+            {'url': '/bar/', 'text': 'Another link'},
+        ])
+
+    def test_render(self):
+        block = FeaturedContent()
+        value = block.to_python({
+            'heading': 'Featured content',
+            'body': 'This is the body',
+            'post': self.page.pk,
+            'show_post_link': True,
+            'post_link_text': 'This is a post',
+            'links': [
+                {'text': 'A link', 'url': '/foo/'},
+                {'text': 'Another link', 'url': '/bar/'},
+            ],
+            'video': {
+                'video_id': '1V0Ax9OIc84',
+		'thumbnail_image': self.image.pk,
+            },
+        })
+
+        request = RequestFactory().get('/')
+        html = block.render(value, context={'request': request})
+
+        # All links get rendered properly.
+        for url, text in (
+            (self.page.url, 'This is a post'),
+            ('/foo/', 'A link'),
+            ('/bar/', 'Another link'),
+        ):
+            self.assertIn(
+                f'<a class="m-list_link" href="{url}">{text}</a>',
+                html
+            )
+
+        # VideoPlayer renders with is_fcm=True and the proper thumbnail.
+        self.assertNotIn('o-video-player_video-container__flexible', html)
+        self.assertRegex(
+            html,
+            r'src="/f/images/test.*\.original\.png"'
+        )
+
+
 class TestInfoUnitGroup(TestCase):
     def setUp(self):
         self.image = CFGOVImage.objects.create(
@@ -401,7 +470,7 @@ class TestInfoUnitGroup(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('no heading and no intro should not fail validation')
 
     def test_heading_only_ok(self):
@@ -414,7 +483,7 @@ class TestInfoUnitGroup(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('heading alone should not fail validation')
 
     def test_intro_only_fails_validation(self):
@@ -435,7 +504,7 @@ class TestInfoUnitGroup(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('heading with intro should not fail validation')
 
     def test_2575_with_image_ok(self):
@@ -454,7 +523,7 @@ class TestInfoUnitGroup(TestCase):
 
         try:
             block.clean(value)
-        except ValidationError:
+        except ValidationError:  # pragma: nocover
             self.fail('25-75 group with info unit that has an image validates')
 
     def test_2575_with_no_images_fails_validation(self):
@@ -494,3 +563,153 @@ class TestInfoUnitGroup(TestCase):
 
         with self.assertRaises(ValidationError):
             block.clean(value)
+
+
+class VideoPlayerTests(SimpleTestCase):
+    def test_video_id_required_by_default(self):
+        block = VideoPlayer()
+        value = block.to_python({'video_id': None})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_video_id_not_required_if_block_is_not_required(self):
+        block = VideoPlayer(required=False)
+        value = block.to_python({'video_id': None})
+
+        try:
+            block.clean(value)
+        except ValidationError as e:  # pragma: nocover
+            self.fail('Optional VideoPlayers should not require sub-fields')
+
+    def test_invalid_video_id(self):
+        block = VideoPlayer()
+        value = block.to_python({'video_url': 'Invalid YouTube ID'})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_valid_video_id(self):
+        block = VideoPlayer(required=False)
+        value = block.to_python({'video_id': '1V0Ax9OIc84'})
+
+        try:
+            block.clean(value)
+        except ValidationError as e:  # pragma: nocover
+            self.fail('VideoPlayer should support valid YouTube IDs')
+
+    def test_render(self):
+        block = VideoPlayer()
+        value = block.to_python({'video_id': '1V0Ax9OIc84'})
+
+        request = RequestFactory().get('/')
+        html = block.render(value, context={'request': request})
+
+        self.assertIn(
+            'href="https://www.youtube.com/embed/1V0Ax9OIc84',
+            html
+        )
+
+        # Default no-JS image is used if no thumbnail is provided.
+        self.assertIn(
+            'src="/static/img/cfpb_video_cover_card_954x200.png"',
+            html
+        )
+
+        # Default behavior doesn't render as FCM.
+        self.assertNotIn('o-featured-content-module_visual', html)
+
+
+class VideoPlayerThumbnailTests(TestCase):
+    def setUp(self):
+        self.image = CFGOVImage.objects.create(
+            title='test',
+            file=get_test_image_file()
+        )
+
+    def test_thumbnail_image_without_video_id_fails_validation(self):
+        block = VideoPlayer(required=False)
+        value = block.to_python({'thumbnail_image': self.image.pk})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_value_contains_thumbnail_url(self):
+        block = VideoPlayer()
+        value = block.to_python({
+            'video_id': '1V0Ax9OIc84',
+            'thumbnail_image': self.image.pk,
+        })
+
+        self.assertRegex(
+            value.thumbnail_url,
+            r'^.*/images/test.*\.original\.png$'
+        )
+
+    def test_render(self):
+        block = VideoPlayer()
+        value = block.to_python({
+            'video_id': '1V0Ax9OIc84',
+            'thumbnail_image': self.image.pk,
+        })
+
+        request = RequestFactory().get('/')
+        html = block.render(value, context={'request': request})
+
+        self.assertIn(
+            'href="https://www.youtube.com/embed/1V0Ax9OIc84',
+            html
+        )
+        self.assertRegex(
+            html,
+            r'src="/f/images/test.*\.original\.png"'
+        )
+
+
+class TestAudioPlayer(TestCase):
+    def test_render_audio_player(self):
+        block = AudioPlayer()
+        fake_file = ContentFile('A boring example mp3')
+        fake_file.name = 'test.mp3'
+        media = Media.objects.create(
+            title='Test audio file',
+            type='audio',
+            duration=100,
+            file=File(fake_file)
+        )
+        value = block.to_python({
+            'audio_file': media.pk,
+        })
+
+        html = block.render(value)
+
+        self.assertInHTML(
+            (
+                '<audio class="o-audio-player" controls preload="metadata"'
+                '       data-title="Test audio file">'
+                '    <source src="/f/media/test.mp3" type="audio/mpeg">'
+                '    Your browser does not support this audio player.'
+                '</audio>'
+            ),
+            html
+        )
+
+    def test_audio_player_with_video_file_returns_error(self):
+        block = AudioPlayer()
+        fake_file = ContentFile('Example video')
+        fake_file.name = 'test.mp4'
+        media = Media.objects.create(
+            title='Test video file',
+            type='video',
+            duration=100,
+            file=File(fake_file)
+        )
+        value = block.to_python({
+            'audio_file': media.pk,
+        })
+
+        html = block.render(value)
+        self.assertInHTML(
+            '<b>Warning:</b>',
+            html
+        )

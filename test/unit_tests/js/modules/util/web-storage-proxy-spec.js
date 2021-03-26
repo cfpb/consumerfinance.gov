@@ -1,7 +1,4 @@
-const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
-const webStorageProxy = require(
-  BASE_JS_PATH + 'modules/util/web-storage-proxy.js'
-);
+import webStorageProxy from '../../../../../cfgov/unprocessed/js/modules/util/web-storage-proxy.js';
 
 describe( 'web-storage-proxy', () => {
   beforeEach( () => {
@@ -168,6 +165,18 @@ describe( 'web-storage-proxy', () => {
         webStorageProxy.setStorage( true );
       }
       expect( storageError ).toThrow( Error );
+    } );
+
+    it( 'should set storage to an object if ' +
+        'sessionStorage is undefined', () => {
+      let UNDEFINED;
+      webStorageProxy.setItem( 'foo', 'bar', UNDEFINED );
+      expect( webStorageProxy.getItem( 'foo' ) ).toEqual( 'bar' );
+    } );
+
+    it( 'should set storage to an object if sessionStorage is null', () => {
+      webStorageProxy.setItem( 'foo', 'bar', null );
+      expect( webStorageProxy.getItem( 'foo' ) ).toEqual( 'bar' );
     } );
 
     xit( 'should set storage to an object if sessionStorage throws an error',

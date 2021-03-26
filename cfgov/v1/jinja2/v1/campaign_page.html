@@ -1,0 +1,25 @@
+{% extends "layout-full.html" %}
+
+{% block hero %}
+    {% for block in page.header %}
+        {% if block.block_type == 'features' %}
+            <section class="wrapper
+                            wrapper__match-content
+                            block
+                            block__bg
+                            block__border
+                            block__flush-top
+                            u-mb0">
+                {% include_block block %}
+            </section>
+        {% else %}
+            {% include_block block %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block content_main %}
+    {% for block in page.content %}
+        {% include_block block %}
+    {% endfor %}
+{% endblock %}

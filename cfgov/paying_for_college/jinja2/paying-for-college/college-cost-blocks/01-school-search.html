@@ -1,0 +1,264 @@
+<section class="college-costs_tool-section college-costs_tool-section__school-search" id="college-costs_school-search" data-tool-section="school-info">
+    <div class="school-search_start" id="school-search_what-school">
+        <h2>School & living situation</h2>
+        <p>Start with the school you’re considering, plus the program and other info about your situation. Refer to your financial aid offer if you're not sure.</p>
+        <label class="a-label a-label__heading u-mb15" for="search__school-input">
+            What school are you considering?
+        </label>
+        <p>
+            <input type="text"
+                   id="search__school-input"
+                   name="search__school-input"
+                   class="a-text-input"
+                   autocomplete="off">
+        </p>
+        <div class="a-form-alert a-form-alert__error" data-state-based-visibility="school-required" role="alert">
+          {{ svg_icon( 'warning-round' ) }}
+          <span class="a-form-alert_text">
+              Please enter the school you are considering.
+          </span>
+        </div>
+    </div>
+
+    <div id="search-results">
+        <ul></ul>
+    </div>
+
+    <div class="school-search_additional-info">
+        <div class="block block__sub program-question" id="school-search_program-type">
+            <h3 class="h4">Select your program type</h3>
+            {{ notification.render(
+                'information',
+                true,
+                '',
+                'If you are entering or continuing an accelerated degree program (a bachelor’s followed by a master’s in the same subject), choose the program type covered by this financial aid offer.'
+            ) }}
+            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="type-required" role="alert">
+              {{ svg_icon( 'warning-round' ) }}
+              <span class="a-form-alert_text">
+                  Please select your program type.
+              </span>
+            </div>
+            {{
+                radio.render({
+                  'name':  "programType",
+                  'label': 'Certificate',
+                  'value': 'certificate',
+                  'id': 'program-type-radio_certificate'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programType",
+                  'label': 'Associate\'s degree',
+                  'value': 'associates',
+                  'id': 'program-type-radio_associates'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programType",
+                  'label': 'Bachelor\'s degree',
+                  'value': 'bachelors',
+                  'id': 'program-type-radio_bachelors'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programType",
+                  'label': 'Graduate degree (master\'s or doctorate)',
+                  'value': 'graduate',
+                  'id': 'program-type-radio_graduate'
+                })
+            }}
+        </div>
+
+        <div data-state-based-visibility="school-no-programs">
+            {{ notification.render(
+                'information',
+                true,
+                '',
+                'Salary data is not available for any <span class="undergrad-content">under</span>graduate programs at your school. Please ask the school to provide you with earnings figures for recent graduates.' | safe
+            ) }}
+        </div>
+
+        <div class="block block__sub program-select">
+          <h3 class="h4">Select your program</h3>
+          <div class="a-select">
+            <select id="program-select">
+
+            </select>
+          </div>
+        </div>
+        <div class="block block__sub program-question" id="school-search_program-length">
+            <h3 class="h4">How long do you expect your program to take?</h3>
+            <div class="undergrad-content">
+              {{ notification.render(
+                  'information',
+                  true,
+                  '',
+                  'Though 4 years is considered the standard length of bachelor’s degrees, <a href="https://nces.ed.gov/fastfacts/display.asp?id=569" target="_blank" class="external-link" rel="noreferrer noopener">data</a> suggests that over half of students take longer.' | safe
+              ) }}
+            </div>
+            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="length-required" role="alert">
+              {{ svg_icon( 'warning-round' ) }}
+              <span class="a-form-alert_text">
+                  Please select your program length.
+              </span>
+            </div>
+            {{
+                radio.render({
+                  'name':  "programLength",
+                  'label': '1 year or less',
+                  'value': '1',
+                  'id': 'program-length-radio_1'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programLength",
+                  'label': '2 years',
+                  'value': '2',
+                  'id': 'program-length-radio_2'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programLength",
+                  'label': '3 years',
+                  'value': '3',
+                  'id': 'program-length-radio_3'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programLength",
+                  'label': '4 years',
+                  'value': '4',
+                  'id': 'program-length-radio_4'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programLength",
+                  'label': '5 years',
+                  'value': '5',
+                  'id': 'program-length-radio_5'
+                })
+            }}
+             {{
+                radio.render({
+                  'name':  "programLength",
+                  'label': '6 years',
+                  'value': '6',
+                  'id': 'program-length-radio_6'
+                })
+            }}
+        </div>
+
+        <div class="block block__sub program-question" id="school-search_program-rate" data-state-based-visibility="control-nonprivate">
+            <h3 class="h4">Which tuition rate will apply to you?</h3>
+            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="rate-required" role="alert">
+              {{ svg_icon( 'warning-round' ) }}
+              <span class="a-form-alert_text">
+                  Please select which tuition rate will apply to you.
+              </span>
+            </div>
+            {{
+                radio.render({
+                  'name':  "programRate",
+                  'label': 'In-state',
+                  'value': 'inState',
+                  'id': 'program-rate-radio_in-state'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programRate",
+                  'label': 'Out of state',
+                  'value': 'outOfState',
+                  'id': 'program-rate-radio_out-of-state'
+                })
+            }}
+            <!-- TODO: add option for N/A -- all students pay the same rate OR hide this question if N/A -->
+        </div>
+
+        <div class="block block__sub program-question" id="school-search_program-housing">
+            <h3 class="h4">Where do you plan to live while in school?</h3>
+            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="housing-required" role="alert">
+              {{ svg_icon( 'warning-round' ) }}
+              <span class="a-form-alert_text">
+                  Please select where you plan to live while in school.
+              </span>
+            </div>
+            {{
+                radio.render({
+                  'name':  "programHousing",
+                  'label': 'On campus',
+                  'value': 'onCampus',
+                  'id': 'program-housing-radio_on-campus'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programHousing",
+                  'label': 'Off campus (you will pay rent/mortgage)',
+                  'value': 'offCampus',
+                  'id': 'program-housing-radio_off-campus'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programHousing",
+                  'label': 'With family (you will not pay rent/mortgage)',
+                  'value': 'withFamily',
+                  'id': 'program-housing-radio_with-family'
+                })
+            }}
+        </div>
+
+        <div class="block block__sub program-question undergrad-content" id="school-search_program-dependency">
+            <h3 class="h4">Are you considered a dependent or independent student?</h3>
+            <p><a href="https://studentaid.gov/help/view-sar" target="_blank" rel="noreferrer noopener">Check your Student Aid Report (SAR)</a> if you’re not sure.</p>
+            <div class="a-form-alert a-form-alert__error" data-state-based-visibility="dependency-required" role="alert">
+              {{ svg_icon( 'warning-round' ) }}
+              <span class="a-form-alert_text">
+                  Please select whether you are considered a dependent or independent student.
+              </span>
+            </div>
+
+            {{
+                radio.render({
+                  'name':  "programDependency",
+                  'label': 'Dependent',
+                  'value': 'dependent',
+                  'id': 'program-dependency-radio_dependent'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "programDependency",
+                  'label': 'Independent',
+                  'value': 'independent',
+                  'id': 'program-dependency-radio_independent'
+                })
+            }}
+        </div>
+    </div>
+    <div data-state-based-visibility="school-fields-errors">
+        {{ notification.render(
+            'error',
+            true,
+            'Form is incomplete',
+            'Please make selections for the following fields on this page:
+            <ul class="m-list m-list__links">
+            <div data-state-based-visibility="school-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_what-school" data-gtm_ignore="true">What school are you considering?</a></li></div>
+            <div data-state-based-visibility="type-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-type" data-gtm_ignore="true">Select your program type</a></li></div>
+            <div data-state-based-visibility="length-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-length" data-gtm_ignore="true">How long do you expect your program to take?</a></li></div>
+            <div data-state-based-visibility="rate-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-rate" data-gtm_ignore="true">Which tuition rate will apply to you?</a></li></div>
+            <div data-state-based-visibility="housing-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-housing" data-gtm_ignore="true">Where do you plan to live while in school?</a></li></div>
+            <div data-state-based-visibility="dependency-required"><li class="m-list_item"><a class="a-link m-list_link" href="#school-search_program-dependency" data-gtm_ignore="true">Are you considered a dependent or independent student?</a></li></div>
+            </ul>' | safe
+        ) }}
+    </div>
+</section>

@@ -1,12 +1,11 @@
 const autoprefixer = require( 'autoprefixer' );
-const BROWSER_LIST = require( '../../config/browser-list-config' );
 const config = require( '../config' );
 const configPkg = config.pkg;
 const configBanner = config.banner;
 const configStyles = config.styles;
-const configLegacy = config.legacy;
 const fs = require( 'fs' );
 const gulp = require( 'gulp' );
+const gulpBless = require( 'gulp-bless' );
 const gulpCleanCss = require( 'gulp-clean-css' );
 const gulpHeader = require( 'gulp-header' );
 const gulpLess = require( 'gulp-less' );
@@ -33,7 +32,7 @@ function stylesModern() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulpPostcss( [
-      autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2 } )
+      autoprefixer()
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
@@ -56,12 +55,13 @@ function stylesIE() {
       postcssUnmq( {
         width: '75em'
       } ),
-      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8_9 } )
+      autoprefixer( { overrideBrowserslist: [ 'ie 8', 'ie 9' ]} )
     ] ) )
     .pipe( gulpRename( {
       suffix:  '.ie',
       extname: '.css'
     } ) )
+    .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( { compatibility: 'ie8', inline: false } ) )
     .pipe( gulp.dest( configStyles.dest ) );
 }
@@ -81,7 +81,7 @@ function stylesOnDemand() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-      autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+      autoprefixer()
     ] ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configStyles.dest ) )
@@ -99,6 +99,26 @@ function stylesOnDemand() {
 }
 
 /**
+ * Process CSS for Wagtail on demand blocks.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesOnDemandBlocks() {
+  return gulp.src( configStyles.cwd + '/on-demand/blocks/*.less' )
+    .pipe( gulpNewer( {
+      dest:  configStyles.dest + '/blocks',
+      // ext option required because this subtask uses multiple source files
+      ext:   '.css',
+      extra: configStyles.otherBuildTriggerFiles
+    } ) )
+    .pipe( gulpLess( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpPostcss( [
+      autoprefixer()
+    ] ) )
+    .pipe( gulp.dest( configStyles.dest + '/on-demand' ) );
+}
+
+/**
  * Process CSS for Wagtail feature flags.
  * @returns {PassThrough} A source stream.
  */
@@ -113,57 +133,9 @@ function stylesFeatureFlags() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpPostcss( [
-      autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+      autoprefixer()
     ] ) )
     .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) );
-}
-
-/**
- * Process Nemo CSS.
- * @returns {PassThrough} A source stream.
- */
-function stylesNemoProd() {
-  return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles.less' )
-    .pipe( gulpNewer( {
-      dest:  configLegacy.dest + '/nemo/_/c/es-styles.min.css',
-      extra: configStyles.otherBuildTriggerFiles
-        .concat( configStyles.otherBuildTriggerFilesNemo )
-    } ) )
-    .pipe( gulpLess( { compress: true } ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpPostcss( [
-      autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_9_UP } )
-    ] ) )
-    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpRename( {
-      suffix:  '.min',
-      extname: '.css'
-    } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) );
-}
-
-/**
- * Process Nemo IE8 CSS.
- * @returns {PassThrough} A source stream.
- */
-function stylesNemoIE8() {
-  return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles-ie.less' )
-    .pipe( gulpNewer( {
-      dest:  configLegacy.dest + '/nemo/_/c/es-styles-ie.min.css',
-      extra: configStyles.otherBuildTriggerFiles
-        .concat( configStyles.otherBuildTriggerFilesNemo )
-    } ) )
-    .pipe( gulpLess( { compress: true } ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpPostcss( [
-      autoprefixer( { browsers: BROWSER_LIST.ONLY_IE_8 } )
-    ] ) )
-    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpRename( {
-      suffix:  '.min',
-      extname: '.css'
-    } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) );
 }
 
 /**
@@ -195,8 +167,9 @@ function stylesApps() {
         .pipe( gulpLess( configStyles.settings ) )
         .on( 'error', handleErrors )
         .pipe( gulpPostcss( [
-          autoprefixer( { grid: true, browsers: BROWSER_LIST.LAST_2_IE_8_UP } )
+          autoprefixer()
         ] ) )
+        .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
         .pipe( gulpCleanCss( {
           compatibility: 'ie9',
           inline: [ 'none' ]
@@ -215,15 +188,8 @@ gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:ie', stylesIE );
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ondemand', stylesOnDemand );
+gulp.task( 'styles:ondemandBlocks', stylesOnDemandBlocks );
 
-gulp.task( 'styles:nemoProd', stylesNemoProd );
-gulp.task( 'styles:nemoIE8', stylesNemoIE8 );
-gulp.task( 'styles:nemo',
-  gulp.parallel(
-    'styles:nemoProd',
-    'styles:nemoIE8'
-  )
-);
 
 gulp.task( 'styles',
   gulp.parallel(
@@ -231,7 +197,14 @@ gulp.task( 'styles',
     'styles:featureFlags',
     'styles:ie',
     'styles:modern',
-    'styles:nemo',
-    'styles:ondemand'
+    'styles:ondemand',
+    'styles:ondemandBlocks'
   )
 );
+
+gulp.task( 'styles:watch', function() {
+  gulp.watch(
+    `${ configStyles.cwd }/**/*.less`,
+    gulp.parallel( 'styles:modern' )
+  );
+} );

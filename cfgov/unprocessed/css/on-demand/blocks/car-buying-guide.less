@@ -1,0 +1,72 @@
+@import (reference) '../../main.less';
+
+.respond-to-print({
+    .content_main {
+        border-width: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+        position: static !important;
+
+        div.block {
+            display: none !important;
+        }
+
+        .block.cbg-print-block {
+            div[class^="block"] {
+                display: block !important;
+            }
+            display: block !important;
+        }
+
+        &:after {
+            border-left: none !important;
+            position:static;
+        }
+    }
+
+    header,
+    footer,
+    .content_sidebar,
+    .cbg-checklist {
+        display: none !important;
+    }
+
+    .cbg-print-paper {
+        display: block !important;
+        position: static !important;
+
+        table {
+            td + td {
+                border-left: 1px solid @gray-20;
+            }
+        }
+
+        thead {
+            th, td {
+                margin-bottom: unit( 14px / @base-font-size-px, em );
+                font-weight: 600;
+                letter-spacing: 1px;
+                line-height: 1.25;
+                text-transform: uppercase;
+                padding: unit( 12px / @base-font-size-px, em );
+                color: @black;
+                background: transparent;
+            }
+        }
+
+        tbody {
+            tr {
+                border-bottom: 1px solid @gray-20;
+            }
+
+            th, td {
+                padding-bottom: unit( 20px / @base-font-size-px, em );
+                padding-top: unit( 20px / @base-font-size-px, em );
+            }
+
+            td + td {
+                padding-left: unit( 20px / @base-font-size-px, em );
+            }
+        }
+    }
+});

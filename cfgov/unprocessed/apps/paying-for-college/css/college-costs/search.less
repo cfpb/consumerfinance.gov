@@ -1,0 +1,39 @@
+#college-costs_school-search {
+	position: relative;
+
+	#search-results {
+		background-color: white;
+		border: 1px solid black;
+		position: absolute;
+		display: none;
+		z-index: 1;
+
+		&.active {
+			display: block;
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+
+			li {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				
+				button {
+					background: none;
+					border: none;
+					padding: unit( 5px / @base-font-size-px, em ) unit( 30px / @base-font-size-px, em );
+					margin: 0;
+					text-align: left;
+					width: 100%;
+				}				
+
+				&:hover {
+					background-color: @pacific-20;
+				}
+			}
+		}
+	}	
+}

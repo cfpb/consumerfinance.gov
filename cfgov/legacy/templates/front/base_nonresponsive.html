@@ -1,10 +1,6 @@
 {% load base_elements %}
 {% load i18n %}
 {% load static from staticfiles %}
-{% load staticversions %}
-{% load remit_var %}
-
-{% is_remit as IS_REMIT %}
 
 <!DOCTYPE html>
 <!--
@@ -74,9 +70,6 @@ please send an email with your full name to tech@cfpb.gov.
     <!--[if gt IE 8]><!-->
         <link rel="stylesheet" href="{% static 'nemo/_/c/woff.css' %}">
     <!--<![endif]-->
-    <!--[if lt IE 9]>
-    <link rel="stylesheet" href="{% static 'nemo/_/c/eot.css' %}">
-    <![endif]-->
     <link rel="stylesheet" href="{% static 'nemo/_/c/styles.css' %}">
 
 
@@ -118,7 +111,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 {% endblock %}
 
-        {% include_header %}
+    {% include_header %}
     <div id="page">
         {% block app_notification %}
         {% endblock %}
@@ -138,16 +131,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     </div><!-- /#page -->
-        {% include_footer %}
-
-    {% block app_modal %}
-    {% endblock %}
-
-{% block nemo_js %}
-{% endblock %}
-
-{% block app_js %}
-{% endblock %}
+    {% include_footer %}
 
 {% block page_js %}
 {% endblock %}
@@ -174,7 +158,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   </script>
 <!--[if gt IE 8]><!-->
-<script type="text/javascript" src="{% static "js/atomic/header.nonresponsive.js" %}"></script>
+<script src="{% static "js/atomic/header.nonresponsive.js" %}"></script>
 <!--<![endif]-->
 </body>
 </html>

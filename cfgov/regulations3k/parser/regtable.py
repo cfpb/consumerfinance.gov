@@ -1,6 +1,3 @@
-from __future__ import unicode_literals
-
-
 class RegTable(object):
     """Assemble table from XML and deliver an HTML table."""
 

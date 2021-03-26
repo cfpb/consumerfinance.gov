@@ -1,5 +1,5 @@
 /* ==========================================================================
-   cfgov-refresh
+   consumerfinance.gov
    Print
    ========================================================================== */
 
@@ -28,25 +28,116 @@
     - cfgov-print
 */
 
+.respond-to-print({
+    a {
+        font-weight: 500;
+    }
 
-/* topdoc
-  name: Print header
-  notes:
-    - "Separates print header stuff from the rest of the page content."
-    - "Used on /about-us/the-bureau/leadership-calendar/print/"
-  family: cfgov-print
-  patterns:
-    - name: .print-header
-      markup: |
-        <div class="print-header">
-            There should be a line underneath me =D
-        </div>
-  tags:
-    - cfgov-print
-*/
+    a:after {
+        border-bottom: 1px solid @white;
+        font-weight: 300;
+        word-break: break-all;
+    }
 
-.print-header {
-    margin-bottom: unit(30px / @base-font-size-px, em);
-    padding-bottom: unit(30px / @base-font-size-px, em);
-    border-bottom: 5px solid @black;
-}
+    a[href*="://"]:after {
+        // Output href in parentheses for links with a protocol already there.
+        content: " (" attr(href) ")";
+    }
+
+    a[href^="/"]:after {
+        // Output root-relative hrefs in parentheses with our domain prepended.
+        content: " (cfpb.gov" attr(href) ")";
+    }
+
+    a[href^="/ask-cfpb"]:after,
+    a[href^="/external-site"]:after,
+    a[href*="consumerfinance.gov/ask-cfpb"]:after,
+    a[href*="consumerfinance.gov/external-site"]:after {
+        // Output original href for links with external site interstitial.
+        content: " (" attr(data-pretty-href) ")";
+    }
+
+    a[href="/"]:after,
+    a[href*="?authors"]:after {
+        // Don't append hrefs to the logo or author links.
+        content: none;
+    }
+
+    a[href^="#"],
+    a[href*="?authors"]{
+        // Style in-page anchor links (like page TOCs) and author links
+        // to not look like links.
+        color: @gray-dark;
+        border-bottom-width: 0;
+    }
+
+    a.a-btn {
+        // These pseudo-classes are needed to guarantee specificity
+        &:link,
+        &:visited {
+            // Replace Design System button and stand-alone link stylings with some generic styling
+            all: unset;
+            border-bottom: 1px dotted @link-underline;
+            color: @link-text;
+            display: inline;
+            font-weight: 500;
+            text-decoration: none;
+        }
+    }
+
+    a.a-link__jump,
+    a.m-list_link {
+        // These pseudo-classes are needed to guarantee specificity
+        &:link,
+        &:visited {
+            border: 0;
+            padding-top: unit( 5px / @base-font-size-px, em );
+            padding-bottom: unit( 5px / @base-font-size-px, em );
+        }
+    }
+
+    .o-video-player_play-btn {
+        // !important used here to avoid being overriden by a much more specific
+        // selector that sets the display property for this element
+        // and to avoid using a selector that specific here.
+        display: none !important;
+    }
+
+    .a-tagline {
+        // Force the tagline's background image to be visible when printing
+        color-adjust: exact;
+    }
+
+    .o-video-player::after {
+        content: "Watch the video at https://www.youtube.com/watch?v=" attr(data-id);
+    }
+
+    .m-global-eyebrow,
+    .join-the-conversation,
+    .o-email-signup,
+    .rss-subscribe,
+    .o-feedback,
+    .o-search-bar,
+    .m-hero_image-wrapper {
+        display: none;
+    }
+
+    // Solving Firefox's longstanding issue of cutting off inline-block
+    // elements after one page.
+    @-moz-document url-prefix() {
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content_main {
+            margin: 0;
+            display: block !important;
+        }
+
+        .content_sidebar {
+            display: block !important;
+        }
+    }
+});

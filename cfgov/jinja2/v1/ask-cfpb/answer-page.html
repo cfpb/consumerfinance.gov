@@ -5,39 +5,34 @@
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'organisms/ask-search.html' as ask_search with context %}
 
-{% block title %}
-    {{ page.question | striptags }}
-{% endblock %}
+{% block title -%}
+    {{- seo_title or page.question or page.title | striptags }} | {{ _('Consumer Financial Protection Bureau') }}
+{%- endblock %}
 
-{% block desc %}
-    {{ description | striptags | safe}}
-{% endblock %}
 {%- block og_desc -%}
-  {{- page.search_description or page.seo_title or page.short_answer|striptags -}}
+    {{- meta_description -}}
 {%- endblock -%}
-
 
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__answer
 {%- endblock %}
-
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
-<div {% if flag_enabled('HOW_TO_SCHEMA', request) %}
-        itemscope=""
-        itemtype="http://schema.org/HowTo"
-     {% endif %}>
     <div class="block
                 block__flush-top
                 block__sub">
         {% if last_edited %}
-        <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
+            {% if flag_enabled('ASK_UPDATED_DATE_LABEL') %}
+                <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('last reviewed') }}: {{ dt.format_date(last_edited) }}</time>
+            {% else %}
+                <time datetime='{{ last_edited }}' class="answer-edited-date">{{ _('updated') }} {{ dt.format_date(last_edited) }}</time>
+            {% endif %}
         {% endif %}
-        <h1 {% if flag_enabled('HOW_TO_SCHEMA', request) %}itemprop="name"{% endif %}>
+        <h1>
             {{ page.question | striptags }}
         </h1>
     </div>
@@ -48,80 +43,72 @@
                 {{ page.short_answer | richtext | safe }}
             </div>
         {% endif %}
-        <div class="block block__sub">
-            <div data-qa-hook="expandable"
-                 data-read-more="true"
-                 class="o-expandable
-                        o-expandable__read-more-mobile">
-                <div class="o-expandable_content" id="answer-content">
-                    <div class="answer-text">
-                        {% include_block page.answer_content %}
-                    </div>
-                </div>
-                <button class="o-expandable_header o-expandable_target"
-                        title="Expand content">
-                    <span class="o-expandable_link">
-                        <span class="o-expandable_cue o-expandable_cue-open">
-                            {{ _('Read full answer') }}
-                            {{ svg_icon('plus-round') }}
-                       </span>
-                        <span class="o-expandable_cue o-expandable_cue-close">
-                            {{ _('Hide full answer') }}
-                            {{ svg_icon('minus-round') }}
-                       </span>
-                    </span>
-                </button>
-            </div>
-        {% if page.related_resource and page.related_resource.trans_text(page.language) | striptags %}
-            <div class="block next-steps">
-                <div class="o-well">
-                <h2 class="u-mb15">
-                    {{ _('Take the next step') }}
-                </h2>
-                <h3 class="u-mt15">{{ page.related_resource.trans_title(page.language) | safe }}</h3>
-                {{ page.related_resource.trans_text(page.language) | safe }}
-                </div>
+
+        {% if page.share_and_print %}
+            {% import "molecules/social-media.html" as social_media with context -%}
+            <div class="block block__flush-top block__flush-bottom block__padded-bottom">
+                {{ social_media.render(
+                    {
+                        'is_share_view': true,
+                        'is_printable': true
+                    }
+                ) }}
             </div>
         {% endif %}
 
-        <div class="block related-questions">
-            <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
-            {% if related_questions %}
-            <div class="block block__sub">
-                <h3>{{ _('Browse related questions') }} </h3>
-                <ul class="m-list m-list__unstyled m-list__links">
-                    {% for question in related_questions %}
-                    <li class="m-list_item">
-                        <a href="{{ question.url }}" class="m-list_link">
-                            {{ question.question | safe }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                    {% if portal_page %}
-                    <li class="m-list_item m-list_item__last">
-                        <a href="{{ portal_page.url }}" class="m-list_link">
-                            <b>
-                                {{ _('Learn more about') }}
-                                {{ portal_page.portal_topic.title(page.language) | lower }}
-                            </b>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
+        <div class="block block__sub">
+
+            <div class="o-summary o-summary__mobile"
+                 data-js-hook="behavior_flyout-menu">
+                <div class="o-summary_content answer-text"
+                     data-js-hook="behavior_flyout-menu_content">
+                    {% include_block page.answer_content %}
+                </div>
+
+                <button class="o-summary_btn u-hidden"
+                        data-js-hook="behavior_flyout-menu_trigger">
+                    {{ _('Read full answer') }}
+                    {{ svg_icon('plus-round') }}
+                </button>
             </div>
-            {% endif %}
-            <div class="block block__sub">
-                {{ ask_search.render( language=page.language ) }}
+
+            <div class="block related-questions">
+                <h2>{{ _('Don\'t see what you\'re looking for?') }}</h2>
+                {% if related_questions %}
+                <div class="block block__sub">
+                    <h3>{{ _('Browse related questions') }} </h3>
+                    <ul class="m-list m-list__unstyled m-list__links">
+                        {% for question in related_questions %}
+                        <li class="m-list_item">
+                            <a href="{{ question.url }}" class="m-list_link">
+                                {{ question.question | safe }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% if portal_page %}
+                        <li class="m-list_item m-list_item__last">
+                            <a href="{{ portal_page.url }}" class="m-list_link">
+                                <b>
+                                    {{ _('Learn more about') }}
+                                    {{ portal_page.portal_topic.title(page.language) | lower }}
+                                </b>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="block block__sub">
+                    {{ ask_search.render( language=page.language ) }}
+                </div>
             </div>
-        </div>
-        {# This brings in the feedback module #}
-        {% for block in page.user_feedback %}
-            {{- form_block.render(block, 'user_feedback', loop.index0) -}}
-        {% endfor %}
+            {# This brings in the feedback module #}
+            {% for block in page.user_feedback %}
+                {{- form_block.render(block, 'user_feedback', loop.index0) -}}
+            {% endfor %}
         </div>
 
     </div>
-</div>
 {{ email_popup(request) }}
 {% endblock %}
 

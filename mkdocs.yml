@@ -1,6 +1,6 @@
-site_name: cfgov-refresh
+site_name: consumerfinance.gov
 
-repo_url: https://github.com/cfpb/cfgov-refresh
+repo_url: https://github.com/cfpb/consumerfinance.gov
 
 nav:
 - Introduction: index.md
@@ -13,30 +13,31 @@ nav:
 - Pages and Components:
     - Atomic Structure and Design: atomic-structure.md
     - Creating and Editing Components: editing-components.md
+    - Debugging Templates: debugging-templates.md
     - Django and Wagtail Migrations: migrations.md
-    - Editing the Mega Menu: mega-menu.md
     - Forms in Wagtail Page Context: forms-in-wagtail.md
     - Wagtail Pages: wagtail-pages.md
 - Supporting Features:
     - Caching: caching.md
     - Feature Flags: feature-flags.md
+    - Search: search.md
     - Split Testing: split-testing.md
     - Translation: translation.md
 - Testing:
     - Browser/Acceptance Testing: browser-acceptance-tests.md
     - JavaScript Unit Testing: javascript-unit-tests.md
     - Python Unit Testing: python-unit-tests.md
+    - Functional Testing: functional-testing.md
 - Contributing:
     - Branching and Merging: branching-merging.md
     - Contributing to the Docs: contributing-docs.md
     - Related Projects: related-projects.md
     - Development Tips: development-tips.md
-    - How We Use Travis CI: travis.md
+    - How We Use GitHub Actions: github-actions.md
 - APIs and Data:
     - Ask CFPB: ask-cfpb.md
     - Consumer Complaints: consumer-complaint-database.md
     - Find a Housing Counselor Tool: housing-counselor-tool.md
-    - HMDA Data: hmda.md
     - Website Feedback: website-feedback.md
 
 theme:

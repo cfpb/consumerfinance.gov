@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 import datetime
 import json
 import unittest
+from unittest import mock
 
 from django.conf import settings
 from django.test import TestCase as DjangoTestCase
 
-import mock
 from bs4 import BeautifulSoup as bS
 from requests import Response
 
@@ -329,7 +327,7 @@ class ImporterRunTestCase(unittest.TestCase):
             ecfr_importer.run()
 
     def test_run_importer_non_cfpb_part_args(self):
-        """The Part number must be on our whitelist"""
+        """The Part number must be on our allowlist"""
         with self.assertRaises(ValueError):
             ecfr_importer.run('9999')
         with self.assertRaises(ValueError):

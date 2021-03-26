@@ -1,11 +1,11 @@
 import logging
 from datetime import datetime, timedelta
 
-from django.conf import settings
 from django.views.generic import TemplateView
 
-import requests
+from complaint_search import views
 from flags.state import flag_enabled
+from rest_framework.test import APIRequestFactory
 
 
 logger = logging.getLogger(__name__)
@@ -28,32 +28,36 @@ class ComplaintLandingView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ComplaintLandingView, self).get_context_data(**kwargs)
 
-        complaint_source = getattr(
-            settings,
-            'COMPLAINT_LANDING_STATS_SOURCE',
-            None
-        )
-
-        if complaint_source:
-            ccdb_status_json = self.get_ccdb_status_json(complaint_source)
-            context.update(self.is_ccdb_out_of_date(ccdb_status_json))
+        ccdb_status_json = self.get_ccdb_status_json()
+        context.update(self.is_ccdb_out_of_date(ccdb_status_json))
 
         context.update({
             'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES'),
-            'ccdb_content_updates': flag_enabled('CCDB_CONTENT_UPDATES'),
+            'ccdb_content_updates': flag_enabled('CCDB_CONTENT_UPDATES')
         })
 
         return context
 
-    def get_ccdb_status_json(self, complaint_source):
+    def get_ccdb_status_json(self):
         """Retrieve JSON describing the CCDB's status from a given URL."""
         try:
-            res_json = requests.get(complaint_source).json()
-        except requests.exceptions.RequestException:
-            logger.exception("CCDB status data fetch failed.")
-            res_json = {}
+            args = {'field': 'all', 'size': '1', 'no_aggs': 'true'}
+            factory = APIRequestFactory()
+            request = factory.get('/search/', args, format='json')
+            response = views.search(request)
+
+            if response.status == 200:
+                res_json = response.data
+            else:
+                logger.exception("Elasticsearch failed to return a valid " +
+                                 "response. Response data returned: {}"
+                                 .format(response.data))
+                res_json = {}
         except ValueError:
             logger.exception("CCDB status data not valid JSON.")
+            res_json = {}
+        except Exception:
+            logger.exception("CCDB status data fetch failed.")
             res_json = {}
 
         return res_json
@@ -76,13 +80,12 @@ class ComplaintLandingView(TemplateView):
                                   timedelta(delta)).strftime("%Y-%m-%d")
 
         try:
-
-            if res_json['stats']['last_updated'] < four_business_days_ago:
+            if res_json['_meta']['last_indexed'] < four_business_days_ago:
                 data_down = True
-            elif (res_json['stats']['last_updated_narratives'] <
+            elif (res_json['_meta']['last_updated'] <
                     four_business_days_ago):
                 narratives_down = True
-        except KeyError:
+        except (TypeError, KeyError):
             logger.exception("CCDB JSON status not in expected format.")
 
         return {

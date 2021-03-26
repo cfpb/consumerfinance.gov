@@ -1,0 +1,17 @@
+.schema-block h2 {
+    margin-top: unit( @grid_gutter-width / @size-ii, em );
+}
+
+.schema-block__how-to li {
+    margin-top: unit( @grid_gutter-width / 2 / @size-iv, em );
+}
+
+.respond-to-min( @bp-lg-min, {
+    .schema-block h2 {
+        margin-top: unit( @grid_gutter-width * 1.5 / @size-ii, em );
+    }
+} );
+
+.schema-block > .schema-block_item:first-child > h2:first-child {
+    margin-top: 0;
+}

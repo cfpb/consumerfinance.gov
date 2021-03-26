@@ -1,0 +1,231 @@
+<section class="college-costs_tool-section college-costs_tool-section__affording" data-tool-section="affording-your-loans">
+    <h2>Can I afford my payment?</h2>
+
+    <p> Skipping monthly loan payments can cause financial and legal problems. Default—missing too many payments—can result in low credit scores, additional fees, wage garnishment, and ineligibility for further federal student aid. This page gives you two ways to estimate the affordability of your projected monthly payment.</p>
+
+
+    <div class="affording-loans-choices block block__sub">
+        {{
+            radio.render({
+              'name':  "affording-display-radio",
+              'label': 'My payment in terms of hourly wages',
+              'value': 'hourly',
+              'id': 'affording-loans-choices_hourly',
+              'class': 'm-form-field__lg-target'
+            })
+        }}
+        {{
+            radio.render({
+              'name':  "affording-display-radio",
+              'label': 'My payment within a monthly budget',
+              'value': 'monthly',
+              'id': 'affording-loans-choices_monthly',
+              'class': 'm-form-field__lg-target'
+            })
+        }}
+    </div>
+
+    <div data-state-based-visibility="expenses-hourly-wages">
+        <p>If you make about $15 an hour, how many hours would you have to work to cover your estimated monthly payment(s)?</p>
+
+        {{ number_callout.render({
+                'header': 'Estimated monthly loan payment',
+                'data_attribute': 'data-financial-item="debt_tenYearMonthly"',
+                'additional_classes': 'number-callout__large number-callout__border-top',
+                'value': '$0.00'
+            })
+        }}
+
+        <div class="number-callout number-callout__large number-callout__divisor">
+            <div class="number-callout_value">
+              <span>&divide; $15</span>
+            </div>
+        </div>
+
+        <div class="number-callout number-callout__large">
+            <div class="number-callout_value">
+              About <span data-financial-item="debt_repayHours" data-is-number="true">??</span> hours, or <span data-financial-item="debt_repayWorkWeeks" data-is-number="true">?</span> forty-hour work weeks
+            </div>
+        </div>
+
+        <p>Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years; other plans with lower monthly payments (and higher total costs of borrowing) are available.</p>
+
+    </div>
+    <div data-state-based-visibility="expenses-monthly-budget">
+        <div id="affording-your-loans_chart"></div>
+
+        {{ number_callout.render({
+                'header': 'Estimated monthly loan payment',
+                'data_attribute': 'data-financial-item="debt_tenYearMonthly"',
+                'additional_classes': 'number-callout__large number-callout__border-top',
+                'value': '$0.00'
+            })
+        }}
+        <p>Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years; other plans with lower monthly payments (and higher total costs of borrowing) are available.</p>
+        <div class="no-program-selected">
+            {{ number_callout.render({
+                    'header': 'Monthly median salary for this school\'s recent students',
+                    'data_attribute': 'data-financial-item="salary_monthly"',
+                    'additional_classes': 'number-callout__large number-callout__border-top',
+                    'value': '$0.00'
+                })
+            }}
+        </div>
+        <div data-state-based-visibility="program-is-selected">
+            {{ number_callout.render({
+                    'header': 'Monthly median first-year salary for this program\'s graduates',
+                    'data_attribute': 'data-financial-item="salary_monthly"',
+                    'additional_classes': 'number-callout__large number-callout__border-top',
+                    'value': '$0.00'
+                })
+            }}
+        </div>
+
+        {{ number_callout.render({
+                'header': 'Average monthly spending at this salary',
+                'data_attribute': 'data-expenses-item="total_expenses"',
+                'additional_classes': 'number-callout__large number-callout__border-top',
+                'value': '$4,016.67'
+            })
+        }}
+
+         <p>Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://www.bls.gov/bls/blswage.htm" class="link-external">BLS Wage Data website</a>.</p>
+
+        {{ notification.render(
+            'information',
+            true,
+            '',
+            'Students tend to overestimate their starting salaries. Remember that medians are the middle &mdash; half of students make more, but half make less.' | safe
+        ) }}
+
+        <div class="m-form-field m-form-field__select">
+            <label class="a-label a-label__heading" for="expenses__region">
+                What part of the US do you plan to live in after graduation?
+            </label>
+            <div class="a-select">
+                <select id="expenses__region">
+                    <option value="MW">Midwest region</option>
+                    <option value="NE">Northeast region</option>
+                    <option value="SO">South region</option>
+                    <option value="WE">West region</option>
+                </select>
+            </div>
+        </div>
+
+        <h3 class="h4 u-mt30 u-mb30">If you know your living expenses, adjust these averages to match your situation.</h3>
+        {{
+            input.render({
+                'label': 'Housing',
+                'id': 'expenses__housing',
+                'value': '$1,138',
+                'data_attribute': 'data-expenses-item="item_housing"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Food',
+                'id': 'expenses__food',
+                'value': '$486',
+                'data_attribute': 'data-expenses-item="item_food"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Clothing',
+                'id': 'expenses__clothing',
+                'value': '$118',
+                'data_attribute': 'data-expenses-item="item_clothing"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Transportation',
+                'id': 'expenses__transportation',
+                'value': '$636',
+                'data_attribute': 'data-expenses-item="item_transportation"'
+            })
+        }}
+       {{
+            input.render({
+                'label': 'Healthcare',
+                'id': 'expenses__healthcare',
+                'value': '$280',
+                'data_attribute': 'data-expenses-item="item_healthcare"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Entertainment',
+                'id': 'expenses__entertainment',
+                'value': '$151',
+                'data_attribute': 'data-expenses-item="item_entertainment"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Retirement & savings',
+                'id': 'expenses__savings',
+                'value': '$278',
+                'data_attribute': 'data-expenses-item="item_retirement"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Taxes',
+                'id': 'expenses__taxes',
+                'value': '$147',
+                'data_attribute': 'data-expenses-item="item_taxes"'
+            })
+        }}
+       {{
+            input.render({
+                'label': 'Childcare',
+                'id': 'expenses__childcare',
+                'value': '$0',
+                'data_attribute': 'data-expenses-item="item_childcare"'
+            })
+        }}
+       {{
+            input.render({
+                'label': 'Current debt payments',
+                'id': 'expenses__currentDebts',
+                'value': '$0',
+                'data_attribute': 'data-expenses-item="item_currentDebts"'
+            })
+        }}
+        {{
+            input.render({
+                'label': 'Other',
+                'id': 'expenses__other',
+                'value': '$300',
+                'data_attribute': 'data-expenses-item="item_other"'
+            })
+        }}
+
+        {{ number_callout.render({
+                'header': 'Total money left',
+                'data_attribute': 'data-expenses-item="total_remainder"',
+                'additional_classes': 'number-callout__large number-callout__border-top',
+                'value': '$373'
+            })
+        }}
+
+        <div data-state-based-visibility="expenses-shortage">
+            {{ notification.render(
+            'caution',
+            true,
+            '',
+            'The estimate leaves you with a shortage of <span class="gap" data-expenses-item="total_remainder">$373</span>. Try adjusting the expenses to balance your budget.' | safe
+        ) }}
+        </div>
+        <div data-state-based-visibility='expenses-surplus'>
+            {{ notification.render(
+            'information',
+            true,
+            '',
+            'The estimate leaves you with a surplus of <span class="gap" data-expenses-item="total_remainder">$373</span>, increasing your savings.' | safe
+        ) }}
+        </div>
+    </div>
+
+</section>

@@ -11,37 +11,40 @@
 {%- endblock %}
 
 {% block og_article_author -%}
-    <meta property="article:author" content="https://www.facebook.com/CFPB">
+    <meta property="article:author"
+          content="{{ _( 'https://www.facebook.com/CFPB' ) }}">
 {%- endblock %}
 
 {% block content_main %}
     {% include 'article.html' %}
     {% block post_article_content %}
-    <div class="block">
+    <div class="block join-the-conversation">
         <p>
-            Join the conversation. Follow CFPB on
-            <a class="a-link
-                      a-link__icon"
-                href="{{ unsigned_redirect('https://twitter.com/cfpb') }}">
-                    <span class="a-link_text">Twitter</span>
-                    {{ svg_icon('external-link') }}
-            </a> and <a class="a-link
-                               a-link__icon"
-                         href="{{ unsigned_redirect('https://facebook.com/cfpb') }}">
-                    <span class="a-link_text">Facebook</span>
-                    {{ svg_icon('external-link') }}
-            </a>.
+            {% set twitter_url = _("https://twitter.com/CFPB") %}
+            {%- set twitter_link = ( '<a href="%s">Twitter</a>' % twitter_url ) | safe %}
+
+            {%- set facebook_url = _("https://www.facebook.com/CFPB") %}
+            {%- set facebook_link = ( '<a href="%s">Facebook</a>' % facebook_url ) | safe %}
+
+            {% trans trimmed %}
+                Join the conversation.
+                Follow CFPB on {{ twitter_link }} and {{ facebook_link }}.
+            {% endtrans %}
         </p>
     </div>
     {% endblock %}
 {% endblock %}
 
 {% block content_sidebar %}
-    {{ streamfield_sidefoot.render(page.sidefoot) }}
-    {% if rss_feed %}
-    <div class="block block__sub">
-        {% import 'molecules/rss-feed.html' as rss %}
-        {{ rss.render(rss_feed) }}
-    </div>
+    {% if page and page.archived %}
+        {% include 'molecules/archived-related-content.html' %}
+    {% else %}
+        {{ streamfield_sidefoot.render(page.sidefoot) }}
+        {% if rss_feed %}
+        <div class="block block__sub">
+            {% import 'molecules/rss-feed.html' as rss %}
+            {{ rss.render(rss_feed) }}
+        </div>
+        {% endif %}
     {% endif %}
 {% endblock %}

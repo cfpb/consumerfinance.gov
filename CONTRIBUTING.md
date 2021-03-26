@@ -27,7 +27,7 @@ If you are a contributor from outside of CFPB, you should fork this repository,
 make changes in your own fork, and then submit a pull request.
 
 If you are a contributor within CFPB, you may also fork, or follow our
-[documentation for branching](https://cfpb.github.io/cfgov-refresh/branching-merging/).
+[documentation for branching](https://cfpb.github.io/consumerfinance.gov/branching-merging/).
 
 For timely code reviews of pull requests, please tag @cfpb/cfgov-backends and
 @cfpb/cfgov-frontends as appropriate for your changes.
@@ -87,7 +87,7 @@ our content.
 
 Satellite apps may run within consumerfinance.gov, but manage their own assets
 within the
-[unprocessed/apps](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/apps)
+[unprocessed/apps](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/apps)
 directory. These apps can have their own package.json file, webpack config file,
 and
 [browserlist config](https://github.com/browserslist/browserslist#config-file)

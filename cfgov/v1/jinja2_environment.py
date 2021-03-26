@@ -1,11 +1,10 @@
-from __future__ import absolute_import
-
 import os.path
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import linebreaksbr, pluralize, slugify
+from django.urls import reverse
 from django.utils.translation import ugettext, ungettext
 
 from jinja2 import Environment
@@ -63,6 +62,32 @@ class JinjaTranslations(object):
 
 
 def environment(**options):
+    # If running Django in debug mode, enable the Jinja2 {% debug %} tag.
+    # We do this here instead of in settings because DEBUG's value may be
+    # not be set until after the default Jinja configuration is defined.
+    #
+    # https://jinja.palletsprojects.com/en/2.11.x/extensions/#debug-extension
+    #
+    # Use of the {% debug %} tag when this extension isn't installed (when
+    # DEBUG is False) will trigger a 500 error with a
+    # jinja2.exceptions.TemplateSyntaxError. In theory we should never be using
+    # this tag for pages in production, but, if we did, we wouldn't want to
+    # accidentally expose debug information, so this seems like sensible
+    # behavior.
+    #
+    # It might be better if {% debug %} would instead work as a no-op and print
+    # nothing in the DEBUG=False case, but that would require writing our own
+    # custom tag. Relatedly, the Django template language's {% debug %} tag is
+    # always defined and always renders debug information regardless of the
+    # value of settings.DEBUG:
+    #
+    # https://docs.djangoproject.com/en/2.2/ref/templates/builtins/#debug
+    if settings.DEBUG:
+        extensions = options.setdefault('extensions', [])
+        debug_extension = 'jinja2.ext.debug'
+        if debug_extension not in extensions:
+            extensions.append(debug_extension)
+
     env = RelativeTemplatePathEnvironment(**options)
     env.autoescape = True
 

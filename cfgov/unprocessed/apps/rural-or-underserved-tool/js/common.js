@@ -2,10 +2,7 @@
    Common application-wide scripts for rural-or-underserved-tool.
    ========================================================================== */
 
-import Expandable from '../../../../../node_modules/cf-expandables/src/Expandable.js';
-
-Expandable.init();
-
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 import addressUtils from './address-utils';
 import axios from 'axios';
 import callCensus from './call-census';
@@ -13,13 +10,34 @@ import contentControl from './content-control';
 import count from './count';
 import DT from './dom-tools';
 import fileInput from './file-input';
-const Papaparse = require( 'papaparse' );
+import Papaparse from 'papaparse';
 import ruralCounties from './get-rural-counties';
 import textInputs from './text-inputs';
 import tiger from './call-tiger';
 
-require( 'es6-promise' ).polyfill();
 require( './show-map' );
+// Polyfill ES6 Promise for IE11.
+require( 'es6-promise' ).polyfill();
+
+// Polyfill SVG classList API for IE11.
+if ( !( 'classList' in SVGElement.prototype ) ) {
+  Object.defineProperty( SVGElement.prototype, 'classList', {
+    get() {
+      return {
+        contains: className => this.className.baseVal.split( ' ' ).indexOf( className ) !== -1,
+        add: className => this.setAttribute( 'class', this.getAttribute( 'class' ) + ' ' + className ),
+        remove: className => {
+          const removedClass = this.getAttribute( 'class' ).replace( new RegExp( '(\\s|^)' + className + '(\\s|$)', 'g' ), '$2' );
+          if ( this.classList.contains( className ) ) {
+            this.setAttribute( 'class', removedClass );
+          }
+        }
+      };
+    }
+  } );
+}
+
+Expandable.init();
 
 const MAX_CSV_ROWS = 250;
 
@@ -152,7 +170,7 @@ fileChangeDom.addEventListener( 'change', function( evt ) {
           );
           return;
         }
-        if ( results.data[0]['Street Address'] !== '' ) {
+        if ( results.data['Street Address'] !== '' ) {
           rowCount++;
         }
 
@@ -219,7 +237,7 @@ geocodeCSVDom.addEventListener( 'submit', function( evt ) {
       header: true,
       step: function( results, parser ) {
         if ( addressUtils.isValid( results ) ) {
-          if ( rowCount < MAX_CSV_ROWS && results.data[0]['Street Address'] !== '' ) {
+          if ( rowCount < MAX_CSV_ROWS && results.data['Street Address'] !== '' ) {
             addresses = addressUtils.pushAddress( results, addresses );
           }
           rowCount++;

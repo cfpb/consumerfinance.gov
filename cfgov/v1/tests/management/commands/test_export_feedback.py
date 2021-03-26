@@ -3,14 +3,14 @@ import argparse
 import io
 import tempfile
 from datetime import date, datetime, timedelta
-from six import StringIO, ensure_text
+from io import StringIO
 
 from django.core.management import call_command
 from django.test import SimpleTestCase, TestCase
 from django.utils.timezone import make_aware
 
+from wagtail.core.models import Site
 from wagtail.tests.testapp.models import SimplePage
-from wagtail.wagtailcore.models import Site
 
 from v1.management.commands.export_feedback import (
     lookup_page_slug, make_aware_datetime, parse_date
@@ -102,7 +102,7 @@ class TestExportFeedback(TestCase):
     def call_command(self, *args, **kwargs):
         stdout = StringIO()
         call_command('export_feedback', *args, stdout=stdout, **kwargs)
-        return ensure_text(stdout.getvalue())
+        return str(stdout.getvalue())
 
     def test_export_no_feedback_header_only(self):
         Feedback.objects.all().delete()

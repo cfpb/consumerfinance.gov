@@ -6,6 +6,16 @@ from django.utils import timezone
 from prepaid_agreements.models import PrepaidAgreement, PrepaidProduct
 
 
+class TestPrepaidProducts(TestCase):
+
+    def test_valid_products(self):
+        product1 = PrepaidProduct.objects.create()
+        product2 = PrepaidProduct.objects.create(deleted_at=timezone.now())
+        valid_products = PrepaidProduct.objects.valid()
+        self.assertIn(product1, valid_products)
+        self.assertNotIn(product2, valid_products)
+
+
 class TestMostRecentAgreement(TestCase):
     """ Test that the latest agreement is based on its created date.
 

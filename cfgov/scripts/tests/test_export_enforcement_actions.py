@@ -2,11 +2,10 @@ import datetime
 
 from django.test import TestCase
 
-from wagtail.wagtailcore.models import Page, Site
+from wagtail.core.models import Page, Site
 
 from scripts.export_enforcement_actions import assemble_output
-
-from v1.models import DocumentDetailPage
+from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
 
@@ -28,7 +27,7 @@ class TestExportEnforcementActions(TestCase):
         self.actions_page = Page(title='Actions', slug='actions')
         save_new_page(self.actions_page, root=self.enforcement_page)
 
-        self.test_all_data_page = DocumentDetailPage(
+        self.test_all_data_page = EnforcementActionPage(
             title="Great Test Page",
             live=True,
             preview_description='This is a great test page.'
@@ -84,14 +83,14 @@ class TestExportEnforcementActions(TestCase):
             ]
         )
 
-        self.test_no_data_page = DocumentDetailPage(
+        self.test_no_data_page = EnforcementActionPage(
             title="Terrible Test Page",
             live=False,
             preview_description='This is a terrible test page.'
         )
         save_new_page(self.test_no_data_page, root=self.actions_page)
 
-        self.test_wrong_page = DocumentDetailPage(
+        self.test_wrong_page = EnforcementActionPage(
             title="Wrong Test Page",
             live=True,
             preview_description='This is the wrong test page.'

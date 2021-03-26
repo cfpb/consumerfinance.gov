@@ -4,7 +4,7 @@
 
    ==========================================================================
 
-   See https://cfpb.github.io/design-manual/global-elements/heroes.html
+   See https://cfpb.github.io/design-system/patterns/heroes
 
    Description:
 
@@ -34,6 +34,9 @@
 
    value.is_overlay:       A boolean to change the hero to an overlay hero.
 
+   value.is_jumbo:         A boolean that indicates whether the image is
+                           extra large (jumbo).
+
    ========================================================================== #}
 
 
@@ -49,9 +52,10 @@
 {% endif %}
 
 <section class="m-hero
-                {{ 'm-hero__knockout' if value.is_white_text else '' }}
-                {{ 'm-hero__bleeding' if value.is_bleeding else '' }}
-                {{ 'm-hero__overlay' if value.is_overlay else '' }}">
+                {{- ' m-hero__knockout' if value.is_white_text else '' }}
+                {{- ' m-hero__bleeding' if value.is_bleeding else '' }}
+                {{- ' m-hero__overlay' if ( value.is_overlay or value.is_jumbo ) else '' }}
+                {{- ' m-hero__jumbo' if value.is_jumbo else '' }}">
     <div class="m-hero_wrapper wrapper">
         <div class="m-hero_text">
             <h1 class="m-hero_heading">{{ value.heading | safe }}</h1>

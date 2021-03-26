@@ -1,10 +1,9 @@
 import json
-import six
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
-from wagtail.wagtailcore.blocks import StreamValue
+from wagtail.core.blocks import StreamValue
 
 from treebeard.mp_tree import MP_Node
 
@@ -74,17 +73,11 @@ def get_stream_data(page_or_revision, field_name):
     revision """
     if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
-        stream_block = field.stream_block
-        stream_data = stream_block.get_prep_value(field)
+        return field.stream_data
     else:
         revision_content = json.loads(page_or_revision.content_json)
-        if revision_content.get(field_name):
-            field = revision_content[field_name]
-            stream_data = json.loads(field)
-        else:
-            stream_data = []
-
-    return stream_data
+        field = revision_content.get(field_name, "[]")
+        return json.loads(field)
 
 
 def set_stream_data(page_or_revision, field_name, stream_data, commit=True):
@@ -105,35 +98,101 @@ def set_stream_data(page_or_revision, field_name, stream_data, commit=True):
         page_or_revision.save()
 
 
-def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
-    """ Recursively run the mapper on fields of block_type in stream_data """
+def _is_listblock(value):
+    return isinstance(value, list) and not any(
+        'type' in block and 'value' in block for block in value
+    )
+
+
+def migrate_block(page_or_revision, child_block_path, block_value, mapper):
+    is_listblock = _is_listblock(block_value)
+
+    if not child_block_path and not is_listblock:
+        return mapper(page_or_revision, block_value), True
+
+    if is_listblock:
+        migrator = migrate_listblock
+    elif isinstance(block_value, list):
+        migrator = migrate_streamblock
+    elif isinstance(block_value, dict):
+        migrator = migrate_structblock
+    else:
+        raise ValueError('unexpected block value: %s' % block_value)
+
+    return migrator(
+        page_or_revision, child_block_path, block_value, mapper
+    )
+
+
+def migrate_streamblock(page_or_revision, block_path, block, mapper):
+    migrated = False
+    child_block_name, remaining_block_path = block_path[0], block_path[1:]
+
+    for child_block in block:
+        if child_block['type'] != child_block_name:
+            continue
+
+        migrated_value, child_migrated = migrate_block(
+            page_or_revision,
+            remaining_block_path,
+            child_block['value'],
+            mapper
+        )
+
+        if child_migrated:
+            child_block['value'] = migrated_value
+            migrated = True
+
+    return block, migrated
+
+
+def migrate_structblock(page_or_revision, block_path, block, mapper):
+    migrated = False
+    child_block_name, remaining_block_path = block_path[0], block_path[1:]
+
+    child_block = block.get(child_block_name)
+
+    if child_block:
+        migrated_value, child_migrated = migrate_block(
+            page_or_revision, remaining_block_path, child_block, mapper
+        )
+
+        if child_migrated:
+            block[child_block_name] = migrated_value
+            migrated = True
+
+    return block, migrated
+
+
+def migrate_listblock(page_or_revision, block_path, block, mapper):
     migrated = False
 
-    if isinstance(block_path, six.string_types):
-        block_path = [block_path, ]
+    for i in range(len(block)):
+        child_block = block[i]
 
-    if len(block_path) == 0:
+        migrated_value, child_migrated = migrate_block(
+            page_or_revision, block_path, child_block, mapper
+        )
+
+        if child_migrated:
+            block[i] = migrated_value
+            migrated = True
+
+    return block, migrated
+
+
+def migrate_stream_data(page_or_revision, block_path, stream_data, mapper):
+    if not block_path:
         return stream_data, False
 
-    # Separate out the current block name from its child paths
-    block_name = block_path[0]
-    child_block_path = block_path[1:]
+    if isinstance(block_path, str):
+        block_path = [block_path, ]
+    elif isinstance(block_path, tuple):
+        block_path = list(block_path)
 
-    for field in stream_data:
-        if field['type'] == block_name:
-            if len(child_block_path) == 0:
-                value = mapper(page_or_revision, field['value'])
-                field_migrated = True
-            else:
-                value, field_migrated = migrate_stream_data(
-                    page_or_revision, child_block_path, field['value'], mapper
-                )
-
-            if field_migrated:
-                field['value'] = value
-                migrated = True
-
-    return stream_data, migrated
+    return migrate_streamblock(
+        page_or_revision, block_path, stream_data, mapper
+    )
 
 
 def migrate_stream_field(page_or_revision, field_name, block_path, mapper):

@@ -1,52 +1,60 @@
 # Browser/Acceptance Tests
 
-## Run tests with localhost server
+## Browser testing
 
-1. Ensure that the following env vars are set (they should already be in your [`.env`](https://github.com/cfpb/cfgov-refresh/blob/master/.env_SAMPLE) file):
-   - `export TEST_HTTP_HOST=localhost`
-   - `export DJANGO_HTTP_PORT=8000`
-1. Then reload the virtual environment if needed: `source .env`
-1. Get your local version of cf.gov running at http://localhost:8000:
-   ```
-   ./runserver.sh
-   ```
-1. Run the browser tests against your localhost:
-   ```
-   gulp test:acceptance:new
-   ```
+Our browser tests (also called acceptance tests) are organized into
+suites under the
+[`test/browser_tests/cucumber/features`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/features)
+directory.
 
-## Run tests with Tox server:
+### Running the current browser tests locally
 
-To run browser tests, open a new Terminal window or tab and change to the project directory,
-then tell gulp to start the tests:
+1. Ensure that the following env vars are set (they should already be in your [`.env`](https://github.com/cfpb/consumerfinance.gov/blob/main/.env_SAMPLE) file):
+    - `export TEST_HTTP_HOST=localhost`
+    - `export DJANGO_HTTP_PORT=8000`
+2. Then reload the virtual environment if needed: `source .env`
+3. Get your local version of cf.gov running at http://localhost:8000:
+    - If you use Docker: `docker-compose up`
+    - If you use a virtual environment locally: `./runserver.sh`
+4. Run the browser tests against your localhost: `gulp test:acceptance`
 
-```sh
-gulp build
-gulp test:acceptance ( tox -e acceptance can be run as well )
-```
-
-There are several options you can pass to run a particular suite of tests,
-to run a particular list of features,
-and/or to run it in "fast" mode:
+There are several options you can pass to run a particular suite of tests or to
+run a particular list of features:
 
 ```sh
 gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin suite )
 gulp test:acceptance --specs=multiselect.feature ( runs just the multiselect feature )
 gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )
-gulp test:acceptance --recreate ( runs the tests and recreates the virtual environment )
 ```
 
-The same options can be used with tox (--omitted):
+### Running the legacy browser tests in Sauce Labs
 
-```sh
-tox -e acceptance suite=wagtail-admin
-tox -e acceptance specs=multiselect.feature
-tox -e acceptance tags=@mobile
-```
+Sauce Labs can be used to run the legacy browser tests remotely in the cloud.
 
-These tests will run on their own server; you do not need to be running your development server.
+1. Log into [https://saucelabs.com/account](https://saucelabs.com/account).
+2. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
+   and `SAUCE_SELENIUM_URL` values in your `.env` file.
+   The access key can be found on the Sauce Labs
+   [user settings page](https://saucelabs.com/beta/user-settings).
+3. Reload the settings with `source .env`.
+4. Run the tests with `gulp test:acceptance --sauce`.
+5. Monitor progress of the tests
+   on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
 
-## Cucumber - tool for running automated tests written in plain language
+!!! Note
+    If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
+    while running a test, it likely means that Sauce Connect is not running.
+
+### Writing browser tests
+
+Any new tests should be added to an existing suite (e.g. "default"), or placed
+into a new suite directory, in
+[`test/browser_tests/cucumber/features/suites`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/features/suites).
+All tests start with writing a `.feature` spec in one of these suites,
+and then adding corresponding step definitions, found in
+[`test/browser_tests/cucumber/step_definitions`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/step_definitions).
+
+#### Cucumber + Gherkin: tools for running automated tests written in plain language
 
 Below are some suggested standards for Cucumber Feature files:
 
@@ -128,54 +136,7 @@ Scenario: User logs in
    </tbody>
 </table>
 
-
-## Sauce Connect - send tests to the cloud
-
-Sauce Labs can be used to run tests remotely in the cloud.
-
-1. Log into [https://saucelabs.com/account](https://saucelabs.com/account).
-
-2. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
-   and `SAUCE_SELENIUM_URL` values in your `.env` file.
-   The access key can be found on the Sauce Labs
-   [user settings page](https://saucelabs.com/beta/user-settings).
-
-3. Reload the settings with `source .env`.
-
-4. Run the tests with `gulp test:acceptance --sauce`.
-
-5. Monitor progress of the tests
-   on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
-
-!!! Note
-    If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
-    while running a test, it likely means that Sauce Connect is not running.
-
-## Manual test configuration
-
-A number of command-line arguments can be set to test particular configurations:
-
- - `--suite`: Choose a particular suite or suites to run.
-   For example, `gulp test:acceptance --suite=content` or `gulp test:acceptance --suite=content,functional`.
- - `--specs`: Choose a particular spec or specs to run.
-   For example, `gulp test:acceptance --specs=header.feature`, `gulp test:acceptance --specs=header.feature,pagination.feature`, or `gulp test:acceptance --specs=filterable*.feature`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
- - `--windowSize`: Set the window size in pixels in `w,h` format.
-   For example, `gulp test:acceptance --windowSize=900,400`.
- - `--browserName`: Set the browser to run.
-   For example, `gulp test:acceptance --browserName=firefox`.
- - `--version`: Set the browser version to run.
-   For example, `gulp test:acceptance --version='44.0'`.
- - `--platform`: Set the OS platform to run.
-   For example, `gulp test:acceptance --platform='osx 10.10'`.
- - `--sauce`: Whether to run on Sauce Labs or not.
-   For example, `gulp test:acceptance --sauce=false`.
-
-
-## Tests
-
-Tests are organized into suites under the `test/browser_tests/cucumber/features` directory. Any new tests should be added to an existing suite (e.g. "default"), or placed into a new suite directory. All tests start with writing a `.feature` spec in one of these suites, and then adding corresponding step definitions, found in `test/browser_tests/cucumber/step_definitions`.
-
-## Further reading
+#### Further reading
 
 - [Cucumber features](https://github.com/cucumber/cucumber/wiki/Feature-Introduction)
 - [Protractor](https://angular.github.io/protractor/#/)
@@ -183,38 +144,18 @@ Tests are organized into suites under the `test/browser_tests/cucumber/features`
 - [Writing Jasmin expectations](https://jasmine.github.io/2.0/introduction.html#section-Expectations).
 - [Understanding Page Objects](https://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings)
 
-
-
-
 ## Performance testing
 
 To audit if the site complies with performance best practices and guidelines,
-run `gulp audit:perf`.
+[Google's Lighthouse](https://github.com/GoogleChrome/lighthouse) can be run
+from Google Chrome by opening the developer console and going to the Lighthouse
+tab to run a performance audit.
 
-The audit will run against
-[Google's Lighthouse](https://github.com/GoogleChrome/lighthouse).
-
-
-
-
-## Accessibility Testing
+## Accessibility testing
 
 Run the acceptance tests with an `--a11y` flag (i.e. `gulp test:acceptance --a11y`)
 to check every webpage for WCAG and Section 508 compliancy using Protractor's
 [accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
-
-If you'd like to audit a specific page, use `gulp audit:a11y`:
-
-  1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
-     Get a free [AChecker API ID](https://achecker.ca/register.php) for the value.
-  2. Reload your `.env` with `source ./.env` while in the project root directory.
-  3. Run `gulp audit:a11y` to run an audit on the homepage.
-  4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
-     For example, `gulp audit:a11y --u=contact-us`
-     or `gulp audit:a11y --u=the-bureau/bureau-structure/`.
-
-
-
 
 ## Source code linting
 

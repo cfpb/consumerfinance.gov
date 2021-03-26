@@ -1,10 +1,7 @@
-from __future__ import unicode_literals
-
 import logging
 import os
 from pprint import pformat
 
-from django.utils import six
 from django.utils.encoding import force_str
 from django.views.debug import get_exception_reporter_filter
 
@@ -19,7 +16,7 @@ class CFGovErrorHandler(logging.Handler):
     Generated GitHub issues include stack trace and request information.
     Sensitive request POST parameters are filtered using this Django logic:
 
-    https://docs.djangoproject.com/en/1.11/howto/error-reporting/#filtering-sensitive-information
+    https://docs.djangoproject.com/en/stable/howto/error-reporting/#filtering-sensitive-information
     """
 
     def __init__(self):
@@ -98,13 +95,10 @@ class CFGovErrorHandler(logging.Handler):
         except Exception:
             get = '<could not parse>'
 
-        if request._post_parse_error:
+        try:
+            post = pformat(POST_override)
+        except Exception:
             post = '<could not parse>'
-        else:
-            try:
-                post = pformat(POST_override)
-            except Exception:
-                post = '<could not parse>'
 
         try:
             cookies = pformat(request.COOKIES)
@@ -122,9 +116,9 @@ class CFGovErrorHandler(logging.Handler):
             '<%s\npath:%s,\nGET:%s,\nPOST:%s,\nCOOKIES:%s,\nMETA:%s>' % (
                 request.__class__.__name__,
                 path,
-                six.text_type(get),
-                six.text_type(post),
-                six.text_type(cookies),
-                six.text_type(meta)
+                str(get),
+                str(post),
+                str(cookies),
+                str(meta)
             )
         )

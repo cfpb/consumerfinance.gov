@@ -1,4 +1,4 @@
-from wagtail.wagtailcore import blocks
+from wagtail.core import blocks
 
 
 class YESChecklistItem(blocks.StructBlock):
@@ -6,8 +6,9 @@ class YESChecklistItem(blocks.StructBlock):
 
     item = blocks.CharBlock(
         help_text='Short description for a checkbox item')
-    details = blocks.TextBlock(
-        help_text='Deeper explanation of the item')
+    details = blocks.RichTextBlock(
+        help_text='Deeper explanation of the item',
+        required=False)
 
     class Meta:
         template = 'youth_employment/yes-checklist-items.html'
@@ -22,3 +23,6 @@ class YESChecklist(blocks.StructBlock):
         icon = 'list-ul'
         template = 'youth_employment/yes-checklist.html'
         label = 'Youth employment checklist'
+
+    class Media:
+        js = ["youth-employment-programs/buying-a-car/index.js"]

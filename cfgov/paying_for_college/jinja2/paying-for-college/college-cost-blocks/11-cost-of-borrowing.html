@@ -1,0 +1,51 @@
+<section class="college-costs_tool-section" data-tool-section="cost-of-borrowing">
+    <h2>What will interest cost me?</h2>
+    <p> This page depicts the total cost of borrowing if you repay your debt over 10 years on the standard repayment plan; other plans with lower monthly payments (and higher total costs of borrowing) are available.</p>
+
+    <div id="cost-of-borrowing_chart"></div>
+    <div class="block block__mid">
+        <h3 class="u-border-bottom">Cost of borrowing your loans</h3>
+
+        {{
+            text_item.render({
+                'label': 'Total money borrowed',
+                'value': '$0',
+                'type': 'text',
+                'data_attribute': 'data-financial-item="total_borrowingAtGrad"'
+            })
+        }}
+        {{
+            text_item.render({
+                'label': 'Interest accrued while in school ',
+                'value': '$0',
+                'type': 'text',
+                'data_attribute': 'data-financial-item="debt_programInterest"'
+            })
+        }}
+        {{
+            text_item.render({
+                'label': 'Interest over 10-year repayment plan',
+                'value': '$0',
+                'type': 'text',
+                'data_attribute': 'data-financial-item="debt_tenYearInterest"'
+            })
+        }}
+        {{
+            text_item.render({
+                'label': 'Total cost of borrowing',
+                'value': '$0',
+                'type': 'subtotal',
+                'status': 'warning',
+                'data_attribute': 'data-financial-item="debt_tenYearTotal"'
+            })
+        }}
+
+        {{ notification.render(
+            'money-tips',
+            true,
+            'Money saving tip',
+            'To lower the total cost of your loans, make room in your in-school budget for payments towards the interest on your private and unsubsidized federal loans. This will reduce the amount you pay due to <em>capitalization</em> &mdash; interest on your interest.' | safe
+        ) }}
+    </div>
+
+</section>

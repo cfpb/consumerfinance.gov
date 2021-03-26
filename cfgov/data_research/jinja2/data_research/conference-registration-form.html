@@ -51,11 +51,11 @@
             <div class="u-mb15">
             {% set form = settings.form %}
             {% for error in form.non_field_errors() %}
-                {{- notification.render('error', true, error | richtext ) }}
+                {{- notification.render( 'error', true, error | richtext ) }}
             {% endfor %}
             {% for field in form %}
                 {% for error in field.errors %}
-                    {{- notification.render('error', true, error) }}
+                    {{- notification.render( 'error', true, error ) }}
                 {% endfor %}
             {% endfor %}
             </div>
@@ -68,7 +68,7 @@
                 It would be preferable to be able to loop over form.fields
                 here instead of hardcoding them here, but unfortunately it's
                 difficult to reconcile Django's form field rendering with how
-                Capital Framework wants fields to be wrapped.
+                the Design System wants fields to be wrapped.
             #}
 
             {# Attendee Type -- Only virtual allowed when at capacity #}
@@ -158,11 +158,11 @@
             <div class="u-mb15">
             {% set form = settings.form %}
             {% for error in form.non_field_errors() %}
-                {{- notification.render('error', true, error | richtext) }}
+                {{- notification.render( 'error', true, error | richtext ) }}
             {% endfor %}
             {% for field in form %}
                 {% for error in field.errors %}
-                    {{- notification.render('error', true, error) }}
+                    {{- notification.render( 'error', true, error ) }}
                 {% endfor %}
             {% endfor %}
             </div>
@@ -175,7 +175,7 @@
                 It would be preferable to be able to loop over form.fields
                 here instead of hardcoding them here, but unfortunately it's
                 difficult to reconcile Django's form field rendering with how
-                Capital Framework wants fields to be wrapped.
+                the Design System wants fields to be wrapped.
             #}
 
             {# Attendee Type #}

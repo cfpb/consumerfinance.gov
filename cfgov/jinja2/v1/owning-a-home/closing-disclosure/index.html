@@ -3,7 +3,11 @@
 {% set page = {"search_description":"Use this tool to double-check that all the details about your loan are correct on your Closing Disclosure. If something looks incorrect or unexpected, ask why."} %}
 {% set active_page = "closing-disclosure" %}
 {% set page_js = "closing-disclosure" %}
-{% block title %}Closing Disclosure Explainer{% endblock title %}
+
+{% block title %}
+    Closing Disclosure Explainer | Consumer Financial Protection Bureau
+{% endblock %}
+
 {% block metadescription %}Use the CFPB's tool to double-check that all the details about your loan are correct on your Closing Disclosure.{% endblock metadescription %}
 
 {% block banner_top %}
@@ -93,20 +97,23 @@
     {% import "_templates/brand-footer.html" as brand_footer %}
     {% set footer_links = [ {
         "img": static("img/footer_keys.png"),
-        "text": "Found a home, chosen a lender?",
-        "label": "Get ready to close",
+        "intro": "Found a home, chosen a lender?",
+        "text": "Get ready to close",
+        "label": "Closing on your new home",
         "url": "/owning-a-home/process/close/",
         "is_jump_link": false
     }, {
         "img": static("img/footer_checklist.png"),
-        "text": "Know what to expect during closing?",
-        "label": "Get our closing checklist",
+        "intro": "Know what to expect during closing?",
+        "text": "Get our closing checklist",
+        "label": "Your mortgage closing checklist",
         "url": "/owning-a-home/resources/checklist_mortgage_closing.pdf",
         "is_jump_link": true
     }, {
         "img": static("img/footer_closing-forms.png"),
-        "text": "Ready to review your closing documents?",
-        "label": "Learn what to look for",
+        "intro": "Ready to review your closing documents?",
+        "text": "Learn what to look for",
+        "label": "Guide to closing forms",
         "url": "/owning-a-home/resources/mortgage_closing_forms.pdf",
         "is_jump_link": true
     }

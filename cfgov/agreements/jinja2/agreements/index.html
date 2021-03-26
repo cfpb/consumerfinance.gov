@@ -1,6 +1,8 @@
 {% extends "agreements/base_agreements.html" %}
 
-{% block title %}Credit card agreement database{% endblock %}
+{% block title -%}
+    Credit card agreement database | Consumer Financial Protection Bureau
+{%- endblock %}
 
 {% block content %}
 <main class="content content__2-1 content__bleedbar">
@@ -48,258 +50,194 @@
                     If you are an issuer, email <a href="mailto:CardAgreements@consumerfinance.gov">CardAgreements@consumerfinance.gov</a>
                     for agreement submission instructions.
                 </p>
-
-                <ul class="m-list m-list__links u-mt15">
+                <ul class="m-list m-list__links u-mt15 cc-links">
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q1.zip">
-                            <span class="a-link_text">
-                                Download all most recent agreements (Q1-2019)
-                            </span>
-                            {{ svg_icon('download') }}
+                      <span>
+                          Q3-2020 agreements may include omissions due to the Bureau’s COVID-19
+                          <a href=" https://files.consumerfinance.gov/f/documents/cfpb_data-collection-statement_covid-19_2020-03.pdf">
+                              regulatory flexibility statement
+                          </a>.
+                      </span><br/>
+                          <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q3.zip">
+                              Download all most recent agreements (Q3-2020)
+                          </a>
+                    </li>
+                    <li class="m-list m-list__links">
+                      <span>
+                          Q2-2020 agreements may include omissions due to the Bureau’s COVID-19
+                          <a href=" https://files.consumerfinance.gov/f/documents/cfpb_data-collection-statement_covid-19_2020-03.pdf">
+                              regulatory flexibility statement
+                          </a>.
+                      </span><br/>
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q2.zip">
+                            Archived Q2-2020 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q4.zip">
-                            <span class="a-link_text">
-                                Archived Q4-2018 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                      <span>
+                          Q1-2020 agreements may include omissions due to the Bureau’s COVID-19
+                          <a href=" https://files.consumerfinance.gov/f/documents/cfpb_data-collection-statement_covid-19_2020-03.pdf">
+                              regulatory flexibility statement
+                          </a>.
+                      </span><br/>
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2020_Q1.zip">
+                            Archived Q1-2020 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q3.zip">
-                            <span class="a-link_text">
-                                Archived Q3-2018 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q4.zip">
+                            Archived Q4-2019 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q2.zip">
-                            <span class="a-link_text">
-                                Archived Q2-2018 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q3.zip">
+                            Archived Q3-2019 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q1.zip">
-                            <span class="a-link_text">
-                                Archived Q1-2018 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                      <span>Q2 agreements are incomplete due to technical submission issues at the Bureau.</span><br/>
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q2.zip">
+                            Archived Q2-2019 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q4.zip">
-                            <span class="a-link_text">
-                                Archived Q4-2017 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2019_Q1.zip">
+                            Archived Q1-2019 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q3.zip">
-                            <span class="a-link_text">
-                                Archived Q3-2017 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q4.zip">
+                            Archived Q4-2018 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q2.zip">
-                            <span class="a-link_text">
-                                Archived Q2-2017 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q3.zip">
+                            Archived Q3-2018 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q1.zip">
-                            <span class="a-link_text">
-                                Archived Q1-2017 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q2.zip">
+                            Archived Q2-2018 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q4.zip">
-                            <span class="a-link_text">
-                                Archived Q4-2016 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2018_Q1.zip">
+                            Archived Q1-2018 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q3.zip">
-                            <span class="a-link_text">
-                                Archived Q3-2016 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q4.zip">
+                            Archived Q4-2017 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q2.zip">
-                            <span class="a-link_text">
-                                Archived Q2-2016 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q3.zip">
+                            Archived Q3-2017 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2016_Q1.zip">
-                            <span class="a-link_text">
-                                Archived Q1-2016 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q2.zip">
+                            Archived Q2-2017 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2015_Q4.zip">
-                            <span class="a-link_text">
-                                Archived January 2016 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2017_Q1.zip">
+                            Archived Q1-2017 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q4.zip">
-                            <span class="a-link_text">
-                                Archived Q4-2014 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q4.zip">
+                            Archived Q4-2016 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q3.zip">
-                            <span class="a-link_text">
-                                Archived Q3-2014 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q3.zip">
+                            Archived Q3-2016 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q2.zip">
-                            <span class="a-link_text">
-                                Archived Q2-2014 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/Credit_Card_Agreements_2016_Q2.zip">
+                            Archived Q2-2016 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q1.zip">
-                            <span class="a-link_text">
-                                Archived Q1-2014 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2016_Q1.zip">
+                            Archived Q1-2016 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q4.zip">
-                            <span class="a-link_text">
-                                Archived Q4-2013 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2015_Q4.zip">
+                            Archived January 2016 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q3.zip">
-                            <span class="a-link_text">
-                                Archived Q3-2013 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q4.zip">
+                            Archived Q4-2014 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q2.zip">
-                            <span class="a-link_text">
-                                Archived Q2-2013 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q3.zip">
+                            Archived Q3-2014 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q1.zip">
-                            <span class="a-link_text">
-                                Archived Q1-2013 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q2.zip">
+                            Archived Q2-2014 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q4.zip">
-                            <span class="a-link_text">
-                                Archived Q4-2012 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2014_Q1.zip">
+                            Archived Q1-2014 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q3.zip">
-                            <span class="a-link_text">
-                                Archived Q3-2012 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q4.zip">
+                            Archived Q4-2013 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q2.zip">
-                            <span class="a-link_text">
-                                Archived Q2-2012 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q3.zip">
+                            Archived Q3-2013 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q1.zip">
-                            <span class="a-link_text">
-                                Archived Q1-2012 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q2.zip">
+                            Archived Q2-2013 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q4.zip">
-                            <span class="a-link_text">
-                                Archived Q4-2011 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2013_Q1.zip">
+                            Archived Q1-2013 agreements
                         </a>
                     </li>
                     <li class="m-list m-list__links">
-                        <a class="a-link a-link__icon"
-                        href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q3.zip">
-                            <span class="a-link_text">
-                                Archived Q3-2011 agreements
-                            </span>
-                            {{ svg_icon('download') }}
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q4.zip">
+                            Archived Q4-2012 agreements
+                        </a>
+                    </li>
+                    <li class="m-list m-list__links">
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q3.zip">
+                            Archived Q3-2012 agreements
+                        </a>
+                    </li>
+                    <li class="m-list m-list__links">
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q2.zip">
+                            Archived Q2-2012 agreements
+                        </a>
+                    </li>
+                    <li class="m-list m-list__links">
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2012_Q1.zip">
+                            Archived Q1-2012 agreements
+                        </a>
+                    </li>
+                    <li class="m-list m-list__links">
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q4.zip">
+                            Archived Q4-2011 agreements
+                        </a>
+                    </li>
+                    <li class="m-list m-list__links">
+                        <a href="https://files.consumerfinance.gov/a/assets/CCADB_Snapshot_2011_Q3.zip">
+                            Archived Q3-2011 agreements
                         </a>
                     </li>
                 </ul>

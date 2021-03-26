@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 import glob
 import json
 import logging
@@ -135,7 +133,7 @@ def generate_counselor_html(source_dir, target_dir):
         html_filename = os.path.join(target_dir, '{}.html'.format(zipcode))
 
         with open(html_filename, 'w') as f:
-            f.write(html.encode('utf-8'))
+            f.write(html)
 
 
 def get_counselor_json_files(directory):

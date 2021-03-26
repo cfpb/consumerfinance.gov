@@ -1,5 +1,5 @@
-Feature: verify the /owning-a-home/mortgage-estimate page works according to requirements
-As a first time visitor to the Buying a House page
+Feature: Verify the /owning-a-home/mortgage-estimate page works according to requirements
+As a first time visitor to the Owning a Home page
 I want to navigate the Mortgage Estimate page
 So that I can find the information I'm looking for
 
@@ -9,5 +9,5 @@ Scenario Outline: Testing availability of pages on Mortgage Estimate
   Then Links are working without 404 errors
 
 Examples:
-  | page_name             |
-  | Mortgage Estimate     |
+| page_name         |
+| Mortgage Estimate |

@@ -1,10 +1,8 @@
 import os
 import shutil
-import six
 import tempfile
-from unittest import TestCase
+from unittest import TestCase, mock
 
-import mock
 from deployable_zipfile.install_wheels import install_wheels
 
 
@@ -25,10 +23,7 @@ class TestSetup(TestCase):
 
         # We expect that only compatible wheels will be installed.
 
-        if six.PY2:  # pragma: no cover
-            expected_wheels = ['bar-1.0-py2-none-any.whl']
-        elif six.PY3:  # pragma: no cover
-            expected_wheels = ['baz-1.0-py3-none-any.whl']
+        expected_wheels = ['baz-1.0-py3-none-any.whl']
 
         expected_wheels.append('foo-1.0-py2.py3-none-any.whl')
 

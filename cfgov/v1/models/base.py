@@ -1,30 +1,34 @@
+import re
+
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.db.models import F, Value
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone, translation
 from django.utils.module_loading import import_string
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, StreamFieldPanel,
     TabbedInterface
 )
-from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import (
-    Orderable, Page, PageManager, PageQuerySet
-)
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsearch import index
+from wagtail.core import hooks
+from wagtail.core.fields import StreamField
+from wagtail.core.models import Page, PageManager, PageQuerySet, Site
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
 
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 from wagtailinventory.helpers import get_page_blocks
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
+from v1.models.banners import Banner
 from v1.models.snippets import ReusableText
 from v1.util import ref
 from v1.util.util import validate_social_sharing_image
@@ -77,6 +81,53 @@ class CFGOVPage(Page):
             'Maximum size: 4096w x 4096h.'
         )
     )
+    schema_json = JSONField(
+        null=True,
+        blank=True,
+        verbose_name='Schema JSON',
+        help_text=mark_safe(
+            'Enter structured data for this page in JSON-LD format, '
+            'for use by search engines in providing rich search results. '
+            '<a href="https://developers.google.com/search/docs/guides/'
+            'intro-structured-data">Learn more.</a> '
+            'JSON entered here will be output in the '
+            '<code>&lt;head&gt;</code> of the page between '
+            '<code>&lt;script type="application/ld+json"&gt;</code> and '
+            '<code>&lt;/script&gt;</code> tags.'
+        ),
+    )
+    force_breadcrumbs = models.BooleanField(
+        "Force breadcrumbs on child pages",
+        default=False,
+        blank=True,
+        help_text=(
+            "Normally breadcrumbs don't appear on pages one or two levels "
+            "below the homepage. Check this option to force breadcrumbs to "
+            "appear on all children of this page no matter how many levels "
+            "below the homepage they are (for example, if you want "
+            "breadcrumbs to appear on all children of a top-level campaign "
+            "page)."
+        ),
+    )
+
+    is_archived = models.CharField(
+        max_length=16,
+        choices=[
+            ('no', 'No'),
+            ('yes', 'Yes'),
+            ('never', 'Never'),
+        ],
+        default='no',
+        verbose_name='This page is archived',
+        help_text='If "Never" is selected, the page will not be archived '
+                  'automatically after a certain period of time.'
+    )
+
+    archived_at = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="Archive date"
+    )
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
@@ -104,10 +155,16 @@ class CFGOVPage(Page):
     # Panels
     promote_panels = Page.promote_panels + [
         ImageChooserPanel('social_sharing_image'),
+        FieldPanel('force_breadcrumbs', 'Breadcrumbs'),
     ]
 
     sidefoot_panels = [
         StreamFieldPanel('sidefoot'),
+    ]
+
+    archive_panels = [
+        FieldPanel('is_archived'),
+        FieldPanel('archived_at'),
     ]
 
     settings_panels = [
@@ -115,8 +172,10 @@ class CFGOVPage(Page):
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
+        FieldPanel('schema_json', 'Structured Data'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'language'),
+        MultiFieldPanel(archive_panels, 'Archive'),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
@@ -125,6 +184,11 @@ class CFGOVPage(Page):
         ObjectList(sidefoot_panels, heading='Sidebar/Footer'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
+
+    default_exclude_fields_in_copy = Page.default_exclude_fields_in_copy + [
+        'tags',
+        'authors'
+    ]
 
     def clean(self):
         super(CFGOVPage, self).clean()
@@ -167,33 +231,13 @@ class CFGOVPage(Page):
         return None
 
     def get_breadcrumbs(self, request):
-        ancestors = self.get_ancestors()
-        home_page_children = request.site.root_page.get_children()
+        ancestors = self.get_ancestors().specific()
+        site = Site.find_for_request(request)
         for i, ancestor in enumerate(ancestors):
-            if ancestor in home_page_children:
-                # Add top level parent page and `/process/` url segments
-                # where necessary to BAH page breadcrumbs.
-                # TODO: Remove this when BAH moves under /consumer-tools
-                # and redirects are added after 2018 homebuying campaign.
-                if ancestor.slug == 'owning-a-home':
-                    breadcrumbs = []
-                    for ancestor in ancestors[i:]:
-                        ancestor_url = ancestor.relative_url(request.site)
-                        if ancestor_url.startswith((
-                                '/owning-a-home/prepare',
-                                '/owning-a-home/explore',
-                                '/owning-a-home/compare',
-                                '/owning-a-home/close',
-                                '/owning-a-home/sources')):
-                            ancestor_url = ancestor_url.replace(
-                                'owning-a-home', 'owning-a-home/process')
-                        breadcrumbs.append({
-                            'title': ancestor.title,
-                            'href': ancestor_url,
-                        })
-                    return breadcrumbs
-                # END TODO
-                return [ancestor for ancestor in ancestors[i + 1:]]
+            if ancestor.is_child_of(site.root_page):
+                if ancestor.specific.force_breadcrumbs:
+                    return ancestors[i:]
+                return ancestors[i + 1:]
         return []
 
     def get_appropriate_descendants(self, inclusive=True):
@@ -203,10 +247,77 @@ class CFGOVPage(Page):
     def get_appropriate_siblings(self, inclusive=True):
         return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
+    def remove_html_tags(self, text):
+        clean = re.compile('<.*?>')
+        return re.sub(clean, ' ', text)
+
+    def get_streamfield_content(self, section, blockType, value):
+        for item in section:
+            if item.block_type is blockType:
+                return self.remove_html_tags(item.value[value].source)
+        return
+
+    def get_meta_description(self):
+        """Determine what the page's meta and OpenGraph description should be
+
+        Checks several different possible fields in order of preference.
+        If none are found, returns an empty string, which is preferable to a
+        generic description repeated on many pages.
+        """
+
+        preference_order = [
+            'search_description',
+            'header_hero_body',
+            'preview_description',
+            'header_text_intro',
+            'content_text_intro',
+            'header_item_intro',
+        ]
+        candidates = {}
+
+        if self.search_description:
+            candidates['search_description'] = self.search_description
+        if hasattr(self, 'header'):
+            candidates['header_hero_body'] = self.get_streamfield_content(
+                self.header, 'hero', 'body')
+            candidates['header_text_intro'] = self.get_streamfield_content(
+                self.header, 'text_introduction', 'intro')
+            candidates['header_item_intro'] = self.get_streamfield_content(
+                self.header, 'item_introduction', 'paragraph')
+        if hasattr(self, 'preview_description') and self.preview_description:
+            candidates['preview_description'] = self.remove_html_tags(
+                self.preview_description)
+        if hasattr(self, 'content'):
+            candidates['content_text_intro'] = self.get_streamfield_content(
+                self.content, 'text_introduction', 'intro')
+
+        for entry in preference_order:
+            if candidates.get(entry):
+                return candidates[entry]
+
+        return ''
+
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+
         for hook in hooks.get_hooks('cfgovpage_context_handlers'):
             hook(self, request, context, *args, **kwargs)
+
+        # Add any banners that are enabled and match the current request path
+        # to a context variable.
+        context['banners'] = Banner.objects \
+            .filter(enabled=True) \
+            .annotate(
+                # This annotation creates a path field in the QuerySet
+                # that we can use in the filter below to compare with
+                # the url_pattern defined on each enabled banner.
+                path=Value(request.path, output_field=models.CharField())) \
+            .filter(path__regex=F('url_pattern'))
+
+        if self.schema_json:
+            context['schema_json'] = self.schema_json
+
+        context['meta_description'] = self.get_meta_description()
         return context
 
     def serve(self, request, *args, **kwargs):
@@ -239,7 +350,8 @@ class CFGOVPage(Page):
         If form_id is found, it returns the response from the block method
         retrieval.
 
-        If form_id is not found, it returns an error response.
+        If form_id is not found, or if form_id is not a block that implements
+        get_result() to process the POST, it returns an error response.
         """
         form_module = None
         form_id = request.POST.get('form_id', None)
@@ -257,20 +369,21 @@ class CFGOVPage(Page):
                     except ValueError:
                         streamfield_index = None
 
-                    try:
-                        form_module = streamfield[streamfield_index]
-                    except IndexError:
-                        form_module = None
+                    if streamfield_index is not None:
+                        try:
+                            form_module = streamfield[streamfield_index]
+                        except IndexError:
+                            form_module = None
 
-        if form_module is None:
+        try:
+            result = form_module.block.get_result(
+                self,
+                request,
+                form_module.value,
+                True
+            )
+        except AttributeError:
             return self._return_bad_post_response(request)
-
-        result = form_module.block.get_result(
-            self,
-            request,
-            form_module.value,
-            True
-        )
 
         if isinstance(result, HttpResponse):
             return result
@@ -324,10 +437,20 @@ class CFGOVPage(Page):
     def post_preview_cache_key(self):
         return 'post_preview_{}'.format(self.id)
 
+    @property
+    def archived(self):
+        if self.is_archived == 'yes':
+            return True
 
-class CFGOVPageCategory(Orderable):
+        return False
+
+
+class CFGOVPageCategory(models.Model):
     page = ParentalKey(CFGOVPage, related_name='categories')
     name = models.CharField(max_length=255, choices=ref.categories)
+
+    class Meta:
+        ordering = ['name']
 
     panels = [
         FieldPanel('name'),
@@ -337,7 +460,7 @@ class CFGOVPageCategory(Orderable):
 # keep encrypted passwords around to ensure that user does not re-use
 # any of the previous 10
 class PasswordHistoryItem(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()  # password becomes invalid at...
     locked_until = models.DateTimeField()  # password cannot be changed until
@@ -361,7 +484,7 @@ class PasswordHistoryItem(models.Model):
 
 # User Failed Login Attempts
 class FailedLoginAttempt(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # comma-separated timestamp values, right now it's a 10 digit number,
     # so we can store about 91 last failed attempts
     failed_attempts = models.CharField(max_length=1000)
@@ -392,6 +515,6 @@ class FailedLoginAttempt(models.Model):
 
 
 class TemporaryLockout(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()

@@ -1,6 +1,6 @@
 /* ==========================================================================
-   cfgov-refresh
-   Master Less file
+   consumerfinance.gov
+   Main Less file
    ========================================================================== */
 
 
@@ -8,17 +8,17 @@
    ========================================================================== */
 
 // Import required CF components.
-@import (less) 'cf-core.less';
-@import (less) 'cf-icons.less';
-@import (less) 'cf-buttons.less';
-@import (less) 'cf-forms.less';
-@import (less) 'cf-grid.less';
-@import (less) 'cf-layout.less';
-@import (less) 'cf-typography.less';
-@import (less) 'cf-notifications.less';
-@import (less) 'cf-pagination.less';
-@import (less) 'cf-expandables.less';
-@import (less) 'cf-tables.less';
+@import (less) 'cfpb-core.less';
+@import (less) 'cfpb-icons.less';
+@import (less) 'cfpb-buttons.less';
+@import (less) 'cfpb-forms.less';
+@import (less) 'cfpb-grid.less';
+@import (less) 'cfpb-layout.less';
+@import (less) 'cfpb-typography.less';
+@import (less) 'cfpb-notifications.less';
+@import (less) 'cfpb-pagination.less';
+@import (less) 'cfpb-expandables.less';
+@import (less) 'cfpb-tables.less';
 
 // Icon font path
 @cf-icon-path: '/static/icons';
@@ -59,6 +59,7 @@
 @import (less) "media.less";
 @import (less) "meta.less";
 @import (less) "misc.less";
+@import (less) "schema.less";
 
 
 /* Amalgamated patterns
@@ -82,21 +83,19 @@
 /* Molecule pieces
    ========================================================================== */
 
+@import (less) "molecules/archived-banner.less";
+@import (less) "molecules/archived-pill.less";
 @import (less) "molecules/autocomplete.less";
 @import (less) "molecules/call-to-action.less";
 @import (less) "molecules/card.less";
-@import (less) "molecules/featured-menu-content.less";
 @import (less) "molecules/form-field-with-button.less";
 @import (less) "molecules/full-width-media.less";
-@import (less) "molecules/full-width-text.less";
 @import (less) "molecules/global-banner.less";
 @import (less) "molecules/global-eyebrow.less";
 @import (less) "molecules/global-header-cta.less";
 @import (less) "molecules/global-search.less";
-@import (less) "molecules/home-hero.less";
 @import (less) "molecules/info-unit.less";
 @import (less) "molecules/inset.less";
-@import (less) "molecules/multiselect.less";
 @import (less) "molecules/nav-link.less";
 @import (less) "molecules/related-metadata.less";
 @import (less) "molecules/related-posts.less";
@@ -106,7 +105,7 @@
 /* Organism pieces
    ========================================================================== */
 @import (less) "organisms/ask-search.less";
-@import (less) "organisms/bureau-structure.less";
+@import (less) "organisms/audio-player.less";
 @import (less) "organisms/chart.less";
 @import (less) "organisms/email-popup.less";
 @import (less) "organisms/email-signup.less";
@@ -121,6 +120,7 @@
 @import (less) "organisms/post-preview.less";
 @import (less) "organisms/prefooter.less";
 @import (less) "organisms/read-more.less";
+@import (less) "organisms/summary.less";
 @import (less) "organisms/reg-comment.less";
 @import (less) "organisms/resource-list.less";
 @import (less) "organisms/secondary-navigation.less";
@@ -128,6 +128,9 @@
 @import (less) "organisms/sidebar-contact-info.less";
 @import (less) "organisms/sidebar-content.less";
 @import (less) "organisms/video-player.less";
+@import (less) "organisms/card-group.less";
+@import (less) "organisms/carousel.less";
+@import (less) "organisms/simple-chart.less";
 
 
 /* Template pieces
@@ -145,18 +148,11 @@
 @import (less) "pages/event.less";
 @import (less) "pages/external-site.less";
 @import (less) "pages/error.less";
-@import (less) "pages/home.less";
 @import (less) "pages/press-resources.less";
-@import (less) "pages/car-buying-guide.less";
+// @import (less) "pages/car-buying-guide.less";
 
 
 /* Print styles
    ========================================================================== */
 
 @import (less) "print.less";
-
-
-/* Wagtail mitigation
-   ========================================================================== */
-
-@import (less) "rich-text.less";

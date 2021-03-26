@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 
 from rest_framework.renderers import JSONRenderer
@@ -63,8 +61,8 @@ class TimeSeriesData(APIView):
             return Response("Unknown delinquency range")
         reference_lists = {
             entry: MortgageMetaData.objects.get(name=entry).json_value
-            for entry in ['whitelist', 'msa_fips', 'non_msa_fips']}
-        if fips not in reference_lists['whitelist']:
+            for entry in ['allowlist', 'msa_fips', 'non_msa_fips']}
+        if fips not in reference_lists['allowlist']:
             return Response("FIPS code not found or not valid.")
         if len(fips) == 2:
             state = State.objects.get(fips=fips)

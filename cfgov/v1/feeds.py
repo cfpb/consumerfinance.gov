@@ -2,8 +2,6 @@ from datetime import datetime
 
 from django.contrib.syndication.views import Feed
 
-from wagtail.wagtailcore.url_routing import RouteResult
-
 import pytz
 
 
@@ -48,23 +46,6 @@ class FilterableFeed(Feed):
         return "%s<>consumerfinance.gov" % item.page_ptr_id
 
 
-class FilterableFeedPageMixin(object):
-
-    def route(self, request, path_components):
-        if len(path_components) == 1 and path_components[0] == 'feed':
-            return RouteResult(self, kwargs={'format': 'rss'})
-
-        return super(FilterableFeedPageMixin,
-                     self).route(request, path_components)
-
-    def serve(self, request, format='html'):
-        if format == 'rss':
-            context = self.get_context(request)
-            return FilterableFeed(self, context)(request)
-        else:
-            return super(FilterableFeedPageMixin, self).serve(request)
-
-
 def get_appropriate_rss_feed_url_for_page(page, request=None):
     """Given a page, return the most appropriate RSS feed for it to link to.
 
@@ -75,13 +56,15 @@ def get_appropriate_rss_feed_url_for_page(page, request=None):
     under the index page).
 
     Pages are considered to provide a feed if they inherit from
-    FilterableFeedPageMixin.
+    FilterableListMixin.
 
     Returns None if neither the page nor any of its ancestors provide feeds.
     """
+    from v1.models.filterable_list_mixins import FilterableListMixin
+
     ancestors_including_page = page.get_ancestors(inclusive=True)
     ancestors_including_page_with_feeds = ancestors_including_page.filter(
-        ancestors_including_page.type_q(FilterableFeedPageMixin)
+        ancestors_including_page.type_q(FilterableListMixin)
     )
 
     # page.get_ancestors() orders from root down to page.

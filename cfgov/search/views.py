@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.views.generic import View
 
-from wagtail.wagtailcore.models import get_page_models
+from wagtail.core.models import get_page_models
 
 from search import dotgov
 from search.forms import ExternalLinksForm
@@ -34,7 +34,7 @@ class SearchView(View):
         pages = sorted(pages, key=lambda k: k.title)
 
         contacts = list(
-            Contact.objects.filter(body__contains=url).order_by('heading'))
+            Contact.objects.filter(body__contains=url))
         resources = sorted(list(
             Resource.objects.filter(link__contains=url)) + list(
             Resource.objects.filter(alternate_link__contains=url)),

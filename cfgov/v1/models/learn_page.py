@@ -1,26 +1,28 @@
-from datetime import date
+from datetime import date, datetime
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import (
+from wagtail.admin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
     StreamFieldPanel, TabbedInterface
 )
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Page, PageManager
-from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsearch import index
+from wagtail.core import blocks
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page, PageManager
+from wagtail.documents.edit_handlers import DocumentChooserPanel
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.search import index
 
 from localflavor.us.models import USStateField
+from pytz import timezone
 
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.models.base import CFGOVPage, CFGOVPageManager
+from v1.util.datetimes import convert_date
 from v1.util.events import get_venue_coords
 
 
@@ -29,6 +31,7 @@ class AbstractFilterPage(CFGOVPage):
         ('article_subheader', blocks.RichTextBlock(icon='form')),
         ('text_introduction', molecules.TextIntroduction()),
         ('item_introduction', organisms.ItemIntroduction()),
+        ('notification', molecules.Notification()),
     ], blank=True)
     preview_title = models.CharField(max_length=255, null=True, blank=True)
     preview_subheading = models.CharField(
@@ -55,13 +58,14 @@ class AbstractFilterPage(CFGOVPage):
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         MultiFieldPanel([
-            FieldPanel('preview_title', classname="full"),
-            FieldPanel('preview_subheading', classname="full"),
-            FieldPanel('preview_description', classname="full"),
-            FieldPanel('secondary_link_url', classname="full"),
-            FieldPanel('secondary_link_text', classname="full"),
+            FieldPanel('preview_title'),
+            FieldPanel('preview_subheading'),
+            FieldPanel('preview_description'),
+            FieldPanel('secondary_link_url'),
+            FieldPanel('secondary_link_text'),
             ImageChooserPanel('preview_image'),
         ], heading='Page Preview Fields', classname='collapsible'),
+        FieldPanel('schema_json', 'Structured Data'),
         FieldPanel('authors', 'Authors'),
         MultiFieldPanel([
             FieldPanel('date_published'),
@@ -70,6 +74,7 @@ class AbstractFilterPage(CFGOVPage):
         ], 'Relevant Dates', classname='collapsible'),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
         FieldPanel('language', 'Language'),
+        MultiFieldPanel(CFGOVPage.archive_panels, 'Archive'),
     ]
 
     # This page class cannot be created.
@@ -106,16 +111,19 @@ class LearnPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('info_unit_group', organisms.InfoUnitGroup()),
         ('expandable_group', organisms.ExpandableGroup()),
+        ('contact_expandable_group', organisms.ContactExpandableGroup()),
         ('expandable', organisms.Expandable()),
         ('well', organisms.Well()),
         ('call_to_action', molecules.CallToAction()),
         ('email_signup', organisms.EmailSignUp()),
         ('video_player', organisms.VideoPlayer()),
+        ('audio_player', organisms.AudioPlayer()),
         ('table_block', organisms.AtomicTableBlock(
             table_options={'renderer': 'html'}
         )),
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
+
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')
     )
@@ -184,7 +192,7 @@ class EventPage(AbstractFilterPage):
             'v1.ReusableText'
         )),
     ], blank=True)
-    start_dt = models.DateTimeField("Start", blank=True, null=True)
+    start_dt = models.DateTimeField("Start")
     end_dt = models.DateTimeField("End", blank=True, null=True)
     future_body = RichTextField(blank=True)
     archive_image = models.ForeignKey(
@@ -209,15 +217,15 @@ class EventPage(AbstractFilterPage):
         related_name='+'
     )
     flickr_url = models.URLField("Flickr URL", blank=True)
-    youtube_url = models.URLField(
-        "YouTube URL",
+    archive_video_id = models.CharField(
+        'YouTube video ID (archive)',
+        null=True,
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id. "
-                  "It can be obtained by clicking on Share > "
-                  "Embed on YouTube.",
-        validators=[
-            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
-        ]
+        max_length=11,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        validators=[RegexValidator(regex=r'^[\w-]{11}$')],
+        help_text=organisms.VideoPlayer.YOUTUBE_ID_HELP_TEXT
     )
     live_stream_availability = models.BooleanField(
         "Streaming?",
@@ -226,15 +234,15 @@ class EventPage(AbstractFilterPage):
         help_text='Check if this event will be streamed live. This causes the '
                   'event page to show the parts necessary for live streaming.'
     )
-    live_stream_url = models.URLField(
-        "URL",
+    live_video_id = models.CharField(
+        'YouTube video ID (live)',
+        null=True,
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id. "
-                  "It can be obtained by clicking on Share > "
-                  "Embed on YouTube.",
-        validators=[
-            RegexValidator(regex=r'^https?:\/\/www\.youtube\.com\/embed\/.*$')
-        ]
+        max_length=11,
+        # This is a reasonable but not official regex for YouTube video IDs.
+        # https://webapps.stackexchange.com/a/54448
+        validators=[RegexValidator(regex=r'^[\w-]{11}$')],
+        help_text=organisms.VideoPlayer.YOUTUBE_ID_HELP_TEXT
     )
     live_stream_date = models.DateTimeField(
         "Go Live Date",
@@ -280,10 +288,10 @@ class EventPage(AbstractFilterPage):
         default='placeholder',
         verbose_name='Post-event image type',
         help_text='Choose what to display after an event concludes. This will '
-                  'be overridden by embedded video if the "YouTube URL" field '
-                  'on the previous tab is populated. If "Unique image" is '
-                  'chosen here, you must select the image you want below. It '
-                  'should be sized to 1416x796.',
+                  'be overridden by embedded video if the "YouTube video ID '
+                  '(archive)" field on the previous tab is populated. If '
+                  '"Unique image" is chosen here, you must select the image '
+                  'you want below. It should be sized to 1416x796.',
     )
     post_event_image = models.ForeignKey(
         'v1.CFGOVImage',
@@ -301,34 +309,34 @@ class EventPage(AbstractFilterPage):
     search_fields = AbstractFilterPage.search_fields + [
         index.SearchField('body'),
         index.SearchField('archive_body'),
-        index.SearchField('live_stream_url'),
+        index.SearchField('live_video_id'),
         index.SearchField('flickr_url'),
-        index.SearchField('youtube_url'),
+        index.SearchField('archive_video_id'),
         index.SearchField('future_body'),
         index.SearchField('agenda_items')
     ]
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
-        FieldPanel('body', classname="full"),
+        FieldPanel('body'),
         FieldRowPanel([
             FieldPanel('start_dt', classname="col6"),
             FieldPanel('end_dt', classname="col6"),
         ]),
         MultiFieldPanel([
-            FieldPanel('archive_body', classname="full"),
+            FieldPanel('archive_body'),
             ImageChooserPanel('archive_image'),
             DocumentChooserPanel('video_transcript'),
             DocumentChooserPanel('speech_transcript'),
             FieldPanel('flickr_url'),
-            FieldPanel('youtube_url'),
+            FieldPanel('archive_video_id'),
         ], heading='Archive Information'),
-        FieldPanel('live_body', classname="full"),
-        FieldPanel('future_body', classname="full"),
+        FieldPanel('live_body'),
+        FieldPanel('future_body'),
         StreamFieldPanel('persistent_body'),
         MultiFieldPanel([
             FieldPanel('live_stream_availability'),
-            FieldPanel('live_stream_url'),
+            FieldPanel('live_video_id'),
             FieldPanel('live_stream_date'),
         ], heading='Live Stream Information'),
     ]
@@ -374,8 +382,34 @@ class EventPage(AbstractFilterPage):
     template = 'events/event.html'
 
     @property
+    def event_state(self):
+        if self.end_dt:
+            end = convert_date(self.end_dt, 'America/New_York')
+            if end < datetime.now(timezone('America/New_York')):
+                return 'past'
+
+        if self.live_stream_date:
+            start = convert_date(
+                self.live_stream_date,
+                'America/New_York'
+            )
+        else:
+            start = convert_date(self.start_dt, 'America/New_York')
+
+        if datetime.now(timezone('America/New_York')) > start:
+            return 'present'
+
+        return 'future'
+
+    @property
     def page_js(self):
-        return super(EventPage, self).page_js + ['video-player.js']
+        if (
+            (self.live_stream_date and self.event_state == 'present')
+            or (self.archive_video_id and self.event_state == 'past')
+        ):
+            return super(EventPage, self).page_js + ['video-player.js']
+
+        return super(EventPage, self).page_js
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
         if not self.venue_coords:
@@ -408,3 +442,8 @@ class EventPage(AbstractFilterPage):
     def save(self, *args, **kwargs):
         self.venue_coords = get_venue_coords(self.venue_city, self.venue_state)
         return super(EventPage, self).save(*args, **kwargs)
+
+    def get_context(self, request):
+        context = super(EventPage, self).get_context(request)
+        context['event_state'] = self.event_state
+        return context

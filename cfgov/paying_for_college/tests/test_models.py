@@ -1,28 +1,23 @@
-# -*- coding: utf8 -*-
-from __future__ import unicode_literals
-
 import datetime
-import six
 import smtplib
 import unittest
+from unittest import mock
+from unittest.mock import mock_open, patch
 
+from django.http import HttpRequest
 from django.test import TestCase
 from django.utils import timezone
 
 import requests
+
 from paying_for_college.apps import PayingForCollegeConfig
 from paying_for_college.models import (
-    Alias, ConstantCap, ConstantRate, Contact, Feedback, Nickname,
-    Notification, Program, School, get_region, make_divisible_by_6
+    Alias, CollegeCostsPage, ConstantCap, ConstantRate, Contact, Feedback,
+    Nickname, Notification, Program, RepayingStudentDebtPage, School,
+    StudentLoanQuizPage, get_region, make_divisible_by_6
 )
-
-
-if six.PY2:  # pragma: no cover
-    import mock
-    from mock import mock_open, patch
-else:  # pragma: no cover
-    from unittest import mock
-    from unittest.mock import mock_open, patch
+from v1.models import HomePage
+from v1.util.migrations import set_stream_data
 
 
 class MakeDivisibleTest(TestCase):
@@ -38,6 +33,60 @@ class MakeDivisibleTest(TestCase):
         self.assertTrue(make_divisible_by_6(test_value) == 6)
         test_value = 45
         self.assertTrue(make_divisible_by_6(test_value) == 48)
+
+
+class PageModelsTest(TestCase):
+
+    def setUp(self):
+
+        def create_page(model, title, slug, parent):
+            new_page = model(
+                live=False,
+                title=title,
+                slug=slug)
+            parent.add_child(instance=new_page)
+            new_page.save()
+            return new_page
+        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.loan_quiz_page = create_page(
+            StudentLoanQuizPage,
+            'Choosing a student loan',
+            'choose-a-student-loan',
+            self.ROOT_PAGE
+        )
+        self.debt_page = create_page(
+            RepayingStudentDebtPage,
+            'Repaying student debt',
+            'repaying-student-debt',
+            self.ROOT_PAGE
+        )
+        self.college_costs_page = create_page(
+            CollegeCostsPage,
+            'Understanding college costs',
+            'college-costs',
+            self.ROOT_PAGE
+        )
+
+    def test_loan_quiz_template(self):
+        """
+        We are using get_template to set a 'situation_id' for development.
+
+        We hope to drop this value, or deliver it another way,
+        when quiz structure is decided.
+        """
+        page = self.loan_quiz_page
+        stream_data = [{
+            'type': 'guided_quiz',
+            'id': '12345',
+            'value': {
+                'question': '?',
+                'answer': 'huh?'}}]
+        set_stream_data(page, 'content', stream_data)
+        self.assertEqual(
+            page.get_template(HttpRequest()),
+            'paying-for-college/choose-a-student-loan.html')
+        self.assertEqual(
+            self.loan_quiz_page.content[0].value['situation_id'], '12345')
 
 
 class SchoolRegionTest(TestCase):
@@ -60,7 +109,8 @@ class PayingForCollegeConfigTest(unittest.TestCase):
 class SchoolModelsTest(TestCase):
 
     def create_school(
-            self, ID=999999,
+            self,
+            school_id=999999,
             data_json='',
             accreditor="Almighty Wizard",
             city="Emerald City",
@@ -69,7 +119,7 @@ class SchoolModelsTest(TestCase):
             ope6=5555,
             ope8=555500):
         return School.objects.create(
-            school_id=ID,
+            school_id=school_id,
             data_json=data_json,
             accreditor=accreditor,
             degrees_highest=degrees_highest,
@@ -146,7 +196,6 @@ class SchoolModelsTest(TestCase):
         self.assertTrue(isinstance(p, Program))
         self.assertIn(p.program_name, p.__str__())
         self.assertIn(p.program_name, p.as_json())
-        self.assertIn('Bachelor', p.get_level())
         noti = self.create_notification(s)
         self.assertTrue(isinstance(noti, Notification))
         self.assertIn(noti.oid, noti.__str__())
@@ -274,7 +323,7 @@ class SchoolModelsTest(TestCase):
         self.assertEqual(feedback.parsed_url, {})
 
     def test_feedback_school(self):
-        school = self.create_school(ID=451796)
+        school = self.create_school(school_id=451796)
         feedback = self.create_feedback()
         self.assertEqual(feedback.school, school)
         feedback.url = feedback.url.replace("iped=451796&", '')
@@ -361,12 +410,59 @@ class NonSettlementNotification(TestCase):
         self.assertTrue('No notification required' in non_msg)
 
 
-class ProgramExport(TestCase):
+class ProgramExportTest(TestCase):
     fixtures = ['test_program.json']
 
-    def test_program_as_csv(self):
+    def test_program_as_csv_is_called(self):
         p = Program.objects.get(pk=1)
         m = mock_open()
-        with patch("six.moves.builtins.open", m, create=True):
+        with patch("builtins.open", m, create=True):
             p.as_csv('/tmp.csv')
         self.assertEqual(m.call_count, 1)
+
+
+class ProgramCodesTest(TestCase):
+    """
+    Make sure the Program.program_codes property delivers the right data.
+
+    Programs should be excluded if any of these are true:
+    - Program.test is True
+    - Program.level is blank
+    - Program.salary is None
+    - Program is undergrad (< level 4)
+    The fixture has 4 grad and 1 undergrad programs linked to school 408039.
+    """
+
+    fixtures = ['test_program.json']
+
+    def setUp(self):
+        self.school = School.objects.get(pk=408039)
+
+    def test_program_codes_deliver_no_undergrad(self):
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('undergrad')), 1)
+
+    def test_grad_program_codes(self):
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('graduate')), 4)
+
+    def test_program_codes_exclude_test_programs(self):
+        p1 = Program.objects.get(pk=1)
+        p1.test = True
+        p1.save()
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('graduate')), 3)
+
+    def test_program_codes_exclude_blank_level(self):
+        p2 = Program.objects.get(pk=2)
+        p2.level = ''
+        p2.save()
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('graduate')), 3)
+
+    def test_program_codes_exclude_null_salary(self):
+        p3 = Program.objects.get(pk=3)
+        p3.salary = None
+        p3.save()
+        programs = self.school.program_codes
+        self.assertEqual(len(programs.get('graduate')), 3)

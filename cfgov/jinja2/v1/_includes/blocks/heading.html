@@ -1,6 +1,40 @@
-<{{ value.level }}>
-    {%- if value.icon %}
-        {{ svg_icon(value.icon) }}
-    {% endif -%}
-    {{ value.text | safe }}
+{# ==========================================================================
+
+   Heading
+
+   ==========================================================================
+
+   Description:
+
+   Create a heading when given:
+
+   value.text:          Heading text.
+
+   value.level:         The heading level (h2, h3, h4).
+
+   value.level_class:   (Optional) Alternate heading class, used for tags like:
+                        <h2 class="h3">
+
+   value.icon:          (Optional) Name of icon to insert before the heading
+                        text. See list of available icon names at:
+                        https://cfpb.github.io/design-system/foundation/iconography
+
+   ========================================================================== #}
+{%- macro heading( value ) -%}
+
+{# Don't render anything if the heading text is empty. #}
+{% if value.text -%}
+
+<{{ value.level }}
+{%- if value.level_class %} class="{{ value.level_class }}"{% endif -%}
+>
+    {%- if value.icon %}{{ svg_icon( value.icon ) }} {% endif %}
+    {{- value.text | safe -}}
 </{{ value.level }}>
+
+{%- endif %}
+
+{%- endmacro -%}
+
+{# Allows this template to be rendered directly without using a macro. #}
+{% if value %}{{ heading( value ) }}{% endif %}

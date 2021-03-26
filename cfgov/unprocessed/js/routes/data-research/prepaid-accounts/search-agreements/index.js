@@ -1,6 +1,6 @@
-import Expandable from 'cf-expandables/src/Expandable';
-import Multiselect from '../../../../molecules/Multiselect';
-import { instantiateAll } from '../../../../modules/util/atomic-helpers';
+import Expandable from '@cfpb/cfpb-expandables/src/Expandable';
+import Multiselect from '@cfpb/cfpb-forms/src/organisms/Multiselect';
+import { instantiateAll } from '@cfpb/cfpb-atomic-component/src/utilities/atomic-helpers.js';
 
 const multiSelectsSelector = `.${ Multiselect.BASE_CLASS }`;
 

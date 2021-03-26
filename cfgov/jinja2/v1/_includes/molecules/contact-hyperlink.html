@@ -1,0 +1,28 @@
+{# ==========================================================================
+
+   Contact Hyperlink
+
+   ==========================================================================
+
+   Description:
+
+   Create a Contact Hyperlink molecule when given:
+
+   value:                 ContactHyperlink block StreamValue.
+
+   value.url:             Hyperlink URL.
+
+   value.text:            Hyperlink text (optional).
+
+   ========================================================================== #}
+<div class="m-contact m-contact-hyperlink">
+    <span class="h5">
+        {{ svg_icon( 'globe' ) }}
+        Web
+    </span>
+    <p>
+        <a href="{{ value.url }}">
+            {{ value.text | default( value.url, true ) }}
+        </a>
+    </p>
+</div>

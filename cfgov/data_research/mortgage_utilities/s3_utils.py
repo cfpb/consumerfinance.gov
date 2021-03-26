@@ -1,13 +1,11 @@
-from __future__ import unicode_literals
-
+import csv
 import datetime
-from six import BytesIO
+from io import StringIO
 
 from django.conf import settings
 
 import boto3
 import requests
-import unicodecsv
 
 
 # bake_to_s3 functions require S3 secrets to be stored in the env
@@ -22,8 +20,8 @@ S3_SOURCE_FILE = 'latest_county_delinquency.csv'
 
 def read_in_s3_csv(url):
     response = requests.get(url)
-    f = BytesIO(response.content)
-    reader = unicodecsv.DictReader(f)
+    f = StringIO(response.content.decode('utf-8'))
+    reader = csv.DictReader(f)
     return reader
 
 
@@ -48,7 +46,7 @@ def bake_csv_to_s3(slug, csv_file_obj, sub_bucket=None):
         Key='{}/{}.csv'.format(sub_bucket, slug),
         ACL='public-read',
         ContentType='text/csv',
-        Body=csv_file_obj,
+        Body=csv_file_obj.getvalue(),
         CacheControl='max-age=2592000,public',
         Expires=expires
     )

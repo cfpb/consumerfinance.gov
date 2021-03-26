@@ -1,15 +1,15 @@
 import json
 from datetime import date
+from unittest.mock import Mock, patch
 
 from django.test import TestCase
 
 import requests
-from mock import Mock, patch
-from scripts import unpublish_closed_jobs
 
-from jobmanager.models.django import ApplicantType, JobCategory, Region
+from jobmanager.models.django import ApplicantType, JobCategory
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import USAJobsApplicationLink
+from scripts import unpublish_closed_jobs
 from v1.tests.wagtail_pages import helpers
 
 
@@ -79,11 +79,6 @@ class UnpublishClosedJobsTestCase(TestCase):
             job_category="category"
         )
         division.save()
-        region = Region(
-            abbreviation="TS",
-            name="TriStateArea"
-        )
-        region.save()
         self.public_type = ApplicantType(
             applicant_type="public",
             description="description"
@@ -102,7 +97,6 @@ class UnpublishClosedJobsTestCase(TestCase):
             open_date=date(2099, 1, 1),
             close_date=date(2099, 1, 15),
             division=division,
-            location=region,
             live=True)
         helpers.publish_page(child=self.page)
 

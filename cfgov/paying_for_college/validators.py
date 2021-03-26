@@ -1,7 +1,4 @@
-from __future__ import unicode_literals
-
-
-WHITELIST_KEYS = {
+ALLOWLIST_KEYS = {
     'alias': 'string',
     'avgmonthlypay': 'float',
     'avgstuloandebt': 'integer',

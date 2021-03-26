@@ -1,8 +1,0 @@
-{
-  "name": "CFPB Featured Topic",
-  "query": {
-    "doc_type": "featured_topic",
-    "size": 10,
-    "sort": "date:desc"
-  }
-}

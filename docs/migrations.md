@@ -25,7 +25,7 @@ into the concepts presented throughout this page:
 
 - [Django migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/)
 - [Django data migrations documentation](https://docs.djangoproject.com/en/1.11/topics/migrations/#data-migrations)
-- [Wagtail Streamfield migrations documentation](https://docs.wagtail.io/en/v1.13.4/topics/streamfield.html#migrations)
+- [Wagtail Streamfield migrations documentation](https://docs.wagtail.io/en/stable/topics/streamfield.html#migrations)
 
 
 ## Do I need to create a migration?
@@ -90,7 +90,7 @@ that briefly describes the change(s) you're making:
 ```
 
 For examples of good migration names, look through some of
-[our existing migration files](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/v1/migrations).
+[our existing migration files](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/v1/migrations).
 
 !!! note
     Some changes will generate multiple migration files.
@@ -106,9 +106,10 @@ a regular source of conflicts between pull requests
 that are in flight at the same time.
 If a PR with a migration gets merged between the time you create your migration
 and the time that your PR is ready for merging,
-you will have to update your branch as normal to be current with master
+you will have to update your branch as normal to be current with main
 and then re-create your migration.
-Also note that our [back-end tests that run in Travis](../travis/)
+Also note that our
+[back-end tests that run in GitHub Actions](../github-actions/)
 will fail if a required schema migration is missing or if
 migrations are in conflict with one another.
 
@@ -172,8 +173,8 @@ The `forwards()` and `backwards()` functions are where any changes
 that need to happen to a model's data are made.
 
 !!! note
-    While backwards migrations are necessary in external libraries that we create, 
-    we do not require them in cfgov-refresh 
+    While backwards migrations are necessary in external libraries that we create,
+    we do not require them in consumerfinance.gov
     because we prefer not to rollback migrations that have already been applied.
 
 ### Wagtail-specific considerations
@@ -181,7 +182,7 @@ that need to happen to a model's data are made.
 Django data migrations with Wagtail can be challenging because
 [programmatic editing of Wagtail pages is difficult](https://github.com/wagtail/wagtail/issues/1101),
 and pages have both revisions and StreamFields.
-This section describes ways we try to address these challenges in cfgov-refresh.
+This section describes ways we try to address these challenges in consumerfinance.gov.
 
 The data migration needs to modify both the existing Wagtail pages
 that correspond to the changed model and all revisions of that page.
@@ -196,7 +197,7 @@ it's a three-step process to modify a field without losing data:
    from the old field to the new field
 3. Delete the old field with an automatic schema migration
 
-We've written some utility functions in cfgov-refresh
+We've written some utility functions in consumerfinance.gov
 that make writing data migrations for StreamFields easier.
 Using these utilities, a Django data migration that modifies a StreamField
 would use the following format:
@@ -246,12 +247,12 @@ class Migration(migrations.Migration):
     ]
 ```
 
-`field_name` is the name of the StreamField on the Page model that contains the blocks to migrate. 
+`field_name` is the name of the StreamField on the Page model that contains the blocks to migrate.
 `block_name` is the name of the block within a StreamField that contains the data to be migrated.
 
-StreamBlocks can themselves also contain child blocks. 
-The block name can be given as a list of block names 
-that form the "path" to the block that needs to be migrated. 
+StreamBlocks can themselves also contain child blocks.
+The block name can be given as a list of block names
+that form the "path" to the block that needs to be migrated.
 For example :
 
 ```python
@@ -266,9 +267,9 @@ def forwards(apps, schema_editor):
     )
 ```
 
-In this example, 
-a block with the name `child_block` 
-that is inside a block named `parent_block` 
+In this example,
+a block with the name `child_block`
+that is inside a block named `parent_block`
 will be passed to the `forward_mapper` function.
 
 The `data` that gets passed to the `forward_mapper` or `backward_mapper`
@@ -277,7 +278,7 @@ is a JSON-compatible Python `dict` that corresponds to the block's schema.
 ### Utility functions
 
 These functions, defined in `v1.util.migrations`,
-are used in the above data migration example. 
+are used in the above data migration example.
 They reduce the amount of boilerplate required
 to work with Wagtail StreamField data in data migrations.
 
@@ -285,34 +286,34 @@ to work with Wagtail StreamField data in data migrations.
 
 Migrate the fields of a Wagtail page type using the given `mapper` function.
 `page_types_and_fields` should be a list of 4-tuples providing
-`('app', 'PageType', 'field_name', 'block_name')` or 
-`('app', 'PageType', 'field_name', ['parent_block_name', 'child_block_name'])`. 
+`('app', 'PageType', 'field_name', 'block_name')` or
+`('app', 'PageType', 'field_name', ['parent_block_name', 'child_block_name'])`.
 
-`field_name` is the name of the StreamField on the Page model. 
+`field_name` is the name of the StreamField on the Page model.
 
-`block_name` is the name of the StreamBlock within the StreamField to migrate. 
+`block_name` is the name of the StreamBlock within the StreamField to migrate.
 
-The mapper function should take `page_or_revision` 
+The mapper function should take `page_or_revision`
 and the stream block's value as a `dict`.
 
 This function calls `migrate_stream_field()`.
 
 #### `migrate_stream_field(page_or_revision, field_name, block_path, mapper)`
 
-Migrate all occurrences of the block name 
+Migrate all occurrences of the block name
 contained within the `block_path` list
 belonging to the page or revision using the `mapper` function.
 
-The mapper function should take `page_or_revision` 
+The mapper function should take `page_or_revision`
 and the stream block's value as a `dict`.
 
 This function calls `migrate_stream_data()`.
 
 #### `migrate_stream_data(page_or_revision, block_path, stream_data, mapper)`
 
-Migrate all occurrences of the block name 
+Migrate all occurrences of the block name
 contained within the `block_path` list
-within the `stream_data` `dict` 
+within the `stream_data` `dict`
 using the given `mapper` function.
 
 The mapper function should take `page_or_revision`
@@ -336,45 +337,45 @@ containing the blocks within the given StreamField.
 
 ## Recreating migrations
 
-[As described above](#schema-migrations), 
-each time a Django model's definition changes it requires the generation of a new Django migration. 
-Over time, the number of migrations in our apps can grow very large, 
+[As described above](#schema-migrations),
+each time a Django model's definition changes it requires the generation of a new Django migration.
+Over time, the number of migrations in our apps can grow very large,
 slowing down testing and the `migrate` command.
 
-For this reason it may be desirable to periodically delete and recreate the migration files, 
-so that instead of a series of files detailing every change over time 
-we have a smaller set that just describes the current state of models in the code. 
+For this reason it may be desirable to periodically delete and recreate the migration files,
+so that instead of a series of files detailing every change over time
+we have a smaller set that just describes the current state of models in the code.
 
-Django does provide an automated 
-[squashing](https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations) 
-process for migrations, 
+Django does provide an automated
+[squashing](https://docs.djangoproject.com/en/1.11/topics/migrations/#squashing-migrations)
+process for migrations,
 but this is often not optimal when migrations contain manual `RunPython` blocks that we don't necessarily care about keeping around.
 
-Instead, we delete all existing migration files and then run `manage.py makemigrations` to create new ones. 
-This will generate the smallest number of migration files needed to describe the state of models in the code; 
+Instead, we delete all existing migration files and then run `manage.py makemigrations` to create new ones.
+This will generate the smallest number of migration files needed to describe the state of models in the code;
 typically one per app although sometimes multiple are needed due to app dependencies.
 
 This process does have these critical side effects:
 
-1. Databases that exist at some migration state before the one at the point of the recreation will no longer be able to be migrated to the current state, 
-    as the intermediate changes will have been lost. 
-    This means that those databases will need to be recreated. 
-    This also means that historical database archives will require a bit more work to resurrect; 
-    they'll need to first be migrated to the point just before the recreation, 
+1. Databases that exist at some migration state before the one at the point of the recreation will no longer be able to be migrated to the current state,
+    as the intermediate changes will have been lost.
+    This means that those databases will need to be recreated.
+    This also means that historical database archives will require a bit more work to resurrect;
+    they'll need to first be migrated to the point just before the recreation,
     and then updated to code at or after that point.
 
-    For example, say a database dump exists at a point where N migrations occur. 
-    At such time as N + 1 migrations occur, 
-    we decide to go through the recreation process. 
-    Now we have a new migration numbered N + 2 that represents the equivalent of all (1..N+1) migrations that it replaces. 
-    If you try to load and migrate the dump at point N, 
-    Django no longer has the code necessary to go from N->N+1 only -- 
-    it only has the ability to go from 0->N+2. 
-    To recover such a dump, you'll need to check out the code at the point before the recreation was done, 
+    For example, say a database dump exists at a point where N migrations occur.
+    At such time as N + 1 migrations occur,
+    we decide to go through the recreation process.
+    Now we have a new migration numbered N + 2 that represents the equivalent of all (1..N+1) migrations that it replaces.
+    If you try to load and migrate the dump at point N,
+    Django no longer has the code necessary to go from N->N+1 only --
+    it only has the ability to go from 0->N+2.
+    To recover such a dump, you'll need to check out the code at the point before the recreation was done,
     migrate from N->N+1, and then check out latest and migrate forwards.
 
-2. Any open pull requests at the time of the recreation that reference 
-    or depend on some of the existing migrations 
+2. Any open pull requests at the time of the recreation that reference
+    or depend on some of the existing migrations
     will need to be modified to instead refer to the new migration files.
 
 Migrations can be recreated with this process:
@@ -391,12 +392,12 @@ Migrations can be recreated with this process:
     cfgov/manage.py makemigrations --noinput
     ```
 
-    As it happens this creates new initial migrations (`0001_initial`) for all apps, 
-    plus some subsequent migrations (`0002_something`) for apps that depend on other apps 
+    As it happens this creates new initial migrations (`0001_initial`) for all apps,
+    plus some subsequent migrations (`0002_something`) for apps that depend on other apps
     (for example, `ask_cfpb` has its own initial migration and then some changes that rely on `v1`).
 
-3. Rename the created migration files so that they follow in sequence the migration files that used to exist. 
-   For example, if at the time of recreation there are 101 `v1` migrations, 
+3. Rename the created migration files so that they follow in sequence the migration files that used to exist.
+   For example, if at the time of recreation there are 101 `v1` migrations,
    the first new migration should be numbered 102.
 
 4. Manually alter all new migration files to indicate that they replace the old migration files.
@@ -404,15 +405,15 @@ Migrations can be recreated with this process:
     This involves adding lines to these files like:
 
     ```py
-    includes = [('app_name', '0002_foo'), ('app_name', '0003_bar'), ...]
+    replaces = [('app_name', '0002_foo'), ('app_name', '0003_bar'), ...]
     ```
 
-    This tells Django that these new files replace the old files, 
-    so that when migrations are run again, 
+    This tells Django that these new files replace the old files,
+    so that when migrations are run again,
     it doesn't need to do anything.
 
-    Also manually update any new subsequent migration files so that they properly refer to each other. 
-    For example, if an app has two new migrations 102 and 103, 
+    Also manually update any new subsequent migration files so that they properly refer to each other.
+    For example, if an app has two new migrations 102 and 103,
     the 103 file needs to properly depend on 102.
 
 To apply these new migration files to an existing database, you can simply run:
@@ -421,7 +422,7 @@ To apply these new migration files to an existing database, you can simply run:
 cfgov/manage.py migrate --noinput
 ```
 
-You'll see that there are no changes to apply, 
+You'll see that there are no changes to apply,
 as the new files should exactly describe the current model state in the same way that the old migrations did.
 
-See [cfgov-refresh#3770](https://github.com/cfpb/cfgov-refresh/pull/3770) for an example of when this was done.
+See [consumerfinance.gov#3770](https://github.com/cfpb/consumerfinance.gov/pull/3770) for an example of when this was done.

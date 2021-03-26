@@ -5,7 +5,7 @@ from datetime import datetime, time, timedelta
 from django.core.management.base import BaseCommand
 from django.utils.timezone import make_aware
 
-from wagtail.wagtailcore.models import Page
+from wagtail.core.models import Page
 
 from v1.models import Feedback
 

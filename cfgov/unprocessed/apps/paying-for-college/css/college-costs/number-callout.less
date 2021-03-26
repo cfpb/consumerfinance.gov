@@ -1,0 +1,47 @@
+.number-callout {
+	&_header {
+		font-size: unit( 16px / @base-font-size-px, em );
+		font-weight: 500;
+		margin-bottom: 0;
+		text-transform: uppercase;
+	}
+
+	&_value {
+		margin-top: 0;
+		margin-bottom: unit( 10px / @base-font-size-px, em );
+		font-size: unit( 18px / @base-font-size-px, em );
+	}
+
+	&__large {
+		.number-callout_value {
+			font-size: unit( 28px / @base-font-size-px, em );
+			font-weight: 600;
+		}
+	}
+
+	&__right {
+		text-align: right;
+		border-right: 5px solid @black;
+		padding-right: unit( 10px / @base-font-size-px, em );
+	}
+
+	&__warning {
+		border-color: @red;
+
+		.number-callout_value {
+			color: @red;
+		}
+	}
+
+	&__border-top {
+		border-top: 1px solid @block__border;
+		padding-top: unit( 10px / @base-font-size-px, em );
+		margin-top: unit( 30px / @base-font-size-px, em );
+	}
+
+	&__divisor .number-callout_value > span {
+		border-bottom: 1px solid black;
+    	padding-bottom: unit( 5px / @base-font-size-px, em );
+	}
+
+}

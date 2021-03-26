@@ -1,22 +1,6 @@
 
-// Import Capital Framework Atomic Component less file to get transition CSS.
-@import (less) 'cf-atomic-component.less';
-
-// TODO: Move the theme variables to /enhancements/ for CF.
-/* topdoc
-  name: Theme variables
-  family: cf-core
-  notes:
-    - "The following color and sizing variables are exposed, allowing you to
-       easily override them before compiling."
-  patterns:
-    - name: Sizing
-      codenotes:
-        - |
-          @mobile_trigger_ht__px
-  tags:
-    - cf-core
-*/
+// Import Design System's Atomic Component less file to get transition CSS.
+@import (less) '@cfpb/cfpb-atomic-component/src/utilities/transition/transition.less';
 
 @mobile_trigger_ht__px: 54px;
 
@@ -30,8 +14,8 @@
         - |
           body
 */
-// TODO: Reduce global scope and reign it in to the menu only if possible.
 
+// TODO: Reduce global scope and reign it in to the menu only if possible.
 body {
     .respond-to-max( @bp-sm-max, {
         overflow-x: hidden;
@@ -46,83 +30,104 @@ body {
       markup: |
         <nav class="o-mega-menu"
              role="navigation">
-            <h2 class="o-mega-menu_heading">
-                <button class="o-mega-menu_trigger" aria-expanded="false">
-                    <span class="u-visually-hidden">Main menu</span>
-                </button>
-            </h2>
+            <button class="o-mega-menu_trigger" aria-expanded="false">
+                <span class="u-visually-hidden">Main menu</span>
+            </button>
+            <button class="o-mega-menu_trigger" data-js-hook="behavior_flyout-menu_trigger" aria-haspopup="menu" aria-expanded="false">
+                <span class="o-mega-menu_trigger-open">
+                    [svg]
+                </span>
+                <span class="o-mega-menu_trigger-close">
+                    [svg]
+                </span>
+                <span class="u-visually-hidden">
+                    Main menu
+                </span>
+            </button>
             <div class="o-mega-menu_content"
                  aria-expanded="false">
                 <div class="o-mega-menu_content-wrapper">
-                    <div class="wrapper">
-                        <div class="o-mega-menu_content-grid">
-                            <div class="o-mega-menu-lists">
-                                <ul class="o-mega-menu_content-list">
-                                    <li class="o-mega-menu_content-item">
-                                        [Global Header CTA]
-                                    </li>
-                                    <li class="o-mega-menu_content-item">
-                                        <a class="o-mega-menu_content-link"
-                                           href="/about-us/"
-                                           aria-expanded="false">
-                                            About Us
-                                        </a>
-                                        <div class="o-mega-menu_content"
-                                             aria-expanded="false">
-                                            <div class="o-mega-menu_content-wrapper">
-                                                <div class="wrapper">
-                                                    <button class="o-mega-menu_content-alt-trigger">
-                                                        Back
-                                                    </button>
-                                                    <div class="o-mega-menu_content-grid">
-                                                        <span class="o-mega-menu_content-overview">
-                                                            <h3 class="o-mega-menu_content-overview-heading">
-                                                                <a class="o-mega-menu_content-overview-link"
-                                                                   href="/about-us/">
-                                                                    About Us Overview
-                                                                </a>
-                                                            </h3>
-                                                        </span>
-                                                        <div class="o-mega-menu_content-lists">
-                                                            <ul class="m-list
-                                                                       m-list__unstyled
-                                                                       o-mega-menu_content-list">
+                    <div class="o-mega-menu-lists">
+                        <ul class="o-mega-menu_content-list">
+                            <li class="o-mega-menu_content-item">
+                                [Global Header CTA]
+                            </li>
+                            <li class="o-mega-menu_content-item">
+                                <a class="o-mega-menu_content-link"
+                                    href="/about-us/"
+                                    aria-expanded="false">
+                                    <h2>
+                                        About Us
+                                        <span class="o-mega-menu_content-link-icon-post">
+                                            [svg]
+                                        </span>
+                                        <span class="o-mega-menu_content-link-icon-closed">
+                                            [svg]
+                                        </span>
+                                        <span class="o-mega-menu_content-link-icon-open">
+                                            [svg]
+                                        </span>
+                                    </h2>
+                                </a>
+                                <div class="o-mega-menu_content"
+                                        aria-expanded="false">
+                                    <div class="o-mega-menu_content-wrapper">
+                                        <div class="wrapper">
+                                            <button class="o-mega-menu_content-alt-trigger">
+                                                Back
+                                            </button>
+                                            <span class="o-mega-menu_content-overview">
+                                                <div class="o-mega-menu_content-overview-heading">
+                                                    <a class="o-mega-menu_content-overview-link"
+                                                        href="/about-us/">
+                                                        About Us Overview
+                                                    </a>
+                                                </div>
+                                            </span>
+                                            <div class="o-mega-menu_content-lists">
+                                                <div class="o-mega-menu_content-list-group">
+                                                    <div class="o-mega-menu_content-list">
+
+                                                        <h4 class="h5 o-mega-menu_group-heading">
+                                                            Money Topics
+                                                        </h4>
+
+                                                        <ul class="m-list
+                                                                   m-list__unstyled">
+                                                            <li class="m-list_item
+                                                                        o-mega-menu_content-item">
+                                                                <a class="o-mega-menu_content-link"
+                                                                    href="/the-bureau/">
+                                                                    The Bureau
+                                                                    </a>
+                                                            </li>
+                                                            …
+                                                        </ul>
+                                                        <ul class="m-list
+                                                                    m-list__unstyled">
                                                                 <li class="m-list_item
-                                                                           o-mega-menu_content-item">
-                                                                    <a class="o-mega-menu_content-link"
-                                                                       href="/the-bureau/">
-                                                                        The Bureau
-                                                                     </a>
+                                                                            o-mega-menu_content-item">
+                                                                    <a class="o-mega-menu_content-link__current
+                                                                                o-mega-menu_content-link"
+                                                                        href="/about-us/careers/">
+                                                                        Careers
+                                                                        </a>
                                                                 </li>
                                                                 …
-                                                            </ul>
-                                                            <ul class="m-list
-                                                                       m-list__unstyled
-                                                                       o-mega-menu_content-list">
-                                                                    <li class="m-list_item
-                                                                               o-mega-menu_content-item">
-                                                                        <a class="o-mega-menu_content-link__current
-                                                                                  o-mega-menu_content-link"
-                                                                           href="/about-us/careers/">
-                                                                            Careers
-                                                                         </a>
-                                                                    </li>
-                                                                    …
-                                                            </ul>
-                                                            …
-                                                        </div>
+                                                        </ul>
                                                     </div>
-                                                    <aside class="sub-nav_media">
-                                                        [Featured Menu Content]
-                                                    </aside>
+                                                    …
                                                 </div>
                                             </div>
+                                            <aside class="sub-nav_media">
+                                                [Featured Menu Content]
+                                            </aside>
                                         </div>
-                                    </li>
-                                </ul>
-                                [Global Eyebrow]
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        [Global Eyebrow]
                     </div>
                 </div>
             </div>
@@ -132,38 +137,46 @@ body {
           Structural cheat sheet:
           -----------------------
           nav.o-mega-menu
-            .o-mega-menu_heading
-                .o-mega-menu_trigger
+            .o-mega-menu_trigger
             .o-mega-menu_content
                 .o-mega-menu_content-wrapper
-                    .wrapper
-                        .o-mega-menu-content-grid
-                            .o-mega-menu_content-overview
-                                .o-mega-menu_content-overview-heading
-                                    .o-mega-menu_content-overview-link
-                            .o-mega-menu_content-title
-                                a.o-mega-menu_content-link
-                            .o-mega-menu_content-lists
-                                ul.o-mega-menu_content-list
-                                    li.o-mega-menu_content-item
-                                        .m-global-header-cta.m-global-header-cta__list
-                                    li.o-mega-menu_content-item
-                                        a.o-mega-menu_content-link
+                    .o-mega-menu_content-overview
+                        .o-mega-menu_content-overview-heading
+                            .o-mega-menu_content-overview-link
+                    .o-mega-menu_content-title
+                        a.o-mega-menu_content-link
+                    .o-mega-menu_content-lists
+                        .o-mega-menu_content-list-group
+                            .o-mega-menu_content-list
+                                .o-mega-menu_group-heading
+                                ul
                                     li.o-mega-menu_content-item
                                         a.o-mega-menu_content-link
+                                            h2
+                                                span.o-mega-menu_content-link-icon-pre
+                                    li.o-mega-menu_content-item
+                                        a.o-mega-menu_content-link
+                                            h2
+                                                span.o-mega-menu_content-link-icon-post
+                                                span.o-mega-menu_content-link-icon-open
+                                                span.o-mega-menu_content-link-icon-closed
+                                    li.o-mega-menu_content-item
+                                        a.o-mega-menu_content-link
+                                            h2
+                                                span.o-mega-menu_content-link-icon-post
+                                                span.o-mega-menu_content-link-icon-open
+                                                span.o-mega-menu_content-link-icon-closed
                                         .o-mega-menu_content
                                             .o-mega-menu_content-wrapper
-                                                .wrapper
-                                                    button.o-mega-menu_content-alt-trigger
-                                                    .o-mega-menu_content-grid
-                                                        .o-mega-menu_content-title
-                                                            a.o-mega-menu_content-link
-                                                        .o-mega-menu_content-lists
-                                                            ul.o-mega-menu_content-list
-                                                                li.o-mega-menu_content-item
-                                                            ul.o-mega-menu_content-list
-                                                                li.o-mega-menu_content-item
-                                                    aside.sub-nav_media
+                                                button.o-mega-menu_content-alt-trigger
+                                                .o-mega-menu_content-title
+                                                    a.o-mega-menu_content-link
+                                                .o-mega-menu_content-lists
+                                                    ul.o-mega-menu_content-list
+                                                        li.o-mega-menu_content-item
+                                                    ul.o-mega-menu_content-list
+                                                        li.o-mega-menu_content-item
+                                            aside.sub-nav_media
       notes:
         - "Not shown, but each content level adds a depth-specific class,
            such as o-mega-menu_content-1, o-mega-menu_content-2, etc."
@@ -171,29 +184,263 @@ body {
     - cfgov-organisms
 */
 
-.o-mega-menu {
+@menu_max_width_px: 1200px;
+@menu_link_hover_bar_px: 5px;
 
-    &_heading {
-        // Override h2 element styles.
-        margin: 0;
-        font-size: 1em;
+//
+// ELEMENT STATES
+//
+// To finely control the focus, hover, and current states independent of element
+// padding and margin, we create a hover bar in the :before pseudo-element, and
+// a focus rectangle in the :after pseudo-element.
+//
+
+
+// Create a bar for hover purposes to the left of an item.
+.u-bar-left( @color, @position: -@menu_link_hover_bar_px - 10px ) {
+    & {
+        position: relative;
     }
 
-    ul ul {
-        // Override margin added by CF between lists.
+    &:before {
+        position: absolute;
+        left: @position;
+        top: 0;
+        content: '';
+        background: @color;
+        width: @menu_link_hover_bar_px;
+        height: 100%;
+    }
+}
+
+// Focus item appearance.
+.u-focus-rectangle() {
+    // Position focus rectangle relative to parent container.
+    & {
+        position: relative;
+    }
+
+    // Remove default focus outline.
+    &:focus {
+        outline: none;
+    }
+
+    // Make the pseudo-element have an outline.
+    &:focus:after {
+        outline: 1px dotted @pacific;
+    }
+
+    // Create the dimensions for the pseudo-element focus rectangle.
+    &:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: '';
+        height: 100%;
+        width: 100%;
+    }
+}
+
+//
+// HOVER STATES
+//
+// u-hover-link-desktop
+// u-hover-link-icon-desktop
+// u-hover-link-featured-desktop
+// u-hover-link-mobile
+//
+
+// Hover over item appearance.
+// Default link hover menu items.
+.u-hover-link-desktop() {
+    &:hover {
+        .u-bar-left( @green );
+    }
+}
+
+// Adjustments for links with icons, desktop.
+.u-hover-link-icon-desktop() {
+    &:hover {
+        .u-bar-left( @green, -@menu_link_hover_bar_px - 8px );
+
+        .cf-icon-svg {
+            fill: @black;
+        }
+    }
+}
+
+// Adjustments for featured link, desktop.
+.u-hover-link-featured-desktop() {
+    &:hover {
+        .u-bar-left( transparent );
+    }
+}
+
+// A default link on mobile.
+.u-hover-link-mobile() {
+    &:hover {
+        color: @black;
+        .u-bar-left( @green );
+
+        // This is for the link with icon, which is
+        // combined with this helper because the
+        // hover bar doesn't need separate treatment.
+        .cf-icon-svg {
+            fill: @black;
+        }
+    }
+}
+
+//
+// FOCUS STATES
+//
+// u-focus-link-desktop
+// u-focus-overview-link-desktop
+// u-focus-link-icon-desktop
+// u-focus-link-featured-desktop
+// u-focus-link-mobile
+//
+
+// Default link focus appearance, desktop.
+.u-focus-link-desktop() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px - 9px;
+        width: calc( 100% + @menu_link_hover_bar_px + 6px );
+    }
+}
+
+// Focus on overview links, desktop.
+.u-focus-overview-link-desktop() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px - 9px;
+        width: calc( 100% + @menu_link_hover_bar_px + 9px );
+    }
+}
+
+// Focus on links with icons, desktop.
+.u-focus-link-icon-desktop() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px - 7px;
+        width: calc( 100% + @menu_link_hover_bar_px + 6px );
+    }
+}
+
+// Focus on featured links, desktop.
+.u-focus-link-featured-desktop() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px;
+        width: calc( 100% + @menu_link_hover_bar_px + 5px );
+    }
+}
+
+// Default link on mobile.
+.u-focus-link-mobile() {
+    .u-focus-rectangle();
+
+    &:after {
+        left: -@menu_link_hover_bar_px - 9px;
+        width: calc( 100% + @menu_link_hover_bar_px + 14px );
+    }
+}
+
+//
+// CURRENT STATES
+//
+// u-current-link-desktop
+// u-current-link-icon-desktop
+// u-current-link-mobile
+//
+
+
+// Default current link appearance, desktop.
+.u-current-link-desktop() {
+    &, &:hover {
+        .u-bar-left( @black );
+    }
+}
+
+// Current link with an icon, desktop.
+.u-current-link-icon-desktop() {
+    &, &:hover {
+        .u-bar-left( @black, -@menu_link_hover_bar_px - 8px );
+    }
+}
+
+// Default current link, mobile.
+.u-current-link-mobile() {
+    &, &:hover {
+        .u-bar-left( @black );
+    }
+}
+
+.o-mega-menu {
+
+    // Reset default unordered list padding and margin.
+    ul {
+        padding-left: 0;
         margin-top: 0;
     }
 
-    &_content-item {
-        // Override margin added by CF to list items.
+    // Reset default h2 heading styles.
+    h2 {
+        font-size: 1em;
+        line-height: 1.375;
         margin-bottom: 0;
     }
 
     &_content {
+
         &-overview-heading {
             margin-bottom: 0;
-            font-size: unit( @base-font-size-px / @base-font-size-px, em );
+            font-size: unit( 18px / @base-font-size-px, rem );
             font-weight: normal;
+        }
+
+        // …however, show the icons in featured links.
+        &-item__has-icon {
+            .cf-icon-svg {
+                display: inline-block;
+            }
+        }
+
+        // Ensure desktop up/down arrow link icons don't appear at mobile.
+        &-link {
+            width: 100%;
+            &-icon-closed .cf-icon-svg,
+            &-icon-open .cf-icon-svg {
+                display: none;
+            }
+        }
+
+        // Featured menu content is link items with icons.
+        &-item__has-icon {
+            // Align the icon and text.
+            display: flex;
+            align-items: baseline;
+
+            & a {
+                display: flex;
+            }
+
+            // Hide link bottom line from Design System link styles.
+            & .a-link_text {
+                border-bottom-width: 0;
+            }
+
+            & .cf-icon-svg {
+                display: inline;
+                color: @pacific;
+                margin-right: 10px;
+                width: 100%;
+            }
         }
     }
 
@@ -204,10 +451,6 @@ body {
             .u-link__colors( @black );
 
             display: block;
-
-            .cf-icon-svg {
-                display: none;
-            }
         }
     }
 
@@ -226,26 +469,14 @@ body {
         &-link,
         &-overview-link {
             // Colors for :link, :visited, :hover, :focus, :active.
-            .u-link__colors( @pacific, @black );
+            .u-link__colors( @pacific, @pacific, @black, @pacific, @black );
+            &:hover:focus {
+                color: @black;
+            }
 
             display: block;
-
-            .cf-icon-svg {
-                display: none;
-            }
         }
     }
-
-    &_footer {
-        border-top: 1px solid @gray-40;
-        padding: @grid_gutter-width / 2 0;
-
-        a {
-            // Override "nav a" style in Capital Framework cf-core.
-            border-bottom-width: 1px;
-        }
-    }
-
 
     // Mobile sizes.
     .respond-to-max( @bp-xs-max, {
@@ -311,6 +542,10 @@ body {
                 }
             }
 
+            // Hover state for (x) close button.
+            &:hover {
+                background: @gray-20;
+            }
         }
 
         // Menu flyout.
@@ -351,11 +586,16 @@ body {
                 text-transform: uppercase;
 
                 &:focus {
-                    outline: 1px dotted @black;
+                    outline: 1px dotted @pacific;
                 }
 
                 .cf-icon-svg {
                     margin-right: 0.6em;
+                }
+
+                // Hover state for back button.
+                &:hover {
+                    background: @gray-20;
                 }
             }
 
@@ -364,44 +604,19 @@ body {
                 border-bottom: 1px solid @gray-40;
             }
 
+            &-wrapper {
+                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem );
+                padding-left: unit( @grid_gutter-width / @base-font-size-px, rem );
+            }
+
             // Adjust padding and margin on unordered list menu items
             // above the global eyebrow.
-            &-list {
-                padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            &-list-group {
                 margin-bottom: 0;
             }
 
             &-item {
                 border-bottom: 1px solid @gray-40;
-            }
-
-            &-link,
-            &-overview-link {
-                position: relative;
-                // Colors for :link, :visited, :hover, :focus, :active.
-                .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
-
-                padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-
-                .js & {
-                    &__has-children .cf-icon-svg {
-                        display: block;
-
-                        position: absolute;
-                        right: 0;
-                        top: 50%;
-                        transform: translateY( -50% );
-
-                        fill: @green;
-                    }
-                }
-
-                &__current,
-                &:hover {
-                    cursor: pointer;
-                }
             }
 
             &-overview-heading-text {
@@ -410,25 +625,53 @@ body {
                 padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             }
 
+            &-link,
+            &-overview-link {
+                position: relative;
+                // Colors for :link, :visited, :hover, :focus, :active.
+                .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @navy-dark );
+
+                padding-top: unit( 15px / 18px, em );
+                padding-bottom: unit( 15px / 18px, em );
+
+                // Hide ">" icon when we don't have children.
+                &-icon-post {
+                    display: none;
+                }
+
+                &__has-children &-icon-post {
+                    display: block;
+
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY( -50% );
+
+                    .cf-icon-svg {
+                        fill: @green;
+                    }
+                }
+
+                .u-hover-link-mobile();
+                .u-focus-link-mobile();
+
+                &__current {
+                    .u-current-link-mobile();
+                }
+            }
         }
 
         // 1st-level menu - Tablet/Mobile.
         &_content-1 {
+            display: block;
+
             .js & {
                 // Offset for height of trigger button.
                 top: @mobile_trigger_ht__px;
             }
-            display: block;
 
-            &-list {
+            &-list-group {
                 padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-            }
-
-            // Remove final border line of last list item.
-            &-list:last-child {
-                .o-mega-menu_content-1-item:last-child {
-                    border-bottom: none;
-                }
             }
 
             // TODO: Remove when Consumer Tools and Ed Resources links are in.
@@ -446,26 +689,9 @@ body {
         // 2nd-level menu - Tablet/Mobile.
         &_content-2 {
 
-            // TODO: Enable or delete when non-clickable
-            //       current page link is in.
-            //       The problem is sections with a 3rd
-            //       level need to remain links and the
-            //       overview link is what needs to be disabled.
-            // Make current page menu link non-clickable.
-            // &-link,
-            // &-overview-link {
-            //    &__current,
-            //    &__current:hover {
-            //        color: @black;
-            //        cursor: default;
-            //    }
-            // }
-
             // Remove final border line of last list item.
-            &-list:last-child {
-                .o-mega-menu_content-2-item:last-child {
-                    border-bottom: none;
-                }
+            &-lists &-list-group:last-child &-list:last-child &-item:last-child {
+                border-bottom: none;
             }
         }
 
@@ -474,7 +700,7 @@ body {
             // TODO: There is similar code set on all three menus.
             //       Investigate if it can be combined.
             // Remove final border line of last list item.
-            &-list:last-child {
+            &-list-group:last-child {
                 .o-mega-menu_content-3-item:last-child {
                     border-bottom: none;
                 }
@@ -490,15 +716,16 @@ body {
             top: -1px;
             z-index: 10;
 
-            &-grid {
-                padding-left: unit( @grid_gutter-width / 2 / 18px, em );
+            &-wrapper {
                 padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             }
         }
 
         // Group heading - Tablet/Mobile
         &_group-heading {
-            margin-top: @grid_gutter-width;
+            // !important is used to override a highly specific ul+.h5 rule in base.less
+            margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, rem ) !important;
 
             &__hidden {
                 .u-visually-hidden;
@@ -512,16 +739,33 @@ body {
 
     } );
 
-    // Desktop sizes.
+    // Desktop sizes. 901px.
     .respond-to-min( @bp-med-min, {
+        position: relative;
+        left: -( @grid_gutter-width / 2 );
+        width: calc( 100% + @grid_gutter-width );
+
+        // Horizontal rule to overlay on top of header rule so that
+        // rule isn't hidden when menu opens.
+        &:after {
+            position: absolute;
+            bottom: 0;
+            left: -( @grid_gutter-width / 2 );
+            right: -( @grid_gutter-width / 2 );
+            display: block;
+            z-index: 20;
+            height: 1px;
+            content: '';
+            box-shadow: 0px 1px 0px 0px @gray-40;
+        }
 
         &_trigger {
             display: none;
         }
 
-        &_footer {
-            margin-top: @grid_gutter-width;
-            font-size: unit( 18px / @base-font-size-px, em );
+        // Hide the ">" icon next to menu items on desktop…
+        &_content-link-icon-post {
+            display: none;
         }
 
         // 1st-level menu - Desktop.
@@ -533,14 +777,22 @@ body {
                 }
             }
 
-            &-list {
-                display: inline-block;
+            &-list ul {
+                display: table;
+                width: 100%;
+
+                // Constrain the menu spacing.
+                max-width: unit( 1000px / @base-font-size-px, em );
+            }
+
+            &-list-group {
                 margin-bottom: 0;
+                // Truncate the expanded menu to this element.
+                position: relative;
             }
 
             &-item {
-                display: inline-block;
-                margin-right: unit( 25px / @base-font-size-px, em );
+                display: table-cell;
 
                 .no-js &:hover {
                     .o-mega-menu_content-2 {
@@ -554,42 +806,146 @@ body {
             }
 
             &-link {
-                padding-bottom: @grid_gutter-width;
-                margin-left: @grid_gutter-width;
+                display: inline-block;
 
-                font-size: unit( 18px / @base-font-size-px, em );
+                position: relative;
+                z-index: 30;
+                padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                border-top: 1px solid transparent;
+                border-right: 1px solid transparent;
+                border-left: 1px solid transparent;
+                font-size: unit( 16px / @base-font-size-px, rem );
+
+                // Revert 100% width set globally within menu.
+                width: auto !important;
 
                 &:first-child {
                     margin-left: 0;
                 }
 
-                // -6px padding offset is to account for the border height.
+                // Override global link styling.
+                &:hover,
+                &:active,
+                &:focus,
+                &:visited {
+                    border-color: transparent;
+                    border-bottom: none;
+                }
+
+                // This creates the hover/selection line.
+                // We can't use a border here as it will get a slant on
+                // the edges because there are transparent left/right
+                // borders.
+                &:after {
+                    position: absolute;
+                    left: 0;
+                    top: unit( 46px / @base-font-size-px, em );
+                    content: '';
+                    background: transparent;
+                    width: 100%;
+                    height: unit( 6px / @base-font-size-px, em );
+                }
+
+                &:hover {
+                    padding-bottom: ( @grid_gutter-width / 2) - 6px;
+                    border-bottom: 6px solid transparent;
+                    cursor: pointer;
+
+                    // Change hover border color.
+                    &:after {
+                        background: @gray-40;
+                    }
+                }
+
+                // A main nav label has been selected and the menu is expanded.
                 &[aria-expanded="true"],
+                &:active {
+                    position: relative;
+                    top: 1px;
+                    background-color: @gray-5;
+
+                    // Important needed to override global link style override.
+                    border: 1px solid @gray-40 !important;
+                    border-bottom: none !important;
+                }
+
+                // Don't show hover when menu is expanded.
+                &[aria-expanded="true"]:hover,
+                &:active:hover {
+                    border-bottom: none;
+                    padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+                }
+
+                &:focus {
+                    outline-offset: 2px;
+                }
+
+                &[aria-expanded="true"]:focus {
+                    outline: none;
+                    box-shadow: 0 -4px 5px 0 @pacific-40,
+                                -5px -2px 5px 0 @pacific-40,
+                                5px -2px 5px 0 @pacific-40;
+
+                }
+
+                &[aria-expanded="true"]:hover,
+                &[aria-expanded="true"]:focus {
+                    &:after {
+                        position: absolute;
+                        bottom: -5px;
+                        left: 0;
+                        display: block;
+                        content: '';
+                        width: 100%;
+                        height: unit( 10px / @base-font-size-px, em );
+                        background: @gray-5;
+                    }
+                }
+
+                &-icon-closed .cf-icon-svg,
+                &-icon-open .cf-icon-svg {
+                    position: absolute;
+                    // Adjusts position by 4px to accommodate longer titles.
+                    right: unit( ( 15px - 4px ) / @base-font-size-px, rem );
+                    top: 19px;
+                    font-size: unit( 10px / @base-font-size-px, em );
+                }
+
+                &-icon-closed .cf-icon-svg {
+                    display: inline-block;
+                }
+
+                &[aria-expanded="true"] &-icon-open .cf-icon-svg {
+                    display: inline-block;
+                }
+
+                &[aria-expanded="true"] &-icon-closed .cf-icon-svg {
+                    display: none;
+                }
+
+                // Add padding to accommodate caret.
+                &__has-children {
+                    // Remove 4px to accommodate longer titles.
+                    padding-right: unit( ( @grid_gutter-width - 4px ) / @base-font-size-px, em );
+                }
+
                 &__current {
-                    padding-bottom: @grid_gutter-width - 6px;
-                    border-bottom: 6px solid @black;
-                    cursor: pointer;
+                    // Change the selection bar to black.
+                    &:after {
+                        background-color: @black;
+                    }
                 }
 
-                &:hover {
-                    padding-bottom: @grid_gutter-width - 6px;
-                    border-bottom: 6px solid @gray-40;
-                    cursor: pointer;
-                }
-            }
-
-            // TODO: Remove when Consumer Tools and Ed Resources links are in.
-            // Overrides disabled link styles.
-            &-link.u-link__disabled {
-                color: @black !important;
-
-                &:hover {
-                    padding-bottom: @grid_gutter-width - 6px !important;
-                    border-bottom: 6px solid @gray-40 !important;
-                    cursor: pointer !important;
+                &__current[aria-expanded="true"]:after,
+                &__current:active:after {
+                    background-color: transparent;
                 }
             }
+        }
 
+        // Hide last columns headings at desktop sizes.
+        &_content-2-lists &_content-2-list-group:last-child &_group-heading {
+            display: none;
         }
 
         // 2nd-level menu - Desktop.
@@ -598,13 +954,13 @@ body {
             position: absolute;
             left: 0;
             z-index: 10;
-            width: 100%;
 
             .no-js & {
                 display: none;
             }
 
             &[aria-expanded="true"] {
+                overflow: visible;
 
                 .o-mega-menu_content-2-wrapper {
                     display: block;
@@ -613,19 +969,13 @@ body {
 
             &-wrapper {
                 background-color: @gray-5;
-                border-top: 1px solid @gray-40;
-                border-bottom: 1px solid @gray-40;
+                border: 1px solid @gray-40;
+                box-shadow: 0 5px 5px 0px rgba( 0, 0, 0, 0.2 );
 
-                .u-drop-shadow-after();
-
-                // Adjustments to CF-wrapper.
-                // TODO: Investigate applying adjustment to CF directly,
-                //       or copying values here.
-                .wrapper {
-                    padding: unit( @grid_gutter-width / @base-font-size-px, em );
-                    padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                    padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-                }
+                padding: unit( @grid_gutter-width / @base-font-size-px, em );
+                padding-top: unit( 20px / @base-font-size-px, em );
+                padding-left: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
+                padding-right: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em );
             }
 
             &-alt-trigger {
@@ -634,61 +984,125 @@ body {
 
             &-overview {
                 padding-bottom: @grid_gutter-width / 2;
-                margin-bottom: @grid_gutter-width * 2 / 3 ;
-                font-size: 1em;
+                margin-bottom: @grid_gutter-width;
 
                 &-heading {
                     padding-top: 0;
                 }
-
-                // ------------------------------------------------------------
-                // TODO: Remove when Consumer Tools and Practitioner Resources
-                //       have overview pages.
-                //       This is temporary code to hide the overview links
-                //       at desktop sizes.
-                &-heading-text {
-                    .u-visually-hidden();
-                }
-                // ------------------------------------------------------------
             }
 
             &-lists {
-                .grid_nested-col-group();
+                display: table;
+                margin-top: unit( 10px / @base-font-size-px, em );
             }
 
-            &-list {
-                .grid_column(3);
+            &-list-group {
+                display: table-cell;
+                width: 25%;
+                vertical-align: top;
+                padding-right: unit( 30px / @base-font-size-px, em );
             }
 
-            &-grid__three-col .o-mega-menu_content-2-list {
-                .grid_column(4);
+            &-list-group:last-child {
+                padding-right: 0;
             }
 
+            // Move the first link in each mega menu list group up a bit so that it aligns
+            // with the featured links box. We do this instead of removing the top padding
+            // to preserve the links' hover state.
+            &-list:not( &-list__featured ) &-item:first-child &-link {
+                margin-top: unit( -12px / @base-font-size-px, em );
+            }
+
+            &-overview-link,
             &-link {
-                padding-top: unit( 10px / 18px, em );
-                padding-bottom: unit( 10px / 18px, em );
-                padding-left: unit( 15px / 18px, em );
+                padding: unit( 10px / 18px, em );
+                padding-left: 0;
+                padding-right: unit( 15px / 18px, em );
 
-                border-left: 5px solid transparent;
-                font-size: unit( 18px / @base-font-size-px, em );
-            }
+                .u-hover-link-desktop();
 
-            &-link,
-            &-overview-link {
-                &:hover,
-                &__current,
-                &__current:visited {
-                    color: @black;
-                    border-left-color: @green;
+                &__current {
+                    .u-current-link-desktop();
                 }
             }
 
+            &-overview-link {
+                display: inline-block;
+                font-size: unit( 18px / @base-font-size-px, rem );
+                .u-focus-overview-link-desktop();
+            }
 
+            &-link {
+                font-size: unit( 16px / @base-font-size-px, em );
+                .u-focus-link-desktop();
+            }
+
+            // Featured item has a highlight box around it.
+            &-list__featured ul {
+                // Style the featured item box.
+                padding-right: unit( 13px / @base-font-size-px, em );
+                padding-top: unit( 30px / @base-font-size-px, em );
+                padding-bottom: unit( 30px / @base-font-size-px, em );
+                margin-bottom: unit( 30px / @base-font-size-px, em );
+                border: 1px solid @gray-40;
+                border-top: 6px solid @gold;
+                box-sizing: border-box;
+            }
+
+            &-list__featured &-link {
+                display: flex;
+                padding: 0;
+                left: 0;
+                border: none;
+
+                & .cf-icon-svg {
+                    color: @gold;
+                    width: 100%;
+                }
+            }
+
+            &-list__featured &-item {
+                margin-bottom: unit( 15px / @base-font-size-px, em );
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+
+            &-item__has-icon {
+                // Pad in featured items from their icons.
+                padding-left: unit( 13px / @base-font-size-px, em );
+            }
+
+            // Set up hover state for link with an icon.
+            &-item__has-icon &-link {
+                .u-hover-link-icon-desktop();
+                .u-focus-link-icon-desktop();
+
+                &__current {
+                    .u-current-link-icon-desktop();
+                }
+            }
+
+            // Remove hover bar for featured item link.
+            &-list__featured &-link {
+                .u-hover-link-featured-desktop();
+                .u-focus-link-featured-desktop();
+            }
         }
 
         // 3rd-level menu - Desktop.
         &_content-3 {
             display: none;
+        }
+
+        &_group-heading {
+            margin-bottom: unit( 30px / @base-font-size-px, em );
+
+            &__hidden {
+                visibility: hidden;
+            }
         }
 
         // Hide global header CTA container and eyebrow at desktop size.
@@ -698,43 +1112,34 @@ body {
         }
     } );
 
-    // Large desktop size.
-    .respond-to-min( @bp-lg-min, {
-        &_content-1 {
-            &-item {
-                margin-right: @grid_gutter-width * 1.5;
-            }
-        }
-        // 2nd-level menu - Large desktop.
-         &_content-2 {
-            &-grid__three-col {
-                .grid_column( 8 );
-                // TODO: Check if .grid_nested-col-group()
-                //       can be used here when implementing Featured Menu Content.
-                border-left: 0;
-            }
+    // Large desktop size. 1021px. Not currently used.
+    /*.respond-to-min( @bp-lg-min, { } );*/
+
+    // Xtra-Large desktop size. 1261px.
+    .respond-to-min( @bp-xl-min + @grid_gutter-width, {
+        width: @menu_max_width_px;
+
+        // Horizontal rule to overlay on top of header rule so that
+        // rule isn't hidden when menu opens.
+        &:after {
+            left: -@grid_gutter-width;
+            width: @menu_max_width_px + ( @grid_gutter-width * 2 );
         }
 
-        // Group heading - Large desktop.
-
-        &_group-heading {
-            // match link item indentation
-            padding-left: unit( @grid_gutter-width * 2 / 3 / @size-v, em );
-
-            &__hidden {
-                visibility: hidden;
-            }
+        &_content-2 {
+            left: -@grid_gutter-width;
+            width: @menu_max_width_px + ( @grid_gutter-width * 2 );
         }
+
     } );
 
-    // Xtra-Large desktop size.
-    .respond-to-min( @bp-xl-min, {
+    // Normalize second level width between 901px and 1260px
+    .respond-to-range( @bp-med-min, @bp-lg-max + @grid_gutter-width, {
 
-        &_content-1 {
-            &-item {
-                margin-right: @grid_gutter-width * 2;
-            }
+        &_content-2 {
+            width: 100%;
         }
+
     } );
 }
 
@@ -752,6 +1157,11 @@ body {
     // JS isn't available to remove u-hidden class, so override it.
     &.u-hidden {
       display: block;
+    }
+
+    // Hide the ">" arrow icon (used on mobile view).
+    .o-mega-menu_content-link-icon-post {
+        display: none;
     }
 }
 

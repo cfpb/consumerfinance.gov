@@ -1,6 +1,6 @@
 import * as behavior from '../../../js/modules/util/behavior';
 import * as utils from './search-utils';
-import { closest, queryOne as find } from '../../../js/modules/util/dom-traverse';
+import { closest, queryOne as find } from '@cfpb/cfpb-atomic-component/src/utilities/dom-traverse.js';
 import { fetch } from './regs3k-utils';
 
 // Keep track of the most recent XHR request so that we can cancel it if need be

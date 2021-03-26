@@ -3,12 +3,14 @@
 {% import 'form_block.html' as form_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'templates/render_block.html' as render_block with context %}
+{% import 'molecules/archived-pill.html' as archived_pill with context %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
+    {{ archived_pill.render( page if page else '' ) }}
     {% for block in page.header -%}
         {% if block.block_type == 'item_introduction' %}
             {% import 'organisms/item-introduction.html' as item_introduction with context %}
@@ -35,5 +37,9 @@
 {%- endblock %}
 
 {% block content_sidebar scoped -%}
-    {{ streamfield_sidefoot.render(page.sidefoot) }}
+    {% if page and page.archived %}
+        {% include 'molecules/archived-related-content.html' %}
+    {% else %}
+        {{ streamfield_sidefoot.render(page.sidefoot) }}
+    {% endif %}
 {%- endblock %}

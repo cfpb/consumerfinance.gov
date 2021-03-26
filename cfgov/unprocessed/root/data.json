@@ -1,279 +1,248 @@
 {
-
   "@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld",
-
   "@type": "dcat:Catalog",
-
   "conformsTo": "https://project-open-data.cio.gov/v1.1/schema",
-
   "describedBy": "https://project-open-data.cio.gov/v1.1/schema/catalog.json",
-
   "dataset": [
 
     {
-
       "@type": "dcat:Dataset",
-
       "accessLevel": "public",
-
       "accrualPeriodicity": "R/P1D",
-
       "bureauCode": [
-
         "581:00"
-
       ],
-
       "contactPoint": {
-
         "@type": "vcard:Contact",
-
         "fn": "devops@cfpb.gov",
-
         "hasEmail": "mailto:devops@cfpb.gov"
-
       },
-
-      "describedBy": "https://www.consumerfinance.gov/complaintdatabase/technical-documentation/#field-reference",
-
-      "description": "These are complaints we’ve received about financial products and services.",
-
+      "describedBy": "https://cfpb.github.io/api/ccdb/api.html",
+      "description": "The Consumer Complaint Database is a collection of complaints about consumer financial products and services that we sent to companies for response. Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first. Complaints referred to other regulators, such as complaints about depository institutions with less than $10 billion in assets, are not published in the Consumer Complaint Database. The database generally updates daily.",
       "distribution": [
-
         {
-
           "@type": "dcat:Distribution",
-
-          "downloadURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp/rows.csv?accessType=DOWNLOAD",
-
+          "downloadURL": "https://files.consumerfinance.gov/ccdb/complaints.csv.zip",
           "mediaType": "text/csv"
-
         },
-
         {
-
           "@type": "dcat:Distribution",
-
-          "downloadURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp/rows.csv?accessType=DOWNLOAD",
-
-          "mediaType": "text/csv"
-
-        },
-
-        {
-
-          "@type": "dcat:Distribution",
-
-          "downloadURL": "https://data.consumerfinance.gov/api/views.json",
-
+          "downloadURL": "https://files.consumerfinance.gov/ccdb/complaints.json.zip",
           "mediaType": "application/json"
-
         },
-
         {
-
           "@type": "dcat:Distribution",
-
-          "downloadURL": "https://data.consumerfinance.gov/api/views.xml",
-
-          "mediaType": "application/xml"
-
-        },
-
-        {
-
-          "@type": "dcat:Distribution",
-
           "format": "API",
-
-          "accessURL": "https://data.consumerfinance.gov/api/views/s6ew-h6mp.json"
-
+          "accessURL": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/"
         }
-
       ],
-
       "identifier": "CCDB",
-
       "keyword": [
-
         "consumer",
-
         "finance",
-
         "complaint",
-
         "bank account",
-
         "bank service",
-
         "credit card",
-
         "credit report",
-
         "debt collection",
-
         "money transfer",
-
         "mortgage",
-
         "student loan",
-
         "loan"
-
       ],
-
-      "landingPage": "https://www.consumerfinance.gov/complaintdatabase",
-
-      "modified": "2013-11-06",
-
+      "landingPage": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
+      "modified": "2020-06-29",
       "programCode": [
-
         "000:000"
-
       ],
-
       "publisher": {
-
         "@type": "org:Organization",
-
         "name": "Consumer Financial Protection Bureau"
-
       },
-
       "spatial": "United States",
-
-      "temporal": "2011-12-01/2013-11-06",
-
       "title": "Consumer Complaint Database"
+    },
 
+    {
+      "@type": "dcat:Dataset",
+      "accessLevel": "public",
+      "accrualPeriodicity": "R/P1Y",
+      "bureauCode": [
+        "581:00"
+      ],
+      "contactPoint": {
+        "@type": "vcard:Contact",
+        "fn": "devops@cfpb.gov",
+        "hasEmail": "mailto:devops@cfpb.gov"
+      },
+      "describedBy": "https://api.consumerfinance.gov/data/hmda",
+      "description": "Home Mortgage Disclosure Act (HMDA) requires many FIs to maintain, report, and publicly disclose information about applications for and originations of mortgage loans.  HMDA’s purposes are to provide the public and public officials with sufficient information to enable them to determine whether institutions are serving the housing needs of the communities and neighborhoods in which they are located, to assist public officials in distributing public sector investments in a manner designed to improve the private investment environment, and to assist in identifying possible discriminatory lending patterns and enforcing antidiscrimination statutes. ",
+      "distribution": [
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2017",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2017_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2016",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2016_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2015",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2015_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2014",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2014_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2013",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2013_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2012",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2012_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2011",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2011_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2010",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2010_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2009",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2009_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2008",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2008_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+            "@type": "dcat:Distribution",
+            "description": "HMDA 2007",
+            "downloadURL": "https://files.consumerfinance.gov/hmda-historic-loan-data/hmda_2007_nationwide_all-records_labels.zip",
+            "mediaType": "text/csv"
+        },
+        {
+          "@type": "dcat:Distribution",
+          "accessURL": "https://api.consumerfinance.gov/data/hmda",
+          "downloadURL": "https://api.consumerfinance.gov/data/hmda.json",
+          "mediaType": "application/json"
+        },
+        {
+          "@type": "dcat:Distribution",
+          "accessURL": "https://api.consumerfinance.gov/data/hmda",
+          "downloadURL": "https://api.consumerfinance.gov/data/hmda.xml",
+          "description": "https://www.consumerfinance.gov/data-research/hmda/historic-data/",
+          "mediaType": "application/xml"
+        },
+        {
+          "@type": "dcat:Distribution",
+          "format": "API",
+          "accessURL": "https://api.consumerfinance.gov/data/hmda",
+          "description": "https://www.consumerfinance.gov/data-research/hmda/historic-data/"
+        }
+      ],
+      "identifier": "hmda_lar",
+      "keyword": [
+        "consumer",
+        "finance",
+        "mortgage",
+        "HMDA",
+        "Home Mortgage Disclosure Act",
+        "loan"
+      ],
+      "landingPage": "https://www.consumerfinance.gov/hmda/",
+      "modified": "2017-12-31",
+      "programCode": [
+        "000:000"
+      ],
+      "publisher": {
+        "@type": "org:Organization",
+        "name": "Consumer Financial Protection Bureau"
+      },
+      "spatial": "United States",
+      "temporal": "2007-02-01T00:00:00Z/2017-12-31T00:00:00Z",
+      "title": "Home Mortgage Disclosure Act (HMDA) Public Data from 2007-2017"
     },
 
     {
 
       "@type": "dcat:Dataset",
-
       "accessLevel": "public",
-
       "accrualPeriodicity": "R/P1Y",
-
       "bureauCode": [
-
         "581:00"
-
       ],
-
       "contactPoint": {
-
         "@type": "vcard:Contact",
-
         "fn": "devops@cfpb.gov",
-
         "hasEmail": "mailto:devops@cfpb.gov"
-
       },
 
-      "describedBy": "https://api.consumerfinance.gov/data/hmda",
-
-      "description": "The Home Mortgage Disclosure Act (HMDA) requires many financial institutions to maintain, report, and publicly disclose information about mortgages",
-
+      "describedBy": "https://www.consumerfinance.gov/documents/5586/cfpb_nfwbs-puf-codebook.pdf",
+      "describedByType":"application/pdf",
+      "description": "The 2017 National Financial Well-Being in America Survey, conducted for the CFPB Offices of Financial Education and Financial Protection for Older Americans, was an online survey conducted to measure the financial well-being of adults in the United States. These data were created as a foundation for internal and external research into financial well-being and are relevant to work being done by researchers in the Office of Research who have access to the (deidentified) data.",
       "distribution": [
-
         {
-
           "@type": "dcat:Distribution",
-
-          "downloadURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.csv",
-
+          "accessURL": "https://www.consumerfinance.gov/data-research/financial-well-being-survey-data/",
+          "downloadURL": "https://www.consumerfinance.gov/documents/5614/NFWBS_PUF_2016_data.csv",
           "mediaType": "text/csv"
-
-        },
-
-        {
-
-          "@type": "dcat:Distribution",
-
-          "downloadURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.csv",
-
-          "mediaType": "text/csv"
-
-        },
-
-        {
-
-          "@type": "dcat:Distribution",
-
-          "downloadURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.json",
-
-          "mediaType": "application/json"
-
-        },
-
-        {
-
-          "@type": "dcat:Distribution",
-
-          "downloadURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.xml",
-
-          "mediaType": "application/xml"
-
-        },
-
-        {
-
-          "@type": "dcat:Distribution",
-
-          "format": "API",
-
-          "accessURL": "https://api.consumerfinance.gov/data/hmda/slice/hmda_lar.json"
-
         }
-
       ],
-
-      "identifier": "hmda_lar",
-
+      "identifier": "54210e71-e472-4e95-af82-15afd6362a5e",
       "keyword": [
-
-        "consumer",
-
+        "Income",
         "finance",
-
-        "mortgage",
-
-        "HMDA",
-
-        "Home Mortgage Disclosure Act",
-
-        "loan"
-
+        "employment",
+        "Savings",
+        "safety nets",
+        "Past financial experiences",
+        "Financial behaviors",
+        "skills",
+        "well-being",
+        "financial security",
+        "financial freedom",
+        "freedom of choice"
       ],
-
-      "landingPage": "https://www.consumerfinance.gov/hmda/",
-
-      "modified": "2014-09-22",
-
+      "landingPage": "https://www.consumerfinance.gov/data-research/financial-well-being-survey-data/",
+      "modified": "2017-09-30",
       "programCode": [
-
-        "000:000"
-
+          "000:000"
       ],
-
       "publisher": {
-
         "@type": "org:Organization",
-
         "name": "Consumer Financial Protection Bureau"
-
       },
-
+      "references": [
+          "https://www.consumerfinance.gov/documents/5588/cfpb_nfwbs-puf-user-guide.pdf"
+      ],
       "spatial": "United States",
-
-      "temporal": "2007-02-01T00:00:00Z/2014-12-31T00:00:00Z",
-
-      "title": "Home Mortgage Disclosure Act Data for the years 2007-2014"
-
+      "temporal": "2016-01-01T00:00:00Z/2017-12-31T00:00:00Z",
+      "title": "Financial Well-Being in America (2017)"
     }
-
   ]
-
 }

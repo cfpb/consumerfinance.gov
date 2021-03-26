@@ -1,7 +1,7 @@
 # JavaScript Unit Tests
 
 This page provides instructions for writing and running
-JavaScript (JS) unit tests in cfgov-refresh.
+JavaScript (JS) unit tests in consumerfinance.gov.
 
 [Jest](https://jestjs.io/docs/en/getting-started) is the framework we use
 for writing and running JavaScript unit tests.
@@ -73,11 +73,11 @@ gulp test:unit
 The following links list out the main directories containing tests
 (as of January 2019, this page’s initial publication date).
 
-- [All unit tests](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests)
-- [Tests for individual apps](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/apps)
-- [Tests for regular modules](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/modules)
-- [Tests for molecules](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/molecules)
-- [Tests for organisms](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests/js/organisms)
+- [All unit tests](https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests)
+- [Tests for individual apps](https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/apps)
+- [Tests for regular modules](https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/js/modules)
+- [Tests for molecules](https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/js/molecules)
+- [Tests for organisms](https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests/js/organisms)
 
 
 
@@ -109,7 +109,7 @@ the typical approach to programming and unit tests.
 ### New test file from sample
 
 For this guide, we’ll use very basic sample code files
-to illustrate how to use the test framework in cfgov-refresh
+to illustrate how to use the test framework in consumerfinance.gov
 and how to test very common code patterns.
 
 Another common approach is to look for existing tests
@@ -123,7 +123,7 @@ Now, let’s begin! Let’s make a new unit test fail,
 then we will make it pass, following the principles of TDD.
 
 1. Copy the sample test file to a new location by
-   running this command from the root of cfgov-refresh:
+   running this command from the root of consumerfinance.gov:
 
     ```bash
     cp docs/samples/sample-spec.js test/unit_tests/js/modules/
@@ -142,16 +142,16 @@ with the addition of a `-spec` suffix.
 ### Folder structure (where to put your JavaScript and tests)
 
 JavaScript unit test files belong in the
-[`test/unit_tests/`](https://github.com/cfpb/cfgov-refresh/tree/master/test/unit_tests)
+[`test/unit_tests/`](https://github.com/cfpb/consumerfinance.gov/tree/main/test/unit_tests)
 directory.
 
 The folder structure of the test files mirrors
 the structure of the project JavaScript in
-[`cfgov/unprocessed/js/`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/unprocessed/js).
+[`cfgov/unprocessed/js/`](https://github.com/cfpb/consumerfinance.gov/tree/main/cfgov/unprocessed/js).
 
 When considering exactly where to place JavaScript in these directories,
 it might be helpful to review the documentation about
-[atomic components in cfgov-refresh](../atomic-structure).
+[atomic components in consumerfinance.gov](../atomic-structure).
 JavaScript corresponding to atomic elements should go into
 the appropriate subfolder for the type of element being implemented.
 In our case, `sample.js` and `sample-spec.js` don’t relate to atomic elements,
@@ -162,7 +162,7 @@ so they can be placed into the uncategorized `modules` subfolders:
     If you’re working on something in a child app,
     put it in `test/unit_test/appname/js/`.
     Otherwise, if you’re working on something that
-    belongs to cfgov-refresh generally,
+    belongs to consumerfinance.gov generally,
     it should go in the corresponding folder under `test/unit_test/js/`.
 
 
@@ -200,7 +200,7 @@ to save and commit your changes.
     then write the corresponding JavaScript that will make the test pass.
 
 1. Make the test pass by changing your script’s line 7
-   ([see `sample.js`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/sample.js))
+   ([see `sample.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/sample.js))
    to the following:
 
     ```js
@@ -329,8 +329,8 @@ And then we would create the `gimmeString` and `gimmeObject` methods
 in our `sample.js` file.
 
 Another example is
-[`breakpoint-state-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/breakpoint-state-spec.js),
-which tests 2 methods, `get` and `isInDesktop`,
+[`breakpoint-state-spec.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/breakpoint-state-spec.js),
+which tests several methods, including `getBreakpointState` and `viewportIsIn`,
 on the module `breakpoint-state`.
 
 When using TDD, you may prefer to add `describe` blocks later,
@@ -404,7 +404,7 @@ use the minimum needed to test the code.
 
 The simplest way to set up test data is to
 declare it as variables within each test, e.g., the tests in
-[strings-spec.js](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/strings-spec.js).
+[strings-spec.js](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/strings-spec.js).
 This can include HTML markup for DOM manipulation tests,
 if each test requires different markup.
 
@@ -416,7 +416,7 @@ Jest has setup and teardown methods, such as
 which can be used to performing actions
 that are needed before and after running all tests or each test in a suite.
 For example, the tests in
-[`Analytics-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/Analytics-spec.js#L7-L32)
+[`Analytics-spec.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/Analytics-spec.js#L7-L32)
 use both `beforeAll` and `beforeEach` inside the root `describe` block to
 do a variable definition for all tests at the beginning of the suite
 and reset the `dataLayer` before each test, respectively.
@@ -431,9 +431,9 @@ set `document.body.innerHTML` to that snippet.
 
 Use `beforeAll` to attach HTML markup that is unaffected by the tests,
 e.g., the tests in
-[`footer-button-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/footer-button-spec.js).
+[`footer-button-spec.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/footer-button-spec.js).
 Use `beforeEach` to reset manipulated markup between tests, e.g., the tests in
-[`Notification-spec.js`](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/molecules/Notification-spec.js).
+[`Notification-spec.js`](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/molecules/Notification-spec.js).
 
 [See “Testing DOM manipulation”](#testing-dom-manipulation)
 in the “Common test patterns” section of this page
@@ -456,7 +456,7 @@ with the input described in the `it` statement
 and use `expect` to check that you receive the desired result.
 
 Here is a simple example from our
-[array helpers module](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/util/array-helpers.js)
+[array helpers module](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/util/array-helpers.js)
 (`cfgov/unprocessed/js/modules/util/array-helpers.js`):
 
 ```js
@@ -478,7 +478,7 @@ function indexOfObject( array, key, val ) {
 ```
 
 Tests for that function, from
-[test/unit_tests/js/modules/util/array-helpers-spec.js](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/util/array-helpers-spec.js):
+[test/unit_tests/js/modules/util/array-helpers-spec.js](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/util/array-helpers-spec.js):
 
 ```js
 describe( 'indexOfObject()', () => {
@@ -527,7 +527,7 @@ As an example, let’s look at our Notification component.
 The Notification component uses a common set of markup
 with different classes and SVG icon code to style it
 as a particular kind of notification (success, warning, etc.). In
-[the component JS](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/molecules/Notification.js),
+[the component JS](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/molecules/Notification.js),
 we have this function that sets the type of a notification before displaying it:
 
 ```js
@@ -569,7 +569,7 @@ it has a few different steps that modify the DOM node.
 
 Now let’s look at the tests.
 Here are the first 22 lines of
-[the spec file](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/molecules/Notification-spec.js)
+[the spec file](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/molecules/Notification-spec.js)
 that tests this component:
 
 ```js
@@ -671,10 +671,10 @@ One way of doing this is to create a **spy**
 that watches for browser API calls to be made
 a certain number of times or with a specific payload.
 One example is found in
-[the tests for our full-table-row-linking code](https://github.com/cfpb/cfgov-refresh/blob/master/test/unit_tests/js/modules/o-table-row-links-spec.js).
+[the tests for our full-table-row-linking code](https://github.com/cfpb/consumerfinance.gov/blob/main/test/unit_tests/js/modules/o-table-row-links-spec.js).
 
 In
-[the module code](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/unprocessed/js/modules/o-table-row-links.js)
+[the module code](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/unprocessed/js/modules/o-table-row-links.js)
 (`o-table-row-links.js`),
 if an event listener detects a click anywhere on
 one of these special table rows,

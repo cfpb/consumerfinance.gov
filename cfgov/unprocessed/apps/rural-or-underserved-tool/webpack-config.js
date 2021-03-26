@@ -12,8 +12,8 @@ const COMMON_BUNDLE_NAME = 'common.js';
 /* Set warnings to true to show linter-style warnings.
    Set mangle to false and beautify to true to debug the output code. */
 const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
-  cache: true,
   parallel: true,
+  extractComments: false,
   terserOptions: {
     ie8: false,
     ecma: 5,
@@ -31,11 +31,11 @@ const COMMON_MINIFICATION_CONFIG = new TerserPlugin( {
 const COMMON_MODULE_CONFIG = {
   rules: [ {
     test: /\.js$/,
-
-    /* The below regex will capture all node modules
-       that start with `cf-` or `cfpb-`.
-       Regex test: https://regex101.com/r/zizz3V/5 */
-    exclude: /node_modules\/(?:cf\-.+|cfpb\-.+)/,
+    /* Exclude modules from transpiling.
+       The below regex will match and exclude all node modules
+       except those that start with `@cfpb/` or `cfpb-`.
+       Regex test: https://regex101.com/r/zizz3V/9 */
+    exclude: /node_modules\/(?!(?:@cfpb\/.+|cfpb\-.+)).+/,
     use: {
       loader: 'babel-loader?cacheDirectory=true',
       options: {
@@ -62,10 +62,10 @@ const conf = {
   module: COMMON_MODULE_CONFIG,
   mode: 'production',
   output: {
-    filename: '[name]',
-    jsonpFunction: 'rout'
+    filename: '[name]'
   },
   optimization: {
+    minimize: true,
     minimizer: [
       COMMON_MINIFICATION_CONFIG
     ]

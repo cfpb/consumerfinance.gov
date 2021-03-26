@@ -1,11 +1,11 @@
 @import (reference) '../../../css/main.less';
 
 /**
-  * Capital Framework overrides
+ * Design System overrides
 **/
 
 // ATOMIC OVERRIDES
-/** 
+/**
 * This gets overwritten by media queries, so we need to make it important.
 */
 .u-hidden {
@@ -55,7 +55,7 @@
   }
 }
 
-// The original class provides a pretty huge gap, particularly on mobile, so tame it a bit 
+// The original class provides a pretty huge gap, particularly on mobile, so tame it a bit
 .content-l_col+.content-l_col {
   .respond-to-max(@bp-sm-min, {
     margin-top: 1em;
@@ -130,7 +130,7 @@ ul {
 }
 
 /**
-* content-l_col overrides the default appearance for textareas, this restores it. 
+* content-l_col overrides the default appearance for textareas, this restores it.
 */
 textarea {
   border-color: black !important;
@@ -301,7 +301,7 @@ input:-moz-ui-invalid {
     position: absolute;
     // The right-justified content doesn't quite line up with the input field it's
     // attached to, so we have to manually nudge it up a bit
-    top: calc(100% - (@size-iv + @base-line-height-px + 3px));
+    top: calc(100% - @size-iv);
     // Fix for safari absolute position layout
     width: 100%;
   }

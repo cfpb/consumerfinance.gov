@@ -1,5 +1,5 @@
 /* ==========================================================================
-   cfgov-refresh
+   consumerfinance.gov
    Ask CFPB pages at /ask-cfpb/.
    ========================================================================== */
 
@@ -15,15 +15,6 @@
     .terms {
         padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
 
-        .rich-text {
-            display: inline;
-            max-width: 41.875rem;
-
-            p:last-child {
-                display: inline;
-            }
-        }
-
         .term {
             margin-bottom: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
         }
@@ -32,8 +23,15 @@
             padding-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
         }
 
-        .term-link {
-            display: inline;
+        .term_name {
+            .h2();
+
+            display: block;
+        }
+
+        .term_definition {
+            display: block;
+            margin-left: 0;
         }
     }
 
@@ -157,13 +155,11 @@
           margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
         }
 
-        .row + .row h2,
-        .schema-block h2 {
+        .row + .row h2 {
             margin-top: unit( @grid_gutter-width / @size-ii, em );
         }
 
-        .row + .row h3,
-        .schema-block h3 {
+        .row + .row h3 {
             margin-top: unit( @grid_gutter-width / @size-iii, em );
         }
 
@@ -172,15 +168,10 @@
         }
 
         .respond-to-min( @bp-lg-min, {
-            .row + .row h2,
-            .schema-block h2 {
+            .row + .row h2 {
                 margin-top: unit( @grid_gutter-width * 1.5 / @size-ii, em );
             }
         } );
-
-        .schema-block > .schema-block_item:first-child > h2:first-child {
-            margin-top:0;
-        }
     }
 
     .respond-to-max(@bp-xs-max, {
@@ -240,20 +231,12 @@
         max-width: 500px;
     }
 
-    .m-inset__bordered {
-        border-top:4px solid @teal-60;
-        border-bottom: 2px solid @teal-40;
-        padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
-        margin-bottom: unit( @grid_gutter-width /2 / @base-font-size-px, em );
-    }
-
-    .respond-to-min(@bp-sm-min, {
-        .m-inset__bordered {
-            margin: unit( 3px / @base-font-size-px, em )
-                    0
-                    unit( @grid_gutter-width / @base-font-size-px, em )
-                    unit( @grid_gutter-width / @base-font-size-px, em );
-            padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+    // The max-width on the search bar cuts off the last few letters of the
+    // Spanish button text when the input and button are side by side; setting
+    // the width of that button to auto lets it overrun its container if needed
+    .respond-to-min( @bp-med-min, {
+        .o-form__input-w-btn_btn-container .a-btn {
+            width: auto;
         }
     } );
 
@@ -310,36 +293,28 @@
         .respond-to-min( @bp-sm-min, {
             padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         } );
-
-        .content-l_col {
-            margin: 0 0 unit( @grid_gutter-width / @base-font-size-px, em ) 0;
-        }
-
-        .m-card {
-            h2 {
-                .respond-to-range( @bp-sm-min, @bp-sm-max, {
-                    .h3();
-                } );
-
-                a {
-                    color: @black;
-                    display: table;
-
-                    span {
-                        display: table-cell;
-
-                        &:first-child {
-                            padding-right: @grid_gutter-width / 4;
-                        }
-                    }
-                }
-            }
-        }
     }
 
      .o-search-bar_input {
         max-width: 31.25rem;
     }
+
+    label[for="o-search-bar_query"] h2 {
+        .heading-4();
+
+        .respond-to-min( @bp-med-min, {
+            .heading-3();
+        } );
+    }
+
+    // The max-width on the search bar cuts off the last few letters of the
+    // Spanish button text at widths where there's a sidebar; setting the width
+    // of that button to auto lets it overrun its container if needed
+    .respond-to-min( @bp-med-min, {
+        .o-form__input-w-btn_btn-container .a-btn {
+            width: auto;
+        }
+    } );
 
 }
 
@@ -451,4 +426,3 @@
         }
     } );
 }
-

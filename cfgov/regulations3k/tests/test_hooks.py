@@ -1,17 +1,16 @@
-from __future__ import unicode_literals
-
 from datetime import date
 
 from django.test import TestCase
 
 from wagtail.tests.utils import WagtailTestUtils
 
-from model_mommy import mommy
+from model_bakery import baker
 
 from regulations3k.models.django import (
     EffectiveVersion, Part, Section, Subpart
 )
 from regulations3k.models.pages import RegulationLandingPage, RegulationPage
+from regulations3k.wagtail_hooks import RegsURLHelper
 
 
 class TestRegs3kHooks(TestCase, WagtailTestUtils):
@@ -23,26 +22,26 @@ class TestRegs3kHooks(TestCase, WagtailTestUtils):
             title='Reg Landing', slug='reg-landing')
         self.ROOT_PAGE.add_child(instance=self.landing_page)
 
-        self.part_1002 = mommy.make(
+        self.part_1002 = baker.make(
             Part,
             part_number='1002',
             title='Equal Credit Opportunity Act',
             short_name='Regulation B',
             chapter='X'
         )
-        self.effective_version = mommy.make(
+        self.effective_version = baker.make(
             EffectiveVersion,
             effective_date=date(2014, 1, 18),
             part=self.part_1002
         )
-        self.subpart = mommy.make(
+        self.subpart = baker.make(
             Subpart,
             label='Subpart General',
             title='General',
             subpart_type=Subpart.BODY,
             version=self.effective_version
         )
-        self.section_num4 = mommy.make(
+        self.section_num4 = baker.make(
             Section,
             label='4',
             title='\xa7\xa01002.4 General rules.',
@@ -50,20 +49,20 @@ class TestRegs3kHooks(TestCase, WagtailTestUtils):
             subpart=self.subpart,
         )
 
-        self.draft_effective_version = mommy.make(
+        self.draft_effective_version = baker.make(
             EffectiveVersion,
             effective_date=date(2020, 1, 18),
             part=self.part_1002,
             draft=True,
         )
-        self.draft_subpart = mommy.make(
+        self.draft_subpart = baker.make(
             Subpart,
             label='Subpart General',
             title='General',
             subpart_type=Subpart.BODY,
             version=self.draft_effective_version
         )
-        self.draft_section_num4 = mommy.make(
+        self.draft_section_num4 = baker.make(
             Section,
             label='4',
             title='\xa7\xa01002.4 General rules.',
@@ -107,3 +106,22 @@ class TestRegs3kHooks(TestCase, WagtailTestUtils):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'View live', response.content)
         self.assertIn(b'View draft', response.content)
+
+    def test_regs_url_helper(self):
+        helper = RegsURLHelper(Section)
+
+        self.assertNotIn(
+            self.subpart.__str__(),
+            helper.crumb(
+                parent_field="subpart",
+                parent_instance=self.subpart,
+                specific_instance=self.section_num4,
+            )[1],
+        )
+
+        self.assertEqual(
+            self.section_num4.__str__(),
+            helper.crumb(
+                specific_instance=self.section_num4,
+            )[1],
+        )

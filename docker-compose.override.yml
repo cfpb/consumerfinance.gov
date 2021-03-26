@@ -2,19 +2,12 @@ version: "3.4"
 
 services:
 
-    python2:
+    python:
         build:
             target: cfgov-dev
         ports:
-            - "8000:8000" # Django
+            - "127.0.0.1:8000:8000" # Django
         volumes: &python_volumes
-            - ./:/src/cfgov-refresh/
+            - ./:/src/consumerfinance.gov/
             - ./.env:/etc/profile.d/dev-env.sh
             - ./extend-environment.sh:/etc/profile.d/extend-environment.sh
-
-    python3:
-        build:
-            target: cfgov-dev
-        ports:
-            - "8333:8000" # Django
-        volumes: *python_volumes

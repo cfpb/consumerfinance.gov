@@ -49,12 +49,6 @@ related_links = {
         ]
     }
 }
-featured_content = {
-    'type': 'featured_content',
-    'value': {
-        'body': "this is a featured content body"
-    }
-}
 expandable = {
     'type': 'expandable',
     'value': {
@@ -152,71 +146,6 @@ full_width_text = {
             'value': 'Full width text content'
         }
     ]
-}
-image_text_25_75_group = {
-    "type": "image_text_25_75_group",
-    "value": {
-        "heading": "Image 25 75 Group",
-        "image_texts": [
-            {
-                "heading": "",
-                "body": "this is an image text in a 25 75 group",
-                "has_rule": False,
-                "image": {
-                    "alt": "",
-                    "upload": 84
-                },
-                "links": [
-                    {
-                        "url": "/",
-                        "text": "test"
-                    }
-                ]
-            }
-        ]
-    }
-}
-image_text_50_50_group = {
-    "type": "image_text_50_50_group",
-    "value": {
-        "heading": "Image 50 50 Group",
-        "image_texts": [
-            {
-                "heading": "",
-                "body": "this is an image text in a 50 50 group",
-                "links": [
-                    {
-                        "url": "/",
-                        "text": "test"
-                    }
-                ],
-                "image": {
-                    "alt": "",
-                    "upload": 84
-                },
-                "is_widescreen": False,
-                "is_button": False
-            }
-        ]
-    }
-}
-half_width_link_blob_group = {
-    "type": "half_width_link_blob_group",
-    "value": {
-        "heading": "Half Width Link Blob Group",
-        "link_blobs": [
-            {
-                "body": "this is a half width link blob",
-                "heading": "",
-                "links": [
-                    {
-                        "url": "/",
-                        "text": "test"
-                    }
-                ]
-            }
-        ]
-    }
 }
 
 info_unit_group = {
@@ -363,29 +292,6 @@ item_introduction = {
     }
 }
 
-job_listing_list = {
-    'type': 'job_listing_list',
-    'value': {
-        'limit': 5,
-        'more_jobs_page': 123,
-        'hide_closed': True,
-        'heading': 'heading',
-        'more_jobs_text': 'Full list of jobs',
-    },
-}
-
-job_listing_table = {
-    'type': u'job_listing_table',
-    'value': {
-        'is_striped': False,
-        'hide_closed': True,
-        'is_full_width': False,
-        'is_stacked': False,
-        'first_row_is_table_header': True,
-        'first_col_is_header': False,
-    },
-}
-
 data_snapshot = {
     'type': u'data_snapshot',
     'value': {
@@ -476,5 +382,7 @@ filter_controls = {
         'categories': {
             'page_type': '',
         },
+        'filter_children': True,
+        'filter_siblings': False,
     }
 }

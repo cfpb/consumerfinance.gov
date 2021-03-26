@@ -1,6 +1,6 @@
 /* ==========================================================================
-   cfgov-refresh
-   Master Less file for the nonresponsive on-demand header
+   consumerfinance.gov
+   Main Less file for the nonresponsive on-demand header
    ========================================================================== */
 
 
@@ -10,15 +10,15 @@
 
 // Import required CF components.
 // Combined CF components.
-@import (less) 'cf-core.less';
-@import (less) 'cf-icons.less';
-@import (less) 'cf-buttons.less';
-@import (less) 'cf-forms.less';
+@import (less) 'cfpb-core.less';
+@import (less) 'cfpb-icons.less';
+@import (less) 'cfpb-buttons.less';
+@import (less) 'cfpb-forms.less';
 
 .o-header {
-    @import (less) 'cf-buttons.less';
-    @import (less) 'cf-layout.less';
-    @import (less) 'cf-typography.less';
+    @import (less) 'cfpb-buttons.less';
+    @import (less) 'cfpb-layout.less';
+    @import (less) 'cfpb-typography.less';
 }
 
 // Icon font path
@@ -54,7 +54,6 @@
 /* Molecule pieces
    ========================================================================== */
 
-@import (less) "../molecules/featured-menu-content.less";
 @import (less) "../molecules/global-banner.less";
 @import (less) "../molecules/global-eyebrow.less";
 @import (less) "../molecules/global-header-cta.less";
@@ -65,9 +64,20 @@
 
 @import (less) "../organisms/header.less";
 
-.o-header {
-  // menu needs to be scoped or the cascade pushes the other scoped styles up
-  @import (less) "../organisms/mega-menu.less";
+@import (less) "../organisms/mega-menu.less";
+
+// Hacks to fix issues with styles spilling into menu on legacy pages.
+.o-mega-menu_trigger {
+   border-radius: 0;
+}
+.o-mega-menu_content-list__featured a:hover {
+   border: transparent;
+}
+.o-mega-menu_content-list__featured ul {
+   margin-bottom: 1.875em !important;
+}
+.o-mega-menu_content-list a:focus {
+   background-color: transparent !important;
 }
 
 /* Template pieces
