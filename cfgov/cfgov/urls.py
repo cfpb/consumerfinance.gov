@@ -299,7 +299,8 @@ urlpatterns = [
 
     re_path(
         r'^data-research/consumer-complaints/$', TemplateView.as_view(
-        template_name='complaint/complaint-landing.html'),
+            template_name='complaint/complaint-landing.html'
+        ),
         name='complaint-landing'
     ),
 
