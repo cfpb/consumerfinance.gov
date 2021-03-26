@@ -171,9 +171,6 @@ pipeline {
         }
 
         stage('Run Functional Tests') {
-            agent {
-                label 'docker'
-            }
             when {
                 anyOf {
                     branch 'main'
@@ -181,8 +178,11 @@ pipeline {
                 }
             }
             parallel {
-                postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
                 stage('Cypress admin tests') {
+                    postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 10, unit: 'MINUTES')
                     }
@@ -192,6 +192,9 @@ pipeline {
                     }
                 }
                 stage('Cypress component tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 10, unit: 'MINUTES')
                     }
@@ -201,6 +204,9 @@ pipeline {
                     }
                 }
                 stage('Cypress consumer tools tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 10, unit: 'MINUTES')
                     }
@@ -210,6 +216,9 @@ pipeline {
                     }
                 }
                 stage('Cypress data research tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 10, unit: 'MINUTES')
                     }
@@ -219,6 +228,9 @@ pipeline {
                     }
                 }
                 stage('Cypress paying for college tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 10, unit: 'MINUTES')
                     }
@@ -228,16 +240,18 @@ pipeline {
                     }
                 }
                 stage('Cypress rules-policy tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 10, unit: 'MINUTES')
                     }
-                    LAST_STAGE = env.STAGE_NAME
                     steps {
                         // sh "./docker-compose -f docker-compose.e2e.yml run rules-policy-tests"
                         sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
                     }
+                    postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
                 }
-                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
             }
         }
     }
