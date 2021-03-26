@@ -193,54 +193,54 @@ pipeline {
                         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
                     }
                 }
-                stage('component-tests') {
-                    agent {
-                        label 'docker'
-                    }
-                    options {
-                        timeout(time: 10, unit: 'MINUTES')
-                    }
-                    steps {
-                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/components/**/*'"
-                    }
-                }
-                stage('consumer-tools-tests') {
-                    agent {
-                        label 'docker'
-                    }
-                    options {
-                        timeout(time: 10, unit: 'MINUTES')
-                    }
-                    steps {
-                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
-                    }
-                }
-                stage('data-research-tests') {
-                    agent {
-                        label 'docker'
-                    }
-                    options {
-                        timeout(time: 10, unit: 'MINUTES')
-                    }
-                    steps {
-                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
-                    }
-                }
-                stage('paying-for-college-tests') {
-                    agent {
-                        label 'docker'
-                    }
-                    options {
-                        timeout(time: 10, unit: 'MINUTES')
-                    }
-                    steps {
-                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
-                    }
-                }
+                // stage('component-tests') {
+                //     agent {
+                //         label 'docker'
+                //     }
+                //     options {
+                //         timeout(time: 10, unit: 'MINUTES')
+                //     }
+                //     steps {
+                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                //         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/components/**/*'"
+                //     }
+                // }
+                // stage('consumer-tools-tests') {
+                //     agent {
+                //         label 'docker'
+                //     }
+                //     options {
+                //         timeout(time: 10, unit: 'MINUTES')
+                //     }
+                //     steps {
+                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                //         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
+                //     }
+                // }
+                // stage('data-research-tests') {
+                //     agent {
+                //         label 'docker'
+                //     }
+                //     options {
+                //         timeout(time: 10, unit: 'MINUTES')
+                //     }
+                //     steps {
+                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                //         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
+                //     }
+                // }
+                // stage('paying-for-college-tests') {
+                //     agent {
+                //         label 'docker'
+                //     }
+                //     options {
+                //         timeout(time: 10, unit: 'MINUTES')
+                //     }
+                //     steps {
+                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                //         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
+                //     }
+                // }
                 stage('rules-policy-tests') {
                     agent {
                         label 'docker'
@@ -249,8 +249,8 @@ pipeline {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
-                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
+                        sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        // sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
                         postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
