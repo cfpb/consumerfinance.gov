@@ -179,7 +179,6 @@ pipeline {
             }
             parallel {
                 stage('Cypress admin tests') {
-                    postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
                     agent {
                         label 'docker'
                     }
@@ -187,6 +186,7 @@ pipeline {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
+                        postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
                         // sh "./docker-compose -f docker-compose.e2e.yml run admin-tests"
                         sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
                     }
@@ -249,8 +249,8 @@ pipeline {
                     steps {
                         // sh "./docker-compose -f docker-compose.e2e.yml run rules-policy-tests"
                         sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
+                        postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
-                    postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
                 }
             }
         }
