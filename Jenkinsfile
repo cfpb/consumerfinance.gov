@@ -26,6 +26,7 @@ pipeline {
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
         DEPLOY_SUCCESS = false
+        CYPRESS_REPO = 'cypress/included:6.8.0'
     }
 
     parameters {
@@ -58,6 +59,11 @@ pipeline {
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES2_LOCAL = "${env.IMAGE_ES2_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
+                    env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
+                    env.CYPRESS_PATH = "test/cypress/integration"
+                    env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
+                    env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
+                    env.CYPRESS_CMD = "--rm ${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} --shm-size=1024M ${env.CYPRESS_REPO} npx cypress run -b chrome --headless"
                 }
                 sh 'env | sort'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
@@ -165,6 +171,9 @@ pipeline {
         }
 
         stage('Run Functional Tests') {
+            agent {
+                label 'docker'
+            }
             when {
                 anyOf {
                     branch 'main'
@@ -172,12 +181,14 @@ pipeline {
                 }
             }
             parallel {
+                postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
                 stage('Cypress admin tests') {
                     options {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
-                        sh "./docker-compose -f docker-compose.e2e.yml run admin-tests"
+                        // sh "./docker-compose -f docker-compose.e2e.yml run admin-tests"
+                        sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
                     }
                 }
                 stage('Cypress component tests') {
@@ -185,7 +196,8 @@ pipeline {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
-                        sh "./docker-compose -f docker-compose.e2e.yml run component-tests"
+                        // sh "./docker-compose -f docker-compose.e2e.yml run component-tests"
+                        sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/components/**/*'"
                     }
                 }
                 stage('Cypress consumer tools tests') {
@@ -193,7 +205,8 @@ pipeline {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
-                        sh "./docker-compose -f docker-compose.e2e.yml run consumer-tools-tests"
+                        // sh "./docker-compose -f docker-compose.e2e.yml run consumer-tools-tests"
+                        sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                     }
                 }
                 stage('Cypress data research tests') {
@@ -201,7 +214,8 @@ pipeline {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
-                        sh "./docker-compose -f docker-compose.e2e.yml run data-research-tests"
+                        // sh "./docker-compose -f docker-compose.e2e.yml run data-research-tests"
+                        sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
                     }
                 }
                 stage('Cypress paying for college tests') {
@@ -209,17 +223,21 @@ pipeline {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
-                        sh "./docker-compose -f docker-compose.e2e.yml run paying-for-college-tests"
+                        // sh "./docker-compose -f docker-compose.e2e.yml run paying-for-college-tests"
+                        sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
                     }
                 }
                 stage('Cypress rules-policy tests') {
                     options {
                         timeout(time: 10, unit: 'MINUTES')
                     }
+                    LAST_STAGE = env.STAGE_NAME
                     steps {
-                        sh "./docker-compose -f docker-compose.e2e.yml run rules-policy-tests"
+                        // sh "./docker-compose -f docker-compose.e2e.yml run rules-policy-tests"
+                        sh "docker run ${env.CYPRESS_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
                     }
                 }
+                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
             }
         }
     }
