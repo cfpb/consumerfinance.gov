@@ -1,22 +1,103 @@
 .o-simple-chart {
-  border-top: 1px solid @horizontal-rule;
-  padding-top: 3em;
+  h2 {
+    margin-top: 0;
+  }
 
-  .simple-chart-target {
-    margin-top: 2.8125em;
-    .respond-to-max( @bp-xs-max + 60, {
-      margin-top: 1.875em;
+  h5 {
+    margin-bottom: 1.0714em;
+  }
+
+  h3 {
+    .respond-to-max( @bp-xs-max, {
+      margin-top: 1.66666em;
     })
   }
 
-  .highcharts-graph {
+  .chart-selects {
+    margin-top: 1.875em;
+    .respond-to-max( @bp-xs-max, {
+      margin-top: 1.5625em;
+    })
+  }
+
+  .select-wrapper {
+    .grid_column(1,2);
+    margin-bottom: 0.9375em;
+    border-width: 0 30px 0 0;
+    .respond-to-max( @bp-xs-max, {
+      display: block;
+      width: 100%;
+    })
+  }
+
+  .a-label__heading {
+    margin: 0;
+    padding-bottom: 0.83333em;
+    .respond-to-max( @bp-xs-max, {
+      font-size: @base-font-size-px;
+      padding-bottom: 0.625em;
+    })
+  }
+
+  .simple-chart-target {
+    margin-top: 1.875em;
+    .respond-to-max( @bp-xs-max, {
+      margin-top: 0.9375em;
+    })
+  }
+/* Testing line patterns
+  .highcharts-line-series.highcharts-series-0 {
+    stroke-dasharray: 45, 7;
+  }
+  .highcharts-line-series.highcharts-series-1 {
+    stroke-dasharray: 15, 7;
+  }
+  .highcharts-line-series.highcharts-series-2 {
+    stroke-dasharray: 22, 7, 1, 7;
+  }
+  .highcharts-line-series.highcharts-series-3 {
+    stroke-dasharray: 45, 7, 1, 7, 1, 7;
+  }
+  .highcharts-line-series.highcharts-series-4 {
+    stroke-dasharray: 1, 4;
+  }
+  */
+
+  .highcharts-line-series .highcharts-graph {
+    stroke-width: 2px;
+  }
+
+  .highcharts-line-series.highcharts-series-hover .highcharts-graph {
     stroke-width: 3px;
+  }
+
+  .highcharts-line-series {
+    .highcharts-point, .highcharts-point-hover, .highcharts-point-select {
+      display: none;
+    }
   }
 
   .highcharts-axis-line, .highcharts-tick, .highcharts-grid-line {
     stroke: @gray-20;
   }
-
+  .highcharts-button {
+    font-size: 14px;
+    fill: #d6e8fa;
+  }
+  .highcharts-button:hover, .highcharts-button-pressed {
+    fill: #7eb7e8;
+  }
+  .highcharts-range-selector-buttons{
+    text {
+      transform:translate(-8px, 20px);
+      &:first-child{
+        display:none;
+      }
+    }
+  }
+  .highcharts-navigator-mask-inside{
+    fill: @gray-30;
+  }
   .highcharts-tooltip-box{
     background-color: #f7f8f9;
   }
@@ -55,5 +136,11 @@
   }
   .m-chart-footnote {
     max-width: 55.8333333333rem;
+    margin-top: 2.5em;
+    padding-top: 1.25em;
+    .respond-to-max( @bp-xs-max, {
+      margin-top: 2.5em;
+    })
+
   }
 }

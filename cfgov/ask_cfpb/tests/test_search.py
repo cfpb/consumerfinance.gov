@@ -296,6 +296,12 @@ class RedirectAskSearchTestCase(TestCase):
         result = redirect_ask_search(request)
         self.assertEqual(result.get("location"), "/ask-cfpb/search/")
 
+    def test_bad_facet(self):
+        request = HttpRequest()
+        request.GET["selected_facets"] = "bad_exact:foo"
+        with self.assertRaises(Http404):
+            redirect_ask_search(request)
+
     def test_redirect_search_uppercase_facet(self):
         """Handle odd requests with uppercase, spaced category names."""
         category_querystring = "selected_facets=category_exact:Prepaid Cards"

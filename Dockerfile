@@ -89,6 +89,7 @@ ENV APACHE_PROCESS_COUNT 4
 ENV ACCESS_LOG /dev/stdout
 ENV ERROR_LOG /dev/stderr
 ENV STATIC_PATH ${APP_HOME}/cfgov/static/
+ENV LIMIT_REQUEST_BODY 0
 
 # mod_wsgi settings
 ENV CFGOV_PATH ${APP_HOME}

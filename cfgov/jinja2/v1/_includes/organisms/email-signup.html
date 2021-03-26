@@ -46,7 +46,7 @@
           action="/subscriptions/new/"
           enctype="application/x-www-form-urlencoded">
         {% import 'molecules/notification.html' as notification with context %}
-        {{ notification.render('default', false, '') }}
+        {{ notification.render( 'information', false, '' ) }}
 
         <div class="m-form-field">
             <label class="a-label a-label__heading" for="{{ 'email_' ~ form_id }}">

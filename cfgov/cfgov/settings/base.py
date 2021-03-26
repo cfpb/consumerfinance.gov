@@ -146,7 +146,6 @@ MIDDLEWARE = (
     "django.contrib.messages.middleware.MessageMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
-    "flags.middleware.FlagConditionsMiddleware",
     "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
@@ -443,6 +442,8 @@ else:
     ELASTICSEARCH_DSL = {
         "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
     }
+
+ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'search.elasticsearch_helpers.WagtailSignalProcessor'
 
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
@@ -836,6 +837,9 @@ PARSE_LINKS_EXCLUSION_LIST = [
     r"^/policy-compliance/rulemaking/regulations/\d+/",
     # DjangoRestFramework API pages where link icons are intrusive
     r"^/oah-api/",
+    # External site interstitial (if we're here, the links have already been
+    # parsed)
+    r"^/external-site/",
 ]
 
 # Required by django-extensions to determine the execution directory used by

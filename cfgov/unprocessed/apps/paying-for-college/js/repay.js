@@ -60,7 +60,7 @@ const pfcDecision = ( function() {
   }
 
   function processHash( position ) {
-    hashes = location.hash.replace( '#', '' ).split( ':' );
+    const hashes = location.hash.replace( '#', '' ).split( ':' );
     $( '.ds-buttons:visible button[data-ds-name="' + hashes[position] + '"]' ).click();
     if ( position + 1 < hashes.length ) {
       processHash( position + 1 );
