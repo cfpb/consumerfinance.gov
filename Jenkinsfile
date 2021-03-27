@@ -187,9 +187,10 @@ pipeline {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
+                        LAST_STAGE = env.STAGE_NAME
                         postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
-                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
+                        sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        // sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
                     }
                 }
                 // stage('component-tests') {
@@ -200,6 +201,7 @@ pipeline {
                 //         timeout(time: 10, unit: 'MINUTES')
                 //     }
                 //     steps {
+                //         LAST_STAGE = env.STAGE_NAME
                 //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                 //         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/components/**/*'"
                 //     }
@@ -212,6 +214,7 @@ pipeline {
                 //         timeout(time: 10, unit: 'MINUTES')
                 //     }
                 //     steps {
+                //         LAST_STAGE = env.STAGE_NAME
                 //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                 //         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
                 //     }
@@ -224,6 +227,7 @@ pipeline {
                 //         timeout(time: 10, unit: 'MINUTES')
                 //     }
                 //     steps {
+                //         LAST_STAGE = env.STAGE_NAME
                 //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                 //         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
                 //     }
@@ -236,6 +240,7 @@ pipeline {
                 //         timeout(time: 10, unit: 'MINUTES')
                 //     }
                 //     steps {
+                //         LAST_STAGE = env.STAGE_NAME
                 //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                 //         sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
                 //     }
@@ -248,8 +253,9 @@ pipeline {
                         timeout(time: 10, unit: 'MINUTES')
                     }
                     steps {
-                        sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        // sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
+                        LAST_STAGE = env.STAGE_NAME
+                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker run --name ${env.STAGE_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
                         postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
