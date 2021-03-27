@@ -64,11 +64,12 @@ pipeline {
                     env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
                     env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
                     env.CYPRESS_CMD = "npx cypress run -b chrome --headless"
-                    env.DOCKER_CMD = "${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} --shm-size=1024M ${env.CYPRESS_REPO} ${env.CYPRESS_CMD}"
+                    env.DOCKER_CMD = "--rm ${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} --shm-size=1024M ${env.CYPRESS_REPO} ${env.CYPRESS_CMD}"
                 }
                 sh 'env | sort'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                 sh "chmod +x docker-compose"
+                sh "docker system prune -a -f"
                 sh '''if [ "$(docker network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
             }
         }
