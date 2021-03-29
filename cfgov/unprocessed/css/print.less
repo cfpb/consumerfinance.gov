@@ -102,7 +102,7 @@
         .content-l_col-1-3,
         .content-l_col-2-3 {
             // Ensure content remains vertically aligned by rendering them as a table cell
-            display: table-cell;
+            display: table-cell !important;
             .m-info-unit_image {
                 // Print info unit images
                 display: block;
@@ -185,13 +185,19 @@
         display: none !important;
     }
 
+    .o-video-player{
+        &_image-container {
+            .grid_column( 6 );
+        }
+        &::after {
+            content: "Watch the video at https://www.youtube.com/watch?v=" attr(data-id);
+            .grid_column( 6 );
+        }
+    }
+
     .a-tagline {
         // Force the tagline's background image to be visible when printing
         color-adjust: exact;
-    }
-
-    .o-video-player::after {
-        content: "Watch the video at https://www.youtube.com/watch?v=" attr(data-id);
     }
 
     .m-global-eyebrow,
