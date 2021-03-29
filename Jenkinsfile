@@ -26,7 +26,6 @@ pipeline {
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
         DEPLOY_SUCCESS = false
-        CYPRESS_REPO = 'cypress/included:6.8.0'
     }
 
     parameters {
@@ -59,12 +58,6 @@ pipeline {
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES2_LOCAL = "${env.IMAGE_ES2_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
-                    env.HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
-                    env.CYPRESS_PATH = "test/cypress/integration"
-                    env.CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
-                    env.CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
-                    env.CYPRESS_CMD = "npx cypress run -b chrome --headless"
-                    env.DOCKER_CMD = "--rm ${env.CYPRESS_VOLUMES} -w /app ${env.CYPRESS_ENV} --shm-size=1024M ${env.CYPRESS_REPO} ${env.CYPRESS_CMD}"
                 }
                 sh 'env | sort'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
@@ -179,6 +172,15 @@ pipeline {
                     expression { return params.DEPLOY }
                 }
             }
+            environment {
+                CYPRESS_REPO = 'cypress/included:6.8.0'
+                CYPRESS_PATH = 'test/cypress/integration'
+                CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
+                CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json"
+                CYPRESS_CMD = "npx cypress run -b chrome --headless"
+                DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app ${CYPRESS_ENV} --shm-size=1024M ${CYPRESS_REPO} ${CYPRESS_CMD}"
+                HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
+            }
             parallel {
                 stage('admin-tests') {
                     agent {
@@ -196,7 +198,7 @@ pipeline {
                         sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                         sh "chmod +x docker-compose"
                         sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        // sh "docker run --name ${env.DOCKER_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/admin.js'"
+                        // sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
                     }
                 }
                 // stage('component-tests') {
@@ -212,7 +214,7 @@ pipeline {
                 //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                 //         }
                 //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/components/**/*'"
+                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
                 //     }
                 // }
                 // stage('consumer-tools-tests') {
@@ -228,7 +230,7 @@ pipeline {
                 //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                 //         }
                 //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/consumer-tools/*'"
+                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
                 //     }
                 // }
                 // stage('data-research-tests') {
@@ -244,7 +246,7 @@ pipeline {
                 //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                 //         }
                 //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/data-research/*'"
+                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
                 //     }
                 // }
                 // stage('paying-for-college-tests') {
@@ -260,7 +262,7 @@ pipeline {
                 //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                 //         }
                 //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/paying-for-college/*'"
+                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
                 //     }
                 // }
                 stage('rules-policy-tests') {
@@ -276,7 +278,7 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh "docker run --name ${env.DOCKER_NAME} ${env.DOCKER_CMD} --spec '${env.CYPRESS_PATH}/pages/rules-policy/*'"
+                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                         postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
