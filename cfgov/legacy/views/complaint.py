@@ -32,8 +32,7 @@ class ComplaintLandingView(TemplateView):
         context.update(self.is_ccdb_out_of_date(ccdb_status_json))
 
         context.update({
-            'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES'),
-            'ccdb_content_updates': flag_enabled('CCDB_CONTENT_UPDATES')
+            'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES')
         })
 
         return context
