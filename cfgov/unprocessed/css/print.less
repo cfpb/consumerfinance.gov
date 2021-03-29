@@ -58,7 +58,8 @@
     }
 
     a[href="/"]:after,
-    a[href*="?authors"]:after {
+    a[href*="?authors"]:after,
+    a.m-info-unit_heading-link:after {
         // Don't append hrefs to the logo or author links.
         content: none;
     }
@@ -100,6 +101,57 @@
         .content-l_col-1-2 {
             // Keep 50/50 info unit groups at two columns for print
             .grid_column( 6 );
+        }
+    }
+
+    // Force FCMs into multiple columns when printing
+    .o-featured-content-module {
+        display: flex;
+
+        &_text {
+            flex: 1;
+            padding-right: @fcm-visual-width + @grid_gutter-width;
+            padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+
+        &_visual {
+            height: 100%;
+            overflow: hidden;
+            padding-right: 0    ;
+            padding-bottom: 0   ;
+            padding-left: 0 ;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: @fcm-visual-width;
+        }
+
+        &_img {
+            max-width: none;
+            height: 100%;
+            position: absolute;
+        }
+
+        // Modifiers
+        &__right {
+            .o-featured-content-module_img {
+                right: 0;
+            }
+        }
+
+        &__center {
+            .o-featured-content-module_img {
+                left: 50%;
+
+                transform: translateX( -50% );
+
+                .lt-ie9 & {
+                    position: absolute;
+                    right: -100%;
+                    left: -100%;
+                    margin: auto;
+                }
+            }
         }
     }
 
