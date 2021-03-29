@@ -37,45 +37,49 @@
 
 {% block content_main %}
 
-<div class="block block__bg block__padded-top block__border-top block__border-bottom">
-  <div class="content-l">
-    <div class="content-l_col content-l_col-2-3">
-      <h2 class="h3">
-        Things to know before you use the database
-      </h2>
-      <p>
-        Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first.
-        <a href="#about-the-database">
-          Learn more
-        </a>
+<div class="m-notification m-notification__warning {% if data_down %} m-notification__visible show-data-notification {% elif narratives_down %} m-notification__visible show-narratives-notification {% endif %}">
+  {{ svg_icon("warning-round") }}
+  <div class="m-notification_content">
+    <div class="m-notification_content">
+      <div class="h4 m-notification_message">Warning!</div>
+      <p class="data-text m-notification_explanation">
+        We're currently experiencing technical issues that have delayed the refresh of data in the Consumer Complaint database.
       </p>
-      <p>
-        Complaints are not necessarily representative of all consumers’ experiences with a financial product or company.
-        <a href="#what-you-should-consider">
-          Learn more
-        </a>
+      <p class="narratives-text m-notification_explanation">
+        We're currently experiencing technical issues that have delayed the refresh of consumer complaint narratives in the Consumer Complaint database.
       </p>
-      <p>
-        We don’t verify all the allegations in complaint narratives.
-        <a href="#what-you-should-consider">
-          Learn more
-        </a>
+      <p class="m-notification_explanation">{% if technical_issues %}
+        We expect a refresh of the data and restoration of access soon.
+        {% else %}
+        We expect to refresh the data in the next few days.
+        {% endif %}
       </p>
     </div>
   </div>
 </div>
 
-<div class="m-notification m-notification__warning{% if data_down %} m-notification__visible show-data-notification {% elif narratives_down %} m-notification__visible show-narratives-notification {% endif %}">
-  {{ svg_icon("warning-round") }}
-  <div class="m-notification_content">
-    <p class="data-text">We're currently experiencing technical issues that have delayed the refresh of data in the Consumer Complaint database.</p>
-    <p class="narratives-text">We're currently experiencing technical issues that have delayed the refresh of consumer complaint narratives in the Consumer Complaint database.</p>
-    <p class="short-desc">{% if technical_issues %}
-    We expect a refresh of the data and restoration of access soon.
-    {% else %}
-    We expect to refresh the data in the next few days.
-    {% endif %}</p>
-  </div>
+<div class="block block__padded-top o-well">
+  <h2 class="h3">
+    Things to know before you use the database
+  </h2>
+  <p>
+    Complaints are published after the company responds, confirming a commercial relationship with the consumer, or after 15 days, whichever comes first.
+    <a href="#about-the-database">
+      Learn more
+    </a>
+  </p>
+  <p>
+    Complaints are not necessarily representative of all consumers’ experiences with a financial product or company.
+    <a href="#what-you-should-consider">
+      Learn more
+    </a>
+  </p>
+  <p>
+    We don’t verify all the allegations in complaint narratives.
+    <a href="#what-you-should-consider">
+      Learn more
+    </a>
+  </p>
 </div>
 
 <div class="block">
