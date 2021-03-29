@@ -98,9 +98,22 @@
     }
 
     .o-info-unit-group {
+        .content-l_col-1-2,
+        .content-l_col-1-3 {
+            // Ensure content remains vertically aligned by rendering them as a table cell
+            display: table-cell;
+            .m-info-unit_image {
+                // Print info unit images
+                display: block;
+            }
+        }
         .content-l_col-1-2 {
             // Keep 50/50 info unit groups at two columns for print
             .grid_column( 6 );
+        }
+        .content-l_col-1-3 {
+            // Keep 33/33/33 info unit groups at three columns for print
+            .grid_column( 4 );
         }
     }
 
@@ -153,6 +166,11 @@
                 }
             }
         }
+    }
+
+    .o-summary_content[aria-expanded="false"]:after {
+        // Remove the fade gradient when printing
+        background: none;
     }
 
     .o-video-player_play-btn {
