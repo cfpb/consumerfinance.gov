@@ -99,7 +99,8 @@
 
     .o-info-unit-group {
         .content-l_col-1-2,
-        .content-l_col-1-3 {
+        .content-l_col-1-3,
+        .content-l_col-2-3 {
             // Ensure content remains vertically aligned by rendering them as a table cell
             display: table-cell;
             .m-info-unit_image {
@@ -114,6 +115,10 @@
         .content-l_col-1-3 {
             // Keep 33/33/33 info unit groups at three columns for print
             .grid_column( 4 );
+        }
+        .content-l_col-2-3 {
+            // Maintain 2/3 layouts for print
+            .grid_column( 8 );
         }
     }
 
