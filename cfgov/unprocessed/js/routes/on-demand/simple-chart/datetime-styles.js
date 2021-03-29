@@ -56,6 +56,7 @@ const datetime = {
     floating: true,
     dropdown: 'never',
     enabled: true,
+    allButtonsEnabled: true,
     buttonPosition: {
       x: -35,
       y: -70
