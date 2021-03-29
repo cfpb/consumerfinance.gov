@@ -122,7 +122,8 @@ export class AdminPage {
 
   clickBlock( name ) {
     return cy.get( `.action-add-block-${ name }` )
-      .should('be.visible').click();
+      .should( 'be.visible' )
+      .click();
   }
 
   addFullWidthTextElement() {
@@ -207,6 +208,10 @@ export class AdminPage {
 
   addTable() {
     this.clickBlock( 'table_block' );
+    cy.get( '.c-sf-container__block-container', { timeout: 60000 } )
+      .should( 'be.visible' );
+    cy.get( '.c-sf-add-panel__grid', { timeout: 60000 } )
+      .should( 'be.visible' );
   }
 
   getFirstTableCell() {
@@ -214,8 +219,9 @@ export class AdminPage {
   }
 
   getTableModal() {
+    // Retry while element css has the "display: none" property
     cy.get( '.table-block-modal', { timeout: 60000 } )
-      .should('be.visible')
+      .should('not.have.css', 'display', 'none')
       .as( 'tableModal' );
   }
 
@@ -242,20 +248,22 @@ export class AdminPage {
     // Wait for editor to register entered text before saving.
     cy.wait( 1000 );
     cy.get( '@tableModal', { timeout: 60000 } )
-      .should('be.visible')
+      .should( 'be.visible' )
       .find( '#table-block-save-btn' )
       .click();
   }
 
   selectTableEditorTextbox() {
-    return cy.get( '@tableModal' ).find( '.public-DraftEditor-content' ).click();
+    return cy.get( '@tableModal' )
+      .find( '.public-DraftEditor-content' )
+      .click();
   }
 
   typeTableEditorTextbox( text ) {
     /* Wait for Wagtail JS to finish initializing.
        If we don't, it interrupts the typing. */
     return cy.get( '.public-DraftEditor-content' )
-      .last().type( text, { force: true } );
+      .last().focus().type( text, { force: true } );
   }
 
   selectInternalLink( text ) {
