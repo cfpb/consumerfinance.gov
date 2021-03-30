@@ -63,7 +63,10 @@ pipeline {
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                 sh "chmod +x docker-compose"
                 sh "docker system prune -a -f"
+                sh "docker container prune -a -f"
                 sh '''if [ "$(docker network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
+                sh "docker container ls -a --filter status=running"
+                sh "docker container ls -a --filter status=exited --filter status=created"
             }
         }
 
@@ -165,7 +168,7 @@ pipeline {
             }
         }
 
-        stage('Run Functional Tests') {
+        stage('Run Tests') {
             when {
                 anyOf {
                     branch 'main'
@@ -182,28 +185,29 @@ pipeline {
                 HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
             }
             parallel {
-                // stage('admin-tests') {
-                //     agent {
-                //         label 'docker'
-                //     }
-                //     options {
-                //         timeout(time: 10, unit: 'MINUTES')
-                //     }
-                //     environment {
-                //         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app1/test/cypress -v ${WORKSPACE}/cypress.json:/app1/cypress.json"
-                //         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app1 ${CYPRESS_OPTIONS}"
-                //     }
-                //     steps {
-                //         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                //         script {
-                //             LAST_STAGE = env.STAGE_NAME
-                //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
-                //         }
-                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
-                //         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
-                //     }
-                // }
+                stage('admin-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
+                    }
+                    environment {
+                        CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app1/test/cypress -v ${WORKSPACE}/cypress.json:/app1/cypress.json"
+                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app1 ${CYPRESS_OPTIONS}"
+                    }
+                    steps {
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        }
+                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker rm -f ${env.DOCKER_NAME}"
+                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
+                    }
+                }
                 stage('component-tests') {
                     agent {
                         label 'docker'
@@ -222,6 +226,7 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker rm -f ${env.DOCKER_NAME}"
                         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -244,6 +249,7 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker rm -f ${env.DOCKER_NAME}"
                         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -266,6 +272,7 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker rm -f ${env.DOCKER_NAME}"
                         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -288,6 +295,7 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker rm -f ${env.DOCKER_NAME}"
                         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -310,6 +318,7 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker rm -f ${env.DOCKER_NAME}"
                         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
