@@ -273,7 +273,10 @@ export class AdminPage {
   selectDocumentLink( text ) {
     cy.get( '#id_q' ).invoke( 'val', text ).trigger( 'change' );
     cy.get( '#id_q' ).type( ' ' );
+    cy.get( '#id_q' ).type( '{enter}' );
     cy.wait( 1000 );
+    cy.get( '.document-choice' ).should( 'contain', text );
+    cy.get( '#search-results' ).should( 'contain', 'There is 1 match' );
     cy.get( '#search-results', { timeout: 10000 } ).contains( text ).click();
   }
 }
