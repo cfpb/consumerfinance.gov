@@ -59,8 +59,9 @@
 
     a[href="/"]:after,
     a[href*="?authors"]:after,
-    a.m-info-unit_heading-link:after {
-        // Don't append hrefs to the logo or author links.
+    a.m-info-unit_heading-link:after,
+    .m-info-unit_content h4 a:after {
+        // Don't append hrefs to the logo, author links or info unit headings.
         content: none;
     }
 
@@ -188,11 +189,13 @@
         display: none !important;
     }
 
-    .o-video-player{
+    .o-video-player {
+        // When printing, shrink video preview images to one column with the :after
+        // URL in a second column next to it.
         &_image-container {
             .grid_column( 6 );
         }
-        &::after {
+        &:after {
             content: "Watch the video at https://www.youtube.com/watch?v=" attr(data-id);
             .grid_column( 6 );
         }
@@ -210,6 +213,7 @@
     .o-feedback,
     .o-search-bar,
     .m-hero_image-wrapper {
+        // Hide unimportant print things
         display: none;
     }
 
