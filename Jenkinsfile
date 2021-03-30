@@ -195,76 +195,74 @@ pipeline {
                             LAST_STAGE = env.STAGE_NAME
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
-                        sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
-                        sh "chmod +x docker-compose"
-                        sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        // sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
+                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
                     }
                 }
-                // stage('component-tests') {
-                //     agent {
-                //         label 'docker'
-                //     }
-                //     options {
-                //         timeout(time: 10, unit: 'MINUTES')
-                //     }
-                //     steps {
-                //         script {
-                //             LAST_STAGE = env.STAGE_NAME
-                //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
-                //         }
-                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
-                //     }
-                // }
-                // stage('consumer-tools-tests') {
-                //     agent {
-                //         label 'docker'
-                //     }
-                //     options {
-                //         timeout(time: 10, unit: 'MINUTES')
-                //     }
-                //     steps {
-                //         script {
-                //             LAST_STAGE = env.STAGE_NAME
-                //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
-                //         }
-                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
-                //     }
-                // }
-                // stage('data-research-tests') {
-                //     agent {
-                //         label 'docker'
-                //     }
-                //     options {
-                //         timeout(time: 10, unit: 'MINUTES')
-                //     }
-                //     steps {
-                //         script {
-                //             LAST_STAGE = env.STAGE_NAME
-                //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
-                //         }
-                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
-                //     }
-                // }
-                // stage('paying-for-college-tests') {
-                //     agent {
-                //         label 'docker'
-                //     }
-                //     options {
-                //         timeout(time: 10, unit: 'MINUTES')
-                //     }
-                //     steps {
-                //         script {
-                //             LAST_STAGE = env.STAGE_NAME
-                //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
-                //         }
-                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
-                //     }
-                // }
+                stage('component-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
+                    }
+                    steps {
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        }
+                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
+                    }
+                }
+                stage('consumer-tools-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
+                    }
+                    steps {
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        }
+                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
+                    }
+                }
+                stage('data-research-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
+                    }
+                    steps {
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        }
+                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
+                    }
+                }
+                stage('paying-for-college-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 10, unit: 'MINUTES')
+                    }
+                    steps {
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        }
+                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
+                    }
+                }
                 stage('rules-policy-tests') {
                     agent {
                         label 'docker'
