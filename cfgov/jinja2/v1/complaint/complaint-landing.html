@@ -19,19 +19,50 @@
 
 {% block hero %}
 <section class="m-hero">
-    <div class="m-hero_wrapper wrapper">
-        <div class="m-hero_text">
-            <h1 class="m-hero_heading">Consumer Complaint Database</h1>
-            <div class="m-hero_subhead">
-                <p>
-                  This database is a collection of complaints about consumer financial products and services that we sent to companies for response.
-                </p>
-            </div>
-        </div>
-        <div class="m-hero_image-wrapper">
-            <div class="m-hero_image" style="background-image:url({{ static('complaint/img/hero.png') }})"></div>
-        </div>
-    </div>
+  <div class="m-hero_wrapper wrapper">
+      <div class="m-hero_text">
+          <h1 class="m-hero_heading">Consumer Complaint Database</h1>
+          <div class="m-hero_subhead">
+            <p>
+              This database is a collection of complaints about consumer financial products and services that we sent to companies for response.
+            </p>
+          </div>
+      </div>
+      <div class="m-hero_image-wrapper">
+
+          <div class="m-hero_image"></div>
+
+      </div>
+  </div>
+
+
+  <style>
+      .m-hero_image {
+          background-image: url('{{ static('complaint/img/hero.png') }}');
+          filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+              src='{{ static('complaint/img/hero.png') }}',
+              sizingMethod='scale');
+          padding-bottom: 41.48936170212766%;
+      }
+
+      @media screen and (min-width: 37.5625em) {
+          .m-hero_image {
+              background-image: url('{{ static('complaint/img/hero.png') }}');
+              filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                  src='{{ static('complaint/img/hero.png') }}',
+                  sizingMethod='scale');
+              padding-bottom: 41.48936170212766%;
+          }
+
+          .m-hero__overlay .m-hero_wrapper {
+              background-image: url('{{ static('complaint/img/hero.png') }}');
+              background-size: cover;
+              filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                  src='{{ static('complaint/img/hero.png') }}',
+                  sizingMethod='scale');
+          }
+      }
+  </style>
 </section>
 {% endblock %}
 
