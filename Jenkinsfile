@@ -182,23 +182,23 @@ pipeline {
                 HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
             }
             parallel {
-                stage('admin-tests') {
-                    agent {
-                        label 'docker'
-                    }
-                    options {
-                        timeout(time: 10, unit: 'MINUTES')
-                    }
-                    steps {
-                        postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
-                        script {
-                            LAST_STAGE = env.STAGE_NAME
-                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
-                        }
-                        // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
-                    }
-                }
+                // stage('admin-tests') {
+                //     agent {
+                //         label 'docker'
+                //     }
+                //     options {
+                //         timeout(time: 10, unit: 'MINUTES')
+                //     }
+                //     steps {
+                //         postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
+                //         script {
+                //             LAST_STAGE = env.STAGE_NAME
+                //             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                //         }
+                //         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
+                //         sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
+                //     }
+                // }
                 stage('component-tests') {
                     agent {
                         label 'docker'
