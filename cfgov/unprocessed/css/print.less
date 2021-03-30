@@ -103,10 +103,9 @@
         .content-l_col-2-3 {
             // Ensure content remains vertically aligned by rendering them as a table cell
             display: table-cell !important;
-            .m-info-unit_image {
-                // Print info unit images
-                display: block;
-            }
+        }
+        .content-l_col-1 {
+            .grid_column( 12 );
         }
         .content-l_col-1-2 {
             // Keep 50/50 info unit groups at two columns for print
@@ -119,6 +118,10 @@
         .content-l_col-2-3 {
             // Maintain 2/3 layouts for print
             .grid_column( 8 );
+        }
+        .m-info-unit_image {
+            // Print info unit images
+            display: block;
         }
     }
 
