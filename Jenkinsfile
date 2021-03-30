@@ -63,12 +63,11 @@ pipeline {
                 sh 'env | sort'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                 sh "chmod +x docker-compose"
-                sh "docker image prune -a -f"
                 sh '''if [ "network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
                 sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRESS_REPO}); fi'''
                 sh "docker container prune -f"
-                sh "docker container ls -a --filter status=running"
-                sh "docker container ls -a --filter status=exited --filter status=created"
+                sh "docker volume prune -f"
+                sh "docker image prune -a -f"
             }
         }
 
@@ -196,12 +195,12 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app1/test/cypress -v ${WORKSPACE}/cypress.json:/app1/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app1 ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
-                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -219,12 +218,12 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app2/test/cypress -v ${WORKSPACE}/cypress.json:/app2/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app2 ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
-                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -242,12 +241,12 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app3/test/cypress -v ${WORKSPACE}/cypress.json:/app3/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app3 ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
-                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -265,12 +264,12 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app4/test/cypress -v ${WORKSPACE}/cypress.json:/app4/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app4 ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
-                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -288,12 +287,12 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app5/test/cypress -v ${WORKSPACE}/cypress.json:/app5/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app5 ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
-                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -311,12 +310,12 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app6/test/cypress -v ${WORKSPACE}/cypress.json:/app6/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /app6 ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
-                            env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
