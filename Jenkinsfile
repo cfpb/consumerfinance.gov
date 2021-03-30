@@ -204,8 +204,8 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh '''if [ "$(docker ps -a -q -f name=${env.DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${env.DOCKER_NAME}); fi'''
-                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -227,8 +227,8 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh '''if [ "$(docker ps -a -q -f name=${env.DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${env.DOCKER_NAME}); fi'''
-                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -250,8 +250,8 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh '''if [ "$(docker ps -a -q -f name=${env.DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${env.DOCKER_NAME}); fi'''
-                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -273,8 +273,8 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh '''if [ "$(docker ps -a -q -f name=${env.DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${env.DOCKER_NAME}); fi'''
-                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -296,8 +296,8 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh '''if [ "$(docker ps -a -q -f name=${env.DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${env.DOCKER_NAME}); fi'''
-                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -319,8 +319,8 @@ pipeline {
                             env.DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         }
                         // sh "./docker-compose -f docker-compose.e2e.yml run ${env.STAGE_NAME}"
-                        sh '''if [ "$(docker ps -a -q -f name=${env.DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${env.DOCKER_NAME}); fi'''
-                        sh "docker run --name ${env.DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
