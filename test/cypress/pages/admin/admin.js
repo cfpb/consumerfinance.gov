@@ -121,12 +121,12 @@ export class AdminPage {
   }
 
   clickBlock( name ) {
-    return cy.get( `.action-add-block-${ name }` )
+    return cy.get( `.action-add-block-${ name }`, { timeout: 60000 } )
       .should( 'be.visible' )
       .click();
   }
 
-  addFullWidthTextElement() {
+  addFullWidthText() {
     this.clickBlock( 'full_width_text' );
   }
 
@@ -227,7 +227,7 @@ export class AdminPage {
 
   selectFirstTableCell() {
     cy.get( '.htCore td' ).first().as( 'firstTableCell' );
-    cy.get( '@firstTableCell' ).click().click();
+    cy.get( '@firstTableCell' ).click( {force: true} ).click( {force: true} );
     this.getTableModal();
   }
 

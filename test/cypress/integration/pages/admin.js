@@ -119,9 +119,16 @@ describe( 'Admin', () => {
   describe( 'Custom TableBlock', () => {
     before( () => {
       admin.addBlogChildPage();
-      admin.addFullWidthTextElement();
+      admin.addFullWidthText();
       admin.addTable();
+    } );
+
+    beforeEach( () => {
       admin.selectFirstTableCell();
+    } );
+
+    afterEach( () => {
+      admin.closeTableEditor();
     } );
 
     it( 'should be able to create and edit a table', () => {
@@ -132,7 +139,6 @@ describe( 'Admin', () => {
     } );
 
     it( 'should be able to select all standard edit buttons in table', () => {
-      admin.selectFirstTableCell();
       admin.selectTableEditorButton( 'BOLD' );
       admin.selectTableEditorButton( 'ITALIC' );
       admin.selectTableEditorButton( 'header-three' );
@@ -142,25 +148,20 @@ describe( 'Admin', () => {
       admin.selectTableEditorButton( 'unordered-list-item' );
       admin.selectTableEditorButton( 'undo' );
       admin.selectTableEditorButton( 'redo' );
-      admin.closeTableEditor();
     } );
 
     it( 'should be able to use link buttons', () => {
-      admin.selectFirstTableCell();
       admin.selectTableEditorButton( 'LINK' );
       admin.selectInternalLink( 'CFGov' );
-      const documentName = 'cfpb_interested-vendor-instructions_fy2020.pdf';
-      admin.selectTableEditorButton( 'DOCUMENT' );
-      admin.selectDocumentLink( documentName );
+      // const documentName = 'cfpb_interested-vendor-instructions_fy2020.pdf';
+      // admin.selectTableEditorButton( 'DOCUMENT' );
+      // admin.selectDocumentLink( documentName );
     } );
 
     it( 'should be able to save an empty cell', () => {
-      // cy.focused().clear();
       admin.typeTableEditorTextbox( '{selectall}{backspace}' );
-      admin.getTableModal();
       admin.saveTableEditor();
       admin.getFirstTableCell().should( 'be.empty' );
-      admin.closeTableEditor();
     } );
   } );
 } );
