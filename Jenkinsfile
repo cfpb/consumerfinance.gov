@@ -62,8 +62,8 @@ pipeline {
                 sh 'env | sort'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                 sh "chmod +x docker-compose"
-                sh "docker system prune -a -f"
-                sh "docker container prune -a -f"
+                sh "docker container prune -f"
+                sh "docker image prune -a -f"
                 sh '''if [ "$(docker network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
                 sh "docker container ls -a --filter status=running"
                 sh "docker container ls -a --filter status=exited --filter status=created"
