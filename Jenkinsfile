@@ -65,7 +65,7 @@ pipeline {
                 sh "chmod +x docker-compose"
                 sh "docker image prune -a -f"
                 sh '''if [ "network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
-                sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRES_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRES_REPO}); fi'''
+                sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRESS_REPO}); fi'''
                 sh "docker container prune -f"
                 sh "docker container ls -a --filter status=running"
                 sh "docker container ls -a --filter status=exited --filter status=created"
