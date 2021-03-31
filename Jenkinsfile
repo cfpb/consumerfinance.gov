@@ -67,7 +67,6 @@ pipeline {
                 sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRESS_REPO}); fi'''
                 sh "docker container prune -f"
                 sh "docker volume prune -f"
-                sh "docker image prune -a -f"
             }
         }
 
@@ -190,7 +189,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 10, unit: 'MINUTES')
+                        timeout(time: 15, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app1/test/cypress -v ${WORKSPACE}/cypress.json:/app1/cypress.json"
@@ -236,7 +235,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 10, unit: 'MINUTES')
+                        timeout(time: 15, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app3/test/cypress -v ${WORKSPACE}/cypress.json:/app3/cypress.json"
@@ -259,7 +258,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 10, unit: 'MINUTES')
+                        timeout(time: 15, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app4/test/cypress -v ${WORKSPACE}/cypress.json:/app4/cypress.json"
@@ -282,7 +281,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 10, unit: 'MINUTES')
+                        timeout(time: 15, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app5/test/cypress -v ${WORKSPACE}/cypress.json:/app5/cypress.json"
@@ -305,7 +304,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 10, unit: 'MINUTES')
+                        timeout(time: 15, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app6/test/cypress -v ${WORKSPACE}/cypress.json:/app6/cypress.json"
