@@ -1,6 +1,4 @@
-import {
-  RuralOrUnderservedTool
-} from '../../pages/rural-or-underserved-tool/rural-or-underserved';
+import { RuralOrUnderservedTool } from '../../../pages/consumer-tools/rural-or-underserved-tool';
 
 const page = new RuralOrUnderservedTool();
 
