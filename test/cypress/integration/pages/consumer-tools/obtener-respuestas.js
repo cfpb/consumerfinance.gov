@@ -1,4 +1,4 @@
-import { ObtenerRespuestasBuscar } from '../../pages/obtener-respuestas/buscar';
+import { ObtenerRespuestasBuscar } from '../../../pages/consumer-tools/obtener-respuestas';
 
 const buscar = new ObtenerRespuestasBuscar();
 

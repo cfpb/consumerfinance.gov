@@ -18,6 +18,8 @@ pipeline {
     }
 
     environment {
+        // Docker Repository used by functional tests
+        CYPRESS_REPO = 'cypress/included:6.8.0'
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
@@ -60,6 +62,13 @@ pipeline {
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
+                // Create docker network used by functional tests
+                sh '''if [ -z "$(docker network ls -q -f name=^cfgov$)" ]; then docker network create cfgov; fi'''
+                // Stop docker containers used by functional tests 
+                sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRESS_REPO}); fi'''
+                // Remove docker containers and volumes used by functional tests
+                sh "docker container prune -f"
+                sh "docker volume prune -f"
             }
         }
 
@@ -83,7 +92,6 @@ pipeline {
             }
             steps {
                 postGitHubStatus("jenkins/deploy", "pending", "Building", env.RUN_DISPLAY_URL)
-                postGitHubStatus("jenkins/functional-tests", "pending", "Waiting", env.RUN_DISPLAY_URL)
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
@@ -103,6 +111,7 @@ pipeline {
                 }
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
                 scanImage(env.IMAGE_ES2_REPO, env.IMAGE_TAG)
+                // scanImage(env.CYPRESS_REPO, env.IMAGE_TAG) We will Scan once Twistlock is configured.
                 // scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG) We Will Scan once Twistlock is configured to ignore known issues with this image.
             }
         }
@@ -161,25 +170,162 @@ pipeline {
             }
         }
 
-        stage('Run Functional Tests') {
+        stage('Run Tests') {
             when {
                 anyOf {
                     branch 'main'
                     expression { return params.DEPLOY }
                 }
             }
-            steps {
-                postGitHubStatus("jenkins/functional-tests", "pending", "Started", env.RUN_DISPLAY_URL)
-
-                script {
-                    LAST_STAGE = env.STAGE_NAME
-                    timeout(time: 60, unit: 'MINUTES') {
-                        // sh "docker-compose -f docker-compose.e2e.yml run e2e -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME}"
-                        sh "docker run -v ${WORKSPACE}/test/cypress:/app/test/cypress -v ${WORKSPACE}/cypress.json:/app/cypress.json -w /app -e CYPRESS_baseUrl=https://${CFGOV_HOSTNAME} -e CI=1 cypress/included:6.8.0 npx cypress run -b chrome --headless"
+            environment {
+                // Location of functional tests
+                CYPRESS_PATH = 'test/cypress/integration'
+                // Shared memory used by functional tests
+                CYPRESS_SHM = "--shm-size=1024M"
+                // Command to run functional tests using Chrome browser
+                CYPRESS_CMD = "npx cypress run -b chrome --headless"
+                // Environment for running functional tests
+                CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
+                // Command line options to run functional tests
+                CYPRESS_OPTIONS = "${CYPRESS_ENV} ${CYPRESS_SHM} ${CYPRESS_REPO} ${CYPRESS_CMD}"
+                HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
+            }
+            parallel {
+                stage('admin-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 15, unit: 'MINUTES')
+                    }
+                    environment {
+                        CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
+                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                    }
+                    steps {
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                        }
+                        // Remove docker container used by admin tests
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
-
-                postGitHubStatus("jenkins/functional-tests", "success", "Passed", env.RUN_DISPLAY_URL)
+                stage('component-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    environment {
+                        CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
+                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                    }
+                    steps {
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                        }
+                        // Remove docker container used by component tests
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
+                    }
+                }
+                stage('consumer-tools-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 20, unit: 'MINUTES')
+                    }
+                    environment {
+                        CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
+                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                    }
+                    steps {
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                        }
+                        // Remove docker container used by consumer tool tests
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
+                    }
+                }
+                stage('data-research-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 15, unit: 'MINUTES')
+                    }
+                    environment {
+                        CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
+                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                    }
+                    steps {
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                        }
+                        // Remove docker container used by data research tests
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
+                    }
+                }
+                stage('paying-for-college-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 15, unit: 'MINUTES')
+                    }
+                    environment {
+                        CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
+                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                    }
+                    steps {
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                        }
+                        // Remove docker container used by paying for college tests
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
+                    }
+                }
+                stage('rules-policy-tests') {
+                    agent {
+                        label 'docker'
+                    }
+                    options {
+                        timeout(time: 15, unit: 'MINUTES')
+                    }
+                    environment {
+                        CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
+                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                    }
+                    steps {
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                        }
+                        // Remove docker container used by rules and policy tests
+                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
+                        sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
+                        postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
+                    }
+                }
             }
         }
     }
