@@ -149,7 +149,7 @@ pipeline {
                 postGitHubStatus("jenkins/deploy", "pending", "Deploying", env.RUN_DISPLAY_URL)
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    timeout(time: 30, unit: 'MINUTES') {
+                    timeout(time: 60, unit: 'MINUTES') {
                         dockerStack.deploy(env.STACK_NAME, 'docker-stack.yml')
                     }
                     DEPLOY_SUCCESS = true
