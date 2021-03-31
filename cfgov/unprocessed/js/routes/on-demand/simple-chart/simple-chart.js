@@ -130,14 +130,20 @@ function extractSeries( rawData, { series, xAxisData, chartType } ) {
 
     // array of {name: str, data: arr (maybe of obj)}
     series.forEach( currSeries => {
+      let name = currSeries;
+      let key = currSeries;
+      if ( typeof currSeries === 'object' ) {
+        name = name.label;
+        key = key.key;
+      }
       const currArr = [];
       const currObj = {
-        name: currSeries,
+        name,
         data: currArr
       };
 
       rawData.forEach( obj => {
-        let d = Number( obj[currSeries] );
+        let d = Number( obj[key] );
         if ( chartType === 'datetime' ) {
           d = {
             x:  Number( new Date( obj[xAxisData] ) ),
@@ -235,11 +241,11 @@ function makeChartOptions(
   }
   if ( defaultObj.series.length > 1 ) {
     const len = defaultObj.series.length;
-    let marg = len * 20;
+    let marg = ( len * 23 ) + 35;
     let y = 0;
-    if ( marg < 70 ) {
-      marg = 70;
-      y = 7 * ( 4 - len );
+    if ( marg < 100 ) {
+      marg = 100;
+      y = 19;
     }
     defaultObj.legend.enabled = true;
     defaultObj.chart.marginTop = marg;

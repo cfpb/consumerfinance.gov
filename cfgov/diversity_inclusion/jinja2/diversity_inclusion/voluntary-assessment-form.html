@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% block title -%}
-    Voluntary Diversity Assessment Onboarding Form
+    Voluntary Diversity Assessment Onboarding Form | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block desc -%}
@@ -55,11 +55,11 @@
                 {% import 'molecules/notification.html' as notification %}
                 <div class="u-mb15">
                     {% for error in form.non_field_errors() %}
-                        {{- notification.render('error', true, error | richtext ) }}
+                        {{- notification.render( 'error', true, error | richtext ) }}
                     {% endfor %}
                     {% for field in form %}
                         {% for error in field.errors %}
-                            {{- notification.render('error', true, error) }}
+                            {{- notification.render( 'error', true, error ) }}
                         {% endfor %}
                     {% endfor %}
                 </div>
