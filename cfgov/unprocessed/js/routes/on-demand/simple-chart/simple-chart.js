@@ -130,14 +130,20 @@ function extractSeries( rawData, { series, xAxisData, chartType } ) {
 
     // array of {name: str, data: arr (maybe of obj)}
     series.forEach( currSeries => {
+      let name = currSeries;
+      let key = currSeries;
+      if ( typeof currSeries === 'object' ) {
+        name = name.label;
+        key = key.key;
+      }
       const currArr = [];
       const currObj = {
-        name: currSeries,
+        name,
         data: currArr
       };
 
       rawData.forEach( obj => {
-        let d = Number( obj[currSeries] );
+        let d = Number( obj[key] );
         if ( chartType === 'datetime' ) {
           d = {
             x:  Number( new Date( obj[xAxisData] ) ),
