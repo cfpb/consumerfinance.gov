@@ -63,7 +63,7 @@ pipeline {
                 sh 'env | sort'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                 sh "chmod +x docker-compose"
-                sh '''if [ "network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
+                sh '''if [ "docker network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
                 sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRESS_REPO}); fi'''
                 sh "docker container prune -f"
                 sh "docker volume prune -f"
@@ -213,7 +213,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 10, unit: 'MINUTES')
+                        timeout(time: 15, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/app2/test/cypress -v ${WORKSPACE}/cypress.json:/app2/cypress.json"
