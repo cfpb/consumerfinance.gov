@@ -171,10 +171,6 @@ pipeline {
         }
 
         stage('Run Tests') {
-            // Docker node used to run functional tests
-            agent {
-                label 'docker'
-            }
             when {
                 anyOf {
                     branch 'main'
@@ -196,6 +192,9 @@ pipeline {
             }
             parallel {
                 stage('admin-tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 15, unit: 'MINUTES')
                     }
@@ -216,6 +215,9 @@ pipeline {
                     }
                 }
                 stage('component-tests') {
+                    agent {
+                        label 'docker'
+                    }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
@@ -233,6 +235,9 @@ pipeline {
                     }
                 }
                 stage('consumer-tools-tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 20, unit: 'MINUTES')
                     }
@@ -253,6 +258,9 @@ pipeline {
                     }
                 }
                 stage('data-research-tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 15, unit: 'MINUTES')
                     }
@@ -273,6 +281,9 @@ pipeline {
                     }
                 }
                 stage('paying-for-college-tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 15, unit: 'MINUTES')
                     }
@@ -293,6 +304,9 @@ pipeline {
                     }
                 }
                 stage('rules-policy-tests') {
+                    agent {
+                        label 'docker'
+                    }
                     options {
                         timeout(time: 15, unit: 'MINUTES')
                     }
