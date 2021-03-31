@@ -90,7 +90,6 @@ pipeline {
             }
             steps {
                 postGitHubStatus("jenkins/deploy", "pending", "Building", env.RUN_DISPLAY_URL)
-                postGitHubStatus("jenkins/functional-tests", "pending", "Waiting", env.RUN_DISPLAY_URL)
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
