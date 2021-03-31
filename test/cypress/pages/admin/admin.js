@@ -9,12 +9,8 @@ export class AdminPage {
     cy.get( 'form' ).submit();
   }
 
-  pageList() {
-    return cy.get( '.listing-page' );
-  }
-
   openMostRecentPage() {
-    this.pageList().find( 'a' ).first().click();
+    cy.get( '.listing-page a' ).first().click();
   }
 
   publishPage() {
@@ -57,26 +53,16 @@ export class AdminPage {
     this.submitForm();
   }
 
-  openMortgageConstants() {
-    this.openNavigationTab( 'Data Research' );
-    this.selectSubMenu( 'Mortgage performance constants' );
-  }
-
-  addMortgageConstant() {
-    cy.get( 'a[href="/admin/data_research/mortgagedataconstant/create/"]' ).click();
+  addMortgageData( name ) {
+    cy.get( `a[href="/admin/data_research/mortgage${ name }/create/"]` )
+      .click();
     cy.get( '#id_name' ).type( 'test' );
     this.submitForm();
   }
 
-  openMortgageMetadata() {
+  openMortgageData( name ) {
     this.openNavigationTab( 'Data Research' );
-    this.selectSubMenu( 'Mortgage metadata' );
-  }
-
-  addMortgageMetadata() {
-    cy.get( 'a[href="/admin/data_research/mortgagemetadata/create/"]' ).click();
-    cy.get( '#id_name' ).type( 'Test' );
-    this.submitForm();
+    this.selectSubMenu( `Mortgage ${ name }` );
   }
 
   openNavigationTab( name ) {
@@ -93,24 +79,25 @@ export class AdminPage {
 
   editRegulation() {
     this.getFirstTableRow().trigger( 'mouseover' );
-    cy.get( 'a[href="/admin/regulations3k/part/edit/1/"]' ).click( { force: true } );
+    cy.get( 'a[href="/admin/regulations3k/part/edit/1/"]' )
+      .click( { force: true } );
     this.submitForm();
   }
 
   copyRegulation() {
     this.getFirstTableRow().find( '.children' ).click();
     this.getFirstTableRow().contains( 'Copy' ).click( { force: true } );
-    this.setRegulationEffectiveDate();
+    this.setRegulationEffectiveDate( '2020-01-01' );
     this.submitForm();
   }
 
   cleanUpRegulations() {
-    cy.get( 'table' ).find( 'tr' ).last().contains( 'Delete' ).click( { force: true } );
+    cy.get( 'table tr' ).last().contains( 'Delete' ).click( { force: true } );
     this.submitForm();
   }
 
-  setRegulationEffectiveDate() {
-    cy.get( '#id_effective_date' ).clear().type( '2020-01-01' );
+  setRegulationEffectiveDate( name ) {
+    cy.get( '#id_effective_date' ).clear().type( name );
   }
 
   openMegaMenu() {
@@ -123,15 +110,24 @@ export class AdminPage {
   }
 
   openPage( name ) {
-    cy.get( '.c-explorer__item__link' ).contains( name ).click();
+    this.openNavigationTab( 'Pages' );
+    cy.get( '.c-explorer__item__link' ).contains( name )
+      .click( { force: true } );
   }
 
   addBlogChildPage() {
     cy.visit( '/admin/pages/add/v1/blogpage/319/' );
+    cy.url().should( 'include', 'blogpage' );
   }
 
-  addFullWidthTextElement() {
-    cy.get( '.action-add-block-full_width_text' ).click();
+  clickBlock( name ) {
+    return cy.get( `.action-add-block-${ name }`, { timeout: 60000 } )
+      .should( 'be.visible' )
+      .click();
+  }
+
+  addFullWidthText() {
+    this.clickBlock( 'full_width_text' );
   }
 
   openBuildingBlockActivity() {
@@ -201,7 +197,7 @@ export class AdminPage {
   }
 
   getFirstTableRow() {
-    return cy.get( '.listing' ).find( 'tr' ).eq( 1 );
+    return cy.get( '.listing tr' ).eq( 1 );
   }
 
   getPageMetadataReports() {
@@ -211,43 +207,63 @@ export class AdminPage {
   }
 
   addTable() {
-    cy.get( '.action-add-block-table_block' ).click();
+    this.clickBlock( 'table_block' );
+    cy.get( '.c-sf-container__block-container', { timeout: 60000 } )
+      .should( 'be.visible' );
+    cy.get( '.c-sf-add-panel__grid', { timeout: 60000 } )
+      .should( 'be.visible' );
   }
 
   getFirstTableCell() {
-    return cy.get( '.htCore' ).find( 'td' ).first();
+    return cy.get( '.htCore td' ).first();
+  }
+
+  getTableModal() {
+    // Retry while element css has the "display: none" property
+    cy.get( '.table-block-modal', { timeout: 60000 } )
+      .should('not.have.css', 'display', 'none')
+      .as( 'tableModal' );
   }
 
   selectFirstTableCell() {
-    cy.get( '.htCore' ).find( 'td' ).first().click().click();
+    cy.get( '.htCore td' ).first().as( 'firstTableCell' );
+    cy.get( '@firstTableCell' ).click( {force: true} ).click( {force: true} );
+    this.getTableModal();
   }
 
   selectTableEditorButton( name ) {
-    cy.get( '.modal-body' ).find( `[name="${ name }"]` ).click();
+    cy.get( '@tableModal' ).find( `[name="${ name }"]` )
+      .click( { force: true } );
   }
 
-  searchFirstTableCell( text ) {
-    return cy.get( '.htCore' ).find( 'td' ).first().contains( text );
+  searchFirstTableCell( name ) {
+    return cy.get( '@firstTableCell' ).contains( name );
+  }
+
+  closeTableEditor() {
+    cy.get( '#close-table-block-modal-btn' ).click( {force: true} );
   }
 
   saveTableEditor() {
     // Wait for editor to register entered text before saving.
     cy.wait( 1000 );
-    cy.get( '#table-block-save-btn' ).click();
+    cy.get( '@tableModal', { timeout: 60000 } )
+      .should( 'be.visible' )
+      .find( '#table-block-save-btn' )
+      .click();
   }
 
   selectTableEditorTextbox() {
-    return cy.get( '.table-block-modal .public-DraftEditor-content' ).click();
+    return cy.get( '@tableModal' )
+      .find( '.public-DraftEditor-content' )
+      .click();
   }
 
   typeTableEditorTextbox( text ) {
-    // Wait for Wagtail JS to finish initializing. If we don't, it interrupts the typing.
-    cy.wait( 500 );
-    return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( text );
-  }
-
-  backspaceTableEditorTextbox( ) {
-    return cy.get( '.table-block-modal .public-DraftEditor-content' ).type( '{backspace}' );
+    /* Wait for Wagtail JS to finish initializing.
+       If we don't, it interrupts the typing. */
+    return cy.get( '.public-DraftEditor-content' )
+      .last().focus().type( text, { force: true } );
   }
 
   selectInternalLink( text ) {
@@ -257,7 +273,10 @@ export class AdminPage {
   selectDocumentLink( text ) {
     cy.get( '#id_q' ).invoke( 'val', text ).trigger( 'change' );
     cy.get( '#id_q' ).type( ' ' );
+    cy.get( '#id_q' ).type( '{enter}' );
     cy.wait( 1000 );
+    cy.get( '.document-choice' ).should( 'contain', text );
+    cy.get( '#search-results' ).should( 'contain', 'There is 1 match' );
     cy.get( '#search-results', { timeout: 10000 } ).contains( text ).click();
   }
 }
