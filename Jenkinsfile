@@ -63,7 +63,7 @@ pipeline {
                 sh 'env | sort'
                 sh "curl -L https://github.com/docker/compose/releases/download/1.28.5/docker-compose-`uname -s`-`uname -m` -o docker-compose"
                 sh "chmod +x docker-compose"
-                sh '''if [ "$(docker network ls -f name=^cfgov$ -q)" == "" ]; then docker network create cfgov; fi'''
+                sh '''if [ "$(docker network ls -q -f name=^cfgov$)" == "" ]; then docker network create cfgov; fi'''
                 sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRESS_REPO}); fi'''
                 sh "docker container prune -f"
                 sh "docker volume prune -f"
