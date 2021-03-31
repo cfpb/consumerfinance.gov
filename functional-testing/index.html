@@ -274,7 +274,8 @@
 <h2 id="running-cypress">Running Cypress<a class="headerlink" href="#running-cypress" title="Permanent link">¶</a></h2>
 <p>We support both a headless docker container to execute our cypress tests as well as the already installed desktop application that comes packaged with cypress. The test files are located in the <code>test/cypress/integration/</code> directory.</p>
 <ul>
-<li>To run the docker container execute <code>docker-compose -f docker-compose.e2e.yml run e2e</code></li>
+<li>To run a single docker container use <code>docker-compose -f docker-compose.e2e.yml run admin-tests</code></li>
+<li>To run all docker containers execute <code>docker-compose -f docker-compose.e2e.yml up</code></li>
 <li>
 <p>If you have not previously set up a local Docker network, you will need to stop any running consumerfinance.gov Docker containers, run <code>docker network create cfgov</code>, start the containers again, and then run the above command.</p>
 </li>
