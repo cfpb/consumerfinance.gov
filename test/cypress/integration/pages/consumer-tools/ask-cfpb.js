@@ -1,5 +1,5 @@
-import { AskCfpbSearch } from '../../pages/ask-cfpb/search';
-import { AskCfpbAnswerPage } from '../../pages/ask-cfpb/answer-page';
+import { AskCfpbSearch } from '../../../pages/consumer-tools/ask-cfpb/search';
+import { AskCfpbAnswerPage } from '../../../pages/consumer-tools/ask-cfpb/answer-page';
 
 const search = new AskCfpbSearch();
 const answerPage = new AskCfpbAnswerPage();
