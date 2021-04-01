@@ -187,6 +187,13 @@ function scriptsApps() {
   }
   return singleStream;
 }
+
+gulp.task( 'scripts:apps', scriptsApps );
+gulp.task( 'scripts:external', scriptsExternal );
+gulp.task( 'scripts:modern', scriptsModern );
+gulp.task( 'scripts:polyfill', scriptsPolyfill );
+gulp.task( 'scripts:admin', scriptsAdmin );
+
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
 
@@ -196,12 +203,6 @@ gulp.task( 'scripts:ondemand',
     'scripts:ondemand:footer'
   )
 );
-
-gulp.task( 'scripts:apps', scriptsApps );
-gulp.task( 'scripts:external', scriptsExternal );
-gulp.task( 'scripts:modern', scriptsModern );
-gulp.task( 'scripts:polyfill', scriptsPolyfill );
-gulp.task( 'scripts:admin', scriptsAdmin );
 
 gulp.task( 'scripts',
   gulp.parallel(
