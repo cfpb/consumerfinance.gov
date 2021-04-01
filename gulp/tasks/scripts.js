@@ -10,8 +10,6 @@ const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpModernizr = require( 'gulp-modernizr' );
 const gulpNewer = require( 'gulp-newer' );
-const gulpRename = require( 'gulp-rename' );
-const gulpReplace = require( 'gulp-replace' );
 const gulpTerser = require( 'gulp-terser' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
@@ -110,53 +108,6 @@ function scriptsExternal() {
 }
 
 /**
- * Bundle atomic header component scripts.
- * Provides a means to bundle JS for specific atomic components,
- * which then can be carried over to other projects.
- * @returns {PassThrough} A source stream.
- */
-function scriptsOnDemandHeader() {
-  return _processScript(
-    webpackConfig.commonConf,
-    '/js/routes/on-demand/header.js',
-    '/js/atomic/'
-  );
-}
-
-/**
- * Bundle atomic header component scripts.
- * Provides a means to bundle JS for specific atomic components,
- * which then can be carried over to other projects.
- * @returns {PassThrough} A source stream.
- */
-function scriptsOnDemandFooter() {
-  return _processScript(
-    webpackConfig.commonConf,
-    '/js/routes/on-demand/footer.js',
-    '/js/atomic/'
-  );
-}
-
-/**
- * Bundle atomic component scripts for non-responsive pages.
- * Provides a means to bundle JS for specific atomic components,
- * which then can be carried over to other projects.
- * @returns {PassThrough} A source stream.
- */
-function scriptsNonResponsive() {
-  return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
-    .pipe( gulpNewer( {
-      dest:  paths.processed + '/js/atomic/header.nonresponsive.js',
-      extra: configScripts.otherBuildTriggerFiles
-    } ) )
-    .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpRename( 'header.nonresponsive.js' ) )
-    .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) );
-}
-
-/**
  * Bundle scripts in /apps/ & factor out shared modules into common.js for each.
  * @returns {PassThrough} A source stream.
  */
@@ -215,24 +166,12 @@ gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:admin', scriptsAdmin );
 
-gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
-gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
-gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
-gulp.task( 'scripts:ondemand',
-  gulp.parallel(
-    'scripts:ondemand:header',
-    'scripts:ondemand:footer',
-    'scripts:ondemand:nonresponsive'
-  )
-);
-
 gulp.task( 'scripts',
   gulp.parallel(
     'scripts:polyfill',
     'scripts:modern',
     'scripts:apps',
     'scripts:external',
-    'scripts:ondemand',
     'scripts:admin'
   )
 );
