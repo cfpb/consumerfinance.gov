@@ -108,6 +108,34 @@ function scriptsExternal() {
 }
 
 /**
+ * Bundle atomic header component scripts.
+ * Provides a means to bundle JS for specific atomic components,
+ * which then can be carried over to other projects.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOnDemandHeader() {
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/routes/on-demand/header.js',
+    '/js/atomic/'
+  );
+}
+
+/**
+ * Bundle atomic header component scripts.
+ * Provides a means to bundle JS for specific atomic components,
+ * which then can be carried over to other projects.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOnDemandFooter() {
+  return _processScript(
+    webpackConfig.commonConf,
+    '/js/routes/on-demand/footer.js',
+    '/js/atomic/'
+  );
+}
+
+/**
  * Bundle scripts in /apps/ & factor out shared modules into common.js for each.
  * @returns {PassThrough} A source stream.
  */
@@ -159,6 +187,15 @@ function scriptsApps() {
   }
   return singleStream;
 }
+gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
+gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
+
+gulp.task( 'scripts:ondemand',
+  gulp.parallel(
+    'scripts:ondemand:header',
+    'scripts:ondemand:footer'
+  )
+);
 
 gulp.task( 'scripts:apps', scriptsApps );
 gulp.task( 'scripts:external', scriptsExternal );
@@ -172,6 +209,7 @@ gulp.task( 'scripts',
     'scripts:modern',
     'scripts:apps',
     'scripts:external',
+    'scripts:ondemand',
     'scripts:admin'
   )
 );
