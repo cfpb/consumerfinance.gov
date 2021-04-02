@@ -591,6 +591,10 @@ function buildChart( chartNode ) {
       target,
       makeChartOptions( data, target.dataset )
     );
+    const mediaQueryList = window.matchMedia( 'print' );
+    mediaQueryList.addListener( function() {
+      chart.reflow();
+    } );
 
     initFilters(
       target.dataset, chartNode, chart, data, transform && chartHooks[transform]

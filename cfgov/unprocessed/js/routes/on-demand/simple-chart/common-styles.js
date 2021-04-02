@@ -7,6 +7,12 @@ const styles = {
       fontSize: '16px',
       color: '#5a5d61',
       lineHeight: 1.375
+    },
+    events: {
+      render: function() {
+        const zoomText = this.container.querySelector( '.highcharts-range-selector-buttons > text' );
+        if ( zoomText && zoomText.textContent !== 'Select time range' ) zoomText.textContent = 'Select time range';
+      }
     }
   },
   credits: false,
@@ -25,7 +31,7 @@ const styles = {
     itemMarginBottom: 4,
     itemStyle: {
       color: '#5a5d61',
-      fontFamily: "'Avenir Next', Arial, sans-serif",
+      fontFamily: '"AvenirNextLTW01-Regular", Arial, sans-serif',
       fontSize: 16
     }
   },
