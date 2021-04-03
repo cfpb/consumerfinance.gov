@@ -212,15 +212,15 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        script {
-                            LAST_STAGE = env.STAGE_NAME
-                        }
                         // Remove docker container used by admin tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        try {
-                            sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
-                        } catch(err) {
-                            sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            try {
+                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
+                            } catch(err) {
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -236,15 +236,15 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        script {
-                            LAST_STAGE = env.STAGE_NAME
-                        }
                         // Remove docker container used by component tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        try {
-                            sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
-                        } catch(err) {
-                            sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            try {
+                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
+                            } catch(err) {
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -263,15 +263,15 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        script {
-                            LAST_STAGE = env.STAGE_NAME
-                        }
                         // Remove docker container used by consumer tool tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        try {
-                            sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
-                        } catch(err) {
-                            sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            try {
+                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
+                            } catch(err) {
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -290,15 +290,15 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        script {
-                            LAST_STAGE = env.STAGE_NAME
-                        }
                         // Remove docker container used by data research tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        try {
-                            sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
-                        } catch(err) {
-                            sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            try {
+                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
+                            } catch(err) {
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -317,15 +317,15 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        script {
-                            LAST_STAGE = env.STAGE_NAME
-                        }
                         // Remove docker container used by paying for college tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        try {
-                            sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
-                        } catch(err) {
-                            sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            try {
+                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
+                            } catch(err) {
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
@@ -344,15 +344,15 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        script {
-                            LAST_STAGE = env.STAGE_NAME
-                        }
                         // Remove docker container used by rules and policy tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        try {
-                            sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
-                        } catch(err) {
-                            sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                        script {
+                            LAST_STAGE = env.STAGE_NAME
+                            try {
+                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
+                            } catch(err) {
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
