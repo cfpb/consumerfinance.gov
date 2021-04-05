@@ -25,7 +25,7 @@ The more common mixin that pages will extend is the [FilterableListMixin](https:
 
 ### CategoryFilterableListMixin
 
-The [CategoryFilterableListMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L199) is an extension of the base `FilterableListMixin` that exposes some new functionality. It modifies how `get_filterable_queryset` operates in that it gets an initial list of pages but limits them to only ones that are assigned a category within a set of initial categories, which is defined as the variable `filterable_categories` on a given page model. We can see this in action with both Newsroom (`NewsroomLandingPage`) and Recent Updates (`ActivityLogPage`) pages.
+The [CategoryFilterableMixin](https://github.com/cfpb/consumerfinance.gov/blob/main/cfgov/v1/models/filterable_list_mixins.py#L199) is an extension of the base `FilterableListMixin` that exposes some new functionality. It modifies how `get_filterable_queryset` operates in that it gets an initial list of pages but limits them to only ones that are assigned a category within a set of initial categories, which is defined as the variable `filterable_categories` on a given page model. We can see this in action with both Newsroom (`NewsroomLandingPage`) and Recent Updates (`ActivityLogPage`) pages.
 
 ### Forms
 
