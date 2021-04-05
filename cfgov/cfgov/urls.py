@@ -146,9 +146,6 @@ urlpatterns = [
 
     re_path(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
-    re_path(r'^fair-lending/$', TemplateView.as_view(
-        template_name='fair-lending/index.html'),
-        name='fair-lending'),
 
     re_path(r'^parents/(?P<path>.*)$', RedirectView.as_view(
         url='/money-as-you-grow/%(path)s', permanent=True)),
