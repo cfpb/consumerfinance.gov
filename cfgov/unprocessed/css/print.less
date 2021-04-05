@@ -100,6 +100,11 @@
         }
     }
 
+    .m-list__links .m-list_item {
+        // Space out stand-alone links by .5em
+        margin-bottom: unit( 8px / @base-font-size-px, em );
+    }
+
     .o-info-unit-group {
         .content-l_col-1-2,
         .content-l_col-1-3,
@@ -141,9 +146,9 @@
         &_visual {
             height: 100%;
             overflow: hidden;
-            padding-right: 0    ;
-            padding-bottom: 0   ;
-            padding-left: 0 ;
+            padding-right: 0;
+            padding-bottom: 0;
+            padding-left: 0;
             position: absolute;
             top: 0;
             right: 0;
