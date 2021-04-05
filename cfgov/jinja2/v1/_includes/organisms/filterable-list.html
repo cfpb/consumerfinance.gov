@@ -46,7 +46,7 @@
 
 {% if not has_unfiltered_results and value.no_posts_message %}
     {{ notification.render(
-        'default',
+        'information',
         true,
         value.no_posts_message,
         value.no_posts_explanation
@@ -159,7 +159,7 @@
                                     ] %}
                                 {% endif %}
 
-                                {{ info_unit( 
+                                {{ info_unit(
                                     {
                                         'image': {
                                             'upload': post.preview_image,

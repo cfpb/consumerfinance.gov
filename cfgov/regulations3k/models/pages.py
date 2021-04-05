@@ -19,6 +19,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.core.fields import StreamField
 from wagtail.core.models import PageManager
+from wagtailsharing.models import ShareableRoutablePageMixin
 
 import requests
 from jinja2 import Markup
@@ -27,6 +28,7 @@ from regdown import regdown
 from ask_cfpb.models.pages import SecondaryNavigationJSMixin
 from regulations3k.blocks import RegulationsListingFullWidthText
 from regulations3k.documents import SectionParagraphDocument
+from regulations3k.forms import SearchForm
 from regulations3k.models import Part, Section, label_re_str
 from regulations3k.resolver import get_contents_resolver, get_url_resolver
 from v1.atomic_elements import molecules, organisms
@@ -61,20 +63,29 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
         all_regs = Part.objects.order_by('part_number')
         regs = validate_regs_list(request)
         order = validate_order(request)
-        search_query = request.GET.get('q', '').strip()
+
         payload = {
-            'search_query': search_query,
+            'search_query': '',
             'results': [],
             'total_results': 0,
             'regs': regs,
             'all_regs': [],
         }
-        if not search_query or len(urllib.parse.unquote(search_query)) == 1:
+
+        search_form = SearchForm(request.GET)
+        if (
+            not search_form.is_valid() or
+            len(urllib.parse.unquote(search_form.cleaned_data['q'])) == 1
+        ):
             self.results = payload
             return TemplateResponse(
                 request,
                 self.get_template(request),
                 self.get_context(request))
+
+        search_query = search_form.cleaned_data['q']
+        payload['search_query'] = search_query
+
         search = SectionParagraphDocument.search().query(
             'match', text={"query": search_query, "operator": "AND"})
         search = search.highlight(
@@ -142,7 +153,7 @@ class RegulationsSearchPage(RoutablePageMixin, CFGOVPage):
             context)
 
 
-class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
+class RegulationLandingPage(ShareableRoutablePageMixin, CFGOVPage):
     """Landing page for eregs."""
 
     header = StreamField([
@@ -171,7 +182,7 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
     template = 'regulations3k/landing-page.html'
 
     def get_context(self, request, *args, **kwargs):
-        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
         context.update({
             'get_secondary_nav_items': get_secondary_nav_items,
         })
@@ -197,7 +208,9 @@ class RegulationLandingPage(RoutablePageMixin, CFGOVPage):
         return JsonResponse(response.json())
 
 
-class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
+class RegulationPage(
+    ShareableRoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage
+):
     """A routable page for serving an eregulations page by Section ID."""
 
     objects = PageManager()
@@ -290,9 +303,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         )
 
     def get_context(self, request, *args, **kwargs):
-        context = super(RegulationPage, self).get_context(
-            request, *args, **kwargs
-        )
+        context = super().get_context(request, *args, **kwargs)
         context.update({
             'regulation': self.regulation,
             'current_version': self.get_effective_version(request),
@@ -307,7 +318,7 @@ class RegulationPage(RoutablePageMixin, SecondaryNavigationJSMixin, CFGOVPage):
         return context
 
     def get_breadcrumbs(self, request, section=None, **kwargs):
-        crumbs = super(RegulationPage, self).get_breadcrumbs(request)
+        crumbs = super().get_breadcrumbs(request)
 
         if section is not None:
             crumbs = crumbs + [

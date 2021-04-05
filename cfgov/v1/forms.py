@@ -133,6 +133,12 @@ class FilterableListForm(forms.Form):
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
+    def get_order_by(self):
+        if self.wagtail_block is not None:
+            return self.wagtail_block.value.get('order_by', '-date_published')
+        else:
+            return '-date_published'
+
     def get_page_set(self):
         if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
             categories = self.cleaned_data.get('categories')
@@ -154,7 +160,8 @@ class FilterableListForm(forms.Form):
                 to_date=self.cleaned_data.get('to_date'),
                 from_date=self.cleaned_data.get('from_date'),
                 title=self.cleaned_data.get('title'),
-                archived=self.cleaned_data.get('archived')).search()
+                archived=self.cleaned_data.get('archived'),
+                order_by=self.get_order_by()).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(
@@ -307,6 +314,17 @@ class EnforcementActionsFilterForm(FilterableListForm):
         widget=widgets.CheckboxSelectMultiple()
     )
 
+    products = forms.MultipleChoiceField(
+        required=False,
+        choices=enforcement_action_page.enforcement_products,
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_products',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for products',
+            'multiple': 'multiple',
+        })
+    )
+
     def get_page_set(self):
         if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
             return EnforcementActionFilterablePagesDocumentSearch(
@@ -317,7 +335,8 @@ class EnforcementActionsFilterForm(FilterableListForm):
                 to_date=self.cleaned_data.get('to_date'),
                 from_date=self.cleaned_data.get('from_date'),
                 title=self.cleaned_data.get('title'),
-                statuses=self.cleaned_data.get('statuses')).search()
+                statuses=self.cleaned_data.get('statuses'),
+                products=self.cleaned_data.get('products')).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(
@@ -334,6 +353,7 @@ class EnforcementActionsFilterForm(FilterableListForm):
             'authors__slug__in',         # authors
             'is_archived__in',           # archived
             'statuses__status__in',      # statuses
+            'products__product__in',     # products
         ]
 
 
@@ -348,7 +368,8 @@ class EventArchiveFilterForm(FilterableListForm):
                 authors=self.cleaned_data.get('authors'),
                 to_date=self.cleaned_data.get('to_date'),
                 from_date=self.cleaned_data.get('from_date'),
-                title=self.cleaned_data.get('title')).search()
+                title=self.cleaned_data.get('title'),
+                order_by=self.get_order_by()).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(

@@ -11,7 +11,7 @@
 @import (reference) "cfpb-forms.less";
 @import (reference) "cfpb-grid.less";
 @import (reference) "cfpb-icons.less";
-@import (reference) "cfpb-layout.less";
+@import (less) "cfpb-layout.less";
 @import (reference) "cfpb-typography.less";
 
 // Import the brand color palette.
@@ -51,3 +51,10 @@
 @import (less) "college-costs/search.less";
 @import (less) "college-costs/state-based.less";
 @import (less) "quiz.less";
+
+// Import legacy styles.
+@import (less) "guides.css";
+
+.respond-to-print( {
+    @import (less) "print.css";
+} );
