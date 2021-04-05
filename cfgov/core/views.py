@@ -5,9 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
-from django.utils.decorators import method_decorator
 from django.utils.translation import activate, get_language
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
@@ -25,7 +23,6 @@ logger = logging.getLogger(__name__)
 REQUIRED_PARAMS_GOVDELIVERY = ['email', 'code']
 
 
-@csrf_exempt
 @require_http_methods(['POST'])
 def govdelivery_subscribe(request):
     """
@@ -71,7 +68,6 @@ REQUIRED_PARAMS_REGSGOV = [
 ]
 
 
-@csrf_exempt
 @require_http_methods(['POST'])
 def regsgov_comment(request):
     """
@@ -143,7 +139,6 @@ class ExternalURLNoticeView(FormMixin, TemplateView):
     template_name = 'external-site/index.html'
     form_class = ExternalURLForm
 
-    @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
         return super(ExternalURLNoticeView, self).dispatch(*args, **kwargs)
 
