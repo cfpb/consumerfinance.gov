@@ -77,7 +77,7 @@
         // These pseudo-classes are needed to guarantee specificity
         &:link,
         &:visited {
-            // Replace Design System button and stand-alone link stylings with some generic styling
+            // Replace Design System button link stylings with some generic styling
             all: unset;
             border-bottom: 1px dotted @link-underline;
             color: @link-text;
@@ -92,9 +92,11 @@
         // These pseudo-classes are needed to guarantee specificity
         &:link,
         &:visited {
-            border: 0;
+            // Convert stand-alone (jump) links to standard inline links
+            border-top: 0;
+            display: inline;
             padding-top: unit( 5px / @base-font-size-px, em );
-            padding-bottom: unit( 5px / @base-font-size-px, em );
+            padding-bottom: 0;
         }
     }
 
