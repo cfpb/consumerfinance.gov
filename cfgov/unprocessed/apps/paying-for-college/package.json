@@ -15,6 +15,7 @@
   "license": "SEE LICENSE IN TERMS.md",
   "dependencies": {
     "format-usd": "1.0.1",
-    "jquery": "3.5.1"
+    "jquery": "3.5.1",
+    "student-debt-calc": "2.6.5"
   }
 }

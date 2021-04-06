@@ -1,5 +1,5 @@
-{% extends "front/base_update.html" %}
-{% load staticfiles %}
+{% extends "base.html" %}
+
 {% block title %}
     Understanding your financial aid offer | Consumer Financial Protection Bureau
 {% endblock %}
@@ -24,7 +24,7 @@
 {% endblock %}
 {% block app_css %}
 <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="{% static 'apps/paying-for-college/css/main.css' %}">
+    <link rel="stylesheet" href="{{ static('apps/paying-for-college/css/main.css') }}">
 <!--<![endif]-->
 
 
@@ -41,36 +41,32 @@
         <div class="wrapper content_wrapper">
             <section class="about-this-tool content_main
             content_main__narrow">
-                <div class="content_intro">
-                    <div class="content-l">
-                        <section class="content-l_col block block_section"> <h1>
-                                About the &ldquo;Understanding Your Financial
-                                Aid Offer&rdquo; tool
-                            </h1>
-                            <p>
-                                This page describes how our &ldquo;Understanding
-                                Your Financial Aid Offer&rdquo; tool works. It
-                                includes:
-                            </p>
-                            <ul class="list list__spaced">
-                                <li class="list_item">
-                                    Where the data comes from
-                                </li>
-                                <li class="list_item">
-                                    Explanations of the calculations
-                                </li>
-                                <li class="list_item">
-                                    Definitions of financial aid terms
-                                </li>
-                                <li class="list_item">
-                                    Links to resources to learn more about
-                                    related topics
-                                </li>
-                            </ul>
-                        </section>
-                    </div>
-                </div>
-                <section class="block block_section block_section__h2">
+                <section class="block block__flush-top"> <h1>
+                        About the &ldquo;Understanding Your Financial
+                        Aid Offer&rdquo; tool
+                    </h1>
+                    <p>
+                        This page describes how our &ldquo;Understanding
+                        Your Financial Aid Offer&rdquo; tool works. It
+                        includes:
+                    </p>
+                    <ul class="list list__spaced">
+                        <li class="list_item">
+                            Where the data comes from
+                        </li>
+                        <li class="list_item">
+                            Explanations of the calculations
+                        </li>
+                        <li class="list_item">
+                            Definitions of financial aid terms
+                        </li>
+                        <li class="list_item">
+                            Links to resources to learn more about
+                            related topics
+                        </li>
+                    </ul>
+                </section>
+                <section class="block">
                     <h2>
                         Using the tool
                     </h2>
@@ -102,7 +98,7 @@
                         office.
                     </p>
                 </section>
-                <section class="block block_section block_section__h2">
+                <section class="block">
                     <h2 id="assumptions">
                         Assumptions for calculations
                     </h2>
@@ -183,7 +179,7 @@
                         your projected monthly student loan payment.
                     </p>
                 </section>
-                <section class="block block_section block_section__h2">
+                <section class="block">
                     <h2>
                         Step 1 Reviewing your first-year offer
                     </h2>
@@ -675,7 +671,7 @@
                         Your individual circumstances may be different.
                     </p>
                 </section>
-                <section class="block block_section block_section__h2">
+                <section class="block">
                     <h2>
                         Step 2  Weighing the financial impact of your offer
                     </h2>
@@ -996,7 +992,7 @@
                         College Navigator</a>.
                     </p>
                 </section>
-                <section class="block block_section block_section__h2">
+                <section class="block">
                     <h2>
                         Step 3 Consider your options
                     </h2>
@@ -1096,9 +1092,17 @@
 
 {% endblock %}
 
-{% block share_box %}
-{% endblock %}
-
-{% block page_js %}
-<script src="{% static 'apps/paying-for-college/js/disclosure-main.js' %}"></script>
-{% endblock %}
+{% block javascript scoped %}
+{{ super() }}
+<script async>
+  if (document.body.parentElement.className.indexOf('no-js') === -1) {
+    !function () {
+      {# Include site - wide JavaScript. #}
+      var s = [
+            '{{ static('apps/paying-for-college/js/disclosures/index.js') }}'
+          ];
+      jsl(s);
+    }()
+  }
+</script>
+{% endblock javascript %}

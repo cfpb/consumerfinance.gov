@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+extend@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
+  integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
+
 format-usd@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/format-usd/-/format-usd-1.0.1.tgz#b5f80cf8d9eab5cf5f94135aa7cee272be5d705c"
@@ -11,3 +16,10 @@ jquery@3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
   integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+
+student-debt-calc@2.6.5:
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/student-debt-calc/-/student-debt-calc-2.6.5.tgz#de7260730a05706698bbc0dbd38622a546504d2f"
+  integrity sha512-j38faFRVP79RWHXfNE7kvWIKDQRhu3vrXmlV7L/SIuyARG+zPnvNja4Cg0+xvo3ZH3lQewKjWGUvbMmUitihyw==
+  dependencies:
+    extend "3.0.2"

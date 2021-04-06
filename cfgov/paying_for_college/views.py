@@ -119,7 +119,7 @@ class OfferView(TemplateView):
         warning = ''
         OID = ''
         if not request.GET:
-            return render(request, 'paying_for_college/disclosure.html', {
+            return render(request, 'paying-for-college/disclosure.html', {
                 'data_js': "0",
                 'school': school,
                 'schoolData': school_data,
@@ -162,7 +162,7 @@ class OfferView(TemplateView):
                 warning = IPED_ERROR
         else:
             warning = IPED_ERROR
-        return render(request, 'paying_for_college/disclosure.html', {
+        return render(request, 'paying-for-college/disclosure.html', {
             'data_js': "0",
             'school': school,
             'schoolData': school_data,
