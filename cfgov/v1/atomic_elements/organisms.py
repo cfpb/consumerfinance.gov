@@ -644,6 +644,23 @@ class SimpleChart(blocks.StructBlock):
         help_text='General chart information'
     )
 
+    def get_context(self, value, parent_context=None):
+        context = super(SimpleChart, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        request = context['request']
+        if hasattr(request, 'served_by_wagtail_sharing'):
+            shared = request.served_by_wagtail_sharing
+        else:
+            shared = False
+
+        context.update({
+            'served_by_wagtail_sharing': shared,
+        })
+        return context
+
     class Meta:
         label = 'Simple Chart'
         icon = 'image'
