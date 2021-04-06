@@ -170,7 +170,6 @@ class FilterablePagesDocumentSearch:
         if not self.title:
             return search.sort('-date_published')[0:total_results]
         else:
-            print(search.to_dict())
             return search.sort(self.order_by)[0:total_results]
 
     def has_dates(self):
