@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-06 14:42-0400\n"
+"POT-Creation-Date: 2021-04-06 14:51-0400\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -394,6 +394,13 @@ msgstr "Palabra a buscar"
 msgid "Search our full library of answers"
 msgstr "Buscar en toda la lista de respuestas"
 
+#: jinja2/v1/blog/blog_page.html:29
+#, python-format
+msgid ""
+"Join the conversation. Follow CFPB on %(twitter_link)s and %(facebook_link)s."
+msgstr ""
+"Únase a la conversación. Síganos en %(twitter_link)s y en %(facebook_link)s."
+
 #: jobmanager/jinja2/jobmanager/job_listing_page.html:76
 msgid "Read full description"
 msgstr "Leer descripción completa"
@@ -596,6 +603,13 @@ msgstr ""
 
 #: v1/tests/management/commands/test_makemessages_data/__init__.py:4
 msgid "Test string from Python file."
+msgstr ""
+
+#: v1/tests/management/commands/test_makemessages_data/jinja2/test.html:1
+msgid ""
+"\n"
+"Test string from Jinja template.\n"
+"This is in a multi-line block.\n"
 msgstr ""
 
 #: v1/tests/management/commands/test_makemessages_data/templates/test.html:2
@@ -1522,14 +1536,6 @@ msgstr "Jubilado"
 
 #~ msgid "Next featured content item"
 #~ msgstr "Siguiente ítem destacado"
-
-#, python-format
-#~ msgid ""
-#~ "Join the conversation. Follow CFPB on %(twitter_link)s and "
-#~ "%(facebook_link)s."
-#~ msgstr ""
-#~ "Únase a la conversación. Síganos en %(twitter_link)s y en "
-#~ "%(facebook_link)s."
 
 #~ msgid "Get a grip on debt."
 #~ msgstr "Tome control de sus deudas."
