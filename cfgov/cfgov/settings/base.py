@@ -141,7 +141,7 @@ MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "core.middleware.ParseLinksMiddleware",
@@ -730,8 +730,6 @@ FLAGS = {
     "BETA_EXTERNAL_TESTING": [],
     # Used to hide new youth employment success pages prior to public launch
     "YOUTH_EMPLOYMENT_SUCCESS": [],
-    # Used to hide CCDB landing page updates prior to public launch
-    "CCDB_CONTENT_UPDATES": [],
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     "COLLECT_OUTAGE": [
@@ -876,3 +874,15 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
 REST_FRAMEWORK = {
     "COERCE_DECIMAL_TO_STRING": False
 }
+
+# We require CSRF only on authenticated paths. This setting is handled by our
+# core.middleware.PathBasedCsrfViewMiddleware.
+#
+# Any paths listed here that are public-facing will receive an "
+# "Edge-Control: no-store" header from our
+# core.middleware.DownstreamCacheControlMiddleware and will not be cached.
+CSRF_REQUIRED_PATHS = (
+    "/login",
+    "/admin",
+    "/django-admin",
+)
