@@ -63,4 +63,4 @@ The expanded search for filterable lists is using a [multi-match query](https://
 
 #### EnforcementActionsFilterableListForm
 
-`EnforcementActionsFilterableListForm` is an extension of `FilterablePagesDocumentSearch` that exposes some additional filter logic through the `apply_specific_filters` function. We also see that `filter_date` and `order_results` have been overwritten to leverage an Enforcement Action-specific field, initial filing date.
+`EnforcementActionsFilterForm` is an extension of `FilterablePagesDocumentSearch` that exposes some additional filter logic through the `apply_specific_filters` function. We also see that `filter_date` and `order_results` have been overwritten to leverage an Enforcement Action-specific field, initial filing date.
