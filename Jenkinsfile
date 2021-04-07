@@ -21,7 +21,7 @@ pipeline {
         // Docker Repository used by functional tests
         CYPRESS_REPO = 'cypress/base:centos7-12.4.0'
         IMAGE_REPO = 'cfpb/cfgov-python'
-        IMAGE_CYPRESS_REPO = 'cfpb/cfgov-cypress'
+        IMAGE_CYPRESS_REPO = 'cfpb/cypress'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
