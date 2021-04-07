@@ -212,8 +212,6 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        // Remove docker container used by admin tests
-                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
@@ -231,6 +229,9 @@ pipeline {
                     agent {
                         label 'docker'
                     }
+                    options {
+                        timeout(time: 20, unit: 'MINUTES')
+                    }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
@@ -238,8 +239,6 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        // Remove docker container used by component tests
-                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
@@ -247,7 +246,7 @@ pipeline {
                             } finally {
                                 // Free docker resources used by component tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
+                                sh "echo Error running ${DOCKER_NAME} docker container"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -267,8 +266,6 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        // Remove docker container used by consumer tool tests
-                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
@@ -276,7 +273,7 @@ pipeline {
                             } finally {
                                 // Free docker resources used by consumer tool tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
+                                sh "echo Error running ${DOCKER_NAME} docker container"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -296,8 +293,6 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        // Remove docker container used by data research tests
-                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
@@ -305,7 +300,7 @@ pipeline {
                             } finally {
                                 // Free docker resourcesused by data research tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
+                                sh "echo Error running ${DOCKER_NAME} docker container"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -325,8 +320,6 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        // Remove docker container used by paying for college tests
-                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
@@ -334,7 +327,7 @@ pipeline {
                             } finally {
                                 // Free docker resources used by paying for college tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
+                                sh "echo Error running ${DOCKER_NAME} docker container"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -354,8 +347,6 @@ pipeline {
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
-                        // Remove docker container used by rules and policy tests
-                        sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
@@ -363,7 +354,7 @@ pipeline {
                             } finally {
                                 // Free docker resources used by rules and policy tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
+                                sh "echo Error running ${DOCKER_NAME} docker container"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
