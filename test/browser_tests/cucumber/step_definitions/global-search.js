@@ -123,8 +123,8 @@ Then( 'I should navigate to search portal',
 
     return expect( browser.getCurrentUrl().then( url => {
       url.substring( 0, url.lastIndexOf( '&' ) )
-      .to.eventually
-      .equal( portalUrl );
+        .to.eventually
+        .equal( portalUrl );
     } ) );
   }
 );
