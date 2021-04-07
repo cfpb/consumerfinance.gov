@@ -194,7 +194,7 @@ pipeline {
                 // Environment for running functional tests
                 CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
                 // Command line options to run functional tests
-                CYPRESS_OPTIONS = "${CYPRESS_ENV} ${CYPRESS_SHM} ${IMAGE_CYPRESS_REPO} ${CYPRESS_CMD}"
+                CYPRESS_OPTIONS = "${CYPRESS_ENV} ${CYPRESS_SHM} ${IMAGE_CYPRESS_REPO}:${IMAGE_TAG} ${CYPRESS_CMD}"
                 HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
             }
             parallel {
