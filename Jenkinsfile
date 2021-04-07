@@ -218,8 +218,10 @@ pipeline {
                             LAST_STAGE = env.STAGE_NAME
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
-                            } catch(err) {
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            } finally {
+                                // Free docker resources used by admin tests
+                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -243,8 +245,8 @@ pipeline {
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
                             } finally {
-                                // Free docker resources
-                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                // Free docker resources used by component tests
+                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -272,8 +274,8 @@ pipeline {
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
                             } finally {
-                                // Free docker resources
-                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                // Free docker resources used by consumer tool tests
+                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -301,8 +303,8 @@ pipeline {
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
                             } finally {
-                                // Free docker resources
-                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                // Free docker resourcesused by data research tests
+                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -330,8 +332,8 @@ pipeline {
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
                             } finally {
-                                // Free docker resources
-                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                // Free docker resources used by paying for college tests
+                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -359,8 +361,8 @@ pipeline {
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                             } finally {
-                                // Free docker resources
-                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                // Free docker resources used by rules and policy tests
+                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
