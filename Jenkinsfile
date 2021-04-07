@@ -194,7 +194,7 @@ pipeline {
                 // Environment for running functional tests
                 CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
                 // Command line options to run functional tests
-                CYPRESS_OPTIONS = "${CYPRESS_ENV} ${CYPRESS_SHM} ${CYPRESS_REPO} ${CYPRESS_CMD}"
+                CYPRESS_OPTIONS = "${CYPRESS_ENV} ${CYPRESS_SHM} ${IMAGE_CYPRESS_REPO} ${CYPRESS_CMD}"
                 HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
             }
             parallel {
@@ -220,7 +220,7 @@ pipeline {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
                             } finally {
                                 // Free docker resources used by admin tests
-                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
+                                sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -246,7 +246,7 @@ pipeline {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
                             } finally {
                                 // Free docker resources used by component tests
-                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
+                                sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -275,7 +275,7 @@ pipeline {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
                             } finally {
                                 // Free docker resources used by consumer tool tests
-                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
+                                sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -304,7 +304,7 @@ pipeline {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
                             } finally {
                                 // Free docker resourcesused by data research tests
-                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
+                                sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -333,7 +333,7 @@ pipeline {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
                             } finally {
                                 // Free docker resources used by paying for college tests
-                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
+                                sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
@@ -362,7 +362,7 @@ pipeline {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                             } finally {
                                 // Free docker resources used by rules and policy tests
-                                sh '''docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})'''
+                                sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
                                 sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
