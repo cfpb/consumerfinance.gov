@@ -1,4 +1,20 @@
+/* eslint camelcase: [0] */
+const ccpi_quarterMap = {
+  'Mar 31': 'Q1: Jan-Mar',
+  'Jun 30': 'Q2: Apr-Jun',
+  'Sep 30': 'Q3: Jul-Sep',
+  'Dec 31': 'Q4: Oct-Dec'
+};
 const hooks = {
+  filter( data, filterProp, filterVal ) {
+    if ( !filterVal ) return data;
+    return data.filter( d => {
+      const match = d[filterProp];
+      if ( Array.isArray( match ) ) return match.indexOf( filterVal ) >= 0;
+      return match === filterVal;
+    } );
+  },
+  // Example transform
   monotonicY( data ) {
     return data.map( ( item, i ) => ( {
       ...item,
@@ -6,33 +22,14 @@ const hooks = {
     } ) );
   },
 
-  enforcement_barCount( data ) {
-    const years = {};
-    data.forEach( d => {
-      const year = new Date( d.x ).getFullYear();
-      if ( years[year] ) years[year]++;
-      else years[year] = 1;
-    } );
-    return Object.keys( years )
-      .sort()
-      .map( k => ( { name: k, y: years[k] } ) );
-  },
-
-  enforcement_reliefCount( data ) {
-    const years = {};
-    data.forEach( d => {
-      const year = new Date( d.x ).getFullYear();
-      const relief = Number( d.relief.replace( /[,\.]/g, '' ) ) / 100;
-      if ( years[year] ) years[year] += relief;
-      else years[year] = relief;
-    } );
-    return Object.keys( years )
-      .sort()
-      .map( k => ( { name: k, y: years[k] } ) );
-  },
-
-  enforcement_barCategories( data ) {
-    return data.map( d => d.name );
+  ccpi_quarterLabels() {
+    const { x, y, series } = this;
+    const d = new Date( x ).toLocaleString(
+      'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
+    ).split( ', ' );
+    const quarter = ccpi_quarterMap[d[0]];
+    const year = d[1];
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Percentile: ${ Math.round( y ) }`;
   },
 
   enforcement_yAxisLabelsFormatter() {

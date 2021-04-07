@@ -1,6 +1,10 @@
 {% extends "front/base_update.html" %}
 {% load staticfiles %}
-{% block title %}Understanding your financial aid offer{% endblock %}
+
+{% block title %}
+    Understanding your financial aid offer | Consumer Financial Protection Bureau
+{% endblock %}
+
 {% block page_meta %}
 <meta charset="UTF-8" />
 <meta property="og:title" content="{{ page.title }} &gt; Consumer Financial Protection Bureau"/>
@@ -98,7 +102,6 @@
                             before reviewing your offer.
                         </h2>
                         <form class="verify_form">
-                          {% csrf_token %}
                             <div class="verify_school">
                                 {{school.primary_alias}}
                             </div>
@@ -3336,5 +3339,5 @@
 {% endblock %}
 
 {% block app_js %}
-<script src="{% static 'paying_for_college/js/main.js' %}"></script>
+<script src="{% static 'apps/paying-for-college/js/disclosure-main.js' %}"></script>
 {% endblock %}

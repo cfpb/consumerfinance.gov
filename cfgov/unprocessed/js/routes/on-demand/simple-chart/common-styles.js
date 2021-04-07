@@ -1,23 +1,45 @@
 const styles = {
   accessibility: {},
   chart: {
+    height: 500,
     style: {
       fontFamily: '"Avenir Next", Arial, sans-serif',
       fontSize: '16px',
       color: '#5a5d61',
       lineHeight: 1.375
+    },
+    events: {
+      render: function() {
+        const zoomText = this.container.querySelector( '.highcharts-range-selector-buttons > text' );
+        if ( zoomText && zoomText.textContent !== 'Select time range' ) zoomText.textContent = 'Select time range';
+      }
     }
   },
   credits: false,
-  colors: [ '#20aa3f' ],
-  legend: {
-    enabled: false
-  },
+  // CFPB Green, Navy, Pacific 60, Gold 80, Purple 80
+  colors: [ '#20aa3f', '#254b87', '#7eb7e8', '#ffb858', '#c55998' ],
   scrollbar: {
     enabled: false
   },
+  legend: {
+    enabled: false,
+    symbolWidth: 45,
+    floating: true,
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'top',
+    itemMarginBottom: 4,
+    itemStyle: {
+      color: '#5a5d61',
+      fontFamily: '"AvenirNextLTW01-Regular", Arial, sans-serif',
+      fontSize: 16
+    }
+  },
   plotOptions: {
     series: {
+      animation: {
+        duration: 500
+      },
       states: {
         hover: {
           enabled: false
@@ -31,7 +53,7 @@ const styles = {
     distance: 15,
     padding: 15,
     shadow: { color: '#b4b5b6', opacity: 0.2 },
-    shared: true,
+    shared: false,
     split: false,
     style: {
       pointerEvents: 'auto',
@@ -40,7 +62,11 @@ const styles = {
     useHTML: true
   },
   xAxis: {
-    lineColor: '#d2d3d5'
+    lineColor: '#d2d3d5',
+    minRange: 3 * 30 * 24 * 3600 * 1000,
+    title: {
+      margin: 10
+    }
   },
   yAxis: {
     title: {
@@ -70,13 +96,7 @@ const styles = {
         },
         chartOptions: {
           chart: {
-            spacingTop: 40,
             spacingLeft: 0
-          },
-          xAxis: {
-            labels: {
-              step: 2
-            }
           },
           yAxis: {
             title: {

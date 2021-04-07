@@ -1,9 +1,14 @@
+from html import unescape
+
+from django.core.exceptions import FieldDoesNotExist
+from django.utils.html import strip_tags
+
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
+from elasticsearch_dsl.query import MultiMatch
+from flags.state import flag_enabled
 
-from search.elasticsearch_helpers import (
-    environment_specific_index, ngram_tokenizer
-)
+from search.elasticsearch_helpers import environment_specific_index
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.enforcement_action_page import EnforcementActionPage
 from v1.models.learn_page import (
@@ -16,7 +21,8 @@ from v1.models.newsroom_page import LegacyNewsroomPage, NewsroomPage
 class FilterablePagesDocument(Document):
 
     tags = fields.ObjectField(properties={
-        'slug': fields.KeywordField()
+        'slug': fields.KeywordField(),
+        'name': fields.TextField()
     })
     categories = fields.ObjectField(properties={
         'name': fields.KeywordField()
@@ -25,15 +31,19 @@ class FilterablePagesDocument(Document):
         'name': fields.TextField(),
         'slug': fields.KeywordField()
     })
-    title = fields.TextField(attr='title', analyzer=ngram_tokenizer)
+
+    title = fields.TextField(attr='title')
     is_archived = fields.KeywordField(attr='is_archived')
     date_published = fields.DateField(attr='date_published')
     url = fields.KeywordField()
     start_dt = fields.DateField()
     end_dt = fields.DateField()
     statuses = fields.KeywordField()
+    products = fields.KeywordField()
     initial_filing_date = fields.DateField()
     model_class = fields.KeywordField()
+    content = fields.TextField()
+    preview_description = fields.TextField()
 
     def get_queryset(self):
         return AbstractFilterPage.objects.live().public().specific()
@@ -54,11 +64,33 @@ class FilterablePagesDocument(Document):
         else:
             return None
 
+    def prepare_products(self, instance):
+        products = getattr(instance, 'products', None)
+        if products is not None:
+            return [p.product for p in products.all()]
+        else:
+            return None
+
     def prepare_initial_filing_date(self, instance):
         return getattr(instance, 'initial_filing_date', None)
 
     def prepare_model_class(self, instance):
         return instance.__class__.__name__
+
+    def prepare_content(self, instance):
+        try:
+            content_field = instance._meta.get_field('content')
+            value = content_field.value_from_object(instance)
+            content = content_field.get_searchable_content(value)
+            content = content.pop()
+            return content
+        except FieldDoesNotExist:
+            return None
+        except IndexError:
+            return None
+
+    def prepare_preview_description(self, instance):
+        return unescape(strip_tags(instance.preview_description))
 
     def get_instances_from_related(self, related_instance):
         # Related instances all inherit from AbstractFilterPage.
@@ -80,6 +112,7 @@ class FilterablePagesDocument(Document):
 
     class Index:
         name = environment_specific_index('filterable-pages')
+        settings = {'index.max_ngram_diff': 23}
 
 
 class FilterablePagesDocumentSearch:
@@ -87,7 +120,7 @@ class FilterablePagesDocumentSearch:
     def __init__(self,
                  prefix='/', topics=[], categories=[],
                  authors=[], to_date=None, from_date=None,
-                 title='', archived=None):
+                 title='', archived=None, order_by='-date_published'):
         self.prefix = prefix
         self.topics = topics
         self.categories = categories
@@ -96,6 +129,7 @@ class FilterablePagesDocumentSearch:
         self.from_date = from_date
         self.title = title
         self.archived = archived
+        self.order_by = order_by
 
     def filter_topics(self, search):
         return search.filter("terms", tags__slug=self.topics)
@@ -116,13 +150,27 @@ class FilterablePagesDocumentSearch:
         return search.filter("terms", is_archived=self.archived)
 
     def search_title(self, search):
-        return search.query(
-            "match", title={"query": self.title, "operator": "AND"}
-        )
+        if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
+            query = MultiMatch(
+                query=self.title,
+                fields=['title^10', 'tags.name^10', 'content', 'preview_description'],  # noqa: E501
+                type="phrase_prefix",
+                slop=2)
+            return search.query(query)
+        else:
+            return search.query(
+                "match", title={"query": self.title, "operator": "AND"}
+            )
 
     def order_results(self, search):
         total_results = search.count()
-        return search.sort('-date_published')[0:total_results]
+        # Marching on title is the only time we see an actual
+        # impact on scoring, so we should only look to alter the order
+        # if there is a title provided as part of the search.
+        if not self.title:
+            return search.sort('-date_published')[0:total_results]
+        else:
+            return search.sort(self.order_by)[0:total_results]
 
     def has_dates(self):
         return self.to_date is not None and self.from_date is not None
@@ -168,6 +216,7 @@ class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSear
 
     def __init__(self, **kwargs):
         self.statuses = kwargs.pop('statuses')
+        self.products = kwargs.pop('products')
         super().__init__(**kwargs)
 
     def filter_date(self, search):
@@ -179,7 +228,9 @@ class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSear
     def apply_specific_filters(self, search):
         search = search.filter("term", model_class="EnforcementActionPage")
         if self.statuses != []:
-            return search.filter("terms", statuses=self.statuses)
+            search = search.filter("terms", statuses=self.statuses)
+        if self.products != []:
+            search = search.filter("terms", products=self.products)
 
         return search
 

@@ -23,18 +23,20 @@
     {% endif %}
 
     {% if value.title %}
-    <h2>{{ value.title }}</h2>
+    <h2 class="o-simple-chart_title">{{ value.title }}</h2>
     {% endif %}
 
     {% if value.subtitle %}
-    <p>{{ value.subtitle }}</p>
+    <p class="o-simple-chart_subtitle">{{ value.subtitle }}</p>
     {% endif %}
 
-    <div data-title="{{value.title}}" class="chart-selects"></div>
+    <div data-title="{{value.title}}" class="o-simple-chart_selects"></div>
 
-    <div class="simple-chart-target"
+    <div class="o-simple-chart_target"
          data-chart-type="{{ value.chart_type }}"
          data-source='{{ value.data_source }}'
+         data-series='{{ value.data_series }}'
+         data-x-axis-data='{{ value.x_axis_data }}'
          data-description="{{ value.description }}"
          data-y-axis-label="{{ value.y_axis_label }}"
          {% if value.x_axis_label %}
