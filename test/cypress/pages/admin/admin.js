@@ -221,13 +221,13 @@ export class AdminPage {
   getTableModal() {
     // Retry while element css has the "display: none" property
     cy.get( '.table-block-modal', { timeout: 60000 } )
-      .should('not.have.css', 'display', 'none')
+      .should( 'not.have.css', 'display', 'none' )
       .as( 'tableModal' );
   }
 
   selectFirstTableCell() {
     cy.get( '.htCore td' ).first().as( 'firstTableCell' );
-    cy.get( '@firstTableCell' ).click( {force: true} ).click( {force: true} );
+    cy.get( '@firstTableCell' ).click( { force: true } ).click( { force: true } );
     this.getTableModal();
   }
 
@@ -241,7 +241,7 @@ export class AdminPage {
   }
 
   closeTableEditor() {
-    cy.get( '#close-table-block-modal-btn' ).click( {force: true} );
+    cy.get( '#close-table-block-modal-btn' ).click( { force: true } );
   }
 
   saveTableEditor() {
