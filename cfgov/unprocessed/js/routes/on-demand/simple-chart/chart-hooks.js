@@ -1,9 +1,9 @@
 /* eslint camelcase: [0] */
 const ccpi_quarterMap = {
-  'Mar 31': 'Q1',
-  'Jun 30': 'Q2',
-  'Sep 30': 'Q3',
-  'Dec 31': 'Q4'
+  'Mar 31': 'Q1: Jan-Mar',
+  'Jun 30': 'Q2: Apr-Jun',
+  'Sep 30': 'Q3: Jul-Sep',
+  'Dec 31': 'Q4: Oct-Dec'
 };
 const hooks = {
   filter( data, filterProp, filterVal ) {
@@ -29,7 +29,7 @@ const hooks = {
     ).split( ', ' );
     const quarter = ccpi_quarterMap[d[0]];
     const year = d[1];
-    return `<b>${ series.name }</b><br/><b>${ quarter } ${ year }</b><br/>Percentile: <b>${ y }</b>`;
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Percentile: ${ Math.round( y ) }`;
   },
 
   enforcement_yAxisLabelsFormatter() {
