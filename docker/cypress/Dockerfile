@@ -31,6 +31,10 @@ RUN cd /usr/lib64/python2.7/site-packages/bzrlib/tests/ssl_certs/ && \
     rm -f /etc/pki/tls/private/localhost.key
 
 # Set User to Non Root
-RUN adduser -s /bin/false cypress
-RUN chown -R cypress:cypress ./
+RUN adduser -s /bin/false cypress && \
+    mv /root/.cache /home/cypress/.cache && \
+    chown -R cypress:cypress ./ /home/cypress/.cache
+
+ENV CYPRESS_CACHE_FOLDER /home/cypress/.cache/Cypress
+
 USER cypress
