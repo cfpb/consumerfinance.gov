@@ -17,3 +17,8 @@ RUN google-chrome --version
 # Install Cypress
 RUN npm install -D cypress && \
     $(npm bin)/cypress verify
+
+# Set User to Non Root
+RUN adduser -s /bin/false cypress
+RUN chown -R cypress:cypress ./
+USER cypress
