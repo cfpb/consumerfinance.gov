@@ -333,7 +333,7 @@ function getOptions( filter, data, isDate ) {
 function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
   const name = filter.label ? filter.label : filter.key;
   const id = Math.random() + name;
-  const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
+  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_selects' )[0];
 
   const wrapper = document.createElement( 'div' );
   wrapper.className = 'select-wrapper m-form-field m-form-field__select';
@@ -404,7 +404,7 @@ function titleCase( title ) {
  * @returns {object} the built select DOM node
  */
 function makeSelectHeaderDOM( chartNode ) {
-  const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
+  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_selects' )[0];
   const selectHeader = document.createElement( 'h3' );
   selectHeader.innerText = 'Total ' + titleCase( attachPoint.dataset.title );
   attachPoint.appendChild( selectHeader );
@@ -424,7 +424,7 @@ function makeSelectHeaderDOM( chartNode ) {
 function attachFilter(
   selectNode, chartNode, chart, dataset, filter, data, transform
 ) {
-  const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
+  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_selects' )[0];
   const selectHeader = attachPoint.querySelector( 'h3' );
   const { styleOverrides } = dataset;
   const title = titleCase( attachPoint.dataset.title );
@@ -572,7 +572,7 @@ function buildCharts() {
  * @param {object} chartNode The DOM node of the current chart
  */
 function buildChart( chartNode ) {
-  const target = chartNode.getElementsByClassName( 'simple-chart-target' )[0];
+  const target = chartNode.getElementsByClassName( 'o-simple-chart_target' )[0];
   const { source, transform } = target.dataset;
 
   resolveData( source.trim() ).then( raw => {
