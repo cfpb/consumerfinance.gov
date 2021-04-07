@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0253_add_reusable_text_to_legacy_newsroom'),
+        ('v1', '0254_delete_homepagecarouselitem'),
     ]
 
     run_before = [
