@@ -1,6 +1,7 @@
 import re
 
 from django.conf import settings
+from django.middleware.csrf import CsrfViewMiddleware
 from django.shortcuts import redirect
 from django.utils import translation
 from django.utils.encoding import force_str
@@ -20,6 +21,7 @@ class DownstreamCacheControlMiddleware(object):
 
         if 'CSRF_COOKIE_USED' in request.META:
             response['Edge-Control'] = 'no-store'
+
         return response
 
 
@@ -134,3 +136,26 @@ class SelfHealingMiddleware:
             return redirect(path, permanent=True)
 
         return response
+
+
+class PathBasedCsrfViewMiddleware(CsrfViewMiddleware):
+    def process_view(self, request, callback, callback_args, callback_kwargs):
+        csrf_required_paths = getattr(settings, "CSRF_REQUIRED_PATHS", None)
+
+        # If CSRF_REQUIRED_PATHS is not configured, apply the CSRF middleware
+        # to everything. Otherwise only apply it if the request path matches
+        # the configured paths.
+        if (
+            csrf_required_paths is not None and
+            not any(
+                request.path.startswith(path) for path in csrf_required_paths
+            )
+        ):
+            return None
+
+        return super().process_view(
+            request,
+            callback,
+            callback_args,
+            callback_kwargs
+        )

@@ -141,7 +141,7 @@ MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "core.middleware.ParseLinksMiddleware",
@@ -765,7 +765,9 @@ FLAGS = {
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Enable ES as the backend for FilterableLists
-    "ELASTICSEARCH_FILTERABLE_LISTS": []
+    "ELASTICSEARCH_FILTERABLE_LISTS": [],
+    # Expand ES Filterable List Search
+    "EXPAND_FILTERABLE_LIST_SEARCH": [],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
@@ -872,3 +874,15 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
 REST_FRAMEWORK = {
     "COERCE_DECIMAL_TO_STRING": False
 }
+
+# We require CSRF only on authenticated paths. This setting is handled by our
+# core.middleware.PathBasedCsrfViewMiddleware.
+#
+# Any paths listed here that are public-facing will receive an "
+# "Edge-Control: no-store" header from our
+# core.middleware.DownstreamCacheControlMiddleware and will not be cached.
+CSRF_REQUIRED_PATHS = (
+    "/login",
+    "/admin",
+    "/django-admin",
+)

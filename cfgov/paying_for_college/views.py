@@ -175,7 +175,7 @@ class OfferView(TemplateView):
 
 
 class FeedbackView(TemplateView):
-    template_name = "paying_for_college/disclosure_feedback.html"
+    template_name = "paying-for-college/disclosure_feedback.html"
 
     @property
     def form(self):
@@ -199,8 +199,7 @@ class FeedbackView(TemplateView):
             feedback.save()
             return render(
                 request,
-                'paying_for_college/disclosure_feedback_thanks.html',
-                {'base_template': 'front/base_update.html'}
+                'paying-for-college/disclosure_feedback_thanks.html'
             )
         else:
             return HttpResponseBadRequest("Invalid form")
