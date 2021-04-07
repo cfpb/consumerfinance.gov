@@ -27,7 +27,6 @@ from core.views import (
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from legacy.views import token_provider
 from legacy.views.complaint import ComplaintLandingView
 from regulations3k.views import redirect_eregs
 from v1.auth_forms import CFGOVPasswordChangeForm
@@ -332,9 +331,6 @@ urlpatterns = [
     re_path(r'^reports/(?P<path>.*)$', RedirectView.as_view(
         url='/data-research/research-reports/%(path)s',
         permanent=True)),
-
-    # Form csrf token provider for JS form submission
-    re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
 
     # data-research-api
     re_path(
