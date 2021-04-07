@@ -82,7 +82,7 @@ function debtCalculator() {
   const plusLoans = [ 'gradPlus', 'parentPlus' ];
   const publicLoans = [ 'state', 'institutional', 'nonprofit' ];
   const privateLoans = [ 'privateLoan1' ];
-  const allLoans = fedLoans.concat( plusLoans, publicLoans, privateLoans );
+  const newLoans = fedLoans.concat( plusLoans, publicLoans, privateLoans );
   const fin = financialModel.values;
   const debts = {
     totalAtGrad: 0,
@@ -169,12 +169,7 @@ function debtCalculator() {
     interest[key] = int;
   } );
 
-  // calculate existing loan debt
-  const existingLoanRate = getConstantsValue( 'existingDebtRate' );
-  const existingDebtMonthly = calcMonthlyPayment(
-    fin.existingDebt_amount, existingLoanRate, 10 );
-
-  allLoans.forEach( key => {
+  newLoans.forEach( key => {
     interest.totalAtGrad += interest[key];
     debts.totalAtGrad += debts[key];
 
@@ -214,11 +209,33 @@ function debtCalculator() {
 
   } );
 
+  // calculate existing loan debt payments
+  const existingLoanRate = getConstantsValue( 'existingDebtRate' );
+  const existingDebtInterest = calcInterestAtGrad(
+      fin.existingDebt_amount,
+      existingLoanRate,
+      fin.other_programLength );
+
+  if ( isNaN( existingDebtInterest ) ) {
+    existingDebtInterest = 0;
+  }
+  const existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
+
+  const existingDebtMonthly = calcMonthlyPayment(
+    existingDebtTotalAtGrad, existingLoanRate, 10 );
+
+  debts.tenYearMonthly += existingDebtMonthly;
+  debts.tenYearTotal += existingDebtMonthly * 120;
+
+  // Calculate totals
+
   debts.programInterest = interest.totalAtGrad;
   debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad;
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;
   debts.repayWorkWeeks = debts.repayHours / 40;
+
+  debts.fullTotal = debts.tenYearTotal + fin.existingDebt_amount;
 
   fin.total_borrowingAtGrad = totalBorrowing;
   for ( const key in debts ) {
