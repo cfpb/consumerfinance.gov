@@ -1,6 +1,6 @@
 const chai = require( 'chai' );
 const chaiAsPromised = require( 'chai-as-promised' );
-const { Then, When, Before } = require( 'cucumber' );
+const { Then, When, Before } = require( '@cucumber/cucumber' );
 const { expect } = require( 'chai' );
 const { isShould } = require( '../../util/index.js' );
 
@@ -121,9 +121,11 @@ Then( 'I should navigate to search portal',
     await browser.wait( EC.visibilityOf( _dom.searchBtn ) );
     await _dom.searchBtn.click();
 
-    return expect( browser.getCurrentUrl() )
+    return expect( browser.getCurrentUrl().then( url => {
+      url.substring( 0, url.lastIndexOf( '&' ) )
       .to.eventually
       .equal( portalUrl );
+    } ) );
   }
 );
 
