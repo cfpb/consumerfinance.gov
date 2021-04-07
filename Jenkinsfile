@@ -242,8 +242,10 @@ pipeline {
                             LAST_STAGE = env.STAGE_NAME
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
-                            } catch(err) {
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            } finally {
+                                // Free docker resources
+                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -269,8 +271,10 @@ pipeline {
                             LAST_STAGE = env.STAGE_NAME
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
-                            } catch(err) {
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            } finally {
+                                // Free docker resources
+                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -296,8 +300,10 @@ pipeline {
                             LAST_STAGE = env.STAGE_NAME
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
-                            } catch(err) {
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            } finally {
+                                // Free docker resources
+                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -323,8 +329,10 @@ pipeline {
                             LAST_STAGE = env.STAGE_NAME
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
-                            } catch(err) {
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            } finally {
+                                // Free docker resources
+                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -350,8 +358,10 @@ pipeline {
                             LAST_STAGE = env.STAGE_NAME
                             try {
                                 sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
-                            } catch(err) {
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure: ${err}"
+                            } finally {
+                                // Free docker resources
+                                sh "docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME})"
+                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
