@@ -66,7 +66,7 @@ pipeline {
                 sh 'env | sort'
                 // Create docker network used by functional tests
                 sh '''if [ -z "$(docker network ls -q -f name=^cfgov$)" ]; then docker network create cfgov; fi'''
-                // Stop docker containers used by functional tests 
+                // Stop docker containers used by functional tests
                 sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRESS_REPO}); fi'''
                 // Remove docker containers and volumes used by functional tests
                 sh "docker container prune -f"
