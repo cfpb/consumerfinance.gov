@@ -765,7 +765,9 @@ FLAGS = {
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Enable ES as the backend for FilterableLists
-    "ELASTICSEARCH_FILTERABLE_LISTS": []
+    "ELASTICSEARCH_FILTERABLE_LISTS": [],
+    # Expand ES Filterable List Search
+    "EXPAND_FILTERABLE_LIST_SEARCH": [],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
