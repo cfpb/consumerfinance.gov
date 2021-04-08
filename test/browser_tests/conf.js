@@ -250,8 +250,6 @@ const config = {
   cucumberOpts: {
     'require':   'cucumber/step_definitions/**/*.js',
     'tags':      [ '~@mobile', '~@skip', '~@undefined' ],
-    'profile':   false,
-    'no-source': true,
     'fail-fast': true
   },
   afterLaunch:              () => retry.afterLaunch( 1 ),
