@@ -350,7 +350,14 @@ pipeline {
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
-                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
+                                // sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
+                                docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
+                                    image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
+                                    image.pull()
+                                    image.inside("--user cypress --rm ${CYPRESS_VOLUMES} ${CYPRESS_ENV} -w /${env.STAGE_NAME}") {
+                                        sh "${CYPRESS_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
+                                    }
+                                }
                             } finally {
                                 // Free docker resources used by rules and policy tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
