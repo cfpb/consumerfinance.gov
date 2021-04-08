@@ -208,7 +208,7 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
-                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
@@ -219,7 +219,7 @@ pipeline {
                             } finally {
                                 // Free docker resources used by admin tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                                sh "echo Error running ${DOCKER_NAME}, likely due do `docker run` failure"
+                                sh "echo Error running ${DOCKER_NAME} docker container"
                             }
                         }
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
@@ -235,7 +235,7 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
-                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
@@ -262,7 +262,7 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
-                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
@@ -289,7 +289,7 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
-                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
@@ -316,7 +316,7 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
-                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
@@ -333,7 +333,7 @@ pipeline {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
-                stage('rules-policy-tests') {
+                stage(' ') {
                     agent {
                         label 'docker'
                     }
@@ -343,7 +343,7 @@ pipeline {
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
-                        DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
+                        DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
@@ -353,7 +353,7 @@ pipeline {
                                 // sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                                 docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                                     image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
-                                    image.pull()
+                                    // image.pull()
                                     image.inside("--user cypress --rm ${CYPRESS_VOLUMES} ${CYPRESS_ENV} -w /${env.STAGE_NAME}") {
                                         sh "${CYPRESS_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                                     }
