@@ -653,6 +653,7 @@ CSP_CONNECT_SRC = (
     "n2.mouseflow.com",
     "api.iperceptions.com",
     "*.qualtrics.com",
+    "raw.githubusercontent.com",
 )
 
 # These specify valid media sources (e.g., MP3 files)
