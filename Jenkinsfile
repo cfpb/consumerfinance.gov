@@ -337,20 +337,13 @@ pipeline {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
                         DOCKER_NAME = "${env.STACK_NAME}-${env.STAGE_NAME}"
                         DOCKER_CMD = "--user cypress --name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
-                        DOCKER_ARGS = "--user cypress --name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} ${CYPRESS_ENV} -w /${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
-                                // sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
-                                docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
-                                    image = docker.image(env.CYPRESS_IMAGE)
-                                    image.inside("${DOCKER_ARGS}") {
-                                        sh "${CYPRESS_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
-                                    }
-                                }
+                                sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                             } finally {
                                 // Free docker resources used by rules and policy tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
