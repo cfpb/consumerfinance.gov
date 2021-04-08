@@ -207,15 +207,15 @@ pipeline {
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
-                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                         DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
+                        DOCKER_CMD = "--name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
-                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
+                                sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
                             } finally {
                                 // Free docker resources used by admin tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -234,15 +234,15 @@ pipeline {
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
-                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                         DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
+                        DOCKER_CMD = "--name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
-                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
+                                sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
                             } finally {
                                 // Free docker resources used by component tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -261,15 +261,15 @@ pipeline {
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
-                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                         DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
+                        DOCKER_CMD = "--name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
-                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
+                                sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
                             } finally {
                                 // Free docker resources used by consumer tool tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -288,15 +288,15 @@ pipeline {
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
-                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                         DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
+                        DOCKER_CMD = "--name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
-                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
+                                sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
                             } finally {
                                 // Free docker resourcesused by data research tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -315,15 +315,15 @@ pipeline {
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
-                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                         DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
+                        DOCKER_CMD = "--name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
-                                sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
+                                sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
                             } finally {
                                 // Free docker resources used by paying for college tests
                                 sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
@@ -333,7 +333,7 @@ pipeline {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
-                stage(' ') {
+                stage('rules-policy-tests') {
                     agent {
                         label 'docker'
                     }
@@ -342,19 +342,20 @@ pipeline {
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
-                        DOCKER_CMD = "--rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
                         DOCKER_NAME = "${env.STACK_NAME}-${BUILD_NUMBER}-${env.STAGE_NAME}"
+                        DOCKER_CMD = "--name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} -w /${env.STAGE_NAME} ${CYPRESS_OPTIONS}"
+                        DOCKER_ARGS = "--user cypress --name ${DOCKER_NAME} --rm ${CYPRESS_VOLUMES} ${CYPRESS_ENV} -w /${env.STAGE_NAME}"
                     }
                     steps {
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "pending", "Started", env.RUN_DISPLAY_URL)
                         script {
                             LAST_STAGE = env.STAGE_NAME
                             try {
-                                // sh "docker run --name ${DOCKER_NAME} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
+                                // sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                                 docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                                     image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
                                     // image.pull()
-                                    image.inside("--user cypress --rm ${CYPRESS_VOLUMES} ${CYPRESS_ENV} -w /${env.STAGE_NAME}") {
+                                    image.inside("${DOCKER_ARGS}") {
                                         sh "${CYPRESS_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                                     }
                                 }
