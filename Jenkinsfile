@@ -147,7 +147,7 @@ pipeline {
 
                         image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
                         image.push()
-                        env.CFGOV_CYPRESS_IMAGE = image.imageName()
+                        env.CYPRESS_IMAGE = image.imageName()
                     }
                 }
             }
@@ -194,7 +194,7 @@ pipeline {
                 // Environment for running functional tests
                 CYPRESS_ENV = "-e CYPRESS_baseUrl=https://${env.CFGOV_HOSTNAME} -e CI=1"
                 // Command line options to run functional tests
-                CYPRESS_OPTIONS = "${CYPRESS_ENV} ${CYPRESS_SHM} ${IMAGE_CYPRESS_REPO}:${IMAGE_TAG} ${CYPRESS_CMD}"
+                CYPRESS_OPTIONS = "${CYPRESS_ENV} ${CYPRESS_SHM} ${env.CYPRESS_IMAGE} ${CYPRESS_CMD}"
                 HOST_UID_GID = sh(returnStdout: true, script: 'echo "$(id -u):$(id -g)"').trim()
             }
             parallel {
@@ -353,8 +353,7 @@ pipeline {
                             try {
                                 // sh "docker run ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                                 docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
-                                    image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
-                                    // image.pull()
+                                    image = docker.image(env.CYPRESS_IMAGE)
                                     image.inside("${DOCKER_ARGS}") {
                                         sh "${CYPRESS_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                                     }
