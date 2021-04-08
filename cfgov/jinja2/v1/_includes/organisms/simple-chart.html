@@ -17,6 +17,13 @@
   {% endif %}
 {%- endmacro %}
 
+{% if request.served_by_wagtail_sharing %}
+{% set data_location = value.data_source.replace('production', 'staging') %}
+{% else %}
+{% set data_location = value.data_source %}
+{% endif %}
+
+
 <div class="o-simple-chart">
     {% if value.figure %}
     <h5>Figure {{ value.figure }}</h5>
@@ -34,7 +41,7 @@
 
     <div class="o-simple-chart_target"
          data-chart-type="{{ value.chart_type }}"
-         data-source='{{ value.data_source }}'
+         data-source='{{ data_location }}'
          data-series='{{ value.data_series }}'
          data-x-axis-data='{{ value.x_axis_data }}'
          data-description="{{ value.description }}"
