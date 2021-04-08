@@ -71,8 +71,10 @@ function FilterableListControls( element ) {
    * Refresh the height of the filterable list control's expandable
    * to ensure all its children are visible.
    */
+  let timeout;
   function _refreshExpandableHeight() {
-    window.setTimeout(
+    window.clearTimeout( timeout );
+    timeout = window.setTimeout(
       _expandable.transition.expand.bind( _expandable.transition ),
       250
     );
