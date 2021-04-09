@@ -131,6 +131,11 @@
             // Print info unit images
             display: block;
         }
+        .m-info-unit__inline .m-info-unit_image {
+            // Preserve inline info unit image layout
+            float: left;
+            margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
     }
 
     // Force FCMs into multiple columns when printing
@@ -190,7 +195,7 @@
     }
 
     .o-video-player_play-btn {
-        // !important used here to avoid being overriden by a much more specific
+        // !important used here to avoid being overridden by a much more specific
         // selector that sets the display property for this element
         // and to avoid using a selector that specific here.
         display: none !important;
