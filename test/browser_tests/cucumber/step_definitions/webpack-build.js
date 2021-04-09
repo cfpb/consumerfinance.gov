@@ -4,7 +4,7 @@ const fs = require( 'fs' );
 const SCRIPTS_DIR = 'cfgov/static_built/js/';
 const scritpsManifest = require( '../../../../gulp/utils/scripts-manifest' );
 const directoryMap = scritpsManifest.getDirectoryMap( SCRIPTS_DIR );
-const { When, Given } = require( 'cucumber' );
+const { When, Given } = require( '@cucumber/cucumber' );
 
 Given( /I run gulp build to generate JS bundles/, () => {
   expect( 'routes/common.js' in directoryMap ).to.equal( true );
