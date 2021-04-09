@@ -13,7 +13,8 @@ const metricView = require( '../views/metric-view' );
 const expensesView = require( '../views/expenses-view' );
 const postVerification = require( '../dispatchers/post-verify' );
 
-require( '../../../node_modules/sticky-kit/dist/sticky-kit' );
+window.jQuery = window.$ = $;
+require( '../../../node_modules/sticky-kit/dist/sticky-kit.js' );
 
 const getDataLayerOptions = Analytics.getDataLayerOptions;
 
