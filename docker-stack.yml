@@ -16,7 +16,6 @@ services:
         window: 120s
     networks:
       - app
-
   elasticsearch:
     image: ${CFGOV_ES_IMAGE}
     environment:
@@ -32,7 +31,6 @@ services:
         window: 120s
     networks:
       - app
-
   postgres:
     image: postgres:10-alpine
     user: postgres
@@ -105,11 +103,11 @@ services:
                 django_tables_exist=$$?
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
-                    ./refresh-data.sh
+                    ./refresh-data.sh 
                 fi
 
                 ./cfgov/manage.py update_index
-
+                
                 ./cfgov/manage.py search_index --rebuild -f --parallel
 
                 httpd -d cfgov/apache -D FOREGROUND"
