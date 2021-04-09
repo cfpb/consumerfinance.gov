@@ -3,27 +3,29 @@
 
     <p> Skipping monthly loan payments can cause financial and legal problems. Default—missing too many payments—can result in low credit scores, additional fees, wage garnishment, and ineligibility for further federal student aid. This page gives you two ways to estimate the affordability of your projected monthly payment.</p>
 
-
-    <div class="affording-loans-choices block block__sub">
-        {{
-            radio.render({
-              'name':  "affording-display-radio",
-              'label': 'My payment in terms of hourly wages',
-              'value': 'hourly',
-              'id': 'affording-loans-choices_hourly',
-              'class': 'm-form-field__lg-target'
-            })
-        }}
-        {{
-            radio.render({
-              'name':  "affording-display-radio",
-              'label': 'My payment within a monthly budget',
-              'value': 'monthly',
-              'id': 'affording-loans-choices_monthly',
-              'class': 'm-form-field__lg-target'
-            })
-        }}
-    </div>
+    <fieldset>
+        <legend class="u-visually-hidden">Consider your payment in terms of hourly wages or within a monthly budget</legend>
+        <div class="affording-loans-choices block block__sub">
+            {{
+                radio.render({
+                  'name':  "affording-display-radio",
+                  'label': 'My payment in terms of hourly wages',
+                  'value': 'hourly',
+                  'id': 'affording-loans-choices_hourly',
+                  'class': 'm-form-field__lg-target'
+                })
+            }}
+            {{
+                radio.render({
+                  'name':  "affording-display-radio",
+                  'label': 'My payment within a monthly budget',
+                  'value': 'monthly',
+                  'id': 'affording-loans-choices_monthly',
+                  'class': 'm-form-field__lg-target'
+                })
+            }}
+        </div>
+    </fieldset>
 
     <div data-state-based-visibility="expenses-hourly-wages">
         <p>If you make about $15 an hour, how many hours would you have to work to cover your estimated monthly payment(s)?</p>

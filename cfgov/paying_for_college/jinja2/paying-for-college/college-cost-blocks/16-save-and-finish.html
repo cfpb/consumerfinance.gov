@@ -11,7 +11,7 @@
 
     <div class="o-form_group">
         <div class="m-form-field">
-            <label class="a-label a-label__heading" for="finish_link">
+            <label for="copy-your-link" class="a-label a-label__heading">
                 Your link
             </label>
             <pre id="finish_link" name="finish_link" data-app-save-link="save-and-finish"></pre>
@@ -29,8 +29,8 @@
     <div class="o-form_group">
         <div class="block block__mid">
             <fieldset class="o-form_fieldset" data-impact="impactOffer">
-                <legend>
-                    <h3>Did this tool help you understand your financial aid offer?</h3>
+                <legend class="h3">
+                    Did this tool help you understand your financial aid offer?
                 </legend>
                 {{
                     radio.render({
@@ -65,8 +65,8 @@
             
             <div class="o-form_group">
                 <fieldset class="o-form_fieldset" data-impact="impactLoans">
-                    <legend>
-                        <h3>Did this tool help you understand the potential impact of student loans?</h3>
+                    <legend class="h3">
+                        Did this tool help you understand the potential impact of student loans?
                     </legend>
                     {{
                         radio.render({
@@ -102,11 +102,11 @@
 
 
 <div class="restart" data-app-button="restart">
-    <h3>Do you have another financial aid offer?</h3>
+    <label for="restart-button">Do you have another financial aid offer?</h3>
 
-    <p>If you have another financial aid offer you can click the button below to start this form over and enter in your data for the other school.</p>
+    <p id="restart-description">If you have another financial aid offer you can click the button below to start this form over and enter in your data for the other school.</p>
 
-    <a class="a-btn" href=".">Restart</a>
+    <a id="restart-button" class="a-btn" href="." aria-describedby="restart-description">Restart</a>
 </div>
 
 </section>
