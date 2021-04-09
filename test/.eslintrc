@@ -15,14 +15,3 @@ rules:
   max-statements: 0
   no-unused-expressions: 0
   require-jsdoc: 0
-  max-len:
-    - 1
-    -
-      // https://regex101.com/r/hVU4sX/1
-      ignorePattern: '(^import\s([*])|([A-Za-z0-9]*)\s)|(\sfrom\s)'
-      ignoreComments: true
-      ignoreTrailingComments: true
-      ignoreUrls: true
-      ignoreStrings: false
-      ignoreTemplateLiterals: true
-      ignoreRegExpLiterals: true 
