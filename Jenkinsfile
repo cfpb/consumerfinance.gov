@@ -210,7 +210,7 @@ pipeline {
                         }
                         // Remove docker container used by admin tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        sh "docker run --name ${DOCKER_NAME} --user ${id -u}:${id -g} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
+                        sh "docker run --name ${DOCKER_NAME} --user \$(id -u):\$(id -g) ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/admin.js'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -230,7 +230,7 @@ pipeline {
                         }
                         // Remove docker container used by component tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        sh "docker run --name ${DOCKER_NAME} --user ${id -u}:${id -g} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
+                        sh "docker run --name ${DOCKER_NAME} --user \$(id -u):\$(id -g) ${DOCKER_CMD} --spec '${CYPRESS_PATH}/components/**/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -253,7 +253,7 @@ pipeline {
                         }
                         // Remove docker container used by consumer tool tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        sh "docker run --name ${DOCKER_NAME} --user ${id -u}:${id -g} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
+                        sh "docker run --name ${DOCKER_NAME} --user \$(id -u):\$(id -g) ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/consumer-tools/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -276,7 +276,7 @@ pipeline {
                         }
                         // Remove docker container used by data research tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        sh "docker run --name ${DOCKER_NAME} --user ${id -u}:${id -g} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
+                        sh "docker run --name ${DOCKER_NAME} --user \$(id -u):\$(id -g) ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/data-research/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -299,7 +299,7 @@ pipeline {
                         }
                         // Remove docker container used by paying for college tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        sh "docker run --name ${DOCKER_NAME} --user ${id -u}:${id -g} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
+                        sh "docker run --name ${DOCKER_NAME} --user \$(id -u):\$(id -g) ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/paying-for-college/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
@@ -322,7 +322,7 @@ pipeline {
                         }
                         // Remove docker container used by rules and policy tests
                         sh '''if [ "$(docker ps -a -q -f name=${DOCKER_NAME})" != "" ]; then docker rm -f $(docker ps -a -q -f name=${DOCKER_NAME}); fi'''
-                        sh "docker run --name ${DOCKER_NAME} --user ${id -u}:${id -g} ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
+                        sh "docker run --name ${DOCKER_NAME} --user \$(id -u):\$(id -g) ${DOCKER_CMD} --spec '${CYPRESS_PATH}/pages/rules-policy/*'"
                         postGitHubStatus("jenkins/${env.STAGE_NAME}", "success", "Passed", env.RUN_DISPLAY_URL)
                     }
                 }
