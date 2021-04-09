@@ -1,3 +1,4 @@
+/* eslint-disable */
 // TODO: Remove jquery.
 const $ = require( 'jquery' );
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 var linkElement, hidemenu, dropdown, dropping;
 
 function escHandler(e) {
