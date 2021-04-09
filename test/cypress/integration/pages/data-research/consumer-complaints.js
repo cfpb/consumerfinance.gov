@@ -1,14 +1,10 @@
-import {
-  ConsumerComplaints
-} from '../../../pages/data-research/consumer-complaints';
+import { ConsumerComplaints } from '../../../pages/data-research/consumer-complaints';
 
 const page = new ConsumerComplaints();
-const states = [
-  'AK', 'AL', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID',
-  'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS',
-  'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR',
-  'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
-];
+const states = [ 'AK', 'AL', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+  'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN',
+  'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK',
+  'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY' ];
 
 describe( 'Consumer Complaint Database', () => {
   beforeEach( () => {
@@ -23,8 +19,7 @@ describe( 'Consumer Complaint Database', () => {
       page.checkChart( name ).should( 'be.visible' );
     } );
     page.clickButton( 'Complaints per 1,000' );
-    page.checkLegend( 'description' )
-      .should( 'contain', 'Complaints per 1,000' );
+    page.checkLegend( 'description' ).should( 'contain', 'Complaints per 1,000' );
     page.checkLegend( 'dates' ).should( 'be.visible' );
     states.forEach( name => {
       page.checkState( name ).should( 'be.visible' );

@@ -1,6 +1,4 @@
-const DISABLEABLE_ELEMENTS = [
-  'input', 'button', 'select', 'textarea', 'button', 'object'
-];
+const DISABLEABLE_ELEMENTS = [ 'input', 'button', 'select', 'textarea', 'button', 'object' ];
 
 /**
  * Determines if the given element is focusable

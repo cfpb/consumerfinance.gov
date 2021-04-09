@@ -25,9 +25,7 @@ export class GlobalSearch {
   }
 
   button() {
-    return this.globalSearch(
-      '[data-js-hook="behavior_flyout-menu_content"] .a-btn'
-    );
+    return this.globalSearch( '[data-js-hook="behavior_flyout-menu_content"] .a-btn' );
   }
 
   suggest() {

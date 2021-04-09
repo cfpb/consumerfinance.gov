@@ -1,6 +1,4 @@
-import {
-  PrepaidAgreementsSearch
-} from '../../../pages/data-research/prepaid-agreements-search';
+import { PrepaidAgreementsSearch } from '../../../pages/data-research/prepaid-agreements-search';
 
 const prepaidAgreementsSearch = new PrepaidAgreementsSearch();
 

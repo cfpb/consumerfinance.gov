@@ -10,9 +10,7 @@ import isTabbable from './isTabbable';
  * @param {string} direction - forward or backward
  * @returns {string} element in focus
  */
-export default function nextTabbable(
-  $referenceElement, direction = 'forward'
-) {
+export default function nextTabbable( $referenceElement, direction = 'forward' ) {
   if ( !( direction === 'forward' || direction === 'backward' ) ) {
     throw new Error( 'Expected direction to be forward or backward' );
   }
@@ -21,8 +19,7 @@ export default function nextTabbable(
   let element;
 
   // Queue up all siblings and our ancestor's siblings
-  const siblingProp =
-    direction === 'forward' ? 'nextElementSibling' : 'previousElementSibling';
+  const siblingProp = direction === 'forward' ? 'nextElementSibling' : 'previousElementSibling';
   element = $referenceElement.get( 0 );
   while ( element ) {
     let sibling = element[siblingProp];

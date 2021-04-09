@@ -1,6 +1,4 @@
-import {
-  RegulationsSearch
-} from '../../../pages/rules-policy/regulations-search';
+import { RegulationsSearch } from '../../../pages/rules-policy/regulations-search';
 
 const regulationsSearch = new RegulationsSearch();
 

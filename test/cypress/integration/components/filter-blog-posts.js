@@ -4,9 +4,7 @@ posts published both before and after the date 12/31/2020. The posts should be i
 and tagged with several different topic tags, including at least one with the tag "mortgages" and at least one without the "mortgages" tag.
 The posts should also have several different authors, including at least one with the author "CFPB Web Team". */
 import { Filter } from '../../components/filter';
-import {
-  FilterableListControl
-} from '../../components/filterable-list-control';
+import { FilterableListControl } from '../../components/filterable-list-control';
 import { Pagination } from '../../components/pagination';
 
 const blog = new FilterableListControl();
