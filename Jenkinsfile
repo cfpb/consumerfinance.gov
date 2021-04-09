@@ -19,7 +19,7 @@ pipeline {
 
     environment {
         // Docker Repository used by functional tests
-        CYPRESS_REPO = 'cypress/included:7.0.0'
+        CYPRESS_REPO = 'cypress/included:7.0.1'
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
