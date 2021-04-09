@@ -17,6 +17,51 @@
         <itunes:category text="Education"></itunes:category>
         <itunes:explicit>false</itunes:explicit>
         <item>
+            <title>Understanding your Financial Aid Offer, Part 3: Using the CFPB’s Grad Path Tool to Help with College Decision-making</title>
+            <link>https://www.consumerfinance.gov/consumer-tools/educator-tools/students/financial-intuition/understanding-your-financial-aid-offer-part-3/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>9</itunes:episode>
+            <description>For the third and final episode of this series, we spoke with Kate Mullan, Policy Analyst, Consumer Financial Protection Bureau, to discuss the Grad Path tool and how it can be used to compare programs, assess funding needs (or surplus), and create a financial plan for the academic year.</description>
+            <enclosure
+                length="24859707"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/cfpb_financial-intuition-podcast_understanding-your-financial-aid-offer_episode-3.mp3"
+            />
+            <pubDate>Mon, 10 Apr 2021 16:00:00 EST</pubDate>
+            <itunes:duration>1553</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+        <item>
+            <title>Understanding your Financial Aid Offer, Part 2: What to know when filling out the FAFSA</title>
+            <link>https://www.consumerfinance.gov/consumer-tools/educator-tools/students/financial-intuition/understanding-your-financial-aid-offer-part-2/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>8</itunes:episode>
+            <description>During the second episode in this series, we met with Fred Stennis, Supervisor and Senior Advisor at the U.S. Department of Education, to talk about what to know before, during, and after completing the FAFSA. This episode also covered tips and best practices for using federal financial aid to complete your higher education goals.</description>
+            <enclosure
+                length="18354362"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/cfpb_financial-intuition-podcast_understanding-your-financial-aid-offer_episode-2.mp3"
+            />
+            <pubDate>Mon, 10 Apr 2021 16:00:00 EST</pubDate>
+            <itunes:duration>1147</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+        <item>
+            <title>Understanding your Financial Aid Offer, Part 1: Using College Scorecard to find your Academic Fit</title>
+            <link>https://www.consumerfinance.gov/consumer-tools/educator-tools/students/financial-intuition/understanding-your-financial-aid-offer-part-1/</link>
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:episode>7</itunes:episode>
+            <description>For this episode, we spoke with Brian Fu, a Program Analyst at the U.S. Department of Education, about the Department of Education's College Scorecard tool and how it can be used to search and compare higher education opportunities. This episode will also discuss the importance of finding the right "academic fit" when searching for a program.</description>
+            <enclosure
+                length="16781968"
+                type="audio/mpeg"
+                url="https://files.consumerfinance.gov/f/media/cfpb_financial-intuition-podcast_understanding-your-financial-aid-offer_episode-1.mp3"
+            />
+            <pubDate>Mon, 10 Apr 2021 16:00:00 EST</pubDate>
+            <itunes:duration>1048</itunes:duration>
+            <itunes:explicit>false</itunes:explicit>
+        </item>
+        <item>
             <title>Managing Your Student Loans, Part 3: Postgraduate Degree Repayment Options</title>
             <link>https://www.consumerfinance.gov/consumer-tools/educator-tools/students/financial-intuition/managing-your-student-loans-part-3/</link>
             <itunes:episodeType>full</itunes:episodeType>
