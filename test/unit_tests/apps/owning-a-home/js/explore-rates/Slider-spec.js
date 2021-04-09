@@ -34,8 +34,7 @@ describe( 'explore-rates/Slider', () => {
 
     it( 'should initialize rangeslider class', () => {
       const rangeSliderDom = sliderDom.querySelector( '.rangeslider' );
-      expect( rangeSliderDom.classList.contains( 'rangeslider' ) )
-        .toBe( true );
+      expect( rangeSliderDom.classList.contains( 'rangeslider' ) ).toBe( true );
     } );
   } );
 
@@ -63,8 +62,8 @@ describe( 'explore-rates/Slider', () => {
       expect( slider.valMax() ).toBe( 79 );
     } );
 
-    it( 'should return the maximum value when minimum value of ' +
-        'the range slider is less than 20 units from maximum', () => {
+    it( 'should return the maximum value when minimum ' +
+        'value of the range slider is less than 20 units from maximum', () => {
       document.body.innerHTML = HTML_SNIPPET;
       sliderDom = document.querySelector( '.a-range' );
       slider = new Slider( sliderDom );

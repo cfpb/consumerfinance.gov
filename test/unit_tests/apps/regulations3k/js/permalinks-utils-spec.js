@@ -122,11 +122,7 @@ describe( 'The Regs3K permalinks utils', () => {
     it( 'should return the positions of all paragraphs', () => {
       const paragraphs = document.querySelectorAll( '.regdown-block' );
       expect( utils.getParagraphPositions( paragraphs ) ).toEqual(
-        [
-          { id: 'z-14-i', position: -30 },
-          { id: 'c', position: -30 },
-          { id: 'Interp-1', position: -30 }
-        ]
+        [ { id: 'z-14-i', position: -30 }, { id: 'c', position: -30 }, { id: 'Interp-1', position: -30 } ]
       );
     } );
 
@@ -141,13 +137,7 @@ describe( 'The Regs3K permalinks utils', () => {
 
     it( 'should update and return the positions of all paragraphs', () => {
       expect( utils.updateParagraphPositions() ).toEqual(
-        [
-          { id: 'e', position: -30 },
-          { id: 'd', position: -30 },
-          { id: 'c', position: -30 },
-          { id: 'b', position: -30 },
-          { id: 'a', position: -30 }
-        ]
+        [ { id: 'e', position: -30 }, { id: 'd', position: -30 }, { id: 'c', position: -30 }, { id: 'b', position: -30 }, { id: 'a', position: -30 } ]
       );
     } );
 
@@ -155,15 +145,10 @@ describe( 'The Regs3K permalinks utils', () => {
 
   describe( 'paragraph getter', () => {
 
-    const paragraphs = [
-      { id: 'three', position: 30 },
-      { id: 'two', position: 20 },
-      { id: 'one', position: 10 }
-    ];
+    const paragraphs = [ { id: 'three', position: 30 }, { id: 'two', position: 20 }, { id: 'one', position: 10 } ];
 
     it( 'should get paragraph closest to viewport', () => {
-      expect( utils.getCurrentParagraph( 'sandwich', paragraphs ) )
-        .toEqual( null );
+      expect( utils.getCurrentParagraph( 'sandwich', paragraphs ) ).toEqual( null );
       expect( utils.getCurrentParagraph( -1, paragraphs ) ).toEqual( null );
       expect( utils.getCurrentParagraph( 0, paragraphs ) ).toEqual( null );
       expect( utils.getCurrentParagraph( 5, paragraphs ) ).toEqual( null );
@@ -177,8 +162,7 @@ describe( 'The Regs3K permalinks utils', () => {
       expect( utils.getCurrentParagraph( 30, paragraphs ) ).toEqual( 'two' );
       expect( utils.getCurrentParagraph( 31, paragraphs ) ).toEqual( 'three' );
       expect( utils.getCurrentParagraph( 45, paragraphs ) ).toEqual( 'three' );
-      expect( utils.getCurrentParagraph( 73648576, paragraphs ) )
-        .toEqual( 'three' );
+      expect( utils.getCurrentParagraph( 73648576, paragraphs ) ).toEqual( 'three' );
     } );
 
   } );
@@ -191,25 +175,20 @@ describe( 'The Regs3K permalinks utils', () => {
       document.body.innerHTML = HTML_SNIPPET1;
       utils.updateParagraphPositions();
       utils.updateUrlHash();
-      expect( global.history.replaceState )
-        .toBeCalledWith( null, null, '#z-14-i' );
+      expect( global.history.replaceState ).toBeCalledWith( null, null, '#z-14-i' );
 
       document.body.innerHTML = HTML_SNIPPET2;
       utils.updateParagraphPositions();
       utils.updateUrlHash();
-      expect( global.history.replaceState )
-        .toBeCalledWith( null, null, '#e' );
+      expect( global.history.replaceState ).toBeCalledWith( null, null, '#e' );
     } );
 
   } );
 
   describe( 'getFirstMatch', () => {
-
     it( 'should find the first match', () => {
-      expect( utils.getFirstMatch( 'Appendix B for 999', /Appendix [^\s]+/ ) )
-        .toEqual( 'Appendix B' );
-      expect( utils.getFirstMatch( '§ 1099.999 bah', /§ 10[0-9].\.[0-9]*/g ) )
-        .toEqual( '§ 1099.999' );
+      expect( utils.getFirstMatch( 'Appendix B for 999', /Appendix [^\s]+/ ) ).toEqual( 'Appendix B' );
+      expect( utils.getFirstMatch( '§ 1099.999 bah', /§ 10[0-9].\.[0-9]*/g ) ).toEqual( '§ 1099.999' );
     } );
 
     it( 'should survive an encounter with the dreaded null beast', () => {
@@ -221,12 +200,9 @@ describe( 'The Regs3K permalinks utils', () => {
   describe( 'getCommentMarker', () => {
 
     it( 'should format Comments correctly', () => {
-      expect( utils.getCommentMarker( '17-a-1-Interp-1' ) )
-        .toEqual( '17(a)(1)-1' );
-      expect( utils.getCommentMarker( '3-d-Interp-1' ) )
-        .toEqual( '3(d)-1' );
-      expect( utils.getCommentMarker( '3-c-2-Interp-1' ) )
-        .toEqual( '3(c)(2)-1' );
+      expect( utils.getCommentMarker( '17-a-1-Interp-1' ) ).toEqual( '17(a)(1)-1' );
+      expect( utils.getCommentMarker( '3-d-Interp-1' ) ).toEqual( '3(d)-1' );
+      expect( utils.getCommentMarker( '3-c-2-Interp-1' ) ).toEqual( '3(c)(2)-1' );
       expect( utils.getCommentMarker( '1' ) ).toEqual( '' );
     } );
 
@@ -234,47 +210,15 @@ describe( 'The Regs3K permalinks utils', () => {
 
   describe( 'getWayfinderInfo', () => {
 
-    it( 'should proceess paragraph ids and ' +
-        'turn them into wayfinder link text', () => {
-      expect(
-        utils.getWayfinderInfo(
-          'a-1-iii', '§ 1026.47   Content of disclosures.'
-        )
-      ).toEqual(
-        {
-          formattedTitle: '§ 1026.47',
-          paragraphMarker: '(a)(1)(iii)'
-        }
-      );
-      expect(
-        utils.getWayfinderInfo(
-          'c', '§ 1012.225   Content of disclosures.'
-        )
-      ).toEqual(
-        {
-          formattedTitle: '§ 1012.225',
-          paragraphMarker: '(c)'
-        }
-      );
-      expect(
-        utils.getWayfinderInfo(
-          'abcdef1234567890abcdef',
-          'Appendix A to Part 1010 — Standard and Model Forms and Clauses'
-        )
-      ).toEqual(
-        { formattedTitle: 'Appendix A', paragraphMarker: '' }
-      );
-      expect(
-        utils.getWayfinderInfo(
-          '33-a-2-Interp-2',
-          'Comment for 1026.33 - Requirements for Reverse Mortgages'
-        )
-      ).toEqual(
-        {
-          formattedTitle: 'Comment ',
-          paragraphMarker: '33(a)(2)-2'
-        }
-      );
+    it( 'should proceess paragraph ids and turn them into wayfinder link text', () => {
+      expect( utils.getWayfinderInfo( 'a-1-iii', '§ 1026.47   Content of disclosures.' ) )
+        .toEqual( { formattedTitle: '§ 1026.47', paragraphMarker: '(a)(1)(iii)' } );
+      expect( utils.getWayfinderInfo( 'c', '§ 1012.225   Content of disclosures.' ) )
+        .toEqual( { formattedTitle: '§ 1012.225', paragraphMarker: '(c)' } );
+      expect( utils.getWayfinderInfo( 'abcdef1234567890abcdef', 'Appendix A to Part 1010 — Standard and Model Forms and Clauses' ) )
+        .toEqual( { formattedTitle: 'Appendix A', paragraphMarker: '' } );
+      expect( utils.getWayfinderInfo( '33-a-2-Interp-2', 'Comment for 1026.33 - Requirements for Reverse Mortgages' ) )
+        .toEqual( { formattedTitle: 'Comment ', paragraphMarker: '33(a)(2)-2' } );
     } );
 
   } );
@@ -292,14 +236,11 @@ describe( 'The Regs3K permalinks utils', () => {
       const wayfinder = document.querySelector( '.o-regulations-wayfinder' );
 
       utils.updateWayfinder( false, wayfinder, mainContent );
-      expect( document.querySelector(
-        '.o-regulations-wayfinder_link' ).textContent.trim()
-      ).toEqual( 'Comment 33(a)(2)-2' );
-      expect( document.querySelector(
-        '.o-regulations-wayfinder_link' ).href
-      ).toEqual( 'http://localhost/#33-a-2-Interp-2' );
+      expect( document.querySelector( '.o-regulations-wayfinder_link' ).textContent.trim() ).toEqual( 'Comment 33(a)(2)-2' );
+      expect( document.querySelector( '.o-regulations-wayfinder_link' ).href ).toEqual( 'http://localhost/#33-a-2-Interp-2' );
     } );
 
   } );
+
 
 } );

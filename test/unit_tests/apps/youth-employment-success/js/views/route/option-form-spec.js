@@ -8,7 +8,9 @@ import {
   transitTimeView
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions';
 import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
-import { updateTransportationAction } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
+import {
+  updateTransportationAction
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
 import mockStore from '../../../../../mocks/store';
 
 jest.mock(

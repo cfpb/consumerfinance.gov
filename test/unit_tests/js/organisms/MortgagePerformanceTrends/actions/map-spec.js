@@ -3,8 +3,7 @@
 import actions from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/actions/map.js';
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
-jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/' +
-           'MortgagePerformanceTrends/utils', () => ( {
+jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
   getMetroData: cb => {
     const metros = {
       AL: {

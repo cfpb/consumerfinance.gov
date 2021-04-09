@@ -6,9 +6,7 @@ import budgetReducer, {
 import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
 describe( 'budgetReducer', () => {
-
-  it( 'returns an initial state when it ' +
-      'receives an unsupported action type', () => {
+  it( 'returns an initial state when it recevives an unsupported action type', () => {
     const state = budgetReducer( UNDEFINED, { type: null } );
 
     expect( state ).toEqual( initialState );

@@ -9,13 +9,11 @@ describe( 'web-storage-proxy', () => {
   } );
 
   describe( '.setItem()', () => {
-    it( 'should set an item of "bar" for the key "foo" in sessionStorage',
-      () => {
-        webStorageProxy.setItem( 'foo', 'bar', window.sessionStorage );
-        expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'bar' );
-        expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
-      }
-    );
+    it( 'should set an item of "bar" for the key "foo" in sessionStorage', () => {
+      webStorageProxy.setItem( 'foo', 'bar', window.sessionStorage );
+      expect( window.sessionStorage.getItem( 'foo' ) ).toBe( 'bar' );
+      expect( window.localStorage.getItem( 'foo' ) ).toBeNull();
+    } );
 
     it( 'should set an item of "baz" for the key "foo" in localStorage', () => {
       webStorageProxy.setItem( 'foo', 'baz', window.localStorage );

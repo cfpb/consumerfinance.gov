@@ -9,9 +9,7 @@ TileMap
   from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap';
 import chartMock from '../../../mocks/chartMock';
 
-jest.mock(
-  '../../../../../cfgov/unprocessed/js/modules/Analytics'
-);
+jest.mock( '../../../../../cfgov/unprocessed/js/modules/Analytics' );
 
 /**
  * Create a mock for the window.location object, for testing purposes.
@@ -160,14 +158,9 @@ describe( 'Tile map', () => {
     };
     sut.clickHandler( false, evt );
     expect( Analytics.getDataLayerOptions )
-      .toHaveBeenCalledWith(
-        'State Event: click', 'TX', 'Consumer Complaint Search'
-      );
+      .toHaveBeenCalledWith( 'State Event: click', 'TX', 'Consumer Complaint Search' );
     expect( Analytics.sendEvent ).toHaveBeenCalled();
-    expect( window.location.assign )
-      .toBeCalledWith(
-        'http://localhost/search/?dateRange=3y&dataNormalization=None&state=TX'
-      );
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateRange=3y&dataNormalization=None&state=TX' );
   } );
 
   it( 'navigates the url to per capita when clicked', () => {
@@ -180,11 +173,7 @@ describe( 'Tile map', () => {
       }
     };
     sut.clickHandler( true, evt );
-    expect( window.location.assign )
-      .toBeCalledWith(
-        'http://localhost/search/?dateRange=3y' +
-        '&dataNormalization=Per%201000%20pop.&state=TX'
-      );
+    expect( window.location.assign ).toBeCalledWith( 'http://localhost/search/?dateRange=3y&dataNormalization=Per%201000%20pop.&state=TX' );
   } );
 
   it( 'formats a map tile', () => {
@@ -236,11 +225,11 @@ describe( 'Tile map', () => {
     sut.product = 'Expensive Item';
     sut.issue = 'Being Broke';
     const result = sut.tooltipFormatter();
-    expect( result ).toEqual( '<div class="title">State Name</div>' +
-      '<div class="row u-clearfix"><p class="u-float-left">Complaints</p>' +
-      '<p class="u-right">10,000</p></div><div class="row u-clearfix">' +
-      '<p class="u-float-left">Per 1000 population</p><p class="u-right">' +
-      '3.12</p></div><div class="row u-clearfix"><p class="u-float-left">' +
+    expect( result ).toEqual( '<div class="title">State Name' +
+      '</div><div class="row u-clearfix"><p class="u-float-left">Complaints' +
+      '</p><p class="u-right">10,000</p></div><div class="row u-clearfix">' +
+      '<p class="u-float-left">Per 1000 population</p><p class="u-right">3.12</p>' +
+      '</div><div class="row u-clearfix"><p class="u-float-left">' +
       'Product with highest complaint volume</p><p class="u-right">' +
       'Expensive Item</p></div><div class="row u-clearfix">' +
       '<p class="u-float-left">Issue with highest complaint volume</p>' +
@@ -258,9 +247,7 @@ describe( 'Tile map', () => {
       fullName: 'Alaska',
       value: 713,
       issue: 'Incorrect information on your report',
-      product:
-        'Credit reporting, credit repair services, ' +
-        'or other personal consumer reports',
+      product: 'Credit reporting, credit repair services, or other personal consumer reports',
       perCapita: 0.97,
       displayValue: 713,
       color: 'rgba(247, 248, 249, 1)',
@@ -272,9 +259,7 @@ describe( 'Tile map', () => {
       fullName: 'Alabama',
       value: 10380,
       issue: 'Incorrect information on your report',
-      product:
-        'Credit reporting, credit repair services, ' +
-        'or other personal consumer reports',
+      product: 'Credit reporting, credit repair services, or other personal consumer reports',
       perCapita: 2.14,
       displayValue: 10380,
       color: 'rgba(247, 248, 249, 1)',
@@ -287,9 +272,7 @@ describe( 'Tile map', () => {
       fullName: 'Arkansas',
       value: 4402,
       issue: 'Incorrect information on your report',
-      product:
-        'Credit reporting, credit repair services, ' +
-        'or other personal consumer reports',
+      product: 'Credit reporting, credit repair services, or other personal consumer reports',
       perCapita: 1.48,
       displayValue: 4402,
       color: 'rgba(247, 248, 249, 1)',
@@ -523,27 +506,13 @@ describe( 'Tile map', () => {
         2.845714285714285
       ];
       const expected = [
-        {
-          from: 0, color: '#ffffff', name: '≥ 0', shortName: '≥ 0'
-        },
-        {
-          from: 1.19, color: quantiles[0], name: '> 1.19', shortName: '> 1.19'
-        },
-        {
-          from: 1.46, color: quantiles[1], name: '> 1.46', shortName: '> 1.46'
-        },
-        {
-          from: 1.81, color: quantiles[2], name: '≥ 1.81', shortName: '≥ 1.81'
-        },
-        {
-          from: 2.03, color: quantiles[3], name: '> 2.03', shortName: '> 2.03'
-        },
-        {
-          from: 2.33, color: quantiles[4], name: '≥ 2.33', shortName: '≥ 2.33'
-        },
-        {
-          from: 2.84, color: quantiles[5], name: '> 2.84', shortName: '> 2.84'
-        }
+        { from: 0, color: '#ffffff', name: '≥ 0', shortName: '≥ 0' },
+        { from: 1.19, color: quantiles[0], name: '> 1.19', shortName: '> 1.19' },
+        { from: 1.46, color: quantiles[1], name: '> 1.46', shortName: '> 1.46' },
+        { from: 1.81, color: quantiles[2], name: '≥ 1.81', shortName: '≥ 1.81' },
+        { from: 2.03, color: quantiles[3], name: '> 2.03', shortName: '> 2.03' },
+        { from: 2.33, color: quantiles[4], name: '≥ 2.33', shortName: '≥ 2.33' },
+        { from: 2.84, color: quantiles[5], name: '> 2.84', shortName: '> 2.84' }
       ];
 
       const result = sut.getPerCapitaBins( quantiles, scaleFn );

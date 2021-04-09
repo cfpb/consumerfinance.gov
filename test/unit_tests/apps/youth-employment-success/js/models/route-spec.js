@@ -4,10 +4,9 @@ describe( 'route factory function', () => {
   it( 'constructs a route object', () => {
     const newRoute = createRoute();
 
-    [ 'transportation', 'daysPerWeek', 'miles', 'averageCost' ]
-      .forEach( prop => {
-        expect( newRoute[prop] ).toBeDefined();
-      } );
+    [ 'transportation', 'daysPerWeek', 'miles', 'averageCost' ].forEach( prop => {
+      expect( newRoute[prop] ).toBeDefined();
+    } );
   } );
 
   it( 'constructs a route object with supplied data', () => {

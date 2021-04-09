@@ -4,8 +4,7 @@ import * as defaultActionCreators from '../../../../../../cfgov/unprocessed/js/o
 const actions = defaultActionCreators.default();
 
 jest.mock( 'xdr', () => jest.fn( () => ( { mock: 'data' } ) ) );
-jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/' +
-           'MortgagePerformanceTrends/utils', () => ( {
+jest.mock( '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/utils', () => ( {
   getNonMetroData: cb => {
     const nonMetros = [ {
       valid: true,

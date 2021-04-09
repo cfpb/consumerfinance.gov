@@ -2,7 +2,9 @@ import reviewChoiceView from '../../../../../../../cfgov/unprocessed/apps/youth-
 import mockStore from '../../../../../mocks/store';
 import { simulateEvent } from '../../../../../../util/simulate-event';
 import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { updateRouteChoiceAction } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer';
+import {
+  updateRouteChoiceAction
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer';
 import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
 const CLASSES = reviewChoiceView.CLASSES;
@@ -85,8 +87,7 @@ describe( 'reviewChoiceGoal', () => {
     );
   } );
 
-  it( 'enables the radio buttons when ' +
-      'tansportation modes are selected', () => {
+  it( 'enables the radio buttons when tansportation modes are selected', () => {
     const state = {
       routes: {
         routes: [
@@ -102,8 +103,7 @@ describe( 'reviewChoiceGoal', () => {
     } );
   } );
 
-  it( 'displays the transportation type in the ' +
-      'button labels when modes are selected', () => {
+  it( 'displays the transportation type in the button labels when modes are selected', () => {
     const state = {
       routes: {
         routes: [
@@ -145,8 +145,7 @@ describe( 'reviewChoiceGoal', () => {
     ).toBeFalsy();
   } );
 
-  it( 'shows the rest of the review section when ' +
-      'the review choice button is clicked', () => {
+  it( 'shows the rest of the review section when the review choice button is clicked', () => {
     const state = {
       routes: {
         routes: [
@@ -166,8 +165,7 @@ describe( 'reviewChoiceGoal', () => {
     ).toBeFalsy();
   } );
 
-  it( 'does not enable the radio buttons if no ' +
-      'transportation options are specified', () => {
+  it( 'does not enable the radio buttons if no transportation options are specified', () => {
     const state = {
       routes: {
         routes: [
@@ -179,7 +177,8 @@ describe( 'reviewChoiceGoal', () => {
     store.subscriber()( {}, state );
 
     choiceInputs.forEach(
-      input => expect( input.getAttribute( 'disabled' )
+      input => expect(
+        input.getAttribute( 'disabled' )
       ).toBeTruthy()
     );
   } );

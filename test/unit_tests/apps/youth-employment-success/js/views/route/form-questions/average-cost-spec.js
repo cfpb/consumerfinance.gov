@@ -62,7 +62,7 @@ describe( 'averageCostView', () => {
     view = null;
   } );
 
-  it( 'dispatches correct action when average cost input changes', () => {
+  it( 'dispatches the correct action when average cost input changes', () => {
     const costEl = document.querySelector( 'input[type="text"]' );
     const cost = '12';
 
@@ -80,7 +80,7 @@ describe( 'averageCostView', () => {
     );
   } );
 
-  it( 'sets correct precision on blur', () => {
+  it( 'sets the correct precision on blur', () => {
     const costEl = document.querySelector( 'input[type="text"]' );
     costEl.value = '12.03000';
 
@@ -94,7 +94,7 @@ describe( 'averageCostView', () => {
     expect( costEl.value ).toBe( '' );
   } );
 
-  it( 'dispatches correct action on blur', () => {
+  it( 'dispatches the correct action on blur', () => {
     const costEl = document.querySelector( 'input[type="text"]' );
     costEl.value = '12.03000';
 
@@ -111,7 +111,7 @@ describe( 'averageCostView', () => {
     );
   } );
 
-  it( 'dispatches correct action when a radio button is selected', () => {
+  it( 'dispatches the correct action when a radio button is selected', () => {
     const radioEls = document.querySelectorAll( `.${ CLASSES.RADIO }` );
     const dailyEl = radioEls[0];
     const monthlyEl = radioEls[1];
@@ -136,7 +136,7 @@ describe( 'averageCostView', () => {
     );
   } );
 
-  it( 'dispatches correct action when not sure checkbox is clicked', () => {
+  it( 'dispatches the correct action when not sure checkbox is clicked', () => {
     const notSureEl = document.querySelector( 'input[type="checkbox"]' );
 
     simulateEvent( 'click', notSureEl );
@@ -151,7 +151,7 @@ describe( 'averageCostView', () => {
     );
   } );
 
-  it( 'initializes todo notification component on init', () => {
+  it( 'initializes the todo notification component on init', () => {
     expect( todoNotification.init.mock.calls.length ).toBe( 1 );
   } );
 
@@ -171,8 +171,7 @@ describe( 'averageCostView', () => {
     expect( todoNotification.hide.mock.calls.length ).toBe( 1 );
   } );
 
-  it( 'calls .remove on todo notification ' +
-      'component when this view is toggled', () => {
+  it( 'calls .remove on the todo notification component when this view is toggled', () => {
     const state = {
       routes: {
         routes: [ {

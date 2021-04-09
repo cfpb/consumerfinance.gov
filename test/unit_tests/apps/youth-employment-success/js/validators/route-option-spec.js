@@ -33,8 +33,7 @@ describe( '.validate', () => {
     } ) ).toBeFalsy();
   } );
 
-  it( 'validates data to true if value is ' +
-      'not present and action plan item exists', () => {
+  it( 'validates data to true if value is not present and action plan item exists', () => {
     expect(
       validate( {
         ...data,

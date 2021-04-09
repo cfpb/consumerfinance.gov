@@ -213,11 +213,8 @@ describe( 'The TDP custom analytics', () => {
   } );
 
 
-  it( 'should send an analytics event when ' +
-      'a filter clear icon is clicked', () => {
-    const clearIcon = document.querySelector(
-      '.results_filters svg'
-    );
+  it( 'should send an analytics event when a filter clear icon is clicked', () => {
+    const clearIcon = document.querySelector( '.results_filters svg' );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );
@@ -227,11 +224,8 @@ describe( 'The TDP custom analytics', () => {
     expect( spy ).toHaveBeenCalled();
   } );
 
-  it( 'should NOT send an analytics event when ' +
-      'a filter is clicked (but not its clear icon)', () => {
-    const filterTag = document.querySelector(
-      '.results_filters .a-tag'
-    );
+  it( 'should NOT send an analytics event when a filter is clicked (but not its clear icon)', () => {
+    const filterTag = document.querySelector( '.results_filters .a-tag' );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );
@@ -241,11 +235,8 @@ describe( 'The TDP custom analytics', () => {
     expect( spy ).not.toHaveBeenCalled();
   } );
 
-  it( 'should send an analytics event when ' +
-      'a pagination button is clicked', () => {
-    const paginationButton = document.querySelector(
-      '.m-pagination_btn-next'
-    );
+  it( 'should send an analytics event when a pagination button is clicked', () => {
+    const paginationButton = document.querySelector( '.m-pagination_btn-next' );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );
@@ -255,11 +246,8 @@ describe( 'The TDP custom analytics', () => {
     expect( spy ).toHaveBeenCalled();
   } );
 
-  it( 'should send an analytics event when ' +
-      'an expandable is clicked', () => {
-    const expandable = document.querySelector(
-      '.o-expandable_header'
-    );
+  it( 'should send an analytics event when an expandable is clicked', () => {
+    const expandable = document.querySelector( '.o-expandable_header' );
     const spy = jest.fn();
 
     tdpAnalytics.bindAnalytics( spy );

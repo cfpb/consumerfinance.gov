@@ -223,8 +223,7 @@ describe( 'FlyoutMenu', () => {
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
-          const hasClass = contentDom.classList
-            .contains( 'u-move-transition' );
+          const hasClass = contentDom.classList.contains( 'u-move-transition' );
           expect( hasClass ).toBe( true );
           done();
         } catch ( err ) {
@@ -252,8 +251,7 @@ describe( 'FlyoutMenu', () => {
       flyoutMenu.setCollapseTransition( transition, transition.moveLeft );
       flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {
-          const hasClass = contentDom.classList
-            .contains( 'u-move-transition' );
+          const hasClass = contentDom.classList.contains( 'u-move-transition' );
           expect( hasClass ).toBe( true );
           done();
         } catch ( err ) {

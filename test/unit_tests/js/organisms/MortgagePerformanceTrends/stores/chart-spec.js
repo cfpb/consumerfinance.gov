@@ -143,8 +143,7 @@ describe( 'Mortgage Performance line chart store', () => {
       metros: { 12345: 'Akron, OH' }
     };
     store.dispatch( action );
-    expect( store.getState().metros )
-      .toStrictEqual( { 12345: 'Akron, OH' } );
+    expect( store.getState().metros ).toStrictEqual( { 12345: 'Akron, OH' } );
   } );
 
   it( 'should properly reduce non-metros', () => {
@@ -153,8 +152,7 @@ describe( 'Mortgage Performance line chart store', () => {
       nonMetros: { 67890: 'Boston, MA' }
     };
     store.dispatch( action );
-    expect( store.getState().nonMetros )
-      .toStrictEqual( { 67890: 'Boston, MA' } );
+    expect( store.getState().nonMetros ).toStrictEqual( { 67890: 'Boston, MA' } );
   } );
 
   it( 'should properly reduce counties', () => {
@@ -163,8 +161,7 @@ describe( 'Mortgage Performance line chart store', () => {
       counties: { 12345: 'Acme County' }
     };
     store.dispatch( action );
-    expect( store.getState().counties )
-      .toStrictEqual( { 12345: 'Acme County' } );
+    expect( store.getState().counties ).toStrictEqual( { 12345: 'Acme County' } );
   } );
 
   it( 'should properly reduce u.s. states', () => {

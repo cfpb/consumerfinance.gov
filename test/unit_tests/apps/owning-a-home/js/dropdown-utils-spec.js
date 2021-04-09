@@ -93,10 +93,8 @@ describe( 'Dropdown utils', () => {
   } );
 
   it( 'should select several select elements', () => {
-    /* eslint-disable max-len */
     document.body.innerHTML += '<select id="foo1"><option value="baz1"></option></select>';
     document.body.innerHTML += '<select id="foo2"><option value="baz1"></option></select>';
-    /* eslint-enable max-len */
     dropDownUtils( [ 'foo', 'foo2' ] ).disable();
     expect( document.querySelectorAll( 'select :disabled' ).length ).toBe( 2 );
     dropDownUtils( [ 'foo', 'foo1', 'foo2' ] ).enable();
@@ -122,13 +120,11 @@ describe( 'Dropdown utils', () => {
     expect( getOptions( dropDownDom ).length ).toBe( 2 );
   } );
 
-  it( 'should complain if you try to remove ' +
-      'an option without specifying a value', () => {
+  it( 'should complain if you try to remove an option without specifying a value', () => {
     expect( dropDownUtils( 'foo' ).removeOption ).toThrow();
   } );
 
-  it( 'should complain if you try to check ' +
-      'an option without specifying a value', () => {
+  it( 'should complain if you try to check an option without specifying a value', () => {
     expect( dropDownUtils( 'foo' ).hasOption ).toThrow();
   } );
 
@@ -146,40 +142,34 @@ describe( 'Dropdown utils', () => {
 
   it( 'should hide a dropdown', () => {
     dropDownUtils( 'foo' ).hide();
-    expect( getDivClassList( containerDom ).contains( 'u-hidden' ) )
-      .toBe( true );
+    expect( getDivClassList( containerDom ).contains( 'u-hidden' ) ).toBe( true );
   } );
 
   it( 'should show a dropdown', () => {
     dropDownUtils( 'foo' ).hide();
     dropDownUtils( 'foo' ).show();
-    expect( getDivClassList( containerDom ).contains( 'u-hidden' ) )
-      .toBe( false );
+    expect( getDivClassList( containerDom ).contains( 'u-hidden' ) ).toBe( false );
   } );
 
   it( 'should show loading', () => {
     dropDownUtils( 'foo' ).showLoadingAnimation();
-    expect( getDivClassList( containerDom ).contains( 'loading' ) )
-      .toBe( true );
+    expect( getDivClassList( containerDom ).contains( 'loading' ) ).toBe( true );
   } );
 
   it( 'should hide loading', () => {
     dropDownUtils( 'foo' ).showLoadingAnimation();
     dropDownUtils( 'foo' ).hideLoadingAnimation();
-    expect( getDivClassList( containerDom ).contains( 'loading' ) )
-      .toBe( false );
+    expect( getDivClassList( containerDom ).contains( 'loading' ) ).toBe( false );
   } );
 
   it( 'should highlight the dropdown', () => {
     dropDownUtils( 'foo' ).showHighlight();
-    expect( getDivClassList( containerDom ).contains( 'highlight-dropdown' ) )
-      .toBe( true );
+    expect( getDivClassList( containerDom ).contains( 'highlight-dropdown' ) ).toBe( true );
   } );
 
   it( 'should unhighlight the dropdown', () => {
     dropDownUtils( 'foo' ).showHighlight();
     dropDownUtils( 'foo' ).hideHighlight();
-    expect( getDivClassList( containerDom ).contains( 'highlight-dropdown' ) )
-      .toBe( false );
+    expect( getDivClassList( containerDom ).contains( 'highlight-dropdown' ) ).toBe( false );
   } );
 } );

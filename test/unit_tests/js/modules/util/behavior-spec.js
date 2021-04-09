@@ -115,8 +115,7 @@ describe( 'behavior', () => {
       expect( behaviorDom.length === 1 ).toBe( true );
     } );
 
-    it( 'should throw an error when ' +
-        'passed an invalid behavior selector', () => {
+    it( 'should throw an error when passed an invalid behavior selector', () => {
       const behaviorSelector = 'a[href^="#"]';
       const errorMsg = '[data-js-hook*=behavior_' +
                      behaviorSelector + '] not found in DOM!';
@@ -126,8 +125,7 @@ describe( 'behavior', () => {
   } );
 
   describe( 'remove function', () => {
-    it( 'should remove the event callback ' +
-        'for the specific behavior hook', () => {
+    it( 'should remove the event callback for the specific behavior hook', () => {
       const spy = jest.fn();
       const linkDom = document.querySelector( 'a[href^="#"]' );
       behavior.attach( linkDom, 'click', spy );

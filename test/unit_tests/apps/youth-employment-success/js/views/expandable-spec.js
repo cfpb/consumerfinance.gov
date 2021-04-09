@@ -52,8 +52,7 @@ describe( 'expandableView', () => {
       );
     } );
 
-    it( 'removes route-details section as a ' +
-        'direct child when re-opened', () => {
+    it( 'removes route-details section as a direct child when re-opened', () => {
       target.click();
       target.click();
       target.click();

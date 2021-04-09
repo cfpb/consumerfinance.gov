@@ -118,7 +118,7 @@ describe( 'Analytics', () => {
       expect( window.dataLayer.length === 2 ).toBe( true );
     } );
 
-    it( 'shouldn\'t add objects to dataLayer Array if array isn\'t passed',
+    it( 'shouldn\'t add objects to the dataLayer Array if an array isn\'t passed',
       () => {
         const options1 = getDataLayerOptions(
           { ...dataLayerOptions,

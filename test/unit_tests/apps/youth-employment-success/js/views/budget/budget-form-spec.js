@@ -91,8 +91,7 @@ describe( 'BudgetFormView', () => {
     view = null;
   } );
 
-  it( 'updates the total when either/both ' +
-      'money spent or earned values are present', () => {
+  it( 'updates the total when either/both money spent or earned values are present', () => {
     const moneySpentEl = document.querySelector( `.${ CLASSES.SPENT_INPUT }` );
     const moneyEarnedEl = document.querySelector( `.${ CLASSES.EARNED_INPUT }` );
     const totalEl = document.querySelector( `.${ CLASSES.REMAINING }` );

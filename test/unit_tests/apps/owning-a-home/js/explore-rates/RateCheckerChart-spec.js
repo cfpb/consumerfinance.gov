@@ -83,8 +83,7 @@ describe( 'explore-rates/RateCheckerChart', () => {
       const chartDom = document.querySelector( '#chart' );
       const resultAlertDom = document.querySelector( '#chart-result-alert' );
       expect( chartDom.classList.contains( 'warning' ) ).toBe( true );
-      expect( resultAlertDom.classList.contains( 'm-notification__visible' ) )
-        .toBe( true );
+      expect( resultAlertDom.classList.contains( 'm-notification__visible' ) ).toBe( true );
     } );
 
     it( 'should throw error with incorrect status', () => {

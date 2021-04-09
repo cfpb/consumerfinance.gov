@@ -42,8 +42,7 @@ describe( 'printButtonView', () => {
     expect( removeEventSpy ).toHaveBeenCalled();
   } );
 
-  it( 'hides elements with the no print class, ' +
-      'on print and shows them afterwards', () => {
+  it( 'hides elements with the no print class on print, and shows them afterwards', () => {
     const elToToggle = document.querySelector( `.${ CLASSES.NO_PRINT }` );
 
     expect( elToToggle.classList.contains( CLASSES.HIDE ) ).toBeFalsy();

@@ -54,7 +54,7 @@ describe( 'milesView', () => {
   } );
 
   describe( 'event handling', () => {
-    it( 'calls correct action on `miles` field input', () => {
+    it( 'calls the correct action on `miles` field input', () => {
       const milesEl = dom.querySelector( 'input[type="text"]' );
       const milesPerDay = '5';
       const mock = store.dispatch.mock;
@@ -170,8 +170,7 @@ describe( 'milesView', () => {
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
       } );
 
-      it( 'dispatches correct action when miles is filled in ' +
-          'and transportation method is not drive', () => {
+      it( 'dispatches the correct action when miles is filled in and transportation method is not drive', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( prevState, state );
 
@@ -181,8 +180,7 @@ describe( 'milesView', () => {
         );
       } );
 
-      it( 'dispatches correct action when not sure is selected ' +
-          'and transportation method is not drive', () => {
+      it( 'dispatches the correct action when not sure is selected and transportation method is not drive', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( {
           routes: {
@@ -198,8 +196,7 @@ describe( 'milesView', () => {
         );
       } );
 
-      it( 'calls .remove on todo notification ' +
-          'component when this view is toggled', () => {
+      it( 'calls .remove on the todo notification component when this view is toggled', () => {
         store.subscriber()( prevState, state );
 
         expect( todoNotification.remove.mock.calls.length ).toBe( 1 );

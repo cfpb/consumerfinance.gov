@@ -64,7 +64,7 @@ describe( 'DaysPerWeekView', () => {
   } );
 
   describe( 'event handling', () => {
-    it( 'calls correct action on text input', () => {
+    it( 'calls the correct action on text input', () => {
       const daysEl = dom.querySelector( 'input[type="text"]' );
       const daysPerWeek = '2';
       const mock = store.dispatch.mock;
@@ -82,7 +82,7 @@ describe( 'DaysPerWeekView', () => {
       );
     } );
 
-    it( 'calls correct action on checkbox input', () => {
+    it( 'calls the correct action on checkbox input', () => {
       const notSureEl = dom.querySelector( 'input[type="checkbox"]' );
       const mock = store.dispatch.mock;
 
@@ -152,7 +152,7 @@ describe( 'DaysPerWeekView', () => {
         }
       };
 
-      it( 'clears form inputs', () => {
+      it( 'clears the form inputs', () => {
         const daysEl = dom.querySelector( 'input[type="text"]' );
         const notSureEl = dom.querySelector( 'input[type="checkbox"]' );
 
@@ -165,7 +165,7 @@ describe( 'DaysPerWeekView', () => {
         expect( notSureEl.checked ).toBe( false );
       } );
 
-      it( 'hides container element if not hidden', () => {
+      it( 'hides the container element, if not hidden', () => {
         const subscriberFn = store.subscriber();
         subscriberFn( prevState, state );
 
@@ -196,8 +196,7 @@ describe( 'DaysPerWeekView', () => {
         );
       } );
 
-      it( 'calls .remove on todo notification ' +
-          'component when this view is toggled', () => {
+      it( 'calls .remove on the todo notification component when this view is toggled', () => {
         store.subscriber()( { routes: { routes: [ {} ]}}, state );
 
         expect( todoNotification.remove.mock.calls.length ).toBe( 1 );

@@ -1,5 +1,6 @@
+const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
 const scroll = require(
-  '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/scroll.js'
+  BASE_JS_PATH + 'teachers-digital-platform/js/scroll.js'
 );
 
 const HTML_SNIPPET = `

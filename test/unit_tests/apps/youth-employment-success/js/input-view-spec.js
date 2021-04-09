@@ -27,7 +27,7 @@ describe( 'InputView', () => {
     ).toBeTruthy();
   } );
 
-  it( 'throws an error when an input node matching ' +
+  it( 'throws an error when an <input> node matching ' +
       'the `type` prop cannot be found', () => {
     document.body.innerHTML = `
       <div>
