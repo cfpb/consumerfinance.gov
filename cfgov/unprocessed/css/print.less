@@ -224,6 +224,11 @@
         display: none;
     }
 
+    svg.highcharts-root {
+        // Ensure highcharts charts stay within the viewport and aren't cut off
+        max-width: 90vw;
+    }
+
     // Solving Firefox's longstanding issue of cutting off inline-block
     // elements after one page.
     @-moz-document url-prefix() {
