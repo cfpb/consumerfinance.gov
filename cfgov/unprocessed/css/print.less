@@ -167,31 +167,22 @@
         }
 
         // Modifiers
-        &__right {
-            .o-featured-content-module_img {
-                right: 0;
-            }
+        &__right &_img {
+            right: 0;
         }
 
-        &__center {
-            .o-featured-content-module_img {
-                left: 50%;
+        &__center &_img {
+            left: 50%;
 
-                transform: translateX( -50% );
+            transform: translateX( -50% );
 
-                .lt-ie9 & {
-                    position: absolute;
-                    right: -100%;
-                    left: -100%;
-                    margin: auto;
-                }
+            .lt-ie9 & {
+                position: absolute;
+                right: -100%;
+                left: -100%;
+                margin: auto;
             }
         }
-    }
-
-    .o-summary_content[aria-expanded="false"]:after {
-        // Remove the fade gradient when printing
-        background: none;
     }
 
     .o-video-player_play-btn {
