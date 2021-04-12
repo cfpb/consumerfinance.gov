@@ -1,4 +1,4 @@
-import Analytics from '../../../js/modules/Analytics.js';
+import Analytics from '../../../modules/Analytics.js';
 import Expandable from '@cfpb/cfpb-expandables/src/Expandable.js';
 
 let buttonsDom;
