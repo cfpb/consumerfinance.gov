@@ -57,7 +57,7 @@
                 type="audio/mpeg"
                 url="https://files.consumerfinance.gov/f/media/cfpb_financial-intuition-podcast_understanding-your-financial-aid-offer_episode-1.mp3"
             />
-            <pubDate>Mon, 12 Apr 2021 16:00:00 EST</pubDate>
+            <pubDate>Mon, 12 Apr 2021 16:00:00 EDT</pubDate>
             <itunes:duration>1048</itunes:duration>
             <itunes:explicit>false</itunes:explicit>
         </item>
