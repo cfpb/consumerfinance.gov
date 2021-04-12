@@ -17,7 +17,6 @@ from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
-from v1.util.date_filter import end_of_time_period
 
 
 class FilterableDateField(forms.DateField):
@@ -241,11 +240,8 @@ class FilterableListForm(forms.Form):
                     earliest_results, self.preferred_datetime_format)
 
             if to_date:
-                transformed_to_date = end_of_time_period(
-                    self.data['to_date'], cleaned_data['to_date'])
-                cleaned_data['to_date'] = transformed_to_date
                 self.data['to_date'] = date.strftime(
-                    transformed_to_date, self.preferred_datetime_format)
+                    cleaned_data['to_date'], self.preferred_datetime_format)
             else:
                 # If there's a 'from_date' but no 'to_date', use today's date.
                 today = date.today()
