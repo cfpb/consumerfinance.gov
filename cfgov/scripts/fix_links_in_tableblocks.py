@@ -15,13 +15,13 @@ def get_tableblocks(page):
     or in a FullWidthText item. So we must check both.
     """
     try:
-        stream_data = page.specific.content.stream_data
+        data = page.specific.content.raw_data
     except Exception:
         return []
     tableblocks = list(
-        filter(lambda item: item['type'] == 'table_block', stream_data))
+        filter(lambda item: item['type'] == 'table_block', data))
     full_width_text_items = list(
-        filter(lambda item: item['type'] == 'full_width_text', stream_data))
+        filter(lambda item: item['type'] == 'full_width_text', data))
     for item in full_width_text_items:
         sub_items = item['value']
         for sub_item in list(
@@ -31,7 +31,7 @@ def get_tableblocks(page):
 
 
 def convert_links(links):
-    """ Adds a href to the link with the reative path if a
+    """ Adds a href to the link with the relative path if a
     document ID or page ID is stored
     """
     updated = False
