@@ -31,6 +31,11 @@ class PayingForCollegePage(CFGOVPage):
     class Meta:
         abstract = True
 
+    def get_context(self, request, *args, **kwargs):
+        context = super(PayingForCollegePage, self).get_context(request)
+        context['returning_user'] = 'iped' in request.GET and request.GET['iped']
+        return context
+
 
 class PayingForCollegeContent(blocks.StreamBlock):
     """A base content block for PFC pages."""
