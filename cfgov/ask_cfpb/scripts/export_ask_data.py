@@ -61,7 +61,7 @@ def assemble_output():
         output['Language'] = page['language']
         output['RelatedResource'] = page['related_resource__title']
         output['Question'] = page['question'].replace('\x81', '')
-        answer_streamfield = page['answer_content'].stream_data
+        answer_streamfield = page['answer_content'].raw_data
         answer_text = list(filter(
             lambda item: item['type'] == 'text', answer_streamfield))
         if answer_text:
