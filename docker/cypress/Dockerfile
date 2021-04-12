@@ -12,6 +12,10 @@ RUN yum update -y && \
     yum -y install wget && \
     yum clean all && rm -rf /var/cache/yum
 
+# Upgrade Node.js version
+RUN curl -sL https://rpm.nodesource.com/setup_current.x | bash - && \
+    yum install -y nodejs yarn
+
 # Install Chrome browser
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
     yum -y install google-chrome-stable_current_x86_64.rpm ; \
