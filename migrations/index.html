@@ -524,23 +524,23 @@ contained within the <code>block_path</code> list
 belonging to the page or revision using the <code>mapper</code> function.</p>
 <p>The mapper function should take <code>page_or_revision</code>
 and the stream block's value as a <code>dict</code>.</p>
-<p>This function calls <code>migrate_stream_data()</code>.</p>
-<h4 id="migrate_stream_datapage_or_revision-block_path-stream_data-mapper"><code>migrate_stream_data(page_or_revision, block_path, stream_data, mapper)</code><a class="headerlink" href="#migrate_stream_datapage_or_revision-block_path-stream_data-mapper" title="Permanent link">¶</a></h4>
+<p>This function calls <code>migrate_streamfield_data()</code>.</p>
+<h4 id="migrate_streamfield_datapage_or_revision-block_path-data-mapper"><code>migrate_streamfield_data(page_or_revision, block_path, data, mapper)</code><a class="headerlink" href="#migrate_streamfield_datapage_or_revision-block_path-data-mapper" title="Permanent link">¶</a></h4>
 <p>Migrate all occurrences of the block name
 contained within the <code>block_path</code> list
-within the <code>stream_data</code> <code>dict</code>
+within the <code>data</code> <code>dict</code>
 using the given <code>mapper</code> function.</p>
 <p>The mapper function should take <code>page_or_revision</code>
 and the stream block's value as a <code>dict</code>.</p>
-<h4 id="get_stream_datapage_or_revision-field_name"><code>get_stream_data(page_or_revision, field_name)</code><a class="headerlink" href="#get_stream_datapage_or_revision-field_name" title="Permanent link">¶</a></h4>
+<h4 id="get_streamfield_datapage_or_revision-field_name"><code>get_streamfield_data(page_or_revision, field_name)</code><a class="headerlink" href="#get_streamfield_datapage_or_revision-field_name" title="Permanent link">¶</a></h4>
 <p>Get the StreamField data for a given field name on a page or a revision.</p>
 <p>This function will return a list of <code>dict</code>-like objects
 containing the blocks within the given StreamField.</p>
-<h4 id="set_stream_datapage_or_revision-field_name-stream_data-committrue"><code>set_stream_data(page_or_revision, field_name, stream_data, commit=True)</code><a class="headerlink" href="#set_stream_datapage_or_revision-field_name-stream_data-committrue" title="Permanent link">¶</a></h4>
+<h4 id="set_streamfield_datapage_or_revision-field_name-data-committrue"><code>set_streamfield_data(page_or_revision, field_name, data, commit=True)</code><a class="headerlink" href="#set_streamfield_datapage_or_revision-field_name-data-committrue" title="Permanent link">¶</a></h4>
 <p>Set the StreamField data for a given field name on a page or a revision.
 If commit is <code>True</code> (default),
 <code>save()</code> is called on the <code>page_or_revision</code> object.</p>
-<p><code>stream_data</code> must be a list of <code>dict</code>-like objects
+<p><code>data</code> must be a list of <code>dict</code>-like objects
 containing the blocks within the given StreamField.</p>
 <h2 id="recreating-migrations">Recreating migrations<a class="headerlink" href="#recreating-migrations" title="Permanent link">¶</a></h2>
 <p><a href="#schema-migrations">As described above</a>,
