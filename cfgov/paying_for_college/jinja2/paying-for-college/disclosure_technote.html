@@ -229,7 +229,7 @@
                             Awarded based on financial need
                         </li>
                         <li class="list_item">
-                            Up to <span data-cap="pell">$X</span> per academic
+                            Up to {{ pellCap }} per academic
                             year
                         </li>
                     </ul>
@@ -246,9 +246,8 @@
                             pursuing higher education
                         </li>
                         <li class="list_item">
-                            Up to <span
-                            data-cap="militaryTuitionAssistance">$X</span> per
-                            academic year depending on your service
+                            Up to {{ militaryAssistanceCap }} per
+                               academic year depending on your service
                         </li>
                     </ul>
                     <p>
@@ -319,9 +318,8 @@
                     <p>
                         For federal student loans, the tool applies the interest
                         rates that apply to loans first disbursed during the
-                        <span data-financial="constantsYear"
-                        data-currency="false">2016-17</span> financial aid award
-                        year. These rates are set by the laws governing federal
+                        {{ constantsYear }} financial aid award year.
+                        These rates are set by the laws governing federal
                         student loan programs, including the Higher Education
                         Act.
                     </p>
@@ -347,17 +345,15 @@
                             Awarded based on financial need
                         </li>
                         <li class="list_item">
-                            Up to <span data-cap="perkins">$X</span> per
+                            Up to {{ perkinsUnderCap }} per
                             academic year for undergraduates
                         </li>
                         <li class="list_item">
-                            Up to <span data-cap="perkinsGrad">$X</span> for
-                            graduate students
+                            Up to {{ perkinsGradCap }} for graduate students
                         </li>
                         <li class="list_item">
-                            <span data-financial="perkinsRate"
-                            data-percentage_value="true">[XX]</span>% interest
-                            rate fixed for the life of the loan
+                            {{ perkinsRate }} interest rate
+                            fixed for the life of the loan
                         </li>
                         <li class="list_item">
                             Repayment starts nine months after you leave school
@@ -386,7 +382,7 @@
                             students
                         </li>
                         <li class="list_item">
-                            Up to <span data-cap="directSubsidized">$X</span>
+                            Up to {{ subsidizedCapYearOne }}
                             per academic year for the first year
                         </li>
                         <li class="list_item">
@@ -394,9 +390,8 @@
                             every year you are in school
                         </li>
                         <li class="list_item">
-                            <span data-financial="subsidizedRate"
-                            data-percentage_value="true"> [XX]</span>% interest
-                            rate fixed for the life of the loan
+                            {{ subsidizedRate }} interest rate
+                            fixed for the life of the loan
                         </li>
                         <li class="list_item">
                             Repayment starts six months after you leave school
@@ -409,9 +404,7 @@
                             period
                         </li>
                         <li class="list_item">
-                            Loan fee of <span data-financial="DLOriginationFee"
-                            data-fee="origination"
-                            data-percentage_value="true">[XX]</span>% of the
+                            Loan fee of {{ DLOriginationFee }}   of the
                             total loan amount
                         </li>
                         <li class="list_item">
@@ -427,20 +420,17 @@
                             For all students, regardless of financial need
                         </li>
                         <li class="list_item">
-                            Up to <span
-                            data-cap="directUnsubsidizedDep">$X</span> for the
+                            Up to {{ unsubsidizedCapYearOne }} for the
                             first year in school for dependent undergraduates
                             <ul>
                                 <li class="list_item__spaced">
                                     Increases as you progress through school, up
-                                    to <span
-                                    data-cap="directUnsubsidizedDepThirdYear">$X
-                                    </span>
+                                    to {{ unsubsidizedCapYearThree }}
                                 </li>
                             </ul>
                         </li>
                         <li class="list_item">
-                            Up to <span data-cap="directUnsubsidized">$X</span>
+                            Up to {{ unsubsidizedCapIndepYearOne }}
                             for the first year for independent undergraduate
                             students (students who are not required to provide
                             parental information when applying for federal
@@ -448,14 +438,12 @@
                             <ul>
                                 <li class="list_item__spaced">
                                     Increases as you progress through school, up
-                                    to <span
-                                    data-cap="directUnsubsidizedThirdYear">$X</span>
+                                    to {{ unsubsidizedCapIndepYearThree }}
                                 </li>
                             </ul>
                         </li>
                         <li class="list_item">
-                            Up to <span
-                            data-cap="directUnsubsidizedGrad">$X</span> for
+                            Up to {{ unsubsidizedCapGrad }} for
                             graduate or professional students – higher annual
                             limits apply to students pursuing degrees in the
                             health professions.
@@ -469,16 +457,13 @@
                             unsubsidized loans your first year.
                         </li>
                         <li class="list_item">
-                            <span data-financial="unsubsidizedRateUndergrad"
-                            data-percentage_value="true">[XX]</span>% interest
-                            rate for undergraduates fixed for the life of the
-                            loan
+                            {{ unsubsidizedRateUndergrad }} interest rate
+                            for undergraduates fixed for the life of the loan
                         </li>
                         <li class="list_item">
-                            <span data-financial="unsubsidizedRateGrad"
-                            data-percentage_value="true">[XX]</span>% interest
-                            rate for graduate or professional students fixed for
-                            the life of the loan
+                            {{ unsubsidizedRateGrad }} interest rate
+                            for graduate or professional students fixed
+                            for the life of the loan
                         </li>
                         <li class="list_item">
                             Interest starts accruing while you are still in
@@ -489,9 +474,7 @@
                             (grace period)
                         </li>
                         <li class="list_item">
-                            Loan fee of <span data-financial="DLOriginationFee"
-                            data-fee="origination"
-                            data-percentage_value="true">[XX]</span>% of the
+                            Loan fee of {{ DLOriginationFee }} of the
                             total loan amount
                         </li>
                     </ul>
@@ -521,9 +504,8 @@
                             including other federal loans
                         </li>
                         <li class="list_item">
-                            <span data-financial="gradPlusRate"
-                            data-percentage_value="true">[XX]</span>% interest
-                            rate fixed for the life of the loan
+                            {{ gradPlusRate }} interest rate
+                            fixed for the life of the loan
                         </li>
                         <li class="list_item">
                             Interest starts accruing while you are still in
@@ -534,10 +516,7 @@
                             (deferment period)
                         </li>
                         <li class="list_item">
-                            Loan fee of <span
-                            data-financial="plusOriginationFee"
-                            data-fee="origination"
-                            data-percentage_value="true">[XX]</span>% of the
+                            Loan fee of {{ plusOriginationFee }} of the
                             total loan amount
                         </li>
                     </ul>
@@ -637,10 +616,9 @@
                     </ul>
                     <p>
                         For private student loans where an interest rate is not
-                        provided we assume a constant interest rate of <span
-                        data-financial="privateLoanRate"
-                        data-percentage_value="true">[XX]</span>%. The tool
-                        allows you to adjust that interest rate to match what
+                        provided we assume a constant interest rate of
+                        {{ privateLoanRate }}. The tool allows you
+                        to adjust that interest rate to match what
                         you have been offered by your lender. However, keep in
                         mind that interest rates on private student loans and or
                         tuition payment plans may be variable and change
