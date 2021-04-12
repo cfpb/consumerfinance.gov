@@ -58,7 +58,7 @@ const datetime = {
     enabled: true,
     allButtonsEnabled: true,
     buttonPosition: {
-      x: -48,
+      x: -60,
       y: -70
 
     },

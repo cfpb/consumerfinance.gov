@@ -239,18 +239,15 @@ function makeChartOptions(
     defaultObj.navigator.enabled = false;
     defaultObj.xAxis.min = defaultObj.series[0].data[0].x;
   }
-  if ( defaultObj.series.length > 1 ) {
-    const len = defaultObj.series.length;
-    let marg = ( len * 23 ) + 35;
-    let y = 0;
-    if ( marg < 100 ) {
-      marg = 100;
-      y = 19;
-    }
-    defaultObj.legend.enabled = true;
-    defaultObj.chart.marginTop = marg;
-    defaultObj.legend.y = y;
+  const len = defaultObj.series.length;
+  let marg = ( len * 23 ) + 35;
+  let y = 0;
+  if ( marg < 100 ) {
+    marg = 100;
+    y = 19;
   }
+  defaultObj.chart.marginTop = marg;
+  defaultObj.legend.y = y;
 
   return defaultObj;
 }
