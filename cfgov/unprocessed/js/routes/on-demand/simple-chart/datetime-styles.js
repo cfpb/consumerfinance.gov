@@ -58,7 +58,7 @@ const datetime = {
     enabled: true,
     allButtonsEnabled: true,
     buttonPosition: {
-      x: -35,
+      x: -60,
       y: -70
 
     },
@@ -94,10 +94,18 @@ const datetime = {
   },
   navigator: {
     enabled: true,
-    outlineColor: '#b4b5b6',
     height: 45,
-    maskFill: 'black',
-    series: { color: '#b4b5b6' },
+    series: {
+      data: []
+    },
+    xAxis: {
+      tickInterval: msYear * 2,
+      labels: {
+        style: {
+          color: '#4f5257'
+        }
+      }
+    },
     handles: {
       height: 20,
       width: 10
@@ -111,6 +119,9 @@ const datetime = {
           maxWidth: 600
         },
         chartOptions: {
+          chart: {
+            marginTop: 150
+          },
           xAxis: {
             labels: {
               step: 2
@@ -118,8 +129,8 @@ const datetime = {
           },
           rangeSelector: {
             buttonPosition: {
-              x: -23,
-              y: -85
+              x: -40,
+              y: -105
             }
           },
           navigator: {
