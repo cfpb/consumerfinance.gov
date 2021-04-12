@@ -1,17 +1,17 @@
 .o-simple-chart {
   max-width: 670px;
-  margin-bottom: 2.8125em;
+  margin-bottom: unit( 45 / @base-font-size-px, em );
   h2 {
     margin-top: 0;
   }
 
   h5 {
-    margin-bottom: 1.0714em;
+   margin-bottom: unit( @size-v / 14, em );
   }
 
   h3 {
     .respond-to-max( @bp-xs-max, {
-      margin-top: 1.66666em;
+      margin-top: unit( 25 / 15, em);
     })
   }
 
@@ -21,13 +21,13 @@
 
   .o-simple-chart_selects {
     .respond-to-max( @bp-xs-max, {
-      margin-top: 0.5625em;
+      margin-top: unit( 9 / @base-font-size-px, em);
     })
   }
 
   .select-wrapper {
     .grid_column(1,2);
-    margin-bottom: 0.9375em;
+    margin-bottom: unit( 15 / @base-font-size-px, em);
     border-width: 0 30px 0 0;
     .respond-to-max( @bp-xs-max, {
       display: block;
@@ -37,15 +37,15 @@
 
   .a-label__heading {
     margin: 0;
-    padding-bottom: 0.83333em;
+    padding-bottom: unit( 10 / @size-vi, em);
     .respond-to-max( @bp-xs-max, {
       font-size: @base-font-size-px;
-      padding-bottom: 0.625em;
+      padding-bottom: unit( 10 / @base-font-size-px, em);
     })
   }
 
   .o-simple-chart_target {
-    margin-top: 0.875em;
+    margin-top: unit( 14 / @base-font-size-px, em);
     .respond-to-max( @bp-xs-max, {
       margin-top: 0;
     })
@@ -118,7 +118,7 @@
     }
     text {
       transform:translate(0, 5px);
-      font-size: 16px;
+      font-size: @base-font-size-px;
       font-weight: 400;
       &:first-child{
         transform:translate(48px,-28px)
@@ -162,12 +162,8 @@
     }
   }
   .m-chart-footnote {
-    max-width: 55.8333333333rem;
-    margin-top: 2.5em;
-    padding-top: 1.25em;
-    .respond-to-max( @bp-xs-max, {
-      margin-top: 2.5em;
-    })
-
+    max-width: unit(670 / @size-vi, rem);
+    margin-top: unit(30 / @size-vi, em);
+    padding-top: unit(15 / @size-vi, em);
   }
 }
