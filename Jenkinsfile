@@ -19,7 +19,7 @@ pipeline {
 
     environment {
         // Docker Repository used by functional tests
-        CYPRESS_REPO = 'cypress/included:6.8.0'
+        CYPRESS_REPO = 'cypress/included:7.0.1'
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
@@ -64,7 +64,7 @@ pipeline {
                 sh 'env | sort'
                 // Create docker network used by functional tests
                 sh '''if [ -z "$(docker network ls -q -f name=^cfgov$)" ]; then docker network create cfgov; fi'''
-                // Stop docker containers used by functional tests 
+                // Stop docker containers used by functional tests
                 sh '''if [ "$(docker ps -a -q -f ancestor=${CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${CYPRESS_REPO}); fi'''
                 // Remove docker containers and volumes used by functional tests
                 sh "docker container prune -f"
