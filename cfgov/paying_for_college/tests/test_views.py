@@ -82,9 +82,8 @@ class TestViews(django.test.TestCase):
         response = self.client.get(
             reverse("paying_for_college:disclosures:pfc-feedback")
         )
-        self.assertEqual(
-            sorted(list(response.context_data.keys())), ["form", "url_root"]
-        )
+        self.assertIn('form', response.context_data)
+        self.assertIn('url_root', response.context_data)
 
     def test_feedback_post_creates_feedback(self):
         self.assertFalse(Feedback.objects.exists())

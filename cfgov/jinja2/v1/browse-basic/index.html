@@ -36,7 +36,7 @@
     {% for block in page.content -%}
         {% if block.block_type in ['feedback', 'conference_registration_form'] %}
             {{- form_block.render(block, 'content', loop.index0) -}}
-        {% elif block.block_type in ['job_listing_table'] %}
+        {% elif block.block_type in ['job_listing_table', 'simple_chart'] %}
             {% include_block block %}
         {% else %}
             {{ render_block.render(block, loop.index) }}

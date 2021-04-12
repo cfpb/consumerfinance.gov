@@ -1,7 +1,7 @@
 export class ConsumerComplaints {
 
   click( name ) {
-    cy.get( '.btn' ).contains( name ).click();
+    cy.get( '.a-btn' ).contains( name ).click();
   }
 
   clickTab( name ) {

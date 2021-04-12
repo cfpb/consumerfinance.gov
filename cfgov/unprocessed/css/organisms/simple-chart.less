@@ -1,4 +1,5 @@
 .o-simple-chart {
+  max-width: 670px;
   h2 {
     margin-top: 0;
   }
@@ -13,10 +14,13 @@
     })
   }
 
-  .chart-selects {
-    margin-top: 1.875em;
+  .o-simple-chart_subtitle {
+    margin: 0;
+  }
+
+  .o-simple-chart_selects {
     .respond-to-max( @bp-xs-max, {
-      margin-top: 1.5625em;
+      margin-top: 0.5625em;
     })
   }
 
@@ -39,11 +43,29 @@
     })
   }
 
-  .simple-chart-target {
-    margin-top: 1.875em;
+  .o-simple-chart_target {
+    margin-top: 0.875em;
     .respond-to-max( @bp-xs-max, {
-      margin-top: 0.9375em;
+      margin-top: 0;
     })
+  }
+
+  .highcharts-navigator-mask-inside{
+    fill: @gray-20;
+  }
+  .highcharts-navigator-handle {
+    stroke: @gray;
+    fill: @gray-5;
+  }
+  .highcharts-navigator-outline {
+    stroke: @gray-40;
+  }
+
+  .highcharts-navigator-xaxis > text {
+    font-size: 12px !important;
+  }
+  .highcharts-xaxis-grid.highcharts-navigator-xaxis > .highcharts-grid-line {
+    stroke: @gray-40;
   }
 /* Testing line patterns
   .highcharts-line-series.highcharts-series-0 {
@@ -88,15 +110,19 @@
     fill: #7eb7e8;
   }
   .highcharts-range-selector-buttons{
+    .highcharts-button:last-child {
+      text{
+      font-weight: 500 !important;
+    }
+    }
     text {
-      transform:translate(-8px, 20px);
+      transform:translate(0, 5px);
+      font-size: 16px;
+      font-weight: 400;
       &:first-child{
-        display:none;
+        transform:translate(48px,-28px)
       }
     }
-  }
-  .highcharts-navigator-mask-inside{
-    fill: @gray-30;
   }
   .highcharts-tooltip-box{
     background-color: #f7f8f9;

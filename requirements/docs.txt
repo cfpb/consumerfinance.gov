@@ -1,7 +1,7 @@
 backports-abc==0.5
 Click==7.0
 futures==3.1.1
-Jinja2==2.10.1
+Jinja2==2.11.3
 livereload==2.6.0
 Markdown==2.6.11
 MarkupSafe==1.1.0
@@ -10,6 +10,6 @@ mkdocs-bootstrap==1.0.1
 mkdocs-bootswatch==1.0
 mkdocs-rtd-dropdown==1.0.2
 pymdown-extensions==5.0
-PyYAML==5.3.1
+PyYAML==5.4.1
 singledispatch==3.4.0.3
 tornado==5.1.1

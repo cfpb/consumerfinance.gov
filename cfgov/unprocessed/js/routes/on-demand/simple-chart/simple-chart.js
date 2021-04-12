@@ -130,14 +130,20 @@ function extractSeries( rawData, { series, xAxisData, chartType } ) {
 
     // array of {name: str, data: arr (maybe of obj)}
     series.forEach( currSeries => {
+      let name = currSeries;
+      let key = currSeries;
+      if ( typeof currSeries === 'object' ) {
+        name = name.label;
+        key = key.key;
+      }
       const currArr = [];
       const currObj = {
-        name: currSeries,
+        name,
         data: currArr
       };
 
       rawData.forEach( obj => {
-        let d = Number( obj[currSeries] );
+        let d = Number( obj[key] );
         if ( chartType === 'datetime' ) {
           d = {
             x:  Number( new Date( obj[xAxisData] ) ),
@@ -233,18 +239,15 @@ function makeChartOptions(
     defaultObj.navigator.enabled = false;
     defaultObj.xAxis.min = defaultObj.series[0].data[0].x;
   }
-  if ( defaultObj.series.length > 1 ) {
-    const len = defaultObj.series.length;
-    let marg = ( len * 23 ) + 35;
-    let y = 0;
-    if ( marg < 100 ) {
-      marg = 100;
-      y = 19;
-    }
-    defaultObj.legend.enabled = true;
-    defaultObj.chart.marginTop = marg;
-    defaultObj.legend.y = y;
+  const len = defaultObj.series.length;
+  let marg = ( len * 23 ) + 35;
+  let y = 0;
+  if ( marg < 100 ) {
+    marg = 100;
+    y = 19;
   }
+  defaultObj.chart.marginTop = marg;
+  defaultObj.legend.y = y;
 
   return defaultObj;
 }
@@ -327,7 +330,7 @@ function getOptions( filter, data, isDate ) {
 function makeFilterDOM( options, chartNode, filter, selectLabel, selectLast ) {
   const name = filter.label ? filter.label : filter.key;
   const id = Math.random() + name;
-  const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
+  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_selects' )[0];
 
   const wrapper = document.createElement( 'div' );
   wrapper.className = 'select-wrapper m-form-field m-form-field__select';
@@ -398,7 +401,7 @@ function titleCase( title ) {
  * @returns {object} the built select DOM node
  */
 function makeSelectHeaderDOM( chartNode ) {
-  const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
+  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_selects' )[0];
   const selectHeader = document.createElement( 'h3' );
   selectHeader.innerText = 'Total ' + titleCase( attachPoint.dataset.title );
   attachPoint.appendChild( selectHeader );
@@ -418,7 +421,7 @@ function makeSelectHeaderDOM( chartNode ) {
 function attachFilter(
   selectNode, chartNode, chart, dataset, filter, data, transform
 ) {
-  const attachPoint = chartNode.getElementsByClassName( 'chart-selects' )[0];
+  const attachPoint = chartNode.getElementsByClassName( 'o-simple-chart_selects' )[0];
   const selectHeader = attachPoint.querySelector( 'h3' );
   const { styleOverrides } = dataset;
   const title = titleCase( attachPoint.dataset.title );
@@ -566,7 +569,7 @@ function buildCharts() {
  * @param {object} chartNode The DOM node of the current chart
  */
 function buildChart( chartNode ) {
-  const target = chartNode.getElementsByClassName( 'simple-chart-target' )[0];
+  const target = chartNode.getElementsByClassName( 'o-simple-chart_target' )[0];
   const { source, transform } = target.dataset;
 
   resolveData( source.trim() ).then( raw => {
@@ -585,6 +588,10 @@ function buildChart( chartNode ) {
       target,
       makeChartOptions( data, target.dataset )
     );
+    const mediaQueryList = window.matchMedia( 'print' );
+    mediaQueryList.addListener( function() {
+      chart.reflow();
+    } );
 
     initFilters(
       target.dataset, chartNode, chart, data, transform && chartHooks[transform]
