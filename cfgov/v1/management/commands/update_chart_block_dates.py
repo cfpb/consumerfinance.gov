@@ -47,7 +47,7 @@ class Command(BaseCommand):
         for page in BrowsePage.objects.all():
             chart_blocks = filter(
                 lambda item: item['type'] == 'chart_block',
-                page.specific.content.stream_data
+                page.specific.content.raw_data
             )
             if not chart_blocks:
                 continue
