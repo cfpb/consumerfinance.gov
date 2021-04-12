@@ -114,9 +114,9 @@ services:
         - com.docker.lb.network=${LB_NETWORK}
       resources:
         limits:
-          memory: 512M
+          memory: 1024M
         reservations:
-          memory: 128M
+          memory: 512M
     command: >
                 bash -c "
 
