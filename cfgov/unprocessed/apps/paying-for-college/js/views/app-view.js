@@ -52,7 +52,7 @@ const appView = {
   },
 
   _handleCopyLinkBtn: () => {
-    if ( navigator.clipboard != undefined ) {
+    if ( navigator.clipboard ) {
       navigator.clipboard.writeText( window.location.href ).then( function () {
         appView._copyBtnDefaultText.classList.add( HIDDEN_CLASS );
         appView._copyBtnSuccessText.classList.remove( HIDDEN_CLASS );
@@ -61,13 +61,9 @@ const appView = {
           appView._copyBtnSuccessText.classList.add( HIDDEN_CLASS );
           appView._copyBtnDefaultText.classList.remove( HIDDEN_CLASS );
         }, 3000 );
-
-      }, function ( err ) {
-        console.error( 'Async: Could not copy text: ', err );
       });
-    }
-    else if ( window.clipboardData && window.clipboardData.setData ) { // fallback
-      window.clipboardData.setData( "Text", window.location.href );
+    } else if ( window.clipboardData && window.clipboardData.setData ) {
+      window.clipboardData.setData( 'Text', window.location.href );
     }
   },
 
