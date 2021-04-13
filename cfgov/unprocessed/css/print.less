@@ -225,6 +225,20 @@
         max-width: 90vw;
     }
 
+    // Cap content line lengths at ~ 75 characters. `ch` equals the width of the
+    // font's 0 glyph which is wider than some others (i, f, t, etc.) so setting
+    // it to 62 gives us approximately 75 characters per line.
+    .content_main,
+    .content_intro {
+        dd,
+        dt,
+        li,
+        p,
+        label {
+            max-width: 62ch;
+        }
+    }
+
     // Solving Firefox's longstanding issue of cutting off inline-block
     // elements after one page.
     @-moz-document url-prefix() {
