@@ -70,7 +70,6 @@ class FilterableListForm(forms.Form):
         widget=forms.TextInput(attrs={
             'id': 'o-filterable-list-controls_title',
             'class': 'a-text-input a-text-input__full',
-            'placeholder': 'Search for a specific word in item title',
         })
     )
     from_date = FilterableDateField(
@@ -133,6 +132,12 @@ class FilterableListForm(forms.Form):
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
+    def get_order_by(self):
+        if self.wagtail_block is not None:
+            return self.wagtail_block.value.get('order_by', '-date_published')
+        else:
+            return '-date_published'
+
     def get_page_set(self):
         if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
             categories = self.cleaned_data.get('categories')
@@ -154,7 +159,8 @@ class FilterableListForm(forms.Form):
                 to_date=self.cleaned_data.get('to_date'),
                 from_date=self.cleaned_data.get('from_date'),
                 title=self.cleaned_data.get('title'),
-                archived=self.cleaned_data.get('archived')).search()
+                archived=self.cleaned_data.get('archived'),
+                order_by=self.get_order_by()).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(
@@ -361,7 +367,8 @@ class EventArchiveFilterForm(FilterableListForm):
                 authors=self.cleaned_data.get('authors'),
                 to_date=self.cleaned_data.get('to_date'),
                 from_date=self.cleaned_data.get('from_date'),
-                title=self.cleaned_data.get('title')).search()
+                title=self.cleaned_data.get('title'),
+                order_by=self.get_order_by()).search()
         else:
             query = self.generate_query()
             return self.filterable_pages.filter(query).distinct().order_by(

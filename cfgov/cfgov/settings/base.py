@@ -141,7 +141,7 @@ MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "core.middleware.ParseLinksMiddleware",
@@ -653,6 +653,7 @@ CSP_CONNECT_SRC = (
     "n2.mouseflow.com",
     "api.iperceptions.com",
     "*.qualtrics.com",
+    "raw.githubusercontent.com",
 )
 
 # These specify valid media sources (e.g., MP3 files)
@@ -730,8 +731,6 @@ FLAGS = {
     "BETA_EXTERNAL_TESTING": [],
     # Used to hide new youth employment success pages prior to public launch
     "YOUTH_EMPLOYMENT_SUCCESS": [],
-    # Used to hide CCDB landing page updates prior to public launch
-    "CCDB_CONTENT_UPDATES": [],
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     "COLLECT_OUTAGE": [
@@ -767,7 +766,9 @@ FLAGS = {
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
     # Enable ES as the backend for FilterableLists
-    "ELASTICSEARCH_FILTERABLE_LISTS": []
+    "ELASTICSEARCH_FILTERABLE_LISTS": [],
+    # Expand ES Filterable List Search
+    "EXPAND_FILTERABLE_LIST_SEARCH": [],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
@@ -837,6 +838,9 @@ PARSE_LINKS_EXCLUSION_LIST = [
     r"^/policy-compliance/rulemaking/regulations/\d+/",
     # DjangoRestFramework API pages where link icons are intrusive
     r"^/oah-api/",
+    # External site interstitial (if we're here, the links have already been
+    # parsed)
+    r"^/external-site/",
 ]
 
 # Required by django-extensions to determine the execution directory used by
@@ -871,3 +875,15 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
 REST_FRAMEWORK = {
     "COERCE_DECIMAL_TO_STRING": False
 }
+
+# We require CSRF only on authenticated paths. This setting is handled by our
+# core.middleware.PathBasedCsrfViewMiddleware.
+#
+# Any paths listed here that are public-facing will receive an "
+# "Edge-Control: no-store" header from our
+# core.middleware.DownstreamCacheControlMiddleware and will not be cached.
+CSRF_REQUIRED_PATHS = (
+    "/login",
+    "/admin",
+    "/django-admin",
+)

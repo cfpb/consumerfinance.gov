@@ -3,13 +3,12 @@ backports.csv==1.0.7
 beautifulsoup4==4.8.2
 boto3==1.7.80
 dj-database-url==0.5.0
-djangorestframework==3.11.1
+djangorestframework==3.11.2
 django-csp==3.4
 django-elasticsearch-dsl==7.1.4
 django-extensions==2.1.3
-django-flags==5.0.3
+django-flags==5.0.4
 django-haystack==2.8.1
-# django-localflavor is required by django-college-costs-comparison
 django-localflavor==2.2
 django-mptt==0.9.0
 django-storages==1.7.1
@@ -19,8 +18,8 @@ edgegrid-python==1.0.10
 elasticsearch7==7.9.1
 elasticsearch==2.4.1
 govdelivery==1.3
-Jinja2==2.11.2
-lxml==4.2.5
+Jinja2==2.11.3
+lxml==4.6.3
 Markdown==3.2.1
 ntplib==0.3.4
 openpyxl==3.0.3

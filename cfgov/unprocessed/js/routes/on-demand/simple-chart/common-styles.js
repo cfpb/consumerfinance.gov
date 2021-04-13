@@ -1,11 +1,18 @@
 const styles = {
   accessibility: {},
   chart: {
+    height: 500,
     style: {
       fontFamily: '"Avenir Next", Arial, sans-serif',
       fontSize: '16px',
       color: '#5a5d61',
       lineHeight: 1.375
+    },
+    events: {
+      render: function() {
+        const zoomText = this.container.querySelector( '.highcharts-range-selector-buttons > text' );
+        if ( zoomText && zoomText.textContent !== 'Select time range' ) zoomText.textContent = 'Select time range';
+      }
     }
   },
   credits: false,
@@ -14,7 +21,20 @@ const styles = {
   scrollbar: {
     enabled: false
   },
-  legend: { enabled: false },
+  legend: {
+    enabled: true,
+    symbolWidth: 45,
+    floating: true,
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'top',
+    itemMarginBottom: 4,
+    itemStyle: {
+      color: '#5a5d61',
+      fontFamily: '"AvenirNextLTW01-Regular", Arial, sans-serif',
+      fontSize: 16
+    }
+  },
   plotOptions: {
     series: {
       animation: {
@@ -77,11 +97,6 @@ const styles = {
         chartOptions: {
           chart: {
             spacingLeft: 0
-          },
-          xAxis: {
-            labels: {
-              step: 2
-            }
           },
           yAxis: {
             title: {
