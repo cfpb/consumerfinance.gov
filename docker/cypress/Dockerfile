@@ -1,20 +1,19 @@
-FROM cypress/base:centos7-12.4.0
+FROM centos:7
 
 LABEL maintainer="tech@cfpb.gov"
-
-ENV CYPRESS_VERSION 7.0.1
 
 RUN mkdir -p /app
 WORKDIR /app
 
 # Update and install OS dependencies
 RUN yum update -y && \
-    yum -y install wget && \
+    yum -y install gcc-c++ make wget && \
     yum clean all && rm -rf /var/cache/yum
 
-# Upgrade Node.js version
+# Install Node.js
 RUN curl -sL https://rpm.nodesource.com/setup_current.x | bash - && \
-    yum install -y nodejs yarn
+    yum install -y nodejs && \
+    npm install yarn -g
 
 # Install Chrome browser
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
@@ -22,16 +21,24 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.
     rm -f ./google-chrome-stable_current_x86_64.rpm
 RUN google-chrome --version
 
+# Install Cypress dependencies
+RUN yum -y install \
+        xorg-x11-server-Xvfb \
+        xorg-x11-xauth \
+        gtk3-3.22* \
+        libXtst* \
+        libXScrnSaver* \
+        GConf2* \
+        alsa-lib*
+
 # Install Cypress
 RUN npm install -D cypress && \
     $(npm bin)/cypress verify
 
 # Remove files flagged by image vulnerability scanner
-RUN cd /root/.cache/Cypress/${CYPRESS_VERSION}/Cypress/resources/app/packages/server/node_modules/ && \
+RUN cd /root/.cache/Cypress/*/Cypress/resources/app/packages/server/node_modules/ && \
     rm -rf http-proxy/test/fixtures/agent2-key.pem lazystream/secret && \
-    rm -rf public-encrypt/test/*.pem public-encrypt/test/*.priv
-RUN cd /usr/lib64/python2.7/site-packages/bzrlib/tests/ssl_certs/ && \
-    rm -f server_with_pass.key server_without_pass.key && \
+    rm -f public-encrypt/test/*.pem public-encrypt/test/*.priv && \
     rm -f /etc/pki/tls/private/localhost.key
 
 # Set User to Non Root
