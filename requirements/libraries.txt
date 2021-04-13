@@ -30,7 +30,7 @@ requests==2.22.0
 requests_aws4auth==0.8.0
 requests_toolbelt==0.8.0
 urllib3==1.25.2
-# wagtail-autocomplete==0.6 TODO: Restore when wagtail-autocomplete #77 is merged
+wagtail-autocomplete==0.6.3
 wagtail-flags==5.1.0
 wagtail-inventory==1.2.0
 wagtail-placeholder-images==0.1.1
@@ -40,7 +40,6 @@ wagtailmedia==0.6.0
 
 # These packages are installed from GitHub.
 https://github.com/cfpb/elasticsearch-dsl-py/releases/download/7.2.2/elasticsearch_dsl-7.2.2-py2.py3-none-any.whl
-https://github.com/cfpb/wagtail-autocomplete/releases/download/0.7/wagtail_autocomplete-0.6-py3-none-any.whl
 https://github.com/cfpb/owning-a-home-api/releases/download/0.17.1/owning_a_home_api-0.17.1-py3-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.15.2/retirement-0.15.2-py3-none-any.whl
 https://github.com/cfpb/ccdb5-api/releases/download/1.5.2/ccdb5_api-1.5.2-py3-none-any.whl
