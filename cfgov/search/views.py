@@ -62,17 +62,3 @@ class SearchView(View):
             if page.pk not in seen:
                 seen.add(page.pk)
                 yield page
-
-
-def results_view(request):
-    query = request.GET.get('q', '')
-
-    results = dotgov.search(query)
-
-    context = {
-        'q': query,
-        'results': results
-    }
-
-    response = TemplateResponse(request, 'search/results.html', context)
-    return response.render()
