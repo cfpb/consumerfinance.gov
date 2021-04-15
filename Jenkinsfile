@@ -88,7 +88,8 @@ pipeline {
 
         stage('Build Image') {
             environment {
-                DOCKER_BUILDKIT = '1'
+                DOCKER_BUILDKIT = '0'
+                COMPOSE_DOCKER_CLI_BUILD = '0'
             }
             steps {
                 postGitHubStatus("jenkins/deploy", "pending", "Building", env.RUN_DISPLAY_URL)
