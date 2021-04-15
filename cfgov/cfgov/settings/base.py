@@ -718,8 +718,6 @@ FLAGS = {
     # Email popups.
     "EMAIL_POPUP_OAH": [("boolean", True)],
     "EMAIL_POPUP_DEBT": [("boolean", True)],
-    # Search.gov API-based site-search
-    "SEARCH_DOTGOV_API": [],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # SPLIT TESTING FLAGS
@@ -782,10 +780,6 @@ WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS")
 WATCHMAN_CHECKS = (
     "alerts.checks.elasticsearch_health",
 )
-
-# Search.gov values
-SEARCH_DOT_GOV_AFFILIATE = os.environ.get("SEARCH_DOT_GOV_AFFILIATE")
-SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get("SEARCH_DOT_GOV_ACCESS_KEY")
 
 # We want the ability to serve the latest drafts of some pages on beta
 # This value is read by v1.wagtail_hooks
