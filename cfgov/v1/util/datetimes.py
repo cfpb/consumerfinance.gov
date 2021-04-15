@@ -1,6 +1,8 @@
+import re
 from datetime import date, datetime
 
-from dateutil import parser, relativedelta
+from dateutil import parser
+from dateutil.relativedelta import relativedelta
 from pytz import timezone
 
 
@@ -10,6 +12,10 @@ from pytz import timezone
 
 # For more information on date formatting, see the python documentation here:
 # https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
+
+# For more information on date utilities, see the python documentation here:
+# https://dateutil.readthedocs.io/en/stable/parser.html
+# https://dateutil.readthedocs.io/en/stable/relativedelta.html
 
 def convert_date(date, tz):
     """ Takes a string or datetime and a timezone, returns aware datetime
@@ -39,13 +45,15 @@ def date_from_pattern(date_str, pattern):
 
 
 def end_of_time_period(user_input, input_date):
+    # Full date format with month, day, and year
     for pattern in ('%m/%d/%Y', '%m-%d-%Y', '%m/%d/%y', '%m-%d-%y'):
         if date_from_pattern(user_input, pattern) is not None:
             return input_date
+    # Month and year date format
     for pattern in ('%m/%Y', '%m-%Y', '%m/%y', '%m-%y'):
         if date_from_pattern(user_input, pattern) is not None:
             return input_date + relativedelta(day=31)
-    for pattern in ('%Y'):
-        if date_from_pattern(user_input, pattern) is not None:
-            return date(input_date.year, 12, 31)
+    # Year format: yy or yyyy
+    if re.search("^([0-9]{2}|[0-9]{4})$", user_input):
+        return date(input_date.year, 12, 31)
     return input_date
