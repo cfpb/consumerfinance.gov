@@ -20,7 +20,7 @@ const financialView = {
   _inputChangeTimeout: null,
   _calculatingTimeout: null,
   _currentInput: null,
-  _costsOfferButtons: null,
+  _costsOfferButton: null,
   _gradProgramContent: null,
   _undergradProgramContent: null,
 
@@ -76,7 +76,7 @@ const financialView = {
     this._financialItems = document.querySelectorAll( '[data-financial-item]' );
     this._financialInputs = document.querySelectorAll( 'input[data-financial-item]' );
     this._financialSpans = document.querySelectorAll( 'span[data-financial-item]' );
-    this._costsOfferButtons = document.querySelectorAll( '.costs_button-section button' );
+    this._costsOfferButton = document.querySelector( '.costs_button-section button' );
     _addInputListeners();
     _addButtonListeners();
   }
@@ -97,9 +97,7 @@ function _addInputListeners() {
  * Listeners for INPUT fields and radio buttons.
  */
 function _addButtonListeners() {
-  financialView._costsOfferButtons.forEach( elem => {
-    elem.addEventListener( 'click', _handleCostsButtonClick );
-  } );
+  financialView._costsOfferButton.addEventListener( 'click', _handleCostsButtonClick );
 }
 
 /**
@@ -149,10 +147,11 @@ function _handleInputClick( event ) {
  * @param {MouseEvent} event - Triggering event.
  */
 function _handleCostsButtonClick( event ) {
+  const answer = document.querySelector( 'input[name="costs-offer-radio"]:checked' ).value;
   const target = event.target;
-  const answer = target.dataset.costs_offerAnswer;
 
   // When the button is clicked, bring in school data if 'No'
+  console.log( 'answer: ', answer );
   if ( getStateValue( 'costsQuestion' ) === false ) {
     updateState.byProperty( 'costsQuestion', answer );
     // If their offer does not have costs, use the Department of Ed data

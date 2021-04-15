@@ -135,11 +135,11 @@
 
         <div data-state-based-visibility="expenses-shortage">
             {{ notification.render(
-            'caution',
-            true,
-            '',
-            'The estimate leaves you with a shortage of <span class="gap" data-expenses-item="total_remainder">$373</span>. Try adjusting the expenses to balance your budget.' | safe
-        ) }}
+                'caution',
+                true,
+                '',
+                'The estimate leaves you with a shortage of <span class="gap" data-expenses-item="total_remainder">$373</span>. Try adjusting the expenses to balance your budget.' | safe
+            ) }}
         </div>
         <div data-state-based-visibility='expenses-surplus'>
             {{ notification.render(

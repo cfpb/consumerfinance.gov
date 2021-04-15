@@ -35,28 +35,6 @@
         border-bottom: 1px solid @block__border-bottom;
     }
 
-    .respond-to-min( @bp-med-min, {
-        @supports (position: sticky) {
-            .app-container {
-                display: flex;
-            }
-            .app {
-                width: 70%;
-            }
-            .costs-not-covered-sticky {
-                width: 30%;
-                .number-callout {
-                    position: sticky;
-                    top: unit( 10px / @base-font-size-px, em );
-                }
-            }
-        }
-    });
-
-    .u-border-bottom {
-        border-bottom: 1px solid @block__border-bottom;
-    }
-
     .block.block__mid {
         margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
         margin-bottom: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
@@ -75,6 +53,23 @@
         display: none;
 
         max-width: unit( 570px / @base-font-size-px, rem );
+
+        .equation-row {
+            .financial-item {
+                &_label div {
+                    .h3();
+                }
+                &_value span {
+                    .h3();
+                }
+            }
+
+            &__bottom-line {
+                border-bottom: 2px solid black;
+                padding-bottom: 30px;
+            }
+        }
+
 
         .m-notification {
             margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -111,184 +106,13 @@
                 color: @pacific;
                 border-color: @pacific;
             }
-        }
 
-        &__summary {
-            .financial-item {
-                margin-top: 0;
-            }
-
-            .financial-item + .financial-item {
-                margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-            }
-
-            dl {
-                dt {
-                    font-size: inherit;
-                    text-transform: none;
-                    letter-spacing: normal;
-                    margin-bottom: 0;
-                }
-                dd:after {
-                    height: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+            .costs_button-section {
+                .m-form-field {
+                    margin-bottom: unit( 15px / @base-font-size-px, em );
                 }
             }
         }
-
-        .other-borrowing-btns {
-            margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        }
-
-        .action-plan_choices,
-        .affording-loans-choices {
-            // equal height radio inputs
-            display: flex;
-
-            .m-form-field {
-                width: 50%;
-                box-sizing: border-box;
-                &:first-child {
-                    padding-right: 7px;
-                }
-                &:last-child {
-                    padding-left: 7px;
-                }
-                label {
-                    height: 100%;
-                }
-            }
-
-        }
-    }
-
-    .school-results_comparison-section {
-        border: 2px solid @gray-20;
-        padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-
-        legend {
-            margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-        }
-
-        .school-results_rank-display {
-            display: flex;
-            align-items: center;
-            margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
-        }
-
-        .big-percentile {
-            height: 110px;
-            width: 110px;
-            border: 5px solid @black;
-            border-radius: 50%;
-            margin-right: 15px;
-            line-height: 110px;
-            text-align: center;
-            font-size: 36px;
-            font-weight: 600;
-            flex: 1;
-            flex-basis: 110px;
-            flex-grow: 0;
-            flex-shrinK: 0;
-        }
-
-        .m-form-field__radio {
-            display: inline-block;
-        }
-    }
-    
-	.respond-to-min( @bp-med-min, {
-		@supports (position: sticky) {
-		    .app-container {
-		    	display: flex;
-		    }
-		    .app {
-		    	width: 70%;
-		    }
-		    .costs-not-covered-sticky {
-		    	width: 30%;
-		    	.number-callout {
-		    		position: sticky;
-					top: unit( 10px / @base-font-size-px, em );
-		    	}
-		    }
-		}
-	});
-
-	.u-border-bottom {
-		border-bottom: 1px solid @block__border-bottom;
-	}
-	
-	.block.block__mid {
-		margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
-		margin-bottom: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
-	}
-
-	// Notification explanation doesn't need top margin unless it follows message
-	.m-notification_explanation {
-		margin-top: 0;
-	}
-
-	.m-notification_message + .m-notification_explanation {
-		margin-top: unit( 5px / @base-font-size-px, em );
-	}
-
-	&_tool-section {
-		display: none;
-
-		max-width: unit( 570px / @base-font-size-px, rem );
-
-		.equation-row {
-            .financial-item {
-                &_label div {
-                    .h3();
-                }
-                &_value span {
-                    .h3();
-                }
-            }
-
-            &__bottom-line {
-                border-bottom: 2px solid black;
-                padding-bottom: 30px;
-            }
-		}
-
-		.m-notification {
-			margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-			margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-		}
-
-		input {
-			width: 100%;
-			box-sizing: border-box;
-		}
-
-		.o-expandable {
-			&_header,
-			&_content {
-				padding-left: 0;
-				padding-right: 0;
-			}
-		}
-
-		&__school-search {
-			.m-notification {
-				margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-				margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-			}
-
-			.m-form-field {
-				margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-			}
-		}
-
-		&__costs {
-			.a-btn.active {
-				background-color: @white;
-				color: @pacific;
-				border-color: @pacific;
-			}
-		}
 
         &__debt-guideline {
             .h3 .financial-item__subtotal {
@@ -315,45 +139,57 @@
             }
         }
 
-		&__summary {
-			.financial-item {
-				margin-top: 0;
-			}
+        &__summary {
+            .financial-item {
+                margin-top: 0;
+            }
 
-			.financial-item + .financial-item {
-				margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-			}
-		}
+            .financial-item + .financial-item {
+                margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+            }
 
-		.other-borrowing-btns {
-			margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-		}
+            dl {
+                dt {
+                    font-size: inherit;
+                    text-transform: none;
+                    letter-spacing: normal;
+                    margin-bottom: 0;
+                }
+                dd:after {
+                    height: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+                }
+            }
+        }    
 
-		.action-plan_choices,
-		.affording-loans-choices {
-			// equal height radio inputs
-			display: flex;
+        .other-borrowing-btns {
+            margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        }
 
-			.m-form-field {
-				width: 50%;
-				box-sizing: border-box;
-				&:first-child {
-					padding-right: 7px;
-				}
-				&:last-child {
-					padding-left: 7px;
-				}
-				label {
-					height: 100%;
-				}
-			}
+        .action-plan_choices,
+        .affording-loans-choices {
+            // equal height radio inputs
+            display: flex;
 
-			&_about {
-				margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-			}
+            .m-form-field {
+                width: 50%;
+                box-sizing: border-box;
+                &:first-child {
+                    padding-right: 7px;
+                }
+                &:last-child {
+                    padding-left: 7px;
+                }
+                label {
+                    height: 100%;
+                }
+            }
 
-		}
-	}
+            &_about {
+                margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            }
+
+        }
+    }
 
 	.school-results_comparison-section {
 		border: 2px solid @gray-20;
@@ -374,13 +210,13 @@
 			width: 110px;
 		    border: 5px solid @black;
 		    border-radius: 50%;
-		    margin-right: 15px;
-		    line-height: 110px;
+		    margin-right: unit( 15px / @base-font-size-px, em );
+		    line-height: unit( 110px / @base-font-size-px, em );
 		    text-align: center;
-		    font-size: 36px;
+		    font-size: unit( 36px / @base-font-size-px, em );;
 		    font-weight: 600;
 		    flex: 1;
-		    flex-basis: 110px;
+		    flex-basis: unit( 110px / @base-font-size-px, em );;
 		    flex-grow: 0;
 		    flex-shrinK: 0;
 		}
