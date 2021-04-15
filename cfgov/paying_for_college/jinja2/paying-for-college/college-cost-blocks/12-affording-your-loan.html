@@ -1,11 +1,11 @@
 <section class="college-costs_tool-section college-costs_tool-section__affording" data-tool-section="affording-your-loans">
     <h1>Can I afford my payment?</h1>
 
-    <p>Making loan payments on time can help you avoid financial and legal problems. Default—missing too many payments—can result in low credit scores, additional fees, wage garnishment, and ineligibility for further federal student aid.</p>
+    <p class="lead-paragraph">Making loan payments on time can help you avoid financial and legal problems. Default—missing too many payments—can result in low credit scores, additional fees, wage garnishment, and ineligibility for further federal student aid.</p>
 
-    <h2>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly">$XYZ</span> (including any current debt you have, if you entered it on a previous page)</h2>
+    <h2><strong>Your estimated monthly payment is <span data-financial-item="debt_tenYearMonthly">$XYZ</span> (including any current debt you have, if you entered it on a previous page)</strong></h2>
 
-    <h3>1. Check out two ways to help you decide if you can afford this payment</h3>
+    <h2>1. Check out two ways to help you decide if you can afford this payment</h2>
 
     <div class="affording-loans-choices block block__sub">
         {{
@@ -29,18 +29,20 @@
     </div>
 
     <div data-state-based-visibility="expenses-hourly-wages">
-        <h3>2. See how much of your time at work each month would go towards covering your loan payment</h3>
+        <h2>2. See how much of your time at work each month would go towards covering your loan payment</h2>
 
-        {{
-            text_item.render({
-                'label': 'Estimated monthly loan payment',
-                'value': '$0',
-                'type': 'text',
-                'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
-            })
-        }}
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Estimated monthly loan payment',
+                    'value': '$0',
+                    'type': 'text',
+                    'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
+                })
+            }}
+        </div>
 
-        <div class="math-equation__bottom-line">
+        <div class="equation-row equation-row__bottom-line">
             {{
                 text_item.render({
                     'label': 'Divided by $15 an hour after taxes',
@@ -50,22 +52,24 @@
             }}            
         </div>
 
-        {{
-            text_item.render({
-                'label': 'Work needed to cover payment',
-                'value': '$0',
-                'type': 'text',
-                'data_attribute': 'data-financial-item="debt_repayHours"'
-            })
-        }}
+        <div class="equation-row total-hours">
+            {{
+                text_item.render({
+                    'label': 'Work needed to cover payment',
+                    'value': '$0',
+                    'type': 'text',
+                    'data_attribute': 'data-financial-item="debt_repayHours"'
+                })
+            }}
+        </div>
 
-        <h3 class="affording-loans-choices_about">About your estimated payment</h3>
+        <h2 class="affording-loans-choices_about">About your estimated payment</h2>
 
         <p>Your actual payment will depend on how much you actually borrow and which repayment plan you choose for federal loans. This estimate assumes a standard repayment plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments are available, but the total costs of borrowing will be higher.</p>
 
     </div>
     <div data-state-based-visibility="expenses-monthly-budget">
-         <h3>2. See if the monthly payment fits in an average monthly budget for this [school/program]'s salary and region</h3>
+         <h2>2. See if the monthly payment fits in an average monthly budget for this <span data-state-based-visibility="no-program-selected">school</a><a data-state-based-visibility="program-is-selected">program</a>'s salary and region</h2>
 
         <div class="m-form-field m-form-field__select">
             <label class="a-label a-label__heading" for="expenses__region">
@@ -83,27 +87,31 @@
 
         <div id="affording-your-loans_chart"></div>
 
-        {{
-            text_item.render({
-                'label': 'Median monthly salary of this [program/school]\'s students',
-                'value': '$0',
-                'type': 'text',
-                'helper_text': 'Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://www.bls.gov/bls/blswage.htm" class="link-external">Bureau of Labor Statistics\' Wage Data website</a>.',
-                'data_attribute': 'data-financial-item="salary_monthly"'
-            })
-        }}
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Median monthly salary of this <span data-state-based-visibility="no-program-selected">school</a><a data-state-based-visibility="program-is-selected">program</a>\'s students',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://www.bls.gov/bls/blswage.htm" class="link-external">Bureau of Labor Statistics\' Wage Data website</a>.',
+                    'data_attribute': 'data-financial-item="salary_monthly"'
+                })
+            }}
+        </div>
 
-        {{
-            text_item.render({
-                'label': 'Estimated monthly loan payment',
-                'value': '$0',
-                'type': 'text',
-                'helper_text': 'Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments (and higher total costs of borrowing) are available.',
-                'data_attribute': 'data-financial-item="debt_programInterest"'
-            })
-        }}
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Estimated monthly loan payment',
+                    'value': '$0',
+                    'type': 'text',
+                    'helper_text': 'Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments (and higher total costs of borrowing) are available.',
+                    'data_attribute': 'data-financial-item="debt_programInterest"'
+                })
+            }}
+        </div>
 
-        <div class="math-equation__bottom-line">
+        <div class="equation-row equation-row__bottom-line">
             {{
                 text_item.render({
                     'label': 'Average monthly expenses for this salary and region',
@@ -115,13 +123,15 @@
             }}
         </div>
 
-        {{
-            text_item.render({
-                'label': 'Total money left',
-                'value': '$0',
-                'type': 'text'
-            })
-        }}
+        <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Total money left',
+                    'value': '$0',
+                    'type': 'text'
+                })
+            }}
+        </div>
 
         <div data-state-based-visibility="expenses-shortage">
             {{ notification.render(
@@ -140,7 +150,7 @@
         ) }}
         </div>
 
-        <h3>3. Does this budget work for you? Adjust specific expenses, like rent and groceries, below</h3>
+        <h2>3. Does this budget work for you? Adjust specific expenses, like rent and groceries, below</h2>
 
         {% set expandable_settings = {
             'label': 'Average monthly expenses',

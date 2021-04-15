@@ -269,8 +269,8 @@ const compareCostOfBorrowingOpts = {
 const costOfBorrowingOpts = {
   chart: {
     type: 'bar',
-    marginTop: 75,
-    height: 350,
+    marginTop: 95,
+    height: 300,
   },
   tooltip: false,
   title: false,
@@ -285,6 +285,7 @@ const costOfBorrowingOpts = {
       fontWeight: '100'
     },
     layout: 'vertical',
+    margin: 30,
     symbolHeight: 14,
     symbolWidth: 14,
     symbolRadius: 0,
@@ -327,8 +328,8 @@ const makePlanOpts = {
 const maxDebtOpts = {
   chart: {
     type: 'bar',
-    marginTop: 75,
-    height: 350
+    marginTop: 0,
+    height: 300
   },
   title: false,
   subtitle: false,
@@ -367,6 +368,7 @@ const maxDebtOpts = {
   series: [ {
     data: [ 43000 ],
     pointWidth: 60,
+    pointPlacement: -0.09,
     color: '#ff9e1b'
   },{
     data: [ 35000 ],
@@ -390,7 +392,7 @@ const affordingOpts = {
   chart: {
     type: 'bar',
     marginTop: 100,
-    height: 450,
+    height: 375,
   },
   tooltip: false,
   title: false,
@@ -428,18 +430,21 @@ const affordingOpts = {
   series: [ {
     name: 'Estimated monthly loan payment: <strong>$524</strong>',
     pointWidth: 60,
+    pointPlacement: .05,
     data: [ 524 ],
     color: '#ffe1b9',
     stack: 'costs'
   }, {
     name: 'Average monthly expenses: <strong>$2,246</strong>',
     pointWidth: 60,
+    pointPlacement: .05,
     data: [ 2246 ],
     color: '#ff9e1b',
     stack: 'costs'
   }, {
     name: 'Monthly median salary: <strong>$4,357</strong>',
     pointWidth: 60,
+    pointPlacement: -0.05,
     data: [ 4357 ],
     color: {
       pattern: {
@@ -626,8 +631,8 @@ const chartView = {
 
     chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer.text(
           'Estimated total debt at graduation: <strong>' + debtString + '</strong>',
-          60,
-          90 )
+          13,
+          50 )
           .attr({
             zIndex: 5
           }).css({
@@ -637,8 +642,8 @@ const chartView = {
 
     chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer.text(
         'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
-        60,
-        210 )
+        13,
+        160 )
         .attr({
           zIndex: 5
         }).css({

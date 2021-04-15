@@ -15,7 +15,6 @@ import {
   getSchoolValue,
   getStateValue
 } from '../dispatchers/get-model-values.js';
-import { updateState } from './update-state.js';
 import { updateSchoolView } from './update-view.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
@@ -196,13 +195,6 @@ function updateModelsFromQueryString( queryObj ) {
   // If there's an offerID, set cobs to 'o' (offer)
   if ( queryObj.hasOwnProperty( 'oid' ) ) {
     queryObj.cobs = 'o';
-  }
-
-  // If there's an iped, skip the intro page
-  if ( queryObj.hasOwnProperty( 'iped' ) ) {
-    updateState.getStarted( true );
-    updateState.activeSection( 'school-info' );
-    navigationView.updateView();
   }
 
   // If we have no cobs, check if there are costs values

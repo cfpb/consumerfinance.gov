@@ -106,7 +106,7 @@ const schoolView = {
                 ${ elem.level } - ${ elem.name }
           </option>`;
       } );
-      html += '\n<option value="null">My program is not listed here.</option>';
+      html += '\n<option value="null">My program is not listed here/I am undecided.</option>';
       schoolView._programSelect.innerHTML = html;
 
       // If there's a program id in the state, select that program

@@ -237,9 +237,20 @@
 
 		max-width: unit( 570px / @base-font-size-px, rem );
 
-		.math-equation__bottom-line {
-			border-bottom: 2px solid black;
-		    padding-bottom: 30px;
+		.equation-row {
+            .financial-item {
+                &_label div {
+                    .h3();
+                }
+                &_value span {
+                    .h3();
+                }
+            }
+
+            &__bottom-line {
+                border-bottom: 2px solid black;
+                padding-bottom: 30px;
+            }
 		}
 
 		.m-notification {
@@ -279,13 +290,38 @@
 			}
 		}
 
+        &__debt-guideline {
+            .h3 .financial-item__subtotal {
+                margin-top: unit( 15px / @base-font-size-px, em );
+            }
+
+            h2.step-2 {
+                margin-top: unit( 45px / @base-font-size-px, em );
+            }
+        }
+
+        &__affording {
+            .total-hours .financial-item_value span {
+                font-weight: 600;
+            }
+
+            h2 {
+                margin-top: unit( 30px / @base-font-size-px, em );
+            }
+
+            .o-expandable_header {
+                border-top: 1px solid @black;
+                border-bottom: 1px solid @black;
+            }
+        }
+
 		&__summary {
 			.financial-item {
 				margin-top: 0;
 			}
 
 			.financial-item + .financial-item {
-				margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );;
+				margin-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
 			}
 		}
 
@@ -368,6 +404,3 @@
         }
     }
 }
-	
-}
-
