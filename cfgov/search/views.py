@@ -1,10 +1,8 @@
 from django.shortcuts import render
-from django.template.response import TemplateResponse
 from django.views.generic import View
 
 from wagtail.core.models import get_page_models
 
-from search import dotgov
 from search.forms import ExternalLinksForm
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, ReusableText

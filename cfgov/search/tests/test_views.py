@@ -1,13 +1,12 @@
 import json
-from unittest import mock
 
-from django.test import TestCase, override_settings
-from django.urls import reverse
+from django.test import TestCase
 
 from v1.models.blog_page import BlogPage
 from v1.models.browse_page import BrowsePage
 from v1.models.snippets import Contact
 from v1.tests.wagtail_pages.helpers import publish_page
+
 
 class ExternalLinksSearchViewTestCase(TestCase):
 
