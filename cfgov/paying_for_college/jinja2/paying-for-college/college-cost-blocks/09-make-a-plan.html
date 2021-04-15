@@ -110,22 +110,24 @@
                 'note': '<strong>Apply for additional grants and scholarships:</strong> Ask the financial aid office and your school counselor (if you’re currently in high school) for help. <a href="https://studentaid.gov/understand-aid/types/scholarships" target="_blank" class="external-link" rel="noreferrer noopener">The Department of Education has more ideas here.</a>' | safe
             } %}
             {% call() expandable(expandable_settings) %}
-                {{
-                    input.render({
-                        'label': 'Federal Pell Grants',
-                        'id': 'plan__pellGrants',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="grant_pell"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'Federal SEOG grant',
-                        'id': 'plan__seog',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="grant_seog"'
-                    })
-                }}
+                <div class="undergrad-content">
+                    {{
+                        input.render({
+                            'label': 'Federal Pell Grants',
+                            'id': 'plan__pellGrants',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="grant_pell"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Federal SEOG grant',
+                            'id': 'plan__seog',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="grant_seog"'
+                        })
+                    }}
+                </div>
                 {{
                     input.render({
                         'label': 'Other federal grants',
