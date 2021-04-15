@@ -2,7 +2,7 @@ from io import StringIO
 
 from django.core import management
 from django.core.exceptions import ValidationError
-from django.test import SimpleTestCase, TestCase, override_settings
+from django.test import SimpleTestCase, TestCase
 
 from wagtail.core.blocks import StreamValue
 
@@ -20,7 +20,6 @@ from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
-@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
 class MoleculesTestCase(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
