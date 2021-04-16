@@ -343,21 +343,6 @@ class TestExternalURLNoticeView(TestCase):
         with self.assertRaises(Http404):
             view(request)
 
-    def test_valid_post_returns_redirect(self):
-        view = ExternalURLNoticeView.as_view()
-        request = self.factory.post("/", {"ext_url": "https://foo.com"})
-        response = view(request)
-        self.assertEqual(
-            (response.status_code, response["Location"]),
-            (302, "https://foo.com"),
-        )
-
-    def test_invalid_post_returns_404(self):
-        view = ExternalURLNoticeView.as_view()
-        request = self.factory.post("/")
-        with self.assertRaises(Http404):
-            view(request)
-
 
 class TranslatedTemplateViewTestCase(TestCase):
 

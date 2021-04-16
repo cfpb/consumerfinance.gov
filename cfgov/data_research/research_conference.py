@@ -23,7 +23,7 @@ def get_conference_details_from_page(page_id):
     page = Page.objects.get(pk=page_id).specific
 
     if hasattr(page, 'content'):
-        for block in page.content.stream_data:
+        for block in page.content.raw_data:
             if 'conference_registration_form' == block['type']:
                 return {
                     key: block['value'][key]

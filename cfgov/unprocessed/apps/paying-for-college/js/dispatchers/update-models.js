@@ -16,6 +16,7 @@ import {
 } from '../dispatchers/get-model-values.js';
 import { updateSchoolView } from './update-view.js';
 import { updateUrlQueryString } from '../dispatchers/update-view.js';
+import { updateState } from '../dispatchers/update-state.js';
 import { urlParameters } from '../util/url-parameter-utils.js';
 
 /**
@@ -145,6 +146,7 @@ const updateSchoolData = function( iped ) {
         // Some values must migrate to the financial model
         if ( programInfo ) {
           financialModel.setValue( 'salary_annual', stringToNum( programInfo.salary ) );
+          updateState.byProperty( 'programName', programInfo.name );
         } else {
           financialModel.setValue( 'salary_annual', stringToNum( getSchoolValue( 'medianAnnualPay6Yr' ) ) );
         }

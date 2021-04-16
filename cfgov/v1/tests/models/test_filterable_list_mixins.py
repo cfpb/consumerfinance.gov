@@ -4,7 +4,7 @@ from unittest import mock
 from django.test import RequestFactory, TestCase, override_settings
 
 from wagtail.core.blocks import StreamValue
-from wagtail.core.models import Site
+from wagtail.core.models import Page, Site
 
 from scripts._atomic_helpers import filter_controls
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
@@ -88,12 +88,14 @@ class TestFilterableListMixin(TestCase):
         assert self.mixin.do_not_index is False
 
 
-class FilterableListContextTestCase(TestCase):
+class FilterableListContextTestCase(ElasticsearchTestsMixin, TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.filterable_page = BrowseFilterablePage(title="Blog", slug="test")
         self.root = Site.objects.get(is_default_site=True).root_page
-        self.root.add_child(instance=self.filterable_page)
+        self.home_page = Page(title="Home")
+        self.root.add_child(instance=self.home_page)
+        self.home_page.add_child(instance=self.filterable_page)
         self.page = BlogPage(title="Child test page", live=True)
         self.archived_page = BlogPage(
             title="Archive test page",
@@ -102,6 +104,8 @@ class FilterableListContextTestCase(TestCase):
         )
         self.filterable_page.add_child(instance=self.page)
         self.filterable_page.add_child(instance=self.archived_page)
+
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_get_context_has_archived_posts(self):
         context = self.filterable_page.get_context(
@@ -119,9 +123,6 @@ class FilterableListContextTestCase(TestCase):
         self.assertFalse(context['has_archived_posts'])
 
 
-@override_settings(
-    FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]}
-)
 class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
 
     def setUp(self):
@@ -153,7 +154,7 @@ class FilterableRoutesTestCase(ElasticsearchTestsMixin, TestCase):
         )
 
 
-class FilterableListRelationsTestCase(TestCase):
+class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
 
     def setUp(self):
         self.filter_controls = filter_controls
@@ -177,6 +178,8 @@ class FilterableListRelationsTestCase(TestCase):
             instance=self.archived_sibling_page
         )
 
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
+
     def set_filterable_controls(self, value):
         self.filterable_page.content = StreamValue(
             self.filterable_page.content.stream_block,
@@ -187,33 +190,15 @@ class FilterableListRelationsTestCase(TestCase):
 
     def test_get_filterable_children_pages(self):
         filter_controls['value']['filter_children'] = True
-        filter_controls['value']['filter_siblings'] = False
         self.set_filterable_controls(self.filter_controls)
 
         qs = self.filterable_page.get_filterable_queryset()
         self.assertEqual(qs.count(), 1)
         self.assertEqual(qs[0].pk, self.child_page.pk)
-
-    def test_get_filterable_siblings_pages(self):
-        filter_controls['value']['filter_children'] = False
-        filter_controls['value']['filter_siblings'] = True
-        self.set_filterable_controls(self.filter_controls)
-
-        qs = self.filterable_page.get_filterable_queryset()
-        self.assertEqual(qs.count(), 2)
-        self.assertEqual(qs[0].pk, self.sibling_page.pk)
-
-    def test_get_filterable_root_siblings(self):
-        filter_controls['value']['filter_children'] = False
-        filter_controls['value']['filter_siblings'] = True
-        self.set_filterable_controls(self.filter_controls)
-
-        root = self.filterable_page.get_filterable_root()
-        self.assertEqual("/", root)
+        self.assertEqual("/test/", self.filterable_page.get_filterable_root())
 
     def test_get_filterable_root_site_wide(self):
         filter_controls['value']['filter_children'] = False
-        filter_controls['value']['filter_siblings'] = False
         self.set_filterable_controls(self.filter_controls)
 
         root = self.filterable_page.get_filterable_root()

@@ -1,6 +1,7 @@
 {
     "baseUrl": "http://localhost:8000",
     "video": false,
+    "screenshotOnRunFailure": false,
     "fixturesFolder": "test/cypress/fixtures",
     "integrationFolder": "test/cypress/integration",
     "videosFolder": "test/cypress/videos",

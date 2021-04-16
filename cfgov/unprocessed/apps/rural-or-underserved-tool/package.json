@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=12.x"
+    "node": ">=14.x"
   },
   "dependencies": {
     "axios": "0.21.1",

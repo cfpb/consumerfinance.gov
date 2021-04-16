@@ -16,9 +16,7 @@
                     <tr>
                         <td data-label="Year">{{ year }}</td>
                         <td data-label="Records">
-                          <div class="decimal-align-right">
                             {{ "{:,.0f}".format(csv.number_of_records | int) }}
-                          </div>
                         </td>
                         <td data-label="Download"><a aria-label="{{ csv.file_size }} CSV file containing HMDA loan application records for {{ year }}" href="https://files.consumerfinance.gov/hmda-historic-loan-data/{{ csv.file_name }}">CSV</a> ({{ csv.file_size }})</td>
                     </tr>

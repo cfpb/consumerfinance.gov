@@ -29,7 +29,6 @@ function ExternalSite( element ) {
    */
   function init() {
     _intervalId = setInterval( _tick, INTERVAL );
-    _proceedBtnEl.addEventListener( 'click', _proceedClickedHandler );
   }
 
   /**
@@ -46,9 +45,8 @@ function ExternalSite( element ) {
    * Go to the redirect URL.
    */
   function _gotoUrl() {
-    const _formEl = _dom.querySelector( 'form#proceed' );
     clearInterval( _intervalId );
-    _formEl.submit();
+    document.location = _proceedBtnEl.href;
   }
 
   /**
@@ -59,15 +57,6 @@ function ExternalSite( element ) {
     const content = '<span class=\'external-site_reload-duration\'>' +
                     _duration + '</span> second' + plurality;
     _durationEl.innerHTML = content;
-  }
-
-  /**
-   * Proceed to external site button was clicked.
-   * @param {Object} event Click event object.
-   */
-  function _proceedClickedHandler( event ) {
-    event.stopImmediatePropagation();
-    _gotoUrl();
   }
 
   this.init = init;

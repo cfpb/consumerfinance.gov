@@ -1,4 +1,4 @@
-const { Then, When, Before } = require( 'cucumber' );
+const { Then, When, Before } = require( '@cucumber/cucumber' );
 const { isShould, toCamelCase } = require( '../../util/index.js' );
 const chai = require( 'chai' );
 const expect = chai.expect;

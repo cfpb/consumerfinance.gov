@@ -6,7 +6,7 @@
             What school are you considering?
         </label>
         <p>
-            <input type="text" 
+            <input type="text"
                    id="search__school-input"
                    name="search__school-input"
                    class="a-text-input"
@@ -28,7 +28,7 @@
         <div class="block block__sub program-question" id="school-search_program-type">
             <h3 class="h4">Select your program type</h3>
             {{ notification.render(
-                'default',
+                'information',
                 true,
                 '',
                 'If you are entering or continuing an accelerated degree program (a bachelor’s followed by a master’s in the same subject), choose the program type covered by this financial aid offer.'
@@ -75,7 +75,7 @@
 
         <div data-state-based-visibility="school-no-programs">
             {{ notification.render(
-                'default',
+                'information',
                 true,
                 '',
                 'Salary data is not available for any <span class="undergrad-content">under</span>graduate programs at your school. Please ask the school to provide you with earnings figures for recent graduates.' | safe
@@ -86,7 +86,7 @@
           <h3 class="h4">Select your program</h3>
           <div class="a-select">
             <select id="program-select">
-              
+
             </select>
           </div>
         </div>
@@ -94,7 +94,7 @@
             <h3 class="h4">How long do you expect your program to take?</h3>
             <div class="undergrad-content">
               {{ notification.render(
-                  'default',
+                  'information',
                   true,
                   '',
                   'Though 4 years is considered the standard length of bachelor’s degrees, <a href="https://nces.ed.gov/fastfacts/display.asp?id=569" target="_blank" class="external-link" rel="noreferrer noopener">data</a> suggests that over half of students take longer.' | safe
@@ -261,4 +261,4 @@
             </ul>' | safe
         ) }}
     </div>
-</section>  
+</section>

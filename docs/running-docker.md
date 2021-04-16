@@ -80,10 +80,16 @@ and need to interact with the running Django process when the breakpoint is reac
 you can run [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach/):
 
 ```bash
-docker attach consumerfinance.gov_python_1
+docker attach consumerfinancegov_python_1
 ```
 
 When you're done, you can detach with `Ctrl+P Ctrl+Q`.
+
+!!! note
+    `docker attach` takes the specific container name or ID. 
+    Yours may or may not be `consumerfinancegov_python_1`. 
+    To verify, use `docker container ls` 
+    to get the Python container's full name or ID.
 
 
 ## Useful Docker commands

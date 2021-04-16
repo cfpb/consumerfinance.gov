@@ -33,7 +33,7 @@
                 'data_attribute': 'data-financial-item="debt_tenYearMonthly"',
                 'additional_classes': 'number-callout__large number-callout__border-top',
                 'value': '$0.00'
-            }) 
+            })
         }}
 
         <div class="number-callout number-callout__large number-callout__divisor">
@@ -59,7 +59,7 @@
                 'data_attribute': 'data-financial-item="debt_tenYearMonthly"',
                 'additional_classes': 'number-callout__large number-callout__border-top',
                 'value': '$0.00'
-            }) 
+            })
         }}
         <p>Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years; other plans with lower monthly payments (and higher total costs of borrowing) are available.</p>
         <div class="no-program-selected">
@@ -86,13 +86,13 @@
                 'data_attribute': 'data-expenses-item="total_expenses"',
                 'additional_classes': 'number-callout__large number-callout__border-top',
                 'value': '$4,016.67'
-            }) 
+            })
         }}
 
          <p>Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://www.bls.gov/bls/blswage.htm" class="link-external">BLS Wage Data website</a>.</p>
 
         {{ notification.render(
-            'default',
+            'information',
             true,
             '',
             'Students tend to overestimate their starting salaries. Remember that medians are the middle &mdash; half of students make more, but half make less.' | safe
@@ -207,7 +207,7 @@
                 'data_attribute': 'data-expenses-item="total_remainder"',
                 'additional_classes': 'number-callout__large number-callout__border-top',
                 'value': '$373'
-            }) 
+            })
         }}
 
         <div data-state-based-visibility="expenses-shortage">
@@ -220,7 +220,7 @@
         </div>
         <div data-state-based-visibility='expenses-surplus'>
             {{ notification.render(
-            'default',
+            'information',
             true,
             '',
             'The estimate leaves you with a surplus of <span class="gap" data-expenses-item="total_remainder">$373</span>, increasing your savings.' | safe

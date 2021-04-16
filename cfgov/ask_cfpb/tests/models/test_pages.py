@@ -32,7 +32,7 @@ from v1.models import (
 )
 from v1.tests.wagtail_pages import helpers
 from v1.util.migrations import (
-    get_free_path, get_or_create_page, set_stream_data
+    get_free_path, get_or_create_page, set_streamfield_data
 )
 
 
@@ -98,9 +98,9 @@ class ExportAskDataTests(TestCase, WagtailTestUtils):
         self.assertEqual(output.get("Question"), "Mock question1")
 
     def test_clean_and_strip(self):
-        raw_data = "<p>If you have been scammed, file a complaint.</p>"
+        html_data = "<p>If you have been scammed, file a complaint.</p>"
         clean_data = "If you have been scammed, file a complaint."
-        self.assertEqual(clean_and_strip(raw_data), clean_data)
+        self.assertEqual(clean_and_strip(html_data), clean_data)
 
     @mock.patch("ask_cfpb.scripts.export_ask_data.assemble_output")
     def test_export_questions(self, mock_output):
@@ -760,7 +760,7 @@ class AnswerPageTest(TestCase):
         """
 
         page = self.page1
-        stream_data = [
+        data = [
             {
                 "type": "video_player",
                 "id": "402b933b",
@@ -784,7 +784,7 @@ class AnswerPageTest(TestCase):
                 },
             },
         ]
-        set_stream_data(page, "answer_content", stream_data)
+        set_streamfield_data(page, "answer_content", data)
         self.assertTrue(
             page.answer_content_preview().endswith("word word ...")
         )
@@ -796,7 +796,7 @@ class AnswerPageTest(TestCase):
         """
 
         page = self.page1
-        stream_data = [
+        data = [
             {
                 "type": "video_player",
                 "id": "402b933b",
@@ -825,7 +825,7 @@ class AnswerPageTest(TestCase):
                 },
             },
         ]
-        set_stream_data(page, "answer_content", stream_data)
+        set_streamfield_data(page, "answer_content", data)
         self.assertTrue(page.answer_content_preview().endswith(" ..."))
 
     def test_english_page_context(self):
@@ -852,7 +852,7 @@ class AnswerPageTest(TestCase):
         )
 
         # Second fallback is truncated answer_content text block
-        stream_data = [
+        data = [
             {
                 "type": "video_player",
                 "id": "402b933b",
@@ -876,7 +876,7 @@ class AnswerPageTest(TestCase):
                 },
             },
         ]
-        set_stream_data(page, "answer_content", stream_data)
+        set_streamfield_data(page, "answer_content", data)
         self.assertTrue(page.get_meta_description().endswith("word word ..."))
 
         # First fallback is the short_answer

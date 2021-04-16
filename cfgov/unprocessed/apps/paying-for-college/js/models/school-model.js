@@ -8,7 +8,7 @@ const schoolModel = {
   values: {
   },
 
-  textPercents: [ 'defaultRate', 'rateGraduation', 'rateRepay3yr' ],
+  textPercents: [ 'defaultRate', 'rateGraduation', 'rateRepay3yr', 'rateAssociateTransfer' ],
 
   setValue: function( name, value, updateURL ) {
     schoolModel.values[name] = value;

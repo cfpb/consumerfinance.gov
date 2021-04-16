@@ -10,6 +10,7 @@ Disallow: /hud-api-replace
 Disallow: /yourstory
 Disallow: /ask-cfpb/search/
 Disallow: /ask-cfpb/search-by-tag/
+Disallow: /askcfpb/search/
 Disallow: /es/obtener-respuestas/buscar/
 Disallow: /es/obtener-respuestas/buscar-por-etiqueta/
 

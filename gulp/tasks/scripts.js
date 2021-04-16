@@ -10,8 +10,6 @@ const fs = require( 'fs' );
 const gulp = require( 'gulp' );
 const gulpModernizr = require( 'gulp-modernizr' );
 const gulpNewer = require( 'gulp-newer' );
-const gulpRename = require( 'gulp-rename' );
-const gulpReplace = require( 'gulp-replace' );
 const gulpTerser = require( 'gulp-terser' );
 const handleErrors = require( '../utils/handle-errors' );
 const vinylNamed = require( 'vinyl-named' );
@@ -138,25 +136,6 @@ function scriptsOnDemandFooter() {
 }
 
 /**
- * Bundle atomic component scripts for non-responsive pages.
- * Provides a means to bundle JS for specific atomic components,
- * which then can be carried over to other projects.
- * @returns {PassThrough} A source stream.
- */
-function scriptsNonResponsive() {
-  return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
-    .pipe( gulpNewer( {
-      dest:  paths.processed + '/js/atomic/header.nonresponsive.js',
-      extra: configScripts.otherBuildTriggerFiles
-    } ) )
-    .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
-    .on( 'error', handleErrors )
-    .pipe( gulpRename( 'header.nonresponsive.js' ) )
-    .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
-    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) );
-}
-
-/**
  * Bundle scripts in /apps/ & factor out shared modules into common.js for each.
  * @returns {PassThrough} A source stream.
  */
@@ -217,12 +196,11 @@ gulp.task( 'scripts:admin', scriptsAdmin );
 
 gulp.task( 'scripts:ondemand:header', scriptsOnDemandHeader );
 gulp.task( 'scripts:ondemand:footer', scriptsOnDemandFooter );
-gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
+
 gulp.task( 'scripts:ondemand',
   gulp.parallel(
     'scripts:ondemand:header',
-    'scripts:ondemand:footer',
-    'scripts:ondemand:nonresponsive'
+    'scripts:ondemand:footer'
   )
 );
 

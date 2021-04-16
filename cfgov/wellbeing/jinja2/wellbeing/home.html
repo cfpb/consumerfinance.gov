@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% block title -%}
-    {{ _('Find out your financial well-being') }}
+    {{ _('Find out your financial well-being') }} | {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
 {% block desc -%}
@@ -926,8 +926,6 @@
                 </div>
             </div>
         </div>
-
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
         <div class="o-form_group">
             <input class="submit-quiz a-btn"

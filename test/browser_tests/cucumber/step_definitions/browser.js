@@ -1,4 +1,4 @@
-const { When } = require( 'cucumber' );
+const { When } = require( '@cucumber/cucumber' );
 const chai = require( 'chai' );
 const chaiAsPromised = require( 'chai-as-promised' );
 

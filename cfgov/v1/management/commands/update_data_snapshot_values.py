@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_changes
-from v1.util.migrations import set_stream_data
+from v1.util.migrations import set_streamfield_data
 
 
 logger = logging.getLogger(__name__)
@@ -37,10 +37,10 @@ class Command(BaseCommand):
         """
         snapshots = []
         for page in BrowsePage.objects.all():
-            stream_data = page.content.stream_data
-            if stream_data and stream_data[0]['type'] == 'data_snapshot':
-                stream_data[0]['value']['page'] = page.pk
-                snapshots.append(stream_data)
+            data = page.content.raw_data
+            if data and data[0]['type'] == 'data_snapshot':
+                data[0]['value']['page'] = page.pk
+                snapshots.append(data)
         return snapshots
 
     def find_data_snapshot(self, market_key, snapshots):
@@ -61,13 +61,13 @@ class Command(BaseCommand):
         snapshots = self.get_data_snapshots()
         for market in markets:
             key = market['market_key']
-            snapshot_stream_data = self.find_data_snapshot(key, snapshots)
-            if not snapshot_stream_data:  # Market may not have been added to Wagtail yet  # noqa
+            snapshot_data = self.find_data_snapshot(key, snapshots)
+            if not snapshot_data:  # Market may not have been added to Wagtail yet  # noqa
                 logger.warning('Market key {} not found'.format(key))
                 continue
 
             # Update snapshot fields with the provided values
-            snapshot = snapshot_stream_data[0]['value']
+            snapshot = snapshot_data[0]['value']
             snapshot['last_updated_projected_data'] = market['data_month']
             snapshot['num_originations'] = market['num_originations']
             snapshot['value_originations'] = market['value_originations']
@@ -94,5 +94,5 @@ class Command(BaseCommand):
             # Publish changes to the browse page the data snapshot lives on
             page = BrowsePage.objects.get(pk=snapshot['page'])
             del snapshot['page']
-            set_stream_data(page, 'content', snapshot_stream_data)
+            set_streamfield_data(page, 'content', snapshot_data)
             publish_changes(page)

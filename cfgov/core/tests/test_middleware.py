@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 
 from core.middleware import (
     DeactivateTranslationsMiddleware, ParseLinksMiddleware,
-    SelfHealingMiddleware, parse_links
+    PathBasedCsrfViewMiddleware, SelfHealingMiddleware, parse_links
 )
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages.helpers import publish_page
@@ -386,3 +386,43 @@ class SelfHealingMiddlewareTests(SimpleTestCase):
             status_code=301,
             fetch_redirect_response=False
         )
+
+
+class PathBasedCsrfViewMiddlewareTestCase(SimpleTestCase):
+
+    def setUp(self):
+        self.request_factory = RequestFactory()
+        self.middleware = PathBasedCsrfViewMiddleware(lambda r: HttpResponse())
+
+    @override_settings(CSRF_REQUIRED_PATHS=None)
+    def test_default_apply_everywhere(self):
+        request = self.request_factory.get('/test')
+        self.middleware.process_view(
+            request,
+            self.middleware.get_response,
+            [],
+            {}
+        )
+        self.assertTrue(hasattr(request, "csrf_processing_done"))
+
+    @override_settings(CSRF_REQUIRED_PATHS=("/admin", ))
+    def test_do_not_apply_to_path(self):
+        request = self.request_factory.get('/test')
+        self.middleware.process_view(
+            request,
+            self.middleware.get_response,
+            [],
+            {}
+        )
+        self.assertFalse(hasattr(request, "csrf_processing_done"))
+
+    @override_settings(CSRF_REQUIRED_PATHS=("/admin", ))
+    def test_apply_to_path(self):
+        request = self.request_factory.get('/admin')
+        self.middleware.process_view(
+            request,
+            self.middleware.get_response,
+            [],
+            {}
+        )
+        self.assertTrue(hasattr(request, "csrf_processing_done"))

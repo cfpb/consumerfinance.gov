@@ -38,11 +38,6 @@ class HomePage(CFGOVPage):
         ObjectList([StreamFieldPanel('content')], heading='Content'),
         ObjectList([
             InlinePanel(
-                'carousel_items', max_num=4, label="Carousel Item"
-            ),
-        ], heading='Carousel'),
-        ObjectList([
-            InlinePanel(
                 'info_units', min_num=3, max_num=6, label="Info Unit"
             ),
         ], heading='Info Units'),
@@ -65,15 +60,10 @@ class HomePage(CFGOVPage):
 
     objects = PageManager()
 
-    @property
-    def page_js(self):
-        return super(HomePage, self).page_js + ['home-page.js']
-
     def get_context(self, request):
         context = super(HomePage, self).get_context(request)
 
         context.update({
-            'carousel_items': self.carousel_items.select_related('image'),
             'info_units': [
                 info_unit.as_info_unit()
                 for info_unit in
@@ -84,40 +74,6 @@ class HomePage(CFGOVPage):
         })
 
         return context
-
-
-class HomePageCarouselItem(Orderable):
-    page = ParentalKey(
-        'v1.HomePage', on_delete=models.CASCADE, related_name='carousel_items'
-    )
-    title = models.CharField(max_length=45, help_text=(
-        "45 characters maximum (including spaces). "
-        "Sentence case, unless proper noun."
-    ))
-    body = models.TextField(max_length=160, help_text=(
-        "160 characters maximum (including spaces)."
-    ))
-    link_text = models.CharField(max_length=35, help_text=(
-        "35 characters maximum (including spaces). "
-        "Lead with a verb, and be specific."
-    ))
-    # TODO: Change this to use a URLField that also allows relative links.
-    # https://code.djangoproject.com/ticket/10896
-    link_url = models.CharField("Link URL", max_length=255)
-    image = models.ForeignKey(
-        get_image_model_string(),
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='+'
-    )
-
-    panels = [
-        FieldPanel('title'),
-        FieldPanel('body'),
-        FieldPanel('link_text'),
-        FieldPanel('link_url'),
-        ImageChooserPanel('image'),
-    ]
 
 
 class HomePageInfoUnit(Orderable, ClusterableModel):

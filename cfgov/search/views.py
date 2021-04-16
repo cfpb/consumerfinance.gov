@@ -1,10 +1,8 @@
 from django.shortcuts import render
-from django.template.response import TemplateResponse
 from django.views.generic import View
 
 from wagtail.core.models import get_page_models
 
-from search import dotgov
 from search.forms import ExternalLinksForm
 from v1.models.resources import Resource
 from v1.models.snippets import Contact, ReusableText
@@ -62,17 +60,3 @@ class SearchView(View):
             if page.pk not in seen:
                 seen.add(page.pk)
                 yield page
-
-
-def results_view(request):
-    query = request.GET.get('q', '')
-
-    results = dotgov.search(query)
-
-    context = {
-        'q': query,
-        'results': results
-    }
-
-    response = TemplateResponse(request, 'search/results.html', context)
-    return response.render()

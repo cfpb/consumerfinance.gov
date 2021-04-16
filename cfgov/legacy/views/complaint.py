@@ -33,7 +33,6 @@ class ComplaintLandingView(TemplateView):
 
         context.update({
             'technical_issues': flag_enabled('CCDB_TECHNICAL_ISSUES'),
-            'ccdb_content_updates': flag_enabled('CCDB_CONTENT_UPDATES')
         })
 
         return context

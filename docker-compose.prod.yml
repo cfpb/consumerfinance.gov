@@ -19,6 +19,7 @@ services:
             MEDIA_ROOT: /src/consumerfinance.gov/cfgov/f/
             PGPASSWORD: cfpb
             WATCHMAN_TOKENS: "token"
+            APACHE_STATUS_ALLOW_FROM: 127.0.0.1
         ports:
             - "8000:8000"
         volumes:

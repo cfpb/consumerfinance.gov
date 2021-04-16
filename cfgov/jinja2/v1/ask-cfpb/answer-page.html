@@ -5,14 +5,13 @@
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'organisms/ask-search.html' as ask_search with context %}
 
-{% block title %}
-    {{- seo_title or page.question or page.title | striptags -}}
-{% endblock %}
+{% block title -%}
+    {{- seo_title or page.question or page.title | striptags }} | {{ _('Consumer Financial Protection Bureau') }}
+{%- endblock %}
 
 {%- block og_desc -%}
     {{- meta_description -}}
 {%- endblock -%}
-
 
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__answer
@@ -21,7 +20,6 @@
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
-
 
 {% block content_main %}
     <div class="block

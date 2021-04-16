@@ -1,11 +1,14 @@
 #landing-map {
   height: 580px;
+
+  // Override values coming in via the cfpb-chart class from cfpb-chart-builder.
   &.cfpb-chart {
-    .highcharts-container {
-      .webfont-regular();
-    }
-    .highcharts-legend-key {
-      font-size: 16px;
+    max-width: initial;
+
+    .highcharts-legend-description,
+    .highcharts-legend-dates {
+      font-size: 12px;
+      color: @black;
     }
     .highcharts-legend__tile-map {
       font-size: 12px;

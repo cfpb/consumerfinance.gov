@@ -307,32 +307,32 @@ belonging to the page or revision using the `mapper` function.
 The mapper function should take `page_or_revision`
 and the stream block's value as a `dict`.
 
-This function calls `migrate_stream_data()`.
+This function calls `migrate_streamfield_data()`.
 
-#### `migrate_stream_data(page_or_revision, block_path, stream_data, mapper)`
+#### `migrate_streamfield_data(page_or_revision, block_path, data, mapper)`
 
 Migrate all occurrences of the block name
 contained within the `block_path` list
-within the `stream_data` `dict`
+within the `data` `dict`
 using the given `mapper` function.
 
 The mapper function should take `page_or_revision`
 and the stream block's value as a `dict`.
 
-#### `get_stream_data(page_or_revision, field_name)`
+#### `get_streamfield_data(page_or_revision, field_name)`
 
 Get the StreamField data for a given field name on a page or a revision.
 
 This function will return a list of `dict`-like objects
 containing the blocks within the given StreamField.
 
-#### `set_stream_data(page_or_revision, field_name, stream_data, commit=True)`
+#### `set_streamfield_data(page_or_revision, field_name, data, commit=True)`
 
 Set the StreamField data for a given field name on a page or a revision.
 If commit is `True` (default),
 `save()` is called on the `page_or_revision` object.
 
-`stream_data` must be a list of `dict`-like objects
+`data` must be a list of `dict`-like objects
 containing the blocks within the given StreamField.
 
 ## Recreating migrations

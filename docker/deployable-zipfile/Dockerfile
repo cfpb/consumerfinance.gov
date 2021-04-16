@@ -24,7 +24,7 @@ RUN mkdir -p ${HOME} && chmod 777 ${HOME}
 # Python 3 to be enabled at login.
 RUN yum -y update && \
     yum install -y centos-release-scl && \
-    curl -sL https://rpm.nodesource.com/setup_12.x | bash - && \
+    curl -sL https://rpm.nodesource.com/setup_14.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum install -y rh-python36 gcc git nodejs yarn && \
     echo "source scl_source enable rh-python36" > /etc/profile.d/scl_python.sh && \

@@ -67,6 +67,7 @@ module.exports = {
       compress: true
     },
     otherBuildTriggerFiles: [
+      paths.unprocessed + '/css/**/*.css',
       paths.unprocessed + '/css/**/*.less',
       paths.modules,
       './config/**/*.js',

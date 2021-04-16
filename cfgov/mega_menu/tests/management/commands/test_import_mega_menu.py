@@ -40,4 +40,4 @@ class ImportMegaMenuTests(TestCase):
         )
 
         menu = Menu.objects.get(language='en')
-        self.assertEqual(menu.submenus.stream_data, submenus)
+        self.assertSequenceEqual(menu.submenus.raw_data, submenus)

@@ -1,5 +1,5 @@
 const pagination = require( '../../shared_objects/pagination.js' );
-const { Then, When } = require( 'cucumber' );
+const { Then, When } = require( '@cucumber/cucumber' );
 const chai = require( 'chai' );
 const expect = chai.expect;
 const chaiAsPromised = require( 'chai-as-promised' );
