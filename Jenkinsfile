@@ -95,10 +95,12 @@ pipeline {
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
-                    docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '-f ./docker/cypress/Dockerfile .')
-                    docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
-                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
+                    docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
+                        docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '--no-cache --pull -f ./docker/cypress/Dockerfile .') 
+                        docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
+                        docker.build(env.IMAGE_NAME_ES2_LOCAL, '--no-cache --pull -f ./docker/elasticsearch/Dockerfile .')
+                        docker.build(env.IMAGE_NAME_ES_LOCAL, '--no-cache --pull -f ./docker/elasticsearch/7/Dockerfile .')
+                    }
                 }
             }
         }
