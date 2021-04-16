@@ -233,6 +233,9 @@ const stateModel = {
     if ( name === 'activeSection' ) {
       stateModel.setActiveSection( value );
     }
+    if ( name === 'programLength' ) {
+      updateFinancial( 'other_programLength', value, true );
+    }
     stateModel.values[name] = value;
     updateStateInDom( name, value );
 
