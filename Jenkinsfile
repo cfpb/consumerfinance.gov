@@ -88,16 +88,19 @@ pipeline {
 
         stage('Build Image') {
             environment {
-                DOCKER_BUILDKIT = '1'
+                DOCKER_BUILDKIT = '0'
+                COMPOSE_DOCKER_CLI_BUILD = '0'
             }
             steps {
                 postGitHubStatus("jenkins/deploy", "pending", "Building", env.RUN_DISPLAY_URL)
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
-                    docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
-                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-cfpb') {
+                        docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
+                        docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
+                        docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
+                    }
                 }
             }
         }
