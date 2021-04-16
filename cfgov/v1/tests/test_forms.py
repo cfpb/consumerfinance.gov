@@ -109,41 +109,6 @@ class TestFilterableListForm(TestCase):
         assert result['from_date'] == to_date
         assert result['to_date'] == from_date
 
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    def test_generate_query_returns_empty_query_for_unbound_form(self, mock_init):
-        mock_init.return_value = None
-        form = FilterableListForm()
-        form.is_bound = False
-
-        result = form.generate_query()
-        assert result.children == []
-
-    @mock.patch('v1.forms.FilterableListForm.get_query_strings')
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    def test_generate_query_returns_empty_query_fields_not_in_cleaned_data(self, mock_init, mock_get_query_strings):
-        mock_init.return_value = None
-        form = FilterableListForm()
-        form.is_bound = True
-        form.declared_fields = ['field']
-        mock_get_query_strings.return_value = ['field__contains']
-        form.cleaned_data = {'notthefield': None}
-
-        result = form.generate_query()
-        assert result.children == []
-
-    @mock.patch('v1.forms.FilterableListForm.get_query_strings')
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    def test_generate_query_returns_query_from_cleaned_data_fields_and_query_strings(self, mock_init, mock_get_query_strings):
-        mock_init.return_value = None
-        form = FilterableListForm()
-        form.is_bound = True
-        form.declared_fields = ['field']
-        mock_get_query_strings.return_value = ['field__contains']
-        form.cleaned_data = {'field': 'foobar'}
-
-        result = form.generate_query()
-        assert result.children == [('field__contains', 'foobar')]
-
 
 class TestFilterableDateField(TestCase):
     def test_default_required(self):
