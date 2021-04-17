@@ -15,7 +15,7 @@ from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
-from v1.util.date_filter import end_of_time_period
+from v1.util.datetimes import end_of_time_period
 
 
 class FilterableDateField(forms.DateField):
@@ -28,9 +28,13 @@ class FilterableDateField(forms.DateField):
 
     default_input_formats = (
         '%m/%d/%y',     # 10/25/16, 9/1/16
+        '%d/%m/%y',     # 13/4/21
         '%m-%d-%y',     # 10-25-16, 9-1-16
+        '%d-%m-%y',     # 13-4-21
         '%m/%d/%Y',     # 10/25/2016, 9/1/2016
+        '%d/%m/%Y',     # 13/4/2021
         '%m-%d-%Y',     # 10-25-2016, 9-1-2016
+        '%d-%m-%Y',     # 13-4-2021
         '%Y-%m-%d',     # 2016-10-25, 2016-9-1
         '%m/%Y',        # 10/2016, 7/2017
         '%m-%Y',        # 10-2016, 7-2017
