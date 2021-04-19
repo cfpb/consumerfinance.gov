@@ -100,7 +100,7 @@ pipeline {
                         docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                         docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
                         docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
-                        docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '-f ./docker/cypress/Dockerfile .') 
+                        docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '-f ./docker/cypress/Dockerfile .')
                     }
                 }
             }
@@ -179,6 +179,7 @@ pipeline {
         }
 
         stage('Run Tests') {
+            agent none
             when {
                 anyOf {
                     branch 'main'
@@ -201,7 +202,7 @@ pipeline {
             parallel {
                 stage('admin-tests') {
                     agent {
-                        label 'docker'
+                        label 'kitchensink_44'
                     }
                     options {
                         timeout(time: 30, unit: 'MINUTES')
@@ -227,7 +228,7 @@ pipeline {
                 }
                 stage('component-tests') {
                     agent {
-                        label 'docker'
+                        label 'kitchensink_44'
                     }
                     options {
                         timeout(time: 30, unit: 'MINUTES')
@@ -253,7 +254,7 @@ pipeline {
                 }
                 stage('consumer-tools-tests') {
                     agent {
-                        label 'docker'
+                        label 'kitchensink_20'
                     }
                     options {
                         timeout(time: 30, unit: 'MINUTES')
@@ -279,7 +280,7 @@ pipeline {
                 }
                 stage('data-research-tests') {
                     agent {
-                        label 'docker'
+                        label 'kitchensink_20'
                     }
                     options {
                         timeout(time: 30, unit: 'MINUTES')
@@ -305,7 +306,7 @@ pipeline {
                 }
                 stage('paying-for-college-tests') {
                     agent {
-                        label 'docker'
+                        label 'kitchensink_143'
                     }
                     options {
                         timeout(time: 30, unit: 'MINUTES')
@@ -331,7 +332,7 @@ pipeline {
                 }
                 stage('rules-policy-tests') {
                     agent {
-                        label 'docker'
+                        label 'kitchensink_143'
                     }
                     options {
                         timeout(time: 30, unit: 'MINUTES')
