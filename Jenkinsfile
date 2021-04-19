@@ -204,7 +204,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 15, unit: 'MINUTES')
+                        timeout(time: 30, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
@@ -230,7 +230,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 20, unit: 'MINUTES')
+                        timeout(time: 30, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
@@ -256,7 +256,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 20, unit: 'MINUTES')
+                        timeout(time: 30, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
@@ -282,7 +282,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 15, unit: 'MINUTES')
+                        timeout(time: 30, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
@@ -308,7 +308,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 15, unit: 'MINUTES')
+                        timeout(time: 30, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
@@ -334,7 +334,7 @@ pipeline {
                         label 'docker'
                     }
                     options {
-                        timeout(time: 15, unit: 'MINUTES')
+                        timeout(time: 30, unit: 'MINUTES')
                     }
                     environment {
                         CYPRESS_VOLUMES = "-v ${WORKSPACE}/test/cypress:/${env.STAGE_NAME}/test/cypress -v ${WORKSPACE}/cypress.json:/${env.STAGE_NAME}/cypress.json"
