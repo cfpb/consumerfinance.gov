@@ -32,6 +32,30 @@ main.college-costs {
 
 	// Grad & undergrad content control
 	&[data-state_programlevel="undergrad"] {
+		&[data-state_programdependency="dependent"] {
+			.dependent-content {
+				display: block;
+			}
+			span.dependent-content {
+				display: inline;
+			}
+			.independent-content {
+				display: none;
+			}
+		}
+
+		&[data-state_programdependency="independent"] {
+			.independent-content {
+				display: block;
+			}
+			span.independent-content {
+				display: inline;
+			}
+			.dependent-content {
+				display: none;
+			}
+		}
+
 		.undergrad-content {
 			display: block;
 		}
