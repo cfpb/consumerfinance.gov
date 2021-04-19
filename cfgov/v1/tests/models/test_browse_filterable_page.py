@@ -1,7 +1,10 @@
+from io import StringIO
+
 from django.test import TestCase
 
 from wagtail.core.models import Page, Site
 
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory
 from v1.models.browse_filterable_page import (
@@ -19,11 +22,12 @@ class EventArchivePageTestCase(TestCase):
         )
 
 
-class TestNewsroomLandingPage(TestCase):
+class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
     def setUp(self):
         self.newsroom_page = NewsroomLandingPage(title="News", slug='newsroom')
         self.site_root = Site.objects.get(is_default_site=True).root_page
         self.site_root.add_child(instance=self.newsroom_page)
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_eligible_categories(self):
         self.assertEqual(
@@ -48,6 +52,7 @@ class TestNewsroomLandingPage(TestCase):
             page=page
         )
         page.categories.add(category)
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_no_pages_matching_categories(self):
         self.make_page_with_category('test', parent=self.site_root)
