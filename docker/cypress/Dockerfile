@@ -32,7 +32,8 @@ RUN yum -y install \
         alsa-lib*
 
 # Install Cypress
-RUN npm install -D cypress && \
+RUN npm cache clean --force && \
+    npm install -D cypress && \
     $(npm bin)/cypress verify
 
 # Remove files flagged by image vulnerability scanner
