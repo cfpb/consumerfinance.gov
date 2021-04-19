@@ -179,7 +179,6 @@ pipeline {
         }
 
         stage('Run Tests') {
-            agent none
             when {
                 anyOf {
                     branch 'main'
