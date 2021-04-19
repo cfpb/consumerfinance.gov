@@ -34,8 +34,9 @@ jobs:
 
     - name: Install dependencies
       run: |
+        ./frontend.sh development
         python -m pip install --upgrade pip
-        ./setup.sh
+        pip install -r requirements/ci.txt
 
     - name: Set up initial data
       run: ./initial-data.sh
