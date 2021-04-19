@@ -13,7 +13,6 @@ from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
-@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
 class TestFragmentCacheExtension(ElasticsearchTestsMixin, TestCase):
     def test_cache_gets_called_when_visiting_filterable_page(self):
         # Create a filterable page
