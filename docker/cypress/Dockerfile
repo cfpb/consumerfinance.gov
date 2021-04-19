@@ -22,6 +22,7 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.
 RUN google-chrome --version
 
 # Install Cypress dependencies
+# https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
 RUN yum -y install \
         xorg-x11-server-Xvfb \
         xorg-x11-xauth \
@@ -29,6 +30,7 @@ RUN yum -y install \
         libXtst* \
         libXScrnSaver* \
         GConf2* \
+        nss* \
         alsa-lib*
 
 # Install Cypress
