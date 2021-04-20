@@ -36,7 +36,6 @@ jobs:
 
     - name: Install dependencies
       run: |
-        ./frontend.sh development
         python -m pip install --upgrade pip
         pip install -r requirements/base.txt
         pip install django-sslserver==0.20
@@ -48,4 +47,7 @@ jobs:
       run: python cfgov/manage.py runserver
 
     - name: Run Cypress
-      run: yarn cypress run
+      uses: cypress-io/github-action@v2
+      with:
+        build: yarn run gulp
+        start: python cfgov/manage.py runserver
