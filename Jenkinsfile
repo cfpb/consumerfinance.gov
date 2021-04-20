@@ -140,11 +140,15 @@ pipeline {
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
+                    scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
+                    scanImage(env.IMAGE_ES2_REPO, env.IMAGE_TAG)
+                    if (isESImageUpdated) {
+                        scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
+                    }
+                    if (isCypressImageUpdated) {
+                        scanImage(env.IMAGE_CYPRESS_REPO, env.IMAGE_TAG)
+                    }
                 }
-                scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
-                scanImage(env.IMAGE_ES2_REPO, env.IMAGE_TAG)
-                scanImage(env.IMAGE_CYPRESS_REPO, env.IMAGE_TAG)
-                // scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG) We Will Scan once Twistlock is configured to ignore known issues with this image.
             }
         }
 
@@ -171,11 +175,15 @@ pipeline {
                         env.CFGOV_ES2_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
-                        image.push()
+                        if (isESImageUpdated) {
+                            image.push()
+                        }
                         env.CFGOV_ES_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
-                        image.push()
+                        if (isCypressImageUpdated) {
+                            image.push()
+                        }
                         env.CYPRESS_IMAGE = image.imageName()
                     }
                 }
