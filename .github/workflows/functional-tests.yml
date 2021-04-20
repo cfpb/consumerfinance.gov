@@ -43,8 +43,8 @@ jobs:
     - name: Set up initial data
       run: ./initial-data.sh
 
-    - name: Run server
-      run: python cfgov/manage.py runserver
+    # - name: Run server
+    #   run: python cfgov/manage.py runserver
 
     - name: Run Cypress
       uses: cypress-io/github-action@v2
