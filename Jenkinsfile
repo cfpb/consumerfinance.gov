@@ -86,6 +86,30 @@ pipeline {
             }
         }
 
+        stage('Check for Docker image updates') {
+            when { expression { env.BRANCH_NAME != 'main' } }
+            steps {
+                script {
+                    sh "git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main"
+                    sh "git fetch --no-tags"
+
+                    List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
+
+                    def isESImageUpdated = false
+                    def isCypressImageUpdated = false
+
+                    for (int i = 0; i < sourceChanged.size(); i++) {
+                        if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
+                            isESImageUpdated = true
+                        }
+                        if (sourceChanged[i].contains("docker/cypress/Dockerfile")) {
+                            isCypressImageUpdated = true
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Build Image') {
             environment {
                 DOCKER_BUILDKIT = '0'
@@ -99,8 +123,12 @@ pipeline {
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                         docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
-                        docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
-                        docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '-f ./docker/cypress/Dockerfile .')
+                        if (isESImageUpdated) {
+                            docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
+                        }
+                        if (isCypressImageUpdated) {
+                            docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '-f ./docker/cypress/Dockerfile .')
+                        }
                     }
                 }
             }
