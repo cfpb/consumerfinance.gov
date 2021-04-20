@@ -36,7 +36,7 @@ jobs:
       run: |
         ./frontend.sh development
         python -m pip install --upgrade pip
-        pip install -r requirements/ci.txt
+        pip install -r requirements/base.txt
 
     - name: Set up initial data
       run: ./initial-data.sh
