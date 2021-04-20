@@ -31,11 +31,11 @@ RUN yum -y install \
         libXScrnSaver* \
         GConf2* \
         nss* \
-        alsa-lib*
+        alsa-lib* && \
+    yum clean all && rm -rf /var/cache/yum
 
 # Install Cypress
-RUN npm cache clean --force && \
-    npm install -D cypress && \
+RUN npm install -D cypress && \
     $(npm bin)/cypress verify
 
 # Remove files flagged by image vulnerability scanner
