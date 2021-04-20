@@ -27,6 +27,8 @@ pipeline {
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
         DEPLOY_SUCCESS = false
+        IS_ES_IMAGE_UPDATED = false
+        IS_CYPRESS_IMAGE_UPDATED = false
     }
 
     parameters {
@@ -95,15 +97,15 @@ pipeline {
 
                     List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
 
-                    def isESImageUpdated = false
-                    def isCypressImageUpdated = false
+                    // def isESImageUpdated = false
+                    // def isCypressImageUpdated = false
 
                     for (int i = 0; i < sourceChanged.size(); i++) {
                         if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
-                            isESImageUpdated = true
+                            IS_ES_IMAGE_UPDATED = true
                         }
                         if (sourceChanged[i].contains("docker/cypress/Dockerfile")) {
-                            isCypressImageUpdated = true
+                            IS_CYPRESS_IMAGE_UPDATED = true
                         }
                     }
                 }
@@ -123,10 +125,10 @@ pipeline {
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
                         docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
-                        if (isESImageUpdated) {
+                        if (IS_ES_IMAGE_UPDATED) {
                             docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
                         }
-                        if (isCypressImageUpdated) {
+                        if (IS_CYPRESS_IMAGE_UPDATED) {
                             docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '-f ./docker/cypress/Dockerfile .')
                         }
                     }
@@ -142,10 +144,10 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
                     scanImage(env.IMAGE_ES2_REPO, env.IMAGE_TAG)
-                    if (isESImageUpdated) {
+                    if (IS_ES_IMAGE_UPDATED) {
                         scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
                     }
-                    if (isCypressImageUpdated) {
+                    if (IS_CYPRESS_IMAGE_UPDATED) {
                         scanImage(env.IMAGE_CYPRESS_REPO, env.IMAGE_TAG)
                     }
                 }
@@ -175,13 +177,13 @@ pipeline {
                         env.CFGOV_ES2_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
-                        if (isESImageUpdated) {
+                        if (IS_ES_IMAGE_UPDATED) {
                             image.push()
                         }
                         env.CFGOV_ES_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
-                        if (isCypressImageUpdated) {
+                        if (IS_CYPRESS_IMAGE_UPDATED) {
                             image.push()
                         }
                         env.CYPRESS_IMAGE = image.imageName()
