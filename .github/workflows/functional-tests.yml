@@ -3,9 +3,11 @@ name: functional
 on: pull_request
 
 jobs:
-  build:
 
+  cypress:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgres://cfpb:cfpb@localhost/cfgov
 
     services:
       postgres:
