@@ -20,7 +20,6 @@ pipeline {
     environment {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_CYPRESS_REPO = 'cfpb/cypress'
-        IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
@@ -59,7 +58,6 @@ pipeline {
                     env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
-                    env.IMAGE_NAME_ES2_LOCAL = "${env.IMAGE_ES2_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_CYPRESS_LOCAL = "${env.IMAGE_CYPRESS_REPO}:${env.IMAGE_TAG}"
                 }
@@ -97,9 +95,6 @@ pipeline {
 
                     List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
 
-                    // def isESImageUpdated = false
-                    // def isCypressImageUpdated = false
-
                     for (int i = 0; i < sourceChanged.size(); i++) {
                         if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
                             IS_ES_IMAGE_UPDATED = true
@@ -124,7 +119,6 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
-                        docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
                         if (IS_ES_IMAGE_UPDATED) {
                             docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
                         }
@@ -143,7 +137,6 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
-                    scanImage(env.IMAGE_ES2_REPO, env.IMAGE_TAG)
                     if (IS_ES_IMAGE_UPDATED) {
                         scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
                     }
@@ -171,10 +164,6 @@ pipeline {
 
                         // Sets fully-qualified image name
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
-
-                        image = docker.image(env.IMAGE_NAME_ES2_LOCAL)
-                        image.push()
-                        env.CFGOV_ES2_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         if (IS_ES_IMAGE_UPDATED) {
