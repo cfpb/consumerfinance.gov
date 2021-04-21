@@ -88,8 +88,9 @@ STATIC_ROOT = os.environ['DJANGO_STATIC_ROOT']
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_cache',
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cfgov_default_cache',
+        'TIMEOUT': None,
     },
     'post_preview': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',

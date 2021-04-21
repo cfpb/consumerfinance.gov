@@ -1,5 +1,5 @@
 -r base.txt
-django-debug-toolbar==1.11
+django-debug-toolbar==3.2.1
 django-sslserver==0.20
 tox-pip-extensions==1.6.0
 tox==3.19.0
