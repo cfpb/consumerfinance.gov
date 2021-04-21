@@ -52,17 +52,7 @@
                             </div>
                             <div class="college-costs_save-for-later block block__mid" data-state-based-visibility="save-for-later">
                                 <p>Copy and save this link so that you can come back and review your plan.</p>
-                                <div class="m-form-field">
-                                    <p>
-                                        <strong>Your link</strong>
-                                    </p>
-                                    <pre name="finish_link" data-app-save-link="save-for-later"></pre>
-                                    <button class="a-btn u-mt15 copy-your-link"
-                                            aria-live="polite">
-                                      <span id="default-text">Copy<span class="u-visually-hidden">your link to the clipboard</span></span>
-                                      <span id="success-text" class="u-hidden"><span class="u-visually-hidden">Your link was </span>Copied!</span>
-                                    </button>
-                                </div>
+                                {% include 'college-cost-blocks/copy-button.html' %}
                             </div>
                         </div>
                         <div class="costs-not-covered costs-not-covered-sticky">
