@@ -235,7 +235,8 @@ function debtCalculator() {
   debts.repayHours = debts.tenYearMonthly / 15;
   debts.repayWorkWeeks = debts.repayHours / 40;
 
-  debts.fullTotal = debts.tenYearTotal + fin.existingDebt_amount;
+  // NOTE: This is technically incorrect, but to be addressed later.
+  debts.fullTotal = debts.totalAtGrad + fin.existingDebt_amount;
 
   fin.total_borrowingAtGrad = totalBorrowing;
   for ( const key in debts ) {

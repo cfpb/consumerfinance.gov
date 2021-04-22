@@ -69,7 +69,7 @@
 
     </div>
     <div data-state-based-visibility="expenses-monthly-budget">
-         <h2>2. See if the monthly payment fits in an average monthly budget for this <span data-state-based-visibility="no-program-selected">school</a><a data-state-based-visibility="program-is-selected">program</a>'s salary and region</h2>
+         <h2>2. See if the monthly payment fits in an average monthly budget for this <span data-state-based-visibility="no-program-selected">school</span><span data-state-based-visibility="program-is-selected">program</span>'s salary and region</h2>
 
         <div class="m-form-field m-form-field__select">
             <label class="a-label a-label__heading" for="expenses__region">
@@ -85,12 +85,14 @@
             </div>
         </div>
 
-        <div id="affording-your-loans_chart"></div>
+        <div class="college-costs_chart" id="affording-your-loans_chart"></div>
+
+        <p class="median-salary-note"><strong>Note:</strong> Median salary is for financially-aided students working and not enrolled in school 6 years after starting at this school. It includes students who did not graduate. Students tend to overestimate their starting salaries. A median is the middle&emdash;half of the studebts make more, but half make less.</p>
 
         <div class="equation-row">
             {{
                 text_item.render({
-                    'label': 'Median monthly salary of this <span data-state-based-visibility="no-program-selected">school</a><a data-state-based-visibility="program-is-selected">program</a>\'s students',
+                    'label': 'Median monthly salary of this <span data-state-based-visibility="no-program-selected">school</span><span data-state-based-visibility="program-is-selected">program</span>\'s students',
                     'value': '$0',
                     'type': 'text',
                     'helper_text': 'Your actual monthly salary will depend on many different factors, including your field of work and where you will live. To get more information about the salary levels of different careers, visit the <a href="https://www.bls.gov/bls/blswage.htm" class="link-external">Bureau of Labor Statistics\' Wage Data website</a>.',
@@ -151,6 +153,8 @@
         </div>
 
         <h2>3. Does this budget work for you? Adjust specific expenses, like rent and groceries, below</h2>
+
+        <p>Check out the average expenses reported by people living in this <span data-state-based-visibility="no-program-selected">school</span><span data-state-based-visibility="program-is-selected">program</span>'s region and salary. Enter your actual expenses if you know them, or research reasonable figures for the lifestyle you plan to have.</p>
 
         {% set expandable_settings = {
             'label': 'Average monthly expenses',

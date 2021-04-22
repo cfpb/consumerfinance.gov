@@ -35,7 +35,7 @@
                     'value': '$99,999',
                     'type': 'subtotal',
                     'status': '',
-                    'data_attribute': 'data-financial-item="debt_fullTotal"'
+                    'data_attribute': 'data-financial-item="debt_total"'
                 })
             }}
     </div>
@@ -51,7 +51,9 @@
 
     <h2 class="step-2">2. Check if your estimated total debt is less than the median salary of <span data-school-item="school"></span></h2>
 
-    <div id="max-debt-guideline_chart"></div>
+    <div class="college-costs_chart" id="max-debt-guideline_chart"></div>
+
+    <p class="median-salary-note"><strong>Note:</strong> Median salary is for financially-aided students working and not enrolled in school 6 years after starting at this school. It includes students who did not graduate. Students tend to overestimate their starting salaries. A median is the middle&emdash;half of the studebts make more, but half make less.</p>
 
     <div data-state-based-visibility="no-program-selected">
         {{ notification.render(
