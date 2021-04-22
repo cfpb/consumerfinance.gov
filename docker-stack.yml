@@ -106,6 +106,7 @@ services:
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
                     ./refresh-data.sh
+                    ./cfgov/manage.py createcachetable
                 fi
 
                 ./cfgov/manage.py search_index --rebuild -f --parallel
