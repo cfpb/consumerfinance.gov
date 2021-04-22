@@ -5,6 +5,10 @@ LABEL maintainer="tech@cfpb.gov"
 RUN mkdir -p /app
 WORKDIR /app
 
+# avoid too many progress messages
+# https://github.com/cypress-io/cypress/issues/1243
+ENV CI=1
+
 # Update and install Cypress dependencies, Node.js, and Chrome browser
 # https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
 RUN yum update -y && \
