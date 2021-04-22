@@ -109,8 +109,6 @@ services:
                     ./cfgov/manage.py createcachetable
                 fi
 
-                ./cfgov/manage.py update_index
-
                 ./cfgov/manage.py search_index --rebuild -f --parallel
 
                 httpd -d cfgov/apache -D FOREGROUND"
