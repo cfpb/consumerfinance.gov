@@ -117,8 +117,15 @@ pipeline {
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
+
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
+
+                        echo "IS_ES_IMAGE_UPDATED: ${IS_ES_IMAGE_UPDATED}"
+                        echo IS_ES_IMAGE_UPDATED
+                        echo "env.IS_ES_IMAGE_UPDATED: ${env.IS_ES_IMAGE_UPDATED}"
+                        echo env.IS_ES_IMAGE_UPDATED
+
                         if (IS_ES_IMAGE_UPDATED) {
                             docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
                         }
