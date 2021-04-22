@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 from django.db import models
 from django.utils.html import strip_tags
 from django.utils.text import Truncator
@@ -348,6 +349,30 @@ class AnswerPage(CFGOVPage):
             return f"{self.answer_base.id}: {self.title}"
         else:
             return self.title
+
+    def validate_unique(self, *args, **kwargs):
+        super().validate_unique(*args, **kwargs)
+
+        if self.answer_base is None:
+            return
+
+        # Ensure that there is only ever one answer page in this language for
+        # an answer
+        pages_with_same_answer_and_language = self.__class__.objects.filter(
+            language=self.language,
+            answer_base=self.answer_base
+        ).exclude(
+            pk=self.pk
+        )
+        if pages_with_same_answer_and_language.exists():
+            raise ValidationError(
+                {
+                    NON_FIELD_ERRORS: (
+                        f"An answer page in {self.language} already exists "
+                        f"for answer id {self.answer_base.id}"
+                    )
+                }
+            )
 
     @property
     def clean_search_tags(self):
