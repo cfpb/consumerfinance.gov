@@ -41,9 +41,8 @@ RUN cd /root/.cache/Cypress/*/Cypress/resources/app/packages/server/node_modules
 
 # Set User to Non Root
 RUN adduser -s /bin/false cypress && \
-    mv /root/.cache /home/cypress/.cache && \
-    chown -R cypress:cypress ./ /home/cypress/.cache
+    chown -R cypress:cypress /root
 
-ENV CYPRESS_CACHE_FOLDER /home/cypress/.cache/Cypress
+ENV CYPRESS_CACHE_FOLDER /root/.cache/Cypress
 
 USER cypress
