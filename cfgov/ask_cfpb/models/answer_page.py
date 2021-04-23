@@ -196,7 +196,6 @@ class AnswerPage(CFGOVPage):
     )
 
     content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('notification'),
         MultiFieldPanel([
             FieldPanel('last_edited'),
             FieldPanel('question'),
@@ -205,6 +204,7 @@ class AnswerPage(CFGOVPage):
             heading="Page content",
             classname="collapsible"),
         FieldPanel('share_and_print'),
+        StreamFieldPanel('notification'),
         StreamFieldPanel('answer_content'),
         MultiFieldPanel([
             SnippetChooserPanel('related_resource'),
