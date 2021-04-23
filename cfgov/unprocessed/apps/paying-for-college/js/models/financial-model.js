@@ -66,7 +66,7 @@ const financialModel = {
     const hours = Math.floor( financialModel.values.debt_repayHours * 100 ) / 100;
     const weeks = Math.floor( financialModel.values.debt_repayWorkWeeks * 100 ) / 100;
     const coverString = hours + 'hours, or ' + weeks + 'forty-hour work weeks';
-    updateState.byProperty( 'hoursToCoverPaymentText',  )
+    updateState.byProperty( 'hoursToCoverPaymentText' );
 
     recalculateExpenses();
 

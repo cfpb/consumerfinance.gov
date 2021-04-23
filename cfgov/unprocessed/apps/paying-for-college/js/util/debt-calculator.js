@@ -210,26 +210,27 @@ function debtCalculator() {
   } );
 
   // set the program-level debts before current debt is added
-  debts.programInterestAtGrad = interest.totalAtGrad
-  debts.programDebtAtGrad = debts.totalAtGrad
+  debts.programInterestAtGrad = interest.totalAtGrad;
+  debts.programDebtAtGrad = debts.totalAtGrad;
 
   // calculate existing loan debt payments
   let existingDebtInterest = calcInterestAtGrad(
-      fin.existingDebt_amount,
-      fin.rate_existingDebt,
-      fin.other_programLength );
+    fin.existingDebt_amount,
+    fin.rate_existingDebt,
+    fin.other_programLength );
 
   if ( isNaN( existingDebtInterest ) ) {
     existingDebtInterest = 0;
   }
-  let existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
-  let existingDebtMonthly = calcMonthlyPayment(
+  const existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
+  const existingDebtMonthly = calcMonthlyPayment(
     existingDebtTotalAtGrad, fin.rate_existingDebt, 10 );
 
   totalBorrowing += fin.existingDebt_amount;
   interest.totalAtGrad += existingDebtInterest;
-  // NOTE: This is technically incorrect (it should include program interest),
-  // but we are planning how to address the issue so it's clear to the user.
+
+  /* NOTE: This is technically incorrect (it should include program interest),
+     but we are planning how to address the issue so it's clear to the user. */
   debts.totalAtGrad += fin.existingDebt_amount;
 
   debts.tenYearMonthly += existingDebtMonthly;
@@ -247,8 +248,6 @@ function debtCalculator() {
   for ( const key in debts ) {
     fin['debt_' + key] = debts[key];
   }
-
-  console.log( 'fins: ', fin );
 }
 
 

@@ -9,14 +9,14 @@ import Highcharts from 'highcharts/highstock';
 import accessibility from 'highcharts/modules/accessibility';
 import more from 'highcharts/highcharts-more';
 import numberToMoney from 'format-usd';
-import patternFill from "highcharts/modules/pattern-fill";
+import patternFill from 'highcharts/modules/pattern-fill';
 import { updateState } from '../dispatchers/update-state.js';
 
 // curlies in strings is a way of formatting Highcharts labels
 /* eslint-disable no-template-curly-in-string */
 
 more( Highcharts );
-patternFill(Highcharts);
+patternFill( Highcharts );
 
 const columnChartOpts = {
   _meterChartBtns: null,
@@ -270,7 +270,7 @@ const costOfBorrowingOpts = {
   chart: {
     type: 'bar',
     marginTop: 95,
-    height: 300,
+    height: 300
   },
   tooltip: false,
   title: false,
@@ -294,7 +294,7 @@ const costOfBorrowingOpts = {
     x: -10
   },
   xAxis: {
-    categories: ['']
+    categories: [ '' ]
   },
   yAxis: {
     title: {
@@ -334,7 +334,7 @@ const maxDebtOpts = {
   title: false,
   subtitle: false,
   xAxis: {
-    categories: [''],
+    categories: [ '' ],
     title: {
       text: null
     }
@@ -356,11 +356,11 @@ const maxDebtOpts = {
       dataLabels: {
         enabled: false
       },
-      groupPadding: .001
+      groupPadding: 0.001
     }
   },
   legend: {
-    enabled: false,
+    enabled: false
   },
   credits: {
     enabled: false
@@ -370,29 +370,29 @@ const maxDebtOpts = {
     pointWidth: 60,
     pointPlacement: -0.09,
     color: '#ff9e1b'
-  },{
+  }, {
     data: [ 35000 ],
     pointWidth: 60,
     color: {
       pattern: {
-        path: `M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3`,
+        path: 'M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3',
         width: 10,
         height: 10,
         stroke: 1,
         color: '#fff',
         backgroundColor: '#20aa3f',
-        opacity: .9,
+        opacity: 0.9,
         patternTransform: 'scale(.75)'
       }
     }
-  }]
+  } ]
 };
 
 const affordingOpts = {
   chart: {
     type: 'bar',
     marginTop: 100,
-    height: 375,
+    height: 375
   },
   tooltip: false,
   title: false,
@@ -415,7 +415,7 @@ const affordingOpts = {
     x: -10
   },
   xAxis: {
-    categories: ['']
+    categories: [ '' ]
   },
   yAxis: {
     title: {
@@ -430,14 +430,14 @@ const affordingOpts = {
   series: [ {
     name: 'Estimated monthly loan payment: <strong>$524</strong>',
     pointWidth: 60,
-    pointPlacement: .05,
+    pointPlacement: 0.05,
     data: [ 524 ],
     color: '#ffe1b9',
     stack: 'costs'
   }, {
     name: 'Average monthly expenses: <strong>$2,246</strong>',
     pointWidth: 60,
-    pointPlacement: .05,
+    pointPlacement: 0.05,
     data: [ 2246 ],
     color: '#ff9e1b',
     stack: 'costs'
@@ -448,18 +448,18 @@ const affordingOpts = {
     data: [ 4357 ],
     color: {
       pattern: {
-             path: `M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3`,
-           width: 10,
-           height: 10,
-           stroke: 1,
-           color: '#fff',
-           backgroundColor: '#20aa3f',
-           opacity: .9,
-           patternTransform: 'scale(.75)'
+        path: 'M -1,11 l11,-11 M -2 2 l3,-3 M 8, 12 l3, -3',
+        width: 10,
+        height: 10,
+        stroke: 1,
+        color: '#fff',
+        backgroundColor: '#20aa3f',
+        opacity: 0.9,
+        patternTransform: 'scale(.75)'
       }
     },
     stack: 'salary'
-  }]
+  } ]
 };
 
 const gradMeterOpts = {};
@@ -529,25 +529,25 @@ const chartView = {
     );
 
     chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer.text(
-          'Estimated total debt at graduation: ',
-          60,
-          90 )
-          .attr({
-            zIndex: 5
-          }).css({
-            'fontSize':'14px'
-          })
-          .add();
+      'Estimated total debt at graduation: ',
+      60,
+      90 )
+      .attr( {
+        zIndex: 5
+      } ).css( {
+        fontSize: '14px'
+      } )
+      .add();
     chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer.text(
-          'Estimated total debt at graduation: ',
-          60,
-          90 )
-          .attr({
-            zIndex: 5
-          }).css({
-            'fontSize':'14px'
-          })
-          .add();
+      'Estimated total debt at graduation: ',
+      60,
+      90 )
+      .attr( {
+        zIndex: 5
+      } ).css( {
+        fontSize: '14px'
+      } )
+      .add();
 
     chartView.affordingChart = Highcharts.chart(
       chartView.affordingElem,
@@ -576,13 +576,13 @@ const chartView = {
       max: Math.floor( getFinancialValue( 'debt_tenYearTotal' ) * 1.10 )
     } );
     chartView.costOfBorrowingChart.series[0].update( {
-        data: [ interest10years ],
-        name: 'Estimated total interest: <strong>' + interestString + '</strong>'
-      } );
-    chartView.costOfBorrowingChart.series[1].update({
-        data: [ totalBorrowingAtGrad ],
-        name: 'Estimated total borrowed: <strong>' + borrowedString + '</strong>'
-      } );
+      data: [ interest10years ],
+      name: 'Estimated total interest: <strong>' + interestString + '</strong>'
+    } );
+    chartView.costOfBorrowingChart.series[1].update( {
+      data: [ totalBorrowingAtGrad ],
+      name: 'Estimated total borrowed: <strong>' + borrowedString + '</strong>'
+    } );
   },
 
   updateMakePlanChart: () => {
@@ -612,14 +612,14 @@ const chartView = {
 
   updateMaxDebtChart: () => {
     const totalDebt = getFinancialValue( 'debt_totalAtGrad' );
-    const debtString = numberToMoney( { amount: totalDebt, decimalPlaces: 0 }  );
+    const debtString = numberToMoney( { amount: totalDebt, decimalPlaces: 0 } );
     const salary = getFinancialValue( 'salary_annual' );
     const salaryString = numberToMoney( { amount: salary, decimalPlaces: 0 } );
     const max = Math.max( totalDebt * 1.1, salary * 1.1 );
 
     chartView.maxDebtChart.yAxis[0].update( {
       min: 0,
-      max: max 
+      max: max
     } );
 
     chartView.maxDebtChart.series[0].setData( [ totalDebt ] );
@@ -630,26 +630,26 @@ const chartView = {
     chartView.maxDebtChart.debtText.destroy();
 
     chartView.maxDebtChart.debtText = chartView.maxDebtChart.renderer.text(
-          'Estimated total debt at graduation: <strong>' + debtString + '</strong>',
-          13,
-          50 )
-          .attr({
-            zIndex: 5
-          }).css({
-            'fontSize':'14px'
-          })
-          .add();
+      'Estimated total debt at graduation: <strong>' + debtString + '</strong>',
+      13,
+      50 )
+      .attr( {
+        zIndex: 5
+      } ).css( {
+        fontSize: '14px'
+      } )
+      .add();
 
     chartView.maxDebtChart.salaryText = chartView.maxDebtChart.renderer.text(
-        'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
-        13,
-        160 )
-        .attr({
-          zIndex: 5
-        }).css({
-          'fontSize':'14px'
-        })
-      .add()
+      'Estimated salary at graduation: <strong>' + salaryString + '</strong>',
+      13,
+      160 )
+      .attr( {
+        zIndex: 5
+      } ).css( {
+        fontSize: '14px'
+      } )
+      .add();
   },
 
   updateAffordingChart: () => {
@@ -669,17 +669,17 @@ const chartView = {
     } );
 
     chartView.affordingChart.series[0].update( {
-        data: [ monthlyPayment ],
-        name: 'Estimated monthly loan payment: <strong>' + paymentString + '</strong>'
-      } );
-    chartView.affordingChart.series[1].update({
-        data: [ monthlyExpenses ],
-        name: 'Average monthly expenses: <strong>' + expensesString + '</strong>'
-      } );
-    chartView.affordingChart.series[2].update({
-        data: [ monthlySalary ],
-        name: 'Monthly median salary: <strong>' + salaryString + '</strong>'
-      } );
+      data: [ monthlyPayment ],
+      name: 'Estimated monthly loan payment: <strong>' + paymentString + '</strong>'
+    } );
+    chartView.affordingChart.series[1].update( {
+      data: [ monthlyExpenses ],
+      name: 'Average monthly expenses: <strong>' + expensesString + '</strong>'
+    } );
+    chartView.affordingChart.series[2].update( {
+      data: [ monthlySalary ],
+      name: 'Monthly median salary: <strong>' + salaryString + '</strong>'
+    } );
   },
 
   updateGradMeterChart: () => {

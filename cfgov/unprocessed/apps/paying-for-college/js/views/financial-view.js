@@ -44,7 +44,7 @@ const financialView = {
         const prop = elem.dataset.financialItem;
         const isRate = prop.substr( 0, 5 ) === 'rate_';
         const isFee = prop.substr( 0, 4 ) === 'fee_';
-        const isHours = prop.substr( -5, 5) === 'Hours';
+        const isHours = prop.substr( -5, 5 ) === 'Hours';
         const isNumber = elem.dataset.isNumber === 'true';
         let val = getFinancialValue( prop );
 
@@ -151,7 +151,6 @@ function _handleCostsButtonClick( event ) {
   const target = event.target;
 
   // When the button is clicked, bring in school data if 'No'
-  console.log( 'answer: ', answer );
   if ( getStateValue( 'costsQuestion' ) === false ) {
     updateState.byProperty( 'costsQuestion', answer );
     // If their offer does not have costs, use the Department of Ed data
