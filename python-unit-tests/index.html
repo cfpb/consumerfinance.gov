@@ -313,7 +313,7 @@ you can still run the tests if you install Tox in your
 
 <p>If you have set up
 <a href="/installation/#docker-based-installation">a Docker-based installation of consumerfinance.gov</a>,
-you can run the tests there by<br />
+you can run the tests there by
 <a href="http://localhost:8888/running-docker/#access-a-containers-shell">accessing the Python container's shell</a>:</p>
 <pre class="highlight"><code class="language-sh">docker-compose exec python bash</code></pre>
 
@@ -333,9 +333,9 @@ You can select specific environments using <code>-e</code>.</p>
 
 <p>These default environments are:</p>
 <ul>
-<li><code>lint</code>, which runs our <a href="#linting">linting</a> tools. We require this
+<li><code>lint</code>, which runs our <a href="#linting">linters</a>. We require this
   environment to pass in CI.</li>
-<li><code>validate-migrations</code>, which checks for any missing Django migrations. 
+<li><code>validate-migrations</code>, which checks for any missing Django migrations.
   We require this environment to pass in CI.</li>
 <li><code>unittest</code>, which runs unit tests against the current production
   versions of Python, Django, and Wagtail. We require this environment to
