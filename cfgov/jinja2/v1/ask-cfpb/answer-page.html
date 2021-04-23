@@ -40,10 +40,6 @@
     <div class="block
                 block__flush-top">
 
-        {% if page.notification %}
-            {{ page.notification }}
-        {% endif %}
-
         {% if page.short_answer %}
             <div class="lead-paragraph">
                 {{ page.short_answer | richtext | safe }}
@@ -59,6 +55,12 @@
                         'is_printable': true
                     }
                 ) }}
+            </div>
+        {% endif %}
+
+        {% if page.notification %}
+            <div class="block block__sub">
+                {{ page.notification }}
             </div>
         {% endif %}
 
