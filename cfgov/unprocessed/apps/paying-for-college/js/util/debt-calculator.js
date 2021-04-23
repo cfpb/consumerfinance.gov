@@ -214,18 +214,17 @@ function debtCalculator() {
   debts.programDebtAtGrad = debts.totalAtGrad
 
   // calculate existing loan debt payments
-  const existingLoanRate = getConstantsValue( 'existingDebtRate' );
-  const existingDebtInterest = calcInterestAtGrad(
+  let existingDebtInterest = calcInterestAtGrad(
       fin.existingDebt_amount,
-      existingLoanRate,
+      fin.rate_existingDebt,
       fin.other_programLength );
 
   if ( isNaN( existingDebtInterest ) ) {
     existingDebtInterest = 0;
   }
-  const existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
-  const existingDebtMonthly = calcMonthlyPayment(
-    existingDebtTotalAtGrad, existingLoanRate, 10 );
+  let existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
+  let existingDebtMonthly = calcMonthlyPayment(
+    existingDebtTotalAtGrad, fin.rate_existingDebt, 10 );
 
   totalBorrowing += fin.existingDebt_amount;
   interest.totalAtGrad += existingDebtInterest;
@@ -248,6 +247,8 @@ function debtCalculator() {
   for ( const key in debts ) {
     fin['debt_' + key] = debts[key];
   }
+
+  console.log( 'fins: ', fin );
 }
 
 

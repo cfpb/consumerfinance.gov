@@ -54,6 +54,7 @@ const financialModel = {
    * subfunctions
    */
   recalculate: () => {
+    financialModel.rate_existingDebt = getConstantsValue( 'existingDebtRate' );
     financialModel._updateRates();
     financialModel._calculateTotals();
     debtCalculator();
