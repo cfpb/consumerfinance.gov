@@ -21,7 +21,8 @@ pipeline {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_CYPRESS_REPO = 'cfpb/cypress'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
-        IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
+        PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
+        IMAGE_TAG = "${JOB_BASE_NAME}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
@@ -57,7 +58,7 @@ pipeline {
                     env.STACK_NAME = dockerStack.sanitizeStackName("${env.STACK_PREFIX}-${JOB_BASE_NAME}")
                     env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
-                    env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
+                    env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.PYTHON_IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_CYPRESS_LOCAL = "${env.IMAGE_CYPRESS_REPO}:${env.IMAGE_TAG}"
                 }
@@ -121,11 +122,6 @@ pipeline {
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
 
-                        echo "IS_ES_IMAGE_UPDATED: ${IS_ES_IMAGE_UPDATED}"
-                        echo IS_ES_IMAGE_UPDATED
-                        echo "env.IS_ES_IMAGE_UPDATED: ${env.IS_ES_IMAGE_UPDATED}"
-                        echo env.IS_ES_IMAGE_UPDATED
-
                         if (IS_ES_IMAGE_UPDATED == 'true') {
                             docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
                         }
@@ -143,7 +139,7 @@ pipeline {
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
+                    scanImage(env.IMAGE_REPO, env.PYTHON_IMAGE_TAG)
                     if (IS_ES_IMAGE_UPDATED == 'true') {
                         scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
                     }
