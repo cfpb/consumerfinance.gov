@@ -9,6 +9,10 @@ WORKDIR /app
 # https://github.com/cypress-io/cypress/issues/1243
 ENV CI=1
 
+# point Cypress at the /root/cache no matter what user account is used
+# see https://on.cypress.io/caching
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
+
 # Update and install Cypress dependencies, Node.js, and Chrome browser
 # https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
 RUN yum update -y && \
@@ -40,9 +44,8 @@ RUN cd /root/.cache/Cypress/*/Cypress/resources/app/packages/server/node_modules
     rm -f /etc/pki/tls/private/localhost.key
 
 # Set User to Non Root
+# give every user read access to the "/root" folder where the binary is cached
 RUN adduser -s /bin/false cypress && \
-    chown -R cypress:cypress /root
-
-ENV CYPRESS_CACHE_FOLDER /root/.cache/Cypress
+    chmod 755 /root
 
 USER cypress
