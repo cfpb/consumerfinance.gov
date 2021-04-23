@@ -108,7 +108,7 @@
                     'value': '$0',
                     'type': 'text',
                     'helper_text': 'Your payment will depend on your total debt and your repayment plan. This estimate assumes a standard plan, where you pay the same amount every month for 10 years. Other plans with lower monthly payments (and higher total costs of borrowing) are available.',
-                    'data_attribute': 'data-financial-item="debt_programInterest"'
+                    'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
                 })
             }}
         </div>
@@ -130,7 +130,8 @@
                 text_item.render({
                     'label': 'Total money left',
                     'value': '$0',
-                    'type': 'text'
+                    'type': 'text',
+                    'data_attribute': 'data-expenses-item="total_remainder"'
                 })
             }}
         </div>
