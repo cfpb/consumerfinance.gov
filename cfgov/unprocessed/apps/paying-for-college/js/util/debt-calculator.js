@@ -209,6 +209,10 @@ function debtCalculator() {
 
   } );
 
+  // set the program-level debts before current debt is added
+  debts.programInterestAtGrad = interest.totalAtGrad
+  debts.programDebtAtGrad = debts.totalAtGrad
+
   // calculate existing loan debt payments
   const existingLoanRate = getConstantsValue( 'existingDebtRate' );
   const existingDebtInterest = calcInterestAtGrad(
@@ -220,23 +224,25 @@ function debtCalculator() {
     existingDebtInterest = 0;
   }
   const existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
-
   const existingDebtMonthly = calcMonthlyPayment(
     existingDebtTotalAtGrad, existingLoanRate, 10 );
+
+  totalBorrowing += fin.existingDebt_amount;
+  interest.totalAtGrad += existingDebtInterest;
+  // NOTE: This is technically incorrect (it should include program interest),
+  // but we are planning how to address the issue so it's clear to the user.
+  debts.totalAtGrad += fin.existingDebt_amount;
 
   debts.tenYearMonthly += existingDebtMonthly;
   debts.tenYearTotal += existingDebtMonthly * 120;
 
   // Calculate totals
+  debts.totalInterestAtGrad = interest.totalAtGrad;
+  debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad - existingDebtInterest;
 
-  debts.programInterest = interest.totalAtGrad;
-  debts.tenYearInterest = debts.tenYearTotal - debts.totalAtGrad;
   debts.twentyFiveYearInterest = debts.twentyFiveYearTotal - debts.totalAtGrad;
   debts.repayHours = debts.tenYearMonthly / 15;
   debts.repayWorkWeeks = debts.repayHours / 40;
-
-  // NOTE: This is technically incorrect, but to be addressed later.
-  debts.fullTotal = debts.totalAtGrad + fin.existingDebt_amount;
 
   fin.total_borrowingAtGrad = totalBorrowing;
   for ( const key in debts ) {

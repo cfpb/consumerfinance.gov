@@ -152,10 +152,6 @@ const financialModel = {
     vals.total_gap = Math.round( vals.total_costs - vals.total_funding );
     vals.total_excessFunding = Math.round( vals.total_funding - vals.total_costs );
 
-    /* Borrowing total
-       TODO - Update this once year-by-year DIRECT borrowing is in place */
-    vals.total_borrowingAtGrad = vals.total_borrowing * vals.other_programLength;
-
     if ( vals.total_gap < 0 ) {
       vals.total_gap = 0;
     }

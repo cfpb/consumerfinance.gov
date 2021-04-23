@@ -81,6 +81,8 @@ const urlParameters = {
 
   'plus': 'financialModel.plusLoan_parentPlus',
 
+  'cdbt': 'financialModel.existingDebt_amount',
+
   'houx': 'expensesModel.item_housing',
   'fdx': 'expensesModel.item_food',
   'clhx': 'expensesModel.item_clothing',
