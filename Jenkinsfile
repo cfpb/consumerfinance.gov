@@ -126,7 +126,7 @@ pipeline {
                         echo "env.IS_ES_IMAGE_UPDATED: ${env.IS_ES_IMAGE_UPDATED}"
                         echo env.IS_ES_IMAGE_UPDATED
 
-                        if (IS_ES_IMAGE_UPDATED) {
+                        if (IS_ES_IMAGE_UPDATED == 'true') {
                             docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
                         }
                         if (IS_CYPRESS_IMAGE_UPDATED) {
@@ -144,7 +144,7 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
-                    if (IS_ES_IMAGE_UPDATED) {
+                    if (env.IS_ES_IMAGE_UPDATED) {
                         scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
                     }
                     if (IS_CYPRESS_IMAGE_UPDATED) {
@@ -173,7 +173,7 @@ pipeline {
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
-                        if (IS_ES_IMAGE_UPDATED) {
+                        if (IS_ES_IMAGE_UPDATED.toBoolean()) {
                             image.push()
                         }
                         env.CFGOV_ES_IMAGE = image.imageName()
