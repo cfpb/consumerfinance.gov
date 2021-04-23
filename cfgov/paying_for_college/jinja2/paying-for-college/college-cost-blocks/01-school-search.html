@@ -98,7 +98,7 @@
                   'name':  "programProgress",
                   'label': '<strong>None.</strong> I have no credits or only credits from AP/IB exams.',
                   'value': '0',
-                  'id': 'program-years_spent0'
+                  'id': 'program-years_spent-0'
                 })
             }}
             {{
@@ -106,7 +106,7 @@
                   'name':  "programProgress",
                   'label': '<strong>I will be a first-year student.</strong> I have completed 1 - 29 credits, or less than 1 year.',
                   'value': '1',
-                  'id': 'program-years_spent1'
+                  'id': 'program-years_spent-1'
                 })
             }}
             {{
@@ -114,25 +114,23 @@
                   'name':  "programProgress",
                   'label': '<strong>I will be a second-year student.</strong> I have completed 30 - 59 credits, or less than 2 years.',
                   'value': '2',
-                  'id': 'program-years_spent2'
+                  'id': 'program-years_spent-2'
                 })
             }}
-            <div data-state-based-visibility="is_first_year-false">
-              {{
-                  radio.render({
-                    'name':  "programProgress",
-                    'label': '<strong>I have an associate\'s degree.</strong> I will be a third-year student.',
-                    'value': '3',
-                    'id': 'program-years_spent3'
-                  })
-              }}
-            </div>
+            {{
+                radio.render({
+                  'name':  "programProgress",
+                  'label': '<strong>I have an associate\'s degree.</strong> I will be a third-year student.',
+                  'value': '3',
+                  'id': 'program-years_spent-assoc'
+                })
+            }}
             {{
                 radio.render({
                   'name':  "programProgress",
                   'label': '<strong>I will be a third-year student, or beyond.</strong> I have completed 60+ credits, or 2+ years.',
                   'value': '3',
-                  'id': 'program-years_spent3'
+                  'id': 'program-years_spent-3'
                 })
             }}
         </div>

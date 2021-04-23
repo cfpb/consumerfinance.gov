@@ -21,6 +21,7 @@ import { financialModel } from '../models/financial-model.js';
 function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLength ) {
   const level = getStateValue( 'programLevel' );
   const dependency = getStateValue( 'programDependency' );
+  let progress = getStateValue( 'programProgress' );
   let percentSub = 1;
   let percentUnsub = 1;
   let subPrincipal = 0;
@@ -46,8 +47,9 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
   percentSub = directSub / subCaps.yearOne;
   percentUnsub = directUnsub / ( totalCaps.yearOne - directSub );
 
+
   // Iterate through each year of the program
-  for ( let x = 0; x < programLength; x++ ) {
+  for ( let x = progress; x < programLength; x++ ) {
     if ( x === 0 ) {
       subPrincipal += directSub;
       unsubPrincipal += directUnsub;
