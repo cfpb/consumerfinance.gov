@@ -29,6 +29,7 @@ pipeline {
         DEPLOY_SUCCESS = false
         IS_ES_IMAGE_UPDATED = false
         IS_CYPRESS_IMAGE_UPDATED = false
+        DOCKER_REGISTRY_URL = dockerRegistry.url
     }
 
     parameters {
@@ -70,6 +71,10 @@ pipeline {
                 // Remove docker containers and volumes used by functional tests
                 sh "docker container prune -f"
                 sh "docker volume prune -f"
+                sh "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_ES_REPO}/manifests/${env.IMAGE_TAG}"
+                sh "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_ES_REPO}/tags/${env.IMAGE_TAG}"
+                sh "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_CYPRESS_REPO}/manifests/${env.IMAGE_TAG}"
+                sh "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags/${env.IMAGE_TAG}"
             }
         }
 
@@ -87,15 +92,31 @@ pipeline {
             }
         }
 
-        stage('Check for Docker image updates') {
+        stage('Check if Docker images exist') {
             when { expression { env.BRANCH_NAME != 'main' } }
             steps {
                 script {
                     sh "git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main"
                     sh "git fetch --no-tags"
 
+                    List<String> cypressTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_CYPRESS_REPO}/tags/list")
+                    List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_ES_REPO}/tags/list")
                     List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
 
+                    for (int i = 0; i < elasticsearchTags.size(); i++) {
+                        if (elasticsearchTags[i].contains("${env.IMAGE_TAG}")) {
+                            IS_ES_IMAGE_UPDATED = false
+                        } else {
+                            IS_ES_IMAGE_UPDATED = true
+                        }
+                    }
+                    for (int i = 0; i < cypressTags.size(); i++) {
+                        if (cypressTags[i].contains("${env.IMAGE_TAG}")) {
+                            IS_CYPRESS_IMAGE_UPDATED = false
+                        } else {
+                            IS_CYPRESS_IMAGE_UPDATED = true
+                        }
+                    }
                     for (int i = 0; i < sourceChanged.size(); i++) {
                         if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
                             IS_ES_IMAGE_UPDATED = true
