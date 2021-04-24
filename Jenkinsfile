@@ -29,7 +29,7 @@ pipeline {
         DEPLOY_SUCCESS = false
         IS_ES_IMAGE_UPDATED = false
         IS_CYPRESS_IMAGE_UPDATED = false
-        DOCKER_REGISTRY_URL = dockerRegistry.url
+        DOCKER_REGISTRY_URL = 'https://dtr-registry.cfpb.gov'
     }
 
     parameters {
