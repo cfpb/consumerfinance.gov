@@ -95,8 +95,8 @@ pipeline {
                     sh "git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main"
                     sh "git fetch --no-tags"
 
-                    List<String> cypressTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_CYPRESS_REPO}/tags/list")
-                    List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_ES_REPO}/tags/list")
+                    List<String> cypressTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_CYPRESS_REPO}/tags/list").split()
+                    List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_ES_REPO}/tags/list").split()
                     List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
 
                     for (int i = 0; i < elasticsearchTags.size(); i++) {
