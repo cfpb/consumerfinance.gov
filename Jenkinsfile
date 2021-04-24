@@ -71,10 +71,6 @@ pipeline {
                 // Remove docker containers and volumes used by functional tests
                 sh "docker container prune -f"
                 sh "docker volume prune -f"
-                sh "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_ES_REPO}/manifests/${env.IMAGE_TAG}"
-                sh "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_ES_REPO}/tags/${env.IMAGE_TAG}"
-                sh "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_CYPRESS_REPO}/manifests/${env.IMAGE_TAG}"
-                sh "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags/${env.IMAGE_TAG}"
             }
         }
 
