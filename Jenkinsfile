@@ -71,6 +71,8 @@ pipeline {
                 // Remove docker containers and volumes used by functional tests
                 sh "docker container prune -f"
                 sh "docker volume prune -f"
+                sh "docker manifest inspect ${env.IMAGE_NAME_ES_LOCAL}"
+                sh "docker manifest inspect ${env.IMAGE_NAME_CYPRESS_LOCAL}"
             }
         }
 
