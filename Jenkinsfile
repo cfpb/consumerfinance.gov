@@ -102,10 +102,10 @@ pipeline {
 
                     for (int i = 0; i < sourceChanged.size(); i++) {
                         if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
-                            IS_ES_IMAGE_UPDATED = 'true'
+                            env.IS_ES_IMAGE_UPDATED = 'true'
                         }
                         if (sourceChanged[i].contains("docker/cypress/Dockerfile")) {
-                            IS_CYPRESS_IMAGE_UPDATED = 'true'
+                            env.IS_CYPRESS_IMAGE_UPDATED = 'true'
                         }
                     }
                     for (int i = 0; i < elasticsearchTags.size(); i++) {
