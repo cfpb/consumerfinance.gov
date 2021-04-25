@@ -89,7 +89,7 @@ pipeline {
             }
         }
 
-        stage('Check if Docker images exist') {
+        stage('Check Image') {
             when { expression { env.BRANCH_NAME != 'main' } }
             steps {
                 script {
@@ -122,6 +122,7 @@ pipeline {
                             IS_CYPRESS_IMAGE_UPDATED = true
                         }
                     }
+                    sh 'env grep IMAGE | sort'
                 }
             }
         }
