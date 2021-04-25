@@ -162,7 +162,8 @@ class Subpart(models.Model):
     label = models.CharField(
         max_length=255,
         validators=[validate_label],
-        help_text='Labels always require at least 1 alphanumeric character, '
+        help_text='Labels must be unique within this regulation version and '
+                  'always require at least 1 alphanumeric character, '
                   'then any number of alphanumeric characters and hyphens, '
                   'with no spaces.',
     )
@@ -291,6 +292,21 @@ class Section(models.Model):
             'kept': kept,
             'dupes': dupes,
         }
+
+    def validate_unique(self, *args, **kwargs):
+        super().validate_unique(*args, **kwargs)
+
+        # Ensure that the section's label is unique within this version.
+        sections_with_duplicate_labels = self.__class__.objects.filter(
+            subpart__version=self.subpart.version,
+            label=self.label
+        ).exclude(
+            pk=self.pk
+        )
+        if sections_with_duplicate_labels.exists():
+            raise ValidationError(
+                {"label": "Section label must be unique to this version"}
+            )
 
     def save(self, **kwargs):
         self.sortable_label = '-'.join(sortable_label(self.label))

@@ -128,11 +128,10 @@ USER apache
 
 # Build frontend, cleanup excess file, and setup filesystem
 # - cfgov/f/ - Wagtail file uploads
-# - /tmp/eregs_cache/ - Django file-based cache
 RUN ln -s ${SCL_HTTPD_ROOT}/etc/httpd/modules ${APACHE_SERVER_ROOT}/modules && \
     ln -s ${SCL_HTTPD_ROOT}/etc/httpd/run ${APACHE_SERVER_ROOT}/run && \
     rm -rf cfgov/apache/www cfgov/unprocessed && \
-    mkdir -p cfgov/f /tmp/eregs_cache
+    mkdir -p cfgov/f
 
 # Healthcheck retry set high since database loads take a while
 HEALTHCHECK --start-period=300s --interval=30s --retries=30 \

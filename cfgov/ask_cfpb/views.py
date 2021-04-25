@@ -49,13 +49,6 @@ def annotate_links(answer_text):
 def view_answer(request, slug, language, answer_id):
     answer_page = get_object_or_404(
         AnswerPage, language=language, answer_base__id=answer_id)
-    if answer_page.live is False:
-        raise Http404
-    if answer_page.redirect_to_page:
-        new_page = answer_page.redirect_to_page
-        return redirect(new_page.url, permanent=True)
-    if f"{slug}-{language}-{answer_id}" != answer_page.slug:
-        return redirect(answer_page.url, permanent=True)
 
     # We don't want to call answer_page.serve(request) here because that
     # would bypass wagtail-sharing logic that allows for review of draft
@@ -63,15 +56,27 @@ def view_answer(request, slug, language, answer_id):
     try:
         sharing_site = SharingSite.find_for_request(request)
     except SharingSite.DoesNotExist:
-        return answer_page.serve(request)
+        sharing_site = None
 
-    page, args, kwargs = ServeView.route(
-        sharing_site.site,
-        request,
-        request.path
-    )
+    if answer_page.live is False and sharing_site is None:
+        raise Http404
 
-    return ServeView.serve(page, request, args, kwargs)
+    if answer_page.redirect_to_page:
+        new_page = answer_page.redirect_to_page
+        return redirect(new_page.url, permanent=True)
+
+    if f"{slug}-{language}-{answer_id}" != answer_page.slug:
+        return redirect(answer_page.url, permanent=True)
+
+    if sharing_site is not None:
+        page, args, kwargs = ServeView.route(
+            sharing_site.site,
+            request,
+            request.path
+        )
+        ServeView.serve(page, request, args, kwargs)
+
+    return answer_page.serve(request)
 
 
 def ask_search(request, language='en', as_json=False):
