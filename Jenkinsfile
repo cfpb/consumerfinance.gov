@@ -140,10 +140,10 @@ pipeline {
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
 
-                        if (env.IS_ES_IMAGE_UPDATED == true) {
+                        if (IS_ES_IMAGE_UPDATED == true) {
                             docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
                         }
-                        if (env.IS_CYPRESS_IMAGE_UPDATED == true) {
+                        if (IS_CYPRESS_IMAGE_UPDATED == true) {
                             docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '-f ./docker/cypress/Dockerfile .')
                         }
                     }
@@ -158,10 +158,10 @@ pipeline {
                 script {
                     LAST_STAGE = env.STAGE_NAME
                     scanImage(env.IMAGE_REPO, env.PYTHON_IMAGE_TAG)
-                    if (env.IS_ES_IMAGE_UPDATED == true) {
+                    if (IS_ES_IMAGE_UPDATED == true) {
                         scanImage(env.IMAGE_ES_REPO, env.IMAGE_ES_TAG)
                     }
-                    if (env.IS_CYPRESS_IMAGE_UPDATED == true) {
+                    if (IS_CYPRESS_IMAGE_UPDATED == true) {
                         scanImage(env.IMAGE_CYPRESS_REPO, env.CYPRESS_IMAGE_TAG)
                     }
                 }
@@ -187,13 +187,13 @@ pipeline {
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
-                        if (env.IS_ES_IMAGE_UPDATED == true) {
+                        if (IS_ES_IMAGE_UPDATED == true) {
                             image.push()
                         }
                         env.CFGOV_ES_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_CYPRESS_LOCAL)
-                        if (env.IS_CYPRESS_IMAGE_UPDATED == true) {
+                        if (IS_CYPRESS_IMAGE_UPDATED == true) {
                             image.push()
                         }
                         env.CYPRESS_IMAGE = image.imageName()
