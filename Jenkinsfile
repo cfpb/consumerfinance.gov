@@ -100,21 +100,25 @@ pipeline {
                     List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_ES_REPO}/tags").split()
                     List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
 
-                    for (int i = 0; i < elasticsearchTags.size(); i++) {
-                        if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
-                            IS_ES_IMAGE_UPDATED = false
-                        }
-                    }
-                    for (int i = 0; i < cypressTags.size(); i++) {
-                        if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
-                            IS_CYPRESS_IMAGE_UPDATED = false
-                        }
-                    }
                     for (int i = 0; i < sourceChanged.size(); i++) {
                         if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
                             IS_ES_IMAGE_UPDATED = true
                         }
                         if (sourceChanged[i].contains("docker/cypress/Dockerfile")) {
+                            IS_CYPRESS_IMAGE_UPDATED = true
+                        }
+                    }
+                    for (int i = 0; i < elasticsearchTags.size(); i++) {
+                        if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
+                            IS_ES_IMAGE_UPDATED = false
+                        } else {
+                            IS_ES_IMAGE_UPDATED = true
+                        }
+                    }
+                    for (int i = 0; i < cypressTags.size(); i++) {
+                        if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
+                            IS_CYPRESS_IMAGE_UPDATED = false
+                        } else {
                             IS_CYPRESS_IMAGE_UPDATED = true
                         }
                     }
