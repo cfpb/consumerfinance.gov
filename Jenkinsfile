@@ -20,16 +20,17 @@ pipeline {
     environment {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_CYPRESS_REPO = 'cfpb/cypress'
-        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
+        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
+        IMAGE_ES_TAG = '7.10.1'
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
-        IMAGE_TAG = "${JOB_BASE_NAME}"
+        CYPRESS_IMAGE_TAG = 'latest'
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
         DEPLOY_SUCCESS = false
         IS_ES_IMAGE_UPDATED = false
         IS_CYPRESS_IMAGE_UPDATED = false
-        DOCKER_REGISTRY_URL = 'https://dtr-registry.cfpb.gov'
+        DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
     }
 
     parameters {
@@ -60,8 +61,8 @@ pipeline {
                     env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.PYTHON_IMAGE_TAG}"
-                    env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
-                    env.IMAGE_NAME_CYPRESS_LOCAL = "${env.IMAGE_CYPRESS_REPO}:${env.IMAGE_TAG}"
+                    env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_ES_TAG}"
+                    env.IMAGE_NAME_CYPRESS_LOCAL = "${env.IMAGE_CYPRESS_REPO}:${env.CYPRESS_IMAGE_TAG}"
                 }
                 sh 'env | sort'
                 // Create docker network used by functional tests
@@ -71,8 +72,6 @@ pipeline {
                 // Remove docker containers and volumes used by functional tests
                 sh "docker container prune -f"
                 sh "docker volume prune -f"
-                sh "docker manifest inspect ${env.DOCKER_REGISTRY_URL}/${env.IMAGE_NAME_ES_LOCAL}"
-                sh "docker manifest inspect ${env.DOCKER_REGISTRY_URL}/${env.IMAGE_NAME_CYPRESS_LOCAL}"
             }
         }
 
@@ -97,19 +96,19 @@ pipeline {
                     sh "git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main"
                     sh "git fetch --no-tags"
 
-                    List<String> cypressTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_CYPRESS_REPO}/tags/list").split()
-                    List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/${env.IMAGE_ES_REPO}/tags/list").split()
+                    List<String> cypressTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags").split()
+                    List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_ES_REPO}/tags").split()
                     List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
 
                     for (int i = 0; i < elasticsearchTags.size(); i++) {
-                        if (elasticsearchTags[i].contains("${env.IMAGE_TAG}")) {
+                        if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
                             IS_ES_IMAGE_UPDATED = false
                         } else {
                             IS_ES_IMAGE_UPDATED = true
                         }
                     }
                     for (int i = 0; i < cypressTags.size(); i++) {
-                        if (cypressTags[i].contains("${env.IMAGE_TAG}")) {
+                        if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
                             IS_CYPRESS_IMAGE_UPDATED = false
                         } else {
                             IS_CYPRESS_IMAGE_UPDATED = true
@@ -160,10 +159,10 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                     scanImage(env.IMAGE_REPO, env.PYTHON_IMAGE_TAG)
                     if (env.IS_ES_IMAGE_UPDATED == true) {
-                        scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG)
+                        scanImage(env.IMAGE_ES_REPO, env.IMAGE_ES_TAG)
                     }
                     if (env.IS_CYPRESS_IMAGE_UPDATED == true) {
-                        scanImage(env.IMAGE_CYPRESS_REPO, env.IMAGE_TAG)
+                        scanImage(env.IMAGE_CYPRESS_REPO, env.CYPRESS_IMAGE_TAG)
                     }
                 }
             }
