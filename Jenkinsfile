@@ -22,8 +22,8 @@ pipeline {
         IMAGE_CYPRESS_REPO = 'cfpb/cypress'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
         IMAGE_ES_TAG = '7.10.1'
+        CYPRESS_IMAGE_TAG = '7.1.0'
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
-        CYPRESS_IMAGE_TAG = 'latest'
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
@@ -103,15 +103,11 @@ pipeline {
                     for (int i = 0; i < elasticsearchTags.size(); i++) {
                         if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
                             IS_ES_IMAGE_UPDATED = false
-                        } else {
-                            IS_ES_IMAGE_UPDATED = true
                         }
                     }
                     for (int i = 0; i < cypressTags.size(); i++) {
                         if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
                             IS_CYPRESS_IMAGE_UPDATED = false
-                        } else {
-                            IS_CYPRESS_IMAGE_UPDATED = true
                         }
                     }
                     for (int i = 0; i < sourceChanged.size(); i++) {
