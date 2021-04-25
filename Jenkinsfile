@@ -122,7 +122,7 @@ pipeline {
                             IS_CYPRESS_IMAGE_UPDATED = 'true'
                         }
                     }
-                    sh 'env grep IMAGE | sort'
+                    sh 'env | grep IMAGE | sort'
                 }
             }
         }
