@@ -54,7 +54,7 @@ pip install tox
 
 If you have set up
 [a Docker-based installation of consumerfinance.gov](/installation/#docker-based-installation),
-you can run the tests there by  
+you can run the tests there by
 [accessing the Python container's shell](http://localhost:8888/running-docker/#access-a-containers-shell):
 
 ```sh
@@ -86,9 +86,9 @@ tox -e lint -e unittest
 
 These default environments are:
 
-- `lint`, which runs our [linting](#linting) tools. We require this
+- `lint`, which runs our [linters](#linting). We require this
   environment to pass in CI.
-- `validate-migrations`, which checks for any missing Django migrations. 
+- `validate-migrations`, which checks for any missing Django migrations.
   We require this environment to pass in CI.
 - `unittest`, which runs unit tests against the current production
   versions of Python, Django, and Wagtail. We require this environment to

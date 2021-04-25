@@ -8,6 +8,15 @@
 {{ object.activity_file.title|striptags|safe }}
 {{ object.handout_file.title|striptags|safe }}
 {{ object.handout_file_2.title|striptags|safe }}
+{{ object.handout_file_3.title|striptags|safe }}
+
+{% for activity_document in object.activity_documents.all %}
+{{ activity_document.documents.title|striptags|safe }}
+{% endfor %}
+
+{% for handout_document in object.handout_documents.all %}
+{{ handout_document.documents.title|striptags|safe }}
+{% endfor %}
 
 {% for school_subject in object.school_subject.all %}
 {{ school_subject.title|striptags|safe }}

@@ -21,7 +21,6 @@ pipeline {
         // Docker Repository used by functional tests
         CYPRESS_REPO = 'cypress/included:7.0.1'
         IMAGE_REPO = 'cfpb/cfgov-python'
-        IMAGE_ES2_REPO = 'cfpb/cfgov-elasticsearch-23'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
         IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
@@ -58,7 +57,6 @@ pipeline {
                     env.STACK_URL = dockerStack.getStackUrl(env.STACK_NAME)
                     env.CFGOV_HOSTNAME = dockerStack.getHostingDomain(env.STACK_NAME)
                     env.IMAGE_NAME_LOCAL = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
-                    env.IMAGE_NAME_ES2_LOCAL = "${env.IMAGE_ES2_REPO}:${env.IMAGE_TAG}"
                     env.IMAGE_NAME_ES_LOCAL = "${env.IMAGE_ES_REPO}:${env.IMAGE_TAG}"
                 }
                 sh 'env | sort'
@@ -88,16 +86,18 @@ pipeline {
 
         stage('Build Image') {
             environment {
-                DOCKER_BUILDKIT = '1'
+                DOCKER_BUILDKIT = '0'
+                COMPOSE_DOCKER_CLI_BUILD = '0'
             }
             steps {
                 postGitHubStatus("jenkins/deploy", "pending", "Building", env.RUN_DISPLAY_URL)
 
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
-                    docker.build(env.IMAGE_NAME_ES2_LOCAL, '-f ./docker/elasticsearch/Dockerfile .')
-                    docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-cfpb') {
+                        docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
+                        docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
+                    }
                 }
             }
         }
@@ -110,7 +110,6 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
                 }
                 scanImage(env.IMAGE_REPO, env.IMAGE_TAG)
-                scanImage(env.IMAGE_ES2_REPO, env.IMAGE_TAG)
                 // scanImage(env.CYPRESS_REPO, env.IMAGE_TAG) We will Scan once Twistlock is configured.
                 // scanImage(env.IMAGE_ES_REPO, env.IMAGE_TAG) We Will Scan once Twistlock is configured to ignore known issues with this image.
             }
@@ -133,10 +132,6 @@ pipeline {
 
                         // Sets fully-qualified image name
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
-
-                        image = docker.image(env.IMAGE_NAME_ES2_LOCAL)
-                        image.push()
-                        env.CFGOV_ES2_IMAGE = image.imageName()
 
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         image.push()

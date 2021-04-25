@@ -41,6 +41,15 @@
                 {{- page.activity_file.title | striptags | safe -}}
             </a>
         </p>
+        {% if page.activity_documents %}
+            {% for activity_document in page.activity_documents.all() %}
+                <p>
+                    <a href="{{ activity_document.documents.url }}" target="_blank" rel="noopener noreferrer">
+                        {{- activity_document.documents.title | striptags | safe -}}
+                    </a>
+                </p>
+            {% endfor %}
+        {% endif %}
         {% if page.handout_file %}
             <h3 class="h5">Student materials</h3>
             <p>
@@ -62,6 +71,15 @@
                     {{- page.handout_file_3.title | striptags | safe -}}
                 </a>
             </p>
+        {% endif %}
+        {% if page.handout_documents %}
+            {% for handout_document in page.handout_documents.all() %}
+                <p>
+                    <a href="{{ handout_document.documents.url }}" target="_blank" rel="noopener noreferrer">
+                        {{- handout_document.documents.title | striptags | safe -}}
+                    </a>
+                </p>
+            {% endfor %}
         {% endif %}
         <div class="content_line u-mt30 u-mb30"></div>
         <p><strong>Note:</strong> Please remember to consider your students’ accommodations and special needs to ensure that all students are able to participate in a meaningful way.</p>
