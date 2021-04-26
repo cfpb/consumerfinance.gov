@@ -20,8 +20,8 @@ pipeline {
     environment {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_CYPRESS_REPO = 'cfpb/cypress'
-        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch-77'
-        IMAGE_ES_TAG = "${JOB_BASE_NAME}"
+        IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
+        IMAGE_ES_TAG = "7.10.1"
         CYPRESS_IMAGE_TAG = '7.1.0'
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
