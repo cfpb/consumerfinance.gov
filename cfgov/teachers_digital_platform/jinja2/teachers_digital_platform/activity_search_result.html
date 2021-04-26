@@ -28,6 +28,11 @@
                 <h5 class="activity_meta-key">Activity duration:</h5>
                 {{ result.activity_duration }}
             </div>
+            {% if result.available_in_spanish %}
+            <div class="layout-row u-mt15">
+                <strong>{{ _("Available in Spanish") }}</strong>
+            </div>
+            {% endif %}
         </div>
         <div>
             <h4 class="h5">Building block</h4>

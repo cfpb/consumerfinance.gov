@@ -186,6 +186,15 @@ class AnswerPage(CFGOVPage):
         help_text="Include share and print buttons above answer."
     )
 
+    # TODO: When we've updated to Wagtail 2.13.x remove the help_text
+    # and set the block_count for the notification to 1.
+    # See https://git.io/JODqS
+    notification = StreamField([
+        ('notification', molecules.Notification(
+            help_text="Include only one notification."))],
+        blank=True,
+    )
+
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('last_edited'),
@@ -195,6 +204,7 @@ class AnswerPage(CFGOVPage):
             heading="Page content",
             classname="collapsible"),
         FieldPanel('share_and_print'),
+        StreamFieldPanel('notification'),
         StreamFieldPanel('answer_content'),
         MultiFieldPanel([
             SnippetChooserPanel('related_resource'),

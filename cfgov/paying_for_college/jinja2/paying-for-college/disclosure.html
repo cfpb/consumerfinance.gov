@@ -1,5 +1,4 @@
-{% extends "front/base_update.html" %}
-{% load staticfiles %}
+{% extends "base.html" %}
 
 {% block title %}
     Understanding your financial aid offer | Consumer Financial Protection Bureau
@@ -21,17 +20,12 @@
 {% block page_viewport %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock %}
-{% block nemo_styles %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/paying-for-college/css/main.css') }}">
 {% endblock %}
-{% block app_css %}
-<script>
-    /*! modernizr 3.3.1 (Custom Build) | MIT *
-    * http://modernizr.com/download/?-csspointerevents-setclasses
-    * Need to get styled <select>s working !*/
-    !function(e,n,s){function t(e,n){return typeof e===n}function o(){var e,n,s,o,a,i,f;for(var c in l)if(l.hasOwnProperty(c)){if(e=[],n=l[c],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(s=0;s<n.options.aliases.length;s++)e.push(n.options.aliases[s].toLowerCase());for(o=t(n.fn,"function")?n.fn():n.fn,a=0;a<e.length;a++)i=e[a],f=i.split("."),1===f.length?Modernizr[f[0]]=o:(!Modernizr[f[0]]||Modernizr[f[0]]instanceof Boolean||(Modernizr[f[0]]=new Boolean(Modernizr[f[0]])),Modernizr[f[0]][f[1]]=o),r.push((o?"":"no-")+f.join("-"))}}function a(e){var n=c.className,s=Modernizr._config.classPrefix||"";if(u&&(n=n.baseVal),Modernizr._config.enableJSClass){var t=new RegExp("(^|\\s)"+s+"no-js(\\s|$)");n=n.replace(t,"$1"+s+"js$2")}Modernizr._config.enableClasses&&(n+=" "+s+e.join(" "+s),u?c.className.baseVal=n:c.className=n)}function i(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):u?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}var r=[],l=[],f={_version:"3.3.1",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var s=this;setTimeout(function(){n(s[e])},0)},addTest:function(e,n,s){l.push({name:e,fn:n,options:s})},addAsyncTest:function(e){l.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=f,Modernizr=new Modernizr;var c=n.documentElement,u="svg"===c.nodeName.toLowerCase();Modernizr.addTest("csspointerevents",function(){var e=i("a").style;return e.cssText="pointer-events:auto","auto"===e.pointerEvents}),o(),a(r),delete f.addTest,delete f.addAsyncTest;for(var p=0;p<Modernizr._q.length;p++)Modernizr._q[p]();e.Modernizr=Modernizr}(window,document);
-</script>
-<link rel="stylesheet" href="{% static 'apps/paying-for-college/css/main.css' %}">
-{% endblock %}
+
 {% block responsive_nav %}
 <div class="hidden" id="test-store"></div>
 <a class="toggle-menu" href="#" aria-label="Menu">
@@ -61,39 +55,48 @@
         <section class="verify step content_wrapper">
             <div class="content_main">
 
-                <div class="cf-notification cf-notification__error verify_content"
-                data-missing-data-error="noSchool">
-                  <span class="cf-notification_icon cf-notification_icon__error" role="alert">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm261.8 692.2c19.4 19.6 19.3 51.3-.3 70.7-19.5 19.3-50.9 19.3-70.4 0L499.6 676.6 308 868.1c-19.6 19.4-51.3 19.3-70.7-.3-19.3-19.5-19.3-50.9 0-70.4l191.6-191.5-191.6-191.6c-19.3-19.8-18.9-51.4.9-70.7 19.4-18.9 50.4-18.9 69.8 0l191.6 191.5 191.5-191.5c19.6-19.4 51.3-19.3 70.7.3 19.3 19.5 19.3 50.9 0 70.4L570.3 605.9l191.5 191.5z"></path></svg>
-                  </span>
-                  <div class="cf-notification_text">
-                    <p>The information your school provided is missing the school ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right school ID and it's in the correct format.</p>
+                <div class="m-notification m-notification__error verify_content"
+                     data-missing-data-error="noSchool">
+                    {{ svg_icon('error-round') }}
+                    <div class="m-notification_content">
+                        <div class="h4 m-notification_message">Error!</div>
+                        <p class="m-notification_explanation">
+                            The information your school provided is missing the school ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right school ID and it's in the correct format.
+                        </p>
 
-                    <p>Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.</p>
-                  </div>
+                        <p class="m-notification_explanation">
+                            Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="cf-notification cf-notification__error verify_content"
-                data-missing-data-error="noProgram">
-                  <span class="cf-notification_icon cf-notification_icon__error" role="alert">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm261.8 692.2c19.4 19.6 19.3 51.3-.3 70.7-19.5 19.3-50.9 19.3-70.4 0L499.6 676.6 308 868.1c-19.6 19.4-51.3 19.3-70.7-.3-19.3-19.5-19.3-50.9 0-70.4l191.6-191.5-191.6-191.6c-19.3-19.8-18.9-51.4.9-70.7 19.4-18.9 50.4-18.9 69.8 0l191.6 191.5 191.5-191.5c19.6-19.4 51.3-19.3 70.7.3 19.3 19.5 19.3 50.9 0 70.4L570.3 605.9l191.5 191.5z"></path></svg>
-                  </span>
-                  <div class="cf-notification_text">
-                    <p>The information your school provided is missing the program ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right program ID and it's in the correct format.</p>
+                <div class="m-notification m-notification__error verify_content"
+                     data-missing-data-error="noProgram">
+                   {{ svg_icon('error-round') }}
+                   <div class="m-notification_content">
+                        <div class="h4 m-notification_message">Error!</div>
+                        <p class="m-notification_explanation">
+                            The information your school provided is missing the program ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right program ID and it's in the correct format.
+                        </p>
 
-                    <p>Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.</p>
-                  </div>
+                        <p class="m-notification_explanation">
+                            Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
+                        </p>
+                    </div>
                 </div>
-                <div class="cf-notification cf-notification__error verify_content"
-                data-missing-data-error="noOffer">
-                  <span class="cf-notification_icon cf-notification_icon__error" role="alert">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" class="cf-icon-svg"><path d="M500 105.2c-276.1 0-500 223.9-500 500s223.9 500 500 500 500-223.9 500-500-223.9-500-500-500zm261.8 692.2c19.4 19.6 19.3 51.3-.3 70.7-19.5 19.3-50.9 19.3-70.4 0L499.6 676.6 308 868.1c-19.6 19.4-51.3 19.3-70.7-.3-19.3-19.5-19.3-50.9 0-70.4l191.6-191.5-191.6-191.6c-19.3-19.8-18.9-51.4.9-70.7 19.4-18.9 50.4-18.9 69.8 0l191.6 191.5 191.5-191.5c19.6-19.4 51.3-19.3 70.7.3 19.3 19.5 19.3 50.9 0 70.4L570.3 605.9l191.5 191.5z"></path></svg>
-                  </span>
-                  <div class="cf-notification_text">
-                    <p>The information your school provided is missing the offer ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right offer ID and it's in the correct format.</p>
+                <div class="m-notification m-notification__error verify_content"
+                     data-missing-data-error="noOffer">
+                    {{ svg_icon('error-round') }}
+                    <div class="m-notification_content">
+                        <div class="h4 m-notification_message">Error!</div>
+                        <p class="m-notification_explanation"></p>
+                            The information your school provided is missing the offer ID, which is vital information for this tool to work. Please contact your school and ask them to ensure they are sending us the right offer ID and it's in the correct format.
+                        </p>
 
-                    <p>Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.</p>
-                  </div>
+                        <p class="m-notification_explanation"></p>
+                            Once your school provides you with an updated URL link, you will be able to return here so you can continue reviewing the information in the tool.
+                        </p>
+                    </div>
                 </div>
                 <div class="verify_wrapper">
                     <div class="verify_content" data-warning="{{warning}}">
@@ -122,7 +125,7 @@
                                     Program type
                                 </dt>
                                 <dd class="verify_value">
-                                    {{program.get_level}}
+                                    {{program.get_level() if program}}
                                 </dd>
                                 <dt class="verify_heading verify_direct-cost">
                                     Estimated total cost of program
@@ -194,7 +197,7 @@
                                     Offer ID
                                 </dt>
                                 <dd class="verify_value">
-                                    {{ oid|slice:":7" }}
+                                    {{ oid[:7] }}
                                 </dd>
                             </dl>
                             <div class="verify_controls">
@@ -2080,7 +2083,8 @@
                                         </div>
                                     </div>
                                     <div class="metric_notification"
-                                    data-better-direction="higher">
+                                         data-better-direction="higher">
+
                                         <p class="cf-notification_text
                                         metric_notification_text__better">
                                             Higher graduation rate than national
@@ -3335,9 +3339,17 @@
 
 {% endblock %}
 
-{% block share_box %}
-{% endblock %}
-
-{% block app_js %}
-<script src="{% static 'apps/paying-for-college/js/disclosure-main.js' %}"></script>
-{% endblock %}
+{% block javascript scoped %}
+{{ super() }}
+<script async>
+  if (document.body.parentElement.className.indexOf('no-js') === -1) {
+    !function () {
+      {# Include site - wide JavaScript. #}
+      var s = [
+            '{{ static('apps/paying-for-college/js/disclosures/index.js') }}'
+          ];
+      jsl(s);
+    }()
+  }
+</script>
+{% endblock javascript %}

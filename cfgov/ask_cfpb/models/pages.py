@@ -442,7 +442,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     @route(r'^(?P<tag>[^/]+)/$')
     def tag_search(self, request, **kwargs):
         """
-        Return results as a ist of 3-tuples: (url, question, answer-preview).
+        Return results as a list of 3-tuples: (url, question, answer-preview).
 
         This matches the result form used for /ask-cfpb/search/ queries,
         which use the same template but deliver results from Elasticsearch.

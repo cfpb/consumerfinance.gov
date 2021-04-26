@@ -22,7 +22,7 @@ urlpatterns = [
 
     re_path(r"^about-this-tool/$",
             BaseTemplateView.as_view(
-                template_name="paying_for_college/disclosure_technote.html"),
+                template_name="paying-for-college/disclosure_technote.html"),
             name="pfc-technote"),
 
     re_path(

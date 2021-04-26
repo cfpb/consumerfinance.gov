@@ -6,18 +6,21 @@
 import 'core-js/features/promise';
 
 import Highcharts from 'highcharts/highstock';
-// import Highmaps from 'highcharts/highmaps';
+import Highmaps from 'highcharts/highmaps';
 import Papa from 'papaparse';
 import accessibility from 'highcharts/modules/accessibility';
+import tilemap from 'highcharts/modules/tilemap';
 import chartHooks from './chart-hooks.js';
 import cloneDeep from 'lodash.clonedeep';
 import defaultBar from './bar-styles.js';
 import defaultDatetime from './datetime-styles.js';
 import defaultLine from './line-styles.js';
 import defaultTilemap from './tilemap-styles.js';
+import usLayout from './us-layout.js';
 import fetch from 'cross-fetch';
 
 accessibility( Highcharts );
+tilemap( Highmaps );
 
 const dataCache = {};
 
@@ -206,6 +209,108 @@ function makeFormatter( yAxisLabel ) {
   };
 }
 
+
+/**
+ * Extracts all dates from an object/csv formatted for tilemap display
+ * @param {object} data The data object
+ * @returns {array} Extracted dates
+ * */
+function getTilemapDates( data ) {
+  return Object.keys( data[0] )
+    .filter( k => !isNaN( new Date( k ) ) )
+    .sort( ( a, b ) => new Date( b ) - new Date( a ) );
+}
+
+/**
+ * Builds the tilemap filter DOM
+ * @param {object} chartNode The node where the chart lives
+ * @param {object} chart The chart object
+ * @param {object} data The data object
+ * @param {object} transform Whether data has been transformed
+ */
+function makeTilemapSelect( chartNode, chart, data, transform ) {
+
+  let d;
+  if ( transform ) d = data.transformed;
+  else d = data.raw;
+
+  const options = getTilemapDates( d );
+  const selectNode = makeFilterDOM( options, chartNode, { key: 'tilemap' },
+    'Select a date'
+  );
+
+  attachTilemapFilter( selectNode, chart, data );
+}
+
+
+/**
+ * Wires up the tilemap filter
+ * @param {object} node The created select node
+ * @param {object} chart The chart object
+ * @param {object} data The data object
+ */
+function attachTilemapFilter( node, chart, data ) {
+  node.addEventListener( 'change', evt => {
+    const formatted = formatSeries( data );
+    const updated = getMapConfig( formatted, evt.target.value );
+    chart.update( updated );
+  } );
+}
+
+
+/**
+ * Adds generates a config object to be added to the chart config
+ * @param {array} series The formatted series data
+ * @param {string} date The date to use
+ * @returns {array} series data with a geographic component added
+ * */
+function getMapConfig( series, date ) {
+  let min = Infinity;
+  let max = -Infinity;
+  const data = series[0].data;
+  if ( !date ) date = getTilemapDates( data )[0];
+  const added = data.map( v => {
+    const val = Math.round( Number( v[date] ) * 100 ) / 100;
+    if ( val <= min ) min = val;
+    if ( val >= max ) max = val;
+    return {
+      ...usLayout[v.state_ab],
+      state: v.state_ab,
+      value: val
+    };
+  } );
+  min = Math.floor( min );
+  max = Math.ceil( max );
+  const step = Math.round( ( max - min ) / 4 );
+  const step1 = min + step;
+  const step2 = step1 + step;
+  const step3 = step2 + step;
+  return {
+    colorAxis: {
+      dataClasses: [ {
+        from: min,
+        to: step1,
+        color: '#e2efd8',
+        name: `${ min } - ${ step1 }`
+      }, {
+        from: step1,
+        to: step2,
+        color: '#bae0a2',
+        name: `${ step1 } - ${ step2 }`
+      }, {
+        from: step2,
+        to: step3,
+        color: '#66c368',
+        name: `${ step2 } - ${ step3 }`
+      }, {
+        from: step3,
+        color: '#1fa040',
+        name: `${ step3 } - ${ max }`
+      } ]},
+    series: [ { data: added } ]
+  };
+}
+
 /**
  * Overrides default chart options using provided Wagtail configurations
  * @param {object} data The data to provide to the chart
@@ -217,7 +322,7 @@ function makeChartOptions(
   { chartType, styleOverrides, description, xAxisData, xAxisLabel,
     yAxisLabel, filters }
 ) {
-  const defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
+  let defaultObj = cloneDeep( getDefaultChartObject( chartType ) );
 
   if ( styleOverrides ) {
     applyOverrides( styleOverrides, defaultObj, data );
@@ -226,9 +331,19 @@ function makeChartOptions(
   if ( xAxisData && chartType !== 'datetime' ) {
     defaultObj.xAxis.categories = resolveKey( data.raw, xAxisData );
   }
+
+  const formattedSeries = formatSeries( data );
+  if ( chartType === 'tilemap' && formattedSeries.length === 1 ) {
+    defaultObj = {
+      ...defaultObj,
+      ...getMapConfig( formattedSeries )
+    };
+
+  } else {
+    defaultObj.series = formattedSeries;
+  }
   /* eslint-disable-next-line */
   defaultObj.title = { text: undefined };
-  defaultObj.series = formatSeries( data );
   defaultObj.accessibility.description = description;
   defaultObj.yAxis.title.text = yAxisLabel;
   if ( xAxisLabel ) defaultObj.xAxis.title.text = xAxisLabel;
@@ -239,18 +354,33 @@ function makeChartOptions(
     defaultObj.navigator.enabled = false;
     defaultObj.xAxis.min = defaultObj.series[0].data[0].x;
   }
+
+  alignMargin( defaultObj, chartType );
+
+  return defaultObj;
+}
+
+
+/**
+ * Resolves provided x axis or series data
+ * @param {object} defaultObj default object to be decorated
+ * @param {string} chartType current chart type
+ */
+function alignMargin( defaultObj, chartType ) {
   const len = defaultObj.series.length;
   let marg = ( len * 23 ) + 35;
   let y = 0;
-  if ( marg < 100 ) {
+  if ( chartType === 'tilemap' ) {
+    marg = 100;
+    y = -15;
+  } else if ( marg < 100 ) {
     marg = 100;
     y = 19;
   }
   defaultObj.chart.marginTop = marg;
   defaultObj.legend.y = y;
-
-  return defaultObj;
 }
+
 
 /**
  * Resolves provided x axis or series data
@@ -297,7 +427,7 @@ function resolveData( source ) {
 }
 
 /**
- * Wires up select filters, if present
+ * Generates a list of options for the select filters
  * @param {object} filter Object with a filter key and possible label
  * @param {object} data The raw chart data
  * @param {boolean} isDate Whether the data should be stored as JS dates
@@ -318,6 +448,7 @@ function getOptions( filter, data, isDate ) {
   if ( isDate ) return options.map( v => Number( new Date( v ) ) );
   return options;
 }
+
 
 /**
  * @param {array} options List of options to build for the select component
@@ -532,6 +663,7 @@ function initFilters( dataset, chartNode, chart, data, transform ) {
         { key: filters, label: filters }, 'End date', 1
       );
       attachDateFilters( startNode, endNode, chart );
+
     } else {
       if ( !Array.isArray( filters ) ) filters = [ filters ];
       const selects = [];
@@ -570,7 +702,7 @@ function buildCharts() {
  */
 function buildChart( chartNode ) {
   const target = chartNode.getElementsByClassName( 'o-simple-chart_target' )[0];
-  const { source, transform } = target.dataset;
+  const { source, transform, chartType } = target.dataset;
 
   resolveData( source.trim() ).then( raw => {
     const series = extractSeries( raw, target.dataset );
@@ -584,7 +716,11 @@ function buildChart( chartNode ) {
       transformed
     };
 
-    const chart = Highcharts.chart(
+    const chartMaker = chartType === 'tilemap' ?
+      Highmaps.mapChart :
+      Highcharts.chart;
+
+    const chart = chartMaker(
       target,
       makeChartOptions( data, target.dataset )
     );
@@ -593,9 +729,15 @@ function buildChart( chartNode ) {
       chart.reflow();
     } );
 
-    initFilters(
-      target.dataset, chartNode, chart, data, transform && chartHooks[transform]
-    );
+    if ( chartType === 'tilemap' ) {
+      makeTilemapSelect( chartNode, chart, data,
+        transform && chartHooks[transform] );
+    } else {
+      initFilters(
+        target.dataset, chartNode, chart, data,
+        transform && chartHooks[transform]
+      );
+    }
   } );
 }
 
