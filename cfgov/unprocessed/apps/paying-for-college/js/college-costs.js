@@ -20,6 +20,7 @@ import { updateModelsFromQueryString } from './dispatchers/update-models.js';
  */
 const init = function() {
   const body = document.querySelector( 'body' );
+  const query = getQueryVariables();
   constantsModel.init();
   expensesModel.init();
   financialModel.init();
@@ -27,12 +28,12 @@ const init = function() {
   schoolView.init( body );
   expensesView.init( body );
   financialView.init();
-  navigationView.init( body );
+  navigationView.init( body, query.iped );
   chartView.init( body );
   appView.init();
   Expandable.init();
 
-  updateModelsFromQueryString( getQueryVariables() );
+  updateModelsFromQueryString( query );
 
   financialView.updateFinancialItems();
   appView.updateUI();

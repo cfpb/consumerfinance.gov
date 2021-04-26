@@ -8,20 +8,7 @@
             <p>Copy and save this link so that you can come back and review your plan. We won't store this information.</p>
         </div>
     </div>
-    <div class="o-form_group">
-        <div class="m-form-field">
-            <label class="a-label a-label__heading" for="finish_link">
-                Your link
-            </label>
-            <pre id="finish_link" name="finish_link" data-app-save-link="save-and-finish"></pre>
-            <button class="a-btn u-mt15" 
-                    id="copy-your-link"
-                    aria-live="polite">
-              <span id="default-text">Copy<span class="u-visually-hidden">your link to the clipboard</span></span>
-              <span id="success-text" class="u-hidden"><span class="u-visually-hidden">Your link was </span>Copied!</span>
-            </button>
-        </div>
-    </div>
+    {% include 'copy-link-form.html' %}
     <div class="o-form_group">
         <div class="block block__mid">
             <fieldset class="o-form_fieldset" data-impact="impactOffer">

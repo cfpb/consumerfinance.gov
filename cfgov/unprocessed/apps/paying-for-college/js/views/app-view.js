@@ -51,15 +51,19 @@ const appView = {
     updateState.byProperty( 'save-for-later', 'active' );
   },
 
-  _handleCopyLinkBtn: () => {
+  _handleCopyLinkBtn: event => {
     if ( navigator.clipboard ) {
       navigator.clipboard.writeText( window.location.href ).then( function () {
-        appView._copyBtnDefaultText.classList.add( HIDDEN_CLASS );
-        appView._copyBtnSuccessText.classList.remove( HIDDEN_CLASS );
+        const target = event.target;
+        const btn = closest( target, 'button' );
+        const copyBtnDefaultText = btn.querySelector( '#default-text' );
+        const copyBtnSuccessText = btn.querySelector( '#success-text' );
+        copyBtnDefaultText.classList.add( HIDDEN_CLASS );
+        copyBtnSuccessText.classList.remove( HIDDEN_CLASS );
 
         setTimeout( function() {
-          appView._copyBtnSuccessText.classList.add( HIDDEN_CLASS );
-          appView._copyBtnDefaultText.classList.remove( HIDDEN_CLASS );
+          copyBtnSuccessText.classList.add( HIDDEN_CLASS );
+          copyBtnDefaultText.classList.remove( HIDDEN_CLASS );
         }, 3000 );
       });
     } else if ( window.clipboardData && window.clipboardData.setData ) {
@@ -68,8 +72,8 @@ const appView = {
   },
 
   _handleCopyLinkBtnKeypress: event => {
-    if (event.keyCode === 13) {
-      appView._handleCopyLinkBtn();
+    if ( event.keyCode === 13 ) {
+      appView._handleCopyLinkBtn( event );
     }
   },
 
@@ -111,9 +115,7 @@ const appView = {
     appView._restartBtn = document.querySelector( '[data-app-button="restart"]' );
     appView._saveForLaterBtn = document.querySelector( '[data-app-button="save-and-finish-later"]' );
     appView._saveLinks = document.querySelectorAll( '[data-app-save-link]' );
-    appView._copyLinkBtn = document.querySelector( '#copy-your-link' );
-    appView._copyBtnDefaultText = appView._copyLinkBtn.querySelector( '#default-text' );
-    appView._copyBtnSuccessText = appView._copyLinkBtn.querySelector( '#success-text' );
+    appView._copyLinkBtn = document.querySelectorAll( '.copy-your-link' );
     appView._includeParentPlusBtn = document.querySelector( '#plan__parentPlusFeeRepay' );
 
     _addButtonListeners();
@@ -134,8 +136,12 @@ function _addButtonListeners() {
 
   appView._restartBtn.addEventListener( 'click', appView._handleRestartBtn );
   appView._saveForLaterBtn.addEventListener( 'click', appView._handleSaveForLaterBtn );
-  appView._copyLinkBtn.addEventListener( 'click', appView._handleCopyLinkBtn );
-  appView._copyLinkBtn.addEventListener( 'keyup', appView._handleCopyLinkBtnKeypress );
+  appView._copyLinkBtn.forEach( elem => {
+    elem.addEventListener( 'click', appView._handleCopyLinkBtn );
+  } );
+  appView._copyLinkBtn.forEach( elem => {
+    elem.addEventListener( 'keyup', appView._handleCopyLinkBtnKeypress );
+  } );
   appView._includeParentPlusBtn.addEventListener( 'click', appView._handleIncludeParentPlusBtn );
 }
 
