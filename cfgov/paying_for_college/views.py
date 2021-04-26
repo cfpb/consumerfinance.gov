@@ -3,7 +3,9 @@ import os
 import re
 from collections import OrderedDict
 
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import (
+    Http404, HttpResponse, HttpResponseBadRequest, JsonResponse
+)
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views.generic import TemplateView, View
@@ -76,7 +78,7 @@ def get_program_length(program, school):
 
 
 def get_school(schoolID):
-    """Try to get a school by ID; return either school or empty string"""
+    """Try to get a school by ID; return either school or empty string."""
     try:
         school = School.objects.get(school_id=int(schoolID))
     except Exception:
@@ -89,7 +91,7 @@ def get_school(schoolID):
 
 
 def get_program(school, programCode):
-    """Try to get latest program; return either program or empty string"""
+    """Try to get latest program; return either program or empty string."""
     if not validate_pid(programCode):
         return None
     programs = Program.objects.filter(program_code=programCode,
@@ -100,16 +102,32 @@ def get_program(school, programCode):
         return None
 
 
+def format_constants():
+    constants = {}
+    rates = ConstantRate.objects.all()
+    caps = ConstantCap.objects.all()
+    for rate in rates:
+        constants[rate.slug] = f"{round((rate.value * 100), 3).normalize()}%"
+    for cap in caps:
+        if cap.slug == "constantsYear":
+            year_value = f"{cap.value}-" + f"{cap.value + 1}"[-2:]
+            constants[cap.slug] = year_value
+        else:
+            constants[cap.slug] = f"${cap.value:,}"
+    return constants
+
+
 class BaseTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BaseTemplateView, self).get_context_data(**kwargs)
         context['url_root'] = DISCLOSURE_ROOT
+        context.update(format_constants())
         return context
 
 
 class OfferView(TemplateView):
-    """consult values in querystring and deliver school/program data"""
+    """Consult values in querystring and deliver school/program data."""
 
     def get(self, request, test=False):
         school = None
@@ -119,16 +137,7 @@ class OfferView(TemplateView):
         warning = ''
         OID = ''
         if not request.GET:
-            return render(request, 'paying_for_college/disclosure.html', {
-                'data_js': "0",
-                'school': school,
-                'schoolData': school_data,
-                'program': program,
-                'programData': program_data,
-                'oid': OID,
-                'warning': warning,
-                'url_root': DISCLOSURE_ROOT,
-            })
+            raise Http404
         if 'oid' in request.GET and request.GET['oid']:
             OID = request.GET['oid']
         else:
@@ -162,7 +171,7 @@ class OfferView(TemplateView):
                 warning = IPED_ERROR
         else:
             warning = IPED_ERROR
-        return render(request, 'paying_for_college/disclosure.html', {
+        return render(request, 'paying-for-college/disclosure.html', {
             'data_js': "0",
             'school': school,
             'schoolData': school_data,
@@ -262,7 +271,7 @@ class StatsRepresentation(View):
 
 
 class ExpenseRepresentation(View):
-    """deliver BLS expense data in json form"""
+    """Deliver BLS expense data in json form."""
 
     def get(self, request):
         expense_json = get_json_file(EXPENSE_FILE)
@@ -273,7 +282,7 @@ class ExpenseRepresentation(View):
 
 
 class ConstantsRepresentation(View):
-    """deliver stored Constants in json form"""
+    """Deliver stored Constants in json form."""
 
     def get_constants(self):
         constants = OrderedDict()

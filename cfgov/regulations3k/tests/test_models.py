@@ -693,6 +693,28 @@ class RegModelTests(DjangoTestCase):
         validate_label('Interp-2')
         validate_label('ünicode-labels')
 
+    def test_section_label_uniqueness(self):
+        dup_section = baker.make(
+            Section,
+            label='4',
+            subpart=self.subpart,
+        )
+        with self.assertRaises(ValidationError):
+            dup_section.full_clean()
+
+        non_dup_section = baker.make(
+            Section,
+            label='4',
+            subpart=baker.make(
+                Subpart,
+                version=baker.make(
+                    EffectiveVersion,
+                    part=self.part_1030
+                ),
+            ),
+        )
+        non_dup_section.full_clean()
+
 
 class SectionNavTests(unittest.TestCase):
 

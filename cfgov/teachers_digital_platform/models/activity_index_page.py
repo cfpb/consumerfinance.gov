@@ -349,6 +349,9 @@ class ActivitySetUp(models.Model):
                 'summary': activity.summary,
                 'topic': activity.get_topics_list(),
                 'activity_duration': activity.activity_duration.title,
+                'available_in_spanish': activity.activity_type.filter(
+                    title='Available in Spanish'
+                ).exists(),
                 'building_block': [
                     {'title': blk.title, 'svg_icon': blk.svg_icon}
                     for blk in activity.building_block.all()
