@@ -33,7 +33,7 @@ class PayingForCollegePage(CFGOVPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super(PayingForCollegePage, self).get_context(request)
-        context['returning_user'] = 'iped' in request.GET and request.GET['iped']
+        context['return_user'] = 'iped' in request.GET and request.GET['iped']
         return context
 
 
