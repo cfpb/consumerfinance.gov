@@ -35,7 +35,7 @@ pipeline {
         IS_ES_IMAGE_UPDATED = 'false'
         // Determines if Cypress image should be updated
         IS_CYPRESS_IMAGE_UPDATED = 'false'
-        DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
+        DOCKER_REGISTRY_URL = 'https://dtr-registry.cfpb.gov'
     }
 
     parameters {
@@ -101,18 +101,6 @@ pipeline {
                     sh "git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main"
                     sh "git fetch --no-tags"
 
-                    withCredentials([
-                        usernamePassword(
-                            credentialsId: 'docker-hub-cfpb',
-                            passwordVariable: 'DOCKER_HUB_PASSWORD',
-                            usernameVariable: 'DOCKER_HUB_USER'
-                        )
-                    ]) {
-                        sh '''curl -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD -f -lSL https://dtr-registry.cfpb.gov/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags'''
-                    }
-
-                    List<String> cypressTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags").split()
-                    List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_ES_REPO}/tags").split()
                     List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
 
                     for (int i = 0; i < sourceChanged.size(); i++) {
@@ -123,18 +111,29 @@ pipeline {
                             IS_CYPRESS_IMAGE_UPDATED = 'true'
                         }
                     }
-                    for (int i = 0; i < elasticsearchTags.size(); i++) {
-                        if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
-                            IS_ES_IMAGE_UPDATED = 'false'
-                        } else {
-                            IS_ES_IMAGE_UPDATED = 'true'
+
+                    withCredentials([
+                        usernamePassword(
+                            credentialsId: 'docker-hub-cfpb',
+                            passwordVariable: 'DOCKER_HUB_PASSWORD',
+                            usernameVariable: 'DOCKER_HUB_USER'
+                        )
+                    ]) {
+                        List<String> cypressTags = sh(returnStdout: true, script: "curl -u ${DOCKER_HUB_USER}:${DOCKER_HUB_PASSWORD} -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags").split()
+                        List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -u ${DOCKER_HUB_USER}:${DOCKER_HUB_PASSWORD} -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_ES_REPO}/tags").split()
+                        for (int i = 0; i < elasticsearchTags.size(); i++) {
+                            if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
+                                IS_ES_IMAGE_UPDATED = 'false'
+                            } else {
+                                IS_ES_IMAGE_UPDATED = 'true'
+                            }
                         }
-                    }
-                    for (int i = 0; i < cypressTags.size(); i++) {
-                        if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
-                            IS_CYPRESS_IMAGE_UPDATED = 'false'
-                        } else {
-                            IS_CYPRESS_IMAGE_UPDATED = 'true'
+                        for (int i = 0; i < cypressTags.size(); i++) {
+                            if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
+                                IS_CYPRESS_IMAGE_UPDATED = 'false'
+                            } else {
+                                IS_CYPRESS_IMAGE_UPDATED = 'true'
+                            }
                         }
                     }
                     sh 'env | grep IMAGE | sort'
