@@ -125,22 +125,22 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER'
                         )
                     ]) {
-                        sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD $DOCKER_HUB_REGISTRY'
+                        sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
                         sh 'DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_CYPRESS_REPO:$CYPRESS_IMAGE_TAG > /dev/null ; echo $?'
                         sh 'DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_ES_REPO:$CYPRESS_ES_TAG > /dev/null ; echo $?'
                         // get token to be able to talk to Docker Hub
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
-                        TOKEN = sh(
+                        DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
                             script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "$DOCKER_HUB_USER", "password": "$DOCKER_HUB_PASSWORD"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token'
                         ).trim()
                         List<String> cypressTags = sh(
                             returnStdout: true,
-                            script: 'curl -H "Authorization: JWT ${TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags'
+                            script: 'curl -s -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags'
                         ).split()
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
-                            script: 'curl -H "Authorization: JWT ${TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags'
+                            script: 'curl -s -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags'
                         ).split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
