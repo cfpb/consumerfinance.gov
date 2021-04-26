@@ -223,7 +223,7 @@ function getTilemapDates( data ) {
 
 /**
  * Builds the tilemap filter DOM
- * @param {object} chartNode The node where the chart loives
+ * @param {object} chartNode The node where the chart lives
  * @param {object} chart The chart object
  * @param {object} data The data object
  * @param {object} transform Whether data has been transformed
@@ -282,27 +282,30 @@ function getMapConfig( series, date ) {
   min = Math.floor( min );
   max = Math.ceil( max );
   const step = Math.round( ( max - min ) / 4 );
+  const step1 = min + step;
+  const step2 = step1 + step;
+  const step3 = step2 + step;
   return {
     colorAxis: {
       dataClasses: [ {
         from: min,
-        to: min + step,
+        to: step1,
         color: '#e2efd8',
-        name: `${ min } - ${ min + step }`
+        name: `${ min } - ${ step1 }`
       }, {
-        from: min + step,
-        to: min + ( 2 * step ),
+        from: step1,
+        to: step2,
         color: '#bae0a2',
-        name: `${ min + step } - ${ min + ( 2 * step ) }`
+        name: `${ step1 } - ${ step2 }`
       }, {
-        from: min + ( 2 * step ),
-        to: min + ( 3 * step ),
+        from: step2,
+        to: step3,
         color: '#66c368',
-        name: `${ min + ( 2 * step ) } - ${ min + ( 3 * step ) }`
+        name: `${ step2 } - ${ step3 }`
       }, {
-        from: min + ( 3 * step ),
+        from: step3,
         color: '#1fa040',
-        name: `${ min + ( 3 * step ) } - ${ max }`
+        name: `${ step3 } - ${ max }`
       } ]},
     series: [ { data: added } ]
   };
