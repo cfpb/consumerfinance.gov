@@ -10,22 +10,24 @@
     <div class="grants-and-scholarships_content-section financial-items">
         <div class="block block__mid">
             <h3 class="u-border-bottom">Grants</h3>
-            {{
-                input.render({
-                    'label': 'Federal Pell Grant',
-                    'id': 'grants__pell',
-                    'value': '0',
-                    'data_attribute': 'data-financial-item="grant_pell"'
-                })
-            }}
-            {{
-                input.render({
-                    'label': 'Federal SEOG grant',
-                    'id': 'grants__seog',
-                    'value': '0',
-                    'data_attribute': 'data-financial-item="grant_seog"'
-                })
-            }}
+            <div class="undergrad-content">
+                {{
+                    input.render({
+                        'label': 'Federal Pell Grant',
+                        'id': 'grants__pell',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_pell"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Federal SEOG grant',
+                        'id': 'grants__seog',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_seog"'
+                    })
+                }}
+            </div>
             {{
                 input.render({
                     'label': 'Other federal grant(s)',
