@@ -89,7 +89,10 @@ pipeline {
                     }
                 }
                 script {
-                    env.GIT_COMMIT = sh(returnStdout: true, script: "git rev-parse HEAD | cut -c1-7").trim()
+                    env.GIT_COMMIT = sh(
+                        returnStdout: true,
+                        script: "git rev-parse HEAD | cut -c1-7"
+                    ).trim()
                 }
             }
         }
@@ -101,7 +104,10 @@ pipeline {
                     sh "git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main"
                     sh "git fetch --no-tags"
 
-                    List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
+                    List<String> sourceChanged = sh(
+                        returnStdout: true,
+                        script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}"
+                    ).split()
 
                     for (int i = 0; i < sourceChanged.size(); i++) {
                         if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
@@ -122,7 +128,7 @@ pipeline {
                         sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD $DOCKER_HUB_REGISTRY'
                         sh 'DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_CYPRESS_REPO:$CYPRESS_IMAGE_TAG > /dev/null ; echo $?'
                         sh 'DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_ES_REPO:$CYPRESS_ES_TAG > /dev/null ; echo $?'
-                        sh 'TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'${DOCKER_HUB_USER}'", "password": "'${DOCKER_HUB_PASSWORD}'"}' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token)'
+                        sh "TOKEN=$(curl -s -H 'Content-Type: application/json' -X POST -d '{\"username\": \"$DOCKER_HUB_USER\", \"password\": \"$DOCKER_HUB_PASSWORD\" $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token)"
                         List<String> cypressTags = sh(
                             returnStdout: true,
                             script: 'curl -f -lSL $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags'
@@ -163,13 +169,22 @@ pipeline {
                     LAST_STAGE = env.STAGE_NAME
 
                     docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
-                        docker.build(env.IMAGE_NAME_LOCAL, '--build-arg scl_python_version=rh-python36 --target cfgov-prod .')
+                        docker.build(
+                            env.IMAGE_NAME_LOCAL,
+                            '--build-arg scl_python_version=rh-python36 --target cfgov-prod .'
+                        )
 
                         if (IS_ES_IMAGE_UPDATED == 'true') {
-                            docker.build(env.IMAGE_NAME_ES_LOCAL, '-f ./docker/elasticsearch/7/Dockerfile .')
+                            docker.build(
+                                env.IMAGE_NAME_ES_LOCAL,
+                                '-f ./docker/elasticsearch/7/Dockerfile .'
+                            )
                         }
                         if (IS_CYPRESS_IMAGE_UPDATED == 'true') {
-                            docker.build(env.IMAGE_NAME_CYPRESS_LOCAL, '-f ./docker/cypress/Dockerfile .')
+                            docker.build(
+                                env.IMAGE_NAME_CYPRESS_LOCAL,
+                                '-f ./docker/cypress/Dockerfile .'
+                            )
                         }
                     }
                 }
@@ -204,7 +219,10 @@ pipeline {
             steps {
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
+                    docker.withRegistry(
+                        dockerRegistry.url,
+                        dockerRegistry.credentialsId
+                    ) {
                         image = docker.image(env.IMAGE_NAME_LOCAL)
                         image.push()
 
