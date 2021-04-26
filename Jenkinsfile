@@ -101,6 +101,16 @@ pipeline {
                     sh "git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main"
                     sh "git fetch --no-tags"
 
+                    withCredentials([
+                        usernamePassword(
+                            credentialsId: 'docker-hub-cfpb',
+                            passwordVariable: 'DOCKER_HUB_PASSWORD',
+                            usernameVariable: 'DOCKER_HUB_USER'
+                        )
+                    ]) {
+                        sh '''docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'''
+                    }
+
                     List<String> cypressTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags").split()
                     List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_ES_REPO}/tags").split()
                     List<String> sourceChanged = sh(returnStdout: true, script: "git diff --name-only origin/main..origin/${env.BRANCH_NAME}").split()
