@@ -21,14 +21,19 @@ pipeline {
         IMAGE_REPO = 'cfpb/cfgov-python'
         IMAGE_CYPRESS_REPO = 'cfpb/cypress'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
-        IMAGE_ES_TAG = "7.10.1"
+        // Elasticsearch image tag should be the same as that defined in Dockerfile
+        IMAGE_ES_TAG = '7.10.1'
+        // Cypress image tag should be the same as that defined in Dockerfile
         CYPRESS_IMAGE_TAG = '7.1.0'
+        // Only Python image tag changes for every build
         PYTHON_IMAGE_TAG = "${JOB_BASE_NAME}-${BUILD_NUMBER}"
         STACK_PREFIX = 'cfgov'
         NOTIFICATION_CHANNEL = 'cfgov-deployments'
         LAST_STAGE = 'Init'
         DEPLOY_SUCCESS = false
+        // Determines if Elasticsearch image should be updated
         IS_ES_IMAGE_UPDATED = 'false'
+        // Determines if Cypress image should be updated
         IS_CYPRESS_IMAGE_UPDATED = 'false'
         DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
     }
