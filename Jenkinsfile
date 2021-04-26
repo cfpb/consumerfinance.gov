@@ -107,24 +107,24 @@ pipeline {
 
                     for (int i = 0; i < sourceChanged.size(); i++) {
                         if (sourceChanged[i].contains("docker/elasticsearch/7/Dockerfile")) {
-                            env.IS_ES_IMAGE_UPDATED = 'true'
+                            IS_ES_IMAGE_UPDATED = 'true'
                         }
                         if (sourceChanged[i].contains("docker/cypress/Dockerfile")) {
-                            env.IS_CYPRESS_IMAGE_UPDATED = 'true'
+                            IS_CYPRESS_IMAGE_UPDATED = 'true'
                         }
                     }
                     for (int i = 0; i < elasticsearchTags.size(); i++) {
                         if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
-                            env.IS_ES_IMAGE_UPDATED = 'false'
+                            IS_ES_IMAGE_UPDATED = 'false'
                         } else {
-                            env.IS_ES_IMAGE_UPDATED = 'true'
+                            IS_ES_IMAGE_UPDATED = 'true'
                         }
                     }
                     for (int i = 0; i < cypressTags.size(); i++) {
                         if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
-                            env.IS_CYPRESS_IMAGE_UPDATED = 'false'
+                            IS_CYPRESS_IMAGE_UPDATED = 'false'
                         } else {
-                            env.IS_CYPRESS_IMAGE_UPDATED = 'true'
+                            IS_CYPRESS_IMAGE_UPDATED = 'true'
                         }
                     }
                     sh 'env | grep IMAGE | sort'
