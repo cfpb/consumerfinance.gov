@@ -108,7 +108,7 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER'
                         )
                     ]) {
-                        sh '''docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'''
+                        sh '''curl -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD -f -lSL https://dtr-registry.cfpb.gov/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags'''
                     }
 
                     List<String> cypressTags = sh(returnStdout: true, script: "curl -f -lSL ${env.DOCKER_REGISTRY_URL}/v2/repositories/${env.IMAGE_CYPRESS_REPO}/tags").split()
