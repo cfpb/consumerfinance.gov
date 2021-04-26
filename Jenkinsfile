@@ -35,6 +35,7 @@ pipeline {
         IS_ES_IMAGE_UPDATED = 'false'
         // Determines if Cypress image should be updated
         IS_CYPRESS_IMAGE_UPDATED = 'false'
+        DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
     }
 
     parameters {
@@ -118,8 +119,8 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER'
                         )
                     ]) {
-                        List<String> cypressTags = sh(returnStdout: true, script: "curl -u ${DOCKER_HUB_USER}:${DOCKER_HUB_PASSWORD} -f -lSL https://dtr-registry.cfpb.gov/v2/repositories/cfpb/cypress/tags").split()
-                        List<String> elasticsearchTags = sh(returnStdout: true, script: "curl -u ${DOCKER_HUB_USER}:${DOCKER_HUB_PASSWORD} -f -lSL https://dtr-registry.cfpb.gov/v2/repositories/cfpb/cfgov-elasticsearch/tags").split()
+                        List<String> cypressTags = sh(returnStdout: true, script: 'curl -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD -f -lSL $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags').split()
+                        List<String> elasticsearchTags = sh(returnStdout: true, script: 'curl -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD -f -lSL $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags').split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
                                 IS_ES_IMAGE_UPDATED = 'false'
