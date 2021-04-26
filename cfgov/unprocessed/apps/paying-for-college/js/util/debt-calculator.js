@@ -215,25 +215,23 @@ function debtCalculator() {
   debts.programInterestAtGrad = interest.totalAtGrad;
   debts.programDebtAtGrad = debts.totalAtGrad;
 
-  // calculate existing loan debt payments
-  let existingDebtInterest = calcInterestAtGrad(
-    fin.existingDebt_amount,
-    fin.rate_existingDebt,
-    fin.other_programLength );
+  // calculate existing loan debt interest during program
+
+  let existingDebtInterest = fin.existingDebt_amount * fin.rate_existingDebt * fin.other_programLength;
 
   if ( isNaN( existingDebtInterest ) ) {
     existingDebtInterest = 0;
   }
+
   const existingDebtTotalAtGrad = fin.existingDebt_amount + existingDebtInterest;
   const existingDebtMonthly = calcMonthlyPayment(
     existingDebtTotalAtGrad, fin.rate_existingDebt, 10 );
 
+  debts.existingDebtInterestAtGrad = existingDebtInterest;
+
   totalBorrowing += fin.existingDebt_amount;
   interest.totalAtGrad += existingDebtInterest;
-
-  /* NOTE: This is technically incorrect (it should include program interest),
-     but we are planning how to address the issue so it's clear to the user. */
-  debts.totalAtGrad += fin.existingDebt_amount;
+  debts.totalAtGrad += existingDebtTotalAtGrad;
 
   debts.tenYearMonthly += existingDebtMonthly;
   debts.tenYearTotal += existingDebtMonthly * 120;
