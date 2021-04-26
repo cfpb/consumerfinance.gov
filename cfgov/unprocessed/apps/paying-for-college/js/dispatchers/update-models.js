@@ -6,7 +6,6 @@ import { financialModel } from '../models/financial-model.js';
 import { financialView } from '../views/financial-view.js';
 import { getStateByCode } from '../util/other-utils.js';
 import { getSchoolData } from '../dispatchers/get-api-values.js';
-import { navigationView } from '../views/navigation-view.js';
 import { schoolModel } from '../models/school-model.js';
 import { stateModel } from '../models/state-model.js';
 import { isNumeric, stringToNum } from '../util/number-utils.js';
