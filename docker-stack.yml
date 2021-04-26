@@ -3,19 +3,6 @@
 version: "3.7"
 
 services:
-  elasticsearch2:
-    image: ${CFGOV_ES2_IMAGE}
-    deploy:
-      placement:
-        constraints:
-          - node.role!=manager
-      restart_policy:
-        condition: any
-        delay: 10s
-        max_attempts: 3
-        window: 120s
-    networks:
-      - app
   elasticsearch:
     image: ${CFGOV_ES_IMAGE}
     environment:
@@ -29,8 +16,14 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      resources:
+        limits:
+          memory: 2048M
+        reservations:
+          memory: 1024M
     networks:
       - app
+
   postgres:
     image: postgres:10-alpine
     user: postgres
@@ -43,6 +36,11 @@ services:
         delay: 10s
         max_attempts: 3
         window: 120s
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
     environment:
       POSTGRES_USER: cfpb
       POSTGRES_PASSWORD_FILE: /var/run/secrets/PGPASSWORD
@@ -63,7 +61,6 @@ services:
       DATABASE_URL: postgres://cfpb@postgres/cfgov
       DJANGO_ADMIN_USERNAME: admin
       ES_PORT: 9200
-      ES_HOST: elasticsearch2
       ES7_HOST: elasticsearch
       GOVDELIVERY_BASE_URL: https://stage-api.govdelivery.com/
       GOVDELIVERY_ACCOUNT_CODE: USCFPB
@@ -95,6 +92,11 @@ services:
         - com.docker.lb.hosts=${CFGOV_HOSTNAME}
         - com.docker.lb.port=8000
         - com.docker.lb.network=${LB_NETWORK}
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 512M
     command: >
                 bash -c "
 
@@ -103,11 +105,10 @@ services:
                 django_tables_exist=$$?
 
                 if [ $$django_tables_exist -gt 0 ] || [ $$REFRESH_DB == 'true' ]; then
-                    ./refresh-data.sh 
+                    ./refresh-data.sh
+                    ./cfgov/manage.py createcachetable
                 fi
 
-                ./cfgov/manage.py update_index
-                
                 ./cfgov/manage.py search_index --rebuild -f --parallel
 
                 httpd -d cfgov/apache -D FOREGROUND"

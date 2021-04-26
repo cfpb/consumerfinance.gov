@@ -13,7 +13,6 @@ from v1.models import AbstractFilterPage, BrowseFilterablePage, SublandingPage
 from v1.tests.wagtail_pages import helpers
 
 
-@override_settings(FLAGS={"ELASTICSEARCH_FILTERABLE_LISTS": [("boolean", True)]})
 class SublandingPageTestCase(ElasticsearchTestsMixin, TestCase):
     """
     This test case checks that the browse-filterable posts of a sublanding
