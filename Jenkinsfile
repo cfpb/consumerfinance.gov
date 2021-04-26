@@ -133,11 +133,11 @@ pipeline {
                         ).trim()
                         List<String> cypressTags = sh(
                             returnStdout: true,
-                            script: 'curl -s -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\''
+                            script: 'curl -s -H "Authorization: JWT $DOCKER_HUB_TOKEN" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags'
                         ).split()
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
-                            script: 'curl -s -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\''
+                            script: 'curl -s -H "Authorization: JWT $DOCKER_HUB_TOKEN" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags'
                         ).split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
