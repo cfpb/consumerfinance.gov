@@ -125,9 +125,6 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER'
                         )
                     ]) {
-                        sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-                        sh 'DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_CYPRESS_REPO:$CYPRESS_IMAGE_TAG > /dev/null ; echo $?'
-                        sh 'DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_ES_REPO:$CYPRESS_ES_TAG > /dev/null ; echo $?'
                         // get token to be able to talk to Docker Hub
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
                         DOCKER_HUB_TOKEN = sh(
