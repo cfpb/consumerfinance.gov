@@ -445,9 +445,6 @@ urlpatterns = [
 
     re_path(r'^sitemap\.xml$', sitemap),
 
-    flagged_re_path(
-        'SEARCH_DOTGOV_API', r'^search/', include('search.urls')),
-
     re_path(
         r'^consumer-tools/educator-tools/youth-financial-education/',
         include('teachers_digital_platform.urls')
