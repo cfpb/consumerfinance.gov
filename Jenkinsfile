@@ -125,7 +125,7 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER'
                         )
                     ]) {
-                        // get token to be able to talk to Docker Hub
+                        // get token to be able to list image tags in Docker Hub
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
@@ -142,15 +142,11 @@ pipeline {
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
                                 IS_ES_IMAGE_UPDATED = 'false'
-                            } else {
-                                IS_ES_IMAGE_UPDATED = 'true'
                             }
                         }
                         for (int i = 0; i < cypressTags.size(); i++) {
                             if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
                                 IS_CYPRESS_IMAGE_UPDATED = 'false'
-                            } else {
-                                IS_CYPRESS_IMAGE_UPDATED = 'true'
                             }
                         }
                     }
