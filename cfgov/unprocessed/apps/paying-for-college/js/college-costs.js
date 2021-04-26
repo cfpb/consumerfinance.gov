@@ -28,7 +28,7 @@ const init = function() {
   schoolView.init( body );
   expensesView.init( body );
   financialView.init();
-  navigationView.init( body, query[ 'iped' ] );
+  navigationView.init( body, query.iped );
   chartView.init( body );
   appView.init();
   Expandable.init();

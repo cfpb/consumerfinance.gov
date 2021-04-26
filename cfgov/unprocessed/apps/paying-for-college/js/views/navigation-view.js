@@ -114,6 +114,7 @@ const navigationView = {
   /**
    * init - Initialize the navigation view
    * @param { Object } body - The body element of the page
+   * @param { string } iped - String representing the chosen school.
    */
   init: function( body, iped ) {
     this._navMenu = body.querySelector( '.o-secondary-navigation' );
@@ -139,6 +140,7 @@ const navigationView = {
 
 /**
  * _addButtonListeners - Add event listeners for nav buttons
+ * @param { string } iped - String representing the chosen school.
  */
 function _addButtonListeners( iped ) {
   navigationView._navButtons.forEach( elem => {
