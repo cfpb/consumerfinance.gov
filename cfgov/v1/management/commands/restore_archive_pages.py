@@ -103,7 +103,8 @@ class Command(BaseCommand):
                 )
 
             # Get the filterable list QuerySet and filter it.
-            filtered_pages = filterable_page.get_filterable_queryset().filter(
+            filtered_pages = filterable_page.get_filterable_search().search(
+            ).filter(
                 published_date_filter,
                 is_archived="yes",
             )

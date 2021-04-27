@@ -7,10 +7,6 @@ from django.forms import widgets
 
 from taggit.models import Tag
 
-from v1.documents import (
-    EnforcementActionFilterablePagesDocumentSearch,
-    EventFilterablePagesDocumentSearch, FilterablePagesDocumentSearch
-)
 from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
@@ -121,15 +117,17 @@ class FilterableListForm(forms.Form):
     preferred_datetime_format = '%Y-%m-%d'
 
     def __init__(self, *args, **kwargs):
-        self.filterable_pages = kwargs.pop('filterable_pages')
+        self.filterable_search = kwargs.pop('filterable_search')
         self.wagtail_block = kwargs.pop('wagtail_block')
-        self.filterable_root = kwargs.pop('filterable_root')
         self.filterable_categories = kwargs.pop('filterable_categories')
 
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
         clean_categories(selected_categories=self.data.get('categories'))
 
+        # TODO: This results in duplication with get_page_set's
+        # to_querystring. Find a way not to duplicate.
+        self.filterable_pages = self.filterable_search.search()
         page_ids = self.filterable_pages.values_list('id', flat=True)
         self.set_topics(page_ids)
         self.set_authors(page_ids)
@@ -155,16 +153,21 @@ class FilterableListForm(forms.Form):
     def get_page_set(self):
         categories = self.get_categories()
 
-        return FilterablePagesDocumentSearch(
-            prefix=self.filterable_root,
+        self.filterable_search.filter(
             topics=self.cleaned_data.get('topics'),
             categories=categories,
             authors=self.cleaned_data.get('authors'),
             to_date=self.cleaned_data.get('to_date'),
             from_date=self.cleaned_data.get('from_date'),
-            title=self.cleaned_data.get('title'),
             archived=self.cleaned_data.get('archived'),
-            order_by=self.get_order_by()).search()
+        )
+
+        results = self.filterable_search.search(
+            title=self.cleaned_data.get('title'),
+            order_by=self.get_order_by()
+        )
+
+        return results
 
     def first_page_date(self):
         first_post = self.filterable_pages.order_by('date_published').first()
@@ -294,30 +297,36 @@ class EnforcementActionsFilterForm(FilterableListForm):
     )
 
     def get_page_set(self):
-        return EnforcementActionFilterablePagesDocumentSearch(
-            prefix=self.filterable_root,
+        self.filterable_search.filter(
             topics=self.cleaned_data.get('topics'),
             categories=self.cleaned_data.get('categories'),
             authors=self.cleaned_data.get('authors'),
             to_date=self.cleaned_data.get('to_date'),
             from_date=self.cleaned_data.get('from_date'),
-            title=self.cleaned_data.get('title'),
             statuses=self.cleaned_data.get('statuses'),
-            products=self.cleaned_data.get('products')).search()
+            products=self.cleaned_data.get('products')
+        )
+        results = self.filterable_search.search(
+            title=self.cleaned_data.get('title'),
+        )
+        return results
 
 
 class EventArchiveFilterForm(FilterableListForm):
 
     def get_page_set(self):
-        return EventFilterablePagesDocumentSearch(
-            prefix=self.filterable_root,
+        self.filterable_search.filter(
             topics=self.cleaned_data.get('topics'),
             categories=self.cleaned_data.get('categories'),
             authors=self.cleaned_data.get('authors'),
             to_date=self.cleaned_data.get('to_date'),
             from_date=self.cleaned_data.get('from_date'),
+        )
+        results = self.filterable_search.search(
             title=self.cleaned_data.get('title'),
-            order_by=self.get_order_by()).search()
+            order_by=self.get_order_by()
+        )
+        return results
 
 
 class FeedbackForm(forms.ModelForm):

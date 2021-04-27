@@ -117,123 +117,144 @@ class FilterablePagesDocument(Document):
 
 class FilterablePagesDocumentSearch:
 
-    def __init__(self,
-                 prefix='/', topics=[], categories=[],
-                 authors=[], to_date=None, from_date=None,
-                 title='', archived=None, order_by='-date_published'):
-        self.prefix = prefix
-        self.topics = topics
-        self.categories = categories
-        self.authors = authors
-        self.to_date = to_date
-        self.from_date = from_date
-        self.title = title
-        self.archived = archived
-        self.order_by = order_by
+    def __init__(self, prefix='/'):
+        self.document = FilterablePagesDocument()
+        self.search_obj = self.document.search().filter(
+            'prefix', url=prefix
+        )
 
-    def filter_topics(self, search):
-        return search.filter("terms", tags__slug=self.topics)
-
-    def filter_categories(self, search):
-        return search.filter("terms", categories__name=self.categories)
-
-    def filter_authors(self, search):
-        return search.filter("terms", authors__slug=self.authors)
-
-    def filter_date(self, search):
-        return search.filter(
-            "range", **{
-                'date_published': {
-                    'gte': self.from_date, 'lte': self.to_date}})
-
-    def filter_archived(self, search):
-        return search.filter("terms", is_archived=self.archived)
-
-    def search_title(self, search):
-        if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
-            query = MultiMatch(
-                query=self.title,
-                fields=['title^10', 'tags.name^10', 'content', 'preview_description'],  # noqa: E501
-                type="phrase_prefix",
-                slop=2)
-            return search.query(query)
-        else:
-            return search.query(
-                "match", title={"query": self.title, "operator": "AND"}
+    def filter_topics(self, topics=[]):
+        if topics not in ([], '', None):
+            self.search_obj = self.search_obj.filter(
+                "terms",
+                tags__slug=topics
             )
 
-    def order_results(self, search):
-        total_results = search.count()
+    def filter_categories(self, categories=[]):
+        if categories not in ([], '', None):
+            self.search_obj = self.search_obj.filter(
+                "terms",
+                categories__name=categories
+            )
+
+    def filter_authors(self, authors=[]):
+        if authors not in ([], '', None):
+            self.search_obj = self.search_obj.filter(
+                "terms",
+                authors__slug=authors
+            )
+
+    def filter_date(self, from_date=None, to_date=None):
+        if to_date is not None and from_date is not None:
+            self.search_obj = self.search_obj.filter(
+                "range", **{
+                    'date_published': {
+                        'gte': from_date, 'lte': to_date
+                    }
+                }
+            )
+
+    def filter_archived(self, archived=None):
+        if archived is not None:
+            self.search_obj = self.search_obj.filter(
+                "terms",
+                is_archived=archived
+            )
+
+    def search_title(self, title=''):
+        if title not in ([], '', None):
+            if flag_enabled('EXPAND_FILTERABLE_LIST_SEARCH'):
+                query = MultiMatch(
+                    query=title,
+                    fields=[
+                        'title^10',
+                        'tags.name^10',
+                        'content',
+                        'preview_description'
+                    ],
+                    type="phrase_prefix",
+                    slop=2
+                )
+                self.search_obj = self.search_obj.query(query)
+            else:
+                self.search_obj = self.search_obj.query(
+                    "match", title={"query": title, "operator": "AND"}
+                )
+
+    def order_results(self, title='', order_by='-date_published'):
+        total_results = self.search_obj.count()
         # Marching on title is the only time we see an actual
         # impact on scoring, so we should only look to alter the order
         # if there is a title provided as part of the search.
-        if not self.title:
-            return search.sort('-date_published')[0:total_results]
+        if not title:
+            return self.search_obj.sort('-date_published')[0:total_results]
         else:
-            return search.sort(self.order_by)[0:total_results]
+            return self.search_obj.sort(order_by)[0:total_results]
 
-    def has_dates(self):
-        return self.to_date is not None and self.from_date is not None
+    def filter(self, topics=[], categories=[], authors=[], to_date=None,
+               from_date=None, archived=None):
+        self.filter_topics(topics=topics)
+        self.filter_categories(categories=categories)
+        self.filter_authors(authors=authors)
+        self.filter_date(from_date=from_date, to_date=to_date)
+        self.filter_archived(archived=archived)
 
-    def apply_specific_filters(self, search):
-        return search
-
-    def search(self):
-        search = FilterablePagesDocument.search()
-        if self.prefix != '':
-            search = search.filter('prefix', url=self.prefix)
-        if self.topics not in ([], '', None):
-            search = self.filter_topics(search)
-        if self.categories not in ([], '', None):
-            search = self.filter_categories(search)
-        if self.authors not in ([], '', None):
-            search = self.filter_authors(search)
-        if self.has_dates():
-            search = self.filter_date(search)
-        if self.archived is not None:
-            search = self.filter_archived(search)
-        if self.title not in ([], '', None):
-            search = self.search_title(search)
-
-        search = self.apply_specific_filters(search)
-        results = self.order_results(search)
+    def search(self, title='', order_by='-date_published'):
+        self.search_title(title=title)
+        results = self.order_results(order_by=order_by)
         return results.to_queryset()
 
 
 class EventFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):
+    def filter_date(self, from_date=None, to_date=None):
+        if to_date is not None and from_date is not None:
+            self.search_obj = self.search_obj.filter(
+                "range", **{'start_dt': {'gte': from_date}}
+            ).filter(
+                "range", **{'end_dt': {'lte': to_date}}
+            )
 
-    def filter_date(self, search):
-        return search.filter(
-            "range", **{
-                'start_dt': {'gte': self.from_date}}).filter(
-                    "range", **{'end_dt': {'lte': self.to_date}})
-
-    def apply_specific_filters(self, search):
-        return search.filter("term", model_class="EventPage")
+    def filter(self, **kwargs):
+        self.search_obj = self.search_obj.filter(
+            "term",
+            model_class="EventPage"
+        )
+        super().filter(**kwargs)
 
 
-class EnforcementActionFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):  # noqa: E501
+class EnforcementActionFilterablePagesDocumentSearch(
+    FilterablePagesDocumentSearch
+):
+    def filter_date(self, from_date=None, to_date=None):
+        if to_date is not None and from_date is not None:
+            self.search_obj = self.search_obj.filter(
+                "range", **{
+                    "initial_filing_date": {
+                        "gte": from_date, "lte": to_date
+                    }
+                }
+            )
 
-    def __init__(self, **kwargs):
-        self.statuses = kwargs.pop('statuses')
-        self.products = kwargs.pop('products')
-        super().__init__(**kwargs)
+    def filter(self, statuses=[], products=[], **kwargs):
+        self.search_obj = self.search_obj.filter(
+            "term",
+            model_class="EnforcementActionPage"
+        )
 
-    def filter_date(self, search):
-        return search.filter(
-            "range", **{
-                "initial_filing_date": {
-                    "gte": self.from_date, "lte": self.to_date}})
+        if statuses != []:
+            self.search_obj = self.search_obj.filter(
+                "terms",
+                statuses=statuses
+            )
 
-    def apply_specific_filters(self, search):
-        search = search.filter("term", model_class="EnforcementActionPage")
-        if self.statuses != []:
-            search = search.filter("terms", statuses=self.statuses)
-        if self.products != []:
-            search = search.filter("terms", products=self.products)
+        if products != []:
+            self.search_obj = self.search_obj.filter(
+                "terms",
+                products=products
+            )
 
-        return search
+        super().filter(**kwargs)
 
-    def order_results(self, search):
-        total_results = search.count()
-        return search.sort('-initial_filing_date')[0:total_results]
+    def order_results(self, order_by='-initial_filing_date'):
+        total_results = self.search_obj.count()
+        return self.search_obj.sort('-initial_filing_date')[0:total_results]
