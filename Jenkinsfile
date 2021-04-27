@@ -132,13 +132,13 @@ pipeline {
                         )
                     ]) {
                         sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-                        String DOCKER_HUB_TOKEN = sh(
+                        def dockerToken = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token)'
+                            script: '''$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token)'''
                         ).trim()
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\')'
+                            script: '''$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\')'''
                         ).split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
@@ -149,7 +149,7 @@ pipeline {
                         }
                         List<String> cypressTags = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\')'
+                            script: '''$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\')'''
                         ).split()
                         for (int i = 0; i < cypressTags.size(); i++) {
                             if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
