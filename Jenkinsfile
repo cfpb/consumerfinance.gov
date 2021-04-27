@@ -35,7 +35,6 @@ pipeline {
         IS_ES_IMAGE_UPDATED = 'false'
         // Determines if Cypress image should be updated
         IS_CYPRESS_IMAGE_UPDATED = 'false'
-        DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
     }
 
     parameters {
@@ -126,10 +125,10 @@ pipeline {
                     ]) {
                         // get token to be able to list image tags in Docker Hub
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
+                        DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
                         sh 'docker info'
                         sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-                        sh 'docker manifest inspect $DOCKER_HUB_REGISTRY/$IMAGE_ES_REPO:$IMAGE_ES_TAG'
-                        sh 'docker manifest inspect $DOCKER_HUB_REGISTRY/$IMAGE_CYPRESS_REPO:$CYPRESS_IMAGE_TAG'
+                        sh 'cat ~/.docker/config.json'
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
                             script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
