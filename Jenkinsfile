@@ -128,14 +128,13 @@ pipeline {
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
+                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/login/)'
                         ).trim()
-                        sh 'echo ${DOCKER_HUB_TOKEN}'
                         REGISTRY_AUTH = "Authorization: JWT ${DOCKER_HUB_TOKEN}"
                         REGISTRY_URL = "${DOCKER_HUB_REGISTRY}/v2/repositories"
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
-                            script: 'curl -s -H "${REGISTRY_AUTH}" $REGISTRY_URL/$IMAGE_ES_REPO/tags/$IMAGE_ES_TAG'
+                            script: '$(curl -s -H "${REGISTRY_AUTH}" $REGISTRY_URL/$IMAGE_ES_REPO/tags/$IMAGE_ES_TAG)'
                         ).split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
@@ -144,7 +143,7 @@ pipeline {
                         }
                         List<String> cypressTags = sh(
                             returnStdout: true,
-                            script: 'curl -s -H "${REGISTRY_AUTH}" $REGISTRY_URL/$IMAGE_CYPRESS_REPO/tags/$CYPRESS_IMAGE_TAG'
+                            script: '$(curl -s -H "${REGISTRY_AUTH}" $REGISTRY_URL/$IMAGE_CYPRESS_REPO/tags/$CYPRESS_IMAGE_TAG)'
                         ).split()
                         for (int i = 0; i < cypressTags.size(); i++) {
                             if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
