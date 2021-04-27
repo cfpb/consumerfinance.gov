@@ -133,10 +133,10 @@ pipeline {
                         sh 'docker info'
                         sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
                         sh 'cat ~/.docker/config.json'
-                        DOCKER_HUB_TOKEN = sh(
-                            returnStdout: true,
-                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v1/users/login/)'
-                        ).trim()
+                        // DOCKER_HUB_TOKEN = sh(
+                        //     returnStdout: true,
+                        //     script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
+                        // ).trim()
                         // you may need a new token for each repository
                         CYPRESS_TOKEN = sh(
                             returnStdout: true,
