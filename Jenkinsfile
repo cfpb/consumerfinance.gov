@@ -35,7 +35,7 @@ pipeline {
         IS_ES_IMAGE_UPDATED = 'false'
         // Determines if Cypress image should be updated
         IS_CYPRESS_IMAGE_UPDATED = 'false'
-        DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
+        DOCKER_HUB_REGISTRY = '$dockerRegistry.url'
     }
 
     parameters {
@@ -75,8 +75,7 @@ pipeline {
                 // Stop docker containers used by functional tests
                 sh '''if [ "$(docker ps -a -q -f ancestor=${IMAGE_CYPRESS_REPO})" != "" ]; then docker stop $(docker ps -a -q -f ancestor=${IMAGE_CYPRESS_REPO}); fi'''
                 // Remove docker containers and volumes used by functional tests
-                sh "docker container prune -f"
-                sh "docker volume prune -f"
+                sh 'docker container prune -f; docker volume prune -f'
             }
         }
 
@@ -150,6 +149,7 @@ pipeline {
                             }
                         }
                     }
+                    sh 'curl https://$DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD@dtr-registry.cfpb.gov/v2/$IMAGE_ES_REPO/tags/list'
                     sh 'env | grep IMAGE | sort'
                 }
             }
@@ -171,7 +171,6 @@ pipeline {
                             env.IMAGE_NAME_LOCAL,
                             '--build-arg scl_python_version=rh-python36 --target cfgov-prod .'
                         )
-
                         if (IS_ES_IMAGE_UPDATED == 'true') {
                             docker.build(
                                 env.IMAGE_NAME_ES_LOCAL,
@@ -217,10 +216,7 @@ pipeline {
             steps {
                 script {
                     LAST_STAGE = env.STAGE_NAME
-                    docker.withRegistry(
-                        dockerRegistry.url,
-                        dockerRegistry.credentialsId
-                    ) {
+                    docker.withRegistry(dockerRegistry.url, dockerRegistry.credentialsId) {
                         image = docker.image(env.IMAGE_NAME_LOCAL)
                         image.push()
 
