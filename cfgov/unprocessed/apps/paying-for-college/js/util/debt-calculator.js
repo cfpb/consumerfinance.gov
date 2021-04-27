@@ -21,6 +21,10 @@ import { financialModel } from '../models/financial-model.js';
 function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLength ) {
   const level = getStateValue( 'programLevel' );
   const dependency = getStateValue( 'programDependency' );
+  const progressMap = {
+    n: 0,
+    a: 2
+  };
   let progress = getStateValue( 'programProgress' );
   let percentSub = 1;
   let percentUnsub = 1;
@@ -52,7 +56,12 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
   // Note that "progress" refers to number of years completed, thus a user has 0 progress
   // until they start their second year. An associate's degree represents 2 years of school,
   // so when progress = 'a' (for Associates), then progress is set to '2'
-  if ( progress === 'a' ) progress = 2;
+
+  // Translate progress value to number where necessary
+  if ( progressMap.hasOwnProperty( progress ) ) {
+    progress = progressMap[ progress ];
+  }
+
   for ( let x = 0; x < programLength; x++ ) {
     if ( x + progress === 0 ) {
       subPrincipal += directSub;
