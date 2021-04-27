@@ -150,7 +150,6 @@ pipeline {
                             }
                         }
                     }
-                    sh 'env | grep IMAGE | sort'
                 }
             }
         }
