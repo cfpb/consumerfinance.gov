@@ -132,7 +132,7 @@ pipeline {
                         sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
                         String dockerToken = sh(
                             returnStdout: true,
-                            script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/'
+                            script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token'
                         )
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
@@ -168,7 +168,7 @@ pipeline {
                         sh 'docker login $DTR_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
                         String dockerToken = sh(
                             returnStdout: true,
-                            script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DTR_REGISTRY/v2/users/login/ | jq -r .token'
+                            script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DTR_REGISTRY/v2/users/login/'
                         )
                         sh 'echo "docker token: ${dockerToken}"'
                         List<String> cypressTags = sh(
