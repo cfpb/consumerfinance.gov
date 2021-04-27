@@ -35,7 +35,7 @@ pipeline {
         IS_ES_IMAGE_UPDATED = 'false'
         // Determines if Cypress image should be updated
         IS_CYPRESS_IMAGE_UPDATED = 'false'
-        DOCKER_HUB_REGISTRY = '$dockerRegistry.url'
+        DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
     }
 
     parameters {
