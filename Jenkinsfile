@@ -136,7 +136,7 @@ pipeline {
                         )
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\')'
+                            script: 'curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\''
                         ).split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
@@ -147,7 +147,7 @@ pipeline {
                         }
                         List<String> cypressTags = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\')'
+                            script: 'curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\''
                         ).split()
                         for (int i = 0; i < cypressTags.size(); i++) {
                             if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
@@ -171,6 +171,10 @@ pipeline {
                             script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DTR_REGISTRY/v2/users/login/ | jq -r .token'
                         )
                         sh 'echo "docker token: ${dockerToken}"'
+                        List<String> cypressTags = sh(
+                            returnStdout: true,
+                            script: 'curl -s -H "Authorization:Bearer $dockerToken" $DTR_REGISTRY/v2/$IMAGE_CYPRESS_REPO/tags/list | jq \'.tags[:10]\''
+                        ).split()
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
                             script: 'curl -s -H "Authorization:Bearer $dockerToken" $DTR_REGISTRY/v2/$IMAGE_ES_REPO/tags/list | jq \'.tags[:10]\''
@@ -182,10 +186,6 @@ pipeline {
                                 IS_ES_IMAGE_UPDATED = 'true'
                             }
                         }
-                        List<String> cypressTags = sh(
-                            returnStdout: true,
-                            script: 'curl -s -H "Authorization:Bearer $dockerToken" $DTR_REGISTRY/v2/$IMAGE_CYPRESS_REPO/tags/list | jq \'.tags[:10]\''
-                        ).split()
                     }
                 }
             }
