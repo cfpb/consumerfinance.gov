@@ -140,7 +140,7 @@ pipeline {
                         // you may need a new token for each repository
                         CYPRESS_TOKEN = sh(
                             returnStdout: true,
-                            script: '$(curl -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD https://dtr-registry.cfpb.gov/token?$CYPRESS_PARAMS)'
+                            script: '$(curl -s -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD https://dtr-registry.cfpb.gov/token?$CYPRESS_PARAMS)'
                         ).trim()
                         List<String> CYPRESS_TAG_LIST = sh(
                             returnStdout: true,
@@ -148,7 +148,7 @@ pipeline {
                         ).trim()
                         ES_TOKEN = sh(
                             returnStdout: true,
-                            script: '$(curl -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD https://dtr-registry.cfpb.gov/token?$ES_PARAMS | jq -r \'.token\')'
+                            script: '$(curl -s -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD https://dtr-registry.cfpb.gov/token?$ES_PARAMS | jq -r \'.token\')'
                         ).trim()
                         List<String> ES_TAG_LIST = sh(
                             returnStdout: true,
