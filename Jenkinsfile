@@ -126,7 +126,11 @@ pipeline {
                     ]) {
                         // get token to be able to list image tags in Docker Hub
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
-                        sh 'docker config ls'
+                        sh 'docker info'
+                        sh 'docker registry info'
+                        sh 'docker registry ls'
+                        sh 'docker registry inspect'
+                        sh 'docker manifest inspect'
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
                             script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
