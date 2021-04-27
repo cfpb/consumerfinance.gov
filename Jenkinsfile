@@ -99,8 +99,6 @@ pipeline {
         stage('Check Image') {
             environment {
                 DTR_REGISTRY = 'https://dtr-registry.cfpb.gov'
-                ES_PARAMS = "service=dtr-registry.cfpb.gov&scope=repository:${IMAGE_ES_REPO}:pull"
-                CYPRESS_PARAMS = "service=dtr-registry.cfpb.gov&scope=repository:${IMAGE_CYPRESS_REPO}:pull"
             }
             when { expression { env.BRANCH_NAME != 'main' } }
             steps {
@@ -132,13 +130,13 @@ pipeline {
                         )
                     ]) {
                         sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-                        def dockerToken = sh(
+                        String dockerToken = sh(
                             returnStdout: true,
                             script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token'
                         )
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
-                            script: '''$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\')'''
+                            script: '$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\')'
                         ).split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
@@ -149,7 +147,7 @@ pipeline {
                         }
                         List<String> cypressTags = sh(
                             returnStdout: true,
-                            script: '''$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\')'''
+                            script: '$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\')'
                         ).split()
                         for (int i = 0; i < cypressTags.size(); i++) {
                             if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
@@ -168,14 +166,26 @@ pipeline {
                         )
                     ]) {
                         sh 'docker login $DTR_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-                        // CYPRESS_TOKEN = sh(
-                        //     returnStdout: true,
-                        //     script: '$(curl -s -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD $DTR_REGISTRY/token?$CYPRESS_PARAMS | jq -r .token)'
-                        // ).trim()
-                        // List<String> CYPRESS_TAG_LIST = sh(
-                        //     returnStdout: true,
-                        //     script: '$(curl -H "Authorization:Bearer $CYPRESS_TOKEN" $DTR_REGISTRY/v2/$IMAGE_CYPRESS_REPO/tags/list | jq \'.tags[:10]\')'
-                        // ).trim()
+                        String dockerToken = sh(
+                            returnStdout: true,
+                            script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DTR_REGISTRY/v2/users/login/ | jq -r .token'
+                        )
+                        sh 'echo "docker token: ${dockerToken}"'
+                        List<String> elasticsearchTags = sh(
+                            returnStdout: true,
+                            script: 'curl -s -H "Authorization:Bearer $dockerToken" $DTR_REGISTRY/v2/$IMAGE_ES_REPO/tags/list | jq \'.tags[:10]\''
+                        ).split()
+                        for (int i = 0; i < elasticsearchTags.size(); i++) {
+                            if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
+                                IS_ES_IMAGE_UPDATED = 'false'
+                            } else {
+                                IS_ES_IMAGE_UPDATED = 'true'
+                            }
+                        }
+                        List<String> cypressTags = sh(
+                            returnStdout: true,
+                            script: 'curl -s -H "Authorization:Bearer $dockerToken" $DTR_REGISTRY/v2/$IMAGE_CYPRESS_REPO/tags/list | jq \'.tags[:10]\''
+                        ).split()
                     }
                 }
             }
