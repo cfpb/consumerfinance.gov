@@ -128,7 +128,7 @@ pipeline {
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/login/)'
+                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
                         ).trim()
                         REGISTRY_AUTH = "Authorization: JWT ${DOCKER_HUB_TOKEN}"
                         REGISTRY_URL = "${DOCKER_HUB_REGISTRY}/v2/repositories"
