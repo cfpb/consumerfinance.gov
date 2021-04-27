@@ -120,7 +120,8 @@ const datetime = {
         },
         chartOptions: {
           chart: {
-            marginTop: 150
+            marginTop: 150,
+            spacingBottom: 60
           },
           xAxis: {
             labels: {
@@ -128,9 +129,12 @@ const datetime = {
             }
           },
           rangeSelector: {
+            verticalAlign: 'bottom',
+            buttonSpacing: 30,
             buttonPosition: {
-              x: -40,
-              y: -105
+              align: 'center',
+              x: -70,
+              y: 95
             }
           },
           navigator: {
