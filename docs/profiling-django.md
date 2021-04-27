@@ -7,7 +7,7 @@ as well as targets for caching and optimization.
 
 Because our primary goal is 
 to ensure that page loads are as quick as possible for the public, 
-this document focuses on profile the Django request/response cycle: 
+this document focuses on profiling the Django request/response cycle: 
 view code, Wagtail page rendering, etc.
 
 This document covers the tools we use to 
@@ -16,7 +16,7 @@ both generate and understand a profile.
 ## Generating a profile from a URL
 
 To enable profile generation, 
-we use a lightweight middleware that wraps 
+we use a middleware that wraps 
 [Python's builtin `cprofile` module](https://docs.python.org/3/library/profile.html), 
 [django-cprofile-middleware](https://github.com/omarish/django-cprofile-middleware). 
 This middleware is enabled by default for local development 
@@ -46,7 +46,7 @@ might return something like:
 ```
 
 You can also sort this output using a `sort` field. 
-For example `http://localhost:8000/about-us/newsroom/?prof&sort=time`. 
+For example, to sort by call count instead of the default time sort: `http://localhost:8000/about-us/newsroom/?prof&sort=ncalls`. 
 The can be any supported by 
 [pstats.Stats.sort_stats](https://docs.python.org/3/library/profile.html#pstats.Stats.sort_stats).
 
@@ -90,7 +90,7 @@ the total time for the Django request/response cycle.
 
 For example:
 
-![Example SnakeViz Icicle view showing a class-based view call stacK](/img/profiling-django-snakeviz.png)
+![Example SnakeViz Icicle view showing a class-based view call stack](/img/profiling-django-snakeviz.png)
 
 This visualization shows the request/response cycle 
 took 27.2s in the root view. 
