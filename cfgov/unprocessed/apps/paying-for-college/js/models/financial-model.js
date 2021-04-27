@@ -54,12 +54,19 @@ const financialModel = {
    * subfunctions
    */
   recalculate: () => {
+    financialModel.rate_existingDebt = getConstantsValue( 'existingDebtRate' );
     financialModel._updateRates();
     financialModel._calculateTotals();
     debtCalculator();
 
     // set monthly salary value
     financialModel.values.salary_monthly = financialModel.values.salary_annual / 12;
+
+    // set text of "hours to cover payment"
+    const hours = Math.floor( financialModel.values.debt_repayHours * 100 ) / 100;
+    const weeks = Math.floor( financialModel.values.debt_repayWorkWeeks * 100 ) / 100;
+    const coverString = hours + 'hours, or ' + weeks + 'forty-hour work weeks';
+    updateState.byProperty( 'hoursToCoverPaymentText' );
 
     recalculateExpenses();
 
@@ -145,10 +152,6 @@ const financialModel = {
     vals.total_funding = vals.total_contributions + vals.total_borrowing;
     vals.total_gap = Math.round( vals.total_costs - vals.total_funding );
     vals.total_excessFunding = Math.round( vals.total_funding - vals.total_costs );
-
-    /* Borrowing total
-       TODO - Update this once year-by-year DIRECT borrowing is in place */
-    vals.total_borrowingAtGrad = vals.total_borrowing * vals.other_programLength;
 
     if ( vals.total_gap < 0 ) {
       vals.total_gap = 0;
