@@ -141,8 +141,6 @@ pipeline {
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
                                 IS_ES_IMAGE_UPDATED = 'false'
-                            } else {
-                                IS_ES_IMAGE_UPDATED = 'true'
                             }
                         }
                         List<String> cypressTags = sh(
@@ -152,8 +150,6 @@ pipeline {
                         for (int i = 0; i < cypressTags.size(); i++) {
                             if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
                                 IS_CYPRESS_IMAGE_UPDATED = 'false'
-                            } else {
-                                IS_CYPRESS_IMAGE_UPDATED = 'true'
                             }
                         }
                     }
@@ -170,7 +166,6 @@ pipeline {
                             returnStdout: true,
                             script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DTR_REGISTRY/v2/users/login/'
                         )
-                        sh 'echo "docker token: ${dockerToken}"'
                         List<String> cypressTags = sh(
                             returnStdout: true,
                             script: 'curl -s -H "Authorization:Bearer $dockerToken" $DTR_REGISTRY/v2/$IMAGE_CYPRESS_REPO/tags/list | jq \'.tags[:10]\''
@@ -179,13 +174,6 @@ pipeline {
                             returnStdout: true,
                             script: 'curl -s -H "Authorization:Bearer $dockerToken" $DTR_REGISTRY/v2/$IMAGE_ES_REPO/tags/list | jq \'.tags[:10]\''
                         ).split()
-                        for (int i = 0; i < elasticsearchTags.size(); i++) {
-                            if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
-                                IS_ES_IMAGE_UPDATED = 'false'
-                            } else {
-                                IS_ES_IMAGE_UPDATED = 'true'
-                            }
-                        }
                     }
                 }
             }
