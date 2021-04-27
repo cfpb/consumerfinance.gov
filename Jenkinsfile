@@ -132,7 +132,7 @@ pipeline {
                         )
                     ]) {
                         sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-                        DOCKER_HUB_TOKEN = sh(
+                        String DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
                             script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token)'
                         ).trim()
