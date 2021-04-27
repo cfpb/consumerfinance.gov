@@ -35,6 +35,7 @@ pipeline {
         IS_ES_IMAGE_UPDATED = 'false'
         // Determines if Cypress image should be updated
         IS_CYPRESS_IMAGE_UPDATED = 'false'
+        DOCKER_HUB_REGISTRY = 'https://registry.hub.docker.com'
     }
 
     parameters {
@@ -97,7 +98,7 @@ pipeline {
 
         stage('Check Image') {
             environment {
-                DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
+                DTR_REGISTRY = 'https://dtr-registry.cfpb.gov'
                 ES_PARAMS = "service=dtr-registry.cfpb.gov&scope=repository:${IMAGE_ES_REPO}:pull"
                 CYPRESS_PARAMS = "service=dtr-registry.cfpb.gov&scope=repository:${IMAGE_CYPRESS_REPO}:pull"
             }
@@ -121,6 +122,44 @@ pipeline {
                         }
                     }
 
+                    // get token to be able to list image tags in Docker Hub
+                    // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
+                    withCredentials([
+                        usernamePassword(
+                            credentialsId: 'docker-hub-cfpb',
+                            passwordVariable: 'DOCKER_HUB_PASSWORD',
+                            usernameVariable: 'DOCKER_HUB_USER'
+                        )
+                    ]) {
+                        sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
+                        DOCKER_HUB_TOKEN = sh(
+                            returnStdout: true,
+                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token)'
+                        ).trim()
+                        List<String> elasticsearchTags = sh(
+                            returnStdout: true,
+                            script: '$(curl -s -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\')'
+                        ).split()
+                        for (int i = 0; i < elasticsearchTags.size(); i++) {
+                            if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
+                                IS_ES_IMAGE_UPDATED = 'false'
+                            } else {
+                                IS_ES_IMAGE_UPDATED = 'true'
+                            }
+                        }
+                        List<String> cypressTags = sh(
+                            returnStdout: true,
+                            script: '$(curl -s -H "Authorization: JWT ${DOCKER_HUB_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags | jq -r \'.results|.[]|.name\')'
+                        ).split()
+                        for (int i = 0; i < cypressTags.size(); i++) {
+                            if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
+                                IS_CYPRESS_IMAGE_UPDATED = 'false'
+                            } else {
+                                IS_CYPRESS_IMAGE_UPDATED = 'true'
+                            }
+                        }
+                    }
+
                     withCredentials([
                         usernamePassword(
                             credentialsId: 'dtr-ext-jenkins-service',
@@ -128,50 +167,15 @@ pipeline {
                             usernameVariable: 'DOCKER_HUB_USER'
                         )
                     ]) {
-                        // get token to be able to list image tags in Docker Hub
-                        // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
-                        sh 'docker info'
-                        sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-                        sh 'cat ~/.docker/config.json'
-                        // DOCKER_HUB_TOKEN = sh(
+                        sh 'docker login $DTR_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
+                        // CYPRESS_TOKEN = sh(
                         //     returnStdout: true,
-                        //     script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
+                        //     script: '$(curl -s -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD $DTR_REGISTRY/token?$CYPRESS_PARAMS | jq -r .token)'
                         // ).trim()
-                        // you may need a new token for each repository
-                        CYPRESS_TOKEN = sh(
-                            returnStdout: true,
-                            script: '$(curl -s -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD https://dtr-registry.cfpb.gov/token?$CYPRESS_PARAMS)'
-                        ).trim()
-                        List<String> CYPRESS_TAG_LIST = sh(
-                            returnStdout: true,
-                            script: '$(curl -H "Authorization:Bearer $CYPRESS_TOKEN" https://dtr-registry.cfpb.gov/v2/$IMAGE_CYPRESS_REPO/tags/list | jq \'.tags[:10]\')'
-                        ).trim()
-                        ES_TOKEN = sh(
-                            returnStdout: true,
-                            script: '$(curl -s -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD https://dtr-registry.cfpb.gov/token?$ES_PARAMS | jq -r \'.token\')'
-                        ).trim()
-                        List<String> ES_TAG_LIST = sh(
-                            returnStdout: true,
-                            script: '$(curl -H "Authorization:Bearer $ES_TOKEN" https://dtr-registry.cfpb.gov/v2/$IMAGE_ES_REPO/tags/list | jq \'.tags[:10]\')'
-                        ).trim()
-                        List<String> elasticsearchTags = sh(
-                            returnStdout: true,
-                            script: '$(curl -s -H "Authorization: JWT ${ES_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags/$IMAGE_ES_TAG)'
-                        ).split()
-                        for (int i = 0; i < elasticsearchTags.size(); i++) {
-                            if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
-                                IS_ES_IMAGE_UPDATED = 'false'
-                            }
-                        }
-                        List<String> cypressTags = sh(
-                            returnStdout: true,
-                            script: '$(curl -s -H "Authorization: JWT ${CYPRESS_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags/$CYPRESS_IMAGE_TAG)'
-                        ).split()
-                        for (int i = 0; i < cypressTags.size(); i++) {
-                            if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
-                                IS_CYPRESS_IMAGE_UPDATED = 'false'
-                            }
-                        }
+                        // List<String> CYPRESS_TAG_LIST = sh(
+                        //     returnStdout: true,
+                        //     script: '$(curl -H "Authorization:Bearer $CYPRESS_TOKEN" $DTR_REGISTRY/v2/$IMAGE_CYPRESS_REPO/tags/list | jq \'.tags[:10]\')'
+                        // ).trim()
                     }
                 }
             }
@@ -244,7 +248,8 @@ pipeline {
 
                         // Sets fully-qualified image name
                         env.CFGOV_PYTHON_IMAGE = image.imageName()
-
+                    }
+                    docker.withRegistry("${DOCKER_HUB_REGISTRY}", 'docker-hub-cfpb') {
                         image = docker.image(env.IMAGE_NAME_ES_LOCAL)
                         if (IS_ES_IMAGE_UPDATED == 'true') {
                             image.push()
