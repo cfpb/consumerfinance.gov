@@ -28,6 +28,7 @@ nav:
     - JavaScript Unit Testing: javascript-unit-tests.md
     - Python Unit Testing: python-unit-tests.md
     - Functional Testing: functional-testing.md
+    - Profiling Django: profiling-django.md
 - Contributing:
     - Branching and Merging: branching-merging.md
     - Contributing to the Docs: contributing-docs.md
