@@ -15,7 +15,6 @@ function calcInterestAtGrad( amount, rate, programLength ) {
 
   for ( let x = programLength; x > 0; x-- ) {
     interest += amount * rate * x;
-
   }
 
   return interest;

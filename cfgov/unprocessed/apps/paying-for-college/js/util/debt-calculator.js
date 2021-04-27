@@ -49,12 +49,12 @@ function calculateDirectLoanDebt( directSub, directUnsub, rateUnsub, programLeng
 
 
   // Iterate through each year of the program
-  for ( let x = progress; x < programLength; x++ ) {
-    if ( x === 0 ) {
+  for ( let x = 0; x < programLength; x++ ) {
+    if ( x + progress === 0 ) {
       subPrincipal += directSub;
       unsubPrincipal += directUnsub;
       unsubInterest += directUnsub * rateUnsub * programLength;
-    } else if ( x === 1 ) {
+    } else if ( x + progress === 1 ) {
       const subAmount = percentSub * subCaps.yearTwo;
       const unsubAmount = percentUnsub * ( totalCaps.yearTwo - subAmount );
       subPrincipal += subAmount;
