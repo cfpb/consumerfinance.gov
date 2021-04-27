@@ -127,9 +127,10 @@ pipeline {
                         // get token to be able to list image tags in Docker Hub
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
                         sh 'docker info'
-                        sh 'docker registry info ${DOCKER_HUB_REGISTRY}'
-                        sh 'docker registry ls ${DOCKER_HUB_REGISTRY}'
-                        sh 'docker registry inspect ${DOCKER_HUB_REGISTRY}'
+                        sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
+                        sh 'docker registry info $DOCKER_HUB_REGISTRY'
+                        sh 'docker registry ls $DOCKER_HUB_REGISTRY'
+                        sh 'docker registry inspect $DOCKER_HUB_REGISTRY'
                         sh 'docker manifest inspect'
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
