@@ -130,19 +130,19 @@ pipeline {
                             returnStdout: true,
                             script: 'curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/'
                         ).trim()
-                        List<String> cypressTags = sh(
-                            returnStdout: true,
-                            script: 'curl -s -H "Authorization: JWT $DOCKER_HUB_TOKEN" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags'
-                        ).split()
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
-                            script: 'curl -s -H "Authorization: JWT $DOCKER_HUB_TOKEN" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags'
+                            script: 'curl -f -H "Authorization: JWT $DOCKER_HUB_TOKEN" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags/$IMAGE_ES_TAG'
                         ).split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
                                 IS_ES_IMAGE_UPDATED = 'false'
                             }
                         }
+                        List<String> cypressTags = sh(
+                            returnStdout: true,
+                            script: 'curl -f -H "Authorization: JWT $DOCKER_HUB_TOKEN" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags/$CYPRESS_IMAGE_TAG'
+                        ).split()
                         for (int i = 0; i < cypressTags.size(); i++) {
                             if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
                                 IS_CYPRESS_IMAGE_UPDATED = 'false'
