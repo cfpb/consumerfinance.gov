@@ -32,6 +32,30 @@ main.college-costs {
 
 	// Grad & undergrad content control
 	&[data-state_programlevel="undergrad"] {
+		&[data-state_programdependency="dependent"] {
+			.dependent-content {
+				display: block;
+			}
+			span.dependent-content {
+				display: inline;
+			}
+			.independent-content {
+				display: none;
+			}
+		}
+
+		&[data-state_programdependency="independent"] {
+			.independent-content {
+				display: block;
+			}
+			span.independent-content {
+				display: inline;
+			}
+			.dependent-content {
+				display: none;
+			}
+		}
+
 		.undergrad-content {
 			display: block;
 		}
@@ -204,6 +228,14 @@ main.college-costs {
 			display: inline;
 		}
 	}
+	&:not([data-state_pid]) {
+		[data-state-based-visibility="no-program-selected"] {
+			display: block;
+		}
+		span[data-state-based-visibility="no-program-selected"] {
+			display: inline;
+		}	
+	}
 	
 	&[data-state_programtype="graduate"]:not( [data-state_pid] ) {
 		[data-state-based-visibility="no-program-selected"] {
@@ -325,6 +357,18 @@ main.college-costs {
 		}
 	}
 
+	&[data-state_programprogress="0"] {
+		[data-state-based-visibility="is_first_year-true"] {
+			display: block;
+		}
+	}
+
+	&:not( [data-state_programprogress="0"] ) {
+		[data-state-based-visibility="is_first_year-false"] {
+			display: block;
+		}
+	}
+
 	// Don't show the next button on the save & finish page
 	&[data-state_activesection="save-and-finish"] {
 		.college-costs_tool-section_buttons {
@@ -429,6 +473,12 @@ main.college-costs {
 
 	&[data-state_showschoolerrors="yes"][data-state_programlengthselected="required"] {
 		[data-state-based-visibility="length-required"] {
+			display: block;
+		}
+	}
+
+	&[data-state_showschoolerrors="yes"][data-state_programprogressselected="required"] {
+		[data-state-based-visibility="progress-required"] {
 			display: block;
 		}
 	}

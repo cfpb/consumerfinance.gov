@@ -60,12 +60,11 @@ const appView = {
         const copyBtnSuccessText = btn.querySelector( '#success-text' );
         copyBtnDefaultText.classList.add( HIDDEN_CLASS );
         copyBtnSuccessText.classList.remove( HIDDEN_CLASS );
-
         setTimeout( function() {
           copyBtnSuccessText.classList.add( HIDDEN_CLASS );
           copyBtnDefaultText.classList.remove( HIDDEN_CLASS );
         }, 3000 );
-      });
+      } );
     } else if ( window.clipboardData && window.clipboardData.setData ) {
       window.clipboardData.setData( 'Text', window.location.href );
     }
