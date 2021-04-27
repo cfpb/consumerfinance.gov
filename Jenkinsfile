@@ -98,8 +98,8 @@ pipeline {
         stage('Check Image') {
             environment {
                 DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
-                ES_PARAMS = 'service=dtr-registry.cfpb.gov&scope=repository:$IMAGE_ES_REPO:pull'
-                CYPRESS_PARAMS = 'service=dtr-registry.cfpb.gov&scope=repository:$IMAGE_CYPRESS_REPO:pull'
+                ES_PARAMS = "service=dtr-registry.cfpb.gov&scope=repository:${IMAGE_ES_REPO}:pull"
+                CYPRESS_PARAMS = "service=dtr-registry.cfpb.gov&scope=repository:${IMAGE_CYPRESS_REPO}:pull"
             }
             when { expression { env.BRANCH_NAME != 'main' } }
             steps {
