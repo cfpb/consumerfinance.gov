@@ -135,7 +135,7 @@ pipeline {
                         def dockerToken = sh(
                             returnStdout: true,
                             script: '''$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/ | jq -r .token)'''
-                        ).trim()
+                        )
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
                             script: '''$(curl -s -H "Authorization: JWT $dockerToken" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags | jq -r \'.results|.[]|.name\')'''
