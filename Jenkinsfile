@@ -128,7 +128,8 @@ pipeline {
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
                         sh 'docker info'
                         sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-                        sh 'docker manifest inspect'
+                        sh 'docker manifest inspect $IMAGE_ES_REPO'
+                        sh 'docker manifest inspect $IMAGE_CYPRESS_REPO'
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
                             script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
