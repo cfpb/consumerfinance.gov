@@ -148,7 +148,6 @@ pipeline {
                                 IS_CYPRESS_IMAGE_UPDATED = 'false'
                             }
                         }
-                        sh 'curl https://$DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD@dtr-registry.cfpb.gov/v2/$IMAGE_ES_REPO/tags/list'
                     }
                     sh 'env | grep IMAGE | sort'
                 }
