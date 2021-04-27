@@ -96,6 +96,11 @@ pipeline {
         }
 
         stage('Check Image') {
+            environment {
+                DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
+                ES_PARAMS = 'service=registry.docker.io&scope=repository:$IMAGE_ES_REPO:pull'
+                CYPRESS_PARAMS = 'service=registry.docker.io&scope=repository:$IMAGE_CYPRESS_REPO:pull'
+            }
             when { expression { env.BRANCH_NAME != 'main' } }
             steps {
                 script {
@@ -125,10 +130,18 @@ pipeline {
                     ]) {
                         // get token to be able to list image tags in Docker Hub
                         // https://hub.docker.com/support/doc/how-do-i-authenticate-with-the-v2-api
-                        DOCKER_HUB_REGISTRY = 'https://dtr-registry.cfpb.gov'
                         sh 'docker info'
                         sh 'docker login $DOCKER_HUB_REGISTRY -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
                         sh 'cat ~/.docker/config.json'
+                        // you may need a new token for each repository
+                        CYPRESS_TOKEN = sh(
+                            returnStdout: true,
+                            script: '$(curl -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD https://auth.docker.io/token?$CYPRESS_PARAMS | jq -r \'.token\')'
+                        ).trim()
+                        ES_TOKEN = sh(
+                            returnStdout: true,
+                            script: '$(curl -u $DOCKER_HUB_USER:$DOCKER_HUB_PASSWORD https://auth.docker.io/token?$ES_PARAMS | jq -r \'.token\')'
+                        ).trim()
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
                             script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
