@@ -135,7 +135,7 @@ pipeline {
                         sh 'cat ~/.docker/config.json'
                         DOCKER_HUB_TOKEN = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v2/users/login/)'
+                            script: '$(curl -s -H "Content-Type: application/json" -X POST -d \'{"username": "\'$DOCKER_HUB_USER\'", "password": "\'$DOCKER_HUB_PASSWORD\'"}\' $DOCKER_HUB_REGISTRY/v1/users/login/)'
                         ).trim()
                         // you may need a new token for each repository
                         CYPRESS_TOKEN = sh(
@@ -154,10 +154,9 @@ pipeline {
                             returnStdout: true,
                             script: '$(curl -H "Authorization:Bearer $ES_TOKEN" https://dtr-registry.cfpb.gov/v2/$IMAGE_ES_REPO/tags/list | jq \'.tags[:10]\')'
                         ).trim()
-                        REGISTRY_AUTH = "Authorization: JWT ${DOCKER_HUB_TOKEN}"
                         List<String> elasticsearchTags = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "${REGISTRY_AUTH}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags/$IMAGE_ES_TAG)'
+                            script: '$(curl -s -H "Authorization: JWT ${ES_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_ES_REPO/tags/$IMAGE_ES_TAG)'
                         ).split()
                         for (int i = 0; i < elasticsearchTags.size(); i++) {
                             if (elasticsearchTags[i].contains("${env.IMAGE_ES_TAG}")) {
@@ -166,7 +165,7 @@ pipeline {
                         }
                         List<String> cypressTags = sh(
                             returnStdout: true,
-                            script: '$(curl -s -H "${REGISTRY_AUTH}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags/$CYPRESS_IMAGE_TAG)'
+                            script: '$(curl -s -H "Authorization: JWT ${CYPRESS_TOKEN}" $DOCKER_HUB_REGISTRY/v2/repositories/$IMAGE_CYPRESS_REPO/tags/$CYPRESS_IMAGE_TAG)'
                         ).split()
                         for (int i = 0; i < cypressTags.size(); i++) {
                             if (cypressTags[i].contains("${env.CYPRESS_IMAGE_TAG}")) {
