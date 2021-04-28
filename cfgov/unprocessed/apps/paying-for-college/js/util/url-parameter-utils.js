@@ -10,6 +10,7 @@ const urlParameters = {
   'pid': 'stateModel.pid',
   'houp': 'stateModel.programHousing',
   'typp': 'stateModel.programType',
+  'prop': 'stateModel.programProgress',
   'lenp': 'stateModel.programLength',
   'ratp': 'stateModel.programRate',
   'depp': 'stateModel.programDependency',
@@ -79,6 +80,8 @@ const urlParameters = {
   'pvf1': 'financialModel.privloan_privLoanFee1',
 
   'plus': 'financialModel.plusLoan_parentPlus',
+
+  'cdbt': 'financialModel.existingDebt_amount',
 
   'houx': 'expensesModel.item_housing',
   'fdx': 'expensesModel.item_food',
