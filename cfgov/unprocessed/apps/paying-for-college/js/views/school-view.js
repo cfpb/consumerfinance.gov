@@ -74,8 +74,8 @@ const schoolView = {
    * NOTE: The appearance of error messages is mostly found in the state-based.less rules
    */
   updateViewWithErrors: () => {
-    const errorChecks = [ 'programType', 'programLength', 'programLevel', 'programRate',
-      'programHousing', 'programDependency' ];
+    const errorChecks = [ 'programType', 'programProgress', 'programLength',
+      'programLevel', 'programRate', 'programHousing', 'programDependency' ];
 
     const searchBox = document.querySelector( '#search__school-input' );
     if ( getStateValue( 'schoolSelected' ) === false ) {
@@ -106,7 +106,7 @@ const schoolView = {
                 ${ elem.level } - ${ elem.name }
           </option>`;
       } );
-      html += '\n<option value="null">My program is not listed here.</option>';
+      html += '\n<option value="null">My program is not listed here/I am undecided.</option>';
       schoolView._programSelect.innerHTML = html;
 
       // If there's a program id in the state, select that program
@@ -117,7 +117,8 @@ const schoolView = {
   },
 
   _updateSchoolRadioButtons: () => {
-    const buttons = [ 'programLength', 'programType', 'programHousing', 'programRate', 'programDependency' ];
+    const buttons = [ 'programLength', 'programType', 'programHousing', 'programProgress',
+      'programRate', 'programDependency' ];
 
     schoolView._searchResults.classList.remove( 'active' );
     schoolView._searchBox.value = getSchoolValue( 'school' );
