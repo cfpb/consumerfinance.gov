@@ -125,10 +125,8 @@ class FilterableListForm(forms.Form):
 
         clean_categories(selected_categories=self.data.get('categories'))
 
-        # TODO: This results in duplication with get_page_set's
-        # to_querystring. Find a way not to duplicate.
-        self.filterable_pages = self.filterable_search.search()
-        page_ids = self.filterable_pages.values_list('id', flat=True)
+        self.all_filterable_results = self.filterable_search.get_raw_results()
+        page_ids = [result.meta.id for result in self.all_filterable_results]
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
@@ -170,11 +168,10 @@ class FilterableListForm(forms.Form):
         return results
 
     def first_page_date(self):
-        first_post = self.filterable_pages.order_by('date_published').first()
-        if first_post:
-            return first_post.date_published
-        else:
-            return date(2010, 1, 1)
+        if len(self.all_filterable_results) > 0:
+            first_post = self.all_filterable_results[0]
+            return first_post.date_published.date()
+        return date(2010, 1, 1)
 
     def prepare_options(self, arr):
         """

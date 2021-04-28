@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import date, datetime
 from io import StringIO
 
 from django.test import TestCase, override_settings
@@ -9,8 +9,7 @@ from pytz import timezone
 from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.documents import (
     EnforcementActionFilterablePagesDocumentSearch,
-    EventFilterablePagesDocumentSearch,
-    FilterablePagesDocumentSearch
+    EventFilterablePagesDocumentSearch, FilterablePagesDocumentSearch
 )
 from v1.forms import (
     EnforcementActionsFilterForm, EventArchiveFilterForm, FilterableListForm
@@ -172,6 +171,12 @@ class TestFilterableListForm(ElasticsearchTestsMixin, TestCase):
         page_set = form.get_page_set()
         self.assertEqual(len(page_set), 1)
         self.assertEqual(page_set[0].specific, self.category_blog)
+
+    def test_first_page_date(self):
+        form = self.setUpFilterableForm()
+        self.assertEqual(form.first_page_date(), self.blog1.date_published)
+        form.all_filterable_results = []
+        self.assertEqual(form.first_page_date(), date(2010, 1, 1))
 
 
 class TestFilterableListFormArchive(ElasticsearchTestsMixin, TestCase):

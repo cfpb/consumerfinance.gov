@@ -118,6 +118,7 @@ class FilterablePagesDocument(Document):
 class FilterablePagesDocumentSearch:
 
     def __init__(self, prefix='/'):
+        self.prefix = prefix
         self.document = FilterablePagesDocument()
         self.search_obj = self.document.search().filter(
             'prefix', url=prefix
@@ -181,28 +182,41 @@ class FilterablePagesDocumentSearch:
                     "match", title={"query": title, "operator": "AND"}
                 )
 
-    def order_results(self, title='', order_by='-date_published'):
-        total_results = self.search_obj.count()
-        # Marching on title is the only time we see an actual
-        # impact on scoring, so we should only look to alter the order
-        # if there is a title provided as part of the search.
-        if not title:
-            return self.search_obj.sort('-date_published')[0:total_results]
-        else:
-            return self.search_obj.sort(order_by)[0:total_results]
+    def order(self, order_by='-date_published'):
+        """ Sort results by the given field """
+        self.search_obj = self.search_obj.sort(order_by)
 
     def filter(self, topics=[], categories=[], authors=[], to_date=None,
                from_date=None, archived=None):
+        """ Filter the results based on the given keyword arguments """
         self.filter_topics(topics=topics)
         self.filter_categories(categories=categories)
         self.filter_authors(authors=authors)
         self.filter_date(from_date=from_date, to_date=to_date)
         self.filter_archived(archived=archived)
 
-    def search(self, title='', order_by='-date_published'):
+    def search(self, title='', order_by='date_published'):
+        """ Perform a search for the given title """
         self.search_title(title=title)
-        results = self.order_results(order_by=order_by)
-        return results.to_queryset()
+        self.order(order_by=order_by)
+        return self.search_obj[0:self.count()].to_queryset()
+
+    def count(self):
+        """ Return the search object's current result count """
+        return self.search_obj.count()
+
+    def get_raw_results(self, order_by='date_published'):
+        """ Get the Elasticsearch DSL Resposne object for current results.
+
+        This can be called any time, before, between, or after calls to
+        filter() or search().
+
+        See the Elasticsearch DSL documentation for more on the Response
+        object:
+        https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html#response
+        """
+        self.order(order_by=order_by)
+        return self.search_obj[0:self.count()].execute()
 
 
 class EventFilterablePagesDocumentSearch(FilterablePagesDocumentSearch):
@@ -255,6 +269,5 @@ class EnforcementActionFilterablePagesDocumentSearch(
 
         super().filter(**kwargs)
 
-    def order_results(self, order_by='-initial_filing_date'):
-        total_results = self.search_obj.count()
-        return self.search_obj.sort('-initial_filing_date')[0:total_results]
+    def order(self, order_by='-initial_filing_date'):
+        self.search_obj = self.search_obj.sort('-initial_filing_date')

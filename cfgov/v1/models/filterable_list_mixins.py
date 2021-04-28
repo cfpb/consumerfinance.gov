@@ -84,8 +84,9 @@ class FilterableListMixin(RoutablePageMixin):
         if flag_enabled('HIDE_ARCHIVE_FILTER_OPTIONS', request=request):
             has_archived_posts = False
         else:
-            has_archived_posts = (
-                form.filterable_pages.filter(is_archived='yes').count() > 0
+            has_archived_posts = any(
+                result for result in form.all_filterable_results
+                if result.is_archived == 'yes'
             )
 
         context.update({
@@ -93,6 +94,7 @@ class FilterableListMixin(RoutablePageMixin):
             'get_secondary_nav_items': get_secondary_nav_items,
             'has_active_filters': has_active_filters,
             'has_archived_posts': has_archived_posts,
+            'has_unfiltered_results': filterable_search.count() > 0,
         })
 
         return context
