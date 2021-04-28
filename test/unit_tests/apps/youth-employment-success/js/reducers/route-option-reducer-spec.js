@@ -22,7 +22,7 @@ import routeOptionReducer, {
 import UNDEFINED from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import {
   PLAN_TYPES
- } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 
 // Arbitrary value to ensure reducer is updating properly
 const nextValue = '15';
