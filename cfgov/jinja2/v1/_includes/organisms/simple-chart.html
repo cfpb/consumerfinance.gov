@@ -30,7 +30,7 @@
     {% endif %}
 
     {% if value.title %}
-    <h2 class="o-simple-chart_title">{{ value.title }}</h2>
+    <a class="chart-anchor" id="chart-{{value.title}}" href="#chart-{{ value.title}}"><h2 class="o-simple-chart_title">{{ value.title }}</h2></a>
     {% endif %}
 
     {% if value.subtitle %}
