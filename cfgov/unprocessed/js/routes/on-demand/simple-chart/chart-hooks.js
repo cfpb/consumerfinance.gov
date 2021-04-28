@@ -61,7 +61,7 @@ const hooks = {
     const dSplit = d.toLocaleString(
       'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
     ).split( ', ' );
-    return `${ ccpi_quarterMap[dSplit[0]] } ${ dSplit[1] }`;
+    return `${ ccpi_quarterMap[dSplit[0]] }<br/>${ dSplit[1] }`;
   },
 
   enforcement_yAxisLabelsFormatter() {

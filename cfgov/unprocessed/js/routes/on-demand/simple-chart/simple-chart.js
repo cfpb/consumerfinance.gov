@@ -377,7 +377,7 @@ function alignMargin( defaultObj, chartType ) {
     marg = 100;
     y = 19;
   }
-  defaultObj.chart.marginTop = marg;
+  if ( !defaultObj.chart.marginTop ) defaultObj.chart.marginTop = marg;
   defaultObj.legend.y = y;
 }
 
