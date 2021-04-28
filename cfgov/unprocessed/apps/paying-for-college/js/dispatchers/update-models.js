@@ -195,6 +195,7 @@ function updateModelsFromQueryString( queryObj ) {
   if ( queryObj.hasOwnProperty( 'oid' ) ) {
     queryObj.cobs = 'o';
   }
+
   // If we have no cobs, check if there are costs values
   if ( !queryObj.hasOwnProperty( 'cobs' ) ) {
     const costKeys = [ 'tuit', 'hous', 'diro', 'book', 'indo', 'nda', 'tran' ];

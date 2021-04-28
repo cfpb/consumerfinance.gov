@@ -5,7 +5,9 @@ volumes:
 
 services:
   admin-tests:
-    image: cypress/included:7.0.1
+    build:
+      context: ./
+      dockerfile: ./docker/cypress/Dockerfile
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
@@ -16,7 +18,9 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   component-tests:
-    image: cypress/included:7.0.1
+    build:
+      context: ./
+      dockerfile: ./docker/cypress/Dockerfile
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
@@ -27,7 +31,9 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   consumer-tools-tests:
-    image: cypress/included:7.0.1
+    build:
+      context: ./
+      dockerfile: ./docker/cypress/Dockerfile
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
@@ -38,7 +44,9 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   data-research-tests:
-    image: cypress/included:7.0.1
+    build:
+      context: ./
+      dockerfile: ./docker/cypress/Dockerfile
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
@@ -49,7 +57,9 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   paying-for-college-tests:
-    image: cypress/included:7.0.1
+    build:
+      context: ./
+      dockerfile: ./docker/cypress/Dockerfile
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}
@@ -60,7 +70,9 @@ services:
       - ./test/cypress:/app/test/cypress
       - ./cypress.json:/app/cypress.json
   rules-policy-tests:
-    image: cypress/included:7.0.1
+    build:
+      context: ./
+      dockerfile: ./docker/cypress/Dockerfile
     environment:
       - CI=1
       - CYPRESS_baseUrl=http://${CFGOV_HOSTNAME}

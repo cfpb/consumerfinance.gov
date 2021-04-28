@@ -34,7 +34,7 @@
     .u-border-bottom {
         border-bottom: 1px solid @block__border-bottom;
     }
-    
+
     .block.block__mid {
         margin-top: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
         margin-bottom: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em );
@@ -53,6 +53,23 @@
         display: none;
 
         max-width: unit( 570px / @base-font-size-px, rem );
+
+        .equation-row {
+            .financial-item {
+                &_label div {
+                    .h3();
+                }
+                &_value span {
+                    .h3();
+                }
+            }
+
+            &__bottom-line {
+                border-bottom: 2px solid black;
+                padding-bottom: 30px;
+            }
+        }
+
 
         .m-notification {
             margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -89,6 +106,37 @@
                 color: @pacific;
                 border-color: @pacific;
             }
+
+            .costs_button-section {
+                .m-form-field {
+                    margin-bottom: unit( 15px / @base-font-size-px, em );
+                }
+            }
+        }
+
+        &__debt-guideline {
+            .h3 .financial-item__subtotal {
+                margin-top: unit( 15px / @base-font-size-px, em );
+            }
+
+            h2.step-2 {
+                margin-top: unit( 45px / @base-font-size-px, em );
+            }
+        }
+
+        &__affording {
+            .total-hours .financial-item_value span {
+                font-weight: 600;
+            }
+
+            h2 {
+                margin-top: unit( 30px / @base-font-size-px, em );
+            }
+
+            .o-expandable_header {
+                border-top: 1px solid @black;
+                border-bottom: 1px solid @black;
+            }
         }
 
         &__summary {
@@ -111,7 +159,7 @@
                     height: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
                 }
             }
-        }
+        }    
 
         .other-borrowing-btns {
             margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -136,48 +184,53 @@
                 }
             }
 
+            &_about {
+                margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            }
+
         }
     }
 
-    .school-results_comparison-section {
-        border: 2px solid @gray-20;
-        padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+	.school-results_comparison-section {
+		border: 2px solid @gray-20;
+		padding: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
-        legend {
-            margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
-        }
+		legend {
+			margin-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+		}
 
-        .school-results_rank-display {
-            display: flex;
-            align-items: center;
-            margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
-        }
+		.school-results_rank-display {
+			display: flex;
+			align-items: center;
+			margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+		}
 
-        .big-percentile {
-            height: 110px;
-            width: 110px;
+		.big-percentile {
+            @big-percentile-font-size-px: 36px;
+            height: unit( 110px / @big-percentile-font-size-px, em );
+            width: unit( 110px / @big-percentile-font-size-px, em );
             border: 5px solid @black;
             border-radius: 50%;
-            margin-right: 15px;
-            line-height: 110px;
+            margin-right: unit( 15px / @big-percentile-font-size-px, em );
+            line-height: unit( 110px / @big-percentile-font-size-px, em );
             text-align: center;
-            font-size: 36px;
+            font-size: unit( 36px / @base-font-size-px, em );
             font-weight: 600;
             flex: 1;
-            flex-basis: 110px;
+            flex-basis: unit( 110px / @big-percentile-font-size-px, em );;
             flex-grow: 0;
             flex-shrinK: 0;
-        }
+		}
 
-        .m-form-field__radio {
-            display: inline-block;
-        }
-    }
-    
-    [data-state-based-visibility="school-fields-errors"] ul {
-        padding-left: 0;
-        list-style: none;
-    }
+		.m-form-field__radio {
+			display: inline-block;
+		}
+	}
+	
+	[data-state-based-visibility="school-fields-errors"] ul {
+		padding-left: 0;
+    	list-style: none;
+	}
 
     .o-table__financial {
         .indented-row td:first-child {
