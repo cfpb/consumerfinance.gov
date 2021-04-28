@@ -5,6 +5,7 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from flags.state import flag_enabled
 
+from v1.documents import FilterablePagesDocumentSearch
 from v1.feeds import FilterableFeed
 from v1.forms import FilterableListForm
 from v1.models.learn_page import AbstractFilterPage
@@ -47,48 +48,17 @@ class FilterableListMixin(RoutablePageMixin):
 
         if filterable_list_block.value['filter_children']:
             return self.get_url()
-        elif filterable_list_block.value['filter_siblings']:
-            return self.get_parent().get_url()
 
         return '/'
 
     def get_filterable_queryset(self):
-        """Return the queryset of pages to be filtered by this page.
-
-        By default this includes only live pages and pages that live in the
-        same Wagtail Site as this page. If this page cannot be mapped to a
-        Wagtail site (for example, if it does not live under a site root),
-        then it will not return any filterable results.
-
-        The filter_children attribute determines whether this page filters
-        pages that are direct children of this page. By default this is True;
-        set this to False to allow this page to filter pages that are not
-        direct children of this page.
-
-        The filter_siblings attribute determines whether this page filters
-        pages that are siblings of this page. By default this is False.
-
-        If there are any members of the base queryset that are archived,
-        the has_archived_posts context variable will be set,
-        triggering the visibility of the archive filtering options to the user.
-        """
         site = self.get_site()
 
         if not site:
             return self.get_model_class().objects.none()
 
-        queryset = self.get_model_class().objects.in_site(site).live()
-
-        filterable_list_block = self.get_filterable_list_wagtail_block()
-        if filterable_list_block is None:
-            return queryset
-
-        if filterable_list_block.value['filter_children']:
-            queryset = queryset.child_of(self)
-        elif filterable_list_block.value['filter_siblings']:
-            queryset = queryset.sibling_of(self)
-
-        return queryset
+        return FilterablePagesDocumentSearch(
+            prefix=self.get_filterable_root()).search()
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(
@@ -154,7 +124,7 @@ class FilterableListMixin(RoutablePageMixin):
         form_data = {'archived': 'include'}
         has_active_filters = False
         for field in self.get_form_class().declared_fields:
-            if field in ['categories', 'topics', 'authors', 'statuses']:
+            if field in ['categories', 'topics', 'authors', 'statuses', 'products']:  # noqa: E501
                 value = request_dict.getlist(field, [])
             else:
                 value = request_dict.get(field, '')
@@ -208,6 +178,7 @@ class CategoryFilterableMixin:
         will only filter pages that are tagged with a tag in those categories.
         By default this is an empty list and all page tags are eligible.
         """
-        queryset = super().get_filterable_queryset()
         category_names = get_category_children(self.filterable_categories)
-        return queryset.filter(categories__name__in=category_names)
+        return FilterablePagesDocumentSearch(
+            prefix=self.get_filterable_root(),
+            categories=category_names).search()

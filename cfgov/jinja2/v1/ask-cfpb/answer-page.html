@@ -4,15 +4,15 @@
 {% import 'macros/util/format/datetime.html' as dt %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'organisms/ask-search.html' as ask_search with context %}
+{% import 'molecules/notification.html' as notification %}
 
-{% block title %}
-    {{- seo_title or page.question or page.title | striptags -}}
-{% endblock %}
+{% block title -%}
+    {{- seo_title or page.question or page.title | striptags }} | {{ _('Consumer Financial Protection Bureau') }}
+{%- endblock %}
 
 {%- block og_desc -%}
     {{- meta_description -}}
 {%- endblock -%}
-
 
 {% block content_modifiers -%}
     {{ super() }} ask-cfpb-page ask-cfpb-page__answer
@@ -21,7 +21,6 @@
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
-
 
 {% block content_main %}
     <div class="block
@@ -40,6 +39,7 @@
     </div>
     <div class="block
                 block__flush-top">
+
         {% if page.short_answer %}
             <div class="lead-paragraph">
                 {{ page.short_answer | richtext | safe }}
@@ -55,6 +55,12 @@
                         'is_printable': true
                     }
                 ) }}
+            </div>
+        {% endif %}
+
+        {% if page.notification %}
+            <div class="block block__sub">
+                {{ page.notification }}
             </div>
         {% endif %}
 

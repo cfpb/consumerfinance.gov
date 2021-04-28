@@ -1,67 +1,43 @@
 <section class="college-costs_tool-section college-costs_tool-section__summary" data-tool-section="summary">
-    <h2>Review your plan and projected outcomes</h2>
+    <div class="block block__flush-top">
+        <h2>Review your plan and projected outcomes</h2>
 
-    <p>Here is an overview of this school’s costs, your plan for covering them, the debt you are considering, and the school’s results on a few key metrics. As you look over these numbers again, think about whether you are feeling good about going to this school with this financial plan. If you have multiple offers, use this summary to compare them.</p>
+        <p>Here is an overview of this school’s costs, your plan for covering them, the debt you are considering, and the school’s results on a few key metrics. As you look over these numbers again, think about whether you are feeling good about going to this school with this financial plan. If you have multiple offers, use this summary to compare them.</p>
 
-    <div data-state-based-visibility="none">
-        <button class="a-btn">Print summary</button>
-        <button class="a-btn a-btn__secondary">Save as a link</button>
-        <p class="u-mt15"><small>You will also have a chace to print all documents at the end.</small></p>
+        <p class="u-right">
+            <a class="a-link
+                      a-link__icon"
+               href="javascript:window.print()">
+                {{ svg_icon('print') }}
+                <span class="a-link_text">Print</span>
+            </a>
+        </p>
+        <div data-state-based-visibility="none">
+            <button class="a-btn">Print summary</button>
+            <button class="a-btn a-btn__secondary">Save as a link</button>
+            <p class="u-mt15"><small>You will also have a chance to print all documents at the end.</small></p>
+        </div>
     </div>
 
-    <div class="block block__mid">
+    <div class="block block__mid school-summary">
         <h3 class="summary_header">School and living situation</h3>
-        {{
-            text_item.render({
-                'label': 'School',
-                'value': '[school name]',
-                'type': 'text',
-                'data_attribute': 'data-school-item="school"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Program type',
-                'value': '[program type]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programTypeText"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Program name',
-                'value': '[program name]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programName"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Number of years',
-                'value': '[program length]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programLengthText"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Tuition type',
-                'value': '[program rate]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programRateText"'
-            })
-        }}
-        {{
-            text_item.render({
-                'label': 'Where do you plan to live?',
-                'value': '[housing]',
-                'type': 'text',
-                'data_attribute': 'data-state-item="programHousingText"'
-            })
-        }}
+        <dl>
+            <dt>School:</dt>
+            <dd><span data-school-item="school"></span></dd>
+            <dt>Program type:</dt>
+            <dd><span data-state-item="programTypeText"></span></dd>
+            <dt>Program name:</dt>
+            <dd><span data-state-item="programName"></span></dd>
+            <dt>Number of years:</dt>
+            <dd><span data-state-item="programLengthText"></span></dd>
+            <dt>Tuition type:</dt>
+            <dd><span data-state-item="programRateText"></span></dd>
+            <dt>Where do you plan to live?</dt>
+            <dd><span data-state-item="programHousingText"></span></dd>
+        </dl>
     </div>
 
-    <div class="block block__mid">
+    <div class="block block__mid m-full-width-text">
         <h3 class="summary_header">Covering your costs</h3>
         <div class="costs-not-covered">
             {{ notification.render(
@@ -71,372 +47,321 @@
                     '<b>Costs not covered yet:</b> <span data-financial-item="total_gap"></span>' | safe
             ) }} 
         </div>
-        <div class="o-expandable-group">
-            {% set expandable_settings = {
-                'label': 'Your estimated total cost this year',
-                'value': '$99,999',
-                'data_attribute': 'data-financial-item="total_costs"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                <div class="block block__sub block__flush-top">
-                    <h4>Direct costs</h4>
-                    {{
-                        text_item.render({
-                            'label': 'Tuition and fees',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="dirCost_tuition"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Housing and meals',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="dirCost_housing"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Additional direct costs',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="dirCost_other"'
-                        })
-                    }}
-                </div>
-                <div class="block block__sub block">
-                    <h4>Indirect costs</h4>
-                    {{
-                        text_item.render({
-                            'label': 'Books & supplies',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="indiCost_books"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Transportation',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="indiCost_transportation"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Other/miscellaneous expenses',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="indiCost_other"'
-                        })
-                    }}
-                </div>
-                <div class="block block__sub block__flush-bottom">
-                    {{
-                        text_item.render({
-                            'label': 'Additional indirect costs',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="otherCosts_additional"'
-                        })
-                    }}                    
-                </div>
-            {% endcall %}
 
-            {% set expandable_settings = {
-                'label': 'Total funding',
-                'value': '$99,999',
-                'data_attribute': 'data-financial-item="total_funding"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                <div class="block block__sub block__flush-top">
-                    <h4>Non-debt</h4>
-                    {{
-                        text_item.render({
-                            'label': 'Grants and scholarships',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="total_grantsScholarships"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Work-study',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="total_income"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Other resources',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="total_personal"'
-                        })
-                    }}
-                </div>
-                <div class="block block__sub block__flush-bottom">
-                    <h4>Debt</h4>
-                    {{
-                        text_item.render({
-                            'label': 'Federal Loans',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="total_fedLoans"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Loans from your state, the school, or a non-profit',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="total_publicLoans"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Private loans',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="privLoan_privLoan1"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'PLUS loans',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="total_plusLoans"'
-                        })
-                    }}
-                </div>
-            {% endcall %}
-        </div>
+        <table class="o-table o-table__financial u-w100pct">
+            <thead>
+                <tr>
+                    <th scope="col" class="u-w70pct">
+                        <p>Total estimated cost this year</p>
+                    </th>
+                    <th scope="col">
+                        <p data-financial-item="total_costs"></p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="subtotal-row">
+                    <td><p>Direct costs subtotal</p></td>
+                    <td ><p data-financial-item="total_directCosts"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Tuition and fees</p></td>
+                    <td><p data-financial-item="dirCost_tuition"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Housing and meals</p></td>
+                    <td><p data-financial-item="dirCost_housing"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Additional direct costs</p></td>
+                    <td><p data-financial-item="dirCost_other"></p></td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td><p>Indirect costs subtotal</p></td>
+                    <td ><p data-financial-item="total_indirectCosts"></p></td>
+                </tr>   
+                <tr class="indented-row">
+                    <td><p>Books & supplies</p></td>
+                    <td><p data-financial-item="indiCost_books"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Transportation</p></td>
+                    <td><p data-financial-item="indiCost_transportation"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Other/miscellaneous expenses</p></td>
+                    <td><p data-financial-item="indiCost_other"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Additional indirect costs</p></td>
+                    <td><p data-financial-item="otherCosts_additional"></p></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    <div class="block block__mid m-full-width-text">
+        <table class="o-table o-table__financial u-w100pct">
+            <thead>
+                <tr>
+                    <th scope="col" class="u-w70pct">
+                        <p>Total funding</p>
+                    </th>
+                    <th scope="col">
+                        <p data-financial-item="total_funding"></p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="subtotal-row">
+                    <td><p>Non-debt subtotal</p></td>
+                    <td ><p data-financial-item="total_contributions"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Grants and scholarships</p></td>
+                    <td><p data-financial-item="total_grantsScholarships"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Work-study</p></td>
+                    <td><p data-financial-item="total_workStudy"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Other resources</p></td>
+                    <td><p data-financial-item="total_otherResources"></p></td>
+                </tr>
+                <tr class="subtotal-row">
+                    <td><p>Debt subtotal</p></td>
+                    <td ><p data-financial-item="total_borrowing"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Federal Loans</p></td>
+                    <td><p data-financial-item="total_fedLoans"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Loans from your state, the school, or a non-profit</p></td>
+                    <td><p data-financial-item="total_publicLoans"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Private loans</p></td>
+                    <td><p data-financial-item="privLoan_privLoan1"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>PLUS loans</p></td>
+                    <td><p data-financial-item="total_plusLoans"></p></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
     
-    <div class="block block__mid">
+    <div class="block">
         <h3 class="summary_header">Affording your loans</h3>
-        <div class="o-expandable-group">
-            {% set expandable_settings = {
-                'label': 'Could this be too much debt? How does the projected total debt compare to the median salary?',
-                'value': '',
-                'note': 'The projected total debt is <span class="inline" data-financial-item="other_debtGuideDifference">$0</span> <span data-state-based-visibility="debt-rule-violation">more</span><span data-state-based-visibility="debt-rule-passed">less</span> than the median salary. ',
-                'data_attribute': ''
-            } %}
-            {% call() expandable(expandable_settings) %}
-                
-                {{
-                    text_item.render({
-                        'label': 'Projected total debt',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="debt_totalAtGrad"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Includes Parent PLUS loans?',
-                        'value': 'Yes',
-                        'type': 'text',
-                        'data_attribute': 'data-state-item="repayParentPlus"'
-                    })
-                }}
-                <div data-state-based-visibility="program-is-selected">
-                    {{
-                        text_item.render({
-                            'label': 'Median first-year salary of this program\'s graduates',
-                            'value': '$0',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="salary_annual"'
-                        })
-                    }}
-                </div>
-                <div class="undergrad-content">
-                    <div class="no-program-selected">
-                    {{
-                        text_item.render({
-                            'label': 'Median salary of this school\'s recent students',
-                            'value': '$0',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="salary_annual"'
-                        })
-                    }}
-                    </div>
-                </div>
-                <div class="graduate-content">
-                    <div class="no-program-selected">
-                    {{
-                        text_item.render({
-                            'label': 'Median first-year salary of this program\'s graduates',
-                            'value': 'Ask the school for salary data',
-                            'type': 'text',
-                            'data_attribute': ''
-                        })
-                    }}
-                    </div>
-                </div>
-            {% endcall %}
 
-            {% set expandable_settings = {
-                'label': 'What will interest cost me?',
-                'value': '$99,999',
-                'data_attribute': 'data-financial-item="debt_tenYearInterest"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                {{
-                    text_item.render({
-                        'label': 'Total cost of borrowing over 10-year repayment period',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="debt_tenYearTotal"'
-                    })
-                }}
-            {% endcall %}
-            
-            {% set expandable_settings = {
-                'label': 'Can I afford my estimated payment?',
-                'value': '',
-                'note': '',
-                'data_attribute': 'data-state-item="???"'
-            } %}
-            {% call() expandable(expandable_settings) %}
-                <div class="financial-item financial-item__full-width">
-                    <div>How long will it take to earn my estimated payment?</div>
-                    <div>It will take <span class="inline" data-financial-item="debt_repayHours" data-is-number="true"> 0</span> hours to earn the estimated payment, assuming a wage of $15 an hour after taxes.</div>
-                </div>
-                <div class="financial-item financial-item__full-width">
-                    <div>Can I afford my payment within a monthly budget?</div>
-                    <div><span data-state-based-visibility="expenses-surplus">Yes, there is room in the hypothetical budget</span><span data-state-based-visibility="expenses-shortage">No, there is not room in the hypothetical budget</span></div>
-                </div>
-                {{
-                    text_item.render({
-                        'label': 'Estimated monthly loan payment',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-financial-item="debt_tenYearMonthly"'
-                    })
-                }}
-
-                <div data-state-based-visibility="program-is-selected">
-                    {{
-                        text_item.render({
-                            'label': 'Median monthly first-year salary of this program\'s graduates',
-                            'value': '$0',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="salary_monthly"'
-                        })
-                    }}
-                </div>
-                <div class="undergrad-content">
-                    <div class="no-program-selected">
-
-                    {{
-                        text_item.render({
-                            'label': 'Median monthly salary of this school\'s recent students',
-                            'value': '$0',
-                            'type': 'text',
-                            'data_attribute': 'data-financial-item="salary_monthly"'
-                        })
-                    }}
-                    </div>
-                </div>
-                <div class="graduate-content">
-                    <div class="no-program-selected">
-                    {{
-                        text_item.render({
-                            'label': 'Median monthly first-year salary of this program\'s graduates',
-                            'value': 'Ask the school for salary data',
-                            'type': 'text',
-                            'data_attribute': ''
-                        })
-                    }}
-                    </div>
-                </div>
-                {{
-                    text_item.render({
-                        'label': 'Average (or estimated) monthly expenses',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-expenses-item="total_expenses"'
-                    })
-                }}
-                {{
-                    text_item.render({
-                        'label': 'Additional money needed or left over',
-                        'value': '$0',
-                        'type': 'text',
-                        'data_attribute': 'data-expenses-item="total_remainder"'
-                    })
-                }}
-                   
-            {% endcall %}
-            {% set expandable_settings = {
-                'label': 'Worth your investment?',
-                'value': ''
-            } %}
-            {% call() expandable(expandable_settings) %}
-                <div class="undergrad-content">
-                    {{
-                        text_item.render({
-                            'label': 'Graduation rate',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-school-item="rateGraduationText"'
-                        })
-                    }}
-                    <div class="community-college-content">
-                        {{
-                            text_item.render({
-                                'label': 'Transfer to graduation rate',
-                                'value': '',
-                                'type': 'text',
-                                'data_attribute': 'data-school-item="???"'
-                            })
-                        }}
-                    </div>
-                    {{
-                        text_item.render({
-                            'label': 'Default rate',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-school-item="defaultRateText"'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Repayment rate',
-                            'value': '',
-                            'type': 'text',
-                            'data_attribute': 'data-school-item="rateRepay3yrText"'
-                        })
-                    }}
-                </div>
-                <div class="graduate-content">
-                    {{
-                        text_item.render({
-                            'label': 'Graduation rate',
-                            'value': 'Ask the school.',
-                            'type': 'text'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Default rate',
-                            'value': 'Ask the school.',
-                            'type': 'text'
-                        })
-                    }}
-                    {{
-                        text_item.render({
-                            'label': 'Repayment rate',
-                            'value': 'Ask the school.',
-                            'type': 'text'
-                        })
-                    }}
-                </div>
-            {% endcall %}
+        <table class="o-table u-w100pct">
+            <thead>
+                <tr>
+                    <th scope="col" class="u-w70pct">
+                        <p>Estimated total debt at graduation</p>
+                    </th>
+                    <th scope="col">
+                        <p data-financial-item="debt_totalAtGrad"></p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="indented-row">
+                    <td><p>Estimated debt from this program</p></td>
+                    <td><p data-financial-item="debt_totalAtGrad"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Includes Parent PLUS loans?</p></td>
+                    <td><p data-state-item="repayParentPlus"></p></td>
+                </tr>
+                <tr class="indented-row">
+                    <td><p>Current student debt from prior schooling</p></td>
+                    <td><p></p></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span data-state-based-visibility="program-is-selected">
+                            Median first-year salary of this program's graduates
+                        </span>
+                        <span class="no-program-selected">
+                            <span class="undergrad-content">
+                                Median salary of this school's recent students
+                            </span>
+                            <span class="graduate-content">
+                                Median first-year salary of this program's graduates
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <span data-state-based-visibility="program-is-selected">
+                            <span data-financial-item="salary_annual"></span>
+                        </span>
+                        <span class="no-program-selected">
+                            <span class="undergrad-content">
+                                <span data-financial-item="salary_annual"></span>
+                            </span>
+                            <span class="graduate-content">
+                                Ask the school for salary data
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>How does the projected total debt compare to the median salary?</td>
+                    <td>
+                        <p>The projected total debt is <span class="inline" data-financial-item="other_debtGuideDifference">$0</span> <span data-state-based-visibility="debt-rule-violation">more</span><span data-state-based-visibility="debt-rule-passed">less</span> than the median salary.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="block block__mid">
+            <table class="o-table u-w100pct">
+                <thead>
+                    <tr>
+                        <th scope="col" class="u-w70pct">
+                            <p>Estimated interest</p>
+                        </th>
+                        <th scope="col">
+                            <p data-financial-item="debt_tenYearInterest"></p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Total cost of borrowing over 10-year repayment period</td>
+                        <td><p data-financial-item="debt_tenYearTotal"></p></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <div class="block block__mid">
+            <table class="o-table u-w100pct">
+                <thead>
+                    <tr>
+                        <th scope="col" class="u-w70pct">
+                            <p>Estimated monthly loan payment</p>
+                        </th>
+                        <th scope="col">
+                            <p data-financial-item="debt_tenYearMonthly"></p>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>How long will it take to earn my estimated payment?</td>
+                        <td>
+                            <p>
+                                It will take <span class="inline" data-financial-item="debt_repayHours" data-is-number="true"> 0</span> hours to earn the estimated payment, assuming a wage of $15 an hour after taxes.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Can I afford my payment within a monthly budget?</td>
+                        <td>
+                            <p>
+                                <span data-state-based-visibility="expenses-surplus">Yes, there is room in the hypothetical budget</span><span data-state-based-visibility="expenses-shortage">No, there is not room in the hypothetical budget
+                                </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span data-state-based-visibility="program-is-selected">
+                                Median monthly first-year salary of this program's graduates
+                            </span>
+                            <span class="no-program-selected">
+                                <span class="undergrad-content">
+                                    Median monthly salary of this school's recent students
+                                </span>
+                                <span class="graduate-content">
+                                    Median monthly first-year salary of this program's graduates
+                                </span>
+                            </span>
+                        </td>
+                        <td>
+                            <span data-state-based-visibility="program-is-selected">
+                                <span data-financial-item="salary_monthly"></span>
+                            </span>
+                            <span class="no-program-selected">
+                                <span class="undergrad-content">
+                                    <span data-financial-item="salary_monthly"></span>
+                                </span>
+                                <span class="graduate-content">
+                                    Ask the school for salary data
+                                </span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Average (or estimated) monthly expenses</td>
+                        <td><p data-expenses-item="total_expenses"></p></td>
+                    </tr>
+                    <tr>
+                        <td>Additional money needed or left over</td>
+                        <td><p data-expenses-item="total_remainder"></p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="block">
+            <h3 class="summary_header">Worth your investment?</h3>
+
+        <div class="o-expandable-group">
+            <table class="o-table u-w100pct">
+            <thead>
+                <tr>
+                    <th scope="col" class="u-w70pct">
+                        <p>Graduation and repayment rates</p>
+                    </th>
+                    <th scope="col">
+                        <p></p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><p>Graduation rate</p></td>
+                    <td>
+                        <span class="undergrad-content">
+                            <span data-school-item="rateGraduationText"></span>
+                        </span>
+                        <span class="graduate-content">
+                            <span>Ask the school</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="community-college">
+                    <td><p>Transfer to graduation rate</p></td>
+                    <td><span data-school-item=""></span></td>
+                </tr>
+                <tr>
+                    <td><p>Default rate</p></td>
+                    <td>
+                        <span class="undergrad-content">
+                            <span data-school-item="defaultRateText"></span>
+                        </span>
+                        <span class="graduate-content">
+                            <span>Ask the school</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>Repayment rate</p></td>
+                    <td>
+                        <span class="undergrad-content">
+                            <span data-school-item="rateRepay3yrText"></span>
+                        </span>
+                        <span class="graduate-content">
+                            <span>Ask the school</span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+            
+            
     </div>
 </section>

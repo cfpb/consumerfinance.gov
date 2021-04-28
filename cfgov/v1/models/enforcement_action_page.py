@@ -41,6 +41,7 @@ enforcement_products = [
     ('Debt Relief', 'Debt Relief'),
     ('Deposits', 'Deposits'),
     ('Furnishing', 'Furnishing'),
+    ('Fair Lending', 'Fair Lending'),
     ('Mortgage Origination', 'Mortgage Origination'),
     ('Mortgage Servicing', 'Mortgage Servicing'),
     ('Payments', 'Payments'),
@@ -300,7 +301,7 @@ class EnforcementActionPage(AbstractFilterPage):
                 for d in self.defendant_types.all()
             ],
             'statutes': [s.statute for s in self.statutes.all()],
-            'products': [p.product for p in self.products.all()],
+            'products': [p.get_product_display() for p in self.products.all()],
             'at_risk_groups': [
                 g.at_risk_group for g in self.at_risk_groups.all()
             ]

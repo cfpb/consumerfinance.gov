@@ -3,10 +3,8 @@ from datetime import date
 
 from django import forms
 from django.core.exceptions import ValidationError
-from django.db.models import Q
 from django.forms import widgets
 
-from flags.state import flag_enabled
 from taggit.models import Tag
 
 from v1.documents import (
@@ -17,7 +15,7 @@ from v1.models import enforcement_action_page
 from v1.models.feedback import Feedback
 from v1.util import ERROR_MESSAGES, ref
 from v1.util.categories import clean_categories
-from v1.util.date_filter import end_of_time_period
+from v1.util.datetimes import end_of_time_period
 
 
 class FilterableDateField(forms.DateField):
@@ -30,9 +28,13 @@ class FilterableDateField(forms.DateField):
 
     default_input_formats = (
         '%m/%d/%y',     # 10/25/16, 9/1/16
+        '%d/%m/%y',     # 13/4/21
         '%m-%d-%y',     # 10-25-16, 9-1-16
+        '%d-%m-%y',     # 13-4-21
         '%m/%d/%Y',     # 10/25/2016, 9/1/2016
+        '%d/%m/%Y',     # 13/4/2021
         '%m-%d-%Y',     # 10-25-2016, 9-1-2016
+        '%d-%m-%Y',     # 13-4-2021
         '%Y-%m-%d',     # 2016-10-25, 2016-9-1
         '%m/%Y',        # 10/2016, 7/2017
         '%m-%Y',        # 10-2016, 7-2017
@@ -70,7 +72,6 @@ class FilterableListForm(forms.Form):
         widget=forms.TextInput(attrs={
             'id': 'o-filterable-list-controls_title',
             'class': 'a-text-input a-text-input__full',
-            'placeholder': 'Search for a specific word in item title',
         })
     )
     from_date = FilterableDateField(
@@ -133,33 +134,37 @@ class FilterableListForm(forms.Form):
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
-    def get_page_set(self):
-        if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
-            categories = self.cleaned_data.get('categories')
+    def get_categories(self):
+        categories = self.cleaned_data.get('categories')
 
-            # If no categories are submitted by the form
-            if categories == []:
-                # And we have defined a prexisting set of categories
-                # to limit results by Using CategoryFilterableMixin
-                if self.filterable_categories not in ([], None):
-                    # Search for results only within the provided categories
-                    categories = ref.get_category_children(
-                        self.filterable_categories)
+        # If no categories are submitted by the form
+        if categories == []:
+            # And we have defined a prexisting set of categories
+            # to limit results by Using CategoryFilterableMixin
+            if self.filterable_categories not in ([], None):
+                return ref.get_category_children(
+                    self.filterable_categories)
+        return categories
 
-            return FilterablePagesDocumentSearch(
-                prefix=self.filterable_root,
-                topics=self.cleaned_data.get('topics'),
-                categories=categories,
-                authors=self.cleaned_data.get('authors'),
-                to_date=self.cleaned_data.get('to_date'),
-                from_date=self.cleaned_data.get('from_date'),
-                title=self.cleaned_data.get('title'),
-                archived=self.cleaned_data.get('archived')).search()
+    def get_order_by(self):
+        if self.wagtail_block is not None:
+            return self.wagtail_block.value.get('order_by', '-date_published')
         else:
-            query = self.generate_query()
-            return self.filterable_pages.filter(query).distinct().order_by(
-                '-date_published'
-            )
+            return '-date_published'
+
+    def get_page_set(self):
+        categories = self.get_categories()
+
+        return FilterablePagesDocumentSearch(
+            prefix=self.filterable_root,
+            topics=self.cleaned_data.get('topics'),
+            categories=categories,
+            authors=self.cleaned_data.get('authors'),
+            to_date=self.cleaned_data.get('to_date'),
+            from_date=self.cleaned_data.get('from_date'),
+            title=self.cleaned_data.get('title'),
+            archived=self.cleaned_data.get('archived'),
+            order_by=self.get_order_by()).search()
 
     def first_page_date(self):
         first_post = self.filterable_pages.order_by('date_published').first()
@@ -259,36 +264,6 @@ class FilterableListForm(forms.Form):
         field.widget.render = lambda name, value, **kwargs: \
             old_render(new_name, value, **kwargs)
 
-    # Generates a query by iterating over the zipped collection of
-    # tuples.
-    def generate_query(self):
-        final_query = Q()
-        if self.is_bound:
-            for query, field_name in zip(
-                self.get_query_strings(),
-                self.declared_fields
-            ):
-                if self.cleaned_data.get(field_name) not in (None, [], ''):
-                    final_query &= Q(
-                        (query, self.cleaned_data.get(field_name))
-                    )
-
-        return final_query
-
-    # Returns a list of query strings to associate for each field, ordered by
-    # the field declaration for the form. Note: THEY MUST BE ORDERED IN THE
-    # SAME WAY AS THEY ARE DECLARED IN THE FORM DEFINITION.
-    def get_query_strings(self):
-        return [
-            'title__icontains',      # title
-            'date_published__gte',   # from_date
-            'date_published__lte',   # to_date
-            'categories__name__in',  # categories
-            'tags__slug__in',        # topics
-            'authors__slug__in',     # authors
-            'is_archived__in',       # archived
-        ]
-
     def clean_archived(self):
         data = self.cleaned_data['archived']
         if data == 'exclude':
@@ -307,63 +282,42 @@ class EnforcementActionsFilterForm(FilterableListForm):
         widget=widgets.CheckboxSelectMultiple()
     )
 
-    def get_page_set(self):
-        if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
-            return EnforcementActionFilterablePagesDocumentSearch(
-                prefix=self.filterable_root,
-                topics=self.cleaned_data.get('topics'),
-                categories=self.cleaned_data.get('categories'),
-                authors=self.cleaned_data.get('authors'),
-                to_date=self.cleaned_data.get('to_date'),
-                from_date=self.cleaned_data.get('from_date'),
-                title=self.cleaned_data.get('title'),
-                statuses=self.cleaned_data.get('statuses')).search()
-        else:
-            query = self.generate_query()
-            return self.filterable_pages.filter(query).distinct().order_by(
-                '-initial_filing_date'
-            )
+    products = forms.MultipleChoiceField(
+        required=False,
+        choices=enforcement_action_page.enforcement_products,
+        widget=widgets.SelectMultiple(attrs={
+            'id': 'o-filterable-list-controls_products',
+            'class': 'o-multiselect',
+            'data-placeholder': 'Search for products',
+            'multiple': 'multiple',
+        })
+    )
 
-    def get_query_strings(self):
-        return [
-            'title__icontains',          # title
-            'initial_filing_date__gte',  # from_date
-            'initial_filing_date__lte',  # to_date
-            'categories__name__in',      # categories
-            'tags__slug__in',            # topics
-            'authors__slug__in',         # authors
-            'is_archived__in',           # archived
-            'statuses__status__in',      # statuses
-        ]
+    def get_page_set(self):
+        return EnforcementActionFilterablePagesDocumentSearch(
+            prefix=self.filterable_root,
+            topics=self.cleaned_data.get('topics'),
+            categories=self.cleaned_data.get('categories'),
+            authors=self.cleaned_data.get('authors'),
+            to_date=self.cleaned_data.get('to_date'),
+            from_date=self.cleaned_data.get('from_date'),
+            title=self.cleaned_data.get('title'),
+            statuses=self.cleaned_data.get('statuses'),
+            products=self.cleaned_data.get('products')).search()
 
 
 class EventArchiveFilterForm(FilterableListForm):
 
     def get_page_set(self):
-        if flag_enabled('ELASTICSEARCH_FILTERABLE_LISTS'):
-            return EventFilterablePagesDocumentSearch(
-                prefix=self.filterable_root,
-                topics=self.cleaned_data.get('topics'),
-                categories=self.cleaned_data.get('categories'),
-                authors=self.cleaned_data.get('authors'),
-                to_date=self.cleaned_data.get('to_date'),
-                from_date=self.cleaned_data.get('from_date'),
-                title=self.cleaned_data.get('title')).search()
-        else:
-            query = self.generate_query()
-            return self.filterable_pages.filter(query).distinct().order_by(
-                '-date_published'
-            )
-
-    def get_query_strings(self):
-        return [
-            'title__icontains',      # title
-            'start_dt__gte',         # from_date
-            'end_dt__lte',           # to_date
-            'categories__name__in',  # categories
-            'tags__slug__in',        # topics
-            'authors__slug__in',     # authors
-        ]
+        return EventFilterablePagesDocumentSearch(
+            prefix=self.filterable_root,
+            topics=self.cleaned_data.get('topics'),
+            categories=self.cleaned_data.get('categories'),
+            authors=self.cleaned_data.get('authors'),
+            to_date=self.cleaned_data.get('to_date'),
+            from_date=self.cleaned_data.get('from_date'),
+            title=self.cleaned_data.get('title'),
+            order_by=self.get_order_by()).search()
 
 
 class FeedbackForm(forms.ModelForm):

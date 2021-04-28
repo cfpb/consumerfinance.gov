@@ -75,6 +75,16 @@ class RedirectRegulations3kTestCase(TestCase):
             '/policy-compliance/rulemaking/regulations/'
             'search-regulations/results/?regs=1002&q=california')
 
+    def test_redirect_search_invalid(self):
+        request = self.factory.get(
+            '/eregulations/search/1002',
+        )
+        response = redirect_eregs(request)
+        self.assertEqual(
+            response.get('location'),
+            '/policy-compliance/rulemaking/regulations/'
+            'search-regulations/results/?regs=1002&q=')
+
     def test_redirect_invalid_part(self):
         request = self.factory.get(
             '/eregulations/1020-1/2017-20417_20180101')

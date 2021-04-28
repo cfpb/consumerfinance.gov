@@ -49,9 +49,12 @@
         content: " (cfpb.gov" attr(href) ")";
     }
 
-    a[href^="/external-site"]:after {
+    a[href^="/ask-cfpb"]:after,
+    a[href^="/external-site"]:after,
+    a[href*="consumerfinance.gov/ask-cfpb"]:after,
+    a[href*="consumerfinance.gov/external-site"]:after {
         // Output original href for links with external site interstitial.
-        content: " (" attr(data-orig-href) ")";
+        content: " (" attr(data-pretty-href) ")";
     }
 
     a[href="/"]:after,
@@ -68,11 +71,41 @@
         border-bottom-width: 0;
     }
 
+    a.a-btn {
+        // These pseudo-classes are needed to guarantee specificity
+        &:link,
+        &:visited {
+            // Replace Design System button and stand-alone link stylings with some generic styling
+            all: unset;
+            border-bottom: 1px dotted @link-underline;
+            color: @link-text;
+            display: inline;
+            font-weight: 500;
+            text-decoration: none;
+        }
+    }
+
+    a.a-link__jump,
+    a.m-list_link {
+        // These pseudo-classes are needed to guarantee specificity
+        &:link,
+        &:visited {
+            border: 0;
+            padding-top: unit( 5px / @base-font-size-px, em );
+            padding-bottom: unit( 5px / @base-font-size-px, em );
+        }
+    }
+
     .o-video-player_play-btn {
         // !important used here to avoid being overriden by a much more specific
         // selector that sets the display property for this element
         // and to avoid using a selector that specific here.
         display: none !important;
+    }
+
+    .a-tagline {
+        // Force the tagline's background image to be visible when printing
+        color-adjust: exact;
     }
 
     .o-video-player::after {
@@ -82,7 +115,10 @@
     .m-global-eyebrow,
     .join-the-conversation,
     .o-email-signup,
-    .rss-subscribe {
+    .rss-subscribe,
+    .o-feedback,
+    .o-search-bar,
+    .m-hero_image-wrapper {
         display: none;
     }
 

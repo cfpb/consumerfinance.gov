@@ -114,8 +114,9 @@ const navigationView = {
   /**
    * init - Initialize the navigation view
    * @param { Object } body - The body element of the page
+   * @param { string } iped - String representing the chosen school.
    */
-  init: function( body ) {
+  init: function( body, iped ) {
     this._navMenu = body.querySelector( '.o-secondary-navigation' );
     this._navButtons = body.querySelectorAll( '.o-secondary-navigation a' );
     this._navListItems = body.querySelectorAll( '.o-secondary-navigation li' );
@@ -129,7 +130,7 @@ const navigationView = {
     this._stateDomElem = document.querySelector( 'main.college-costs' );
     this._affordingChoices = document.querySelectorAll( '.affording-loans-choices .m-form-field' );
 
-    _addButtonListeners();
+    _addButtonListeners( iped );
     this.updateView();
 
     updateState.replaceStateInHistory( window.location.search );
@@ -139,8 +140,9 @@ const navigationView = {
 
 /**
  * _addButtonListeners - Add event listeners for nav buttons
+ * @param { string } iped - String representing the chosen school.
  */
-function _addButtonListeners() {
+function _addButtonListeners( iped ) {
   navigationView._navButtons.forEach( elem => {
     elem.addEventListener( 'click', _handleNavButtonClick );
   } );
@@ -150,7 +152,11 @@ function _addButtonListeners() {
   } );
 
   navigationView._nextButton.addEventListener( 'click', _handleNextButtonClick );
-  navigationView._getStartedBtn.addEventListener( 'click', _handleGetStartedBtnClick );
+  if ( iped ) {
+    _handleGetStartedBtnClick();
+  } else {
+    navigationView._getStartedBtn.addEventListener( 'click', _handleGetStartedBtnClick );
+  }
 }
 
 /**
@@ -171,7 +177,6 @@ function _handleGetStartedBtnClick( event ) {
   updateState.getStarted( true );
   updateState.activeSection( 'school-info' );
   navigationView.updateView();
-
   // The user should be sent back to the top of the P4C content
   window.scrollTo( 0, document.querySelector( '.college-costs' ).offsetTop );
 }

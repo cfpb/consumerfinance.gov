@@ -2,30 +2,32 @@
     <h2>Grants and scholarships</h2>
     <p>You do not have to pay back grants and scholarships as long as you meet their requirements. Please enter the grants and scholarships from your financial aid offer as well as any others you have been awarded.</p>
     {{ notification.render(
-            'default',
-            true,
-            '',
-            'Not sure where your grants and scholarships are listed? One way to identify grants and scholarships on your offer is to use the <a href="http://www.myfinancialaidletter.org/" target="_blank" class="external-link" rel="noreferrer noopener">Hechinger Report’s OfferLetterDECODER</a>, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)' | safe
-    ) }} 
+        'information',
+        true,
+        '',
+        'Not sure where your grants and scholarships are listed? One way to identify grants and scholarships on your offer is to use the <a href="http://www.myfinancialaidletter.org/" target="_blank" class="external-link" rel="noreferrer noopener">Hechinger Report’s OfferLetterDECODER</a>, which color codes the different types of funding in offers uploaded as PDFs. (This links to a third-party resource. We do not endorse the third-party or guarantee the accuracy of this third-party information. There may be other resources that also serve your needs.)' | safe
+    ) }}
     <div class="grants-and-scholarships_content-section financial-items">
         <div class="block block__mid">
             <h3 class="u-border-bottom">Grants</h3>
-            {{
-                input.render({
-                    'label': 'Federal Pell Grant',
-                    'id': 'grants__pell',
-                    'value': '0',
-                    'data_attribute': 'data-financial-item="grant_pell"'
-                })
-            }}
-            {{
-                input.render({
-                    'label': 'Federal SEOG grant',
-                    'id': 'grants__seog',
-                    'value': '0',
-                    'data_attribute': 'data-financial-item="grant_seog"'
-                })
-            }}
+            <div class="undergrad-content">
+                {{
+                    input.render({
+                        'label': 'Federal Pell Grant',
+                        'id': 'grants__pell',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_pell"'
+                    })
+                }}
+                {{
+                    input.render({
+                        'label': 'Federal SEOG grant',
+                        'id': 'grants__seog',
+                        'value': '0',
+                        'data_attribute': 'data-financial-item="grant_seog"'
+                    })
+                }}
+            </div>
             {{
                 input.render({
                     'label': 'Other federal grant(s)',
@@ -94,7 +96,7 @@
                     })
                 }}
             </div>
-            
+
         </div>
     </div>
     <div class="grants-and-scholarships_content-section financial-items">
@@ -140,34 +142,34 @@
     </div>
     <div class="costs-not-covered-notification">
         {{ notification.render(
-                'caution',
-                true,
-                '',
-                '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
-        ) }} 
+            'caution',
+            true,
+            '',
+            '<b>Costs not covered:</b> <span data-financial-item="total_gap"></span>' | safe
+        ) }}
     </div>
     {{ notification.render(
-            'money-tips',
-            true,
-            'Money saving tips',
-            '<ul>
-                <li> To protect your funding, find out the requirements of your grants and scholarships. For example, you may need to stay enrolled in a minimum number of courses or get high enough grades to meet a minimum GPA. </li>
-                <li> You should also ask if it is renewable (available in future years). If so, ask how many years—typically the limit will be enough for on-time graduation — and if you will need to reapply next year (like FAFSA for federal grants and loans). If not, you will need to find replacement funding next year. </li>
-                <li> Seriously, don’t hesitate to contact the financial aid office for more information. They want to help you! And forming relationships with the financial aid staff may help you find more funding opportunities.</li>
-            </ul>' | safe
-    ) }} 
+        'money-tips',
+        true,
+        'Money saving tips',
+        '<ul>
+            <li> To protect your funding, find out the requirements of your grants and scholarships. For example, you may need to stay enrolled in a minimum number of courses or get high enough grades to meet a minimum GPA. </li>
+            <li> You should also ask if it is renewable (available in future years). If so, ask how many years—typically the limit will be enough for on-time graduation&emdash;and if you will need to reapply next year (like FAFSA for federal grants and loans). If not, you will need to find replacement funding next year. </li>
+            <li>Seriously, don’t hesitate to contact the financial aid office for more information. They want to help you! Continue visiting the financial aid office throughout school to ask about new opportunities for funding.</li>
+        </ul>' | safe
+    ) }}
 
 
     {{ notification.render(
-            'warning',
-            true,
-            'Know before you go',
-            '<ul>
-                <li> Applying for a grant or scholarship does not guarantee you will get it. Apply early for a better shot at funds that are first come, first served.</li>
-                <li>Your grant and scholarship funding can go up or down from year to year, depending on your financial situation, your major/program, the terms of the funding, and other factors.</li>
-                <li>Receiving private scholarships can reduce your eligibility for grants or scholarships from the school.</li>
-                <li>Scholarship money may be taxed as income if it exceeds the total of certain expenses. Ask the financial aid office if this might be an issue for you.</li>
-            </ul>' | safe
-    ) }} 
+        'warning',
+        true,
+        'Know before you go',
+        '<ul>
+            <li> Applying for a grant or scholarship does not guarantee you will get it. Apply early for a better shot at funds that are first come, first served.</li>
+            <li>Your grant and scholarship funding can go up or down from year to year, depending on your financial situation, your major/program, the terms of the funding, and other factors.</li>
+            <li>Receiving private scholarships can reduce your eligibility for grants or scholarships from the school.</li>
+            <li>Scholarship money may be taxed as income if it exceeds the total of certain expenses. <a href="https://www.irs.gov/publications/p970#en_US_2020_publink1000293200" target="_blank" class="external-link" rel="noreferrer noopener">See IRS publication 970 for more information.</a> (Your family may also qualify for <a href="https://www.irs.gov/individuals/free-tax-return-preparation-for-qualifying-taxpayers" target="_blank" class="external-link" rel="noreferrer noopener">free tax help from the IRS’s VITA program.</a>)</li>
+        </ul>' | safe
+    ) }}
 
 </section>

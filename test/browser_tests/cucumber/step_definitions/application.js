@@ -1,7 +1,7 @@
 const BasePage = require( '../../page_objects/base-page.js' );
 const basePage = new BasePage();
 
-const { Then, When } = require( 'cucumber' );
+const { Then, When } = require( '@cucumber/cucumber' );
 const { expect } = require( 'chai' );
 
 When( /I goto URL "(.*)"/, { timeout: 60 * 1000 }, async function( url ) {

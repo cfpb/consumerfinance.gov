@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from io import StringIO
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from wagtail.core.models import Site
 
@@ -19,7 +19,7 @@ from v1.documents import (
 from v1.models.base import CFGOVPageCategory
 from v1.models.blog_page import BlogPage
 from v1.models.enforcement_action_page import (
-    EnforcementActionPage, EnforcementActionStatus
+    EnforcementActionPage, EnforcementActionProduct, EnforcementActionStatus
 )
 from v1.models.learn_page import AbstractFilterPage, EventPage
 from v1.tests.wagtail_pages.helpers import publish_page
@@ -43,7 +43,8 @@ class FilterablePagesDocumentTest(TestCase):
             [
                 'tags', 'categories', 'authors', 'title', 'url',
                 'is_archived', 'date_published', 'start_dt', 'end_dt',
-                'statuses', 'initial_filing_date', 'model_class'
+                'statuses', 'products', 'initial_filing_date', 'model_class',
+                'content', 'preview_description'
             ]
         )
 
@@ -67,12 +68,72 @@ class FilterablePagesDocumentTest(TestCase):
         prepared_data = doc.prepare(enforcement)
         self.assertEqual(prepared_data['statuses'], ['expired-terminated-dismissed'])
 
+    def test_prepare_content_no_content_defined(self):
+        event = EventPage(
+            title='Event Test',
+            start_dt=datetime.now(timezone('UTC'))
+        )
+        doc = FilterablePagesDocument()
+        prepared_data = doc.prepare(event)
+        self.assertIsNone(prepared_data['content'])
+
+    def test_prepare_content_exists(self):
+        blog = BlogPage(
+            title='Test Blog',
+            content=json.dumps([
+                {
+                    'type': 'full_width_text',
+                    'value': [
+                        {
+                            'type':'content',
+                            'value': 'Blog Text'
+                    }]
+                }
+            ])
+        )
+        doc = FilterablePagesDocument()
+        prepared_data = doc.prepare(blog)
+        self.assertEqual(prepared_data['content'], 'Blog Text')
+
+    def test_prepare_content_empty(self):
+        blog = BlogPage(
+            title='Test Blog',
+            content=json.dumps([])
+        )
+        doc = FilterablePagesDocument()
+        prepared_data = doc.prepare(blog)
+        self.assertIsNone(prepared_data['content'])
+
+    def test_prepare_products(self):
+        enforcement = EnforcementActionPage(
+            title="Great Test Page",
+            preview_description='This is a great test page.',
+            initial_filing_date=datetime.now(timezone('UTC'))
+        )
+        product = EnforcementActionProduct(product='Fair Lending')
+        enforcement.products.add(product)
+        doc = FilterablePagesDocument()
+        prepared_data = doc.prepare(enforcement)
+        self.assertEqual(prepared_data['products'], ['Fair Lending'])
+
 
 class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
         cls.site = Site.objects.get(is_default_site=True)
+
+        content = json.dumps([
+                {
+                    'type': 'full_width_text',
+                    'value': [
+                        {
+                            'type':'content',
+                            'value': 'Foo Test Content'
+                    }]
+                }
+            ])
+
         event = EventPage(
             title='Event Test',
             start_dt=datetime(2021, 2, 16, tzinfo=timezone('UTC')),
@@ -89,14 +150,44 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
         )
         status = EnforcementActionStatus(status='expired-terminated-dismissed')
         enforcement.statuses.add(status)
+        product = EnforcementActionProduct(product='Debt Collection')
+        enforcement.products.add(product)
         publish_page(enforcement)
         blog = BlogPage(
             title="Blog Page"
         )
         publish_page(blog)
+
+        blog_title_match = BlogPage(
+            title="Foo Bar"
+        )
+        publish_page(blog_title_match)
+
+        blog_preview_match = BlogPage(
+            title="Random Title",
+            preview_description="Foo blog"
+        )
+        publish_page(blog_preview_match)
+
+        blog_content_match = BlogPage(
+            title="Some Title",
+            content=content
+        )
+        publish_page(blog_content_match)
+
+        blog_topic_match = BlogPage(
+            title="Another Blog Post"
+        )
+        blog_topic_match.tags.add("Foo Tag")
+        publish_page(blog_topic_match)
+
         cls.event = event
         cls.enforcement = enforcement
         cls.blog = blog
+        cls.blog_title_match = blog_title_match
+        cls.blog_preview_match = blog_preview_match
+        cls.blog_content_match = blog_content_match
+        cls.blog_topic_match = blog_topic_match
 
         cls.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
@@ -149,6 +240,7 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
             from_date=from_date,
             title=None,
             statuses=['expired-terminated-dismissed'],
+            products=['Debt Collection'],
             archived=None).search()
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
 
@@ -167,5 +259,38 @@ class FilterablePagesDocumentSearchTest(ElasticsearchTestsMixin, TestCase):
             from_date=from_date,
             title=None,
             statuses=[],
+            products=[],
             archived=None).search()
         self.assertTrue(results.filter(title=self.enforcement.title).exists())
+
+    @override_settings(FLAGS={"EXPAND_FILTERABLE_LIST_SEARCH": [("boolean", True)]})
+    def test_search_title_multimatch_enabled(self):
+        results = FilterablePagesDocumentSearch(
+            prefix='/',
+            topics=[],
+            categories=[],
+            authors=[],
+            to_date=None,
+            from_date=None,
+            title="Foo",
+            archived=None).search()
+        self.assertTrue(results.filter(title=self.blog_title_match).exists())
+        self.assertTrue(results.filter(title=self.blog_content_match.title).exists())
+        self.assertTrue(results.filter(title=self.blog_preview_match.title).exists())
+        self.assertTrue(results.filter(title=self.blog_topic_match.title).exists())
+
+    @override_settings(FLAGS={"EXPAND_FILTERABLE_LIST_SEARCH": [("boolean", False)]})
+    def test_search_title_multimatch_disabled(self):
+        results = FilterablePagesDocumentSearch(
+            prefix='/',
+            topics=[],
+            categories=[],
+            authors=[],
+            to_date=None,
+            from_date=None,
+            title="Foo",
+            archived=None).search()
+        self.assertTrue(results.filter(title=self.blog_title_match).exists())
+        self.assertFalse(results.filter(title=self.blog_content_match.title).exists())
+        self.assertFalse(results.filter(title=self.blog_preview_match.title).exists())
+        self.assertFalse(results.filter(title=self.blog_topic_match.title).exists())

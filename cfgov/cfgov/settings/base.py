@@ -141,12 +141,11 @@ MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    "core.middleware.PathBasedCsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "core.middleware.ParseLinksMiddleware",
     "core.middleware.DownstreamCacheControlMiddleware",
-    "flags.middleware.FlagConditionsMiddleware",
     "core.middleware.SelfHealingMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     "core.middleware.DeactivateTranslationsMiddleware",
@@ -444,6 +443,8 @@ else:
         "default": {"hosts": f"http://{ES7_HOST}:{ES_PORT}"}
     }
 
+ELASTICSEARCH_DSL_SIGNAL_PROCESSOR = 'search.elasticsearch_helpers.WagtailSignalProcessor'
+
 # S3 Configuration
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_LOCATION = "f"  # A path prefix that will be prepended to all uploads
@@ -652,6 +653,7 @@ CSP_CONNECT_SRC = (
     "n2.mouseflow.com",
     "api.iperceptions.com",
     "*.qualtrics.com",
+    "raw.githubusercontent.com",
 )
 
 # These specify valid media sources (e.g., MP3 files)
@@ -716,8 +718,6 @@ FLAGS = {
     # Email popups.
     "EMAIL_POPUP_OAH": [("boolean", True)],
     "EMAIL_POPUP_DEBT": [("boolean", True)],
-    # Search.gov API-based site-search
-    "SEARCH_DOTGOV_API": [],
     # Ping google on page publication in production only
     "PING_GOOGLE_ON_PUBLISH": [("environment is", "production")],
     # SPLIT TESTING FLAGS
@@ -729,8 +729,6 @@ FLAGS = {
     "BETA_EXTERNAL_TESTING": [],
     # Used to hide new youth employment success pages prior to public launch
     "YOUTH_EMPLOYMENT_SUCCESS": [],
-    # Used to hide CCDB landing page updates prior to public launch
-    "CCDB_CONTENT_UPDATES": [],
     # During a Salesforce system outage, the following flag should be enabled
     # to alert users that the Collect community is down.
     "COLLECT_OUTAGE": [
@@ -765,8 +763,8 @@ FLAGS = {
     "ASK_SURVEY_INTERCEPT": [],
     # Hide archive filter options in the filterable UI
     "HIDE_ARCHIVE_FILTER_OPTIONS": [],
-    # Enable ES as the backend for FilterableLists
-    "ELASTICSEARCH_FILTERABLE_LISTS": []
+    # Expand ES Filterable List Search
+    "EXPAND_FILTERABLE_LIST_SEARCH": [],
 }
 
 # Watchman tokens, a comma-separated string of tokens used to authenticate
@@ -780,10 +778,6 @@ WATCHMAN_TOKENS = os.environ.get("WATCHMAN_TOKENS")
 WATCHMAN_CHECKS = (
     "alerts.checks.elasticsearch_health",
 )
-
-# Search.gov values
-SEARCH_DOT_GOV_AFFILIATE = os.environ.get("SEARCH_DOT_GOV_AFFILIATE")
-SEARCH_DOT_GOV_ACCESS_KEY = os.environ.get("SEARCH_DOT_GOV_ACCESS_KEY")
 
 # We want the ability to serve the latest drafts of some pages on beta
 # This value is read by v1.wagtail_hooks
@@ -836,6 +830,9 @@ PARSE_LINKS_EXCLUSION_LIST = [
     r"^/policy-compliance/rulemaking/regulations/\d+/",
     # DjangoRestFramework API pages where link icons are intrusive
     r"^/oah-api/",
+    # External site interstitial (if we're here, the links have already been
+    # parsed)
+    r"^/external-site/",
 ]
 
 # Required by django-extensions to determine the execution directory used by
@@ -870,3 +867,15 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
 REST_FRAMEWORK = {
     "COERCE_DECIMAL_TO_STRING": False
 }
+
+# We require CSRF only on authenticated paths. This setting is handled by our
+# core.middleware.PathBasedCsrfViewMiddleware.
+#
+# Any paths listed here that are public-facing will receive an "
+# "Edge-Control: no-store" header from our
+# core.middleware.DownstreamCacheControlMiddleware and will not be cached.
+CSRF_REQUIRED_PATHS = (
+    "/login",
+    "/admin",
+    "/django-admin",
+)
