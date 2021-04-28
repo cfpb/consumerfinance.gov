@@ -1,7 +1,5 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
-import {
-  daysPerWeekView
-} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week';
+import daysPerWeekView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week';
 import {
   clearDaysPerWeekAction,
   updateDaysPerWeekAction,

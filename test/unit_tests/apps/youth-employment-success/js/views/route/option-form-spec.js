@@ -1,7 +1,5 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
-import {
-  routeOptionFormView
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form';
+import routeOptionFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form';
 import {
   averageCostView,
   daysPerWeekView,
@@ -9,9 +7,7 @@ import {
   milesView,
   transitTimeView
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions';
-import {
-  routeDetailsView
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
 import {
   updateTransportationAction
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';

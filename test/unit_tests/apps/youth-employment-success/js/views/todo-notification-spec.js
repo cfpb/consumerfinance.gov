@@ -1,6 +1,4 @@
-import {
-  TodoNotification
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/todo-notification';
+import TodoNotification from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/todo-notification';
 import TODO_FIXTURE from '../../fixtures/todo-alert';
 
 const CONTAINER = 'alert-container';

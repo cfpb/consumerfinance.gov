@@ -1,5 +1,4 @@
-import {
-  choiceReducer,
+import choiceReducer, {
   updateRouteChoiceAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer';
 

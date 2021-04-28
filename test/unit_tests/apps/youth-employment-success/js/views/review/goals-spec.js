@@ -1,6 +1,4 @@
-import {
-  reviewGoalsView
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/goals';
+import reviewGoalsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/goals';
 import mockStore from '../../../../../mocks/store';
 import {
   toArray

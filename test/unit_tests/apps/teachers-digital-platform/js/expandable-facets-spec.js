@@ -1,7 +1,5 @@
 import { simulateEvent } from '../../../../util/simulate-event';
-import {
-  ExpandableFacets
-} from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
+import ExpandableFacets from '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/expandable-facets.js';
 
 let ef;
 let efLabel;

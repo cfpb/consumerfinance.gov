@@ -1,6 +1,4 @@
-import {
-  routeDetailsView
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
 import {
   toArray,
   toPrecision
@@ -8,9 +6,7 @@ import {
 import {
   PLAN_TYPES
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
-import {
-  transportationMap
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
+import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
 
 jest.mock(
   '../../../../../../../cfgov/unprocessed/apps/' +

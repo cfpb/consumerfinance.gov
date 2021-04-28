@@ -1,7 +1,5 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
-import {
-  milesView
-} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/miles';
+import milesView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/miles';
 import mockStore from '../../../../../../mocks/store';
 import {
   clearMilesAction,

@@ -1,6 +1,4 @@
-import {
-  createRoute
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
+import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
 
 describe( 'route factory function', () => {
   it( 'constructs a route object', () => {

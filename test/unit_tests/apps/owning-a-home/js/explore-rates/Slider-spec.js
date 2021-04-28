@@ -1,6 +1,4 @@
-import {
-  Slider
-} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/Slider';
+import Slider from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/Slider';
 let sliderDom;
 let slider;
 

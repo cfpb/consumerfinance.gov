@@ -1,8 +1,5 @@
-import {
-  createRoute
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
-import {
-  routeOptionReducer,
+import createRoute from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/models/route';
+import routeOptionReducer, {
   addRouteOptionAction,
   clearAverageCostAction,
   clearDaysPerWeekAction,
@@ -22,12 +19,10 @@ import {
   updateTransitTimeMinutesAction,
   updateTransportationAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import {
-  UNDEFINED
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import UNDEFINED from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 import {
   PLAN_TYPES
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+ } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 
 // Arbitrary value to ensure reducer is updating properly
 const nextValue = '15';

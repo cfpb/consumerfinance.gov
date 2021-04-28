@@ -1,6 +1,4 @@
-import {
-  RateCheckerChart
-} from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/RateCheckerChart';
+import RateCheckerChart from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/RateCheckerChart';
 
 const HTML_SNIPPET = `
 <section id="chart-section" class="chart">
