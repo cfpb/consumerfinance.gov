@@ -85,6 +85,14 @@ CACHES = {
     for k in ("default", "post_preview")
 }
 
+# Optionally enable default cache
+if os.environ.get("ENABLE_DEFAULT_CACHE"):
+    CACHES["default"] = {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "default_cache",
+        "TIMEOUT": None,
+    }
+
 # Optionally enable cache for post_preview
 if os.environ.get("ENABLE_POST_PREVIEW_CACHE"):
     CACHES["post_preview"] = {
@@ -107,3 +115,8 @@ CSP_IMG_SRC += (
 )
 
 ELASTICSEARCH_SYNONYMS_HOME = './search/resources'
+
+# Add django-cprofile-middleware to enable lightweight local profiling.
+# The middleware's profiling is only available if DEBUG=True
+MIDDLEWARE += ("django_cprofile_middleware.middleware.ProfilerMiddleware",)
+DJANGO_CPROFILE_MIDDLEWARE_REQUIRE_STAFF = False

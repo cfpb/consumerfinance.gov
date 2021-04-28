@@ -110,22 +110,24 @@
                 'note': '<strong>Apply for additional grants and scholarships:</strong> Ask the financial aid office and your school counselor (if you’re currently in high school) for help. <a href="https://studentaid.gov/understand-aid/types/scholarships" target="_blank" class="external-link" rel="noreferrer noopener">The Department of Education has more ideas here.</a>' | safe
             } %}
             {% call() expandable(expandable_settings) %}
-                {{
-                    input.render({
-                        'label': 'Federal Pell Grants',
-                        'id': 'plan__pellGrants',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="grant_pell"'
-                    })
-                }}
-                {{
-                    input.render({
-                        'label': 'Federal SEOG grant',
-                        'id': 'plan__seog',
-                        'value': '0',
-                        'data_attribute': 'data-financial-item="grant_seog"'
-                    })
-                }}
+                <div class="undergrad-content">
+                    {{
+                        input.render({
+                            'label': 'Federal Pell Grants',
+                            'id': 'plan__pellGrants',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="grant_pell"'
+                        })
+                    }}
+                    {{
+                        input.render({
+                            'label': 'Federal SEOG grant',
+                            'id': 'plan__seog',
+                            'value': '0',
+                            'data_attribute': 'data-financial-item="grant_seog"'
+                        })
+                    }}
+                </div>
                 {{
                     input.render({
                         'label': 'Other federal grants',
@@ -254,7 +256,7 @@
             {% endcall %}
 
             {% set expandable_settings = {
-                'label': 'Other resources',
+                'label': 'Other sources',
                 'value': '$99,999',
                 'is_editable': 'True',
                 'data_attribute': 'data-financial-item="total_otherResources"',
@@ -473,9 +475,13 @@
                 <h3 class="other-loan-options">Additional loan options</h3>
                 <p> If you still have uncovered costs after working with the financial aid office to exhaust all the options listed above, you and your family have two more loan options to consider: </p>
                 <ul>
-                    <li class="undergrad-content"><strong>Federal Parent PLUS loan</strong>: For dependent students at participating schools, parents and stepparents may be able to apply for a Parent PLUS loan from the U.S. Department of Education. Check with the financial aid office before including this in your plan.</li>
+                    <div class="dependent-content">
+                        <li><strong>Federal Parent PLUS loan</strong>: For dependent students at participating schools, parents and stepparents may be able to apply for a Parent PLUS loan from the U.S. Department of Education. Check with the financial aid office before including this in your plan.</li>
+                    </div>
 
-                    <li class="graduate-content"><strong>Direct PLUS loan (aka Grad PLUS)</strong>: Graduate students can apply for a Direct PLUS loan from the U.S. Department of Education.</li>
+                    <div class="graduate-content">
+                        <li><strong>Direct PLUS loan (aka Grad PLUS)</strong>: Graduate students can apply for a Direct PLUS loan from the U.S. Department of Education.</li>
+                    </div>
 
                     <li><strong>Private student loan</strong>: You or a family member can apply for a private student loan from a bank or credit union. Students without credit history are typically required to have a family member cosign as a fellow borrower on the loan.</li>
                 </ul>
@@ -484,13 +490,21 @@
                     true,
                     'Know before you go',
                     '<ul>
-                        <li><strong>Accessibility</strong>: <span class="undergrad-content">Parent</span><span class="graduate-content">Grad</span> PLUS Loans are typically easier to qualify for than private loans. All borrowers can save money by comparison shopping—apply to multiple lenders to get the best terms.</li>
+                        <div class="dependent-content">
+                            <li><strong>Accessibility</strong>: <span class="undergrad-content">Parent</span><span class="graduate-content">Grad</span> PLUS Loans are typically easier to qualify for than private loans. All borrowers can save money by comparison shopping—apply to multiple lenders to get the best terms.</li>
+                        </div>
 
-                        <li><strong>Cost</strong>: For borrowers and cosigners with strong credit, private loans may offer lower interest rates than <span class="undergrad-content">Parent</span> <span class="graduate-content">Grad</span> PLUS loans — but watch out for variable interest rates, which can increase in the future. Any borrower can save money on interest by starting repayment as soon as possible.</li>
+                        <div class="dependent-content">
+                            <li><strong>Cost</strong>: For borrowers and cosigners with strong credit, private loans may offer lower interest rates than <span class="undergrad-content">Parent</span> <span class="graduate-content">Grad</span> PLUS loans&emdash;but watch out for variable interest rates, which can increase in the future. Any borrower can save money on interest by starting repayment as soon as possible.</li>
+                        </div>
 
-                        <li><strong>Protections</strong>: <span class="undergrad-content">Parent PLUS loans offer some, but not all, of the protections as Federal Direct Loans to students.</span> Private loans are not legally required to offer the same borrower protections and repayment options as any federal loans.</li>
+                        <div class="independent-content">
+                            <li><strong>Cost</strong>: You may be able to reduce the cost of the loan by comparison shopping — apply to multiple lenders to get the best terms. Watch out for variable interest rates, which can increase in the future. You can save money on interest by starting repayment as soon as possible.</li>
+                        </div>
 
-                        <li><strong>Risks</strong>: With both types of loans, borrowers and cosigners risk harm to their credit score if the debt is not repaid on time. Defaulting on a <span class="undergrad-content">federal</span> <span class="graudate-content">PLUS</span> loan can lead to garnishment of federal tax refunds and Social Security payments. Parents and other family members should consider whether they have saved enough for emergencies and retirement when deciding whether to borrow money for their student’s education.</li>
+                        <li><strong>Protections</strong>: <span class="dependent-content">Parent PLUS loans offer some, but not all, of the protections as Federal Direct Loans to students.</span> Private loans are not legally required to offer the same borrower protections and repayment options as any federal loans.</li>
+
+                        <li><strong>Risks</strong>: <span class="dependent-content">With both types of loans, borrowers</span><span class="independent-content">Borrowers</span> and cosigners risk harm to their credit score if the debt is not repaid on time. Defaulting on a <span class="undergrad-content">federal</span> <span class="graudate-content">PLUS</span> loan can lead to garnishment of federal tax refunds and Social Security payments. Parents and other family members should consider whether they have saved enough for emergencies and retirement when deciding whether to borrow money for their student’s education.</li>
 
                         <li><strong>Further guidance</strong>: <a href="https://studentaid.gov/understand-aid/types/loans/federal-vs-private/" target="_blank" class="external-link" rel="noreferrer noopener">Visit the U.S. Department of Education for a detailed discussion of loan options.</a> You can also contact the school’s financial aid office.</li>
                     </ul>' | safe
@@ -538,7 +552,7 @@
                         ) }}
                     {% endcall %}
                 </div>
-                <div class="plus-loan-expandable undergrad-content">
+                <div class="plus-loan-expandable dependent-content">
                     {% set expandable_settings = {
                         'label': 'Parent PLUS loan' | safe,
                         'value': '$0',

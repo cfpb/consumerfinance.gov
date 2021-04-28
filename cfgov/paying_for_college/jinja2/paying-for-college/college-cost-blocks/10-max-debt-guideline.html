@@ -1,16 +1,45 @@
 <section class="college-costs_tool-section college-costs_tool-section__debt-guideline" data-tool-section="max-debt-guideline">
-    <h2>Could this be too much debt?</h2>
-    <p>A guideline that some find helpful: If you’re borrowing more than you’re likely to earn in your first year out of school, then you should consider whether you might be taking on more debt than you'll be able to afford. <span data-state-based-visibility="program-is-selected">The projected total debt shown below is just for this program and does not include prior student loans; if you have other student debt, include that in your calculations.</span></p>
+    <h1>Could this be too much debt?</h1>
+    <p class="lead-paragraph"><strong>A common guideline:</strong> Keep your student loan total below your first-year salary out of school. If your debt will be higher than your salary, consider whether it might be more debt than you can afford.</p>
 
-    {{ number_callout.render({
-            'header': 'Projected total debt',
-            'data_attribute': 'data-financial-item="debt_totalAtGrad"',
-            'additional_classes': 'number-callout__large',
-            'value': '$0'
-        })
-    }}
+    <h2>1. Estimate your total debt at graduation.</h2>
 
-    <p>Assuming similar borrowing each year</p>
+    <div>
+        {{
+            input.render({
+                'label': 'Current debt from prior schooling',
+                'helper_text': 'What is your current total balance on all student loans you have already taken out? For federal loans, go to <a href="link" target="_blank" class="external-link" rel="noreferrer noopener">studentaid.gov</a>. For private loans, check with your servicer. If you\'re  not sure what you have, start with your <a href="link" target="_blank" class="external-link" rel="noreferrer noopener">credit report</a>.',
+                'id': 'existing-debt__amount',
+                'value': '0',
+                'data_attribute': 'data-financial-item="existingDebt_amount"'
+            })
+        }}
+    </div>
+
+    <div class="text-item__bigger equation-row__bottom-line">
+        {{
+            text_item.render({
+                'label': 'Estimated new debt for upcoming schooling',
+                'value': '[debt at graduation]',
+                'helper_text': 'The U.S. Department of Education sets the interest rate on federal student loans each July. If you are using this tool prior to July 1 for loans you will receive after July 1, then the interest rate may be different from what you see here.',
+                'type': 'text',
+                'data_attribute': 'data-financial-item="debt_programDebtAtGrad"'
+            })
+        }}
+    </div>
+
+    <div class="equation-row">
+            {{
+                text_item.render({
+                    'label': 'Estimated total debt at graduation',
+                    'helper_text': 'This total debt includes <span data-financial-item="debt_existingDebtInterestAtGrad">$0</span> of interest on your current debt over the length of your program.',
+                    'value': '$99,999',
+                    'type': 'subtotal',
+                    'status': '',
+                    'data_attribute': 'data-financial-item="debt_totalAtGrad"'
+                })
+            }}
+    </div>
 
     <div data-state-based-visibility="uncovered-costs">
     {{ notification.render(
@@ -21,6 +50,12 @@
     ) }}
     </div>
 
+    <h2 class="step-2">2. Check if your estimated total debt is less than the median salary of <span data-school-item="school"></span></h2>
+
+    <div class="college-costs_chart" id="max-debt-guideline_chart"></div>
+
+    <p class="median-salary-note"><strong>Note:</strong> Median salary is for financially-aided students working and not enrolled in school 6 years after starting at this school. It includes students who did not graduate. Students tend to overestimate their starting salaries. A median is the middle&emdash;half of the studebts make more, but half make less.</p>
+
     <div data-state-based-visibility="no-program-selected">
         {{ notification.render(
             'information',
@@ -29,22 +64,8 @@
             'Your actual salary will depend on factors like your field of work and where you live. <a href="https://www.bls.gov/bls/blswage.htm" target="_blank" class="external-link" rel="noreferrer noopener">Visit the BLS Wage Data site for more information.</a>' | safe
         ) }}
     </div>
+
     <div class="debt-guideline_salary-info">
-    {{ number_callout.render({
-                'header': 'Median salary of this <span class="no-program-selected">school\'s recent students</span><span data-state-based-visibility="program-is-selected">program\'s graduates</span>' | safe,
-                'data_attribute': 'data-financial-item="salary_annual"',
-                'additional_classes': 'number-callout__large',
-                'value': '$0'
-            })
-        }}
-
-
-        <p class="undergrad-content">Median earnings of federally-aided students working and not enrolled 6 years after starting at this school—includes students who did not graduate</p>
-        <p class="graduate-content">Median first-year earnings of federally-aided program graduates who were working and not enrolled during the first year following graduation</p>
-
-        <h4>Your projected debt vs. the median <span class="no-program-selected">salary of recent students</span><span data-state-based-visibility="program-is-selected">first-year salary of program graduates</span></h4>
-
-        <div id="max-debt-guideline_chart"></div>
 
         <div data-state-based-visibility="debt-rule-violation">
             {{ notification.render(
