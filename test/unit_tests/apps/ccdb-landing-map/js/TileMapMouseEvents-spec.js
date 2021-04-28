@@ -1,10 +1,6 @@
 import 'regenerator-runtime/runtime';
-import
-* as d3
-  from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/node_modules/d3-selection';
-import
-* as sut
-  from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap.js';
+import * as d3 from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/node_modules/d3-selection';
+import * as sut from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/TileMap.js';
 
 describe( 'Tile map: mouse events', () => {
   it( 'can mouseOut tiles', () => {

@@ -1,4 +1,5 @@
-import goalReducer, {
+import {
+  goalReducer,
   GOAL_TIMELINES,
   initialState,
   updateGoalAction,

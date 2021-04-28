@@ -1,6 +1,4 @@
-import
-* as analytics
-  from '../../../../../cfgov/unprocessed/apps/regulations3k/js/analytics.js';
+import * as analytics from '../../../../../cfgov/unprocessed/apps/regulations3k/js/analytics.js';
 
 /* eslint-disable max-lines-per-function, no-undefined */
 describe( 'The Regs3K analytics', () => {

@@ -1,7 +1,11 @@
 import 'regenerator-runtime/runtime';
 import * as sinon from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/node_modules/sinon';
-import Chart from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js';
-import landingMap from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/landing-map.js';
+import {
+  Chart
+} from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart.js';
+import {
+  landingMap
+} from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/landing-map.js';
 import { simulateEvent } from '../../../../util/simulate-event';
 
 

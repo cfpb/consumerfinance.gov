@@ -1,6 +1,6 @@
-import
-FormModel
-  from '../../../../../cfgov/unprocessed/js/modules/util/FormModel';
+import {
+  FormModel
+} from '../../../../../cfgov/unprocessed/js/modules/util/FormModel';
 
 const HTML_SNIPPET = `
 <form method="get" action=".">

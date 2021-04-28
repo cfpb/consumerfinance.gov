@@ -1,6 +1,6 @@
-import
-jsLoader
-  from '../../../../../cfgov/unprocessed/js/modules/util/js-loader';
+import {
+  jsLoader
+} from '../../../../../cfgov/unprocessed/js/modules/util/js-loader';
 
 describe( 'loadScript method', () => {
 

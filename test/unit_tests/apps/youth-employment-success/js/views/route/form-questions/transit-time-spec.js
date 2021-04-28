@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
-import transitTimeView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/transit-time';
+import {
+  transitTimeView
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/transit-time';
 import {
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,

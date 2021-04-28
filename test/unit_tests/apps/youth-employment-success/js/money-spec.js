@@ -1,4 +1,6 @@
-import money from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/money';
+import {
+  money
+} from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/money';
 
 describe( 'money helpers', () => {
   describe( '.toDollars', () => {

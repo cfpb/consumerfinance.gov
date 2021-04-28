@@ -1,9 +1,12 @@
-import budgetReducer, {
+import {
+  budgetReducer,
   initialState,
   updateEarnedAction,
   updateSpentAction
 } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/budget-reducer';
-import { UNDEFINED } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import {
+  UNDEFINED
+} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
 
 describe( 'budgetReducer', () => {
   it( 'returns an initial state when it recevives an unsupported action type', () => {

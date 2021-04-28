@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
-import budgetFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/budget';
+import {
+  budgetFormView
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/budget';
 import mockStore from '../../../../../mocks/store';
 
 const HTML = `

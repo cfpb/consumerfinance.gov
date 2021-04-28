@@ -1,4 +1,6 @@
-import Store from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/stores/map.js';
+import {
+  Store
+} from '../../../../../../cfgov/unprocessed/js/organisms/MortgagePerformanceTrends/stores/map.js';
 let store;
 
 describe( 'Mortgage Performance map store', () => {

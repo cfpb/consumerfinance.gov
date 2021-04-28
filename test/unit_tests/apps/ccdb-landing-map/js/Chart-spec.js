@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
-import
-Chart
-  from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart';
+import {
+  Chart
+} from '../../../../../cfgov/unprocessed/apps/ccdb-landing-map/js/Chart';
 
 describe( 'chart constructor', () => {
   beforeEach( () => {

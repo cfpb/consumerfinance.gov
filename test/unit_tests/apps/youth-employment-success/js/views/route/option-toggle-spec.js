@@ -1,5 +1,7 @@
 import { simulateEvent } from '../../../../../../util/simulate-event';
-import routeOptionToggleView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-toggle';
+import {
+  routeOptionToggleView
+ } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-toggle';
 
 const HTML = `
   <button class="${ routeOptionToggleView.CLASSES.BUTTON }"></buton>

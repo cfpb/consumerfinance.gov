@@ -1,12 +1,16 @@
 import { simulateEvent } from '../../../../../../../util/simulate-event';
-import milesView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/miles';
+import {
+  milesView
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/miles';
 import mockStore from '../../../../../../mocks/store';
 import {
   clearMilesAction,
   updateMilesAction,
   updateMilesToActionPlan
 } from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import { PLAN_TYPES } from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import {
+  PLAN_TYPES
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
 import TODO_FIXTURE from '../../../../fixtures/todo-alert';
 import TodoNotificationMock from '../../../../mocks/todo-notification';
 
