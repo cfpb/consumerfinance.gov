@@ -75,6 +75,7 @@ class FilterableListMixin(RoutablePageMixin):
 
         form_data, has_active_filters = self.get_form_data(request.GET)
         filterable_search = self.get_filterable_search()
+        has_unfiltered_results = filterable_search.count() > 0
         form = self.get_form_class()(
             form_data,
             wagtail_block=self.get_filterable_list_wagtail_block(),
@@ -98,7 +99,7 @@ class FilterableListMixin(RoutablePageMixin):
             'get_secondary_nav_items': get_secondary_nav_items,
             'has_active_filters': has_active_filters,
             'has_archived_posts': has_archived_posts,
-            'has_unfiltered_results': filterable_search.count() > 0,
+            'has_unfiltered_results': has_unfiltered_results,
         })
 
         return context
