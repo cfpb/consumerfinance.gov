@@ -1,9 +1,5 @@
 export class PfcFinancialPathToGraduation {
 
-  click( name ) {
-    cy.get( '.a-btn' ).contains( name ).click();
-  }
-
   clickGetStarted() {
     cy.get( '.btn__get-started' ).click();
   }
@@ -51,5 +47,10 @@ export class PfcFinancialPathToGraduation {
 
   actionPlan( name ) {
     cy.get( `#action-plan_${ name }` ).check( { force: true } );
+  }
+
+  costsQuestionChoice( name ) {
+    cy.get( `label[for="costs-offer-radio_${ name }"]` ).click();
+    cy.get( '#costs-offer-button' ).click();
   }
 }

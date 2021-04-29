@@ -1,6 +1,9 @@
 .o-simple-chart {
   max-width: 670px;
-  margin-bottom: unit( 45 / @base-font-size-px, em );
+  margin-bottom: unit( 60 / @base-font-size-px, em );
+  .chart-anchor, &:hover, &:visited {
+    color: @text;
+  }
   h2 {
     margin-top: 0;
   }
@@ -16,7 +19,7 @@
   }
 
   .o-simple-chart_subtitle {
-    margin: 0 0 unit(15 / @base-font-size-px, em) 0;
+    margin: 0 0 unit(20 / @base-font-size-px, em) 0;
   }
 
   .o-simple-chart_selects {
@@ -121,7 +124,11 @@
       font-size: @base-font-size-px;
       font-weight: 400;
       &:first-child{
-        transform:translate(48px,-28px)
+        transform:translate(48px,-28px);
+        .respond-to-max( 600px, {
+          transform:translate(128px,-28px)
+        })
+
       }
     }
   }

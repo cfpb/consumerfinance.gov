@@ -18,11 +18,12 @@ describe( 'Paying For College', () => {
       page.searchResults().should( 'be.visible' );
       page.clickSearchResult( 'Harvard University' );
       page.selectProgram( 'type', 'certificate' );
+      page.selectProgram( 'years-spent', 'n' );
       page.selectProgram( 'length', '1' );
       page.selectProgram( 'housing', 'on-campus' );
       page.selectProgram( 'dependency', 'dependent' );
       page.clickNextStep();
-      page.click( 'No' );
+      page.costsQuestionChoice( 'no' );
       page.setText( 'costs__tuition-fees', '50000' );
       page.setText( 'costs__room-board', '25000' );
       page.setText( 'costs__otherDirect-board', '12500' );
@@ -42,11 +43,12 @@ describe( 'Paying For College', () => {
       page.searchResults().should( 'be.visible' );
       page.clickSearchResult( 'Harvard University' );
       page.selectProgram( 'type', 'associates' );
+      page.selectProgram( 'years-spent', 'n' );
       page.selectProgram( 'length', '2' );
       page.selectProgram( 'housing', 'off-campus' );
       page.selectProgram( 'dependency', 'dependent' );
       page.clickNextStep( );
-      page.click( 'Yes' );
+      page.costsQuestionChoice( 'yes' );
       page.setText( 'costs__tuition-fees', '100000' );
       page.setText( 'costs__room-board', '50000' );
       page.setText( 'costs__otherDirect-board', '25000' );
@@ -66,10 +68,11 @@ describe( 'Paying For College', () => {
       page.searchResults().should( 'be.visible' );
       page.clickSearchResult( 'Harvard University' );
       page.selectProgram( 'type', 'graduate' );
+      page.selectProgram( 'years-spent', 'n' );
       page.selectProgram( 'length', '4' );
       page.selectProgram( 'housing', 'off-campus' );
       page.clickNextStep( );
-      page.click( 'No' );
+      page.costsQuestionChoice( 'no' );
       page.setText( 'costs__tuition-fees', '400000' );
       page.setText( 'costs__room-board', '200000' );
       page.setText( 'costs__otherDirect-board', '100000' );
@@ -83,8 +86,6 @@ describe( 'Paying For College', () => {
         cy.wrap( el ).should( 'contain', '$797,500' );
       } );
       page.clickNextStep( );
-      page.setText( 'grants__pell', '9000' );
-      page.setText( 'grants__seog', '10000' );
       page.setText( 'grants__otherFederal', '11000' );
       page.setText( 'grants__state', '12000' );
       page.setText( 'grants__school', '13000' );
@@ -95,7 +96,7 @@ describe( 'Paying For College', () => {
       page.setText( 'scholarships__state', '17000' );
       page.setText( 'scholarships__school', '18000' );
       page.setText( 'scholarships__other', '19000' );
-      cy.get( '[data-financial-item="total_grantsScholarships"]' ).should( 'contain', '$158,500' );
+      cy.get( '[data-financial-item="total_grantsScholarships"]' ).should( 'contain', '$139,500' );
       page.clickNextStep( );
       page.setText( 'workStudy__workStudy', '50000' );
       cy.get( '[data-financial-item="total_workStudy"]' ).should( 'contain', '$50,000' );
@@ -112,7 +113,7 @@ describe( 'Paying For College', () => {
       page.setText( 'loans__nonprofitLoan', '40000' );
       page.setText( 'loans__nonprofitLoanRate', '3' );
       page.setText( 'loans__nonprofitLoanFee', '2' );
-      cy.get( '[data-financial-item="total_publicLoans"]' ).should( 'contain', '$197,700' );
+      cy.get( '[data-financial-item="total_publicLoans"]' ).first().should( 'contain', '$197,700' );
       page.clickNextStep( );
       page.setText( 'savings__personal', '10000' );
       page.setText( 'savings__family', '20000' );
@@ -140,11 +141,12 @@ describe( 'Paying For College', () => {
       page.searchResults().should( 'be.visible' );
       page.clickSearchResult( 'Harvard University' );
       page.selectProgram( 'type', 'bachelors' );
+      page.selectProgram( 'years-spent', 'n' );
       page.selectProgram( 'length', '3' );
       page.selectProgram( 'housing', 'on-campus' );
       page.selectProgram( 'dependency', 'dependent' );
       page.clickNextStep( );
-      page.click( 'Yes' );
+      page.costsQuestionChoice( 'yes' );
       page.setText( 'costs__tuition-fees', '200000' );
       page.setText( 'costs__room-board', '100000' );
       page.setText( 'costs__otherDirect-board', '50000' );
@@ -170,7 +172,7 @@ describe( 'Paying For College', () => {
       page.setText( 'scholarships__state', '1000' );
       page.setText( 'scholarships__school', '2000' );
       page.setText( 'scholarships__other', '3000' );
-      cy.get( '[data-financial-item="total_grantsScholarships"]' ).should( 'contain', '$54,793' );
+      cy.get( '[data-financial-item="total_grantsScholarships"]' ).first().should( 'contain', '$54,793' );
       page.clickNextStep( );
       page.setText( 'workStudy__workStudy', '50000' );
       cy.get( '[data-financial-item="total_workStudy"]' ).should( 'contain', '$50,000' );
@@ -187,7 +189,7 @@ describe( 'Paying For College', () => {
       page.setText( 'loans__nonprofitLoan', '40000' );
       page.setText( 'loans__nonprofitLoanRate', '3' );
       page.setText( 'loans__nonprofitLoanFee', '2' );
-      cy.get( '[data-financial-item="total_publicLoans"]' ).should( 'contain', '$197,700' );
+      cy.get( '[data-financial-item="total_publicLoans"]' ).first().should( 'contain', '$197,700' );
       page.clickNextStep( );
       page.setText( 'savings__personal', '10000' );
       page.setText( 'savings__family', '20000' );
@@ -196,7 +198,7 @@ describe( 'Paying For College', () => {
       page.setText( 'income__jobOnCampus', '50000' );
       page.setText( 'income__employerAssist', '60000' );
       page.setText( 'income_otherFunding', '70000' );
-      cy.get( '[data-financial-item="total_otherResources"]' ).should( 'contain', '$280,000' );
+      cy.get( '[data-financial-item="total_otherResources"]' ).first().should( 'contain', '$280,000' );
       page.clickNextStep( );
       page.clickNextStep( );
       page.clickNextStep( );
