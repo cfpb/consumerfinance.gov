@@ -2,6 +2,7 @@ from collections import Counter
 from datetime import date
 
 from django import forms
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
@@ -121,14 +122,57 @@ class FilterableListForm(forms.Form):
         self.wagtail_block = kwargs.pop('wagtail_block')
         self.filterable_categories = kwargs.pop('filterable_categories')
 
+        # This cache key is used for caching authors, topics, page_ids, and
+        # the full set of Elasticsearch results for this form used to generate
+        # them.
+        # Default the cache key prefix to this form's hash if it's not
+        # provided.
+        self.cache_key_prefix = kwargs.pop('cache_key_prefix', hash(self))
+
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
         clean_categories(selected_categories=self.data.get('categories'))
 
-        self.all_filterable_results = self.filterable_search.get_raw_results()
-        page_ids = [result.meta.id for result in self.all_filterable_results]
+        self.all_filterable_results = self.get_all_filterable_results()
+        page_ids = self.get_all_page_ids()
         self.set_topics(page_ids)
         self.set_authors(page_ids)
+
+    def get_all_filterable_results(self):
+        """ Get all filterable document results from Elasticsearch
+
+        This set of results is used to populate the list of all page_ids,
+        below, which is in turn used for populating topics and authors
+        relevant to those pages.
+
+        This first document in this result set is also used to determine the
+        earliest post date, also below, when a to_date is given but
+        from_date is not.
+        """
+        # Cache the full list of filterable results. This avoids having to
+        # generate the same list with every request. When a filterable page is
+        # is saved, the cache key for this fix prefix will be deleted.
+        all_filterable_results = cache.get(
+            f"{self.cache_key_prefix}-all_filterable_results"
+        )
+        if all_filterable_results is None:
+            all_filterable_results = self.filterable_search.get_raw_results()
+            cache.set(
+                f"{self.cache_key_prefix}-all_filterable_results",
+                all_filterable_results,
+                3600,
+            )
+        return all_filterable_results
+
+    def get_all_page_ids(self):
+        """ Return a list of all possible filterable page ids """
+        page_ids = cache.get(f"{self.cache_key_prefix}-page_ids")
+        if page_ids is None:
+            page_ids = [
+                result.meta.id for result in self.all_filterable_results
+            ]
+            cache.set(f"{self.cache_key_prefix}-page_ids", page_ids, 3600)
+        return page_ids
 
     def get_categories(self):
         categories = self.cleaned_data.get('categories')
@@ -186,16 +230,29 @@ class FilterableListForm(forms.Form):
     # Populate Topics' choices
     def set_topics(self, page_ids):
         if self.wagtail_block:
-            self.fields['topics'].choices = self.wagtail_block.block \
-                .get_filterable_topics(page_ids, self.wagtail_block.value)
+            # Cache the topics for this filterable list form to avoid
+            # repeated database lookups of the same data.
+            topics = cache.get(f"{self.cache_key_prefix}-topics")
+            if topics is None:
+                topics = self.wagtail_block.block.get_filterable_topics(
+                    page_ids,
+                    self.wagtail_block.value
+                )
+                cache.set(f"{self.cache_key_prefix}-topics", topics, 3600)
+
+            self.fields['topics'].choices = topics
 
     # Populate Authors' choices
     def set_authors(self, page_ids):
-        authors = Tag.objects.filter(
-            v1_cfgovauthoredpages_items__content_object__id__in=page_ids
-        ).values_list('slug', 'name')
-        options = self.prepare_options(arr=authors)
-
+        # Cache the authors for this filterable list form to avoid
+        # repeated database lookups of the same data.
+        options = cache.get(f"{self.cache_key_prefix}-authors")
+        if options is None:
+            authors = Tag.objects.filter(
+                v1_cfgovauthoredpages_items__content_object__id__in=page_ids
+            ).values_list('slug', 'name')
+            options = self.prepare_options(arr=authors)
+            cache.set(f"{self.cache_key_prefix}-authors", options, 3600)
         self.fields['authors'].choices = options
 
     def clean(self):

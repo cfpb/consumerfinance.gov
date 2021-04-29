@@ -77,6 +77,7 @@ class FilterableListMixin(RoutablePageMixin):
             wagtail_block=self.get_filterable_list_wagtail_block(),
             filterable_categories=self.filterable_categories,
             filterable_search=filterable_search,
+            cache_key_prefix=self.pk,
         )
         filter_data = self.process_form(request, form)
 
