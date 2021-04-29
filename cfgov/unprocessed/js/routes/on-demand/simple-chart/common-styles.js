@@ -98,6 +98,11 @@ const styles = {
           chart: {
             spacingLeft: 0
           },
+          legend: {
+            align: 'left',
+            margin: 0,
+            padding: 0
+          },
           yAxis: {
             title: {
               x: 0,

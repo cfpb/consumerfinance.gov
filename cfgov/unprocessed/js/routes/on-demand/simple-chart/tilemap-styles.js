@@ -6,6 +6,7 @@ const tilemap = {
   plotOptions: {
     tilemap: {
       tileShape: 'square',
+      pointRange: 0.8,
       dataLabels: {
         enabled: true,
         format: '{point.state}',
@@ -31,10 +32,25 @@ const tilemap = {
     ...styles.legend
   },
   chart: {
-    width: 670,
-    height: 450,
-    spacingBottom: -275,
+    maxWidth: 670,
+    height: 550,
+    spacingBottom: -325,
     type: 'tilemap'
+  },
+  responsive: {
+    rules: [
+      {
+        condition: {
+          maxWidth: 660
+        },
+        chartOptions: {
+          chart: {
+            height: 450,
+            spacingBottom: -275
+          }
+        }
+      }
+    ]
   }
 };
 

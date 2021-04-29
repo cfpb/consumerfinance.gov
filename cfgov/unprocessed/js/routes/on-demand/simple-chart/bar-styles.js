@@ -6,6 +6,9 @@ const bar = {
     ...styles.chart,
     type: 'column'
   },
+  legend: {
+    enabled: false
+  },
   plotOptions: {
     series: {
       states: {
