@@ -65,6 +65,9 @@ class FilterableListMixin(RoutablePageMixin):
             prefix=self.get_filterable_root()
         )
 
+    def get_cache_key_prefix(self):
+        return self.url
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(
             request, *args, **kwargs
@@ -77,7 +80,7 @@ class FilterableListMixin(RoutablePageMixin):
             wagtail_block=self.get_filterable_list_wagtail_block(),
             filterable_categories=self.filterable_categories,
             filterable_search=filterable_search,
-            cache_key_prefix=self.pk,
+            cache_key_prefix=self.get_cache_key_prefix(),
         )
         filter_data = self.process_form(request, form)
 
@@ -157,9 +160,6 @@ class FilterableListMixin(RoutablePageMixin):
             self.get_template(request, *args, **kwargs),
             context
         )
-
-        # Set a shorter TTL in Akamai
-        response['Edge-Control'] = 'cache-maxage=10m'
 
         # Set noindex for crawlers if needed
         if self.do_not_index:

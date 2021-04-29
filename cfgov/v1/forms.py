@@ -160,7 +160,6 @@ class FilterableListForm(forms.Form):
             cache.set(
                 f"{self.cache_key_prefix}-all_filterable_results",
                 all_filterable_results,
-                3600,
             )
         return all_filterable_results
 
@@ -171,7 +170,7 @@ class FilterableListForm(forms.Form):
             page_ids = [
                 result.meta.id for result in self.all_filterable_results
             ]
-            cache.set(f"{self.cache_key_prefix}-page_ids", page_ids, 3600)
+            cache.set(f"{self.cache_key_prefix}-page_ids", page_ids)
         return page_ids
 
     def get_categories(self):
@@ -238,7 +237,7 @@ class FilterableListForm(forms.Form):
                     page_ids,
                     self.wagtail_block.value
                 )
-                cache.set(f"{self.cache_key_prefix}-topics", topics, 3600)
+                cache.set(f"{self.cache_key_prefix}-topics", topics)
 
             self.fields['topics'].choices = topics
 
@@ -252,7 +251,7 @@ class FilterableListForm(forms.Form):
                 v1_cfgovauthoredpages_items__content_object__id__in=page_ids
             ).values_list('slug', 'name')
             options = self.prepare_options(arr=authors)
-            cache.set(f"{self.cache_key_prefix}-authors", options, 3600)
+            cache.set(f"{self.cache_key_prefix}-authors", options)
         self.fields['authors'].choices = options
 
     def clean(self):
