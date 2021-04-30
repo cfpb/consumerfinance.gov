@@ -66,7 +66,7 @@ def invalidate_filterable_list_caches(sender, **kwargs):
 
     # There's nothing to do if this page isn't a filterable page
     if not isinstance(page, AbstractFilterPage):
-        pass
+        return
 
     # Determine which filterable list page this page might belong
     # First, check to see if it has any ancestors that are
@@ -114,11 +114,5 @@ def invalidate_filterable_list_caches(sender, **kwargs):
     batch.purge()
 
 
-page_published.connect(
-    invalidate_filterable_list_caches,
-    sender=AbstractFilterPage
-)
-page_unpublished.connect(
-    invalidate_filterable_list_caches,
-    sender=AbstractFilterPage
-)
+page_published.connect(invalidate_filterable_list_caches)
+page_unpublished.connect(invalidate_filterable_list_caches)
