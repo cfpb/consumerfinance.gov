@@ -1,11 +1,11 @@
-import { simulateEvent } from '../../../../../../util/simulate-event';
+import { simulateEvent } from '../../../../../../util/simulate-event.js';
 import goalsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/goals';
 import {
   updateGoalAction,
   updateGoalImportanceAction,
   updateGoalStepsAction,
   updateGoalTimelineAction
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/goal-reducer';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/goal-reducer.js';
 
 const HTML = `
   <form class="js-yes-goals">
