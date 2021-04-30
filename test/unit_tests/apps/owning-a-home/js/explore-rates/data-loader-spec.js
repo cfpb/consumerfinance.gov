@@ -3,7 +3,9 @@ const domLoader = require( BASE_JS_PATH + 'js/explore-rates/data-loader' );
 
 // Mock the XmlHttpRequest call from axios.
 import axios from '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios';
-jest.mock( '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios' );
+jest.mock(
+  '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios'
+);
 const mockResp = { data: 'mock data' };
 axios.get.mockImplementation( () => Promise.resolve( mockResp ) );
 jest.spyOn( axios, 'get' );

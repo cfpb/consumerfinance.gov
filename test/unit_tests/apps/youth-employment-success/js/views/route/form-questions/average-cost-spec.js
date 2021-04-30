@@ -1,13 +1,13 @@
-import { simulateEvent } from '../../../../../../../util/simulate-event';
-import averageCostView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/average-cost';
+import { simulateEvent } from '../../../../../../../util/simulate-event.js';
+import averageCostView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/average-cost.js';
 import {
   updateAverageCostAction,
   updateCostToActionPlan,
   updateIsMonthlyCostAction
-} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import TODO_FIXTURE from '../../../../fixtures/todo-alert';
-import TodoNotificationMock from '../../../../mocks/todo-notification';
-import mockStore from '../../../../../../mocks/store';
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer.js';
+import TODO_FIXTURE from '../../../../fixtures/todo-alert.js';
+import TodoNotificationMock from '../../../../mocks/todo-notification.js';
+import mockStore from '../../../../../../mocks/store.js';
 
 const HTML = `
   <div class="content-l content-l_col-2-3 block__sub-micro m-yes-average-cost">

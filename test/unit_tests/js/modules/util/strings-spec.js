@@ -2,7 +2,7 @@ import {
   formatTimestamp,
   stringEscape,
   stringMatch
-} from '../../../../../cfgov/unprocessed/js/modules/util/strings';
+} from '../../../../../cfgov/unprocessed/js/modules/util/strings.js';
 let string;
 let control;
 

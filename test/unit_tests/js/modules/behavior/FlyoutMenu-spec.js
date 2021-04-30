@@ -1,4 +1,4 @@
-import FlyoutMenu from '../../../../../cfgov/unprocessed/js/modules/behavior/FlyoutMenu';
+import FlyoutMenu from '../../../../../cfgov/unprocessed/js/modules/behavior/FlyoutMenu.js';
 import MoveTransition from '@cfpb/cfpb-atomic-component/src/utilities/transition/MoveTransition';
 
 const HTML_SNIPPET = `

@@ -1,11 +1,13 @@
-import reviewChoiceView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/choice';
-import mockStore from '../../../../../mocks/store';
-import { simulateEvent } from '../../../../../../util/simulate-event';
-import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+import reviewChoiceView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/choice.js';
+import mockStore from '../../../../../mocks/store.js';
+import { simulateEvent } from '../../../../../../util/simulate-event.js';
+import {
+  toArray
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util.js';
 import {
   updateRouteChoiceAction
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer';
-import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer.js';
+import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map.js';
 
 const CLASSES = reviewChoiceView.CLASSES;
 
@@ -62,14 +64,16 @@ describe( 'reviewChoiceGoal', () => {
 
     it( 'hides the final plan review section', () => {
       expect(
-        dom.querySelector( `.${ CLASSES.REVIEW_PLAN }` ).classList.contains( 'u-hidden' )
+        dom.querySelector( `.${ CLASSES.REVIEW_PLAN }` )
+          .classList.contains( 'u-hidden' )
       ).toBeTruthy();
     } );
 
     it( 'disables the form controls', () => {
       const button = dom.querySelector( `.${ CLASSES.BUTTON }` );
 
-      choiceInputs.forEach( input => expect( input.getAttribute( 'disabled' ) ).toBe( 'disabled' )
+      choiceInputs.forEach(
+        input => expect( input.getAttribute( 'disabled' ) ).toBe( 'disabled' )
       );
       expect( button.getAttribute( 'disabled' ) ).toBe( '' );
     } );
@@ -117,7 +121,10 @@ describe( 'reviewChoiceGoal', () => {
 
       if ( route ) {
         expect(
-          wrapper.querySelector( 'label' ).textContent.indexOf( transportationMap[route.transportation] ) !== -1
+          wrapper.querySelector( 'label' )
+            .textContent.indexOf(
+              transportationMap[route.transportation]
+            ) !== -1
         ).toBeTruthy();
       }
     } );
@@ -135,7 +142,9 @@ describe( 'reviewChoiceGoal', () => {
 
     store.subscriber()( {}, state );
 
-    expect( dom.querySelector( `.${ CLASSES.BUTTON }` ).getAttribute( 'disabled' ) ).toBeFalsy();
+    expect(
+      dom.querySelector( `.${ CLASSES.BUTTON }` ).getAttribute( 'disabled' )
+    ).toBeFalsy();
   } );
 
   it( 'shows the rest of the review section when the review choice button is clicked', () => {
@@ -152,7 +161,10 @@ describe( 'reviewChoiceGoal', () => {
 
     simulateEvent( 'click', dom.querySelector( `.${ CLASSES.BUTTON }` ) );
 
-    expect( dom.querySelector( `.${ CLASSES.REVIEW_PLAN }` ).classList.contains( 'u-hidden' ) ).toBeFalsy();
+    expect(
+      dom.querySelector( `.${ CLASSES.REVIEW_PLAN }` )
+        .classList.contains( 'u-hidden' )
+    ).toBeFalsy();
   } );
 
   it( 'does not enable the radio buttons if no transportation options are specified', () => {
@@ -166,7 +178,11 @@ describe( 'reviewChoiceGoal', () => {
 
     store.subscriber()( {}, state );
 
-    choiceInputs.forEach( input => expect( input.getAttribute( 'disabled' ) ).toBeTruthy() );
+    choiceInputs.forEach(
+      input => expect(
+        input.getAttribute( 'disabled' )
+      ).toBeTruthy()
+    );
   } );
 
   it( 'calls its hook fn after showing the review plans', () => {

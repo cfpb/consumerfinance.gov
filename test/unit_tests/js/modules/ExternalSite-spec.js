@@ -1,4 +1,4 @@
-import ExternalSite from '../../../../cfgov/unprocessed/js/modules/ExternalSite';
+import ExternalSite from '../../../../cfgov/unprocessed/js/modules/ExternalSite.js';
 
 const HTML_SNIPPET = `
 <main class="content">

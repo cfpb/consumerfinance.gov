@@ -1,12 +1,12 @@
-import { simulateEvent } from '../../../../../../../util/simulate-event';
-import daysPerWeekView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week';
+import { simulateEvent } from '../../../../../../../util/simulate-event.js';
+import daysPerWeekView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week.js';
 import {
   clearDaysPerWeekAction,
   updateDaysPerWeekAction,
   updateDaysToActionPlan
-} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import TODO_FIXTURE from '../../../../fixtures/todo-alert';
-import TodoNotificationMock from '../../../../mocks/todo-notification';
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer.js';
+import TODO_FIXTURE from '../../../../fixtures/todo-alert.js';
+import TodoNotificationMock from '../../../../mocks/todo-notification.js';
 
 const HTML = `
   <div class="m-yes-days-per-week">
@@ -58,7 +58,7 @@ describe( 'DaysPerWeekView', () => {
       expect( store.subscribe ).toHaveBeenCalled();
     } );
 
-    it( 'initializes the todo notification component on init', () => {
+    it( 'initializes todo notification component on init', () => {
       expect( todoNotification.init.mock.calls.length ).toBe( 1 );
     } );
   } );
@@ -186,7 +186,7 @@ describe( 'DaysPerWeekView', () => {
         expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
       } );
 
-      it( 'dispatches the correct action when daysPerWeek is filled in', () => {
+      it( 'dispatches correct action when daysPerWeek is filled in', () => {
         const mock = store.dispatch.mock;
         store.subscriber()( prevState, state );
 

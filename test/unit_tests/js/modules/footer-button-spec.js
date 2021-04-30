@@ -1,7 +1,7 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 
-import { simulateEvent } from '../../../util/simulate-event';
+import { simulateEvent } from '../../../util/simulate-event.js';
 
 let footerBtnDom;
 

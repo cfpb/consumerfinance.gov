@@ -1,4 +1,4 @@
-import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification';
+import Notification from '../../../../cfgov/unprocessed/js/molecules/Notification.js';
 
 const HTML_SNIPPET = `
 <div class="m-notification">

@@ -1,6 +1,7 @@
-import notificationsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications';
-import { toArray } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { ALERT_TYPES } from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/notifications';
+import notificationsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications.js';
+import {
+  ALERT_TYPES
+} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/notifications.js';
 
 const CLASSES = notificationsView.CLASSES;
 const NOTIFICATION_CLASS = 'm-notification';
@@ -71,7 +72,8 @@ describe( 'notificationsView', () => {
     expect( dom.classList.contains( 'u-hidden' ) ).toBeTruthy();
   } );
 
-  it( 'toggles its container element when a there is an active notification', () => {
+  it( 'toggles its container element when ' +
+      'there is an active notification', () => {
     view.render( {
       alertValues: {
         ...alertSettings,
@@ -119,14 +121,21 @@ describe( 'notificationsView', () => {
         },
         alertTarget } );
 
-      const alert = alertTarget.querySelector( `.${ CLASSES.INVALID_ALERT }` );
-      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector(
+        `.${ CLASSES.INVALID_ALERT }`
+      );
+      const alertNotification = alert.querySelector(
+        `.${ NOTIFICATION_CLASS }`
+      );
 
-      expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
+      expect( alertNotification.classList.contains(
+        `${ VISIBLE_NOTIFICATION_CLASS }`
+      ) ).toBeTruthy();
       expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
-    it( 'displays the invalid with todos alert when data is invalid and there are todos', () => {
+    it( 'displays the invalid with todos alert when ' +
+        'data is invalid and there are todos', () => {
       view.render( {
         alertValues: {
           ...alertSettings,
@@ -135,10 +144,16 @@ describe( 'notificationsView', () => {
         },
         alertTarget } );
 
-      const alert = alertTarget.querySelector( `.${ CLASSES.INCOMPLETE_ALERT }` );
-      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector(
+        `.${ CLASSES.INCOMPLETE_ALERT }`
+      );
+      const alertNotification = alert.querySelector(
+        `.${ NOTIFICATION_CLASS }`
+      );
 
-      expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
+      expect( alertNotification.classList.contains(
+        `${ VISIBLE_NOTIFICATION_CLASS }`
+      ) ).toBeTruthy();
       expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
@@ -150,14 +165,21 @@ describe( 'notificationsView', () => {
         },
         alertTarget } );
 
-      const alert = alertTarget.querySelector( `.${ CLASSES.IN_BUDGET_ALERT }` );
-      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector(
+        `.${ CLASSES.IN_BUDGET_ALERT }`
+      );
+      const alertNotification = alert.querySelector(
+        `.${ NOTIFICATION_CLASS }`
+      );
 
-      expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
+      expect( alertNotification.classList.contains(
+        `${ VISIBLE_NOTIFICATION_CLASS }`
+      ) ).toBeTruthy();
       expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
-    it( 'displays the in-budget-with-todos alert when data is in budget and there are todos', () => {
+    it( 'displays the in-budget-with-todos alert when ' +
+        'data is in budget and there are todos', () => {
       view.render( {
         alertValues: {
           ...alertSettings,
@@ -166,14 +188,20 @@ describe( 'notificationsView', () => {
         },
         alertTarget } );
 
-      const alert = alertTarget.querySelector( `.${ CLASSES.IN_BUDGET_W_TODOS }` );
-      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector(
+        `.${ CLASSES.IN_BUDGET_W_TODOS }`
+      );
+      const alertNotification = alert.querySelector(
+        `.${ NOTIFICATION_CLASS }`
+      );
 
-      expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
+      expect( alertNotification.classList.contains(
+        `${ VISIBLE_NOTIFICATION_CLASS }`
+      ) ).toBeTruthy();
       expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
-    it( 'displays the out of budget alert when data is out of budget', () => {
+    it( 'displays out of budget alert when data is out of budget', () => {
       view.render( {
         alertValues: {
           ...alertSettings,
@@ -181,14 +209,21 @@ describe( 'notificationsView', () => {
         },
         alertTarget } );
 
-      const alert = alertTarget.querySelector( `.${ CLASSES.OOB_ALERT }` );
-      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector(
+        `.${ CLASSES.OOB_ALERT }`
+      );
+      const alertNotification = alert.querySelector(
+        `.${ NOTIFICATION_CLASS }`
+      );
 
-      expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
+      expect( alertNotification.classList.contains(
+        `${ VISIBLE_NOTIFICATION_CLASS }`
+      ) ).toBeTruthy();
       expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
-    it( 'displays the out-of-budget-with-todos alert when data is out of budget and there are todos', () => {
+    it( 'displays out-of-budget-with-todos alert when ' +
+        'data is out of budget and there are todos', () => {
       view.render( {
         alertValues: {
           ...alertSettings,
@@ -197,14 +232,20 @@ describe( 'notificationsView', () => {
         },
         alertTarget } );
 
-      const alert = alertTarget.querySelector( `.${ CLASSES.OOB_W_TODOS }` );
-      const alertNotification = alert.querySelector( `.${ NOTIFICATION_CLASS }` );
+      const alert = alertTarget.querySelector(
+        `.${ CLASSES.OOB_W_TODOS }`
+      );
+      const alertNotification = alert.querySelector(
+        `.${ NOTIFICATION_CLASS }`
+      );
 
-      expect( alertNotification.classList.contains( `${ VISIBLE_NOTIFICATION_CLASS }` ) ).toBeTruthy();
+      expect( alertNotification.classList.contains(
+        `${ VISIBLE_NOTIFICATION_CLASS }`
+      ) ).toBeTruthy();
       expect( alertTarget.childNodes.length ).toBe( 1 );
     } );
 
-    it( 'does not display anything when an invalid bitmask is supplied', () => {
+    it( 'does not display anything when invalid bitmask is supplied', () => {
       view.render( {
         alertValues: {
           ...alertSettings,

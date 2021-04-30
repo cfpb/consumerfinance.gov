@@ -1,4 +1,4 @@
-import EmailPopup from '../../../../cfgov/unprocessed/js/organisms/EmailPopup';
+import EmailPopup from '../../../../cfgov/unprocessed/js/organisms/EmailPopup.js';
 
 let emailPopup;
 

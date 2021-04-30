@@ -1,4 +1,6 @@
-const simulateEvent = require( '../../../../util/simulate-event' ).simulateEvent;
+const simulateEvent = require(
+  '../../../../util/simulate-event'
+).simulateEvent;
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 
 const app = require( `${ BASE_JS_PATH }/js/search.js` );
@@ -70,7 +72,8 @@ describe( 'The Regs3K search page', () => {
 
     simulateEvent( 'submit', form );
 
-    expect( global.location.assign ).toBeCalledWith( 'http://localhost/?q=money&regs=1002' );
+    expect( global.location.assign )
+      .toBeCalledWith( 'http://localhost/?q=money&regs=1002' );
   } );
 
   it( 'should clear a filter when its X icon is clicked', () => {
@@ -142,6 +145,7 @@ describe( 'The Regs3K search page', () => {
 
     simulateEvent( 'click', clearIcon );
     setTimeout( () => {
+      // eslint-disable-next-line no-console
       expect( console.error ).toBeCalled();
       done();
     }, 100 );

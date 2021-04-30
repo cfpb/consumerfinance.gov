@@ -1,5 +1,5 @@
 import Summary from '../../../../cfgov/unprocessed/js/organisms/Summary.js';
-import { simulateEvent } from '../../../util/simulate-event';
+import { simulateEvent } from '../../../util/simulate-event.js';
 
 const HTML_SNIPPET = `
 <div class="o-summary o-summary__mobile"

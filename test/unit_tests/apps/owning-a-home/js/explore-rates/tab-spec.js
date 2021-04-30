@@ -1,7 +1,7 @@
 const BASE_JS_PATH = '../../../../../../cfgov/unprocessed/apps/owning-a-home/';
 const tab = require( BASE_JS_PATH + 'js/explore-rates/tab' );
 
-import { simulateEvent } from '../../../../../util/simulate-event';
+import { simulateEvent } from '../../../../../util/simulate-event.js';
 
 const HTML_SNIPPET = `
   <section class="next-steps tabs-layout">

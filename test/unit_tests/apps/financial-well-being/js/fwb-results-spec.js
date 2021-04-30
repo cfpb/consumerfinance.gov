@@ -1,5 +1,5 @@
-import fwbResults from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-results';
-import { simulateEvent } from '../../../../util/simulate-event';
+import fwbResults from '../../../../../cfgov/unprocessed/apps/financial-well-being/js/fwb-results.js';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 
 const SELECTED_CLASS = 'comparison-chart_toggle-button__selected';
 const HIDDEN_CLASS = 'u-hidden';

@@ -1,5 +1,5 @@
-import { simulateEvent } from '../../../../../util/simulate-event';
-import printButton from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/print-button';
+import { simulateEvent } from '../../../../../util/simulate-event.js';
+import printButton from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/print-button.js';
 
 const CLASSES = printButton.CLASSES;
 const HTML = `

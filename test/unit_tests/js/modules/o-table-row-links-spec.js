@@ -2,7 +2,7 @@ const simpleTableRowLinks = require(
   '../../../../cfgov/unprocessed/js/modules/o-table-row-links'
 );
 
-import { simulateEvent } from '../../../util/simulate-event';
+import { simulateEvent } from '../../../util/simulate-event.js';
 
 let tableDom;
 let linkDom;

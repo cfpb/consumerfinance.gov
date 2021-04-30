@@ -1,13 +1,13 @@
-import { simulateEvent } from '../../../../../../../util/simulate-event';
-import transitTimeView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/transit-time';
+import { simulateEvent } from '../../../../../../../util/simulate-event.js';
+import transitTimeView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/transit-time.js';
 import {
   updateTimeToActionPlan,
   updateTransitTimeHoursAction,
   updateTransitTimeMinutesAction
-} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import TODO_FIXTURE from '../../../../fixtures/todo-alert';
-import mockStore from '../../../../../../mocks/store';
-import TodoNotificationMock from '../../../../mocks/todo-notification';
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer.js';
+import TODO_FIXTURE from '../../../../fixtures/todo-alert.js';
+import mockStore from '../../../../../../mocks/store.js';
+import TodoNotificationMock from '../../../../mocks/todo-notification.js';
 
 const CLASSES = transitTimeView.CLASSES;
 
@@ -31,7 +31,6 @@ const HTML = `
 
 describe( 'transitTimeView', () => {
   const routeIndex = 0;
-  const CLASSES = transitTimeView.CLASSES;
   const todoNotification = new TodoNotificationMock();
   const dispatch = jest.fn();
   let el;
@@ -57,8 +56,10 @@ describe( 'transitTimeView', () => {
     expect( store.subscribe.mock.calls.length ).toBe( 1 );
   } );
 
-  it( 'dispatches the correct action when hours field is changed', () => {
-    const hoursEl = document.querySelector( '[data-js-name="transitTimeHours"]' );
+  it( 'dispatches correct action when hours field is changed', () => {
+    const hoursEl = document.querySelector(
+      '[data-js-name="transitTimeHours"]'
+    );
     const hours = '1';
 
     hoursEl.value = hours;
@@ -75,8 +76,10 @@ describe( 'transitTimeView', () => {
     );
   } );
 
-  it( 'dispatches the correct event when the minutes field is updated', () => {
-    const minutesEl = document.querySelector( '[data-js-name="transitTimeMinutes"]' );
+  it( 'dispatches correct event when minutes field is updated', () => {
+    const minutesEl = document.querySelector(
+      '[data-js-name="transitTimeMinutes"]'
+    );
     const minutes = '20';
 
     minutesEl.value = minutes;
@@ -93,7 +96,7 @@ describe( 'transitTimeView', () => {
     );
   } );
 
-  it( 'dispatches the correct event when the not sure checkbox is clicked', () => {
+  it( 'dispatches correct event when not sure checkbox is clicked', () => {
     const checkboxEl = document.querySelector( '[name="timeToActionPlan"]' );
 
     simulateEvent( 'click', checkboxEl );
@@ -108,7 +111,7 @@ describe( 'transitTimeView', () => {
     );
   } );
 
-  it( 'initializes the todo notification component on init', () => {
+  it( 'initializes todo notification component on init', () => {
     expect( todoNotification.init.mock.calls.length ).toBe( 1 );
   } );
 
@@ -128,7 +131,7 @@ describe( 'transitTimeView', () => {
     expect( todoNotification.hide.mock.calls.length ).toBe( 1 );
   } );
 
-  it( 'updates the minutes field when the current state has changed', () => {
+  it( 'updates minutes field when current state has changed', () => {
     const state = {
       routes: {
         routes: [ {
@@ -144,7 +147,7 @@ describe( 'transitTimeView', () => {
     expect( minutesEl.value ).toBe( '0' );
   } );
 
-  it( 'updates the hours field when the current state has changed', () => {
+  it( 'updates hours field when current state has changed', () => {
     const state = {
       routes: {
         routes: [ {

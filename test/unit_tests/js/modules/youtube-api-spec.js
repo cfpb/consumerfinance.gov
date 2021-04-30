@@ -1,4 +1,4 @@
-import youTubeAPI from '../../../../cfgov/unprocessed/js/modules/youtube-api';
+import youTubeAPI from '../../../../cfgov/unprocessed/js/modules/youtube-api.js';
 
 describe( 'youtube-api', () => {
 

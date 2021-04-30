@@ -1,5 +1,5 @@
-import * as treeTraversal from '../../../../../cfgov/unprocessed/js/modules/util/tree-traversal';
-import Tree from '../../../../../cfgov/unprocessed/js/modules/Tree';
+import * as treeTraversal from '../../../../../cfgov/unprocessed/js/modules/util/tree-traversal.js';
+import Tree from '../../../../../cfgov/unprocessed/js/modules/Tree.js';
 
 describe( 'Tree traversal', () => {
 

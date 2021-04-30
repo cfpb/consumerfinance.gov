@@ -1,14 +1,16 @@
-import { simulateEvent } from '../../../../../../../util/simulate-event';
-import milesView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/miles';
-import mockStore from '../../../../../../mocks/store';
+import { simulateEvent } from '../../../../../../../util/simulate-event.js';
+import milesView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/miles.js';
+import mockStore from '../../../../../../mocks/store.js';
 import {
   clearMilesAction,
   updateMilesAction,
   updateMilesToActionPlan
-} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import { PLAN_TYPES } from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
-import TODO_FIXTURE from '../../../../fixtures/todo-alert';
-import TodoNotificationMock from '../../../../mocks/todo-notification';
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer.js';
+import {
+  PLAN_TYPES
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items.js';
+import TODO_FIXTURE from '../../../../fixtures/todo-alert.js';
+import TodoNotificationMock from '../../../../mocks/todo-notification.js';
 
 const HTML = `
   <div class="m-yes-miles">
@@ -48,7 +50,7 @@ describe( 'milesView', () => {
       expect( store.subscribe ).toHaveBeenCalled();
     } );
 
-    it( 'initializes the todo notification component on init', () => {
+    it( 'initializes todo notification component on init', () => {
       expect( todoNotification.init.mock.calls.length ).toBe( 1 );
     } );
   } );
@@ -72,7 +74,7 @@ describe( 'milesView', () => {
       );
     } );
 
-    it( 'calls the correct action when the `not sure` checkbox is clicked', () => {
+    it( 'calls correct action when the `not sure` checkbox is clicked', () => {
       const notSureEl = document.querySelector( 'input[type="checkbox"]' );
       const mock = store.dispatch.mock;
 
