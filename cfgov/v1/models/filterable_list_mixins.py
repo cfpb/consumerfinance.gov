@@ -34,6 +34,10 @@ class FilterableListMixin(RoutablePageMixin):
     def get_form_class():
         return FilterableListForm
 
+    @staticmethod
+    def get_search_class():
+        return FilterablePagesDocumentSearch
+
     def get_filterable_list_wagtail_block(self):
         return next(
             (b for b in self.content if b.block_type == 'filter_controls'),
@@ -41,7 +45,6 @@ class FilterableListMixin(RoutablePageMixin):
         )
 
     def get_filterable_root(self):
-
         filterable_list_block = self.get_filterable_list_wagtail_block()
         if filterable_list_block is None:
             return '/'
@@ -51,14 +54,19 @@ class FilterableListMixin(RoutablePageMixin):
 
         return '/'
 
-    def get_filterable_queryset(self):
+    def get_filterable_search(self):
+        """Return a FilterablePagesDocumentSearch object"""
         site = self.get_site()
 
         if not site:
-            return self.get_model_class().objects.none()
+            return None
 
-        return FilterablePagesDocumentSearch(
-            prefix=self.get_filterable_root()).search()
+        return self.get_search_class()(
+            prefix=self.get_filterable_root()
+        )
+
+    def get_cache_key_prefix(self):
+        return self.url
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(
@@ -66,25 +74,32 @@ class FilterableListMixin(RoutablePageMixin):
         )
 
         form_data, has_active_filters = self.get_form_data(request.GET)
-        queryset = self.get_filterable_queryset()
+        filterable_search = self.get_filterable_search()
+        has_unfiltered_results = filterable_search.count() > 0
+        form = self.get_form_class()(
+            form_data,
+            wagtail_block=self.get_filterable_list_wagtail_block(),
+            filterable_categories=self.filterable_categories,
+            filterable_search=filterable_search,
+            cache_key_prefix=self.get_cache_key_prefix(),
+        )
+        filter_data = self.process_form(request, form)
+
         # flag check to enable or disable archive filter options
         if flag_enabled('HIDE_ARCHIVE_FILTER_OPTIONS', request=request):
             has_archived_posts = False
         else:
-            has_archived_posts = queryset.filter(is_archived='yes').count() > 0
-        form = self.get_form_class()(
-            form_data,
-            filterable_pages=queryset,
-            wagtail_block=self.get_filterable_list_wagtail_block(),
-            filterable_root=self.get_filterable_root(),
-            filterable_categories=self.filterable_categories
-        )
+            has_archived_posts = any(
+                result for result in form.all_filterable_results
+                if result.is_archived == 'yes'
+            )
 
         context.update({
-            'filter_data': self.process_form(request, form),
+            'filter_data': filter_data,
             'get_secondary_nav_items': get_secondary_nav_items,
             'has_active_filters': has_active_filters,
             'has_archived_posts': has_archived_posts,
+            'has_unfiltered_results': has_unfiltered_results,
         })
 
         return context
@@ -147,9 +162,6 @@ class FilterableListMixin(RoutablePageMixin):
             context
         )
 
-        # Set a shorter TTL in Akamai
-        response['Edge-Control'] = 'cache-maxage=10m'
-
         # Set noindex for crawlers if needed
         if self.do_not_index:
             response['X-Robots-Tag'] = 'noindex'
@@ -170,7 +182,7 @@ class CategoryFilterableMixin:
     filterable_categories = []
     """Determines page categories to be filtered; see filterable_pages."""
 
-    def get_filterable_queryset(self):
+    def get_filterable_search(self):
         """Return the queryset of pages to be filtered by this page.
 
         The class property filterable_categories can be set to a list of page
@@ -179,6 +191,8 @@ class CategoryFilterableMixin:
         By default this is an empty list and all page tags are eligible.
         """
         category_names = get_category_children(self.filterable_categories)
-        return FilterablePagesDocumentSearch(
-            prefix=self.get_filterable_root(),
-            categories=category_names).search()
+        filterable_search = self.get_search_class()(
+            prefix=self.get_filterable_root()
+        )
+        filterable_search.filter_categories(categories=category_names)
+        return filterable_search
