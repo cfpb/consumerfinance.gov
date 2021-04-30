@@ -8,7 +8,7 @@ import {
   toArray,
   toPrecision,
   toggleCFNotification
-} from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+} from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util.js';
 
 const reducerStateA = {
   name: 'barbara',

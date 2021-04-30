@@ -4,7 +4,7 @@ import {
   TABLET,
   getBreakpointState,
   viewportIsIn
-} from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state';
+} from '../../../../../cfgov/unprocessed/js/modules/util/breakpoint-state.js';
 import varsBreakpoints from '@cfpb/cfpb-core/src/vars-breakpoints';
 
 /**

@@ -1,4 +1,4 @@
-import { simulateEvent } from '../../../../util/simulate-event';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/regulations3k';
 
 const HTML_SNIPPET = `

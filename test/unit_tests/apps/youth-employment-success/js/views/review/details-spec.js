@@ -1,11 +1,11 @@
-import reviewDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/details';
-import mockStore from '../../../../../mocks/store';
+import reviewDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/details.js';
+import mockStore from '../../../../../mocks/store.js';
 import {
   toArray
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util.js';
 import {
   PLAN_TYPES
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items.js';
 
 let state;
 

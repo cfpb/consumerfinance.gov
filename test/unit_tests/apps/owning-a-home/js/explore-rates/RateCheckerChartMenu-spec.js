@@ -7,7 +7,7 @@ const Highcharts = require(
   BASE_JS_PATH + 'node_modules/highcharts'
 );
 
-import { simulateEvent } from '../../../../../util/simulate-event';
+import { simulateEvent } from '../../../../../util/simulate-event.js';
 
 const STATE_OPEN = 'open';
 const STATE_CLOSED = 'closed';

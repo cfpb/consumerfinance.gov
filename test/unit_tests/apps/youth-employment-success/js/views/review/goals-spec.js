@@ -1,8 +1,8 @@
-import reviewGoalsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/goals';
-import mockStore from '../../../../../mocks/store';
+import reviewGoalsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/goals.js';
+import mockStore from '../../../../../mocks/store.js';
 import {
   toArray
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util.js';
 
 const HTML = `
 <div class="js-your-goals">

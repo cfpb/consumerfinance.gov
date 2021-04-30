@@ -1,4 +1,4 @@
-import FormSubmit from '../../../../cfgov/unprocessed/js/organisms/FormSubmit';
+import FormSubmit from '../../../../cfgov/unprocessed/js/organisms/FormSubmit.js';
 
 const BASE_CLASS = 'o-email-signup';
 const HTML_SNIPPET = `

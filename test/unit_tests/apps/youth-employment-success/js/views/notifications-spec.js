@@ -1,7 +1,7 @@
-import notificationsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications';
+import notificationsView from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/notifications.js';
 import {
   ALERT_TYPES
-} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/notifications';
+} from '../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/notifications.js';
 
 const CLASSES = notificationsView.CLASSES;
 const NOTIFICATION_CLASS = 'm-notification';

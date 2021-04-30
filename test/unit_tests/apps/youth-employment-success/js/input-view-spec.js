@@ -1,5 +1,5 @@
-import inputView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/input';
-import { simulateEvent } from '../../../../util/simulate-event';
+import inputView from '../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/input.js';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 
 const HTML = `
   <div>

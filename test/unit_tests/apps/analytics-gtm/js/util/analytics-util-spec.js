@@ -1,4 +1,4 @@
-import * as analyticsUtil from '../../../../../../cfgov/unprocessed/apps/analytics-gtm/js/util/analytics-util';
+import * as analyticsUtil from '../../../../../../cfgov/unprocessed/apps/analytics-gtm/js/util/analytics-util.js';
 
 const HTML_SNIPPET = `
   <div id="test-elem"></div>

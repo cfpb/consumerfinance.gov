@@ -1,4 +1,4 @@
-import { simulateEvent } from '../../../../util/simulate-event';
+import { simulateEvent } from '../../../../util/simulate-event.js';
 
 const app = require(
   '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js'

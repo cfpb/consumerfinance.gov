@@ -1,6 +1,6 @@
-import * as rateChecker from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/rate-checker';
+import * as rateChecker from '../../../../../../cfgov/unprocessed/apps/owning-a-home/js/explore-rates/rate-checker.js';
 import axios from '../../../../../../cfgov/unprocessed/apps/owning-a-home/node_modules/axios';
-import { simulateEvent } from '../../../../../util/simulate-event';
+import { simulateEvent } from '../../../../../util/simulate-event.js';
 
 // Mock the XmlHttpRequest call from axios.
 jest.mock(

@@ -1,13 +1,13 @@
-import reviewChoiceView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/choice';
-import mockStore from '../../../../../mocks/store';
-import { simulateEvent } from '../../../../../../util/simulate-event';
+import reviewChoiceView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/choice.js';
+import mockStore from '../../../../../mocks/store.js';
+import { simulateEvent } from '../../../../../../util/simulate-event.js';
 import {
   toArray
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util.js';
 import {
   updateRouteChoiceAction
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer';
-import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/choice-reducer.js';
+import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map.js';
 
 const CLASSES = reviewChoiceView.CLASSES;
 

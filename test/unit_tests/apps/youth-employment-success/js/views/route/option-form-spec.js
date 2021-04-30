@@ -1,5 +1,5 @@
-import { simulateEvent } from '../../../../../../util/simulate-event';
-import routeOptionFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form';
+import { simulateEvent } from '../../../../../../util/simulate-event.js';
+import routeOptionFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form.js';
 import {
   averageCostView,
   daysPerWeekView,
@@ -7,11 +7,11 @@ import {
   milesView,
   transitTimeView
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions';
-import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details.js';
 import {
   updateTransportationAction
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import mockStore from '../../../../../mocks/store';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer.js';
+import mockStore from '../../../../../mocks/store.js';
 
 jest.mock(
   '../../../../../../../cfgov/unprocessed/apps/' +

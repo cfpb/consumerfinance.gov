@@ -1,12 +1,12 @@
-import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details.js';
 import {
   toArray,
   toPrecision
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util.js';
 import {
   PLAN_TYPES
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
-import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items.js';
+import transportationMap from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/transportation-map.js';
 
 jest.mock(
   '../../../../../../../cfgov/unprocessed/apps/' +

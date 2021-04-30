@@ -1,12 +1,12 @@
-import { simulateEvent } from '../../../../../../../util/simulate-event';
-import daysPerWeekView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week';
+import { simulateEvent } from '../../../../../../../util/simulate-event.js';
+import daysPerWeekView from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions/days-per-week.js';
 import {
   clearDaysPerWeekAction,
   updateDaysPerWeekAction,
   updateDaysToActionPlan
-} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import TODO_FIXTURE from '../../../../fixtures/todo-alert';
-import TodoNotificationMock from '../../../../mocks/todo-notification';
+} from '../../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer.js';
+import TODO_FIXTURE from '../../../../fixtures/todo-alert.js';
+import TodoNotificationMock from '../../../../mocks/todo-notification.js';
 
 const HTML = `
   <div class="m-yes-days-per-week">
