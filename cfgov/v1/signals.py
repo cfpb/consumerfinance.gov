@@ -1,9 +1,17 @@
 from datetime import timedelta
+from itertools import chain
 
-from django.core.cache import caches
+from django.core.cache import cache, caches
 from django.utils import timezone
 
-from wagtail.core.signals import page_published
+from wagtail.contrib.frontend_cache.utils import PurgeBatch
+from wagtail.core.signals import page_published, page_unpublished
+
+from v1.models import AbstractFilterPage, CFGOVPage
+from v1.models.filterable_list_mixins import (
+    CategoryFilterableMixin, FilterableListMixin
+)
+from v1.util.ref import get_category_children
 
 
 def new_phi(user, expiration_days=90, locked_days=1):
@@ -46,3 +54,71 @@ def invalidate_post_preview(sender, **kwargs):
 
 
 page_published.connect(invalidate_post_preview)
+
+
+def invalidate_filterable_list_caches(sender, **kwargs):
+    """ Invalidate filterable list caches when necessary
+
+    When a filterable page is published or unpublished, we need to invalidate
+    the caches related to the filterable list page that it might belong to.
+    """
+    page = kwargs['instance']
+
+    # There's nothing to do if this page isn't a filterable page
+    if not isinstance(page, AbstractFilterPage):
+        pass
+
+    # Determine which filterable list page this page might belong
+    # First, check to see if it has any ancestors that are
+    # FilterableListMixins.
+    filterable_list_pages = page.get_ancestors().type(
+        FilterableListMixin
+    ).specific().all()
+
+    # Next, see if it belongs to any CategoryFilterableMixin filterable lists
+    page_categories = page.categories.values_list('name', flat=True)
+    category_filterable_list_pages = (
+        category_filterable_list_page
+        for category_filterable_list_page in CFGOVPage.objects.type(
+            CategoryFilterableMixin
+        ).specific()
+        if any(
+            category for category in page_categories
+            if category in get_category_children(
+                category_filterable_list_page.filterable_categories
+            )
+        )
+    )
+
+    # Combine parent filterable list pages and category filterable list pages
+    filterable_list_pages = list(chain(
+        filterable_list_pages,
+        category_filterable_list_pages
+    ))
+
+    # Create a frontend cache purge batch for invalidation
+    batch = PurgeBatch()
+
+    for filterable_list_page in filterable_list_pages:
+        cache_key_prefix = filterable_list_page.get_cache_key_prefix()
+
+        # Delete internal cache for the filterable list page
+        cache.delete(f"{cache_key_prefix}-all_filterable_results")
+        cache.delete(f"{cache_key_prefix}-page_ids")
+        cache.delete(f"{cache_key_prefix}-topics")
+        cache.delete(f"{cache_key_prefix}-authors")
+
+        # Invalidate the filterable list page in front-end cache
+        batch.add_page(filterable_list_page)
+
+    batch.purge()
+
+
+page_published.connect(
+    invalidate_filterable_list_caches,
+    sender=AbstractFilterPage
+)
+page_unpublished.connect(
+    invalidate_filterable_list_caches,
+    sender=AbstractFilterPage
+)
