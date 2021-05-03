@@ -59,9 +59,7 @@ class TestFilterableListMixin(TestCase):
             def get_site(self):
                 return None
 
-        self.assertFalse(
-            MockPageInDefaultSite().get_filterable_queryset().exists()
-        )
+        self.assertIsNone(MockPageInDefaultSite().get_filterable_search())
 
     # FilterableListMixin.set_do_not_index tests
     def test_do_not_index_is_false_by_default(self):
@@ -192,7 +190,8 @@ class FilterableListRelationsTestCase(ElasticsearchTestsMixin, TestCase):
         filter_controls['value']['filter_children'] = True
         self.set_filterable_controls(self.filter_controls)
 
-        qs = self.filterable_page.get_filterable_queryset()
+        filterable_search = self.filterable_page.get_filterable_search()
+        qs = filterable_search.search()
         self.assertEqual(qs.count(), 1)
         self.assertEqual(qs[0].pk, self.child_page.pk)
         self.assertEqual("/test/", self.filterable_page.get_filterable_root())

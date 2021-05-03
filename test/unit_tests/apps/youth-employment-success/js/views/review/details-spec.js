@@ -1,7 +1,13 @@
-import reviewDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/details';
-import mockStore from '../../../../../mocks/store';
-import { toArray } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util';
-import { PLAN_TYPES } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items';
+import reviewDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/review/details.js';
+import mockStore from '../../../../../mocks/store.js';
+import {
+  toArray
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/util.js';
+import {
+  PLAN_TYPES
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/data-types/todo-items.js';
+
+let state;
 
 const CLASSES = reviewDetailsView.CLASSES;
 
@@ -76,9 +82,11 @@ describe( 'reviewDetailsView', () => {
 
   describe.only( 'on state update', () => {
     const budget = { earned: 1, spent: 1 };
-    const actionPlanRoute = { transportation: 'Walk', actionPlanItems: [ PLAN_TYPES.MILES ]};
+    const actionPlanRoute = {
+      transportation: 'Walk', actionPlanItems: [ PLAN_TYPES.MILES ]
+    };
 
-    const state = {
+    state = {
       budget,
       routes: {
         routes: [
@@ -94,8 +102,9 @@ describe( 'reviewDetailsView', () => {
       expect( renderMock.mock.calls.length ).toBe( 2 );
     } );
 
-    it( 'hides the `Possible Option` headings when the user selects the `wait` choice', () => {
-      const state = {
+    it( 'hides the `Possible Option` headings when ' +
+        'the user selects the `wait` choice', () => {
+      state = {
         budget,
         routes: { routes: []},
         routeChoice: 'wait'
@@ -103,7 +112,9 @@ describe( 'reviewDetailsView', () => {
 
       store.subscriber()( {}, state );
 
-      const choiceHeadings = toArray( el.querySelectorAll( `.${ CLASSES.CHOICE_HEADING }` ) );
+      const choiceHeadings = toArray(
+        el.querySelectorAll( `.${ CLASSES.CHOICE_HEADING }` )
+      );
 
       choiceHeadings.forEach( ch => {
         expect( ch.classList.contains( 'u-hidden' ) ).toBeTruthy();
