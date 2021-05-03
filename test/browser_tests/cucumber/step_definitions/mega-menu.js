@@ -67,7 +67,8 @@ Then( 'the mega-menu organism should show menu when clicked',
 Then( 'the mega-menu organism should show the FourthMenuItem menu when clicked',
   async function() {
     await browser.driver.actions().click( _dom.triggerBtn ).perform();
-    await browser.driver.actions().click( _dom.triggerFourthMenuItem ).perform();
+    await browser.driver.actions()
+      .click( _dom.triggerFourthMenuItem ).perform();
     await expect( _dom.contentFourthMenuItem.isDisplayed() )
       .to.eventually.equal( true );
 

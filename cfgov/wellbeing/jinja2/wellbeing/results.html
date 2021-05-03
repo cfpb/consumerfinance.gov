@@ -726,3 +726,18 @@
         </p>
     </div>
 {% endblock %}
+
+{% block javascript scoped %}
+{{ super() }}
+<script async>
+  if (document.body.parentElement.className.indexOf('no-js') === -1) {
+    !function () {
+      {# Include site - wide JavaScript. #}
+      var s = [
+            '{{ static('apps/financial-well-being/js/results.js') }}'
+          ];
+      jsl(s);
+    }()
+  }
+</script>
+{% endblock %}
