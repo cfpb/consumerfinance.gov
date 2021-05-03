@@ -3,6 +3,7 @@ from unittest import mock
 
 from django.apps import apps
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.test import SimpleTestCase, TestCase, override_settings
@@ -1216,3 +1217,25 @@ class AnswerPageTest(TestCase):
         request = HttpRequest()
         request.GET.update({"page": "<script>Boo</script>"})
         self.assertEqual(validate_page_number(request, paginator), 1)
+
+    def test_validate_uniqueness_of_language_and_answer(self):
+        answer = baker.make(Answer)
+        answer.save()
+
+        page = AnswerPage(
+            slug="question-en",
+            title="Original question?"
+        )
+        self.ROOT_PAGE.add_child(instance=page)
+        page.answer_base = answer
+        page.full_clean()
+        page.save()
+
+        dup_page = AnswerPage(
+            slug="dup-question-en",
+            title="Duplicate question?"
+        )
+        dup_page.answer_base = answer
+
+        with self.assertRaises(ValidationError):
+            dup_page.full_clean()
