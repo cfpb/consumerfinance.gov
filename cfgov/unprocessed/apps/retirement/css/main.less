@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Retirement
+   ========================================================================== */
+
+// This is your project's main Less file.
+// Project-specific Less rules go after the imports.
+
+// Import Design System modules.
+@import (reference) 'cfpb-core.less';
+@import (reference) 'cfpb-icons.less';
+@import (reference) 'cfpb-buttons.less';
+@import (reference) 'cfpb-forms.less';
+@import (reference) 'cfpb-layout.less';
+@import (reference) 'cfpb-typography.less';
+@import (reference) 'cfpb-notifications.less';
+
+// Icon font path
+@cf-icon-path: '../fonts';
+
+// Webfont variables
+// This is the path for self-hosted fonts.
+@cf-fonts-path: '../webfonts';
+// Whether or not to override the local path and retrieve fonts from fonts.net.
+@use-font-cdn: true;
+
+// Import the Capital Framework enhancements
+@import (less) "cf-enhancements.less";
+
+// Import breadcrumbs less
+@import (less) "breadcrumbs.less";
+
+// import CFPB nemo theme header and footer styles
+.nemo {
+  @import "nemo.less";
+  // and a shim to override some things
+  @import "nemo-shim.less";
+}
+
+// Import the claiming.less file
+@import (less) "claiming.less";

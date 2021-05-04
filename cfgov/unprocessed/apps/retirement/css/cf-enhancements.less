@@ -1,0 +1,190 @@
+/* ==========================================================================
+   Capital Framework
+   Enhancements
+   ========================================================================== */
+
+// This is your project's CF enhancements.
+//
+// Whenever building enhancements or changes to existing CF components, write them here
+// to work out the details before contributing them back to a Capital Framework component
+//
+
+/* ==========================================================================
+   Full-width buttons on small screens
+   ========================================================================== */
+
+.a-btn__full-small {
+
+  .respond-to-max( @bp-xs-max, {
+    display: block;
+    width: 100%;
+    text-align: center;
+  } );
+
+  &.a-btn__link {
+    .respond-to-max( @bp-xs-max, {
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+    } );
+  }
+
+  & + & {
+
+    .respond-to-max( @bp-xs-max, {
+      margin-top: unit(10px / @base-font-size-px, em);
+      margin-left: auto;
+    } );
+  }
+}
+
+a.a-btn__full-small.a-btn__link {
+
+  .respond-to-max( @bp-xs-max, {
+    display: inline-block;
+  } );
+}
+
+/* ==========================================================================
+   Accessible bleedbar
+   ========================================================================== */
+
+.content__bleedbar {
+
+  .content_wrapper:after {
+    background-color: @gray-5;
+  }
+
+  .content_sidebar {
+    background-color: @gray-5;
+
+    .respond-to-min(801px, {
+      background-color: transparent;
+    });
+  }
+
+  .header-slug {
+    border-color: @gray-40;
+  }
+}
+
+/* ==========================================================================
+   Full-width-on-small-screen buttons
+   ========================================================================== */
+
+.a-btn__full {
+
+    .respond-to-max( @bp-xs-max, {
+        display: block;
+        width: 100%;
+        text-align: center;
+
+        + .a-btn__full {
+            margin-left: initial;
+        }
+    } );
+}
+
+/* ==========================================================================
+   Range slider
+   https://github.com/cfarm/cf-forms/blob/range/src/cf-forms.less
+   ========================================================================== */
+@input-range-bg:       @gray-80;
+@input-range-border:   @gray-40;
+@input-range-handle:   @gray-10;
+
+@input-inset-selected: @pacific-20;
+@input-border-focus:   @pacific;
+
+input[type=range] {
+    width: 100%;
+    padding-left: 0;
+    margin: 15px 0;
+    -webkit-appearance: none;
+    border: none;
+    &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 11px;
+        background: @input-range-bg;
+        border: 1px solid @input-range-border;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    &::-moz-range-track {
+        width: 100%;
+        height: 11px;
+        background: @input-range-bg;
+        border: 1px solid @input-range-border;
+        cursor: pointer;
+    }
+    &::-ms-track {
+        width: 100%;
+        border-width: 19px 0;
+        height: 11px;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+        cursor: pointer;
+    }
+    &::-webkit-slider-thumb {
+        width: 45px;
+        height: 45px;
+        margin-top: -18px;
+        -webkit-appearance: none;
+        border: 1px solid @input-range-border;
+        border-radius: 50%;
+        background: @input-range-handle;
+        cursor: pointer;
+    }
+    &::-moz-range-thumb {
+        width: 45px;
+        height: 45px;
+        background: @input-range-handle;
+        border: 1px solid @input-range-border;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    &::-ms-thumb {
+        width: 45px;
+        height: 45px;
+        background: @input-range-handle;
+        border: 1px solid @input-range-border;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    &::-ms-fill-lower {
+        background: @input-range-bg;
+        border: 1px solid @input-range-border;
+        border-radius: 2rem;
+    }
+    &::-ms-fill-upper {
+        background: @input-range-bg;
+        border: 1px solid @input-range-border;
+        border-radius: 2rem;
+    }
+    &:focus,
+    &.focus {
+        box-shadow: none;
+        outline: none;
+        &::-webkit-slider-thumb {
+            background: @input-inset-selected;
+            border: 2px solid @input-border-focus;
+        }
+
+        &::-moz-range-thumb {
+            background: @input-inset-selected;
+            border: 2px solid @input-border-focus;
+        }
+
+        &::-ms-thumb {
+            background: @input-inset-selected;
+            border: 2px solid @input-border-focus;
+        }
+    }
+}
+
+.wrapper__match-content {
+    .respond-to-min( @bp-sm-min, {
+        max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 ) !important;
+    } );
+}
