@@ -1,5 +1,5 @@
-import { simulateEvent } from '../../../../../../util/simulate-event';
-import routeOptionFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form';
+import { simulateEvent } from '../../../../../../util/simulate-event.js';
+import routeOptionFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/option-form.js';
 import {
   averageCostView,
   daysPerWeekView,
@@ -7,13 +7,16 @@ import {
   milesView,
   transitTimeView
 } from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/form-questions';
-import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details';
+import routeDetailsView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/route/details.js';
 import {
   updateTransportationAction
-} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer';
-import mockStore from '../../../../../mocks/store';
+} from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/reducers/route-option-reducer.js';
+import mockStore from '../../../../../mocks/store.js';
 
-jest.mock( '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/todo-notification' );
+jest.mock(
+  '../../../../../../../cfgov/unprocessed/apps/' +
+  'youth-employment-success/js/views/todo-notification'
+);
 
 const CLASSES = routeOptionFormView.CLASSES;
 const HTML = `
@@ -73,16 +76,19 @@ describe( 'routeOptionFormView', () => {
   beforeEach( () => {
     document.body.innerHTML = HTML;
     store = mockStore();
-    view = routeOptionFormView( document.querySelector( `.${ CLASSES.FORM }` ), {
-      store,
-      routeIndex: 0,
-      routeDetailsView: detailsView,
-      averageCostView: costViewMock,
-      daysPerWeekView: daysPerWeekViewMock,
-      drivingCostEstimateView: costEstimateView,
-      milesView: milesViewMock,
-      transitTimeView: transitViewMock
-    } );
+    view = routeOptionFormView(
+      document.querySelector( `.${ CLASSES.FORM }` ),
+      {
+        store,
+        routeIndex: 0,
+        routeDetailsView: detailsView,
+        averageCostView: costViewMock,
+        daysPerWeekView: daysPerWeekViewMock,
+        drivingCostEstimateView: costEstimateView,
+        milesView: milesViewMock,
+        transitTimeView: transitViewMock
+      }
+    );
     view.init();
   } );
 
@@ -104,7 +110,8 @@ describe( 'routeOptionFormView', () => {
     expect( store.subscribe.mock.calls.length ).toBe( 1 );
   } );
 
-  it( 'dispatches an action to update `transportation` with checkbox selection', () => {
+  it( 'dispatches an action to update `transportation` ' +
+      'with checkbox selection', () => {
     const radioEl = document.querySelectorAll( 'input[name="transpo"]' )[0];
 
     simulateEvent( 'click', radioEl );
@@ -112,10 +119,13 @@ describe( 'routeOptionFormView', () => {
     const mock = store.dispatch.mock;
 
     expect( mock.calls.length ).toBe( 1 );
-    expect( mock.calls[0][0] ).toEqual( updateTransportationAction( { routeIndex: 0, value: radioEl.value } ) );
+    expect( mock.calls[0][0] ).toEqual(
+      updateTransportationAction( { routeIndex: 0, value: radioEl.value } )
+    );
   } );
 
-  it( 'hides the transportation discount section when transportation method is Walk', () => {
+  it( 'hides transportation discount section when ' +
+      'transportation method is Walk', () => {
     const state = {
       routes: {
         routes: [ {
@@ -123,15 +133,15 @@ describe( 'routeOptionFormView', () => {
         } ]
       }
     };
-    let discountEl;
-
     store.subscriber()( {}, state );
 
-    discountEl = document.querySelector( `.${ CLASSES.DISCOUNT }` );
+    const discountEl = document.querySelector( `.${ CLASSES.DISCOUNT }` );
 
     expect( discountEl.classList.contains( 'u-hidden' ) ).toBeTruthy();
 
-    store.subscriber()( {}, { routes: { routes: [ { transportation: 'Drive' } ]}} );
+    store.subscriber()(
+      {}, { routes: { routes: [ { transportation: 'Drive' } ]}}
+    );
 
     expect( discountEl.classList.contains( 'u-hidden' ) ).toBeFalsy();
   } );

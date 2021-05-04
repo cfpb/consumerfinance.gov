@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-17 11:58-0500\n"
+"POT-Creation-Date: 2021-04-09 18:00-0400\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,11 +49,11 @@ msgstr "Ver todos los resultados para"
 msgid "Export Ask data"
 msgstr ""
 
-#: cfgov/settings/base.py:244
+#: cfgov/settings/base.py:242
 msgid "English"
 msgstr ""
 
-#: cfgov/settings/base.py:245
+#: cfgov/settings/base.py:243
 msgid "Spanish"
 msgstr ""
 
@@ -79,19 +79,19 @@ msgstr "Un sitio web oficial del gobierno federal de los Estados Unidos"
 msgid "Your browser does not support this audio player."
 msgstr ""
 
-#: jinja2/v1/_includes/blocks/feedback.html:53
+#: jinja2/v1/_includes/blocks/feedback.html:52
 msgid "Yes"
 msgstr "Sí"
 
-#: jinja2/v1/_includes/blocks/feedback.html:90
+#: jinja2/v1/_includes/blocks/feedback.html:89
 msgid "Additional comment"
 msgstr "Comentario adicional"
 
-#: jinja2/v1/_includes/blocks/feedback.html:91
+#: jinja2/v1/_includes/blocks/feedback.html:90
 msgid "optional"
 msgstr "opcional"
 
-#: jinja2/v1/_includes/blocks/feedback.html:95
+#: jinja2/v1/_includes/blocks/feedback.html:94
 msgid ""
 "Please do not share any personally identifiable information (PII), "
 "including, but not limited to: your name, address, phone number, email "
@@ -224,23 +224,6 @@ msgstr "/es/obtener-respuestas/buscar/"
 msgid "Search for your question"
 msgstr "Busca su pregunta"
 
-#: jinja2/v1/_includes/organisms/carousel.html:89
-msgid "Featured content"
-msgstr "Ítem destacado"
-
-#: jinja2/v1/_includes/organisms/carousel.html:90
-#: jinja2/v1/_includes/organisms/mega-menu.html:167
-msgid "Featured"
-msgstr "Destacado"
-
-#: jinja2/v1/_includes/organisms/carousel.html:95
-msgid "Previous featured content item"
-msgstr "Ítem destacado previo"
-
-#: jinja2/v1/_includes/organisms/carousel.html:99
-msgid "Next featured content item"
-msgstr "Siguiente ítem destacado"
-
 #: jinja2/v1/_includes/organisms/email-signup.html:53
 msgid "Email address"
 msgstr "Dirección email"
@@ -281,6 +264,10 @@ msgstr "https://gobiernousa.gov/"
 msgid "USA.gov"
 msgstr "GobiernoUSA.gov"
 
+#: jinja2/v1/_includes/organisms/mega-menu.html:167
+msgid "Featured"
+msgstr "Destacado"
+
 #: jinja2/v1/_includes/organisms/mega-menu.html:298
 msgid "Main menu"
 msgstr "Menú principal"
@@ -298,35 +285,37 @@ msgstr "Ver video en YouTube"
 msgid "Play video"
 msgstr "Ver video"
 
-#: jinja2/v1/_layouts/base.html:57
+#: jinja2/v1/_layouts/base.html:57 jinja2/v1/ask-cfpb/answer-page.html:9
 #: jinja2/v1/youth_employment_success/index.html:9
-#: legacy/templates/front/base_nonresponsive.html:28
-#: legacy/templates/front/base_update.html:47 v1/jinja2/v1/home_page.html:7
-#: v1/jinja2/v1/home_page.html:43
+#: legacy/templates/front/base_update.html:47 v1/jinja2/v1/home_page.html:6
+#: wellbeing/jinja2/wellbeing/about.html:4
+#: wellbeing/jinja2/wellbeing/error.html:7
+#: wellbeing/jinja2/wellbeing/home.html:4
+#: wellbeing/jinja2/wellbeing/results.html:9
 msgid "Consumer Financial Protection Bureau"
 msgstr "Oficina para la Protección Financiera del Consumidor"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:32
+#: jinja2/v1/ask-cfpb/answer-page.html:30
 msgid "last reviewed"
 msgstr "revisado"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:34
+#: jinja2/v1/ask-cfpb/answer-page.html:32
 msgid "updated"
 msgstr "actualizado"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:72
+#: jinja2/v1/ask-cfpb/answer-page.html:70
 msgid "Read full answer"
 msgstr "Leer más"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:78 jinja2/v1/ask-cfpb/see-all.html:78
+#: jinja2/v1/ask-cfpb/answer-page.html:76 jinja2/v1/ask-cfpb/see-all.html:78
 msgid "Don't see what you're looking for?"
 msgstr "¿No encuentra lo que busca?"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:81
+#: jinja2/v1/ask-cfpb/answer-page.html:79
 msgid "Browse related questions"
 msgstr "Otras preguntas"
 
-#: jinja2/v1/ask-cfpb/answer-page.html:94
+#: jinja2/v1/ask-cfpb/answer-page.html:92
 #: jinja2/v1/ask-cfpb/landing-page.html:82
 msgid "Learn more about"
 msgstr "Sepa más sobre"
@@ -412,111 +401,10 @@ msgid ""
 msgstr ""
 "Únase a la conversación. Síganos en %(twitter_link)s y en %(facebook_link)s."
 
-#: jinja2/v1/owning-a-home/_templates/ratings-form.html:10
-#: v1/models/feedback.py:15
-msgid "Was this page helpful to you?"
-msgstr "¿Fue útil esta página?"
-
 #: jobmanager/jinja2/jobmanager/job_listing_page.html:76
 msgid "Read full description"
 msgstr "Leer descripción completa"
 
-#: legacy/templates/common/forgot_password.html:24
-msgid "Email"
-msgstr ""
-
-#: legacy/templates/common/forgot_password.html:28
-msgid "Continue"
-msgstr ""
-
-#: legacy/templates/common/login.html:29
-msgid "Password:"
-msgstr ""
-
-#: legacy/templates/common/login.html:37
-msgid "Log in"
-msgstr ""
-
-#: legacy/templates/common/password_change_confirm.html:9
-#: legacy/templates/common/password_change_form.html:9
-msgid "Documentation"
-msgstr ""
-
-#: legacy/templates/common/password_change_confirm.html:10
-#: legacy/templates/common/password_change_form.html:11
-msgid "Change password"
-msgstr ""
-
-#: legacy/templates/common/password_change_confirm.html:12
-#: legacy/templates/common/password_change_form.html:13
-msgid "Log out"
-msgstr ""
-
-#: legacy/templates/common/password_change_confirm.html:16
-#: legacy/templates/common/password_change_form.html:18
-msgid "Home"
-msgstr ""
-
-#: legacy/templates/common/password_change_confirm.html:17
-#: legacy/templates/common/password_change_confirm.html:21
-#: legacy/templates/common/password_change_form.html:19
-#: legacy/templates/common/password_change_form.html:23
-#: legacy/templates/common/password_change_form.html:48
-msgid "Password change"
-msgstr ""
-
-#: legacy/templates/common/password_change_form.html:32
-msgid ""
-"\n"
-"        Please correct the error below."
-msgid_plural ""
-"Please correct the errors below.\n"
-"        "
-msgstr[0] ""
-msgstr[1] ""
-
-#: legacy/templates/common/password_change_form.html:50
-msgid ""
-"Please enter your old password, for security's sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
-msgstr ""
-
-#: legacy/templates/common/password_change_form.html:66
-msgid "Old password"
-msgstr ""
-
-#: legacy/templates/common/password_change_form.html:71
-msgid "New password"
-msgstr ""
-
-#: legacy/templates/common/password_change_form.html:76
-msgid "Password (again)"
-msgstr ""
-
-#: legacy/templates/common/password_change_form.html:83
-msgid "Change my password"
-msgstr ""
-
-#: legacy/templates/common/reset_password_confirm.html:5
-msgid "Login"
-msgstr ""
-
-#: legacy/templates/common/reset_password_confirm.html:5
-msgid "login"
-msgstr ""
-
-#: legacy/templates/common/reset_password_email.html:3
-msgid "Please follow the link below to reset your password:"
-msgstr ""
-
-#: legacy/templates/common/reset_password_email.html:7
-msgid "Your username (in case you've forgotten):"
-msgstr ""
-
-#: legacy/templates/front/base_nonresponsive.html:19
-#: legacy/templates/front/base_nonresponsive.html:20
-#: legacy/templates/front/base_nonresponsive.html:21
-#: legacy/templates/front/base_nonresponsive.html:22
 #: legacy/templates/front/base_update.html:24
 #: legacy/templates/front/base_update.html:25
 #: legacy/templates/front/base_update.html:26
@@ -525,7 +413,6 @@ msgstr ""
 msgid "en-US"
 msgstr ""
 
-#: legacy/templates/front/base_nonresponsive.html:106
 #: legacy/templates/front/base_update.html:152
 msgid "en"
 msgstr ""
@@ -588,6 +475,10 @@ msgstr "Ver más"
 
 #: search/templates/search/external_links.html:4
 msgid "External Links Management"
+msgstr ""
+
+#: teachers_digital_platform/jinja2/teachers_digital_platform/activity_search_result.html:33
+msgid "Available in Spanish"
 msgstr ""
 
 #: templates/wagtailadmin/access_denied.html:7
@@ -678,10 +569,6 @@ msgstr ""
 msgid "No log entries found."
 msgstr ""
 
-#: v1/jinja2/v1/home_page.html:43
-msgid "homepage"
-msgstr ""
-
 #: v1/models/base.py:41
 msgid "Author"
 msgstr ""
@@ -701,6 +588,10 @@ msgstr ""
 #: v1/models/base.py:467
 msgid "password"
 msgstr ""
+
+#: v1/models/feedback.py:15
+msgid "Was this page helpful to you?"
+msgstr "¿Fue útil esta página?"
 
 #: v1/models/feedback.py:16
 msgid "Was this answer helpful to you?"
@@ -733,11 +624,11 @@ msgstr ""
 msgid "Your password has been changed successfully!"
 msgstr ""
 
-#: v1/views/__init__.py:183
+#: v1/views/__init__.py:187
 msgid "Enter new password"
 msgstr ""
 
-#: v1/views/__init__.py:196
+#: v1/views/__init__.py:200
 msgid "Password reset unsuccessful"
 msgstr ""
 
@@ -915,33 +806,33 @@ msgid "See the report"
 msgstr "Lea el informe (en inglés)"
 
 #: wellbeing/jinja2/wellbeing/about.html:171
-#: wellbeing/jinja2/wellbeing/home.html:1038
+#: wellbeing/jinja2/wellbeing/home.html:1036
 #: wellbeing/jinja2/wellbeing/results.html:717
 msgid "Legal disclaimer"
 msgstr "Declaración legal"
 
 #: wellbeing/jinja2/wellbeing/about.html:174
-#: wellbeing/jinja2/wellbeing/home.html:1041
+#: wellbeing/jinja2/wellbeing/home.html:1039
 #: wellbeing/jinja2/wellbeing/results.html:720
 msgid "The content on this page provides general consumer information."
 msgstr ""
 "El contenido de esta página ofrece información general para los consumidores."
 
 #: wellbeing/jinja2/wellbeing/about.html:175
-#: wellbeing/jinja2/wellbeing/home.html:1042
+#: wellbeing/jinja2/wellbeing/home.html:1040
 #: wellbeing/jinja2/wellbeing/results.html:721
 msgid "It is not legal advice or regulatory guidance."
 msgstr ""
 "No pretende dar asesoramiento legal, ni orientación sobre regulaciones."
 
 #: wellbeing/jinja2/wellbeing/about.html:176
-#: wellbeing/jinja2/wellbeing/home.html:1043
+#: wellbeing/jinja2/wellbeing/home.html:1041
 #: wellbeing/jinja2/wellbeing/results.html:722
 msgid "The CFPB updates this information periodically."
 msgstr "El CFPB actualiza esta información periódicamente."
 
 #: wellbeing/jinja2/wellbeing/about.html:177
-#: wellbeing/jinja2/wellbeing/home.html:1044
+#: wellbeing/jinja2/wellbeing/home.html:1042
 #: wellbeing/jinja2/wellbeing/results.html:723
 msgid ""
 "This information may include links or references to third-party resources or "
@@ -951,7 +842,7 @@ msgstr ""
 "de terceros."
 
 #: wellbeing/jinja2/wellbeing/about.html:178
-#: wellbeing/jinja2/wellbeing/home.html:1045
+#: wellbeing/jinja2/wellbeing/home.html:1043
 #: wellbeing/jinja2/wellbeing/results.html:724
 msgid ""
 "We do not endorse the third-party or guarantee the accuracy of this third-"
@@ -961,7 +852,7 @@ msgstr ""
 "dichos terceros."
 
 #: wellbeing/jinja2/wellbeing/about.html:179
-#: wellbeing/jinja2/wellbeing/home.html:1046
+#: wellbeing/jinja2/wellbeing/home.html:1044
 #: wellbeing/jinja2/wellbeing/results.html:725
 msgid "There may be other resources that also serve your needs."
 msgstr "Puede que hayan otros recursos que también atiendan sus necesidades."
@@ -1241,21 +1132,21 @@ msgstr "Yo leí y contesté las preguntas"
 msgid "I read the questions to someone else and recorded their answers"
 msgstr "Yo leí a alguien las preguntas y anoté sus respuestas"
 
-#: wellbeing/jinja2/wellbeing/home.html:936
+#: wellbeing/jinja2/wellbeing/home.html:934
 msgid "Get my score"
 msgstr "Obtenga su puntuación"
 
-#: wellbeing/jinja2/wellbeing/home.html:947
+#: wellbeing/jinja2/wellbeing/home.html:945
 msgid "About us"
 msgstr "Quienes somos"
 
-#: wellbeing/jinja2/wellbeing/home.html:949
+#: wellbeing/jinja2/wellbeing/home.html:947
 msgid "We&#39;re the Consumer Financial Protection Bureau (CFPB),"
 msgstr ""
 "Somos la Oficina para la Protección Financiera del Consumidor (CFPB, por sus "
 "siglas en inglés),"
 
-#: wellbeing/jinja2/wellbeing/home.html:950
+#: wellbeing/jinja2/wellbeing/home.html:948
 msgid ""
 "a U.S. government agency that makes sure banks, lenders, and other financial "
 "companies treat you fairly."
@@ -1263,16 +1154,16 @@ msgstr ""
 "una agencia del gobierno de los Estados Unidos que se asegura de que bancos, "
 "prestamistas y otras compañías financieras le traten de forma justa."
 
-#: wellbeing/jinja2/wellbeing/home.html:953
+#: wellbeing/jinja2/wellbeing/home.html:951
 msgid "Learn how the CFPB can help you"
 msgstr "Descubra cómo el CFPB puede ayudarle"
 
-#: wellbeing/jinja2/wellbeing/home.html:959
+#: wellbeing/jinja2/wellbeing/home.html:957
 #: wellbeing/jinja2/wellbeing/results.html:704
 msgid "About this questionnaire"
 msgstr "Sobre este cuestionario"
 
-#: wellbeing/jinja2/wellbeing/home.html:962
+#: wellbeing/jinja2/wellbeing/home.html:960
 #: wellbeing/jinja2/wellbeing/results.html:707
 msgid ""
 "CFPB researchers developed the questionnaire and a way to score it, as a "
@@ -1281,7 +1172,7 @@ msgstr ""
 "Investigadores del CFPB desarrollaron este cuestionario y el método para "
 "obtener su puntuación de bienestar financiero."
 
-#: wellbeing/jinja2/wellbeing/home.html:963
+#: wellbeing/jinja2/wellbeing/home.html:961
 #: wellbeing/jinja2/wellbeing/results.html:708
 msgid ""
 "that is, how well your current money situation is providing you with "
@@ -1290,7 +1181,7 @@ msgstr ""
 "Su puntuación mide cuán bien su situación financiera actual le da seguridad "
 "y libertad financiera tanto en el presente como en el futuro."
 
-#: wellbeing/jinja2/wellbeing/home.html:966
+#: wellbeing/jinja2/wellbeing/home.html:964
 #: wellbeing/jinja2/wellbeing/results.html:711
 msgid "See more background"
 msgstr "Más información"
@@ -1640,6 +1531,15 @@ msgstr "Desempleado o despedido"
 #: wellbeing/views.py:157
 msgid "Retired"
 msgstr "Jubilado"
+
+#~ msgid "Featured content"
+#~ msgstr "Ítem destacado"
+
+#~ msgid "Previous featured content item"
+#~ msgstr "Ítem destacado previo"
+
+#~ msgid "Next featured content item"
+#~ msgstr "Siguiente ítem destacado"
 
 #~ msgid "Get a grip on debt."
 #~ msgstr "Tome control de sus deudas."

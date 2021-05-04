@@ -1,4 +1,4 @@
-import * as domManipulators from '../../../../../cfgov/unprocessed/js/modules/util/dom-manipulators';
+import * as domManipulators from '../../../../../cfgov/unprocessed/js/modules/util/dom-manipulators.js';
 
 describe( 'Dom Manipulators create', () => {
   beforeAll( () => {

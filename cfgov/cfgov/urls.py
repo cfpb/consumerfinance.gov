@@ -27,7 +27,6 @@ from core.views import (
 from housing_counselor.views import (
     HousingCounselorPDFView, HousingCounselorView
 )
-from legacy.views import token_provider
 from legacy.views.complaint import ComplaintLandingView
 from regulations3k.views import redirect_eregs
 from v1.auth_forms import CFGOVPasswordChangeForm
@@ -333,9 +332,6 @@ urlpatterns = [
         url='/data-research/research-reports/%(path)s',
         permanent=True)),
 
-    # Form csrf token provider for JS form submission
-    re_path(r'^token-provider/', token_provider, name='csrf-token-provider'),
-
     # data-research-api
     re_path(
         r'^data-research/mortgages/api/v1/',
@@ -448,9 +444,6 @@ urlpatterns = [
             namespace='diversity_inclusion')),
 
     re_path(r'^sitemap\.xml$', sitemap),
-
-    flagged_re_path(
-        'SEARCH_DOTGOV_API', r'^search/', include('search.urls')),
 
     re_path(
         r'^consumer-tools/educator-tools/youth-financial-education/',

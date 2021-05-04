@@ -8,6 +8,8 @@ import { sendAnalyticsEvent } from '../util/analytics.js';
 import { updateFinancialViewAndFinancialCharts } from '../dispatchers/update-view.js';
 import { updateState } from '../dispatchers/update-state.js';
 import { getStateValue } from '../dispatchers/get-model-values.js';
+
+const HIDDEN_CLASS = 'u-hidden';
 const appView = {
   _actionPlanChoices: null,
   _didThisHelpChoices: null,
@@ -15,6 +17,9 @@ const appView = {
   _saveForLaterBtn: null,
   _saveLinks: null,
   _sendLinkBtn: null,
+  _copyLinkBtn: null,
+  _copyBtnDefaultText: null,
+  _copyBtnSuccessText: null,
 
   /**
    * Handle the click of the Include Parent Plus checkbox
@@ -46,14 +51,29 @@ const appView = {
     updateState.byProperty( 'save-for-later', 'active' );
   },
 
-  _handleSendLinkBtn: event => {
-    sendAnalyticsEvent( 'Email your link click', window.location.search );
+  _handleCopyLinkBtn: event => {
+    if ( navigator.clipboard ) {
+      navigator.clipboard.writeText( window.location.href ).then( function () {
+        const target = event.target;
+        const btn = closest( target, 'button' );
+        const copyBtnDefaultText = btn.querySelector( '#default-text' );
+        const copyBtnSuccessText = btn.querySelector( '#success-text' );
+        copyBtnDefaultText.classList.add( HIDDEN_CLASS );
+        copyBtnSuccessText.classList.remove( HIDDEN_CLASS );
+        setTimeout( function() {
+          copyBtnSuccessText.classList.add( HIDDEN_CLASS );
+          copyBtnDefaultText.classList.remove( HIDDEN_CLASS );
+        }, 3000 );
+      } );
+    } else if ( window.clipboardData && window.clipboardData.setData ) {
+      window.clipboardData.setData( 'Text', window.location.href );
+    }
+  },
 
-    const target = event.target;
-    let href = 'mailto:' + document.querySelector( '#finish_email' ).value;
-    href += '?subject=Link: Your financial path to graduation&body=';
-    href += encodeURIComponent( window.location.href );
-    target.setAttribute( 'href', href );
+  _handleCopyLinkBtnKeypress: event => {
+    if ( event.keyCode === 13 ) {
+      appView._handleCopyLinkBtn( event );
+    }
   },
 
   /**
@@ -94,7 +114,7 @@ const appView = {
     appView._restartBtn = document.querySelector( '[data-app-button="restart"]' );
     appView._saveForLaterBtn = document.querySelector( '[data-app-button="save-and-finish-later"]' );
     appView._saveLinks = document.querySelectorAll( '[data-app-save-link]' );
-    appView._sendLinkBtn = document.querySelector( '#email-your-link' );
+    appView._copyLinkBtn = document.querySelectorAll( '.copy-your-link' );
     appView._includeParentPlusBtn = document.querySelector( '#plan__parentPlusFeeRepay' );
 
     _addButtonListeners();
@@ -115,7 +135,12 @@ function _addButtonListeners() {
 
   appView._restartBtn.addEventListener( 'click', appView._handleRestartBtn );
   appView._saveForLaterBtn.addEventListener( 'click', appView._handleSaveForLaterBtn );
-  appView._sendLinkBtn.addEventListener( 'click', appView._handleSendLinkBtn );
+  appView._copyLinkBtn.forEach( elem => {
+    elem.addEventListener( 'click', appView._handleCopyLinkBtn );
+  } );
+  appView._copyLinkBtn.forEach( elem => {
+    elem.addEventListener( 'keyup', appView._handleCopyLinkBtnKeypress );
+  } );
   appView._includeParentPlusBtn.addEventListener( 'click', appView._handleIncludeParentPlusBtn );
 }
 

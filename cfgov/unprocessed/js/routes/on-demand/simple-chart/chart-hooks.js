@@ -1,10 +1,20 @@
 /* eslint camelcase: [0] */
+const ccpi_quarterRange = {
+  'Mar 31': 'Jan-Mar',
+  'Jun 30': 'Apr-Jun',
+  'Sep 30': 'Jul-Sep',
+  'Dec 31': 'Oct-Dec'
+};
+
 const ccpi_quarterMap = {
   'Mar 31': 'Q1',
   'Jun 30': 'Q2',
   'Sep 30': 'Q3',
   'Dec 31': 'Q4'
 };
+
+const msYear = 365 * 24 * 60 * 60 * 1000;
+
 const hooks = {
   filter( data, filterProp, filterVal ) {
     if ( !filterVal ) return data;
@@ -27,9 +37,31 @@ const hooks = {
     const d = new Date( x ).toLocaleString(
       'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
     ).split( ', ' );
-    const quarter = ccpi_quarterMap[d[0]];
+    const quarter = `${ ccpi_quarterMap[d[0]] }: ${ ccpi_quarterRange[d[0]] }`;
     const year = d[1];
-    return `<b>${ series.name }</b><br/><b>${ quarter } ${ year }</b><br/>Percentile: <b>${ y }</b>`;
+    return `<b>${ series.name }</b><br/>${ quarter } ${ year }<br/>Percentile: ${ Math.round( y ) }`;
+  },
+
+  ccpi_tickPositioner() {
+    const { series, min, max } = this;
+    if ( ( max - min ) / msYear > 5 ) return this.tickPositions;
+    let ticks = series[0].xData.filter( v => v >= min && v <= max );
+    if ( ticks.length > 9 ) {
+      ticks = ticks.filter( ( v, i ) => i % 2 === 0 );
+    }
+    return ticks;
+  },
+
+  ccpi_xAxisLabels() {
+    const { min, max } = this.chart.xAxis[0];
+    const d = new Date( this.value );
+    if ( ( max - min ) / msYear > 5 ) {
+      return d.getFullYear() + 1;
+    }
+    const dSplit = d.toLocaleString(
+      'en-US', { dateStyle: 'medium', timeZone: 'UTC' }
+    ).split( ', ' );
+    return `${ ccpi_quarterMap[dSplit[0]] }<br/>${ dSplit[1] }`;
   },
 
   enforcement_yAxisLabelsFormatter() {

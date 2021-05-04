@@ -4,18 +4,56 @@ from django.db import models
 from django.utils import timezone
 
 from wagtail.admin.edit_handlers import (
-    FieldPanel, MultiFieldPanel, ObjectList, TabbedInterface
+    FieldPanel, InlinePanel, MultiFieldPanel, ObjectList, TabbedInterface
 )
 from wagtail.core.fields import RichTextField
-from wagtail.core.models import Page
+from wagtail.core.models import Orderable, Page
 from wagtail.documents.edit_handlers import DocumentChooserPanel
 from wagtail.search import index
 
-from modelcluster.fields import ParentalManyToManyField
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
 
 from teachers_digital_platform.fields import ParentalTreeManyToManyField
 from teachers_digital_platform.models.django import ActivityTopic
 from v1.models import CFGOVPage, CFGOVPageManager
+
+
+class ActivityPageActivityDocuments(Orderable):
+    project = ParentalKey(
+        'ActivityPage',
+        on_delete=models.CASCADE,
+        related_name='activity_documents'
+    )
+
+    documents = models.ForeignKey(
+        'wagtaildocs.Document',
+        on_delete=models.CASCADE,
+        related_name='+',
+        verbose_name='Teacher guide'
+    )
+
+    panels = [
+        DocumentChooserPanel('documents')
+    ]
+
+
+class ActivityPageHandoutDocuments(Orderable):
+    project = ParentalKey(
+        'ActivityPage',
+        on_delete=models.CASCADE,
+        related_name='handout_documents'
+    )
+
+    documents = models.ForeignKey(
+        'wagtaildocs.Document',
+        on_delete=models.CASCADE,
+        related_name='+',
+        verbose_name='Student file'
+    )
+
+    panels = [
+        DocumentChooserPanel('documents')
+    ]
 
 
 class ActivityPage(CFGOVPage):
@@ -98,9 +136,21 @@ class ActivityPage(CFGOVPage):
         MultiFieldPanel(
             [
                 DocumentChooserPanel('activity_file'),
+                InlinePanel(
+                    'activity_documents',
+                    label='Additional activity files',
+                    min_num=0,
+                    max_num=5,
+                ),
                 DocumentChooserPanel('handout_file'),
                 DocumentChooserPanel('handout_file_2'),
                 DocumentChooserPanel('handout_file_3'),
+                InlinePanel(
+                    'handout_documents',
+                    label='Additional handout files',
+                    min_num=0,
+                    max_num=10,
+                ),
             ],
             heading="Download activity",
         ),

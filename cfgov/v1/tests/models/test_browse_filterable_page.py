@@ -1,7 +1,10 @@
+from io import StringIO
+
 from django.test import TestCase
 
 from wagtail.core.models import Page, Site
 
+from search.elasticsearch_helpers import ElasticsearchTestsMixin
 from v1.forms import EventArchiveFilterForm
 from v1.models import CFGOVPageCategory
 from v1.models.browse_filterable_page import (
@@ -19,11 +22,12 @@ class EventArchivePageTestCase(TestCase):
         )
 
 
-class TestNewsroomLandingPage(TestCase):
+class TestNewsroomLandingPage(ElasticsearchTestsMixin, TestCase):
     def setUp(self):
         self.newsroom_page = NewsroomLandingPage(title="News", slug='newsroom')
         self.site_root = Site.objects.get(is_default_site=True).root_page
         self.site_root.add_child(instance=self.newsroom_page)
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_eligible_categories(self):
         self.assertEqual(
@@ -37,7 +41,9 @@ class TestNewsroomLandingPage(TestCase):
         )
 
     def test_no_pages_by_default(self):
-        self.assertFalse(self.newsroom_page.get_filterable_queryset().exists())
+        filterable_search = self.newsroom_page.get_filterable_search()
+        result = filterable_search.search()
+        self.assertFalse(result.exists())
 
     def make_page_with_category(self, category_name, parent):
         page = AbstractFilterPage(title='test', slug='test')
@@ -48,16 +54,26 @@ class TestNewsroomLandingPage(TestCase):
             page=page
         )
         page.categories.add(category)
+        self.rebuild_elasticsearch_index('v1', stdout=StringIO())
 
     def test_no_pages_matching_categories(self):
         self.make_page_with_category('test', parent=self.site_root)
-        self.assertFalse(self.newsroom_page.get_filterable_queryset().exists())
+
+        filterable_search = self.newsroom_page.get_filterable_search()
+        result = filterable_search.search()
+        self.assertFalse(result.exists())
 
     def test_page_matches_categories(self):
         self.make_page_with_category('op-ed', parent=self.site_root)
-        self.assertTrue(self.newsroom_page.get_filterable_queryset().exists())
+
+        filterable_search = self.newsroom_page.get_filterable_search()
+        result = filterable_search.search()
+        self.assertTrue(result.exists())
 
     def test_page_in_other_site_not_included(self):
         wagtail_root = Page.objects.get(pk=1)
         self.make_page_with_category('op-ed', parent=wagtail_root)
-        self.assertFalse(self.newsroom_page.get_filterable_queryset().exists())
+
+        filterable_search = self.newsroom_page.get_filterable_search()
+        result = filterable_search.search()
+        self.assertFalse(result.exists())
