@@ -1,6 +1,6 @@
-import { simulateEvent } from '../../../../../../util/simulate-event';
+import { simulateEvent } from '../../../../../../util/simulate-event.js';
 import budgetFormView from '../../../../../../../cfgov/unprocessed/apps/youth-employment-success/js/views/budget';
-import mockStore from '../../../../../mocks/store';
+import mockStore from '../../../../../mocks/store.js';
 
 const HTML = `
 <section class="block o-yes-budget">

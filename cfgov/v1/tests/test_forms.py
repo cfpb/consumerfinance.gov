@@ -16,6 +16,7 @@ class TestFilterableListForm(TestCase):
         mock_init.return_value = None
         page_ids = [1, 2, 3, 4, 5]
         form = FilterableListForm()
+        form.cache_key_prefix = 'test'
         form.fields = {'authors': mock.Mock()}
         form.set_authors(page_ids=page_ids)
         mock_tag_objects.filter.assert_called_with(v1_cfgovauthoredpages_items__content_object__id__in=page_ids)

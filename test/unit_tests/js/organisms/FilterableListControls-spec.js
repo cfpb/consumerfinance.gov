@@ -1,4 +1,4 @@
-import FilterableListControls from '../../../../cfgov/unprocessed/js/organisms/FilterableListControls';
+import FilterableListControls from '../../../../cfgov/unprocessed/js/organisms/FilterableListControls.js';
 
 const BASE_CLASS = 'o-filterable-list-controls';
 const HTML_SNIPPET = `

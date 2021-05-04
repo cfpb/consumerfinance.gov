@@ -1,4 +1,7 @@
-const utils = require( '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search-utils.js' );
+const BASE_JS_PATH = '../../../../../cfgov/unprocessed/apps/';
+const utils = require(
+  BASE_JS_PATH + 'teachers-digital-platform/js/search-utils.js'
+);
 
 describe( 'The TDP search utils', () => {
 
