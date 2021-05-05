@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.utils.translation import activate, deactivate_all, ugettext as _
 from django.views.generic import TemplateView, View
+from core.views import TranslatedTemplateView
 
 from dateutil import parser
 
@@ -16,51 +17,6 @@ from .utils.ss_calculator import get_retire_data
 from .utils.ss_utilities import get_retirement_age
 
 BASEDIR = os.path.dirname(__file__)
-
-def claiming(request, es=False):
-    if es is True:
-        activate("es")
-        language = "es"
-    else:
-        language = "en"
-        deactivate_all()
-    ages = {}
-    for age in AgeChoice.objects.all():
-        ages[age.age] = _(age.aside)
-    page = Page.objects.get(title="Planning your Social Security claiming age")
-    tips = {}
-    for tooltip in Tooltip.objects.all():
-        tips[tooltip.title] = tooltip.text
-    questions = {}
-    for q in Question.objects.all():
-        questions[q.slug] = q
-    steps = {}
-    for step in Step.objects.all():
-        steps[step.title] = step.trans_instructions(language=language)
-
-    cdict = {
-        "tstamp": datetime.datetime.now(),
-        "steps": steps,
-        "questions": questions,
-        "tips": tips,
-        "ages": ages,
-        "page": page,
-        "available_languages": ["en", "es"],
-        "es": es,
-        "language": language,
-        "show_banner": True,
-        "show_mega_menu": True,
-        "about_view_name": "retirement_api:" + ("about_es" if es else "about"),
-        "breadcrumb_items": [{
-            "title": "Planning for Retirement",
-            "href": "/consumer-tools/retirement/",
-        }]
-    }
-
-    if es is True:
-        return render(request, "retirement_api/claiming-es.html", cdict)
-    else:
-        return render(request, "retirement_api/claiming.html", cdict)
 
 def param_check(request, param):
     if param in request.GET and request.GET[param]:
@@ -129,21 +85,3 @@ def get_full_retirement_age(request, birth_year):
     else:
         data = json.dumps(data_tuple)
         return HttpResponse(data, content_type="application/json")
-
-
-def about(request, language="en"):
-    """Return our 'about' calculation-explainer page in Engish or Spanish"""
-    if language == "es":
-        activate("es")
-        es = True
-    else:
-        deactivate_all()
-        es = False
-    cdict = {
-        "available_languages": ["en", "es"],
-        "es": es,
-        "language": language,
-        "show_banner": True,
-        "show_mega_menu": True,
-    }
-    return render(request, "retirement_api/about.html", cdict)

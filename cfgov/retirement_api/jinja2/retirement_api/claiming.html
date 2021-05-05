@@ -1,3 +1,9 @@
+{% if current_language == 'en' %}
+{% set breadcrumb_items = [{
+  'href': '/consumer-tools/retirement/',
+  'title': 'Planning for Retirement'
+}]%}
+{% endif %}
 
 {% extends 'layout-full.html' %}
 
@@ -27,9 +33,7 @@
 {% set NOTSURE = _("Not Sure") %}
 {% set STEP = _("Step") %}
 
-  <div id="claiming-social-security"
-       class="claiming-social-security content-l">
-
+  <div id="claiming-social-security" class="claiming-social-security content-l">
       <div class="intro block block__flush-top">
         <div class="content-l">
           <div class="content-l_col content-l_col-2-3">
@@ -157,7 +161,7 @@
           </div>
 
           <p class="learn-how">
-            <a href="{{ url( about_view_name) }}" target="_blank" rel="noopener noreferrer">
+            <a href="/consumer-tools/retirement/before-you-claim/about/{{ 'es/' if language == 'es' }}" target="_blank" rel="noopener noreferrer">
               {{ _("Where do these numbers come from?") }}
             </a>
           </p>
@@ -215,15 +219,50 @@
           </div>
           <div class="lifestyle-response" data-responds-to="yes">
             <h4>{{ _("You can protect the financial security of your surviving spouse.") }}</h4>
-            <p>{{ _("Your decision of when to claim your Social Security could affect the benefits your spouse will receive after you die. Surviving spouses can keep either their own benefit or choose to keep their spouse's benefit, whichever is higher. If you are married, and are the higher earner in the household, claiming at your full benefit age will ensure your spouse will receive the higher benefit. Talk to your spouse about your claiming options so you can make this important decision together.") }}</p>
+            <p>
+              {% block questions_lifestyle_answer_yes %}
+                Your decision of when to claim your Social Security could affect
+                the benefits your spouse will receive after you die. Surviving
+                spouses can keep either their own benefit or choose to keep
+                their spouse's benefit, whichever is higher. If you are married,
+                and are the higher earner in the household, claiming at your
+                full benefit age will ensure your spouse will receive the higher
+                benefit. Talk to your spouse about your claiming options so you
+                can make this important decision together.
+              {% endblock %}
+            </p>
           </div>
           <div class="lifestyle-response" data-responds-to="no">
             <h4>{{ _("Claiming at your full retirement age or later permanently increases your benefit.") }}</h4>
-            <p>{{ _("If you claim at your full Social Security benefit age or later, you will avoid a reduction in your monthly benefit. In addition, if you choose to wait to claim past your full benefit age until age 70, you can get an increase for every month that you wait. If you are divorced, your former spouse's claiming decision will not affect your benefit, so it should not affect your decision of when to claim.") }}</p>
+            <p>
+              {% block questions_lifestyle_answer_no %}
+                If you claim at your full Social Security benefit age or later,
+                you will avoid a reduction in your monthly benefit. In addition,
+                if you choose to wait to claim past your full benefit age until
+                age 70, you can get an increase for every month that you wait.
+                If you are divorced, your former spouse's claiming decision will
+                not affect your benefit, so it should not affect your decision
+                of when to claim.
+              {% endblock %}
+            </p>
           </div>
           <div class="lifestyle-response" data-responds-to="widowed">
             <h4>{{ _("Your claiming age matters for your own retirement benefits and your survivor's benefits.") }}</h4>
-            <p>{{ _("You may qualify for a survivor benefit if your deceased spouse qualified for Social Security. You can wait until age 70 to claim your survivor benefit and get the maximum amount possible, or you can claim a reduced survivor benefit as early as age 60. You may also qualify for a retirement benefit based on your own earnings record, but you will only receive one benefit at a time. If you expect your own retirement benefit to be higher than the survivor benefit, you may want to consider claiming the survivor benefit first. That way, you can start receiving some money from Social Security as your own retirement benefit continues to grow.") }}</p>
+            <p>
+              {% block questions_lifestyle_answer_widowed %}
+                You may qualify for a survivor benefit if your deceased spouse
+                qualified for Social Security. You can wait until age 70 to
+                claim your survivor benefit and get the maximum amount possible,
+                or you can claim a reduced survivor benefit as early as age 60.
+                You may also qualify for a retirement benefit based on your own
+                earnings record, but you will only receive one benefit at a
+                time. If you expect your own retirement benefit to be higher
+                than the survivor benefit, you may want to consider claiming
+                the survivor benefit first. That way, you can start receiving
+                some money from Social Security as your own retirement benefit
+                continues to grow.
+              {% endblock %}
+            </p>
           </div>
         </div>
         <div class="content-l_col content-l_col-1-3 question question-working age-split">

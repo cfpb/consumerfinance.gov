@@ -6,6 +6,46 @@
 
 {% extends 'claiming.html' %}
 
+{% block questions_lifestyle_answer_yes %}
+Su decisión sobre cuándo solicitar sus beneficios de Seguro Social podría
+afectar la cantidad de los beneficios que recibirá su esposo(a) cuando usted
+fallezca. Su cónyuge sobreviviente puede recibir los beneficios como
+sobreviviente basados en el registro de ganancias de su cónyuge o los beneficios
+basados en el registro de ganancias de usted, dependiendo de cuál de los dos
+beneficios sea el más alto. Si usted está casado, y tiene los ingresos más altos
+de la familia, al solicitar sus beneficios a su plena edad de jubilación, usted
+garantizará que su cónyuge reciba el beneficio más alto. Tenga una conversación
+con su esposo(a) sobre sus opciones para que juntos puedan tomar esta decisión.
+{% endblock %}
+
+{% block questions_lifestyle_answer_no %}
+Si solicita sus beneficios de Seguro Social cuando cumpla su plena edad de
+jubilación evitará una reducción en su beneficio mensual. Además, si elige
+solicitar sus beneficios a los 70 años, puede obtener un aumento por cada mes
+que haya esperado después de haber cumplido su plena edad de jubilación. Si
+está divorciado(a), la decisión que tome su ex cónyuge de cuándo solicitar los
+beneficios, no afectará la cantidad de los beneficios a los que usted tenga
+derecho bajo el registro de ganancias de su ex cónyuge. Por lo tanto, la
+decisión de su ex cónyuge no debería influir su decisión de cuándo solicitar
+sus beneficios.
+{% endblock %}
+
+{% block questions_lifestyle_answer_widowed %}
+Es posible que tenga derecho a recibir los beneficios como cónyuge
+sobreviviente, si su cónyuge fallecido tenía derecho a recibir beneficios de
+Seguro Social. Usted tiene la opción de esperar hasta cumplir los 70 años para
+solicitar los beneficios como cónyuge sobreviviente y recibir la cantidad máxima
+posible de los beneficios, o puede solicitarlos tan temprano como a los 60 años
+de edad y recibir una cantidad reducida. Es posible que también tenga derecho a
+recibir los beneficios por jubilación bajo el registro de ganancias de usted.
+No obstante, sólo puede recibir uno de los dos tipos de beneficios a la vez. Si
+usted sabe que su beneficio por jubilación bajo su propio registro de ganancias
+será más alto que el beneficio como sobreviviente, puede solicitar primero el
+beneficio como sobreviviente. Así podrá comenzar a recibir algún beneficio
+mientras que los beneficios de jubilación bajo su propio registro de ganancias
+siguen aumentando.
+{% endblock %}
+
 {% block questions_sixties_answer_yes_under_50 %}
 Sus beneficios de Seguro Social se calculan usando los 35 años con los ingresos
 más altos. Por lo tanto, cada año que trabaje en sus sesentas podría añadirle a
