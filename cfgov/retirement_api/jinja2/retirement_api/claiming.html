@@ -33,7 +33,7 @@
 {% set NOTSURE = _("Not Sure") %}
 {% set STEP = _("Step") %}
 
-  <div id="claiming-social-security" class="claiming-social-security content-l">
+  <div id="claiming-social-security" class="claiming-social-security">
       <div class="intro block block__flush-top">
         <div class="content-l">
           <div class="content-l_col content-l_col-2-3">
@@ -42,10 +42,10 @@
               {{ _("The age you claim Social Security affects your lifetime income. We’ll help you think through this decision.") }}
             </p>
             <p>
-              {% if es %}
-                <a href="../">View page in English</a>
+              {% if current_language == 'es' %}
+              <a href="../">View page in English</a>
               {% else %}
-                <a href="es/">Ver página en español</a>
+              <a href="es/">Ver página en español</a>
               {% endif %}
               </p>
           </div>
