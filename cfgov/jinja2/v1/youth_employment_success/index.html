@@ -1,34 +1,34 @@
 {% extends 'layout-side-nav.html' %}
 
 {% block css -%}
-  {{ super() }}
-  <link rel="stylesheet" href="{{ static('apps/youth-employment-success/css/main.css') }}">
+{{ super() }}
+<link rel="stylesheet" href="{{ static('apps/youth-employment-success/css/main.css') }}">
 {%- endblock %}
 
 {% block title -%}
-  Planning how you’ll get to work | {{ _('Consumer Financial Protection Bureau') }}
+Planning how you’ll get to work | {{ _('Consumer Financial Protection Bureau') }}
 {%- endblock %}
 
 {%- block desc -%}
-  This tool helps youth plan how to get to work, budget for transportation costs, and identify a backup plan.
+This tool helps youth plan how to get to work, budget for transportation costs, and identify a backup plan.
 {% endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__1-3 yes-transit-tool
+{{ super() }} content__1-3 yes-transit-tool
 {%- endblock %}
 
 {% block pre_content %}
-    <div class="content_wrapper">
-        <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            {{ svg_icon('left') }}
-            <a class="breadcrumbs_link" href="/consumer-tools/educator-tools/">
-              Educator Tools
-            </a>
-            <a class="breadcrumbs_link" href="/consumer-tools/educator-tools/resources-youth-employment-programs/">
-              Resources for Youth Employment Programs
-            </a>
-        </nav>
-    </div>
+<div class="content_wrapper">
+    <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        {{ svg_icon('left') }}
+        <a class="breadcrumbs_link" href="/consumer-tools/educator-tools/">
+            Educator Tools
+        </a>
+        <a class="breadcrumbs_link" href="/consumer-tools/educator-tools/resources-youth-employment-programs/">
+            Resources for Youth Employment Programs
+        </a>
+    </nav>
+</div>
 {% endblock %}
 
 {% block content_sidebar scoped -%}
@@ -37,54 +37,55 @@
 
 {% block content_main %}
 
-    {% include "no-js.html" %}
-    <div class="js-no-print">
-      {% include "goals.html" %}
-      {% include "budget-form.html" %}
-      <div class="block block__sub">
+{% include "no-js.html" %}
+<div class="js-no-print">
+    {% include "goals.html" %}
+    {% include "budget-form.html" %}
+    <div class="block block__sub">
         <h2>
-          How do your transportation options fit your budget, schedule, and lifestyle?
+            How do your transportation options fit your budget, schedule, and lifestyle?
         </h2>
         <p>
-          There are many ways you could get to work &mdash; some options are faster, cheaper, or more convenient.
+            There are many ways you could get to work &mdash; some options are faster, cheaper, or more convenient.
         </p>
         <p class="u-mb0">
-          You'll be able to choose a type of transportation and enter how much it costs. If you're unsure about the specifics, don't worry &mdash; you can select "I'm not sure" and the item will be added to your to-do list, which you'll receive at the end. Once you finish your first transportation option, you can compare it to other options to help you figure out the best first choice and backup plan.
+            You'll be able to choose a type of transportation and enter how much it costs. If you're unsure about the
+            specifics, don't worry &mdash; you can select "I'm not sure" and the item will be added to your to-do list,
+            which you'll receive at the end. Once you finish your first transportation option, you can compare it to
+            other options to help you figure out the best first choice and backup plan.
         </p>
         {% include "route/index.html" %}
-      </div>
-      <div class="content_line-bold"></div>
     </div>
-    {% include "review/index.html" %}
+    <div class="content_line-bold"></div>
+</div>
+{% include "review/index.html" %}
 
-    <div class="content-l block block__sub-micro block__flush-top u-hidden js-route-notifications">
-      {% include 'route/notifications.html' %}
-    </div>
-
+<div class="content-l block block__sub-micro block__flush-top u-hidden js-route-notifications">
+    {% include 'route/notifications.html' %}
+</div>
 {% endblock %}
 
-
 {% block footer %}
-  <div class="u-hide-on-print">
+<div class="u-hide-on-print">
     {% import 'organisms/footer.html' as o_footer with context %}
     {{ o_footer.render() }}
-  </div>
+</div>
 {% endblock %}
 
 {% block javascript scoped %}
-    {{ super() }}
-    <script async>
-      var htmlEl = document.documentElement;
+{{ super() }}
+<script async>
+  var htmlEl = document.documentElement;
 
-      if (htmlEl.className.indexOf('no-js') === -1) {
-        !function(){
-          {# Include site-wide JavaScript. #}
-          var s = [
-            '{{ static('apps/youth-employment-success/js/index.js') }}'
-          ];
+  if (htmlEl.className.indexOf('no-js') === -1) {
+    !function () {
+      {# Include site - wide JavaScript. #}
+      var s = [
+        '{{ static('apps/youth-employment-success/js/index.js') }}'
+      ];
 
-          jsl(s);
-        }()
-      }
-    </script>
+      jsl(s);
+    }()
+  }
+</script>
 {% endblock %}
