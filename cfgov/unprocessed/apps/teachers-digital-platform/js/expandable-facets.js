@@ -89,21 +89,6 @@ function toggleTargetState( element ) {
   }
 }
 
-// To do: move this to a more appropriate place
-/**
- * Custom mobile facet options.
- */
-if ( window.innerWidth <= 800 ) {
-  const selectors = [
-    '.filter-section__first div:nth-child(1) .o-expandable_content',
-    '.filter-section__first div:nth-child(2) .o-expandable_content'
-  ].join(',');
-
-  document.querySelectorAll(selectors).forEach(el => {
-    el.classList.remove('o-expandable_content__onload-open');
-  });
-}
-
 export default ExpandableFacets;
 
 /**
