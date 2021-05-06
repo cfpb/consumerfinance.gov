@@ -92,8 +92,6 @@
     "protractor": "7.0.0",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "protractor-retry": "2.0.1",
-    "sauce-connect-tunnel": "0.2.1",
-    "selenium-webdriver": "4.0.0-alpha.5",
     "snyk": "1.530.0",
     "through2": "4.0.2",
     "wcag": "0.3.0"
