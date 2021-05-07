@@ -22,7 +22,7 @@ pipeline {
         IMAGE_CYPRESS_REPO = 'cfpb/cypress'
         IMAGE_ES_REPO = 'cfpb/cfgov-elasticsearch'
         // Elasticsearch image tag should be the same as that defined in Dockerfile
-        IMAGE_ES_TAG = '7.10.1'
+        IMAGE_ES_TAG = '7.12.1'
         // Cypress image tag should be the same as that defined in Dockerfile
         CYPRESS_IMAGE_TAG = '7.2.0'
         // Only Python image tag changes for every build
