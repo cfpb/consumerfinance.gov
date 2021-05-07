@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Browser/Acceptance Testing - consumerfinance.gov</title>
+  <title>Other Front-end Testing - consumerfinance.gov</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Browser/Acceptance Testing";
-    var mkdocs_page_input_path = "browser-acceptance-tests.md";
+    var mkdocs_page_name = "Other Front-end Testing";
+    var mkdocs_page_input_path = "other-front-end-testing.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -144,27 +144,6 @@
 		
     <span class="caption-text">Testing</span>
     <ul class="subnav">
-                <li class=" current">
-                    
-    <a class="current" href="./">Browser/Acceptance Testing</a>
-    <ul class="subnav">
-            
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#browser-testing">Browser testing</a></li>
-        
-            <li><a class="toctree-l4" href="#performance-testing">Performance testing</a></li>
-        
-            <li><a class="toctree-l4" href="#accessibility-testing">Accessibility testing</a></li>
-        
-            <li><a class="toctree-l4" href="#source-code-linting">Source code linting</a></li>
-        
-        </ul>
-    
-
-    </ul>
-                </li>
                 <li class="">
                     
     <a class="" href="../javascript-unit-tests/">JavaScript Unit Testing</a>
@@ -180,6 +159,25 @@
                 <li class="">
                     
     <a class="" href="../profiling-django/">Profiling Django</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Other Front-end Testing</a>
+    <ul class="subnav">
+            
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#performance-testing">Performance testing</a></li>
+        
+            <li><a class="toctree-l4" href="#accessibility-testing">Accessibility testing</a></li>
+        
+            <li><a class="toctree-l4" href="#source-code-linting">Source code linting</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -260,10 +258,10 @@
         
       
     
-    <li>Browser/Acceptance Testing</li>
+    <li>Other Front-end Testing</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/browser-acceptance-tests.md"
+        <a href="https://github.com/cfpb/consumerfinance.gov/edit/master/docs/other-front-end-testing.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -273,145 +271,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="browseracceptance-tests">Browser/Acceptance Tests<a class="headerlink" href="#browseracceptance-tests" title="Permanent link">¶</a></h1>
-<h2 id="browser-testing">Browser testing<a class="headerlink" href="#browser-testing" title="Permanent link">¶</a></h2>
-<p>Our browser tests (also called acceptance tests) are organized into
-suites under the
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/features"><code>test/browser_tests/cucumber/features</code></a>
-directory.</p>
-<h3 id="running-the-current-browser-tests-locally">Running the current browser tests locally<a class="headerlink" href="#running-the-current-browser-tests-locally" title="Permanent link">¶</a></h3>
-<ol>
-<li>Ensure that the following env vars are set (they should already be in your <a href="https://github.com/cfpb/consumerfinance.gov/blob/main/.env_SAMPLE"><code>.env</code></a> file):<ul>
-<li><code>export TEST_HTTP_HOST=localhost</code></li>
-<li><code>export DJANGO_HTTP_PORT=8000</code></li>
-</ul>
-</li>
-<li>Then reload the virtual environment if needed: <code>source .env</code></li>
-<li>Get your local version of cf.gov running at <a href="http://localhost:8000">http://localhost:8000</a>:<ul>
-<li>If you use Docker: <code>docker-compose up</code></li>
-<li>If you use a virtual environment locally: <code>./runserver.sh</code></li>
-</ul>
-</li>
-<li>Run the browser tests against your localhost: <code>gulp test:acceptance</code></li>
-</ol>
-<p>There are several options you can pass to run a particular suite of tests or to
-run a particular list of features:</p>
-<pre class="highlight"><code class="language-sh">gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin suite )
-gulp test:acceptance --specs=multiselect.feature ( runs just the multiselect feature )
-gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )</code></pre>
-
-<h3 id="running-the-legacy-browser-tests-in-sauce-labs">Running the legacy browser tests in Sauce Labs<a class="headerlink" href="#running-the-legacy-browser-tests-in-sauce-labs" title="Permanent link">¶</a></h3>
-<p>Sauce Labs can be used to run the legacy browser tests remotely in the cloud.</p>
-<ol>
-<li>Log into <a href="https://saucelabs.com/account">https://saucelabs.com/account</a>.</li>
-<li>Update and uncomment the <code>SAUCE_USERNAME</code>, <code>SAUCE_ACCESS_KEY</code>,
-   and <code>SAUCE_SELENIUM_URL</code> values in your <code>.env</code> file.
-   The access key can be found on the Sauce Labs
-   <a href="https://saucelabs.com/beta/user-settings">user settings page</a>.</li>
-<li>Reload the settings with <code>source .env</code>.</li>
-<li>Run the tests with <code>gulp test:acceptance --sauce</code>.</li>
-<li>Monitor progress of the tests
-   on the <a href="https://saucelabs.com/dashboard">Sauce Labs dashboard</a> Automated Tests tab.</li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you get the error <code>Error: ENOTFOUND getaddrinfo ENOTFOUND</code>
-while running a test, it likely means that Sauce Connect is not running.</p>
-</div>
-<h3 id="writing-browser-tests">Writing browser tests<a class="headerlink" href="#writing-browser-tests" title="Permanent link">¶</a></h3>
-<p>Any new tests should be added to an existing suite (e.g. "default"), or placed
-into a new suite directory, in
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/features/suites"><code>test/browser_tests/cucumber/features/suites</code></a>.
-All tests start with writing a <code>.feature</code> spec in one of these suites,
-and then adding corresponding step definitions, found in
-<a href="https://github.com/cfpb/consumerfinance.gov/tree/main/test/browser_tests/cucumber/step_definitions"><code>test/browser_tests/cucumber/step_definitions</code></a>.</p>
-<h4 id="cucumber-gherkin-tools-for-running-automated-tests-written-in-plain-language">Cucumber + Gherkin: tools for running automated tests written in plain language<a class="headerlink" href="#cucumber-gherkin-tools-for-running-automated-tests-written-in-plain-language" title="Permanent link">¶</a></h4>
-<p>Below are some suggested standards for Cucumber Feature files:</p>
-<p><em>Table copied from <a href="https://saucelabs.com/blog/write-great-cucumber-tests">https://saucelabs.com/blog/write-great-cucumber-tests</a> by Greg Sypolt, with moderate modifications</em>
-<table>
-   <tbody>
-      <tr>
-         <td>Feature Files</td>
-         <td>Every *.feature file consists in a single feature, focused on the business value.</td>
-      </tr>
-      <tr>
-      <td><a href="https://github.com/cucumber/cucumber/wiki/Gherkin">Gherkin</a></td>
-         <td>
-            <pre>Feature:Title (one line describing the story)
-Narrative Description: As a [role], I want [feature], so that I [benefit]<br>
-Scenario: Title (acceptance criteria of user story)
-  Given [context]
-  And [some more context]...
-  When [event]
-  Then [outcome]
-  And [another outcome]...<br>
-Scenario:...
-</pre>
-</td>
-      </tr>
-      <tr>
-         <td>Given, When, and Then Statements</td>
-         <td>
-           There might be some confusion surrounding where to put the verification step in the Given, When, Then sequence. Each statement has a purpose. <br><br></p>
-<ul>
-<li><strong>Given</strong> is the pre-condition to put the system into a known state before the user starts interacting with the application</li>
-<li><strong>When</strong> describes the key action the user performs</li>
-<li><strong>Then</strong> is observing the expected outcome</li>
-</ul>
-<p>Just remember the <em>‘then’</em> step is an acceptance criteria of the story.
-   </td>
-      </tr>
-      <tr>
-         <td><a href="https://github.com/cucumber/cucumber/wiki/Background">Background</a></td>
-         <td>The background needs to be used wisely. If you use the same steps at the beginning of all scenarios of a feature, put them into the feature’s background scenario. The background steps are run before each scenario.
-<pre>
-Background:
-  Given I am logged into Wagtail as an admin
-  And I create a Wagtail Sublanding Page
-  And I open the content menu</pre>
-        </td>
-      </tr>
-      <tr>
-         <td>Scenarios</td>
-         <td>Keep each scenario independent. The scenarios should run independently, without any dependencies on other scenarios.  Scenarios should be between 3 to 6 statements, if possible.</td>
-      </tr>
-      <tr>
-         <td><a href="https://github.com/cucumber/cucumber/wiki/Scenario-Outlines">Scenario Outline</a></td>
-         <td>If you identify the need to use a scenario outline, take a step back and ask the following question: Is it necessary to repeat this scenario ‘x’ amount of times just to exercise the different combination of data? In most cases, one time is enough for UI level testing.</td>
-      </tr>
-      <tr>
-         <td>Declarative Vs Imperative Scenarios</td>
-         <td>
-            The declarative style describes behavior at a higher level, which improves the readability of the feature by abstracting out the implementation details of the application.  The imperative style is more verbose but better describes the expected behavior.  Either style is acceptable.<br><br>
-<u>Example: Declarative</u>
-<pre>
-Scenario:User logs in
-  Given I am on the homepage
-  When I log in
-  Then I should see a login notification
-</pre>
-<u>Example: Imperative</u>
-<pre>
-Scenario: User logs in
-  Given I am on the homepage
-  When I click on the "Login" button
-  And I fill in the "Email" field with "<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;">&#109;&#101;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;</a>"
-  And I fill in the "Password" field with "secret"
-  And I click on "Submit"
-  Then I should see "Welcome to the app, John Doe"
-</pre>
-         </td>
-      </tr>
-   </tbody>
-</table></p>
-<h4 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">¶</a></h4>
-<ul>
-<li><a href="https://github.com/cucumber/cucumber/wiki/Feature-Introduction">Cucumber features</a></li>
-<li><a href="https://angular.github.io/protractor/#/">Protractor</a></li>
-<li><a href="https://www.seleniumhq.org/docs/03_webdriver.jsp#locating-ui-elements-webelements">Select elements on a page</a></li>
-<li><a href="https://jasmine.github.io/2.0/introduction.html#section-Expectations">Writing Jasmin expectations</a>.</li>
-<li><a href="https://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings">Understanding Page Objects</a></li>
-</ul>
+                <h1 id="other-front-end-testing">Other Front-end Testing<a class="headerlink" href="#other-front-end-testing" title="Permanent link">¶</a></h1>
 <h2 id="performance-testing">Performance testing<a class="headerlink" href="#performance-testing" title="Permanent link">¶</a></h2>
 <p>To audit if the site complies with performance best practices and guidelines,
 <a href="https://github.com/GoogleChrome/lighthouse">Google's Lighthouse</a> can be run
@@ -446,10 +306,10 @@ for detailed rule descriptions.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../javascript-unit-tests/" class="btn btn-neutral float-right" title="JavaScript Unit Testing">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../branching-merging/" class="btn btn-neutral float-right" title="Branching and Merging">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../translation/" class="btn btn-neutral" title="Translation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../profiling-django/" class="btn btn-neutral" title="Profiling Django"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -477,10 +337,10 @@ for detailed rule descriptions.</p>
           <a href="https://github.com/cfpb/consumerfinance.gov/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../translation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../profiling-django/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../javascript-unit-tests/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../branching-merging/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
