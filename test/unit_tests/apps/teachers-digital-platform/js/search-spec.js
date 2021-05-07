@@ -1,6 +1,6 @@
 import { simulateEvent } from '../../../../util/simulate-event.js';
 
-const app = require(
+const search = require(
   '../../../../../cfgov/unprocessed/apps/teachers-digital-platform/js/search.js'
 );
 
@@ -158,14 +158,12 @@ describe( 'The TDP search page', () => {
     global.XMLHttpRequest = xhr;
     // Load HTML fixture
     document.body.innerHTML = HTML_SNIPPET;
-    // Fire `load` event
-    const event = document.createEvent( 'Event' );
-    event.initEvent( 'load', true, true );
-    window.dispatchEvent( event );
+    // Fire init
+    search.init();
   } );
 
   it( 'should not throw any errors on init', () => {
-    expect( () => app ).not.toThrow();
+    expect( () => search.init() ).not.toThrow();
   } );
 
   it( 'should handle search form submissions', () => {

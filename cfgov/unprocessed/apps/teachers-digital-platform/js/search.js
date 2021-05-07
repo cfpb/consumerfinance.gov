@@ -14,8 +14,12 @@ let searchRequest = {};
  * Initialize search functionality.
  */
 function init() {
-  // Override search form submission
-  attachHandlers();
+  if ( 'replaceState' in window.history ) {
+    // Override search form submission
+    attachHandlers();
+  } else {
+    // This case already handled inline at the bottom
+  }
 }
 
 /**
@@ -261,9 +265,9 @@ function _updateParentFilter( element ) {
 
 // Provide the no-JS experience to browsers without `replaceState`
 if ( 'replaceState' in window.history ) {
-  window.addEventListener( 'load', () => {
-    init();
-  } );
+  // This case handled in init() above
 } else {
   document.getElementById( 'main' ).className += ' no-js';
 }
+
+export { init };
