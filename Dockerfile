@@ -10,6 +10,8 @@ LABEL maintainer="tech@cfpb.gov"
 # See: https://www.softwarecollections.org/en/scls/user/rhscl/?search=python
 ARG scl_python_version
 ENV SCL_PYTHON_VERSION ${scl_python_version}
+ARG postgres_version
+ENV POSTGRES_VERSION ${postgres_version}
 
 # Stops Python default buffering to stdout, improving logging to the console.
 ENV PYTHONUNBUFFERED 1
@@ -24,7 +26,7 @@ SHELL ["/bin/bash", "--login", "-o", "pipefail", "-c"]
 RUN yum -y install \
         centos-release-scl \
         epel-release && \
-    rpm -i https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
+    yum -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm && \
     curl -sL https://rpm.nodesource.com/setup_14.x | bash - && \
     curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo && \
     yum -y update && \
@@ -32,7 +34,7 @@ RUN yum -y install \
         gcc \
         git \
         mailcap \
-        postgresql10 \
+        ${POSTGRES_VERSION} \
         which \
         gettext \
         ${SCL_PYTHON_VERSION} && \

@@ -29,7 +29,7 @@ services:
         ports:
             - 127.0.0.1:5601:5601
     postgres:
-        image: postgres:10-alpine
+        image: postgres:13-alpine
         user: postgres
         restart: always
         volumes:
@@ -46,6 +46,7 @@ services:
             context: .
             dockerfile: Dockerfile
             args:
+                postgres_version: postgresql13
                 scl_python_version: rh-python36
         depends_on:
             - elasticsearch
