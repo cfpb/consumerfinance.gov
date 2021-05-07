@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% import 'organisms/post-preview.html' as preview %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div class="wrapper content_wrapper">
+    <div class="content_main">
+        {{ preview.render( post, none ) }}
+    </div>
+</div>
+{% endblock %}
+
+{% block wagtailuserbar %}{% endblock %}
+
+{% block footer %}{% endblock %}
