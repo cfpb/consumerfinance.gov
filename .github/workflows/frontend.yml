@@ -1,6 +1,10 @@
 name: frontend
 
-on: pull_request
+on:
+  pull_request:
+    paths:
+    - '**.js'
+    - '**package.json'
 
 jobs:
 
@@ -12,6 +16,7 @@ jobs:
         gulp_cmd:
           - lint --ci
           - test:unit --ci --headless
+          - build
 
     steps:
       - uses: actions/checkout@v2
@@ -21,16 +26,9 @@ jobs:
         with:
             node-version: '14.x'
 
-      - name: Set up Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.6
-
       - name: Install dependencies
         run: |
-          ./frontend.sh development
-          python -m pip install --upgrade pip
-          pip install -r requirements/ci.txt
+          yarn
 
       - name: Run ${{ matrix.gulp_cmd }}
         run: yarn run gulp ${{ matrix.gulp_cmd }}
@@ -61,7 +59,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements/ci.txt
+          pip install diff_cover
 
       - name: Retrieve frontend coverage
         uses: actions/download-artifact@v1
