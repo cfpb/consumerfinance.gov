@@ -1,18 +1,24 @@
+import re
+
 from django.core.management.base import BaseCommand
 
 from wagtail.contrib.frontend_cache.utils import purge_url_from_cache
 
 
 class Command(BaseCommand):
-    help = "Delete the cache of a page by its full URL"
+    help = "Delete the cache of pages by full URLs"
 
     def add_arguments(self, parser):
         parser.add_argument(
             "--url",
             required=True,
-            help="The full URL for the page you wish to delete its cache",
+            help="The full URLs for pages you wish to delete its cache",
         )
 
     def handle(self, *args, **options):
-        page_url = options["url"]
-        purge_url_from_cache(page_url)
+        page_urls = options["url"]
+        if re.search(r"\s", page_urls):
+            for page_url in page_urls:
+                purge_url_from_cache(page_url)
+        else:
+            purge_url_from_cache(page_urls)
