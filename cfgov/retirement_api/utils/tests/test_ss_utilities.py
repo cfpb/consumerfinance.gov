@@ -9,7 +9,6 @@ import mock
 import requests
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
-from retirement_api import utils
 from retirement_api.utils.ss_calculator import (
     calculate_lifetime_benefits, clean_comment, get_retire_data,
     interpolate_benefits, interpolate_for_past_fra, num_test, parse_details,
@@ -135,32 +134,6 @@ class UtilitiesTests(unittest.TestCase):
             results, base_benefit, fra_tuple, dob, past_fra
         )
         self.assertTrue(test_results["data"]["lifetime"]["age62"] == 262752)
-
-    def test_get_test_params(self):
-        test_params = get_test_params(46, 3)
-        self.assertEqual(test_params["dobday"], 3)
-        test_params = get_test_params(46, 3, dob_year=1950)
-        self.assertEqual(test_params["yob"], 1950)
-        test_params = get_test_params(46, 3, dob_year=1950)
-        self.assertEqual(test_params["yob"], 1950)
-        if self.today.day > 27:
-            test_today = self.today.replace(day=27)  # pragma: no cover
-        else:
-            test_today = self.today
-        test_params = get_test_params(46, test_today.day + 1)
-        self.assertEqual(test_params["dobday"], test_today.day + 1)
-
-    @mock.patch("retirement_api.utils.ssa_check.datetime.date")
-    def test_get_test_params_in_january(self, mock_date):
-        mock_date.today.return_value = date(2017, 1, 2)
-        test_params = get_test_params(46, 3)
-        self.assertEqual(test_params["yob"], 1970)
-        mock_date.today.return_value = date(2017, 1, 27)
-        test_params = get_test_params(46, 28)
-        self.assertEqual(test_params["yob"], 1970)
-        mock_date.today.return_value = date(2017, 2, 27)
-        test_params = get_test_params(46, 28)
-        self.assertEqual(test_params["yob"], 1971)
 
     def test_clean_comment(self):
         test_comment = "<!-- This is a test comment    -->"
