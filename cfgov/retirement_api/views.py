@@ -1,22 +1,15 @@
-import datetime
 import json
 import os
 
-from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
-from django.utils.translation import activate, deactivate_all, ugettext as _
-from django.views.generic import TemplateView, View
-from core.views import TranslatedTemplateView
 
 from dateutil import parser
-
-from retirement_api.models import AgeChoice, Page, Question, Step, Tooltip
 
 from .utils.ss_calculator import get_retire_data
 from .utils.ss_utilities import get_retirement_age
 
 BASEDIR = os.path.dirname(__file__)
+
 
 def param_check(request, param):
     if param in request.GET and request.GET[param]:
