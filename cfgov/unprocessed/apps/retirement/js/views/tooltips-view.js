@@ -27,7 +27,7 @@ function toolTipper( elem ) {
   const innerTip = $ttc.find( '.innertip' );
   const outerTip = $ttc.find( '.outertip' );
   const pageSel = '#main .content_wrapper';
-  let pagePadding = parseInt( $( pageSel ).css( 'padding-left' ), 10 );
+  const pagePadding = parseInt( $( pageSel ).css( 'padding-left' ), 10 );
   let newLeft;
   let elemCenter;
   let elemRightOffset;

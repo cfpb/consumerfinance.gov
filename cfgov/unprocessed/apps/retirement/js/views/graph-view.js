@@ -40,45 +40,45 @@ const currentLanguage = document.querySelector( 'html' ).getAttribute( 'lang' );
 
 // TODO: merge textlets and catalog hashes.
 const catalog = {
-  "is your full benefit claiming age.": "de edad es su plena edad de jubilación.",
-  "is past your full benefit claiming age.": "años de edad es después de haber cumplido su plena edad de jubilación.",
-  "is your maximum benefit claiming age.": "es la edad máxima para solicitar.",
-  "62": "62 años",
-  "63": "63 años",
-  "64": "64 años",
-  "65": "65 años",
-  "66": "66 años",
-  "66 and 2 months": "66 años y 2 meses ",
-  "66 and 4 months": "66 años y 4 meses ",
-  "66 and 6 months": "66 años y 6 meses ",
-  "66 and 8 months": "66 años y 8 meses ",
-  "66 and 10 months": "66 años y 10 meses ",
-  "67": "67 años",
-  "68": "68 años",
-  "69": "69 años",
-  "70": "70 años",
-  "Age": "",
-  "<strong>reduces</strong> your monthly benefit by&nbsp;<strong>": "años de edad, su beneficio se <strong>reducirá</strong> un&nbsp;<strong>",
-  "Compared to claiming at your full benefit claiming age.": "en comparación con su plena edad de jubilación.",
-  "Compared to claiming at": "en comparación con su beneficio a los XXX años.",
-  "(in today's dollars) (sin ajustes por inflación)": "(sin ajustes por inflación)",
-  "Claiming at age": "A los",
-  "<strong>increases</strong> your benefit by&nbsp;<strong>": "años de edad, su beneficio <strong>aumentará</strong> un&nbsp;<strong>",
-  "Age 70 is your maximum benefit claiming age.": "70 años es la edad máxima para solicitar."
+  'is your full benefit claiming age.': 'de edad es su plena edad de jubilación.',
+  'is past your full benefit claiming age.': 'años de edad es después de haber cumplido su plena edad de jubilación.',
+  'is your maximum benefit claiming age.': 'es la edad máxima para solicitar.',
+  '62': '62 años',
+  '63': '63 años',
+  '64': '64 años',
+  '65': '65 años',
+  '66': '66 años',
+  '66 and 2 months': '66 años y 2 meses ',
+  '66 and 4 months': '66 años y 4 meses ',
+  '66 and 6 months': '66 años y 6 meses ',
+  '66 and 8 months': '66 años y 8 meses ',
+  '66 and 10 months': '66 años y 10 meses ',
+  '67': '67 años',
+  '68': '68 años',
+  '69': '69 años',
+  '70': '70 años',
+  'Age': '',
+  '<strong>reduces</strong> your monthly benefit by&nbsp;<strong>': 'años de edad, su beneficio se <strong>reducirá</strong> un&nbsp;<strong>',
+  'Compared to claiming at your full benefit claiming age.': 'en comparación con su plena edad de jubilación.',
+  'Compared to claiming at': 'en comparación con su beneficio a los XXX años.',
+  "(in today's dollars) (sin ajustes por inflación)": '(sin ajustes por inflación)',
+  'Claiming at age': 'A los',
+  '<strong>increases</strong> your benefit by&nbsp;<strong>': 'años de edad, su beneficio <strong>aumentará</strong> un&nbsp;<strong>',
+  'Age 70 is your maximum benefit claiming age.': '70 años es la edad máxima para solicitar.'
 };
 
 /**
- *
  * @param {string} msgid - Value to look up the translation of in the catalog.
+ * @returns {string} The processed text.
  */
 function gettext( msgid ) {
   const value = currentLanguage === 'es' ? catalog[msgid] : msgid;
-  if ( typeof value  == 'undefined' ) {
+  if ( typeof value == 'undefined' ) {
     return msgid;
   }
 
-  return ( typeof value  == 'string' ) ? value : value[0];
-};
+  return typeof value == 'string' ? value : value[0];
+}
 
 function init() {
   const SSData = getModelValues.benefits();
